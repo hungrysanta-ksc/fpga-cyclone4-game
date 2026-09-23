@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "date": "2026-09-23",
+  "candidate_id": "fxpak-g13-prefill-endpoint-seed7-hold1-v1",
+  "candidate_directory": "probes/full-core-link/results/fxpak-g13-prefill-endpoint-seed7-hold1-v1",
+  "source_hashes": {
+    "fxpak_gbc_top.sv": "2c941e30a1a71e35dfe40cddfc12d857a78aba50a02f35875255ba6ac7fbe726",
+    "full_core_link.sv": "50efe646a6d4001b813bb4550b50a3f0f3e601932b60dfa8a749a0721df0311b",
+    "frame_pipeline_ring3.sv": "035c35a74409627002700d8405d98800e3ece100dab2156d6dd0a29b753b9ff7",
+    "palette_hdma_word.sv": "768aa7b2af3ee7f28bea66bdeefa66ea7de649d9bf5e68d035067e873ac2d7d4"
+  },
+  "constraint_hashes": {
+    "pin.sdc": "b1b8587e4d6c4f405c36f6dfaabbdd38f79c0aa6f083ac66319b9a746cab2a4e",
+    "board_output_cdc.sdc": "b074be03b87a20efccdfd982f7c3e0bbee9af7c886ffcf09b7a5ef1b48f8db85",
+    "placement-target.sdc": "1fb9118edbff9f9a8d7b5f3737afff30a247a79d9acec102f73f45d533cb3a46"
+  },
+  "tool": "Quartus Prime Lite 25.1std.0 build 1129 (frozen reports); no new compilation this audit",
+  "status_semantics": "pass is limited to the stated model and stimulus; unknown is not pass; historical G12S2 hardware results are not transferred to this G13 candidate",
+  "checks": [
+    {
+      "id": "isolation",
+      "stimulus": "independent file copy with before/after/copy SHA256",
+      "model_scope": "local private snapshot",
+      "result": "pass",
+      "evidence": ["ISOLATION-MANIFEST.json"],
+      "next_gate": "all new outputs remain inside snapshot"
+    },
+    {
+      "id": "physical_fit",
+      "stimulus": "seed 7 full fit, EP4CE15F17C8",
+      "model_scope": "candidate RTL and physical pins",
+      "result": "pass_with_resource_pressure",
+      "evidence": ["probes/full-core-link/results/fxpak-g13-prefill-endpoint-seed7-hold1-v1/pin.fit.rpt"],
+      "next_gate": "account for 56/56 M9K and 531 free LE for any edit"
+    },
+    {
+      "id": "constrained_slack",
+      "stimulus": "frozen original signoff SDC, setup/hold/recovery/removal/pulse across reported corners",
+      "model_scope": "only constrained paths",
+      "result": "pass_limited",
+      "evidence": ["probes/full-core-link/results/fxpak-g13-prefill-endpoint-seed7-hold1-v1/pin.sta.summary"],
+      "next_gate": "do not promote to board signoff"
+    },
+    {
+      "id": "constraint_coverage",
+      "stimulus": "report_ucp expanded, ignored constraints, clock transfers",
+      "model_scope": "all used pins and timing paths",
+      "result": "fail_open",
+      "evidence": ["probes/full-core-link/results/fxpak-g13-prefill-endpoint-seed7-hold1-v1/pin.sta.rpt", "TIMING-EXCEPTIONS.ko.md"],
+      "next_gate": "resolve 36 input/29 output summary versus 2/5 default detail; classify every used path"
+    },
+    {
+      "id": "cdc_mtbf",
+      "stimulus": "chain-level metastability/clock-transfer and bundled-data analysis",
+      "model_scope": "SPI, FIFO, upload, joypad, audio, diagnostic, reset",
+      "result": "unknown",
+      "evidence": ["probes/full-core-link/results/fxpak-g13-prefill-endpoint-seed7-hold1-v1/pin.sta.rpt", "INTERFACE-CLOCK-RESET.ko.md"],
+      "next_gate": "explain 0.962 unavailable fraction and matched exception endpoints"
+    },
+    {
+      "id": "external_bus_timing",
+      "stimulus": "actual board part timing and CPU/DMA/HDMA/MCU waveforms including direction turnaround",
+      "model_scope": "ROM PSRAM, 8-bit SRAM, SPI, DAC, SNES transceiver",
+      "result": "unknown_board_gate",
+      "evidence": ["probes/full-core-link/SNES-SRAM-SLOTS.ko.md", "probes/full-core-link/BOARD-OUTPUT-CONTRACT.ko.md"],
+      "next_gate": "source device/board specs and narrow safe observations, including 270ns slot"
+    },
+    {
+      "id": "nominal_g13_endpoint",
+      "stimulus": "10 nominal source frames, startup/prefill schedule",
+      "model_scope": "real output FIFO/CDC/pages/SRAM frontend; synthetic RGB and host, no game CPU or board",
+      "result": "pass_limited",
+      "evidence": ["probes/full-core-link/results/g13-endpoint-startup-prefill10-v1-nominal/verification.json"],
+      "next_gate": "long epoch/backlog and actual game/renderer integration"
+    },
+    {
+      "id": "dense_g13_deadline",
+      "stimulus": "10 dense source frames at phase 0 and phase 700000",
+      "model_scope": "same RTL source hashes; synthetic host and RGB",
+      "result": "fail",
+      "evidence": ["probes/full-core-link/results/g13-prefill-audit.json"],
+      "next_gate": "preserve 854748/852474 cycle failures; diagnose service and frame age before RTL optimization"
+    },
+    {
+      "id": "steady_backlog_epoch",
+      "stimulus": "hundreds to thousands of source frames and host phase sweep including repeated DMA/HDMA",
+      "model_scope": "production and consumption in the same candidate",
+      "result": "not_run",
+      "evidence": ["SYSTEM-BUDGET.ko.md"],
+      "next_gate": "measure queue slope, max age, dropped/reordered source IDs and repeated complete display IDs"
+    },
+    {
+      "id": "reset_lifecycle",
+      "stimulus": "cold/warm/menu/other ROM/PLL unlock/LCD off and reset during capture, DMA, save, publish",
+      "model_scope": "CPU/PPU, MCU, SNES renderer and board ownership",
+      "result": "unknown",
+      "evidence": ["INTERFACE-CLOCK-RESET.ko.md"],
+      "next_gate": "capture first fault before reset and distinguish from post-reset dump"
+    },
+    {
+      "id": "save_crossload",
+      "stimulus": "PC SAV to hardware, hardware SRM to hardware, hardware SRM to PC",
+      "model_scope": "historical K141 G12S2 8KiB hardware candidate, not current G13",
+      "result": "historical_pass",
+      "evidence": ["START-HERE.ko.md"],
+      "next_gate": "regression only after a relevant change"
+    },
+    {
+      "id": "hardware_game_scenes",
+      "stimulus": "same G13 candidate cold/warm, folio/transition, minigame, combat, save restart",
+      "model_scope": "real FXPAK Pro and SNES",
+      "result": "not_run",
+      "evidence": ["EXECUTION-PLAN.ko.md"],
+      "next_gate": "requires P0/P1 safety and P3 same-candidate integration; user judges expansion/degradation after scenes"
+    }
+  ],
+  "board_signoff": false,
+  "shipping_ready": false
+}
