@@ -18,7 +18,7 @@ from pathlib import Path
 CANDIDATE = "probes/full-core-link/results/fxpak-g13-prefill-endpoint-seed7-hold1-v1"
 OUTPUT = "probes/full-core-link/results/p0-g13-sta-coverage-v1"
 COPY_SUFFIXES = {".sv", ".v", ".vhd", ".vh", ".qsf", ".qpf", ".sdc", ".tcl"}
-EXTRA_REPORTS = ("clock_checks.tcl", "cdc_metastability.tcl")
+EXTRA_REPORTS = ("clock_checks.tcl", "cdc_metastability.tcl", "sta_endpoint_audit.tcl")
 
 
 def sha256(path: Path) -> str:
@@ -49,7 +49,7 @@ def main() -> None:
         actual = sha256(candidate / name)
         if actual != expected:
             raise ValueError(f"Frozen input hash mismatch: {name}")
-    for name in ("pin.qpf", "placement-target.sdc", *EXTRA_REPORTS):
+    for name in ("pin.qpf", "placement-target.sdc", *EXTRA_REPORTS[:2]):
         if not (candidate / name).is_file():
             raise FileNotFoundError(candidate / name)
     for tool in ("quartus_map", "quartus_fit", "quartus_sta"):
@@ -60,6 +60,7 @@ def main() -> None:
     for source in candidate.iterdir():
         if source.is_file() and source.suffix in COPY_SUFFIXES:
             shutil.copy2(source, output / source.name)
+    shutil.copy2(repository / "tools" / "sta_endpoint_audit.tcl", output / "sta_endpoint_audit.tcl")
     boot = output / "BootROMs" / "cgb_boot.mif"
     boot.parent.mkdir()
     shutil.copy2(candidate / "BootROMs" / "cgb_boot.mif", boot)
