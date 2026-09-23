@@ -4,7 +4,7 @@
 
 - 격리 사본: `ISOLATION-MANIFEST.json`의 `complete=true`, 31,256개, 4,090,209,408바이트. 원본 root `.git`만 제외하고 중첩 Git은 보존했다. 이 문서는 사본에서만 작성했다.
 - 동결 물리 후보: `probes/full-core-link/results/fxpak-g13-prefill-endpoint-seed7-hold1-v1/` (이하 C). top `fxpak_gbc_top`, EP4CE15F17C8, seed 7, Quartus 25.1std.0 build 1129. C의 `verification.json`에 든 주요 소스·SDC 해시는 실제 파일과 대조했다. `pin.sta.rpt` SHA256 `104ccb42fa7dc87a37b1bda20d26ed306914ca8fd4c07995d5399a8c1606a648`, `pin.fit.rpt` `db6cc91fd382cb5dbbfca5b2a73c91ac19b6481f3698ed2ec175cfe354738f18`.
-- upstream Gameboy_MiSTer HEAD `7a5ff50528cd9c1d13ffb675e7df8506bffaa078`, upstream sd2snes HEAD `cf7e21d7a5978fcd74981d71c3cfbf6e982a4dd1`. 둘 다 로컬 수정이 있으므로 HEAD만으로 후보를 재현할 수 없다. 공개용 `repository/` HEAD `0ae1cff231546536865d1918c24fa8f77ca2ad11`, push 전이다.
+- upstream Gameboy_MiSTer HEAD `7a5ff50528cd9c1d13ffb675e7df8506bffaa078`, upstream sd2snes HEAD `cf7e21d7a5978fcd74981d71c3cfbf6e982a4dd1`. 둘 다 로컬 수정이 있으므로 HEAD만으로 후보를 재현할 수 없다. 이 감사의 최초 로컬 문서 기준은 `0ae1cff231546536865d1918c24fa8f77ca2ad11`이다. 공개 저장소의 후속 이력은 Git에서 확인한다.
 - C `pin.qsf`에는 물리 위치 135개, 해당 IO standard 135개(모두 3.3-V LVTTL), current strength 135개(모두 4mA)가 있다. 이는 fit의 135 physical/0 virtual pins와 일치한다. 위치 배정 완전성과 실제 보드 회로·트랜시버 전압/타이밍 적합성은 다른 판정이다.
 - 이 감사는 기존 결과와 소스의 정적 판독이다. 새 Quartus/Questa 실행, 보드 파형 측정, 비트스트림 생성은 없다. C의 `gbc_live_core.sv` 첫 주석은 오래된 resource-probe 설명이지만 C의 `full_core_link.sv`는 실제 core를 인스턴스화한다. 반대로 C의 G13 endpoint 시험은 실제 게임 CPU 대신 고정 RGB 입력을 사용했다. 두 검증 범위를 혼합하지 않는다.
 

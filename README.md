@@ -10,7 +10,7 @@
 - [실행 계획과 완료 기준](docs/EXECUTION-PLAN.ko.md)
 - [FPGA 방법론 검토와 발견 사항](docs/FPGA-METHODOLOGY-REVIEW.ko.md)
 - [현재 진행·미결 gate](docs/PROJECT-STATUS.ko.md)
-- [P0 인터페이스·클록·리셋 감사](docs/INTERFACE-CLOCK-RESET.ko.md), [타이밍 예외 판정](docs/TIMING-EXCEPTIONS.ko.md), [검증 행렬](docs/VERIFICATION-MATRIX.json)
+- [P0 인터페이스·클록·리셋 감사](docs/INTERFACE-CLOCK-RESET.ko.md), [타이밍 예외 판정](docs/TIMING-EXCEPTIONS.ko.md), [확장 STA 경로 감사](docs/P0-STA-COVERAGE.ko.md), [검증 행렬](docs/VERIFICATION-MATRIX.json)
 - [P1 초기 예산](docs/SYSTEM-BUDGET.ko.md)
 - [다른 코어 이식 참고 절차](docs/PORTING-PLAYBOOK.ko.md)
 - [저장소 관리 규칙](docs/REPOSITORY-POLICY.ko.md), [기여·등록 절차](CONTRIBUTING.md), [의존성 등록부](docs/DEPENDENCY-REGISTER.ko.md)
@@ -39,4 +39,11 @@ P1 계산 도구 `tools/p1_budget_calc.py`는 로컬 동결 보고서가 있어�
 
 ```sh
 python tools/p1_budget_calc.py --snapshot /path/to/private/local-snapshot
+```
+
+동결된 G13 후보의 타이밍 범위를 다시 확인할 때는 개인 snapshot에서만 다음 명령을 실행합니다. 첫 명령은 새 Quartus fit/STA DB와 원본 제약의 보고서를 개인 snapshot 안에 생성하며 bitstream을 만들지 않습니다. 생성 디렉터리가 이미 있으면 중단합니다. 두 번째 명령은 공개 가능한 집계만 표준 출력으로 냅니다.
+
+```sh
+python tools/run_sta_coverage.py --snapshot /path/to/private/local-snapshot --quartus-bin /path/to/quartus/bin64
+python tools/summarize_sta_coverage.py /path/to/private/local-snapshot/probes/full-core-link/results/p0-g13-sta-coverage-v1
 ```

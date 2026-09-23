@@ -14,7 +14,7 @@
     "board_output_cdc.sdc": "b074be03b87a20efccdfd982f7c3e0bbee9af7c886ffcf09b7a5ef1b48f8db85",
     "placement-target.sdc": "1fb9118edbff9f9a8d7b5f3737afff30a247a79d9acec102f73f45d533cb3a46"
   },
-  "tool": "Quartus Prime Lite 25.1std.0 build 1129 (frozen reports); no new compilation this audit",
+  "tool": "Quartus Prime Lite 25.1std.0 build 1129 (frozen reports plus same-source seed-7 re-fit for coverage); no bitstream",
   "status_semantics": "pass is limited to the stated model and stimulus; unknown is not pass; historical G12S2 hardware results are not transferred to this G13 candidate",
   "checks": [
     {
@@ -42,20 +42,28 @@
       "next_gate": "do not promote to board signoff"
     },
     {
+      "id": "sta_coverage_rebuild",
+      "stimulus": "source-hash checked re-fit with fitter-only placement target, then original signoff SDC restored for STA and expanded reports",
+      "model_scope": "same G13 source and seed in private isolated snapshot",
+      "result": "pass_limited",
+      "evidence": ["probes/full-core-link/results/p0-g13-sta-coverage-v1/audit.json", "P0-STA-COVERAGE.ko.md"],
+      "next_gate": "fit and STA summary reproduction does not establish external board timing or CDC safety"
+    },
+    {
       "id": "constraint_coverage",
-      "stimulus": "report_ucp expanded, ignored constraints, clock transfers",
+      "stimulus": "same-source seed-7 re-fit, expanded report_ucp and clock transfers under original signoff SDC",
       "model_scope": "all used pins and timing paths",
       "result": "fail_open",
-      "evidence": ["probes/full-core-link/results/fxpak-g13-prefill-endpoint-seed7-hold1-v1/pin.sta.rpt", "TIMING-EXCEPTIONS.ko.md"],
-      "next_gate": "resolve 36 input/29 output summary versus 2/5 default detail; classify every used path"
+      "evidence": ["probes/full-core-link/results/p0-g13-sta-coverage-v1/full-unconstrained.rpt", "P0-STA-COVERAGE.ko.md"],
+      "next_gate": "36 input/29 output ports are reconciled with the default 2/5 table; classify and constrain actual board I/O paths, especially 269 combinational input-output paths"
     },
     {
       "id": "cdc_mtbf",
-      "stimulus": "chain-level metastability/clock-transfer and bundled-data analysis",
+      "stimulus": "report_metastability -nchains 100 at each fitted operating condition",
       "model_scope": "SPI, FIFO, upload, joypad, audio, diagnostic, reset",
       "result": "unknown",
-      "evidence": ["probes/full-core-link/results/fxpak-g13-prefill-endpoint-seed7-hold1-v1/pin.sta.rpt", "INTERFACE-CLOCK-RESET.ko.md"],
-      "next_gate": "explain 0.962 unavailable fraction and matched exception endpoints"
+      "evidence": ["probes/full-core-link/results/p0-g13-sta-coverage-v1/cdc-metastability-8_slow_1200mv_85c.rpt", "P0-STA-COVERAGE.ko.md"],
+      "next_gate": "explain 51 automatic uncalculated chains and match each relevant false-path/bundled-data endpoint"
     },
     {
       "id": "external_bus_timing",
