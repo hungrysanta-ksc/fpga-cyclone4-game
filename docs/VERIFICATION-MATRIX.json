@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "date": "2026-09-23",
+  "date": "2026-09-24",
   "candidate_id": "fxpak-g13-prefill-endpoint-seed7-hold1-v1",
   "candidate_directory": "probes/full-core-link/results/fxpak-g13-prefill-endpoint-seed7-hold1-v1",
   "source_hashes": {
@@ -74,6 +74,22 @@
       "next_gate": "source device/board specs and narrow safe observations, including 270ns slot"
     },
     {
+      "id": "mcu_spi_static_callpath",
+      "stimulus": "GBC FPGA configuration to loader call path and historical G12-save ELF/link map inspection",
+      "model_scope": "modified STM32 source and older linked artifact, no current G13 firmware or pin capture",
+      "result": "pass_limited",
+      "evidence": ["INTERFACE-CLOCK-RESET.ko.md"],
+      "next_gate": "identify flashed firmware and measure actual SCK/SS/MOSI/MISO/MCU_RDY timing"
+    },
+    {
+      "id": "snes_slot_model",
+      "stimulus": "12 synthetic 270ns PHI2 phases, 24 program/frame reads, 12 writes, one 80ns early-read counterexample",
+      "model_scope": "frozen G13 slot scheduler, cart map and byte writer with assumed 45ns SRAM access",
+      "result": "pass_limited",
+      "evidence": ["probes/full-core-link/results/snes-slot-actual-writer-v1/verification.json", "INTERFACE-CLOCK-RESET.ko.md"],
+      "next_gate": "measure minimum real CPU/DMA/HDMA PHI2-to-read gap and pin direction/OE/WE turnaround; error flag cannot undo a write"
+    },
+    {
       "id": "nominal_g13_endpoint",
       "stimulus": "10 nominal source frames, startup/prefill schedule",
       "model_scope": "real output FIFO/CDC/pages/SRAM frontend; synthetic RGB and host, no game CPU or board",
@@ -88,6 +104,14 @@
       "result": "fail",
       "evidence": ["probes/full-core-link/results/g13-prefill-audit.json"],
       "next_gate": "preserve 854748/852474 cycle failures; diagnose service and frame age before RTL optimization"
+    },
+    {
+      "id": "dense_g13_lifecycle50",
+      "stimulus": "50 dense phase-0 source frames through first host-visible epoch 49",
+      "model_scope": "same 26 RTL source hashes as 30-frame run; synthetic RGB and host with timestamped source/pipeline/commit/publish/visible events",
+      "result": "fail_deadline_pass_data_limited",
+      "evidence": ["probes/full-core-link/results/g13-endpoint-p1-lifecycle50-phase0-v1-dense/verification.json", "P1-ENDPOINT-BACKLOG.ko.md"],
+      "next_gate": "two frame deadlines missed; source-to-visible 54.763..71.296ms is synthetic, and 50 frames do not establish sustained stability"
     },
     {
       "id": "steady_backlog_epoch",
