@@ -1,7 +1,9 @@
 """Summarize a private G13 endpoint log without copying the raw log into Git.
 
-The two clocks and source period must come from the testbench being analyzed.
-This computes model timing proxies; it does not infer physical bus timing.
+The two effective simulator clocks and source period must come from the
+testbench being analyzed. Account for its time-precision rounding.
+Timestamped logs additionally report the synthetic source-to-visible age.
+Neither calculation infers physical bus timing or real game-frame age.
 """
 
 import argparse
@@ -24,7 +26,15 @@ def analyze(log, source_frame_cycles, source_clock_ns, host_clock_ns):
     stalls = {}
     installs = []
     visibles = []
+    lifecycle = {name: {} for name in ("source", "pipeline", "commit", "publish")}
+    lifecycle_visible = {}
     final = {}
+
+    def once(table, index, timestamp):
+        if index in table:
+            raise ValueError(f"Duplicate lifecycle event for epoch {index}")
+        table[index] = timestamp
+
     for line in log.splitlines():
         if "STALL_PROFILE frame=" in line:
             item = fields(line)
@@ -39,6 +49,21 @@ def analyze(log, source_frame_cycles, source_clock_ns, host_clock_ns):
                 installs.append(item)
             elif item["kind"] == 7:
                 visibles.append(item)
+        elif "SOURCE_FRAME frame=" in line:
+            item = fields(line)
+            once(lifecycle["source"], item["frame"], item["time_ns"])
+        elif "PIPELINE_START_EVENT epoch=" in line:
+            item = fields(line)
+            once(lifecycle["pipeline"], item["epoch"], item["time_ns"])
+        elif "COMMIT_EVENT epoch=" in line:
+            item = fields(line)
+            once(lifecycle["commit"], item["epoch"], item["time_ns"])
+        elif "PUBLISH_EVENT epoch=" in line:
+            item = fields(line)
+            once(lifecycle["publish"], item["epoch"], item["time_ns"])
+        elif "VISIBLE_EVENT epoch=" in line:
+            item = fields(line)
+            lifecycle_visible.setdefault(item["epoch"], item["time_ns"])
         elif "ENDPOINT_PASS commits=" in line:
             final["endpoint"] = fields(line)
         elif "HOST_PASS installs=" in line:
@@ -92,8 +117,8 @@ def analyze(log, source_frame_cycles, source_clock_ns, host_clock_ns):
         for i in sorted(first_visible)
         if i in starts
     ]
-    return {
-        "scope": "synthetic host and source; age starts at pipeline processing, not original GBC capture",
+    result = {
+        "scope": "synthetic host and source; legacy proxy starts at pipeline processing, not original GBC capture",
         "frames": count,
         "source_frame_cycles": source_frame_cycles,
         "deadline_misses": final["diagnostic"]["deadline_misses"],
@@ -119,14 +144,53 @@ def analyze(log, source_frame_cycles, source_clock_ns, host_clock_ns):
             for i in range(count) if frame_cycles[i] >= source_frame_cycles
         ],
     }
+    if any(lifecycle.values()) or lifecycle_visible:
+        expected = list(range(count))
+        if any(sorted(lifecycle[name]) != expected for name in ("source", "commit", "publish")):
+            raise ValueError("Incomplete source/commit/publish timestamps")
+        if lifecycle["pipeline"] and sorted(lifecycle["pipeline"]) != expected:
+            raise ValueError("Incomplete pipeline-start timestamps")
+        if sorted(lifecycle_visible) != expected:
+            raise ValueError("Incomplete visible timestamps")
+        period_ns = source_frame_cycles * source_clock_ns
+        if any(abs(lifecycle["source"][i] - lifecycle["source"][i - 1] - period_ns) > 2
+               for i in range(1, count)):
+            raise ValueError("Source timestamp spacing disagrees with testbench period")
+        for i in expected:
+            steps = [lifecycle["source"][i]]
+            if lifecycle["pipeline"]:
+                steps.append(lifecycle["pipeline"][i])
+            steps += [lifecycle["commit"][i], lifecycle["publish"][i], lifecycle_visible[i]]
+            if steps != sorted(steps):
+                raise ValueError(f"Lifecycle order violation at epoch {i}")
+
+        def duration_stats(start, end):
+            values = [(end[i] - start[i]) / 1_000_000 for i in expected]
+            return {"min": round(min(values), 3), "max": round(max(values), 3),
+                    "max_epoch": values.index(max(values)), "last": round(values[-1], 3)}
+
+        result["timestamped_lifecycle"] = {
+            "scope": "synthetic source first pixel to synthetic host first visible; not real game capture age",
+            "source_to_commit_ms": duration_stats(lifecycle["source"], lifecycle["commit"]),
+            "source_to_publish_ms": duration_stats(lifecycle["source"], lifecycle["publish"]),
+            "source_to_first_visible_ms": duration_stats(lifecycle["source"], lifecycle_visible),
+            "publish_to_first_visible_ms": duration_stats(lifecycle["publish"], lifecycle_visible),
+        }
+        if lifecycle["pipeline"]:
+            result["timestamped_lifecycle"]["source_to_pipeline_start_ms"] = duration_stats(
+                lifecycle["source"], lifecycle["pipeline"]
+            )
+    return result
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("log", type=Path)
     parser.add_argument("--source-frame-cycles", type=int, required=True)
-    parser.add_argument("--source-clock-ns", type=float, required=True)
-    parser.add_argument("--host-clock-ns", type=float, required=True)
+    parser.add_argument("--source-clock-ns", type=float, required=True,
+                        help="effective simulator period after time-precision rounding")
+    parser.add_argument("--host-clock-ns", type=float, required=True,
+                        help="effective simulator period after time-precision rounding")
     args = parser.parse_args()
     if args.source_frame_cycles <= 0 or args.source_clock_ns <= 0 or args.host_clock_ns <= 0:
         parser.error("Clock periods and source frame length must be positive")

@@ -24,6 +24,24 @@ GOOD = """
 # DIAGNOSTIC_ONLY deadline_misses=0
 """
 
+TRACE = """
+# SOURCE_FRAME frame=0 time_ns=0
+# PIPELINE_START_EVENT epoch=0 time_ns=1000000
+# COMMIT_EVENT epoch=0 time_ns=9000000
+# PUBLISH_EVENT epoch=0 time_ns=10000000
+# VISIBLE_EVENT epoch=0 time_ns=21000000
+# SOURCE_FRAME frame=1 time_ns=10000000
+# PIPELINE_START_EVENT epoch=1 time_ns=11000000
+# COMMIT_EVENT epoch=1 time_ns=19000000
+# PUBLISH_EVENT epoch=1 time_ns=20000000
+# VISIBLE_EVENT epoch=1 time_ns=31000000
+# SOURCE_FRAME frame=2 time_ns=20000000
+# PIPELINE_START_EVENT epoch=2 time_ns=21000000
+# COMMIT_EVENT epoch=2 time_ns=29000000
+# PUBLISH_EVENT epoch=2 time_ns=30000000
+# VISIBLE_EVENT epoch=2 time_ns=52000000
+"""
+
 
 class EndpointBacklogTest(unittest.TestCase):
     def test_repeat_without_missing_source_epoch(self):
@@ -43,6 +61,32 @@ class EndpointBacklogTest(unittest.TestCase):
     def test_deadline_mismatch_is_rejected(self):
         with self.assertRaises(ValueError):
             analyze(GOOD.replace("deadline_misses=0", "deadline_misses=1"), 10, 1.0, 1.0)
+
+    def test_timestamped_source_to_visible(self):
+        report = analyze(GOOD + TRACE, 10, 1000000.0, 1000000.0)
+        age = report["timestamped_lifecycle"]["source_to_first_visible_ms"]
+        self.assertEqual(age["max_epoch"], 2)
+        self.assertEqual(age["last"], 32.0)
+        self.assertEqual(report["timestamped_lifecycle"]["source_to_pipeline_start_ms"]["last"], 1.0)
+
+    def test_lifecycle_order_violation_is_rejected(self):
+        with self.assertRaises(ValueError):
+            analyze(GOOD + TRACE.replace("epoch=1 time_ns=20000000", "epoch=1 time_ns=18000000"),
+                    10, 1000000.0, 1000000.0)
+
+    def test_missing_visible_timestamp_is_rejected(self):
+        with self.assertRaises(ValueError):
+            analyze(GOOD + TRACE.replace("# VISIBLE_EVENT epoch=2 time_ns=52000000\n", ""),
+                    10, 1000000.0, 1000000.0)
+
+    def test_duplicate_source_timestamp_is_rejected(self):
+        with self.assertRaises(ValueError):
+            analyze(GOOD + TRACE + "# SOURCE_FRAME frame=1 time_ns=10000000\n",
+                    10, 1000000.0, 1000000.0)
+
+    def test_wrong_simulator_clock_is_rejected(self):
+        with self.assertRaises(ValueError):
+            analyze(GOOD + TRACE, 10, 1500000.0, 1000000.0)
 
 
 if __name__ == "__main__":
