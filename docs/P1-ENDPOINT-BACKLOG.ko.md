@@ -32,8 +32,21 @@ python -m unittest discover -s tools -p test_analyze_endpoint_backlog.py
 
 비공개 원본에서 분석 도구 4개 계약 검사와 실제 로그 집계가 통과했다. 로그가 없으면 공개 저장소 단독으로 숫자를 재계산할 수 없다.
 
+## 두 번째 설치 DMA 경계의 별도 진단
+
+동결 renderer의 **두 번째 설치**만 대상으로 동일 크기의 one-shot native 변형 64개를 실행했다. metadata 7회와 pixel 24회 DMA 시작·끝, 독립 반복 지점 2개를 관측했고, 후반 128개 화면/2949120 RGB555 화소가 정확히 일치했다. pixel 간격의 18바이트 설정 명령과 24개 trigger를 binary로 대조했으며 잘못된 레지스터와 0길이 간격의 부정 대조도 검출했다. 비공개 결과 ID는 `g13-steady-dma-boundaries-v3`; 첫 두 실행 준비 시도는 격리 경로 검사에서 빌드 전에 중단됐다.
+
+| 설치 구간 | metadata 전체 / 설정 간격 합계 | pixel 전체 / 설정 간격 합계 |
+| --- | ---: | ---: |
+| 첫 설치 기존 계측 | 10085 / 711 dot (7.05%) | 43574 / 1207 dot (2.77%) |
+| 두 번째 설치 | 12476 / 785 dot (6.29%) | 37743 / 1013 dot (2.68%) |
+
+이 수치는 native 에뮬레이터의 H/V 경과 시간이다. 첫 설치 helper 실행의 후속 위상 영향, refresh/HDMA, H/V 양자화가 남아 있으며 실제 cartridge 주소·PHI2·read strobe나 SRAM 쓰기 가능 시간을 측정한 값은 아니다.
+
+두 번째 설치의 **각 설정 간격에서 관측한 최솟값**만 쓰고 양끝 12 dot을 계속 차단한 합성 host 민감도 시험을 했다. 첫 설치와 기존 metadata 40행/pixel 115행 envelope는 유지했다. 같은 26개 출력 RTL 소스의 prefill-only dense55/phase0/10프레임 비교에서 frame 2는 854748→847445클록, frame 3은 702729→706292클록이었다. 두 조건 모두 **기한 초과 2회**이며, 새 시험도 230400 RGB555 화소·217640 출력 SRAM 유효 바이트 exact, 10 commit/publish, host 11설치(완성 epoch 1 재표시 1회), Questa 오류·경고 0건이다. 따라서 관측된 간격만 반영해서는 이 모델의 처리량 gate가 닫히지 않는다. 변경한 FPGA HDL이 없으므로 새 full-fit은 하지 않았다.
+
 ## 다음 gate
 
-1. 반복 설치의 metadata/pixel DMA 경계와 WRAM 설정·HDMA 구간을 별도로 관측한다. 첫 설치의 one-shot 경계를 반복 구간에 복제하지 않는다.
+1. 반복 설치의 native H/V 경계는 별도로 관측했다. 이제 실제 SNES 주소/PHI2/read strobe와 WRAM HDMA 개입을 확인한다. 계측된 설정 간격 전체를 쓰기 슬롯으로 취급하지 않는다.
 2. 같은 후보로 더 긴 생산/소비 추적을 수행하고 capture 시점, commit, publish, install, visible을 분리 계측한다. 상대 시작 지연뿐 아니라 실제 대기량과 frame age 상한을 계산한다.
 3. 보드 SPI/SNES slot/SRAM/PSRAM/DAC 계약과 STA 미제약 경로를 닫은 후에만 새 실기 후보를 판단한다. 현재 결과는 처리량 gate·제품 gate 통과가 아니다.
