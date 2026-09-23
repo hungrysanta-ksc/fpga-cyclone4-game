@@ -8,7 +8,7 @@
 | 저장/로드 | G12S2의 PC SAV→실기, 실기 SRM→실기, 실기 SRM→PC 3방향 성공(K141 8KiB) | 관련 변경 후 회귀. 재구현 과제 아님 |
 | 정상 장면 색 | G12 팔레트 표현 한계 재현; G13 제한 장면 RGB/SRAM exact | 폴리오·미니게임·전투 전체 미평가 |
 | 점멸/리셋 후 재실행 | cold/warm 차이와 진단 dump 확보 | 원인 미확정. 팔레트 한계와 별도 가설 |
-| G13 처리량 | nominal 10-frame 최대535,928/561,792클록; dense 두 위상 최대854,748/852,474 | dense 개별 deadline 실패, 장기 backlog·표시 age unknown |
+| G13 처리량 | nominal 10-frame 최대535,928/561,792클록; dense 두 위상 최대854,748/852,474. dense phase0 30-frame에서도 2회 초과, 합성 host의 이전 화면 재표시 1회 관측 | [P1 종단 진단](P1-ENDPOINT-BACKLOG.ko.md)은 30-frame 한 조건에 한정. 장기 backlog·실제 표시 age unknown |
 | FPGA 배치 | seed7 full-fit 재현: 14,877/15,408 LE, 56/56 M9K; 적용 제약 setup +0.051ns/hold +0.134ns | 확장 UCP 36입력/29출력의 292/1030경로, 조합 I/O 269경로 미제약. MTBF 51/53 미계산, 외부 보드 계약 미완료 |
 | 실기/제품 | 이전 성공·진단 후보 보존 | G13 실기/배포 승인 없음 |
 

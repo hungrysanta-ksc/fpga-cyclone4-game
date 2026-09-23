@@ -12,6 +12,7 @@
 - [현재 진행·미결 gate](docs/PROJECT-STATUS.ko.md)
 - [P0 인터페이스·클록·리셋 감사](docs/INTERFACE-CLOCK-RESET.ko.md), [타이밍 예외 판정](docs/TIMING-EXCEPTIONS.ko.md), [확장 STA 경로 감사](docs/P0-STA-COVERAGE.ko.md), [검증 행렬](docs/VERIFICATION-MATRIX.json)
 - [P1 초기 예산](docs/SYSTEM-BUDGET.ko.md)
+- [P1 출력 종단·반복 표시 진단](docs/P1-ENDPOINT-BACKLOG.ko.md)
 - [다른 코어 이식 참고 절차](docs/PORTING-PLAYBOOK.ko.md)
 - [저장소 관리 규칙](docs/REPOSITORY-POLICY.ko.md), [기여·등록 절차](CONTRIBUTING.md), [의존성 등록부](docs/DEPENDENCY-REGISTER.ko.md)
 - [보고서 감사 도구](tools/audit_fpga_signoff.py)
