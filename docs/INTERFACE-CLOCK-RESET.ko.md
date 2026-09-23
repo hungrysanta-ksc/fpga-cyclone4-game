@@ -45,6 +45,12 @@
 
 따라서 현재 소스의 GBC 로더에 unpaced block 호출이 숨어 있다는 가설은 정적 검사에서 지지되지 않는다. 물리 SPI SCK/SS/MOSI/MISO/MCU_RDY의 최소·최대 간격, SSEL 중단 복구, 실제 펌웨어 버전은 계측/배포 기록으로 확인해야 한다. `pin.sdc`의 SPI SCK 20.833ns 선언과 펌웨어의 명목 42MHz 설정도 같은 실제 파형을 직접 입증하지 않는다.
 
+## SNES SRAM 조건부 슬롯 재검증
+
+동결 G13 후보와 SHA-256이 일치하는 `snes_sram_slots.sv` (`82a2a59c…de04cb8372e`)·`sram_granted_writer.sv` (`17cdd8f7…ee24ee`)·`snes_cart_map.sv`를 함께 Icarus로 실행했다. 이는 앞선 `sram_burst_writer` 중심 슬롯 시험과 **다른, 현재 후보의 byte writer 경로**다. 합성 PHI2/ROMSEL/읽기 신호에서 비-SRAM cycle 다음 SRAM read까지 270ns를 주고 시작 위상 12개를 검사했다. 12바이트 쓰기 및 program/frame read 24회가 시험의 125ns 샘플 지점에서 정확했고, 모델의 tAA=45ns·WE pulse≥35ns·주소/데이터 setup 검사도 통과했다. 일부러 80ns에 읽기를 시작한 반례에서는 `protocol_error`와 `slot_violation`이 모두 올라왔다. 반례의 쓰기 자체는 이미 수행될 수 있으므로 이 오류 플래그를 물리 보호 수단으로 취급하지 않는다. 비공개 재현 ID는 `snes-slot-actual-writer-v1`이고, RTL·testbench 해시와 로그는 격리 사본의 `verification.json`에 있다. 생산 RTL 수정이나 새 fit은 없었다.
+
+실제 270ns 하한은 **아직 측정하지 않았다**. 다음 보드 관측에서는 CPU fetch, DMA, HDMA, refresh/idle 전환을 포함해 비-SRAM PHI2 상승→다음 SRAM read strobe의 최소 간격을 구분한다. 같은 캡처에서 주소/ROMSEL, `/RD`, SRAM `/OE`·`/WE`, transceiver DIR/OE의 전환 순서와 겹침을 확인하고, 신호별 지연·프로브 분해능을 기록한다. 짧은 간격 한 번이라도 발견되면 현재 슬롯 grant 계약은 실패다. H/V 시간이나 합성 DMA 설정 간격을 이 파형의 대체 자료로 쓰지 않는다.
+
 ## 리셋 검증 표
 
 모든 행에서 `WE/OE` 비활성, 소유권 한 명, FIFO/page valid·epoch 초기화와 SaveRAM 보존을 함께 검사한다. RAM 전체가 0일 필요는 없다. 현재 C에 대한 **시험 계획**이며 통과 기록이 아니다.
