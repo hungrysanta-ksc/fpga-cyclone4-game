@@ -15,7 +15,7 @@
     "placement-target.sdc": "1fb9118edbff9f9a8d7b5f3737afff30a247a79d9acec102f73f45d533cb3a46"
   },
   "tool": "Quartus Prime Lite 25.1std.0 build 1129 (frozen reports plus same-source seed-7 re-fit for coverage); no bitstream",
-  "status_semantics": "pass is limited to the stated model and stimulus; unknown is not pass; historical G12S2 hardware results are not transferred to this G13 candidate",
+  "status_semantics": "pass is limited to the stated model and stimulus; fail_model is a failure under the stated software assumptions, not a measured board result; unknown is not pass; historical G12S2 hardware results are not transferred to this G13 candidate",
   "checks": [
     {
       "id": "isolation",
@@ -71,7 +71,7 @@
       "model_scope": "ROM PSRAM, 8-bit SRAM, SPI, DAC, SNES transceiver",
       "result": "unknown_board_gate",
       "evidence": ["probes/full-core-link/SNES-SRAM-SLOTS.ko.md", "probes/full-core-link/BOARD-OUTPUT-CONTRACT.ko.md"],
-      "next_gate": "source device/board specs and narrow safe observations, including 270ns slot"
+      "next_gate": "equipment unavailable: review device/board specs and run bounded software fault injection; 270ns slot and physical bus turnaround remain unverified"
     },
     {
       "id": "mcu_spi_static_callpath",
@@ -83,10 +83,10 @@
     },
     {
       "id": "snes_slot_model",
-      "stimulus": "12 synthetic 270ns PHI2 phases, 24 program/frame reads, 12 writes, one 80ns early-read counterexample",
-      "model_scope": "frozen G13 slot scheduler, cart map and byte writer with assumed 45ns SRAM access",
+      "stimulus": "12 synthetic 270ns PHI2 phases, 24 program/frame reads, 6 byte plus 6 word writes, one 80ns early-read counterexample",
+      "model_scope": "frozen G13 slot scheduler, cart map and frontend-connected burst writer with assumed 45ns SRAM access",
       "result": "pass_limited",
-      "evidence": ["probes/full-core-link/results/snes-slot-actual-writer-v1/verification.json", "INTERFACE-CLOCK-RESET.ko.md"],
+      "evidence": ["probes/full-core-link/results/snes-slot-burst-writer-v1/verification.json", "INTERFACE-CLOCK-RESET.ko.md"],
       "next_gate": "measure minimum real CPU/DMA/HDMA PHI2-to-read gap and pin direction/OE/WE turnaround; error flag cannot undo a write"
     },
     {
@@ -114,12 +114,28 @@
       "next_gate": "two frame deadlines missed; source-to-visible 54.763..71.296ms is synthetic, and 50 frames do not establish sustained stability"
     },
     {
+      "id": "dense_g13_lifecycle100",
+      "stimulus": "100 dense phase-0 source frames using a repeated 10-frame RGB pattern through first host-visible epoch 99",
+      "model_scope": "same 26 RTL source hashes as 50-frame run; synthetic source and host; ~63% of their relative phase beat",
+      "result": "fail_deadline_pass_data_limited",
+      "evidence": ["probes/full-core-link/results/g13-endpoint-p1-lifecycle100-phase0-v1-dense/verification.json", "P1-ENDPOINT-BACKLOG.ko.md"],
+      "next_gate": "two early deadlines missed; later 200-frame run exposes three more misses near the phase beat"
+    },
+    {
+      "id": "dense_g13_lifecycle200",
+      "stimulus": "200 dense phase-0 source frames using a repeated 10-frame RGB pattern through first host-visible epoch 199",
+      "model_scope": "same 26 RTL source hashes as 100-frame run; synthetic source and host; >1 relative phase beat",
+      "result": "fail_deadline_pass_data_limited",
+      "evidence": ["probes/full-core-link/results/g13-endpoint-p1-lifecycle200-phase0-v2-dense/verification.json", "P1-ENDPOINT-BACKLOG.ko.md"],
+      "next_gate": "five deadlines missed at frames 2/3/156/157/158; drift recurs to 449811 clocks, while 200 data/epoch lifecycles stay ordered"
+    },
+    {
       "id": "steady_backlog_epoch",
       "stimulus": "hundreds to thousands of source frames and host phase sweep including repeated DMA/HDMA",
       "model_scope": "production and consumption in the same candidate",
-      "result": "not_run",
-      "evidence": ["SYSTEM-BUDGET.ko.md"],
-      "next_gate": "measure queue slope, max age, dropped/reordered source IDs and repeated complete display IDs"
+      "result": "partial_200_frames_one_phase",
+      "evidence": ["SYSTEM-BUDGET.ko.md", "P1-ENDPOINT-BACKLOG.ko.md", "probes/full-core-link/results/g13-endpoint-p1-lifecycle200-phase0-v2-dense/verification.json"],
+      "next_gate": "one relative phase beat shows deadline and drift recurrence; check other host phases and more repeats before stability claims"
     },
     {
       "id": "reset_lifecycle",
@@ -128,6 +144,14 @@
       "result": "unknown",
       "evidence": ["INTERFACE-CLOCK-RESET.ko.md"],
       "next_gate": "capture first fault before reset and distinguish from post-reset dump"
+    },
+    {
+      "id": "sram_reset_during_write",
+      "stimulus": "reset at 1/10/25/40ns after byte WE or second word WE falls",
+      "model_scope": "frozen G13 frontend-connected burst writer in Icarus; existing synthetic >=35ns WE-low criterion; no real board reset waveform",
+      "result": "fail_model",
+      "evidence": ["probes/full-core-link/results/sram-burst-reset-pulse-v1/verification.json", "INTERFACE-CLOCK-RESET.ko.md"],
+      "next_gate": "design a reset-safe write completion protocol and repeat phase/clock-stop injections; keep board electrical signoff open"
     },
     {
       "id": "save_crossload",

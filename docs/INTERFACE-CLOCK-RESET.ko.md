@@ -28,7 +28,7 @@
 | encoder/next-use → PSRAM background | `req_valid/write/addr[22:0]/data[15:0]`, `req_ready`, 별도 `rsp_valid/data`; capture와 audio가 `psram_bg_arbiter`를 공유. | C `full_core_link.sv`, `psram_bg_arbiter.sv`; one-request/one-response는 테스트 범위의 계약. | 최장 arbitration 지연/blackout, read-during-write·부품 tAA/tWP, 실제 ROM/save 경합 상한 unknown. |
 | renderer metadata/pixels → 출력 FIFO → SRAM writer | source 33.56MHz → bus 84MHz, 4개 ×33비트 Gray-pointer FIFO. `ready`는 enqueue ACK이고 SRAM commit이 아님; `drained` 후 publish. | C `output_fifo_cdc.sv`, `board_output_ring3_link.sv`, `frame_output_pages.sv`; pointer 2단 동기화, slot은 read pointer 반환까지 불변. | Gray bit skew/MTBF 범위, 긴 blackout 중 overflow, reset 중 미완료 write와 publish 검증 미완료. |
 | source page → uploader → SNES renderer | bus `upload_start/read_idle`로 새 frame read를 막고 기존 read를 drain; toggle request/ack가 source로 왕복, bus가 page/valid를 취득. | C `upload_boundary_cdc.sv`; busy 중 새 frame read는 프로토콜 오류. renderer는 poll 뒤 DMA/HDMA. | timeout 없음. 요청 중 reset, MCU/menu/reconfigure, 실제 반복 설치/refresh/HDMA 시퀀스 확인 필요. |
-| SNES CPU/DMA → `snes_frontend` → 외부 8비트 SRAM | SNES 주소[23:0], `/RD,/WR,/ROMSEL`, PHI2는 비동기. 동기화된 slot이 비-SRAM 새 사이클에서만 writer grant. raw `/RD`는 OE 해제. `RAM_ADDR[18:0]`, `RAM_DATA[7:0]` 양방향. | `snes_sram_slots.sv`, `sram_granted_writer.sv`: 다음 SRAM read strobe까지 **최소 270ns** 가정, writer 8 bus clocks 예약; WE 4 bus clocks low, 후속 data hold/tri-state. 시뮬레이션 모델 tAA45/tHZ20/tWP≥35ns 등. | 실제 SNES CPU/DMA/HDMA PHI2·주소·read strobe 상대 파형, 트랜시버 DIR/OE turn-around, contention, SRAM 부품/보드 지연 unknown. slot 위반 검출은 이미 시작한 write를 되돌리지 못함. 실기 진단 전 차단 gate. |
+| SNES CPU/DMA → `snes_frontend` → 외부 8비트 SRAM | SNES 주소[23:0], `/RD,/WR,/ROMSEL`, PHI2는 비동기. 동기화된 slot이 비-SRAM 새 사이클에서만 writer grant. raw `/RD`는 OE 해제. `RAM_ADDR[18:0]`, `RAM_DATA[7:0]` 양방향. | `snes_sram_slots.sv`, 연결된 `sram_burst_writer.sv`: 다음 SRAM read strobe까지 **최소 270ns** 가정, byte/word writer 각각 8/14 bus clocks 예약; WE는 각 펄스에서 4 bus clocks low, 후속 data hold/tri-state. 시뮬레이션 모델 tAA45/tHZ20/tWP≥35ns 등. | 실제 SNES CPU/DMA/HDMA PHI2·주소·read strobe 상대 파형, 트랜시버 DIR/OE turn-around, contention, SRAM 부품/보드 지연 unknown. slot 위반 검출은 이미 시작한 write를 되돌리지 못함. 실기 진단 전 차단 gate. |
 | MCU SPI/loader → ROM PSRAM 및 renderer SRAM | SCK↔core toggle+held byte; MCU command/주소[23:0]/data[7:0], `MCU_RDY` completion poll. renderer access는 `mcu_address[23:19]==10001`일 때 별도 loader가 core↔bus handshake. | C `fxpak_gbc_top.sv`, `gbc_spi.sv`, `gbc_sram_loader.sv`; `sgb_features[15]` 후 run. 아래 정적 call path 감사에서 GBC 구성 뒤 단일 바이트 pacing과 과거 G12-save ELF 포함을 확인했다. | 현재 G13 실기 펌웨어 바이너리/플래시 상태, 실제 byte 간격·MISO/MCU_RDY 파형, SS 중단·빠른 back-to-back, loader와 live SRAM ownership 전환은 미확인. 새 block callsite가 생기면 pacing 재검토 필요. |
 | GBC ROM/cache/SaveRAM ↔ PSRAM | 16비트 `ROM_DATA`, byte lane `ROM_BHE/BLE`, 주소[21:0], OE/WE. Save 주소 17비트 생성, K141 8KiB 회귀 성공. | C `rom_bus_bridge_save.sv`,`psram_rw3_save.sv`, `full_core_link.sv`; G12S2 세 방향 save 교차 로드는 사용자 실기 성공. | 외부 PSRAM 실제 데이터/주소 setup/hold, OE/WE 및 양방향 turn-around, MCU 동시 접근·저장 중 reset 보호는 별도 gate. Save 재구현 대상 아님. |
 | joypad → GBC | SNES register의 8비트 상태+toggle가 bus→core 2단 전달, bundled data hold. | C `joypad_cdc.sv`, `board_output_cdc.sdc`; 이전 G12 실기 조작 성공. | 빠른 연속 갱신/메뉴 복귀/reset edge 및 실제 입력 지연 범위 unknown. |
@@ -47,9 +47,17 @@
 
 ## SNES SRAM 조건부 슬롯 재검증
 
-동결 G13 후보와 SHA-256이 일치하는 `snes_sram_slots.sv` (`82a2a59c…de04cb8372e`)·`sram_granted_writer.sv` (`17cdd8f7…ee24ee`)·`snes_cart_map.sv`를 함께 Icarus로 실행했다. 이는 앞선 `sram_burst_writer` 중심 슬롯 시험과 **다른, 현재 후보의 byte writer 경로**다. 합성 PHI2/ROMSEL/읽기 신호에서 비-SRAM cycle 다음 SRAM read까지 270ns를 주고 시작 위상 12개를 검사했다. 12바이트 쓰기 및 program/frame read 24회가 시험의 125ns 샘플 지점에서 정확했고, 모델의 tAA=45ns·WE pulse≥35ns·주소/데이터 setup 검사도 통과했다. 일부러 80ns에 읽기를 시작한 반례에서는 `protocol_error`와 `slot_violation`이 모두 올라왔다. 반례의 쓰기 자체는 이미 수행될 수 있으므로 이 오류 플래그를 물리 보호 수단으로 취급하지 않는다. 비공개 재현 ID는 `snes-slot-actual-writer-v1`이고, RTL·testbench 해시와 로그는 격리 사본의 `verification.json`에 있다. 생산 RTL 수정이나 새 fit은 없었다.
+연결 경로를 재확인한 결과 동결 후보의 `snes_frontend.sv`는 `sram_burst_writer.sv` (`fba9cee7…44c03826`)를 사용한다. 앞선 `snes-slot-actual-writer-v1`의 `sram_granted_writer.sv` 시험은 **후보에 존재하지만 해당 frontend에 연결되지 않은 byte writer**의 참고 결과로 정정한다.
+
+실제로 연결된 `snes_sram_slots.sv`·`snes_cart_map.sv`·`sram_burst_writer.sv`를 동일 후보 해시로 고정해 Icarus에서 다시 실행했다. 합성 PHI2/ROMSEL/읽기 신호에서 비-SRAM cycle 다음 SRAM read까지 270ns를 주고 시작 위상 12개를 검사했다. 바이트 쓰기 6회와 워드 쓰기 6회, program/frame read 24회가 예상 데이터와 일치했고 모델의 tAA=45ns·WE pulse≥35ns·주소/데이터 setup 검사를 통과했다. 80ns 조기 읽기 반례에서는 `protocol_error`와 `slot_violation`이 올라왔지만 이미 진행된 쓰기를 되돌리지는 못한다. 비공개 재현 ID는 `snes-slot-burst-writer-v1`; testbench·연결된 frontend·RTL 해시와 로그는 격리 사본의 `verification.json`에 있다. 생산 RTL 수정이나 새 fit은 없었다.
 
 실제 270ns 하한은 **아직 측정하지 않았다**. 다음 보드 관측에서는 CPU fetch, DMA, HDMA, refresh/idle 전환을 포함해 비-SRAM PHI2 상승→다음 SRAM read strobe의 최소 간격을 구분한다. 같은 캡처에서 주소/ROMSEL, `/RD`, SRAM `/OE`·`/WE`, transceiver DIR/OE의 전환 순서와 겹침을 확인하고, 신호별 지연·프로브 분해능을 기록한다. 짧은 간격 한 번이라도 발견되면 현재 슬롯 grant 계약은 실패다. H/V 시간이나 합성 DMA 설정 간격을 이 파형의 대체 자료로 쓰지 않는다.
+
+현재는 로직 애널라이저가 없어 위 보드 파형을 얻을 수 없다. 따라서 270ns·핀 방향 전환·실제 SRAM 사양은 미확인 gate로 유지한다. 그동안에는 동결 RTL의 합성 버스 모델, 리셋 오류 주입, 정적 계약/제약 검사를 진행하고 결과의 적용 범위를 각각 명시한다.
+
+### SRAM 쓰기 중 리셋 오류 주입
+
+실제로 연결된 동결 `sram_burst_writer.sv` (`fba9cee7…44c03826`)에 `/WE` low 시작 후 1/10/25/40ns에 리셋을 넣었다. 바이트 쓰기 펄스와 워드 쓰기의 **두 번째** 펄스 모두 비동기 리셋 경로가 `/WE`와 `/OE`를 즉시 high로 올렸고, 관측된 `/WE` low 폭은 각각 1/10/25/40ns였다. 워드 쓰기의 첫 번째 펄스는 47.616ns였다. 1/10/25ns 자극 6개는 기존 디지털 SRAM 모델의 최소 35ns 쓰기 펄스 조건을 충족하지 못한다. Icarus 오류·경고 없이 8개 자극과 리셋 후 내부 상태 정리 검사를 완료했다. 비공개 재현 ID는 `sram-burst-reset-pulse-v1`이며, testbench/연결된 frontend/RTL 해시와 로그는 격리 사본에 있다. `clock_reset_guard`는 PLL lock 상실 때 이 경로의 리셋을 비동기 assert한다. **이는 현재 연결 경로의 모델에서 발견한 리셋 안전성 실패**다. 실제 SRAM의 최소 펄스 폭이나 콘솔에서의 리셋 파형을 측정했다는 뜻은 아니다. 다음 소프트웨어 작업에서는 쓰기 완료와 비동기 리셋 우선순위를 조정한 후보를 별도로 만들고, 리셋 위상·클록 정지·재시작을 함께 검증해야 한다.
 
 ## 리셋 검증 표
 
@@ -60,7 +68,7 @@
 | cold boot, PLL lock 지연/상실 | lock 전 WE/OE 안전, core/bus 개별 release 후 단일 첫 epoch | 미검증 |
 | console warm reset, menu return, 같은 ROM 재실행 | MCU/renderer/run bit와 양 도메인 valid 재동기화, 이전 frame/data를 새 epoch로 오인하지 않음 | 실기 차이 관측, 원인 미확정 |
 | 다른 ROM 후 K141 복귀 | ROM/cache/save mapping 재설정, 보존할 저장만 유지 | 미검증 |
-| capture·PSRAM 응답·FIFO drain·SRAM write·DMA/publish 중 reset | 미완료 frame 비공개, ack/toggle 재기준화, pin contention 없음 | 제한 단위 시험만 있음 |
+| capture·PSRAM 응답·FIFO drain·SRAM write·DMA/publish 중 reset | 미완료 frame 비공개, ack/toggle 재기준화, pin contention 없음 | SRAM write 중 리셋에서 기존 ≥35ns 모델보다 짧은 `/WE` 펄스 재현; 나머지는 제한 단위 시험만 있음 |
 | save 중 reset | 이미 완료된 SaveRAM 유지, 부분 write와 MCU flush/파일 저장 경계 판별 | 미검증; 기존 save 성공 자체는 유지 |
 | LCD off/on, 첫 publish | capture invalidation 뒤 다음 완성 frame만 공개 | 제한 모델 시험만 있음 |
 

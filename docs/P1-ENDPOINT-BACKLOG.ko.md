@@ -2,11 +2,11 @@
 
 ## 대상과 재현 범위
 
-`g13-prefill-endpoint-seed7-hold1-v1`과 같은 출력 후보의 비공개 Questa 실행 `g13-endpoint-p1-prefill-long30-phase0-v2-dense`와 계측을 추가한 `g13-endpoint-p1-lifecycle50-phase0-v1-dense`를 집계했다. 두 실행의 26개 관련 RTL 소스 해시가 서로, 또 기존 full-fit manifest의 해당 항목과 일치한다. testbench와 runner에는 관측·종료 조건을 추가했으므로 해시가 다르다. 동일 물리 타이밍 통과를 근거로 사용할 수 있는 범위는 이 RTL 해시가 확인된 후보뿐이다. 원본 로그·시험 영상·게임 자산·라이선스는 공개 저장소에 없다.
+`g13-prefill-endpoint-seed7-hold1-v1`과 같은 출력 후보의 비공개 Questa 실행 `g13-endpoint-p1-prefill-long30-phase0-v2-dense`, 계측을 추가한 `g13-endpoint-p1-lifecycle50-phase0-v1-dense`, 실행 길이를 확장한 `g13-endpoint-p1-lifecycle100-phase0-v1-dense`와 `g13-endpoint-p1-lifecycle200-phase0-v2-dense`를 집계했다. 네 실행의 26개 관련 RTL 소스 해시가 서로, 또 기존 full-fit manifest의 해당 항목과 일치한다. testbench와 runner에는 관측·종료 조건을 추가했으므로 해시가 다르다. 동일 물리 타이밍 통과를 근거로 사용할 수 있는 범위는 이 RTL 해시가 확인된 후보뿐이다. 원본 로그·시험 영상·게임 자산·라이선스는 공개 저장소에 없다.
 
-조건은 dense 55ns, host phase 0, 첫 요청 225행, 30/50 source frames, synthetic ROM/save/audio 경합, 실제 출력 FIFO/CDC/page owner/frontend/SRAM 핀 모델이다. testbench의 `#14.900662`/`#5.952381` 반주기는 1ps 시뮬레이터 정밀도로 반올림되므로 **실효 source/host 주기는 29.802ns/11.904ns**다. source 간격은 561792 source clocks다. host는 요청/상태/invalid 재시도/설치를 모델링하지만 실제 65816 주소·read strobe/PHI2/HDMA 파형은 아니다. 실제 게임 CPU와 보드도 연결하지 않았다.
+조건은 dense 55ns, host phase 0, 첫 요청 225행, 30/50/100/200 source frames, synthetic ROM/save/audio 경합, 실제 출력 FIFO/CDC/page owner/frontend/SRAM 핀 모델이다. testbench의 `#14.900662`/`#5.952381` 반주기는 1ps 시뮬레이터 정밀도로 반올림되므로 **실효 source/host 주기는 29.802ns/11.904ns**다. source 간격은 561792 source clocks다. host는 요청/상태/invalid 재시도/설치를 모델링하지만 실제 65816 주소·read strobe/PHI2/HDMA 파형은 아니다. 실제 게임 CPU와 보드도 연결하지 않았다.
 
-시뮬레이터 사용권은 로컬 임시 FLOAT 서버를 통해 대여했다. 30/50프레임 실행은 각각 종료까지 오류·경고 0건이었고, 임시 서버는 실행 뒤 종료했다. 라이선스 파일과 서버 설정 사본은 Git에 포함하지 않는다.
+시뮬레이터 사용권은 로컬 임시 FLOAT 서버를 통해 대여했다. 30/50/200프레임 실행은 각각 종료까지 오류·경고 0건이었다. 100프레임 실행은 vlog 오류 0/경고 1건(테스트벤치 타임아웃 정수 리터럴 폭), vsim 오류·경고 0건으로 정상 종료했다. 이 리터럴은 200프레임 runner에서 64비트로 수정했으며 RTL은 바뀌지 않았다. 200프레임 준비 중 한 번은 수정 리터럴의 문법 오류로 컴파일 전에 중단했고, 수정한 별도 실행 ID `v2`가 통과했다. 임시 서버는 각 실행 뒤 종료했다. 라이선스 파일과 서버 설정 사본은 Git에 포함하지 않는다.
 
 ## 관측
 
@@ -36,6 +36,36 @@
 
 이 시각은 **합성 testbench에서 source 첫 화소를 생성한 때**를 시작점으로 한다. 실제 GBC CPU가 프레임을 만든 시점이나 보드 출력 age가 아니다. 50프레임 동안 상대 시작 지연은 최고점에서 감소했지만 마지막에도 남아 있다. 이 길이의 실행은 점근적 backlog 안정성이나 실기 처리량을 증명하지 않는다.
 
+실행 길이 자체가 마지막 처리 시간에 영향을 준다. 동일 자극의 30프레임 실행과 50프레임 실행은 frame 0..27 처리 클록이 같지만 frame 28은 551619/557952클록, frame 29는 558318/558069클록으로 달랐다. 50프레임 실행과 100프레임 실행의 frame 0..47도 같고, frame 48·49만 달라졌다. 100프레임과 더 긴 실행은 frame 0..97이 같고 frame 98·99만 달랐다. source 입력이 끝난 뒤에는 후속 캡처 경합이 사라지므로 마지막 두 프레임의 수치를 정상 반복 상태의 대표값으로 쓰지 않는다. 짧은 실행들의 마지막 지연값 비교도 이 종료 효과를 포함한다.
+
+## 100프레임 연속 시험
+
+50프레임과 동일한 동결 RTL·host phase 0·합성 source/host에서 입력 생성과 종료 감시만 확장했다. RGB 입력은 서로 다른 100개 화면이 아니라 **10프레임 시험 패턴의 반복**이다. source와 host 필드의 차이는 약 0.10429248ms/프레임이어서 상대 위상 한 순환은 약 159.5프레임이다. 따라서 이 실행은 순환의 약 63%만 덮는다.
+
+| 항목 | 100프레임 관측 |
+| --- | --- |
+| 데이터·순서 | 2,304,000 RGB555 화소, 출력 SRAM 유효 2,176,400바이트 exact; 100 commit/100 publish, host 101설치, epoch 0..99 순서 유지, epoch 1 재표시 1회 |
+| 처리 기한 | frame 2 = 854748클록, frame 3 = 702729클록의 초과 2회만 기록. frame 4..99의 중앙값 558279.5클록 |
+| 상대 처리 시작 지연 | frame 4 최대 433849클록; frame 99는 97112클록. 50프레임 끝 270315클록보다 감소했으나 0은 아님 |
+| source 첫 화소→첫 visible | 100개 epoch의 첫 표시가 모두 존재하며 54.763..71.296ms; 마지막 epoch 61.180ms |
+| source 첫 화소→pipeline/commit/publish | 마지막 epoch 각각 18.479/35.058/44.669ms |
+
+처리량 실패 2회는 유지되며, 100프레임 동안 출력 데이터 누락·순서 역전은 발견되지 않았다. 상대 지연 감소는 현재 합성 조건의 관측이며 점근 안정성, 다른 host 위상, 실제 보드의 프레임 age를 보증하지 않는다. 비공개 로그/RTL·testbench 해시는 `g13-endpoint-p1-lifecycle100-phase0-v1-dense/verification.json`에 있다.
+
+## 200프레임 상대 위상 순환 시험
+
+같은 26개 RTL 해시와 dense 55ns/host phase 0 조건에서 200 source frames를 이어 실행했다. 약 159.5프레임의 source/host 상대 위상 순환을 한 번 이상 포함하며, RGB 입력은 여전히 10프레임 패턴의 반복이다. 마지막 epoch 199가 합성 host에 처음 표시될 때까지 기다렸다.
+
+| 항목 | 200프레임 관측 |
+| --- | --- |
+| 데이터·순서 | 4,608,000 RGB555 화소, 출력 SRAM 유효 4,352,800바이트 exact; 200 commit/200 publish, host 202설치. epoch 0..199 순서 유지, epoch 1과 156에서 완성 화면을 각각 한 번 재표시 |
+| 처리 기한 | **5회 초과**: frame 2/3 = 854748/702729클록, 위상 순환 근처 frame 156/157/158 = 771549/777239/586472클록. 나머지 195개는 개별 561792클록 한계 이내 |
+| 원인 구간 | frame 156 픽셀 FIFO 대기 270872클록 중 합성 DMA 겹침 245014클록; frame 157 palette FIFO 대기 171664 중 DMA 겹침 170055클록. 조기 초과와 같은 종류의 합성 host 서비스 경합 |
+| 상대 처리 시작 지연 | frame 135에서 0까지 해소됐다가 frame 159에서 새 최대 449811클록으로 재누적. 마지막 frame 199는 303575클록 |
+| source 첫 화소→첫 visible | 200개 epoch 모두 첫 표시와 순서가 확인됨. **54.763..71.769ms**, 최대 epoch 157, 마지막 epoch 67.389ms |
+
+100프레임까지만 보면 backlog가 계속 줄어드는 듯했지만, 상대 위상 순환 근처에서 기한 실패와 지연 재누적이 발생했다. 따라서 100프레임 결과는 장기 안정성의 근거가 아니다. 200프레임에서는 source epoch 누락·재정렬 또는 불완전 SRAM 바이트를 발견하지 못했으나, 기한 실패 5회와 완성 화면 재표시 2회는 별도 문제다. 이 지연은 합성 source 첫 화소→합성 host 첫 표시이며 실제 게임/보드 지연이 아니다. 비공개 원본·해시는 `g13-endpoint-p1-lifecycle200-phase0-v2-dense/verification.json`과 `analysis.json`에 있다.
+
 ## 반복 가능한 분석
 
 로컬 로그에 `tools/analyze_endpoint_backlog.py`를 실행한다. 명령의 클록 수치는 반드시 해당 testbench에서 다시 확인한다. 도구는 raw log 경로를 출력하지 않고 집계 JSON만 출력하며, 프레임 누락, commit/publish 수 불일치, 기한 초과 집계 오류, host epoch 건너뛰기를 거부한다.
@@ -46,7 +76,7 @@ python tools/analyze_endpoint_backlog.py /path/to/private/vsim.log \
 python -m unittest discover -s tools -p test_analyze_endpoint_backlog.py
 ```
 
-비공개 원본에서 분석 도구 9개 계약 검사와 30/50프레임 로그 집계가 통과했다. 로그가 없으면 공개 저장소 단독으로 숫자를 재계산할 수 없다.
+비공개 원본에서 분석 도구 9개 계약 검사와 30/50/100/200프레임 로그 집계가 통과했다. 로그가 없으면 공개 저장소 단독으로 숫자를 재계산할 수 없다.
 
 ## 두 번째 설치 DMA 경계의 별도 진단
 
@@ -64,5 +94,5 @@ python -m unittest discover -s tools -p test_analyze_endpoint_backlog.py
 ## 다음 gate
 
 1. 반복 설치의 native H/V 경계는 별도로 관측했다. 이제 실제 SNES 주소/PHI2/read strobe와 WRAM HDMA 개입을 확인한다. 계측된 설정 간격 전체를 쓰기 슬롯으로 취급하지 않는다.
-2. 50프레임 합성 수명주기 이후 실제 GBC capture 시점과 SNES 설치 버스 서비스를 계측해 실제 frame age와 대기량을 계산한다. 더 긴 생산/소비 추적으로 안정성도 확인한다.
+2. 200프레임의 한 위상 순환 이상에서 기한 실패 재발을 확인했다. 다른 host 위상·더 긴 반복 구간에서 같은 실패 범위와 backlog 회복/재누적을 비교하고, 수정 후보는 동일 자극으로 회귀한다. 실제 GBC capture 시점과 SNES 설치 버스 서비스는 장비가 없어 아직 계측할 수 없으므로 실제 frame age로 환산하지 않는다.
 3. 보드 SPI/SNES slot/SRAM/PSRAM/DAC 계약과 STA 미제약 경로를 닫은 후에만 새 실기 후보를 판단한다. 현재 결과는 처리량 gate·제품 gate 통과가 아니다.
