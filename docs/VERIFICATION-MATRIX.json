@@ -151,7 +151,23 @@
       "model_scope": "frozen G13 frontend-connected burst writer in Icarus; existing synthetic >=35ns WE-low criterion; no real board reset waveform",
       "result": "fail_model",
       "evidence": ["probes/full-core-link/results/sram-burst-reset-pulse-v1/verification.json", "INTERFACE-CLOCK-RESET.ko.md"],
-      "next_gate": "design a reset-safe write completion protocol and repeat phase/clock-stop injections; keep board electrical signoff open"
+      "next_gate": "verify immediate pin release, discard incomplete page, and complete page rewrite after restart; short WE pulse and board electrical signoff remain open"
+    },
+    {
+      "id": "sram_clock_stop_reset_restart",
+      "stimulus": "stop bus clock and assert reset 10ns after byte WE or second word WE falls; release reset before clock resumes; issue fresh write",
+      "model_scope": "frozen connected burst writer in Icarus only; no page ownership, SRAM chip, analog PLL or console reset sequence",
+      "result": "pass_limited_short_pulse_remains",
+      "evidence": ["probes/full-core-link/results/sram-burst-clock-stop-reset-v1/verification.json", "INTERFACE-CLOCK-RESET.ko.md"],
+      "next_gate": "integrate writer with output FIFO, page validity and SNES frontend across clock-stop/reset; do not claim minimum WE width"
+    },
+    {
+      "id": "sram_page_reset_integration",
+      "stimulus": "assert shared reset 10ns into an active WE pulse; retain modeled SRAM bytes; send and upload one fresh full synthetic frame",
+      "model_scope": "frozen G13 output FIFO/pages and connected burst writer; digital >=35ns SRAM write criterion, one reset phase; no real CPU, console or board",
+      "result": "pass_limited_short_pulse_remains",
+      "evidence": ["probes/full-core-link/results/sram-page-reset-integration-v1/verification.json", "INTERFACE-CLOCK-RESET.ko.md"],
+      "next_gate": "sweep reset phases and both clocks stopping; validate physical SRAM and actual console reset before hardware signoff"
     },
     {
       "id": "save_crossload",
