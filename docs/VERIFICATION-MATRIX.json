@@ -163,11 +163,11 @@
     },
     {
       "id": "sram_page_reset_integration",
-      "stimulus": "assert shared reset 10ns into an active WE pulse; retain modeled SRAM bytes; send and upload one fresh full synthetic frame",
-      "model_scope": "frozen G13 output FIFO/pages and connected burst writer; digital >=35ns SRAM write criterion, one reset phase; no real CPU, console or board",
+      "stimulus": "assert shared reset 1/10/25/40ns into first or second word WE pulse; retain modeled SRAM bytes; send and upload one fresh full synthetic frame per case",
+      "model_scope": "frozen G13 output FIFO/pages and connected burst writer; digital >=35ns SRAM write criterion, eight cases; no real CPU, console or board",
       "result": "pass_limited_short_pulse_remains",
       "evidence": ["probes/full-core-link/results/sram-page-reset-integration-v1/verification.json", "INTERFACE-CLOCK-RESET.ko.md"],
-      "next_gate": "sweep reset phases and both clocks stopping; validate physical SRAM and actual console reset before hardware signoff"
+      "next_gate": "extend the connected test to both clocks stopping and actual console sequence; validate physical SRAM before hardware signoff"
     },
     {
       "id": "save_crossload",
