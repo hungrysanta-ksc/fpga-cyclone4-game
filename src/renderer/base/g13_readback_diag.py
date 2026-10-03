@@ -1,0 +1,51 @@
+"""Manual-X-only readback after IRQ/HDMA disable and forced blank.
+No upload request is issued. Compare installed metadata and VRAM before the
+diagnostic screen overwrites either. Counts/first mismatch occupy 1850..185e.
+"""
+def emit_readback(a):
+ a.label('r1_readback')
+ for adr in range(0x1850,0x185f):a.stz(adr)
+ a.read(0x24);a.emit(0xc9,3);a.branch(0xf0,'r1_manual');a.emit(0x60)
+ a.label('r1_manual');a.read(0x3f);a.branch(0xd0,'r1_started');a.emit(0x60)
+ a.label('r1_started');a.read(0x2a);a.emit(0x29,0x0b,0xc9,0x0a);a.branch(0xf0,'r1_available');a.emit(0x60)
+ a.label('r1_available')
+ a.read(0x12);a.emit(0x49,1,0x0a,0x0a,0x0a,0x0a,0x0a);a.sta(0x86)
+ a.write(0x82,0x40);a.write(0x85,0x7e)
+ # Palette plus the seven length words actually used during installation.
+ regions=[(0xc400,0x4000,128),(0xc480,0x1820,14)]+[(0xc600+ch*0x300,0x4100+ch*0x300,None) for ch in range(7)]
+ for source,dest,count in regions:
+  a.write(0x80,source&255);a.write(0x81,source>>8);a.write(0x83,dest&255)
+  a.lda8(dest>>8)
+  if dest!=0x1820:a.emit(0x05,0x86) # ORA direct buffer high offset
+  a.sta(0x84)
+  if count is not None:a.ldx16(count)
+  else:
+   directory=0x40c480+2*((source-0xc600)//0x300);tag=f'r1_len_{source:x}'
+   a.emit(0xc2,0x20,0xaf,directory,directory>>8,directory>>16,0xc9,6,0);a.branch(0x90,tag+'_bad')
+   a.emit(0xc9,0xd7,2);a.branch(0x90,tag+'_ok')
+   a.label(tag+'_bad');a.emit(0xe2,0x20);a.write(0x185e,0xe1);a.emit(0x60)
+   a.label(tag+'_ok');a.emit(0xaa,0xe2,0x20)
+  a.jsr('r1_meta_bytes')
+ # Read the same 24 strided 360-word passes that install_frame wrote.
+ a.write(0x80,0);a.write(0x81,0x80);a.emit(0xa0,0,0);a.write(0x2115,0x81)
+ a.stz(0x185f);a.label('r1_vram_pass')
+ a.read(0x185f);a.sta(0x2116);a.stz(0x2117)
+ a.read(0x213a) # prime read buffer and advance from first to next word
+ a.ldx16(360);a.jsr('r1_vram_words')
+ a.emit(0xee,0x5f,0x18);a.read(0x185f);a.emit(0xc9,24);a.branch(0xd0,'r1_vram_pass')
+ a.write(0x185e,0xa1);a.emit(0x60)
+
+ a.label('r1_meta_bytes');a.emit(0xa0,0,0)
+ a.label('r1_meta_loop');a.emit(0xb7,0x80);a.sta(0x87);a.emit(0xb7,0x83,0xc5,0x87);a.branch(0xf0,'r1_meta_next')
+ a.emit(0xc2,0x20);a.read(0x1850);a.branch(0xd0,'r1_meta_seen')
+ a.emit(0x98,0x18,0x65,0x80);a.sta(0x1852);a.emit(0xe2,0x20)
+ a.read(0x87);a.sta(0x1855);a.emit(0xb7,0x83);a.sta(0x1854);a.emit(0xc2,0x20)
+ a.label('r1_meta_seen');a.emit(0xee,0x50,0x18,0xe2,0x20)
+ a.label('r1_meta_next');a.emit(0xc8,0xca);a.branch(0xd0,'r1_meta_loop');a.emit(0x60)
+
+ a.label('r1_vram_words');a.emit(0xc2,0x20)
+ a.label('r1_vram_loop');a.emit(0xb7,0x80);a.sta(0x1860);a.read(0x2139);a.sta(0x1862);a.emit(0xcd,0x60,0x18);a.branch(0xf0,'r1_vram_next')
+ a.read(0x1856);a.branch(0xd0,'r1_vram_seen')
+ a.emit(0x98,0x18,0x69,0,0x80);a.sta(0x1858);a.read(0x1862);a.sta(0x185a);a.read(0x1860);a.sta(0x185c)
+ a.label('r1_vram_seen');a.emit(0xee,0x56,0x18)
+ a.label('r1_vram_next');a.emit(0xc8,0xc8,0xca);a.branch(0xd0,'r1_vram_loop');a.emit(0xe2,0x20,0x60)

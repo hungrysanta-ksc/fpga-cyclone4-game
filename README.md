@@ -1,42 +1,33 @@
-# Cyclone IV 코어 이식 연구 / FXPAK Pro GBC
+# FXPAK Pro Game Boy Color — C44
 
-이 공개 저장소는 두 가지를 위해 운영합니다.
+Game Boy / Game Boy Color FPGA core for **FXPAK Pro / Mk.III (STM32 + Cyclone IV)**. C44 passed the user's final hardware checks on 2026-10-04. This branch prepares the source and an update package; a final GitHub Release has not been published.
 
-1. **진행 중인 FXPAK Pro GBC 프로젝트의 근거와 작업을 보관·지원**합니다. 기존 하드웨어를 개조하지 않고 원본 `.gbc`를 실행하는 FPGA 코어·MCU 펌웨어·SNES 표시 경로를 다룹니다. 게임 ROM을 SNES ROM으로 변환하지 않습니다.
-2. **다른 게임기 코어를 Cyclone IV로 이식할 때 참고할 방법과 계약**을 남깁니다. 보드 핀·클록·메모리·CDC·검증 범위를 새 대상에 다시 대조하도록 합니다. GBC 전용 수치가 다른 코어에도 성립한다고 가정하지 않습니다.
+**[사용 가이드 / Korean user guide](docs/USER-GUIDE.ko.md)** · [Compatibility](docs/COMPATIBILITY.ko.md) · [Build](docs/BUILD-C44.ko.md) · [Release notes](docs/RELEASE-C44.ko.md) · [Source and notices](docs/DEPENDENCY-REGISTER.ko.md)
 
-## 시작점
+## 사용 개요
 
-- [실행 계획과 완료 기준](docs/EXECUTION-PLAN.ko.md)
-- [FPGA 방법론 검토와 발견 사항](docs/FPGA-METHODOLOGY-REVIEW.ko.md)
-- [현재 진행·미결 gate](docs/PROJECT-STATUS.ko.md)
-- [P0 인터페이스·클록·리셋 감사](docs/INTERFACE-CLOCK-RESET.ko.md), [타이밍 예외 판정](docs/TIMING-EXCEPTIONS.ko.md), [검증 행렬](docs/VERIFICATION-MATRIX.json)
-- [P1 초기 예산](docs/SYSTEM-BUDGET.ko.md)
-- [다른 코어 이식 참고 절차](docs/PORTING-PLAYBOOK.ko.md)
-- [저장소 관리 규칙](docs/REPOSITORY-POLICY.ko.md), [기여·등록 절차](CONTRIBUTING.md), [의존성 등록부](docs/DEPENDENCY-REGISTER.ko.md)
-- [보고서 감사 도구](tools/audit_fpga_signoff.py)
+- 게임 파일의 복사본 확장자를 `.egbc`로 변경하면 새 코어로 실행합니다.
+- `.gb/.gbc`는 기존 SGB 경로를 유지합니다. 기존 코어·BIOS 설치가 필요합니다.
+- L+R+Start 메뉴: 복귀, WRITE SRAM, AUTO WRITE SRAM, 소리, 4슬롯 강제 저장·복원, 게임 리셋.
+- R을 누르는 동안 약 3배 빨리감기. 배속은 게임·화면 갱신 시간에 따라 달라집니다.
+- MBC1/MBC1M/MBC3+RTC/MBC5를 구현했습니다. SGB 테두리·치트·통신·특수 주변장치는 지원 범위 밖입니다.
+- C44는 SD 진단 로그 3종을 만들지 않습니다. 게임 저장·강제 저장·설정 파일은 정상 기록합니다.
 
-2026-09-23 현재, 기본 게임 실행·음향·조작 및 K141 기준 저장/로드 교차 검증은 이전 G12 후보에서 실기 확인했습니다. 간헐적 점멸/리셋 후 재실행 문제, G13 영상 확장의 고부하 처리량, 보드 전체 타이밍 검증은 미완료입니다. G13은 실험 단계이며 배포 가능한 완제품이 아닙니다.
+## 배포 구성
 
-먼저 인터페이스·클록·리셋·제약 감사를 수행하고, 자원/처리량 예산 → 근거 있는 수정 → 통합 검증 → 실기 → 미니게임/전투 평가 순서로 진행합니다. 원본 화소·색·CPU 속도·프레임 순서를 희생하는 전환은 승인되지 않았습니다.
+정상 동작하는 **공식 sd2snes 1.11.2 계열 설치** 위에 적용하는 업데이트입니다. SD에 복사할 파일은 `firmware.stm`, `fpga_egbc.bi3`, `gbc_snes.bin`, `gbc-utc-offset.txt`입니다. 기존 시차 설정이 있으면 자신의 설정을 유지합니다.
 
-## 이 공개 저장소의 범위
+SGB 코어·BIOS, 상용 게임 ROM, 세이브, 외부 도구는 포함하지 않습니다. 구형 SD2SNES/Mk.II용 바이너리가 아닙니다. ludufre 2.16.4 배포판은 파일 구성만 참고했으며, 해당 포크의 기능 병합이나 혼합 설치를 검증하지 않았습니다.
 
-현재는 계획·감사·예산·관리 문서와 자체 작성 감사 도구를 등록합니다. RTL/펌웨어는 출처·라이선스·필수 의존성을 확인한 뒤 단계적으로 등록합니다. **현재 저장소만으로 제품을 빌드할 수 없습니다.** 문서에 언급한 과거 로컬 보고서/실험 파일은 대부분 포함되지 않았으며, 경로와 해시는 근거 식별용입니다.
+## 소스
 
-도구 자체 검사는 외부 FPGA 도구나 ROM 없이 실행할 수 있습니다.
+| 경로 | 내용 |
+| --- | --- |
+| src/fpga | C43에서 실기 검증한 HDL·제약·공개 부트 초기값. C44에서도 동일 |
+| src/firmware-overlay | 고정 sd2snes 커밋에 적용하는 C44 MCU 변경·추가 파일 30개 |
+| src/renderer | 자체 SNES 화면·메뉴·SPC 코드 생성기 |
+| tools / tests | 소스 복원·재현 빌드·RTC와 로그 정책 검사·패키징 |
+| source-manifest.json | 파일별 해시와 고정 upstream 출처 |
+| release | 바이너리 해시·재현 및 기능 검증 기록 |
 
-```sh
-python tools/audit_fpga_signoff.py --self-test
-python tools/audit_fpga_signoff.py /path/to/quartus-report-directory
-```
-
-두 번째 명령에는 `pin.sta.summary`, `pin.sta.rpt`, `pin.fit.summary`, `pin.fit.rpt`가 필요합니다. 이 도구는 적용된 제약의 슬랙과 미제약/자원 항목을 분리해 보고하며 보드 signoff나 출하를 승인하지 않습니다. 출력에는 로컬 경로가 포함되므로 공개 전 검토해야 합니다.
-
-상용 ROM·사용자 세이브·실기 덤프·라이선스 키·설치 도구·미검증 bitstream/ZIP은 등록하지 않습니다. 원본 시험 자료는 독립 로컬 사본에만 유지합니다.
-
-P1 계산 도구 `tools/p1_budget_calc.py`는 로컬 동결 보고서가 있어야 실행됩니다. 저장소 단독 실행용 CI 대상으로 취급하지 않습니다. 코드·문서 전체에 적용할 공개 재사용 라이선스는 의존성 출처 검토와 소유자 결정 후 명시합니다. 라이선스가 정해지기 전에는 단순 공개를 재배포 허락으로 해석하지 않습니다.
-
-```sh
-python tools/p1_budget_calc.py --snapshot /path/to/private/local-snapshot
-```
+원래 저작권·라이선스를 유지하며, 저장소 전체를 새 단일 라이선스로 덮지 않습니다. 기존 실험·방법론 문서는 당시 이력입니다. 현재 동작과 설치는 C44 문서를 우선합니다.
