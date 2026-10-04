@@ -1,6 +1,7 @@
 # FPGA Core Development — sd2snesHST
 
-**sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다. 제품 이름의 **HST는 HungrySanTa**를 뜻합니다.
+**sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다.
+제품 이름의 **HST는 HungrySanTa = 제작팀 이름**을 뜻합니다.
 
 일반 사용자 안내는 [sd2snesHST](https://github.com/hungrysanta-ksc/sd2snesHST)에서 제공합니다. **sd2snesHST 0.9.0 = 검증된 GBC C44**의 릴리스 초안에 설치 ZIP·소스 ZIP·manifest·체크섬을 업로드했습니다. 정식 릴리스는 아직 공개하지 않았습니다.
 
