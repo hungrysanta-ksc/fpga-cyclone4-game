@@ -1,0 +1,68 @@
+{
+  "candidate": "G13C44",
+  "date": "2026-10-04",
+  "firmware": {
+    "passed": true,
+    "sha256": "16b0ed2decd79a289d95a98c075b18d5f086a6e138d7f1f7f1af067d50d95dd5",
+    "public_overlay_rebuilt": true,
+    "upstream_version_id_only_normalized": true
+  },
+  "log_policy_host_tests": {
+    "passed": true,
+    "scope": "Actual C with modeled filesystem/SPI; no hardware execution",
+    "tests": [
+      {
+        "test": "state-off",
+        "passed": true,
+        "output": "PASS disabled state report: save/load, success/failure, full or failed filesystem"
+      },
+      {
+        "test": "state-on",
+        "passed": true,
+        "output": "PASS C36 text report exact metadata, append-only names, five SD failures, short write and full directory; no FPGA memory dependency"
+      },
+      {
+        "test": "dump-off",
+        "passed": true,
+        "output": "PASS disabled dump: preserved observation, identity and one-shot; zero filesystem and bulk memory IO"
+      },
+      {
+        "test": "dump-on",
+        "passed": true,
+        "output": "PASS G12_DUMP cases=38 payload=598016 complete_file=599040 source_read_only=1"
+      },
+      {
+        "test": "load-off",
+        "passed": true,
+        "output": "PASS load report policy"
+      },
+      {
+        "test": "load-on",
+        "passed": true,
+        "output": "PASS load report policy"
+      }
+    ]
+  },
+  "unchanged_components": {
+    "source_candidate": "G13C43",
+    "fpga": {
+      "constrained_timing_pass": true,
+      "slack_checks": 48,
+      "minimum_slack": 0.056,
+      "rle_roundtrip": true,
+      "sha256": "0bdcb9f995496ea314a41a0b624f1b9c98bc702f2929ab578b5e300c1d4bf647",
+      "identical_to_tested_c43": true
+    },
+    "renderer": {
+      "passed": true,
+      "byte_identical": true,
+      "sha256": "7a36dc1fa4355d804ee72ca4aed18250c00c92bd3d8a469c16d8970def8e20ca"
+    },
+    "mini_rebuilt_from_pinned_upstream": true
+  },
+  "hardware_report": {
+    "passed": true,
+    "date": "2026-10-04",
+    "scope": "User reported requested C44 final checks normal"
+  }
+}

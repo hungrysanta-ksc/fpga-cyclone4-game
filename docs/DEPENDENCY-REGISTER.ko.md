@@ -1,12 +1,19 @@
-# 소스·라이선스·의존성 등록부
+# 소스·라이선스·의존성 등록부 — C44
 
-현재 저장소에는 원본 RTL·MCU/renderer 구현을 아직 등록하지 않았다. 아래 commit은 로컬 조사 기준이며 코드의 공개 허가 판정이 아니다.
+공개 소스는 C44 성공 후보에서 추출했습니다. 파일별 SHA256, 동일 이름의 upstream 후보 및 원본 해시는 `source-manifest.json`에 있습니다. 이름 매칭 후보는 출처 추적 자료이며 모든 파일에 동일 라이선스를 부여한다는 뜻이 아닙니다.
 
-| 구성 | 로컬 조사 기준 | 등록 상태 | 다음 검토 |
-| --- | --- | --- | --- |
-| Gameboy_MiSTer 기반 GBC core | 로컬 upstream HEAD `7a5ff50528cd9c1d13ffb675e7df8506bffaa078`, 수정된 파일 있음 | 미등록 | 공식 upstream URL/라이선스/각 수정 파일의 출처와 필수 HDL·boot image 의존성 확인 |
-| sd2snes/FXPAK MCU·FPGA·SNES 경로 | 로컬 upstream HEAD `cf7e21d7a5978fcd74981d71c3cfbf6e982a4dd1`, 수정된 파일 있음 | 미등록 | 각 하위 파일의 저작권·라이선스, 변경 diff, board definition·build 도구 의존성 확인 |
-| 공개 저장소 자체 문서·감사 도구 | `codex/methodology-baseline`의 초기 문서/도구와 후속 관리 문서 | 등록 대상 | 전체 공개 재사용 라이선스는 소유자 결정 대기 |
-| 상용 게임 ROM/SaveRAM/boot image·사용자 dump | 개인 로컬 시험 자료 | 영구 제외 | 빌드/시험 방법에는 파일 해시·형식만 기술, 내용·식별 정보 공개 금지 |
+| 구성 | 출처 및 고정 기준 | 조건·변경 범위 |
+| --- | --- | --- |
+| GBC core / T80 / video / sound | [Gameboy_MiSTer](https://github.com/MiSTer-devel/Gameboy_MiSTer/tree/7a5ff50528cd9c1d13ffb675e7df8506bffaa078) | gb.v는 GPL-3.0-or-later 표시, T80은 원본 허용 조건·고지 유지. 일부 파일은 개별 라이선스 헤더가 없어 upstream 전체를 임의로 MIT 등으로 표기하지 않음. |
+| MCU·SPI·보드 경로 | [sd2snes](https://github.com/mrehkopf/sd2snes/tree/cf7e21d7a5978fcd74981d71c3cfbf6e982a4dd1) | MCU의 GPL-2.0-only 헤더·루트 COPYING 등 원래 조건 유지. 전체 clone 대신 30개 변경·추가 파일을 overlay로 제공. mini FPGA는 이 커밋에서 재생성. |
+| 공개 CGB boot | 위 MiSTer의 BootROMs, SameBoy 기반 | Lior Halphon의 MIT 고지 보존. MIF 초기값과 주소 packing만 사용. 상용 SGB BIOS와 구분. |
+| PLL wrapper | Quartus 생성 소스, Cyclone IV 대상 | 파일 내 Intel/Altera 조건 유지. 임의로 GPL/MIT 재지정하지 않음. |
+| 자체 통합 HDL·renderer·검증·문서 | 본 프로젝트 C43 및 소스 생성기 | 저장소 전체에 대한 신규 포괄 재사용 라이선스는 아직 소유자 결정 전. 기존 파생 파일의 upstream 조건은 계속 적용. |
 
-향후 코드를 추가할 때 한 행에 upstream URL, 고정 commit, 원래 라이선스/NOTICE, 수정 파일 목록, 생성물/헤더 포함 경로, 필요한 도구/버전, 공개 가능한 무ROM 테스트, 검토자를 채운다. 저장소 루트에 단일 LICENSE를 서둘러 추가해 서로 다른 upstream 조건을 덮지 않는다.
+## 변경과 고지
+
+MCU는 새 확장자 분기, 빠른 로딩, SRAM/RTC, 메뉴·강제 저장·복원·진단을 추가했습니다. FPGA는 MiSTer 기반 CPU/PPU/사운드와 FXPAK 메모리·SPI·SNES 출력 경로를 연결하고 매퍼·상태·RTC·배속을 수정했습니다. renderer는 자체 생성한 SNES/SPC 코드입니다. 변경일과 후보는 2026-10-04 / G13C44입니다.
+
+원래 파일의 저작권·라이선스 문구는 삭제하지 않았습니다. `licenses`에 핵심 고지를 함께 제공합니다. 개별 헤더 없는 upstream 파일과 자체 작성 부분의 최종 배포 고지·라이선스 범위는 릴리스 전 점검 항목이며, 공개 접근 가능성만으로 재배포 조건이 모두 확정됐다고 주장하지 않습니다.
+
+도구 설치본, 상용 게임·BIOS·사용자 세이브·메모리 덤프는 제외합니다. 참고한 ludufre 2.16.4 ZIP의 펌웨어·FPGA·메뉴 자산은 이 소스에 합치지 않았습니다.

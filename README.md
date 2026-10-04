@@ -1,51 +1,37 @@
-# Cyclone IV 코어 이식 연구 / FXPAK Pro GBC
+# FPGA Core Development — sd2snesHST
 
-이 공개 저장소는 두 가지를 위해 운영합니다.
+**sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다. 제품 이름의 **HST는 HungrySanTa**를 뜻합니다.
 
-1. **진행 중인 FXPAK Pro GBC 프로젝트의 근거와 작업을 보관·지원**합니다. 기존 하드웨어를 개조하지 않고 원본 `.gbc`를 실행하는 FPGA 코어·MCU 펌웨어·SNES 표시 경로를 다룹니다. 게임 ROM을 SNES ROM으로 변환하지 않습니다.
-2. **다른 게임기 코어를 Cyclone IV로 이식할 때 참고할 방법과 계약**을 남깁니다. 보드 핀·클록·메모리·CDC·검증 범위를 새 대상에 다시 대조하도록 합니다. GBC 전용 수치가 다른 코어에도 성립한다고 가정하지 않습니다.
+일반 사용자용 저장소는 `hungrysanta-ksc/sd2snesHST`로 분리할 계획입니다. 현재 새 저장소 생성과 정식 릴리스 발행은 아직 하지 않았습니다. 첫 공개 버전은 **sd2snesHST 0.9.0 = 검증된 GBC C44**로 계획합니다.
 
-## 시작점
+## 어디서 시작하나요?
 
-- [실행 계획과 완료 기준](docs/EXECUTION-PLAN.ko.md)
-- [FPGA 방법론 검토와 발견 사항](docs/FPGA-METHODOLOGY-REVIEW.ko.md)
-- [현재 진행·미결 gate](docs/PROJECT-STATUS.ko.md)
-- [P0 인터페이스·클록·리셋 감사](docs/INTERFACE-CLOCK-RESET.ko.md), [타이밍 예외 판정](docs/TIMING-EXCEPTIONS.ko.md), [확장 STA 경로 감사](docs/P0-STA-COVERAGE.ko.md), [검증 행렬](docs/VERIFICATION-MATRIX.json)
-- [P1 초기 예산](docs/SYSTEM-BUDGET.ko.md)
-- [P1 출력 종단·반복 표시 진단](docs/P1-ENDPOINT-BACKLOG.ko.md)
-- [기존 G12S2 실기 기준선 시험](docs/HARDWARE-BASELINE-TEST.ko.md)
-- [다른 코어 이식 참고 절차](docs/PORTING-PLAYBOOK.ko.md)
-- [저장소 관리 규칙](docs/REPOSITORY-POLICY.ko.md), [기여·등록 절차](CONTRIBUTING.md), [의존성 등록부](docs/DEPENDENCY-REGISTER.ko.md)
-- [보고서 감사 도구](tools/audit_fpga_signoff.py)
+| 목적 | 문서 |
+| --- | --- |
+| 사용자 배포와 개발의 역할·버전 관리 | [두 저장소 운영 계획](docs/distribution/REPOSITORIES.ko.md) |
+| 0.9.0 준비·발행 순서 | [0.9.0 공개 계획](docs/distribution/0.9.0-PLAN.ko.md) |
+| 배포 저장소 첫 화면 초안 | [sd2snesHST](distribution/sd2snesHST/README.md) |
+| 코어 현황·NES/PCE 후속 작업 | [코어 로드맵](cores/README.md) |
+| 새 코어 조사 시작 | [코어 제안서](cores/CORE-PROPOSAL.ko.md) · [이식 절차](docs/PORTING-PLAYBOOK.ko.md) |
+| 공통 구현과 코어 경계 | [개발 구조](docs/development/ARCHITECTURE.ko.md) |
+| 모든 현재 문서와 과거 기록 | [문서 안내](docs/README.md) |
 
-2026-09-24 현재, 기본 게임 실행·음향·조작 및 K141 기준 저장/로드 교차 검증은 이전 G12 후보에서 실기 확인했습니다. 간헐적 점멸/리셋 후 재실행 문제, G13 영상 확장의 고부하 처리량, 보드 전체 타이밍 검증은 미완료입니다. G13은 실험 단계이며 배포 가능한 완제품이 아닙니다.
+## 개발 기준선
 
-먼저 인터페이스·클록·리셋·제약 감사를 수행하고, 자원/처리량 예산 → 근거 있는 수정 → 통합 검증 → 실기 → 미니게임/전투 평가 순서로 진행합니다. 원본 화소·색·CPU 속도·프레임 순서를 희생하는 전환은 승인되지 않았습니다.
+| 구성 | 현재 상태 | 소스·재현 |
+| --- | --- | --- |
+| GB/GBC | C44 실기 확인, 0.9.0 편입 예정 | [GBC 개발 안내](cores/gbc/README.md) |
+| NES | 조사 대기; 포팅·배포 미완료 | [NES 조사 범위](cores/nes/README.md) |
+| PC Engine | 조사 대기; HuCard 범위를 우선 검토 | [PCE 조사 범위](cores/pce/README.md) |
 
-## 이 공개 저장소의 범위
+현재 구현 대상은 **FXPAK Pro / Mk.III, STM32 + EP4CE15F17C8**입니다. 제품 이름이 바뀌어도 보드 지원 범위가 넓어지는 것은 아닙니다. NES/PCE의 동작 가능성·일정은 아직 확정하지 않았습니다.
 
-현재는 계획·감사·예산·관리 문서와 자체 작성 감사 도구를 등록합니다. RTL/펌웨어는 출처·라이선스·필수 의존성을 확인한 뒤 단계적으로 등록합니다. **현재 저장소만으로 제품을 빌드할 수 없습니다.** 문서에 언급한 과거 로컬 보고서/실험 파일은 대부분 포함되지 않았으며, 경로와 해시는 근거 식별용입니다.
+검증된 GBC 입력 경로 `src/fpga`, `src/firmware-overlay`, `src/renderer`는 유지합니다. 코어별 안내·등록부로 구분하고, 실제 공통 코드 추출은 두 번째 코어의 요구가 확인된 뒤 별도 검증으로 진행합니다.
 
-도구 자체 검사는 외부 FPGA 도구나 ROM 없이 실행할 수 있습니다.
+## 기록과 배포 원칙
 
-```sh
-python tools/audit_fpga_signoff.py --self-test
-python tools/audit_fpga_signoff.py /path/to/quartus-report-directory
-```
-
-두 번째 명령에는 `pin.sta.summary`, `pin.sta.rpt`, `pin.fit.summary`, `pin.fit.rpt`가 필요합니다. 이 도구는 적용된 제약의 슬랙과 미제약/자원 항목을 분리해 보고하며 보드 signoff나 출하를 승인하지 않습니다. 출력에는 로컬 경로가 포함되므로 공개 전 검토해야 합니다.
-
-상용 ROM·사용자 세이브·실기 덤프·라이선스 키·설치 도구·미검증 bitstream/ZIP은 등록하지 않습니다. 원본 시험 자료는 독립 로컬 사본에만 유지합니다.
-
-P1 계산 도구 `tools/p1_budget_calc.py`는 로컬 동결 보고서가 있어야 실행됩니다. 저장소 단독 실행용 CI 대상으로 취급하지 않습니다. 코드·문서 전체에 적용할 공개 재사용 라이선스는 의존성 출처 검토와 소유자 결정 후 명시합니다. 라이선스가 정해지기 전에는 단순 공개를 재배포 허락으로 해석하지 않습니다.
-
-```sh
-python tools/p1_budget_calc.py --snapshot /path/to/private/local-snapshot
-```
-
-동결된 G13 후보의 타이밍 범위를 다시 확인할 때는 개인 snapshot에서만 다음 명령을 실행합니다. 첫 명령은 새 Quartus fit/STA DB와 원본 제약의 보고서를 개인 snapshot 안에 생성하며 bitstream을 만들지 않습니다. 생성 디렉터리가 이미 있으면 중단합니다. 두 번째 명령은 공개 가능한 집계만 표준 출력으로 냅니다.
-
-```sh
-python tools/run_sta_coverage.py --snapshot /path/to/private/local-snapshot --quartus-bin /path/to/quartus/bin64
-python tools/summarize_sta_coverage.py /path/to/private/local-snapshot/probes/full-core-link/results/p0-g13-sta-coverage-v1
-```
+- 구현 변경·upstream 출처·가설·실패 결과·재현 가능한 검증은 이 저장소에서 관리합니다.
+- 사용자용 저장소에는 제품 안내와 릴리스만 정리합니다. 코드를 두 저장소에서 따로 수정하지 않습니다.
+- 제품 버전, 코어 후보, 개발 커밋, 바이너리 해시, 세이브/상태 형식을 연결합니다.
+- 상용 ROM·BIOS·개인 세이브·덤프·비밀 정보는 공개하지 않습니다.
+- [기여 규칙](CONTRIBUTING.md), [소스 고지](docs/DEPENDENCY-REGISTER.ko.md), [공개 정책](docs/REPOSITORY-POLICY.ko.md)을 따릅니다.
