@@ -57,3 +57,7 @@ python tools/package_release.py --payload PATH_TO_TESTED_SD2SNES --out build/FXP
 RTC 테스트는 공개 가능한 자작 자극만 사용합니다. 상용 게임의 시뮬레이션이나 실기 대체 검사가 아닙니다. 패키저는 정확한 C44 해시의 4개 파일만 받아 업데이트 ZIP을 생성합니다. ROM·SGB 파일·세이브·원본 실험 로그를 포함하지 않습니다.
 
 C44에서 변경한 것은 MCU 로그 정책뿐입니다. FPGA·renderer는 C43 전체 재현 빌드의 동일 해시를 사용합니다. 배포 기본값 GBC_FILE_LOGS=0을 유지하며 진단 빌드의 GBC_FILE_LOGS=1은 별도 후보로 취급합니다.
+
+## sd2snesHST 0.9.0 소스 ZIP
+
+최종 제품 소스 ZIP은 필요한 upstream 소스를 동봉합니다. `python tools/prepare_firmware.py --offline --out build/firmware`로 네트워크 없이 준비할 수 있습니다. [동봉 범위와 부트 입력](SOURCE-BUNDLE.ko.md)을 참조하세요.

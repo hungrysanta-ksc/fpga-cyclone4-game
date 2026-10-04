@@ -35,4 +35,5 @@
 - 사용자용 저장소에는 제품 안내와 릴리스만 정리합니다. 코드를 두 저장소에서 따로 수정하지 않습니다.
 - 제품 버전, 코어 후보, 개발 커밋, 바이너리 해시, 세이브/상태 형식을 연결합니다.
 - 상용 ROM·BIOS·개인 세이브·덤프·비밀 정보는 공개하지 않습니다.
+- [라이선스](LICENSE.md) · [대응 소스 묶음](docs/SOURCE-BUNDLE.ko.md)
 - [기여 규칙](CONTRIBUTING.md), [소스 고지](docs/DEPENDENCY-REGISTER.ko.md), [공개 정책](docs/REPOSITORY-POLICY.ko.md)을 따릅니다.
