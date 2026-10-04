@@ -10,8 +10,8 @@
 | fit | LE 14,877/15,408; M9K 56/56; 135 physical pins; virtual 0 | C `pin.fit.summary`. 자원 확장 여유와 board timing은 별도. |
 | clock status | board8, SPI SCK, 두 PLL generated 및 virtual sys 모두 constrained | C `pin.sta.rpt` Clock Status. clock transfer 구조/false path의 적절성은 별도. |
 | unconstrained path summary | 입력 **36 ports/292 paths**, 출력 **29 ports/1030 paths**, setup과 hold 모두 동일 | C `pin.sta.rpt` Unconstrained Paths Summary. **출하 차단 미분류 잔여**. |
-| 기본 상세 UCP 표 | 입력 `SPI_MOSI`, `SPI_SS` 2개 이름; 출력 `MCU_RDY`, `ROM_WE`, `SNES_DATABUS_DIR`, `SNES_DATABUS_OE`, `SPI_MISO` 5개 이름 | 요약 36/29와 다르다. 기본 표를 전체 목록으로 해석하면 안 된다. 비트 확장/보고 필터·setup/hold·포트/경로 집계 차이는 확장 `report_ucp`로 대조해야 한다. |
-| metastability | 53 chains, 최단 2 registers, MTBF 미계산 비율 0.962 | 약 51/53 chain에 계산값 없음으로 추정되지만 원인/chain ID는 별도 보고 필요. `1e+09 years` headline은 전체 승인 불가. 0.962는 고장 확률이 아니다. |
+| 확장 UCP 경로 표 | 입력 36 ports/292 paths, 출력 29 ports/1030 paths가 setup·hold에서 재현됨 | 기본 상세의 2/5는 delay/예외가 없는 포트 표이고, 확장 경로 표에는 입력→출력 조합 경로 269개가 포함된다. [분해 기록](P0-STA-COVERAGE.ko.md). 미제약 상태 자체는 남는다. |
+| metastability | 53 chains, 최단 2 registers, MTBF 미계산 비율 0.962 | 확장 보고서에서 51개 Automatic 미계산, 2개 User Specified 계산을 확인했다. 미계산 이유/chain 안전성은 미확정이다. `1e+09 years` headline은 전체 승인 불가. 0.962는 고장 확률이 아니다. |
 
 ## 포트·경계 분류
 
@@ -34,13 +34,13 @@
 | E3 | `board_output_cdc.sdc`: writer Gray pointer와 uploader toggles 첫 FF false path + net max10ns; entry/held bundled data max10ns·hold false | 자료 구조상 근거가 있으나 Gray skew/hold 및 어떤 제약이 최적화 후 실제 적용됐는지 미완결. | 전체 chain별 endpoint·최대 skew, 이중 전환·reset 동시성, 보고서 생성. |
 | E4 | guard release → 도메인 reset pipe false path; joypad/audio/diagnostic toggle·bundled data 예외 | async assert/sync release 의도. hold false 대상은 stable-data invariant가 필요. | reset injection, payload stability assertions 및 endpoint report. |
 | E5 | SNES pad → **첫 sampling FF만** false path | 비동기 입력에 정당할 수 있음. raw `/RD`→OE 및 두 번째 FF는 제외되지 않아야 함. | `report_exceptions`와 실제 pad-to-OE 경로 확인, 외부 timing 모델. |
-| W1 | STA `332174` 5건: `*uploader|brst*`, `*writer|bus_reset*`, `*writer|source_reset*`, `*host_frontend|bridge|wr_sync[0]`, `*host_frontend|bridge|addr_meta[*]` unmatched | 최적화/병합/현재 hierarchy 차이 가능. `required_regs`의 nonempty 전체 collection 검사로 개별 패턴 실패가 가려질 수 있음. 미적용 대상이 실제 필요한 경로라면 **제약 누락**. | 각 register의 post-map 이름/경로와 예외가 실제 의도대로 적용된 endpoint 수 대조. 임의 wildcard 확장 금지. |
+| W1 | STA `332174` 5건: `*uploader|brst*`, `*writer|bus_reset*`, `*writer|source_reset*`, `*host_frontend|bridge|wr_sync[0]`, `*host_frontend|bridge|addr_meta[*]` unmatched | 같은 seed 재배치의 map 병합 표와 netlist 조회에서 각각 다른 register로 병합된 사실을 확인했다. [병합 대상](P0-STA-COVERAGE.ko.md)을 기록했다. `required_regs`의 전체 collection nonempty 검사는 개별 패턴 실패를 가릴 수 있다. | 의도한 예외가 병합 후 실제 endpoint에 적용됐는지 path별 대조. 임의 wildcard 확장 금지. |
 | W2 | STA `332054` 29건: `board_output_cdc.sdc:44`가 RAM_DATA[0:7], RAM_ADDR[0:18], RAM_OE/WE output delay 대체 | 같은 `-max` 0ns 뒤 -11.9047619ns override가 의도적 routing budget일 수 있음. `-add_delay`를 경고 제거용으로 넣으면 **의미가 달라짐**. | post-SDC 실제 min/max 값을 포트별 출력하고 외부 SRAM timing 계약과 분리. |
 | W3 | STA `114001` 5건: 29.8013245, 17.2013245, -11.9047619ns 등 반올림 | 수치 표현 경고. 작은 setup slack과 같은 자릿수라 영향 크기 비교 필요. | 적용된 시간값과 worst path에 대한 영향 기록; 무근거 period 완화 금지. |
-| M1 | 53 chains 중 0.962 MTBF unavailable | 보고 범위 부족. 수동으로 모든 chain이 안전하다고 간주 불가. | `report_metastability -nchains 100`, source/dest clock, toggle rate, settling/chain 식별, missing reason 분류. |
+| M1 | 53 chains 중 51개 Automatic MTBF unavailable; 2개 User Specified만 계산 | 체인 ID와 clock/settling은 확장 보고서에 나왔다. 51개 미계산 이유와 체인별 CDC 적합성은 미확정. | 실제 false path·동기화 첫 FF·toggle rate·bundle hold를 체인별 대조. |
 
 ## P0 다음 재현 명령과 안전 조건
 
-C에는 `clock_checks.tcl`이 `check_timing`, `report_clock_transfers`, `report_ucp`를, `cdc_metastability.tcl`이 `report_metastability -nchains 100`을 요구한다. 스크립트 존재만 확인했으며 C에 해당 출력 `full-unconstrained.rpt`, `full-clock-transfers.rpt`, `cdc-metastability-*.rpt`는 보존되지 않았다. 현재 기본 `.sta.rpt`의 기본 UCP 목록 2/5로 36/29를 해소하지 않는다.
+C의 동결 결과 폴더에는 Quartus DB가 없었다. 개인 snapshot의 별도 `p0-g13-sta-coverage-v1/`에서 같은 입력을 재배치하여 `full-unconstrained.rpt`, `full-clock-transfers.rpt`, `cdc-metastability-*.rpt`를 생성했다. 기본 2/5와 경로 표 36/29의 차이는 [확장 STA 기록](P0-STA-COVERAGE.ko.md)에서 분해했다. 이 결과는 미제약 경로의 보드 타이밍을 해결하지 않는다.
 
-새 분석 실행 전 C의 `pin.qsf`가 상대 HDL/SDC 경로인 점을 확인했지만, 동결 결과 폴더에 STA netlist가 보존됐는지 확인하고 복사본에서만 실행한다. 원본 임시 경로가 기록된 JSON/로그는 증거로 유지한다. 분석 보고서는 별도 `p0-timing-audit-v1/`에 출력한다. 실제 DB가 없으면 새 full-fit을 무작정 시작하지 않고 **미결**로 기록한다. 새 SDC 예외나 slack 완화는 이 P0 단계에서 하지 않는다.
+새 분석에서도 원본 임시 경로가 기록된 JSON/로그는 증거로 유지한다. 새 SDC 예외나 slack 완화는 하지 않았다. 다음에는 미제약 각 경로에 필요한 실제 부품·보드 계약과 적용된 제약 endpoint를 확인한다.

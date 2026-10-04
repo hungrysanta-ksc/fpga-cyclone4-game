@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "date": "2026-09-23",
+  "date": "2026-09-24",
   "candidate_id": "fxpak-g13-prefill-endpoint-seed7-hold1-v1",
   "candidate_directory": "probes/full-core-link/results/fxpak-g13-prefill-endpoint-seed7-hold1-v1",
   "source_hashes": {
@@ -14,8 +14,8 @@
     "board_output_cdc.sdc": "b074be03b87a20efccdfd982f7c3e0bbee9af7c886ffcf09b7a5ef1b48f8db85",
     "placement-target.sdc": "1fb9118edbff9f9a8d7b5f3737afff30a247a79d9acec102f73f45d533cb3a46"
   },
-  "tool": "Quartus Prime Lite 25.1std.0 build 1129 (frozen reports); no new compilation this audit",
-  "status_semantics": "pass is limited to the stated model and stimulus; unknown is not pass; historical G12S2 hardware results are not transferred to this G13 candidate",
+  "tool": "Quartus Prime Lite 25.1std.0 build 1129 (frozen reports plus same-source seed-7 re-fit for coverage); no bitstream",
+  "status_semantics": "pass is limited to the stated model and stimulus; fail_model is a failure under the stated software assumptions, not a measured board result; unknown is not pass; historical G12S2 hardware results are not transferred to this G13 candidate",
   "checks": [
     {
       "id": "isolation",
@@ -42,20 +42,28 @@
       "next_gate": "do not promote to board signoff"
     },
     {
+      "id": "sta_coverage_rebuild",
+      "stimulus": "source-hash checked re-fit with fitter-only placement target, then original signoff SDC restored for STA and expanded reports",
+      "model_scope": "same G13 source and seed in private isolated snapshot",
+      "result": "pass_limited",
+      "evidence": ["probes/full-core-link/results/p0-g13-sta-coverage-v1/audit.json", "P0-STA-COVERAGE.ko.md"],
+      "next_gate": "fit and STA summary reproduction does not establish external board timing or CDC safety"
+    },
+    {
       "id": "constraint_coverage",
-      "stimulus": "report_ucp expanded, ignored constraints, clock transfers",
+      "stimulus": "same-source seed-7 re-fit, expanded report_ucp and clock transfers under original signoff SDC",
       "model_scope": "all used pins and timing paths",
       "result": "fail_open",
-      "evidence": ["probes/full-core-link/results/fxpak-g13-prefill-endpoint-seed7-hold1-v1/pin.sta.rpt", "TIMING-EXCEPTIONS.ko.md"],
-      "next_gate": "resolve 36 input/29 output summary versus 2/5 default detail; classify every used path"
+      "evidence": ["probes/full-core-link/results/p0-g13-sta-coverage-v1/full-unconstrained.rpt", "P0-STA-COVERAGE.ko.md"],
+      "next_gate": "36 input/29 output ports are reconciled with the default 2/5 table; classify and constrain actual board I/O paths, especially 269 combinational input-output paths"
     },
     {
       "id": "cdc_mtbf",
-      "stimulus": "chain-level metastability/clock-transfer and bundled-data analysis",
+      "stimulus": "report_metastability -nchains 100 at each fitted operating condition",
       "model_scope": "SPI, FIFO, upload, joypad, audio, diagnostic, reset",
       "result": "unknown",
-      "evidence": ["probes/full-core-link/results/fxpak-g13-prefill-endpoint-seed7-hold1-v1/pin.sta.rpt", "INTERFACE-CLOCK-RESET.ko.md"],
-      "next_gate": "explain 0.962 unavailable fraction and matched exception endpoints"
+      "evidence": ["probes/full-core-link/results/p0-g13-sta-coverage-v1/cdc-metastability-8_slow_1200mv_85c.rpt", "P0-STA-COVERAGE.ko.md"],
+      "next_gate": "explain 51 automatic uncalculated chains and match each relevant false-path/bundled-data endpoint"
     },
     {
       "id": "external_bus_timing",
@@ -63,7 +71,23 @@
       "model_scope": "ROM PSRAM, 8-bit SRAM, SPI, DAC, SNES transceiver",
       "result": "unknown_board_gate",
       "evidence": ["probes/full-core-link/SNES-SRAM-SLOTS.ko.md", "probes/full-core-link/BOARD-OUTPUT-CONTRACT.ko.md"],
-      "next_gate": "source device/board specs and narrow safe observations, including 270ns slot"
+      "next_gate": "equipment unavailable: review device/board specs and run bounded software fault injection; 270ns slot and physical bus turnaround remain unverified"
+    },
+    {
+      "id": "mcu_spi_static_callpath",
+      "stimulus": "GBC FPGA configuration to loader call path and historical G12-save ELF/link map inspection",
+      "model_scope": "modified STM32 source and older linked artifact, no current G13 firmware or pin capture",
+      "result": "pass_limited",
+      "evidence": ["INTERFACE-CLOCK-RESET.ko.md"],
+      "next_gate": "identify flashed firmware and measure actual SCK/SS/MOSI/MISO/MCU_RDY timing"
+    },
+    {
+      "id": "snes_slot_model",
+      "stimulus": "12 synthetic 270ns PHI2 phases, 24 program/frame reads, 6 byte plus 6 word writes, one 80ns early-read counterexample",
+      "model_scope": "frozen G13 slot scheduler, cart map and frontend-connected burst writer with assumed 45ns SRAM access",
+      "result": "pass_limited",
+      "evidence": ["probes/full-core-link/results/snes-slot-burst-writer-v1/verification.json", "INTERFACE-CLOCK-RESET.ko.md"],
+      "next_gate": "measure minimum real CPU/DMA/HDMA PHI2-to-read gap and pin direction/OE/WE turnaround; error flag cannot undo a write"
     },
     {
       "id": "nominal_g13_endpoint",
@@ -82,12 +106,36 @@
       "next_gate": "preserve 854748/852474 cycle failures; diagnose service and frame age before RTL optimization"
     },
     {
+      "id": "dense_g13_lifecycle50",
+      "stimulus": "50 dense phase-0 source frames through first host-visible epoch 49",
+      "model_scope": "same 26 RTL source hashes as 30-frame run; synthetic RGB and host with timestamped source/pipeline/commit/publish/visible events",
+      "result": "fail_deadline_pass_data_limited",
+      "evidence": ["probes/full-core-link/results/g13-endpoint-p1-lifecycle50-phase0-v1-dense/verification.json", "P1-ENDPOINT-BACKLOG.ko.md"],
+      "next_gate": "two frame deadlines missed; source-to-visible 54.763..71.296ms is synthetic, and 50 frames do not establish sustained stability"
+    },
+    {
+      "id": "dense_g13_lifecycle100",
+      "stimulus": "100 dense phase-0 source frames using a repeated 10-frame RGB pattern through first host-visible epoch 99",
+      "model_scope": "same 26 RTL source hashes as 50-frame run; synthetic source and host; ~63% of their relative phase beat",
+      "result": "fail_deadline_pass_data_limited",
+      "evidence": ["probes/full-core-link/results/g13-endpoint-p1-lifecycle100-phase0-v1-dense/verification.json", "P1-ENDPOINT-BACKLOG.ko.md"],
+      "next_gate": "two early deadlines missed; later 200-frame run exposes three more misses near the phase beat"
+    },
+    {
+      "id": "dense_g13_lifecycle200",
+      "stimulus": "200 dense phase-0 source frames using a repeated 10-frame RGB pattern through first host-visible epoch 199",
+      "model_scope": "same 26 RTL source hashes as 100-frame run; synthetic source and host; >1 relative phase beat",
+      "result": "fail_deadline_pass_data_limited",
+      "evidence": ["probes/full-core-link/results/g13-endpoint-p1-lifecycle200-phase0-v2-dense/verification.json", "P1-ENDPOINT-BACKLOG.ko.md"],
+      "next_gate": "five deadlines missed at frames 2/3/156/157/158; drift recurs to 449811 clocks, while 200 data/epoch lifecycles stay ordered"
+    },
+    {
       "id": "steady_backlog_epoch",
       "stimulus": "hundreds to thousands of source frames and host phase sweep including repeated DMA/HDMA",
       "model_scope": "production and consumption in the same candidate",
-      "result": "not_run",
-      "evidence": ["SYSTEM-BUDGET.ko.md"],
-      "next_gate": "measure queue slope, max age, dropped/reordered source IDs and repeated complete display IDs"
+      "result": "partial_200_frames_one_phase",
+      "evidence": ["SYSTEM-BUDGET.ko.md", "P1-ENDPOINT-BACKLOG.ko.md", "probes/full-core-link/results/g13-endpoint-p1-lifecycle200-phase0-v2-dense/verification.json"],
+      "next_gate": "one relative phase beat shows deadline and drift recurrence; check other host phases and more repeats before stability claims"
     },
     {
       "id": "reset_lifecycle",
@@ -96,6 +144,30 @@
       "result": "unknown",
       "evidence": ["INTERFACE-CLOCK-RESET.ko.md"],
       "next_gate": "capture first fault before reset and distinguish from post-reset dump"
+    },
+    {
+      "id": "sram_reset_during_write",
+      "stimulus": "reset at 1/10/25/40ns after byte WE or second word WE falls",
+      "model_scope": "frozen G13 frontend-connected burst writer in Icarus; existing synthetic >=35ns WE-low criterion; no real board reset waveform",
+      "result": "fail_model",
+      "evidence": ["probes/full-core-link/results/sram-burst-reset-pulse-v1/verification.json", "INTERFACE-CLOCK-RESET.ko.md"],
+      "next_gate": "verify immediate pin release, discard incomplete page, and complete page rewrite after restart; short WE pulse and board electrical signoff remain open"
+    },
+    {
+      "id": "sram_clock_stop_reset_restart",
+      "stimulus": "stop bus clock and assert reset 10ns after byte WE or second word WE falls; release reset before clock resumes; issue fresh write",
+      "model_scope": "frozen connected burst writer in Icarus only; no page ownership, SRAM chip, analog PLL or console reset sequence",
+      "result": "pass_limited_short_pulse_remains",
+      "evidence": ["probes/full-core-link/results/sram-burst-clock-stop-reset-v1/verification.json", "INTERFACE-CLOCK-RESET.ko.md"],
+      "next_gate": "integrate writer with output FIFO, page validity and SNES frontend across clock-stop/reset; do not claim minimum WE width"
+    },
+    {
+      "id": "sram_page_reset_integration",
+      "stimulus": "assert shared reset 1/10/25/40ns into first or second word WE pulse; retain modeled SRAM bytes; send and upload one fresh full synthetic frame per case",
+      "model_scope": "frozen G13 output FIFO/pages and connected burst writer; digital >=35ns SRAM write criterion, eight cases; no real CPU, console or board",
+      "result": "pass_limited_short_pulse_remains",
+      "evidence": ["probes/full-core-link/results/sram-page-reset-integration-v1/verification.json", "INTERFACE-CLOCK-RESET.ko.md"],
+      "next_gate": "extend the connected test to both clocks stopping and actual console sequence; validate physical SRAM before hardware signoff"
     },
     {
       "id": "save_crossload",

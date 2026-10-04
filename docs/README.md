@@ -30,3 +30,11 @@
 ## 과거 기준선
 
 [초기 실행 계획](EXECUTION-PLAN.ko.md), [초기 검증 표](VERIFICATION-MATRIX.json), C43 설치·빌드·릴리스 문서는 역사적 기록입니다. 이전의 “실기 대기”, 자원 수치, 배포 보류 문구는 당시 상태를 뜻합니다. 원본 기록과 재현 경로를 유지하기 위해 이번 정리에서 파일을 옮기거나 삭제하지 않았습니다.
+
+PR #1에서 보존한 기록과 도구:
+
+- [2026-09-24 상태 원문](PROJECT-STATUS-20260924.ko.md)
+- [확장 STA 경로 감사](P0-STA-COVERAGE.ko.md)
+- [출력 종단·반복 표시 진단](P1-ENDPOINT-BACKLOG.ko.md)
+- [G12S2 실기 기준선 시험](HARDWARE-BASELINE-TEST.ko.md) — 당시 설치판 전용 절차
+- [과거 후보 분석 도구 사용법](G13-AUDIT-TOOLS.ko.md)
