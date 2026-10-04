@@ -1,33 +1,37 @@
-# FXPAK Pro Game Boy Color — C44
+# FPGA Core Development — sd2snesHST
 
-Game Boy / Game Boy Color FPGA core for **FXPAK Pro / Mk.III (STM32 + Cyclone IV)**. C44 passed the user's final hardware checks on 2026-10-04. This branch prepares the source and an update package; a final GitHub Release has not been published.
+**sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다. 제품 이름의 **HST는 HungrySanTa**를 뜻합니다.
 
-**[사용 가이드 / Korean user guide](docs/USER-GUIDE.ko.md)** · [Compatibility](docs/COMPATIBILITY.ko.md) · [Build](docs/BUILD-C44.ko.md) · [Release notes](docs/RELEASE-C44.ko.md) · [Source and notices](docs/DEPENDENCY-REGISTER.ko.md)
+일반 사용자용 저장소는 `hungrysanta-ksc/sd2snesHST`로 분리할 계획입니다. 현재 새 저장소 생성과 정식 릴리스 발행은 아직 하지 않았습니다. 첫 공개 버전은 **sd2snesHST 0.9.0 = 검증된 GBC C44**로 계획합니다.
 
-## 사용 개요
+## 어디서 시작하나요?
 
-- 게임 파일의 복사본 확장자를 `.egbc`로 변경하면 새 코어로 실행합니다.
-- `.gb/.gbc`는 기존 SGB 경로를 유지합니다. 기존 코어·BIOS 설치가 필요합니다.
-- L+R+Start 메뉴: 복귀, WRITE SRAM, AUTO WRITE SRAM, 소리, 4슬롯 강제 저장·복원, 게임 리셋.
-- R을 누르는 동안 약 3배 빨리감기. 배속은 게임·화면 갱신 시간에 따라 달라집니다.
-- MBC1/MBC1M/MBC3+RTC/MBC5를 구현했습니다. SGB 테두리·치트·통신·특수 주변장치는 지원 범위 밖입니다.
-- C44는 SD 진단 로그 3종을 만들지 않습니다. 게임 저장·강제 저장·설정 파일은 정상 기록합니다.
-
-## 배포 구성
-
-정상 동작하는 **공식 sd2snes 1.11.2 계열 설치** 위에 적용하는 업데이트입니다. SD에 복사할 파일은 `firmware.stm`, `fpga_egbc.bi3`, `gbc_snes.bin`, `gbc-utc-offset.txt`입니다. 기존 시차 설정이 있으면 자신의 설정을 유지합니다.
-
-SGB 코어·BIOS, 상용 게임 ROM, 세이브, 외부 도구는 포함하지 않습니다. 구형 SD2SNES/Mk.II용 바이너리가 아닙니다. ludufre 2.16.4 배포판은 파일 구성만 참고했으며, 해당 포크의 기능 병합이나 혼합 설치를 검증하지 않았습니다.
-
-## 소스
-
-| 경로 | 내용 |
+| 목적 | 문서 |
 | --- | --- |
-| src/fpga | C43에서 실기 검증한 HDL·제약·공개 부트 초기값. C44에서도 동일 |
-| src/firmware-overlay | 고정 sd2snes 커밋에 적용하는 C44 MCU 변경·추가 파일 30개 |
-| src/renderer | 자체 SNES 화면·메뉴·SPC 코드 생성기 |
-| tools / tests | 소스 복원·재현 빌드·RTC와 로그 정책 검사·패키징 |
-| source-manifest.json | 파일별 해시와 고정 upstream 출처 |
-| release | 바이너리 해시·재현 및 기능 검증 기록 |
+| 사용자 배포와 개발의 역할·버전 관리 | [두 저장소 운영 계획](docs/distribution/REPOSITORIES.ko.md) |
+| 0.9.0 준비·발행 순서 | [0.9.0 공개 계획](docs/distribution/0.9.0-PLAN.ko.md) |
+| 배포 저장소 첫 화면 초안 | [sd2snesHST](distribution/sd2snesHST/README.md) |
+| 코어 현황·NES/PCE 후속 작업 | [코어 로드맵](cores/README.md) |
+| 새 코어 조사 시작 | [코어 제안서](cores/CORE-PROPOSAL.ko.md) · [이식 절차](docs/PORTING-PLAYBOOK.ko.md) |
+| 공통 구현과 코어 경계 | [개발 구조](docs/development/ARCHITECTURE.ko.md) |
+| 모든 현재 문서와 과거 기록 | [문서 안내](docs/README.md) |
 
-원래 저작권·라이선스를 유지하며, 저장소 전체를 새 단일 라이선스로 덮지 않습니다. 기존 실험·방법론 문서는 당시 이력입니다. 현재 동작과 설치는 C44 문서를 우선합니다.
+## 개발 기준선
+
+| 구성 | 현재 상태 | 소스·재현 |
+| --- | --- | --- |
+| GB/GBC | C44 실기 확인, 0.9.0 편입 예정 | [GBC 개발 안내](cores/gbc/README.md) |
+| NES | 조사 대기; 포팅·배포 미완료 | [NES 조사 범위](cores/nes/README.md) |
+| PC Engine | 조사 대기; HuCard 범위를 우선 검토 | [PCE 조사 범위](cores/pce/README.md) |
+
+현재 구현 대상은 **FXPAK Pro / Mk.III, STM32 + EP4CE15F17C8**입니다. 제품 이름이 바뀌어도 보드 지원 범위가 넓어지는 것은 아닙니다. NES/PCE의 동작 가능성·일정은 아직 확정하지 않았습니다.
+
+검증된 GBC 입력 경로 `src/fpga`, `src/firmware-overlay`, `src/renderer`는 유지합니다. 코어별 안내·등록부로 구분하고, 실제 공통 코드 추출은 두 번째 코어의 요구가 확인된 뒤 별도 검증으로 진행합니다.
+
+## 기록과 배포 원칙
+
+- 구현 변경·upstream 출처·가설·실패 결과·재현 가능한 검증은 이 저장소에서 관리합니다.
+- 사용자용 저장소에는 제품 안내와 릴리스만 정리합니다. 코드를 두 저장소에서 따로 수정하지 않습니다.
+- 제품 버전, 코어 후보, 개발 커밋, 바이너리 해시, 세이브/상태 형식을 연결합니다.
+- 상용 ROM·BIOS·개인 세이브·덤프·비밀 정보는 공개하지 않습니다.
+- [기여 규칙](CONTRIBUTING.md), [소스 고지](docs/DEPENDENCY-REGISTER.ko.md), [공개 정책](docs/REPOSITORY-POLICY.ko.md)을 따릅니다.
