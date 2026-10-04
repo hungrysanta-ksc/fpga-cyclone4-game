@@ -1,5 +1,7 @@
 # 다른 게임기 코어의 Cyclone IV 이식 참고 절차
 
+공개 제품까지의 구체 실패·수정 사례는 [GBC 이식 회고](development/GBC-PORTING-LESSONS.ko.md), 다음 실행 계획은 [NES 인계](../cores/nes/HANDOFF.ko.md)를 참조합니다.
+
 이 문서는 FXPAK Pro GBC 작업에서 배운 **검토 순서**다. 대상 보드·칩·코어가 바뀌면 수치와 제약을 다시 측정한다. 소스의 라이선스와 실제 보드 회로를 먼저 확인한다.
 
 ## 1. 목표와 기준선

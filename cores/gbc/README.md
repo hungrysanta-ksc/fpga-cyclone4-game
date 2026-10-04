@@ -1,7 +1,9 @@
 # GB/GBC 개발 기준선
 
+다른 코어 작업에는 [이식 회고](../../docs/development/GBC-PORTING-LESSONS.ko.md)를 먼저 읽습니다. 실행 코어는 Gameboy_MiSTer 기반이며 SameBoy 유래 CGB 부트 코드를 사용합니다.
+
 - 내부 후보: G13C44. 사용자 실기 성공: 2026-10-04.
-- 예정 제품 매핑: sd2snesHST 0.9.0.
+- 공개 제품 매핑: [sd2snesHST 0.9.0](https://github.com/hungrysanta-ksc/sd2snesHST/releases/tag/v0.9.0).
 - 고정 구현 커밋: 35ef4aef14fc6abef6495a980b7f00f257e5174f.
 - FPGA: [src/fpga](../../src/fpga), MCU: [overlay](../../src/firmware-overlay), SNES 출력: [renderer](../../src/renderer).
 - [빌드](../../docs/BUILD-C44.ko.md), [호환성](../../docs/COMPATIBILITY.ko.md), [사용 가이드](../../docs/USER-GUIDE.ko.md).

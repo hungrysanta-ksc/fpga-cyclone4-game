@@ -5,6 +5,8 @@
 ## 현재 개발·운영
 
 - [현재 상태](PROJECT-STATUS.ko.md)
+- [GBC 이식 회고와 재사용 경계](development/GBC-PORTING-LESSONS.ko.md)
+- [NES 착수 인계](../cores/nes/HANDOFF.ko.md)
 - [코어별 현황](../cores/README.md)
 - [개발 구조·공통 경계](development/ARCHITECTURE.ko.md)
 - [두 저장소 운영·버전 규칙](distribution/REPOSITORIES.ko.md)
@@ -14,7 +16,7 @@
 
 ## 사용자 문서의 원본
 
-[사용 가이드](USER-GUIDE.ko.md)와 [호환성 기록](COMPATIBILITY.ko.md)은 개발 기준 원본입니다. 제품 배포 시 확정 버전으로 정리한 사본을 사용자 저장소에 제공합니다. [배포 저장소 초안](../distribution/sd2snesHST/README.md)은 0.9.0 공개 계획을 검토하기 위한 초안이며 아직 발행된 문서가 아닙니다.
+[사용 가이드](USER-GUIDE.ko.md)와 [호환성 기록](COMPATIBILITY.ko.md)은 개발 기준 원본입니다. 제품 배포 시 확정 버전으로 정리한 사본을 사용자 저장소에 제공합니다. [배포 저장소 초안](../distribution/sd2snesHST/README.md)은 0.9.0 공개 계획을 검토하기 위한 초안으로 보존합니다. 0.9.0은 공개됐으며 실제 제품 문서는 [배포 저장소](https://github.com/hungrysanta-ksc/sd2snesHST)의 확정본이 기준입니다.
 
 ## 새 코어 조사에 재사용할 문서
 
