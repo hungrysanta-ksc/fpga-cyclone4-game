@@ -2,7 +2,7 @@
 
 **sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다. 제품 이름의 **HST는 HungrySanTa**를 뜻합니다.
 
-일반 사용자용 저장소는 `hungrysanta-ksc/sd2snesHST`로 분리할 계획입니다. 현재 새 저장소 생성과 정식 릴리스 발행은 아직 하지 않았습니다. 첫 공개 버전은 **sd2snesHST 0.9.0 = 검증된 GBC C44**로 계획합니다.
+일반 사용자 안내는 [sd2snesHST](https://github.com/hungrysanta-ksc/sd2snesHST)에서 제공합니다. **sd2snesHST 0.9.0 = 검증된 GBC C44**의 릴리스 초안에 설치 ZIP·소스 ZIP·manifest·체크섬을 업로드했습니다. 정식 릴리스는 아직 공개하지 않았습니다.
 
 ## 어디서 시작하나요?
 

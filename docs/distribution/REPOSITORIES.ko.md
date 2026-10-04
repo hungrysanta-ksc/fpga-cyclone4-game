@@ -6,7 +6,7 @@
 
 | 항목 | 개발 저장소 | 사용자 배포 저장소 |
 | --- | --- | --- |
-| 저장소 | hungrysanta-ksc/fpga-cyclone4-game | hungrysanta-ksc/sd2snesHST — 생성 계획 |
+| 저장소 | hungrysanta-ksc/fpga-cyclone4-game | hungrysanta-ksc/sd2snesHST — 생성 완료, 0.9.0 초안 |
 | 독자 | 개발자·코어 기여자 | 설치·업데이트하는 사용자 |
 | 내용 | 구현, 빌드, 테스트, 설계, 출처, 실패/실험 기록 | README, 설치·사용법, 호환성, 변경 기록, Releases, 문제 보고 |
 | 구현 수정 | 이곳에서만 수행 | 확정 소스 스냅샷을 릴리스에 첨부 |
