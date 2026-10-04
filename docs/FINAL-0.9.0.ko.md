@@ -1,6 +1,6 @@
 # sd2snesHST 0.9.0 최종 준비 검증
 
-기준일: 2026-10-04. 최종 자료 준비이며 Release 공개 상태와 구분합니다.
+기준일: 2026-10-04. 아래는 최종 준비 당시의 검증 기록입니다. 이후 사용자 안내·파일명·패키지 고지를 정리하여 [v0.9.0을 공개](https://github.com/hungrysanta-ksc/sd2snesHST/releases/tag/v0.9.0)했습니다. 공개 파일의 최종 해시와 시각은 [제품 매핑](../release/product-version-map.json)을 기준으로 합니다. 실행 파일·대응 소스 ZIP은 동일합니다.
 
 - 사용자 README의 소개·목표·AI 활용 문구를 유지하고 설치 폴더 중첩 가능성만 정정.
 - 자체 FPGA GPL-3.0-or-later / MCU GPL-2.0-only / 독립 도구·renderer·문서 MIT: 소유자 승인 반영.

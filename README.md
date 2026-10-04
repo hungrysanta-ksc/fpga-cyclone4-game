@@ -3,7 +3,7 @@
 **sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다.
 제품 이름의 **HST는 HungrySanTa = 제작팀 이름**을 뜻합니다.
 
-일반 사용자 안내는 [sd2snesHST](https://github.com/hungrysanta-ksc/sd2snesHST)에서 제공합니다. **sd2snesHST 0.9.0 = 검증된 GBC C44**의 릴리스 초안에 설치 ZIP·소스 ZIP·manifest·체크섬을 업로드했습니다. 정식 릴리스는 아직 공개하지 않았습니다.
+일반 사용자 안내는 [sd2snesHST](https://github.com/hungrysanta-ksc/sd2snesHST)에서 제공합니다. **sd2snesHST 0.9.0 = 검증된 GBC C44**를 [공개했습니다](https://github.com/hungrysanta-ksc/sd2snesHST/releases/tag/v0.9.0). 다음 작업은 NES 코어 이식이며, [GBC 회고](docs/development/GBC-PORTING-LESSONS.ko.md)와 [NES 인계 계획](cores/nes/HANDOFF.ko.md)에서 시작합니다.
 
 ## 어디서 시작하나요?
 
@@ -21,8 +21,8 @@
 
 | 구성 | 현재 상태 | 소스·재현 |
 | --- | --- | --- |
-| GB/GBC | C44 실기 확인, 0.9.0 편입 예정 | [GBC 개발 안내](cores/gbc/README.md) |
-| NES | 조사 대기; 포팅·배포 미완료 | [NES 조사 범위](cores/nes/README.md) |
+| GB/GBC | C44 실기 확인, 0.9.0 공개 완료 | [GBC 개발 안내](cores/gbc/README.md) |
+| NES | 조사·구현 착수 요청; 합성·실기 미검증 | [NES 조사 범위](cores/nes/README.md) |
 | PC Engine | 조사 대기; HuCard 범위를 우선 검토 | [PCE 조사 범위](cores/pce/README.md) |
 
 현재 구현 대상은 **FXPAK Pro / Mk.III, STM32 + EP4CE15F17C8**입니다. 제품 이름이 바뀌어도 보드 지원 범위가 넓어지는 것은 아닙니다. NES/PCE의 동작 가능성·일정은 아직 확정하지 않았습니다.

@@ -27,4 +27,4 @@
 
 차기 코어는 `PORTING-PLAYBOOK.ko.md`로 요구와 보드 계약을 처음부터 대조한다. GBC의 33.56/84MHz, 270ns slot, 색·오디오·메모리 배치를 새 코어의 사실로 복사하지 않는다. upstream 코드·라이선스의 병합 가능성과 보드 핀/전압/클록·메모리 예산을 먼저 기록한다.
 
-이 저장소 전체에 대한 재사용 라이선스는 현재 미정이다. 기존 upstream 표시를 지우거나 새 라이선스로 덮지 않는다. 공개 자료의 재사용 조건이 필요하면 소유자가 명시적으로 결정하고 `DEPENDENCY-REGISTER.ko.md`의 검토를 마친 뒤 파일별/전체 범위를 문서화한다.
+자체 작성 부분은 2026-10-04 소유자 승인으로 FPGA GPL-3.0-or-later, MCU GPL-2.0-only, 독립 도구·renderer 생성기·문서 MIT로 확정했다. [LICENSE.md](../LICENSE.md)와 `DEPENDENCY-REGISTER.ko.md`가 범위를 설명한다. 새 코어 upstream의 원래 고지를 유지하며 기존 결정을 제3자 소스에 임의 적용하지 않는다.
