@@ -59,3 +59,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 058 실행 전 공유 읽기 포트
 
 [포트 계약](../../docs/nes-rom-readback-port-contract.md)의 unit/diff/mutation은 공개 자체 패턴만 사용한다. 공동 fit는 private057 export가 필요하다.058은 전체 코어 재실행·SPI/MCU readback·실기 시험을 포함하지 않는다. 원시 근거 감사는 `verify_nes_rom_readback.py`로 구분한다. [결과](../../analysis/ROM-READBACK-PORT-RESULT.ko.md).
+
+## 059 SPI 읽기 확인과 실행 gate
+
+[계약](../../docs/nes-spi-readback-contract.md)의 unit/host/mutation/wave는 공개 자체 소스·패턴으로 실행한다. 실제 C 파형은32바이트 확인 뒤 입력 오류 복구를 검사하며 전체 C 길이 시험은 별도 모형이다. 전체 코어/공동 fit는 private057,ARM 전체 링크는 private056 준비 트리가 필요하다. `verify_nes_spi_readback.py`는 원시 archive 감사이며 공개 clone 단독 재현이나 실제 STM32 실행이 아니다. [결과](../../analysis/SPI-READBACK-RESULT.ko.md).
