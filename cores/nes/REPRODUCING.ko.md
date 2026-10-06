@@ -47,3 +47,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 055 SPI에서 실제 코어까지
 
 [계약](../../docs/nes-spi-live-contract.md)의 `run_nes_spi_live.ps1`은 해시 고정 private053 실제 코어 export를 입력으로 받아 새 폴더에서 SPI 적재·코어 실행을 수행한다.96/80KiB 진단2종8프레임을 새로 실행했다. `verify_nes_spi_live.py`는 원시055/053/054fit 입력을 감사하며 새 시뮬레이션이 아니다. 공개 clone만으로 전체 코어를 재현할 수 있다고 주장하지 않는다. [결과](../../analysis/SPI-LIVE-RESULT.ko.md).
+
+## 056 STM32 적재·복구
+
+[계약](../../docs/nes-mcu-loader-contract.md)의 호스트/파형 시험은 공개 소스로 자체 진단을 생성하며 private053 코어 export가 필요 없다. ARM 전체 링크는 고정 sd2snes upstream·툴체인·검증한 mini FPGA 입력이 필요하다. 미호출 함수도 ELF에 남겨 링크를 검사하지만 메뉴 연결·설치용 후보는 아니다. `verify_nes_mcu_loader.py`는 보관한 원시 근거를 감사한다. [결과](../../analysis/MCU-LOADER-RESULT.ko.md).

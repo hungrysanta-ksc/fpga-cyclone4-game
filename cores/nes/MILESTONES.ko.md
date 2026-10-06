@@ -18,5 +18,6 @@
 | 053 | 핀으로 ROM 적재 후 코어 실행, 8프레임/491520픽셀. 공동 929 LAB | [053](../../analysis/ROM-BOOT-RESULT.ko.md) |
 | 054 | SPI 프레임·C 파형·80KiB 전체 적재/읽기, 공동948LAB | [054](../../analysis/SPI-BOOT-RESULT.ko.md) |
 | 055 | 96/80KiB SPI 적재 후 실제 코어2종8프레임·491520픽셀,053 이벤트 비교 | [055](../../analysis/SPI-LIVE-RESULT.ko.md) |
+| 056 | STM32 SD 검증·적재·복구 바인딩,26호스트/18입력 거부,29024응답 비트, ARM 전체 링크 | [056](../../analysis/MCU-LOADER-RESULT.ko.md) |
 
-다음은 [실제 MCU 호출·보드 통합](HANDOFF.ko.md)이다. 053 공개 메모리 회귀와054 SPI 시험은 [재현 안내](REPRODUCING.ko.md)에 구분하며 과거 실제 코어 실행을 다시 실행한 것으로 계산하지 않는다.
+다음은 [공통 형상·무결성·보드 통합](HANDOFF.ko.md)이다. 053 공개 메모리 회귀·054 SPI·056 MCU 시험은 [재현 안내](REPRODUCING.ko.md)에 구분하며 과거 실제 코어 실행을 다시 실행한 것으로 계산하지 않는다.
