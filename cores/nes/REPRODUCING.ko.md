@@ -39,3 +39,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 공개 정리 중 제품 RTL·C 코드·기존 시험/생성기의 바이트를 바꾸지 않았다. [공개 파일 해시](publication-sources.json)는 가져온 구현 파일을 고정한다. 과거 상태 설명은 `history/`에 링크 위치·라이선스 식별자만 정리해 보관하며 현재 진입점의 상태를 우선한다. 기존 artifact manifest는 원래 로컬 체크포인트용이며 공개 정리된 문서의 새 manifest가 아니다.
 
 2026-10-06 공개 체크아웃 재실행: 위 3종 총 **518277 검사 PASS**, Questa Starter 2025.2. [결과와 실제 실행 소스 해시](public-unit-result.json).
+
+## 054 SPI 경계
+
+[계약과 재현 인자](../../docs/nes-spi-boot-contract.md)의 `run_nes_spi_boot.ps1`은 공개 원본만으로 unit/wave 시험을 실행한다. [결과](../../analysis/SPI-BOOT-RESULT.ko.md)는 새 C callback 파형·80KiB 직렬 적재/읽기와 공동 자원을 구분한다. 공동 fit는 별도 private053 해시 고정 입력이 필요하다. `verify_nes_spi_boot.py --evidence <private054>`는 원시 근거 감사이며 새 시험 실행이 아니다.
