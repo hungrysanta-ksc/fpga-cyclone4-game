@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
-  "date_kst": "2026-10-06",
-  "technical_candidate": "NES-MCU-LOADER-056",
+  "date_kst": "2026-10-07",
+  "technical_candidate": "NES-ROM-GEOMETRY-057",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "056 appends SD/GPIO load-only binding to unchanged materialized044.26host lifecycle/18input rejection cases,29024RTL response bits/256pin writes and full ARM link pass. No physical MCU execution, START or new menu entry.055 full-core evidence and044 hardware retained.",
+  "assessment": "057 shares accepted loader geometry with core; full96/80KiB SPI/core8frames and all events identical055 with zero tick delta after old fixture input is poisoned. New joint13976LE/954LAB leaves9LAB.056 unchanged; physical readback/board integration remain.",
   "next_action": "R4",
   "next_three_deliverables": [
-    "Bind approved CHR geometry to SPI BEGIN and core mask; implement physical integrity gate",
-    "Budget board clocks/reset/consumer within15LAB; retain full-core equivalence",
-    "Connect RUN/menu progress/results only after board gates and joint physical fit/STA"
+    "Prototype MCU-driven physical readback with existing052 reader, common accepted geometry and early joint fit",
+    "Verify corrupt data/address/tag/timeout/reset rejection before RUN; preserve056 GPIO/USB/base recovery",
+    "Integrate board clocks/consumer/deadlines within9LAB and full physical fit/STA before RUN/menu hardware pair"
   ],
   "gates": [
     {
@@ -19,8 +19,8 @@
       "title": "Latest resource and memory feasibility",
       "depends_on": [],
       "exit": "Pinned synthesis/resource table, explicit exclusions, memory service contract and integration-headroom decision; not full board signoff",
-      "evidence": "analysis/SPI-LIVE-RESULT.ko.md",
-      "remaining": "055 SPI -> actual core and056 MCU load-only binding validated in separate digital tests.054948LAB/15remaining unchanged. Common geometry, physical integrity/clocks/consumer and board timing remain."
+      "evidence": "analysis/ROM-GEOMETRY-RESULT.ko.md",
+      "remaining": "057 accepted geometry/core binding verified with exact0558frames. New954LAB leaves9LAB. Physical readback, actual MCU/board clocks/consumer and full board timing remain."
     },
     {
       "id": "R2",
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "partial_MCU_load_only_binding",
+      "status": "partial_MCU_binding_and_accepted_geometry",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/MCU-LOADER-RESULT.ko.md",
-      "remaining": "056 SD/GPIO/failure recovery binding compiled and model/RTL checked. Physical STM32, common geometry/readback/clocks/consumer, RUN/menu and board fit/STA remain."
+      "evidence": "analysis/ROM-GEOMETRY-RESULT.ko.md",
+      "remaining": "057 accepted geometry/core binding verified with exact0558frames. New954LAB leaves9LAB. Physical readback, actual MCU/board clocks/consumer and full board timing remain."
     },
     {
       "id": "R5",
@@ -78,8 +78,8 @@
     {
       "id": "BOARD-FIT",
       "status": "partial_H1_physical_fit_internal_STA",
-      "evidence": "analysis/H1-SAMPLING-RESULT.ko.md",
-      "detail": "054 diagnostic948/963LAB leaves15LAB, includes SPI and ROM pin ownership.055 uses32identical synthesis modules and adds no new fit. Complete boundary/program ROM/PLL/consumer/recovery and physical STA remain."
+      "evidence": "analysis/ROM-GEOMETRY-RESULT.ko.md",
+      "detail": "057 diagnostic13976LE/954LAB/26M9K leaves9LAB. Same register count, changed packing vs054. Complete boundary/program ROM/PLL/consumer/recovery and physical STA remain."
     },
     {
       "id": "DISPLAY-240",
