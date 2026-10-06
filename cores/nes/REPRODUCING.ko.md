@@ -51,3 +51,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 056 STM32 적재·복구
 
 [계약](../../docs/nes-mcu-loader-contract.md)의 호스트/파형 시험은 공개 소스로 자체 진단을 생성하며 private053 코어 export가 필요 없다. ARM 전체 링크는 고정 sd2snes upstream·툴체인·검증한 mini FPGA 입력이 필요하다. 미호출 함수도 ELF에 남겨 링크를 검사하지만 메뉴 연결·설치용 후보는 아니다. `verify_nes_mcu_loader.py`는 보관한 원시 근거를 감사한다. [결과](../../analysis/MCU-LOADER-RESULT.ko.md).
+
+## 057 승인 형상 연결
+
+[계약](../../docs/nes-rom-geometry-contract.md)의 unit와 잘못된 인자 latch mutation은 공개 소스만 사용한다. live는055,fit는054의 고정 private export가 필요하다. 같은 승인 레지스터가 core mask를 구동한8프레임을055와 시각까지 비교하며 새 공동 fit를 실행했다. [결과](../../analysis/ROM-GEOMETRY-RESULT.ko.md). 물리 readback/보드 통과와 구분한다.
