@@ -1,0 +1,566 @@
+{
+  "candidate": "NES-R2-VIDEO-WORKLOADS-021",
+  "implementation_candidate": "NES-P2-RDY-014",
+  "date_kst": "2026-10-05",
+  "sources": [
+    {
+      "path": "tools/build_nes_video_workloads.py",
+      "bytes": 4053,
+      "sha256": "8ddbd3289145506d24869ce8d7647e27f6d2b3cc78c74809e096ee426b4249c2"
+    },
+    {
+      "path": "tools/run_nes_video_workloads.py",
+      "bytes": 1841,
+      "sha256": "79816424257604f7e78faccf8587dd2e6743f98b0e85bf82515e51d1afb3f4f5"
+    },
+    {
+      "path": "tools/nes_video_packet_admission.py",
+      "bytes": 2371,
+      "sha256": "97d61f9a2a05224a4e275f430aac55126feebce38f250e513312144b34ec634e"
+    },
+    {
+      "path": "tools/verify_nes_video_workloads.py",
+      "bytes": 7968,
+      "sha256": "ba5e9538bcc539acde5eaa7f7edbdcb2fea92d1b1c89112c157445ba8fde8a97"
+    },
+    {
+      "path": "tests/nes-functional/capture_video_workloads.lua",
+      "bytes": 2017,
+      "sha256": "b4fcc153c60afe0c2a6260686f62cf153c31309eb0212ea29c73d2a7f7c399c6"
+    },
+    {
+      "path": "analysis/VIDEO-WORKLOADS-RESULT.ko.md",
+      "bytes": 4499,
+      "sha256": "e70c9d23217a4a0987a6609dbc21a95743e9b24aa999f90e96652d291162271e"
+    },
+    {
+      "path": "analysis/video-workloads-verification.json",
+      "bytes": 62498,
+      "sha256": "2181a606f78d5f8c5be21d4889d5018db2123aa1b7a433c9b8b9c107422696c5"
+    },
+    {
+      "path": "docs/nes-video-workloads-contract.md",
+      "bytes": 3711,
+      "sha256": "79498cf1059d050ebdef9b679c32af385694cb1f2873d2decc0eb1adb927beef"
+    },
+    {
+      "path": "tools/build_nes_trace_replay.py",
+      "bytes": 8847,
+      "sha256": "1b9e25b9af887c6b4329f1f883f61b98f3b320360ed3853144d09f60a292161a"
+    },
+    {
+      "path": "tools/analyze_nes_fetch_workload.py",
+      "bytes": 11522,
+      "sha256": "db63b0a4199ced3948d3d667fb2756920c094caabfe78274655e019484ceab55"
+    },
+    {
+      "path": "tools/verify_nes_rtl_fetch.py",
+      "bytes": 7726,
+      "sha256": "629cfd7c2a66c22097038a09f3b3bf5879f1e0c71268be1daab6a5fd8d5d275e"
+    },
+    {
+      "path": "tools/verify_nes_mmc3_integrated.py",
+      "bytes": 8707,
+      "sha256": "8da60a41bfaf5f9d8a07cccec76089c27dec1fc22edbfb7a535ec4e39b93ddfa"
+    },
+    {
+      "path": "snes/video_probe/build_probe.py",
+      "bytes": 5716,
+      "sha256": "6313cd97c3575e75c3ef14000a2e2460c7a46deddcc37993e41dbb8062ec8d14"
+    },
+    {
+      "path": "tools/video_schedule_model.py",
+      "bytes": 15988,
+      "sha256": "2111258ada711d007a875eb56e80dd513397124f05a9e8236d232613936614da"
+    },
+    {
+      "path": "tools/build_nes_mmc3.py",
+      "bytes": 3424,
+      "sha256": "132fa62d3838b42c254cf011e1840e3c1ad813d7bef2853c041b6fefd60e80f9"
+    }
+  ],
+  "status_files": [
+    {
+      "path": ".gitignore",
+      "bytes": 16444,
+      "sha256": "54165c95dea1162d6014f45c88a3f5ca1aa258bf599c3d6a1e8b8dd71c92fa31"
+    },
+    {
+      "path": "cores/nes/README.md",
+      "bytes": 2366,
+      "sha256": "019eb1f8a056310d68f7c6a32c76fefa036175cd8ca3212b8763b6054a71937d"
+    },
+    {
+      "path": "cores/nes/HANDOFF.ko.md",
+      "bytes": 29930,
+      "sha256": "2f2bc14be60b4f299aa12c3f03219d49284e0a33c3f568b48a4178e12509f265"
+    },
+    {
+      "path": "cores/nes/PROPOSAL.ko.md",
+      "bytes": 15059,
+      "sha256": "8928f2ce42a2ea31f3bd4acbb5ec7b29c91100195a3dfa1895cfb9c35a42a5a7"
+    },
+    {
+      "path": "cores/registry.json",
+      "bytes": 3614,
+      "sha256": "fecb8452513cd29075b3883aeb154cab575fe1052dd2d8eb8ae2298ecec32dcb"
+    },
+    {
+      "path": "docs/nes-development-plan.json",
+      "bytes": 5814,
+      "sha256": "bce067fab618dd6bde17e0eefd961c24fe2d39616d6c10580bbbca4c8793d33b"
+    }
+  ],
+  "input_evidence": [
+    {
+      "path": "analysis/trace-replay-artifacts.json",
+      "bytes": 35032,
+      "sha256": "e37a1495dc93e156f58479df367b72a93eb021ab2b10d71312a810194d0a966e"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "analysis/local-video-workloads-021/banks32/build/chr.hex",
+      "bytes": 98304,
+      "sha256": "be81b07335e2e717e63116e6c19d5dd16be32e3d16ac0f09c341f029cebfc1fb"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/banks32/build/manifest.json",
+      "bytes": 681,
+      "sha256": "bcb687a9e009569e7653e74d0b135acedd8a8c993a5bd56997abc26c59bff4ad"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/banks32/build/mmc3.nes",
+      "bytes": 98320,
+      "sha256": "22427da4f719a0bce2b4d8417b35a45a347e76dbcab2cbc22427ace29aa1279b"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/banks32/build/prg.hex",
+      "bytes": 196608,
+      "sha256": "c0052ba58fbbaa360954e418845d87013ca730d19c565de798caeff79efe0099"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/banks32/capture/capture.json",
+      "bytes": 822,
+      "sha256": "fbf026e464373b21949478f17f52859b4fd4b3b26e67269f3cc4ef86fee618a7"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/banks32/capture/capture.lua",
+      "bytes": 2104,
+      "sha256": "e18550bb6fc6f9e7adcb457851691423e60fc2a7f94b8c8c76288ada65b329ea"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/banks32/capture/frame-006.rgb",
+      "bytes": 184320,
+      "sha256": "806ef299f7153c328a9b70c0e93cd34aee2f376f43365daa0b15c5bbec40dd56"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/banks32/capture/frame-007.rgb",
+      "bytes": 184320,
+      "sha256": "c9b1d2f3430bcaf491c7c05fd6d46c599a58abfbb713bd652f8ef7ac30bf6800"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/banks32/capture/frame-008.rgb",
+      "bytes": 184320,
+      "sha256": "03e5301a3f3a486f699e4e23c4ad305b2ec44a3a65165895d60808d338562f09"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/banks32/capture/frame-009.rgb",
+      "bytes": 184320,
+      "sha256": "7a02571030d252fea545d658524ef3c73d3c5afe165875af37a27903cf11ce55"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/banks32/capture/frames.tsv",
+      "bytes": 114,
+      "sha256": "2d6dbd2f86746d1e934fa7ed13e295fc4506b88f2d0d6d6b784fc50ec81ef33d"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/banks32/capture/mesen.log",
+      "bytes": 401,
+      "sha256": "610dc8ca28f0de907ee7915ab34494d41f3619c49148ba83fd66b43421b9f992"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/banks32/capture/trace.tsv",
+      "bytes": 3610646,
+      "sha256": "4d1c68665955a5c8ec8b8a9e0d8c6fe2e060b439f93727b21f76254e5d05e63d"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline/build/chr.hex",
+      "bytes": 49152,
+      "sha256": "97f52da4e8cc2f777cef51c270374918f154ad2866ccec33ab89fff51406282e"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline/build/manifest.json",
+      "bytes": 682,
+      "sha256": "7dbe7c8b42bf5450e84688989880790cf17abd2fdca64469eaf922698f02068b"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline/build/mmc3.nes",
+      "bytes": 81936,
+      "sha256": "fa58532ea101751ddd1fd6497ec8b2bf71a6d34d909a7fd5e4e884b73ec1fe6c"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline/build/prg.hex",
+      "bytes": 196608,
+      "sha256": "353c399eac7cd7ebd22d388bd420bf609053d0041dee4978c7bd35517f3ff648"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline/capture/capture.json",
+      "bytes": 823,
+      "sha256": "6016d24eac15ff65f67391095840db6cae73a1ec96b4dd788176b4650526528c"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline/capture/capture.lua",
+      "bytes": 2105,
+      "sha256": "215a3424afc65b90eb1ba54ed702c57c2d0d18bce5e3ce05d7b5a3793d64633f"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline/capture/frame-006.rgb",
+      "bytes": 184320,
+      "sha256": "03e5301a3f3a486f699e4e23c4ad305b2ec44a3a65165895d60808d338562f09"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline/capture/frame-007.rgb",
+      "bytes": 184320,
+      "sha256": "c9b1d2f3430bcaf491c7c05fd6d46c599a58abfbb713bd652f8ef7ac30bf6800"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline/capture/frame-008.rgb",
+      "bytes": 184320,
+      "sha256": "03e5301a3f3a486f699e4e23c4ad305b2ec44a3a65165895d60808d338562f09"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline/capture/frame-009.rgb",
+      "bytes": 184320,
+      "sha256": "c9b1d2f3430bcaf491c7c05fd6d46c599a58abfbb713bd652f8ef7ac30bf6800"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline/capture/frames.tsv",
+      "bytes": 112,
+      "sha256": "0ca0e36e89d80aa6c05db18b3b47a0804e75ab0c8fd660af16547e62d55a8c24"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline/capture/mesen.log",
+      "bytes": 401,
+      "sha256": "f8b748ef41f0e7e621a536ccd9998c97627ed83811eb351a1d64cff40350de6b"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline/capture/trace.tsv",
+      "bytes": 3579024,
+      "sha256": "548021fcd96c86f656e1af36f26ce632bdedbc6c3c80b2d6b9d445e07b17a784"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline-status/.gitignore",
+      "bytes": 16018,
+      "sha256": "510b87ac6bc475f287e6b9dd9dc2d1ba85c7ccd4bff8b9931c0b943d8b7fb3b0"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline-status/cores/nes/HANDOFF.ko.md",
+      "bytes": 27752,
+      "sha256": "da0a7b7a6b8c344167a5b78f70f8c30cae4f63f5b57f30836b4600822be77546"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline-status/cores/nes/PROPOSAL.ko.md",
+      "bytes": 14421,
+      "sha256": "68854d3869ce4e094f36746d9f51f237a0b66352155572a7b18d9602466475c7"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline-status/cores/nes/README.md",
+      "bytes": 2310,
+      "sha256": "4baed227b23b4803b4f30ab223e00cf7a1b95af2aa9a7e44074550d3c0268efc"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline-status/cores/registry.json",
+      "bytes": 3424,
+      "sha256": "520605e910991a366cc367b205b9cc040b808d6a1b88de174779dd17ea85ed48"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/baseline-status/docs/nes-development-plan.json",
+      "bytes": 5275,
+      "sha256": "b4512457eb12c3bd64f69fd44f5aedaeeb627689c931c75cbaaacd6cd05afd64"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/build-banks32.log",
+      "bytes": 704,
+      "sha256": "f79b374f54818be7e7a0bf821eae0dd2836efc08ff7d0b1ba088413e86f232fd"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/build-baseline.log",
+      "bytes": 705,
+      "sha256": "8b00c29d13a26f264e64a8a3440b7c5cf857d0ead11269d84ecc3f55aed05551"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/build-fine_x.log",
+      "bytes": 703,
+      "sha256": "b42cc025e67866e1876d0db7e443c03f7ab0a9f0ce378527ce65d8c6939a99f0"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/build-split.log",
+      "bytes": 702,
+      "sha256": "f693c8456587d8a4f251689d7304e135e91d2d37bb304c9ef4108941e1cdff07"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/build-sprite.log",
+      "bytes": 703,
+      "sha256": "f5b209ddfd440d5c760d4f19e206b0b7a708ccc9e23165b099c1c7acd6022660"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/fine_x/build/chr.hex",
+      "bytes": 49152,
+      "sha256": "97f52da4e8cc2f777cef51c270374918f154ad2866ccec33ab89fff51406282e"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/fine_x/build/manifest.json",
+      "bytes": 680,
+      "sha256": "5fb352222a117e3937dd14b7512fc342118fa178f1c61922f2cb142b5d4988ca"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/fine_x/build/mmc3.nes",
+      "bytes": 81936,
+      "sha256": "3daf26c8e2d0002c288efdf2ff694cdc14f0266b9cb32bb3efda8b9bf5d173df"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/fine_x/build/prg.hex",
+      "bytes": 196608,
+      "sha256": "b840582d3818d90e0ee03bb517962c648ecada2c28a79ff3f76a16c205bd6370"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/fine_x/capture/capture.json",
+      "bytes": 821,
+      "sha256": "343f6c7fb627cc8c012d2364134731167b117bc887b95076dd085fdbb62f70a4"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/fine_x/capture/capture.lua",
+      "bytes": 2103,
+      "sha256": "72947ab4a4260b21ac02d5560093e4352f82428964ef44dc0d962ea45f2ab7ef"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/fine_x/capture/frame-006.rgb",
+      "bytes": 184320,
+      "sha256": "03c6fae7df13244951d3a2e6faee6786d7429dc713dd7e5ffcb81aea6bdb3afa"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/fine_x/capture/frame-007.rgb",
+      "bytes": 184320,
+      "sha256": "28474968be49ce70cb5feb523e24fbc17c2fa232a3cf17b02ac95bdef2536674"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/fine_x/capture/frame-008.rgb",
+      "bytes": 184320,
+      "sha256": "03c6fae7df13244951d3a2e6faee6786d7429dc713dd7e5ffcb81aea6bdb3afa"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/fine_x/capture/frame-009.rgb",
+      "bytes": 184320,
+      "sha256": "28474968be49ce70cb5feb523e24fbc17c2fa232a3cf17b02ac95bdef2536674"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/fine_x/capture/frames.tsv",
+      "bytes": 112,
+      "sha256": "53d58fa85a2f2135ce6a229b6ec2362c1532d5ba3b33997b34c4534fe56a506a"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/fine_x/capture/mesen.log",
+      "bytes": 401,
+      "sha256": "6b0c161deb373cbc7ffba19ad5489c67855249bf5dac05376fd7fab8676abaa4"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/fine_x/capture/trace.tsv",
+      "bytes": 3579024,
+      "sha256": "b78f8605c1a17869668d04041edb4be82c28ad611150573496cda386f3b31077"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/nes_video_packet_admission-initial.py",
+      "bytes": 1552,
+      "sha256": "e11f72e781f3f86bf1784abae420b6545a3ea7bdde919edfe5d106d4fc57cde4"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/prior-audit.json",
+      "bytes": 81,
+      "sha256": "e2e8dc54dbe32d6334bae6d76458edce939fbcf8311fe4d98a4b5c04a6647b6e"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/run-banks32.log",
+      "bytes": 244,
+      "sha256": "4457ef9d8ab3d38d509e26e9490c5f3f7474d09d746553595cc8bee1d243ddf3"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/run-baseline.log",
+      "bytes": 243,
+      "sha256": "b34cc3c51735e38e3a0379fc1bc77408e01725ffbbed398d304a39c44c3507b9"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/run-fine_x.log",
+      "bytes": 241,
+      "sha256": "acbea9bbe2707bbeebe17e75fcdd5d42be94d1ba5f606ac2f8ec89d9a78ab615"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/run-split.log",
+      "bytes": 240,
+      "sha256": "bfb0c7414361a55ff9b091e7dbba674844868b3a68733e760fbce6d824291627"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/run-sprite.log",
+      "bytes": 241,
+      "sha256": "173dcf5fadeb87aca1bfa40d6a5a186b6ec161e6ae4b114698083ebca7dd3a65"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/split/build/chr.hex",
+      "bytes": 49152,
+      "sha256": "97f52da4e8cc2f777cef51c270374918f154ad2866ccec33ab89fff51406282e"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/split/build/manifest.json",
+      "bytes": 679,
+      "sha256": "5b26758574bd2e36266de7edc4ca1fc31e46556eea25de55b5718c751fcf756b"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/split/build/mmc3.nes",
+      "bytes": 81936,
+      "sha256": "dbb7d8b1fad54fdc7420987606f9402d517cac3be95febb46df11f5c6200eb35"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/split/build/prg.hex",
+      "bytes": 196608,
+      "sha256": "57b6b2335481de2d88ce0d78012a337a62d6a68f3e9049815ee8ad619ba6c75b"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/split/capture/capture.json",
+      "bytes": 820,
+      "sha256": "2a3b10d4646903d1f078b8852158e054af53e64a98e14c5e8f549719f164f63f"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/split/capture/capture.lua",
+      "bytes": 2102,
+      "sha256": "3e6f99f07f70872141841d5ef7f9ce3669815c609bcce26ca2261ca1c69aa05a"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/split/capture/frame-006.rgb",
+      "bytes": 184320,
+      "sha256": "ff118aa6021fdb29e516f1e1148087b2210038ef30b3374f030db9ede19c4f76"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/split/capture/frame-007.rgb",
+      "bytes": 184320,
+      "sha256": "51aabaa0df92ace156a9bcd5611a3ecdf4337253d10fd56a582842bef84b0ca8"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/split/capture/frame-008.rgb",
+      "bytes": 184320,
+      "sha256": "ff118aa6021fdb29e516f1e1148087b2210038ef30b3374f030db9ede19c4f76"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/split/capture/frame-009.rgb",
+      "bytes": 184320,
+      "sha256": "51aabaa0df92ace156a9bcd5611a3ecdf4337253d10fd56a582842bef84b0ca8"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/split/capture/frames.tsv",
+      "bytes": 112,
+      "sha256": "0ca0e36e89d80aa6c05db18b3b47a0804e75ab0c8fd660af16547e62d55a8c24"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/split/capture/mesen.log",
+      "bytes": 401,
+      "sha256": "648d232599bfc95843282725808caa63a96d585328ba2f1622c8d91c77a3e9fe"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/split/capture/trace.tsv",
+      "bytes": 3580170,
+      "sha256": "705697248d0cf0e65823312154a6817acac64a619f8c7aab59e406ac7ca7ea8e"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/sprite/build/chr.hex",
+      "bytes": 49152,
+      "sha256": "97f52da4e8cc2f777cef51c270374918f154ad2866ccec33ab89fff51406282e"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/sprite/build/manifest.json",
+      "bytes": 680,
+      "sha256": "0cd48d69955f62088ca810ff450f685a35281e91b84decf45030cfbcfb053ed9"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/sprite/build/mmc3.nes",
+      "bytes": 81936,
+      "sha256": "2a5d0400f2b227074b9144b3db74ccde81c8c52db006fbcc55d436d1c5f64a25"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/sprite/build/prg.hex",
+      "bytes": 196608,
+      "sha256": "29cb3de4003357fe425cfd6134936600f6b9be8ef38e156671d2367c79be65e8"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/sprite/capture/capture.json",
+      "bytes": 821,
+      "sha256": "d9198dfb1143401f3f1802c3e92f5a918eae38e70cbe44e01e81f2174e152dcf"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/sprite/capture/capture.lua",
+      "bytes": 2103,
+      "sha256": "34e39405949ea7a870ccdce15d70098baf1cdf1744d3ac04d4f4b1d014b3d7d9"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/sprite/capture/frame-006.rgb",
+      "bytes": 184320,
+      "sha256": "adf33fbaba9c6fbf63d721dd6d137ee870d44222f1fecb66b8bc95e16b4b834b"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/sprite/capture/frame-007.rgb",
+      "bytes": 184320,
+      "sha256": "5fe608dae7d6ab91ffb6d4ca247891bee2129b47de834e2cf8e2a21a8f9a2425"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/sprite/capture/frame-008.rgb",
+      "bytes": 184320,
+      "sha256": "adf33fbaba9c6fbf63d721dd6d137ee870d44222f1fecb66b8bc95e16b4b834b"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/sprite/capture/frame-009.rgb",
+      "bytes": 184320,
+      "sha256": "5fe608dae7d6ab91ffb6d4ca247891bee2129b47de834e2cf8e2a21a8f9a2425"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/sprite/capture/frames.tsv",
+      "bytes": 112,
+      "sha256": "8173b36e01c30cbd2e8de00edb21df0371e547d220713b0d3c48c56c7100fcd2"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/sprite/capture/mesen.log",
+      "bytes": 401,
+      "sha256": "75716ab920cba1dd95474b6ae3b21799c7424c6516d29371928508f01fb759e9"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/sprite/capture/trace.tsv",
+      "bytes": 3579221,
+      "sha256": "915602506c4cbda3bae8375b152179097a7f7a4f8d9429ce0cde77d5e7024a67"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/verification-final.json",
+      "bytes": 62498,
+      "sha256": "2181a606f78d5f8c5be21d4889d5018db2123aa1b7a433c9b8b9c107422696c5"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/verification-final.log",
+      "bytes": 8975,
+      "sha256": "93c3283bcc9ae8900f833d7e32081537115bc07fa55723923ce4ee55f16a02ef"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/verification.json",
+      "bytes": 62368,
+      "sha256": "752021dea7061a22bab2032b8a3036e8c86e123b01fd4e92fd3cd6b9b76968e8"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/verification.log",
+      "bytes": 8845,
+      "sha256": "b565ff947a39a59efb214cc025710884ec01bd406c992585a8d84ed2f8e3fb29"
+    },
+    {
+      "path": "analysis/local-video-workloads-021/verify_nes_video_workloads-initial.py",
+      "bytes": 7804,
+      "sha256": "e9107bbfcb0e08a53705a59b4812794ecad9abc4e56d841774343e975a091254"
+    }
+  ],
+  "prior_status_baseline": "analysis/local-video-workloads-021/baseline-status",
+  "final_verification": "analysis/local-video-workloads-021/verification-final.json",
+  "scope": "Five new original NES Mesen workloads;offline reference-assisted static packet admission. No new RTL/SNES/hardware or broad compatibility claim."
+}

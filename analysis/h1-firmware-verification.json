@@ -1,0 +1,38 @@
+{
+  "candidate": "NES-H1-FIRMWARE-035",
+  "prior034_entries": 194,
+  "c44_source_hashes": 152,
+  "arm_build": "PASS",
+  "arm_bytes": 168288,
+  "arm_sha256": "76ce009ce667878fd6da0577025eed8a1725b12ec5b8007fe81d6de7074a0470",
+  "arm_compile_warnings": 0,
+  "compiled_manual_entry_calls": 3,
+  "compiled_marker_checks": 4,
+  "host_cases": [
+    "PASS normal RESET/menu restoration, 224 timed SCK edges",
+    "PASS re-entry",
+    "PASS missing H1 image restores base under RESET",
+    "PASS wrong protocol ID fail closed",
+    "PASS bounded missing identity",
+    "PASS stuck hardware SPI bounded rejection",
+    "PASS running status fault stops and restores",
+    "PASS missing base keeps RESET asserted",
+    "PASS invalid base token keeps RESET asserted",
+    "PASS pre-disabled USB IRQ remains disabled",
+    "PASS marker boundary cases"
+  ],
+  "io_delay_model": "Slow 1200mV 85C",
+  "io_group_longest_ns": {
+    "snes_pad_enable": 25.206,
+    "snes_input_capture": 10.005,
+    "spi_input_capture": 5.704,
+    "spi_ss_release": 10.622,
+    "register_to_snes": 19.481,
+    "register_to_miso": 11.962
+  },
+  "unconstrained_input_ports": 38,
+  "unconstrained_output_ports": 11,
+  "hardware_executed": false,
+  "hardware_eligible": false,
+  "scope": "Full ARM build plus host GPIO/SPI mock; prior034 physical fit delay inventory only. No MCU hardware execution, IO signoff or GBC runtime regression."
+}

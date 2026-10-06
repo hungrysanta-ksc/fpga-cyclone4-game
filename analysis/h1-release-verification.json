@@ -1,0 +1,104 @@
+{
+  "candidate": "NES-H1-RELEASE-040",
+  "date_kst": "2026-10-06",
+  "user039_log_sha256": "3ca7b618aebd7eab99dd947ad1baae9da2dc766ddd994f8839e5c84505726509",
+  "user039_decoded": {
+    "candidate": "NES-H1-FAULT-039",
+    "exit_reason": "F2_STATUS",
+    "last_status": 7,
+    "RUN": true,
+    "LOCKED": true,
+    "aggregate_fault": true,
+    "sequence_exhausted": false,
+    "polls": 33,
+    "elapsed_ms_including_configuration": 450,
+    "base_restored": true,
+    "root_cause_proven": false,
+    "confirmation": {
+      "identity": 165,
+      "protocol": 57,
+      "status": 7
+    },
+    "snapshot_trusted": true,
+    "snapshot_valid": true,
+    "snapshot": {
+      "flags_hex": "87",
+      "bus_error": 0,
+      "bus_meaning": "none",
+      "frontend_mask": 1,
+      "frontend_flags": [
+        "aborted_or_address_or_ROMSEL_changed"
+      ],
+      "producer_error": 0,
+      "producer_meaning": "none",
+      "captured_address_hex": "011800",
+      "capture_cycles_84MHz": 3034446,
+      "published_low8": 2,
+      "read_n": true,
+      "write_n": true,
+      "romsel_n": true
+    }
+  },
+  "fix": "Gate payload ROMSEL abort by !read_n; preserve pending-response early release and active-read errors",
+  "rtl": {
+    "candidate": "NES-H1-RELEASE-040",
+    "passed": true,
+    "samples": 448,
+    "verified_bits": 200,
+    "rows": 1880,
+    "waveform_sha256": "2d5ac119f6a314531cb7be2d8cff8a857fa77907ef41169877a49f17e2b7632e",
+    "boundary_sha256": "60ff0e7c036eb2cd79cd4721b8548970c7945f43ed89a876e5bef47d66c0d711",
+    "frontend_sha256": "e7c7b7a39810f2d956911cc3569761406cb237b3df59cd04feb53ff0569a9fd2",
+    "release": {
+      "normal_cases": 156,
+      "real_abort_cases": 72,
+      "legacy_false_abort_cases": 120,
+      "board_signature": {
+        "legacy_F2": 7,
+        "legacy_flags": 135,
+        "legacy_frontend": 1,
+        "legacy_stage": 0,
+        "legacy_producer": 0,
+        "legacy_address_hex": "011800",
+        "fixed_F2": 3,
+        "fixed_snapshot": 0,
+        "scope": "Legal synthetic bus release; matching recorded status signature, not a measured hardware bus trace"
+      }
+    }
+  },
+  "resource": {
+    "LE": 1465,
+    "LAB": 110,
+    "M9K": 44,
+    "registers": 954,
+    "pins": 135,
+    "virtual_pins": 0,
+    "PLL": 1
+  },
+  "internal_min_slack_ns": {
+    "setup": 2.721,
+    "hold": 0.131,
+    "recovery": 5.619,
+    "removal": 1.507,
+    "minimum_pulse_width": 5.604
+  },
+  "unconstrained_IO": {
+    "input_ports": 38,
+    "input_paths": 831,
+    "output_ports": 11,
+    "output_paths": 895
+  },
+  "rbf_bytes": 223004,
+  "rbf_sha256": "dc495abe746a57ed782158d9a13847dcd8917d0a58e1eb3d7a36b6166a1cbea9",
+  "fpga_bytes": 165212,
+  "fpga_sha256": "093695235a041e5171b42efc985557d14a78138b96598f13f9721042b28027fd",
+  "MCU_unchanged039_sha256": "57199290c967ac7fa43cc0818467e6b2a395e64e03aef0bd0c587db4d3f1a8b8",
+  "MCU_decoder_exact": true,
+  "installer_cases": 9,
+  "zip_sha256": "fe0b25c0f7897db7b74fd52b3452fe204b901f45e2e101689f8c1be932605a3d",
+  "hardware_executed": false,
+  "hardware_verified": false,
+  "electrical_signoff": false,
+  "no_new_emulator_execution": true,
+  "reference_ROM_unchanged034": true
+}

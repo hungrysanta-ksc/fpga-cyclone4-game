@@ -1,0 +1,615 @@
+{
+  "candidate": "NES-R2-MEMORY-PRODUCER-045",
+  "scope": "Original memory reader RTL+044 bus tests and standalone fit; no live encoder or new hardware image",
+  "sources": [
+    {
+      "path": "analysis/PACKET-MEMORY-RESULT.ko.md",
+      "bytes": 3610,
+      "sha256": "a6dc6f9a4d6aba73ddef20a181cc82c3253dd1f364cfa857d03ed7f5aee20107"
+    },
+    {
+      "path": "analysis/packet-memory-verification.json",
+      "bytes": 904,
+      "sha256": "74cd9e78005f8cadf2220172558358117b0c0fa8204b7416b2d922aef4a31bfc"
+    },
+    {
+      "path": "docs/nes-packet-memory-contract.md",
+      "bytes": 5771,
+      "sha256": "792e6687eb9affd9115807a7d5836f37de10959e1b87d42eb898ba4ac5cb799a"
+    },
+    {
+      "path": "src/nes/nes_packet_memory_producer.sv",
+      "bytes": 4762,
+      "sha256": "3fc53be9e6e64052713e8027dd3cde0537e819db84afb78d885458d0f033beac"
+    },
+    {
+      "path": "tests/nes-functional/packet_memory_tb.sv",
+      "bytes": 8572,
+      "sha256": "cafc34e6caa7d878cf1416296e811c8d2036cd8fde49748e3c3b20715e60fef5"
+    },
+    {
+      "path": "tools/nes_packet_memory.py",
+      "bytes": 4264,
+      "sha256": "d893f78f56fe86a56f06c09b693966a7ed9daa6c5eab5bc48d657f095d9dec6b"
+    },
+    {
+      "path": "tools/nes_packet_memory_resource.py",
+      "bytes": 2573,
+      "sha256": "1e9507068c922fa6c891d26a20658b32100f1f80223eafb9051ac243a3396282"
+    },
+    {
+      "path": "tools/run_nes_packet_memory.ps1",
+      "bytes": 3314,
+      "sha256": "8bb320b53a0cfae59b32d3b7a28f75fc81be8c7a6cc93dd2508537ffa5ca4770"
+    },
+    {
+      "path": "tools/verify_nes_packet_memory.py",
+      "bytes": 5978,
+      "sha256": "fba87430093061ce61da5a6c077b23c3c8875b3214106cb2a5019171e583103e"
+    }
+  ],
+  "status_files": [
+    {
+      "path": ".gitignore",
+      "bytes": 27441,
+      "sha256": "4acb3f68561eb303c55ce4045439788bd2a5e54f43d3bc82026bf8bf4071faa2"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 10908,
+      "sha256": "21a68925ca50fa4ef677964cb8c4c5844b667f752eab3bd0301b4cd111e3f5aa"
+    },
+    {
+      "path": "analysis/hardware-readiness.json",
+      "bytes": 13197,
+      "sha256": "f3e3c45b31bc8977371a9bf94ccb047d6b21d234637fe6b409d319604a8481df"
+    },
+    {
+      "path": "cores/nes/HANDOFF.ko.md",
+      "bytes": 60918,
+      "sha256": "8970d8812c56363d2124cb738a0ae35d5b62b2fc21f84154d8d000e2aec42686"
+    },
+    {
+      "path": "cores/nes/PROPOSAL.ko.md",
+      "bytes": 31376,
+      "sha256": "312206aa57bf29840eaa927bee9745117122410316d7b4c0be2189f0cce9659c"
+    },
+    {
+      "path": "cores/nes/README.md",
+      "bytes": 9052,
+      "sha256": "17cbe6372534c9216a73584b7a2e8a3e25a00025db2b5d4202b3934043f67006"
+    },
+    {
+      "path": "cores/registry.json",
+      "bytes": 10978,
+      "sha256": "facc2228c928a746d0d7b8875b7fcce82d03f9ccd30730f705dd5845350c06ed"
+    },
+    {
+      "path": "docs/nes-development-plan.json",
+      "bytes": 19371,
+      "sha256": "5d428948f3cb987c1e08a20b47ceede5247560d9209112f14e5786bf271b18de"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "analysis/local-packet-memory-045/baseline-status/.gitignore",
+      "bytes": 27025,
+      "sha256": "6bbd83bef7bb29f6b0e844eeb04d8d978f6ed8dfe6b2e041c7e6fe050bd0aa79"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/baseline-status/AGENTS.md",
+      "bytes": 9613,
+      "sha256": "73237df0b8c96d49d387e90289edb9e03503e64a2af8e0dfed23dd161660cb03"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/baseline-status/analysis/hardware-readiness.json",
+      "bytes": 13197,
+      "sha256": "f3e3c45b31bc8977371a9bf94ccb047d6b21d234637fe6b409d319604a8481df"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/baseline-status/cores/nes/HANDOFF.ko.md",
+      "bytes": 60247,
+      "sha256": "2841ccb40321f01845f9327b0097f2c57419162b8e1cdf550dc467a14d4d0b47"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/baseline-status/cores/nes/PROPOSAL.ko.md",
+      "bytes": 30705,
+      "sha256": "37cbff257a93473ec5e7edd174aa0ddbdc487d5cb55a3e674a2e48c96c7caa0f"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/baseline-status/cores/nes/README.md",
+      "bytes": 8381,
+      "sha256": "4f0256128eca5c2b0b3028a14d7f32d801de60cadf9494d0cfdb981aaa2134d3"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/baseline-status/cores/registry.json",
+      "bytes": 10628,
+      "sha256": "20cb04616f3897d7ea0b5a674632b317e8a5d996526fc9f0b2b0c041e1835e98"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/baseline-status/docs/nes-development-plan.json",
+      "bytes": 19032,
+      "sha256": "433a18cf488fd65fa556f930dec2090bd575f9f15222e78b365fca21615e7b0e"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/completion-audit.json",
+      "bytes": 133,
+      "sha256": "86150ae934301df2c6930d748b32ef34a32a5570bbfacd1fcf5b974364cf9211"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/latency.json",
+      "bytes": 4659,
+      "sha256": "a738eb244ef3253b54fabccd0b49b0eaa7a22c3f6cbc6e0919388009cc2e487a"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/public-files.json",
+      "bytes": 411,
+      "sha256": "699f4a7f39d578809d5349c9adb4da4c23e367d8ccc534a1f061fb37467fcc0a"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource-before-reset-fix/fit.log",
+      "bytes": 7724,
+      "sha256": "1051f043c127339a164e5a5bf78df2e8cfd6317cfdb3f348c298ff332dbfbee2"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource-before-reset-fix/map.log",
+      "bytes": 52383,
+      "sha256": "81a1c8131d3d61261699aefc7e65d4492e2284d21f0286c196e8ad3e4cd5e7ba"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource-before-reset-fix/nes_packet_memory_producer.sv",
+      "bytes": 4613,
+      "sha256": "82d31caf1b9bf4c090d44ac6b8a5cf516d396d19df86c1d0de8d6c4406f60de2"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource-before-reset-fix/output_files/producer.fit.rpt",
+      "bytes": 129544,
+      "sha256": "a933fb69206a4cd58833c342f9915633d1d1d498530047f29b602a016e77e0c7"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource-before-reset-fix/output_files/producer.fit.summary",
+      "bytes": 642,
+      "sha256": "31736f4b35bc26f7cf47b0feabfd68391b9fd071ae989d5cd3af108acb560cc3"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource-before-reset-fix/output_files/producer.flow.rpt",
+      "bytes": 6601,
+      "sha256": "327b704ee89b3f294137798c918811391b843822b25c4970e868c4cbf7b74336"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource-before-reset-fix/output_files/producer.map.rpt",
+      "bytes": 84511,
+      "sha256": "36ad48487b1075ac01f7e149829205b039681c4d75e13e14dc918804a63ab50e"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource-before-reset-fix/output_files/producer.map.summary",
+      "bytes": 497,
+      "sha256": "b313a3756fc58a092287d0844af36f8de72c3163f4ad54cd6147bfb8ea78d7a6"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource-before-reset-fix/producer.qpf",
+      "bytes": 31,
+      "sha256": "c4394d1a0ac431854f5ccee33b30c3508246f3de01a95d5789ea3606541b7522"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource-before-reset-fix/producer.qsf",
+      "bytes": 2362,
+      "sha256": "2cae513066f19bc97cbc01cbea4cbcd150acd52fc752dd1f9ebf72c03c0b876b"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource-before-reset-fix/producer.sdc",
+      "bytes": 92,
+      "sha256": "1c250ee62b8b19521331b7cbd3cedd1eb3758e2738bbdb8b821fbd1977b376eb"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource-before-reset-fix/result.json",
+      "bytes": 450,
+      "sha256": "02e12f0a44b07ba5133379d1d355dfa63a174529233e528d68386e4fbe38a4bc"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource/fit.log",
+      "bytes": 6436,
+      "sha256": "c7d432b5e98487e9f65a8c4969b968a7d88324f1659ac53b9021755bc5a609e1"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource/map.log",
+      "bytes": 48664,
+      "sha256": "1d83e53269607773745cf5861a56eb4202d187de23f10d5aac3e9c22de0bf6b1"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource/nes_packet_memory_producer.sv",
+      "bytes": 4762,
+      "sha256": "3fc53be9e6e64052713e8027dd3cde0537e819db84afb78d885458d0f033beac"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource/output_files/producer.fit.rpt",
+      "bytes": 126965,
+      "sha256": "009e4cc1ff5a6f994d934375397620ea684ac268abb2b60a809103374eb4a2e6"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource/output_files/producer.fit.summary",
+      "bytes": 640,
+      "sha256": "9e54b581d17487f00d087d56164e070735c815e70acf89d35bc0e65337936368"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource/output_files/producer.flow.rpt",
+      "bytes": 6601,
+      "sha256": "a8e5cd41efb8e2f062569ada33b4fdd8d35af76fd3565c04fc755c1198d9617d"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource/output_files/producer.map.rpt",
+      "bytes": 78856,
+      "sha256": "d6a9174b8d9409d601bf025061de6db8e1dc62ee5e290801a5e676edb9a2918b"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource/output_files/producer.map.summary",
+      "bytes": 497,
+      "sha256": "55d32c40799a49c0ff94018ba31ff3f27f44524e5ad8ad4fb50c011442df6b84"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource/producer.qpf",
+      "bytes": 31,
+      "sha256": "c4394d1a0ac431854f5ccee33b30c3508246f3de01a95d5789ea3606541b7522"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource/producer.qsf",
+      "bytes": 2362,
+      "sha256": "2cae513066f19bc97cbc01cbea4cbcd150acd52fc752dd1f9ebf72c03c0b876b"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource/producer.sdc",
+      "bytes": 92,
+      "sha256": "1c250ee62b8b19521331b7cbd3cedd1eb3758e2738bbdb8b821fbd1977b376eb"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/resource/result.json",
+      "bytes": 450,
+      "sha256": "efa126a2d1d21c5c819bdc67362272faf68b5a15e789467e9fce488cf4ba6d2a"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/result.json",
+      "bytes": 8133,
+      "sha256": "cd1da6e36f5babec0c7ac0b82eda71a91b0360071ffd848fc59d501977fea071"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/compile.log",
+      "bytes": 789,
+      "sha256": "f5193126904a4e93ad4441aeb4eb881d82a7c2fda20899d2abc6afcb5f942bca"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/memory-trace.tsv",
+      "bytes": 930096,
+      "sha256": "cdf88d715591335477f51aa42a06b5cbd37febda9c8e3bd0d3723afc8a55fd90"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/nes_packet_cdc_ram.sv",
+      "bytes": 4551,
+      "sha256": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/nes_packet_memory_producer.sv",
+      "bytes": 4613,
+      "sha256": "82d31caf1b9bf4c090d44ac6b8a5cf516d396d19df86c1d0de8d6c4406f60de2"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/nes_packet_queue_ram.sv",
+      "bytes": 3872,
+      "sha256": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/nes_snes_frontend.sv",
+      "bytes": 6729,
+      "sha256": "d4695fb16a1b58bb59028ececb784f1f4965353626599d8df42629267c26b3a4"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/nes_transport.sv",
+      "bytes": 1131,
+      "sha256": "850da0fe98d251fafd464a8542f4882c7519619be5871e6ed5528ea6b003430d"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/packet_memory_tb.sv",
+      "bytes": 8471,
+      "sha256": "b9a834d130c1e84d495413dce0e192b4dc4b23266b3d0c56ab122cbaa1e41b48"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/packets.hex",
+      "bytes": 65536,
+      "sha256": "b763dba4a5f0dcaec5beb987c0a555225ff756ff8318f3ca101519fb2405d14b"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/q20_h10.log",
+      "bytes": 2212,
+      "sha256": "af9c69012887bbba7635fe8eb557a42309e54142d8b87f9a9860b6ccd4b1adeb"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/q20_h10.tsv",
+      "bytes": 919513,
+      "sha256": "45064b00723c0733165bd249cc0d46badd649477c25fb5ce3fd6e1a3ac7ae8f6"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/q46_h12.log",
+      "bytes": 2326,
+      "sha256": "8e360ce804033381e2d3ae1ef9cfc9f37dc4ed79958eaa3677320029e3450231"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/q46_h12.tsv",
+      "bytes": 929777,
+      "sha256": "55a09b8de77309664a30762f04bf890905c8f9ab05bf2e766abe1deee5caba0c"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/q46_h20.log",
+      "bytes": 2220,
+      "sha256": "c5d83190b4e783808fd0d108f1dafd35564941b064ee6b90522a84f37a43a2e0"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/q46_h20.tsv",
+      "bytes": 930096,
+      "sha256": "cdf88d715591335477f51aa42a06b5cbd37febda9c8e3bd0d3723afc8a55fd90"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/result.json",
+      "bytes": 6134,
+      "sha256": "18f1e4d258ef7d16e9ecf11954e5bed96c8584315993fe4b4aa2d24c7ec19d37"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/transcript",
+      "bytes": 2188,
+      "sha256": "e42dec6b8691b91368bfd78173fa717c626d83ebe66f2f38567094e94ee9adf5"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-before-reset-fix/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-register-test/compile.log",
+      "bytes": 789,
+      "sha256": "12b2775d41ec3ab74aa3e912d23231200408eea67a6dce5b9514ec702a10375e"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-register-test/memory-trace.tsv",
+      "bytes": 88695,
+      "sha256": "cdefb412015093082379d4cd51a72b22bac4937a20104bb437a7e779d7bdc81d"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-register-test/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-register-test/nes_packet_cdc_ram.sv",
+      "bytes": 4551,
+      "sha256": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-register-test/nes_packet_memory_producer.sv",
+      "bytes": 4613,
+      "sha256": "82d31caf1b9bf4c090d44ac6b8a5cf516d396d19df86c1d0de8d6c4406f60de2"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-register-test/nes_packet_queue_ram.sv",
+      "bytes": 3872,
+      "sha256": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-register-test/nes_snes_frontend.sv",
+      "bytes": 6729,
+      "sha256": "d4695fb16a1b58bb59028ececb784f1f4965353626599d8df42629267c26b3a4"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-register-test/nes_transport.sv",
+      "bytes": 1131,
+      "sha256": "850da0fe98d251fafd464a8542f4882c7519619be5871e6ed5528ea6b003430d"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-register-test/packet_memory_tb.sv",
+      "bytes": 7749,
+      "sha256": "3f3a82f3accc3cf93fab86620fe953968b79e4799ba02b10633b8a98d4dc781e"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-register-test/packets.hex",
+      "bytes": 65536,
+      "sha256": "b763dba4a5f0dcaec5beb987c0a555225ff756ff8318f3ca101519fb2405d14b"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-register-test/q46_h12.log",
+      "bytes": 1748,
+      "sha256": "c2652dd738f8f4aa37502091835c3fa8375f504772454c019f9bd7c5a2bdf8a9"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-register-test/q46_h12.tsv",
+      "bytes": 88695,
+      "sha256": "cdefb412015093082379d4cd51a72b22bac4937a20104bb437a7e779d7bdc81d"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-register-test/result.json",
+      "bytes": 3357,
+      "sha256": "89cf4364b3ed4cae40f431d5e7a3e1055cf0527032399fc9a5186fab21aa67f9"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-register-test/transcript",
+      "bytes": 1716,
+      "sha256": "d1bb6dfaf41a6bec3d5991c61492373d304effda97dabdf4d5cd2b320c380e53"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-register-test/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-retry-test/compile.log",
+      "bytes": 789,
+      "sha256": "414ddb976eeafdfb170aeb4c39cc8dd72321d33f33da719704316589b501fbe7"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-retry-test/memory-trace.tsv",
+      "bytes": 774187,
+      "sha256": "49870208d0e32a352ce38874ca23a98dce68888adb7e0598cbb6559d9ca7307e"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-retry-test/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-retry-test/nes_packet_cdc_ram.sv",
+      "bytes": 4551,
+      "sha256": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-retry-test/nes_packet_memory_producer.sv",
+      "bytes": 4613,
+      "sha256": "82d31caf1b9bf4c090d44ac6b8a5cf516d396d19df86c1d0de8d6c4406f60de2"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-retry-test/nes_packet_queue_ram.sv",
+      "bytes": 3872,
+      "sha256": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-retry-test/nes_snes_frontend.sv",
+      "bytes": 6729,
+      "sha256": "d4695fb16a1b58bb59028ececb784f1f4965353626599d8df42629267c26b3a4"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-retry-test/nes_transport.sv",
+      "bytes": 1131,
+      "sha256": "850da0fe98d251fafd464a8542f4882c7519619be5871e6ed5528ea6b003430d"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-retry-test/packet_memory_tb.sv",
+      "bytes": 8264,
+      "sha256": "132cdc13928b735777ab8212bb05eea14f12918b6f57116f01e55dea2e5414d3"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-retry-test/packets.hex",
+      "bytes": 65536,
+      "sha256": "b763dba4a5f0dcaec5beb987c0a555225ff756ff8318f3ca101519fb2405d14b"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-retry-test/q46_h12.log",
+      "bytes": 2202,
+      "sha256": "83bdb0d3f1ffbc1bf938880dca6242cd264c989c76814e671e5ccb30820cc967"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-retry-test/q46_h12.tsv",
+      "bytes": 774187,
+      "sha256": "49870208d0e32a352ce38874ca23a98dce68888adb7e0598cbb6559d9ca7307e"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-retry-test/result.json",
+      "bytes": 3357,
+      "sha256": "5b3b6facacc92a64652b150ce0af4313f0e25a7cd3408c1944d07e7186bdad53"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-retry-test/transcript",
+      "bytes": 2170,
+      "sha256": "1ac8333f237b11a9b912d6623b56a05df7cadb0a200828a7b0d5ed207ffd01be"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl-initial-retry-test/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/compile.log",
+      "bytes": 789,
+      "sha256": "50a30253cc6767ab3f2ee274033bc3e3041e8ae6908782d3ec4fc15fff87b956"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/memory-trace.tsv",
+      "bytes": 930096,
+      "sha256": "cdf88d715591335477f51aa42a06b5cbd37febda9c8e3bd0d3723afc8a55fd90"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/nes_packet_cdc_ram.sv",
+      "bytes": 4551,
+      "sha256": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/nes_packet_memory_producer.sv",
+      "bytes": 4762,
+      "sha256": "3fc53be9e6e64052713e8027dd3cde0537e819db84afb78d885458d0f033beac"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/nes_packet_queue_ram.sv",
+      "bytes": 3872,
+      "sha256": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/nes_snes_frontend.sv",
+      "bytes": 6729,
+      "sha256": "d4695fb16a1b58bb59028ececb784f1f4965353626599d8df42629267c26b3a4"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/nes_transport.sv",
+      "bytes": 1131,
+      "sha256": "850da0fe98d251fafd464a8542f4882c7519619be5871e6ed5528ea6b003430d"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/packet_memory_tb.sv",
+      "bytes": 8572,
+      "sha256": "cafc34e6caa7d878cf1416296e811c8d2036cd8fde49748e3c3b20715e60fef5"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/packets.hex",
+      "bytes": 65536,
+      "sha256": "b763dba4a5f0dcaec5beb987c0a555225ff756ff8318f3ca101519fb2405d14b"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/q20_h10.log",
+      "bytes": 2212,
+      "sha256": "a5eb30f83367b85ea9c42a298afe90c95eddb10fda0eda7f538c5c9f1546fc54"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/q20_h10.tsv",
+      "bytes": 919513,
+      "sha256": "45064b00723c0733165bd249cc0d46badd649477c25fb5ce3fd6e1a3ac7ae8f6"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/q46_h12.log",
+      "bytes": 2326,
+      "sha256": "6e41364923d99d855e3ca6be2b3c01804b758b9d923fbc7a0f65c0812968c3ed"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/q46_h12.tsv",
+      "bytes": 929777,
+      "sha256": "55a09b8de77309664a30762f04bf890905c8f9ab05bf2e766abe1deee5caba0c"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/q46_h20.log",
+      "bytes": 2220,
+      "sha256": "431f7be6d2149b11d5f4dc312ec300f6b17b9ef5924b15ccfb18fb6f9bb9bd2d"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/q46_h20.tsv",
+      "bytes": 930096,
+      "sha256": "cdf88d715591335477f51aa42a06b5cbd37febda9c8e3bd0d3723afc8a55fd90"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/result.json",
+      "bytes": 6134,
+      "sha256": "fff7f976aec0ac6f9d638c759d09fba1f754da510e9478d5e8d8dd7c0211c1c5"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/transcript",
+      "bytes": 2188,
+      "sha256": "e3193e2730d878748b0759fa5bf0b51f3bb457fe57dcb71447e5ef560e28c9a4"
+    },
+    {
+      "path": "analysis/local-packet-memory-045/rtl/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

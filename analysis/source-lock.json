@@ -1,0 +1,1229 @@
+{
+  "candidate": "NES-P0-001",
+  "upstream": {
+    "url": "https://github.com/MiSTer-devel/NES_MiSTer",
+    "commit": "49a0a662e244469ca77b2155746a066df704ffae",
+    "files": [
+      {
+        "path": "COPYING",
+        "sha256": "b3d1eae7f524fc9ddd48562a4652efd2bcd848e38b03f05e388bcce943e73df2",
+        "bytes": 35819,
+        "license": "GPL-3.0",
+        "basis": "file points to repository COPYING (GPLv3 text)",
+        "status": "candidate-locked",
+        "notice_lines": []
+      },
+      {
+        "path": "rtl/nes.v",
+        "sha256": "7856ea1bf109af8d8dc4abbecc6224216971b68a53630dc816830f68235ef906",
+        "bytes": 43193,
+        "license": "GPL-3.0",
+        "basis": "file points to repository COPYING (GPLv3 text)",
+        "status": "candidate-locked",
+        "notice_lines": [
+          "// Copyright (c) 2012-2013 Ludvig Strigeus",
+          "// This program is GPL Licensed. See COPYING for the full license.",
+          "// Sprite DMA Works as follows.",
+          "// When the CPU writes to $4014 DMA is initiated ASAP.",
+          "// DMA runs for 512 cycles, the first cycle it reads from address",
+          "// xx00 - xxFF, into a latch, and the second cycle it writes to $2004.",
+          "// Facts:",
+          "// 1) Sprite DMA always does reads on even cycles and writes on odd cycles.",
+          "// 2) There are 1-2 cycles of cpu_read=1 after cpu_read=0 until Sprite DMA starts (pause_cpu=1, aout_enable=0)",
+          "// 3) Sprite DMA reads the address value on the last clock of cpu_read=0",
+          "// 4) If DMC interrupts Sprite, then it runs on the even cycle, and the odd cycle will be idle (pause_cpu=1, aout_enable=0)",
+          "// 5) When DMC triggers && interrupts CPU, there will be 2-3 cycles (pause_cpu=1, aout_enable=0) before DMC DMA starts.",
+          "// https://wiki.nesdev.com/w/index.php/PPU_OAM",
+          "// https://wiki.nesdev.com/w/index.php/APU_DMC",
+          "// https://forums.nesdev.com/viewtopic.php?f=3&t=6100",
+          "// https://forums.nesdev.com/viewtopic.php?f=3&t=14120"
+        ]
+      },
+      {
+        "path": "rtl/ppu.sv",
+        "sha256": "623c18149345910f04515d583ede22d2030047a723e0e629ceb45bbb6bec707a",
+        "bytes": 86344,
+        "license": "GPL-3.0",
+        "basis": "file points to repository COPYING (GPLv3 text)",
+        "status": "candidate-locked",
+        "notice_lines": [
+          "// Copyright (c) 2012-2013 Ludvig Strigeus",
+          "// This program is GPL Licensed. See COPYING for the full license.",
+          "// altera message_off 10935",
+          "// altera message_off 10027"
+        ]
+      },
+      {
+        "path": "rtl/apu.sv",
+        "sha256": "a08a8f0d7a13cfcce2b7045d230342330cb3dc35bc485d37b4a40c632ac69838",
+        "bytes": 41860,
+        "license": "GPL-3.0",
+        "basis": "explicit GPLv3 file header; no later-version grant asserted",
+        "status": "candidate-locked",
+        "notice_lines": [
+          "// Rewritten 6/4/2020 by Kitrinx",
+          "// This code is GPLv3."
+        ]
+      },
+      {
+        "path": "rtl/regs_savestates.sv",
+        "sha256": "6e243af0b87a604fb30d43502eed65ef5924a105d7ce254f424317debf787e9a",
+        "bytes": 3136,
+        "license": "repository GPLv3; individual grant not stated",
+        "basis": "no per-file notice; repository COPYING is evidence, not blanket clearance",
+        "status": "hold-before-vendoring",
+        "notice_lines": []
+      },
+      {
+        "path": "rtl/bus_savestates.vhd",
+        "sha256": "86b3df3bb42b2a3cd91df10b2cda97819f01004953fd8ca5569346704bc11a14",
+        "bytes": 2336,
+        "license": "repository GPLv3; individual grant not stated",
+        "basis": "no per-file notice; repository COPYING is evidence, not blanket clearance",
+        "status": "hold-before-vendoring",
+        "notice_lines": [
+          "-----------------------------------------------------------------",
+          "--------------- Bus Package --------------------------------",
+          "-----------------------------------------------------------------"
+        ]
+      },
+      {
+        "path": "rtl/dpram.vhd",
+        "sha256": "8d9ed84b808504717f7fa7b1c86e8916dbda4b429edf6fdcd68dcd5d678aa2b0",
+        "bytes": 6796,
+        "license": "repository GPLv3; individual grant not stated",
+        "basis": "no per-file notice; repository COPYING is evidence, not blanket clearance",
+        "status": "hold-before-vendoring",
+        "notice_lines": [
+          "--------------------------------------------------------------",
+          "-- Single port Block RAM",
+          "--------------------------------------------------------------"
+        ]
+      },
+      {
+        "path": "rtl/mappers/MMC3.sv",
+        "sha256": "a85f0324d941c7cf0bf3022b2b94a63e82ba989f882156090585d0d7cac04165",
+        "bytes": 57878,
+        "license": "repository GPLv3; individual grant not stated",
+        "basis": "no per-file notice; repository COPYING is evidence, not blanket clearance",
+        "status": "hold-before-vendoring",
+        "notice_lines": [
+          "// MMC3 style mappers. Some of these can probably be consolidated.",
+          "// iNES mapper 64 and 158 - Tengen's version of MMC3"
+        ]
+      },
+      {
+        "path": "sys/iir_filter.v",
+        "sha256": "570a8095c15af84a60015b5eab105cee6e2d7edde77e20f0ce40c075ab2db8b7",
+        "bytes": 5659,
+        "license": "GPL-2.0-or-later",
+        "basis": "explicit file header",
+        "status": "candidate-locked",
+        "notice_lines": [
+          "//  3-tap IIR filter for 2 channels. ",
+          "//  Copyright (C) 2020 Sorgelig",
+          "//",
+          "//  This program is free software; you can redistribute it and/or modify it",
+          "//  under the terms of the GNU General Public License as published by the Free",
+          "//  Software Foundation; either version 2 of the License, or (at your option)",
+          "//  any later version.",
+          "//",
+          "//  This program is distributed in the hope that it will be useful, but WITHOUT",
+          "//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or",
+          "//  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for",
+          "//  more details.",
+          "//",
+          "//  You should have received a copy of the GNU General Public License along",
+          "//  with this program; if not, write to the Free Software Foundation, Inc.,",
+          "//  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.",
+          "//",
+          "//  Can be converted to 2-tap (coeff_x2 = 0, coeff_y2 = 0) or 1-tap (coeff_x1,2 = 0, coeff_y1,2 = 0)",
+          "//"
+        ]
+      },
+      {
+        "path": "rtl/t65/T65_Pack.vhd",
+        "sha256": "986f55ef2f35bfa54588bc936ee6a7499178b57d43bff8e66273d029e8009bf0",
+        "bytes": 5458,
+        "license": "LicenseRef-T65-source-synthesized-BSD-style",
+        "basis": "file header; source and synthesized-form notice, non-endorsement, disclaimer",
+        "status": "candidate-locked",
+        "notice_lines": [
+          "-- ****",
+          "-- T65(b) core. In an effort to merge and maintain bug fixes ....",
+          "--",
+          "-- See list of changes in T65 top file (T65.vhd)...",
+          "--",
+          "-- ****",
+          "-- 65xx compatible microprocessor core",
+          "--",
+          "-- FPGAARCADE SVN: $Id: T65_Pack.vhd 1234 2015-02-28 20:14:50Z wolfgang.scherr $",
+          "--",
+          "-- Copyright (c) 2002...2015",
+          "--               Daniel Wallner (jesus <at> opencores <dot> org)",
+          "--               Mike Johnson   (mikej <at> fpgaarcade <dot> com)",
+          "--               Wolfgang Scherr (WoS <at> pin4 <dot> at>",
+          "--               Morten Leikvoll ()",
+          "--",
+          "-- All rights reserved",
+          "--",
+          "-- Redistribution and use in source and synthezised forms, with or without",
+          "-- modification, are permitted provided that the following conditions are met:",
+          "--",
+          "-- Redistributions of source code must retain the above copyright notice,",
+          "-- this list of conditions and the following disclaimer.",
+          "--",
+          "-- Redistributions in synthesized form must reproduce the above copyright",
+          "-- notice, this list of conditions and the following disclaimer in the",
+          "-- documentation and/or other materials provided with the distribution.",
+          "--",
+          "-- Neither the name of the author nor the names of other contributors may",
+          "-- be used to endorse or promote products derived from this software without",
+          "-- specific prior written permission.",
+          "--",
+          "-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"",
+          "-- AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,",
+          "-- THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR",
+          "-- PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE",
+          "-- LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR",
+          "-- CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF",
+          "-- SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS",
+          "-- INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN",
+          "-- CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)",
+          "-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE",
+          "-- POSSIBILITY OF SUCH DAMAGE.",
+          "--",
+          "-- Please report bugs to the author(s), but before you do so, please",
+          "-- make sure that this is not a derivative work and that",
+          "-- you have the latest version of this file.",
+          "--",
+          "-- Limitations :",
+          "--   See in T65 top file (T65.vhd)..."
+        ]
+      },
+      {
+        "path": "rtl/t65/T65_ALU.vhd",
+        "sha256": "78981177465d777e54bc0fed6e71542503ef7ee1cf6ff2965bd980417000acf7",
+        "bytes": 10187,
+        "license": "LicenseRef-T65-source-synthesized-BSD-style",
+        "basis": "file header; source and synthesized-form notice, non-endorsement, disclaimer",
+        "status": "candidate-locked",
+        "notice_lines": [
+          "-- ****",
+          "-- T65(b) core. In an effort to merge and maintain bug fixes ....",
+          "--",
+          "-- See list of changes in T65 top file (T65.vhd)...",
+          "--",
+          "-- ****",
+          "-- 65xx compatible microprocessor core",
+          "--",
+          "-- FPGAARCADE SVN: $Id: T65_ALU.vhd 1234 2015-02-28 20:14:50Z wolfgang.scherr $",
+          "--",
+          "-- Copyright (c) 2002...2015",
+          "--               Daniel Wallner (jesus <at> opencores <dot> org)",
+          "--               Mike Johnson   (mikej <at> fpgaarcade <dot> com)",
+          "--               Wolfgang Scherr (WoS <at> pin4 <dot> at>",
+          "--               Morten Leikvoll ()",
+          "--",
+          "-- All rights reserved",
+          "--",
+          "-- Redistribution and use in source and synthezised forms, with or without",
+          "-- modification, are permitted provided that the following conditions are met:",
+          "--",
+          "-- Redistributions of source code must retain the above copyright notice,",
+          "-- this list of conditions and the following disclaimer.",
+          "--",
+          "-- Redistributions in synthesized form must reproduce the above copyright",
+          "-- notice, this list of conditions and the following disclaimer in the",
+          "-- documentation and/or other materials provided with the distribution.",
+          "--",
+          "-- Neither the name of the author nor the names of other contributors may",
+          "-- be used to endorse or promote products derived from this software without",
+          "-- specific prior written permission.",
+          "--",
+          "-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"",
+          "-- AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,",
+          "-- THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR",
+          "-- PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE",
+          "-- LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR",
+          "-- CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF",
+          "-- SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS",
+          "-- INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN",
+          "-- CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)",
+          "-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE",
+          "-- POSSIBILITY OF SUCH DAMAGE.",
+          "--",
+          "-- Please report bugs to the author(s), but before you do so, please",
+          "-- make sure that this is not a derivative work and that",
+          "-- you have the latest version of this file.",
+          "--",
+          "-- Limitations :",
+          "--   See in T65 top file (T65.vhd)..."
+        ]
+      },
+      {
+        "path": "rtl/t65/T65_MCode.vhd",
+        "sha256": "315a59bc556fd9a69eae109ff84059b8d8db0ee29c74ebca55e8aa553345d4d1",
+        "bytes": 47062,
+        "license": "LicenseRef-T65-source-synthesized-BSD-style",
+        "basis": "file header; source and synthesized-form notice, non-endorsement, disclaimer",
+        "status": "candidate-locked",
+        "notice_lines": [
+          "-- ****",
+          "-- T65(b) core. In an effort to merge and maintain bug fixes ....",
+          "--",
+          "-- See list of changes in T65 top file (T65.vhd)...",
+          "--",
+          "-- ****",
+          "-- 65xx compatible microprocessor core",
+          "--",
+          "-- FPGAARCADE SVN: $Id: T65_MCode.vhd 1234 2015-02-28 20:14:50Z wolfgang.scherr $",
+          "--",
+          "-- Copyright (c) 2002...2015",
+          "--               Daniel Wallner (jesus <at> opencores <dot> org)",
+          "--               Mike Johnson   (mikej <at> fpgaarcade <dot> com)",
+          "--               Wolfgang Scherr (WoS <at> pin4 <dot> at>",
+          "--               Morten Leikvoll ()",
+          "--",
+          "-- All rights reserved",
+          "--",
+          "-- Redistribution and use in source and synthezised forms, with or without",
+          "-- modification, are permitted provided that the following conditions are met:",
+          "--",
+          "-- Redistributions of source code must retain the above copyright notice,",
+          "-- this list of conditions and the following disclaimer.",
+          "--",
+          "-- Redistributions in synthesized form must reproduce the above copyright",
+          "-- notice, this list of conditions and the following disclaimer in the",
+          "-- documentation and/or other materials provided with the distribution.",
+          "--",
+          "-- Neither the name of the author nor the names of other contributors may",
+          "-- be used to endorse or promote products derived from this software without",
+          "-- specific prior written permission.",
+          "--",
+          "-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"",
+          "-- AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,",
+          "-- THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR",
+          "-- PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE",
+          "-- LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR",
+          "-- CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF",
+          "-- SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS",
+          "-- INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN",
+          "-- CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)",
+          "-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE",
+          "-- POSSIBILITY OF SUCH DAMAGE.",
+          "--",
+          "-- Please report bugs to the author(s), but before you do so, please",
+          "-- make sure that this is not a derivative work and that",
+          "-- you have the latest version of this file.",
+          "--",
+          "-- Limitations :",
+          "--   See in T65 top file (T65.vhd)..."
+        ]
+      },
+      {
+        "path": "rtl/t65/T65.vhd",
+        "sha256": "52395e881ade8e7d99717d5082cdb5131a0711aaa2dea1fcf042014f6758d01b",
+        "bytes": 31630,
+        "license": "LicenseRef-T65-source-synthesized-BSD-style",
+        "basis": "file header; source and synthesized-form notice, non-endorsement, disclaimer",
+        "status": "candidate-locked",
+        "notice_lines": [
+          "-- ****",
+          "-- T65(b) core. In an effort to merge and maintain bug fixes ....",
+          "--",
+          "-- Ver 315 SzGy April 2020",
+          "--   Reduced the IRQ detection delay when RDY is not asserted (NMI?)",
+          "--   Undocumented opcodes behavior change during not RDY and page boundary crossing (VICE tests - cpu/sha, cpu/shs, cpu/shxy)",
+          "--",
+          "-- Ver 313 WoS January 2015",
+          "--   Fixed issue that NMI has to be first if issued the same time as a BRK instruction is latched in",
+          "--   Now all Lorenz CPU tests on FPGAARCADE C64 core (sources used: SVN version 1021) are OK! :D :D :D",
+          "--   This is just a starting point to go for optimizations and detailed fixes (the Lorenz test can't find)",
+          "--",
+          "-- Ver 312 WoS January 2015",
+          "--   Undoc opcode timing fixes for $B3 (LAX iy) and $BB (LAS ay)",
+          "--   Added comments in MCode section to find handling of individual opcodes more easily",
+          "--   All \"basic\" Lorenz instruction test (individual functional checks, CPUTIMING check) work now with",
+          "--       actual FPGAARCADE C64 core (sources used: SVN version 1021).",
+          "--",
+          "-- Ver 305, 306, 307, 308, 309, 310, 311 WoS January 2015",
+          "--   Undoc opcode fixes (now all Lorenz test on instruction functionality working, except timing issues on $B3 and $BB):",
+          "--     SAX opcode",
+          "--     SHA opcode",
+          "--     SHX opcode",
+          "--     SHY opcode",
+          "--     SHS opcode",
+          "--     LAS opcode",
+          "--     alternate SBC opcode",
+          "--     fixed NOP with immediate param (caused Lorenz trap test to fail)",
+          "--     IRQ and NMI timing fixes (in conjuction with branches)",
+          "--",
+          "-- Ver 304 WoS December 2014",
+          "--   Undoc opcode fixes:",
+          "--     ARR opcode",
+          "--     ANE/XAA opcode",
+          "--   Corrected issue with NMI/IRQ prio (when asserted the same time)",
+          "--",
+          "-- Ver 303 ost(ML) July 2014",
+          "--   (Sorry for some scratchpad comments that may make little sense)",
+          "--   Mods and some 6502 undocumented instructions.",
+          "--   Not correct opcodes acc. to Lorenz tests (incomplete list):",
+          "--     NOPN    (nop)",
+          "--     NOPZX   (nop + byte 172)",
+          "--     NOPAX   (nop + word da  ...  da:  byte 0)",
+          "--     ASOZ    (byte $07 + byte 172)",
+          "--",
+          "-- Ver 303,302 WoS April 2014",
+          "--     Bugfixes for NMI from foft",
+          "--     Bugfix for BRK command (and its special flag)",
+          "--",
+          "-- Ver 300,301 WoS January 2014",
+          "--     More merging",
+          "--     Bugfixes by ehenciak added, started tidyup *bust*",
+          "--",
+          "-- MikeJ March 2005",
+          "--      Latest version from www.fpgaarcade.com (original www.opencores.org)",
+          "-- ****",
+          "--",
+          "-- 65xx compatible microprocessor core",
+          "--",
+          "-- FPGAARCADE SVN: $Id: T65.vhd 1347 2015-05-27 20:07:34Z wolfgang.scherr $",
+          "--",
+          "-- Copyright (c) 2002...2015",
+          "--               Daniel Wallner (jesus <at> opencores <dot> org)",
+          "--               Mike Johnson   (mikej <at> fpgaarcade <dot> com)",
+          "--               Wolfgang Scherr (WoS <at> pin4 <dot> at>",
+          "--               Morten Leikvoll ()",
+          "--",
+          "-- All rights reserved",
+          "--",
+          "-- Redistribution and use in source and synthezised forms, with or without",
+          "-- modification, are permitted provided that the following conditions are met:",
+          "--",
+          "-- Redistributions of source code must retain the above copyright notice,",
+          "-- this list of conditions and the following disclaimer.",
+          "--",
+          "-- Redistributions in synthesized form must reproduce the above copyright",
+          "-- notice, this list of conditions and the following disclaimer in the",
+          "-- documentation and/or other materials provided with the distribution.",
+          "--",
+          "-- Neither the name of the author nor the names of other contributors may",
+          "-- be used to endorse or promote products derived from this software without",
+          "-- specific prior written permission.",
+          "--",
+          "-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"",
+          "-- AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,",
+          "-- THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR",
+          "-- PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE",
+          "-- LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR",
+          "-- CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF",
+          "-- SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS",
+          "-- INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN",
+          "-- CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)",
+          "-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE",
+          "-- POSSIBILITY OF SUCH DAMAGE.",
+          "--",
+          "-- Please report bugs to the author(s), but before you do so, please",
+          "-- make sure that this is not a derivative work and that",
+          "-- you have the latest version of this file.",
+          "--",
+          "-- ----- IMPORTANT NOTES -----",
+          "--",
+          "-- Limitations:",
+          "--   65C02 and 65C816 modes are incomplete (and definitely untested after all 6502 undoc fixes)",
+          "--      65C02 supported : inc, dec, phx, plx, phy, ply",
+          "--      65D02 missing : bra, ora, lda, cmp, sbc, tsb*2, trb*2, stz*2, bit*2, wai, stp, jmp, bbr*8, bbs*8",
+          "--   Some interface signals behave incorrect",
+          "--   NMI interrupt handling not nice, needs further rework (to cycle-based encoding).",
+          "--",
+          "-- Usage:",
+          "--   The enable signal allows clock gating / throttling without using the ready signal.",
+          "--   Set it to constant '1' when using the Clk input as the CPU clock directly.",
+          "--",
+          "--   TAKE CARE you route the DO signal back to the DI signal while R_W_n='0',",
+          "--   otherwise some undocumented opcodes won't work correctly.",
+          "--   EXAMPLE:",
+          "--      CPU : entity work.T65",
+          "--          port map (",
+          "--              R_W_n   => cpu_rwn_s,",
+          "--              [....all other ports....]",
+          "--              DI      => cpu_din_s,",
+          "--              DO      => cpu_dout_s",
+          "--          );",
+          "--      cpu_din_s <= cpu_dout_s when cpu_rwn_s='0' else",
+          "--                   [....other sources from peripherals and memories...]",
+          "--",
+          "-- ----- IMPORTANT NOTES -----",
+          "--"
+        ]
+      }
+    ]
+  },
+  "current_adoption": "P1 original MIT Python/Lua only; no upstream HDL copied into this checkout by P1",
+  "exclusions": [
+    "MiSTer OPLL/VM2413 noncommercial condition",
+    "N8 permission unconfirmed"
+  ],
+  "evidence_manifest_sha256": "6522034cb74fdbe58afd296446b75ca0c28118b47d6b49e53de07c54897da118",
+  "evidence_files": [
+    {
+      "file": "nes-n01-diagnostic-v1/chr.hex",
+      "sha256": "f8802cb3a95f03dae660dd57659afdb0135acd4e6b718a3cf990b0600afff840",
+      "match": true
+    },
+    {
+      "file": "nes-n01-diagnostic-v1/diagnostic.nes",
+      "sha256": "98ecb54846f020d886d32740292999efaad3d3ed4fa6792e7043403fba3854f9",
+      "match": true
+    },
+    {
+      "file": "nes-n01-diagnostic-v1/manifest.json",
+      "sha256": "96e87a955884618065114a04a9d9d1e4a6cadbcbc512f265dff2f916c2da2f98",
+      "match": true
+    },
+    {
+      "file": "nes-n01-diagnostic-v1/prg.hex",
+      "sha256": "4277715e6265c58d9b5ebf5a9d4d0727cf1b0f1ef18c5e7ad5f5808b182d3750",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v1/files.qip",
+      "sha256": "b297cc35f4e91c6145efd06fa773c189c94784530fde033ad1cbaf7113170643",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v1/map.log",
+      "sha256": "91599bb73563661801be511d2ac4bfe6ffaaf5fad0297da315d8201a10933e9c",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v1/nes_probe.sv",
+      "sha256": "8ced4cf77bd0b194a8bfed0086fc2cf1641401eae45a8d510ef7809e13961b66",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v1/output_files/probe.flow.rpt",
+      "sha256": "cdc6cc90b5004149787492b3a59c97f3d012b503f721929e16ff1ecbc723fc10",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v1/output_files/probe.map.rpt",
+      "sha256": "c344cc7c87dd0109aa23358013e60dea77a4e684a957e91267f11b2035545bbc",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v1/output_files/probe.map.summary",
+      "sha256": "73585fdf8a8024f882df4ce668028d4be6c82feb43cad70c837f465d3f4a277a",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v1/probe.qpf",
+      "sha256": "c4087ec21f97c540ffb537072cd0e63acbd5625f02b3a55847b2d2d5a45faacf",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v1/probe.qsf",
+      "sha256": "85b7e4e657f9b223b4f08ecee4229c9757aa400853576b6c6856299334a2b385",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v1/probe.sdc",
+      "sha256": "548ab14ed48c3d810d0d4261e458bff3ee9f5c049f9a1a2be4927fa6984b87f9",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v1/result.json",
+      "sha256": "6c79a4e80ef044abd3068c17d0aa3670e7b160767a7e28ade7e1535bf5775c77",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v2/files.qip",
+      "sha256": "b297cc35f4e91c6145efd06fa773c189c94784530fde033ad1cbaf7113170643",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v2/fit.log",
+      "sha256": "98e92b1c534de1b4418f7b6e9f1ee9b46c346335b1b21cc64c4e9194e3519fd4",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v2/map.log",
+      "sha256": "4ed0093cde9634f08b007241d60b2f28b211e05a1594e6425c607178de3bc735",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v2/nes_probe.sv",
+      "sha256": "0bc10ac32a2b52176d1436b406ad63427d50f87df8379edbf608eef711af1454",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v2/output_files/probe.fit.rpt",
+      "sha256": "7caf043ee744126b8763ac48720d7b28688c3cde2156f116ac23d25291450861",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v2/output_files/probe.fit.summary",
+      "sha256": "17357356b7973095eb841a3879f131daccca79d7c705b025e5ba74005c23bd12",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v2/output_files/probe.flow.rpt",
+      "sha256": "43558a7d61cc1b67d528707a53ab62bd7af126afcb0d8102a3e95f601383f6e0",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v2/output_files/probe.map.rpt",
+      "sha256": "5e05f9daf7ff6d725d4a739cc99713d8a5fba2342c911dc5e797af4c99db3dc3",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v2/output_files/probe.map.summary",
+      "sha256": "877648d295e8a2e824e158ee5d4b8ec3d13427d9e7bf40c9169b9bf33d3c84a0",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v2/output_files/probe.sta.rpt",
+      "sha256": "93bbadbe93e0c564ba076ff67fc98525edd6163271f90f2ff4d5b02ca5b5a484",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v2/output_files/probe.sta.summary",
+      "sha256": "0e7d1005c8925e0ac2cbafaef26f25ca170dc098c854b30b2d96cf5c7f629d22",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v2/probe.qpf",
+      "sha256": "c4087ec21f97c540ffb537072cd0e63acbd5625f02b3a55847b2d2d5a45faacf",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v2/probe.qsf",
+      "sha256": "e63165754fdb3047b09f94a92bba2193803f3bd9b98449930276602691502f92",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v2/probe.sdc",
+      "sha256": "548ab14ed48c3d810d0d4261e458bff3ee9f5c049f9a1a2be4927fa6984b87f9",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v2/result.json",
+      "sha256": "21ab25c2927d745d9305967d27cd6d3045cf4d9cefc0c73dd20c213f8ba5c0eb",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v2/sta.log",
+      "sha256": "f336d2539b511eb125a924fa64c41af3b804731f8af62cdee253ac69e6bfb699",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v3/files.qip",
+      "sha256": "e433d138b33e639b3021d2bf4520fc0451ed073766e360c7885a43a98a17ece5",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v3/fit.log",
+      "sha256": "99ded74f6ada558de5b5d283e0d2c9aa6e349345dee6d05c838e31755c70bc9f",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v3/map.log",
+      "sha256": "5867fdced69a27bfc1c8a9069f1b82873d628d24566c9d2d18a8ed201e3fe659",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v3/nes_probe.sv",
+      "sha256": "0bc10ac32a2b52176d1436b406ad63427d50f87df8379edbf608eef711af1454",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v3/output_files/probe.fit.rpt",
+      "sha256": "4fe2aa7683a3ee0268f07a076776cc2635e55cd309396cfbae2ac9243469b02b",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v3/output_files/probe.fit.summary",
+      "sha256": "c205c92ebb8839ff40393bde765aaa2f9515c76eb02f8072b5ef0e95baae734f",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v3/output_files/probe.flow.rpt",
+      "sha256": "6bb36cdee2467fc2b0af6b14ca8a63cd5ccd9d55fe712a611e0c497907ff4512",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v3/output_files/probe.map.rpt",
+      "sha256": "d054da98d49255a6b35dea80fe2c4d1b57c78b5a804adfa8904ad0adb1d92009",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v3/output_files/probe.map.summary",
+      "sha256": "eaef8f221848634ec33718409a84f4502378839a702b58d351a594f0a27d8f77",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v3/output_files/probe.sta.rpt",
+      "sha256": "c5b06191a805c09101b257392046ac54efacfd8629ce87350ab2358161f15159",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v3/output_files/probe.sta.summary",
+      "sha256": "50e645c70b4db9b93a042bad78229b92e8f3dc3a8d24cbf45370eeae787af5f8",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v3/probe.qpf",
+      "sha256": "c4087ec21f97c540ffb537072cd0e63acbd5625f02b3a55847b2d2d5a45faacf",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v3/probe.qsf",
+      "sha256": "e63165754fdb3047b09f94a92bba2193803f3bd9b98449930276602691502f92",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v3/probe.sdc",
+      "sha256": "548ab14ed48c3d810d0d4261e458bff3ee9f5c049f9a1a2be4927fa6984b87f9",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v3/result.json",
+      "sha256": "dc5faaddb5898a74ebe2e175977a4b618a39cea757945e8505f34132c6136806",
+      "match": true
+    },
+    {
+      "file": "nes-n01-mister-probe-v3/sta.log",
+      "sha256": "330c127f46b9172a5677ebc3b609c941aca51f5880958e42c52febee6fdfd5b6",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v1/chr.hex",
+      "sha256": "f8802cb3a95f03dae660dd57659afdb0135acd4e6b718a3cf990b0600afff840",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v1/compile-000-T65_Pack.log",
+      "sha256": "ec2e6dc60dbed64be2596e93543ae24819b1c104c17129cf72ba0d8006cf2737",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v1/compile-001-T65_ALU.log",
+      "sha256": "e06122a85c1ee228834a72b4c59f01ecf1052e439aefef91d0848a1ab7754e6e",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v1/compile-002-T65_MCode.log",
+      "sha256": "bea59f20ba1e416106076c1b69d9608946e56b74f32a08b22ffe23dc39180d0c",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v1/compile-003-T65.log",
+      "sha256": "13c80f85619e0431c135d85af84014340f94afdef9078af7bbbac7921939fdf1",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v1/files.qip",
+      "sha256": "b297cc35f4e91c6145efd06fa773c189c94784530fde033ad1cbaf7113170643",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v1/manifest.json",
+      "sha256": "96e87a955884618065114a04a9d9d1e4a6cadbcbc512f265dff2f916c2da2f98",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v1/nes_probe.sv",
+      "sha256": "0bc10ac32a2b52176d1436b406ad63427d50f87df8379edbf608eef711af1454",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v1/prg.hex",
+      "sha256": "4277715e6265c58d9b5ebf5a9d4d0727cf1b0f1ef18c5e7ad5f5808b182d3750",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v1/vlib.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v2/chr.hex",
+      "sha256": "f8802cb3a95f03dae660dd57659afdb0135acd4e6b718a3cf990b0600afff840",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v2/compile-000-bus_savestates.log",
+      "sha256": "9cb7f7ede2706b203818a651b26e9fefc73b16e7f581a9e8a8be600fc704a504",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v2/compile-001-T65_Pack.log",
+      "sha256": "e1cb2e0b76d13e659e937df85b85f665ff3c6c9694a02037b78371d03d8a0661",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v2/compile-002-T65_ALU.log",
+      "sha256": "6b1b801b80e5fc574348695a1a81046c886b6f2828c753585208eaa4262740c9",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v2/compile-003-T65_MCode.log",
+      "sha256": "68ff56fd980d0b71380f60121f37fb4897d569d9a6c329d7b99ae9a72d1c50f2",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v2/compile-004-T65.log",
+      "sha256": "bd0746d2ee016c06b0064d7652b2bb709f76887e24ccdc8a34e3ac4970db9dc4",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v2/compile-005-VRC.log",
+      "sha256": "66c9c5118967bae70096d2edffad80a212e9d666fc1145ac3449e9abd4813693",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v2/files.qip",
+      "sha256": "b297cc35f4e91c6145efd06fa773c189c94784530fde033ad1cbaf7113170643",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v2/manifest.json",
+      "sha256": "96e87a955884618065114a04a9d9d1e4a6cadbcbc512f265dff2f916c2da2f98",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v2/nes_probe.sv",
+      "sha256": "0bc10ac32a2b52176d1436b406ad63427d50f87df8379edbf608eef711af1454",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v2/prg.hex",
+      "sha256": "4277715e6265c58d9b5ebf5a9d4d0727cf1b0f1ef18c5e7ad5f5808b182d3750",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v2/vlib.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v3/chr.hex",
+      "sha256": "f8802cb3a95f03dae660dd57659afdb0135acd4e6b718a3cf990b0600afff840",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v3/compile-000-bus_savestates.log",
+      "sha256": "2036c5b5e8c1e0626145cefddaafb770f2bd3521876fc82c3b39eddee0828455",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v3/compile-001-T65_Pack.log",
+      "sha256": "4626a6682475b08be162ce674f7d1e331eff387ea97a968ccfdbcfbff891ae28",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v3/compile-002-T65_ALU.log",
+      "sha256": "503f0fa8b6149e3c687eb902918fdfcfa6f12e6f5654b0949a52a5d63b7058e2",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v3/compile-003-T65_MCode.log",
+      "sha256": "d098431f2dc19b095d9dd2d90f7b52c5d79b30d2a60d4f23553ce515036d0312",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v3/compile-004-T65.log",
+      "sha256": "4750993441367a417176b1a7367f085e187661f19e4451d3dd3465e520397949",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v3/compile-018-attacktable.log",
+      "sha256": "988a0029dff78a81850f1e1398a6913c842150a2f2ce15643af50fb95de71b31",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v3/compile-019-controller.log",
+      "sha256": "daf05e67d179592648b65780fc33abd1ce7b8cea0d13d4007f09003a93cc032e",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v3/files.qip",
+      "sha256": "b297cc35f4e91c6145efd06fa773c189c94784530fde033ad1cbaf7113170643",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v3/manifest.json",
+      "sha256": "96e87a955884618065114a04a9d9d1e4a6cadbcbc512f265dff2f916c2da2f98",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v3/nes_probe.sv",
+      "sha256": "0bc10ac32a2b52176d1436b406ad63427d50f87df8379edbf608eef711af1454",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v3/prg.hex",
+      "sha256": "4277715e6265c58d9b5ebf5a9d4d0727cf1b0f1ef18c5e7ad5f5808b182d3750",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v3/vlib.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v4/chr.hex",
+      "sha256": "f8802cb3a95f03dae660dd57659afdb0135acd4e6b718a3cf990b0600afff840",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v4/compile-000-vm2413.log",
+      "sha256": "1503f79e1e0e0e8a4783d74fe3ee310e827f5b31d4b51e86de248294e76a8b9c",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v4/files.qip",
+      "sha256": "b297cc35f4e91c6145efd06fa773c189c94784530fde033ad1cbaf7113170643",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v4/manifest.json",
+      "sha256": "96e87a955884618065114a04a9d9d1e4a6cadbcbc512f265dff2f916c2da2f98",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v4/nes_probe.sv",
+      "sha256": "0bc10ac32a2b52176d1436b406ad63427d50f87df8379edbf608eef711af1454",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v4/prg.hex",
+      "sha256": "4277715e6265c58d9b5ebf5a9d4d0727cf1b0f1ef18c5e7ad5f5808b182d3750",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v4/vlib.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v5/chr.hex",
+      "sha256": "f8802cb3a95f03dae660dd57659afdb0135acd4e6b718a3cf990b0600afff840",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v5/compile-000-vm2413.log",
+      "sha256": "cbf0251e4f1e0a37b726f38d1c654cf4b2ab9d6c557d9936af897e09baea9237",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v5/compile-001-bus_savestates.log",
+      "sha256": "c2ec9a04cbeb9c6a9204ce588a3f3939b21208b0a18b61be92db8c1545d3863e",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v5/compile-002-T65_Pack.log",
+      "sha256": "06362c22b86dc7997b9fbbbe5aff54a11b4ec009467a6088fcd8ae35a2428773",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v5/compile-003-T65_ALU.log",
+      "sha256": "af3cd08424bdd09cc7402c7264ee6a9806deaed597a43c7dd3bab0179e4c2245",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v5/compile-004-T65_MCode.log",
+      "sha256": "68468c63ebb7cfbc8bea3465ff0e1f52b5a8b086a80fb4c5f1bc0bc1a28e1fe0",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v5/compile-005-T65.log",
+      "sha256": "a857bb2092f7d883c2b4cbf9568027bd847921c1a5f1f4fcae219a2813ad5d17",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v5/compile-019-attacktable.log",
+      "sha256": "a4de7087b291d2816b6585f0d7f6e072fb9ef743fada2df056dc70363c8c45e0",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v5/compile-020-controller.log",
+      "sha256": "7bd34e453d87d8a8c79e91788f86715c49295faf246cadfa6876bf8da2818c6e",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v5/files.qip",
+      "sha256": "b297cc35f4e91c6145efd06fa773c189c94784530fde033ad1cbaf7113170643",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v5/manifest.json",
+      "sha256": "96e87a955884618065114a04a9d9d1e4a6cadbcbc512f265dff2f916c2da2f98",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v5/nes_probe.sv",
+      "sha256": "0bc10ac32a2b52176d1436b406ad63427d50f87df8379edbf608eef711af1454",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v5/prg.hex",
+      "sha256": "4277715e6265c58d9b5ebf5a9d4d0727cf1b0f1ef18c5e7ad5f5808b182d3750",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v5/vlib.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v6/chr.hex",
+      "sha256": "f8802cb3a95f03dae660dd57659afdb0135acd4e6b718a3cf990b0600afff840",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v6/compile-000-bus_savestates.log",
+      "sha256": "d701d498a9f3edc875e82f10f87ecf0f84ea101d21d7b1a0402d82079184010a",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v6/compile-001-T65_Pack.log",
+      "sha256": "827f77af6044e0c3fe7b35f62493c32375c21db3a08ecaaffcb6ebfb7ed396e6",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v6/compile-002-T65_ALU.log",
+      "sha256": "fdfbc397e4229a634fdf02a3ad233df201fb9b67c12a40c9fad755f2571e1d45",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v6/compile-003-T65_MCode.log",
+      "sha256": "5cc05e0c00c6a1c57d1f7a4b5f9571c79d9c48aaac0631ef15fb9209fa2d41bc",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v6/compile-004-T65.log",
+      "sha256": "4f31cda861fdd25960ea6b8f713ded8e85016618f1a3365a13cd91dc69f54728",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v6/compile-006-dpram.log",
+      "sha256": "6210fba45cf5c8ce88dada3f7d30218a90ec105a5c6fbad818822ee1246fbe9c",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v6/files.qip",
+      "sha256": "e433d138b33e639b3021d2bf4520fc0451ed073766e360c7885a43a98a17ece5",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v6/manifest.json",
+      "sha256": "96e87a955884618065114a04a9d9d1e4a6cadbcbc512f265dff2f916c2da2f98",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v6/nes_probe.sv",
+      "sha256": "0bc10ac32a2b52176d1436b406ad63427d50f87df8379edbf608eef711af1454",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v6/prg.hex",
+      "sha256": "4277715e6265c58d9b5ebf5a9d4d0727cf1b0f1ef18c5e7ad5f5808b182d3750",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v6/vlib.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v7/chr.hex",
+      "sha256": "f8802cb3a95f03dae660dd57659afdb0135acd4e6b718a3cf990b0600afff840",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v7/compile-000-bus_savestates.log",
+      "sha256": "0e7a15326469bcfb1263695aa3b883dcf956f2d62eda315bf252978e164f5d43",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v7/compile-001-T65_Pack.log",
+      "sha256": "0d06878131dc19fd25c80a25559ec0c8d39bab7159834e646e9d09d1207ca615",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v7/compile-002-T65_ALU.log",
+      "sha256": "4e4f045cc3d2ed8e1a30195f5ba990dc91d59e7cc1d99844d7377d7d55a8dd30",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v7/compile-003-T65_MCode.log",
+      "sha256": "b71c5b16027872b8ae8f545264635c6f69b1665f6aa16de4b609f6a1a2eec5b7",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v7/compile-004-T65.log",
+      "sha256": "d6b0b0cbc1254d0c68fa63b5c9fb46f580832bc59a93eec5567144e1abd7fe28",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v7/compile-006-dpram.log",
+      "sha256": "d86f6d5ab986ad0f06e3d65c8239126a9625a04cf56c3602dd2e3bc4c3dbb691",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v7/compile-020-statemanager.log",
+      "sha256": "7753f1eb169257cf9276f686a9f68b5b699158d281d6616c1667228a84eccdc9",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v7/compile-021-savestates.log",
+      "sha256": "bcb650e678fab6d499105021acb60279518d20fdd4ebe124c70ded24fa9ef1e8",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v7/compile-verilog.log",
+      "sha256": "9b56040f28ee390e3e37bf531d18d0c628afc7dce8626c82800122f779360f53",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v7/files.qip",
+      "sha256": "e433d138b33e639b3021d2bf4520fc0451ed073766e360c7885a43a98a17ece5",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v7/manifest.json",
+      "sha256": "96e87a955884618065114a04a9d9d1e4a6cadbcbc512f265dff2f916c2da2f98",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v7/nes_probe.sv",
+      "sha256": "0bc10ac32a2b52176d1436b406ad63427d50f87df8379edbf608eef711af1454",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v7/prg.hex",
+      "sha256": "4277715e6265c58d9b5ebf5a9d4d0727cf1b0f1ef18c5e7ad5f5808b182d3750",
+      "match": true
+    },
+    {
+      "file": "nes-n01-simulation-v7/vlib.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "file": "draft-tools/nes_probe.py",
+      "sha256": "1e0e0a8a970ddab9e97716d803d8676deb4c38acdf32b30d95dbcc7474eb28a5",
+      "match": true
+    },
+    {
+      "file": "draft-tools/nes_diagnostic.py",
+      "sha256": "b35e1c003997c7615f3495a489c0eae5916f36ea1861ccf85411d26633584d32",
+      "match": true
+    },
+    {
+      "file": "draft-tools/nes_sim.py",
+      "sha256": "51444d1276c2f0e06e06cc16d92497547ff5249892e26e690ab1e5c172862636",
+      "match": true
+    },
+    {
+      "file": "reference-plan/FXPAK-PRO-NES-PLAN.ko.md",
+      "sha256": "6c4d68f3856bcd2e79cbf6851e2d7d44d11565445e6f2a9aee0e6a885b3d52ba",
+      "match": true
+    },
+    {
+      "file": "reference-plan/EVIDENCE-MANIFEST.json",
+      "sha256": "76826f5a71982f824e4c0102a6d0b3abf860c31f147d8a4e07445d7666955ed5",
+      "match": true
+    }
+  ],
+  "plan_manifest_sha256": "76826f5a71982f824e4c0102a6d0b3abf860c31f147d8a4e07445d7666955ed5",
+  "plan_snapshots": [
+    {
+      "file": "START-HERE.ko.md",
+      "sha256": "c522efd9205afa18a2562aa973608a9e5887adab74785aeb00fc33ba048c959c",
+      "match": true
+    },
+    {
+      "file": "MISTER-PRO-FIT-REVIEW.ko.md",
+      "sha256": "fe58b33796e60ce60754f1a883e707d10a4aeb301a0da8285d98155c1d93c797",
+      "match": true
+    },
+    {
+      "file": "HARDWARE-TEST-GUIDE.ko.md",
+      "sha256": "9220b785aebdf5c18ba66d8e509002ae7eadc586debc3cc2e945472c4cc0c241",
+      "match": true
+    },
+    {
+      "file": "SESSION-20260923-G12S2-HARDWARE-SAVE-PASS.ko.md",
+      "sha256": "166913ec49db50706bf0cf40b4cee165fb543d6ec2f9769584691cb7acf240a7",
+      "match": true
+    },
+    {
+      "file": "SESSION-20260923-G13-DMA-GAPS.ko.md",
+      "sha256": "d63dc593d764e9408ee0493664d955a364909785c8b56636372827ee2d61da4b",
+      "match": true
+    },
+    {
+      "file": "upstream-sd2snes__src__config-mk3-stm32",
+      "sha256": "b2f4986384e22304f9819e5497746136c4969d06467665abbf20da2b9643728f",
+      "match": true
+    },
+    {
+      "file": "upstream-sd2snes__verilog__sd2snes_sgb__main.qsf",
+      "sha256": "7124e65f742db161afa00209f8bbe05ae43b9d31ec4ca98ed52675181d9e5a55",
+      "match": true
+    },
+    {
+      "file": "upstream-sd2snes__verilog__sd2snes_sgb__main.v",
+      "sha256": "829856c98f39ff2ba8241d72e530310e96b2a64ff7e9bb4ade9ac97e0e011fb2",
+      "match": true
+    },
+    {
+      "file": "analysis__nes-feasibility-20261002__mister-MMC5.sv",
+      "sha256": "a2d129857f1c201464bc5d52498be4aa9a2e7f0dada976dcb616a512f0a919bd",
+      "match": true
+    },
+    {
+      "file": "analysis__nes-feasibility-20261002__n8pro-map_005.sv",
+      "sha256": "8af3aaaba167b09f6f335af7609977fdf7b99bdc675ea3ec8f4206b5bbab1670",
+      "match": true
+    },
+    {
+      "file": "analysis__nes-feasibility-20261002__rom-headers.json",
+      "sha256": "8e5484a84e2687e1036c78dc16029625f11bf6a37121e4159ad5d3ace8c95a41",
+      "match": true
+    },
+    {
+      "file": "analysis__nes-feasibility-20261002__sd2snes-plus-mmu.v",
+      "sha256": "0adf71fbf619da182c10a2c4c41bc437584364968985e2ee1465539decc3fa76",
+      "match": true
+    },
+    {
+      "file": "analysis__nes-feasibility-20261002__sd2snes-plus-nes_bridge.v",
+      "sha256": "f42e7a3848dacc5cd81803d41687e9bbb4b8acc2d12539af10ff09b76f34f851",
+      "match": true
+    },
+    {
+      "file": "analysis__nes-feasibility-20261002__sd2snes-plus-nes_chr.c",
+      "sha256": "537ae376a8f8806d0cd347ff8c7fd31078ea910fa8ca6d3729679b0164d702bd",
+      "match": true
+    },
+    {
+      "file": "analysis__nes-feasibility-20261002__sd2snes-plus-nes.c",
+      "sha256": "82f8fac1cd2c58d6e8c7baafab5c28c998014c7f06df38061f31104d26f3cb2b",
+      "match": true
+    },
+    {
+      "file": "analysis__nes-feasibility-20261002__source-manifest.json",
+      "sha256": "e2f17537604fa44f3928853a311f1cc4ca6d1205dce57dd48632787e5160c111",
+      "match": true
+    }
+  ],
+  "gbc_baseline": "C44 / sd2snesHST 0.9.0 / development 8240299b1b6c061f14d88e591ccd4c9b64d113da",
+  "limitations": [
+    "HDL per-file holds unresolved; no P2 vendoring or distribution clearance",
+    "board pins, external RAM response, full fit/STA unverified"
+  ]
+}

@@ -1,0 +1,2765 @@
+{
+  "candidate": "NES-R1-ROM-EARLY-051",
+  "scope": "Causal early ROM reads, actual core latency comparison and joint diagnostic fit; no new hardware",
+  "sources": [
+    {
+      "path": "analysis/ROM-EARLY-RESULT.ko.md",
+      "bytes": 2942,
+      "sha256": "844c5009f6aab1780bf71b0a9ccb41f7d27fe0c7e7cf09eb8019f71b00f5bb95"
+    },
+    {
+      "path": "analysis/rom-early-verification.json",
+      "bytes": 1933,
+      "sha256": "2a94c0f02a4a9a348880a5201202966051e87d7afbe4c6d36cde965bd60badbf"
+    },
+    {
+      "path": "docs/nes-rom-early-contract.md",
+      "bytes": 6572,
+      "sha256": "df2ad18a050989d85a4defae00525f94c98fb4d429cc6b90a0877e8371bfde6d"
+    },
+    {
+      "path": "src/nes/nes_rom_early.sv",
+      "bytes": 3843,
+      "sha256": "41c9b363320c32ded0b5fc2389fd17a540b7a4b1eae35eb5b13cb3e053f35028"
+    },
+    {
+      "path": "tests/nes-functional/rom_early_tb.sv",
+      "bytes": 5870,
+      "sha256": "0a911edcc14464d39ce4de26b72382d6dbf2a10ffe941d46108361130ccbd298"
+    },
+    {
+      "path": "tools/nes_rom_early.py",
+      "bytes": 3075,
+      "sha256": "abc1eb152929844fc9db101429871df22b0a9e49572a78681737ee2d52e0b5b7"
+    },
+    {
+      "path": "tools/nes_rom_early_checks.py",
+      "bytes": 1590,
+      "sha256": "ed3a9dbb0be6faab644eafd1b7d44fb8c000971571ba9780054d0d932f39ac1a"
+    },
+    {
+      "path": "tools/nes_rom_early_complete_probe.py",
+      "bytes": 2881,
+      "sha256": "1c8de76d251fad360c045d61ff7b774da19adce0d6a1a39879a4f44990df7075"
+    },
+    {
+      "path": "tools/run_nes_rom_early.ps1",
+      "bytes": 3410,
+      "sha256": "aaf3a00a1f7e421ea74a7b694963f8c419b5db26057d0a3de831320ac36a576c"
+    },
+    {
+      "path": "tools/run_nes_rom_early_checks.ps1",
+      "bytes": 3402,
+      "sha256": "96384c0f03e043c9740e72b7788c4d6cb79d492631285e7cd1c11237d96c8c86"
+    },
+    {
+      "path": "tools/run_nes_rom_early_complete_probe.ps1",
+      "bytes": 3505,
+      "sha256": "0634f15447bc85bdb2677687d2915d095a982963b93beec3ae17735749b57afe"
+    },
+    {
+      "path": "tools/verify_nes_rom_early.py",
+      "bytes": 10449,
+      "sha256": "8bbf4cff1ddda2f1beff221c468f77e59d27310bcd758e3a33b323d6d25a61e6"
+    }
+  ],
+  "status_files": [
+    {
+      "path": ".gitignore",
+      "bytes": 30083,
+      "sha256": "fe7411bd3d2cc3823040f2508ab284ed511e33a5272361f01e46a4153ffcddbc"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 20292,
+      "sha256": "bb0cbb6b50bbb527d32bcd126d2aab7815cb7569477226743d9ffdf187ffadfa"
+    },
+    {
+      "path": "analysis/hardware-readiness.json",
+      "bytes": 13197,
+      "sha256": "f3e3c45b31bc8977371a9bf94ccb047d6b21d234637fe6b409d319604a8481df"
+    },
+    {
+      "path": "cores/nes/HANDOFF.ko.md",
+      "bytes": 65195,
+      "sha256": "8a8af240c5951ef1710acb506efc5473bd749882788218e61257ffccc9c23f87"
+    },
+    {
+      "path": "cores/nes/PROPOSAL.ko.md",
+      "bytes": 35653,
+      "sha256": "3c610d23528ee4ed38a5f3af037cf11473ff9681ecb41e6263c59ef9ed2586b5"
+    },
+    {
+      "path": "cores/nes/README.md",
+      "bytes": 13329,
+      "sha256": "920488a71843071d5784a576362059567c8417dec811d5e0d98ce7a7e75c86c7"
+    },
+    {
+      "path": "cores/registry.json",
+      "bytes": 12888,
+      "sha256": "28775ce82a4b78bf29aef873ce1ef724b89c290dc2e4307aa9c1733b647650cc"
+    },
+    {
+      "path": "docs/nes-development-plan.json",
+      "bytes": 23957,
+      "sha256": "ec0d55103e1d84e157c9b97164863b06923b3589b264c0e59160839b2f147458"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "analysis/local-rom-early-051/baseline/banks32/chr.hex",
+      "bytes": 98304,
+      "sha256": "be81b07335e2e717e63116e6c19d5dd16be32e3d16ac0f09c341f029cebfc1fb"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/banks32/live.tsv",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/banks32/manifest.json",
+      "bytes": 681,
+      "sha256": "bcb687a9e009569e7653e74d0b135acedd8a8c993a5bd56997abc26c59bff4ad"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/banks32/modelsim.ini",
+      "bytes": 148,
+      "sha256": "f71b16381cd79967d0edf730adefb1ac5d20a9cdd7cf954a91213a047a6bb34b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/banks32/prg.hex",
+      "bytes": 196608,
+      "sha256": "c0052ba58fbbaa360954e418845d87013ca730d19c565de798caeff79efe0099"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/banks32/simulation.log",
+      "bytes": 10514,
+      "sha256": "83962317f850bb58e14c3446a1a3ea59dfe80ccd0d2da493dd322c9caba0d1a5"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/cart_nrom.sv",
+      "bytes": 36838,
+      "sha256": "aab8314bd8134bb33dff42ef7beebc4b109e81148d9ee11ccd2886a97673faf8"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/COPYING",
+      "bytes": 35146,
+      "sha256": "c53a65c2fd561c87eaabf1072ef5dcab8653042bc15308465f52413585eb6271"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/fine_x/chr.hex",
+      "bytes": 49152,
+      "sha256": "97f52da4e8cc2f777cef51c270374918f154ad2866ccec33ab89fff51406282e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/fine_x/live.tsv",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/fine_x/manifest.json",
+      "bytes": 680,
+      "sha256": "5fb352222a117e3937dd14b7512fc342118fa178f1c61922f2cb142b5d4988ca"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/fine_x/modelsim.ini",
+      "bytes": 148,
+      "sha256": "f71b16381cd79967d0edf730adefb1ac5d20a9cdd7cf954a91213a047a6bb34b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/fine_x/prg.hex",
+      "bytes": 196608,
+      "sha256": "b840582d3818d90e0ee03bb517962c648ecada2c28a79ff3f76a16c205bd6370"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/fine_x/simulation.log",
+      "bytes": 7835,
+      "sha256": "c8569fecb67c986a329730ca9bbf56f86ad9faf219b0748098151bcb055a2ff3"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/ncr1_live_tb.sv",
+      "bytes": 8451,
+      "sha256": "55b1b57b89169931dc13bb06d10ca89bfc7b780f3fa17e00681bafda03726b1a"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/nes_local_memory.sv",
+      "bytes": 2372,
+      "sha256": "09a5109f5ea187b740ffbceb865c505c485dee13e87ee1cb665de937046d6ec4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/nes_ncr1_encoder.sv",
+      "bytes": 7429,
+      "sha256": "bcc5e1d3ff24511b2227107b90d1da4bc0b521179e1432bd50c8a2209e2a108a"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/nes_ncr1_ppu_tap.sv",
+      "bytes": 2981,
+      "sha256": "c9ccca0512f21062efb8756fc1f167aa1bdb4e44b07216719da9c5f8f66ac003"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/nes_packet_cdc_ram.sv",
+      "bytes": 4551,
+      "sha256": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/nes_packet_memory_producer.sv",
+      "bytes": 4762,
+      "sha256": "3fc53be9e6e64052713e8027dd3cde0537e819db84afb78d885458d0f033beac"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/nes_packet_queue_ram.sv",
+      "bytes": 3872,
+      "sha256": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/nes_probe.sv",
+      "bytes": 3149,
+      "sha256": "a422a25be908599c73f64679eca61c9036e7ea6555de9273c56ca3e4e274bd65"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/nes_resource.sv",
+      "bytes": 2340,
+      "sha256": "d4661cee0a5fd897cfb6864c2a9651a0b2aaada337004891b4be2ff1dc85bfe9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/nes_rom_service.sv",
+      "bytes": 3438,
+      "sha256": "121bc412cf2541e8e43fd9e2ba4416f390a9614e2bc7d96ddc179323345494b4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/nes_snes_frontend.sv",
+      "bytes": 6729,
+      "sha256": "d4695fb16a1b58bb59028ececb784f1f4965353626599d8df42629267c26b3a4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/nes_transport.sv",
+      "bytes": 1131,
+      "sha256": "850da0fe98d251fafd464a8542f4882c7519619be5871e6ed5528ea6b003430d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/oam-banking.diff",
+      "bytes": 9576,
+      "sha256": "de7706b01934398a89961eadbe61a6f38c8cb766323e84ce096297411f5bcdb0"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/probe.qpf",
+      "bytes": 28,
+      "sha256": "c4087ec21f97c540ffb537072cd0e63acbd5625f02b3a55847b2d2d5a45faacf"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/probe.qsf",
+      "bytes": 3165,
+      "sha256": "3368bfc6440af8459cb402f9ec33d6af6e99f9c7fb7d824ad33cf9f2211194f6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/probe.sdc",
+      "bytes": 91,
+      "sha256": "548ab14ed48c3d810d0d4261e458bff3ee9f5c049f9a1a2be4927fa6984b87f9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/resource-adapter.diff",
+      "bytes": 1179,
+      "sha256": "f84d29465cdc7c6ba96122b0a29a94529dd7d1892cf8bf8640f0970951eebcf4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/result.json",
+      "bytes": 3525,
+      "sha256": "ef30047d849b1510d33c04835a99a3a4e1491cfd8aab64c0c905bbd7b64c8e28"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/rom_backend_model.sv",
+      "bytes": 1452,
+      "sha256": "26d0eb52ed798836dab04e29bef61eab8b5d0751ccadf07b34ef2cc27bcd9ec7"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/rtl/apu.sv",
+      "bytes": 40639,
+      "sha256": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/rtl/bus_savestates.vhd",
+      "bytes": 2249,
+      "sha256": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/rtl/cheatcodes.sv",
+      "bytes": 2411,
+      "sha256": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/rtl/compat.v",
+      "bytes": 572,
+      "sha256": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/rtl/composite_board.sv",
+      "bytes": 3409,
+      "sha256": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/rtl/nes.v",
+      "bytes": 44154,
+      "sha256": "9dc5def880e1d91ef962bc7e8d8a8e9814638907d9bce7657cf5fb076200e1f1"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/rtl/ppu.sv",
+      "bytes": 91380,
+      "sha256": "a4362eda9ec9a6b8a025edd5720e16fa4bab55e80279b3dab580872f7dacd186"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/rtl/regs_savestates.sv",
+      "bytes": 3093,
+      "sha256": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/rtl/savestates.vhd",
+      "bytes": 14291,
+      "sha256": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/rtl/statemanager.vhd",
+      "bytes": 5333,
+      "sha256": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/rtl/t65/T65.vhd",
+      "bytes": 31950,
+      "sha256": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/rtl/t65/T65_ALU.vhd",
+      "bytes": 9894,
+      "sha256": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/rtl/t65/T65_MCode.vhd",
+      "bytes": 45791,
+      "sha256": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/rtl/t65/T65_Pack.vhd",
+      "bytes": 5279,
+      "sha256": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/sys/iir_filter.v",
+      "bytes": 5635,
+      "sha256": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/tap-export.diff",
+      "bytes": 6471,
+      "sha256": "8472cd528eb3caf163b2aaccf770d1f1943d80a9c05aeb154bedb59182f3589b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/validated-build.json",
+      "bytes": 6687,
+      "sha256": "7a4f3e6911b6e31c187936ccf7182d2089687e37aa744f7e2215ff02f951a4ad"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/vcom-00.log",
+      "bytes": 628,
+      "sha256": "e8726d6ce41958142ed2f9c02551b75a748235d0c523aaa7e5b55b0adda6fbbf"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/vcom-01.log",
+      "bytes": 528,
+      "sha256": "d714ce2e74cf0c964a36c2b9722a732690db68e45432417aadb893c3034d207b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/vcom-02.log",
+      "bytes": 563,
+      "sha256": "bc3848bb9d87b24c3598080f8c78226eadca29014cc6c12e0512ebc507551168"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/vcom-03.log",
+      "bytes": 644,
+      "sha256": "72fe33777ffb3bc24d8762e1d0c2fd720296dfa9b5c360b346a836e8acad8269"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/vcom-04.log",
+      "bytes": 753,
+      "sha256": "3223da30c4388b1fe37b85eff27b794fb9f81dc1ef661f62b9c5804427efe1c9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/vcom-05.log",
+      "bytes": 546,
+      "sha256": "27e194e3f85a8ca066691533c1ce8a4c559bb02f82fff16bb35655547b1ec628"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/vcom-06.log",
+      "bytes": 576,
+      "sha256": "7ae360750611f7c4fea974ad9512be33d262639bef1265af339481f493159504"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline/vlog.log",
+      "bytes": 2832,
+      "sha256": "279a121a29fdc4084f2571b9c10adf6780d75831042a785715455f795f853905"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/banks32/chr.hex",
+      "bytes": 98304,
+      "sha256": "be81b07335e2e717e63116e6c19d5dd16be32e3d16ac0f09c341f029cebfc1fb"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/banks32/live.tsv",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/banks32/manifest.json",
+      "bytes": 681,
+      "sha256": "bcb687a9e009569e7653e74d0b135acedd8a8c993a5bd56997abc26c59bff4ad"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/banks32/modelsim.ini",
+      "bytes": 148,
+      "sha256": "2f19cae714560773c907c910a8082083c3c701e22b5bd984a285f682808b4f38"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/banks32/prg.hex",
+      "bytes": 196608,
+      "sha256": "c0052ba58fbbaa360954e418845d87013ca730d19c565de798caeff79efe0099"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/banks32/simulation.log",
+      "bytes": 9490,
+      "sha256": "50e02244b8f8a81339b8d86c840a95a19c1a03e18cafdef1a8c5632017f3288e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/cart_nrom.sv",
+      "bytes": 36838,
+      "sha256": "aab8314bd8134bb33dff42ef7beebc4b109e81148d9ee11ccd2886a97673faf8"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/COPYING",
+      "bytes": 35146,
+      "sha256": "c53a65c2fd561c87eaabf1072ef5dcab8653042bc15308465f52413585eb6271"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/fine_x/chr.hex",
+      "bytes": 49152,
+      "sha256": "97f52da4e8cc2f777cef51c270374918f154ad2866ccec33ab89fff51406282e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/fine_x/live.tsv",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/fine_x/manifest.json",
+      "bytes": 680,
+      "sha256": "5fb352222a117e3937dd14b7512fc342118fa178f1c61922f2cb142b5d4988ca"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/fine_x/modelsim.ini",
+      "bytes": 148,
+      "sha256": "2f19cae714560773c907c910a8082083c3c701e22b5bd984a285f682808b4f38"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/fine_x/prg.hex",
+      "bytes": 196608,
+      "sha256": "b840582d3818d90e0ee03bb517962c648ecada2c28a79ff3f76a16c205bd6370"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/fine_x/simulation.log",
+      "bytes": 6811,
+      "sha256": "43026b8b8b99a837382c9c96d694a10545416e6d5a6fd95fdde534ca87351a85"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/ncr1_live_tb.sv",
+      "bytes": 8467,
+      "sha256": "7e0920127894aba8319fe1180eeb8f2a639390276218bb8a0d13e1ee6cde4577"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/nes_local_memory.sv",
+      "bytes": 2372,
+      "sha256": "09a5109f5ea187b740ffbceb865c505c485dee13e87ee1cb665de937046d6ec4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/nes_ncr1_encoder.sv",
+      "bytes": 7429,
+      "sha256": "bcc5e1d3ff24511b2227107b90d1da4bc0b521179e1432bd50c8a2209e2a108a"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/nes_ncr1_ppu_tap.sv",
+      "bytes": 2981,
+      "sha256": "c9ccca0512f21062efb8756fc1f167aa1bdb4e44b07216719da9c5f8f66ac003"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/nes_packet_cdc_ram.sv",
+      "bytes": 4551,
+      "sha256": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/nes_packet_memory_producer.sv",
+      "bytes": 4762,
+      "sha256": "3fc53be9e6e64052713e8027dd3cde0537e819db84afb78d885458d0f033beac"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/nes_packet_queue_ram.sv",
+      "bytes": 3872,
+      "sha256": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/nes_probe.sv",
+      "bytes": 3149,
+      "sha256": "a422a25be908599c73f64679eca61c9036e7ea6555de9273c56ca3e4e274bd65"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/nes_resource.sv",
+      "bytes": 2340,
+      "sha256": "d4661cee0a5fd897cfb6864c2a9651a0b2aaada337004891b4be2ff1dc85bfe9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/nes_rom_service.sv",
+      "bytes": 3438,
+      "sha256": "121bc412cf2541e8e43fd9e2ba4416f390a9614e2bc7d96ddc179323345494b4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/nes_snes_frontend.sv",
+      "bytes": 6729,
+      "sha256": "d4695fb16a1b58bb59028ececb784f1f4965353626599d8df42629267c26b3a4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/nes_transport.sv",
+      "bytes": 1131,
+      "sha256": "850da0fe98d251fafd464a8542f4882c7519619be5871e6ed5528ea6b003430d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/oam-banking.diff",
+      "bytes": 9576,
+      "sha256": "de7706b01934398a89961eadbe61a6f38c8cb766323e84ce096297411f5bcdb0"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/probe.qpf",
+      "bytes": 28,
+      "sha256": "c4087ec21f97c540ffb537072cd0e63acbd5625f02b3a55847b2d2d5a45faacf"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/probe.qsf",
+      "bytes": 3165,
+      "sha256": "3368bfc6440af8459cb402f9ec33d6af6e99f9c7fb7d824ad33cf9f2211194f6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/probe.sdc",
+      "bytes": 91,
+      "sha256": "548ab14ed48c3d810d0d4261e458bff3ee9f5c049f9a1a2be4927fa6984b87f9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/resource-adapter.diff",
+      "bytes": 1179,
+      "sha256": "f84d29465cdc7c6ba96122b0a29a94529dd7d1892cf8bf8640f0970951eebcf4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/result.json",
+      "bytes": 3525,
+      "sha256": "629249518c93ace7d25bef8e47fe1d4d45bf2d32a26aedac86fad69585cd9d49"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/rom_backend_model.sv",
+      "bytes": 1452,
+      "sha256": "26d0eb52ed798836dab04e29bef61eab8b5d0751ccadf07b34ef2cc27bcd9ec7"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/rtl/apu.sv",
+      "bytes": 40639,
+      "sha256": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/rtl/bus_savestates.vhd",
+      "bytes": 2249,
+      "sha256": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/rtl/cheatcodes.sv",
+      "bytes": 2411,
+      "sha256": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/rtl/compat.v",
+      "bytes": 572,
+      "sha256": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/rtl/composite_board.sv",
+      "bytes": 3409,
+      "sha256": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/rtl/nes.v",
+      "bytes": 44154,
+      "sha256": "9dc5def880e1d91ef962bc7e8d8a8e9814638907d9bce7657cf5fb076200e1f1"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/rtl/ppu.sv",
+      "bytes": 91380,
+      "sha256": "a4362eda9ec9a6b8a025edd5720e16fa4bab55e80279b3dab580872f7dacd186"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/rtl/regs_savestates.sv",
+      "bytes": 3093,
+      "sha256": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/rtl/savestates.vhd",
+      "bytes": 14291,
+      "sha256": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/rtl/statemanager.vhd",
+      "bytes": 5333,
+      "sha256": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/rtl/t65/T65.vhd",
+      "bytes": 31950,
+      "sha256": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/rtl/t65/T65_ALU.vhd",
+      "bytes": 9894,
+      "sha256": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/rtl/t65/T65_MCode.vhd",
+      "bytes": 45791,
+      "sha256": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/rtl/t65/T65_Pack.vhd",
+      "bytes": 5279,
+      "sha256": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/sys/iir_filter.v",
+      "bytes": 5635,
+      "sha256": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/tap-export.diff",
+      "bytes": 6471,
+      "sha256": "8472cd528eb3caf163b2aaccf770d1f1943d80a9c05aeb154bedb59182f3589b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/validated-build.json",
+      "bytes": 6687,
+      "sha256": "7a4f3e6911b6e31c187936ccf7182d2089687e37aa744f7e2215ff02f951a4ad"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/vcom-00.log",
+      "bytes": 628,
+      "sha256": "123c440dca9083fa186f56d975163ac4c9dc18dd8e60c590ead471144d343744"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/vcom-01.log",
+      "bytes": 528,
+      "sha256": "d6a1d9cbb4ea0b92f9e3a175715539bd62e160d6eec0c3f906ef55a5e19bedf1"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/vcom-02.log",
+      "bytes": 563,
+      "sha256": "caf9a06a402aa9e9ee37cfb99ffe89c89c4c716ba65ca0c4102d20376faf8352"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/vcom-03.log",
+      "bytes": 644,
+      "sha256": "ab8bc3ca2ddff6fc8ae02660e74efe08878273f57ecaba40d4850ce722ffee53"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/vcom-04.log",
+      "bytes": 753,
+      "sha256": "b02bdc86ae64c2f605fefc503769169e45cf9bd0f7e1f94487014e8b96429e78"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/vcom-05.log",
+      "bytes": 546,
+      "sha256": "b9929e33b2327782cbcd822452ce9c2750e5e1eebfcb9c6afcc0922336aab424"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/vcom-06.log",
+      "bytes": 576,
+      "sha256": "ba6f2401a9c79f1d73035b7e17e181a72fca3b46cea535314fa511c4a8f92747"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-before-history-fix/vlog.log",
+      "bytes": 2832,
+      "sha256": "4ec21d5edba840f029ff5a52ecbef2cf875b13b3b3d67cda8aefa82324436c3c"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-status/.gitignore",
+      "bytes": 29592,
+      "sha256": "a7b62b224bdd1ba73ec172f94badc27fdace8338622561cce503884733d6bd38"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-status/AGENTS.md",
+      "bytes": 18544,
+      "sha256": "e825c9fceb083cb4c6e162ed3a4d1cab185675ec7e29ffd2ab818681dda19aa8"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-status/analysis/hardware-readiness.json",
+      "bytes": 13197,
+      "sha256": "f3e3c45b31bc8977371a9bf94ccb047d6b21d234637fe6b409d319604a8481df"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-status/cores/nes/HANDOFF.ko.md",
+      "bytes": 64553,
+      "sha256": "e354779d975329afffbd7eb83c6906224cbd48f52c9812e832fefccb30abba7f"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-status/cores/nes/PROPOSAL.ko.md",
+      "bytes": 35011,
+      "sha256": "cd5c2bc3ee9c439be3785aadd0dbacd8a0485b40478a5be8c8240363e1957331"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-status/cores/nes/README.md",
+      "bytes": 12687,
+      "sha256": "d2d287c1288a3866d71b800dfdd4986d6af5782786c030f80335e041181b4064"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-status/cores/registry.json",
+      "bytes": 12504,
+      "sha256": "9c6bea34907fa253de0ceba3f43883d1c26f160fcc564746d1551916dac1e527"
+    },
+    {
+      "path": "analysis/local-rom-early-051/baseline-status/docs/nes-development-plan.json",
+      "bytes": 23525,
+      "sha256": "a011c9d073b615bb54aba4184ece5b393c46413c17370cfb084e26a836df1c2d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/completion-audit.json",
+      "bytes": 258,
+      "sha256": "b74743d6c5409c85b7ce904653b2f1f473ed51755fb9e9b634df60daf5a69a02"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/banks32/chr.hex",
+      "bytes": 98304,
+      "sha256": "be81b07335e2e717e63116e6c19d5dd16be32e3d16ac0f09c341f029cebfc1fb"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/banks32/frame-1.hex",
+      "bytes": 245760,
+      "sha256": "810b75a8ae9734dd7d55afd3d67fe0221f49ad347bb1bbbe9f764c57d7e3aaf7"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/banks32/frame-2.hex",
+      "bytes": 245760,
+      "sha256": "f79c5d8db8729779bdf7d4380ee899d2d3f26ef6e6592407f0d521a458510f1f"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/banks32/frame-3.hex",
+      "bytes": 245760,
+      "sha256": "e99cb9af4cf3e9cc7d2a27112b09a683a702eb8e6669b39841dc9fffda00e22a"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/banks32/frame-4.hex",
+      "bytes": 245760,
+      "sha256": "e84d48135602deea1d61dd930068174342643ee6932acd5f3a76ba68c6063011"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/banks32/live.tsv",
+      "bytes": 1876443,
+      "sha256": "838a4de259f2f073f3610f313988daaaaceecd9de00d03466627c6633756f030"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/banks32/manifest.json",
+      "bytes": 681,
+      "sha256": "bcb687a9e009569e7653e74d0b135acedd8a8c993a5bd56997abc26c59bff4ad"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/banks32/modelsim.ini",
+      "bytes": 144,
+      "sha256": "60db638c7876222818629c45b7e2c98f54bd3296fae6a3349345a238e364f3fc"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/banks32/prg.hex",
+      "bytes": 196608,
+      "sha256": "c0052ba58fbbaa360954e418845d87013ca730d19c565de798caeff79efe0099"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/banks32/simulation.log",
+      "bytes": 9866,
+      "sha256": "3abe55d6a5afaa416fdb6755157a133318605191020c40df706ab39f069b77f6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/cart_nrom.sv",
+      "bytes": 36838,
+      "sha256": "aab8314bd8134bb33dff42ef7beebc4b109e81148d9ee11ccd2886a97673faf8"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/COPYING",
+      "bytes": 35146,
+      "sha256": "c53a65c2fd561c87eaabf1072ef5dcab8653042bc15308465f52413585eb6271"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/ncr1_live_tb.sv",
+      "bytes": 8584,
+      "sha256": "e7ed994e0b3ba8823691f16188015a0ca2a6614531eea7702b95db3c3032f732"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/nes_local_memory.sv",
+      "bytes": 2372,
+      "sha256": "09a5109f5ea187b740ffbceb865c505c485dee13e87ee1cb665de937046d6ec4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/nes_ncr1_encoder.sv",
+      "bytes": 7429,
+      "sha256": "bcc5e1d3ff24511b2227107b90d1da4bc0b521179e1432bd50c8a2209e2a108a"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/nes_ncr1_ppu_tap.sv",
+      "bytes": 2981,
+      "sha256": "c9ccca0512f21062efb8756fc1f167aa1bdb4e44b07216719da9c5f8f66ac003"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/nes_packet_cdc_ram.sv",
+      "bytes": 4551,
+      "sha256": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/nes_packet_memory_producer.sv",
+      "bytes": 4762,
+      "sha256": "3fc53be9e6e64052713e8027dd3cde0537e819db84afb78d885458d0f033beac"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/nes_packet_queue_ram.sv",
+      "bytes": 3872,
+      "sha256": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/nes_probe.sv",
+      "bytes": 3302,
+      "sha256": "e07337d68bbc654201b5db8b1f184ebd80ec06923e4c9d3e5400a509b4728fb9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/nes_resource.sv",
+      "bytes": 2340,
+      "sha256": "d4661cee0a5fd897cfb6864c2a9651a0b2aaada337004891b4be2ff1dc85bfe9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/nes_rom_service.sv",
+      "bytes": 3843,
+      "sha256": "41c9b363320c32ded0b5fc2389fd17a540b7a4b1eae35eb5b13cb3e053f35028"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/nes_snes_frontend.sv",
+      "bytes": 6729,
+      "sha256": "d4695fb16a1b58bb59028ececb784f1f4965353626599d8df42629267c26b3a4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/nes_transport.sv",
+      "bytes": 1131,
+      "sha256": "850da0fe98d251fafd464a8542f4882c7519619be5871e6ed5528ea6b003430d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/oam-banking.diff",
+      "bytes": 9576,
+      "sha256": "de7706b01934398a89961eadbe61a6f38c8cb766323e84ce096297411f5bcdb0"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/probe.qpf",
+      "bytes": 28,
+      "sha256": "c4087ec21f97c540ffb537072cd0e63acbd5625f02b3a55847b2d2d5a45faacf"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/probe.qsf",
+      "bytes": 3165,
+      "sha256": "3368bfc6440af8459cb402f9ec33d6af6e99f9c7fb7d824ad33cf9f2211194f6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/probe.sdc",
+      "bytes": 91,
+      "sha256": "548ab14ed48c3d810d0d4261e458bff3ee9f5c049f9a1a2be4927fa6984b87f9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/resource-adapter.diff",
+      "bytes": 1179,
+      "sha256": "f84d29465cdc7c6ba96122b0a29a94529dd7d1892cf8bf8640f0970951eebcf4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/result.json",
+      "bytes": 3105,
+      "sha256": "c26a7fbc44941df3596365b242d5d816082404ecd2976336e978bfa1aaa498d9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/rom_backend_model.sv",
+      "bytes": 1452,
+      "sha256": "26d0eb52ed798836dab04e29bef61eab8b5d0751ccadf07b34ef2cc27bcd9ec7"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/rtl/apu.sv",
+      "bytes": 40639,
+      "sha256": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/rtl/bus_savestates.vhd",
+      "bytes": 2249,
+      "sha256": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/rtl/cheatcodes.sv",
+      "bytes": 2411,
+      "sha256": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/rtl/compat.v",
+      "bytes": 572,
+      "sha256": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/rtl/composite_board.sv",
+      "bytes": 3409,
+      "sha256": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/rtl/nes.v",
+      "bytes": 44316,
+      "sha256": "d76a18fb93e4a97b4efed31f7a19deb8f34935c2f872059d2b35bb9548c78cdd"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/rtl/ppu.sv",
+      "bytes": 91462,
+      "sha256": "e155b3b59000f5c52a5ab2e72b6745be682fd9a515d59c0360f208eafbfc090e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/rtl/regs_savestates.sv",
+      "bytes": 3093,
+      "sha256": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/rtl/savestates.vhd",
+      "bytes": 14291,
+      "sha256": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/rtl/statemanager.vhd",
+      "bytes": 5333,
+      "sha256": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/rtl/t65/T65.vhd",
+      "bytes": 31950,
+      "sha256": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/rtl/t65/T65_ALU.vhd",
+      "bytes": 9894,
+      "sha256": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/rtl/t65/T65_MCode.vhd",
+      "bytes": 45791,
+      "sha256": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/rtl/t65/T65_Pack.vhd",
+      "bytes": 5279,
+      "sha256": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/sys/iir_filter.v",
+      "bytes": 5635,
+      "sha256": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/tap-export.diff",
+      "bytes": 6471,
+      "sha256": "8472cd528eb3caf163b2aaccf770d1f1943d80a9c05aeb154bedb59182f3589b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/validated-build.json",
+      "bytes": 6687,
+      "sha256": "7a4f3e6911b6e31c187936ccf7182d2089687e37aa744f7e2215ff02f951a4ad"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/vcom-00.log",
+      "bytes": 628,
+      "sha256": "a81ff48eb0b3e6b8ec1295c0652879663510bc5dd70ba5c07dbaff08cc8416f6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/vcom-01.log",
+      "bytes": 528,
+      "sha256": "b3e0799d44c19480b23f2c8cc37360d5364a5f6af8240cae808427fc637aa824"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/vcom-02.log",
+      "bytes": 563,
+      "sha256": "6a688be7bc32d5163bb36473e352f89341b58c13de3582da229f5e5cab7c8050"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/vcom-03.log",
+      "bytes": 644,
+      "sha256": "8f71d2368fc3055a319236de9053647382d9c989e6a4a2f093602ddebd06f577"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/vcom-04.log",
+      "bytes": 753,
+      "sha256": "f373915a1f819a8015da3dabebf01d8c5cf8966a3906cba09a5b9bb865361ca9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/vcom-05.log",
+      "bytes": 546,
+      "sha256": "dadf667b800bf72ac80436d417daf6872e960e018db5428b13e08192a80b0947"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/vcom-06.log",
+      "bytes": 576,
+      "sha256": "24796c69193693d9c9e9c36c10bba3ad6adaab5449aa67b81eea4f29891a5742"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-rom-early-051/delay4-probe/vlog.log",
+      "bytes": 2830,
+      "sha256": "d23e07f291cee114dd494c628bb1b48288e949fbaba99afc2ca16fed93fd435b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/executed-drivers/nes_rom_early-before-history-fix.py",
+      "bytes": 2852,
+      "sha256": "70a11cd1dfb0691890f34a4aca7a5945b39ae9c7094aa1fa4033765d274e1a15"
+    },
+    {
+      "path": "analysis/local-rom-early-051/latency-comparison.json",
+      "bytes": 890,
+      "sha256": "aa6fcfc4bd3d64c349a786dd08b3e92024e671ecd2bb4870042f07136b787c2c"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/banks32/chr.hex",
+      "bytes": 98304,
+      "sha256": "be81b07335e2e717e63116e6c19d5dd16be32e3d16ac0f09c341f029cebfc1fb"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/banks32/frame-1.hex",
+      "bytes": 245760,
+      "sha256": "810b75a8ae9734dd7d55afd3d67fe0221f49ad347bb1bbbe9f764c57d7e3aaf7"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/banks32/frame-2.hex",
+      "bytes": 245760,
+      "sha256": "f79c5d8db8729779bdf7d4380ee899d2d3f26ef6e6592407f0d521a458510f1f"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/banks32/frame-3.hex",
+      "bytes": 245760,
+      "sha256": "e99cb9af4cf3e9cc7d2a27112b09a683a702eb8e6669b39841dc9fffda00e22a"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/banks32/frame-4.hex",
+      "bytes": 245760,
+      "sha256": "e84d48135602deea1d61dd930068174342643ee6932acd5f3a76ba68c6063011"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/banks32/live.tsv",
+      "bytes": 1876443,
+      "sha256": "838a4de259f2f073f3610f313988daaaaceecd9de00d03466627c6633756f030"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/banks32/manifest.json",
+      "bytes": 681,
+      "sha256": "bcb687a9e009569e7653e74d0b135acedd8a8c993a5bd56997abc26c59bff4ad"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/banks32/modelsim.ini",
+      "bytes": 144,
+      "sha256": "8b90986aae89cef0f903228dce4bedb3c972b20c20b7d3d27cddbdb15267276e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/banks32/packet-1.bin",
+      "bytes": 2008,
+      "sha256": "efcdb6863d05ab942ccc15abec017b137649947c76e44c4ebd21cf64112b4a02"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/banks32/packet-2.bin",
+      "bytes": 2008,
+      "sha256": "1c36d58851bb0770599f5fbc4167eb726a77a6d90c036c0c4acbc0041a28f71b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/banks32/packet-3.bin",
+      "bytes": 2008,
+      "sha256": "340f5bd7164a3c4dfee9a23764f431cb6eb46271f50e974bd2d1cfa4ed4ea15c"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/banks32/packet-4.bin",
+      "bytes": 2008,
+      "sha256": "15df13600fc4d9a50958fc83b0072a0f3e01293d3dd1da267e4e64591412e98c"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/banks32/prg.hex",
+      "bytes": 196608,
+      "sha256": "c0052ba58fbbaa360954e418845d87013ca730d19c565de798caeff79efe0099"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/banks32/simulation.log",
+      "bytes": 9866,
+      "sha256": "2c84548043873f26534967c9473a316ed174eb08df59c91ae3b1470beb80359f"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/cart_nrom.sv",
+      "bytes": 36838,
+      "sha256": "aab8314bd8134bb33dff42ef7beebc4b109e81148d9ee11ccd2886a97673faf8"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/COPYING",
+      "bytes": 35146,
+      "sha256": "c53a65c2fd561c87eaabf1072ef5dcab8653042bc15308465f52413585eb6271"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/fine_x/chr.hex",
+      "bytes": 49152,
+      "sha256": "97f52da4e8cc2f777cef51c270374918f154ad2866ccec33ab89fff51406282e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/fine_x/frame-1.hex",
+      "bytes": 245760,
+      "sha256": "cf84fb669c6bec7c958f470545b5dc9de307e62743cf9a6a99ad4f6e87da5d44"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/fine_x/frame-2.hex",
+      "bytes": 245760,
+      "sha256": "89dfba4836a6efe0c26df2851f7c5db0de7ff7e4a13d9293134505ba6088ea9d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/fine_x/frame-3.hex",
+      "bytes": 245760,
+      "sha256": "cf84fb669c6bec7c958f470545b5dc9de307e62743cf9a6a99ad4f6e87da5d44"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/fine_x/frame-4.hex",
+      "bytes": 245760,
+      "sha256": "89dfba4836a6efe0c26df2851f7c5db0de7ff7e4a13d9293134505ba6088ea9d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/fine_x/live.tsv",
+      "bytes": 1844744,
+      "sha256": "9884f34e82aeeea020b0cf5a5ba4f3525c63694d0a05df646dc7f2a603890944"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/fine_x/manifest.json",
+      "bytes": 680,
+      "sha256": "5fb352222a117e3937dd14b7512fc342118fa178f1c61922f2cb142b5d4988ca"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/fine_x/modelsim.ini",
+      "bytes": 144,
+      "sha256": "8b90986aae89cef0f903228dce4bedb3c972b20c20b7d3d27cddbdb15267276e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/fine_x/packet-1.bin",
+      "bytes": 2008,
+      "sha256": "25abeccf893edc65deb47dc0a1d14cc9236d7d2a01ff3ee0c58b7e3f4ea0a16d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/fine_x/packet-2.bin",
+      "bytes": 2008,
+      "sha256": "bcaf4130082ac00adaa9ddb9b0aca0e7240e35f6ffe793658f2dd7b21e465278"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/fine_x/packet-3.bin",
+      "bytes": 2008,
+      "sha256": "f04bf4a9888d706a05748fb38895e232b16415e25efe200d571de9e8901cb370"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/fine_x/packet-4.bin",
+      "bytes": 2008,
+      "sha256": "2299d88c3ee8a180e97fde99e9df1f10a31d66f9f3e9e444f618fa6b943db6c1"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/fine_x/prg.hex",
+      "bytes": 196608,
+      "sha256": "b840582d3818d90e0ee03bb517962c648ecada2c28a79ff3f76a16c205bd6370"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/fine_x/simulation.log",
+      "bytes": 7187,
+      "sha256": "3d0f58fbe0aa17c6e09be4660522e4e4158bba7ab68604c86e919612fd1cf2ed"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/ncr1_live_tb.sv",
+      "bytes": 8600,
+      "sha256": "0a8266024b7387b2b24671aeba89c239388611cdca97c7b9ffb099d7ceb24f88"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/nes_local_memory.sv",
+      "bytes": 2372,
+      "sha256": "09a5109f5ea187b740ffbceb865c505c485dee13e87ee1cb665de937046d6ec4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/nes_ncr1_encoder.sv",
+      "bytes": 7429,
+      "sha256": "bcc5e1d3ff24511b2227107b90d1da4bc0b521179e1432bd50c8a2209e2a108a"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/nes_ncr1_ppu_tap.sv",
+      "bytes": 2981,
+      "sha256": "c9ccca0512f21062efb8756fc1f167aa1bdb4e44b07216719da9c5f8f66ac003"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/nes_packet_cdc_ram.sv",
+      "bytes": 4551,
+      "sha256": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/nes_packet_memory_producer.sv",
+      "bytes": 4762,
+      "sha256": "3fc53be9e6e64052713e8027dd3cde0537e819db84afb78d885458d0f033beac"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/nes_packet_queue_ram.sv",
+      "bytes": 3872,
+      "sha256": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/nes_probe.sv",
+      "bytes": 3302,
+      "sha256": "e07337d68bbc654201b5db8b1f184ebd80ec06923e4c9d3e5400a509b4728fb9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/nes_resource.sv",
+      "bytes": 2340,
+      "sha256": "d4661cee0a5fd897cfb6864c2a9651a0b2aaada337004891b4be2ff1dc85bfe9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/nes_rom_service.sv",
+      "bytes": 3843,
+      "sha256": "41c9b363320c32ded0b5fc2389fd17a540b7a4b1eae35eb5b13cb3e053f35028"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/nes_snes_frontend.sv",
+      "bytes": 6729,
+      "sha256": "d4695fb16a1b58bb59028ececb784f1f4965353626599d8df42629267c26b3a4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/nes_transport.sv",
+      "bytes": 1131,
+      "sha256": "850da0fe98d251fafd464a8542f4882c7519619be5871e6ed5528ea6b003430d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/oam-banking.diff",
+      "bytes": 9576,
+      "sha256": "de7706b01934398a89961eadbe61a6f38c8cb766323e84ce096297411f5bcdb0"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/probe.qpf",
+      "bytes": 28,
+      "sha256": "c4087ec21f97c540ffb537072cd0e63acbd5625f02b3a55847b2d2d5a45faacf"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/probe.qsf",
+      "bytes": 3165,
+      "sha256": "3368bfc6440af8459cb402f9ec33d6af6e99f9c7fb7d824ad33cf9f2211194f6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/probe.sdc",
+      "bytes": 91,
+      "sha256": "548ab14ed48c3d810d0d4261e458bff3ee9f5c049f9a1a2be4927fa6984b87f9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/resource-adapter.diff",
+      "bytes": 1179,
+      "sha256": "f84d29465cdc7c6ba96122b0a29a94529dd7d1892cf8bf8640f0970951eebcf4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/result.json",
+      "bytes": 6424,
+      "sha256": "f287c68383283513542d5d13705b23215107afc41ae1f5d9292f73c54014ef8d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/rom_backend_model.sv",
+      "bytes": 1452,
+      "sha256": "26d0eb52ed798836dab04e29bef61eab8b5d0751ccadf07b34ef2cc27bcd9ec7"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/rtl/apu.sv",
+      "bytes": 40639,
+      "sha256": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/rtl/bus_savestates.vhd",
+      "bytes": 2249,
+      "sha256": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/rtl/cheatcodes.sv",
+      "bytes": 2411,
+      "sha256": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/rtl/compat.v",
+      "bytes": 572,
+      "sha256": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/rtl/composite_board.sv",
+      "bytes": 3409,
+      "sha256": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/rtl/nes.v",
+      "bytes": 44316,
+      "sha256": "d76a18fb93e4a97b4efed31f7a19deb8f34935c2f872059d2b35bb9548c78cdd"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/rtl/ppu.sv",
+      "bytes": 91462,
+      "sha256": "e155b3b59000f5c52a5ab2e72b6745be682fd9a515d59c0360f208eafbfc090e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/rtl/regs_savestates.sv",
+      "bytes": 3093,
+      "sha256": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/rtl/savestates.vhd",
+      "bytes": 14291,
+      "sha256": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/rtl/statemanager.vhd",
+      "bytes": 5333,
+      "sha256": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/rtl/t65/T65.vhd",
+      "bytes": 31950,
+      "sha256": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/rtl/t65/T65_ALU.vhd",
+      "bytes": 9894,
+      "sha256": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/rtl/t65/T65_MCode.vhd",
+      "bytes": 45791,
+      "sha256": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/rtl/t65/T65_Pack.vhd",
+      "bytes": 5279,
+      "sha256": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/sys/iir_filter.v",
+      "bytes": 5635,
+      "sha256": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/tap-export.diff",
+      "bytes": 6471,
+      "sha256": "8472cd528eb3caf163b2aaccf770d1f1943d80a9c05aeb154bedb59182f3589b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/validated-build.json",
+      "bytes": 6687,
+      "sha256": "7a4f3e6911b6e31c187936ccf7182d2089687e37aa744f7e2215ff02f951a4ad"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/vcom-00.log",
+      "bytes": 628,
+      "sha256": "c0c797ea0bd23eaa80627d9e6863a355be5f59acc40c3675261784e24f673c46"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/vcom-01.log",
+      "bytes": 528,
+      "sha256": "fdf9f3b8ac87e1980282494bbbb1c935af0e734a1449a43380b8eb09a5a0cf99"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/vcom-02.log",
+      "bytes": 563,
+      "sha256": "f2f60ef3977d4500c49e7937f02c2949c3fb311c604d9cf5f8f744d3d56ad960"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/vcom-03.log",
+      "bytes": 644,
+      "sha256": "b6bc17dbb40168103ddcc1fcb08d8f1580118284bdadf1a4c3373e57d062342a"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/vcom-04.log",
+      "bytes": 753,
+      "sha256": "836150f009eacdcf87ddd97b8bb43f88509a6d8e5a8dbafc66633342fba8ab30"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/vcom-05.log",
+      "bytes": 546,
+      "sha256": "086ae6c74cc053ce74e03706250ed7f20bd2a11335f3489ea8e993aac635002f"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/vcom-06.log",
+      "bytes": 576,
+      "sha256": "d895b48298846d4ef3c1c6cd7675bb944e3a8e75ab1e42a78bea394263a3b2e3"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live2/vlog.log",
+      "bytes": 2830,
+      "sha256": "41850414b05e1dbe75b028dc84fd4c508044be6b7c005ee76f4af36f1961fe90"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/banks32/chr.hex",
+      "bytes": 98304,
+      "sha256": "be81b07335e2e717e63116e6c19d5dd16be32e3d16ac0f09c341f029cebfc1fb"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/banks32/frame-1.hex",
+      "bytes": 245760,
+      "sha256": "810b75a8ae9734dd7d55afd3d67fe0221f49ad347bb1bbbe9f764c57d7e3aaf7"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/banks32/frame-2.hex",
+      "bytes": 245760,
+      "sha256": "f79c5d8db8729779bdf7d4380ee899d2d3f26ef6e6592407f0d521a458510f1f"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/banks32/frame-3.hex",
+      "bytes": 245760,
+      "sha256": "e99cb9af4cf3e9cc7d2a27112b09a683a702eb8e6669b39841dc9fffda00e22a"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/banks32/frame-4.hex",
+      "bytes": 245760,
+      "sha256": "e84d48135602deea1d61dd930068174342643ee6932acd5f3a76ba68c6063011"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/banks32/live.tsv",
+      "bytes": 1876443,
+      "sha256": "838a4de259f2f073f3610f313988daaaaceecd9de00d03466627c6633756f030"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/banks32/manifest.json",
+      "bytes": 681,
+      "sha256": "bcb687a9e009569e7653e74d0b135acedd8a8c993a5bd56997abc26c59bff4ad"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/banks32/modelsim.ini",
+      "bytes": 146,
+      "sha256": "447ac9e0eb1fc3bf741e5fabd61ddf608d64f25cc68894e10c6ad5285fc44c9e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/banks32/packet-1.bin",
+      "bytes": 2008,
+      "sha256": "efcdb6863d05ab942ccc15abec017b137649947c76e44c4ebd21cf64112b4a02"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/banks32/packet-2.bin",
+      "bytes": 2008,
+      "sha256": "1c36d58851bb0770599f5fbc4167eb726a77a6d90c036c0c4acbc0041a28f71b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/banks32/packet-3.bin",
+      "bytes": 2008,
+      "sha256": "340f5bd7164a3c4dfee9a23764f431cb6eb46271f50e974bd2d1cfa4ed4ea15c"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/banks32/packet-4.bin",
+      "bytes": 2008,
+      "sha256": "15df13600fc4d9a50958fc83b0072a0f3e01293d3dd1da267e4e64591412e98c"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/banks32/prg.hex",
+      "bytes": 196608,
+      "sha256": "c0052ba58fbbaa360954e418845d87013ca730d19c565de798caeff79efe0099"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/banks32/simulation.log",
+      "bytes": 9892,
+      "sha256": "2e5b4a33634ca295844a4f00ecba1931399088ccf4fb34be840343c308720365"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/cart_nrom.sv",
+      "bytes": 36838,
+      "sha256": "aab8314bd8134bb33dff42ef7beebc4b109e81148d9ee11ccd2886a97673faf8"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/COPYING",
+      "bytes": 35146,
+      "sha256": "c53a65c2fd561c87eaabf1072ef5dcab8653042bc15308465f52413585eb6271"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/fine_x/chr.hex",
+      "bytes": 49152,
+      "sha256": "97f52da4e8cc2f777cef51c270374918f154ad2866ccec33ab89fff51406282e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/fine_x/frame-1.hex",
+      "bytes": 245760,
+      "sha256": "cf84fb669c6bec7c958f470545b5dc9de307e62743cf9a6a99ad4f6e87da5d44"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/fine_x/frame-2.hex",
+      "bytes": 245760,
+      "sha256": "89dfba4836a6efe0c26df2851f7c5db0de7ff7e4a13d9293134505ba6088ea9d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/fine_x/frame-3.hex",
+      "bytes": 245760,
+      "sha256": "cf84fb669c6bec7c958f470545b5dc9de307e62743cf9a6a99ad4f6e87da5d44"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/fine_x/frame-4.hex",
+      "bytes": 245760,
+      "sha256": "89dfba4836a6efe0c26df2851f7c5db0de7ff7e4a13d9293134505ba6088ea9d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/fine_x/live.tsv",
+      "bytes": 1844744,
+      "sha256": "9884f34e82aeeea020b0cf5a5ba4f3525c63694d0a05df646dc7f2a603890944"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/fine_x/manifest.json",
+      "bytes": 680,
+      "sha256": "5fb352222a117e3937dd14b7512fc342118fa178f1c61922f2cb142b5d4988ca"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/fine_x/modelsim.ini",
+      "bytes": 146,
+      "sha256": "447ac9e0eb1fc3bf741e5fabd61ddf608d64f25cc68894e10c6ad5285fc44c9e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/fine_x/packet-1.bin",
+      "bytes": 2008,
+      "sha256": "25abeccf893edc65deb47dc0a1d14cc9236d7d2a01ff3ee0c58b7e3f4ea0a16d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/fine_x/packet-2.bin",
+      "bytes": 2008,
+      "sha256": "bcaf4130082ac00adaa9ddb9b0aca0e7240e35f6ffe793658f2dd7b21e465278"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/fine_x/packet-3.bin",
+      "bytes": 2008,
+      "sha256": "f04bf4a9888d706a05748fb38895e232b16415e25efe200d571de9e8901cb370"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/fine_x/packet-4.bin",
+      "bytes": 2008,
+      "sha256": "2299d88c3ee8a180e97fde99e9df1f10a31d66f9f3e9e444f618fa6b943db6c1"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/fine_x/prg.hex",
+      "bytes": 196608,
+      "sha256": "b840582d3818d90e0ee03bb517962c648ecada2c28a79ff3f76a16c205bd6370"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/fine_x/simulation.log",
+      "bytes": 7213,
+      "sha256": "46dcb21a7f3ea684d91a77263fde7261ba7d26fc509754bc4b718039a849cb0b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/ncr1_live_tb.sv",
+      "bytes": 8584,
+      "sha256": "e7ed994e0b3ba8823691f16188015a0ca2a6614531eea7702b95db3c3032f732"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/nes_local_memory.sv",
+      "bytes": 2372,
+      "sha256": "09a5109f5ea187b740ffbceb865c505c485dee13e87ee1cb665de937046d6ec4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/nes_ncr1_encoder.sv",
+      "bytes": 7429,
+      "sha256": "bcc5e1d3ff24511b2227107b90d1da4bc0b521179e1432bd50c8a2209e2a108a"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/nes_ncr1_ppu_tap.sv",
+      "bytes": 2981,
+      "sha256": "c9ccca0512f21062efb8756fc1f167aa1bdb4e44b07216719da9c5f8f66ac003"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/nes_packet_cdc_ram.sv",
+      "bytes": 4551,
+      "sha256": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/nes_packet_memory_producer.sv",
+      "bytes": 4762,
+      "sha256": "3fc53be9e6e64052713e8027dd3cde0537e819db84afb78d885458d0f033beac"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/nes_packet_queue_ram.sv",
+      "bytes": 3872,
+      "sha256": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/nes_probe.sv",
+      "bytes": 3302,
+      "sha256": "e07337d68bbc654201b5db8b1f184ebd80ec06923e4c9d3e5400a509b4728fb9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/nes_resource.sv",
+      "bytes": 2340,
+      "sha256": "d4661cee0a5fd897cfb6864c2a9651a0b2aaada337004891b4be2ff1dc85bfe9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/nes_rom_service.sv",
+      "bytes": 3843,
+      "sha256": "41c9b363320c32ded0b5fc2389fd17a540b7a4b1eae35eb5b13cb3e053f35028"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/nes_snes_frontend.sv",
+      "bytes": 6729,
+      "sha256": "d4695fb16a1b58bb59028ececb784f1f4965353626599d8df42629267c26b3a4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/nes_transport.sv",
+      "bytes": 1131,
+      "sha256": "850da0fe98d251fafd464a8542f4882c7519619be5871e6ed5528ea6b003430d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/oam-banking.diff",
+      "bytes": 9576,
+      "sha256": "de7706b01934398a89961eadbe61a6f38c8cb766323e84ce096297411f5bcdb0"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/probe.qpf",
+      "bytes": 28,
+      "sha256": "c4087ec21f97c540ffb537072cd0e63acbd5625f02b3a55847b2d2d5a45faacf"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/probe.qsf",
+      "bytes": 3165,
+      "sha256": "3368bfc6440af8459cb402f9ec33d6af6e99f9c7fb7d824ad33cf9f2211194f6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/probe.sdc",
+      "bytes": 91,
+      "sha256": "548ab14ed48c3d810d0d4261e458bff3ee9f5c049f9a1a2be4927fa6984b87f9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/resource-adapter.diff",
+      "bytes": 1179,
+      "sha256": "f84d29465cdc7c6ba96122b0a29a94529dd7d1892cf8bf8640f0970951eebcf4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/result.json",
+      "bytes": 6424,
+      "sha256": "75efdabc243dbd68a2ce5f6dc2dde89eccb73319fc10513912c42490abc18c00"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/rom_backend_model.sv",
+      "bytes": 1452,
+      "sha256": "26d0eb52ed798836dab04e29bef61eab8b5d0751ccadf07b34ef2cc27bcd9ec7"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/rtl/apu.sv",
+      "bytes": 40639,
+      "sha256": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/rtl/bus_savestates.vhd",
+      "bytes": 2249,
+      "sha256": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/rtl/cheatcodes.sv",
+      "bytes": 2411,
+      "sha256": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/rtl/compat.v",
+      "bytes": 572,
+      "sha256": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/rtl/composite_board.sv",
+      "bytes": 3409,
+      "sha256": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/rtl/nes.v",
+      "bytes": 44316,
+      "sha256": "d76a18fb93e4a97b4efed31f7a19deb8f34935c2f872059d2b35bb9548c78cdd"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/rtl/ppu.sv",
+      "bytes": 91462,
+      "sha256": "e155b3b59000f5c52a5ab2e72b6745be682fd9a515d59c0360f208eafbfc090e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/rtl/regs_savestates.sv",
+      "bytes": 3093,
+      "sha256": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/rtl/savestates.vhd",
+      "bytes": 14291,
+      "sha256": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/rtl/statemanager.vhd",
+      "bytes": 5333,
+      "sha256": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/rtl/t65/T65.vhd",
+      "bytes": 31950,
+      "sha256": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/rtl/t65/T65_ALU.vhd",
+      "bytes": 9894,
+      "sha256": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/rtl/t65/T65_MCode.vhd",
+      "bytes": 45791,
+      "sha256": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/rtl/t65/T65_Pack.vhd",
+      "bytes": 5279,
+      "sha256": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/sys/iir_filter.v",
+      "bytes": 5635,
+      "sha256": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/tap-export.diff",
+      "bytes": 6471,
+      "sha256": "8472cd528eb3caf163b2aaccf770d1f1943d80a9c05aeb154bedb59182f3589b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/validated-build.json",
+      "bytes": 6687,
+      "sha256": "7a4f3e6911b6e31c187936ccf7182d2089687e37aa744f7e2215ff02f951a4ad"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/vcom-00.log",
+      "bytes": 628,
+      "sha256": "5393ecc9c19a01df373a864a8cb8ebd293b26a414692a86ad55f49f312a0205f"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/vcom-01.log",
+      "bytes": 528,
+      "sha256": "527248e19fed83b6e114a1f70329f1a36cd37aaddd1ccbca1ff98d50065a95ca"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/vcom-02.log",
+      "bytes": 563,
+      "sha256": "9f1deef62b8364bc821c79530929cca81797264d52ef0c3efcc479f24cfce566"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/vcom-03.log",
+      "bytes": 644,
+      "sha256": "06289583bde8bbfe413ed37e961fea4a03b0dddce66d86693dd4966ac57d886f"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/vcom-04.log",
+      "bytes": 753,
+      "sha256": "8a813f587b813d14f3553debe4d11ea3e0e7f02eab0c50c070eafee1b36b9977"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/vcom-05.log",
+      "bytes": 546,
+      "sha256": "52f4aed0d256e5ac590678cf3993a9b30547b7129364e2193e41fffab2218749"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/vcom-06.log",
+      "bytes": 576,
+      "sha256": "780798980e4d87795cfc97f4ed1c95e4ac104ba3ef149f330c4d458af3a3adad"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live3/vlog.log",
+      "bytes": 2830,
+      "sha256": "6e7486cfb360b7bfdc224101e3e4ee6b20237f02a9717cb510045f3e32692713"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/banks32/chr.hex",
+      "bytes": 98304,
+      "sha256": "be81b07335e2e717e63116e6c19d5dd16be32e3d16ac0f09c341f029cebfc1fb"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/banks32/frame-1.hex",
+      "bytes": 245760,
+      "sha256": "810b75a8ae9734dd7d55afd3d67fe0221f49ad347bb1bbbe9f764c57d7e3aaf7"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/banks32/frame-2.hex",
+      "bytes": 245760,
+      "sha256": "f79c5d8db8729779bdf7d4380ee899d2d3f26ef6e6592407f0d521a458510f1f"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/banks32/frame-3.hex",
+      "bytes": 245760,
+      "sha256": "e99cb9af4cf3e9cc7d2a27112b09a683a702eb8e6669b39841dc9fffda00e22a"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/banks32/frame-4.hex",
+      "bytes": 245760,
+      "sha256": "e84d48135602deea1d61dd930068174342643ee6932acd5f3a76ba68c6063011"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/banks32/live.tsv",
+      "bytes": 1876443,
+      "sha256": "838a4de259f2f073f3610f313988daaaaceecd9de00d03466627c6633756f030"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/banks32/manifest.json",
+      "bytes": 681,
+      "sha256": "bcb687a9e009569e7653e74d0b135acedd8a8c993a5bd56997abc26c59bff4ad"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/banks32/modelsim.ini",
+      "bytes": 144,
+      "sha256": "60db638c7876222818629c45b7e2c98f54bd3296fae6a3349345a238e364f3fc"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/banks32/packet-1.bin",
+      "bytes": 2008,
+      "sha256": "efcdb6863d05ab942ccc15abec017b137649947c76e44c4ebd21cf64112b4a02"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/banks32/packet-2.bin",
+      "bytes": 2008,
+      "sha256": "1c36d58851bb0770599f5fbc4167eb726a77a6d90c036c0c4acbc0041a28f71b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/banks32/packet-3.bin",
+      "bytes": 2008,
+      "sha256": "340f5bd7164a3c4dfee9a23764f431cb6eb46271f50e974bd2d1cfa4ed4ea15c"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/banks32/packet-4.bin",
+      "bytes": 2008,
+      "sha256": "15df13600fc4d9a50958fc83b0072a0f3e01293d3dd1da267e4e64591412e98c"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/banks32/prg.hex",
+      "bytes": 196608,
+      "sha256": "c0052ba58fbbaa360954e418845d87013ca730d19c565de798caeff79efe0099"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/banks32/simulation.log",
+      "bytes": 9866,
+      "sha256": "3abe55d6a5afaa416fdb6755157a133318605191020c40df706ab39f069b77f6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/cart_nrom.sv",
+      "bytes": 36838,
+      "sha256": "aab8314bd8134bb33dff42ef7beebc4b109e81148d9ee11ccd2886a97673faf8"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/COPYING",
+      "bytes": 35146,
+      "sha256": "c53a65c2fd561c87eaabf1072ef5dcab8653042bc15308465f52413585eb6271"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/fine_x/chr.hex",
+      "bytes": 49152,
+      "sha256": "97f52da4e8cc2f777cef51c270374918f154ad2866ccec33ab89fff51406282e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/fine_x/frame-1.hex",
+      "bytes": 245760,
+      "sha256": "cf84fb669c6bec7c958f470545b5dc9de307e62743cf9a6a99ad4f6e87da5d44"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/fine_x/frame-2.hex",
+      "bytes": 245760,
+      "sha256": "89dfba4836a6efe0c26df2851f7c5db0de7ff7e4a13d9293134505ba6088ea9d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/fine_x/frame-3.hex",
+      "bytes": 245760,
+      "sha256": "cf84fb669c6bec7c958f470545b5dc9de307e62743cf9a6a99ad4f6e87da5d44"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/fine_x/frame-4.hex",
+      "bytes": 245760,
+      "sha256": "89dfba4836a6efe0c26df2851f7c5db0de7ff7e4a13d9293134505ba6088ea9d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/fine_x/live.tsv",
+      "bytes": 1844744,
+      "sha256": "9884f34e82aeeea020b0cf5a5ba4f3525c63694d0a05df646dc7f2a603890944"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/fine_x/manifest.json",
+      "bytes": 680,
+      "sha256": "5fb352222a117e3937dd14b7512fc342118fa178f1c61922f2cb142b5d4988ca"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/fine_x/modelsim.ini",
+      "bytes": 146,
+      "sha256": "8cf06304f1799ebcbf480cec6586b52727f03ff50934eb29b6fcb06f327ff3bc"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/fine_x/packet-1.bin",
+      "bytes": 2008,
+      "sha256": "25abeccf893edc65deb47dc0a1d14cc9236d7d2a01ff3ee0c58b7e3f4ea0a16d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/fine_x/packet-2.bin",
+      "bytes": 2008,
+      "sha256": "bcaf4130082ac00adaa9ddb9b0aca0e7240e35f6ffe793658f2dd7b21e465278"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/fine_x/packet-3.bin",
+      "bytes": 2008,
+      "sha256": "f04bf4a9888d706a05748fb38895e232b16415e25efe200d571de9e8901cb370"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/fine_x/packet-4.bin",
+      "bytes": 2008,
+      "sha256": "2299d88c3ee8a180e97fde99e9df1f10a31d66f9f3e9e444f618fa6b943db6c1"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/fine_x/prg.hex",
+      "bytes": 196608,
+      "sha256": "b840582d3818d90e0ee03bb517962c648ecada2c28a79ff3f76a16c205bd6370"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/fine_x/simulation.log",
+      "bytes": 9892,
+      "sha256": "14cfcfe71e0d149add9b6b4515b97f8e718d70576252a5f17961b73a8e834b02"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/ncr1_live_tb.sv",
+      "bytes": 8584,
+      "sha256": "e7ed994e0b3ba8823691f16188015a0ca2a6614531eea7702b95db3c3032f732"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/nes_local_memory.sv",
+      "bytes": 2372,
+      "sha256": "09a5109f5ea187b740ffbceb865c505c485dee13e87ee1cb665de937046d6ec4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/nes_ncr1_encoder.sv",
+      "bytes": 7429,
+      "sha256": "bcc5e1d3ff24511b2227107b90d1da4bc0b521179e1432bd50c8a2209e2a108a"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/nes_ncr1_ppu_tap.sv",
+      "bytes": 2981,
+      "sha256": "c9ccca0512f21062efb8756fc1f167aa1bdb4e44b07216719da9c5f8f66ac003"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/nes_packet_cdc_ram.sv",
+      "bytes": 4551,
+      "sha256": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/nes_packet_memory_producer.sv",
+      "bytes": 4762,
+      "sha256": "3fc53be9e6e64052713e8027dd3cde0537e819db84afb78d885458d0f033beac"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/nes_packet_queue_ram.sv",
+      "bytes": 3872,
+      "sha256": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/nes_probe.sv",
+      "bytes": 3302,
+      "sha256": "e07337d68bbc654201b5db8b1f184ebd80ec06923e4c9d3e5400a509b4728fb9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/nes_rom_service.sv",
+      "bytes": 3843,
+      "sha256": "41c9b363320c32ded0b5fc2389fd17a540b7a4b1eae35eb5b13cb3e053f35028"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/nes_snes_frontend.sv",
+      "bytes": 6729,
+      "sha256": "d4695fb16a1b58bb59028ececb784f1f4965353626599d8df42629267c26b3a4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/nes_transport.sv",
+      "bytes": 1131,
+      "sha256": "850da0fe98d251fafd464a8542f4882c7519619be5871e6ed5528ea6b003430d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/oam-banking.diff",
+      "bytes": 9576,
+      "sha256": "de7706b01934398a89961eadbe61a6f38c8cb766323e84ce096297411f5bcdb0"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/result.json",
+      "bytes": 6599,
+      "sha256": "fa056bd9126a38d776131620435f0355c1fb787189591a8f9dabdc078d2805a4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/rom_backend_model.sv",
+      "bytes": 1452,
+      "sha256": "26d0eb52ed798836dab04e29bef61eab8b5d0751ccadf07b34ef2cc27bcd9ec7"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/rtl/apu.sv",
+      "bytes": 40639,
+      "sha256": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/rtl/bus_savestates.vhd",
+      "bytes": 2249,
+      "sha256": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/rtl/cheatcodes.sv",
+      "bytes": 2411,
+      "sha256": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/rtl/compat.v",
+      "bytes": 572,
+      "sha256": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/rtl/composite_board.sv",
+      "bytes": 3409,
+      "sha256": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/rtl/nes.v",
+      "bytes": 44316,
+      "sha256": "d76a18fb93e4a97b4efed31f7a19deb8f34935c2f872059d2b35bb9548c78cdd"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/rtl/ppu.sv",
+      "bytes": 91462,
+      "sha256": "e155b3b59000f5c52a5ab2e72b6745be682fd9a515d59c0360f208eafbfc090e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/rtl/regs_savestates.sv",
+      "bytes": 3093,
+      "sha256": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/rtl/savestates.vhd",
+      "bytes": 14291,
+      "sha256": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/rtl/statemanager.vhd",
+      "bytes": 5333,
+      "sha256": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/rtl/t65/T65.vhd",
+      "bytes": 31950,
+      "sha256": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/rtl/t65/T65_ALU.vhd",
+      "bytes": 9894,
+      "sha256": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/rtl/t65/T65_MCode.vhd",
+      "bytes": 45791,
+      "sha256": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/rtl/t65/T65_Pack.vhd",
+      "bytes": 5279,
+      "sha256": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/sys/iir_filter.v",
+      "bytes": 5635,
+      "sha256": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/tap-export.diff",
+      "bytes": 6471,
+      "sha256": "8472cd528eb3caf163b2aaccf770d1f1943d80a9c05aeb154bedb59182f3589b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/vcom-00.log",
+      "bytes": 628,
+      "sha256": "fbcfa002970a80e47d0451714f5a90a8b39e761be124b3e9bf48ada35d077988"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/vcom-01.log",
+      "bytes": 528,
+      "sha256": "7a39bc672ebec272c3cf235e00a6fdc3b6d48b860fcb300379264a928bdd1579"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/vcom-02.log",
+      "bytes": 563,
+      "sha256": "5856a6e044067a515b502f25d886a3471934cd86ede9408ab5e06614ab2608b5"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/vcom-03.log",
+      "bytes": 644,
+      "sha256": "34189f86b5d32bee8f2fb22d89d59287982dfd15d21f15ad970cdac48af690a4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/vcom-04.log",
+      "bytes": 753,
+      "sha256": "e99d9f7b24082738cf963077ae359f1fdb53f2da6a5fdec3d14f80d7bb46e388"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/vcom-05.log",
+      "bytes": 546,
+      "sha256": "e2ead3ec939c668790e1688aa4a3bdd1bf0f761a67ffe14f11806aba246ed7cf"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/vcom-06.log",
+      "bytes": 576,
+      "sha256": "bb192160b4fe99475ce83afaa62e833ca14089262c58d6f1628d3fe3d6bf69db"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-rom-early-051/live4/vlog.log",
+      "bytes": 2830,
+      "sha256": "614172187ebc0791423fc5d4432e7b1e9e09c3e30bb867615ccc1fae97e08fa7"
+    },
+    {
+      "path": "analysis/local-rom-early-051/public-files.json",
+      "bytes": 491,
+      "sha256": "b2682e311b3c329780f5c19396202feb88607f97bfdf6faa553727a73087a66f"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/cart_nrom.sv",
+      "bytes": 36838,
+      "sha256": "aab8314bd8134bb33dff42ef7beebc4b109e81148d9ee11ccd2886a97673faf8"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/COPYING",
+      "bytes": 35146,
+      "sha256": "c53a65c2fd561c87eaabf1072ef5dcab8653042bc15308465f52413585eb6271"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/fit.log",
+      "bytes": 13451,
+      "sha256": "3ab5b78fc7c38029b5b5e57c99a262353116a3586e6c0a048c09cb2d7b818438"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/live.qpf",
+      "bytes": 26,
+      "sha256": "4a91c8153a337aa6c1397a992d9b689c9117c01a97124df2fca8b86f9670562c"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/live.qsf",
+      "bytes": 5541,
+      "sha256": "4b28999ab7ee2e8fcf37ba6c70a18dccc07e66fb3c8915e6de3b3e5e8477b8ff"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/live.sdc",
+      "bytes": 153,
+      "sha256": "a25a3a482006aafbc293406901584844c26752ecd4a7193a63650233bf3673b5"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/map.log",
+      "bytes": 104307,
+      "sha256": "0f7799ac657d9a429b7002a6610f1cf5f42a3dd9256d37257d2ac2b5cb6aab19"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/ncr1_live_tb.sv",
+      "bytes": 8600,
+      "sha256": "0a8266024b7387b2b24671aeba89c239388611cdca97c7b9ffb099d7ceb24f88"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/nes_live_joint.sv",
+      "bytes": 6342,
+      "sha256": "c8e625e4a26c1e75a59a37b09c3172841b085b66756ff38f8728af57847c4b7f"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/nes_local_memory.sv",
+      "bytes": 2372,
+      "sha256": "09a5109f5ea187b740ffbceb865c505c485dee13e87ee1cb665de937046d6ec4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/nes_ncr1_encoder.sv",
+      "bytes": 7429,
+      "sha256": "bcc5e1d3ff24511b2227107b90d1da4bc0b521179e1432bd50c8a2209e2a108a"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/nes_ncr1_ppu_tap.sv",
+      "bytes": 2981,
+      "sha256": "c9ccca0512f21062efb8756fc1f167aa1bdb4e44b07216719da9c5f8f66ac003"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/nes_packet_cdc_ram.sv",
+      "bytes": 4551,
+      "sha256": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/nes_packet_memory_producer.sv",
+      "bytes": 4762,
+      "sha256": "3fc53be9e6e64052713e8027dd3cde0537e819db84afb78d885458d0f033beac"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/nes_packet_queue_ram.sv",
+      "bytes": 3872,
+      "sha256": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/nes_probe.sv",
+      "bytes": 3302,
+      "sha256": "e07337d68bbc654201b5db8b1f184ebd80ec06923e4c9d3e5400a509b4728fb9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/nes_resource.sv",
+      "bytes": 2340,
+      "sha256": "d4661cee0a5fd897cfb6864c2a9651a0b2aaada337004891b4be2ff1dc85bfe9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/nes_rom_service.sv",
+      "bytes": 3843,
+      "sha256": "41c9b363320c32ded0b5fc2389fd17a540b7a4b1eae35eb5b13cb3e053f35028"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/nes_snes_frontend.sv",
+      "bytes": 6729,
+      "sha256": "d4695fb16a1b58bb59028ececb784f1f4965353626599d8df42629267c26b3a4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/nes_transport.sv",
+      "bytes": 1131,
+      "sha256": "850da0fe98d251fafd464a8542f4882c7519619be5871e6ed5528ea6b003430d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/oam-banking.diff",
+      "bytes": 9576,
+      "sha256": "de7706b01934398a89961eadbe61a6f38c8cb766323e84ce096297411f5bcdb0"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/output_files/live.fit.rpt",
+      "bytes": 350052,
+      "sha256": "63b5a9be2f5db016110dbbfc5441bd09509dc716dd3330e92ca890ef444fde77"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/output_files/live.fit.summary",
+      "bytes": 641,
+      "sha256": "104bea43da876251c9ad519584ac07e2299a8728e015291f8c305ea43a0f92bd"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/output_files/live.flow.rpt",
+      "bytes": 6692,
+      "sha256": "bde834b67f459724c50e99405629afda5fea4389d71f8d017c5310c66783ebd7"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/output_files/live.map.rpt",
+      "bytes": 1151789,
+      "sha256": "84f5c8a9f35ab1a3237507f5fdf3e3d5f989600f608b05ecbb1cd0f17dea25ea"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/output_files/live.map.summary",
+      "bytes": 496,
+      "sha256": "446efb9c6407212d0e8a7289b01c62a9aeb10ec4e7b686837be20f74916dbed1"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/probe.qpf",
+      "bytes": 28,
+      "sha256": "c4087ec21f97c540ffb537072cd0e63acbd5625f02b3a55847b2d2d5a45faacf"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/probe.qsf",
+      "bytes": 3165,
+      "sha256": "3368bfc6440af8459cb402f9ec33d6af6e99f9c7fb7d824ad33cf9f2211194f6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/probe.sdc",
+      "bytes": 91,
+      "sha256": "548ab14ed48c3d810d0d4261e458bff3ee9f5c049f9a1a2be4927fa6984b87f9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/resource-adapter.diff",
+      "bytes": 1179,
+      "sha256": "f84d29465cdc7c6ba96122b0a29a94529dd7d1892cf8bf8640f0970951eebcf4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/result.json",
+      "bytes": 3715,
+      "sha256": "b0fa25de5fe02c4a6fcb11a1a4780a744f835e79cf003f7d608b404bd89bf203"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/rom_backend_model.sv",
+      "bytes": 1452,
+      "sha256": "26d0eb52ed798836dab04e29bef61eab8b5d0751ccadf07b34ef2cc27bcd9ec7"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/rtl/apu.sv",
+      "bytes": 40639,
+      "sha256": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/rtl/bus_savestates.vhd",
+      "bytes": 2249,
+      "sha256": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/rtl/cheatcodes.sv",
+      "bytes": 2411,
+      "sha256": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/rtl/compat.v",
+      "bytes": 572,
+      "sha256": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/rtl/composite_board.sv",
+      "bytes": 3409,
+      "sha256": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/rtl/nes.v",
+      "bytes": 44316,
+      "sha256": "d76a18fb93e4a97b4efed31f7a19deb8f34935c2f872059d2b35bb9548c78cdd"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/rtl/ppu.sv",
+      "bytes": 91462,
+      "sha256": "e155b3b59000f5c52a5ab2e72b6745be682fd9a515d59c0360f208eafbfc090e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/rtl/regs_savestates.sv",
+      "bytes": 3093,
+      "sha256": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/rtl/savestates.vhd",
+      "bytes": 14291,
+      "sha256": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/rtl/statemanager.vhd",
+      "bytes": 5333,
+      "sha256": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/rtl/t65/T65.vhd",
+      "bytes": 31950,
+      "sha256": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/rtl/t65/T65_ALU.vhd",
+      "bytes": 9894,
+      "sha256": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/rtl/t65/T65_MCode.vhd",
+      "bytes": 45791,
+      "sha256": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/rtl/t65/T65_Pack.vhd",
+      "bytes": 5279,
+      "sha256": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/sys/iir_filter.v",
+      "bytes": 5635,
+      "sha256": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/tap-export.diff",
+      "bytes": 6471,
+      "sha256": "8472cd528eb3caf163b2aaccf770d1f1943d80a9c05aeb154bedb59182f3589b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/resource/validated-build.json",
+      "bytes": 6687,
+      "sha256": "7a4f3e6911b6e31c187936ccf7182d2089687e37aa744f7e2215ff02f951a4ad"
+    },
+    {
+      "path": "analysis/local-rom-early-051/result.json",
+      "bytes": 445,
+      "sha256": "8c6ba47ae62a31b04042f82aa71d86c54c84e577c93e7bbe06aea07e43cd3dfb"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/banks32/chr.hex",
+      "bytes": 98304,
+      "sha256": "be81b07335e2e717e63116e6c19d5dd16be32e3d16ac0f09c341f029cebfc1fb"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/banks32/live.tsv",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/banks32/manifest.json",
+      "bytes": 681,
+      "sha256": "bcb687a9e009569e7653e74d0b135acedd8a8c993a5bd56997abc26c59bff4ad"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/banks32/modelsim.ini",
+      "bytes": 146,
+      "sha256": "f64a466dd3db366d439a566276a1d6e0d6d912373443a96d50e78a58daaf6d68"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/banks32/prg.hex",
+      "bytes": 196608,
+      "sha256": "c0052ba58fbbaa360954e418845d87013ca730d19c565de798caeff79efe0099"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/banks32/simulation.log",
+      "bytes": 10486,
+      "sha256": "d7c8c3ec3d142d1e25b23f0b1ef23e0842170db1c95525654545003467f6081b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/cart_nrom.sv",
+      "bytes": 36838,
+      "sha256": "aab8314bd8134bb33dff42ef7beebc4b109e81148d9ee11ccd2886a97673faf8"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/COPYING",
+      "bytes": 35146,
+      "sha256": "c53a65c2fd561c87eaabf1072ef5dcab8653042bc15308465f52413585eb6271"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/fine_x/chr.hex",
+      "bytes": 49152,
+      "sha256": "97f52da4e8cc2f777cef51c270374918f154ad2866ccec33ab89fff51406282e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/fine_x/live.tsv",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/fine_x/manifest.json",
+      "bytes": 680,
+      "sha256": "5fb352222a117e3937dd14b7512fc342118fa178f1c61922f2cb142b5d4988ca"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/fine_x/modelsim.ini",
+      "bytes": 146,
+      "sha256": "f64a466dd3db366d439a566276a1d6e0d6d912373443a96d50e78a58daaf6d68"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/fine_x/prg.hex",
+      "bytes": 196608,
+      "sha256": "b840582d3818d90e0ee03bb517962c648ecada2c28a79ff3f76a16c205bd6370"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/fine_x/simulation.log",
+      "bytes": 7807,
+      "sha256": "e0c0de9cfadb00f5140e3ae0144053ed8f41c535de08d997bb5d80f1ada336fc"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/ncr1_live_tb.sv",
+      "bytes": 8584,
+      "sha256": "e7ed994e0b3ba8823691f16188015a0ca2a6614531eea7702b95db3c3032f732"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/nes_local_memory.sv",
+      "bytes": 2372,
+      "sha256": "09a5109f5ea187b740ffbceb865c505c485dee13e87ee1cb665de937046d6ec4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/nes_ncr1_encoder.sv",
+      "bytes": 7429,
+      "sha256": "bcc5e1d3ff24511b2227107b90d1da4bc0b521179e1432bd50c8a2209e2a108a"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/nes_ncr1_ppu_tap.sv",
+      "bytes": 2981,
+      "sha256": "c9ccca0512f21062efb8756fc1f167aa1bdb4e44b07216719da9c5f8f66ac003"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/nes_packet_cdc_ram.sv",
+      "bytes": 4551,
+      "sha256": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/nes_packet_memory_producer.sv",
+      "bytes": 4762,
+      "sha256": "3fc53be9e6e64052713e8027dd3cde0537e819db84afb78d885458d0f033beac"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/nes_packet_queue_ram.sv",
+      "bytes": 3872,
+      "sha256": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/nes_probe.sv",
+      "bytes": 3302,
+      "sha256": "e07337d68bbc654201b5db8b1f184ebd80ec06923e4c9d3e5400a509b4728fb9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/nes_resource.sv",
+      "bytes": 2340,
+      "sha256": "d4661cee0a5fd897cfb6864c2a9651a0b2aaada337004891b4be2ff1dc85bfe9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/nes_rom_service.sv",
+      "bytes": 3843,
+      "sha256": "41c9b363320c32ded0b5fc2389fd17a540b7a4b1eae35eb5b13cb3e053f35028"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/nes_snes_frontend.sv",
+      "bytes": 6729,
+      "sha256": "d4695fb16a1b58bb59028ececb784f1f4965353626599d8df42629267c26b3a4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/nes_transport.sv",
+      "bytes": 1131,
+      "sha256": "850da0fe98d251fafd464a8542f4882c7519619be5871e6ed5528ea6b003430d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/oam-banking.diff",
+      "bytes": 9576,
+      "sha256": "de7706b01934398a89961eadbe61a6f38c8cb766323e84ce096297411f5bcdb0"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/probe.qpf",
+      "bytes": 28,
+      "sha256": "c4087ec21f97c540ffb537072cd0e63acbd5625f02b3a55847b2d2d5a45faacf"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/probe.qsf",
+      "bytes": 3165,
+      "sha256": "3368bfc6440af8459cb402f9ec33d6af6e99f9c7fb7d824ad33cf9f2211194f6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/probe.sdc",
+      "bytes": 91,
+      "sha256": "548ab14ed48c3d810d0d4261e458bff3ee9f5c049f9a1a2be4927fa6984b87f9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/resource-adapter.diff",
+      "bytes": 1179,
+      "sha256": "f84d29465cdc7c6ba96122b0a29a94529dd7d1892cf8bf8640f0970951eebcf4"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/result.json",
+      "bytes": 3524,
+      "sha256": "33fc3211f920bc9e0050df11f86c298221a0d9062353be0bb75449a72b21431d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/rom_backend_model.sv",
+      "bytes": 1452,
+      "sha256": "26d0eb52ed798836dab04e29bef61eab8b5d0751ccadf07b34ef2cc27bcd9ec7"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/rtl/apu.sv",
+      "bytes": 40639,
+      "sha256": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/rtl/bus_savestates.vhd",
+      "bytes": 2249,
+      "sha256": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/rtl/cheatcodes.sv",
+      "bytes": 2411,
+      "sha256": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/rtl/compat.v",
+      "bytes": 572,
+      "sha256": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/rtl/composite_board.sv",
+      "bytes": 3409,
+      "sha256": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/rtl/nes.v",
+      "bytes": 44316,
+      "sha256": "d76a18fb93e4a97b4efed31f7a19deb8f34935c2f872059d2b35bb9548c78cdd"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/rtl/ppu.sv",
+      "bytes": 91462,
+      "sha256": "e155b3b59000f5c52a5ab2e72b6745be682fd9a515d59c0360f208eafbfc090e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/rtl/regs_savestates.sv",
+      "bytes": 3093,
+      "sha256": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/rtl/savestates.vhd",
+      "bytes": 14291,
+      "sha256": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/rtl/statemanager.vhd",
+      "bytes": 5333,
+      "sha256": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/rtl/t65/T65.vhd",
+      "bytes": 31950,
+      "sha256": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/rtl/t65/T65_ALU.vhd",
+      "bytes": 9894,
+      "sha256": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/rtl/t65/T65_MCode.vhd",
+      "bytes": 45791,
+      "sha256": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/rtl/t65/T65_Pack.vhd",
+      "bytes": 5279,
+      "sha256": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/sys/iir_filter.v",
+      "bytes": 5635,
+      "sha256": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/tap-export.diff",
+      "bytes": 6471,
+      "sha256": "8472cd528eb3caf163b2aaccf770d1f1943d80a9c05aeb154bedb59182f3589b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/validated-build.json",
+      "bytes": 6687,
+      "sha256": "7a4f3e6911b6e31c187936ccf7182d2089687e37aa744f7e2215ff02f951a4ad"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/vcom-00.log",
+      "bytes": 628,
+      "sha256": "e25f607e08aef5a07470659585c22294beb709824f332edf6cc35f48bea71e60"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/vcom-01.log",
+      "bytes": 528,
+      "sha256": "180caf7166bc0b525cddddaff60729e0677724b06c6b04dcfbb14952ff6c0e04"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/vcom-02.log",
+      "bytes": 563,
+      "sha256": "ee36791ebb376c0833574d708320594034d2fe06bbcc8b15f67f5ab38012ce35"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/vcom-03.log",
+      "bytes": 644,
+      "sha256": "1b24f048b78cc1707bcf1503e23bd2fa18f10e97b479b246c8621468eb141f95"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/vcom-04.log",
+      "bytes": 753,
+      "sha256": "e3bca499599c16491fc045863c7d68a3c0cc045870cc500ab9c40e363679b37b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/vcom-05.log",
+      "bytes": 546,
+      "sha256": "4b0fb766f1f63137861533296d4763fa15a3b6712764bcc73950b6bc367d556e"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/vcom-06.log",
+      "bytes": 576,
+      "sha256": "fbd8845538ce1c6e67369e762381a08f094a6016b7b5b44f4a189caed4c5373d"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-rom-early-051/slow/vlog.log",
+      "bytes": 2830,
+      "sha256": "9e692c7681e8e280cb524825bfaf3b5a2bad0cc3e0593a6e607214316f2b2f8a"
+    },
+    {
+      "path": "analysis/local-rom-early-051/timing-history.json",
+      "bytes": 28497,
+      "sha256": "83fdf554a8f692bcb1a031fd6ae6bd410cd783ec711400519c8786f086167470"
+    },
+    {
+      "path": "analysis/local-rom-early-051/unit/nes_rom_early.sv",
+      "bytes": 3843,
+      "sha256": "41c9b363320c32ded0b5fc2389fd17a540b7a4b1eae35eb5b13cb3e053f35028"
+    },
+    {
+      "path": "analysis/local-rom-early-051/unit/result.json",
+      "bytes": 344,
+      "sha256": "1a1452639e36471d2ab6b4a67359fd7e7ea149248f654fb64762b9b38897a4e9"
+    },
+    {
+      "path": "analysis/local-rom-early-051/unit/rom_early_tb.sv",
+      "bytes": 5870,
+      "sha256": "0a911edcc14464d39ce4de26b72382d6dbf2a10ffe941d46108361130ccbd298"
+    },
+    {
+      "path": "analysis/local-rom-early-051/unit/simulation.log",
+      "bytes": 1544,
+      "sha256": "fc78e02a175bcf4da479b6ab6c00182bf37c864ca04310f95c349f2adbd45530"
+    },
+    {
+      "path": "analysis/local-rom-early-051/unit/transcript",
+      "bytes": 1512,
+      "sha256": "0f5271f88df340b538d06d86716902f9ec5753a420b493a5df615fe250aede7b"
+    },
+    {
+      "path": "analysis/local-rom-early-051/unit/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-rom-early-051/unit/vlog.log",
+      "bytes": 457,
+      "sha256": "eec20912b0d190dfbf10dc7a013d0d8806d0319ef4f33df64a2224d54e59d6b6"
+    }
+  ]
+}

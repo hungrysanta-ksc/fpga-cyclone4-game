@@ -1,0 +1,706 @@
+{
+  "candidate": "NES-H1-PATTERN-033",
+  "date_kst": "2026-10-06",
+  "implementation_candidate": "NES-P2-RDY-014",
+  "last_nes_trace_replay_candidate": "NES-R2-CHR-RESIDENCY-025",
+  "hardware_visual_candidate": "NES-H0-VISUAL-030",
+  "core_resource_candidate": "NES-R1-JOINT-RESOURCE-032",
+  "sources": [
+    {
+      "path": "src/nes/nes_h1_pattern_producer.sv",
+      "bytes": 2918,
+      "sha256": "df503ca66b93ba26441de3900375b13359345c301610b22c0d085e685ef4248d"
+    },
+    {
+      "path": "src/nes/nes_h1_pattern.sv",
+      "bytes": 767,
+      "sha256": "2f480d01257e8b755dee314fa48932ad0abca2cf737f71bd467bdce35c135822"
+    },
+    {
+      "path": "tests/nes-functional/h1_pattern_tb.sv",
+      "bytes": 4041,
+      "sha256": "764393cc53e57945e99efdd8e99951719911127f23f10c89ff7b53e532b94fcc"
+    },
+    {
+      "path": "tools/build_nes_h1_pattern.py",
+      "bytes": 7133,
+      "sha256": "b193ba8a2924f9cd4964a7858305af0aa0897ea645a0389a7d1f0cb73b48baad"
+    },
+    {
+      "path": "tools/nes_h1_pattern.py",
+      "bytes": 2430,
+      "sha256": "0115b445fa379ca321ee1a932bc3f5b98e3f2f753b5aab4323b09b56a4fec939"
+    },
+    {
+      "path": "tools/run_nes_h1_pattern.ps1",
+      "bytes": 3375,
+      "sha256": "aff8993c979b462f4d1953570cb052d33807524f5551eecc9212ebe8a69c5bbd"
+    },
+    {
+      "path": "tools/run_nes_h1_client.py",
+      "bytes": 4684,
+      "sha256": "8c08612932dd884a6072b41bbeda4413848f2f9c66309eb32aaf990f4cd65eda"
+    },
+    {
+      "path": "tools/nes_h1_pattern_resource.py",
+      "bytes": 2911,
+      "sha256": "76e1ab7e2341c744400319c2abaf1a596fa3bff11ae39ac3e0dacf885a278bde"
+    },
+    {
+      "path": "tools/verify_nes_h1_pattern.py",
+      "bytes": 5298,
+      "sha256": "dd39ad2011f1557a450ab5eee788092343bfea55728eb82eaa570c336e48e059"
+    },
+    {
+      "path": "snes/video_probe/capture_h1_pattern.lua",
+      "bytes": 3696,
+      "sha256": "5cd7859f4b8d8e8d54673cca5a5f61433ed6ee3e307b22764705b44bcb955811"
+    },
+    {
+      "path": "docs/nes-h1-pattern-contract.md",
+      "bytes": 5422,
+      "sha256": "51931e5bd8d6e183e4cff39551bd8f82adf0685583dc60287e0fc80ca7052966"
+    },
+    {
+      "path": "analysis/H1-PATTERN-RESULT.ko.md",
+      "bytes": 4869,
+      "sha256": "e378965d25dcd33b0fc3bfd35b40f8c4bb1c2da5e36d4d4787cf89494f390144"
+    },
+    {
+      "path": "analysis/h1-pattern-verification.json",
+      "bytes": 5944,
+      "sha256": "9a534d2fa9abc15b1a706165d1ec5b4ae9b8c462875147af6b0223ddb549e7f5"
+    },
+    {
+      "path": "analysis/joint-resource-artifacts.json",
+      "bytes": 13926,
+      "sha256": "846b69d985c63a91ce22c4848d1af784677e0153efb6e0416aff0fe2eec2f5fa"
+    },
+    {
+      "path": "tools/build_nes_visual_h0.py",
+      "bytes": 6117,
+      "sha256": "bbeba608328309c4d59c694e2b878ba82d97e3aae9f24cf42e0655cfb992aaac"
+    },
+    {
+      "path": "tools/build_nes_trace_replay.py",
+      "bytes": 8847,
+      "sha256": "1b9e25b9af887c6b4329f1f883f61b98f3b320360ed3853144d09f60a292161a"
+    },
+    {
+      "path": "snes/video_probe/build_probe.py",
+      "bytes": 5716,
+      "sha256": "6313cd97c3575e75c3ef14000a2e2460c7a46deddcc37993e41dbb8062ec8d14"
+    }
+  ],
+  "status_files": [
+    {
+      "path": "cores/nes/README.md",
+      "bytes": 1511,
+      "sha256": "dccf07a2bb574013a7ca9bf970b25fff558f649e1ae3bad23195b7c749d3054e"
+    },
+    {
+      "path": "cores/nes/PROPOSAL.ko.md",
+      "bytes": 22255,
+      "sha256": "1443a165d08830950a30b7ad01e9e283c24c972fd337e265d56ec640fc6c900d"
+    },
+    {
+      "path": "cores/nes/HANDOFF.ko.md",
+      "bytes": 49902,
+      "sha256": "3d5b7fa243a2f69117302595cbab34d56a389e6b079ef1d2f43074d887d73d2c"
+    },
+    {
+      "path": "docs/nes-development-plan.json",
+      "bytes": 8330,
+      "sha256": "1e775b45cfa94990c727d30c68b73cd1161940e14fe9e844bbd6c0f2606cada8"
+    },
+    {
+      "path": "cores/registry.json",
+      "bytes": 5682,
+      "sha256": "3957bbb0ea433a6fbc87df41c0c734650c82cc7f2765efdb19f3a148416dec75"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 21095,
+      "sha256": "68ae1ff648fdd83bacae3f20df20ed341bbc0a31bff56742828627d55a556798"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 1409,
+      "sha256": "c84aada55c79f5cd00226137a777bfe536e67af4bc5d3c57e2f7bcb9c03868cb"
+    },
+    {
+      "path": "analysis/hardware-readiness.json",
+      "bytes": 3443,
+      "sha256": "45efc88adf93336f410b1725ac2cccc94eb35af1f7e5633696971b715dcf27ae"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "analysis/local-h1-pattern-033/absent/capture.json",
+      "bytes": 486,
+      "sha256": "80199e93a16f3fcd9c552f3ed43cf47314a3324eb956946f3549b31517c3fcaf"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/absent/capture.lua",
+      "bytes": 3888,
+      "sha256": "06f775e2554c6934a6c7506bad4f3c7433e9fb34d3af46444d6df96d4dec9900"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/absent/frame-000.rgb",
+      "bytes": 183552,
+      "sha256": "88965e231eec52120ba709a48f962803c72cd5f8cf5f2ca86131f70c556d34ee"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/absent/frame-001.png",
+      "bytes": 1203,
+      "sha256": "411976081a7c8c62b2c207090d0a80f84094cc31373291539795f8002f384d8c"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/absent/frame-001.rgb",
+      "bytes": 183552,
+      "sha256": "51ae4b1ca0c72a5244459fc98de696d27f055d1525bdbd0258b89632f6027981"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/absent/frames.tsv",
+      "bytes": 51,
+      "sha256": "330b49502bd884be97ee1fc49acbc0325051e95e82691136c25bd04ed02c8114"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/absent/mesen.log",
+      "bytes": 213,
+      "sha256": "833e52bd08269138d4712a84f395ee704b422d8d291e39cd2a62e8d5bd5dd37c"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/absent/model.tsv",
+      "bytes": 7,
+      "sha256": "f5f038585a49748e7befa99b3fcded393352899205e152b8d31307cd022520ac"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/absent/result.json",
+      "bytes": 444,
+      "sha256": "f85e169ce25132957ae0df450b989a0324ee88721fe7f3a22b14a03187010b83"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/absent/trace.tsv",
+      "bytes": 3924312,
+      "sha256": "f9ce5712cd7d56af1cad4c49173784e428b5e92dd2f5541a9416146bb36ac979"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/absent-runner.log",
+      "bytes": 444,
+      "sha256": "647705b28bafa75c4a508b603c073fbab3f803659c9ade81a1afa921297f1194"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/auditor-failure-01/failure.txt",
+      "bytes": 385,
+      "sha256": "02877735da23f4d1d1b69252bbf3be1c309812dc4d5ae6474a00a7119e1428a5"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/auditor-failure-01/run_nes_h1_client.py",
+      "bytes": 4366,
+      "sha256": "f7639504527ffbcad424bb042970a7e0abc0bc4ae3b13960aaae3f7d280bb90a"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/bad_length/capture.json",
+      "bytes": 490,
+      "sha256": "61ddb13e6fad39f4f9e7a31c3097b9d8bfc1a14a778eb668cc977de9f80ed4d8"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/bad_length/capture.lua",
+      "bytes": 3896,
+      "sha256": "f842b79c585f993f9eed7b746cfed936dfed08bed7b8bb3dc945f0e4c922a4b2"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/bad_length/frame-000.rgb",
+      "bytes": 183552,
+      "sha256": "88965e231eec52120ba709a48f962803c72cd5f8cf5f2ca86131f70c556d34ee"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/bad_length/frame-001.png",
+      "bytes": 1203,
+      "sha256": "411976081a7c8c62b2c207090d0a80f84094cc31373291539795f8002f384d8c"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/bad_length/frame-001.rgb",
+      "bytes": 183552,
+      "sha256": "51ae4b1ca0c72a5244459fc98de696d27f055d1525bdbd0258b89632f6027981"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/bad_length/frames.tsv",
+      "bytes": 49,
+      "sha256": "ffa566a1cf827ad874e8520e052f4dc28d0ecdea29ff1bf4916e05e9c2cceb50"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/bad_length/mesen.log",
+      "bytes": 213,
+      "sha256": "833e52bd08269138d4712a84f395ee704b422d8d291e39cd2a62e8d5bd5dd37c"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/bad_length/model.tsv",
+      "bytes": 7,
+      "sha256": "64bdea662f92337026649726d6370f9a2d8e4cf2d1d2ef184beb82948f359c88"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/bad_length/result.json",
+      "bytes": 448,
+      "sha256": "b7f712153f4f9164736ca828a3476907bcdf43bcec6c1aa6865334109538664e"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/bad_length/trace.tsv",
+      "bytes": 3902,
+      "sha256": "0a1009d503b586d91c711abea7ec02828566b3211c962256cbc504d9782cf345"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/bad_length-runner.log",
+      "bytes": 448,
+      "sha256": "673ffb382a9e233fe3edf87f3a12a5e96e40d28debc53ac2a92dcb3513011a32"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/baseline-status/.gitignore",
+      "bytes": 20559,
+      "sha256": "c920d4820f93272247024dec1949512d872d86b52a117e08a2b7a536404a5c69"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/baseline-status/AGENTS.md",
+      "bytes": 1409,
+      "sha256": "c84aada55c79f5cd00226137a777bfe536e67af4bc5d3c57e2f7bcb9c03868cb"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/baseline-status/analysis/hardware-readiness.json",
+      "bytes": 3278,
+      "sha256": "120acd95993cfe1ae49dc6a74aa0e7792c249d948b5c15f69ad2828a1eac3a0d"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/baseline-status/cores/nes/HANDOFF.ko.md",
+      "bytes": 48747,
+      "sha256": "696c439c64b0c68c02ca1adfaed7ec8ece6b479847ed080ef094a6d4a8c8cb5f"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/baseline-status/cores/nes/PROPOSAL.ko.md",
+      "bytes": 21764,
+      "sha256": "0cdad79d51bddbcf68de48bec27d70a069d0e2822dbf1e8a204daec635782503"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/baseline-status/cores/nes/README.md",
+      "bytes": 1579,
+      "sha256": "cd880ae7f14e3af455486801f697ab1c41e7abd39fb08ee2eb978a550d286682"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/baseline-status/cores/registry.json",
+      "bytes": 5321,
+      "sha256": "dac98a627bccf95eb254f1571862f9cee62ae29bd56b77c2055ba392daf80ec5"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/baseline-status/docs/nes-development-plan.json",
+      "bytes": 8348,
+      "sha256": "3d5f8b9ec141577a35af2ce1a68afef462d849065224798987f05700b5675e97"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/build/expected-0.rgb",
+      "bytes": 172032,
+      "sha256": "826ac91502e52385f6ddcf1ef498bcdf2242e73ed7785fde1675843673438a3e"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/build/expected-1.rgb",
+      "bytes": 172032,
+      "sha256": "c8cfd3458df2ec14ec1a9e51a026247d09b8f1ae2e219ab460255e0718726498"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/build/expected-2.rgb",
+      "bytes": 172032,
+      "sha256": "0423c7dfd8c6a6075dc27410774c082908b92f560eeab1ac3a214a23f7713995"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/build/expected-3.rgb",
+      "bytes": 172032,
+      "sha256": "ec8eab59a0ad25ae1718bdf67503b49b7cd97c2a9254fdcab30462ac113d54e4"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/build/expected-4.rgb",
+      "bytes": 172032,
+      "sha256": "8f6eb72ae1501726d27e6b3afd013c0f3c46babdc5658022df754e06821c0b31"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/build/h1-pattern.hex",
+      "bytes": 24576,
+      "sha256": "64a5c82ab686350bb3a56cc90062aafa8bfa39581fa6183ffc10b6d62b293ba6"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/build/manifest.json",
+      "bytes": 575,
+      "sha256": "ef90bf752b89336fc6928109bd195bec872d336ee446a4f85be3f0f77b8e4d6a"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/build/nes-h1-pattern-033.sfc",
+      "bytes": 65536,
+      "sha256": "da3cf228c070143a773e68994094b7966ed5ebe05fef3893341708a4d33c1bd0"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/build/page-0.bin",
+      "bytes": 2048,
+      "sha256": "3d22cdb5dc8ecd7344a8fb2c0f0b6701604a8c68db640604d3524ddb7a9b4c18"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/build/page-1.bin",
+      "bytes": 2048,
+      "sha256": "676b7b28194da99bd84c9422e534614d220c9a89be491cfd74cdac56e147a14b"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/build/page-2.bin",
+      "bytes": 2048,
+      "sha256": "f0b9f610e0f9bf87fda0e2a93e03e48e603759e139f4a04bf15b00033d5392e7"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/build/page-3.bin",
+      "bytes": 2048,
+      "sha256": "34361e8690ccc2ae5b64f2fe7ed79416a5ec50e16a83afca178d85480b0605df"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/build/page-4.bin",
+      "bytes": 2048,
+      "sha256": "864bbebda97f78443eb3ea35effa80f9fb880fc9a3e2a99051cc1f3c734d373f"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/build-failure-01/builder.py",
+      "bytes": 6863,
+      "sha256": "261c36d506ef5e922b48e80592a10048fdada0b0320274e4e59c0a163c6c8c4e"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/build-failure-01/failure.txt",
+      "bytes": 168,
+      "sha256": "646859d1bc142f173e38a291b95777f332bea32962528391f57b4ef4b8796f02"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/completion-checks.json",
+      "bytes": 679,
+      "sha256": "c644d8d790fbcc4686b21075d49b3a227fb418e2b927c76a6f5836181aaacb1d"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/h1-reference-contact.png",
+      "bytes": 8612,
+      "sha256": "937ccbc6ab6eda4469858a00a0ccdf3779aba02dda5e91f111fa6db6e52c85e4"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/new-public-files.json",
+      "bytes": 524,
+      "sha256": "99005af5c01bfd36c94e76ca0b7e52e2956b5ecb4d3f474cf7501a7cae8c616e"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/capture.json",
+      "bytes": 486,
+      "sha256": "a73a147001317eb3ee9c683cc082119deab7a51f587d0a254bc44a20024d0a2d"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/capture.lua",
+      "bytes": 3888,
+      "sha256": "2f88510bae658ef342e4dd1527dbee5d8db6bbe4d4f89559b574bcd476f180eb"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/frame-000.png",
+      "bytes": 1260,
+      "sha256": "2c27b7fd7430f1d7136c5e945665094a77155ae33548ed89a32011ee141432f3"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/frame-000.rgb",
+      "bytes": 183552,
+      "sha256": "88965e231eec52120ba709a48f962803c72cd5f8cf5f2ca86131f70c556d34ee"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/frame-001.png",
+      "bytes": 1382,
+      "sha256": "d99629c643eca8570acd802572c25b8acbd7b3e907b558d3a8417df71f1bcc32"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/frame-001.rgb",
+      "bytes": 183552,
+      "sha256": "9cf86d235b1baab201d82cd4a9fcb263d92e713857db7047c2c621b6a5eb8471"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/frame-002.png",
+      "bytes": 1360,
+      "sha256": "59732eeac9a91ac6814d478b3b898a5074ce1074a2a25bc612d062b82d3bee5a"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/frame-002.rgb",
+      "bytes": 183552,
+      "sha256": "d7dd72fb36aaa7dcc2cdc38d7f79be1dd1fc7827cf7f4c2096bfc512c533f633"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/frame-003.png",
+      "bytes": 1401,
+      "sha256": "183dbd7bed6895459bf388e1ee5238194dc7b3109fb25872366c5dd87793ca9b"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/frame-003.rgb",
+      "bytes": 183552,
+      "sha256": "fbe6a9c15d26c04b6042f233928387e1a783dc9e064d41e29ef86c84c9a4e210"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/frame-004.rgb",
+      "bytes": 183552,
+      "sha256": "9cf86d235b1baab201d82cd4a9fcb263d92e713857db7047c2c621b6a5eb8471"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/frame-005.rgb",
+      "bytes": 183552,
+      "sha256": "d7dd72fb36aaa7dcc2cdc38d7f79be1dd1fc7827cf7f4c2096bfc512c533f633"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/frame-006.rgb",
+      "bytes": 183552,
+      "sha256": "fbe6a9c15d26c04b6042f233928387e1a783dc9e064d41e29ef86c84c9a4e210"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/frames.tsv",
+      "bytes": 189,
+      "sha256": "9b6d75f630925b710928e1a8a26ce6dedd7ac5d6896585ad281bd7418e053a49"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/mesen.log",
+      "bytes": 213,
+      "sha256": "833e52bd08269138d4712a84f395ee704b422d8d291e39cd2a62e8d5bd5dd37c"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/model.tsv",
+      "bytes": 11,
+      "sha256": "3680c2a6f13011084d32f70e8d344aeae4bab82eecb44da21a5b717a7fda8611"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/result.json",
+      "bytes": 2313,
+      "sha256": "6817523af65619aae922be80551ce92f8d80ab200a6fcecc5a1a99c52e5062f3"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/normal/trace.tsv",
+      "bytes": 442759,
+      "sha256": "4d6a65f35187d2e476d747ab4db4d110eb1e97d71d69b8297ae367246a495686"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/prior-audit.json",
+      "bytes": 52,
+      "sha256": "548eb88191810ea43f2e17c1508fca07e58069bedbf940447def4840957529ee"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/fit.log",
+      "bytes": 9306,
+      "sha256": "8b13ff3edc186709f5ea376c98b283ab77a393de7b84e904cff7926b85e2e0b7"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/h1-pattern.hex",
+      "bytes": 24576,
+      "sha256": "64a5c82ab686350bb3a56cc90062aafa8bfa39581fa6183ffc10b6d62b293ba6"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/map.log",
+      "bytes": 30036,
+      "sha256": "da69656510c61451c446b32c0b4ff08fbf78d67e5d96f8d0bc14dd93d579bbde"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/nes_h1_pattern.sv",
+      "bytes": 767,
+      "sha256": "2f480d01257e8b755dee314fa48932ad0abca2cf737f71bd467bdce35c135822"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/nes_h1_pattern_producer.sv",
+      "bytes": 2918,
+      "sha256": "df503ca66b93ba26441de3900375b13359345c301610b22c0d085e685ef4248d"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/nes_packet_cdc_ram.sv",
+      "bytes": 4551,
+      "sha256": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/nes_packet_queue_ram.sv",
+      "bytes": 3872,
+      "sha256": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/nes_snes_frontend.sv",
+      "bytes": 4218,
+      "sha256": "c78ba887c2f1d8583513be6e98e990a09f7bd731cfd7cb7abc43c2e65e9a87bc"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/nes_transport.sv",
+      "bytes": 1091,
+      "sha256": "d7a722f872234a9d655d892c9a822593a09cfef4b2ec43fb815f022e64170765"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/output_files/transport.fit.rpt",
+      "bytes": 359439,
+      "sha256": "f3d1a161f632d0e1c3a1666180ba5247ffd0a016bf289df94dc4d8ec6f077200"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/output_files/transport.fit.smsg",
+      "bytes": 703,
+      "sha256": "bff381894c1dc45dfc5f6fb651d1bbe3793ead7f7adc4646fd1806e464e18e75"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/output_files/transport.fit.summary",
+      "bytes": 635,
+      "sha256": "fa6fab3daefa9fc942f8ee80f47866d11fe10f624bee925e73417259673f42d0"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/output_files/transport.flow.rpt",
+      "bytes": 6604,
+      "sha256": "767655a80021b085ce802b8d51432b90392310ef2b962ad2b6cb4bde8c682b02"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/output_files/transport.map.rpt",
+      "bytes": 135048,
+      "sha256": "7c240054eb9e1facbec516f0d261cb0c34bdd2bafff8bbd8c4a1447e97af627b"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/output_files/transport.map.smsg",
+      "bytes": 486,
+      "sha256": "ec54b42815d2e84f6554be668d236cb844098acf7d185f80fd4d6ba4a064f0bf"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/output_files/transport.map.summary",
+      "bytes": 493,
+      "sha256": "085483397b86651d0f715b59702bc8cb77ee10f12a4b40e081c1e49d29600cf9"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/output_files/transport.pin",
+      "bytes": 33440,
+      "sha256": "44977e58803ffe941d1f6b4403c4e732ef8cdda7b2ee8662f40e991b45250e72"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/result.json",
+      "bytes": 1167,
+      "sha256": "6e87e54db9287db1a999284ded9ae56aa12b02ccf1de31e9942cd10c5129b92c"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/transport.qpf",
+      "bytes": 32,
+      "sha256": "f3a27eb4a6367e4ef14582d1ba20c47fdf3363596e529c79693b7048ed1e7a35"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/transport.qsf",
+      "bytes": 2131,
+      "sha256": "6a48c7b4148d1d349973860d0cd16fa3516cdbd404f6077381f791105d6a5c8f"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/resource/transport.sdc",
+      "bytes": 156,
+      "sha256": "f1876f07244cec4f5ee7068a3d9812698c598fc6b984da13c8ed1f01cd2510bf"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/compile.log",
+      "bytes": 828,
+      "sha256": "d05125427659da6b49f2af356f3d21002d656451d6b002ef93768820385ece3f"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/h1-pattern.hex",
+      "bytes": 24576,
+      "sha256": "64a5c82ab686350bb3a56cc90062aafa8bfa39581fa6183ffc10b6d62b293ba6"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/h1_pattern_tb.sv",
+      "bytes": 4041,
+      "sha256": "764393cc53e57945e99efdd8e99951719911127f23f10c89ff7b53e532b94fcc"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/nes_h1_pattern.sv",
+      "bytes": 767,
+      "sha256": "2f480d01257e8b755dee314fa48932ad0abca2cf737f71bd467bdce35c135822"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/nes_h1_pattern_producer.sv",
+      "bytes": 2918,
+      "sha256": "df503ca66b93ba26441de3900375b13359345c301610b22c0d085e685ef4248d"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/nes_packet_cdc_ram.sv",
+      "bytes": 4551,
+      "sha256": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/nes_packet_queue_ram.sv",
+      "bytes": 3872,
+      "sha256": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/nes_snes_frontend.sv",
+      "bytes": 4218,
+      "sha256": "c78ba887c2f1d8583513be6e98e990a09f7bd731cfd7cb7abc43c2e65e9a87bc"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/nes_transport.sv",
+      "bytes": 1091,
+      "sha256": "d7a722f872234a9d655d892c9a822593a09cfef4b2ec43fb815f022e64170765"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/q20_h10.bin",
+      "bytes": 14336,
+      "sha256": "a6f33087b4adaef489867adc56afe9b29151a076711b37f19d05650d18138e2d"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/q20_h10.log",
+      "bytes": 1702,
+      "sha256": "e457ec8c62cc73f57dd9d644e0d3d9645f54e54e427fad2faf8d3e03aef27053"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/q20_h10.txt",
+      "bytes": 47650,
+      "sha256": "419b959da83b1d30ecc672dcbd8dc78149165867ec3519edd87078708acd7ad8"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/q46_h12.bin",
+      "bytes": 14336,
+      "sha256": "a6f33087b4adaef489867adc56afe9b29151a076711b37f19d05650d18138e2d"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/q46_h12.log",
+      "bytes": 1820,
+      "sha256": "93eb0d2ac827e37c78251cb08f79eaee331daab096df7988b2999b1321cf955a"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/q46_h12.txt",
+      "bytes": 47650,
+      "sha256": "419b959da83b1d30ecc672dcbd8dc78149165867ec3519edd87078708acd7ad8"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/q46_h20.bin",
+      "bytes": 14336,
+      "sha256": "a6f33087b4adaef489867adc56afe9b29151a076711b37f19d05650d18138e2d"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/q46_h20.log",
+      "bytes": 1714,
+      "sha256": "d54c195577c7a18dd4b4e11ee9c6f949c682a64113e0f6970592eedde322c43a"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/q46_h20.txt",
+      "bytes": 47650,
+      "sha256": "419b959da83b1d30ecc672dcbd8dc78149165867ec3519edd87078708acd7ad8"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/result.json",
+      "bytes": 2034,
+      "sha256": "9a109acda3a84b8f4a992ee6ccb89bf3eadc2727324c93193166b932dec12995"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/rtl/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-h1-pattern-033/runtime-client-runner.py",
+      "bytes": 4611,
+      "sha256": "f55f139b6df24cccb763f25790cec5b1f164140f230c40c1822a4bdde3166940"
+    }
+  ],
+  "prior_status_baseline": "analysis/local-h1-pattern-033/baseline-status",
+  "scope": "Separate actual RTL3x5cases43008B and real Mesen CPU/PPU with explicit device model fed RTL bytes,11frames673024exactpixels; virtual H1-onlyfit1144LE104LAB20M9K. No boardPLL/pins/IO/CDC/STA/loader/recovery or hardware claim."
+}

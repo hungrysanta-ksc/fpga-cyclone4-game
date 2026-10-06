@@ -1,0 +1,162 @@
+{
+  "candidate": "NES-R2-PACKET-QUEUE-027",
+  "inspection": "Static source/constraint audit;no waveform or oscillator measurement",
+  "sources": [
+    {
+      "path": "src/fpga/pin.sdc",
+      "bytes": 3685,
+      "sha256": "00308f85971a77f033b85d8f931eba0a1907b2a6c56643df31b8b42b3bdfca77",
+      "observed_lines": [
+        {
+          "line": 1,
+          "text": "create_clock -name board8 -period 125 [get_ports CLKIN]"
+        }
+      ]
+    },
+    {
+      "path": "src/fpga/gbc_pll0.v",
+      "bytes": 5810,
+      "sha256": "9939dab74e99c0f4caa78cb23c58166b9543c873e47bd9272c6fb601a7936b61",
+      "observed_lines": [
+        {
+          "line": 107,
+          "text": "altpll_component.clk0_divide_by = 36,"
+        },
+        {
+          "line": 109,
+          "text": "altpll_component.clk0_multiply_by = 151,"
+        },
+        {
+          "line": 112,
+          "text": "altpll_component.inclk0_input_frequency = 125000,"
+        }
+      ]
+    },
+    {
+      "path": "src/fpga/gbc_bus_pll0.v",
+      "bytes": 15294,
+      "sha256": "4c5e3aff3ecf1e69936fcef5331ff7ab8abbc9b24302193be9d8f475d09075ac",
+      "observed_lines": [
+        {
+          "line": 107,
+          "text": "altpll_component.clk0_divide_by = 2,"
+        },
+        {
+          "line": 109,
+          "text": "altpll_component.clk0_multiply_by = 21,"
+        },
+        {
+          "line": 112,
+          "text": "altpll_component.inclk0_input_frequency = 125000,"
+        }
+      ]
+    },
+    {
+      "path": "src/fpga/full_core_link.sv",
+      "bytes": 19251,
+      "sha256": "dde0305294a9983a41a695751fc1e01ff7cbc89165b6528f94ded3761136f44c",
+      "observed_lines": [
+        {
+          "line": 40,
+          "text": "gbc_bus_pll0 bus_pll(reset,CLKIN,bus_clk,bus_locked);"
+        },
+        {
+          "line": 41,
+          "text": "gbc_pll0 pll(.areset(reset),.inclk0(CLKIN),.c0(clk),.locked(locked));"
+        },
+        {
+          "line": 218,
+          "text": "snes_frontend host_frontend(menu_write,menu_data,menu_status,bus_clk,logic_reset,snes_phi,snes_address,"
+        }
+      ]
+    },
+    {
+      "path": "src/fpga/fxpak_gbc_top.sv",
+      "bytes": 10937,
+      "sha256": "4b5debfd7ff33354ba6df458dda7d5b8274a655987d300d09d5ea0b9fb68c4b2",
+      "observed_lines": [
+        {
+          "line": 146,
+          "text": ".snes_phi(SNES_CPU_CLK_IN),.snes_read_n(SNES_READ_IN||!renderer_run),"
+        }
+      ]
+    },
+    {
+      "path": "src/fpga/snes_frontend.sv",
+      "bytes": 4468,
+      "sha256": "e4d9c285307145bd4afbde95787a873e530c133998259343bb4946c6dcf01cdf",
+      "observed_lines": [
+        {
+          "line": 49,
+          "text": "snes_sram_slots slots(clk,local_reset,phi2,snes_addr,read_n,write_n,romsel_n,"
+        }
+      ]
+    },
+    {
+      "path": "src/fpga/snes_sram_slots.sv",
+      "bytes": 1645,
+      "sha256": "82a2a59c135c41e42159f5bded448f982377427ec87f8b22800aade04cb8372e",
+      "observed_lines": [
+        {
+          "line": 11,
+          "text": "(* async_reg=\"true\" *)reg[1:0]phi_sync;"
+        },
+        {
+          "line": 26,
+          "text": "phi_sync<={phi_sync[0],phi2};phi_previous<=phi_sync[1];"
+        }
+      ]
+    },
+    {
+      "path": "tests/nes-functional/rdy_tb.sv",
+      "bytes": 3625,
+      "sha256": "a04fc646eff93a682862bf948c2187b90fde8a00695be0537b88636bdf59991a",
+      "observed_lines": [
+        {
+          "line": 4,
+          "text": "reg clk=0;always #23.280423 clk=~clk;"
+        }
+      ]
+    },
+    {
+      "path": "../nes-upstream-mister/rtl/nes.v",
+      "bytes": 43193,
+      "sha256": "7856ea1bf109af8d8dc4abbecc6224216971b68a53630dc816830f68235ef906",
+      "observed_lines": [
+        {
+          "line": 230,
+          "text": "localparam div_cpu_n = 5'd12;"
+        },
+        {
+          "line": 231,
+          "text": "localparam div_ppu_n = 3'd4;"
+        },
+        {
+          "line": 239,
+          "text": "wire cpu_ce  = (div_cpu == div_cpu_n);"
+        },
+        {
+          "line": 240,
+          "text": "wire ppu_ce  = (div_ppu == div_ppu_n);"
+        }
+      ]
+    }
+  ],
+  "board_clkin_declared_hz": 8000000,
+  "gbc_core_pll_ratio": [
+    151,
+    36
+  ],
+  "bus_pll_ratio": [
+    21,
+    2
+  ],
+  "snes_phi2_is_asynchronous_input": true,
+  "nes_probe_clock_period_ns": 46.560846,
+  "upstream_cpu_divisor": 12,
+  "upstream_ppu_divisor": 4,
+  "nes_board_clock_integration_implemented": false,
+  "common_nes_snes_clock_or_phase_lock_proven": false,
+  "protocol_test_clock_period_ns": 10,
+  "conclusion": "Existing board PLLs derive from CLKIN,not synchronizedSNESphi2. Existing NES testbench clock is synthetic. Keep026 drift requirement open."
+}
