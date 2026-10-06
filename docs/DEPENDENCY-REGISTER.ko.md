@@ -19,3 +19,9 @@ MCU는 새 확장자 분기, 빠른 로딩, SRAM/RTC, 메뉴·강제 저장·복
 도구 설치본, 상용 게임·BIOS·사용자 세이브·메모리 덤프는 제외합니다. 참고한 ludufre 2.16.4 ZIP의 펌웨어·FPGA·메뉴 자산은 이 소스에 합치지 않았습니다.
 
 최종 source ZIP은 MCU 기본 소스와 mini FPGA 입력도 함께 제공합니다. [대응 소스 묶음](SOURCE-BUNDLE.ko.md)을 참조하세요. 파일별 원문·저작권과 적용 도구의 조건은 유지합니다.
+
+## NES 독립 진단·연결 코드 (053 공개 기록)
+
+`src/nes` 25개는 기존 MIT 헤더를 가진 자체 작성 연결/진단 RTL·C 코드이며 이 헤더를 보존한다. 전체 NES upstream 구현을 포함하지 않는다. 생성기·시험·계약은 독립 도구/문서 범위다. [공개 소스 해시](../cores/nes/publication-sources.json)와 [재현·출처 구분](../cores/nes/REPRODUCING.ko.md)을 참고한다.
+
+실제 코어 조사 기준은 NES_MiSTer commit `49a0a662e244469ca77b2155746a066df704ffae`다. [파일별 고지 조사](../analysis/source-lock.json)의 GPL/T65 등 원래 조건을 유지하고, 개별 고지 보류 4개는 vendoring/배포 승인으로 바꾸지 않는다. 이 PR에는 upstream HDL, ROM/BIOS, raw 로그, 펌웨어/bitstream/설치 ZIP가 없다. GBC 라이선스 범위는 변경하지 않는다.

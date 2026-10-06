@@ -17,3 +17,5 @@ Third-party files retain their existing terms. In particular, T80's source/synth
 The MCU and GBC FPGA are separate build outputs. This document does not relabel all upstream code or every packaged component under one license.
 
 See [dependency register](docs/DEPENDENCY-REGISTER.ko.md) and [source license inventory](release/source-license-inventory.json) for scope and provenance. There is no warranty beyond the terms of the applicable licenses.
+
+The independently authored NES diagnostic/adapter files in `src/nes` retain their existing SPDX MIT headers. They do not include the upstream NES CPU/PPU implementation. See [NES provenance and reproduction limits](cores/nes/REPRODUCING.ko.md) and [the upstream lock](analysis/source-lock.json); vendoring holds remain unresolved. No upstream grant is broadened by this publication.

@@ -20,7 +20,7 @@ MCU와 SNES 출력 코드는 재사용 가능한 부분과 코어 특유의 요�
 
 GBC 구현은 `src/fpga`, `src/firmware-overlay`, `src/renderer`에 있습니다. `cores/gbc/README.md`와 `cores/registry.json`이 실제 경로를 안내합니다. 검증된 QSF/SDC·생성기·source-manifest 해시를 보존하기 위해 이번 문서 정리에서는 이동하지 않습니다.
 
-NES/PCE는 `cores/nes`, `cores/pce`의 조사 문서만 존재합니다. 구현이 시작되면 전용 소스 경로와 빌드 항목을 추가합니다. 공통 소스 분리는 새 경로로 빌드·기능이 동일함을 증명하는 별도 변경으로 수행합니다.
+NES 구현은 `src/nes`, 시험은 `tests/nes-functional`, 진단 생성기는 `snes/video_probe`로 분리되어 있습니다. `cores/nes`가 현재 상태·재현 수준·이력을 안내합니다. PCE는 `cores/pce`의 조사 계획 단계입니다. 공통 소스 분리는 새 경로로 빌드·기능이 동일함을 증명하는 별도 변경으로 수행합니다.
 
 ## 새 코어의 최소 계약
 

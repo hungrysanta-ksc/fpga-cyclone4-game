@@ -40,3 +40,7 @@ PR #1에서 보존한 기록과 도구:
 - [출력 종단·반복 표시 진단](P1-ENDPOINT-BACKLOG.ko.md)
 - [G12S2 실기 기준선 시험](HARDWARE-BASELINE-TEST.ko.md) — 당시 설치판 전용 절차
 - [과거 후보 분석 도구 사용법](G13-AUDIT-TOOLS.ko.md)
+
+## 코어별 주요 진전 관리
+
+[작업·커밋·PR 운영 규칙](development/MILESTONE-WORKFLOW.ko.md)을 따릅니다. 매 작업 호출마다 커밋할 필요는 없으며, 검증된 큰 진전마다 코어별 현황과 공통 교훈을 정리하고 커밋·PR을 만듭니다.

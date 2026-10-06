@@ -22,12 +22,14 @@
 | 구성 | 현재 상태 | 소스·재현 |
 | --- | --- | --- |
 | GB/GBC | C44 실기 확인, 0.9.0 공개 완료 | [GBC 개발 안내](cores/gbc/README.md) |
-| NES | 조사·구현 착수 요청; 합성·실기 미검증 | [NES 조사 범위](cores/nes/README.md) |
+| NES | 044 진단 실기 확인; 053 ROM 적재·코어 RTL 통합 | [NES 개발 현황](cores/nes/README.md) |
 | PC Engine | 조사 대기; HuCard 범위를 우선 검토 | [PCE 조사 범위](cores/pce/README.md) |
 
 현재 구현 대상은 **FXPAK Pro / Mk.III, STM32 + EP4CE15F17C8**입니다. 제품 이름이 바뀌어도 보드 지원 범위가 넓어지는 것은 아닙니다. NES/PCE의 동작 가능성·일정은 아직 확정하지 않았습니다.
 
 검증된 GBC 입력 경로 `src/fpga`, `src/firmware-overlay`, `src/renderer`는 유지합니다. 코어별 안내·등록부로 구분하고, 실제 공통 코드 추출은 두 번째 코어의 요구가 확인된 뒤 별도 검증으로 진행합니다.
+
+주요 진전마다 [코어별 기록·커밋·PR 절차](docs/development/MILESTONE-WORKFLOW.ko.md)에 따라 정리합니다. NES의 [공개 재현 시험](cores/nes/REPRODUCING.ko.md)과 전체 코어/실기 검증 범위는 구분합니다.
 
 ## 기록과 배포 원칙
 

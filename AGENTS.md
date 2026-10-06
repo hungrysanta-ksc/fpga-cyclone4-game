@@ -1,0 +1,9 @@
+# Development instructions
+
+- Read `docs/development/MILESTONE-WORKFLOW.ko.md` and the target console's `cores/<id>/README.md` before work. NES additionally uses `cores/nes/HANDOFF.ko.md` and the applicable safeguards in `cores/nes/history/AGENTS-053.md`; current handoff supersedes historical status claims.
+- Keep GB/GBC, NES and future cores distinct in status, source ownership and evidence. Preserve validated GBC paths and `source-manifest.json` hashes.
+- Do not commit every turn. At major verified milestones, organize console status and reusable lessons, explicitly stage reviewed files, commit, push and open a PR. This workflow is user-authorized. Do not merge or publish product binaries automatically.
+- Follow `docs/REPOSITORY-POLICY.ko.md`: no broad `git add .`/force-add, private snapshots, ROMs, saves, raw logs, licenses or credentials. Preserve provenance and original notices.
+- Distinguish compile, RTL, emulator reference, joint fit, STA, board and actual hardware evidence. Preserve failed tests and negative controls. Never call a private-evidence verifier reproducible from a public clone alone.
+- Questa on the established Windows host must reuse the verified Starter FLOAT wrapper from local user instructions. Run the actual job with `-RunOnly -AfterSmokeScript` and absolute paths; no recurring license smoke tests, new paid-license assumption, inherited failing uncounted route, global environment/service changes, or interruption of another task's server. License files and server logs stay private.
+- Prefer explicit RTK for verbose read-only summaries when useful; keep exact diffs, hashes, bytes and debugging evidence unfiltered. Use native commands for mutations. Local user instructions govern RTK installation/configuration.
