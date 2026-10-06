@@ -2,25 +2,25 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-07",
-  "technical_candidate": "NES-ROM-GEOMETRY-057",
+  "technical_candidate": "NES-READBACK-PORT-058",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "057 shares accepted loader geometry with core; full96/80KiB SPI/core8frames and all events identical055 with zero tick delta after old fixture input is poisoned. New joint13976LE/954LAB leaves9LAB.056 unchanged; physical readback/board integration remain.",
+  "assessment": "058 implements a mem-clock CHECK port sharing052 reader while core remains reset. Full80/96KiB pin-model readback and RUN differential pass; joint949LAB. No SPI/MCU CHECK protocol, integrity START gate or full-core rerun in058.",
   "next_action": "R4",
   "next_three_deliverables": [
-    "Prototype MCU-driven physical readback with existing052 reader, common accepted geometry and early joint fit",
-    "Verify corrupt data/address/tag/timeout/reset rejection before RUN; preserve056 GPIO/USB/base recovery",
-    "Integrate board clocks/consumer/deadlines within9LAB and full physical fit/STA before RUN/menu hardware pair"
+    "Connect SPI CHECK request/completion mailbox with held data/tag and cancellation",
+    "MCU full-byte comparison, timeout/tag rejection and actual GPIO waveform; add integrity RUN gate",
+    "New core8frame regression/joint fit then board clock/consumer/full pins and STA"
   ],
   "gates": [
     {
       "id": "R1",
-      "status": "partial_SPI_boundary_RTL_board_integration_open",
+      "status": "partial_shared_CHECK_port_board_integration_open",
       "title": "Latest resource and memory feasibility",
       "depends_on": [],
       "exit": "Pinned synthesis/resource table, explicit exclusions, memory service contract and integration-headroom decision; not full board signoff",
-      "evidence": "analysis/ROM-GEOMETRY-RESULT.ko.md",
-      "remaining": "057 accepted geometry/core binding verified with exact0558frames. New954LAB leaves9LAB. Physical readback, actual MCU/board clocks/consumer and full board timing remain."
+      "evidence": "analysis/ROM-READBACK-PORT-RESULT.ko.md",
+      "remaining": "Shared CHECK port verified; SPI completion mailbox/MCU integrity gate/full core rerun/board remain.949LAB leaves14 only in external CHECK-port geometry."
     },
     {
       "id": "R2",
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "partial_MCU_binding_and_accepted_geometry",
+      "status": "partial_shared_CHECK_port",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/ROM-GEOMETRY-RESULT.ko.md",
-      "remaining": "057 accepted geometry/core binding verified with exact0558frames. New954LAB leaves9LAB. Physical readback, actual MCU/board clocks/consumer and full board timing remain."
+      "evidence": "analysis/ROM-READBACK-PORT-RESULT.ko.md",
+      "remaining": "Shared CHECK port verified; SPI completion mailbox/MCU integrity gate/full core rerun/board remain.949LAB leaves14 only in external CHECK-port geometry."
     },
     {
       "id": "R5",
@@ -72,14 +72,14 @@
     {
       "id": "VIDEO-CAUSAL",
       "status": "partial_live_core_diagnostic_pass",
-      "evidence": "analysis/SPI-LIVE-RESULT.ko.md",
-      "detail": "055 actual core8frames after full SPI loading matches491520PPU pixels. Consumer remains testbench bus stimulus; real SNES PPU DMA/deadline and board integration open."
+      "evidence": "analysis/ROM-GEOMETRY-RESULT.ko.md",
+      "detail": "057 actual core8frames after SPI loading and accepted geometry matches055 exactly.058 reader differential is not a new full core run. Consumer remains testbench stimulus; real SNES DMA/deadlines remain."
     },
     {
       "id": "BOARD-FIT",
       "status": "partial_H1_physical_fit_internal_STA",
-      "evidence": "analysis/ROM-GEOMETRY-RESULT.ko.md",
-      "detail": "057 diagnostic13976LE/954LAB/26M9K leaves9LAB. Same register count, changed packing vs054. Complete boundary/program ROM/PLL/consumer/recovery and physical STA remain."
+      "evidence": "analysis/ROM-READBACK-PORT-RESULT.ko.md",
+      "detail": "05813946LE/949LAB/26M9K,335virtual CHECK-port pins,22unlocated pins,PLL0.14LAB remains before SPI CHECK extension and full board/consumer/STA."
     },
     {
       "id": "DISPLAY-240",
@@ -102,8 +102,8 @@
     {
       "id": "RESOURCE-PACKING",
       "status": "joint_fit_pass_narrow_headroom",
-      "evidence": "analysis/joint-resource-verification.json",
-      "detail": "Actualjoint13417LE/923LAB/24M9K,remaining40LAB/1991LE/32M9K;417LEoverinternal13000goal. Separate992LABsum concern superseded; no fullboard fit guarantee."
+      "evidence": "analysis/rom-readback-port-verification.json",
+      "detail": "Current058 external CHECK-port geometry uses13946LE/949LAB/26M9K with14LAB left. Changes in packing and virtual ports mean this is not a guaranteed budget for SPI/board extensions."
     },
     {
       "id": "VIDEO-REPRESENTATION",

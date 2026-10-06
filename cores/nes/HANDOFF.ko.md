@@ -1,19 +1,21 @@
-# NES 다음 작업 인계 — 057 이후
+# NES 다음 작업 인계 — 058 이후
 
-현재 후보는 **NES-ROM-GEOMETRY-057**. [결과](../../analysis/ROM-GEOMETRY-RESULT.ko.md)와 [재현 계약](../../docs/nes-rom-geometry-contract.md)을 먼저 읽는다. 실기 기준044, MCU 적재 전용056은 유지하며 새 SD 이미지는 없다.
+현재 후보는 **NES-READBACK-PORT-058**. [결과](../../analysis/ROM-READBACK-PORT-RESULT.ko.md)와 [포트 계약](../../docs/nes-rom-readback-port-contract.md)을 먼저 읽는다. 실기044·MCU056은 유지하며 새 SD 이미지는 없다.
 
 ## 완료한 경계
 
-- 057은 로더가 승인한 기존 chr32 레지스터 하나를 길이와 코어 CHR mask에 연결한다. 독립 ext_chr_32k 입력은 제거했다. SPI의 수신 인자 latch는 거부된 BEGIN에서도 바뀔 수 있어 직접 사용하면 안 된다. 잘못 연결한 대조가 정확히 실패한다.
-- 단위360484형상/로더 검사,180224바이트. 실제 코어2종8프레임491520픽셀과16064패킷 바이트/전체 이벤트가055와 시각까지 동일하다. BEGIN 뒤 기존 fixture 인자를 반대로 바꾼 조건이다.
-- 새 공동 fit13976LE/954LAB/5158레지스터/26M9K. **9LAB 여유**다. 레지스터 추가 없이도 패킹 차이로054보다6LAB 늘었다. 옛15LAB을 현재 값으로 사용하지 않는다. 물리 보드 fit/STA가 아니다.
-- 056은 SD/GPIO/USB 보호와 적재·복구 바인딩을 host/RTL/ARM link로 검증했으며 실제 STM32/SD 실행은 아니다. END→STOP→기본 FPGA 복구로 ROM을 폐기한다. START나 새 메뉴 hook은 없다.
+- 057 승인된 chr32 공유를 유지한다.058은 기존052 reader의 FSM/주소/chip/lane/data를 메모리 클록 CHECK와 RUN이 공유한다. 코어는 CHECK 동안 reset이다. FPGA CRC·두 번째 reader·새 CDC 왕복은 추가하지 않았다.
+- 핀 모델1919161검사:835585핀 쓰기,80/96KiB 전체를 포함한180238CHECK 읽기,1024RUN 읽기.10취소/10거부/4데이터 손상,chip/lane/CHR 주소의 예상 실패3종이 확인됐다. 오류 중 기존 쓰기는 끝까지 유지한다.
+- CHECK를 끈 reader와 원본052의 전체 출력은4096요청(4053응답+43취소),161207edge 비교에서 동일하다.058은 전체 NES CPU/PPU를 새로 실행하지 않았다. 마지막 실제 코어8프레임/491520픽셀은057이다.
+- 새 공동 fit13946LE/949LAB/5160레지스터/26M9K. 외부 CHECK 포트를 포함한335가상핀 조건에서14LAB 여유다.057보다 패킹이 달라졌으며 SPI 확장의 여유를 보장하지 않는다. 물리 핀22개 미배치,PLL0,전체 보드/STA 미완료다.
 
 ## 다음 구현 순서
 
-1. [물리 readback 후속 설계](../../docs/nes-rom-readback-plan.md)에 따라 기존052 reader를 실행 전 CHECK 소유권에서 MCU가 사용하는 최소 경로를 구현/공동 fit한다. FPGA CRC 회로·두 번째 reader를 먼저 추가하지 않는다. read_reset이 현재 !RUN 및 core reset에 묶여 있으므로 요청 명령만 추가하면 읽을 수 없다. MCU는 실제 응답의 주소·데이터와 전체 길이를 비교해야 한다.
-2. readback 성공 후 reader의 양쪽 도메인과 outstanding 요청을 안전하게 비우고 기존049 scrub/RUN으로 연결한다. 단일 byte 손상·주소/chip/lane 오류·응답 유실·STOP/common reset/PLL loss·stale completion 거부와 실제 MCU GPIO 파형을 먼저 시험한다. CRC8/입력CRC32/loaded/057형상 연결을 물리 readback 성공으로 표시하지 않는다.
-3. 남은9LAB 안에서 보드 클록/소비자·프레임 마감/복구를 공동 측정한다. 초과 시 동등성 회귀를 동반한 최적화를 먼저 한다. SNES_SYSCLK/PIN_A9는 아직 주파수·지역·라우팅 미확인 후보다.
-4. 보드 경계와 전체 핀/PLL fit·CDC/외부 IO/STA가 갖춰진 후 별도 RUN/메뉴 진입점·진행 표시·종료 결과와 복구 가능한 실기 쌍을 준비한다.056 true 반환은 메뉴 재로딩 안전성이고 적재/실행 성공이 아니다. 복구 실패에서 RESET과 USB 보호를 풀지 않는다.
+1. CHECK를 SPI 명령/응답에 연결한다.058 응답은 한 메모리 클록 pulse이며 다음 요청이 주소 tag를 바꾸므로 SPI용 완료 mailbox/ack가 필요하다. 수신 offset은 STATUS 중 덮어써질 수 있어 그대로 재사용하지 않는다. 단일 outstanding,실제 데이터·tag 보존,프로토콜 버전/CRC/CS절단/오류 취소를 먼저 정한다.
+2. MCU가 SD 승인 입력과 실제 반환 바이트 전부를 비교하고 길이·중복·tag·timeout을 검증한다. 입력CRC/END/loaded를 무결성 완료로 표시하지 않는다. 검증 성공 뒤 CHECK 해제·reader 공통 reset·RUN/049 scrub으로 넘긴다. 아직058에는 성공을 요구하는 START gate가 없다.
+3. 실제 C GPIO 파형을 RTL에 재생하고 전체 코어8프레임/전체 이벤트를 새 통합 경로로 회귀한다. 같은 구현으로 공동 fit를 다시 한다.14LAB은 현재 외부 CHECK 포트 시험의 수치다.
+4. 보드 클록/소비자/프레임 마감/복구와 전체 핀·PLL fit·CDC·STA 이후 RUN/메뉴 진행/종료 표시와 복구 가능한 실기 쌍을 준비한다. SNES_SYSCLK/PIN_A9는 아직 미확인 후보며,056 true 반환은 메뉴 재로딩 안전성이다. 복구 실패에서 RESET/USB 보호를 풀지 않는다.
 
-044의 실제 순환/RESET/GBC 보고와041 실패,043/044 SDF 실패,050/051 지연 대조,055/056 시험 기대 오류를 보존한다. 원본053/054 및056 소스·과거 원시 근거는 수정하지 않는다.057은 새 폴더에 생성한 배선 변형이며 MCU 프로토콜은054 그대로다. [과거 주의사항](history/AGENTS-053.md), [재현 범위](REPRODUCING.ko.md), [주요 진전 관리](../../docs/development/MILESTONE-WORKFLOW.ko.md)를 따른다.
+STOP과 CHECK 해제는 함께 수행한다. RUN 전에는 CHECK를 최소 한 mem_clk 내려 reader 양쪽을 공통 reset한다(058시험5클록). CHECK 잘못 사용 시 sticky fault는 common reset으로만 해제한다. 핀25ns 모델을 실제 메모리 규격으로 부르지 않는다.
+
+044 실기와 과거 실패/원시 근거를 유지한다.058 초기 fit의 중첩 폴더 복사 실패,초기 diff의 미연결 출력 경고와 수정 후 통과도 보존한다. [과거 주의사항](history/AGENTS-053.md), [공개 재현](REPRODUCING.ko.md), [주요 진전 관리](../../docs/development/MILESTONE-WORKFLOW.ko.md)를 따른다.

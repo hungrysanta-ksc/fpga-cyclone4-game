@@ -1,0 +1,188 @@
+{
+  "candidate": "NES-READBACK-PORT-058",
+  "date_kst": "2026-10-07",
+  "passed": true,
+  "hardware_image": false,
+  "full_core_execution": false,
+  "spi_mcu_connected": false,
+  "integrity_gate": false,
+  "unit": "PASS READBACK PORT checks=1919161 pin_written_bytes=835585 checked_reads=180238 run_reads=1024 cancellations=10 rejected=10 corruptions_detected=4",
+  "differential": "PASS READBACK RUN DIFF comparisons=161207 requests=4096 replies=4053 cancellations=43",
+  "joint_fit": {
+    "LE": 13946,
+    "LAB": 949,
+    "total_LAB": 963,
+    "remaining_LAB": 14,
+    "registers": 5160,
+    "M9K": 26,
+    "virtual_pins": 335,
+    "physical_unlocated_pins": 22,
+    "PLL": 0
+  },
+  "protected_files": {
+    "GBC": 152,
+    "original_NES": 334
+  },
+  "runs": {
+    "unit": {
+      "candidate": "NES-READBACK-PORT-058",
+      "mode": "unit",
+      "passed": true,
+      "hardware_image": false,
+      "spi_mcu_connected": false,
+      "integrity_gate": false,
+      "sources": {
+        "nes_rom_loader.sv": "0044d3e95cb01df212a016e6b6d2f33ec242a32bb6df9bbc7709767adef9bfc9",
+        "nes_rom_boot.sv": "b38f768dde888d9d0ed47babcd449273bb03cb8526e00878cb0d3d7224d7ffb7",
+        "nes_rom_physical.sv": "718ab345658c228ca27888e39e52a74cbaaafd9a667d35b850df557487128a84",
+        "rom_boot_model.sv": "d0c18f965fe2d6bde1a393d2f19920923c0e88f405bcc6dd77a0cd6806d23389",
+        "rom_readback_tb.sv": "dcdd93d5ebfbb10df3bb78c80224e03dc4ed2deedb8d4cf72764bc4be33db0a3"
+      },
+      "driver_sha256": "d423712cb68a241ff89fb2b496e655f970de606d26bd1a07e6acf2e458405287",
+      "generator_sha256": "7438981a478a6464fa4a13a3108058a9d83dee5171fb036a9e5ba67944808676",
+      "marker": "PASS READBACK PORT checks=1919161 pin_written_bytes=835585 checked_reads=180238 run_reads=1024 cancellations=10 rejected=10 corruptions_detected=4"
+    },
+    "diff": {
+      "candidate": "NES-READBACK-PORT-058",
+      "mode": "diff",
+      "passed": true,
+      "hardware_image": false,
+      "spi_mcu_connected": false,
+      "integrity_gate": false,
+      "sources": {
+        "nes_rom_physical.sv": "718ab345658c228ca27888e39e52a74cbaaafd9a667d35b850df557487128a84",
+        "nes_rom_physical_reference.sv": "dfa4df6ac34752aa63c7fbafb512c94a7f7483974658741b1851ae2e65ba0fd2",
+        "rom_readback_diff.sv": "074fe20e958c77a11298a34b02686811f288b204d16047d6f525bae4e48f2859"
+      },
+      "driver_sha256": "d423712cb68a241ff89fb2b496e655f970de606d26bd1a07e6acf2e458405287",
+      "generator_sha256": "7438981a478a6464fa4a13a3108058a9d83dee5171fb036a9e5ba67944808676",
+      "marker": "PASS READBACK RUN DIFF comparisons=161207 requests=4096 replies=4053 cancellations=43"
+    },
+    "mutation": {
+      "candidate": "NES-READBACK-PORT-058",
+      "mode": "mutation",
+      "passed": true,
+      "hardware_image": false,
+      "spi_mcu_connected": false,
+      "integrity_gate": false,
+      "sources": {
+        "nes_rom_loader.sv": "0044d3e95cb01df212a016e6b6d2f33ec242a32bb6df9bbc7709767adef9bfc9",
+        "nes_rom_boot.sv": "b38f768dde888d9d0ed47babcd449273bb03cb8526e00878cb0d3d7224d7ffb7",
+        "nes_rom_physical.sv": "718ab345658c228ca27888e39e52a74cbaaafd9a667d35b850df557487128a84",
+        "rom_boot_model.sv": "d0c18f965fe2d6bde1a393d2f19920923c0e88f405bcc6dd77a0cd6806d23389",
+        "rom_readback_tb.sv": "cea1fed70a126c400610c3006319cf84ebb092e17cc0eac8e12afe48b35d7c5b"
+      },
+      "driver_sha256": "d423712cb68a241ff89fb2b496e655f970de606d26bd1a07e6acf2e458405287",
+      "generator_sha256": "7438981a478a6464fa4a13a3108058a9d83dee5171fb036a9e5ba67944808676",
+      "negative_controls": [
+        {
+          "mutation": "chip",
+          "expected_failure": "READBACK check81928 returned accepted address tag",
+          "incorrect_design_passed": false,
+          "sources": {
+            "nes_rom_loader.sv": "0044d3e95cb01df212a016e6b6d2f33ec242a32bb6df9bbc7709767adef9bfc9",
+            "nes_rom_boot.sv": "b38f768dde888d9d0ed47babcd449273bb03cb8526e00878cb0d3d7224d7ffb7",
+            "nes_rom_physical.sv": "b2e41a0669a97d774f42684ab4bd01514c973c8172729b696cc67f606e76d110",
+            "rom_boot_model.sv": "d0c18f965fe2d6bde1a393d2f19920923c0e88f405bcc6dd77a0cd6806d23389",
+            "rom_readback_tb.sv": "cea1fed70a126c400610c3006319cf84ebb092e17cc0eac8e12afe48b35d7c5b"
+          }
+        },
+        {
+          "mutation": "lane",
+          "expected_failure": "READBACK check81928 returned accepted address tag",
+          "incorrect_design_passed": false,
+          "sources": {
+            "nes_rom_loader.sv": "0044d3e95cb01df212a016e6b6d2f33ec242a32bb6df9bbc7709767adef9bfc9",
+            "nes_rom_boot.sv": "b38f768dde888d9d0ed47babcd449273bb03cb8526e00878cb0d3d7224d7ffb7",
+            "nes_rom_physical.sv": "00e3b4e2d6f6b2f6ba257603c57503ace1ccf526eb23a9be6beeae1ac07ffdaa",
+            "rom_boot_model.sv": "d0c18f965fe2d6bde1a393d2f19920923c0e88f405bcc6dd77a0cd6806d23389",
+            "rom_readback_tb.sv": "cea1fed70a126c400610c3006319cf84ebb092e17cc0eac8e12afe48b35d7c5b"
+          }
+        },
+        {
+          "mutation": "chr",
+          "expected_failure": "READBACK check475144 returned accepted address tag",
+          "incorrect_design_passed": false,
+          "sources": {
+            "nes_rom_loader.sv": "0044d3e95cb01df212a016e6b6d2f33ec242a32bb6df9bbc7709767adef9bfc9",
+            "nes_rom_boot.sv": "327cca59b08a3881467763925b59895b3a6f12fab38a472b3fedbdb9eefc91a2",
+            "nes_rom_physical.sv": "718ab345658c228ca27888e39e52a74cbaaafd9a667d35b850df557487128a84",
+            "rom_boot_model.sv": "d0c18f965fe2d6bde1a393d2f19920923c0e88f405bcc6dd77a0cd6806d23389",
+            "rom_readback_tb.sv": "cea1fed70a126c400610c3006319cf84ebb092e17cc0eac8e12afe48b35d7c5b"
+          }
+        }
+      ]
+    },
+    "fit": {
+      "candidate": "NES-READBACK-PORT-058",
+      "mode": "fit",
+      "passed": true,
+      "hardware_image": false,
+      "spi_mcu_connected": false,
+      "integrity_gate": false,
+      "baseline_result_sha256": "968295a7c0fcea57905f9a0e8ed14f532dccf799d560df5294edbd648a5665f5",
+      "sources": {
+        "rtl/bus_savestates.vhd": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9",
+        "rtl/t65/T65_Pack.vhd": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb",
+        "rtl/t65/T65_ALU.vhd": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b",
+        "rtl/t65/T65_MCode.vhd": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5",
+        "rtl/t65/T65.vhd": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692",
+        "rtl/statemanager.vhd": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6",
+        "rtl/savestates.vhd": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0",
+        "rtl/regs_savestates.sv": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95",
+        "rtl/cheatcodes.sv": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918",
+        "rtl/ppu.sv": "e155b3b59000f5c52a5ab2e72b6745be682fd9a515d59c0360f208eafbfc090e",
+        "rtl/apu.sv": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586",
+        "rtl/nes.v": "d76a18fb93e4a97b4efed31f7a19deb8f34935c2f872059d2b35bb9548c78cdd",
+        "rtl/composite_board.sv": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895",
+        "rtl/compat.v": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731",
+        "sys/iir_filter.v": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8",
+        "cart_nrom.sv": "aab8314bd8134bb33dff42ef7beebc4b109e81148d9ee11ccd2886a97673faf8",
+        "nes_probe.sv": "e07337d68bbc654201b5db8b1f184ebd80ec06923e4c9d3e5400a509b4728fb9",
+        "ncr1_live_tb.sv": "01ac7f96931f5f6e3500931661d4c7640af2083cfa1d1b89e52e04cba3b834bf",
+        "tap-export.diff": "8472cd528eb3caf163b2aaccf770d1f1943d80a9c05aeb154bedb59182f3589b",
+        "nes_packet_queue_ram.sv": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1",
+        "nes_packet_cdc_ram.sv": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542",
+        "nes_host_stage.sv": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162",
+        "nes_snes_frontend.sv": "d4695fb16a1b58bb59028ececb784f1f4965353626599d8df42629267c26b3a4",
+        "nes_transport.sv": "850da0fe98d251fafd464a8542f4882c7519619be5871e6ed5528ea6b003430d",
+        "nes_packet_memory_producer.sv": "3fc53be9e6e64052713e8027dd3cde0537e819db84afb78d885458d0f033beac",
+        "nes_ncr1_encoder.sv": "bcc5e1d3ff24511b2227107b90d1da4bc0b521179e1432bd50c8a2209e2a108a",
+        "nes_ncr1_ppu_tap.sv": "c9ccca0512f21062efb8756fc1f167aa1bdb4e44b07216719da9c5f8f66ac003",
+        "nes_rom_loader.sv": "0044d3e95cb01df212a016e6b6d2f33ec242a32bb6df9bbc7709767adef9bfc9",
+        "nes_rom_boot.sv": "b38f768dde888d9d0ed47babcd449273bb03cb8526e00878cb0d3d7224d7ffb7",
+        "nes_rom_physical.sv": "718ab345658c228ca27888e39e52a74cbaaafd9a667d35b850df557487128a84",
+        "nes_rom_service.sv": "41c9b363320c32ded0b5fc2389fd17a540b7a4b1eae35eb5b13cb3e053f35028",
+        "nes_local_memory.sv": "09a5109f5ea187b740ffbceb865c505c485dee13e87ee1cb665de937046d6ec4",
+        "oam-banking.diff": "de7706b01934398a89961eadbe61a6f38c8cb766323e84ce096297411f5bcdb0",
+        "rom_backend_model.sv": "d0c18f965fe2d6bde1a393d2f19920923c0e88f405bcc6dd77a0cd6806d23389",
+        "nes_live_joint.sv": "c7a47dbf594f8772a93cfbf2f27bf92e63cb31288ace06bb0ad147cfdf0a08d1",
+        "nes_resource.sv": "d4661cee0a5fd897cfb6864c2a9651a0b2aaada337004891b4be2ff1dc85bfe9",
+        "live.qsf": "b5de1a2cf94b50d18b74117594f54e715594b3eb84e906d697dc9b65cbb96ee5",
+        "live.qpf": "4a91c8153a337aa6c1397a992d9b689c9117c01a97124df2fca8b86f9670562c",
+        "live.sdc": "7e9a110086cd22e2bdcd560536f6a44238ccb876593cd1bd3e91ea2f54468545",
+        "nes_rom_spi.sv": "64e0858959c61d2def64cce19b2d92c52cbab727e8edd204a58cbd8149bf0bd9",
+        "nes_spi_boot.sv": "24d716195771076ad53974be5e2b508c20864b1b7573b9038c9b0535e5f02d94"
+      },
+      "driver_sha256": "075814067cc2ade1a82b16979a7060725f3556f047370de5527c268bd639b651",
+      "generator_sha256": "7438981a478a6464fa4a13a3108058a9d83dee5171fb036a9e5ba67944808676",
+      "fit_summary": "Fitter Status : Successful - Wed Oct  7 00:35:38 2026\nQuartus Prime Version : 25.1std.0 Build 1129 10/21/2025 SC Standard Edition\nRevision Name : live\nTop-level Entity Name : nes_live_joint\nFamily : Cyclone IV E\nDevice : EP4CE15F17C8\nTiming Models : Final\nTotal logic elements : 13,946 / 15,408 ( 91 % )\n    Total combinational functions : 12,237 / 15,408 ( 79 % )\n    Dedicated logic registers : 5,160 / 15,408 ( 33 % )\nTotal registers : 5160\nTotal pins : 22 / 166 ( 13 % )\nTotal virtual pins : 335\nTotal memory bits : 182,922 / 516,096 ( 35 % )\nEmbedded Multiplier 9-bit elements : 0 / 112 ( 0 % )\nTotal PLLs : 0 / 4 ( 0 % )\n"
+    }
+  },
+  "evidence_manifest_sha256": "363e57075525e9264e7412f123d6f2faef7d5a5ba6eb2fa2589f43ff826a8284",
+  "sources": {
+    "tools/nes_rom_readback.py": "7438981a478a6464fa4a13a3108058a9d83dee5171fb036a9e5ba67944808676",
+    "tools/nes_rom_readback_checks.py": "d423712cb68a241ff89fb2b496e655f970de606d26bd1a07e6acf2e458405287",
+    "tools/run_nes_rom_readback.ps1": "71fb68468dae31ee058f52eae0708545f5bc2eeb32d38ee4ee0fa4e63b1d7db8",
+    "tools/verify_nes_rom_readback.py": "f6c51248f1cd3e182aabf26ed2042e40e80c4dfb81028ca31b478fb200cfff2a",
+    "tests/nes-functional/rom_readback_tb.sv": "dcdd93d5ebfbb10df3bb78c80224e03dc4ed2deedb8d4cf72764bc4be33db0a3",
+    "tests/nes-functional/rom_readback_diff.sv": "074fe20e958c77a11298a34b02686811f288b204d16047d6f525bae4e48f2859"
+  },
+  "limits": [
+    "memory-clock CHECK port only; no SPI/MCU CHECK protocol or completion mailbox",
+    "no integrity success gate or full core rerun in058",
+    "private057 joint-fit export required;335virtual pins/22unlocated/PLL0",
+    "25ns memory model assumption, not measured board timing",
+    "no new SD image or hardware result"
+  ]
+}

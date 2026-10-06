@@ -55,3 +55,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 057 승인 형상 연결
 
 [계약](../../docs/nes-rom-geometry-contract.md)의 unit와 잘못된 인자 latch mutation은 공개 소스만 사용한다. live는055,fit는054의 고정 private export가 필요하다. 같은 승인 레지스터가 core mask를 구동한8프레임을055와 시각까지 비교하며 새 공동 fit를 실행했다. [결과](../../analysis/ROM-GEOMETRY-RESULT.ko.md). 물리 readback/보드 통과와 구분한다.
+
+## 058 실행 전 공유 읽기 포트
+
+[포트 계약](../../docs/nes-rom-readback-port-contract.md)의 unit/diff/mutation은 공개 자체 패턴만 사용한다. 공동 fit는 private057 export가 필요하다.058은 전체 코어 재실행·SPI/MCU readback·실기 시험을 포함하지 않는다. 원시 근거 감사는 `verify_nes_rom_readback.py`로 구분한다. [결과](../../analysis/ROM-READBACK-PORT-RESULT.ko.md).
