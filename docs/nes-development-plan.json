@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-06",
-  "technical_candidate": "NES-R1-SPI-LIVE-055",
+  "technical_candidate": "NES-MCU-LOADER-056",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "055 full96/80KiB SPI pin loading -> actual core passes8frames/491520pixels, packet content and constant-offset events vs053.32synthesis modules unchanged vs054; reuse948LAB/15remaining, no new fit. STM32/SD, physical integrity/clocks/consumer remain.044unchanged.",
+  "assessment": "056 appends SD/GPIO load-only binding to unchanged materialized044.26host lifecycle/18input rejection cases,29024RTL response bits/256pin writes and full ARM link pass. No physical MCU execution, START or new menu entry.055 full-core evidence and044 hardware retained.",
   "next_action": "R4",
   "next_three_deliverables": [
-    "Bind054 C callbacks inside044 STM32 GPIO/USB ownership; validate SD/iNES and fail/recovery paths",
-    "Budget board clocks/reset/consumer within15LAB; qualify PSRAM integrity and physical timing",
-    "Connect real SNES consumer/deadlines/recovery and complete joint physical fit/STA before new hardware pair"
+    "Bind approved CHR geometry to SPI BEGIN and core mask; implement physical integrity gate",
+    "Budget board clocks/reset/consumer within15LAB; retain full-core equivalence",
+    "Connect RUN/menu progress/results only after board gates and joint physical fit/STA"
   ],
   "gates": [
     {
@@ -20,7 +20,7 @@
       "depends_on": [],
       "exit": "Pinned synthesis/resource table, explicit exclusions, memory service contract and integration-headroom decision; not full board signoff",
       "evidence": "analysis/SPI-LIVE-RESULT.ko.md",
-      "remaining": "055 SPI -> actual core complete in digital diagnostic regression.054 reused13866LE/948LAB/26M9K leaves15LAB. Actual STM32/SD, physical integrity/clocks/consumer and full timing remain."
+      "remaining": "055 SPI -> actual core and056 MCU load-only binding validated in separate digital tests.054948LAB/15remaining unchanged. Common geometry, physical integrity/clocks/consumer and board timing remain."
     },
     {
       "id": "R2",
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "partial_SPI_to_actual_core_diagnostic",
+      "status": "partial_MCU_load_only_binding",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/SPI-LIVE-RESULT.ko.md",
-      "remaining": "055 SPI -> actual core complete in digital diagnostic regression.054 reused13866LE/948LAB/26M9K leaves15LAB. Actual STM32/SD, physical integrity/clocks/consumer and full timing remain."
+      "evidence": "analysis/MCU-LOADER-RESULT.ko.md",
+      "remaining": "056 SD/GPIO/failure recovery binding compiled and model/RTL checked. Physical STM32, common geometry/readback/clocks/consumer, RUN/menu and board fit/STA remain."
     },
     {
       "id": "R5",
