@@ -1,0 +1,570 @@
+{
+  "schema_version": 1,
+  "plan_id": "NES-PLAN-20261005-R1",
+  "date_kst": "2026-10-06",
+  "technical_candidate": "NES-R1-ROM-BOOT-053",
+  "implementation_candidate": "NES-P2-RDY-014",
+  "authoritative_document": "cores/nes/PROPOSAL.ko.md",
+  "assessment": "053 pin-stream ROM loading and exclusive run ownership pass360505unit checks/180226byte reads and2actual-core8frame regressions. Pixels/payload match052; timestamp offsets recorded. Joint13612LE/929LAB/26M9K leaves34LAB. MCU SPI/board clocks/integrity/consumer/full timing remain open;044unchanged.",
+  "next_action": "R4",
+  "next_three_deliverables": [
+    "Integrate MCU SPI byte loading and explicit loaded/error status with materialized044 boundary; qualify board NES clock source/reset and PSRAM integrity/timing",
+    "Connect actual NCR1 SNES consumer/frame deadlines and board recovery; jointly fit real pins/PLL/loader/ownership/runtime and constrain CDC/memory paths",
+    "Complete physical timing and lifecycle/GBC regression; produce a recoverable new hardware pair preserving044"
+  ],
+  "gates": [
+    {
+      "id": "R1",
+      "status": "partial_pin_stream_boot_RTL_board_integration_open",
+      "title": "Latest resource and memory feasibility",
+      "depends_on": [],
+      "exit": "Pinned synthesis/resource table, explicit exclusions, memory service contract and integration-headroom decision; not full board signoff",
+      "evidence": "analysis/ROM-BOOT-RESULT.ko.md",
+      "remaining": "05313612LE/929LAB/26M9K leaves34LAB. Real board pins/PLL/MCU stream/consumer/full timing excluded."
+    },
+    {
+      "id": "R2",
+      "status": "partial_H1_044_basic_hardware_pass",
+      "title": "Causal video-load feasibility and trace replay",
+      "depends_on": [],
+      "exit": "Measured actual trace workloads and SNES replay within deadline; no future lookahead or silent output loss; sample limits explicit",
+      "evidence": "analysis/H1-HARDWARE-044-RESULT.ko.md",
+      "remaining": "Fresh actual core047 causal producer passes8diagnostic frames; real SNES consumer/deadline/display integration remains.044 bounded hardware pass unchanged; warm reentry/endurance unconfirmed.",
+      "consumer_evidence": "analysis/CHR-RESIDENCY-RESULT.ko.md"
+    },
+    {
+      "id": "R3",
+      "status": "open_mismatch",
+      "title": "Bounded CPU/APU timing investigation",
+      "depends_on": [],
+      "exit": "DMC reset/timer/buffer difference classified, fixed and regressed if necessary; unresolved issues block accuracy claims, not independent R1/R2 experiments"
+    },
+    {
+      "id": "R4",
+      "status": "partial_ROM_loader_and_run_ownership_RTL",
+      "title": "Real producer/memory/consumer and lifecycle integration",
+      "depends_on": [
+        "R1",
+        "R2"
+      ],
+      "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
+      "evidence": "analysis/ROM-BOOT-RESULT.ko.md",
+      "remaining": "MCU SPI/board clock/reset/integrity binding, real SNES consumer/deadlines/fault recovery and physical fit/STA still required."
+    },
+    {
+      "id": "R5",
+      "status": "pending",
+      "title": "Full board fit/STA and hardware/game acceptance",
+      "depends_on": [
+        "R3",
+        "R4"
+      ],
+      "exit": "Same complete candidate fit/STA/CDC/IO review, source-adoption clearance, recoverable test package, diagnostic then designated SMB3 hardware scenarios"
+    }
+  ],
+  "open_issues": [
+    {
+      "id": "DMC-REFILL",
+      "status": "open",
+      "evidence": "analysis/DMC-OAM-RESULT.ko.md",
+      "detail": "Byte0 enable+5 matches; byte1 RTL+123 vs Mesen+275; origin unresolved"
+    },
+    {
+      "id": "VIDEO-CAUSAL",
+      "status": "partial_live_core_diagnostic_pass",
+      "evidence": "analysis/NCR1-LIVE-RESULT.ko.md",
+      "detail": "Actual core0478frames causal pipeline matches491520PPU pixels. Consumer is testbench bus stimulus; real SNES PPU DMA/deadline/loader/board integration open."
+    },
+    {
+      "id": "BOARD-FIT",
+      "status": "partial_H1_physical_fit_internal_STA",
+      "evidence": "analysis/H1-SAMPLING-RESULT.ko.md",
+      "detail": "053 diagnostic929/963LAB leaves34LAB, includes ROM stream writer/exclusive read-run ownership. Complete044 boundary/program ROM/MCU SPI/PLL/consumer/recovery still require joint fit and STA."
+    },
+    {
+      "id": "DISPLAY-240",
+      "status": "decision_pending_evidence",
+      "evidence": "analysis/CHR-RESIDENCY-RESULT.ko.md",
+      "detail": "Two independent239-row viewports cover all245760source pixels; simultaneous240-row output and product display policy remain unresolved."
+    },
+    {
+      "id": "IRQ-PHASE",
+      "status": "open",
+      "evidence": "analysis/IRQ-PHASE-RESULT.ko.md",
+      "detail": "Relative IRQ path agrees; absolute4dot offset origin uncalibrated"
+    },
+    {
+      "id": "HDL-ADOPTION",
+      "status": "hold",
+      "evidence": "analysis/source-lock.json",
+      "detail": "Four recorded per-file holds remain before vendoring; separate from working Questa license"
+    },
+    {
+      "id": "RESOURCE-PACKING",
+      "status": "joint_fit_pass_narrow_headroom",
+      "evidence": "analysis/joint-resource-verification.json",
+      "detail": "Actualjoint13417LE/923LAB/24M9K,remaining40LAB/1991LE/32M9K;417LEoverinternal13000goal. Separate992LABsum concern superseded; no fullboard fit guarantee."
+    },
+    {
+      "id": "VIDEO-REPRESENTATION",
+      "status": "separate_scroll_sprite_patch_32KiB_samples",
+      "evidence": "analysis/CHR-RESIDENCY-RESULT.ko.md",
+      "detail": "025 one16KiBwindow/frame within32KiBimmutableCHR. Uses40KiBVRAM andoverlaps023OBJ atword4000;relocation/jointsprite+024patch untested. Mixedwindows/largerROM/generalsprite open."
+    },
+    {
+      "id": "VIDEO-CLOCK-DRIFT",
+      "status": "model_exposes_integration_requirement",
+      "evidence": "analysis/packet-queue-clock-audit.json",
+      "detail": "StaticboardCLKIN8MHz->GBC151/36,bus21/2 PLLs;SNESphi2async input. NES clock46.560846ns exists inTB;no boardNESphase lock.026finitequeue drift requirement remains open."
+    },
+    {
+      "id": "OAM-INITIALIZATION",
+      "status": "scope_unresolved",
+      "evidence": "analysis/OAM-BANKED-RESULT.ko.md",
+      "detail": "Pinned original eval_count has no explicit reset/init. Differential test preserves X first then equal0..3seeds; no product initialization fix or sprite hardware accuracy claim."
+    },
+    {
+      "id": "ROM-DEADLINE",
+      "status": "partial_physical_read_RTL_pass_board_timing_open",
+      "evidence": "analysis/ROM-PHYSICAL-RESULT.ko.md",
+      "detail": "052 3memory-clock pin read plus bundled CDC measured4NES clocks in unit matrix and actual core.25ns access assumption; actual part/clock/reset/routing timing still unverified."
+    }
+  ],
+  "guardrails": [
+    "Preserve GBC C44 and released0.9.0 artifacts",
+    "No unauthorized crop, color reduction, normal frame discard or slowdown",
+    "Existing authorized temporary FLOAT route, one Questa seat, no repeated smoke tests",
+    "No claim that partial synthesis, synthetic replay or limited game samples prove full product readiness",
+    "Record actual execution separately from reused evidence; no unneeded core/ROM change or simulation rerun for analysis-only milestones",
+    "Enter bounded original-diagnostic hardware tests once their own integration/timing/recovery gates close; do not wait for unrelated full-game accuracy gates or claim diagnostic success as full NES readiness",
+    "Manual hardware diagnostics require readable candidate/page IDs, distinct patterns and visible progression; do not reuse noise-only fixtures as a meaningful visual test",
+    "A simulation-only RAM representation may not map to embedded memory; bind functional equivalence and resource fit to the same synthesis candidate before hardware packaging"
+  ],
+  "last_functional_candidate": "NES-P2-DMC-OAM-017",
+  "last_snes_replay_candidate": "NES-R2-CHR-RESIDENCY-025",
+  "last_rtl_interface_candidate": "NES-H1-SNES-FRONTEND-031",
+  "hardware_tracks": {
+    "H0": {
+      "status": "basic_visual_hardware_pass",
+      "candidate": "NES-H0-VISUAL-030",
+      "evidence": "analysis/hardware-readiness.json",
+      "limits": "5.27s sampled video/readable title/1-2-3 repeat; no reset/longrun/FPGA acceptance"
+    },
+    "H1": {
+      "status": "044_basic_transport_hardware_pass_lifecycle_endurance_pending",
+      "blocking_items": [
+        "Actual NES producer/memory integration remains open; H1 diagnostic pass is not full R2/R4 completion"
+      ],
+      "does_not_wait_for": [
+        "Full SMB3 compatibility",
+        "DMC accuracy completion"
+      ],
+      "scope": "Original transport diagnostic; no held upstream HDL required",
+      "candidate": "NES-H1-SAMPLING-044",
+      "resource_co_placement": {
+        "candidate": "NES-R1-JOINT-RESOURCE-032",
+        "evidence": "analysis/JOINT-RESOURCE-RESULT.ko.md",
+        "LE": 13417,
+        "LAB": 923,
+        "M9K": 24,
+        "remaining_LAB": 40,
+        "hardware_eligible": false
+      },
+      "diagnostic_resource": {
+        "LE": 1761,
+        "LAB": 137,
+        "M9K": 44,
+        "registers": 1186,
+        "pins": 135,
+        "virtual_pins": 0,
+        "PLL": 1,
+        "candidate": "NES-H1-SAMPLING-044",
+        "scope": "H1 diagnostic only; external timing remains unconstrained"
+      },
+      "client_evidence": "analysis/H1-BOARD-RESULT.ko.md",
+      "firmware": {
+        "bytes": 169056,
+        "sha256": "1c3b40a3459d24114cb4d91ee9d861d1a08025a670ef25317ef489092203693b",
+        "warnings": 0,
+        "candidate": "NES-H1-SAMPLING-044",
+        "hardware_executed": true,
+        "SD_readback_hash_verified": false,
+        "evidence": "analysis/H1-HARDWARE-044-RESULT.ko.md"
+      },
+      "fpga_image": {
+        "bytes": 154991,
+        "sha256": "71ffacd82227ae68b186dd3d3fab9619a69c4cdef73b5c44c55621caff4e0888",
+        "candidate": "NES-H1-SAMPLING-044",
+        "MCU_decoder_exact": true,
+        "hardware_executed": true,
+        "SD_readback_hash_verified": false
+      },
+      "integration_evidence": "analysis/H1-HARDWARE-044-RESULT.ko.md",
+      "package_ready": true,
+      "hardware_executed": true,
+      "hardware_verified": true,
+      "electrical_signoff": false,
+      "package": "analysis/local-h1-sampling-044/NES-H1-SAMPLING-044.zip",
+      "zip_sha256": "09c1e4bd028147428bd0c064ff5eef0aced670291b9a14c02eec7a4faae7f9e5",
+      "guide": "docs/nes-h1-sampling-test.ko.md",
+      "open_electrical_items": [
+        "Final044:38input/725paths and11output/965paths unconstrained; actual board timing/turnaround unmeasured",
+        "Raw SDF fails126bytes/884violations. Finite-resolution old/new/mixed models are conditional experiments, not electrical signoff."
+      ],
+      "required_preflight": [
+        "Retain044 as known working H1 diagnostic baseline; preserve paired images and evidence",
+        "Before future SD changes verify installed pair hashes and back up outside SD; do not reapply the041-only installer over044"
+      ],
+      "last_hardware_observation": {
+        "candidate": "NES-H1-SAMPLING-044",
+        "date_kst": "2026-10-06",
+        "result": "basic_H1_visual_loop_and_RESET_recovery_pass",
+        "hardware_executed": true,
+        "hardware_verified": true,
+        "hardware_verified_scope": "User-reported LINK SCREEN1->2->3->1 repeating without automatic exit; protocol44 no-fault RESET exit/base recovery log; user-reported GBC gameplay normal",
+        "protocol_verified": true,
+        "FPGA_hash_verified": false,
+        "firmware_hash_verified": false,
+        "image_hash_semantics": "Known package hashes retained as expected identities; no SD readback hashes supplied in this observation",
+        "user_report": "자동 종료는 일어나지 않고 링크 스크린 1->2->3->1 순으로 정상적으로 출력되면서 루프 되었어. GBC 게임 플레이도 정상이야.",
+        "evidence_kind": {
+          "screen_progression": "user_report",
+          "GBC_gameplay": "user_report",
+          "RESET_exit_base_recovery": "firmware_log",
+          "new_video_or_pin_measurements": false
+        },
+        "log_private": "analysis/local-h1-hardware-044/user-044.txt",
+        "log_sha256": "4ef6d67bf607714c6d9e6ec71cb6db5b91941fa57661579387fc278a269adf97",
+        "log_bytes": 249,
+        "decoded": {
+          "candidate": "NES-H1-SAMPLING-044",
+          "exit_reason": "RESET_ASSERTED",
+          "last_status": 3,
+          "RUN": true,
+          "LOCKED": true,
+          "aggregate_fault": false,
+          "sequence_exhausted": false,
+          "polls": 17463,
+          "elapsed_ms_including_configuration": 19540,
+          "base_restored": true,
+          "root_cause_proven": false,
+          "confirmation": {
+            "identity": 165,
+            "protocol": 68,
+            "status": 3
+          },
+          "snapshot_trusted": true,
+          "snapshot_valid": false,
+          "frontend_capture_valid": false
+        },
+        "start_result": 0,
+        "stop_result": 0,
+        "epoch": 1,
+        "elapsed_seconds_including_configuration": 19.54,
+        "duration_limit": "Configuration and polling included; not exact visible-loop duration or GBC play duration",
+        "no_error_snapshot": "Valid identity/status response; snapshot_valid=false and frontend_capture_valid=false, consistent with no captured fault. Zero final tag is not a protocol mismatch without a captured event.",
+        "unconfirmed": [
+          "H1 warm reentry after RESET",
+          "Repeated cold boot and long-duration stability",
+          "Separate GBC menu-return observation",
+          "Physical external IO/turnaround timing",
+          "Exact041 failure mechanism and contribution of each043/044 change",
+          "Actual NES game producer/CPU/audio/save integration"
+        ],
+        "root_cause_proven": false,
+        "electrical_signoff": false
+      },
+      "investigation": "NES-H1-SAMPLING-044",
+      "previous_internal_build": {
+        "candidate": "NES-H1-QUALIFIED-043",
+        "hardware_executed": false,
+        "firmware": {
+          "bytes": 169056,
+          "sha256": "b94252861005419b7aea5d313a17398d352291b805c79bb42dca20fabf9ae33a",
+          "warnings": 0
+        },
+        "fpga": {
+          "bytes": 167894,
+          "sha256": "d9cc2364627a9087b271a4ce12302f8eccb6ebfb1929c059b577850a0e1718be"
+        },
+        "resource": {
+          "LE": 1744,
+          "LAB": 133,
+          "M9K": 44,
+          "registers": 1186,
+          "pins": 135,
+          "virtual_pins": 0,
+          "PLL": 1
+        },
+        "verification": "analysis/H1-QUALIFIED-RESULT.ko.md"
+      },
+      "candidate_semantics": "Current bounded hardware baseline is044; previous041 failure is preserved. Image hashes identify distributed build, not measured SD contents.",
+      "previous_hardware_observations": [
+        {
+          "candidate": "NES-H1-EDGE-041",
+          "date_kst": "2026-10-06",
+          "hardware_executed": true,
+          "hardware_verified": false,
+          "protocol_verified": true,
+          "FPGA_hash_verified": false,
+          "user_report": "Same symptom",
+          "log_sha256": "c6f839484c5b3fcc8bb12aba2cebdba3c6d539bdbab891ad5da52130488b3fe7",
+          "decoded": {
+            "candidate": "NES-H1-EDGE-041",
+            "exit_reason": "F2_STATUS",
+            "last_status": 7,
+            "RUN": true,
+            "LOCKED": true,
+            "aggregate_fault": true,
+            "sequence_exhausted": false,
+            "polls": 21,
+            "elapsed_ms_including_configuration": 450,
+            "base_restored": true,
+            "root_cause_proven": false,
+            "confirmation": {
+              "identity": 165,
+              "protocol": 65,
+              "status": 7
+            },
+            "snapshot_trusted": true,
+            "snapshot_valid": true,
+            "snapshot": {
+              "flags_hex": "87",
+              "bus_error": 0,
+              "bus_meaning": "none",
+              "frontend_mask": 1,
+              "frontend_flags": [
+                "aborted_or_address_or_ROMSEL_changed"
+              ],
+              "producer_error": 0,
+              "producer_meaning": "none",
+              "captured_address_hex": "4081a0",
+              "capture_cycles_84MHz": 1911133,
+              "published_low8": 2,
+              "read_n": true,
+              "write_n": true,
+              "romsel_n": false
+            },
+            "frontend_capture_valid": true,
+            "frontend_capture": {
+              "cause_mask_hex": "20",
+              "causes": [
+                "payload_order_or_not_ready"
+              ],
+              "unknown_cause_bits": 0,
+              "pending": 0,
+              "rd_sync": 0,
+              "rd_previous": true,
+              "local_pending": false,
+              "payload_pending": true,
+              "output_valid": false,
+              "read_n": false,
+              "write_n": true,
+              "romsel_n": false,
+              "data_valid": false,
+              "reg_rvalid": false,
+              "fault": false,
+              "busy": false,
+              "ready": true,
+              "raw_address_hex": "4081a0",
+              "latched_read_address_hex": "40819f",
+              "position": 416,
+              "sampled_low_cycles_before_edge": 1,
+              "previous_sampled_low_cycles": 18,
+              "sampled_high_cycles_before_edge": 0,
+              "previous_sampled_high_cycles": 13,
+              "counter_limit": 255,
+              "clock_nominal_MHz": 84,
+              "semantics": "First frontend error predicate at the scheduling edge; pre-edge sampled counters, not analog timing. Independent of later aggregate snapshot."
+            }
+          },
+          "causal_consistency": "aggregate frontend1 versus causal0x20 implies frontend2",
+          "root_cause": "Unresolved; do not classify as payload order from causal byte alone"
+        }
+      ],
+      "hardware_verified_scope": "User-reported LINK SCREEN1->2->3->1 repeating without automatic exit; protocol44 no-fault RESET exit/base recovery log; user-reported GBC gameplay normal",
+      "remaining_validation": [
+        "H1 warm reentry after RESET",
+        "Repeated cold boot and long-duration stability",
+        "Separate GBC menu-return observation",
+        "Physical external IO/turnaround timing",
+        "Exact041 failure mechanism and contribution of each043/044 change",
+        "Actual NES game producer/CPU/audio/save integration"
+      ],
+      "validated_diagnostic_build": {
+        "candidate": "NES-H1-SAMPLING-044",
+        "hardware_executed": true,
+        "hardware_verified": true,
+        "electrical_signoff": false,
+        "package": "analysis/local-h1-sampling-044/NES-H1-SAMPLING-044.zip",
+        "firmware": {
+          "bytes": 169056,
+          "sha256": "1c3b40a3459d24114cb4d91ee9d861d1a08025a670ef25317ef489092203693b",
+          "warnings": 0
+        },
+        "fpga": {
+          "bytes": 154991,
+          "sha256": "71ffacd82227ae68b186dd3d3fab9619a69c4cdef73b5c44c55621caff4e0888"
+        },
+        "resource": {
+          "LE": 1761,
+          "LAB": 137,
+          "M9K": 44,
+          "registers": 1186,
+          "pins": 135,
+          "virtual_pins": 0,
+          "PLL": 1
+        },
+        "verification": "analysis/H1-SAMPLING-RESULT.ko.md",
+        "scope": "bounded_diagnostic_hardware_trial",
+        "hardware_verified_scope": "User-reported LINK SCREEN1->2->3->1 repeating without automatic exit; protocol44 no-fault RESET exit/base recovery log; user-reported GBC gameplay normal",
+        "observation": "analysis/H1-HARDWARE-044-RESULT.ko.md"
+      }
+    }
+  },
+  "last_hardware_diagnostic_candidate": "NES-H1-SAMPLING-044",
+  "last_resource_candidate": "NES-R1-ROM-BOOT-053",
+  "last_h1_candidate": "NES-H1-SAMPLING-044",
+  "last_memory_producer_candidate": "NES-R2-MEMORY-PRODUCER-045",
+  "development_components": {
+    "packet_memory_producer": {
+      "candidate": "NES-R2-MEMORY-PRODUCER-045",
+      "status": "RTL_pass_standalone_fit_no_hardware",
+      "evidence": "analysis/PACKET-MEMORY-RESULT.ko.md",
+      "contract": "docs/nes-packet-memory-contract.md",
+      "scope": "Completed immutable packet memory service to044 transport; live encoder/physical service not implemented"
+    },
+    "streaming_ncr1_encoder": {
+      "candidate": "NES-R2-NCR1-ENCODER-046",
+      "status": "RTL_and_fitted_functional_netlist_pass",
+      "evidence": "analysis/NCR1-ENCODER-RESULT.ko.md",
+      "contract": "docs/nes-ncr1-encoder-contract.md",
+      "scope": "Historical raw BG fetch replay through causal RTL encoder; live PPU tap/mode monitor not connected"
+    },
+    "live_ppu_binding": {
+      "candidate": "NES-R2-NCR1-LIVE-047",
+      "status": "actual_core_RTL_pass_joint_area_fit_tight",
+      "evidence": "analysis/NCR1-LIVE-RESULT.ko.md",
+      "contract": "docs/nes-ncr1-live-contract.md",
+      "resource": {
+        "LE": 14153,
+        "registers": 4797,
+        "LAB_total": 953,
+        "LAB_capacity": 963,
+        "LAB_remaining": 10,
+        "M9K": 26,
+        "memory_bits": 182922,
+        "physical_unlocated_pins": 5,
+        "virtual_pins": 237,
+        "PLL": 0,
+        "map_fit_passed": true,
+        "scope": "Diagnostic ROM geometry, virtual ROM/IO and resource RAM; no full board or STA signoff"
+      },
+      "scope": "Restricted MMC3 BG diagnostic ROMs, actual PPU palette/attribute/mode observation; ideal memory and testbench host consumer"
+    },
+    "oam_write_optimization": {
+      "candidate": "NES-R1-OAM-BANKED-048",
+      "status": "bounded_differential_and_actual_core_pass_joint_fit",
+      "accepted_driver": "tools/nes_oam_compact.py",
+      "evidence": "analysis/OAM-BANKED-RESULT.ko.md",
+      "contract": "docs/nes-oam-banked-contract.md",
+      "resource": {
+        "LE": 13283,
+        "LAB": 926,
+        "LAB_remaining": 37,
+        "M9K": 26,
+        "registers": 4797
+      },
+      "scope": "Primary OAM register write structure only; no new hardware/STA or sprite accuracy claim"
+    },
+    "local_memory": {
+      "candidate": "NES-R1-LOCAL-MEMORY-049",
+      "status": "unit_and_actual_core_pass_joint_fit",
+      "evidence": "analysis/LOCAL-MEMORY-RESULT.ko.md",
+      "contract": "docs/nes-local-memory-contract.md",
+      "resource": {
+        "LE": 13477,
+        "LAB": 920,
+        "LAB_remaining": 43,
+        "M9K": 26,
+        "registers": 4811
+      },
+      "scope": "Common12KiB local RAM with8192-clock reset scrub; PRG RAM erased on every diagnostic reset; external ROM still ideal/virtual, no board timing signoff"
+    },
+    "shared_rom_service": {
+      "candidate": "NES-R1-ROM-SERVICE-050",
+      "status": "actual_core_and_protocol_pass_late_response_negative_confirmed",
+      "evidence": "analysis/ROM-SERVICE-RESULT.ko.md",
+      "contract": "docs/nes-rom-service-contract.md",
+      "resource": {
+        "LE": 13538,
+        "LAB": 928,
+        "LAB_remaining": 35,
+        "M9K": 26,
+        "registers": 4895
+      },
+      "scope": "Single NES-clock shared immutable diagnostic ROM interface; physical controller/CDC not implemented; board caller fault abort/recovery required"
+    },
+    "early_rom_reads": {
+      "candidate": "NES-R1-ROM-EARLY-051",
+      "status": "actual_core2_3_4_clock_pass_8_clock_negative",
+      "evidence": "analysis/ROM-EARLY-RESULT.ko.md",
+      "contract": "docs/nes-rom-early-contract.md",
+      "resource": {
+        "LE": 13420,
+        "LAB": 935,
+        "LAB_remaining": 28,
+        "M9K": 26,
+        "registers": 4895
+      },
+      "scope": "Causal early immutable ROM reads using explicit current addresses; no physical controller/CDC/board signoff"
+    },
+    "physical_rom_read": {
+      "candidate": "NES-R1-ROM-PHYSICAL-052",
+      "status": "RTL_pin_and_CDC_pass_board_signoff_open",
+      "evidence": "analysis/ROM-PHYSICAL-RESULT.ko.md",
+      "contract": "docs/nes-rom-physical-contract.md",
+      "resource": {
+        "LE": 13547,
+        "LAB": 925,
+        "LAB_remaining": 38,
+        "registers": 4959,
+        "M9K": 26
+      },
+      "scope": "Read-only immutable PSRAM pin controller/CDC,25ns assumed model, no hardware/PLL/loader/physical STA"
+    },
+    "diagnostic_rom_boot": {
+      "candidate": "NES-R1-ROM-BOOT-053",
+      "status": "pin_stream_loader_and_run_ownership_RTL_pass",
+      "evidence": "analysis/ROM-BOOT-RESULT.ko.md",
+      "contract": "docs/nes-rom-boot-contract.md",
+      "resource": {
+        "LE": 13612,
+        "LAB": 929,
+        "LAB_remaining": 34,
+        "registers": 5016,
+        "M9K": 26
+      },
+      "packet_tick_offsets_vs052": {
+        "banks32": [
+          -4,
+          -4,
+          -4,
+          -4
+        ],
+        "fine_x": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "scope": "Fixed diagnostic geometry loader; no MCU SPI/board clocks or physical signoff"
+    }
+  },
+  "last_streaming_encoder_candidate": "NES-R2-NCR1-ENCODER-046",
+  "last_live_ppu_candidate": "NES-R2-NCR1-LIVE-047",
+  "implementation_optimization": "NES-R1-OAM-BANKED-048",
+  "last_local_memory_candidate": "NES-R1-LOCAL-MEMORY-049",
+  "last_rom_service_candidate": "NES-R1-ROM-BOOT-053"
+}

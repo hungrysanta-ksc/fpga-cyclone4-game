@@ -1,0 +1,802 @@
+{
+  "candidate": "NES-H1-SNES-FRONTEND-031",
+  "date_kst": "2026-10-06",
+  "implementation_candidate": "NES-P2-RDY-014",
+  "last_nes_trace_replay_candidate": "NES-R2-CHR-RESIDENCY-025",
+  "hardware_visual_candidate": "NES-H0-VISUAL-030",
+  "sources": [
+    {
+      "path": "src/nes/nes_snes_frontend.sv",
+      "bytes": 4218,
+      "sha256": "c78ba887c2f1d8583513be6e98e990a09f7bd731cfd7cb7abc43c2e65e9a87bc"
+    },
+    {
+      "path": "src/nes/nes_transport.sv",
+      "bytes": 1091,
+      "sha256": "d7a722f872234a9d655d892c9a822593a09cfef4b2ec43fb815f022e64170765"
+    },
+    {
+      "path": "src/nes/nes_packet_queue_ram.sv",
+      "bytes": 3872,
+      "sha256": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1"
+    },
+    {
+      "path": "src/nes/nes_packet_cdc_ram.sv",
+      "bytes": 4551,
+      "sha256": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542"
+    },
+    {
+      "path": "tools/nes_snes_frontend.py",
+      "bytes": 4145,
+      "sha256": "905b66640e223b62faea428ba9459dda47f1dc8c4423a0b4d0a0ade1f3b8e631"
+    },
+    {
+      "path": "tools/run_nes_snes_frontend.ps1",
+      "bytes": 3292,
+      "sha256": "95ea63528dfa9f9a955ecdcc5fa80082afa3d223d9d5403785ce64fad37d43ef"
+    },
+    {
+      "path": "tools/verify_nes_snes_frontend.py",
+      "bytes": 3682,
+      "sha256": "88902b527abaf607f9184de1d042cec969a30c86df2d6f5260e8e13a1619591c"
+    },
+    {
+      "path": "tools/nes_transport_resource.py",
+      "bytes": 2775,
+      "sha256": "bb0f5f0607e05d3acaea6b93ece15022e0a9134db6afb98371b1c489a96a3335"
+    },
+    {
+      "path": "tests/nes-functional/snes_frontend_tb.sv",
+      "bytes": 7746,
+      "sha256": "8a14ff0f910cbf80e0012549f2cc6ca5fbf0d24af3a6ff9e258b498d354804bd"
+    },
+    {
+      "path": "tests/nes-functional/packet_queue_ram_tb.sv",
+      "bytes": 6936,
+      "sha256": "9702da064d79d39edb83e6c19a09d0b3f4f9be23d15faa011f75da6aca42fb86"
+    },
+    {
+      "path": "docs/nes-snes-frontend-contract.md",
+      "bytes": 4745,
+      "sha256": "1bc214ea0d5551589ae53f53e52de301240d92724d6cbff3d61a1bf8bfb6f4f4"
+    },
+    {
+      "path": "analysis/SNES-FRONTEND-RESULT.ko.md",
+      "bytes": 4662,
+      "sha256": "f72f8c2e47be324a1ae3471998a1388852b2aff66c86d034886e05370a59a66a"
+    },
+    {
+      "path": "analysis/snes-frontend-verification.json",
+      "bytes": 3021,
+      "sha256": "3207a8a47232d21642e51ea1d8035930aba52669f49ed379b0a5f31f75ed8495"
+    },
+    {
+      "path": "src/nes/nes_packet_queue.sv",
+      "bytes": 3241,
+      "sha256": "f429ce00965b5d46e61fbdd84638078ecc82f62d3646b43c75f0ecd9878bffea"
+    },
+    {
+      "path": "src/nes/nes_packet_cdc.sv",
+      "bytes": 4534,
+      "sha256": "c88f6f154633e30df3ca2a500d0904ed10db0378b03423c8bf0692911506eb28"
+    },
+    {
+      "path": "src/nes/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "tests/nes-functional/packet_queue_tb.sv",
+      "bytes": 5625,
+      "sha256": "fcfb433cb6689589f4c43e5298ae538284b3c3720464299c32b655cfd03460f2"
+    },
+    {
+      "path": "analysis/visual-h0-artifacts.json",
+      "bytes": 11756,
+      "sha256": "b61796fb834933c10190d198f862498b21930c88f5e188a5eba4744543b36bac"
+    },
+    {
+      "path": "analysis/RESOURCE-RESULT.ko.md",
+      "bytes": 5331,
+      "sha256": "202c1328714c08e901cb487848505df6a4ed7e514e6fdab6a24340ea8edeccbc"
+    },
+    {
+      "path": "docs/questa-execution.md",
+      "bytes": 2578,
+      "sha256": "b118eed60ebd6f8a7854641f8afda02e6c7e9fdca78e43e47989ec8100258c51"
+    }
+  ],
+  "status_files": [
+    {
+      "path": "cores/nes/README.md",
+      "bytes": 1577,
+      "sha256": "4b02ee188e446a69f4f9f04464a74dbcadf0ea616272f88fbada4b9fb3cf31f0"
+    },
+    {
+      "path": "cores/nes/PROPOSAL.ko.md",
+      "bytes": 21266,
+      "sha256": "20163dee014c41ad46ba8019626341a8034ffd7f26992b388c16e60da217cfad"
+    },
+    {
+      "path": "cores/nes/HANDOFF.ko.md",
+      "bytes": 47645,
+      "sha256": "a6d9c338d2af24f78700abc0aab087c436c6ea0db5814854512d2af585e8510b"
+    },
+    {
+      "path": "docs/nes-development-plan.json",
+      "bytes": 7831,
+      "sha256": "47c9fd7029b88d76856b7e56102738bbab92412405697baf858fae0c0f1b958b"
+    },
+    {
+      "path": "cores/registry.json",
+      "bytes": 5234,
+      "sha256": "ca863030c539d90b145e36c77a00afa4131e0290a37b52f0cd8fd9c1f7e99237"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 20288,
+      "sha256": "8e7591fa83595200bd8c538c8c9a6a715f7b61b832ca3c61eefd60d78d523e42"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 1409,
+      "sha256": "c84aada55c79f5cd00226137a777bfe536e67af4bc5d3c57e2f7bcb9c03868cb"
+    },
+    {
+      "path": "analysis/hardware-readiness.json",
+      "bytes": 3008,
+      "sha256": "720924985fd4631991fa8881a11b6f7141c6674efee858efd03700d78a89eee9"
+    }
+  ],
+  "input_evidence": [
+    {
+      "path": "analysis/local-bank-patch-024/top/build/packet-1.bin",
+      "bytes": 2328,
+      "sha256": "fbd1a1fdf7ea6e038aa67f2a2b7416eb0b8657ebeb61bdec88d10e9a8eed806e"
+    },
+    {
+      "path": "analysis/local-sprite-replay-023/top/build/packet-1.bin",
+      "bytes": 2052,
+      "sha256": "cbf3c2211342dce8f189051df7c539283d1faa86de5943732674e9a35b0f47d4"
+    },
+    {
+      "path": "analysis/local-chr-residency-025/top/build/packet-1.bin",
+      "bytes": 2008,
+      "sha256": "966c6788289c38ab2a3ce53b6200be623716a38a6323f06a5308978f16200be5"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "analysis/local-snes-frontend-031/baseline-status/.gitignore",
+      "bytes": 19711,
+      "sha256": "a90701358d28136f0b4ad23f61ae58dc88630be5f6f45575fc3553dd59ff0944"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/baseline-status/AGENTS.md",
+      "bytes": 1409,
+      "sha256": "c84aada55c79f5cd00226137a777bfe536e67af4bc5d3c57e2f7bcb9c03868cb"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/baseline-status/analysis/hardware-readiness.json",
+      "bytes": 1685,
+      "sha256": "70373dfb2b0cdcbf136bea842b857c3534e60feb9eaab98af9c360741530523c"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/baseline-status/cores/nes/HANDOFF.ko.md",
+      "bytes": 46423,
+      "sha256": "291e9672397cc19c0a5fb8dfd317f4053502ed6ff9f322f2d095dcaef5dbd255"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/baseline-status/cores/nes/PROPOSAL.ko.md",
+      "bytes": 20771,
+      "sha256": "3a4d791958f066779a8f7c0d9d501b55385f06fbd0f0e8fc3b123aad0ef14e33"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/baseline-status/cores/nes/README.md",
+      "bytes": 1625,
+      "sha256": "3061292fd5cf1f4e477b9bdb49522d2d0ae8049b2dd33cb8ea8a448f6923ebad"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/baseline-status/cores/registry.json",
+      "bytes": 4894,
+      "sha256": "c6afe86e9bf00d17718c978656fa599a50fb4bc39eac524343185e56d9e12302"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/baseline-status/docs/nes-development-plan.json",
+      "bytes": 7533,
+      "sha256": "cf717edfa1a3b165bf1cbab6f3df66aab0b1c86c053212033df02b8d08a01cd7"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/compile-failure-01/compile.log",
+      "bytes": 1227,
+      "sha256": "7749587231a87b1cf0398999fb25297fbb616235c87f7a7d6f9f049f33b8a268"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/compile-failure-01/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/compile-failure-01/nes_packet_cdc.sv",
+      "bytes": 4534,
+      "sha256": "c88f6f154633e30df3ca2a500d0904ed10db0378b03423c8bf0692911506eb28"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/compile-failure-01/nes_packet_queue.sv",
+      "bytes": 3241,
+      "sha256": "f429ce00965b5d46e61fbdd84638078ecc82f62d3646b43c75f0ecd9878bffea"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/compile-failure-01/nes_snes_frontend.sv",
+      "bytes": 4070,
+      "sha256": "749e04e1aad10f83b92bcc33fddc64fadc2cc9a4bbefa139d326170bd0469cdf"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/compile-failure-01/resident.hex",
+      "bytes": 8032,
+      "sha256": "fc276d6516616e7e2166afe8fc5def1337a0568ee2a5e1c7ea1a50e1185d2ec2"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/compile-failure-01/result.json",
+      "bytes": 1499,
+      "sha256": "6df23d7b1a240ddffb96b8873a32f50ca232de0fad51f4be94deef634d3bd0dd"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/compile-failure-01/snes_frontend_tb.sv",
+      "bytes": 6869,
+      "sha256": "a010d9c68ad110e35220a3c24876b24869c85c5fa34dabb71d846f08b8c3dc6e"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/compile-failure-01/split.hex",
+      "bytes": 9312,
+      "sha256": "db8979cd77155e5ab9146c08997101bb741e484432d22f27350090d847a684b8"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/compile-failure-01/sprite.hex",
+      "bytes": 8208,
+      "sha256": "eb43d4333ba9b3d7e03de226ae84aa73a0b6bac1339cf4ed81a3d854f716e08c"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/compile-failure-01/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/completion-checks.json",
+      "bytes": 312,
+      "sha256": "24cd31bcb706ad4b5329bd64e7093b534f13ce40c46a131f3d0de2a1889091fe"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/corrections.txt",
+      "bytes": 1372,
+      "sha256": "5e72bef523e8c3dc4ff928c46f8a914c50c0ebb87837aecb99819f155659f7ba"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/hardware-observation.json",
+      "bytes": 1097,
+      "sha256": "d390467c10cba960293ac1e80b6d06a7837f62436b09a554f7bd05b2cceed27d"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/hardware-video.MOV",
+      "bytes": 2037448,
+      "sha256": "b2dc68cdf0e4c1f2d8e1c963f8dc23613a2801bb1b0fb48285247a148e0af993"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/initial-pass-02/compile.log",
+      "bytes": 643,
+      "sha256": "aa67b35c0b2e076f18979242cee70ec39a703a53baa97e2defd81c35d535629f"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/initial-pass-02/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/initial-pass-02/nes_packet_cdc.sv",
+      "bytes": 4534,
+      "sha256": "c88f6f154633e30df3ca2a500d0904ed10db0378b03423c8bf0692911506eb28"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/initial-pass-02/nes_packet_queue.sv",
+      "bytes": 3241,
+      "sha256": "f429ce00965b5d46e61fbdd84638078ecc82f62d3646b43c75f0ecd9878bffea"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/initial-pass-02/nes_snes_frontend.sv",
+      "bytes": 4070,
+      "sha256": "749e04e1aad10f83b92bcc33fddc64fadc2cc9a4bbefa139d326170bd0469cdf"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/initial-pass-02/q20_h10.log",
+      "bytes": 1990,
+      "sha256": "ff78738cdaccb5299092f5f91721a9874b092a7c84f835cbf310fd876347b803"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/initial-pass-02/q20_h10.tsv",
+      "bytes": 142592,
+      "sha256": "8e0e6028aa36e119a3bacd05cb9a8fec8ca583793b3625ce6d0d4d29a19789e3"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/initial-pass-02/q46_h12.log",
+      "bytes": 2104,
+      "sha256": "4d45ba5dbe32bf25c7526e973d81fee69211a75794ca69934577d87d5c437d79"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/initial-pass-02/q46_h12.tsv",
+      "bytes": 142592,
+      "sha256": "778cda6c7a21ef8749ce6ccaa5c6edeaecfba99bc94e0b3b0ca15c8ce029202e"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/initial-pass-02/q46_h20.log",
+      "bytes": 1999,
+      "sha256": "4bbe38b9384dc702c95d9c0f97f85b141d1f89ffc5c83cf2d399b1904a54051a"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/initial-pass-02/q46_h20.tsv",
+      "bytes": 142592,
+      "sha256": "bd99a423f8c6d47dab95edad7ce9c478ae08d19a8f635596b1470f91da2bf556"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/initial-pass-02/resident.hex",
+      "bytes": 8032,
+      "sha256": "fc276d6516616e7e2166afe8fc5def1337a0568ee2a5e1c7ea1a50e1185d2ec2"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/initial-pass-02/result.json",
+      "bytes": 5175,
+      "sha256": "a1ad75ce0dffd011736ac5e4352191415120c45de254020b52ac1eba833a98e9"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/initial-pass-02/snes_frontend_tb.sv",
+      "bytes": 6933,
+      "sha256": "dd62a37855c95cd0d7798a62dc3995f9f7e333eb5ef654c59ed0d4ee534ff2a3"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/initial-pass-02/split.hex",
+      "bytes": 9312,
+      "sha256": "db8979cd77155e5ab9146c08997101bb741e484432d22f27350090d847a684b8"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/initial-pass-02/sprite.hex",
+      "bytes": 8208,
+      "sha256": "eb43d4333ba9b3d7e03de226ae84aa73a0b6bac1339cf4ed81a3d854f716e08c"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/initial-pass-02/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/new-public-files.json",
+      "bytes": 563,
+      "sha256": "2d16e7d7d2401c66573a4eb5039b593778c3b392950ceec249ad6dda324a488c"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/prior-audit.json",
+      "bytes": 82,
+      "sha256": "916ce5bd96a7b44b749f472c0a528ce21f1ce2f0213c60ceb499bb87847f6c53"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/fit.log",
+      "bytes": 9279,
+      "sha256": "d040b8fb8760dc0e015d2567ee506f7ccbb627170edcd8d8b98cf004515d5b12"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/map.log",
+      "bytes": 32475,
+      "sha256": "2648b26fd03b8cd271eff4bc11a080ca6f7e3f210e9bd01a5ac4e6906054d734"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/nes_packet_cdc_ram.sv",
+      "bytes": 4551,
+      "sha256": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/nes_packet_queue_ram.sv",
+      "bytes": 3872,
+      "sha256": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/nes_snes_frontend.sv",
+      "bytes": 4218,
+      "sha256": "c78ba887c2f1d8583513be6e98e990a09f7bd731cfd7cb7abc43c2e65e9a87bc"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/nes_transport.sv",
+      "bytes": 1091,
+      "sha256": "d7a722f872234a9d655d892c9a822593a09cfef4b2ec43fb815f022e64170765"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/output_files/transport.fit.rpt",
+      "bytes": 170760,
+      "sha256": "eb425705bdfb1b1f7852d97efd76c8088cd6ea86d9008cd1f431a651d41546c0"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/output_files/transport.fit.smsg",
+      "bytes": 703,
+      "sha256": "bff381894c1dc45dfc5f6fb651d1bbe3793ead7f7adc4646fd1806e464e18e75"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/output_files/transport.fit.summary",
+      "bytes": 634,
+      "sha256": "d48fed3f13f92eed5842eebe2e7307fe4b3de0c5d7c262d3d6875cadd3d54299"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/output_files/transport.flow.rpt",
+      "bytes": 6604,
+      "sha256": "f5b47f736b1b408512066ec880a9008049c7165c5feb5dbefce415828fd2e40e"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/output_files/transport.map.rpt",
+      "bytes": 99679,
+      "sha256": "9327f978da66191a162f08f33c77258396810d4ebac58845dc8d7136c614720f"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/output_files/transport.map.smsg",
+      "bytes": 500,
+      "sha256": "2b9593c048a9b3bdd424f4e2afd6cd6c8896c53e2848ba83ac5a053d5e0b9d53"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/output_files/transport.map.summary",
+      "bytes": 492,
+      "sha256": "b690b81dd01853b40bee28482d68857951ef475d0269d1dd80e9c5a6b125613a"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/result.json",
+      "bytes": 955,
+      "sha256": "1383c9ddcb3d0f7c3fd850838f61aca4498de6cc181b8e00c7fda073bea375d4"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/transport.qpf",
+      "bytes": 32,
+      "sha256": "f3a27eb4a6367e4ef14582d1ba20c47fdf3363596e529c79693b7048ed1e7a35"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/transport.qsf",
+      "bytes": 2141,
+      "sha256": "72dd316201a51a50072db624bd6e5f8bc54b4d836034d081f3239a90c46a4400"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource/transport.sdc",
+      "bytes": 156,
+      "sha256": "f1876f07244cec4f5ee7068a3d9812698c598fc6b984da13c8ed1f01cd2510bf"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource-failure-01/map.log",
+      "bytes": 5657,
+      "sha256": "621381a4735f7e63ce145e096d7b9c540660ad8e58c1a6f9a805eb48afae8376"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource-failure-01/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource-failure-01/nes_packet_cdc.sv",
+      "bytes": 4534,
+      "sha256": "c88f6f154633e30df3ca2a500d0904ed10db0378b03423c8bf0692911506eb28"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource-failure-01/nes_packet_queue.sv",
+      "bytes": 3241,
+      "sha256": "f429ce00965b5d46e61fbdd84638078ecc82f62d3646b43c75f0ecd9878bffea"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource-failure-01/nes_snes_frontend.sv",
+      "bytes": 4218,
+      "sha256": "c78ba887c2f1d8583513be6e98e990a09f7bd731cfd7cb7abc43c2e65e9a87bc"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource-failure-01/nes_transport.sv",
+      "bytes": 1087,
+      "sha256": "32ac00a5354bac26fa2ec565c8032e6c74682a16138db997afaa4e08fd79586f"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource-failure-01/output_files/transport.flow.rpt",
+      "bytes": 6367,
+      "sha256": "d635c1f3ae543abbc2a245717721ca9d2f1e6a391f765b547f1a45d5de58a6f6"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource-failure-01/output_files/transport.map.rpt",
+      "bytes": 34027,
+      "sha256": "91ab536c6acdd7cafd17b51690afa6ab84de8a03beab70b4f775e741ee42b0fa"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource-failure-01/output_files/transport.map.smsg",
+      "bytes": 500,
+      "sha256": "503f26cc2c677a3882c1610e0f4bee175c4c10faf39bc9ddd4225a0b373f8bd8"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource-failure-01/output_files/transport.map.summary",
+      "bytes": 687,
+      "sha256": "603ee16662c8dc361dfbaa0b66437b812f1cacd33874da6107c5fdfca61b3620"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource-failure-01/result.json",
+      "bytes": 932,
+      "sha256": "d18ea93ea13eaaa1bfd3585b18ef12e29e723f6c451139fb1723f99b3d5463b0"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource-failure-01/transport.qpf",
+      "bytes": 32,
+      "sha256": "f3a27eb4a6367e4ef14582d1ba20c47fdf3363596e529c79693b7048ed1e7a35"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource-failure-01/transport.qsf",
+      "bytes": 2133,
+      "sha256": "5fab56ac1d8d41a0704870ef53a36e3fdd5b9a4afa6e06e5682fe5654adb6919"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/resource-failure-01/transport.sdc",
+      "bytes": 156,
+      "sha256": "f1876f07244cec4f5ee7068a3d9812698c598fc6b984da13c8ed1f01cd2510bf"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/compile.log",
+      "bytes": 855,
+      "sha256": "3b2ee0b870ffaa3b46204e89ccbb7a6e4c33b648b6da869d42f4377c1f4e7e88"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/nes_packet_cdc_ram.sv",
+      "bytes": 4551,
+      "sha256": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/nes_packet_queue.sv",
+      "bytes": 3241,
+      "sha256": "f429ce00965b5d46e61fbdd84638078ecc82f62d3646b43c75f0ecd9878bffea"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/nes_packet_queue_ram.sv",
+      "bytes": 3872,
+      "sha256": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/nes_snes_frontend.sv",
+      "bytes": 4218,
+      "sha256": "c78ba887c2f1d8583513be6e98e990a09f7bd731cfd7cb7abc43c2e65e9a87bc"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/nes_transport.sv",
+      "bytes": 1091,
+      "sha256": "d7a722f872234a9d655d892c9a822593a09cfef4b2ec43fb815f022e64170765"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/ownership.tsv",
+      "bytes": 646203,
+      "sha256": "c6fad47d30a480107d710fb8a358081fc08c03114229d542732b98def36856b3"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/packet_queue_ram_tb.sv",
+      "bytes": 6936,
+      "sha256": "9702da064d79d39edb83e6c19a09d0b3f4f9be23d15faa011f75da6aca42fb86"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/q20_h10.log",
+      "bytes": 2070,
+      "sha256": "16dbf87cf6b3bcdb7b5fd745b976c5edb05c8f97259c9afe4c042ceac7c936be"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/q20_h10.tsv",
+      "bytes": 142619,
+      "sha256": "fea1f0754c0168b8312d5e6722520b2ddb2b22fa72687a8e2d4c07f47a889c59"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/q46_h12.log",
+      "bytes": 2183,
+      "sha256": "6a347fa212efeb8240a8ace6392e2be2f3c8d98407abc24dc84d3849a557a587"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/q46_h12.tsv",
+      "bytes": 142619,
+      "sha256": "8115aa8bb1397dee56941fd0ee2d80c105e459ea0a8ee5b5ba46e6bfe94ebf4d"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/q46_h20.log",
+      "bytes": 2079,
+      "sha256": "eb063a5051dd3fa8606e70406b424886a23ff2814576125cbdffaf814724ea8b"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/q46_h20.tsv",
+      "bytes": 142619,
+      "sha256": "422857c6ffcf5e30f1f18869df9f9ffce41c21b10f10da683448e35cff29bbd5"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/queue_equivalence.log",
+      "bytes": 2082,
+      "sha256": "360bcce72a584fa145b0565a4f42b7f9751f0eea2710541df6ed52eb52168468"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/resident.hex",
+      "bytes": 8032,
+      "sha256": "fc276d6516616e7e2166afe8fc5def1337a0568ee2a5e1c7ea1a50e1185d2ec2"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/result.json",
+      "bytes": 6289,
+      "sha256": "171426348d2d1eb9b08b821f169805d647d58646775e29f79ea0c0163e4dd88b"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/snes_frontend_tb.sv",
+      "bytes": 7746,
+      "sha256": "8a14ff0f910cbf80e0012549f2cc6ca5fbf0d24af3a6ff9e258b498d354804bd"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/split.hex",
+      "bytes": 9312,
+      "sha256": "db8979cd77155e5ab9146c08997101bb741e484432d22f27350090d847a684b8"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/sprite.hex",
+      "bytes": 8208,
+      "sha256": "eb43d4333ba9b3d7e03de226ae84aa73a0b6bac1339cf4ed81a3d854f716e08c"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/run/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/test-failure-03/compile.log",
+      "bytes": 695,
+      "sha256": "32e3decaca106f48a1812a7f6a71de75b039ee2a8b93a21501c4bba1cfa228da"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/test-failure-03/nes_host_stage.sv",
+      "bytes": 4252,
+      "sha256": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/test-failure-03/nes_packet_cdc.sv",
+      "bytes": 4534,
+      "sha256": "c88f6f154633e30df3ca2a500d0904ed10db0378b03423c8bf0692911506eb28"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/test-failure-03/nes_packet_queue.sv",
+      "bytes": 3241,
+      "sha256": "f429ce00965b5d46e61fbdd84638078ecc82f62d3646b43c75f0ecd9878bffea"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/test-failure-03/nes_snes_frontend.sv",
+      "bytes": 4218,
+      "sha256": "c78ba887c2f1d8583513be6e98e990a09f7bd731cfd7cb7abc43c2e65e9a87bc"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/test-failure-03/nes_transport.sv",
+      "bytes": 1087,
+      "sha256": "32ac00a5354bac26fa2ec565c8032e6c74682a16138db997afaa4e08fd79586f"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/test-failure-03/q46_h12.log",
+      "bytes": 2161,
+      "sha256": "30952c9a46d29f9f990b5a417f9119e36cf58264c620bfd8c08e543f4e9c2334"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/test-failure-03/q46_h12.tsv",
+      "bytes": 142619,
+      "sha256": "8115aa8bb1397dee56941fd0ee2d80c105e459ea0a8ee5b5ba46e6bfe94ebf4d"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/test-failure-03/resident.hex",
+      "bytes": 8032,
+      "sha256": "fc276d6516616e7e2166afe8fc5def1337a0568ee2a5e1c7ea1a50e1185d2ec2"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/test-failure-03/result.json",
+      "bytes": 2270,
+      "sha256": "b282b7805f01a3f87f4cc3bbd334c68a4d8cc2e261ad147c72640cc831d2d825"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/test-failure-03/snes_frontend_tb.sv",
+      "bytes": 7700,
+      "sha256": "98d6e3594e64592c9c81f2b9646f3ef78c96590c1cf1c9f1c395524f693b6bad"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/test-failure-03/split.hex",
+      "bytes": 9312,
+      "sha256": "db8979cd77155e5ab9146c08997101bb741e484432d22f27350090d847a684b8"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/test-failure-03/sprite.hex",
+      "bytes": 8208,
+      "sha256": "eb43d4333ba9b3d7e03de226ae84aa73a0b6bac1339cf4ed81a3d854f716e08c"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/test-failure-03/transcript",
+      "bytes": 2129,
+      "sha256": "31f4508b483cd697fcb00f0b9daa233c5f199e3fbd0ff5a9663fa10397aab3fb"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/test-failure-03/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/verifier-initial.py",
+      "bytes": 3664,
+      "sha256": "c0f980650daf53737deb9a164f1b50acf1e545b257a9403a8c2b9498d65bf7fd"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/video-contact-sheet.png",
+      "bytes": 620670,
+      "sha256": "52e02b6974711cbc7648e4d156ff58a31e6c4f9631bfb3e6b8410634721a24c9"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/video-decode.log",
+      "bytes": 3534,
+      "sha256": "7ce8efb462ab0d5878c1a9a1e24c153a768f319438b7912b1bc9c95906bcb411"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/video-frames/frame-001.png",
+      "bytes": 595153,
+      "sha256": "c261b483524684212195188c175f5b0fe7c34b1be79fc7ad3fab28b4359b1ef5"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/video-frames/frame-002.png",
+      "bytes": 638865,
+      "sha256": "f0d67eae833193b8598a1d56889434325959056bf58e8da4d45f33a920efac07"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/video-frames/frame-003.png",
+      "bytes": 610717,
+      "sha256": "3b660de4923224c81635abdfffb5bdac28b7ce84c4fe9d576eddcc8690d91991"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/video-frames/frame-004.png",
+      "bytes": 609724,
+      "sha256": "0b1e0a42ddb2c7010a4e1ec9c20c9ddf4b8a9666c8d65f574786619a77745e03"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/video-frames/frame-005.png",
+      "bytes": 596165,
+      "sha256": "830754e8969f0ba6befe6258df6b02500e3cb829905bca2be70c7b04683a8d3f"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/video-frames/frame-006.png",
+      "bytes": 621727,
+      "sha256": "ecbb5ce9994236a9aa6c0374f3f66edf89001d91bff8f4de761d46f703f48153"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/video-frames/frame-007.png",
+      "bytes": 612262,
+      "sha256": "6e744aa677f93195d43344582062d79bea65e8ee86afb12a7122e3114908761e"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/video-frames/frame-008.png",
+      "bytes": 623735,
+      "sha256": "6e286ceb9c09ab4a403b4281b4b71c0b4e8c22f13265852b1afafb238cc145a4"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/video-frames/frame-009.png",
+      "bytes": 611087,
+      "sha256": "c28e061a2162a8fb490ad958a1c95c8603fc6077e32a867cc78d9c3a796f5861"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/video-frames/frame-010.png",
+      "bytes": 622137,
+      "sha256": "956d7452116b5ad14ad09088cd513eeda37a87b66118df79480c4cbfaac69ab3"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/video-frames/frame-011.png",
+      "bytes": 605879,
+      "sha256": "6939216b380b49bab6990d9f029e55cdbbda28dee59fc9b335199d86a28589f0"
+    },
+    {
+      "path": "analysis/local-snes-frontend-031/video-tool.json",
+      "bytes": 295,
+      "sha256": "acb17b4a4a665b93de66d206a9fa1321198be056b10e6dd7f3b4c4aaa9344c4f"
+    }
+  ],
+  "prior_status_baseline": "analysis/local-snes-frontend-031/baseline-status",
+  "scope": "H0 basic visual user/video pass;031 logical pin frontend actual13cases x3clockpairs,19218bytes;RAM bounded cycle-equivalence14cases;transport-onlyvirtualfit1139LE111LAB12M9K. NoH1hardware/physicalSTA/fullNESfit claim."
+}

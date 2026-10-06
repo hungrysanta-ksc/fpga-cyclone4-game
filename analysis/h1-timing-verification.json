@@ -1,0 +1,103 @@
+{
+  "investigation": "NES-H1-TIMING-042",
+  "date_kst": "2026-10-06",
+  "new_hardware_image": false,
+  "hardware_root_cause_proven": false,
+  "user041_log_sha256": "c6f839484c5b3fcc8bb12aba2cebdba3c6d539bdbab891ad5da52130488b3fe7",
+  "hardware_telemetry": {
+    "decoded": {
+      "candidate": "NES-H1-EDGE-041",
+      "exit_reason": "F2_STATUS",
+      "last_status": 7,
+      "RUN": true,
+      "LOCKED": true,
+      "aggregate_fault": true,
+      "sequence_exhausted": false,
+      "polls": 21,
+      "elapsed_ms_including_configuration": 450,
+      "base_restored": true,
+      "root_cause_proven": false,
+      "confirmation": {
+        "identity": 165,
+        "protocol": 65,
+        "status": 7
+      },
+      "snapshot_trusted": true,
+      "snapshot_valid": true,
+      "snapshot": {
+        "flags_hex": "87",
+        "bus_error": 0,
+        "bus_meaning": "none",
+        "frontend_mask": 1,
+        "frontend_flags": [
+          "aborted_or_address_or_ROMSEL_changed"
+        ],
+        "producer_error": 0,
+        "producer_meaning": "none",
+        "captured_address_hex": "4081a0",
+        "capture_cycles_84MHz": 1911133,
+        "published_low8": 2,
+        "read_n": true,
+        "write_n": true,
+        "romsel_n": false
+      },
+      "frontend_capture_valid": true,
+      "frontend_capture": {
+        "cause_mask_hex": "20",
+        "causes": [
+          "payload_order_or_not_ready"
+        ],
+        "unknown_cause_bits": 0,
+        "pending": 0,
+        "rd_sync": 0,
+        "rd_previous": true,
+        "local_pending": false,
+        "payload_pending": true,
+        "output_valid": false,
+        "read_n": false,
+        "write_n": true,
+        "romsel_n": false,
+        "data_valid": false,
+        "reg_rvalid": false,
+        "fault": false,
+        "busy": false,
+        "ready": true,
+        "raw_address_hex": "4081a0",
+        "latched_read_address_hex": "40819f",
+        "position": 416,
+        "sampled_low_cycles_before_edge": 1,
+        "previous_sampled_low_cycles": 18,
+        "sampled_high_cycles_before_edge": 0,
+        "previous_sampled_high_cycles": 13,
+        "counter_limit": 255,
+        "clock_nominal_MHz": 84,
+        "semantics": "First frontend error predicate at the scheduling edge; pre-edge sampled counters, not analog timing. Independent of later aggregate snapshot."
+      }
+    },
+    "cause_implied_frontend_mask": 2,
+    "aggregate_first_frontend_mask": 1,
+    "causal_consistency": "different_first_error_bits",
+    "interpretation": "Different first error classes: do not diagnose payload order from the causal byte alone. Ideal RTL schedules the implied sticky bit from the same predicate; physical input timing and capture ordering remain under investigation.",
+    "hardware_root_cause_proven": false
+  },
+  "SDF_applied": true,
+  "SDF_corner": "Slow1200mV85C",
+  "SDF_payload_bytes_before_mismatch": 227,
+  "SDF_mismatch_address": "4080e3",
+  "SDF_timing_errors": 617,
+  "SDF_timing_process_groups": {
+    "control_first_stage": 6,
+    "ROM_address_sampling": 277,
+    "bundle_first_stage": 262,
+    "unsynchronized_strobe_counters": 72
+  },
+  "control_payload_bytes": 512,
+  "control_timing_errors": 0,
+  "same_testbench": true,
+  "same_primitive_connectivity": true,
+  "SDF_notifiers": "enabled; no timing-check suppression",
+  "snapshot_alias_limitation": "Post-fit debug buses contain optimized-away Z aliases even in the control; not hardware SPI telemetry",
+  "physical_board_trace_replayed": false,
+  "FPGA_RBF_unchanged041": true,
+  "next_required_work": "Coherent bus qualification and one registered event source shared by sticky error and first-fault capture; validate CDC/timing model before another physical candidate"
+}

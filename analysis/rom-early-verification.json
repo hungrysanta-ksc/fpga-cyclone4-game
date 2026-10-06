@@ -1,0 +1,91 @@
+{
+  "candidate": "NES-R1-ROM-EARLY-051",
+  "unit_checks": 4168,
+  "protocol_negative_cases": 6,
+  "accepted": [
+    {
+      "delay_cycles": 2,
+      "frames": 8,
+      "exact_pixels": 491520,
+      "exact_bus_bytes": 16064,
+      "exact_live_trace": true,
+      "ROM_requests": 624788
+    },
+    {
+      "delay_cycles": 3,
+      "frames": 8,
+      "exact_pixels": 491520,
+      "exact_bus_bytes": 16064,
+      "exact_live_trace": true,
+      "ROM_requests": 624788
+    },
+    {
+      "delay_cycles": 4,
+      "frames": 8,
+      "exact_pixels": 491520,
+      "exact_bus_bytes": 16064,
+      "exact_live_trace": true,
+      "ROM_requests": 624788
+    }
+  ],
+  "expected_failures": [
+    {
+      "run": "baseline",
+      "case": "banks32",
+      "delay_cycles": 2,
+      "error": 2,
+      "observed_tick": 852270,
+      "decision_tick": 852269
+    },
+    {
+      "run": "baseline",
+      "case": "fine_x",
+      "delay_cycles": 2,
+      "error": 2,
+      "observed_tick": 852270,
+      "decision_tick": 852269
+    },
+    {
+      "run": "slow",
+      "case": "banks32",
+      "delay_cycles": 8,
+      "error": 2,
+      "observed_tick": 852206,
+      "decision_tick": 852205
+    },
+    {
+      "run": "slow",
+      "case": "fine_x",
+      "delay_cycles": 8,
+      "error": 2,
+      "observed_tick": 852206,
+      "decision_tick": 852205
+    }
+  ],
+  "joint_LE": 13420,
+  "joint_LAB": 935,
+  "LAB_remaining": 28,
+  "joint_M9K": 26,
+  "registers": 4895,
+  "frozen_entries": {
+    "050": 223,
+    "049": 212,
+    "048": 290,
+    "047": 491,
+    "046": 107,
+    "045": 121,
+    "044_hardware": 23,
+    "044_build": 386
+  },
+  "protected_GBC_hashes": 152,
+  "hardware_baseline": "044 unchanged",
+  "new_hardware_image": false,
+  "physical_memory_controller": false,
+  "CDC_implemented": false,
+  "timing_signoff": false,
+  "git_diff_check": "PASS",
+  "staged_files": 0,
+  "allowlist": "PASS",
+  "raw_ignored": 531,
+  "manifest_entries": 551
+}

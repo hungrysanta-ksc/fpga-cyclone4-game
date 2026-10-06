@@ -1,0 +1,725 @@
+{
+  "candidate": "NES-R2-FETCH-WORKLOAD-019",
+  "passed": true,
+  "frames": [
+    {
+      "frame": 1,
+      "all_bg_fetches": 16388,
+      "pixel_referenced_fetches": 15360,
+      "unique_all_tiles": 256,
+      "unique_pixel_tiles": 256,
+      "first_fetch_tick": 1428580,
+      "last_fetch_tick": 1757256
+    },
+    {
+      "frame": 2,
+      "all_bg_fetches": 16388,
+      "pixel_referenced_fetches": 15360,
+      "unique_all_tiles": 256,
+      "unique_pixel_tiles": 256,
+      "first_fetch_tick": 1785944,
+      "last_fetch_tick": 2114624
+    },
+    {
+      "frame": 3,
+      "all_bg_fetches": 16388,
+      "pixel_referenced_fetches": 15360,
+      "unique_all_tiles": 256,
+      "unique_pixel_tiles": 256,
+      "first_fetch_tick": 2143312,
+      "last_fetch_tick": 2471988
+    },
+    {
+      "frame": 4,
+      "all_bg_fetches": 16388,
+      "pixel_referenced_fetches": 15360,
+      "unique_all_tiles": 256,
+      "unique_pixel_tiles": 256,
+      "first_fetch_tick": 2500676,
+      "last_fetch_tick": 2829356
+    }
+  ],
+  "scope": "Four original zero-scroll Mapper4 BG-only frames, immutable CHR ROM; no rendered sprites, CHR RAM, game sample or hardware transport.",
+  "capture_start": "Deliberately cold cache model at frame1, despite prior ROM initialization; no claim that game startup was captured.",
+  "observed_union_tiles": 512,
+  "observed_union_bytes": 8192,
+  "whole_chr_rom_bytes": 16384,
+  "causal_policy": "Empty demand LRU keyed by physical 16-byte CHR tile; fill at current observed fetch, read immutable ROM tile; no future access ordering or preloads.",
+  "pixel_only_note": "Removing unused fetches changes LRU history; this is not a guaranteed lower bound for a fixed replacement policy.",
+  "tile_format": "16 NES planar bytes are source payload only; SNES conversion/role/VRAM placement and headers are excluded.",
+  "all_bg_reads": 65552,
+  "pixel_referenced_reads": 61440,
+  "policies": {
+    "all_bg": [
+      {
+        "capacity_tiles": 128,
+        "capacity_bytes": 2048,
+        "initial_state": "empty at capture start; history before capture is unknown",
+        "miss_requests": 3832,
+        "fill_bytes": 61312,
+        "frames": [
+          {
+            "frame": 1,
+            "misses": 958,
+            "hits": 15430,
+            "fill_bytes": 15328,
+            "chr_dma_clocks_at_8_per_byte": 122624
+          },
+          {
+            "frame": 2,
+            "misses": 958,
+            "hits": 15430,
+            "fill_bytes": 15328,
+            "chr_dma_clocks_at_8_per_byte": 122624
+          },
+          {
+            "frame": 3,
+            "misses": 958,
+            "hits": 15430,
+            "fill_bytes": 15328,
+            "chr_dma_clocks_at_8_per_byte": 122624
+          },
+          {
+            "frame": 4,
+            "misses": 958,
+            "hits": 15430,
+            "fill_bytes": 15328,
+            "chr_dma_clocks_at_8_per_byte": 122624
+          }
+        ],
+        "max_line_fill_bytes": 512,
+        "rolling_windows_master_ticks": {
+          "32": {
+            "bytes": 16,
+            "requests": 1,
+            "first_tick": 1428580,
+            "last_tick": 1428580
+          },
+          "1364": {
+            "bytes": 512,
+            "requests": 32,
+            "first_tick": 1428580,
+            "last_tick": 1429892
+          },
+          "10912": {
+            "bytes": 512,
+            "requests": 32,
+            "first_tick": 1428580,
+            "last_tick": 1429892
+          },
+          "357368": {
+            "bytes": 15344,
+            "requests": 959,
+            "first_tick": 1428580,
+            "last_tick": 1785944
+          }
+        }
+      },
+      {
+        "capacity_tiles": 256,
+        "capacity_bytes": 4096,
+        "initial_state": "empty at capture start; history before capture is unknown",
+        "miss_requests": 1024,
+        "fill_bytes": 16384,
+        "frames": [
+          {
+            "frame": 1,
+            "misses": 256,
+            "hits": 16132,
+            "fill_bytes": 4096,
+            "chr_dma_clocks_at_8_per_byte": 32768
+          },
+          {
+            "frame": 2,
+            "misses": 256,
+            "hits": 16132,
+            "fill_bytes": 4096,
+            "chr_dma_clocks_at_8_per_byte": 32768
+          },
+          {
+            "frame": 3,
+            "misses": 256,
+            "hits": 16132,
+            "fill_bytes": 4096,
+            "chr_dma_clocks_at_8_per_byte": 32768
+          },
+          {
+            "frame": 4,
+            "misses": 256,
+            "hits": 16132,
+            "fill_bytes": 4096,
+            "chr_dma_clocks_at_8_per_byte": 32768
+          }
+        ],
+        "max_line_fill_bytes": 512,
+        "rolling_windows_master_ticks": {
+          "32": {
+            "bytes": 16,
+            "requests": 1,
+            "first_tick": 1428580,
+            "last_tick": 1428580
+          },
+          "1364": {
+            "bytes": 512,
+            "requests": 32,
+            "first_tick": 1428580,
+            "last_tick": 1429892
+          },
+          "10912": {
+            "bytes": 512,
+            "requests": 32,
+            "first_tick": 1428580,
+            "last_tick": 1429892
+          },
+          "357368": {
+            "bytes": 4112,
+            "requests": 257,
+            "first_tick": 1428580,
+            "last_tick": 1785944
+          }
+        }
+      },
+      {
+        "capacity_tiles": 512,
+        "capacity_bytes": 8192,
+        "initial_state": "empty at capture start; history before capture is unknown",
+        "miss_requests": 512,
+        "fill_bytes": 8192,
+        "frames": [
+          {
+            "frame": 1,
+            "misses": 256,
+            "hits": 16132,
+            "fill_bytes": 4096,
+            "chr_dma_clocks_at_8_per_byte": 32768
+          },
+          {
+            "frame": 2,
+            "misses": 256,
+            "hits": 16132,
+            "fill_bytes": 4096,
+            "chr_dma_clocks_at_8_per_byte": 32768
+          },
+          {
+            "frame": 3,
+            "misses": 0,
+            "hits": 16388,
+            "fill_bytes": 0,
+            "chr_dma_clocks_at_8_per_byte": 0
+          },
+          {
+            "frame": 4,
+            "misses": 0,
+            "hits": 16388,
+            "fill_bytes": 0,
+            "chr_dma_clocks_at_8_per_byte": 0
+          }
+        ],
+        "max_line_fill_bytes": 512,
+        "rolling_windows_master_ticks": {
+          "32": {
+            "bytes": 16,
+            "requests": 1,
+            "first_tick": 1428580,
+            "last_tick": 1428580
+          },
+          "1364": {
+            "bytes": 512,
+            "requests": 32,
+            "first_tick": 1428580,
+            "last_tick": 1429892
+          },
+          "10912": {
+            "bytes": 512,
+            "requests": 32,
+            "first_tick": 1428580,
+            "last_tick": 1429892
+          },
+          "357368": {
+            "bytes": 4112,
+            "requests": 257,
+            "first_tick": 1428580,
+            "last_tick": 1785944
+          }
+        }
+      },
+      {
+        "capacity_tiles": 1024,
+        "capacity_bytes": 16384,
+        "initial_state": "empty at capture start; history before capture is unknown",
+        "miss_requests": 512,
+        "fill_bytes": 8192,
+        "frames": [
+          {
+            "frame": 1,
+            "misses": 256,
+            "hits": 16132,
+            "fill_bytes": 4096,
+            "chr_dma_clocks_at_8_per_byte": 32768
+          },
+          {
+            "frame": 2,
+            "misses": 256,
+            "hits": 16132,
+            "fill_bytes": 4096,
+            "chr_dma_clocks_at_8_per_byte": 32768
+          },
+          {
+            "frame": 3,
+            "misses": 0,
+            "hits": 16388,
+            "fill_bytes": 0,
+            "chr_dma_clocks_at_8_per_byte": 0
+          },
+          {
+            "frame": 4,
+            "misses": 0,
+            "hits": 16388,
+            "fill_bytes": 0,
+            "chr_dma_clocks_at_8_per_byte": 0
+          }
+        ],
+        "max_line_fill_bytes": 512,
+        "rolling_windows_master_ticks": {
+          "32": {
+            "bytes": 16,
+            "requests": 1,
+            "first_tick": 1428580,
+            "last_tick": 1428580
+          },
+          "1364": {
+            "bytes": 512,
+            "requests": 32,
+            "first_tick": 1428580,
+            "last_tick": 1429892
+          },
+          "10912": {
+            "bytes": 512,
+            "requests": 32,
+            "first_tick": 1428580,
+            "last_tick": 1429892
+          },
+          "357368": {
+            "bytes": 4112,
+            "requests": 257,
+            "first_tick": 1428580,
+            "last_tick": 1785944
+          }
+        }
+      }
+    ],
+    "pixel_only_comparison": [
+      {
+        "capacity_tiles": 128,
+        "capacity_bytes": 2048,
+        "initial_state": "empty at capture start; history before capture is unknown",
+        "miss_requests": 3840,
+        "fill_bytes": 61440,
+        "frames": [
+          {
+            "frame": 1,
+            "misses": 960,
+            "hits": 14400,
+            "fill_bytes": 15360,
+            "chr_dma_clocks_at_8_per_byte": 122880
+          },
+          {
+            "frame": 2,
+            "misses": 960,
+            "hits": 14400,
+            "fill_bytes": 15360,
+            "chr_dma_clocks_at_8_per_byte": 122880
+          },
+          {
+            "frame": 3,
+            "misses": 960,
+            "hits": 14400,
+            "fill_bytes": 15360,
+            "chr_dma_clocks_at_8_per_byte": 122880
+          },
+          {
+            "frame": 4,
+            "misses": 960,
+            "hits": 14400,
+            "fill_bytes": 15360,
+            "chr_dma_clocks_at_8_per_byte": 122880
+          }
+        ],
+        "max_line_fill_bytes": 480,
+        "rolling_windows_master_ticks": {
+          "32": {
+            "bytes": 16,
+            "requests": 1,
+            "first_tick": 1429860,
+            "last_tick": 1429860
+          },
+          "1364": {
+            "bytes": 512,
+            "requests": 32,
+            "first_tick": 1429860,
+            "last_tick": 1430868
+          },
+          "10912": {
+            "bytes": 528,
+            "requests": 33,
+            "first_tick": 1429860,
+            "last_tick": 1440768
+          },
+          "357368": {
+            "bytes": 15376,
+            "requests": 961,
+            "first_tick": 1429860,
+            "last_tick": 1787224
+          }
+        }
+      },
+      {
+        "capacity_tiles": 256,
+        "capacity_bytes": 4096,
+        "initial_state": "empty at capture start; history before capture is unknown",
+        "miss_requests": 1024,
+        "fill_bytes": 16384,
+        "frames": [
+          {
+            "frame": 1,
+            "misses": 256,
+            "hits": 15104,
+            "fill_bytes": 4096,
+            "chr_dma_clocks_at_8_per_byte": 32768
+          },
+          {
+            "frame": 2,
+            "misses": 256,
+            "hits": 15104,
+            "fill_bytes": 4096,
+            "chr_dma_clocks_at_8_per_byte": 32768
+          },
+          {
+            "frame": 3,
+            "misses": 256,
+            "hits": 15104,
+            "fill_bytes": 4096,
+            "chr_dma_clocks_at_8_per_byte": 32768
+          },
+          {
+            "frame": 4,
+            "misses": 256,
+            "hits": 15104,
+            "fill_bytes": 4096,
+            "chr_dma_clocks_at_8_per_byte": 32768
+          }
+        ],
+        "max_line_fill_bytes": 480,
+        "rolling_windows_master_ticks": {
+          "32": {
+            "bytes": 16,
+            "requests": 1,
+            "first_tick": 1429860,
+            "last_tick": 1429860
+          },
+          "1364": {
+            "bytes": 512,
+            "requests": 32,
+            "first_tick": 1429860,
+            "last_tick": 1430868
+          },
+          "10912": {
+            "bytes": 528,
+            "requests": 33,
+            "first_tick": 1429860,
+            "last_tick": 1440768
+          },
+          "357368": {
+            "bytes": 4112,
+            "requests": 257,
+            "first_tick": 1429860,
+            "last_tick": 1787224
+          }
+        }
+      },
+      {
+        "capacity_tiles": 512,
+        "capacity_bytes": 8192,
+        "initial_state": "empty at capture start; history before capture is unknown",
+        "miss_requests": 512,
+        "fill_bytes": 8192,
+        "frames": [
+          {
+            "frame": 1,
+            "misses": 256,
+            "hits": 15104,
+            "fill_bytes": 4096,
+            "chr_dma_clocks_at_8_per_byte": 32768
+          },
+          {
+            "frame": 2,
+            "misses": 256,
+            "hits": 15104,
+            "fill_bytes": 4096,
+            "chr_dma_clocks_at_8_per_byte": 32768
+          },
+          {
+            "frame": 3,
+            "misses": 0,
+            "hits": 15360,
+            "fill_bytes": 0,
+            "chr_dma_clocks_at_8_per_byte": 0
+          },
+          {
+            "frame": 4,
+            "misses": 0,
+            "hits": 15360,
+            "fill_bytes": 0,
+            "chr_dma_clocks_at_8_per_byte": 0
+          }
+        ],
+        "max_line_fill_bytes": 480,
+        "rolling_windows_master_ticks": {
+          "32": {
+            "bytes": 16,
+            "requests": 1,
+            "first_tick": 1429860,
+            "last_tick": 1429860
+          },
+          "1364": {
+            "bytes": 512,
+            "requests": 32,
+            "first_tick": 1429860,
+            "last_tick": 1430868
+          },
+          "10912": {
+            "bytes": 528,
+            "requests": 33,
+            "first_tick": 1429860,
+            "last_tick": 1440768
+          },
+          "357368": {
+            "bytes": 4112,
+            "requests": 257,
+            "first_tick": 1429860,
+            "last_tick": 1787224
+          }
+        }
+      },
+      {
+        "capacity_tiles": 1024,
+        "capacity_bytes": 16384,
+        "initial_state": "empty at capture start; history before capture is unknown",
+        "miss_requests": 512,
+        "fill_bytes": 8192,
+        "frames": [
+          {
+            "frame": 1,
+            "misses": 256,
+            "hits": 15104,
+            "fill_bytes": 4096,
+            "chr_dma_clocks_at_8_per_byte": 32768
+          },
+          {
+            "frame": 2,
+            "misses": 256,
+            "hits": 15104,
+            "fill_bytes": 4096,
+            "chr_dma_clocks_at_8_per_byte": 32768
+          },
+          {
+            "frame": 3,
+            "misses": 0,
+            "hits": 15360,
+            "fill_bytes": 0,
+            "chr_dma_clocks_at_8_per_byte": 0
+          },
+          {
+            "frame": 4,
+            "misses": 0,
+            "hits": 15360,
+            "fill_bytes": 0,
+            "chr_dma_clocks_at_8_per_byte": 0
+          }
+        ],
+        "max_line_fill_bytes": 480,
+        "rolling_windows_master_ticks": {
+          "32": {
+            "bytes": 16,
+            "requests": 1,
+            "first_tick": 1429860,
+            "last_tick": 1429860
+          },
+          "1364": {
+            "bytes": 512,
+            "requests": 32,
+            "first_tick": 1429860,
+            "last_tick": 1430868
+          },
+          "10912": {
+            "bytes": 528,
+            "requests": 33,
+            "first_tick": 1429860,
+            "last_tick": 1440768
+          },
+          "357368": {
+            "bytes": 4112,
+            "requests": 257,
+            "first_tick": 1429860,
+            "last_tick": 1787224
+          }
+        }
+      }
+    ]
+  },
+  "bank_declarations": [
+    {
+      "frame": 1,
+      "declared_bank_writes": [
+        {
+          "register": 0,
+          "value": 0,
+          "tick": 1402019,
+          "line": 241,
+          "dot": 186
+        },
+        {
+          "register": 1,
+          "value": 2,
+          "tick": 1402223,
+          "line": 241,
+          "dot": 237
+        }
+      ],
+      "all_four_kib_declared_tick": 1402223,
+      "ticks_from_both_bank_writes_to_first_fetch": 26357
+    },
+    {
+      "frame": 2,
+      "declared_bank_writes": [
+        {
+          "register": 0,
+          "value": 8,
+          "tick": 1759391,
+          "line": 241,
+          "dot": 188
+        },
+        {
+          "register": 1,
+          "value": 10,
+          "tick": 1759595,
+          "line": 241,
+          "dot": 239
+        }
+      ],
+      "all_four_kib_declared_tick": 1759595,
+      "ticks_from_both_bank_writes_to_first_fetch": 26349
+    },
+    {
+      "frame": 3,
+      "declared_bank_writes": [
+        {
+          "register": 0,
+          "value": 0,
+          "tick": 2116691,
+          "line": 241,
+          "dot": 171
+        },
+        {
+          "register": 1,
+          "value": 2,
+          "tick": 2116895,
+          "line": 241,
+          "dot": 222
+        }
+      ],
+      "all_four_kib_declared_tick": 2116895,
+      "ticks_from_both_bank_writes_to_first_fetch": 26417
+    },
+    {
+      "frame": 4,
+      "declared_bank_writes": [
+        {
+          "register": 0,
+          "value": 8,
+          "tick": 2474063,
+          "line": 241,
+          "dot": 173
+        },
+        {
+          "register": 1,
+          "value": 10,
+          "tick": 2474267,
+          "line": 241,
+          "dot": 224
+        }
+      ],
+      "all_four_kib_declared_tick": 2474267,
+      "ticks_from_both_bank_writes_to_first_fetch": 26409
+    }
+  ],
+  "ideal_zero_latency_replay": [
+    {
+      "capacity_tiles": 128,
+      "pixels": 245760,
+      "indexed_sha256": {
+        "1": "952053e6d5fb775e5dc8513ff4285e4a63169b32a429ecee46266ae1fd77c2f6",
+        "2": "c21429e7b58166f1ebfacf1de4fe5f963e02ac04cd4577ca6f4ca846978fe88c",
+        "3": "952053e6d5fb775e5dc8513ff4285e4a63169b32a429ecee46266ae1fd77c2f6",
+        "4": "c21429e7b58166f1ebfacf1de4fe5f963e02ac04cd4577ca6f4ca846978fe88c"
+      }
+    },
+    {
+      "capacity_tiles": 256,
+      "pixels": 245760,
+      "indexed_sha256": {
+        "1": "952053e6d5fb775e5dc8513ff4285e4a63169b32a429ecee46266ae1fd77c2f6",
+        "2": "c21429e7b58166f1ebfacf1de4fe5f963e02ac04cd4577ca6f4ca846978fe88c",
+        "3": "952053e6d5fb775e5dc8513ff4285e4a63169b32a429ecee46266ae1fd77c2f6",
+        "4": "c21429e7b58166f1ebfacf1de4fe5f963e02ac04cd4577ca6f4ca846978fe88c"
+      }
+    },
+    {
+      "capacity_tiles": 512,
+      "pixels": 245760,
+      "indexed_sha256": {
+        "1": "952053e6d5fb775e5dc8513ff4285e4a63169b32a429ecee46266ae1fd77c2f6",
+        "2": "c21429e7b58166f1ebfacf1de4fe5f963e02ac04cd4577ca6f4ca846978fe88c",
+        "3": "952053e6d5fb775e5dc8513ff4285e4a63169b32a429ecee46266ae1fd77c2f6",
+        "4": "c21429e7b58166f1ebfacf1de4fe5f963e02ac04cd4577ca6f4ca846978fe88c"
+      }
+    },
+    {
+      "capacity_tiles": 1024,
+      "pixels": 245760,
+      "indexed_sha256": {
+        "1": "952053e6d5fb775e5dc8513ff4285e4a63169b32a429ecee46266ae1fd77c2f6",
+        "2": "c21429e7b58166f1ebfacf1de4fe5f963e02ac04cd4577ca6f4ca846978fe88c",
+        "3": "952053e6d5fb775e5dc8513ff4285e4a63169b32a429ecee46266ae1fd77c2f6",
+        "4": "c21429e7b58166f1ebfacf1de4fe5f963e02ac04cd4577ca6f4ca846978fe88c"
+      }
+    }
+  ],
+  "timing": {
+    "deadline_proven": false,
+    "queue_size_proven": false,
+    "reason": "Requests occur at NES fetch demand. No producer/consumer phase, service latency, packet format or SNES delivery schedule modeled.",
+    "comparison_only": {
+      "prior_239_line_raw_blank_clocks": 30008,
+      "assumed_snes_dma_clocks_per_byte": 8,
+      "cold_4kib_chr_clocks": 32768,
+      "excess_over_raw_blank_clocks": 2760,
+      "crop_policy_approved": false
+    }
+  },
+  "input_audit": {
+    "passed": true,
+    "rom_sha256": "8b380949760320c993fd35a2a48af29a6afe2516f353d048f65f49fa1dd38ba9",
+    "frames": 4,
+    "pixels": 245760
+  },
+  "inputs": {
+    "analysis\\local-rdy-014\\integrated-01\\fetch.tsv": "7d3b7b547207e4c6561523802142df6d44f86615f94f11c35fd4ea48fe9a3d10",
+    "analysis\\local-rdy-014\\integrated-01\\frames.tsv": "d7dd7e0cbd58b620c75e372a4378a099e2ed967359c7efd97e80f97adf76c661",
+    "analysis\\local-rdy-014\\integrated-01\\control.tsv": "ad7b41453db141fb399780f6ffe0a48e069acf2275793e7ab7416972eedcacd0",
+    "analysis\\local-rdy-014\\integrated-01\\chr.hex": "97f52da4e8cc2f777cef51c270374918f154ad2866ccec33ab89fff51406282e",
+    "analysis\\local-mmc3-irq-phase-010\\mesen-01\\trace.tsv": "c3824d3b4965c961e29a2ea0c839f145b0d4e15b044ba47b08ae0d6b69597294",
+    "analysis\\local-mmc3-integrated-009\\rom-02\\mmc3.nes": "8b380949760320c993fd35a2a48af29a6afe2516f353d048f65f49fa1dd38ba9"
+  },
+  "tool_sha256": "db63b0a4199ced3948d3d667fb2756920c094caabfe78274655e019484ceab55"
+}

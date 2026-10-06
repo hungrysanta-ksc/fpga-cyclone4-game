@@ -1,0 +1,108 @@
+{
+  "candidate": "NES-P1-STREAM-002",
+  "audit_pass": true,
+  "cases": {
+    "off": {
+      "expected_pass": true,
+      "observed_pass": true,
+      "frames": 128,
+      "different_pixels": 0,
+      "max_payload_bytes": 1792,
+      "max_duration_master_clocks": 17586,
+      "min_deadline_margin_master_clocks": 12328,
+      "outcome_counts": {
+        "commit": 128,
+        "reset_abort": 0,
+        "halt": 0
+      },
+      "rom_sha256": "85ca4dcd3ff0efd5abff4cc6448790dc62f50cdaf8ed709f212154c305f9a56e",
+      "result_sha256": "35ef0597ff92269554e97705323504800b79769a10505dabeee5c5a8631058fe"
+    },
+    "on": {
+      "expected_pass": true,
+      "observed_pass": true,
+      "frames": 128,
+      "different_pixels": 0,
+      "max_payload_bytes": 1792,
+      "max_duration_master_clocks": 18394,
+      "min_deadline_margin_master_clocks": 11508,
+      "outcome_counts": {
+        "commit": 128,
+        "reset_abort": 0,
+        "halt": 0
+      },
+      "rom_sha256": "e2c1299c2cafea24ce0e502ff71abf62a6563cfa17233752d479d76fea6afef5",
+      "result_sha256": "de1d4127cd8f894454e4c194e719e42c872883deb6197acfa383c70e105b5647"
+    },
+    "reset": {
+      "expected_pass": true,
+      "observed_pass": true,
+      "frames": 64,
+      "different_pixels": 0,
+      "max_payload_bytes": 1792,
+      "max_duration_master_clocks": 17656,
+      "min_deadline_margin_master_clocks": 12240,
+      "outcome_counts": {
+        "commit": 63,
+        "reset_abort": 1,
+        "halt": 0
+      },
+      "rom_sha256": "87a12900ec749c3848f580e5d6f015b17b6aa9b0781dd53d8418c5b7e18fd0b2",
+      "result_sha256": "560566ddf858a5640a780e5cb31102cafde02ca1ae8974b34602e8555efbcafa"
+    },
+    "length": {
+      "expected_pass": false,
+      "observed_pass": false,
+      "frames": 32,
+      "different_pixels": 0,
+      "max_payload_bytes": 1792,
+      "max_duration_master_clocks": 17586,
+      "min_deadline_margin_master_clocks": 12328,
+      "outcome_counts": {
+        "commit": 7,
+        "reset_abort": 0,
+        "halt": 1
+      },
+      "rom_sha256": "05826e09dfed2965ae5b05c7aa01d3c7795f668ee1438f9662dd4e7136562693",
+      "result_sha256": "c22157d8373b997b3ca86993b21bac574f89367310ee11ee1268f85da377bf39"
+    },
+    "overrun": {
+      "expected_pass": false,
+      "observed_pass": false,
+      "frames": 32,
+      "different_pixels": 52735,
+      "max_payload_bytes": 8512,
+      "max_duration_master_clocks": 71886,
+      "min_deadline_margin_master_clocks": -41998,
+      "outcome_counts": {
+        "commit": 7,
+        "reset_abort": 0,
+        "halt": 1
+      },
+      "rom_sha256": "73561a309026051a480dfc81ac1ccde8b787236977e8ca200b2ebc1c7cb618e6",
+      "result_sha256": "9865244ddccdbf828120fdcb7c4e317bd7a54d2193c776e8d696046c69a6a02a"
+    },
+    "selection": {
+      "expected_pass": false,
+      "observed_pass": false,
+      "frames": 32,
+      "different_pixels": 1760,
+      "max_payload_bytes": 1792,
+      "max_duration_master_clocks": 17586,
+      "min_deadline_margin_master_clocks": 12328,
+      "outcome_counts": {
+        "commit": 32,
+        "reset_abort": 0,
+        "halt": 0
+      },
+      "rom_sha256": "c2de75f056bdfa49db19c5a114bf2022b1a6e0939a07771bc35ce8947a983da6",
+      "result_sha256": "98be0c55bd38542c3f4378138b1bdbe689796db93041090d43ba25d0df87db1b"
+    }
+  },
+  "notes": [
+    "239 displayed rows only; source row 239 remains absent",
+    "reset is a cooperative producer cancel before palette/OAM commit, not a physical reset",
+    "ROM source timing is not the FPGA/SRAM cart interface"
+  ],
+  "verifier_sha256": "7c4deb550d4b6008e1daad71f4b22c5c7b9807577e4f7bf88e6cd3703f40945a"
+}

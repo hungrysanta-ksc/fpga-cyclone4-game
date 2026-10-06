@@ -1,0 +1,237 @@
+{
+  "candidate": "NES-P2-RTL-006",
+  "date_kst": "2026-10-05",
+  "passed": true,
+  "rtl": {
+    "candidate": "NES-P2-RTL-006",
+    "passed": true,
+    "assertions_passed": true,
+    "metrics": {
+      "reads": 879595,
+      "heartbeat": 49375,
+      "joy": 17895,
+      "audio_changes": 53,
+      "pixels": 61440,
+      "badcolors": 0,
+      "cpu_ticks": 214634,
+      "cpu_period_errors": 0,
+      "unknown_bus": 0,
+      "pixel_errors": 0,
+      "audio_unknown": 0,
+      "audio_period_errors": 0
+    },
+    "pixel_comparison": {
+      "passed": true,
+      "pixels": 61440,
+      "different_pixels": 0,
+      "first_xy": null,
+      "expected_index_sha256": "0c918765c7ecb2bbf64c23c386b00cf8c97e0293ac4c6840ab9c550bd958bce9",
+      "actual_index_sha256": "0c918765c7ecb2bbf64c23c386b00cf8c97e0293ac4c6840ab9c550bd958bce9"
+    },
+    "comparator_negative_tests": {
+      "one_pixel_rejected": true,
+      "truncation_rejected": true
+    },
+    "expected_pulse_edge_period_master_ticks": 24384,
+    "expected_cpu_period_master_ticks": 12,
+    "observation_time_ns": 120020000,
+    "clock_half_period_ns": 23.28,
+    "output_contract": "Registered PPU color is sampled at cycle=x+2 (cycles 2..257); all 256x240 source pixels retained.",
+    "rom_sha256": "98ecb54846f020d886d32740292999efaad3d3ed4fa6792e7043403fba3854f9",
+    "source_sha256": "cda0fe9b821b2cbb6d5cf1b3f04c8c72fe1e4440299b084f96bed5f4b774ce61",
+    "scope": "Original NROM checkerboard, ideal synchronous memory, basic joypad and pulse output. Not MMC3, full APU/CPU conformance, board IO, full-fit/STA or hardware verification."
+  },
+  "build": {
+    "candidate": "NES-P2-RTL-006",
+    "upstream_commit": "49a0a662e244469ca77b2155746a066df704ffae",
+    "sources": [
+      {
+        "path": "rtl/bus_savestates.vhd",
+        "upstream_sha256": "86b3df3bb42b2a3cd91df10b2cda97819f01004953fd8ca5569346704bc11a14",
+        "compiled_sha256": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9",
+        "changed": false
+      },
+      {
+        "path": "rtl/t65/T65_Pack.vhd",
+        "upstream_sha256": "986f55ef2f35bfa54588bc936ee6a7499178b57d43bff8e66273d029e8009bf0",
+        "compiled_sha256": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb",
+        "changed": false
+      },
+      {
+        "path": "rtl/t65/T65_ALU.vhd",
+        "upstream_sha256": "78981177465d777e54bc0fed6e71542503ef7ee1cf6ff2965bd980417000acf7",
+        "compiled_sha256": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b",
+        "changed": false
+      },
+      {
+        "path": "rtl/t65/T65_MCode.vhd",
+        "upstream_sha256": "315a59bc556fd9a69eae109ff84059b8d8db0ee29c74ebca55e8aa553345d4d1",
+        "compiled_sha256": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5",
+        "changed": false
+      },
+      {
+        "path": "rtl/t65/T65.vhd",
+        "upstream_sha256": "52395e881ade8e7d99717d5082cdb5131a0711aaa2dea1fcf042014f6758d01b",
+        "compiled_sha256": "db702503c364af3124bb97488d639ecaab72c467a7f41a5ea0c0b2b44b97f9a8",
+        "changed": false
+      },
+      {
+        "path": "rtl/statemanager.vhd",
+        "upstream_sha256": "b0e418d7f8fcec73e33aff58e2c5486bc2c33823b6fdda0b6fb082fce42eefd1",
+        "compiled_sha256": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6",
+        "changed": false
+      },
+      {
+        "path": "rtl/savestates.vhd",
+        "upstream_sha256": "47d827e1111101a19888b7cfa2502270066aa0e82c3081e3bbd85f06461ec033",
+        "compiled_sha256": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0",
+        "changed": false
+      },
+      {
+        "path": "rtl/regs_savestates.sv",
+        "upstream_sha256": "6e243af0b87a604fb30d43502eed65ef5924a105d7ce254f424317debf787e9a",
+        "compiled_sha256": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95",
+        "changed": false
+      },
+      {
+        "path": "rtl/cheatcodes.sv",
+        "upstream_sha256": "44c7012986807dfa9c6f69d668e8c3ade13ab81a5e9cc054757cccecf0ae356e",
+        "compiled_sha256": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918",
+        "changed": true
+      },
+      {
+        "path": "rtl/ppu.sv",
+        "upstream_sha256": "623c18149345910f04515d583ede22d2030047a723e0e629ceb45bbb6bec707a",
+        "compiled_sha256": "d975693e41e2a197932effe2ad435628a8030eb6ff24ac22a35e0cd86a47f54c",
+        "changed": true
+      },
+      {
+        "path": "rtl/apu.sv",
+        "upstream_sha256": "a08a8f0d7a13cfcce2b7045d230342330cb3dc35bc485d37b4a40c632ac69838",
+        "compiled_sha256": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586",
+        "changed": true
+      },
+      {
+        "path": "rtl/nes.v",
+        "upstream_sha256": "7856ea1bf109af8d8dc4abbecc6224216971b68a53630dc816830f68235ef906",
+        "compiled_sha256": "580676038dec0a194c7668ecc442aab586db6e4ca83be9f983ebc1036fbabb92",
+        "changed": true
+      },
+      {
+        "path": "rtl/composite_board.sv",
+        "upstream_sha256": "cc4817f033657680bb8f75cfe57676393131eec54e7ffd91b220bef7b7330ef0",
+        "compiled_sha256": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895",
+        "changed": true
+      },
+      {
+        "path": "rtl/compat.v",
+        "upstream_sha256": "257927cd863fa409903df0340a3e027f4672c2e5942c19f43ebea3b178853ffb",
+        "compiled_sha256": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731",
+        "changed": true
+      },
+      {
+        "path": "sys/iir_filter.v",
+        "upstream_sha256": "570a8095c15af84a60015b5eab105cee6e2d7edde77e20f0ce40c075ab2db8b7",
+        "compiled_sha256": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8",
+        "changed": true
+      },
+      {
+        "path": "COPYING",
+        "upstream_sha256": "b3d1eae7f524fc9ddd48562a4652efd2bcd848e38b03f05e388bcce943e73df2",
+        "compiled_sha256": "c53a65c2fd561c87eaabf1072ef5dcab8653042bc15308465f52413585eb6271",
+        "changed": false
+      },
+      {
+        "path": "rtl/cart.sv",
+        "upstream_sha256": "ad2d93939f7cd81ba5c0832e0ce22ed8c4229005931caa3a585e383be2dac699",
+        "compiled_sha256": "7c269bc5de604ad2b902c7a0eb785834ae5f8bdd351f5ced17f97fde1196e5a2",
+        "changed": false
+      }
+    ],
+    "source_sha256": "28524fbf36ee98aae0675c070bf42883afb4489ed1ae499c0f3e4ef5c6a56d1e",
+    "license_route": "local FLOAT",
+    "scope": "NROM local CPU/PPU/APU with ideal synchronous external memory; no board or licensed adoption claim",
+    "phases": {
+      "vlib": 0,
+      "vcom-00": 0,
+      "vcom-01": 0,
+      "vcom-02": 0,
+      "vcom-03": 0,
+      "vcom-04": 0,
+      "vcom-05": 0,
+      "vcom-06": 0,
+      "vlog": 0,
+      "vlog-tb": 0,
+      "simulation": 0
+    },
+    "testbench_source_sha256": "41f18931d5605bc119d91fc53ddc094fd20e5c23f5d8b2a157e3f3fe561bb7c9",
+    "generated_inputs": {
+      "nes_probe.sv": "71cae87ffd507083e86f7003c04821192f032e16fbcb0a18843330680e9f1228",
+      "cart_nrom.sv": "977964acb66ad4de1526d1e853ee9b39f5167039310d507db9cdb7d11dbbe77f",
+      "nes_tb.sv": "0b4711758819c55dbfd2730ec5288cadc62fb7246c14247fca40334cb675aff5",
+      "prg.hex": "4277715e6265c58d9b5ebf5a9d4d0727cf1b0f1ef18c5e7ad5f5808b182d3750",
+      "chr.hex": "f8802cb3a95f03dae660dd57659afdb0135acd4e6b718a3cf990b0600afff840",
+      "manifest.json": "96e87a955884618065114a04a9d9d1e4a6cadbcbc512f265dff2f916c2da2f98"
+    },
+    "adaptations": [
+      "declaration normalization",
+      "exact T65 port widths and inactive input levels",
+      "reset timing counters",
+      "connect PPU cold_reset and clear sprite-zero-hit only on cold boot",
+      "disable unused APU ultrasonic extension",
+      "original NTSC timing, no de-jitter padding",
+      "disable/reset unused cheat path"
+    ],
+    "diagnostic_passed": true
+  },
+  "simulation_log_summary": "Errors: 0, Warnings: 42",
+  "warnings_remaining": true,
+  "warning_scope": "Optional/unconnected ports, width/range warnings, time-zero VHDL numeric metavalue warnings; no suppression used. Not warning-free signoff.",
+  "license": {
+    "route": "existing free Starter FLOAT via RunOnly wrapper",
+    "guard_rejects_inherited_file_before_build": true,
+    "permanent_settings_changed": false,
+    "server_processes_remaining": 0,
+    "listening_ports_remaining": 0,
+    "global_rule_sha256": "7d9c93f0fb9b201d992c3c7c94eb786e652fc2408926446f4955649ffd69d39a"
+  },
+  "prior_sources": "P1/STREAM/CACHE/RESIDENT 47 entries unchanged; FETCH-005 modified driver/testbench preserved under local-rtl-006/baseline, other source entries unchanged.",
+  "gbc_verify": "PASS: 152 source hashes, Quartus inputs, 2048 reachable boot bytes",
+  "failures_preserved": [
+    {
+      "run": "01",
+      "failure": "T65 Mode/BCD unsized constant widths"
+    },
+    {
+      "run": "02",
+      "failure": "T65 24-bit A output connected to 16 bits"
+    },
+    {
+      "run": "03",
+      "failure": "40 audio changes vs old ungrounded >=100 gate; weak two-color pixel check passed"
+    },
+    {
+      "run": "04",
+      "failure": "Uninitialized cpu_tick_count caused 16 instead of 12 master clocks per CPU step; 1207 errors in early window"
+    },
+    {
+      "run": "05",
+      "failure": "CPU cadence fixed; uninitialized sprite-zero-hit in PPUSTATUS caused 230 unknown bus observations"
+    },
+    {
+      "run": "06",
+      "outcome": "basic runtime PASS after cold reset repair; later run adds exact full-frame and pulse period assertions"
+    },
+    {
+      "run": "07",
+      "outcome": "full original NROM diagnostic PASS"
+    }
+  ],
+  "limitations": [
+    "local adapted HDL, upstream remains unchanged and license adoption holds remain",
+    "ideal synchronous memory, no real memory arbitration",
+    "one original NROM cold boot; no warm reset/conformance suite",
+    "indexed checkerboard frame only; not complete NES video behavior",
+    "MMC3/A12/IRQ, actual NES-to-SNES integration, full fit/STA, SMB3 and hardware remain unverified"
+  ]
+}

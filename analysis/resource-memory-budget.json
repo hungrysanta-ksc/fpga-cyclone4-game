@@ -1,0 +1,94 @@
+{
+  "candidate": "NES-R1-RESOURCE-018",
+  "clock": {
+    "nes_master_period_ns": 46.560846,
+    "nominal_cpu_enable_master_cycles": 12,
+    "nominal_ppu_enable_master_cycles": 4,
+    "board_clock_and_drift_verified": false
+  },
+  "measured_memories": [
+    {
+      "name": "CPU RAM",
+      "bytes": 2048,
+      "address_start": "0x380000",
+      "address_end": "0x3807ff",
+      "m9k": 2
+    },
+    {
+      "name": "CIRAM",
+      "bytes": 2048,
+      "address_start": "0x3a0000",
+      "address_end": "0x3a07ff",
+      "m9k": 2
+    },
+    {
+      "name": "PRG RAM",
+      "bytes": 8192,
+      "address_start": "0x3c0000",
+      "address_end": "0x3c1fff",
+      "m9k": 8
+    }
+  ],
+  "measured_local_memory_bytes": 12288,
+  "measured_payload_bits": 98304,
+  "measured_implementation_bits": 110592,
+  "measured_m9k": 12,
+  "measured_unused_m9k": 44,
+  "memory_semantics_scope": "One synchronous address, read-old-data plus optional write each master edge. No reset clear/initialization/loader/second-master port. Resource-only implementation: new RAM wrapper not functionally simulated, no physical IO or ready/valid contract. One-cycle structural read latency is not board service guarantee.",
+  "unmeasured_blocks": [
+    {
+      "name": "PRG/CHR ROM and external PSRAM/SRAM controller",
+      "storage": "external; no ROM bytes in M9K",
+      "logic_cells": null,
+      "worst_service_ns": null,
+      "needed": "Pin timing, turnaround, arbitration, exact request-to-consumption window"
+    },
+    {
+      "name": "Fetch/event encoder and compact packet metadata",
+      "logic_cells": null,
+      "bytes": null,
+      "needed": "R2 causal CHR/event workload and peak packet size"
+    },
+    {
+      "name": "Producer/consumer FIFO and immutable packet slots",
+      "logic_cells": null,
+      "bytes": null,
+      "needed": "Peak backlog, frame age, drift, reset ownership and CDC"
+    },
+    {
+      "name": "SNES cartridge/frontend and memory arbitration",
+      "logic_cells": null,
+      "needed": "Actual DMA/address changes, competing masters and IO constraints"
+    },
+    {
+      "name": "Audio output/input/menu/loader/CDC glue",
+      "logic_cells": null,
+      "needed": "Lifecycle and actual clock-domain implementation"
+    }
+  ],
+  "capacity_scenarios_not_adopted": [
+    {
+      "name": "Base12KiB only",
+      "additional_payload_bytes": 0,
+      "additional_m9k_assuming_1024x8": 0,
+      "total_m9k": 12,
+      "remaining_m9k": 44
+    },
+    {
+      "name": "Base plus two4KiB packet slots",
+      "additional_payload_bytes": 8192,
+      "additional_m9k_assuming_1024x8": 8,
+      "total_m9k": 20,
+      "remaining_m9k": 36
+    },
+    {
+      "name": "Base plus two8KiB packet slots and16KiB source cache",
+      "additional_payload_bytes": 32768,
+      "additional_m9k_assuming_1024x8": 32,
+      "total_m9k": 44,
+      "remaining_m9k": 12
+    }
+  ],
+  "capacity_scenario_limit": "Arithmetic only; ports, widths, duplication and metadata can change block use. SNES VRAM cache from004 is not automatically FPGA M9K. No packet/cache size adopted.",
+  "integration_verdict": "Minimum fits; complete system feasibility remains open. 12281LE and881/963LABs imply packing/routing risk. R2 workload determines remaining hardware before R1 can close."
+}

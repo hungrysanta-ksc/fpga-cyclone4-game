@@ -1,0 +1,136 @@
+{
+  "candidate": "NES-P2-RTL-FETCH-007",
+  "passed": true,
+  "errors": {},
+  "metrics": {
+    "frames": 4,
+    "pixels": 245760,
+    "pixel_errors": 0,
+    "fetches": 65552,
+    "fetch_errors": 0,
+    "table_changes": 3,
+    "cpu_ticks": 250430,
+    "cpu_period_errors": 0,
+    "unknown_bus": 0
+  },
+  "frames": [
+    {
+      "frame": 1,
+      "table": 0,
+      "rom_counter": 2,
+      "start_master_tick": 1428556,
+      "pixels": 61440,
+      "different_pixels": 0,
+      "rgb_sha256": "99af6acc30681dd5ccd00aab57babf1e6c4e6fad35e7d13d247b1e99498c913a",
+      "indexed_sha256": "0836fb41ceefa39fa93317d072c777d402543e024220f5453cb27cce963ffe05",
+      "mesen_frame": 13,
+      "bg_latches": 16388,
+      "errors": {},
+      "pixel_referenced_reads": 15360,
+      "unique_tiles": 256,
+      "preceding_control": [
+        1401452,
+        241,
+        44,
+        0
+      ]
+    },
+    {
+      "frame": 2,
+      "table": 4096,
+      "rom_counter": 3,
+      "start_master_tick": 1785920,
+      "pixels": 61440,
+      "different_pixels": 0,
+      "rgb_sha256": "1fdf127ff07d2b55fef8e9187884f178a7dfa75951951912cd841236614a2c90",
+      "indexed_sha256": "9d945a5e8035063d1fb1a4e8ab3c990805af005bb70bcb34ebc50e366aa0362c",
+      "mesen_frame": 12,
+      "bg_latches": 16388,
+      "errors": {},
+      "pixel_referenced_reads": 15360,
+      "unique_tiles": 256,
+      "preceding_control": [
+        1758884,
+        241,
+        61,
+        16
+      ]
+    },
+    {
+      "frame": 3,
+      "table": 0,
+      "rom_counter": 4,
+      "start_master_tick": 2143288,
+      "pixels": 61440,
+      "different_pixels": 0,
+      "rgb_sha256": "99af6acc30681dd5ccd00aab57babf1e6c4e6fad35e7d13d247b1e99498c913a",
+      "indexed_sha256": "0836fb41ceefa39fa93317d072c777d402543e024220f5453cb27cce963ffe05",
+      "mesen_frame": 13,
+      "bg_latches": 16388,
+      "errors": {},
+      "pixel_referenced_reads": 15360,
+      "unique_tiles": 256,
+      "preceding_control": [
+        2116232,
+        241,
+        56,
+        0
+      ]
+    },
+    {
+      "frame": 4,
+      "table": 4096,
+      "rom_counter": 5,
+      "start_master_tick": 2500652,
+      "pixels": 61440,
+      "different_pixels": 0,
+      "rgb_sha256": "1fdf127ff07d2b55fef8e9187884f178a7dfa75951951912cd841236614a2c90",
+      "indexed_sha256": "9d945a5e8035063d1fb1a4e8ab3c990805af005bb70bcb34ebc50e366aa0362c",
+      "mesen_frame": 12,
+      "bg_latches": 16388,
+      "errors": {},
+      "pixel_referenced_reads": 15360,
+      "unique_tiles": 256,
+      "preceding_control": [
+        2473580,
+        241,
+        52,
+        16
+      ]
+    }
+  ],
+  "negative_tests": {
+    "pixel_corruption_rejected": true,
+    "truncated_frame_rejected": true,
+    "wrong_table_rejected": true,
+    "address_corruption_rejected": true,
+    "missing_latch_rejected": true
+  },
+  "rom_sha256": "72f538f47f2292eb893602dd92d7a31c6749e1a215b95b2052a8b7b4c273c5d5",
+  "driver_candidate": "NES-P2-RTL-006",
+  "driver_sha256": "28524fbf36ee98aae0675c070bf42883afb4489ed1ae499c0f3e4ef5c6a56d1e",
+  "verifier_sha256": "629cfd7c2a66c22097038a09f3b3bf5879f1e0c71268be1daab6a5fd8d5d275e",
+  "reference_result_sha256": "98acdef7c103e08964d514de67c1e11a4d9b6ac967d90613e230698a1288dd2c",
+  "reference_trace_sha256": "1fd3a0c19c2ae6182301bf213a7aac76648881ef0f86617d140dd24f8f3a46bf",
+  "observation_time_ns": 140020000,
+  "clock_half_period_ns": 23.28,
+  "contract": "PPU BgPainter pre-NBA latches at RTL cycles 6/8 mapped to Mesen read slots 5/7; compare pixel-referenced addresses/values, not absolute phase or unused fetch content. Registered colors at x+2 preserve 256x240. Existing RTL-006 driver reused unchanged.",
+  "scope": "Original NROM alternating PPUCTRL pattern tables, four full frames, ideal one-master-tick memory. All CHR resident initially. No MMC3, A12/IRQ, real cache miss, NES-to-SNES integration, full-fit/STA, SMB3 or hardware claim.",
+  "prior_checks": {
+    "rtl_006_sources_unchanged": 9,
+    "rtl_006_evidence_unchanged": 278,
+    "p1_stream_cache_resident_sources_unchanged": 47,
+    "fetch_005_sources_or_archived_baselines_unchanged": true,
+    "original_probe_drafts_unchanged": true,
+    "gbc": "PASS: 152 source hashes, Quartus inputs, 2048 reachable boot bytes",
+    "float_processes_after_run": 0,
+    "float_listeners_after_run": 0
+  },
+  "simulation_summary": {
+    "errors": 0,
+    "warnings": 42,
+    "elapsed_seconds": 111,
+    "rtl_changes_from_006": false,
+    "repeat_run": false
+  }
+}

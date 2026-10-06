@@ -1,0 +1,219 @@
+{
+  "candidate": "NES-H1-PATTERN-033",
+  "passed": true,
+  "hardware_eligible": false,
+  "rtl_clock_pairs": {
+    "q46_h12": {
+      "checks": 5,
+      "bytes": 14336,
+      "exact": true,
+      "queue_period_ns": 46.560846,
+      "host_period_ns": 11.904762,
+      "phase_ns": 1.1,
+      "sha256": "a6f33087b4adaef489867adc56afe9b29151a076711b37f19d05650d18138e2d"
+    },
+    "q20_h10": {
+      "checks": 5,
+      "bytes": 14336,
+      "exact": true,
+      "queue_period_ns": 20,
+      "host_period_ns": 10,
+      "phase_ns": 2.3,
+      "sha256": "a6f33087b4adaef489867adc56afe9b29151a076711b37f19d05650d18138e2d"
+    },
+    "q46_h20": {
+      "checks": 5,
+      "bytes": 14336,
+      "exact": true,
+      "queue_period_ns": 46.560846,
+      "host_period_ns": 20,
+      "phase_ns": 4.7,
+      "sha256": "a6f33087b4adaef489867adc56afe9b29151a076711b37f19d05650d18138e2d"
+    }
+  },
+  "rtl_exact_bytes": 43008,
+  "emulator": {
+    "normal": {
+      "candidate": "NES-H1-PATTERN-033",
+      "mode": "normal",
+      "passed": true,
+      "pages": [
+        0,
+        1,
+        2,
+        3,
+        1,
+        2,
+        3
+      ],
+      "frames": 7,
+      "exact_pixels": 428288,
+      "transactions": [
+        {
+          "sequence": 1,
+          "first_read_master_clock": 664884,
+          "last_read_master_clock": 681740,
+          "read_interval_master_clocks": [
+            8,
+            48
+          ],
+          "refresh_stalls": 12,
+          "duration_master_clocks": 18230,
+          "margin_master_clocks": 32148
+        },
+        {
+          "sequence": 2,
+          "first_read_master_clock": 22106868,
+          "last_read_master_clock": 22123724,
+          "read_interval_master_clocks": [
+            8,
+            48
+          ],
+          "refresh_stalls": 12,
+          "duration_master_clocks": 18230,
+          "margin_master_clocks": 32124
+        },
+        {
+          "sequence": 3,
+          "first_read_master_clock": 43548804,
+          "last_read_master_clock": 43565660,
+          "read_interval_master_clocks": [
+            8,
+            48
+          ],
+          "refresh_stalls": 12,
+          "duration_master_clocks": 18230,
+          "margin_master_clocks": 32152
+        },
+        {
+          "sequence": 4,
+          "first_read_master_clock": 64990788,
+          "last_read_master_clock": 65007644,
+          "read_interval_master_clocks": [
+            8,
+            48
+          ],
+          "refresh_stalls": 12,
+          "duration_master_clocks": 18240,
+          "margin_master_clocks": 32118
+        },
+        {
+          "sequence": 5,
+          "first_read_master_clock": 86432732,
+          "last_read_master_clock": 86449588,
+          "read_interval_master_clocks": [
+            8,
+            48
+          ],
+          "refresh_stalls": 12,
+          "duration_master_clocks": 18238,
+          "margin_master_clocks": 32138
+        },
+        {
+          "sequence": 6,
+          "first_read_master_clock": 107874668,
+          "last_read_master_clock": 107891524,
+          "read_interval_master_clocks": [
+            8,
+            48
+          ],
+          "refresh_stalls": 12,
+          "duration_master_clocks": 18190,
+          "margin_master_clocks": 32206
+        }
+      ],
+      "model_counts": [
+        6,
+        12288,
+        0
+      ],
+      "scope": "Real SNES CPU/PPU DMA with Lua MMIO model fed actual RTL bytes; not co-simulation or physical FPGA timing",
+      "auditor_sha256": "8c08612932dd884a6072b41bbeda4413848f2f9c66309eb32aaf990f4cd65eda"
+    },
+    "absent": {
+      "candidate": "NES-H1-PATTERN-033",
+      "mode": "absent",
+      "passed": true,
+      "pages": [
+        0,
+        4
+      ],
+      "frames": 2,
+      "exact_pixels": 122368,
+      "transactions": [],
+      "model_counts": [
+        0,
+        0,
+        1
+      ],
+      "scope": "Real SNES CPU/PPU DMA with Lua MMIO model fed actual RTL bytes; not co-simulation or physical FPGA timing",
+      "auditor_sha256": "8c08612932dd884a6072b41bbeda4413848f2f9c66309eb32aaf990f4cd65eda"
+    },
+    "bad_length": {
+      "candidate": "NES-H1-PATTERN-033",
+      "mode": "bad_length",
+      "passed": true,
+      "pages": [
+        0,
+        4
+      ],
+      "frames": 2,
+      "exact_pixels": 122368,
+      "transactions": [],
+      "model_counts": [
+        0,
+        0,
+        2
+      ],
+      "scope": "Real SNES CPU/PPU DMA with Lua MMIO model fed actual RTL bytes; not co-simulation or physical FPGA timing",
+      "auditor_sha256": "8c08612932dd884a6072b41bbeda4413848f2f9c66309eb32aaf990f4cd65eda"
+    }
+  },
+  "resource": {
+    "LE": 1144,
+    "LAB": 104,
+    "M9K": 20,
+    "memory_bits": 122880,
+    "registers": 758,
+    "virtual_pins": 96
+  },
+  "entities": {
+    "nes_h1_pattern_producer:producer": {
+      "cells": 129,
+      "bits": 49152,
+      "M9K": 8
+    },
+    "nes_transport:transport": {
+      "cells": 1023,
+      "bits": 73728,
+      "M9K": 12
+    },
+    "nes_host_stage:stage": {
+      "cells": 355,
+      "bits": 24576,
+      "M9K": 4
+    },
+    "nes_packet_queue_ram:queue": {
+      "cells": 293,
+      "bits": 49152,
+      "M9K": 8
+    }
+  },
+  "warning_codes": {
+    "map": {
+      "10335": 3,
+      "10230": 3,
+      "10030": 3,
+      "276020": 1,
+      "276027": 1
+    },
+    "fit": {
+      "169085": 1,
+      "114001": 4,
+      "169177": 1
+    }
+  },
+  "prior031_RTL_unchanged": true,
+  "limits": "Separate actual RTL bus tests and actual SNES CPU/PPU DMA with explicit Lua device model, not timing-coupled cosimulation. Virtual fit only; no boardPLL/pins/IO/CDC/STA/loader/recovery or hardware run. Diagnostic ROM image excludes NES core.",
+  "verifier_sha256": "dd39ad2011f1557a450ab5eee788092343bfea55728eb82eaa570c336e48e059"
+}

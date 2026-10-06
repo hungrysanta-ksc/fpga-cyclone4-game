@@ -1,0 +1,172 @@
+{
+  "candidate": "NES-P2-MMC3-UNIT-008",
+  "upstream_commit": "49a0a662e244469ca77b2155746a066df704ffae",
+  "sources": [
+    {
+      "path": "rtl/mappers/MMC3.sv",
+      "sha256": "a85f0324d941c7cf0bf3022b2b94a63e82ba989f882156090585d0d7cac04165"
+    },
+    {
+      "path": "rtl/regs_savestates.sv",
+      "sha256": "6e243af0b87a604fb30d43502eed65ef5924a105d7ce254f424317debf787e9a"
+    },
+    {
+      "path": "rtl/bus_savestates.vhd",
+      "sha256": "86b3df3bb42b2a3cd91df10b2cda97819f01004953fd8ca5569346704bc11a14"
+    },
+    {
+      "path": "COPYING",
+      "sha256": "b3d1eae7f524fc9ddd48562a4652efd2bcd848e38b03f05e388bcce943e73df2"
+    }
+  ],
+  "runner_sha256": "bb5bc8d454d098bec9b6918caf1513776ff9fbe088357d1cc1097dc61262b1ae",
+  "normalizer_sha256": "28524fbf36ee98aae0675c070bf42883afb4489ed1ae499c0f3e4ef5c6a56d1e",
+  "testbench_sha256": "57a60c329f9e0731c4f0e47b8f6c072a93ba07313daea02a648aba7803a8833a",
+  "compiled_module_sha256": "9a918177c193a51307a24618f2dcc4c4cf0b2fe9ab482130d95469859dcfee6c",
+  "license_route": "existing local FLOAT",
+  "license_status": "MMC3.sv and savestate helpers remain hold-before-vendoring; repository COPYING retained, local experiment only",
+  "phases": {
+    "vlib": 0,
+    "vcom": 0,
+    "vlog": 0,
+    "simulation": 0
+  },
+  "audit": {
+    "passed": true,
+    "errors": {},
+    "counts": {
+      "W": 8378,
+      "P": 4112,
+      "C": 8200,
+      "I": 228
+    },
+    "irq_cases": {
+      "reload_one": 12,
+      "held_high_no_reclock": 12,
+      "short_one_rejected": 12,
+      "short_two_rejected": 12,
+      "third_sample_accepted": 12,
+      "irq_latched": 12,
+      "enable_not_ack": 12,
+      "disable_ack": 12,
+      "disabled_no_irq": 12,
+      "reload_three": 12,
+      "count_two": 12,
+      "reload_deferred": 12,
+      "reload_midcount": 12,
+      "after_reload_two": 12,
+      "after_reload_one": 12,
+      "after_reload_zero": 12,
+      "zero_latch_irq": 12,
+      "zero_latch_repeats": 12,
+      "reset_clears_irq": 12
+    },
+    "a12_master_phases": {
+      "reload_one": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "short_one_rejected": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "short_two_rejected": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "third_sample_accepted": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "after_reload_zero": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    }
+  },
+  "rtl_pass": true,
+  "negative_tests": {
+    "prg_address_rejected": true,
+    "prg_permission_rejected": true,
+    "chr_address_rejected": true,
+    "irq_level_rejected": true,
+    "truncated_trace_rejected": true
+  },
+  "passed": true,
+  "trace_sha256": "11856bef013c75a7920dbaf5543a879407e0c7af6794ae7fccbefae0c58ca0e4",
+  "scope": "Standard Mapper4 submapper0 standalone RTL. Synthetic CE/M2/A12 bus stimuli; not CPU/PPU-integrated ROM execution, Mesen runtime comparison, all MMC3 revisions, cache, fit/STA, SMB3 or hardware.",
+  "repeat_trace_identical": true,
+  "initial_phase_gap_rejected_by_final_audit": true,
+  "simulation_summary": {
+    "errors": 0,
+    "warnings": 0,
+    "checks": 12540,
+    "master_ticks": 107176,
+    "simulation_end_ns": 1071757,
+    "clock_period_ns": 10,
+    "clock_note": "Accelerated standalone bench clock; CE and m2_inv are one-tick strobes each 12 ticks, separated by six ticks. Not the integrated NES cart/CPU phase contract."
+  },
+  "preservation": {
+    "prior_sources_unchanged": 56,
+    "rtl_fetch_007_sources_unchanged": 8,
+    "rtl_fetch_007_evidence_unchanged": 51,
+    "gbc": "PASS 152 source hashes, Quartus inputs, 2048 reachable boot bytes",
+    "float_processes_after_run": 0,
+    "float_listeners_after_run": 0
+  },
+  "reference_review": {
+    "path": "Core/NES/Mappers/Nintendo/MMC3.h",
+    "sha256": "426cf9dd53baaddb96f81851b4a1fd01c75eaa1ffd723a00bc767d9bb9d26d1d",
+    "basis": "Local Mesen implementation source reviewed for register mapping and normal IRQ semantics. Mesen was not executed for this standalone test."
+  }
+}

@@ -28,3 +28,5 @@
 차기 코어는 `PORTING-PLAYBOOK.ko.md`로 요구와 보드 계약을 처음부터 대조한다. GBC의 33.56/84MHz, 270ns slot, 색·오디오·메모리 배치를 새 코어의 사실로 복사하지 않는다. upstream 코드·라이선스의 병합 가능성과 보드 핀/전압/클록·메모리 예산을 먼저 기록한다.
 
 자체 작성 부분은 2026-10-04 소유자 승인으로 FPGA GPL-3.0-or-later, MCU GPL-2.0-only, 독립 도구·renderer 생성기·문서 MIT로 확정했다. [LICENSE.md](../LICENSE.md)와 `DEPENDENCY-REGISTER.ko.md`가 범위를 설명한다. 새 코어 upstream의 원래 고지를 유지하며 기존 결정을 제3자 소스에 임의 적용하지 않는다.
+
+NES의 기존 독립 진단/연결 파일은 각 MIT 헤더를 보존하며, 원래 GBC 경로에 대한 2026-10-04 결정과 구분한다. 새 upstream을 포함하는 제품 통합의 조건은 별도 검토한다. 주요 진전의 커밋/PR 주기는 [공통 운영 규칙](development/MILESTONE-WORKFLOW.ko.md)을 따른다.

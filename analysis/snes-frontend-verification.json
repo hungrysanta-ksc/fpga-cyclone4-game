@@ -1,0 +1,92 @@
+{
+  "candidate": "NES-H1-SNES-FRONTEND-031",
+  "audit_pass": true,
+  "queue_equivalence_cases": 14,
+  "queue_reference_reads": 10460,
+  "total_exact_pin_bytes": 19218,
+  "runs": {
+    "q46_h12": {
+      "exact_bytes": 6406,
+      "payload_latency_ns": {
+        "min": 48.0,
+        "median": 54.0,
+        "max": 60.0
+      },
+      "host_period_ns": 11.904762,
+      "queue_period_ns": 46.560846,
+      "cases": [
+        "exact_decode_unmapped_idle",
+        "write_end_bundle_and_held_register",
+        "ready_length_early_commit",
+        "split_dma_held_read_one_byte",
+        "sprite_resident_incrementing_dma",
+        "out_of_order_read_rejected",
+        "held_read_address_change_blocks_drive",
+        "read_write_conflict_no_command",
+        "reset_during_drive",
+        "early_release_requires_reset",
+        "fresh_generation_after_abort",
+        "overread_no_response_no_release",
+        "romsel_abort_latched"
+      ]
+    },
+    "q20_h10": {
+      "exact_bytes": 6406,
+      "payload_latency_ns": {
+        "min": 45.0,
+        "median": 47.0,
+        "max": 48.0
+      },
+      "host_period_ns": 10,
+      "queue_period_ns": 20,
+      "cases": [
+        "exact_decode_unmapped_idle",
+        "write_end_bundle_and_held_register",
+        "ready_length_early_commit",
+        "split_dma_held_read_one_byte",
+        "sprite_resident_incrementing_dma",
+        "out_of_order_read_rejected",
+        "held_read_address_change_blocks_drive",
+        "read_write_conflict_no_command",
+        "reset_during_drive",
+        "early_release_requires_reset",
+        "fresh_generation_after_abort",
+        "overread_no_response_no_release",
+        "romsel_abort_latched"
+      ]
+    },
+    "q46_h20": {
+      "exact_bytes": 6406,
+      "payload_latency_ns": {
+        "min": 87.0,
+        "median": 96.0,
+        "max": 98.0
+      },
+      "host_period_ns": 20,
+      "queue_period_ns": 46.560846,
+      "cases": [
+        "exact_decode_unmapped_idle",
+        "write_end_bundle_and_held_register",
+        "ready_length_early_commit",
+        "split_dma_held_read_one_byte",
+        "sprite_resident_incrementing_dma",
+        "out_of_order_read_rejected",
+        "held_read_address_change_blocks_drive",
+        "read_write_conflict_no_command",
+        "reset_during_drive",
+        "early_release_requires_reset",
+        "fresh_generation_after_abort",
+        "overread_no_response_no_release",
+        "romsel_abort_latched"
+      ]
+    }
+  },
+  "resource": {
+    "LE": 1139,
+    "LAB": 111,
+    "M9K": 12,
+    "memory_bits": 73728
+  },
+  "resource_limitations": "Virtual133pins,2unassignedclockpins;no STA/IO signoff/boardPLL/loader/NES core. Arithmetic881+111=992LAB exceeds963 but separate-fit sums do not predict joint packing. Full integration must be measured.",
+  "hardware_H0": "User positive report and sampled5.27s video show readable030 pages1/2/3 and wrap; no reset/longrun/FPGA evidence"
+}

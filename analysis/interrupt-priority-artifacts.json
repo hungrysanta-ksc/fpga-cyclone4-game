@@ -1,0 +1,330 @@
+{
+  "candidate": "NES-P2-INTERRUPT-PRIORITY-013",
+  "implementation_candidate": "NES-P2-BRANCH-IRQ-012",
+  "date_kst": "2026-10-05",
+  "base_commit": "8240299b1b6c061f14d88e591ccd4c9b64d113da",
+  "sources": [
+    {
+      "path": "tools/build_nes_interrupt_priority.py",
+      "bytes": 2454,
+      "sha256": "08dc0f9eb900c27edbcd59e8e1b6ba605bd1dbbcf6c4d328554f5dba4991decf"
+    },
+    {
+      "path": "tools/verify_nes_interrupt_priority.py",
+      "bytes": 5006,
+      "sha256": "649c28b4391b97216413ac08a75407053bfe02e94b49ce18b36f53319ff70162"
+    },
+    {
+      "path": "tests/nes-functional/interrupt_priority_tb.sv",
+      "bytes": 3141,
+      "sha256": "190179f3e6cd926ac8510dbdebd66cba922cfe789e82bdf03043c0239d8655cf"
+    },
+    {
+      "path": "docs/nes-interrupt-priority-contract.md",
+      "bytes": 4188,
+      "sha256": "448753e6ef94ea7a6037c3b9f62dadd050457f0d37e2cbebd50e1cbc5cfea9ab"
+    },
+    {
+      "path": "analysis/INTERRUPT-PRIORITY-RESULT.ko.md",
+      "bytes": 3112,
+      "sha256": "023789520dcf7e031cec80740443daa5f961bbae6608d783d980954865e37cef"
+    },
+    {
+      "path": "analysis/interrupt-priority-verification.json",
+      "bytes": 14942,
+      "sha256": "2d9f51a4b6e28c3efc7b6c47e68fe1676c5d6c52bfc5743e364d5c6c4444cec6"
+    }
+  ],
+  "status_files": [
+    {
+      "path": ".gitignore",
+      "bytes": 13506,
+      "sha256": "7474168c13afc744340ae7491c85afda2d1f75735d6f50af5189c0c8e8afed51"
+    },
+    {
+      "path": "cores/nes/README.md",
+      "bytes": 1321,
+      "sha256": "b0da2199547ca739a2e8e8b6e8e4f6d815d4901c00a748470f81a6defa06841c"
+    },
+    {
+      "path": "cores/nes/HANDOFF.ko.md",
+      "bytes": 17541,
+      "sha256": "ae5a6a5d0c3c1b0e8eb2ab353bfa8c2a807306dfb4f8fe43932df2a90378057a"
+    },
+    {
+      "path": "cores/registry.json",
+      "bytes": 2576,
+      "sha256": "baf488fbe7236e670fb7beef6e02abb0a93564849248b7b0242cfa210c23d9b0"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "analysis/local-interrupt-priority-013/baseline-status/.gitignore",
+      "bytes": 13135,
+      "sha256": "3c888aa9c75c71a404dbc360ea29f52b9cd18479836d383d7f61b3ad7c87cd90"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/baseline-status/cores/nes/HANDOFF.ko.md",
+      "bytes": 16392,
+      "sha256": "26e8612c14b0206e37bd173cd45d2f8a6047e288d6e1aa4e7eb5ab896441a858"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/baseline-status/cores/nes/README.md",
+      "bytes": 1311,
+      "sha256": "c8bbaac04ed558b7b2049e40a948c1e2be55b4b141779f3520debc418999d753"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/baseline-status/cores/registry.json",
+      "bytes": 2461,
+      "sha256": "cfa18898a9c362ad54d3431d6f0bbb75d3b12ee2b2a61b53a8abcaf19d1bf9a8"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/preservation.json",
+      "bytes": 356,
+      "sha256": "d595d7951567498e9976777ab7a69e7ca8abd051132a41d916314646614081e5"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rom-01/chr.hex",
+      "bytes": 32768,
+      "sha256": "73f028b773fca29f41485f678362e8ac70532b11cdb7806ce574636eb57104e3"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rom-01/interrupt-priority.nes",
+      "bytes": 40976,
+      "sha256": "ef3580d8c063e4285f408367df7826f1d37ceb2f606f60747dbdf436c896527a"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rom-01/manifest.json",
+      "bytes": 12942,
+      "sha256": "baa93567cb16b173c88be97d450572d901d1e5ae7a23e91df63d5aede2a99921"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rom-01/prg.hex",
+      "bytes": 131072,
+      "sha256": "b5fb6132e00f0198f09bec164c91288e37c54a49730440d61f71324926f5b263"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/branch-bus-fix.diff",
+      "bytes": 1988,
+      "sha256": "79f38d4fc75e89da67be37d2852cfe8e165873a65ca5b2bd0ec35f63bf9789a3"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/build.json",
+      "bytes": 6543,
+      "sha256": "2cbb2239057039a6529db8955e230dbabdb36255db1fdbbc97325fedc87ea764"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/cart_nrom.sv",
+      "bytes": 3246,
+      "sha256": "977964acb66ad4de1526d1e853ee9b39f5167039310d507db9cdb7d11dbbe77f"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/chr.hex",
+      "bytes": 32768,
+      "sha256": "73f028b773fca29f41485f678362e8ac70532b11cdb7806ce574636eb57104e3"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/COPYING",
+      "bytes": 35146,
+      "sha256": "c53a65c2fd561c87eaabf1072ef5dcab8653042bc15308465f52413585eb6271"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/interrupt-priority.tsv",
+      "bytes": 100758,
+      "sha256": "80f93f7c7ccec7f351750e75761a5038552d27f140c0a07e48da3c09c8a67b7c"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/irq-sampling-fix.diff",
+      "bytes": 952,
+      "sha256": "74849540a2d0aa496e3e98d05764b066d7ee1dd130bef0d29726c962f652f8af"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/manifest.json",
+      "bytes": 12942,
+      "sha256": "baa93567cb16b173c88be97d450572d901d1e5ae7a23e91df63d5aede2a99921"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/nes_probe.sv",
+      "bytes": 2608,
+      "sha256": "71cae87ffd507083e86f7003c04821192f032e16fbcb0a18843330680e9f1228"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/nes_tb.sv",
+      "bytes": 3252,
+      "sha256": "a075c2e1454afac91237ca9ce7f5d300f744be6168844da81941c5478b2bf3c1"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/prg.hex",
+      "bytes": 131072,
+      "sha256": "b5fb6132e00f0198f09bec164c91288e37c54a49730440d61f71324926f5b263"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/rtl/apu.sv",
+      "bytes": 40639,
+      "sha256": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/rtl/bus_savestates.vhd",
+      "bytes": 2249,
+      "sha256": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/rtl/cart.sv",
+      "bytes": 95572,
+      "sha256": "7c269bc5de604ad2b902c7a0eb785834ae5f8bdd351f5ced17f97fde1196e5a2"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/rtl/cheatcodes.sv",
+      "bytes": 2411,
+      "sha256": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/rtl/compat.v",
+      "bytes": 572,
+      "sha256": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/rtl/composite_board.sv",
+      "bytes": 3409,
+      "sha256": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/rtl/nes.v",
+      "bytes": 43536,
+      "sha256": "580676038dec0a194c7668ecc442aab586db6e4ca83be9f983ebc1036fbabb92"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/rtl/ppu.sv",
+      "bytes": 86569,
+      "sha256": "d975693e41e2a197932effe2ad435628a8030eb6ff24ac22a35e0cd86a47f54c"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/rtl/regs_savestates.sv",
+      "bytes": 3093,
+      "sha256": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/rtl/savestates.vhd",
+      "bytes": 14291,
+      "sha256": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/rtl/statemanager.vhd",
+      "bytes": 5333,
+      "sha256": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/rtl/t65/T65.vhd",
+      "bytes": 31870,
+      "sha256": "c7c8647f6293f6ea7a949892f8e666341ba23426167ae6c3d0d83a55ca00d065"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/rtl/t65/T65_ALU.vhd",
+      "bytes": 9894,
+      "sha256": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/rtl/t65/T65_MCode.vhd",
+      "bytes": 45791,
+      "sha256": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/rtl/t65/T65_Pack.vhd",
+      "bytes": 5279,
+      "sha256": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/simulation-only.diff",
+      "bytes": 77874,
+      "sha256": "4804c4019a5bfe028fa02fbcee22eb197390d584a732b12326d5fb8a1d3c6adb"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/simulation.log",
+      "bytes": 8361,
+      "sha256": "462ead273dc317fae72a872a77e48939117968b4e4b1ed2cab8cdfa5afef00df"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/sys/iir_filter.v",
+      "bytes": 5635,
+      "sha256": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/transcript",
+      "bytes": 8329,
+      "sha256": "629891c6afed4bf3cc5ce24b495244adf853f8b8061875cd46b4d241cac4af91"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/vcom-00.log",
+      "bytes": 628,
+      "sha256": "ddd2d24cec0cefdff71d7ae37ac15017af3893dc2a5f4ea4a3a5be5c027eb3b0"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/vcom-01.log",
+      "bytes": 528,
+      "sha256": "149240448788aa47044e2082fa443fc1303dfa5f38448722490513f1e1a9a8c1"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/vcom-02.log",
+      "bytes": 563,
+      "sha256": "4b345689725152bbe457efc4de0816c0820ac109a71df9a2234e8ad6d917ec3d"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/vcom-03.log",
+      "bytes": 644,
+      "sha256": "823289a9b8888ab78329a871b07587d057a000819e2a853faba5522dcc547f7a"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/vcom-04.log",
+      "bytes": 753,
+      "sha256": "556ccca624d075881a4913d1380c720a3a63c5d5473a641686819ff9bd035cad"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/vcom-05.log",
+      "bytes": 546,
+      "sha256": "76870f109452d75d6324808f5a9d9b0858a95c53e63aa7f3e55800b0b62192db"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/vcom-06.log",
+      "bytes": 576,
+      "sha256": "0e791d23e74d5690a126f7315d89f679eb5739baad8eff4dee2e5408383614e9"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/verification.json",
+      "bytes": 15168,
+      "sha256": "5eae1bc74c14afc53acb052480050c0d6c505d5114c3c07cf41f08c2e0ea76a6"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/vlib.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/vlog-tb.log",
+      "bytes": 387,
+      "sha256": "a22ac22086314176b8aa641da5285106dd564980b6954f8c72f02310727d30ef"
+    },
+    {
+      "path": "analysis/local-interrupt-priority-013/rtl-01/vlog.log",
+      "bytes": 2049,
+      "sha256": "69f67d59fcbb2d5d33e5863a41de3ce580aa56dc2d5d563ab237e7d65703d555"
+    }
+  ],
+  "preservation": {
+    "prior_012_source_status_evidence_hashes_verified": 199,
+    "t65_identical_to_012": true,
+    "compiled_t65_sha256": "c7c8647f6293f6ea7a949892f8e666341ba23426167ae6c3d0d83a55ca00d065",
+    "original_drafts_unchanged": true,
+    "vector_order_case_counts": {
+      "0xfffe": 3,
+      "0xfffa,0xfffe": 21,
+      "0xfffe,0xfffa": 12,
+      "0xfffa": 6
+    },
+    "gbc": "PASS 152 source hashes, Quartus inputs, 2048 reachable boot bytes",
+    "upstream_clean": true,
+    "float_processes_after_run": 0,
+    "float_listeners_after_run": 0
+  },
+  "scope": "42 BEQ scenarios; two-cycle NMI pulse, held IRQ, fixed CPU-edge phase, ideal memory, first-entry timing/vector order/handler counts. No full interrupt, one-cycle NMI, RDY/DMA, BRK hijack or hardware claim.",
+  "reference": "Bounded vector-selection oracle derived from local Mesen NesCpu.cpp IRQ()/EndCpuCycle, not Mesen runtime or hardware."
+}
