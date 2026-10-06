@@ -43,3 +43,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 054 SPI 경계
 
 [계약과 재현 인자](../../docs/nes-spi-boot-contract.md)의 `run_nes_spi_boot.ps1`은 공개 원본만으로 unit/wave 시험을 실행한다. [결과](../../analysis/SPI-BOOT-RESULT.ko.md)는 새 C callback 파형·80KiB 직렬 적재/읽기와 공동 자원을 구분한다. 공동 fit는 별도 private053 해시 고정 입력이 필요하다. `verify_nes_spi_boot.py --evidence <private054>`는 원시 근거 감사이며 새 시험 실행이 아니다.
+
+## 055 SPI에서 실제 코어까지
+
+[계약](../../docs/nes-spi-live-contract.md)의 `run_nes_spi_live.ps1`은 해시 고정 private053 실제 코어 export를 입력으로 받아 새 폴더에서 SPI 적재·코어 실행을 수행한다.96/80KiB 진단2종8프레임을 새로 실행했다. `verify_nes_spi_live.py`는 원시055/053/054fit 입력을 감사하며 새 시뮬레이션이 아니다. 공개 clone만으로 전체 코어를 재현할 수 있다고 주장하지 않는다. [결과](../../analysis/SPI-LIVE-RESULT.ko.md).

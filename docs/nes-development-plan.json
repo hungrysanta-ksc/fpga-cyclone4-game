@@ -2,13 +2,13 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-06",
-  "technical_candidate": "NES-R1-SPI-BOOT-054",
+  "technical_candidate": "NES-R1-SPI-LIVE-055",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "054 SPI frame boundary + C callback waveform and80KiB full serial load/read pass. Joint13866LE/948LAB/26M9K leaves15LAB. Actual-core execution after SPI, STM32/SD integration,96KiB SPI completion, physical integrity/clocks/consumer/full timing remain open.044unchanged.",
+  "assessment": "055 full96/80KiB SPI pin loading -> actual core passes8frames/491520pixels, packet content and constant-offset events vs053.32synthesis modules unchanged vs054; reuse948LAB/15remaining, no new fit. STM32/SD, physical integrity/clocks/consumer remain.044unchanged.",
   "next_action": "R4",
   "next_three_deliverables": [
-    "Run96KiB SPI and actual-core regressions after SPI loading; bind actual STM32 ownership/SD invocation",
+    "Bind054 C callbacks inside044 STM32 GPIO/USB ownership; validate SD/iNES and fail/recovery paths",
     "Budget board clocks/reset/consumer within15LAB; qualify PSRAM integrity and physical timing",
     "Connect real SNES consumer/deadlines/recovery and complete joint physical fit/STA before new hardware pair"
   ],
@@ -19,8 +19,8 @@
       "title": "Latest resource and memory feasibility",
       "depends_on": [],
       "exit": "Pinned synthesis/resource table, explicit exclusions, memory service contract and integration-headroom decision; not full board signoff",
-      "evidence": "analysis/SPI-BOOT-RESULT.ko.md",
-      "remaining": "054 joint13866LE/948LAB/26M9K,15LAB remaining. Actual STM32/SD,96KiB SPI/core execution, physical integrity/clocks/consumer and full timing remain."
+      "evidence": "analysis/SPI-LIVE-RESULT.ko.md",
+      "remaining": "055 SPI -> actual core complete in digital diagnostic regression.054 reused13866LE/948LAB/26M9K leaves15LAB. Actual STM32/SD, physical integrity/clocks/consumer and full timing remain."
     },
     {
       "id": "R2",
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "partial_SPI_protocol_C_waveform",
+      "status": "partial_SPI_to_actual_core_diagnostic",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/SPI-BOOT-RESULT.ko.md",
-      "remaining": "054 joint13866LE/948LAB/26M9K,15LAB remaining. Actual STM32/SD,96KiB SPI/core execution, physical integrity/clocks/consumer and full timing remain."
+      "evidence": "analysis/SPI-LIVE-RESULT.ko.md",
+      "remaining": "055 SPI -> actual core complete in digital diagnostic regression.054 reused13866LE/948LAB/26M9K leaves15LAB. Actual STM32/SD, physical integrity/clocks/consumer and full timing remain."
     },
     {
       "id": "R5",
@@ -72,14 +72,14 @@
     {
       "id": "VIDEO-CAUSAL",
       "status": "partial_live_core_diagnostic_pass",
-      "evidence": "analysis/NCR1-LIVE-RESULT.ko.md",
-      "detail": "Actual core0478frames causal pipeline matches491520PPU pixels. Consumer is testbench bus stimulus; real SNES PPU DMA/deadline/loader/board integration open."
+      "evidence": "analysis/SPI-LIVE-RESULT.ko.md",
+      "detail": "055 actual core8frames after full SPI loading matches491520PPU pixels. Consumer remains testbench bus stimulus; real SNES PPU DMA/deadline and board integration open."
     },
     {
       "id": "BOARD-FIT",
       "status": "partial_H1_physical_fit_internal_STA",
       "evidence": "analysis/H1-SAMPLING-RESULT.ko.md",
-      "detail": "053 diagnostic929/963LAB leaves34LAB, includes ROM stream writer/exclusive read-run ownership. Complete044 boundary/program ROM/MCU SPI/PLL/consumer/recovery still require joint fit and STA."
+      "detail": "054 diagnostic948/963LAB leaves15LAB, includes SPI and ROM pin ownership.055 uses32identical synthesis modules and adds no new fit. Complete boundary/program ROM/PLL/consumer/recovery and physical STA remain."
     },
     {
       "id": "DISPLAY-240",
@@ -423,7 +423,7 @@
     }
   },
   "last_hardware_diagnostic_candidate": "NES-H1-SAMPLING-044",
-  "last_resource_candidate": "NES-R1-ROM-BOOT-053",
+  "last_resource_candidate": "NES-R1-SPI-BOOT-054",
   "last_h1_candidate": "NES-H1-SAMPLING-044",
   "last_memory_producer_candidate": "NES-R2-MEMORY-PRODUCER-045",
   "development_components": {
@@ -560,11 +560,50 @@
         ]
       },
       "scope": "Fixed diagnostic geometry loader; no MCU SPI/board clocks or physical signoff"
+    },
+    "spi_rom_boot": {
+      "candidate": "NES-R1-SPI-BOOT-054",
+      "status": "SPI_protocol_C_waveform_and_joint_fit_pass",
+      "evidence": "analysis/SPI-BOOT-RESULT.ko.md",
+      "contract": "docs/nes-spi-boot-contract.md",
+      "resource": {
+        "LE": 13866,
+        "LAB": 948,
+        "LAB_remaining": 15,
+        "registers": 5158,
+        "M9K": 26
+      },
+      "scope": "CRC/count/CS commit into053 pin loader; actual STM32/SD and board timing open"
+    },
+    "spi_actual_core": {
+      "candidate": "NES-R1-SPI-LIVE-055",
+      "status": "two_diagnostic_ROMs_8frames_pass_after_full_SPI_loading",
+      "evidence": "analysis/SPI-LIVE-RESULT.ko.md",
+      "contract": "docs/nes-spi-live-contract.md",
+      "resource_reused_from": "NES-R1-SPI-BOOT-054",
+      "new_fit_run": false,
+      "packet_tick_offsets_vs053": {
+        "banks32": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "fine_x": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "scope": "Accelerated digital96/80KiB loading; independent fixture CHR geometry input matches loader/core; no STM32/board/consumer signoff"
     }
   },
   "last_streaming_encoder_candidate": "NES-R2-NCR1-ENCODER-046",
   "last_live_ppu_candidate": "NES-R2-NCR1-LIVE-047",
   "implementation_optimization": "NES-R1-OAM-BANKED-048",
   "last_local_memory_candidate": "NES-R1-LOCAL-MEMORY-049",
-  "last_rom_service_candidate": "NES-R1-ROM-BOOT-053"
+  "last_rom_service_candidate": "NES-R1-ROM-BOOT-053",
+  "last_spi_loader_candidate": "NES-R1-SPI-BOOT-054",
+  "last_spi_live_candidate": "NES-R1-SPI-LIVE-055"
 }
