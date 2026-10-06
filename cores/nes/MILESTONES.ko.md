@@ -16,5 +16,6 @@
 | 050–051 | 공유 ROM 서비스 마감 오류 재현 및 조기 읽기, 2–4클록 모델 통과 | [050](../../analysis/ROM-SERVICE-RESULT.ko.md), [051](../../analysis/ROM-EARLY-RESULT.ko.md) |
 | 052 | PSRAM 읽기 핀·서로 다른 클록 연결, 16위상 검사 | [052](../../analysis/ROM-PHYSICAL-RESULT.ko.md) |
 | 053 | 핀으로 ROM 적재 후 코어 실행, 8프레임/491520픽셀. 공동 929 LAB | [053](../../analysis/ROM-BOOT-RESULT.ko.md) |
+| 054 | SPI 프레임·C 파형·80KiB 전체 적재/읽기, 공동948LAB | [054](../../analysis/SPI-BOOT-RESULT.ko.md) |
 
-다음은 [MCU 적재·보드 통합](HANDOFF.ko.md)이다. 이번 공개 정리의 새 시험은 [공개 메모리 회귀](REPRODUCING.ko.md)이며 과거 실제 코어 실행을 다시 실행한 것으로 계산하지 않는다.
+다음은 [실제 MCU 호출·보드 통합](HANDOFF.ko.md)이다. 053 공개 메모리 회귀와054 SPI 시험은 [재현 안내](REPRODUCING.ko.md)에 구분하며 과거 실제 코어 실행을 다시 실행한 것으로 계산하지 않는다.

@@ -2,25 +2,25 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-06",
-  "technical_candidate": "NES-R1-ROM-BOOT-053",
+  "technical_candidate": "NES-R1-SPI-BOOT-054",
   "implementation_candidate": "NES-P2-RDY-014",
-  "authoritative_document": "cores/nes/PROPOSAL.ko.md",
-  "assessment": "053 pin-stream ROM loading and exclusive run ownership pass360505unit checks/180226byte reads and2actual-core8frame regressions. Pixels/payload match052; timestamp offsets recorded. Joint13612LE/929LAB/26M9K leaves34LAB. MCU SPI/board clocks/integrity/consumer/full timing remain open;044unchanged.",
+  "authoritative_document": "cores/nes/HANDOFF.ko.md",
+  "assessment": "054 SPI frame boundary + C callback waveform and80KiB full serial load/read pass. Joint13866LE/948LAB/26M9K leaves15LAB. Actual-core execution after SPI, STM32/SD integration,96KiB SPI completion, physical integrity/clocks/consumer/full timing remain open.044unchanged.",
   "next_action": "R4",
   "next_three_deliverables": [
-    "Integrate MCU SPI byte loading and explicit loaded/error status with materialized044 boundary; qualify board NES clock source/reset and PSRAM integrity/timing",
-    "Connect actual NCR1 SNES consumer/frame deadlines and board recovery; jointly fit real pins/PLL/loader/ownership/runtime and constrain CDC/memory paths",
-    "Complete physical timing and lifecycle/GBC regression; produce a recoverable new hardware pair preserving044"
+    "Run96KiB SPI and actual-core regressions after SPI loading; bind actual STM32 ownership/SD invocation",
+    "Budget board clocks/reset/consumer within15LAB; qualify PSRAM integrity and physical timing",
+    "Connect real SNES consumer/deadlines/recovery and complete joint physical fit/STA before new hardware pair"
   ],
   "gates": [
     {
       "id": "R1",
-      "status": "partial_pin_stream_boot_RTL_board_integration_open",
+      "status": "partial_SPI_boundary_RTL_board_integration_open",
       "title": "Latest resource and memory feasibility",
       "depends_on": [],
       "exit": "Pinned synthesis/resource table, explicit exclusions, memory service contract and integration-headroom decision; not full board signoff",
-      "evidence": "analysis/ROM-BOOT-RESULT.ko.md",
-      "remaining": "05313612LE/929LAB/26M9K leaves34LAB. Real board pins/PLL/MCU stream/consumer/full timing excluded."
+      "evidence": "analysis/SPI-BOOT-RESULT.ko.md",
+      "remaining": "054 joint13866LE/948LAB/26M9K,15LAB remaining. Actual STM32/SD,96KiB SPI/core execution, physical integrity/clocks/consumer and full timing remain."
     },
     {
       "id": "R2",
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "partial_ROM_loader_and_run_ownership_RTL",
+      "status": "partial_SPI_protocol_C_waveform",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/ROM-BOOT-RESULT.ko.md",
-      "remaining": "MCU SPI/board clock/reset/integrity binding, real SNES consumer/deadlines/fault recovery and physical fit/STA still required."
+      "evidence": "analysis/SPI-BOOT-RESULT.ko.md",
+      "remaining": "054 joint13866LE/948LAB/26M9K,15LAB remaining. Actual STM32/SD,96KiB SPI/core execution, physical integrity/clocks/consumer and full timing remain."
     },
     {
       "id": "R5",
