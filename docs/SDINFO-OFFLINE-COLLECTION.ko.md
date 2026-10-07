@@ -1,4 +1,6 @@
-# SD 파일 직접 수집 — 074 실기 실패 이후
+# SD 파일 직접 수집 — 수신 완료 후075 조사
+
+**현재 필요한 사본은 받았다.** 일반 정상044 firmware.stm, TXT 쓰기 성공 HWINFO002의 firmware.stm.bak-hwTest, m3nu.bin, fpga_base.bi3를 보존했다. firmware.before-sdinfo072.stm은 없으며 새로 만들지 않는다. 추가 파일/실기 재시험 요청은 없다. [075 실제 C 조사 결과](../analysis/OFFLINE075-RESULT.ko.md)와 최신 NES 인계를 따른다. 아래 파일 요청 절차는 수신 전 기록이다.
 
 ## 현재 판단
 
