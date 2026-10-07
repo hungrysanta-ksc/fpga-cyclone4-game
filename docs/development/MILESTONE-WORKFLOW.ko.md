@@ -102,3 +102,5 @@
 - 후보 ID를 연결할 때 programming DONE과 peripheral READY를 구분하고, 실제 ELF의 대기→소유권→ID 검사 순서를 확인한다. 전체 trace 차이는 프레임별 필드·시간을 대조하고 ID 변경만 허용했다고 해서 새 RTL 전체 성공으로 승격하지 않는다. 동결 전 준비 manifest의 확장자 없는 Makefile과 캡처/fixture를 포함한 모든 참조 입력의 존재를 점검한다.
 
 - 전체 재생을 새 후보에 연결할 때 testbench의 파일명·top module·clock expression·시뮬레이터 인자를 함께 확인한다. READY 이전 상태와 캡처 원점의 대기는 MCU 실측과 구분하며 `%t` 출력 단위를 명시한다. 동결 데이터와 생산 해시를 확인한 뒤 마지막 ACK/FINISH/STOP까지 재생한다.
+
+- 기존 DB inventory의 포함 범위를 먼저 확인한다. 기록된 db와 기록되지 않은 incremental_db를 구분하고 독립 고정되지 않은 추가 파일을 새 조립에 몰래 넣지 않는다. 원본 해시·새 복사 입력·조립 후 변화를 따로 남긴다. ARM materializer의 줄바꿈/추가 enum 차이를 해시 동일성으로 가정하지 말고 실제 링크 입력을 고정해 C 검증에 사용한다. 첫 실패 원문을 저장하지 못했으면 터미널 전사라고 명시한다.
