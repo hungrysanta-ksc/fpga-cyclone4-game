@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-07",
-  "technical_candidate": "NES-BOARD-DIAGNOSTIC-061",
+  "technical_candidate": "NES-MENU-DIAGNOSTIC-062",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "061 scoped CPU-free diagnostic connects135 physical pins, PLL84 and memory8. C GPIO and internal STA pass; external IO/actual memory specification/menu/images remain open. Full-core0594LAB budget unchanged.",
+  "assessment": "062 candidate-aware SD probe now called by three manual menu paths;41SD/18input/16menu host cases, two causal mutations, bounded C GPIO and full ARM call sites pass. No installable pair or hardware execution.061 SV/fit and059 full-core4LAB budget preserved.",
   "next_action": "R4",
   "next_three_deliverables": [
-    "Confirm actual board/PSRAM specifications and constrain external IO timing for scoped diagnostic",
-    "Connect CF61 identity and synchronous menu progress/result/log/cancellation/recovery",
-    "Prepare paired diagnostic images/backup/rollback/physical observation; separately close full-core resource/consumer/CDC/STA"
+    "Implement readable observation and bounded termination/recovery policy without assuming RESET-held SNES input",
+    "Resolve exact PSRAM part/timing and external IO for the documented FXPAK Pro/Mk.III target; validate full80/96KiB final C-to-board successful session",
+    "Build paired FPGA/ARM images with backups/rollback and physical observation; full-core resource/consumer/CDC/STA separately"
   ],
   "gates": [
     {
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "partial_scoped_physical_top_internal_STA",
+      "status": "partial_manual_menu_host_ARM",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/BOARD-DIAGNOSTIC-RESULT.ko.md",
-      "remaining": "Scoped load/verify top physical fit/internal STA/C GPIO pass. External IO, real memory part, CF61 menu and recoverable images remain; full-core consumer/STA separate."
+      "evidence": "analysis/MENU-DIAGNOSTIC-RESULT.ko.md",
+      "remaining": "CF61/geometry/manual menu/late logs/reload guards verified in host and called ARM. Readable screen/progress/termination, full C-to-board success, external IO/part and paired images remain."
     },
     {
       "id": "R5",
@@ -605,5 +605,67 @@
   "last_local_memory_candidate": "NES-R1-LOCAL-MEMORY-049",
   "last_rom_service_candidate": "NES-R1-ROM-BOOT-053",
   "last_spi_loader_candidate": "NES-R1-SPI-BOOT-054",
-  "last_spi_live_candidate": "NES-R1-SPI-LIVE-055"
+  "last_spi_live_candidate": "NES-R1-SPI-LIVE-055",
+  "hardware_readiness_review": {
+    "date_kst": "2026-10-07",
+    "document": "docs/development/NES-HARDWARE-READINESS-REVIEW.ko.md",
+    "basis_pr": 15,
+    "basis_merge_commit": "39e831aaf045fd0f668f8b30b0482dbded2558fb",
+    "review_only": true,
+    "new_implementation_or_test_execution": false,
+    "scope": "First CPU/PPU-free physical load/verify/STOP/recovery diagnostic, not complete NES gameplay",
+    "counts": {
+      "complete": 4,
+      "partial": 5,
+      "incomplete": 3,
+      "total": 12
+    },
+    "percentage_semantics": "Completed readiness checklist items only; not effort, schedule or product completion",
+    "items": {
+      "H01": "complete",
+      "H02": "complete",
+      "H03": "complete",
+      "H04": "complete",
+      "H05": "partial",
+      "H06": "incomplete",
+      "H07": "partial",
+      "H08": "incomplete",
+      "H09": "partial",
+      "H10": "partial",
+      "H11": "incomplete",
+      "H12": "partial"
+    },
+    "recommended_default_model": "gpt-6.1-sol",
+    "recommended_reasoning_effort": "high",
+    "model_change_applied": false,
+    "model_change_note": "No supported current-chat model setting tool; select model/effort in composer."
+  },
+  "known_hardware_baseline": {
+    "board": "FXPAK Pro / Mk.III",
+    "mcu": "STM32",
+    "fpga": "EP4CE15F17C8",
+    "sources": ["README.md", "cores/registry.json", "docs/interfaces.md"],
+    "past_contract_revision": "Rev.D; documented target, not a new physical observation",
+    "memory_source_description": "PSRAM total16MiB/16bit/70ns; MK3 source2x64Mbit with two CE and ZZ. SRAM512KiB/8bit/45ns",
+    "remaining": "Exact PSRAM part/speed-grade/BOM and external min/max/turnaround; source timing labels are not full datasheet guarantees",
+    "do_not_reask": "Read existing target documents and runtime hwinfo/logs before asking; do not ask the user again for already documented board/MCU/FPGA names"
+  },
+  "hardware_readiness_update062": {
+    "date_kst": "2026-10-07",
+    "candidate": "NES-MENU-DIAGNOSTIC-062",
+    "evidence": "analysis/MENU-DIAGNOSTIC-RESULT.ko.md",
+    "counts": {
+      "complete": 4,
+      "partial": 6,
+      "incomplete": 2,
+      "total": 12
+    },
+    "changed_items": {
+      "H07": "partial: actual CF61/geometry/manual call sites now verified",
+      "H09": "partial: late log/reload guards now verified; blocked calls/physical recovery remain",
+      "H11": "partial: called ARM completed; FPGA ASM/paired package absent"
+    },
+    "hardware_eligible": false,
+    "percentage_semantics": "Checklist states only; not work effort, schedule or NES product completion"
+  }
 }
