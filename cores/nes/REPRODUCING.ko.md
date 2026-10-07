@@ -67,3 +67,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 060 SD 적재·읽기 비교 연결
 
 [계약](../../docs/nes-sd-readback-contract.md)의 host/mutation/GPIO 재생은 공개 원본과자체 fixture를 사용한다. ARM은private059 준비 트리가 필요하며 메뉴 미호출이다. 전체 코어/fit는059 근거를 재사용한다. `verify_nes_sd_readback.py`는 private raw archive 감사다. [결과](../../analysis/SD-READBACK-RESULT.ko.md).
+
+## 061 물리 적재 진단
+
+[계약](../../docs/nes-board-diagnostic-contract.md)의 host060→board GPIO와3개 mutation,Quartus map/fit/STA는 공개 소스만으로 재현한다. 자체 fixture 외 사용자 ROM/실제 NES core export는 필요 없다. 실제 부품/아날로그 PLL/외부 IO 타이밍/실기 검증은 포함하지 않는다. `verify_nes_board_diagnostic.py --evidence <private061>`는동결 원시 근거 감사다.

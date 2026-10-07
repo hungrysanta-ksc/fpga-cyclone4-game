@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-07",
-  "technical_candidate": "NES-SD-READBACK-060",
+  "technical_candidate": "NES-BOARD-DIAGNOSTIC-061",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "060 binds buffered approved SD reread to059 SPI verification and STOP/base recovery. Host41/18 and two C GPIO phases pass; ARM entry retained but menu uncalled. No new physical image or board execution;059 fit/core reused.",
+  "assessment": "061 scoped CPU-free diagnostic connects135 physical pins, PLL84 and memory8. C GPIO and internal STA pass; external IO/actual memory specification/menu/images remain open. Full-core0594LAB budget unchanged.",
   "next_action": "R4",
   "next_three_deliverables": [
-    "Build scoped load/verify-only physical top: actual pins/clocks/PSRAM timing/fit/STA/reset/recovery",
-    "Connect synchronous menu with readable identity/wait/result/log and validated cancellation/reentry",
-    "Prepare paired diagnostic images/backup/rollback/hardware observation; separately close full-core4LAB resource and consumer gates"
+    "Confirm actual board/PSRAM specifications and constrain external IO timing for scoped diagnostic",
+    "Connect CF61 identity and synchronous menu progress/result/log/cancellation/recovery",
+    "Prepare paired diagnostic images/backup/rollback/physical observation; separately close full-core resource/consumer/CDC/STA"
   ],
   "gates": [
     {
@@ -20,7 +20,7 @@
       "depends_on": [],
       "exit": "Pinned synthesis/resource table, explicit exclusions, memory service contract and integration-headroom decision; not full board signoff",
       "evidence": "analysis/SPI-READBACK-RESULT.ko.md",
-      "remaining": "SPI/MCU verification and full core regression pass; SD/menu binding and board/consumer/STA remain.959LAB leaves4 in diagnostic geometry."
+      "remaining": "SPI/MCU and SD verification pass; full-core959LAB leaves4. CPU-free061 physical diagnostic is separate and cannot be added/subtracted from full-core fit."
     },
     {
       "id": "R2",
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "partial_SD_readback_bound_board_open",
+      "status": "partial_scoped_physical_top_internal_STA",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/SD-READBACK-RESULT.ko.md",
-      "remaining": "SD/protocol59 load/verify/STOP binding tested in host/RTL and linked ARM. Physical board/menu execution and full-core consumer/STA remain."
+      "evidence": "analysis/BOARD-DIAGNOSTIC-RESULT.ko.md",
+      "remaining": "Scoped load/verify top physical fit/internal STA/C GPIO pass. External IO, real memory part, CF61 menu and recoverable images remain; full-core consumer/STA separate."
     },
     {
       "id": "R5",
@@ -77,9 +77,9 @@
     },
     {
       "id": "BOARD-FIT",
-      "status": "partial_H1_physical_fit_internal_STA",
-      "evidence": "analysis/SPI-READBACK-RESULT.ko.md",
-      "detail": "05914180LE/959LAB/5203registers/26M9K,288virtual/22unlocated pins/PLL0.4LAB remains; full board/consumer/STA and measured timing remain open."
+      "status": "partial_scoped_physical_fit_internal_STA",
+      "evidence": "analysis/BOARD-DIAGNOSTIC-RESULT.ko.md",
+      "detail": "CPU-free0612386LE/186LAB/44M9K/135physical/PLL1; internal minimum slack0.131ns.54input/49output ports externally unconstrained. Full-core059959LAB/4remain unchanged."
     },
     {
       "id": "DISPLAY-240",
