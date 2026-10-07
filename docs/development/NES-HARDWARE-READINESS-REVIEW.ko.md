@@ -205,3 +205,7 @@ LED 표시의 소유권도 정한다. SysTick의 `led_error()`가 write LED를 �
 ## 068 갱신
 
 초기 대기1600완전클록, 정상2/실패2 및 boundary 우회 거부를 확인했다. 읽기 활성 레지스터의 전체 pin 모델 정상4/실패4, bounded C72312비트, 새195LAB/내부30summary와 routed3168경로의 FPGA 예산이 통과했다. H06은 PCB/전압/아날로그/클록 정지 차단 및 SPI/SNES 때문에 미완료다. **5완료/6부분/1미완료**, 설치 불가를 유지한다. 클록 정지+lockedHIGH의 CE8µs 초과 반례를 보존한다. [068 결과](../../analysis/DIAG-SAFETY-RESULT.ko.md).
+
+## 069 갱신
+
+CF68 MCU의 READY·구형 ID 거부·오류 보호와 하위95/상위/인과7·bounded C72320비트·ARM 호출이 통과했다. H11의 새 ARM 부분은 진전했지만 최종 전체 물리 SPI와 새 ASM/ARM 쌍·실제 SD 복원은 아직이다.5완료/6부분/1미완료와 설치 불가를 유지한다. 클록 정지 반례와 외부 미측정 조건은 그대로다. [069 결과](../../analysis/CF68-MCU-RESULT.ko.md).

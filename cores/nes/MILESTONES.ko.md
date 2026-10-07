@@ -35,3 +35,5 @@
 | 068 | PSRAM 초기대기/보호제거 대조,routed3168경로와외부예산,새195LAB/내부STA,클록정지반례 | [결과](../../analysis/DIAG-SAFETY-RESULT.ko.md) |
 
 다음은 [제한된 진단의 관측/종료·외부 타이밍·쌍 구성](HANDOFF.ko.md)이다. 053 공개 메모리 회귀·054 SPI·056 MCU 시험은 [재현 안내](REPRODUCING.ko.md)에 구분하며 과거 실제 코어 실행을 다시 실행한 것으로 계산하지 않는다.
+
+- **069 CF68 MCU 연결**: READY-before-GPIO/CF68·구형 거부/shared fault 보호, 하위95·상위41/18/16+추가3/native2·대조7, bounded C72320비트·ARM 링크. 전체 C 캡처180224bytes는 새 보드 전체 재생 전이며 FPGA068 fit만 재사용. 설치 불가.

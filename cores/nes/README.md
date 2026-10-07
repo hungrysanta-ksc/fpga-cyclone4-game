@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-068 기준: **PSRAM 초기 대기·읽기 활성 유지, 전체 핀 회귀와 FPGA 지연·외부 잔여 예산을 검증**. CF68,2400LE/195LAB/44M9K·내부STA통과. 전원 안정/실제PCB·클록 정지 반례가 남으며 새 MCU/전체SPI/ARM쌍·실기는 다음 단계다.
+069 기준: **CF68 MCU 승인·초기 READY·오류 보호,95하위/상위 회귀·72320비트 bounded 물리 파형·실제 ARM 연결을 검증**. FPGA068은 변경 없이 재사용하며 전체 물리 SPI·새 파일 쌍·실기는 남는다.
 
 | 구분 | 현재 근거 | 남은 경계 |
 | --- | --- | --- |
@@ -21,11 +21,14 @@
 | 파일 쌍 사전 점검 066 |061 Standard ASM/CPF·510856바이트 정확한 C 복원·18개 안전 검사,065 ARM 쌍 |실제 SD/base/menu·복원 실행·외부 IO·물리 설치 미완료 |
 | 진단 메모리 067 | 정상4/실패대조4·bounded C72312비트·2372LE/184LAB/44M9K·내부30summary 통과 | 외부 min/max·전원/클록 정지·전체SPI·새ARM/쌍·실기 미완료 |
 | 진단 안전 068 | 초기 대기 정상2/실패2·핀 정상4/실패4·C72312비트·routed3168경로 | 실제전압/PCB·클록정지차단·CF68 MCU/전체SPI/새쌍·실기 미완료 |
+| CF68 MCU069 | READY/구형 ID 거부·하위95/상위 회귀·대조7·bounded C72320비트·ARM 호출 | 전체 물리 SPI80/96KiB·새 쌍·외부 조건/실기 미완료 |
 | 제품 | 미포함, 새 SD 이미지 없음 | SNES 런타임 소비자·프레임 마감·복구 및 실제 보드 통합 |
 
 ## 작업 진입점
 
-- [068 결과](../../analysis/DIAG-SAFETY-RESULT.ko.md) · [초기 대기/외부 예산 계약](../../docs/nes-diag-safety-contract.md). 현재 후보CF68,설치 불가.
+- [069 결과](../../analysis/CF68-MCU-RESULT.ko.md) · [CF68 MCU 계약·재현](../../docs/nes-cf68-mcu-contract.md). MCU069/FPGA068, 설치 불가.
+
+- [068 결과](../../analysis/DIAG-SAFETY-RESULT.ko.md) · [초기 대기/외부 예산 계약](../../docs/nes-diag-safety-contract.md). FPGA 후보CF68,설치 불가.
 
 - [067 결과](../../analysis/DIAG-MEMORY-RESULT.ko.md) · [계약/재현](../../docs/nes-diag-memory-contract.md) · [다음 Sol 작업 상세 인계](../../docs/development/NES-067-SOL-HANDOFF.ko.md). 이전067 후보CF67, 설치 불가.
 
@@ -39,7 +42,7 @@
 
 - [062 메뉴 연결 결과](../../analysis/MENU-DIAGNOSTIC-RESULT.ko.md) · [계약·재현](../../docs/nes-menu-diagnostic-contract.md) — 설치 후보 아님.
 
-- [실기 진입 전 공정 점검·진척도·모델 운영 가이드](../../docs/development/NES-HARDWARE-READINESS-REVIEW.ko.md) — 현재068까지의 항목 상태와 남은 실기 조건. 최초061 점검과 이후 결과를 구분한다.
+- [실기 진입 전 공정 점검·진척도·모델 운영 가이드](../../docs/development/NES-HARDWARE-READINESS-REVIEW.ko.md) — 현재069까지의 항목 상태와 남은 실기 조건. 최초061 점검과 이후 결과를 구분한다.
 
 - [061 결과](../../analysis/BOARD-DIAGNOSTIC-RESULT.ko.md) · [물리 진단 계약](../../docs/nes-board-diagnostic-contract.md)
 
