@@ -22,5 +22,6 @@
 | 057 | 승인된 로더 형상→코어 mask,입력 변조 후8프레임 동일,새954LAB/9여유 | [057](../../analysis/ROM-GEOMETRY-RESULT.ko.md) |
 | 058 | 실행 전 공유 CHECK 포트,180238읽기·4096요청 차등·오류 대조,공동949LAB | [058](../../analysis/ROM-READBACK-PORT-RESULT.ko.md) |
 | 059 | SPI CHECK/held data·tag/순서ACK/실행 gate,MCU 비교,8프레임 회귀,공동959LAB | [059](../../analysis/SPI-READBACK-RESULT.ko.md) |
+| 060 |SD 적재·읽기 비교·STOP 복구,41경우/18거부,72312C GPIO 응답 비트,ARM 링크 | [060](../../analysis/SD-READBACK-RESULT.ko.md) |
 
-다음은 [SD 읽기 검증 연결·보드 통합](HANDOFF.ko.md)이다. 053 공개 메모리 회귀·054 SPI·056 MCU 시험은 [재현 안내](REPRODUCING.ko.md)에 구분하며 과거 실제 코어 실행을 다시 실행한 것으로 계산하지 않는다.
+다음은 [제한된 진단의 실제 보드·메뉴 통합](HANDOFF.ko.md)이다. 053 공개 메모리 회귀·054 SPI·056 MCU 시험은 [재현 안내](REPRODUCING.ko.md)에 구분하며 과거 실제 코어 실행을 다시 실행한 것으로 계산하지 않는다.
