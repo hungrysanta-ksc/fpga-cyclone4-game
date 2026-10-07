@@ -108,3 +108,7 @@
 ## 072 원본 정보 수집의 재사용 원칙
 
 기기를 직접 연결할 수 없으면 기존 검증된 firmware→SD TXT→사용자 반환 경로를 활용한다. 원본 firmware의 교체 전 독립 백업과 수집기 firmware 자체를 구분하고, 입력 읽기 전용/새 보고서 CREATE_NEW/sync/close/all-byte readback을 분리한다. 수집 성공은 메뉴 분류나 실제 복원 성공이 아니다. 마지막 화면 출력까지 공유 peripheral 오류 보호를 유지하며, legacy 부팅의 예산 밖 대기도 명시한다. 공개 재현 도구의 입력 바이트와 실제 ARM 입력을 대조하고 config/VERSION 등 archive 밖 입력은 새로 고정한다. 큰 진전의 한국어 PR에는 수집기 준비 달성과 실제 사용자 TXT/복원 미달성을 함께 적는다.
+
+## 073 상태·권한을 건너는 실제 호출 시험
+
+072의 writer/platform mocks는 SD native의 별도 쓰기 허용 상태를 검사하지 않아 실물 code4/미생성을 놓쳤다. 상태·권한이 여러층을 건너는 변경은 실제 호출자→전체FatFS→native guard/runtime를 연결해 성공·거부·shared fault·종료권한회수를 확인한다. mock 하나씩 통과한 결과를 이 연결의 검증으로 확대하지 않는다. 표시 경로는 생성 시도이며 sync/close/allbyte readback까지 통과해야 저장완료다. 출력파일이 없어도 실패를 읽을 수 있게 첫 FatFS 반환/바이트/위치를 화면 또는 안전한 RAM 관측으로 남긴다. 이미 열린 PR의 같은 목표 오류 수정은 상태 확인 뒤 해당 PR에 반영한다.
