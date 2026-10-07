@@ -2,13 +2,13 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-07",
-  "technical_candidate": "NES-BOARD-SESSION-063",
+  "technical_candidate": "NES-DIAG-RECOVERY-064",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "063 unchanged062 C transactions replay complete80/96KiB through061 board memory pins:180224writes/reads/ACKs,50464224response bits, FINISH/STOP.8MHz loader/SPI always free-running; unused legacy84MHz test domain parked after identity with bounded baseline comparisons. No physical STM32, external IO qualification or paired installable images.",
+  "assessment": "064 진단 전용 실제 SD/FPGA/UART 대기·오류 반환과 LED/진행 표시, FatFS 오류 전달·RESET/USB 보호를 host/ARM으로 검증. 전체 SPI 두 기록은063과 동일. 메뉴 offload/늦은 SD 로그·외부 IO·실기·설치 쌍은 남음.",
   "next_action": "R4",
   "next_three_deliverables": [
-    "Connect readable phase/progress and bounded blocked-call error recovery; preserve RESET/USB/SD ownership",
+    "메뉴 재적재·늦은 로그까지 실제 하위 대기 종료/오류 반환과 재진입 보호 검증",
     "Resolve exact PSRAM part/timing, source versus actual board correspondence and external IO constraints for the documented FXPAK Pro/Mk.III target",
     "Build paired FPGA/ARM images with rollback and SD backups, then scoped physical load/verify/recovery observation; full NES integration separately"
   ],
@@ -687,5 +687,18 @@
     },
     "hardware_eligible": false,
     "percentage_semantics": "Checklist scope only, not effort/schedule/NES product completion; revisit H10 if final source or relevant timing changes"
+  },
+  "hardware_readiness_update064": {
+    "candidate": "NES-DIAG-RECOVERY-064",
+    "evidence": "analysis/DIAG-RECOVERY-RESULT.ko.md",
+    "complete": 5,
+    "partial": 6,
+    "incomplete": 1,
+    "actual_stm32_execution": false,
+    "remaining": [
+      "menu SD offload and late log writes",
+      "exact external PSRAM IO min/max",
+      "paired images/backup/rollback/physical observation"
+    ]
   }
 }

@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-063 기준: **수동 메뉴 C의 두 형상 전체 적재·읽기 비교·FINISH·STOP를 보드 핀 모형까지 연결해 통과**. 총180,224바이트를 쓰고 읽어 순서 ACK했고 50,464,224응답 비트가 일치했다. 044 실기/GBC 기준과 061 RTL·062 펌웨어를 보존했다. 새 설치 파일과 실제 STM32 실행은 아직 없다.
+064 기준: **진단 중 실제 SD 읽기·FPGA 설정·UART 대기 오류 반환과 LED/진행 표시를 연결하고 host/ARM으로 검증**. 새 전체 SPI 두 trace는063과 동일해 기존 보드 핀 재생을 재사용한다. 메뉴 재적재/늦은 SD 로그·외부 IO·설치 쌍·실기는 아직 남아 있다. 044/GBC 기준을 보존한다.
 
 | 구분 | 현재 근거 | 남은 경계 |
 | --- | --- | --- |
@@ -16,15 +16,18 @@
 | 물리 적재 진단 061 |135핀/PLL1,2386LE/186LAB/44M9K,내부 STA 최소0.131ns,C GPIO72312비트·3개 실패 대조 |외부 IO·정확한 부품·설치 이미지 미완료. 메뉴 호출은062에서 연결 |
 | 메뉴 연결 062 |41SD/18입력 거부/16메뉴 세션·검사 제거2대조,72320C GPIO 응답 비트,최종ARM3호출 |전체C→보드 성공은063에서 연결. 진행/종료·쌍이미지·실기 미완료 |
 | 전체 보드 세션 063 | 80/96KiB 전체 C GPIO,8MHz SPI/PSRAM,50,464,224응답 비트; 마지막 ACK/FINISH/STOP | 미사용84MHz 영역의 테스트 변경 명시. 외부 IO·실기·설치 쌍 미완료 |
+| 하위 종료·관측 064 |FPGA22/SD24/LED16/UART5/FatFS6·native 오류 보호2·ARM 실제 호출,두 전체 SPI trace063 동일 |메뉴 offload/늦은 로그·물리 시간/가시성·설치 쌍 미완료 |
 | 제품 | 미포함, 새 SD 이미지 없음 | SNES 런타임 소비자·프레임 마감·복구 및 실제 보드 통합 |
 
 ## 작업 진입점
+
+- [064 하위 종료·오류 결과](../../analysis/DIAG-RECOVERY-RESULT.ko.md) · [계약·재현](../../docs/nes-diag-recovery-contract.md) — compile-only, 설치 후보 아님.
 
 - [063 전체 세션 결과](../../analysis/BOARD-SESSION-RESULT.ko.md) · [계약·재현](../../docs/nes-board-session-contract.md) — 디지털 검증, 설치 후보 아님.
 
 - [062 메뉴 연결 결과](../../analysis/MENU-DIAGNOSTIC-RESULT.ko.md) · [계약·재현](../../docs/nes-menu-diagnostic-contract.md) — 설치 후보 아님.
 
-- [실기 진입 전 공정 점검·진척도·모델 운영 가이드](../../docs/development/NES-HARDWARE-READINESS-REVIEW.ko.md) — 현재063까지의 항목 상태와 남은 실기 조건. 최초061 점검과 이후 결과를 구분한다.
+- [실기 진입 전 공정 점검·진척도·모델 운영 가이드](../../docs/development/NES-HARDWARE-READINESS-REVIEW.ko.md) — 현재064까지의 항목 상태와 남은 실기 조건. 최초061 점검과 이후 결과를 구분한다.
 
 - [061 결과](../../analysis/BOARD-DIAGNOSTIC-RESULT.ko.md) · [물리 진단 계약](../../docs/nes-board-diagnostic-contract.md)
 

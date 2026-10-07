@@ -79,3 +79,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 063 전체 C→보드 세션
 
 [계약](../../docs/nes-board-session-contract.md)의 host capture와 보드 replay를 두 형상에서 실행한다. 원본 fixture는 공개 생성기로 만들며 RAM을 미리 채우지 않는다. 최종 두 시험은8MHz/2µs를 유지하고 미사용 legacy/H1 domain만 테스트에서 멈춘다. 원래 클록 대조는64프레임, legacy를 계속 구동한 대조는8,192프레임으로 범위를 구분한다. `verify_nes_board_session.py --evidence PATH`는 로컬 동결 증거 감사이며 공개 clone만으로 새 시험을 수행한 결과가 아니다. 생산061SV/062C가 같아 기존 fit/STA/ARM을 재사용했다. 실제 STM32/SD/PLL/외부 IO/설치 쌍은 검증하지 않았다.
+
+## 064 진단 하위 종료·관측
+
+[계약·실행 명령](../../docs/nes-diag-recovery-contract.md)과 [결과](../../analysis/DIAG-RECOVERY-RESULT.ko.md)를 사용한다. 상위 host와 실제 하위 함수/ARM 검증을 구분한다. 고정 private062 플랫폼/동결063 trace와064 archive가 필요한 검사는 공개 clone 단독 재현으로 취급하지 않는다. 설치 후보가 아니다.
