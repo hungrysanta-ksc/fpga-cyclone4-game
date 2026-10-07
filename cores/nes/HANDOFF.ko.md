@@ -1,27 +1,22 @@
-# NES 다음 작업 인계 — 073 이후
+# NES 다음 작업 인계 — 074 이후
 
-지금 전달 후보는 **SDINFO073-BASE069 TXT 저장 수정 수집기**다. NES 쌍은071/MCU069/FPGA068 CF68를 유지한다. PR27은073 작업 시작 확인 시open/미병합이며 동일 PR에 재시험 수정을 반영한다. [073 결과](../../analysis/SD-WRITE-RECOVERY-RESULT.ko.md), [재시험 안내](../../docs/SDINFO073-RUN.ko.md), [기계 요약](../../analysis/sd-write-recovery-verification.json)을 먼저 읽는다. 이 인계가 과거 현재/다음보다 우선하며 모델/담당 변경으로 검증 수준을 낮추지 않는다.
+현재 전달본은 **SDINFO074-BASE069 LED 오류 관측용 수집기**다. 사용자는073의 HW004000.TXT0바이트와 검은 화면을 보고했다. 정확한 원인은 미확정이며074를 저장 수정 성공으로 표시하지 않는다. [074 결과](../../analysis/SD-FAULT074-RESULT.ko.md), [실행 안내](../../docs/SDINFO074-RUN.ko.md), [검증 메타데이터](../../analysis/sd-fault074-verification.json)를 읽는다. PR27은 이번 시작 시open/미병합이며 같은PR로 업데이트한다.
 
-## 실제 실패와 수정 경계
+## 다음 진행과 구분
 
-사용자072 사진에서버전/Save code4와 TXT 없음이 확인됐다.072의 active 진단에는 report-only write permission이 필요한데 수집기에서 열지 않았다. 실제 FatFS/SD helper로 FAT16/FAT32 모두 code4/전송0/entry 미반영을 재현했다.073 writer만 저장/readback 동안 nes_return_log_allow(true)를 소유하고 모든 종료에서 false로 회수한다. RESET/USB/offload와 sticky shared fault 보호를 우회하지 않는다. gate/runtime/wholeFatFS11개 입력은072/069와 동일하다.40통합검사·window제거mutation1·collector52/writer23/platform6/report29·ARM true/false2호출이 통과했다. SD/CMD24/media/CRC는 host 모형, 실제073성공은 아직 없다.
+- 사용자는 외부 실기에서 실행한다. 다음 입력은 새HW005nnn.TXT/파일크기와 카트리지 Ready·Read·Write LED60초 영상이다. LED가 보이는지 비동기 질문을 보냈으며 답이 없다면 보인다고 단정하지 않는다. 분해/PC USB/이미 확인한 부품 질문은 금지한다.
+- 074는 단일 firmware133332바이트 SHA `031725700f3e9c58abc1001f9d53cdbe89a1587e5e552a77951434d136953271`. 원본 독립 백업과 firmware.before-sdinfo072.stm은 그대로 유지한다. 현재 진단 펌웨어로 원본 백업을 덮지 않는다.
+- 새 stage는1수집/2생성/3쓰기/4sync/5닫기/6재열기/7재읽기/8닫기/9화면. 첫 오류에서 원자적 단일 word의 오류·단계를 고정하고 MCU LED로 표시한다. 안내 표를 참조한다. 최종 BLOCKED에서만 잡으면 이미 단계가 달라질 수 있어 mutation으로 금지했다.
+- SD/FatFS/runtime11입력은073과 동일하다.074는 UART 없는 관측 플랫폼·호출 전 RAM 표식·ID만 바꾼다. RESET/USB/쓰기권한 회수/native fault 뒤 추가IO 금지/재시도 금지를 유지한다. SysTick 정지/CPU lockup에서도 깜빡인다고 주장하지 않는다.
+- 원인 확정 전 CMD24 gap/CRC 샘플/busy/예산을 무작정 바꾸지 않는다. 실제 SD command/data/CRC는073·074 통합에서도 모형이다. 코드 조사가 관측을 대체하지 않는다. LED 오류와 단계로 가설을 좁히고 actual lower-call 실패를 재현한 뒤 수정한다.
 
-firmware133184 SHA `cd7eea7ae61cca3be60a8c5f876a09dbd29e0c6669ccba53462c035b654de5e7`,ID SDINFO073-BASE069,새로그HW004000–999. 원본 백업 이름 firmware.before-sdinfo072.stm은 유지한다. 현재072/073 firmware를 원본 사본에 덮어쓰지 않는다. Op/FAT result/Bytes/offset은 첫 실패의 실제 반환정보이며 표시이름은 저장완료 증거가 아니다.073은 메뉴/CF68/core를 실행하지 않고 완료 화면에 머문다. native fault는 화면갱신 없이 RESET/USB 유지 가능하다. collect60초/1Mpoll, report10초/10000poll; legacy file_init/mini startup은 예산 밖이다.
+## 증거·재현·보존
 
-## 동결·실패 보존
+공개 prepare074는 pinned069→기존 prepare073→별도074변환이다. 실제 materialized source의 collector52/writer23/platform6/report29·runtimeLED162·늦은 capture mutation1·FatFS40·ARM actual callsites 통과. LED 표시의 실물 관측은 아직 없음. 별도 sourceZIP은 실제 빌드입력과 mini 대응소스를 포함한다. NES쌍/RTL/fit/Questa는 새로 실행하지 않았다.
 
-073 `probes/nes-sd-write-recovery-073/evidence/`1571파일 manifest `eaa22dcf085ac6598484ed6ab5945bc6b56534996f83c18b0eafa24ce9fcd586`. final07 exact source,mutation,host01,ARM build02/실제호출/사진 관측을 보존했다. 경로/추출/타입/링크/FAT fixture/read-model 최초실패와 Make3.81 최초dependency를 보존한다. 마지막 finalizer keyword syntax실패는 동결 밖 전사이며 데이터 생성 전 수정했다. finish_nes073.py/document_nes073.py나044–073 finalizer를 다시 실행하지 않는다.072 공개코드·1411파일 및verifier는 변경되지 않았다. 새073 자료만 검증한다.
+`probes/nes-sd-fault-074/evidence/`1519파일 manifest `2be1006b6365414d2246e1dc38655126e3f2b00405871422f1f7a9626d37165b`. 동결 이후 audit의 objdump 경로 encoding/helper 위치 오류를 공개 verifier에서만 수정했다. sibling `audit-addendum/write_report.txt`는 같은 frozen ELF의 보충이며 공개meta SHA로 고정한다. final audit/073 audit 통과. freeze/finalizer 재실행이나044–074 증거 편집 금지. 과거ZIP verifier는 초기판이고 현재 공개 verifier와 addendum을 사용한다. 초기 Make dependency 실패/후속 통과 보존.
 
-## 다음 완료 조건
-
-1. 사용자에게 새073패키지를 전달하고 **새HW004nnn.TXT** 또는 Op/FAT/Bytes/offset이 보이는 실패 관측을 받는다. 기존 원본 독립 백업과072이전 사본을 유지한 채 firmware만 교체한다. 사용자에게 분해/부품/PC USB 연결을 다시 요구하지 않는다.
-2. 새TXT framing/CRC/shape·입력4상태와 교체 전 원본/현재수집기 구분을 검사한다. 실제 원본 복원 뒤 메뉴/GBC 관측과독립backup/readback은 별도 확인한다. code0/TXT/CRC로 이를 승인하지 않는다.
-3. actual smc_id/sgb_id의 unsafe shift/짧은read/초기화 없는reset_inst를 bounded adapter에서 다루고 변환 범위를 밝힌다. plain mapper0/1/carttype0–2/offset/payload≤4MiB/no specialFPGA/SGB/EGBC를 실제 원본 자료에 대조한다. parseableRLE/작은menu만으로 승인하지 않는다.
-4. 전압/PCB/비동기SPI/SNES/reset안정·lockedHIGH CE>8µs 반례와복원 경로를 정리한 뒤 제한CF68 실기를 준비한다. 같은 입력PLL/200µs startup을독립안전차단/voltage sensor로 주장하지 않는다. 준비도5완료6부분1미완료/071 installable=false 유지.
-
-## 같은 실수의 예방
-
-상위 writer와platform mock이 각각통과해도 native 쓰기권한은 실행되지 않을 수 있다. 새 상태/권한이 여러층을 건너면 실제 호출자/FatFS/native guard/runtime 성공·오류를 하나의 시험으로 연결한다. 종료별permission회수·native fault뒤물리전송0·마지막화면보호를 확인한다.실제 source/ARM callsite와 같은입력임을해시로고정한다. 원시증거와모델범위/실물결과를구분한다.
+다음 완료 조건: 사용자 LED로 소프트웨어 최초 오류·단계를 확정→해당 실제하위 경로 수정/인과대조→비어있지 않은 새TXT framing/CRC/전체검사→원본 복원/메뉴/GBC 확인. 이후 actual menu 분류와 외부전기/clock/backup gates를 해결한다. 파일 이름/0바이트/모형 통과를 실기 성공으로 보고하지 않는다.
 
 ## 고정071/069/068 기준
 
