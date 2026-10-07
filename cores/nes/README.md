@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-067 기준: **진단 PSRAM 주소 준비·읽기 후 유지 구간을 구현하고 지연 대조·bounded C 파형·새 내부 fit/STA를 검증**. 새 FPGA 식별은CF67이며065 ARM/066 쌍은CF61용 그대로다. 외부 IO·전체 SPI 회귀·새 쌍·실기는 남는다.044/GBC 기준을 보존한다.
+068 기준: **PSRAM 초기 대기·읽기 활성 유지, 전체 핀 회귀와 FPGA 지연·외부 잔여 예산을 검증**. CF68,2400LE/195LAB/44M9K·내부STA통과. 전원 안정/실제PCB·클록 정지 반례가 남으며 새 MCU/전체SPI/ARM쌍·실기는 다음 단계다.
 
 | 구분 | 현재 근거 | 남은 경계 |
 | --- | --- | --- |
@@ -20,11 +20,14 @@
 | 메뉴 복귀 065 |93 하위/복귀 검사·4개 인과 대조·16메뉴·ARM 호출,전체 SPI063 동일 |외부 IO·쌍이미지·물리 가시성/시간/재진입 미완료 |
 | 파일 쌍 사전 점검 066 |061 Standard ASM/CPF·510856바이트 정확한 C 복원·18개 안전 검사,065 ARM 쌍 |실제 SD/base/menu·복원 실행·외부 IO·물리 설치 미완료 |
 | 진단 메모리 067 | 정상4/실패대조4·bounded C72312비트·2372LE/184LAB/44M9K·내부30summary 통과 | 외부 min/max·전원/클록 정지·전체SPI·새ARM/쌍·실기 미완료 |
+| 진단 안전 068 | 초기 대기 정상2/실패2·핀 정상4/실패4·C72312비트·routed3168경로 | 실제전압/PCB·클록정지차단·CF68 MCU/전체SPI/새쌍·실기 미완료 |
 | 제품 | 미포함, 새 SD 이미지 없음 | SNES 런타임 소비자·프레임 마감·복구 및 실제 보드 통합 |
 
 ## 작업 진입점
 
-- [067 결과](../../analysis/DIAG-MEMORY-RESULT.ko.md) · [계약/재현](../../docs/nes-diag-memory-contract.md) · [다음 Sol 작업 상세 인계](../../docs/development/NES-067-SOL-HANDOFF.ko.md). 현재 후보CF67, 설치 불가.
+- [068 결과](../../analysis/DIAG-SAFETY-RESULT.ko.md) · [초기 대기/외부 예산 계약](../../docs/nes-diag-safety-contract.md). 현재 후보CF68,설치 불가.
+
+- [067 결과](../../analysis/DIAG-MEMORY-RESULT.ko.md) · [계약/재현](../../docs/nes-diag-memory-contract.md) · [다음 Sol 작업 상세 인계](../../docs/development/NES-067-SOL-HANDOFF.ko.md). 이전067 후보CF67, 설치 불가.
 
 - [066 파일 쌍 결과](../../analysis/PAIR-PREFLIGHT-RESULT.ko.md) · [계약·재현·실기 시험표](../../docs/nes-pair-preflight-contract.md) — 오프라인 준비, 설치 승인 아님.
 
@@ -36,7 +39,7 @@
 
 - [062 메뉴 연결 결과](../../analysis/MENU-DIAGNOSTIC-RESULT.ko.md) · [계약·재현](../../docs/nes-menu-diagnostic-contract.md) — 설치 후보 아님.
 
-- [실기 진입 전 공정 점검·진척도·모델 운영 가이드](../../docs/development/NES-HARDWARE-READINESS-REVIEW.ko.md) — 현재066까지의 항목 상태와 남은 실기 조건. 최초061 점검과 이후 결과를 구분한다.
+- [실기 진입 전 공정 점검·진척도·모델 운영 가이드](../../docs/development/NES-HARDWARE-READINESS-REVIEW.ko.md) — 현재068까지의 항목 상태와 남은 실기 조건. 최초061 점검과 이후 결과를 구분한다.
 
 - [061 결과](../../analysis/BOARD-DIAGNOSTIC-RESULT.ko.md) · [물리 진단 계약](../../docs/nes-board-diagnostic-contract.md)
 

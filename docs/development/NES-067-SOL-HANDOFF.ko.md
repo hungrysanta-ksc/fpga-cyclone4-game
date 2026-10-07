@@ -47,3 +47,7 @@ Windows 기본 shell 실행은 이번에 sandbox helper 초기화 오류로 시�
 Questa는 이미 승인된 Starter FLOAT 한 seat와 기존 `probes/questa-license/probe_float.ps1`를 쓴다. wrapper를 소유한 작업만 종료하며 라이선스 파일/host ID/서버로그는 Git에 넣지 않는다. build/test raw는 private, 공개에는 요약·해시·범위만 넣는다. GBC152/originalNES334 및044–066 동결 manifest를 보존한다.
 
 큰 검증 진전에서 명시적 stage·commit·push·한국어 PR을 만든다. 제목도 한국어, 본문은 작업 목표→작업 내용→작업 결과이며 달성 범위·정확한 부족분·다음 완료 조건을 적는다. merge/제품배포는 자동으로 하지 않는다. 새 PR 링크를 현재 인계에 연결하고 사용자 병합 보고 후 상태를 갱신한다.
+
+## 068 이후의 현재 진입점
+
+067 상태는 이력으로 보존한다. 현재 CF68의 초기 대기·등록형 읽기 활성 제어·routed 외부 예산과 다음 MCU/전체 SPI 조건은 [현재 인계](../../cores/nes/HANDOFF.ko.md)와 [068 계약](../nes-diag-safety-contract.md)이 우선한다. 이 문서의 보존·실패 판독·모델 변경 운영 규칙은 계속 적용한다.

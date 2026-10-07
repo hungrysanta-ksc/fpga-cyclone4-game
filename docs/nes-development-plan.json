@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-07",
-  "technical_candidate": "NES-DIAG-MEMORY-067",
+  "technical_candidate": "NES-DIAG-SAFETY-068",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "067 진단SETUP/읽기HOLD/RELEASE,정상4/실패4·bounded C72312비트·새184LAB/내부STA30통과.외부IO·전원/클록정지·전체SPI/새ARM쌍·실기미완료.",
+  "assessment": "068 초기대기 보호·routed3168 FPGA경로/조건부 외부예산·새195LAB 내부STA 통과. locked-high clock halt CE>8us 반례와 실제전압/PCB/SPI/SNES·CF68 MCU/전체SPI·새쌍·실기는남음.",
   "next_action": "R4",
   "next_three_deliverables": [
-    "067 실제 min/max 외부IO·전원tPU/클록정지tCEM 정책과 근거",
-    "최종 회로 전체C80/96KiB SPI 회귀·CF67 MCU/ARM·동일 소스 파일 쌍",
-    "실제SD/base/menu·독립 백업/복원 확인 뒤 외부 실기 TXT·화면·GBC 회귀"
+    "외부/전원·클록정지 조건과 미확인 분류",
+    "CF68 MCU 승인/구형거부·복구/ARM과 최종 전체C80/96KiB SPI 회귀·동일소스 쌍",
+    "실제SD/base/menu·독립백업/복원 및 외부 실기 TXT·화면/GBC회귀"
   ],
   "gates": [
     {
@@ -78,8 +78,8 @@
     {
       "id": "BOARD-FIT",
       "status": "partial_scoped_physical_fit_internal_STA",
-      "evidence": "analysis/DIAG-MEMORY-RESULT.ko.md",
-      "detail": "067 CPU-free diagnostic2372LE/184LAB/44M9K/135physical/PLL1; internal min0.150ns.54input/49output externally unconstrained. Full-core059959LAB/4remain separate."
+      "evidence": "analysis/DIAG-SAFETY-RESULT.ko.md",
+      "detail": "068 CPU-free diagnostic2400LE/195LAB/44M9K/135physical/PLL1/internal min0.140ns.3168 FPGA-only external paths/conditional budget; no electrical signoff. Clock halt lockedHIGH counterexample remains. Full-core059959LAB/4remain separate."
     },
     {
       "id": "DISPLAY-240",

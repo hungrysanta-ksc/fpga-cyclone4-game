@@ -58,3 +58,7 @@ PSRAM 규격은 EBLL Rev.D3(Sept.2022) -70 열을 사용한다. 실제 보드 �
 ## 067 후속 구현
 
 위 기존061 반례는 보존한다.067에서 진단 전용 SETUP/샘플 후 HOLD/RELEASE를 추가했고0/2/20ns 네 정상 경우와보호제거/126ns밖실패를 대조했다.새 내부fit/STA는통과했지만 외부min/max·전원/클록정책은남는다.[067결과](../../analysis/DIAG-MEMORY-RESULT.ko.md)와[다음인계](NES-067-SOL-HANDOFF.ko.md)를현재구현기준으로쓴다.
+
+## 068 외부 예산·초기 대기·읽기 활성 유지
+
+새 CF68에 1600클록 초기 대기를 연결하고, 샘플 에지의 CE/OE 활성 제어를 별도 레지스터로 유지했다. 전체 pin 모델 정상4/실패4와 실제 routed FPGA3168경로를 확인했다. 주소→CE 외부 잔여109.498ns, read byte 경계276.658ns 등 16조건을 계산했다. PCB 각 leg20ns/추가5ns는 미측정 가정이다. locked-high 클록 정지의 CE>8µs 반례가 남으므로 외부/고장 승인은 미완료다. [068 계약](../nes-diag-safety-contract.md)을 현재 기준으로 쓴다.
