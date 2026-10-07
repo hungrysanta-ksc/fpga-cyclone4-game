@@ -100,3 +100,5 @@
 - IO경로조회에필요한분석전용zero-delay/가상제약을생산SDC또는보드승인으로사용하지않는다.원본fit DB복사본의분석전해시와후변경(report/cache·정확한도구버전행)을기록한다.전원대기는전압센서가아니며locked강제LOW복구시험과lockedHIGH인클록정지반례를구분한다.
 
 - 후보 ID를 연결할 때 programming DONE과 peripheral READY를 구분하고, 실제 ELF의 대기→소유권→ID 검사 순서를 확인한다. 전체 trace 차이는 프레임별 필드·시간을 대조하고 ID 변경만 허용했다고 해서 새 RTL 전체 성공으로 승격하지 않는다. 동결 전 준비 manifest의 확장자 없는 Makefile과 캡처/fixture를 포함한 모든 참조 입력의 존재를 점검한다.
+
+- 전체 재생을 새 후보에 연결할 때 testbench의 파일명·top module·clock expression·시뮬레이터 인자를 함께 확인한다. READY 이전 상태와 캡처 원점의 대기는 MCU 실측과 구분하며 `%t` 출력 단위를 명시한다. 동결 데이터와 생산 해시를 확인한 뒤 마지막 ACK/FINISH/STOP까지 재생한다.
