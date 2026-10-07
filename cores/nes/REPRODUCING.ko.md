@@ -83,3 +83,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 064 진단 하위 종료·관측
 
 [계약·실행 명령](../../docs/nes-diag-recovery-contract.md)과 [결과](../../analysis/DIAG-RECOVERY-RESULT.ko.md)를 사용한다. 상위 host와 실제 하위 함수/ARM 검증을 구분한다. 고정 private062 플랫폼/동결063 trace와064 archive가 필요한 검사는 공개 clone 단독 재현으로 취급하지 않는다. 설치 후보가 아니다.
+
+## 065 메뉴 복귀 하위 종료
+
+[계약·실행 명령](../../docs/nes-menu-return-contract.md)과 [결과](../../analysis/MENU-RETURN-RESULT.ko.md)를 사용한다.93 helper/복귀 검사·4개 mutation·전체 C SPI 동일 기록과 ARM 호출을 구별한다. 고정 private062 플랫폼/동결063 trace/065 archive를 요구하는 감사는 공개 clone 단독 재현이 아니다. 새 SD 설치 이미지가 아니다.

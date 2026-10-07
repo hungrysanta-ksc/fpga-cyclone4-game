@@ -1,27 +1,23 @@
-# NES 다음 작업 인계 — 064 이후
+# NES 다음 작업 인계 — 065 이후
 
-현재 **NES-DIAG-RECOVERY-064**. [결과](../../analysis/DIAG-RECOVERY-RESULT.ko.md), [계약·재현](../../docs/nes-diag-recovery-contract.md), [준비도 가이드](../../docs/development/NES-HARDWARE-READINESS-REVIEW.ko.md). PR17은2026-10-07T03:02:30Z 병합됐고 master `76bfe89dddbae7aa57fdf6eafff9167fbe19237b`에서 진행했다. 044/GBC 실기 기준과 과거 동결 근거를 보존한다. 새 설치 쌍과 물리 STM32/SD 결과는 아직 없다.
+현재 **NES-MENU-RETURN-065**. [결과](../../analysis/MENU-RETURN-RESULT.ko.md), [계약·재현](../../docs/nes-menu-return-contract.md), [준비도 가이드](../../docs/development/NES-HARDWARE-READINESS-REVIEW.ko.md). PR18은2026-10-07T03:54:55Z 병합됐고 master 28e58e240d999c7c53b1e3da9c439a8c1d4367ea에서 진행했다.044/GBC 실기 기준과 동결044–064를 보존한다. 신규 설치 쌍/물리 STM32·SD 결과는 없다.
 
 ## 완료한 경계
 
-- active 진단에서 실제 SD busy·응답·data 시작·CRC 오류를 반환한다. CMD17 버퍼 읽기와 R1/CRC7/네 DAT lane CRC16,sticky 오류·쓰기/오프로딩/자동 init 방어를 연결했다. 실패한 SD로 base/메뉴를 다시 읽지 않고 GPIO를 복원한 뒤 RESET/USB 보호를 유지한다.
-- checked FPGA 설정은 독립 FIL/256바이트·검사한 RLE·핀/파일/출력/tick/poll 상한으로 실패를 반환한다. legacy044/056와 원래 programmer는 그대로 남는다. SD가 정상인 설정 실패에만 base 복구를 시도한다.
-- 실제 helper FPGA22/SD24/LED16/UART5/FatFS6,상위41회귀/18입력/16메뉴/native 오류 보호2와2개 causal mutation을 통과했다. 실제 핀/카드/CPU는 host 모형이다. FatFS는 실제 읽기 함수를 추출했고 FAT chain/card는 모형이다.
-- 최종 ARM 전체 link에서 세 marker·한 shared run call·그 call로 합쳐지는 두 분기,checked 설정 두 호출·runtime/SD fault 호출을 확인했다. compile-only이며 설치하지 않는다.
-- 새064 C의80/96KiB 전체 SPI trace가063과 SHA256 동일하다.180224바이트/901152프레임/마지막 ACK/FINISH/STOP,START 없음.063의50,464,224응답 비트 보드 핀 재생과061 fit2386LE/186LAB/1458regs/44M9K/135핀/PLL1·내부 최소0.131ns를 동일 기록/생산 RTL에 한정해 재사용한다. 새Questa/fit은 수행하지 않았다. UART/SD/CPU 지연·물리 클록 위상 증명으로 확대하지 않는다.
-- LED는 VALIDATE/CHECK read 점멸,CONFIG/LOAD write 점멸,RECOVER 둘 켜짐,BLOCKED write 켜짐+ready 점멸이다. 안전한 종료에서 원래 모드/논리 상태를 복원한다. UART phase/error/25% 관측과 active 송신 상한을 구현했지만 실제 가시성/물리 시간은 미검증이다.
+- 메뉴 버퍼 적재/전 byte readback·active SPI/TIM2 대기 종료·실제 FatFS 캐시/할당 한도·PREPARED 단일 블록 SD 쓰기/CRC/busy 오류를 연결했다. 진단부터 RESET 해제 후100ms 안정화·CIC/SRAM 검사까지 USB/active 소유권을 유지한다. 후속 오류는 RESET을 다시 잡고 BLOCKED로 들어간다. 외부 전원/RESET 대기이며 패드 취소가 아니다.
+-93 helper/복귀 검사(복사20/대기12/로그24/SD16/FatFS7/실제 main 구간14),4개 지정 mutation 실패,상위41/18입력/16메뉴/native 오류2를 확인했다. 주변 핀/카드/CPU/FAT는 모델이다. 일반 load_rom 분류/설정 전체는 소스/ARM 근거이며 전체 host 실행이 아니다.
+- 최종 ARM link의세 marker·한 shared call·같은 목적지의 두 narrow/wide 분기,메뉴 copy와 FatFS guard 두 호출을 확인했다. compile-only, 설치하지 않는다.
+-80/96KiB180224바이트/901152프레임의 전체 C SPI trace는063과 동일.063 보드50,464,224응답 비트와061 fit2386LE/186LAB/44M9K/135핀/PLL1·내부 최소0.131ns를 동일 trace/RTL 경계에만 재사용한다. 신규 Questa/Quartus는 없다. 전체 코어059959LAB/4여유·마지막8프레임은 별도다.
+- 보호된 메뉴 준비에서만SD PREPARED 로그를 쓰며 RETURN_READY_RESET_RELEASED는 RAM/UART-only다. 해당 기록은 실제 화면 성공이 아니다. 진단 복귀의 최근/즐겨찾기 수는0이고cfg_save를 생략한다. 일반 inactive 경로는 기존 동작이다.
 
 ## 다음 순서와 완료 조건
 
-1. **메뉴 재적재 offload·늦은 SD 로그·active 밖 UART 및 기존 TIM2 SPI delay를 점검**한다. 메뉴 준비/로그까지 실제 하위 대기 종료와 오류 전달을 연결하고 실패·재진입·RESET/USB/SD 보호를 검증한다. 현재 H08/H09는 부분 완료다. 보호 루프는 외부 전원/RESET 개입을 기다리는 의도적인 fail-closed 상태이며 패드 취소가 아니다.
-2. FXPAK Pro/Mk.III STM32+EP4CE15F17C8은 알려진 대상이다. 제품명을 다시 질문하지 않는다. 과거 Rev.D와 실제 보드 관측을 구별한다. PSRAM 정확한 부품·speed grade/BOM 대응과tOE/tWP/tDS/tDH/tHZ min/max·외부 IO 제약은 부족하다. 기존 총16MiB/16비트/70ns 표기를 전체 사양 증명으로 쓰지 않는다.
-3. 최종 FPGA ASM/압축 roundtrip·ARM 쌍 manifest·SD 백업/rollback을 준비하고,같은 후보로 필요한 영향 검사를 닫는다. CF61/protocol59만으로 파일 동일성을 판정하지 않는다.
-4. 제한된 적재/전체 비교/STOP/base·메뉴 복귀/재진입/전원·RESET/GBC 복귀를 실제 기기에서 관측한다. 일반 NES 소비자 완성을 선행 조건으로 추가하지 않는다. 전체 코어959LAB/4여유·소비자·CDC·STA와마지막8프레임은 별도이다.
-
-현재 점검표 완료5/부분6/미완료1이며 공수·제품 완성률이 아니다. H06 외부 IO는 미완료다.064 표식/log명은 생성 소스의compile-only 이름이며 사용자에게 SD 복사를 요청할 단계가 아니다.
+1. 정확한 PSRAM 부품/speed grade/보드 대응과tOE/tWP/tDS/tDH/tHZ min/max·외부 IO를 확보한다. FXPAK Pro/Mk.III STM32+EP4CE15F17C8은 알려진 대상이다. 제품명을 다시 묻지 않는다. Rev.D 문서와 실제 관측을 구별하고 총16MiB/16bit/70ns를 완전한 사양 증명으로 쓰지 않는다.
+2. 최종 FPGA ASM/압축 roundtrip·ARM 쌍 manifest·SD 원본 백업/rollback을 같은 후보로 준비한다. 메뉴 실제 파일 형상·최대시간 정책·card/write protect·LED/UART 가독성 시험표를 포함한다. CF61/protocol59만으로 설치 파일 동일성을 판단하지 않는다.
+3. 제한된 적재/전체 비교/STOP/base·메뉴 복귀/오류/전원·RESET/재진입/GBC 회귀를 기기에서 관측한다. 전체 SNES 소비자 완성을 선행 조건으로 추가하지 않는다.
+현재 완료5/부분6/미완료1. H08/H09는 물리 종료/가시성/복귀가 남아 부분 완료,H06 외부 IO는 미완료다. SD 복사를 요청하거나 실기 준비 완료를 선언할 단계가 아니다.
 
 ## 근거와 운영
 
-로컬 `probes/nes-diag-recovery-064/` manifest2733파일·SHA256 `ccd03676bc933b8209916aeba3af3b8d2e068688525c11726e3ba12985f351df`에 실패·수정·최종 실행 소스/로그/ELF를 동결했다. `finalize_nes064.py` 및 과거044–063 finalizer를 다시 실행하거나 manifest를 무효화하지 않는다. raw/ROM/ELF/STM/license는 공개하지 않는다. 초기LED extern 누락,ARM optimizer shared-call 검사,host mock/선언/링크 실패를 성공 로그로 덮지 않았다.
-
-큰 검증 진전마다 정리·commit·push·PR을 만든다. PR 제목은 한국어,본문은 `작업 목표`→`작업 내용`→`작업 결과` 순서로 달성 여부·부족한 점·다음 완료 조건을 명시한다. 병합/제품 배포는 별도이다. 새Questa가 필요하면 기존 Starter FLOAT wrapper를 순차 재사용하며 license smoke/실패한 inherited 경로/새 paid entitlement 추정을 반복하지 않는다.
+probes/nes-menu-return-065의3249파일 manifest SHA256:00588f074cdc63f1736267a735df8fd4b1b25b5721d42f77d78708ac207923c2. 초기 준비/include/host/ELF/FatFS/longjmp 실패를 보존했다. 동결 후 verifier 로그 경로 오기는 공개 checker에서만 수정했으며 archive는 그대로다. finalize_nes065.py 및 이전 finalizer를 다시 실행하거나 동결 파일을 변경하지 않는다. raw/ROM/ELF/STM/license는 공개하지 않는다.
+큰 검증 진전마다 정리·commit·push·한국어 PR을 만든다. 제목 한국어,본문 작업 목표→작업 내용→작업 결과로 달성 여부·부족한 점·다음 목표를 명시한다. 병합/제품 배포는 별도다. 실제 Questa는 기존 Starter FLOAT wrapper를 순차 재사용하고 license smoke/inherited 실패 경로/새 유료 entitlement 추정을 반복하지 않는다.

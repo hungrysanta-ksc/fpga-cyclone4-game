@@ -1,0 +1,140 @@
+{
+  "candidate": "NES-MENU-RETURN-065",
+  "hardware_eligible": false,
+  "installable": false,
+  "actual_stm32_execution": false,
+  "summary": "analysis/MENU-RETURN-RESULT.ko.md",
+  "manifest_sha256": "00588f074cdc63f1736267a735df8fd4b1b25b5721d42f77d78708ac207923c2",
+  "archived_files": 3249,
+  "unit": {
+    "copy": {
+      "exit_code": 0,
+      "last_line": "PASS MENU065 copy cases=20 max_bytes=4194304 readback=all bytes"
+    },
+    "wait": {
+      "exit_code": 0,
+      "last_line": "PASS MENU065 wait cases=12 SPI_frozen_tick=1 TIM2_stale_flag=1 wrap=1"
+    },
+    "log": {
+      "exit_code": 0,
+      "last_line": "PASS MENU065 log cases=24 native_fault_blocks_release=1 optional_log_failure=1 no_SD_after_release=1"
+    },
+    "sd": {
+      "exit_code": 0,
+      "last_line": "PASS MENU065 SD_write cases=16 all4_crc=1 no_retry=1 busy_frozen_tick=1"
+    },
+    "fatfs": {
+      "exit_code": 0,
+      "last_line": "PASS MENU065 FatFS cases=7 cached_FAT_budget=1 allocation_budget=1 inactive_legacy=1"
+    },
+    "finish": {
+      "exit_code": 0,
+      "last_line": "PASS MENU065 finish cases=14 actual_main_section=1 post_release_fault_reholds_RESET=1"
+    }
+  },
+  "mutations": [
+    {
+      "kind": "menu-compare",
+      "copy": {
+        "exit_code": 3221226505,
+        "last_line": "Assertion failed: !nes_return_copy_menu(\"menu\",0,0)&&nes_return_failed(), file copy-host.c, line 31"
+      }
+    },
+    {
+      "kind": "log-release",
+      "log": {
+        "exit_code": 3221226505,
+        "last_line": "Assertion failed: ready==!blocked&&!nes_return_log_allowed()&&!irq&&held&&nes_diag_active(), file log-host.c, line 35"
+      }
+    },
+    {
+      "kind": "sd-crc",
+      "sd": {
+        "exit_code": 3221226505,
+        "last_line": "Assertion failed: nes_return_sd_write(0,data,7,2)==RES_ERROR&&commands==1&&nes_diag_sd_fault, file sd-host.c, line 54"
+      }
+    },
+    {
+      "kind": "fatfs-budget",
+      "fatfs": {
+        "exit_code": 3221226505,
+        "last_line": "Assertion failed: n<10001&&!reads&&nes_return_failed(), file fatfs-host.c, line 27"
+      }
+    }
+  ],
+  "menu": {
+    "regression": 41,
+    "input_rejections": 18,
+    "menu_sessions": 16,
+    "native_error_protection": 2
+  },
+  "session": {
+    "candidate": "NES-DIAG-RECOVERY-065",
+    "actual_stm32_execution": false,
+    "markers": [
+      "PASS SESSION C bytes=81920 frames=409616 delay_ns=113872638000 compared=81920 no_START=1",
+      "PASS SESSION C bytes=98304 frames=491536 delay_ns=136646398000 compared=98304 no_START=1"
+    ],
+    "session": true,
+    "traces": {
+      "fine_x": "66d05a4cafbbd556ea0beb2a61008756d0abba69f06bf070b938c5c12fb69d99",
+      "banks32": "e8d89c2d9e82a57d2f465d1436a0777552b12b69ae3d5f55c953f2a0dba322a0"
+    },
+    "reference_identical": true
+  },
+  "arm": {
+    "compile_only": true,
+    "firmware_sha256": "aa5bec7d945ed6904961e555f4c54599203aa32f764e2690bacca16127d7e5a5",
+    "markers": 3,
+    "shared_run_calls": 1,
+    "shared_branches": 2,
+    "menu_copy_call": true,
+    "fatfs_guard_calls": 2,
+    "sources": {
+      "nes_h1_stm32.c": "ce547b271d4977c43495f5bdfea98843e7e276cf377019abb7b5fc3774a29796",
+      "nes_h1_session.c": "96e0c01c71f349f3c39e9d258128887c5caec6b39f6c6e0d624dae31818da488",
+      "nes_rom_spi.c": "ca19fd37339f9f72b3124b4451eb5bd1918436af8ed1ac8fa6bdf1e3216a30bf",
+      "nes_rom_spi.h": "1fcafe5af22a4ae7ac192ba099cbc85248e7aa546244a7dc6b0d9e3e9227461b",
+      "nes_rom_verify.c": "c8766cf1ec9bc1e4b81d635d8176714af36c891ab469504286e5995fb6e8ea1c",
+      "nes_rom_verify.h": "dc98fe0b2bebe7579df835921e5ce0f9af559864c92014a3d576d40ee0393002",
+      "nes_sd_readback.h": "137f530888888a95b97d551506754d08f6e9969277bb13a1e5eb0f525dd9a606",
+      "nes_menu_probe.h": "16936047d5a9bfb174386a006d5fe77f0a6bff0a1d0366504d43b242a79e5047",
+      "nes_menu_diagnostic.c": "2a9167191c5e3ecea589adcf3fba429548c049dc15ad2f3837b0dba96a52efc4",
+      "nes_menu_diagnostic.h": "32ae4fd3cbc8414e093616672c7cd1dd86d09a0297fc1917a978fa3b3838f812",
+      "main.c": "67a7fcd6924fca674c7b83fce5ee03e40791bb21f8069cc49c7b0fe9510f18ff",
+      "filetypes.c": "9dc9175c6c216c1bed138bc20d66fe5557778264c085e5d52590931a52034958",
+      "Makefile": "632f596bd30bdc5486285c8577db4ab4d19a4ba0af277e5f4716052063083fab",
+      "fpga.c": "8d4780b9a828ca5de23d07f23ca80cf9055ff92411967dff8cd23dc50d0ce109",
+      "stm32f4xx/sdnative.c": "8df90cfb1eb2753250d08c53f82e9b218231c4ebddb941a6fe3925140f34a651",
+      "stm32f4xx/led.c": "def973f030dbd8eb0059b8bc123393bdab0348696727334fcf24a7a52237c4e8",
+      "stm32f4xx/uart.c": "8eac7725e909e7f3245e6334bae2619e33d6216e05f1bed9289c0742052db6ae",
+      "nes_diag_runtime.c": "ca01d935a8b075460ead958d9b954ad657e7836dfe14a93eb995b0a194bd893a",
+      "nes_diag_runtime.h": "7d3e03de277d13c279f6bee926d1efb562a582f1d77787174e06a9a0f03f87df",
+      "nes_diag_platform.c": "1d4d668393780e1293995f16d6f74c98d266f8a8a16f58d997591de478b4c085",
+      "nes_menu_return.h": "4c3cc8054b30ca0e7ee3973b79713a9c12ba7fe3d29d4a87da4f19c2f2d09daf",
+      "nes_menu_return.c": "e56f269a485fe72bc8748fb86a3868e3fc81adf5af2695d0442bf904255a9c0d",
+      "stm32f4xx/spi.c": "74a91fd9302b4b3551871438812815f989c6d1301c9871cba0fb96a69575e66c",
+      "stm32f4xx/timer.c": "1ef987e14dad3a341070417e8c8167bab9122370ce5248f3c43a8f3dd6fda8c0",
+      "memory.c": "922cff49370e2079fd2490e665e41a91714126b335f194034842733ba60a78af",
+      "fpga_spi.h": "09489d5712b7b68306026713cdf27ee9810f274b1affff5304834cdce9cdc7e7",
+      "ff.c": "e3be7c9011fccba08f2a81879d999e9a711f5d502abc2919e245a8c1a8dac930"
+    }
+  },
+  "reused": {
+    "board": "analysis/board-session-verification.json",
+    "fit": "analysis/board-diagnostic-verification.json",
+    "new_quartus_or_questa": false,
+    "scope": "identical diagnostic SPI traces and production RTL only"
+  },
+  "readiness": {
+    "complete": 5,
+    "partial": 6,
+    "incomplete": 1
+  },
+  "remaining": [
+    "physical timing and observability/reentry",
+    "exact external PSRAM min/max and board correspondence",
+    "FPGA ASM/ARM paired images, SD backups and rollback",
+    "ordinary menu load_rom classification/setup is ARM/source-reviewed, not a full host/hardware execution"
+  ]
+}

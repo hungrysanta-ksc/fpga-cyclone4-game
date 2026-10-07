@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-07",
-  "technical_candidate": "NES-DIAG-RECOVERY-064",
+  "technical_candidate": "NES-MENU-RETURN-065",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "064 진단 전용 실제 SD/FPGA/UART 대기·오류 반환과 LED/진행 표시, FatFS 오류 전달·RESET/USB 보호를 host/ARM으로 검증. 전체 SPI 두 기록은063과 동일. 메뉴 offload/늦은 SD 로그·외부 IO·실기·설치 쌍은 남음.",
+  "assessment": "065 메뉴 버퍼/전체 readback·SPI/TIM2/FatFS 캐시/SD 쓰기 종료와 RESET 이후 보호를93 host 검사/4개 인과 대조/ARM 호출로 검증. 전체 SPI063 동일. 외부 IO·설치 쌍·물리 시간/가시성/재진입은 남음.",
   "next_action": "R4",
   "next_three_deliverables": [
-    "메뉴 재적재·늦은 로그까지 실제 하위 대기 종료/오류 반환과 재진입 보호 검증",
-    "Resolve exact PSRAM part/timing, source versus actual board correspondence and external IO constraints for the documented FXPAK Pro/Mk.III target",
-    "Build paired FPGA/ARM images with rollback and SD backups, then scoped physical load/verify/recovery observation; full NES integration separately"
+    "FXPAK Pro/Mk.III의 정확한 PSRAM 부품/speed grade/보드 대응·외부 IO min/max 확정",
+    "최종 FPGA ASM/압축 roundtrip·ARM 쌍·원본 SD 백업/rollback과 메뉴 형상/시간 정책을 한 후보로 고정",
+    "제한된 실기 적재/전체 비교/STOP/base·메뉴 복귀/재진입 및 GBC 회귀 관측; 전체 NES 소비자/자원은 별도"
   ],
   "gates": [
     {
@@ -700,5 +700,14 @@
       "exact external PSRAM IO min/max",
       "paired images/backup/rollback/physical observation"
     ]
+  },
+  "hardware_readiness_update065": {
+    "candidate": "NES-MENU-RETURN-065",
+    "evidence": "analysis/menu-return-verification.json",
+    "complete": 5,
+    "partial": 6,
+    "incomplete": 1,
+    "installable": false,
+    "actual_stm32_execution": false
   }
 }
