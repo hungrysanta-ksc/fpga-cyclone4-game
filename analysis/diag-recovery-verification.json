@@ -1,0 +1,104 @@
+{
+  "candidate": "NES-DIAG-RECOVERY-064",
+  "hardware_eligible": false,
+  "installable": false,
+  "actual_stm32_execution": false,
+  "summary": "analysis/DIAG-RECOVERY-RESULT.ko.md",
+  "manifest_sha256": "ccd03676bc933b8209916aeba3af3b8d2e068688525c11726e3ba12985f351df",
+  "archived_files": 2733,
+  "unit": {
+    "fpga": {
+      "exit_code": 0,
+      "marker": "PASS RECOVERY064 FPGA cases=22 frozen_tick=1 wrap=1 retries=0"
+    },
+    "sd": {
+      "exit_code": 0,
+      "marker": "PASS RECOVERY064 SD cases=24 native_command=6 sticky_error=1 no_retry=1"
+    },
+    "led": {
+      "exit_code": 0,
+      "marker": "PASS RECOVERY064 LED restoration_cases=16 reset_usb_unchanged=1"
+    },
+    "uart": {
+      "exit_code": 0,
+      "marker": "PASS RECOVERY064 UART cases=5 frozen_tick=1 normal_path=1"
+    },
+    "fatfs": {
+      "exit_code": 0,
+      "marker": "PASS RECOVERY064 FatFS cases=6 actual_f_read=1 partial_error=1 no_retry=1"
+    }
+  },
+  "menu": {
+    "regression": 41,
+    "input_rejections": 18,
+    "sessions": 16,
+    "native_error_protection": 2
+  },
+  "mutations": [
+    "sd-success",
+    "fpga-done"
+  ],
+  "spi": {
+    "payload_bytes": 180224,
+    "frames": 901152,
+    "traces": {
+      "fine_x": "66d05a4cafbbd556ea0beb2a61008756d0abba69f06bf070b938c5c12fb69d99",
+      "banks32": "e8d89c2d9e82a57d2f465d1436a0777552b12b69ae3d5f55c953f2a0dba322a0"
+    },
+    "identical_to063": true,
+    "explicit_delay_ns": {
+      "fine_x": 113872638000,
+      "banks32": 136646398000
+    },
+    "uart_sd_cpu_latency_modeled": false
+  },
+  "arm": {
+    "called_manual_paths": 3,
+    "marker_calls": 3,
+    "optimized_run_calls": 1,
+    "branches_to_shared_call": 2,
+    "checked_fpga_calls": 2,
+    "compile_only": true,
+    "firmware_sha256": "88640b7f5cdb184f81b752d20fbdb2722bb62f05020fabf30d0e905d59e864b4",
+    "sources": {
+      "nes_h1_stm32.c": "bfe9bf0e184beb8fa7745ad62979286a695e1fc345b280d98c8be2a1d7ff7726",
+      "nes_h1_session.c": "96e0c01c71f349f3c39e9d258128887c5caec6b39f6c6e0d624dae31818da488",
+      "nes_rom_spi.c": "ca19fd37339f9f72b3124b4451eb5bd1918436af8ed1ac8fa6bdf1e3216a30bf",
+      "nes_rom_spi.h": "1fcafe5af22a4ae7ac192ba099cbc85248e7aa546244a7dc6b0d9e3e9227461b",
+      "nes_rom_verify.c": "c8766cf1ec9bc1e4b81d635d8176714af36c891ab469504286e5995fb6e8ea1c",
+      "nes_rom_verify.h": "dc98fe0b2bebe7579df835921e5ce0f9af559864c92014a3d576d40ee0393002",
+      "nes_sd_readback.h": "137f530888888a95b97d551506754d08f6e9969277bb13a1e5eb0f525dd9a606",
+      "nes_menu_probe.h": "16936047d5a9bfb174386a006d5fe77f0a6bff0a1d0366504d43b242a79e5047",
+      "nes_menu_diagnostic.c": "28deb3a384c26c034af96c2e63fb432e6ac7d3824d5820ec16d1924946fe3455",
+      "nes_menu_diagnostic.h": "32ae4fd3cbc8414e093616672c7cd1dd86d09a0297fc1917a978fa3b3838f812",
+      "main.c": "ab356003081bebbbea753133316f26fb59b0c4b433b1aaa9271e117d7caf8f02",
+      "filetypes.c": "9dc9175c6c216c1bed138bc20d66fe5557778264c085e5d52590931a52034958",
+      "Makefile": "32f4eb5b9e1e0a523f7408d3642969bb1355854b0bf4de390abc915e192eef8e",
+      "fpga.c": "8d4780b9a828ca5de23d07f23ca80cf9055ff92411967dff8cd23dc50d0ce109",
+      "stm32f4xx/sdnative.c": "2aeaeece6ab8833253dec03bc06984b38aae651a721908ac50426e76bcb9ed43",
+      "stm32f4xx/led.c": "def973f030dbd8eb0059b8bc123393bdab0348696727334fcf24a7a52237c4e8",
+      "stm32f4xx/uart.c": "8eac7725e909e7f3245e6334bae2619e33d6216e05f1bed9289c0742052db6ae",
+      "nes_diag_runtime.c": "ca01d935a8b075460ead958d9b954ad657e7836dfe14a93eb995b0a194bd893a",
+      "nes_diag_runtime.h": "b49b0032ab68aa53accfaab9a59c5b49cc81b879f51c5b835df368a7bbefe2c8",
+      "nes_diag_platform.c": "ef40c32097cd118b810701816a4d7266cd4c9d1d0cc004dacc9a31296881e695"
+    }
+  },
+  "reused": {
+    "board": "analysis/board-session-verification.json",
+    "fit": "analysis/board-diagnostic-verification.json",
+    "new_quartus_or_questa": false,
+    "scope": "identical SPI traces and production RTL only"
+  },
+  "readiness": {
+    "complete": 5,
+    "partial": 6,
+    "incomplete": 1
+  },
+  "remaining": [
+    "menu SD offload and late SD log writes",
+    "active-outside UART and TIM2 SPI clock-stop waits",
+    "physical observability and reset/reentry",
+    "external PSRAM min/max",
+    "FPGA ASM/ARM paired images, backup and rollback"
+  ]
+}
