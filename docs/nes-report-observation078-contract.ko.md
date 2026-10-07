@@ -1,5 +1,7 @@
 # 보고서 전용 진단의 관측·시간 계약 초안 — 078
 
+079 후속: 단계2–8의 선행 SRAM비교·500ms 실행기회·RESET 재유지를 구현하고 호스트185/타이머5/ARM호출을 확인했다. 이 문서의 제안은 일부 구현됐으며, boot/file_init·실제 가독성·복원 조건은 아직 남는다. [최신 결과](../analysis/REPORT-CHECKPOINT079-RESULT.ko.md)를 따른다.
+
 상태: 설계 방향과 다음 구현 완료 조건. **아직 설치 가능한 구현이나 화면 검증 결과가 아니다.** [078 통합 시험](../analysis/REPORT-SESSION078-RESULT.ko.md)과 [P1 계획](development/NES-077-PROCESS-REVIEW.ko.md)을 따른다.0바이트 원인은 미확정이다.
 
 ## 선택한 방향

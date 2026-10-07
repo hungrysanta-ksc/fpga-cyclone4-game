@@ -5,10 +5,10 @@
   "technical_candidate": "NES-SD077-CF68",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "078 실제074 보고서/전체077 FatFS/native GPIO 카드 모형116+인과대조2 완료. 생산077/068 불변, 새ARM/실기없음. P1은 외부관측 구현과 총시간/부팅 검증이 남아 부분 달성.",
-  "next_action": "P1_VISIBLE_CHECKPOINTS_AND_TIME_BUDGET",
+  "assessment": "079에서 단계2–8의 문구 쓰기·전 바이트 비교/500ms 화면 기회/RESET 재유지와 실제 보고서 저장을 연결했다. 통합185·실제 타이머5·인과대조3·ARM 호출 검사 통과. SDREPORT079는 compile-only이며 부팅/file_init·가독성·복원 패키지는 남는다. P1 부분/준비도4완료7부분1미완료 유지.",
+  "next_action": "P1_BOOTSTRAP_AND_OBSERVABLE_PLATFORM_TO_P3",
   "next_three_deliverables": [
-    "P1 잔여: 단계 화면/RESET·SD 소유권·표시/SD/전체 예산을 실제 플랫폼 이벤트와ARM에 연결",
+    "P1 잔여: 준비 화면 전 boot/file_init/mini 종료·소유권과 최종 화면까지 플랫폼 사건 검증, 실제 가독성 시험 설계",
     "제한 진단 외부 IO/클록 조건 정리(P2) 및 최종 MCU/FPGA/base/menu 쌍·독립 백업/복원 계획(P3)",
     "구별 가능한 저장·관측 시험 통과 후80/96KiB 적재/비교/STOP·메뉴 재진입/GBC 실기(P4)"
   ],
@@ -132,8 +132,8 @@
     {
       "id": "REPORT-SESSION",
       "status": "host_integration_pass_physical_open",
-      "evidence": "analysis/REPORT-SESSION078-RESULT.ko.md",
-      "detail": "116 actual formatter/FatFS/native CMD17/CMD24 GPIO card cases and2causal controls; cold remount/all bytes. Actual card cause, platform observation, boot/whole time and new ARM remain."
+      "evidence": "analysis/REPORT-CHECKPOINT079-RESULT.ko.md",
+      "detail": "079 checkpoints/native report185 + timer5 + causal3 and finalARM calls. Actual card cause, mini display consumption, bootstrap and recovery package remain."
     },
     {
       "id": "EXTERNAL-OBSERVABILITY",
@@ -738,7 +738,8 @@
     "last_offline_pair": "071 =068 FPGA +069 MCU; installable=false",
     "latest_mcu": "NES-SD077-CF68; compile-only",
     "report_collector_last_hardware": "SDINFO074-BASE069; zero-byte/blank-screen failure",
-    "latest_host_session": "078 combines074 report +077 native/FatFS; no new ARM"
+    "latest_host_session": "079 pre-operation checkpoints +074 report +077 native/FatFS:185; actual timer5; causal3",
+    "report_only_arm": "SDREPORT079 compile-only132104bytes; main/writer/checkpoints linked; physical/boot acceptance pending"
   },
   "hardware_readiness_review_initial061": {
     "date_kst": "2026-10-07",
@@ -780,8 +781,8 @@
       "scope": "Report session and external observation",
       "depends_on": [],
       "completion": "Actual multi-layer success/faults, IO protection, cumulative/boot time budget, user-visible outcome and recovery design",
-      "status": "partial_host_session116_done_observation_platform_pending",
-      "evidence": "analysis/REPORT-SESSION078-RESULT.ko.md"
+      "status": "partial_checkpoints185_timer5_ARM_done_boot_visibility_pending",
+      "evidence": "analysis/REPORT-CHECKPOINT079-RESULT.ko.md"
     },
     {
       "id": "P2",
@@ -827,5 +828,6 @@
       ],
       "completion": "CPU/video/input/audio/save, remaining accuracy/source adoption, same candidate board timing/game/cold-warm/endurance/GBC acceptance"
     }
-  ]
+  ],
+  "report_only_candidate": "SDREPORT079 compile-only"
 }
