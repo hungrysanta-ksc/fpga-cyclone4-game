@@ -1,6 +1,6 @@
 # 보고서 전용 진단의 관측·시간 계약 초안 — 078
 
-080 후속: bounded mini·부트 ROM 전량 비교·최종 문구 보호를 구현했다. 플랫폼881/인과2/ARM은 통과했지만 초기 SD 무한 대기와 전체 native 결합·실제 가독성은 남는다. [최신 결과](../analysis/REPORT-PLATFORM080-RESULT.ko.md)를 따른다.
+081 후속: 초기화·mount가 보호 경로 안으로 들어왔다. 실제FatFS mount의 sector는 모형이며 전체native/화면 단일실행은 남는다. 초기화/mini 실패의 외부 관측과044복원 자료까지 준비해야 설치를 판단한다. [최신 결과](../analysis/REPORT-INIT081-RESULT.ko.md).
 
 상태: 설계 방향과 다음 구현 완료 조건. **아직 설치 가능한 구현이나 화면 검증 결과가 아니다.** [078 통합 시험](../analysis/REPORT-SESSION078-RESULT.ko.md)과 [P1 계획](development/NES-077-PROCESS-REVIEW.ko.md)을 따른다.0바이트 원인은 미확정이다.
 
