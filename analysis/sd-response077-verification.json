@@ -1,0 +1,79 @@
+{
+  "candidate": "NES-SD077-CF68",
+  "files": 1424,
+  "manifest_sha256": "8b4b5a9385dd7ced9a46b725d9e3a71f6877734b07febe3f0ec560f30842720c",
+  "public_sources": {
+    "tools/nes_sd_response077.py": "bee3a1509537b50bf7ebe87360ae7b3367d0ac9f2d53a00d3ee2ba34d8d5291e",
+    "tools/nes_sd077_prepare.py": "44ce0ff05f7d2d08dd6ac120d1c9aa60fc0670297d7bab1d28a465032aa3560f",
+    "tools/check_nes_sd077.py": "e448b52877c87104f599996e5f8e403c25fce75d4ac711bc3a1cdefe20adf366",
+    "tools/verify_nes_sd077.py": "2a61727fd4aa46190b69086d62e7c3b139fe2f5ccb54c152394ff818386862f2",
+    "tests/nes-functional/sd_response077_host.c": "9d62d040ddf4a22e39543232f7290310f32ab9de1833243d4fe2c90c158e32dc",
+    "tools/build_nes_cf68_mcu_arm.ps1": "8824e5b28927b17b2a56fe4677406377a251105d4156c1bfbbcabc7f8b2d26db"
+  },
+  "result": {
+    "candidate": "NES-SD077-CF68",
+    "firmware_bytes": 180128,
+    "firmware_sha256": "179bff93a3f967f25abffe1f37562d112ffe740fb7f66b051e407339f88df420",
+    "elf_sha256": "3cde335261bd62f44a99413bc84c48e16c2c91c10cc2f1ddf73b9774cf32acde",
+    "changed_source076": [
+      "src/VERSION",
+      "src/stm32f4xx/sdnative.c"
+    ],
+    "checks_each": 43,
+    "mutations": 2,
+    "calls": {
+      "sdn_write": [
+        "nes_diag_active",
+        "nes_return_log_allowed",
+        "nes_return_failed",
+        "nes_diag_sd_error",
+        "nes_diag_sd_error",
+        "cmd_fast",
+        "nes_diag_sd_response",
+        "send_datablock",
+        "sdn_status",
+        "writeled",
+        "writeled",
+        "write_block"
+      ],
+      "send_datablock": [
+        "wiggle_fast_pos1",
+        "wiggle_fast_pos1",
+        "wiggle_fast_pos1",
+        "wiggle_fast_pos1",
+        "crc_xmodem_update",
+        "crc_xmodem_update",
+        "crc_xmodem_update",
+        "crc_xmodem_update",
+        "wiggle_fast_pos1",
+        "wiggle_fast_pos1",
+        "wiggle_fast_neg",
+        "wiggle_fast_neg1",
+        "printf",
+        "nes_diag_active",
+        "nes_diag_sd_error",
+        "nes_diag_active",
+        "puts",
+        "nes_diag_active",
+        "wiggle_fast_neg",
+        "wait_busy"
+      ],
+      "wait_busy": [
+        "nes_diag_wait_start",
+        "nes_diag_active",
+        "wiggle_fast_neg",
+        "nes_diag_active",
+        "nes_diag_wait_step",
+        "nes_diag_sd_error",
+        "wiggle_fast_neg1"
+      ],
+      "nes_diag_sd_error": [
+        "nes_diag_fail"
+      ]
+    },
+    "physical": false,
+    "installable": false
+  },
+  "physical_cause_confirmed": false,
+  "installable": false
+}

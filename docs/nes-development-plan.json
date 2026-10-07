@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
-  "date_kst": "2026-10-07",
-  "technical_candidate": "NES-CF68-SESSION-070",
+  "date_kst": "2026-10-08",
+  "technical_candidate": "NES-SD077-CF68",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "070 전체069 C→068 CF68 핀180224바이트/901152프레임/50464224비트와 ACK/FINISH/STOP 통과. 새 ASM/ARM 쌍·실제 SD 복원·외부 전기 조건·실기는 남음.",
-  "next_action": "R4",
+  "assessment": "078 실제074 보고서/전체077 FatFS/native GPIO 카드 모형116+인과대조2 완료. 생산077/068 불변, 새ARM/실기없음. P1은 외부관측 구현과 총시간/부팅 검증이 남아 부분 달성.",
+  "next_action": "P1_VISIBLE_CHECKPOINTS_AND_TIME_BUDGET",
   "next_three_deliverables": [
-    "동일068 fit Standard ASM/압축 전체 byte C 복원·고정069 ARM 쌍 manifest",
-    "실제 SD/base/menu 형상·독립 백업/복원·시간/가시성·외부/클록 조건 정리",
-    "회복 가능한 제한 패키지→외부 실기의 사용자 TXT·화면·메뉴 재진입/GBC"
+    "P1 잔여: 단계 화면/RESET·SD 소유권·표시/SD/전체 예산을 실제 플랫폼 이벤트와ARM에 연결",
+    "제한 진단 외부 IO/클록 조건 정리(P2) 및 최종 MCU/FPGA/base/menu 쌍·독립 백업/복원 계획(P3)",
+    "구별 가능한 저장·관측 시험 통과 후80/96KiB 적재/비교/STOP·메뉴 재진입/GBC 실기(P4)"
   ],
   "gates": [
     {
@@ -20,7 +20,7 @@
       "depends_on": [],
       "exit": "Pinned synthesis/resource table, explicit exclusions, memory service contract and integration-headroom decision; not full board signoff",
       "evidence": "analysis/SPI-READBACK-RESULT.ko.md",
-      "remaining": "SPI/MCU and SD verification pass; full-core959LAB leaves4. CPU-free061 physical diagnostic is separate and cannot be added/subtracted from full-core fit."
+      "remaining": "전체059 회로959/963LAB로4개 여유. 별도068 CPU-free195LAB 진단과 혼동 금지. 실제70ns PSRAM의 정상속도 서비스 기한 및 전체 영상 소비자 포함 자원 결정은 남음."
     },
     {
       "id": "R2",
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "partial_full_C_board_memory_session",
+      "status": "partial_current_report_recovery_integration_open",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/CF68-SESSION-RESULT.ko.md",
-      "remaining": "현재 CF68 두 형상의 전체 디지털 적재/비교/STOP 통과.069 하위 종료/ARM 보호 재사용. 새 쌍·실제 SD 백업/복원·외부 IO·물리 메뉴 복귀와 RUN/video/input/audio 통합은 남음."
+      "evidence": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
+      "remaining": "070 고정069C→068 전체 디지털 적재/비교/STOP,071 오프라인쌍,076 제한 메뉴,077 SD 경계 완료. 최신 통합 저장/복구·새쌍·실제SD백업/복원·외부IO·제한실기와 이후 RUN/video/input/audio 통합은 미완료."
     },
     {
       "id": "R5",
@@ -127,7 +127,25 @@
       "id": "ROM-DEADLINE",
       "status": "partial_physical_read_RTL_pass_board_timing_open",
       "evidence": "analysis/ROM-PHYSICAL-RESULT.ko.md",
-      "detail": "052 3memory-clock pin read plus bundled CDC measured4NES clocks in unit matrix and actual core.25ns access assumption; actual part/clock/reset/routing timing still unverified."
+      "detail": "052 3memory-clock pin read plus CDC measured4NES clocks uses25ns access assumption. Actual EBLL-70BLI identity is confirmed; full-core service deadline at70ns remains open. Slow8MHz CPU-free diagnostic does not close full-core timing."
+    },
+    {
+      "id": "REPORT-SESSION",
+      "status": "host_integration_pass_physical_open",
+      "evidence": "analysis/REPORT-SESSION078-RESULT.ko.md",
+      "detail": "116 actual formatter/FatFS/native CMD17/CMD24 GPIO card cases and2causal controls; cold remount/all bytes. Actual card cause, platform observation, boot/whole time and new ARM remain."
+    },
+    {
+      "id": "EXTERNAL-OBSERVABILITY",
+      "status": "open",
+      "evidence": "docs/nes-report-observation078-contract.ko.md",
+      "detail": "073/074 zero-byte/blank screen; cartridge LEDs unavailable. Need externally observable outcomes and recovery policy before new distinguishable physical trial, not a blind074 retry"
+    },
+    {
+      "id": "CURRENT-PAIR-RECOVERY",
+      "status": "partial",
+      "evidence": "analysis/CF68-PAIR-RESULT.ko.md",
+      "detail": "071 offline068+069 pair complete/installation blocked; latest077 unpaired. User four input copies preserved; full SD/save backup and actual restore/menu/GBC remain"
     }
   ],
   "guardrails": [
@@ -607,20 +625,19 @@
   "last_spi_loader_candidate": "NES-R1-SPI-BOOT-054",
   "last_spi_live_candidate": "NES-R1-SPI-LIVE-055",
   "hardware_readiness_review": {
-    "date_kst": "2026-10-07",
+    "date_kst": "2026-10-08",
     "document": "docs/development/NES-HARDWARE-READINESS-REVIEW.ko.md",
-    "basis_pr": 15,
-    "basis_merge_commit": "39e831aaf045fd0f668f8b30b0482dbded2558fb",
+    "process_review": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
+    "reviewed_commit": "a4ed773c6a6776e9c1857b948787062587c091f9",
     "review_only": true,
     "new_implementation_or_test_execution": false,
-    "scope": "First CPU/PPU-free physical load/verify/STOP/recovery diagnostic, not complete NES gameplay",
+    "scope": "Current limited CPU-free diagnostic readiness; not NES gameplay completion",
     "counts": {
       "complete": 4,
-      "partial": 5,
-      "incomplete": 3,
+      "partial": 7,
+      "incomplete": 1,
       "total": 12
     },
-    "percentage_semantics": "Completed readiness checklist items only; not effort, schedule or product completion",
     "items": {
       "H01": "complete",
       "H02": "complete",
@@ -629,30 +646,32 @@
       "H05": "partial",
       "H06": "incomplete",
       "H07": "partial",
-      "H08": "incomplete",
+      "H08": "partial",
       "H09": "partial",
       "H10": "partial",
-      "H11": "incomplete",
+      "H11": "partial",
       "H12": "partial"
     },
-    "recommended_default_model": "gpt-6.1-sol",
-    "recommended_reasoning_effort": "high",
-    "model_change_applied": false,
-    "model_change_note": "No supported current-chat model setting tool; select model/effort in composer."
+    "reclassification": "H10 frozen070 pass retained; current077 whole report/recovery integration unverified",
+    "hardware_eligible": false,
+    "percentage_semantics": "Checklist only; no effort/schedule/product percentage"
   },
   "known_hardware_baseline": {
     "board": "FXPAK Pro / Mk.III",
-    "mcu": "STM32",
-    "fpga": "EP4CE15F17C8",
+    "mcu": "STM32F401RCT6",
+    "fpga": "EP4CE15F17C8N",
     "sources": [
       "README.md",
       "cores/registry.json",
-      "docs/interfaces.md"
+      "docs/interfaces.md",
+      "docs/development/FXPAK-HARDWARE-REFERENCE.ko.md"
     ],
-    "past_contract_revision": "Rev.D; documented target, not a new physical observation",
+    "past_contract_revision": "Rev.D confirmed by user PCB photo and HW002 strap0xC4",
     "memory_source_description": "PSRAM total16MiB/16bit/70ns; MK3 source2x64Mbit with two CE and ZZ. SRAM512KiB/8bit/45ns",
-    "remaining": "Exact PSRAM part/speed-grade/BOM and external min/max/turnaround; source timing labels are not full datasheet guarantees",
-    "do_not_reask": "Read existing target documents and runtime hwinfo/logs before asking; do not ask the user again for already documented board/MCU/FPGA names"
+    "remaining": "Full board wiring/voltage/delay/external IO min-max and clock-halt policy; identity and speed-grade closed",
+    "do_not_reask": "Read existing target documents and runtime hwinfo/logs before asking; do not ask the user again for already documented board/MCU/FPGA names",
+    "psram": "IS66WVE4M16EBLL-70BLI x2, total16MiB/70ns",
+    "sram": "IS62WV5128EBLL-45HLI"
   },
   "hardware_readiness_update062": {
     "date_kst": "2026-10-07",
@@ -709,5 +728,104 @@
     "incomplete": 1,
     "installable": false,
     "actual_stm32_execution": false
-  }
+  },
+  "implementation_candidate_scope": "NES-P2-RDY-014 is a historical CPU investigation baseline, not the current deployable firmware",
+  "process_review": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
+  "candidate_roles": {
+    "hardware_baseline": "NES-H1-SAMPLING-044",
+    "diagnostic_fpga": "CF68/068",
+    "last_full_digital_session": "070 with frozen069 C and068 RTL",
+    "last_offline_pair": "071 =068 FPGA +069 MCU; installable=false",
+    "latest_mcu": "NES-SD077-CF68; compile-only",
+    "report_collector_last_hardware": "SDINFO074-BASE069; zero-byte/blank-screen failure",
+    "latest_host_session": "078 combines074 report +077 native/FatFS; no new ARM"
+  },
+  "hardware_readiness_review_initial061": {
+    "date_kst": "2026-10-07",
+    "document": "docs/development/NES-HARDWARE-READINESS-REVIEW.ko.md",
+    "basis_pr": 15,
+    "basis_merge_commit": "39e831aaf045fd0f668f8b30b0482dbded2558fb",
+    "review_only": true,
+    "new_implementation_or_test_execution": false,
+    "scope": "First CPU/PPU-free physical load/verify/STOP/recovery diagnostic, not complete NES gameplay",
+    "counts": {
+      "complete": 4,
+      "partial": 5,
+      "incomplete": 3,
+      "total": 12
+    },
+    "percentage_semantics": "Completed readiness checklist items only; not effort, schedule or product completion",
+    "items": {
+      "H01": "complete",
+      "H02": "complete",
+      "H03": "complete",
+      "H04": "complete",
+      "H05": "partial",
+      "H06": "incomplete",
+      "H07": "partial",
+      "H08": "incomplete",
+      "H09": "partial",
+      "H10": "partial",
+      "H11": "incomplete",
+      "H12": "partial"
+    },
+    "recommended_default_model": "gpt-6.1-sol",
+    "recommended_reasoning_effort": "high",
+    "model_change_applied": false,
+    "model_change_note": "No supported current-chat model setting tool; select model/effort in composer."
+  },
+  "execution_plan": [
+    {
+      "id": "P1",
+      "scope": "Report session and external observation",
+      "depends_on": [],
+      "completion": "Actual multi-layer success/faults, IO protection, cumulative/boot time budget, user-visible outcome and recovery design",
+      "status": "partial_host_session116_done_observation_platform_pending",
+      "evidence": "analysis/REPORT-SESSION078-RESULT.ko.md"
+    },
+    {
+      "id": "P2",
+      "scope": "Limited diagnostic external IO/clock contract",
+      "depends_on": [],
+      "completion": "Required electrical boundaries and clock-halt handling/accepted scope explicitly resolved"
+    },
+    {
+      "id": "P3",
+      "scope": "Final matched package and independent recovery",
+      "depends_on": [
+        "P1"
+      ],
+      "completion": "Impact-scoped regressions; same-source pair/manifest/base/menu classification and backup/restore instructions",
+      "conditional_dependency": {
+        "CF68_memory_package": [
+          "P2"
+        ],
+        "report_only_package": "Existing validated path only; impact/observation/backup/restore conditions required"
+      }
+    },
+    {
+      "id": "P4",
+      "scope": "External hardware trial",
+      "depends_on": [
+        "P3"
+      ],
+      "completion": "A: report-only observation and baseline restore after eligibleP3. B:80/96KiB load/compare/STOP/reentry/GBC only after A and P2/CF68P3. Record actual observations."
+    },
+    {
+      "id": "P5",
+      "scope": "Full NES feasibility decision",
+      "depends_on": [
+        "P4"
+      ],
+      "completion": "Normal-speed70ns memory, resource headroom, real SNES video/queue/display contract; redesign before feature expansion if insufficient"
+    },
+    {
+      "id": "P6",
+      "scope": "Full integration and acceptance",
+      "depends_on": [
+        "P5"
+      ],
+      "completion": "CPU/video/input/audio/save, remaining accuracy/source adoption, same candidate board timing/game/cold-warm/endurance/GBC acceptance"
+    }
+  ]
 }

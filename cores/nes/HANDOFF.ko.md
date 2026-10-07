@@ -1,56 +1,58 @@
-# NES 다음 작업 인계 — 071 이후
+# NES 현재 인계 — 078 보고서 전체 저장 세션
 
-준비 후보 **NES-CF68-PAIR-071**, MCU **NES-CF68-MCU-069**, FPGA **NES-DIAG-SAFETY-068/CF68**, 전체 디지털 세션 **NES-CF68-SESSION-070**이다. PR25 병합 `1245e0dff52c38c5713105138dcf7f9572c6931e`에서 진행했다. [071 결과](../../analysis/CF68-PAIR-RESULT.ko.md), [계약](../../docs/nes-cf68-pair-contract.md), [입력](../../analysis/cf68-pair-inputs.json), [요약](../../analysis/cf68-pair-verification.json)을 먼저 읽는다. 이071 지시가 아래 보존한070의 당시 다음 작업보다 우선한다. 모델/담당 변경으로 검증 수준을 낮추지 않는다.
+계획P1의 실제074 보고서→전체077 FatFS/native CMD17/CMD24/CRC/busy GPIO 모형 연결을 완료했다. [078 결과](../../analysis/REPORT-SESSION078-RESULT.ko.md)와 [관측 계약 초안](../../docs/nes-report-observation078-contract.ko.md)을 먼저 읽는다. **P1은 부분 달성: 관측 구현·부팅/총시간·최종ARM/패키지는 남는다.** 사용자0바이트의 실기 원인은 미확정이다.
 
-## 071 완료와 고정 파일
+## 이번 근거
 
-068 동결850파일·DB114·입력21·report10을 대조한 뒤 새 ASCII 폴더에서 Standard25.1std.0 Build1129 ASM/CPF만 실행했다. 모두0오류/0경고, 원본은 동일하다. historical IO inventory는db만 기록했다. 원본incremental17은 별도 관측 목록으로 남기고 조립에서는 제외했다. 삭제하거나131개를 독립 고정된 DB로 쓰지 않는다. 새 RTL/ARM/map/fit/STA/Questa는 없다.
+-116검사: FAT16/FAT32 보고서2879바이트, 각각20명령(읽기10/쓰기10), 모든 R1/쓰기end/읽기CRC 위치, cold remount 전체비교,6길이/SDSC·SDHC/이름충돌/불연속할당/시간·poll한도. end검사/내용비교 제거2대조는 정확한 assertion 실패.
+-생산077 MCU·068 RTL 불변.074 보고서와077 lower 경로를 결합한 호스트 구성이며 새ARM/Questa/Quartus/실기/설치쌍 없음. 카드/GPIO/tick/ARM CRC primitive는 모형이다. 읽기 응답-데이터 중첩 전체 위상과 부팅은 미검증.
+-078 frozen267파일,manifest `9532cd2e82acae40baacee35053bd29bd94e6a73f2a7de324d82729c4bc9dac6`. run-01 정의추출/헤더 실패,run-02 미사용메뉴 링크실패,중간82/108검사 보존. 최종run-05/대조-02. verifier078을 사용하고 finalizer078/기존044–077을 재실행·편집하지 않는다.
 
-RBF510856바이트 SHA `45dcb3f3908b427b66f3fe52f14e56c80efae58d422af95b322580bd57f0a572`, 압축212523바이트다. 고정069 ARM179336바이트 SHA `268bc38df477516cbcee19f17b192151b79c6e011dc801756d1ad02fc0262499`와 묶었다. manifest 독립 SHA는 `5d5623c53a2a935c95d8648f65a30def715ff71531f90c51f23d46c39a0dfd02`다. `sd2snes/fpga_nl8.bi3`, 표식 `NES VERIFY 069 80.nh1`/`96.nh1`, CF68/protocol59, `/sd2snes/nes-verify-last-069.txt`를 유지한다. 표식을071로 바꾸거나CF61/065/066과 섞지 않는다. timestamp header를 정규화/재빌드하지 않는다.
+## 다음 작업
 
-정확한069 materialized runtime.c/h와 actual fpga.c에 포함된 programmer 본문으로 C510856바이트와 경계66309바이트,13오류 대조를 검증했다. 공개 helper와의 최초 동일성 실패는 LF 및 materialized header의SPI/TIMER/MENU enum3개 차이였다. 정확한 ARM 입력으로 재실행했다. 23사전 점검의 SD는 로컬 모형이다. C DONE은 실물 관측이 아니다. `true`는safe menu reload이며START/불확실한DATAACK재시도/native공유오류 뒤SD/base를 계속 금지한다.
+1. P1 잔여: 보고서 전용 후보에서 실행 전 단계 화면→RESET 유지 SD 작업→정상 때 다음 표식 순서를 구현하기 전에 mini 실제 화면 갱신/RESET 재시작과 SPI/SD 소유권을 확인한다. 오류 이후 guard 해제·화면/SD 재시도는 금지한다. 화면 방식은 설계 초안이며 가시성이 증명되지 않았다.
+2. 기존1000tick/10000poll 보고서 예산에 표시 대기를 몰래 더하지 않는다. 표시/SD/전체 예산, 부팅/file_init의 예산 밖 경계, timeout 초과 마지막 호출을 구분한다. 실제 플랫폼 이벤트·실패 주입·최종ARM 호출을 연결한 뒤 패키지를 판단한다.
+3. [P1–P6 계획](../../docs/development/NES-077-PROCESS-REVIEW.ko.md)을 따른다. 보고서 전용은 기존 경로/관측/복원 조건 충족 시CF68 P2를 기다리지 않는다. CF68 메모리 실기는P2/같은 쌍P3 필요. 준비도4완료/7부분/1미완료 유지.
+4. 반복074/LED영상/분해/PC USB/같은입력 재요청 금지. 정상044와HW002 TXT성공 펌웨어 역할을 구분한다.071 조립은 완료됐지만 설치보류,077은compile-only이며 임의 혼합 금지. 현재PR27open 조회, 같은PR에 계획검토+078 반영 후 다음 차례 상태를 재확인한다.
 
-## 071 동결과 재현
+## 입력과 보존
 
-`probes/nes-cf68-pair-071/evidence/`374파일, manifest `a70297c41f163eacdf9423e9c93ba8abb5a828aa9bf05e3112eadde7d5848cbd`; audit 통과. 처음DB집합/runtime바이트 오류는 terminal 전사이며 raw 파일이 있었던 것으로 쓰지 않는다. 초기/최종 C 로그·실행 snapshots·원본 manifest와 제외incremental목록을 보존한다. `freeze_nes071.py`/044–071 finalizer를 다시 실행하지 않는다. 원본fit 경로는 로컬068 fit03-path.txt, 새 조립은TEMP `nes071-asm-01`, pair는 동결071의pair/다. 공개 clone에 바이너리/DB/ROM/로그는 없다. 재현 CLI는071 계약에 있다.
+정상044와TXT성공HWINFO002는별도역할이며파일4개는이미보존했다.없는before-sdinfo072를현재진단으로대체하지않는다. 확인된Rev.D/STM32F401RCT6/EP4CE15F17C8N/EBLL-70BLI×2 재질문금지. [075 결과](../../analysis/OFFLINE075-RESULT.ko.md)·[076 결과](../../analysis/MENU076-RESULT.ko.md)를참조한다.
 
-## 지금부터의 작업 순서와 완료 조건
+077 증거 probes/nes-sd-response077/evidence/:1424파일,manifest `8b4b5a9385dd7ced9a46b725d9e3a71f6877734b07febe3f0ec560f30842720c`. verifier077로검사하고finalizer재실행/동결044–077편집금지. 최초DWORD중복과ELF checker의direct-call가정실패를보존했다(후자는stderr전사임). 이번시작PR27open/미병합,같은PR갱신;다음차례재확인.한국어PR3절/큰진전커밋규칙유지.
 
-1. 실제SD 원본 firmware/base/menu의 크기·SHA·형상·호환성과 독립 backup/readback/restore 수단을 확보한다. 기존 실제 분류 코드를 먼저 읽고 smc_id/sgb_id·plain mapper0/1/carttype0–2/offset/payload≤4MiB/특수 FPGA/SGB/EGBC 없음의 조건을 대조한다. parseableRLE/작은menu만으로 승인하지 않는다. 다음 개발은 원본 파일 검사 또는 **기존 외부 실기 SD→TXT의 읽기 전용 수집**으로 좁힌다. 실제SD를 확보하기 전에 호환성을 코드로 가정하지 않는다.
-2. 게임/GBC·세이브의 별도 전체 백업과 변경6파일/복구base/menu의 제한 백업을 구분한다. preflight는 읽기 전용backup/rollback-plan이며 실제 설치/복원 실행기가 아니다. 현재SD/WP/카드/경로를 추정하지 않는다. 실제 복원·전원 손실 회복을 완료 처리하지 않는다.
-3. 전압/PCB/비동기SPI/SNES/reset해제 전 전원 안정과 lockedHIGH 쓰기 클록 정지CE>8µs 반례를 검토한다.200µsstartup은voltage sensor가 아니고같은입력PLL은독립차단이 아니다. 임의delay/blanketfalsepath로 승인하지 않는다. 조건을 정리한 뒤 회복 가능한 제한 실기 패키지를 전달한다.
-4. 사용자가 외부기기에서 실행해TXT·시간/LED·실제 메뉴화면/재진입/GBC를 각각 관측한다. firmware/FPGA 파일readback·CF68을 함께 확인한다. verified/STOP/base/menu-PREPARED와RAM/UART RETURN_READY_RESET_RELEASED는 화면 증명이 아니다. native/shared SPI/TIM2/SD 오류는RESET/USB를 유지하고추가SD/base를 금지한다. START/불확실한 재시도는 계속 차단한다.
+---
 
-준비도5완료/6부분/1미완료는 작업량 비율이 아니다. H11오프라인쌍은 진전했지만H06외부/H08H09물리/H11설치쌍/H12실제복원은 남는다. installable/hardware/clock_halt_safe=false다. 알려진부품/사진/분해/실기PC직접연결을 다시 요구하지 않는다. 기존044/GBC 기준과GBC152/originalNES334 해시는 유지한다. 주요 진전마다한국어PR 세절과목표달성/미달성/다음완료기준을 남긴다.
+아래는074 당시 역사적 기록이며 위077·075/076 결과가 우선한다.
 
-## 070 보존 인계와 재사용 한계
+# NES 다음 작업 인계 — 074 이후
 
-# NES 다음 작업 인계 — 070 이후
+현재 전달본은 **SDINFO074-BASE069 LED 오류 관측용 수집기**다. 사용자는073의 HW004000.TXT0바이트와 검은 화면을 보고했다. 정확한 원인은 미확정이며074를 저장 수정 성공으로 표시하지 않는다. [074 결과](../../analysis/SD-FAULT074-RESULT.ko.md), [실행 안내](../../docs/SDINFO074-RUN.ko.md), [검증 메타데이터](../../analysis/sd-fault074-verification.json)를 읽는다. PR27은 이번 시작 시open/미병합이며 같은PR로 업데이트한다.
 
-검증 후보는 **NES-CF68-SESSION-070**, MCU는 **NES-CF68-MCU-069**, FPGA는 **NES-DIAG-SAFETY-068 / CF68**이다. PR24 병합 `8528e15eb5115f16d4f44fb4deed11e3208649a1`에서 `codex/nes-cf68-session-070`으로 진행했다. [070 결과](../../analysis/CF68-SESSION-RESULT.ko.md), [재현 계약](../../docs/nes-cf68-session-contract.md), [기계 요약](../../analysis/cf68-session-verification.json)을 먼저 읽는다. [069 결과](../../analysis/CF68-MCU-RESULT.ko.md)와 [068 계약](../../docs/nes-diag-safety-contract.md), [모델 전환 인계](../../docs/development/NES-067-SOL-HANDOFF.ko.md)의 보호 조건은 유지한다. 이 인계가 과거 문서의 당시 현재/다음보다 우선한다.
+## 다음 진행과 구분
 
-## 이번에 확인한 경계
+- 사용자는 외부 실기에서 실행한다. 다음 입력은 새HW005nnn.TXT/파일크기와 카트리지 Ready·Read·Write LED60초 영상이다. LED가 보이는지 비동기 질문을 보냈으며 답이 없다면 보인다고 단정하지 않는다. 분해/PC USB/이미 확인한 부품 질문은 금지한다.
+- 074는 단일 firmware133332바이트 SHA `031725700f3e9c58abc1001f9d53cdbe89a1587e5e552a77951434d136953271`. 원본 독립 백업과 firmware.before-sdinfo072.stm은 그대로 유지한다. 현재 진단 펌웨어로 원본 백업을 덮지 않는다.
+- 새 stage는1수집/2생성/3쓰기/4sync/5닫기/6재열기/7재읽기/8닫기/9화면. 첫 오류에서 원자적 단일 word의 오류·단계를 고정하고 MCU LED로 표시한다. 안내 표를 참조한다. 최종 BLOCKED에서만 잡으면 이미 단계가 달라질 수 있어 mutation으로 금지했다.
+- SD/FatFS/runtime11입력은073과 동일하다.074는 UART 없는 관측 플랫폼·호출 전 RAM 표식·ID만 바꾼다. RESET/USB/쓰기권한 회수/native fault 뒤 추가IO 금지/재시도 금지를 유지한다. SysTick 정지/CPU lockup에서도 깜빡인다고 주장하지 않는다.
+- 원인 확정 전 CMD24 gap/CRC 샘플/busy/예산을 무작정 바꾸지 않는다. 실제 SD command/data/CRC는073·074 통합에서도 모형이다. 코드 조사가 관측을 대체하지 않는다. LED 오류와 단계로 가설을 좁히고 actual lower-call 실패를 재현한 뒤 수정한다.
 
-동결069 실제 C 캡처의 전체80/96KiB를 새 실행기로068 물리 top에 재생했다. RAM 사전 적재 없이 실제 WE로180224바이트를 쓰고 읽었으며,901152프레임과50464224응답 비트, 모든 ACK·마지막 ACK·FINISH·STOP·전체 RAM·핀 반환이 통과했다. READY201.0625µs 이후 캡처 원점을 시작하고8MHz SPI/PSRAM은 계속 실행했다. 원래 클록64프레임과 미사용 legacy/H1 영역을 멈춘8192프레임도 통과했다. 응답 비트 오류 대조는 첫 CF 응답 bit8에서 정확히 실패했다. 원시 `%t`는1ps 단위라 `ready_ns` label의 값은1000으로 나눠ns로 읽는다.
+## 증거·재현·보존
 
-생산 SV15개는068 fit03과 같다. 디지털 PLL stub, reset-held H1 입력의 별도 클록 표현, CF68/F0/F1 뒤 미사용84MHz park는 시험 변경이다. 실제 GPIO polling·SD/CPU 지연·interrupt jitter·비동기 위상, 기본 FPGA 재설정과 메뉴 화면은 이번 보드 재생 범위 밖이다.069의95 helper/상위/오류 회귀·ARM 전체 링크와068의2400LE/195LAB/1479regs/44M9K/135핀/PLL1/내부 최소hold0.140ns를 같은 소스 경계에서 재사용한다. 새 ARM/map/fit/STA/ASM은 없다. 전체 NES059의959LAB/4여유/마지막8프레임은 별도 근거다.
+공개 prepare074는 pinned069→기존 prepare073→별도074변환이다. 실제 materialized source의 collector52/writer23/platform6/report29·runtimeLED162·늦은 capture mutation1·FatFS40·ARM actual callsites 통과. LED 표시의 실물 관측은 아직 없음. 별도 sourceZIP은 실제 빌드입력과 mini 대응소스를 포함한다. NES쌍/RTL/fit/Questa는 새로 실행하지 않았다.
 
-## 다음 작업과 완료 기준
+`probes/nes-sd-fault-074/evidence/`1519파일 manifest `2be1006b6365414d2246e1dc38655126e3f2b00405871422f1f7a9626d37165b`. 동결 이후 audit의 objdump 경로 encoding/helper 위치 오류를 공개 verifier에서만 수정했다. sibling `audit-addendum/write_report.txt`는 같은 frozen ELF의 보충이며 공개meta SHA로 고정한다. final audit/073 audit 통과. freeze/finalizer 재실행이나044–074 증거 편집 금지. 과거ZIP verifier는 초기판이고 현재 공개 verifier와 addendum을 사용한다. 초기 Make dependency 실패/후속 통과 보존.
 
-1. 066의 `tools/nes_pair_preflight.py`와 관련 ASM·C decoder 도구를 먼저 읽는다. 이 도구는 **061 RBF/065 ARM 해시·CF61·표식065·fpga_nlv**에 고정되어 있으므로 그대로 새 쌍에 호출하지 않는다. 기존 도구를 보존하고068/069용 파생 실행기로 분리한다.
-2. **068 최종 fit03**을 새로운 ASCII 폴더에 복사한다. 원본 DB114파일, QSF/QPF/SDC와15개 SV의 해시를 검증한 뒤 Standard25.1 ASM/CPF만 실행한다. 원본 DB·동결 파일을 수정하지 않는다. Lite의 기존 실패나 새 fit를 이유 없이 반복하지 않는다.
-3. 066 수정 encoder의 규칙으로 RBF 길이와 모든 바이트를 대조하고 실제 C programmer 복원을 검증한다. EOF padding·65535 경계·DONE 오류 대조를 유지한다. MCU는 고정069 ARM179336바이트 SHA `268bc38df477516cbcee19f17b192151b79c6e011dc801756d1ad02fc0262499`다. 표식06980/96·`fpga_nl8.bi3`·expectedCF68·로그069를 같은 쌍 manifest로 묶는다.065/066 CF61 쌍과 섞거나 timestamp header를 임의 정규화하지 않는다.
-4. 실제 SD의 원본/base/menu 형상·카드/WP·시간/LED·독립 백업/복원을 확보한다. 모형의 복원 계획을 실제 복원으로 기록하지 않는다. START와 불확실한 DATA/ACK 재시도는 금지한다. native/shared peripheral 오류 뒤 RESET/USB를 유지하고 추가 SD/base 접근을 하지 않는069 보호를 보존한다.
-5. 외부 전압/PCB/비동기 SPI/SNES, reset 해제 전 전원 안정, lockedHIGH 쓰기 클록 정지의 한계를 함께 검토한다. 전기 보증을 가정으로 닫거나 blanket false-path·같은 입력의 PLL을 독립 차단으로 취급하지 않는다. 회복 가능한 제한 패키지를 사용자가 외부 기기에서 실행하고 TXT·화면·메뉴 재진입·GBC 관측을 전달하는 방식으로 진행한다.
+다음 완료 조건: 사용자 LED로 소프트웨어 최초 오류·단계를 확정→해당 실제하위 경로 수정/인과대조→비어있지 않은 새TXT framing/CRC/전체검사→원본 복원/메뉴/GBC 확인. 이후 actual menu 분류와 외부전기/clock/backup gates를 해결한다. 파일 이름/0바이트/모형 통과를 실기 성공으로 보고하지 않는다.
 
-## 동결 근거와 실패 기록
+## 고정071/069/068 기준
 
-`probes/nes-cf68-session-070/evidence/`의 **297파일**, manifest `8e03dbc0ef18b5ab9d2ba63bfde8612325b6bd9f5d32f35900b887ebe21fc00a`. `verify_nes_cf68_session.py --evidence <absolute>`는 private archive를 요구한다. 정상baseline64-02/parked8192-01/두full-01과mutation-response-01의 실행 snapshot, 입력 trace/fixture, raw 로그를 보존했다. 최초baseline64-01은 복사한 testbench의 top이 옛 이름이라 최적화에 실패했다. 제품/라이선스 실패가 아니며 모듈명·preflight 수정 뒤 통과했다.
+071 RBF510856 SHA `45dcb3f3908b427b66f3fe52f14e56c80efae58d422af95b322580bd57f0a572`, packed212523,069 ARM179336 SHA `268bc38df477516cbcee19f17b192151b79c6e011dc801756d1ad02fc0262499`. fpga_nl8.bi3,표식 NES VERIFY 069 80.nh1/96.nh1,로그 `/sd2snes/nes-verify-last-069.txt`를 같은 쌍으로 유지한다.065/066/072 firmware와 섞거나 timestamp header를 정규화하지 않는다. 071manifest `a70297c41f163eacdf9423e9c93ba8abb5a828aa9bf05e3112eadde7d5848cbd`,374파일 audit 재통과. [071 결과](../../analysis/CF68-PAIR-RESULT.ko.md)/[계약](../../docs/nes-cf68-pair-contract.md)에 원본db114/관측incremental17 제외·ASM/CPF·C복원510856+66309·오류13·로컬preflight23가 있다.
 
-`freeze_nes070.py`와044–070 동결을 재실행하거나 수정하지 않는다.067/068/069의 필요한 private 입력도 유지한다. FLOAT 한 좌석으로 순차 실행했고 정상 종료했다. 상속 uncounted license, 반복 smoke, 전역 서비스/환경 변경을 금지한다.
+070180224bytes/901152frames/50464224응답bit/ACK/FINISH/STOP은 디지털 보드 세션이며 actual MCU/SD/화면 proof가 아니다. [070 결과](../../analysis/CF68-SESSION-RESULT.ko.md)를 따른다.068최종 fit03 2400LE/195LAB/1479regs/44M9K/135핀/PLL1/최소hold0.140ns와069 ARM·95helper 회귀를 현재 source 경계에서 유지한다. 전체NES059의959LAB/4여유/마지막8프레임은 별도 근거다. START/불확실DATAACKretry/native 공유오류 뒤SD/base 금지,RESET/USB 보호를 보존한다.
 
-## 실물·진척·게시
+## 알려진 실기·준비도·게시
 
-FXPAK Pro Mk.III Rev.D / STM32F401RCT6 / EP4CE15F17C8N / IS66WVE4M16EBLL-70BLI×2 / IS62WV5128EBLL-45HLI는 실물 확인 완료다. 부품명·사진·분해·PC USB를 다시 요구하지 않는다. 실기는 외부에 있으며 패키지→사용자 SD 실행→TXT/영상으로 진행한다.044 화면 순환/GBC 정상 보고와 GBC152/originalNES334 보호 해시를 유지한다.
+FXPAK Pro Mk.III Rev.D / STM32F401RCT6 / EP4CE15F17C8N / PSRAM IS66WVE4M16EBLL-70BLI×2 / SRAM IS62WV5128EBLL-45HLI는 실물 확인 완료다. 부품/사진/분해/PC 직접연결을 다시 요청하지 않는다. 외부기기 패키지→사용자실행→TXT/영상으로 진행한다.044 LINK SCREEN1→2→3→1·자동종료 없음·GBC 정상 플레이와 GBC152/originalNES334 해시를 유지한다.
 
-준비도 **5완료/6부분/1미완료**는 작업량 비율이 아니다. H10은 최신 CF68 전체 디지털 근거로 갱신했다. H06 외부 승인, H08/H09 물리 가시성·시간, H11 새 ASM/ARM 쌍, H12 실제 SD 백업/복원은 남는다. installable/hardware/clock_halt_safe=false다. 주요 진전마다 commit/push/한국어 PR의 세 절을 작성하고 사용자 merge 보고 후 상태를 확인한다. 모델·담당 변경으로 검증 수준을 낮추지 않고 실제 모델 변경을 도구로 주장하지 않는다.
+준비도5완료/6부분/1미완료는 작업량 비율이 아니다. H06외부/H08H09실물가시성·시간/H11설치/H12실제복원은 남고071 installable/hardware/clock_halt_safe=false다. 주요 진전마다 명시적stage/commit/한국어PR 세절과 목표달성/미달성/다음완료기준을 남긴다. Questa는 기존 Starter FLOAT wrapper로 실제 필요 job만 실행한다. 이번072는 새 Questa/Quartus를 실행하지 않았다. 실제 모델 변경은 도구로 주장하지 않는다.
