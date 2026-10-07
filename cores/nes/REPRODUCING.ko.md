@@ -91,3 +91,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 066 오프라인 파일 쌍·읽기 전용 사전 점검
 
 [066 계약](../../docs/nes-pair-preflight-contract.md)의 명령은 명시적으로 제공한 private061 Standard fit·065 ARM을 필요로 한다. 공개 clone은 DB/바이너리를 제공하지 않는다.18개 SD 시험은 로컬 파일 모형이고 backup/rollback-plan은 사용자 SD를 수정하지 않는다. 정확한 부품·실제 menu/base·설치/복원은 남는다.
+
+## 067 진단 메모리
+
+[067계약](../../docs/nes-diag-memory-contract.md)의 명령을 사용한다.공개 단위시험은새loader/CHECK핀모형, bounded C replay는private060host입력이필요하다.동결067verifier는private원시근거검사다.외부IO/전체SPI/ARM/설치승인은포함하지않는다.

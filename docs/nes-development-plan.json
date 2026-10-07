@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-07",
-  "technical_candidate": "NES-PAIR-PREFLIGHT-066",
+  "technical_candidate": "NES-DIAG-MEMORY-067",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "066에서061 Standard ASM/CPF와 정확한510856바이트 압축 복원,065 ARM 쌍·18개 읽기 전용 SD 백업/복원 계획 검사를 완료. 실제 SD/menu/복원 실행·PSRAM/외부 IO·물리 관측은 남음.",
+  "assessment": "067 진단SETUP/읽기HOLD/RELEASE,정상4/실패4·bounded C72312비트·새184LAB/내부STA30통과.외부IO·전원/클록정지·전체SPI/새ARM쌍·실기미완료.",
   "next_action": "R4",
   "next_three_deliverables": [
-    "정확한 PSRAM 부품/speed grade/보드 대응·외부 IO min/max 확정",
-    "실제 SD/base/menu 분류와 독립 백업·설치/복원 실행 경계 검증",
-    "제한 실기 적재/전체 비교/STOP/base·메뉴 복귀/재진입·GBC 회귀 관측; 전체 소비자는 별도"
+    "067 실제 min/max 외부IO·전원tPU/클록정지tCEM 정책과 근거",
+    "최종 회로 전체C80/96KiB SPI 회귀·CF67 MCU/ARM·동일 소스 파일 쌍",
+    "실제SD/base/menu·독립 백업/복원 확인 뒤 외부 실기 TXT·화면·GBC 회귀"
   ],
   "gates": [
     {
@@ -78,8 +78,8 @@
     {
       "id": "BOARD-FIT",
       "status": "partial_scoped_physical_fit_internal_STA",
-      "evidence": "analysis/BOARD-DIAGNOSTIC-RESULT.ko.md",
-      "detail": "CPU-free0612386LE/186LAB/44M9K/135physical/PLL1; internal minimum slack0.131ns.54input/49output ports externally unconstrained. Full-core059959LAB/4remain unchanged."
+      "evidence": "analysis/DIAG-MEMORY-RESULT.ko.md",
+      "detail": "067 CPU-free diagnostic2372LE/184LAB/44M9K/135physical/PLL1; internal min0.150ns.54input/49output externally unconstrained. Full-core059959LAB/4remain separate."
     },
     {
       "id": "DISPLAY-240",

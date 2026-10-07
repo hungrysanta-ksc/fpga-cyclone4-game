@@ -197,3 +197,7 @@ LED 표시의 소유권도 정한다. SysTick의 `led_error()`가 write LED를 �
 사용자 요청에 따라 기존 GBC 인계·board-bus/board-clock·G12 저장 시험·0.9.0 release source와 upstream 회로를 다시 확인했다. GBC [인터페이스 계약](../INTERFACE-CLOCK-RESET.ko.md)도 실제 PSRAM setup/hold/turn-around를 미확인으로 남긴다. MK3 소스의 두64Mbit/16bit/70ns 설명과 핀 맵·모델은 남아 있지만 정확한 장착 부품/speed grade 근거는 찾지 못했다. 로컬 RevF 회로의 MT45W8MW16은 XC3S400-PQ208 보드용이므로 현재 EP4CE15 대상에 전용하지 않는다.
 
 알려주신 [공식 FXPAK Pro 제품 페이지](https://krikzz.com/our-products/cartridges/fxpak-pro.html)는 ROM128Mbit 지원/96Mbit 구현과 FAT32를 설명하며 PSRAM 부품명·speed grade·min/max 표는 제공하지 않는다. 연결된 소개 영상의 접근 가능한 페이지에서도 부품 근거를 확보하지 못했다. 이는 기존 자료가 없다는 뜻이 아니라 실제 부품 식별 자료가 부족하다는 뜻이다. 다음 질문 전에 이 검색 결과를 재사용하고 알려진 제품명·버스 모델 값을 다시 사용자에게 묻지 않는다.
+
+## 067 갱신
+
+진단 주소SETUP/읽기HOLD/RELEASE,정상4·실패대조4,bounded C파형72312비트,새135핀/184LAB/내부STA30summary통과.부품식별완료와구분하여 H06외부IO는미완료,H08/H09물리가시성/시간·H11새CF67쌍·H12실제SD복원은부분상태를유지한다.총5완료/6부분/1미완료,설치불가.기존066쌍을새067검증으로승인하지않는다.[상세인계](NES-067-SOL-HANDOFF.ko.md).
