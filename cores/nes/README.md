@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-065 기준: **메뉴 버퍼 적재/전체 비교·SPI/TIM2/FatFS/늦은 SD 쓰기 종료·RESET/USB 보호를 host/ARM으로 검증**. 전체 진단 SPI 기록은063과 동일하다. 설치 쌍·외부 IO·물리 시간/화면/재진입은 남는다.044/GBC 기준을 보존한다.
+066 기준: **오프라인 FPGA ASM/압축 roundtrip·065 ARM 쌍과 SD 백업/복원 계획을 검증**. 기존 압축기의 EOF 추가1바이트를 검출해066 encoder에서 해결했다. 실제 SD/menu·외부 IO·물리 복원은 남으며044/GBC 기준을 보존한다.
 
 | 구분 | 현재 근거 | 남은 경계 |
 | --- | --- | --- |
@@ -18,9 +18,12 @@
 | 전체 보드 세션 063 | 80/96KiB 전체 C GPIO,8MHz SPI/PSRAM,50,464,224응답 비트; 마지막 ACK/FINISH/STOP | 미사용84MHz 영역의 테스트 변경 명시. 외부 IO·실기·설치 쌍 미완료 |
 | 하위 종료·관측 064 |FPGA22/SD24/LED16/UART5/FatFS6·native 오류 보호2·ARM 실제 호출,두 전체 SPI trace063 동일 |메뉴 offload/늦은 로그·물리 시간/가시성·설치 쌍 미완료 |
 | 메뉴 복귀 065 |93 하위/복귀 검사·4개 인과 대조·16메뉴·ARM 호출,전체 SPI063 동일 |외부 IO·쌍이미지·물리 가시성/시간/재진입 미완료 |
+| 파일 쌍 사전 점검 066 |061 Standard ASM/CPF·510856바이트 정확한 C 복원·18개 안전 검사,065 ARM 쌍 |실제 SD/base/menu·복원 실행·외부 IO·물리 설치 미완료 |
 | 제품 | 미포함, 새 SD 이미지 없음 | SNES 런타임 소비자·프레임 마감·복구 및 실제 보드 통합 |
 
 ## 작업 진입점
+
+- [066 파일 쌍 결과](../../analysis/PAIR-PREFLIGHT-RESULT.ko.md) · [계약·재현·실기 시험표](../../docs/nes-pair-preflight-contract.md) — 오프라인 준비, 설치 승인 아님.
 
 - [065 메뉴 복귀 결과](../../analysis/MENU-RETURN-RESULT.ko.md) · [계약·재현](../../docs/nes-menu-return-contract.md) — compile-only, 설치 후보 아님.
 
@@ -30,7 +33,7 @@
 
 - [062 메뉴 연결 결과](../../analysis/MENU-DIAGNOSTIC-RESULT.ko.md) · [계약·재현](../../docs/nes-menu-diagnostic-contract.md) — 설치 후보 아님.
 
-- [실기 진입 전 공정 점검·진척도·모델 운영 가이드](../../docs/development/NES-HARDWARE-READINESS-REVIEW.ko.md) — 현재065까지의 항목 상태와 남은 실기 조건. 최초061 점검과 이후 결과를 구분한다.
+- [실기 진입 전 공정 점검·진척도·모델 운영 가이드](../../docs/development/NES-HARDWARE-READINESS-REVIEW.ko.md) — 현재066까지의 항목 상태와 남은 실기 조건. 최초061 점검과 이후 결과를 구분한다.
 
 - [061 결과](../../analysis/BOARD-DIAGNOSTIC-RESULT.ko.md) · [물리 진단 계약](../../docs/nes-board-diagnostic-contract.md)
 
