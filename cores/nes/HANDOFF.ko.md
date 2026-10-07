@@ -1,20 +1,21 @@
-# NES 다음 작업 인계 — 060 이후
+# NES 다음 작업 인계 — 061 이후
 
-현재 후보 **NES-SD-READBACK-060**. [결과](../../analysis/SD-READBACK-RESULT.ko.md)와 [계약](../../docs/nes-sd-readback-contract.md)을 읽는다.044 실기와 GBC를 보존하며 새 SD 이미지는 없다.
+현재 **NES-BOARD-DIAGNOSTIC-061**. [결과](../../analysis/BOARD-DIAGNOSTIC-RESULT.ko.md), [계약·재현](../../docs/nes-board-diagnostic-contract.md).044 실기와GBC를 유지한다.061은 설치 후보가 아니며 새 SD 이미지가 없다.
 
 ## 완료한 경계
 
-- 새 `nes_sd_readback_probe`는 변경 없는044+056 C 뒤에 붙으며59 load/query와059 verify를 연결한다. 두 번째 입력의CRC·close 후 END,세 번째 입력의헤더·크기·전체CRC·close 후에만 FINISH한다.256바이트 버퍼 사용,START/SD 쓰기 없음.
-- true는 안전한 메뉴 재로딩 가능성이다. `verified`,load 결과,verify 오류,STOP,base 복구를 각각 검사한다. 검증 성공 뒤 STOP 실패라도 base 복구가 필수다. 복구 실패에서는 RESET/USB 보호를 해제하지 않는다. 불확실한 DATA/ACK는 재전송하지 않는다.
--41실행·복구/18입력 거부와CRC·close 제거 예상 실패2종이 확인됐다. 실제 C GPIO 적재29024응답 비트/256핀 바이트,비교43288비트/256ACK/SD 오류STOP이044+059 RTL에서 통과했다. 비교용96KiB 준비는 loader stimulus와핀 쓰기이며 전체 C 적재 파형이 아니다.
-- ARM 전체 링크에 새1068B 진입점이 남지만 메뉴는 미호출이다. 실제 STM32/SD 실행이 아니다. 컴파일 이미지를 설치하지 않는다.
-- SPI/메모리5개 RTL은059와동일하다.959LAB/4여유와8프레임 근거는059 재사용,060 새 합성·전체코어실행 아님. 이전044–059 근거를 고정한다.
+- PR14의060은 병합됐다. 승인된 SD 적재/재읽기/CRC·close 뒤 FINISH/STOP·base 복구와미호출 ARM 진입점은 그대로다. 재전송 금지·복구 실패 시 RESET/USB 보호를 유지한다.
+-061은 CPU/PPU 없이135개 물리 핀,8MHz 입력/84MHz PLL,PSRAM을 연결한다. 메모리만8MHz:3클록 읽기/쓰기375ns,hold125ns. 실제 NES 실행 경로를 늦추지 않는다.
+- START parser는항상오류8,boot start도0. protocol59,F0=A5/F1=44 유지,별도CF=61. CF 확인은 아직 MCU 미연결이다.
+- C GPIO 적재29024비트/256핀바이트,비교43288비트/256ACK,SD 오류STOP 통과. 비교96KiB 준비는testbench loader→핀 쓰기이며전체 C SPI 적재가아니다. 디지털 PLL stub,70ns/35ns/350ns 모델을 실제 부품 사양으로 부르지 않는다.
+- PLL loss에서각영역이비동기assert/자기클록release한다. 두클록정지·쓰기중abort에서비선택/고임피던스과복구를검사했다. abort된ROM은폐기한다. 잘못된84MHz/두START방어제거3대조가정확한assertion에서실패한다.
+- fit03:2386LE/186LAB/1458registers/44M9K/135physical/0virtual/PLL1.3corner30개내부slack최소0.131ns. 외부54입력/49출력포트는미제약. 전체코어의059959LAB/4여유·마지막8프레임은별도근거다.
 
 ## 다음 구현 순서
 
-1. CPU/PPU RUN 없는 load/verify/STOP 진단의 실제 보드 top을 만든다.044 경계와59 SPI/PSRAM을 승인된 핀·클록·reset에 연결하고,실제 메모리 규격·IO 타이밍·핀 소유권·PLL loss와전체 physical fit/STA를 확인한다. 동작하는 GBC의 조건을 NES 사실로 복사하지 않는다. SNES_SYSCLK/PIN_A9는 미확인 후보다.
-2.060 함수를 동기 메뉴 흐름에 연결한다. 성공/오류/복구를 읽을 수 있는 후보 표식·대기 시간·로그로 남기고 취소·복귀를 검증한다. 현재59 byte별 추가 비교68.3/82.0초는 wire 계산이며 실기 측정이 아니다. RESET 유지 중 가능한 진행 표시 방식을 먼저 확인한다. 본래 fpga_pgm panic은 아직 별도 timeout으로 감싸지 않았다.
-3. 같은 후보 MCU/FPGA 쌍,해시·백업·rollback·관측 절차를 준비해 제한된 실기 검증으로 간다. 전체 NES 소비자를 기다릴 필요는 없지만 해당 진단의 보드/복구 gate는 닫아야 한다. 일반 게임 실행 성공으로 확대하지 않는다.
-4. 전체 코어 경로는4LAB 여유 아래 보드/소비자/프레임 마감/CDC/STA를 별도 진행한다. 필요 면적 개선은 차등 검증하고 NES를 늦추거나 프레임을 버려 통과시키지 않는다.
+1. 실제 사용 보드/PSRAM 부품과규격·회로의전압/ZZ·CE/lane배선을확인하고외부IO min/max/turnaround를닫는다. 사용자에게제품명/리비전/부품명을문의했으며확인된답은아직없다. 기존70ns표기나동작중인GBC를근거로사양을추정하지않는다. 이정보가없어도메뉴/복구의host개발은진행할수있다.
+2.060을CF61 확인과동기메뉴흐름에연결한다. 읽을수있는후보/대기/성공·실패/로그·취소·재진입을준비한다. RESET유지중표시방법,fpga_pgm panic/timeout,base복구실패시보호를검증한다. 추가CHECK68.3/82초는계산값이지실기측정이아니다.
+3. 같은후보MCU/FPGA쌍,해시·backup/rollback·관측절차후제한된실기로간다. 일반게임성공으로확대하지않으며완성NES소비자를기다릴필요는없다.
+4. 전체코어resource/consumer/CDC/STA는4LAB여유아래별도로진행한다. CPU감속/프레임드롭으로통과시키지않는다.
 
-060 실패 기록: 초기host가 sticky SPI 오류 후 명령을 무시하는 동작을 잘못 가정했다. task 안의 참조도 선언 뒤에 놓아야 하며 preflight가 이를 검사한다. 실행 도중 driver가 편집될 수 있으므로 기록 해시는 저장한 실행 snapshot에서 구한다. wave02와최종wave03,Make 최초 dependency 실패를 보존한다. 한 FLOAT seat를 순차 사용하고 기존 wrapper가 서버를 종료하도록 한다.
+061 실패를보존한다:fit01 변환중복assertion,fit02 lock_release84→verified8 hold−0.487ns,수정fit03. wave01은이전reset연결,최종wave02는fit03과SV해시일치. 첫fast-memory는예상Fatal을냈지만exit0이라수집기가실패했고두번째에원인문자열로판정했다. 정상시험도exitcode만보지않는다. 한FLOAT seat를순차사용했고wrapper가모두종료했다. 과거동결finalizer를재실행하지않는다.
