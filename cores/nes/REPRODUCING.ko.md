@@ -63,3 +63,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 059 SPI 읽기 확인과 실행 gate
 
 [계약](../../docs/nes-spi-readback-contract.md)의 unit/host/mutation/wave는 공개 자체 소스·패턴으로 실행한다. 실제 C 파형은32바이트 확인 뒤 입력 오류 복구를 검사하며 전체 C 길이 시험은 별도 모형이다. 전체 코어/공동 fit는 private057,ARM 전체 링크는 private056 준비 트리가 필요하다. `verify_nes_spi_readback.py`는 원시 archive 감사이며 공개 clone 단독 재현이나 실제 STM32 실행이 아니다. [결과](../../analysis/SPI-READBACK-RESULT.ko.md).
+
+## 060 SD 적재·읽기 비교 연결
+
+[계약](../../docs/nes-sd-readback-contract.md)의 host/mutation/GPIO 재생은 공개 원본과자체 fixture를 사용한다. ARM은private059 준비 트리가 필요하며 메뉴 미호출이다. 전체 코어/fit는059 근거를 재사용한다. `verify_nes_sd_readback.py`는 private raw archive 감사다. [결과](../../analysis/SD-READBACK-RESULT.ko.md).

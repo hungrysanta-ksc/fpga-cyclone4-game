@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-07",
-  "technical_candidate": "NES-SPI-READBACK-059",
+  "technical_candidate": "NES-SD-READBACK-060",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "059 SPI held readback/ordered ACK/integrity START gate and MCU byte comparison verified. New2ROM8frame regression matches057; joint959LAB leaves4. SD/menu binding and full board remain.",
+  "assessment": "060 binds buffered approved SD reread to059 SPI verification and STOP/base recovery. Host41/18 and two C GPIO phases pass; ARM entry retained but menu uncalled. No new physical image or board execution;059 fit/core reused.",
   "next_action": "R4",
   "next_three_deliverables": [
-    "Bind approved SD source and protocol59 load/verify/STOP recovery with C GPIO regression",
-    "Prepare scoped load/verify-only physical diagnostic: own pins/clocks/timing/fit/recovery, paired images and progress/log/rollback; no full-core consumer prerequisite",
-    "Close full-core board resource/consumer/deadline/CDC/STA with4LAB headroom, using differential area work if needed"
+    "Build scoped load/verify-only physical top: actual pins/clocks/PSRAM timing/fit/STA/reset/recovery",
+    "Connect synchronous menu with readable identity/wait/result/log and validated cancellation/reentry",
+    "Prepare paired diagnostic images/backup/rollback/hardware observation; separately close full-core4LAB resource and consumer gates"
   ],
   "gates": [
     {
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "partial_SPI_integrity_verified_board_open",
+      "status": "partial_SD_readback_bound_board_open",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/SPI-READBACK-RESULT.ko.md",
-      "remaining": "SPI/MCU verification and full core regression pass; SD/menu binding and board/consumer/STA remain.959LAB leaves4 in diagnostic geometry."
+      "evidence": "analysis/SD-READBACK-RESULT.ko.md",
+      "remaining": "SD/protocol59 load/verify/STOP binding tested in host/RTL and linked ARM. Physical board/menu execution and full-core consumer/STA remain."
     },
     {
       "id": "R5",
