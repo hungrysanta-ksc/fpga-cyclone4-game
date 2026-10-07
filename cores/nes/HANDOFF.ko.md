@@ -1,29 +1,29 @@
-# NES 현재 인계 — 076 제한적 SRTC 메뉴 복귀
+# NES 현재 인계 — 077 SD 응답 종료·후속 클록
 
-**075에서 확인한 carttype55 거부를 active 복귀 경로에서 수정했다.** 받은64KiB 메뉴의 전체CRC/헤더를 확인하는 새 분류기와 실제 복사 중 재CRC·전체PSRAM readback을 연결했다. 일반/GBC 분류기는 그대로다. [076 결과](../../analysis/MENU076-RESULT.ko.md)·[검증 메타](../../analysis/menu076-verification.json)를 먼저 읽는다.
+077은 실제 C의 CMD24→DATA/CRC→상태→busy 에지 모형에서 **손상 종료 비트 수용과 짧은 busy 뒤6~7클록 반례를 재현·보완**했다. [077 결과](../../analysis/SD-RESPONSE077-RESULT.ko.md)·[검증 메타](../../analysis/sd-response077-verification.json)를 먼저 읽는다. **사용자0바이트 TXT의 실기 원인으로 확인된 것은 아니다.**
 
-## 현재 검증과 제한
+## 후보와 검증
 
-- 호스트853검사(분류256지점×3오류=768 포함), CRC 제거2인과대조 통과. FatFS/SRAM은 모델, 전체load_rom 호스트 실행은 아니며 실제active 구간을 추출했다.
-- ARM 전체 링크와 실제 새 분류/승인/복사/CRC 호출, 기존3marker/공유run/READY/CF68 검사 통과. 180108바이트 SHA1af4cc50de3a3c71e57d328007c301f3cc5da3fded16e989955414d640296762, ID NES-MENU076-CF68. **compile-only, 설치 금지**. 기존071 쌍/069표식에 새076 MCU를 혼합하지 않는다. 새 실기패키지 없음.
-- 고정069 275입력 중memory.c/nes_menu_return.c/Makefile만 변경,272동일. 새helper2/VERSION 별도. SDnative/FatFS/SPI/타이머/main/기존smc/sgb/GBC는 그대로다. 새RTL/Questa/Quartus/ASM 없음.
-- 프로필은 정확히 받은65536바이트/CRC c014b571/SRTC/map31/8KiB SRAM/resetff02뿐이다. 범용메뉴 지원/CRC 보안인증이 아니다. 분류와복사 각각유한IO·오류차단,공유fault후close도금지한다.
+- active 진단만 CRC 상태 end=1 검사, wait_busy 후속8클록(토큰 end 기준 최소전체10개). inactive 일반/GBC는 기존4개/검사동작 유지. busy100tick/2Mpoll·shared fault·RESET/USB·재시도금지 그대로다.
+- 기존/수정각43검사, end/tail 보호제거2인과대조. 실제C 함수지만 card/GPIO/tick/ARM CRC primitive는호스트모형이다. 전체FatFS/실기SD아님.
+- 최종ARM180128바이트 SHA179bff93a3f967f25abffe1f37562d112ffe740fb7f66b051e407339f88df420/ID NES-SD077-CF68. STM3/실제쓰기·wait·오류helper/tail-call·manual/READY/CF68 검사통과. **compile-only, 설치금지, 새패키지없음.**
+- 동결076 대비nativeSD/VERSION만변경.076 제한64KiB SRTC/CRC c014b571 메뉴와853검사는같은소스의과거근거로유지(이번재실행아님). 새RTL/Questa/Quartus/ASM 없음.077과071/069쌍을혼합하지않는다.
 
 ## 다음 작업
 
-1. **SD 0바이트 원인은 미확정**이다. 메뉴를 호출하지 않는073/074와076 메뉴수정을 혼동하지 않는다. 다음은 실제 SD DATA/CRC 응답 샘플·busy와보고서/할당예산 인과대조다. 075의CMD24 시작간격2클록은단순8클록누락을원인으로확정할근거가아니다.
-2. 원인과가시적출력이확보된뒤새실기패키지를설계한다. 074 반복/LED 영상/분해/PC USB/같은파일재요청금지. 무제한legacy fallback·오류검사완화·불확실쓰기재시도금지. nativefault RESET/USB·추가SD/SPI/base 차단유지.
-3. 실제TXT,원본044복원,메뉴/GBC재진입,base FPGA호환성/외부IO가남는다.071설치보류와준비도5완료6부분1미완료유지.
+1. 보고서/FatFS 할당·분할쓰기·sync·readback 전체세션/시간예산을 새SD응답모형과연결하고 실패 위치를 인과대조한다.077 단일CMD24 한블록모형을 전체파일저장성공으로과장하지않는다.
+2. 실제원인과가시적결과를확보한뒤새진단을설계한다.073/074 메뉴미호출 TXT문제와076 메뉴수정은별개다.075 시작간격2클록을8클록누락원인으로확정하지않는다. HW002 CMD25성공을무제한legacy복귀/오류검사완화근거로삼지않는다.
+3. 반복074/LED영상/분해/PC USB/같은입력재요청금지. 실제TXT·원본044복원·메뉴/GBC·base호환성/외부IO는남는다.071설치보류·준비도5완료6부분1미완료유지.
 
-## 입력·보존·게시
+## 입력과 보존
 
-정상044 firmware.stm과TXT성공HWINFO002 firmware.stm.bak-hwTest는별도역할이다. 두파일과m3nu.bin/base를이미보존했고before-sdinfo072사본은없다. [075 결과](../../analysis/OFFLINE075-RESULT.ko.md)의전체해시/관측을따른다. 알려진Rev.D/STM32F401RCT6/EP4CE15F17C8N/EBLL-70BLI×2는재질문하지않는다.
+정상044와TXT성공HWINFO002는별도역할이며파일4개는이미보존했다.없는before-sdinfo072를현재진단으로대체하지않는다. 확인된Rev.D/STM32F401RCT6/EP4CE15F17C8N/EBLL-70BLI×2 재질문금지. [075 결과](../../analysis/OFFLINE075-RESULT.ko.md)·[076 결과](../../analysis/MENU076-RESULT.ko.md)를참조한다.
 
-076증거 probes/nes-menu076/evidence/:1467파일,manifest `648144bf654b167b7316f77673eceb5b0f097ec566e5f382d030d6ef897aec0c`. verifier076사용,finalizer재실행/동결044–076편집금지. 최초Windows열거형충돌·mini자기복사·Makefile검사누락실패와ARM로그보존. 호스트최종소스는ARM입력과동일해시다. 이번시작시PR27open/미병합,같은PR업데이트;다음차례상태재확인. 주요검증진전마다한국어PR3절과미달성/다음완료조건을유지한다.
+077 증거 probes/nes-sd-response077/evidence/:1424파일,manifest `8b4b5a9385dd7ced9a46b725d9e3a71f6877734b07febe3f0ec560f30842720c`. verifier077로검사하고finalizer재실행/동결044–077편집금지. 최초DWORD중복과ELF checker의direct-call가정실패를보존했다(후자는stderr전사임). 이번시작PR27open/미병합,같은PR갱신;다음차례재확인.한국어PR3절/큰진전커밋규칙유지.
 
 ---
 
-아래는074 당시 역사적 기록이며 위076과075 결과가 우선한다.
+아래는074 당시 역사적 기록이며 위077·075/076 결과가 우선한다.
 
 # NES 다음 작업 인계 — 074 이후
 
