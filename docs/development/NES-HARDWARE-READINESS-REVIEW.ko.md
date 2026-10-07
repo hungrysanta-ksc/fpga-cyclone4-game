@@ -1,8 +1,8 @@
 # NES 실기 진입 전 공정 점검과 진행 가이드
 
-최신 갱신: 2026-10-07 KST, **NES065**. 현재 점검표는 [065 메뉴 복귀 결과](../../analysis/MENU-RETURN-RESULT.ko.md)를 반영한다. 실제 STM32/SD 실행과 설치 쌍은 아직 없다.
+최신 갱신: 2026-10-07 KST, **NES066**. 현재 점검표는 [066 파일 쌍 결과](../../analysis/PAIR-PREFLIGHT-RESULT.ko.md)를 반영한다. 오프라인 FPGA/ARM 쌍은 생성됐으며 실제 SD·물리 실행·설치 승인은 아직 없다.
 
-최초 점검일: 2026-10-07 KST. 당시 기준: NES061 / [병합된 PR #15](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/15), 병합 커밋 `39e831aaf045fd0f668f8b30b0482dbded2558fb` (00:51:01Z). 당시 점검은 기존 문서·소스·저장된 결과를 읽어 판단한 것이며 새 시험을 수행한 결과가 아니었다. 이후062–065의 구현·시험 결과를 현재 점검표에 반영했다.
+최초 점검일: 2026-10-07 KST. 당시 기준: NES061 / [병합된 PR #15](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/15), 병합 커밋 `39e831aaf045fd0f668f8b30b0482dbded2558fb` (00:51:01Z). 당시 점검은 기존 문서·소스·저장된 결과를 읽어 판단한 것이며 새 시험을 수행한 결과가 아니었다. 이후062–066의 구현·시험 결과를 현재 점검표에 반영했다.
 
 ## 1. 판단과 목표
 
@@ -44,8 +44,8 @@
 | H08 | 대기·진행 관측·취소·시간 제한 | 부분 |065 SPI/TIM2/FatFS 캐시/로그 한도·93 helper/복귀 검사,064 LED/UART 종료 |물리 시간/가시성·입력 정책 관측 및 실제 파일 형상 확인 |
 | H09 | 오류 종료·기본 FPGA·메뉴 복구·로그 | 부분 |065 메뉴 버퍼/전체 비교·native 쓰기 오류 보호·RESET 후 재확보·ARM 호출,063 STOP 동일 |같은 설치 쌍으로 물리 복귀/오류/재진입·GBC 회귀 확인 |
 | H10 | 현재 소스의 디지털 전체성공·오류 회귀 | 완료 | 063 전체80/96KiB 실제 C SPI 기록→보드 핀,마지막 ACK/FINISH/STOP; 같은 생산 소스의062 bounded 실패 회귀 재사용 | 8MHz는 연속 동작,미사용 legacy/H1 영역은 테스트에서 정지. 최종 소스/타이밍 변경 시 영향 검사; 물리 실행은 별도 |
-| H11 | 설치할 MCU/FPGA 쌍의 빌드·패키지 | 부분 | 062 메뉴 포함 ARM 전체 링크·호출 확인,061 map/fit/내부 STA | 최종 소스의 ARM과 최종 FPGA ASM/압축 검증, 동일 후보 해시·입력·출처·복구 파일을 묶음 |
-| H12 | 설치 전 백업·복원·관측 계획 | 부분 | 044의 패키지/과거 절차가 있음. 현재 SD 파일 해시 미확인 | 새 후보의 설치/복원 절차를 검토하고 사용자 SD 원본 백업·해시 대조 후 진입 여부 판단 |
+| H11 | 설치할 MCU/FPGA 쌍의 빌드·패키지 | 부분 |066 Standard ASM/CPF·전체510856byte 압축/C 복원,065 ARM 쌍 manifest |실제 SD의 base/menu 호환성·복구 원본과 같은 쌍으로 고정,외부 IO 승인 |
+| H12 | 설치 전 백업·복원·관측 계획 | 부분 |066 읽기 전용 백업/독립 digest/복원 계획·18개 모형 시험. 실제 SD 미확인 |사용자 SD/GBC·세이브 원본 백업,설치/복원 실행·재삽입 readback 검증 |
 
 근거: [059](../../analysis/SPI-READBACK-RESULT.ko.md), [060](../../analysis/SD-READBACK-RESULT.ko.md), [061](../../analysis/BOARD-DIAGNOSTIC-RESULT.ko.md), [062](../../analysis/MENU-DIAGNOSTIC-RESULT.ko.md), [063](../../analysis/BOARD-SESSION-RESULT.ko.md), [044 실기 관측](../../analysis/H1-HARDWARE-044-RESULT.ko.md). 완료는 각 행에 적힌 범위에만 적용한다.
 
@@ -185,3 +185,13 @@ LED 표시의 소유권도 정한다. SysTick의 `led_error()`가 write LED를 �
 [065 결과](../../analysis/MENU-RETURN-RESULT.ko.md)에서 버퍼 메뉴 복사/전체 readback,실제 SPI/TIM2/SD DATA helper와 FatFS 캐시/클러스터 탐색,실제 main의 RESET 후 안정화 구간을 검증했다.93 helper/복귀 검사와4개 인과 대조,상위16메뉴와 최종 ARM 호출,063과 동일한 두 전체 SPI 기록을 남겼다. 메뉴 헤더 분류/설정의 전체 load_rom은 host 전체 실행이 아닌 소스/ARM 근거다. 실제 핀/카드/CPU는 모형이며 설치 쌍·물리 실행은 없다. 완료5/부분6/미완료1을 유지한다.
 
 다음은 알려진 FXPAK Pro/Mk.III 대상의 정확한 PSRAM 부품/speed grade/보드 대응·외부 min/max와 FPGA ASM/압축 roundtrip·ARM 쌍·원본 SD 백업/rollback을 같은 후보로 준비한다. 임의 70ns 값을 완전한 IO 제약으로 삼지 않는다. 제한된 복귀에서는 최근/즐겨찾기 수가0이고cfg_save를 생략하며 SD 로그는 PREPARED에만 쓴다. RAM/UART RETURN_READY_RESET_RELEASED를 화면 성공으로 판단하지 않는다. 실기 메뉴 파일 형상·소프트웨어 시간 한도·LED 가시성·card/write protect·RESET 재진입을 확인하는 시험표에 이 차이를 포함한다.
+
+## 12. 066 파일 쌍·사전 점검 갱신
+
+[066 결과](../../analysis/PAIR-PREFLIGHT-RESULT.ko.md)에서061 Standard fit 원본을 새 폴더에 복사해 ASM/CPF를 완료하고065 최종 ARM과 쌍으로 묶었다. 구형 C 압축기의 EOF 추가FF1바이트를 검출했다. 새 encoder의209943바이트는 원본510856바이트와 정확히 일치하며 실제 C 프로그래머 모형과18개 사전 점검/백업/복원 계획 시험을 통과했다. 표식은065 이름을 유지한다. 실제 SD 파일·menu 분류·base 호환성·독립 백업/복원 실행은 아직 없어 H11/H12는 부분 완료,합계5/6/1을 유지한다.
+
+[실기 시험표와 재현 계약](../nes-pair-preflight-contract.md)은 card/write protect·시간/LED/UART·RESET/전원·재진입/GBC와 오류 보호를 포함한다. 원본이 바뀌면 복원 계획을 거부한다. 준비 도구는 설치/복원 명령을 제공하지 않는다. 정확한 PSRAM 부품과 외부 IO는 계속 미확인이다. 패키지 생성이나 C DONE 모형을 실제 설정·화면 성공으로 기록하지 않는다.
+
+사용자 요청에 따라 기존 GBC 인계·board-bus/board-clock·G12 저장 시험·0.9.0 release source와 upstream 회로를 다시 확인했다. GBC [인터페이스 계약](../INTERFACE-CLOCK-RESET.ko.md)도 실제 PSRAM setup/hold/turn-around를 미확인으로 남긴다. MK3 소스의 두64Mbit/16bit/70ns 설명과 핀 맵·모델은 남아 있지만 정확한 장착 부품/speed grade 근거는 찾지 못했다. 로컬 RevF 회로의 MT45W8MW16은 XC3S400-PQ208 보드용이므로 현재 EP4CE15 대상에 전용하지 않는다.
+
+알려주신 [공식 FXPAK Pro 제품 페이지](https://krikzz.com/our-products/cartridges/fxpak-pro.html)는 ROM128Mbit 지원/96Mbit 구현과 FAT32를 설명하며 PSRAM 부품명·speed grade·min/max 표는 제공하지 않는다. 연결된 소개 영상의 접근 가능한 페이지에서도 부품 근거를 확보하지 못했다. 이는 기존 자료가 없다는 뜻이 아니라 실제 부품 식별 자료가 부족하다는 뜻이다. 다음 질문 전에 이 검색 결과를 재사용하고 알려진 제품명·버스 모델 값을 다시 사용자에게 묻지 않는다.

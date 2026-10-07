@@ -87,3 +87,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 065 메뉴 복귀 하위 종료
 
 [계약·실행 명령](../../docs/nes-menu-return-contract.md)과 [결과](../../analysis/MENU-RETURN-RESULT.ko.md)를 사용한다.93 helper/복귀 검사·4개 mutation·전체 C SPI 동일 기록과 ARM 호출을 구별한다. 고정 private062 플랫폼/동결063 trace/065 archive를 요구하는 감사는 공개 clone 단독 재현이 아니다. 새 SD 설치 이미지가 아니다.
+
+## 066 오프라인 파일 쌍·읽기 전용 사전 점검
+
+[066 계약](../../docs/nes-pair-preflight-contract.md)의 명령은 명시적으로 제공한 private061 Standard fit·065 ARM을 필요로 한다. 공개 clone은 DB/바이너리를 제공하지 않는다.18개 SD 시험은 로컬 파일 모형이고 backup/rollback-plan은 사용자 SD를 수정하지 않는다. 정확한 부품·실제 menu/base·설치/복원은 남는다.
