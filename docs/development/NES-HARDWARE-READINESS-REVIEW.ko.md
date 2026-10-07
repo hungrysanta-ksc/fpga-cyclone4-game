@@ -1,8 +1,8 @@
 # NES 실기 진입 전 공정 점검과 진행 가이드
 
-최신 갱신: 2026-10-07 KST, **NES064**. 현재 점검표는 [064 하위 종료·관측 결과](../../analysis/DIAG-RECOVERY-RESULT.ko.md)를 반영한다. 실제 STM32/SD 실행과 설치 쌍은 아직 없다.
+최신 갱신: 2026-10-07 KST, **NES065**. 현재 점검표는 [065 메뉴 복귀 결과](../../analysis/MENU-RETURN-RESULT.ko.md)를 반영한다. 실제 STM32/SD 실행과 설치 쌍은 아직 없다.
 
-최초 점검일: 2026-10-07 KST. 당시 기준: NES061 / [병합된 PR #15](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/15), 병합 커밋 `39e831aaf045fd0f668f8b30b0482dbded2558fb` (00:51:01Z). 당시 점검은 기존 문서·소스·저장된 결과를 읽어 판단한 것이며 새 시험을 수행한 결과가 아니었다. 이후062–064의 구현·시험 결과를 현재 점검표에 반영했다.
+최초 점검일: 2026-10-07 KST. 당시 기준: NES061 / [병합된 PR #15](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/15), 병합 커밋 `39e831aaf045fd0f668f8b30b0482dbded2558fb` (00:51:01Z). 당시 점검은 기존 문서·소스·저장된 결과를 읽어 판단한 것이며 새 시험을 수행한 결과가 아니었다. 이후062–065의 구현·시험 결과를 현재 점검표에 반영했다.
 
 ## 1. 판단과 목표
 
@@ -41,8 +41,8 @@
 | H05 | 실제 보드·PSRAM·배선 규격 식별 | 부분 | FXPAK Pro/Mk.III·STM32·EP4CE15F17C8 대상 확정, 핀 맵과 PSRAM16MiB/16비트/70ns 표기 | PSRAM 정확한 부품·speed grade/BOM·회로·외부 타이밍과 대상 보드 대응을 기록. 이미 명시된 제품 정보는 반복 질문하지 않음 |
 | H06 | 외부 IO 타이밍·방향 전환·CDC 검토 | 미완료 | 내부 STA만 통과. 외부 입력 54포트/출력 49포트 미제약 | 아래 전기 타이밍 검토표와 제약·예외의 근거를 닫고 최종 fit/STA 수행 |
 | H07 | 메뉴 진입·파일 표시·실제 후보 확인 | 부분 | 062의3수동 메뉴 호출·CF61/형상·protocol59 검사, host 거부 시험과 ARM 호출 확인 | 설치 쌍의 해시를 확인하고 실제 파일 브라우저/메뉴 진입을 관측 |
-| H08 | 대기·진행 관측·취소·시간 제한 | 부분 |064 실제 SD/FPGA/UART 대기 오류·LED/진행·멈춘 tick/poll 검증 |메뉴 offload/늦은 로그·TIM2 대기·실제 가시성/입력 정책을 닫음 |
-| H09 | 오류 종료·기본 FPGA·메뉴 복구·로그 | 부분 |064 checked base/SD sticky 오류와 early/적재 중 RESET/USB 보호,ARM 호출;063 SPI STOP 재사용 |메뉴 준비·늦은 SD 로그를 실제 하위 호출까지 종료 가능하게 검증 |
+| H08 | 대기·진행 관측·취소·시간 제한 | 부분 |065 SPI/TIM2/FatFS 캐시/로그 한도·93 helper/복귀 검사,064 LED/UART 종료 |물리 시간/가시성·입력 정책 관측 및 실제 파일 형상 확인 |
+| H09 | 오류 종료·기본 FPGA·메뉴 복구·로그 | 부분 |065 메뉴 버퍼/전체 비교·native 쓰기 오류 보호·RESET 후 재확보·ARM 호출,063 STOP 동일 |같은 설치 쌍으로 물리 복귀/오류/재진입·GBC 회귀 확인 |
 | H10 | 현재 소스의 디지털 전체성공·오류 회귀 | 완료 | 063 전체80/96KiB 실제 C SPI 기록→보드 핀,마지막 ACK/FINISH/STOP; 같은 생산 소스의062 bounded 실패 회귀 재사용 | 8MHz는 연속 동작,미사용 legacy/H1 영역은 테스트에서 정지. 최종 소스/타이밍 변경 시 영향 검사; 물리 실행은 별도 |
 | H11 | 설치할 MCU/FPGA 쌍의 빌드·패키지 | 부분 | 062 메뉴 포함 ARM 전체 링크·호출 확인,061 map/fit/내부 STA | 최종 소스의 ARM과 최종 FPGA ASM/압축 검증, 동일 후보 해시·입력·출처·복구 파일을 묶음 |
 | H12 | 설치 전 백업·복원·관측 계획 | 부분 | 044의 패키지/과거 절차가 있음. 현재 SD 파일 해시 미확인 | 새 후보의 설치/복원 절차를 검토하고 사용자 SD 원본 백업·해시 대조 후 진입 여부 판단 |
@@ -179,3 +179,9 @@ LED 표시의 소유권도 정한다. SysTick의 `led_error()`가 write LED를 �
 ## 10. 064 하위 종료·관측 갱신
 
 [064 결과](../../analysis/DIAG-RECOVERY-RESULT.ko.md)에서 실제 SD command/CRC/wait/read와 FatFS 오류 전달,checked FPGA 설정,LED/UART 진행 및 ARM 호출을 검증했다. 상위 host의 두 전체 SPI 기록은063과 동일하며061/063 RTL·fit를 같은 경계에서 재사용한다. 신규 물리 실행 또는 설치 쌍은 없다. H08은 부분 완료로 바뀌어 현재 완료5/부분6/미완료1이다. 다음은 메뉴 offload/늦은 SD 로그의 실제 하위 종료·재진입 보호와 외부 IO다. 모든 호출을 함수 바깥 watchdog으로 감싼 것으로 완료 처리하지 않는다.
+
+## 11. 065 메뉴 복귀·늦은 로그 갱신
+
+[065 결과](../../analysis/MENU-RETURN-RESULT.ko.md)에서 버퍼 메뉴 복사/전체 readback,실제 SPI/TIM2/SD DATA helper와 FatFS 캐시/클러스터 탐색,실제 main의 RESET 후 안정화 구간을 검증했다.93 helper/복귀 검사와4개 인과 대조,상위16메뉴와 최종 ARM 호출,063과 동일한 두 전체 SPI 기록을 남겼다. 메뉴 헤더 분류/설정의 전체 load_rom은 host 전체 실행이 아닌 소스/ARM 근거다. 실제 핀/카드/CPU는 모형이며 설치 쌍·물리 실행은 없다. 완료5/부분6/미완료1을 유지한다.
+
+다음은 알려진 FXPAK Pro/Mk.III 대상의 정확한 PSRAM 부품/speed grade/보드 대응·외부 min/max와 FPGA ASM/압축 roundtrip·ARM 쌍·원본 SD 백업/rollback을 같은 후보로 준비한다. 임의 70ns 값을 완전한 IO 제약으로 삼지 않는다. 제한된 복귀에서는 최근/즐겨찾기 수가0이고cfg_save를 생략하며 SD 로그는 PREPARED에만 쓴다. RAM/UART RETURN_READY_RESET_RELEASED를 화면 성공으로 판단하지 않는다. 실기 메뉴 파일 형상·소프트웨어 시간 한도·LED 가시성·card/write protect·RESET 재진입을 확인하는 시험표에 이 차이를 포함한다.

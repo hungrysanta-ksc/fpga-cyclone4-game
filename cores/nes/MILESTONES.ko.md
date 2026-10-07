@@ -27,5 +27,6 @@
 | 062 |CF61/형상 확인·수동 메뉴3호출·복구 로그,41SD/18입력/16메뉴,ARM호출·72320C GPIO응답비트 | [062](../../analysis/MENU-DIAGNOSTIC-RESULT.ko.md) |
 | 063 |80/96KiB 전체 C→보드 핀 적재/비교/ACK/FINISH/STOP,50,464,224응답 비트; 생산 소스 보존 | [063](../../analysis/BOARD-SESSION-RESULT.ko.md) |
 | 064 |진단 SD/FPGA/UART 대기·오류 반환,LED/진행·FatFS 보호·ARM 호출;전체 SPI063 동일 | [064](../../analysis/DIAG-RECOVERY-RESULT.ko.md) |
+| 065 |메뉴 버퍼/전체 비교·SPI/TIM2/FatFS/로그 종료·RESET 이후 보호·ARM 호출 | [065](../../analysis/MENU-RETURN-RESULT.ko.md) |
 
 다음은 [제한된 진단의 관측/종료·외부 타이밍·쌍 구성](HANDOFF.ko.md)이다. 053 공개 메모리 회귀·054 SPI·056 MCU 시험은 [재현 안내](REPRODUCING.ko.md)에 구분하며 과거 실제 코어 실행을 다시 실행한 것으로 계산하지 않는다.
