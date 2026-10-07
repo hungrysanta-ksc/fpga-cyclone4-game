@@ -1,0 +1,103 @@
+{
+  "candidate": "NES-MENU-DIAGNOSTIC-062",
+  "hardware_eligible": false,
+  "installable": false,
+  "actual_stm32_execution": false,
+  "summary": "analysis/MENU-DIAGNOSTIC-RESULT.ko.md",
+  "manifest_sha256": "38041dc721d6c1a68479dc9fb66716001b24a9ef030a71c6a0bcdb759eef67ae",
+  "archived_files": 309,
+  "host": {
+    "marker": "PASS MENU062 regression=41 input_rejections=18 menu_sessions=16 no_START=1",
+    "source_sha256": "01c74c46cfadf204a1287a5a486c33d320dae3b5ae3337779c7b00c9735b6cb9",
+    "menu_source_sha256": "bf4768a905dea3618572cc8b57028334e535f1c3d8ae23543be3d51a6e5409f5",
+    "input_rejections": 18,
+    "sd_lifecycle": 41,
+    "menu_sessions": 16,
+    "fixture_sha256": {
+      "fine_x": "3daf26c8e2d0002c288efdf2ff694cdc14f0266b9cb32bb3efda8b9bf5d173df",
+      "banks32": "22427da4f719a0bce2b4d8417b35a45a347e76dbcab2cbc22427ace29aa1279b"
+    }
+  },
+  "wave": {
+    "cases": [
+      {
+        "mode": "load",
+        "marker": "PASS BOARD GPIO mode=0 samples=33200 checked=29032 pin_bytes=256 verified_bytes=0 legacy_queries=11 pll_loss_idle_and_write=1 start_barriers=2 no_RUN=1",
+        "waveform_sha256": "28a664770690c4751436334ec993380be1b47e9e62d72547edcd3bcc301d40e0"
+      },
+      {
+        "mode": "check",
+        "marker": "PASS BOARD GPIO mode=1 samples=49472 checked=43288 pin_bytes=98304 verified_bytes=256 legacy_queries=8 pll_loss_idle_and_write=1 start_barriers=2 no_RUN=1",
+        "waveform_sha256": "1fae2064e7540116d6716479e5ce7fbd1f310e54b61c2981fc6493d8d8f98069"
+      }
+    ],
+    "sources": {
+      "nes_rom_spi.sv": "9008380d185930c9001a44a52ef68def9bf2d70c43b724b4ee91dbc0773b1492",
+      "nes_spi_boot.sv": "52343d59484a9a8163209256328ac8226301165d630d165e77ee8c57c24ec3a3",
+      "nes_rom_loader.sv": "0044d3e95cb01df212a016e6b6d2f33ec242a32bb6df9bbc7709767adef9bfc9",
+      "nes_rom_boot.sv": "b38f768dde888d9d0ed47babcd449273bb03cb8526e00878cb0d3d7224d7ffb7",
+      "nes_rom_physical.sv": "718ab345658c228ca27888e39e52a74cbaaafd9a667d35b850df557487128a84",
+      "nes_packet_queue_ram.sv": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1",
+      "nes_packet_cdc_ram.sv": "977c8418538d1a15364a4d568cd0f59b9d6f371a41399440849a2be7fc554542",
+      "nes_host_stage.sv": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162",
+      "nes_h1_pattern_producer.sv": "df503ca66b93ba26441de3900375b13359345c301610b22c0d085e685ef4248d",
+      "nes_snes_frontend.sv": "d4695fb16a1b58bb59028ececb784f1f4965353626599d8df42629267c26b3a4",
+      "nes_transport.sv": "850da0fe98d251fafd464a8542f4882c7519619be5871e6ed5528ea6b003430d",
+      "nes_h1_pattern.sv": "a4039f66efbafa9e25d9a072442c4dc92777e34aa8314add80447d2b95073f6e",
+      "nes_h1_spi_boot.sv": "7ca322e5ce4a656753a20a6da876a62e410b8fd6f0aaf4228bc508541e1a204c",
+      "fxpak_nes_diagnostic_top.sv": "a2af1eeb52eaed3fcd44da76a911ee411b92e90cbe79ea0439b57ff0368ef0ae",
+      "pll_model.sv": "81436d837399bd2a9be5d59edaa685e4061d5a11b89a727d75b572e42bb8da16",
+      "rom_boot_model.sv": "805e582774402455b9887accbd69cf9290f46661d8b7e45b4463560a56ed2add",
+      "sd_readback_wave_tb.sv": "47476eae77a3e3d48f5f25524c962c0632c30d884d31b62acbda1e87e4e5d7e9"
+    },
+    "read_model_ns": 70,
+    "output_disable_model_ns": 35,
+    "write_pulse_min_ns": 350,
+    "analog_pll": false,
+    "full_C_session_success": false,
+    "check_setup": "96KiB testbench loader pin writes"
+  },
+  "arm": {
+    "full_link": true,
+    "manual_calls_in_main": 3,
+    "called_probe": true,
+    "probe_bytes": 1104,
+    "menu_run_bytes": 160,
+    "firmware_sha256": "048292d876fe1e1f9af2204f59dfa61433cf6095ae30ad5cff0b79a7b657e9a9",
+    "physical_execution": false
+  },
+  "mutations": [
+    "candidate guard removed: exact pre-BEGIN assertion",
+    "menu load guard removed: exact preparation rejection assertion"
+  ],
+  "reused_fit": {
+    "candidate": "NES-BOARD-DIAGNOSTIC-061",
+    "production_sv_match": true,
+    "LE": 2386,
+    "LAB": 186,
+    "registers": 1458,
+    "M9K": 44,
+    "physical_pins": 135,
+    "PLL": 1,
+    "internal_min_slack_ns": 0.131,
+    "external_IO_constrained": false
+  },
+  "remaining": [
+    "readable screen/progress/cancellation/blocking-call policy",
+    "full80/96KiB C-to-board successful session",
+    "actual part and external timing",
+    "paired installable images/backup/rollback/physical observation"
+  ],
+  "preserved_failures": [
+    "host01 transform shape",
+    "candidate01 collector target",
+    "menu-release01 unused parameter"
+  ],
+  "unchanged": [
+    "GBC source bytes",
+    "original NES334",
+    "044 H1 route and image",
+    "061 production RTL",
+    "059 full core and4LAB budget"
+  ]
+}

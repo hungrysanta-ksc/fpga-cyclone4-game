@@ -22,10 +22,12 @@
 | 구성 | 현재 상태 | 소스·재현 |
 | --- | --- | --- |
 | GB/GBC | C44 실기 확인, 0.9.0 공개 완료 | [GBC 개발 안내](cores/gbc/README.md) |
-| NES | 044 진단 실기 확인; 061 적재 진단135핀/PLL 연결·내부 STA·C GPIO 검증;외부 타이밍/메뉴 준비 | [NES 개발 현황](cores/nes/README.md) |
+| NES | 044 진단 실기 기준 보존; 062 CF61/형상·수동 메뉴·복구 로그, ARM 호출·C GPIO 검증; 관측/종료·외부 타이밍·전체 성공 준비 | [NES 개발 현황](cores/nes/README.md) |
 | PC Engine | 조사 대기; HuCard 범위를 우선 검토 | [PCE 조사 범위](cores/pce/README.md) |
 
 현재 구현 대상은 **FXPAK Pro / Mk.III, STM32 + EP4CE15F17C8**입니다. 제품 이름이 바뀌어도 보드 지원 범위가 넓어지는 것은 아닙니다. NES/PCE의 동작 가능성·일정은 아직 확정하지 않았습니다.
+
+이 보드·MCU·FPGA 대상은 [등록부](cores/registry.json)와 [NES 실기 준비 가이드의 하드웨어 기준](docs/development/NES-HARDWARE-READINESS-REVIEW.ko.md#확정된-개발-대상과-추가-확인-항목)에 고정합니다. 기존에 적힌 제품 정보를 반복해서 질문하지 않습니다. 추가 확인은 PSRAM의 정확한 부품·타이밍/배선 대응 등 문서로 확인되지 않은 항목으로 한정합니다.
 
 검증된 GBC 입력 경로 `src/fpga`, `src/firmware-overlay`, `src/renderer`는 유지합니다. 코어별 안내·등록부로 구분하고, 실제 공통 코드 추출은 두 번째 코어의 요구가 확인된 뒤 별도 검증으로 진행합니다.
 

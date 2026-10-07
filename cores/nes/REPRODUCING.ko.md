@@ -71,3 +71,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 061 물리 적재 진단
 
 [계약](../../docs/nes-board-diagnostic-contract.md)의 host060→board GPIO와3개 mutation,Quartus map/fit/STA는 공개 소스만으로 재현한다. 자체 fixture 외 사용자 ROM/실제 NES core export는 필요 없다. 실제 부품/아날로그 PLL/외부 IO 타이밍/실기 검증은 포함하지 않는다. `verify_nes_board_diagnostic.py --evidence <private061>`는동결 원시 근거 감사다.
+
+## 062 수동 메뉴와 후보 확인
+
+[계약](../../docs/nes-menu-diagnostic-contract.md)의 host/검사 제거 mutation/C GPIO는공개 소스와자체진단으로 실행한다. ARM은해시고정private060준비트리와툴체인이필요하며최종ELF에서3메뉴호출을검사한다. 설치용쌍이나실제STM32시험은아니다. `verify_nes_menu_diagnostic.py`는309파일동결원시근거를감사한다. 061생산RTL은같아fit를재사용하며전체C→보드성공은아직미검증이다.
