@@ -1,29 +1,28 @@
-# NES 현재 인계 — 079 저장 전 단계 표시
+# NES 현재 인계 — 080 mini·부트 ROM·최종 화면
 
-079에서 단계2–8의 문구 쓰기·전 바이트 비교/500ms 화면 기회/RESET 재유지와 실제 보고서 저장을 연결했다. 통합185·실제 타이머5·인과대조3·ARM 호출 검사 통과. SDREPORT079는 compile-only이며 부팅/file_init·가독성·복원 패키지는 남는다. P1 부분/준비도4완료7부분1미완료 유지.
+080은 embedded mini·부트 ROM 준비와 최종 문구를 bounded/전량 비교 경로로 연결했다. 플랫폼881검사·인과대조2·ARM 호출이 통과했으나 SD 초기화 전 구간과 실제 가독성은 미완료다. SDREPORT080은 compile-only, P1 부분·준비도4완료/7부분/1미완료를 유지한다.
 
-[079 결과](../../analysis/REPORT-CHECKPOINT079-RESULT.ko.md)와 [P1–P6 계획](../../docs/development/NES-077-PROCESS-REVIEW.ko.md)을 먼저 읽는다. PR27은2026-10-07T16:13:56Z 병합됐고 master `249f37fbe02942f6109df3d785d797142030f959`에서 새079 가지를 시작했다. 과거 본문의 PR27open 표기는 당시 이력이다.
+[080 결과](../../analysis/REPORT-PLATFORM080-RESULT.ko.md)와 [P1–P6 계획](../../docs/development/NES-077-PROCESS-REVIEW.ko.md)을 먼저 읽는다. 사용자는 GitHub 장애로 PR28을 병합하지 못했으나 후속 작업을 명시적으로 승인했다.079 head `53a36abb83e0d51de6a645c41eb15e4e0fc3a99c` 위의 `codex/nes-report-platform-080`이 현재 브랜치다. PR28 → 080 순서로 병합하며 후속 PR의 base는 우선079 브랜치다.079 병합 뒤 master로 전환한다.
 
-## 완료와 한계
+## 완료한 경계
 
-- 전용 `SDREPORT079`, `/HW079nnn.TXT`,3072바이트 저장 시험 payload. 기존 입력4개 재수집 없음. 결과 파일만으로 성공 판단 금지.
-- 실제074 writer/전체077 FatFS/native185검사와 actual077 timer5,보호 제거3인과 실패. 최종 ARM132104바이트 SHA `f80be9ac447edcc18d98354fc249286859b5971080baecd67a92e50b31813657`,main→run→writer→checkpoint7회 호출 확인. ARM 실행/물리화면 결과가 아니다.
-- RESET LOW·USB IRQ off·SD offload0·블록 전송 없음·active/report권한이 선행조건. shared fault 뒤SD/SRAM 금지,첫오류 보존. 표시7×500ms도 기존1000tick/10000poll에 포함. budget재개방 금지.
-- mini는RESET 해제마다 PPU/font/WRAM 초기화 후24행 DMA를 반복한다. SRAM비교는화면ACK가 아니며500ms는미검증 표시기회. 초기boot/file_init,최종legacy bootprint와물리가독성은다음범위다.
--077 native8개/mini는해시동일,068 RTL·071쌍·044/GBC 불변. 새Questa/Quartus/ASM없음. CF68전체코어/4LAB자원조건과분리한다.
+- mini153544/boot65535바이트를 실제 legacy decoder와 전 바이트 비교했다. 기존 caller가 마지막FF를 버리는 출력까지 보존한다. 고정 mini·boot 입력과 nativeSD/FatFS/타이머/메모리/SPI/079checkpoint10파일은 동일하다.
+- INITB/DONE/PROGB 대기와 RLE 입출력을 제한했다. 부트 ROM256바이트 단위 전량 재읽기,24줄 clear/비교, 준비·최종 문구의 UART 없는 readback을 연결했다. 공유 오류 이후 화면/SD 재시도와 active/fault 상태 재진입을 거부한다.
+- 플랫폼881검사/인과2와 ARM132160바이트 SHA `79f97dd91001954ab753222d839dd7a9f2f5949b60e2a79ff661c7b21be56e2a` 호출 검사 통과. 새 모형의 report writer는 stub이다. 실제 전체 FatFS/native 근거185/timer5/인과3은079에서 동일 소스로 재사용하며 새 실행으로 세지 않는다.
+- 최초smc.h 누락·기존fpga_get_done 미선언·Make 의존성 실패와 초기855검사를 보존했다. 최종normal-03/negative-03/ARM-02. 빌더079 재사용으로 obj-report079 폴더지만 ID는SDREPORT080이다. 설치용이 아니다.
 
-## 다음 작업 순서
+## 다음 작업 — 실제 SD 초기화와 전체 연결
 
-1. 전용079의 준비 화면 이전 boot/file_init/mini 종료·소유권을 점검하고 최종 화면까지 실제 플랫폼 이벤트 시험을 연결한다. 실패가 화면 전인지 저장 중인지 구별할 관측방법과 시간상한/예산 밖 범위를 명시한다.
-2. 기존 정상044 복원 자료와 묶어 보고서전용P3 적격성을 판단한다. 준비되면 외부실기1회로 화면단계·TXT·정상복원/GBC를 받는다. 원인 사전확정을 요구하는 순환차단은 금지. 아직079 설치패키지는 없다.
-3. CF68은 별도P2 외부IO/클록조건과 같은쌍P3 후 실기. 이후P5 정상속도/영상/자원가능성,P6 게임통합 순서 유지.
+1. `main → file_init → f_mount → sdn_initialize`는 아직080 이전에 실행된다. ACMD41 무한 루프, 느린 명령의 타이머/UART 종료·응답 검증을 별도 report-only 경로에 연결한다. active077은 초기화를 거부하므로 단순 활성화·guard 삭제·오류 reset으로 우회하지 않는다.
+2. 카드 초기화→mini 준비→실제 writer/native→재읽기→최종 화면의 단일 플랫폼 사건 시험을 만든다. 이번881의 GPIO/SRAM/시간/USB/보고서 저장은 모형이므로 native 전체 결합으로 확대 해석하지 않는다.
+3. 초기화·mini·저장 실패를 구별할 화면/시간 경계와 정상044 복원 절차가 준비되면 보고서 전용P3/외부실기를 판단한다. SRAM 비교나500ms 실행 기회는 실제 화면 소비 ACK가 아니다. 미확정 물리 원인을 사전 확정하라는 순환 조건은 금지한다.
+4. CF68은 별도P2 전기/클록과 같은쌍P3 필요. 이후P5 정상속도/영상/자원과P6 게임통합 순서 유지.044/GBC·전체NES959LAB/4여유·071쌍과 분리한다.
 
-## 보존·재현·실수 예방
+## 보존과 공개
 
--079 raw: `probes/nes-report-checkpoints079/evidence/`, metadata는 `analysis/report-checkpoint079-verification.json`, 검사기는 `tools/verify_nes_report079.py`. 최종normal-06/변이-06/ARM-03. 초기 준비·타이머 추출/링크·ARM 헤더/긴VERSION·Make 실패 로그 보존. 완료한 finalizer 재실행/044–079 동결편집 금지.
-- 빌더는 새079 파일만 사용한다.074빌더SHA `765a808cd9263789f1d98ab3f250e02b59c9b5a1b3e1eeb0f74b6514042d0dde` 불변. VERSION은 기존40자 시스템정보 출력 한도를 고려해 짧게 한다. 함수추출은 호출/선언이 아닌 정의에서 시작하고 ELF출력CRLF를 정규화한다.
-- 정상044와HW002 TXT성공 펌웨어 역할을 구분한다. 같은입력·LED·분해·PC USB·부품명 재요청 금지. 사진확인Rev.D/STM32F401RCT6/EP4CE15F17C8N/EBLL-70BLI×2를 사용한다.
-- 한국어 PR의 작업 목표/작업 내용/작업 결과, 검증범위·미달성·다음 종료조건을 유지한다. 병합 후 상태 재확인, 큰진전 단위 커밋, 자동병합 금지.
+- private `probes/nes-report-platform080/evidence/`, metadata `analysis/report-platform080-verification.json`, verifier `tools/verify_nes_report080.py`. 완료한 finalizer 재실행/044–080 동결편집 금지.079 증거5052파일/manifest81c3ff5b7af8911c27d0429ca25a6670b11f0dfd90dc0e6027b7b0ce17a95b13 그대로다.
+- 같은 입력4개·LED·분해·PC USB·부품명 재요청 금지. 정상044와HW002 TXT성공 펌웨어는 별개다. 기존1000tick/10000poll 저장 예산에7×500ms가 포함되며 화면 표시마다 재개방하지 않는다.
+- 한국어PR 작업 목표/작업 내용/작업 결과와 달성/미달성/다음 종료조건을 유지한다. 순차 병합은 사용자에게 맡기며 GitHub가 불가해도 검증된 로컬 커밋과 선행 관계를 보존한다.
 
 ---
 
