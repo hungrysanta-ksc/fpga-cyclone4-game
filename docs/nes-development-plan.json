@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-07",
-  "technical_candidate": "NES-MENU-DIAGNOSTIC-062",
+  "technical_candidate": "NES-BOARD-SESSION-063",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "062 candidate-aware SD probe now called by three manual menu paths;41SD/18input/16menu host cases, two causal mutations, bounded C GPIO and full ARM call sites pass. No installable pair or hardware execution.061 SV/fit and059 full-core4LAB budget preserved.",
+  "assessment": "063 unchanged062 C transactions replay complete80/96KiB through061 board memory pins:180224writes/reads/ACKs,50464224response bits, FINISH/STOP.8MHz loader/SPI always free-running; unused legacy84MHz test domain parked after identity with bounded baseline comparisons. No physical STM32, external IO qualification or paired installable images.",
   "next_action": "R4",
   "next_three_deliverables": [
-    "Implement readable observation and bounded termination/recovery policy without assuming RESET-held SNES input",
-    "Resolve exact PSRAM part/timing and external IO for the documented FXPAK Pro/Mk.III target; validate full80/96KiB final C-to-board successful session",
-    "Build paired FPGA/ARM images with backups/rollback and physical observation; full-core resource/consumer/CDC/STA separately"
+    "Connect readable phase/progress and bounded blocked-call error recovery; preserve RESET/USB/SD ownership",
+    "Resolve exact PSRAM part/timing, source versus actual board correspondence and external IO constraints for the documented FXPAK Pro/Mk.III target",
+    "Build paired FPGA/ARM images with rollback and SD backups, then scoped physical load/verify/recovery observation; full NES integration separately"
   ],
   "gates": [
     {
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "partial_manual_menu_host_ARM",
+      "status": "partial_full_C_board_memory_session",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/MENU-DIAGNOSTIC-RESULT.ko.md",
-      "remaining": "CF61/geometry/manual menu/late logs/reload guards verified in host and called ARM. Readable screen/progress/termination, full C-to-board success, external IO/part and paired images remain."
+      "evidence": "analysis/BOARD-SESSION-RESULT.ko.md",
+      "remaining": "Two complete C-to-board digital memory sessions now pass without RUN. Readable observation, actual blocked calls, external IO/device timing, paired images and physical menu recovery remain."
     },
     {
       "id": "R5",
@@ -644,7 +644,11 @@
     "board": "FXPAK Pro / Mk.III",
     "mcu": "STM32",
     "fpga": "EP4CE15F17C8",
-    "sources": ["README.md", "cores/registry.json", "docs/interfaces.md"],
+    "sources": [
+      "README.md",
+      "cores/registry.json",
+      "docs/interfaces.md"
+    ],
     "past_contract_revision": "Rev.D; documented target, not a new physical observation",
     "memory_source_description": "PSRAM total16MiB/16bit/70ns; MK3 source2x64Mbit with two CE and ZZ. SRAM512KiB/8bit/45ns",
     "remaining": "Exact PSRAM part/speed-grade/BOM and external min/max/turnaround; source timing labels are not full datasheet guarantees",
@@ -667,5 +671,21 @@
     },
     "hardware_eligible": false,
     "percentage_semantics": "Checklist states only; not work effort, schedule or NES product completion"
+  },
+  "hardware_readiness_update063": {
+    "date_kst": "2026-10-07",
+    "candidate": "NES-BOARD-SESSION-063",
+    "evidence": "analysis/BOARD-SESSION-RESULT.ko.md",
+    "counts": {
+      "complete": 5,
+      "partial": 5,
+      "incomplete": 2,
+      "total": 12
+    },
+    "changed_items": {
+      "H10": "complete for current source-level digital load/CHECK-only scope: full80/96KiB at8MHz/2us plus unchanged062 bounded error regressions; legacy-domain simulation transform explicit"
+    },
+    "hardware_eligible": false,
+    "percentage_semantics": "Checklist scope only, not effort/schedule/NES product completion; revisit H10 if final source or relevant timing changes"
   }
 }
