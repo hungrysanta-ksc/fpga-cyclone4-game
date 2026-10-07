@@ -1,19 +1,19 @@
-# NES 현재 인계 — 077 SD 응답 종료·후속 클록
+# NES 현재 인계 — 078 보고서 전체 저장 세션
 
-077은 실제 C의 CMD24→DATA/CRC→상태→busy 에지 모형에서 **손상 종료 비트 수용과 짧은 busy 뒤6~7클록 반례를 재현·보완**했다. [077 결과](../../analysis/SD-RESPONSE077-RESULT.ko.md)·[검증 메타](../../analysis/sd-response077-verification.json)를 먼저 읽는다. **사용자0바이트 TXT의 실기 원인으로 확인된 것은 아니다.**
+계획P1의 실제074 보고서→전체077 FatFS/native CMD17/CMD24/CRC/busy GPIO 모형 연결을 완료했다. [078 결과](../../analysis/REPORT-SESSION078-RESULT.ko.md)와 [관측 계약 초안](../../docs/nes-report-observation078-contract.ko.md)을 먼저 읽는다. **P1은 부분 달성: 관측 구현·부팅/총시간·최종ARM/패키지는 남는다.** 사용자0바이트의 실기 원인은 미확정이다.
 
-## 후보와 검증
+## 이번 근거
 
-- active 진단만 CRC 상태 end=1 검사, wait_busy 후속8클록(토큰 end 기준 최소전체10개). inactive 일반/GBC는 기존4개/검사동작 유지. busy100tick/2Mpoll·shared fault·RESET/USB·재시도금지 그대로다.
-- 기존/수정각43검사, end/tail 보호제거2인과대조. 실제C 함수지만 card/GPIO/tick/ARM CRC primitive는호스트모형이다. 전체FatFS/실기SD아님.
-- 최종ARM180128바이트 SHA179bff93a3f967f25abffe1f37562d112ffe740fb7f66b051e407339f88df420/ID NES-SD077-CF68. STM3/실제쓰기·wait·오류helper/tail-call·manual/READY/CF68 검사통과. **compile-only, 설치금지, 새패키지없음.**
-- 동결076 대비nativeSD/VERSION만변경.076 제한64KiB SRTC/CRC c014b571 메뉴와853검사는같은소스의과거근거로유지(이번재실행아님). 새RTL/Questa/Quartus/ASM 없음.077과071/069쌍을혼합하지않는다.
+-116검사: FAT16/FAT32 보고서2879바이트, 각각20명령(읽기10/쓰기10), 모든 R1/쓰기end/읽기CRC 위치, cold remount 전체비교,6길이/SDSC·SDHC/이름충돌/불연속할당/시간·poll한도. end검사/내용비교 제거2대조는 정확한 assertion 실패.
+-생산077 MCU·068 RTL 불변.074 보고서와077 lower 경로를 결합한 호스트 구성이며 새ARM/Questa/Quartus/실기/설치쌍 없음. 카드/GPIO/tick/ARM CRC primitive는 모형이다. 읽기 응답-데이터 중첩 전체 위상과 부팅은 미검증.
+-078 frozen267파일,manifest `9532cd2e82acae40baacee35053bd29bd94e6a73f2a7de324d82729c4bc9dac6`. run-01 정의추출/헤더 실패,run-02 미사용메뉴 링크실패,중간82/108검사 보존. 최종run-05/대조-02. verifier078을 사용하고 finalizer078/기존044–077을 재실행·편집하지 않는다.
 
 ## 다음 작업
 
-1. 보고서/FatFS 할당·분할쓰기·sync·readback 전체세션/시간예산을 새SD응답모형과연결하고 실패 위치를 인과대조한다.077 단일CMD24 한블록모형을 전체파일저장성공으로과장하지않는다.
-2. 실제원인과가시적결과를확보한뒤새진단을설계한다.073/074 메뉴미호출 TXT문제와076 메뉴수정은별개다.075 시작간격2클록을8클록누락원인으로확정하지않는다. HW002 CMD25성공을무제한legacy복귀/오류검사완화근거로삼지않는다.
-3. 반복074/LED영상/분해/PC USB/같은입력재요청금지. 실제TXT·원본044복원·메뉴/GBC·base호환성/외부IO는남는다.071설치보류·준비도5완료6부분1미완료유지.
+1. P1 잔여: 보고서 전용 후보에서 실행 전 단계 화면→RESET 유지 SD 작업→정상 때 다음 표식 순서를 구현하기 전에 mini 실제 화면 갱신/RESET 재시작과 SPI/SD 소유권을 확인한다. 오류 이후 guard 해제·화면/SD 재시도는 금지한다. 화면 방식은 설계 초안이며 가시성이 증명되지 않았다.
+2. 기존1000tick/10000poll 보고서 예산에 표시 대기를 몰래 더하지 않는다. 표시/SD/전체 예산, 부팅/file_init의 예산 밖 경계, timeout 초과 마지막 호출을 구분한다. 실제 플랫폼 이벤트·실패 주입·최종ARM 호출을 연결한 뒤 패키지를 판단한다.
+3. [P1–P6 계획](../../docs/development/NES-077-PROCESS-REVIEW.ko.md)을 따른다. 보고서 전용은 기존 경로/관측/복원 조건 충족 시CF68 P2를 기다리지 않는다. CF68 메모리 실기는P2/같은 쌍P3 필요. 준비도4완료/7부분/1미완료 유지.
+4. 반복074/LED영상/분해/PC USB/같은입력 재요청 금지. 정상044와HW002 TXT성공 펌웨어 역할을 구분한다.071 조립은 완료됐지만 설치보류,077은compile-only이며 임의 혼합 금지. 현재PR27open 조회, 같은PR에 계획검토+078 반영 후 다음 차례 상태를 재확인한다.
 
 ## 입력과 보존
 
