@@ -99,3 +99,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 068 초기 대기·읽기 활성·외부 예산
 
 [068 계약](../../docs/nes-diag-safety-contract.md)의 명령을 쓴다. 초기 guard·전체 pin 검사·fit는 공개 소스와 로컬 도구로 실행하고, bounded C replay는 private060 host가 필요하다. 동결 verifier는 private068 evidence-final을 요구한다. IO 추출은 원본 DB를 수정하지 않는 분석이며 생산 외부 승인이 아니다.
+
+## 069 CF68 MCU
+
+[069 계약](../../docs/nes-cf68-mcu-contract.md)의 host/helper/capture 명령을 사용한다. prepare/ARM은 pinned private062 플랫폼, bounded wave는 새069 host, frozen audit는069 evidence-complete와068 evidence-final이 필요하다. 실제 전체 보드 SPI 재생이나 설치 승인은 포함하지 않는다.

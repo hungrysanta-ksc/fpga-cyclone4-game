@@ -1,0 +1,79 @@
+{
+  "candidate": "NES-CF68-MCU-069",
+  "base_commit": "4651eada3c26a464b4b27627247e5a30dca2d482",
+  "fpga_candidate": "NES-DIAG-SAFETY-068",
+  "expected_cf_hex": "68",
+  "manifest_sha256": "b5d50d8a5f7590a43f33b8ebe4d5166ff2f2ae0ba9bbebf953984959d6d026ae",
+  "archived_files": 965,
+  "public_sources": {
+    "tools/nes_cf68_mcu.py": "76ca681b970deada42e2420a0817b1444e73ca9e4e9c20fec5861258eb03d2ab",
+    "tools/nes_cf68_mcu_host.py": "f23ee9925999cd72a03364b7f99af5d621e859ec5997d5d4307d9deec4193541",
+    "tools/nes_cf68_mcu_checks.py": "8574400147415a6bd101ae657d680f910ad31c7a0cad4d9a1fe733a96864ccd4",
+    "tools/nes_cf68_mcu_wave.py": "48ce6899e8ef4eb197884dcedf2afb0d927ca1193de1513cfffa80814fa849e9",
+    "tools/build_nes_cf68_mcu_arm.ps1": "8824e5b28927b17b2a56fe4677406377a251105d4156c1bfbbcabc7f8b2d26db",
+    "tools/run_nes_cf68_mcu_wave.ps1": "3a80cfc18bf0447deeefa5a61d30b2ed4ca9e14d1316560de3d450ed93ca818c",
+    "tools/verify_nes_cf68_mcu.py": "84ef6b366609ee7225d6ee99f7961a187b06fd10240ab6387ffd963459868a86"
+  },
+  "reused_fpga_manifest_sha256": "4d9a5b64465e552558ec26321d76e9c70a4a4cb786f619d06af258f31de474f1",
+  "tested_lower_functions": {
+    "sd-write-functions.inc": "3ad4ff3f8ee13207c2c3bac44947029cbb4a7723046b477e15e08b89aa093852",
+    "fatfs-cache-functions.inc": "5155cbe6b7cfcb93cec92fa1681a2c6371b73f7cfe348727313fedb37079f6ff",
+    "main-finish.inc": "29be3a885695de0579bafe5dcf3dc06190ce33ec519d4441d377258167dbe04c"
+  },
+  "upper": {
+    "lifecycle": 41,
+    "input_rejections": 18,
+    "menu_sessions": 16,
+    "extra_old_ids": 2,
+    "ready_fault": 1,
+    "native_protection": 2
+  },
+  "helpers": {
+    "copy": 20,
+    "wait": 14,
+    "log": 24,
+    "sd": 16,
+    "fatfs": 7,
+    "finish": 14,
+    "total": 95
+  },
+  "causal_mutations": 7,
+  "waveform": {
+    "response_bits": 72320,
+    "load_pin_bytes": 256,
+    "check_preload_bytes": 98304,
+    "verified_check_bytes": 256
+  },
+  "full_host": {
+    "bytes": 180224,
+    "frames": 901152,
+    "traces": {
+      "fine_x": "871d36b44e1e5ea53e539d0a347243264f810fb932301d127f29cd618fede3ab",
+      "banks32": "7b6f0910f87dc96ce8479a0f6a1b008a980483424b2a60ea47557239ffea98d6"
+    },
+    "only_change_vs065": "first CF response61->68; all frame times and remaining fields equal"
+  },
+  "arm": {
+    "firmware_bytes": 179336,
+    "firmware_sha256": "268bc38df477516cbcee19f17b192151b79c6e011dc801756d1ad02fc0262499",
+    "markers": 3,
+    "shared_run_calls": 1,
+    "shared_branches": 2,
+    "ready_before_gpio": true,
+    "cf68_compare": true,
+    "binary_header_variation": "arm01 vs arm02 differs only offsets4..7 timestamp-derived genhdr version magic"
+  },
+  "marker_files": [
+    "NES VERIFY 069 80.nh1",
+    "NES VERIFY 069 96.nh1"
+  ],
+  "diagnostic_image": "/sd2snes/fpga_nl8.bi3",
+  "log_file": "/sd2snes/nes-verify-last-069.txt",
+  "new_rtl_fit": false,
+  "new_fpga_asm_pair": false,
+  "full_board_spi_replay": false,
+  "clock_halt_safe": false,
+  "external_io_signoff": false,
+  "hardware_execution": false,
+  "installable": false
+}
