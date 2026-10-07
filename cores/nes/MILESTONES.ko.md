@@ -29,4 +29,7 @@
 | 064 |진단 SD/FPGA/UART 대기·오류 반환,LED/진행·FatFS 보호·ARM 호출;전체 SPI063 동일 | [064](../../analysis/DIAG-RECOVERY-RESULT.ko.md) |
 | 065 |메뉴 버퍼/전체 비교·SPI/TIM2/FatFS/로그 종료·RESET 이후 보호·ARM 호출 | [065](../../analysis/MENU-RETURN-RESULT.ko.md) |
 
+| 066 | 오프라인061 FPGA/065 ARM 쌍·정확한 압축 복원·SD 백업/복원 모형 | [결과](../../analysis/PAIR-PREFLIGHT-RESULT.ko.md) |
+| 067 | 진단 메모리 SETUP/샘플HOLD,정상4/실패4,bounded C 파형,새184LAB/내부STA30 통과 | [결과](../../analysis/DIAG-MEMORY-RESULT.ko.md), [Sol 인계](../../docs/development/NES-067-SOL-HANDOFF.ko.md) |
+
 다음은 [제한된 진단의 관측/종료·외부 타이밍·쌍 구성](HANDOFF.ko.md)이다. 053 공개 메모리 회귀·054 SPI·056 MCU 시험은 [재현 안내](REPRODUCING.ko.md)에 구분하며 과거 실제 코어 실행을 다시 실행한 것으로 계산하지 않는다.
