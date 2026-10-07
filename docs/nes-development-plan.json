@@ -5,10 +5,10 @@
   "technical_candidate": "NES-SD077-CF68",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "080은 embedded mini·부트 ROM 준비와 최종 문구를 bounded/전량 비교 경로로 연결했다. 플랫폼881검사·인과대조2·ARM 호출이 통과했으나 SD 초기화 전 구간과 실제 가독성은 미완료다. SDREPORT080은 compile-only, P1 부분·준비도4완료/7부분/1미완료를 유지한다.",
-  "next_action": "P1_BOUNDED_CARD_INIT_AND_COMPLETE_PLATFORM_SESSION",
+  "assessment": "081은 보고서 전용 SD 초기화의 유한 대기·응답 검사와 실제 FatFS mount 상태 연결을 구현했다. GPIO 초기화/mount8558검사·인과대조2·최종ARM 호출 통과. 전체 초기화→native 저장→최종 화면의 단일 실행·외부 관측·복원 패키지는 남는다. SDREPORT081은 compile-only이며 P1 부분/준비도4완료7부분1미완료다.",
+  "next_action": "P1_ONE_INITIALIZED_NATIVE_PLATFORM_SESSION",
   "next_three_deliverables": [
-    "report-only ACMD41/느린 명령/타이머 종료와 초기화→mini→실제 writer/native→최종 화면 통합",
+    "081 실제초기화→FatFS/native writer→080mini/최종문구 단일 플랫폼·외부관측·044복원 계약",
     "제한 진단 외부 IO/클록 조건 정리(P2) 및 최종 MCU/FPGA/base/menu 쌍·독립 백업/복원 계획(P3)",
     "구별 가능한 저장·관측 시험 통과 후80/96KiB 적재/비교/STOP·메뉴 재진입/GBC 실기(P4)"
   ],
@@ -132,8 +132,8 @@
     {
       "id": "REPORT-SESSION",
       "status": "host_integration_pass_physical_open",
-      "evidence": "analysis/REPORT-PLATFORM080-RESULT.ko.md",
-      "detail": "080 boot/platform881 + causal2 and ARM calls, report writer modeled. Bounded native init/full combined session/display consumption/recovery remain."
+      "evidence": "analysis/REPORT-INIT081-RESULT.ko.md",
+      "detail": "081 bounded SDv2 init + actual mount8558/causal2/ARM. Mount VBR is modeled. One native platform session, external observability and044 recovery remain."
     },
     {
       "id": "EXTERNAL-OBSERVABILITY",
@@ -738,8 +738,8 @@
     "last_offline_pair": "071 =068 FPGA +069 MCU; installable=false",
     "latest_mcu": "NES-SD077-CF68; compile-only",
     "report_collector_last_hardware": "SDINFO074-BASE069; zero-byte/blank-screen failure",
-    "latest_host_session": "080 actual boot/platform881 with modeled writer;079 actual native report185 retained",
-    "report_only_arm": "SDREPORT080 compile-only132160bytes; boot/terminal path linked; native initialization and physical pending"
+    "latest_host_session": "081 init GPIO + actual FatFS mount8558, modeled VBR;079 native report185 and080 boot881 separately retained",
+    "report_only_arm": "SDREPORT081 compile-only132320bytes; init/mount/080boot/079checkpoint linked; combined runtime and physical pending"
   },
   "hardware_readiness_review_initial061": {
     "date_kst": "2026-10-07",
@@ -781,8 +781,8 @@
       "scope": "Report session and external observation",
       "depends_on": [],
       "completion": "Actual multi-layer success/faults, IO protection, cumulative/boot time budget, user-visible outcome and recovery design",
-      "status": "partial_boot_platform881_ARM_done_native_init_visibility_pending",
-      "evidence": "analysis/REPORT-PLATFORM080-RESULT.ko.md"
+      "status": "partial_init_mount_ARM_done_combined_platform_visibility_pending",
+      "evidence": "analysis/REPORT-INIT081-RESULT.ko.md"
     },
     {
       "id": "P2",
@@ -829,5 +829,5 @@
       "completion": "CPU/video/input/audio/save, remaining accuracy/source adoption, same candidate board timing/game/cold-warm/endurance/GBC acceptance"
     }
   ],
-  "report_only_candidate": "SDREPORT080 compile-only"
+  "report_only_candidate": "SDREPORT081 compile-only"
 }

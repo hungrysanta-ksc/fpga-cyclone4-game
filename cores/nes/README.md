@@ -2,7 +2,7 @@
 
 2026-10-08 검토: [완료·미완료·P1–P6 작업 계획](../../docs/development/NES-077-PROCESS-REVIEW.ko.md)을 현재 우선순위로 사용한다. 준비도4완료/7부분/1미완료이며 최신 전체 통합 미검증을 반영한 집계다. 아래 단계별 표의 당시 미완료 항목은 후속 단계에서 해소됐을 수 있으므로 현재 잔여 작업은 위 계획을 따른다.
 
-080은 embedded mini·부트 ROM 준비와 최종 문구를 bounded/전량 비교 경로로 연결했다. 플랫폼881검사·인과대조2·ARM 호출이 통과했으나 SD 초기화 전 구간과 실제 가독성은 미완료다. SDREPORT080은 compile-only, P1 부분·준비도4완료/7부분/1미완료를 유지한다. [080 결과](../../analysis/REPORT-PLATFORM080-RESULT.ko.md).
+081은 보고서 전용 SD 초기화의 유한 대기·응답 검사와 실제 FatFS mount 상태 연결을 구현했다. GPIO 초기화/mount8558검사·인과대조2·최종ARM 호출 통과. 전체 초기화→native 저장→최종 화면의 단일 실행·외부 관측·복원 패키지는 남는다. SDREPORT081은 compile-only이며 P1 부분/준비도4완료7부분1미완료다. [081 결과](../../analysis/REPORT-INIT081-RESULT.ko.md).
 
 | 구분 | 현재 근거 | 남은 경계 |
 | --- | --- | --- |
