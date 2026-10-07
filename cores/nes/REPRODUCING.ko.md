@@ -103,3 +103,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 069 CF68 MCU
 
 [069 계약](../../docs/nes-cf68-mcu-contract.md)의 host/helper/capture 명령을 사용한다. prepare/ARM은 pinned private062 플랫폼, bounded wave는 새069 host, frozen audit는069 evidence-complete와068 evidence-final이 필요하다. 실제 전체 보드 SPI 재생이나 설치 승인은 포함하지 않는다.
+
+## 070 전체 CF68 세션
+
+[070 계약](../../docs/nes-cf68-session-contract.md)의 새 실행기는동결069 session과068 evidence-final을 요구한다. 기존063 실행기는CF61에고정되어그대로호출하지않는다. `LimitFrames`는prefix만,전체완료는두geometry의마지막ACK/FINISH/STOP까지확인한다. 동결070감사는private증거가필요하며 설치승인이아니다.
