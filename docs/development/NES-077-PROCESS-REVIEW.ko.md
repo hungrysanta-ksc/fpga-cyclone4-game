@@ -1,6 +1,6 @@
 # NES 전체 공정 점검과 다음 작업 계획 — 077 기준
 
-현재079 후속: 079에서 단계2–8의 문구 쓰기·전 바이트 비교/500ms 화면 기회/RESET 재유지와 실제 보고서 저장을 연결했다. 통합185·실제 타이머5·인과대조3·ARM 호출 검사 통과. SDREPORT079는 compile-only이며 부팅/file_init·가독성·복원 패키지는 남는다. P1 부분/준비도4완료7부분1미완료 유지. [079 결과](../../analysis/REPORT-CHECKPOINT079-RESULT.ko.md). 이전 회차의 검토 전용/새ARM 없음 표기는 당시 범위다.
+현재080 후속: 080은 embedded mini·부트 ROM 준비와 최종 문구를 bounded/전량 비교 경로로 연결했다. 플랫폼881검사·인과대조2·ARM 호출이 통과했으나 SD 초기화 전 구간과 실제 가독성은 미완료다. SDREPORT080은 compile-only, P1 부분·준비도4완료/7부분/1미완료를 유지한다. [080 결과](../../analysis/REPORT-PLATFORM080-RESULT.ko.md). 아래 과거 회차의 새ARM 없음 표기는 당시 범위다.
 
 검토일: 2026-10-08 KST. 기준 커밋: `a4ed773c6a6776e9c1857b948787062587c091f9`. 기존 소스·결과·인계 문서를 대조한 **검토 전용 작업**이다. 새 구현, 빌드, 시뮬레이션, 실기 시험은 수행하지 않았다. [PR #27](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/27)은 이번 조회에서 open/미병합이었다. 이후 작업 시작 시 다시 확인한다.
 
