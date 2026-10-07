@@ -75,3 +75,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 062 수동 메뉴와 후보 확인
 
 [계약](../../docs/nes-menu-diagnostic-contract.md)의 host/검사 제거 mutation/C GPIO는공개 소스와자체진단으로 실행한다. ARM은해시고정private060준비트리와툴체인이필요하며최종ELF에서3메뉴호출을검사한다. 설치용쌍이나실제STM32시험은아니다. `verify_nes_menu_diagnostic.py`는309파일동결원시근거를감사한다. 061생산RTL은같아fit를재사용하며전체C→보드성공은아직미검증이다.
+
+## 063 전체 C→보드 세션
+
+[계약](../../docs/nes-board-session-contract.md)의 host capture와 보드 replay를 두 형상에서 실행한다. 원본 fixture는 공개 생성기로 만들며 RAM을 미리 채우지 않는다. 최종 두 시험은8MHz/2µs를 유지하고 미사용 legacy/H1 domain만 테스트에서 멈춘다. 원래 클록 대조는64프레임, legacy를 계속 구동한 대조는8,192프레임으로 범위를 구분한다. `verify_nes_board_session.py --evidence PATH`는 로컬 동결 증거 감사이며 공개 clone만으로 새 시험을 수행한 결과가 아니다. 생산061SV/062C가 같아 기존 fit/STA/ARM을 재사용했다. 실제 STM32/SD/PLL/외부 IO/설치 쌍은 검증하지 않았다.

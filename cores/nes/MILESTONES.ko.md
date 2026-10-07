@@ -24,7 +24,7 @@
 | 059 | SPI CHECK/held data·tag/순서ACK/실행 gate,MCU 비교,8프레임 회귀,공동959LAB | [059](../../analysis/SPI-READBACK-RESULT.ko.md) |
 | 060 |SD 적재·읽기 비교·STOP 복구,41경우/18거부,72312C GPIO 응답 비트,ARM 링크 | [060](../../analysis/SD-READBACK-RESULT.ko.md) |
 | 061 |CPU 없는 적재 진단135핀/PLL,8MHz PSRAM,C GPIO·START 이중 차단·정지 클록 reset,186LAB/44M9K·내부 STA | [061](../../analysis/BOARD-DIAGNOSTIC-RESULT.ko.md) |
-
 | 062 |CF61/형상 확인·수동 메뉴3호출·복구 로그,41SD/18입력/16메뉴,ARM호출·72320C GPIO응답비트 | [062](../../analysis/MENU-DIAGNOSTIC-RESULT.ko.md) |
+| 063 |80/96KiB 전체 C→보드 핀 적재/비교/ACK/FINISH/STOP,50,464,224응답 비트; 생산 소스 보존 | [063](../../analysis/BOARD-SESSION-RESULT.ko.md) |
 
-다음은 [제한된 진단의 관측/종료·외부 타이밍·전체 성공 통합](HANDOFF.ko.md)이다. 053 공개 메모리 회귀·054 SPI·056 MCU 시험은 [재현 안내](REPRODUCING.ko.md)에 구분하며 과거 실제 코어 실행을 다시 실행한 것으로 계산하지 않는다.
+다음은 [제한된 진단의 관측/종료·외부 타이밍·쌍 구성](HANDOFF.ko.md)이다. 053 공개 메모리 회귀·054 SPI·056 MCU 시험은 [재현 안내](REPRODUCING.ko.md)에 구분하며 과거 실제 코어 실행을 다시 실행한 것으로 계산하지 않는다.
