@@ -95,3 +95,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 067 진단 메모리
 
 [067계약](../../docs/nes-diag-memory-contract.md)의 명령을 사용한다.공개 단위시험은새loader/CHECK핀모형, bounded C replay는private060host입력이필요하다.동결067verifier는private원시근거검사다.외부IO/전체SPI/ARM/설치승인은포함하지않는다.
+
+## 068 초기 대기·읽기 활성·외부 예산
+
+[068 계약](../../docs/nes-diag-safety-contract.md)의 명령을 쓴다. 초기 guard·전체 pin 검사·fit는 공개 소스와 로컬 도구로 실행하고, bounded C replay는 private060 host가 필요하다. 동결 verifier는 private068 evidence-final을 요구한다. IO 추출은 원본 DB를 수정하지 않는 분석이며 생산 외부 승인이 아니다.

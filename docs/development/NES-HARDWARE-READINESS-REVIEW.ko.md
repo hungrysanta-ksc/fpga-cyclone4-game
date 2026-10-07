@@ -201,3 +201,7 @@ LED 표시의 소유권도 정한다. SysTick의 `led_error()`가 write LED를 �
 ## 067 갱신
 
 진단 주소SETUP/읽기HOLD/RELEASE,정상4·실패대조4,bounded C파형72312비트,새135핀/184LAB/내부STA30summary통과.부품식별완료와구분하여 H06외부IO는미완료,H08/H09물리가시성/시간·H11새CF67쌍·H12실제SD복원은부분상태를유지한다.총5완료/6부분/1미완료,설치불가.기존066쌍을새067검증으로승인하지않는다.[상세인계](NES-067-SOL-HANDOFF.ko.md).
+
+## 068 갱신
+
+초기 대기1600완전클록, 정상2/실패2 및 boundary 우회 거부를 확인했다. 읽기 활성 레지스터의 전체 pin 모델 정상4/실패4, bounded C72312비트, 새195LAB/내부30summary와 routed3168경로의 FPGA 예산이 통과했다. H06은 PCB/전압/아날로그/클록 정지 차단 및 SPI/SNES 때문에 미완료다. **5완료/6부분/1미완료**, 설치 불가를 유지한다. 클록 정지+lockedHIGH의 CE8µs 초과 반례를 보존한다. [068 결과](../../analysis/DIAG-SAFETY-RESULT.ko.md).
