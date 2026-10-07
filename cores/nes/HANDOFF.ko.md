@@ -1,25 +1,29 @@
-# NES 현재 인계 — 078 보고서 전체 저장 세션
+# NES 현재 인계 — 079 저장 전 단계 표시
 
-계획P1의 실제074 보고서→전체077 FatFS/native CMD17/CMD24/CRC/busy GPIO 모형 연결을 완료했다. [078 결과](../../analysis/REPORT-SESSION078-RESULT.ko.md)와 [관측 계약 초안](../../docs/nes-report-observation078-contract.ko.md)을 먼저 읽는다. **P1은 부분 달성: 관측 구현·부팅/총시간·최종ARM/패키지는 남는다.** 사용자0바이트의 실기 원인은 미확정이다.
+079에서 단계2–8의 문구 쓰기·전 바이트 비교/500ms 화면 기회/RESET 재유지와 실제 보고서 저장을 연결했다. 통합185·실제 타이머5·인과대조3·ARM 호출 검사 통과. SDREPORT079는 compile-only이며 부팅/file_init·가독성·복원 패키지는 남는다. P1 부분/준비도4완료7부분1미완료 유지.
 
-## 이번 근거
+[079 결과](../../analysis/REPORT-CHECKPOINT079-RESULT.ko.md)와 [P1–P6 계획](../../docs/development/NES-077-PROCESS-REVIEW.ko.md)을 먼저 읽는다. PR27은2026-10-07T16:13:56Z 병합됐고 master `249f37fbe02942f6109df3d785d797142030f959`에서 새079 가지를 시작했다. 과거 본문의 PR27open 표기는 당시 이력이다.
 
--116검사: FAT16/FAT32 보고서2879바이트, 각각20명령(읽기10/쓰기10), 모든 R1/쓰기end/읽기CRC 위치, cold remount 전체비교,6길이/SDSC·SDHC/이름충돌/불연속할당/시간·poll한도. end검사/내용비교 제거2대조는 정확한 assertion 실패.
--생산077 MCU·068 RTL 불변.074 보고서와077 lower 경로를 결합한 호스트 구성이며 새ARM/Questa/Quartus/실기/설치쌍 없음. 카드/GPIO/tick/ARM CRC primitive는 모형이다. 읽기 응답-데이터 중첩 전체 위상과 부팅은 미검증.
--078 frozen267파일,manifest `9532cd2e82acae40baacee35053bd29bd94e6a73f2a7de324d82729c4bc9dac6`. run-01 정의추출/헤더 실패,run-02 미사용메뉴 링크실패,중간82/108검사 보존. 최종run-05/대조-02. verifier078을 사용하고 finalizer078/기존044–077을 재실행·편집하지 않는다.
+## 완료와 한계
 
-## 다음 작업
+- 전용 `SDREPORT079`, `/HW079nnn.TXT`,3072바이트 저장 시험 payload. 기존 입력4개 재수집 없음. 결과 파일만으로 성공 판단 금지.
+- 실제074 writer/전체077 FatFS/native185검사와 actual077 timer5,보호 제거3인과 실패. 최종 ARM132104바이트 SHA `f80be9ac447edcc18d98354fc249286859b5971080baecd67a92e50b31813657`,main→run→writer→checkpoint7회 호출 확인. ARM 실행/물리화면 결과가 아니다.
+- RESET LOW·USB IRQ off·SD offload0·블록 전송 없음·active/report권한이 선행조건. shared fault 뒤SD/SRAM 금지,첫오류 보존. 표시7×500ms도 기존1000tick/10000poll에 포함. budget재개방 금지.
+- mini는RESET 해제마다 PPU/font/WRAM 초기화 후24행 DMA를 반복한다. SRAM비교는화면ACK가 아니며500ms는미검증 표시기회. 초기boot/file_init,최종legacy bootprint와물리가독성은다음범위다.
+-077 native8개/mini는해시동일,068 RTL·071쌍·044/GBC 불변. 새Questa/Quartus/ASM없음. CF68전체코어/4LAB자원조건과분리한다.
 
-1. P1 잔여: 보고서 전용 후보에서 실행 전 단계 화면→RESET 유지 SD 작업→정상 때 다음 표식 순서를 구현하기 전에 mini 실제 화면 갱신/RESET 재시작과 SPI/SD 소유권을 확인한다. 오류 이후 guard 해제·화면/SD 재시도는 금지한다. 화면 방식은 설계 초안이며 가시성이 증명되지 않았다.
-2. 기존1000tick/10000poll 보고서 예산에 표시 대기를 몰래 더하지 않는다. 표시/SD/전체 예산, 부팅/file_init의 예산 밖 경계, timeout 초과 마지막 호출을 구분한다. 실제 플랫폼 이벤트·실패 주입·최종ARM 호출을 연결한 뒤 패키지를 판단한다.
-3. [P1–P6 계획](../../docs/development/NES-077-PROCESS-REVIEW.ko.md)을 따른다. 보고서 전용은 기존 경로/관측/복원 조건 충족 시CF68 P2를 기다리지 않는다. CF68 메모리 실기는P2/같은 쌍P3 필요. 준비도4완료/7부분/1미완료 유지.
-4. 반복074/LED영상/분해/PC USB/같은입력 재요청 금지. 정상044와HW002 TXT성공 펌웨어 역할을 구분한다.071 조립은 완료됐지만 설치보류,077은compile-only이며 임의 혼합 금지. 현재PR27open 조회, 같은PR에 계획검토+078 반영 후 다음 차례 상태를 재확인한다.
+## 다음 작업 순서
 
-## 입력과 보존
+1. 전용079의 준비 화면 이전 boot/file_init/mini 종료·소유권을 점검하고 최종 화면까지 실제 플랫폼 이벤트 시험을 연결한다. 실패가 화면 전인지 저장 중인지 구별할 관측방법과 시간상한/예산 밖 범위를 명시한다.
+2. 기존 정상044 복원 자료와 묶어 보고서전용P3 적격성을 판단한다. 준비되면 외부실기1회로 화면단계·TXT·정상복원/GBC를 받는다. 원인 사전확정을 요구하는 순환차단은 금지. 아직079 설치패키지는 없다.
+3. CF68은 별도P2 외부IO/클록조건과 같은쌍P3 후 실기. 이후P5 정상속도/영상/자원가능성,P6 게임통합 순서 유지.
 
-정상044와TXT성공HWINFO002는별도역할이며파일4개는이미보존했다.없는before-sdinfo072를현재진단으로대체하지않는다. 확인된Rev.D/STM32F401RCT6/EP4CE15F17C8N/EBLL-70BLI×2 재질문금지. [075 결과](../../analysis/OFFLINE075-RESULT.ko.md)·[076 결과](../../analysis/MENU076-RESULT.ko.md)를참조한다.
+## 보존·재현·실수 예방
 
-077 증거 probes/nes-sd-response077/evidence/:1424파일,manifest `8b4b5a9385dd7ced9a46b725d9e3a71f6877734b07febe3f0ec560f30842720c`. verifier077로검사하고finalizer재실행/동결044–077편집금지. 최초DWORD중복과ELF checker의direct-call가정실패를보존했다(후자는stderr전사임). 이번시작PR27open/미병합,같은PR갱신;다음차례재확인.한국어PR3절/큰진전커밋규칙유지.
+-079 raw: `probes/nes-report-checkpoints079/evidence/`, metadata는 `analysis/report-checkpoint079-verification.json`, 검사기는 `tools/verify_nes_report079.py`. 최종normal-06/변이-06/ARM-03. 초기 준비·타이머 추출/링크·ARM 헤더/긴VERSION·Make 실패 로그 보존. 완료한 finalizer 재실행/044–079 동결편집 금지.
+- 빌더는 새079 파일만 사용한다.074빌더SHA `765a808cd9263789f1d98ab3f250e02b59c9b5a1b3e1eeb0f74b6514042d0dde` 불변. VERSION은 기존40자 시스템정보 출력 한도를 고려해 짧게 한다. 함수추출은 호출/선언이 아닌 정의에서 시작하고 ELF출력CRLF를 정규화한다.
+- 정상044와HW002 TXT성공 펌웨어 역할을 구분한다. 같은입력·LED·분해·PC USB·부품명 재요청 금지. 사진확인Rev.D/STM32F401RCT6/EP4CE15F17C8N/EBLL-70BLI×2를 사용한다.
+- 한국어 PR의 작업 목표/작업 내용/작업 결과, 검증범위·미달성·다음 종료조건을 유지한다. 병합 후 상태 재확인, 큰진전 단위 커밋, 자동병합 금지.
 
 ---
 
