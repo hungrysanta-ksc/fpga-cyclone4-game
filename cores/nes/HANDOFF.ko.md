@@ -1,3 +1,26 @@
+# NES 현재 인계 — CF86 reset 경계·새 배치 검증
+
+086은 실제 CF85 배치에서 발견한 raw 감시 신호의 영역 간 직접 연결을 수정했다. CF86 동일 생산 입력16개로 새 fit/STA·CDC 감사와4 GPIO/128정지/130360응답 비트·보호 제거4개를 통과했다. 제약된 내부39 summary 최소0.158ns, 새 PSRAM3168경로의 가정상 최소64.565ns다. 외부 IO·비동기 clear 지연·실제 기준 클록/공통 고장·최신 MCU 쌍/전체 세션·실기는 미완료이며 설치 파일은 없다. 084 저장/화면/정상044복원·메뉴/GBC 성공은 유지한다.
+
+[086 결과](../../analysis/CLOCK086-RESULT.ko.md), [086 계약](../../docs/nes-clock086-contract.ko.md), [메타데이터](../../analysis/clock086-verification.json)를 우선한다. PR36은2026-10-08T02:26:05Z 병합됐다. master `2995577f37280dbe23398ba39d5238b867f20366`에서 시작한 `codex/nes-clock-timing-086`이며 자동 병합하지 않는다.
+
+## 다음 작업 순서와 완료 조건
+
+1. 보유한 base의 FE 지원·측정창과 binary-source provenance부터 확인한다. 보존 MK3 source는8MHz×12=96MHz,96000000계수+1publish주기, 최초FFFFFFFF다. 사용자 binary 대응 및 RESET-held 가용성은 아직 입증하지 못했다. 대응 불가면 PSRAM 접근을 시작하지 않는 자체 READY/클록 관측 경로를 검토한다. 성공한084 저장·복원 시험이나 부품/LED/분해/PCUSB 수집은 반복하지 않는다.
+2. CF86의 실제 비동기 clear→Q/핀/PCB/전압·부하 상한과 기준 클록 연속성·공통 원인 고장 정책을 닫는다. 이번39 summary는3개 CDC 예외가 적용된 내부 수치다. 외부 input54/744·output49/1391은 미제약이고64.565ns는 미측정 PCB 가정이다. 양클록 정지9µs 반례/MTBF 미확인을 숨기지 않는다.
+3. 이후 최신 MCU의 ID86/READY/최종 로그·전체80/96KiB 실제 C/SD/SPI/STOP/복구를 같은 후보로 검증한다. 그 뒤 같은 fit의 ASM/압축/ARM/base/menu/정상044 복원 쌍(P3)과 외부 TXT/영상(P4)이다. CF68/071 쌍에 CF86만 섞지 않는다. 전체NES 자원4LAB/P5/P6는 별도다.
+
+## 재현·보존
+
+- finalfit03과wave01의 생산 입력16개 동일. 39내부summary 최소0.158ns, 실제CDC36행/예외3개,128정지/130360응답 비트/인과4개 통과. CHECK96KiB 준비는 TB 핀 쓰기이고 C CHECK는256byte다. 전체 C 적재라고 확대하지 않는다.
+- 원래 CF85 fit01−5.354ns/일반 제어 FF crossing은 실제 배선 반례다. 수정 후 예외 없는fit02−2.561ns와 최종fit03, 첫 감사 API 오류/한글 경로 helper 오류를 보존한다. 정상/음성 로그의CLOCK085 marker는 기존 시험 task 재사용이며 실제 query86을 검사한다.
+- evidence 1793파일 manifest `f210693b8ecb48392adc4ae535282c9e5252f9b3e833a4d3b24839192a388d54`. `finalize_clock086.py` 완료 재실행 금지/044–085 archive 수정 금지. verifier086은 public source와 private 동결 입력을 함께 요구한다. 모든 FLOAT job 종료/18000 listener 없음 확인; 새 license smoke 불필요.
+- 내부 fit 통과를 외부/실기 승인으로 확대하지 않는다. 새ARM/ASM/전체길이SPI/하드웨어/설치 없음. 084 physical 및044복원/menu/GBC PASS 유지. 현재 준비도4/7/1.
+
+---
+
+## 이전085 인계 기록
+
 # NES 현재 인계 — CF85 단일 클록 정지 차단
 
 085는 별도 입력 클록을 이용한 단일 클록 정지 차단을 실제 진단 핀 셸에 연결했다. 디지털 GPIO4경우/정지128경우/인과 대조3개를 통과했으며 검출 최대4.374µs, CE LOW 최대3.350µs다. 두 클록 동시 정지 반례는 남는다. 새 fit/STA·실제 기준 클록 가용성·최신 MCU 쌍/전체 세션·실기는 미완료이며 설치 파일은 없다. 084 저장/화면/정상044복원·메뉴/GBC 성공은 유지한다.
