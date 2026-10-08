@@ -5,12 +5,12 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "086은 실제 CF85 배치에서 발견한 raw 감시 신호의 영역 간 직접 연결을 수정했다. CF86 동일 생산 입력16개로 새 fit/STA·CDC 감사와4 GPIO/128정지/130360응답 비트·보호 제거4개를 통과했다. 제약된 내부39 summary 최소0.158ns, 새 PSRAM3168경로의 가정상 최소64.565ns다. 외부 IO·비동기 clear 지연·실제 기준 클록/공통 고장·최신 MCU 쌍/전체 세션·실기는 미완료이며 설치 파일은 없다. 084 저장/화면/정상044복원·메뉴/GBC 성공은 유지한다.",
-  "next_action": "VERIFY_REFERENCE_PROVENANCE_AND_CF86_EXTERNAL_ASYNC_BOUNDS",
+  "assessment": "087은 메모리 접근 없이 RESET-held 기준 클록을 관측할 별도 CF87 회로다. 20MHz 기본800만 주기1경우와3주파수 축소 구간·고장 대조3개, 새 fit/내부STA/배선 감사를 통과했다. 10제어핀 비활성·32데이터핀 출력 차단을 배선 결과에서도 확인했다. 실제 MCU GPIO/TXT 통합·ARM/ASM·실기 패키지는 다음 작업이며 CF86 자체와084 성공 결과는 유지한다.",
+  "next_action": "BUILD_BOUNDED_CF87_MCU_OBSERVATION_REPORT_SESSION",
   "next_three_deliverables": [
-    "실제 base provenance 또는 PSRAM 접근 전 자체 기준 클록 관측·외부/비동기 차단 상한·공통 고장 정책(P2)",
-    "최신 MCU ID86/READY·전체80/96KiB 실제 C/SD/SPI/STOP/복구와 동일 파일 쌍(P3)",
-    "외부 실기 TXT/영상·정상044복원/GBC(P4);084 저장 시험 반복 불필요"
+    "실제CF87 GPIO reader·snapshot/sequence/예산 +084 RAM/mini/TXT 통합 session",
+    "동일CF87 fit ASM/ARM/정상044복원 및SPI/구성전환검증 후report-only trial",
+    "사용자TXT/영상의RESET-held reference 판별 후CF86 외부/비동기/공통고장·최신MCU/전체SPI/쌍 진행"
   ],
   "gates": [
     {
@@ -20,7 +20,7 @@
       "depends_on": [],
       "exit": "Pinned synthesis/resource table, explicit exclusions, memory service contract and integration-headroom decision; not full board signoff",
       "evidence": "analysis/SPI-READBACK-RESULT.ko.md",
-      "remaining": "전체059 회로959/963LAB로4개 여유. 별도068 CPU-free195LAB 진단과 혼동 금지. 실제70ns PSRAM의 정상속도 서비스 기한 및 전체 영상 소비자 포함 자원 결정은 남음."
+      "remaining": "전체059 959/963LAB로4개 여유. CF86 진단191LAB/CF87 관측27LAB와 별개. 전체 영상 소비자 포함 자원·실기 메모리 서비스 기한 미완료."
     },
     {
       "id": "R2",
@@ -78,8 +78,8 @@
     {
       "id": "BOARD-FIT",
       "status": "partial_scoped_physical_fit_internal_STA",
-      "evidence": "analysis/DIAG-SAFETY-RESULT.ko.md",
-      "detail": "068 CPU-free diagnostic2400LE/195LAB/44M9K/135physical/PLL1/internal min0.140ns.3168 FPGA-only external paths/conditional budget; no electrical signoff. Clock halt lockedHIGH counterexample remains. Full-core059959LAB/4remain separate."
+      "evidence": "analysis/CLOCK086-RESULT.ko.md",
+      "detail": "CF86 diagnostic2446LE/191LAB/44M9K/min0.158ns and exact3CDC exceptions; external/async/common-cause open. SeparateCF87 observation337LE/27LAB/noRAM/noPLL/min0.187ns. Neither is fullNES/physical signoff."
     },
     {
       "id": "DISPLAY-240",
@@ -829,5 +829,6 @@
       "completion": "CPU/video/input/audio/save, remaining accuracy/source adoption, same candidate board timing/game/cold-warm/endurance/GBC acceptance"
     }
   ],
-  "report_only_candidate": "SDREPORT083 first-observation trial ready; hardware unverified"
+  "report_only_candidate": "SDREPORT083 first-observation trial ready; hardware unverified",
+  "observation_candidate": "NES-CLOCK-OBSERVATION-087"
 }

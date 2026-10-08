@@ -1,3 +1,28 @@
+# NES 현재 인계 — CF87 메모리 비활성 클록 관측
+
+087은 메모리 접근 없이 RESET-held 기준 클록을 관측할 별도 CF87 회로다. 20MHz 기본800만 주기1경우와3주파수 축소 구간·고장 대조3개, 새 fit/내부STA/배선 감사를 통과했다. 10제어핀 비활성·32데이터핀 출력 차단을 배선 결과에서도 확인했다. 실제 MCU GPIO/TXT 통합·ARM/ASM·실기 패키지는 다음 작업이며 CF86 자체와084 성공 결과는 유지한다.
+
+[087 결과](../../analysis/CLOCK-OBSERVATION087-RESULT.ko.md)와 [응답 계약·다음 완료 조건](../../docs/nes-clock-observation087-contract.ko.md)을 먼저 읽는다. PR37은2026-10-08T02:56:06Z 병합됐고 master `4017a50d716474df76e43e2698feb685fbb6f8c1`에서 시작했다. 현재 `codex/nes-clock-observation-087`. 사용자만 병합한다.
+
+## 바로 다음 작업
+
+1. **실제 bounded MCU GPIO reader와 수집 session**을 만든다. CF87/C0 snapshot 원시16byte의ID/window/divisor/예약/flags/sequence 진행을 검증하고 MCU 자체시간·전체poll예산을 둔다. READY=1은 서비스표식, valid=1은 구간완료일 뿐이다. live0·마지막gap1·진행없음·부분응답을 성공으로 처리하지 않는다. 응답CRC는 아직 없으므로 actualC↔RTL을 연결해 검증한다. 구형 코어MCU가CF87을 승인하게 바꾸지 않는다.
+2. RESET-held 관측→RAM 보관→검증된mini 복귀→084 기반TXT/화면까지 ONE session. CF87은 화면/메모리가 없으므로 값을 확정한 후mini로 바꾼다. 최초fault 뒤 불확실SD/SRAM IO금지,RESET/USB 소유권 보존. 기존 정상 저장시험만 다시 요청하지 않는다.
+3. freshCF87fit의ASM/압축 + 해당ARM +044복원 쌍/manifest를 만든다. SPI IO/구성 전환/RESET 소유권 확인 후 외부실기용report-only trial을 전달한다. 사용자TXT/영상으로 기준 클록 가용성을 판별한다. LED/분해/PCUSB/기존파일/부품 재질문 금지.
+4. CF87은 관측전용이다. CF86 reset/guard·외부PSRAM/비동기clear/공통고장·최신코어MCU/전체80-96KiB는 별도 미완료다. 관측기의 상시메모리비활성을 CF86의activewrite차단 승인으로 대체하지 않는다.
+
+## 고정 근거와 실패 기록
+
+- fit01 동일생산RTL2개:337LE/27LAB/247regs/메모리0/PLL0/135핀.18내부summary 최소0.187ns,예외1개/실제inter-clock6행. mapped10제어HIGH/fitted32데이터disabled. 외부SPI3입력4경로/1출력2경로미제약. 새ARM/ASM/실기/패키지없음.
+- normal02 **20MHz 기본800만 주기 case0만PASS**1250000회. 다음22MHzcase1은1ps stimulus 양자화 기대 오류1375017vs1375000으로 실패했다. 전체run성공아님. short04의80000주기3경우12500/13750/13424 + 부재완료/재개구간PASS; short03은추가구간검사전PASS. production동일,TB parameter override만 다름.
+- 3대조same-clock02/live-snapshot01/memory-enable01 PASS(expectedfailure). same-clock01은 부재검사가 예상했던주파수검사보다일찍 올바르게 실패한 수집기기대오류,normal01compile문법/timeout경고도 보존. Questa 라이선스오류없고모든job/18000listener종료.
+- base90files 중88은18bytefixture,2는actual수신/075사본. source-binary동일성미확인. 재질문대신자체관측경로선택. FE명령을CF87에가정하지않는다.
+- 동결458files manifest `2b13e7bf14b1ed1e0d5c4230f6ee9ed8600fb73f1ed82aa96b73a748ba604d76`. verifier087 사용; finalize_clock087.py 완료재실행금지/044–086archive수정금지.084실기저장/화면/044restore/menu/GBC PASS; 준비도4/7/1.
+
+---
+
+## 이전086 인계 기록
+
 # NES 현재 인계 — CF86 reset 경계·새 배치 검증
 
 086은 실제 CF85 배치에서 발견한 raw 감시 신호의 영역 간 직접 연결을 수정했다. CF86 동일 생산 입력16개로 새 fit/STA·CDC 감사와4 GPIO/128정지/130360응답 비트·보호 제거4개를 통과했다. 제약된 내부39 summary 최소0.158ns, 새 PSRAM3168경로의 가정상 최소64.565ns다. 외부 IO·비동기 clear 지연·실제 기준 클록/공통 고장·최신 MCU 쌍/전체 세션·실기는 미완료이며 설치 파일은 없다. 084 저장/화면/정상044복원·메뉴/GBC 성공은 유지한다.
