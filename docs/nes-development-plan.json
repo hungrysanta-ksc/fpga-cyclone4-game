@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-08",
-  "technical_candidate": "NES-SD077-CF68",
+  "technical_candidate": "NES-CLOCK-GUARD-085",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "084 실기 저장·재읽기·화면 관측을 통과했다. 사용자 HW084001.TXT3072바이트가 기대값과 전체 일치하고, 영상의 같은 파일명·TXT SAVED + READBACK OK·Save code:0을 확인했다. 검토 화면에서 글자 잘림도 없다. 사용자가 정상044복원 후 메뉴·GBC도 모두 정상이라고 확인했다. 083 실제 원인 확정·반복 내구성·NES/CF68 전체 검증으로 확대하지 않는다. 준비도4완료7부분1미완료를 유지한다.",
-  "next_action": "REVIEW_CF68_P2_PAIRED_P3_P4_AFTER_REPORT084_LIFECYCLE_PASS",
+  "assessment": "085는 별도 입력 클록을 이용한 단일 클록 정지 차단을 실제 진단 핀 셸에 연결했다. 디지털 GPIO4경우/정지128경우/인과 대조3개를 통과했으며 검출 최대4.374µs, CE LOW 최대3.350µs다. 두 클록 동시 정지 반례는 남는다. 새 fit/STA·실제 기준 클록 가용성·최신 MCU 쌍/전체 세션·실기는 미완료이며 설치 파일은 없다. 084 저장/화면/정상044복원·메뉴/GBC 성공은 유지한다.",
+  "next_action": "VERIFY_CF85_REFERENCE_AND_NEW_FIT_CDC_EXTERNAL_IO",
   "next_three_deliverables": [
-    "084 저장·재읽기·화면·정상044복원/메뉴/GBC 실기 통과 보존 → 별도CF68 P2/P3/P4 진입조건 점검",
-    "제한 진단 외부 IO/클록 조건 정리(P2) 및 최종 MCU/FPGA/base/menu 쌍·독립 백업/복원 계획(P3)",
-    "구별 가능한 저장·관측 시험 통과 후80/96KiB 적재/비교/STOP·메뉴 재진입/GBC 실기(P4)"
+    "RESET-held reference 가용성·기존 base FE 측정 의미·CF85 fit/STA/CDC/외부 IO·양클록 고장 정책(P2)",
+    "최신 MCU와 CF85 전체 적재/비교/STOP/복구 및 정확한 파일 쌍(P3)",
+    "같은 쌍으로80/96KiB 실기 TXT/영상·정상044복원/GBC(P4);084 저장 시험 반복 불필요"
   ],
   "gates": [
     {
