@@ -1,3 +1,26 @@
+# NES 현재 인계 — 클록 관측 trial091 / 첫 게임 SMB3
+
+091는090의 실제 STM32 설정 함수·매크로를 레지스터 모델에 연결해 구성/관측/mini 복귀94검사와 전환 누락 대조3개를 통과했다. 생산 펌웨어는090 그대로이며 정상044 복원본을 포함한 클록 관측 trial/source ZIP을 완성했다. 다음은 사용자 HW090 TXT/화면 회수다. SMB3(J), mapper4·PRG256KiB/CHR128KiB를 첫 게임 목표로 등록했다.
+
+[091 결과](../../analysis/CLOCK-TRIAL091-RESULT.ko.md), [실행 안내](../../docs/CLOCKREPORT090-RUN.ko.md), [게임 계획](../../docs/development/NES-GAME-COMPATIBILITY.ko.md)을 먼저 읽는다. PR41 merged2026-10-08T04:56:52Z/master `3f83e0f104160d0347810a0226264bd0527f3a9b`에서 시작했고 현재 `codex/nes-clock-transition-091`. 사용자만 병합한다.
+
+## 다음 행동
+
+1. 클록 관측 trial은 `probes/nes-clock-transition091/package-01/FXPAK-CLOCKREPORT090-TRIAL.zip`, 소스는 같은 폴더의SOURCE.zip이다. 시험196248/SHA `00f757fcd1ca0da08ce0e5564358e06b482071e6119d8827e6c81748fcfddebe`와 정상044169056/SHA `1c3b40a3459d24114cb4d91ee9d861d1a08025a670ef25317ef489092203693b`. 파일/화면 번호090을 유지했다. 내용 변경 없이 재빌드/재배포하지 않는다. 사용자가 새HW090 TXT와 영상/마지막화면을 주면 실제 파일명·길이·raw/decoded·최종저장화면을 분석한다. 파일미생성/빈화면도 별도기록하고 관측 전 클록있음으로 확정하지 않는다.
+2. 세팅은test/sd2snes/firmware.stm만 복사, 자동진단,90초 종료 기준, 전원OFF후restore 정상044. 정상084 저장/복원/menu/GBC는 과거PASS이므로 반복 시험 질문을 하지 않는다. 새문제가있으면 그 변화만 받는다. 부품/LED/분해/PCUSB/없는백업파일 재요청 금지.
+3. 이후 CF86 외부/async/commoncause/최신MCU/전체SPI를 별도 진행한다. 현재 넓은준비도4/7/1, **report_trial_ready=true / nes_installable=false**. 새 실기 클록 근거가 필요한 단계는 TXT회수 전 완료로 바꾸지 않는다.
+4. 사용자 첫 게임은 **Super Mario Bros 3 (J).nes**, mapper4,PRG256KiB/CHR128KiB/전체393232, SHA `dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49`다. 로컬원본은Downloads/test에 있고 Git/ZIP에 넣지 않는다. `first-game-target.json`과게임계획을 확인한다. 제목→월드맵→1-1플레이를 첫 실기 구간으로 계획하고 전체호환완료와 구분한다. 현재80/96KiB제한은384KiB지원이 아니다. 이후 mapper확장 시 SMB3/GBC회귀 유지.
+
+## 검증·보존
+
+pins04 actual GPIOhelpers/macros +registermodel94, causal02 AF/SPI복원/DATA0입력누락3검출.6543555상승/하강각 pernormal session, 기존090호출예산과TXT값 동일. 원본SPIbits/CMSISpos와speedH2를 고정했다. 모델은MMIO/BSRR/status/time/card/SRAM이며 SRAM SPItransaction끝CSHIGH는모델계약; 전기파형/bit-levelSRAM새재생 아님. 초기include순서compile실패와pins02/03 speed3상수모델,최종04speed2교정/01및02대조를 보존한다. 기존11hostsame/13native입력/firmware바이트 보존, 새ARM/RTLfit/ASM/Questa없음.
+
+동결717파일 manifest `1ef0c061a1a38dbbec210ad5ee8b4e1f54a7c7ed936b22f53ccaf5f131913040`. verifier091사용. 완료finalizer재실행/044–091archive변경금지. userROM원본변경없음;NESdev direct403/searchprimary참조,헤더값만으로dump리비전/battery하드웨어확정금지.
+
+---
+
+## 이전090 기록
+
 # NES 현재 인계 — 클록 TXT 통합090
 
 090는 단일 제품 함수의 CF87 구성·클록 관측·mini 복귀·실제 SD 초기화/FatFS·TXT 저장/재읽기·최종 화면을 연결했다. 통합94검사·인과 대조4개, TXT16파일 대조와4변조 거부, 전체 ARM196248바이트 링크/호출 검증을 통과했다. 실제 SPI 핀 전환 점검과044 복원 포함 패키지 검증은 남아 있어 실기 배포 전이다.
