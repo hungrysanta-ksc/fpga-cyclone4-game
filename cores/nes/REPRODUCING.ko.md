@@ -163,3 +163,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## CSS/NMI108
 
 [108 계약](../../docs/nes-css108-contract.md)에 따라 고정104에서 준비하고 실제C·ARM벡터/종료경로를 검사한다. 전체native회귀/실기와구분한다.
+
+## CSS 통합109
+
+[109 계약](../../docs/nes-css109-contract.md)에 따라104/108고정입력으로 통합·고장·새파일조합을 검사한다. PA1/PB8 모델,호스트결과출력과제품UART억제를구분한다.

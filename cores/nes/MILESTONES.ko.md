@@ -59,3 +59,5 @@
 - **107 보드 자료 조사**: 공개 KiCad192blob/고정14입력 확인, 구형 회로도와Pro Rev.D 구분, 공통HSE·NMI 미처리 루프 확인. CSS/NMI 후속 구현·측정 계약. 새 코어 배선/실기 PASS 없음. [107 결과](../../analysis/BOARD107-RESULT.ko.md).
 
 - **108 CSS/NMI 종료 구현**: 진단 소유권·고장고정·직접RESET/nCONFIG/SPI종료, 실제C63/대조4/ARM강한벡터 및무호출경로 검증. 전체native/전기적조건/실기 미완료. [108 결과](../../analysis/CSS108-RESULT.ko.md).
+
+- **109 CSS 통합·파일 조합**: 실제108 C와native SD/메뉴38건·보호대조4건,11역할 새pair/정상1+거부23. 생산코드 변경/실기 없음. [109 결과](../../analysis/CSS109-RESULT.ko.md).
