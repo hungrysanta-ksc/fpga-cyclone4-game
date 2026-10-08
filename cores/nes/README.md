@@ -1,13 +1,13 @@
 # NES 개발 현황
 
-현재099: 실제 RTC의 RSF·INITF 무한 대기를 진단 전용 시간·반복 한도로 제한했다. 단위18·실제 main/FatFS 통합12경우와 대조4개, 원본 반례 및 같은 ARM 링크를 확인했다.
+현재100: 실제 SRAM·FPGA 명령·STM32 SPI를 연결하고 오류 이후 새 칩 선택과 추가 DR 접근을 차단했다. 단위13·main 통합21경우, 대조5개와 원본 반례, 같은 ARM 링크가 통과했다.
 
-099 ARM/097 이미지를 기준으로 실제 SRAM→fpga_spi→STM32 SPI 및 UART/printf/타이머/CIC/RESET 보호를 현재 main/load_rom과 연결한다. 최초 오류 이후 하위 IO 차단을 확인한 뒤 최종 파일 쌍·044 복원·외부IO/공통고장·관측 가능한 제한 실기를 확정한다. 준비도4완료/7부분/1미완료, 설치 미승인.
+100 ARM/097 이미지를 기준으로 실제 UART/printf·타이머·CIC·RESET 호출과 이미 시작된 SPI 전송의 취소/핀 상태를 검증한다. 이후 최종 파일 쌍·044 복원·외부IO/공통고장·관측 가능한 제한 실기를 확정한다. 준비도4완료/7부분/1미완료, 설치 미승인.
 
 ## 작업 진입점
 
-- [현재 인계](HANDOFF.ko.md) · [099 결과](../../analysis/RTC099-RESULT.ko.md) · [099 계약](../../docs/nes-rtc099-contract.md)
-- [098 메뉴 주소 수정](../../analysis/MENU098-RESULT.ko.md) · [097 이미지](../../analysis/CONFIG097-RESULT.ko.md)
+- [현재 인계](HANDOFF.ko.md) · [100 결과](../../analysis/LOWER100-RESULT.ko.md) · [100 계약](../../docs/nes-lower100-contract.md)
+- [099 RTC](../../analysis/RTC099-RESULT.ko.md) · [098 메뉴 주소](../../analysis/MENU098-RESULT.ko.md) · [097 이미지](../../analysis/CONFIG097-RESULT.ko.md)
 
 ## 이전 단계별 근거
 
