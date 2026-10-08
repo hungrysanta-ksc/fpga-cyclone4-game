@@ -1,3 +1,25 @@
+# NES 현재 인계 — CF86 차단 지연093 / 최신MCU 통합 다음
+
+CF86의 고정 fit을 복사해3개 코너 VO/SDF를 생성하고, 클록 없이 비동기 clear와 조합 논리만 지나는264경로를 분석했다. 고장/qualification Q 이후 최대23.699ns, CE 최대21.080ns이며 실제 export 변조4개를 검출했다.092 기준클록 실기 활동은 유지하고, 두 클록 동시 정지/전기 승인/최신MCU·전체세션은 별도 미완료로 남긴다.
+
+[093 결과](../../analysis/ASSERTION093-RESULT.ko.md)와 [고장 계약](../../docs/nes-fault-policy093.ko.md)을 우선한다. PR42가2026-10-08T05:33:10Z master `02ccce30618a19ffebe44421722db4e74fe660d7`에 병합됐고 이전head 도달을 확인했다. 현재 codex/nes-clock-assertion-093. 사용자만 PR을 병합한다.
+
+## 다음 작업과 완료 기준
+
+1. 최신CF86용 실제 MCU ID/RDY/RESET·USB소유권/누적오류 처리를 연결한다. old071/CF68는계속CF86거부. fault 뒤 클록/PLL 재개로 이전적재·CHECK승인 부활을 차단한다. 중단 이미지에는 새FPGA구성·전체재적재·전체비교가 필요하다. 생산C 호출·ELF/host실패대조와연결한뒤 ID상수치환 이상의완료를보고한다.
+2. 같은C→CF86 핀80/96KiB 전체적재·CHECK·최종ACK/STOP을 검증하고 같은fit의ASM/최종ARM/정상044복원쌍을준비한다.093은도구분석뿐이며새MCU/펌웨어가아니다. 외부전압/PCB/MTBF/동시클록정지미보호를자동승인하지않는다.
+3. 실기084저장/menu/GBC와092RESET-held클록·TXT/표시·복원은PASS이다. 같은진단·부품·분해·LED·PCUSB질문을되풀이하지않는다. SMB3(J), mapper4,384KiB첫게임및이후호환성확장계획을유지한다.
+
+## 근거와 재실행 금지
+
+normal03 EDA복사본3코너/264경로/Q부터최대23699ps,CE21080ps,실제export변조causal01 4검출. 최장경로는memory_release[1] clrn→q를통과,일반clock FF통과없음. SDF합산은감지시간·실제감응성·전기보장아님.3코너VO/SDF전체와PORT/IOPATH경로를로컬보존. 같은086fit03생산입력과DB보존;원본086verifier로재확인한다.
+
+초기eda작업디렉터리오류/assert01PORT/assert02nestedRAM/assert03constantcell,normal01cmp메타데이터변경/normal02QSFsuffix실패를보존했다. 첫normal01실패원문은터미널전사라고명시. 마지막driver를초기실행본이라고주장하지않는다. 새RTL/fit/STA/Questa/ARM/ASM/패키지없음.동결592파일manifest `c33bf3a1f24eb45135676628defe791229b1aa670c7a03cdd9410d5cc5a19de8`; verifier093. 완료finalizer/044–093archive수정금지.넓은준비도4/7/1설치미승인.
+
+---
+
+## 이전092 기록
+
 # NES 현재 인계 — CLOCKREPORT090 실기PASS / 회수092
 
 CLOCKREPORT090 실기 회수092: HW090000.TXT1099바이트에서 두 연속 구간2/3의 count가1342354로 같고 VALID/LIVE=1, LAST_GAP=0이다. 사진의 동일파일/저장·재읽기성공/코드0 및 사용자 복원성공을 확인했다. 이번 보드·실행의 RESET-held 기준클록 활동과 관측·저장·표시 왕복은PASS다. 절대주파수/CF86외부보호/게임실행 승인은 별도다.

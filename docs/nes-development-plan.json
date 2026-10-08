@@ -5,12 +5,12 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "CLOCKREPORT090 실기 회수092: HW090000.TXT1099바이트에서 두 연속 구간2/3의 count가1342354로 같고 VALID/LIVE=1, LAST_GAP=0이다. 사진의 동일파일/저장·재읽기성공/코드0 및 사용자 복원성공을 확인했다. 이번 보드·실행의 RESET-held 기준클록 활동과 관측·저장·표시 왕복은PASS다. 절대주파수/CF86외부보호/게임실행 승인은 별도다.",
-  "next_action": "APPLY_PHYSICAL_REFERENCE_EVIDENCE_TO_CF86_EXTERNAL_ASYNC_COMMONCAUSE_REVIEW",
+  "assessment": "CF86의 고정 fit을 복사해3개 코너 VO/SDF를 생성하고, 클록 없이 비동기 clear와 조합 논리만 지나는264경로를 분석했다. 고장/qualification Q 이후 최대23.699ns, CE 최대21.080ns이며 실제 export 변조4개를 검출했다.092 기준클록 실기 활동은 유지하고, 두 클록 동시 정지/전기 승인/최신MCU·전체세션은 별도 미완료로 남긴다.",
+  "next_action": "INTEGRATE_ACTUAL_MCU_CF86_STICKY_SESSION_FAULT_THEN_FULL_SPI",
   "next_three_deliverables": [
-    "RESET-held reference활동 실기근거를CF86 외부/async/commoncause정책에반영",
-    "최신MCU/전체SPI/paired실기조건을검증",
-    "SMB3 384KiB/mapper4/IRQ/화면/입력/소리 및 첫플레이단계"
+    "최신MCU/CF86 ID·RDY·fault후세션무효화 및 실제C경로검증",
+    "80/96KiB전체SPI·같은fitASM/최종ARM/044복원쌍;외부조건은명시적으로유지",
+    "SMB3 384KiB/mapper4/IRQ/PPU/입력/소리 첫플레이"
   ],
   "gates": [
     {
@@ -782,8 +782,8 @@
       "scope": "Report session and external observation",
       "depends_on": [],
       "completion": "Actual multi-layer success/faults, IO protection, cumulative/boot time budget, user-visible outcome and recovery design",
-      "status": "partial_report_clock_observation_physical_pass_external_cf86_remaining",
-      "evidence": "analysis/CLOCK-HARDWARE092-RESULT.ko.md"
+      "status": "partial_reference_physical_pass_async_sdf_inventory_mcu_cf86_next",
+      "evidence": "analysis/ASSERTION093-RESULT.ko.md"
     },
     {
       "id": "P2",
