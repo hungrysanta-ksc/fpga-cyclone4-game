@@ -159,3 +159,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 실기 조건106
 
 [106 계약](../../docs/nes-trial106-contract.md):086원시경로 재계산과운영관측정책. 계산상양수/600초한도를물리승인·MCU완료보장으로쓰지않는다.
+
+## CSS/NMI108
+
+[108 계약](../../docs/nes-css108-contract.md)에 따라 고정104에서 준비하고 실제C·ARM벡터/종료경로를 검사한다. 전체native회귀/실기와구분한다.

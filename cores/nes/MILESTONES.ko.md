@@ -57,3 +57,5 @@
 - **106 실기 조건**:3168경로 재계산, CE HIGH 외부예산109.565ns/경계 산술과관측600초 운영정책 정의. E1전기범위/E2공통고장 미완료. [106 결과](../../analysis/TRIAL106-RESULT.ko.md).
 
 - **107 보드 자료 조사**: 공개 KiCad192blob/고정14입력 확인, 구형 회로도와Pro Rev.D 구분, 공통HSE·NMI 미처리 루프 확인. CSS/NMI 후속 구현·측정 계약. 새 코어 배선/실기 PASS 없음. [107 결과](../../analysis/BOARD107-RESULT.ko.md).
+
+- **108 CSS/NMI 종료 구현**: 진단 소유권·고장고정·직접RESET/nCONFIG/SPI종료, 실제C63/대조4/ARM강한벡터 및무호출경로 검증. 전체native/전기적조건/실기 미완료. [108 결과](../../analysis/CSS108-RESULT.ko.md).
