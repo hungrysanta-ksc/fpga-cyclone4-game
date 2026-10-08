@@ -41,3 +41,5 @@
 - **070 전체 CF68 세션**: 실제069C→068핀80/96KiB180224byte/901152frames/50464224응답비트·마지막ACK/FINISH/STOP,원래클록prefix64/parked8192·응답대조1. [결과](../../analysis/CF68-SESSION-RESULT.ko.md), [계약](../../docs/nes-cf68-session-contract.md). 새쌍/실기 미완료.
 
 - **099 RTC 종료 보호**: RSF/INITF 대기 한도, 실제 RTC/main/FatFS30경우·대조4·ARM 검증. 하위 IO·실기는 미완료. [099 결과](../../analysis/RTC099-RESULT.ko.md).
+
+- **100 실제 하위 SPI**: SRAM·FPGA 명령·SPI 연결과 오류 후 CS LOW/DR 접근 차단.34경우·대조5·ARM, 주변장치/물리 핀은 미완료. [100 결과](../../analysis/LOWER100-RESULT.ko.md).
