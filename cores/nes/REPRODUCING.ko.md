@@ -143,3 +143,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 최종 정지102
 
 [102 계약](../../docs/nes-quiesce102-contract.md): 고정101에서 준비해 실제 blocked/RESET/정리함수를 연결한다. 정지함수 진입 후 레지스터 상태와 최초오류부터의 지연을 구분한다.
+
+## 공유 오류 관측103
+
+[103 계약](../../docs/nes-observer103-contract.md): 고정102에서 실제 observer/printf/UART를 연결한다. 공유 fault와 recoverable report.error, 호스트 레지스터 접근과 실제 핀/MCU 시간을 구분한다.

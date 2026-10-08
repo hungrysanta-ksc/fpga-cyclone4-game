@@ -47,3 +47,5 @@
 - **101 SPI 완료 순서**: TXE→BSY 순서 수정,336위상/오류+34통합+4보호대조+2원본반례/ARM. 강제 중단은 미완료. [101 결과](../../analysis/SPI101-RESULT.ko.md).
 
 - **102 최종 정지**: CS 해제→GPIO 분리→SPI1 reset 유지.1024핀/21통합/6대조/1원본/ARM MMIO16, 최초오류부터 진입지연은 미완료. [102 결과](../../analysis/QUIESCE102-RESULT.ko.md).
+
+- **103 오류 관측**: 공유 오류의 LED/UART 이전 정리, 실제 observer/printf/UART54호스트/6대조/ARM MMIO16. timer/CIC/물리시간 미완료. [103 결과](../../analysis/OBSERVER103-RESULT.ko.md).
