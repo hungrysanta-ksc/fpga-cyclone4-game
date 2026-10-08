@@ -1,13 +1,13 @@
 # NES 개발 현황
 
-현재098: 실제 main이 전달하는 메뉴 주소0xC00000을 기존 진단 보호가 거부하던 오류를 재현·수정했다. 전체 load_rom과 main 복귀 분기를 연결한26경우·4대조 및 같은 수정의 ARM 빌드가 통과했다.
+현재099: 실제 RTC의 RSF·INITF 무한 대기를 진단 전용 시간·반복 한도로 제한했다. 단위18·실제 main/FatFS 통합12경우와 대조4개, 원본 반례 및 같은 ARM 링크를 확인했다.
 
-실제 하위 주변장치/최종 파일 쌍/외부IO·공통고장은 남아 있다. 준비도4완료/7부분/1미완료,설치 미승인.
+099 ARM/097 이미지를 기준으로 실제 SRAM→fpga_spi→STM32 SPI 및 UART/printf/타이머/CIC/RESET 보호를 현재 main/load_rom과 연결한다. 최초 오류 이후 하위 IO 차단을 확인한 뒤 최종 파일 쌍·044 복원·외부IO/공통고장·관측 가능한 제한 실기를 확정한다. 준비도4완료/7부분/1미완료, 설치 미승인.
 
 ## 작업 진입점
 
-- [현재 인계](HANDOFF.ko.md) · [098 주소 수정](../../analysis/MENU098-RESULT.ko.md) · [098 계약](../../docs/nes-menu098-contract.md)
-- [097 실제 구성 파일](../../analysis/CONFIG097-RESULT.ko.md) · [094 이전 ARM](../../analysis/SESSION094-RESULT.ko.md) · [086 fit](../../analysis/CLOCK086-RESULT.ko.md)
+- [현재 인계](HANDOFF.ko.md) · [099 결과](../../analysis/RTC099-RESULT.ko.md) · [099 계약](../../docs/nes-rtc099-contract.md)
+- [098 메뉴 주소 수정](../../analysis/MENU098-RESULT.ko.md) · [097 이미지](../../analysis/CONFIG097-RESULT.ko.md)
 
 ## 이전 단계별 근거
 

@@ -127,3 +127,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 실제 메뉴 호출098
 
 [098 계약](../../docs/nes-menu098-contract.md)은 실제main주소와전체load_rom의원본실패·수정26경우/4대조/동일ARM을확인한다. RTC/SPI등하위장치모델과실기를구분한다.
+
+## RTC099
+
+[099 계약](../../docs/nes-rtc099-contract.md): 고정098에서 RTC 한도와 오류 전달을 재현하고 실제 main/FatFS 및 동일 ARM을 확인한다. 레지스터/하위 IO 모델과 실기를 구분한다.

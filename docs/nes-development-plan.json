@@ -5,12 +5,12 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "실제 main이 전달하는 메뉴 주소0xC00000을 기존 진단 보호가 거부하던 오류를 재현·수정했다. 전체 load_rom과 main 복귀 분기를 연결한26경우·4대조 및 같은 수정의 ARM 빌드가 통과했다.",
-  "next_action": "BOUND_ACTUAL_RTC_AND_LOWER_MENU_IO_THEN_FINAL_PAIR",
+  "assessment": "실제 RTC의 RSF·INITF 무한 대기를 진단 전용 시간·반복 한도로 제한했다. 단위18·실제 main/FatFS 통합12경우와 대조4개, 원본 반례 및 같은 ARM 링크를 확인했다.",
+  "next_action": "INTEGRATE_ACTUAL_LOWER_MENU_IO_THEN_FINAL_PAIR",
   "next_three_deliverables": [
-    "098 ARM/097 이미지를 기준으로 실제 RTC의 RSF·INITF 대기와 하위 SRAM/SPI/UART/타이머·CIC/RESET 보호를 연결한다. 완료 후 최종 파일 쌍·정확한044복원본·외부IO/공통고장·관측 가능한 제한실기 절차를 확정한다.",
-    "같은 최종쌍/외부IO·공통고장 정책/관측가능한 제한실기",
-    "SMB3 384KiB/mapper4/IRQ/PPU/입력/소리 첫플레이"
+    "099 ARM/097 이미지를 기준으로 실제 SRAM→fpga_spi→STM32 SPI 및 UART/printf/타이머/CIC/RESET 보호를 현재 main/load_rom과 연결한다. 최초 오류 이후 하위 IO 차단을 확인한 뒤 최종 파일 쌍·044 복원·외부IO/공통고장·관측 가능한 제한 실기를 확정한다.",
+    "같은 최종 파일 쌍/외부IO·공통고장 정책/관측 가능한 제한 실기",
+    "SMB3 384KiB/mapper4/IRQ/PPU/입력/소리 첫 플레이"
   ],
   "gates": [
     {
@@ -48,8 +48,8 @@
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/MENU098-RESULT.ko.md",
-      "remaining": "098 실제main2구간/wholeload_rom 주소수정26+4/ARM완료. 실제RTC 무한대기 및 하위SRAM/SPI/UART/시간/CIC/RESET·최종쌍/외부IO·공통고장/제한실기·RUN/video/input/audio 미완료.084/092실기PASS 유지."
+      "evidence": "analysis/RTC099-RESULT.ko.md",
+      "remaining": "099 ARM/097 이미지를 기준으로 실제 SRAM→fpga_spi→STM32 SPI 및 UART/printf/타이머/CIC/RESET 보호를 현재 main/load_rom과 연결한다. 최초 오류 이후 하위 IO 차단을 확인한 뒤 최종 파일 쌍·044 복원·외부IO/공통고장·관측 가능한 제한 실기를 확정한다. RUN/video/input/audio 및 SMB3 미완료.084/092 실기PASS 유지."
     },
     {
       "id": "R5",
@@ -736,12 +736,12 @@
     "diagnostic_fpga": "CF86/086, same fit03",
     "last_full_digital_session": "095 unchanged094 C→086 RTL; normal-only34-bit periodic guard abstraction, full80/96KiB +2 raw-lock cancellations",
     "last_offline_pair": "071 =068 FPGA +069 MCU; installable=false",
-    "latest_mcu": "098 menu address correction, linked ARM; markers/session094 retained; compile-only",
+    "latest_mcu": "099 bounded RTC, linked ARM; markers/session094 retained; compile-only",
     "report_collector_last_hardware": "SDREPORT084 storage/readback/display and user044restore/menu/GBC PASS",
     "latest_host_session": "090 production whole session94+4causal, actual nativeSD/TXT/mini",
     "report_only_arm": "090 physical clock/TXT/display/restorePASS in092; unchanged196248 firmware",
     "clock_config": "089 same087fitASM +boundedconfig verified",
-    "latest_cf86_host_session": "098 actual main pending spans/full load_rom26+4; lower peripheral models; actual native/config/images097 reused",
+    "latest_cf86_host_session": "099 actual RTC/main/FatFS30 cases +4 controls; lower SPI/SRAM/UART/CIC/reset/time models; images097",
     "latest_cf86_assembly": "097 ASM/CPF of086fit03; RBF510856 packed219453; same RTL/fit, not installation approval"
   },
   "hardware_readiness_review_initial061": {
@@ -784,8 +784,8 @@
       "scope": "Report session and external observation",
       "depends_on": [],
       "completion": "Actual multi-layer success/faults, IO protection, cumulative/boot time budget, user-visible outcome and recovery design",
-      "status": "partial_menu_address098_and_main_spans_pass_lower_io_open",
-      "evidence": "analysis/MENU098-RESULT.ko.md"
+      "status": "partial_rtc099_pass_lower_io_open",
+      "evidence": "analysis/RTC099-RESULT.ko.md"
     },
     {
       "id": "P2",
