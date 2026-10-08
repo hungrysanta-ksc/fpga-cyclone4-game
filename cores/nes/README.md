@@ -1,13 +1,13 @@
 # NES 개발 현황
 
-현재100: 실제 SRAM·FPGA 명령·STM32 SPI를 연결하고 오류 이후 새 칩 선택과 추가 DR 접근을 차단했다. 단위13·main 통합21경우, 대조5개와 원본 반례, 같은 ARM 링크가 통과했다.
+현재101: SPI 진단 경로의 TXE→BSY 종료 순서를 수정했다. 지연 시작·위상·오류336경우와 기존 하위 통합34경우, 보호 제거4개·원본 반례2개 및 같은 ARM 검사에 통과했다. 강제 중단과 핀 차단은 미완료다.
 
-100 ARM/097 이미지를 기준으로 실제 UART/printf·타이머·CIC·RESET 호출과 이미 시작된 SPI 전송의 취소/핀 상태를 검증한다. 이후 최종 파일 쌍·044 복원·외부IO/공통고장·관측 가능한 제한 실기를 확정한다. 준비도4완료/7부분/1미완료, 설치 미승인.
+101 ARM/097 이미지를 기준으로 실제 오류 경로의 SPI 강제 중단·CS/SPE/SCK/GPIO 상태를 구현·검증하고, UART/printf·타이머·CIC·RESET 연결을 확인한다. 이후 최종 파일 쌍·044 복원·외부IO/공통고장·관측 가능한 제한 실기를 확정한다. 준비도4완료/7부분/1미완료, 설치 미승인.
 
 ## 작업 진입점
 
-- [현재 인계](HANDOFF.ko.md) · [100 결과](../../analysis/LOWER100-RESULT.ko.md) · [100 계약](../../docs/nes-lower100-contract.md)
-- [099 RTC](../../analysis/RTC099-RESULT.ko.md) · [098 메뉴 주소](../../analysis/MENU098-RESULT.ko.md) · [097 이미지](../../analysis/CONFIG097-RESULT.ko.md)
+- [현재 인계](HANDOFF.ko.md) · [101 결과](../../analysis/SPI101-RESULT.ko.md) · [101 계약](../../docs/nes-spi101-contract.md)
+- [100 하위SPI](../../analysis/LOWER100-RESULT.ko.md) · [099 RTC](../../analysis/RTC099-RESULT.ko.md) · [097 이미지](../../analysis/CONFIG097-RESULT.ko.md)
 
 ## 이전 단계별 근거
 

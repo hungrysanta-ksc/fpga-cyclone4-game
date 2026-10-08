@@ -135,3 +135,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 실제 하위 SPI100
 
 [100 계약](../../docs/nes-lower100-contract.md): 고정099에서 SRAM/명령/SPI를 연결하고 칩 선택 및 공유 예산 보호를 검증한다. 바이트 모델과 물리 핀/이미 시작된 전송의 종료를 구분한다.
+
+## SPI101 완료 순서
+
+[101 계약](../../docs/nes-spi101-contract.md): 고정100에서 준비하고 위상336 및 기존100 통합34를 재실행한다. 새 GPIO/SPI 강제 중단 증거와 정상 완료 순서를 구별한다.
