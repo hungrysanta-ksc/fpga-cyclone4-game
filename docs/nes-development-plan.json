@@ -5,11 +5,11 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "ARM104·CF86의097 ASM·정확044 복원 조합을11개 파일의 역할과 SHA256으로 고정했다. 이름이 같은 구형 파일, 진단/복원본 혼동, 설치 승인 플래그 변조를 오프라인에서 거부한다.",
-  "next_action": "RESOLVE_LIMITED_TRIAL_EXTERNAL_ASSUMPTIONS_COMMON_CAUSE_AND_OBSERVATION",
+  "assessment": "CF86의 외부 지연 예산을 원시3168경로에서 재계산하고, 최소 조건이 CE 비활성 간격임을 확인했다. 실기 미결 조건을 외부 전기적 범위와 공통고장 처리 두 항목으로 좁히고 관측·종료 절차를 구체화했다.",
+  "next_action": "CLOSE_E1_E2_WITH_BOARD_EVIDENCE_OR_DESIGN_CHANGE_NOT_MORE_PACKAGING",
   "next_three_deliverables": [
-    "106에서는 외부 IO의 미측정 가정과 공통고장 제외 범위를 하나의 제한 실기 판정표로 좁히고, 허용 가능한 조건의 근거와 정상·실패 관측·종료 한도를 확정한다. 파일 조합이나 같은 fit/ARM을 다시 만들지 않는다.",
-    "조건 충족 후 정확 파일 조합의 제한 실기 패키지/관측절차",
+    "107은 반복 분석 대신 미결 E1/E2를 닫는 근거 확보 또는 설계 변경을 선택한다. 먼저 기존 보드 설계·핀/전원 자료에서 전기적 상한을 확보할 수 있는지 조사하고, 없으면 필요한 측정과 공통고장 대안을 구체적으로 보고한다. 조건이 열린 상태에서 또 패키지 준비 PR을 반복하지 않는다.",
+    "조건 충족 후105조합/106관측 계약의 제한실기 패키지",
     "SMB3 384KiB/mapper4/IRQ/PPU/입력/소리 첫 플레이"
   ],
   "gates": [
@@ -48,8 +48,8 @@
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/PAIR105-RESULT.ko.md",
-      "remaining": "106에서는 외부 IO의 미측정 가정과 공통고장 제외 범위를 하나의 제한 실기 판정표로 좁히고, 허용 가능한 조건의 근거와 정상·실패 관측·종료 한도를 확정한다. 파일 조합이나 같은 fit/ARM을 다시 만들지 않는다. RUN/video/input/audio 및 SMB3 미완료."
+      "evidence": "analysis/TRIAL106-RESULT.ko.md",
+      "remaining": "107은 반복 분석 대신 미결 E1/E2를 닫는 근거 확보 또는 설계 변경을 선택한다. 먼저 기존 보드 설계·핀/전원 자료에서 전기적 상한을 확보할 수 있는지 조사하고, 없으면 필요한 측정과 공통고장 대안을 구체적으로 보고한다. 조건이 열린 상태에서 또 패키지 준비 PR을 반복하지 않는다. RUN/video/input/audio 및SMB3미완료."
     },
     {
       "id": "R5",
@@ -784,8 +784,8 @@
       "scope": "Report session and external observation",
       "depends_on": [],
       "completion": "Actual multi-layer success/faults, IO protection, cumulative/boot time budget, user-visible outcome and recovery design",
-      "status": "partial_pair105_identity_pass_external_conditions_observation_open",
-      "evidence": "analysis/PAIR105-RESULT.ko.md"
+      "status": "partial_trial106_conditions_quantified_E1_E2_open",
+      "evidence": "analysis/TRIAL106-RESULT.ko.md"
     },
     {
       "id": "P2",

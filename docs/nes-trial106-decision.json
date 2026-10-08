@@ -1,0 +1,39 @@
+{
+  "candidate": "NES-TRIAL-CONDITIONS-106",
+  "pair": "NES-PAIR-105",
+  "hardware_trial_approved": false,
+  "installable": false,
+  "start_enabled": false,
+  "observation_procedure_defined": true,
+  "observation_limit_seconds": 600,
+  "observation_limit_is_mcu_guarantee": false,
+  "observation_clock_origin": "manual marker selection",
+  "timeout_interpretation": "inconclusive; power off and restore manually; not proof of timer fault",
+  "open_conditions": [
+    {
+      "id": "E1",
+      "name": "external electrical operating envelope",
+      "state": "open",
+      "required": "VDD/VDDQ/load/PCB min-max evidence covering all16 constraints; arithmetic threshold alone is not evidence"
+    },
+    {
+      "id": "E2",
+      "name": "common-cause clock/power fault disposition",
+      "state": "open",
+      "required": "independent bounded disable path or explicit justified limited-trial scope/risk decision; no unconditional8us protection claim"
+    }
+  ],
+  "scope": [
+    "80KiB synthetic diagnostic first",
+    "load/compare/STOP/base/menu only",
+    "no NES RUN or commercial ROM",
+    "no deliberate clock/power fault injection"
+  ],
+  "reuse": [
+    "ARM104",
+    "ASM097/fit086",
+    "pair105",
+    "044 restore",
+    "084 and092 physical observations"
+  ]
+}
