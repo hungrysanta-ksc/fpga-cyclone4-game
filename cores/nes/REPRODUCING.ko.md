@@ -119,3 +119,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 실제 native096
 
 [096 계약/명령](../../docs/nes-native096-contract.md)에 따라 동결094 입력과 호스트 GCC를 사용한다.154경우/4대조, 동결 검증은 `verify_nes_native096.py`. 실제 구성 파일·main 메뉴·실기는 이 시험과 구분한다.
+
+## 실제 구성·메뉴097
+
+[097 계약/명령](../../docs/nes-config097-contract.md)에 따라 같은086 fit ASM/CPF와 실제 사용자 파일을 최종094 native/메뉴 함수에 연결한다.176호스트/5대조이며 전체main·실기 승인과 구분한다.
