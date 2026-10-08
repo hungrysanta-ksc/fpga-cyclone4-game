@@ -1,6 +1,6 @@
 # 보고서 전용 진단의 관측·시간 계약 초안 — 078
 
-081 후속: 초기화·mount가 보호 경로 안으로 들어왔다. 실제FatFS mount의 sector는 모형이며 전체native/화면 단일실행은 남는다. 초기화/mini 실패의 외부 관측과044복원 자료까지 준비해야 설치를 판단한다. [최신 결과](../analysis/REPORT-INIT081-RESULT.ko.md).
+082 후속: 실제 초기화→첫 native mount→mini→전체 저장/readback→terminal 단일 실행667검사/대조2 완료. 현재 SDREPORT081의 초기화는 mini 이전이므로 초기 고장은 검은 화면일 수 있다. 다음은 SD 전 표식 가능성·전체 시간/결과 해석·044복원 계약이다. SRAM문구와7×500ms는 TV가독성 증거가 아니며 설치 보류다. [최신 결과](../analysis/REPORT-SESSION082-RESULT.ko.md). 아래 제안순서와 현재 실제순서를 구분한다.
 
 상태: 설계 방향과 다음 구현 완료 조건. **아직 설치 가능한 구현이나 화면 검증 결과가 아니다.** [078 통합 시험](../analysis/REPORT-SESSION078-RESULT.ko.md)과 [P1 계획](development/NES-077-PROCESS-REVIEW.ko.md)을 따른다.0바이트 원인은 미확정이다.
 
