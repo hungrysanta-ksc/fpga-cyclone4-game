@@ -1,23 +1,27 @@
-# NES 현재 인계 — 082 초기화부터 저장·최종문구까지 단일 실행
+# NES 현재 인계 — 083 첫 화면·저장 관측 패키지
 
-082에서 실제081 초기화→첫 mount→080mini→FatFS/native CMD17/24 저장·재읽기→최종문구를 단일 호스트 실행으로 연결했다. 667검사·인과대조2 통과, 생산 소스/081 ARM은 불변이다. 외부 관측·시간/결과표·044복원은 남으며 설치 불가, P1 부분/준비도4완료7부분1미완료다.
+083은 SD 접근 전에 mini와1A초기화/1Bmount 표식을 표시한다. 실제 전체경로679·1초타이머5·인과대조4·최종ARM 순서 검증을 통과했고, 첫 관측 ZIP/정상044복원/대응소스를 준비했다. 실기 가독성·새TXT·복원 후 메뉴/GBC는 사용자 관측 대기다. CF68/NES 설치 승인이 아니며 준비도4완료7부분1미완료를 유지한다.
 
-[082 결과](../../analysis/REPORT-SESSION082-RESULT.ko.md), [공정 계획](../../docs/development/NES-077-PROCESS-REVIEW.ko.md), [관측 계약](../../docs/nes-report-observation078-contract.ko.md)을 먼저 읽는다. 현재 가지는 `codex/nes-report-session-082`다. PR32 병합 master `648d399865e6746397037ecb3bbb4e6f5c9c51fc`에서 시작했으며 PR31은 닫힌 대체 이전 기록이다. 다음 PR은 master 대상이고 자동 병합하지 않는다.
+[083 결과](../../analysis/REPORT-OBSERVATION083-RESULT.ko.md), [실행/복원 안내](../../docs/SDREPORT083-RUN.ko.md)를 먼저 읽는다. PR33은 master `413c4fd11a395e661a6d894fed1c283d4fdc2ecb`에 병합됐고 원래 head 도달을 확인했다. 현재 `codex/nes-report-observation-083`이며 새 PR은 master 대상이다. 자동 병합하지 않는다.
 
 ## 완료와 보존
 
-- 실제 final081 init→strong disk_initialize 상태 전달→file_init/FatFS 첫 CMD17→boot/mini→writer의 create/write/sync/close/open/readback/close→terminal을 한 번의 세션으로 실행했다. 단계 사이의 재초기화/오류 reset 없이 FAT16/32×SDSC/SDHC 네 조합 통과. 3072바이트를 실제 writer와 카드 FAT 체인 독립 검사로 확인했다.
-- 정상 native 명령은 FAT16 read11/write10, FAT32 read12/write10. SRAM587접근·7×500ms·최종문구 확인. 모든43 응답 위치/587 SRAM 위치 고장, 화면 변조/타이머/누적예산/wrap/초기화/카드/논리 code7을 포함해667검사다. 정상CRC 내용변조는 code7 실패문구, 공유 오류는 추가IO 없이 RESET/USB 보호 종료다.
-- 원래081 생산 소스 불변, 기존 ARM132320바이트 SHA `5931eec90956022104b8aa42851525b52b3f3a805d50a48ca71c33357357649d` 재사용. 새 펌웨어082/ARM빌드/실행/RTL/Questa/fit/ASM/실기는 없다. 실제 MCU startup과 TV 표시, 전기 타이밍은 검증 밖이다.
-- 최종normal-04/두negative-04. 새302파일 manifest `14023cb52e2239380743a891a2795d73e32bccab8657ce343d8b8df1f2692112`. 최초 file_status 헤더 오류와 code7에 대한 잘못된 시험 기대를 보존했다. 기존081 verifier도 통과. 044–082 동결 archive 및 완료한 freeze/update 스크립트는 재실행/편집하지 않는다.
-- 재현은 tools/test_nes_report_session082.py와 개인 고정081 증거가 필요하다. tools/verify_nes_report082.py는082/081 증거와 공개 소스 해시를 검사한다. 개별079/080/081 검사를667개에 합산하지 않는다.
+- 실제083 순서는 내장mini/boot→STEP1A(1초)→081초기화→STEP1B(1초)→첫native mount→writer 단계2–8(각0.5초)→terminal이다. 새 표식은 write permission/예산을 재시작하지 않는다. 표식 후 RESET 재유지, 첫fault 이후 추가IO 금지, USB 제외를 보존한다.
+- actual native/FatFS/전체 writer679검사, 실제1초 timer5, 비교·RESET·최초표식 제거4대조 통과. 소스 SRAM문구/렌더링 기회는 TV 픽셀/가독성 증거가 아니다. 새ARM 실제 호출 순서와 기존15입력SHA 불변을 확인했다. main power/clock/CIC startup은 시험 범위 밖이다.
+- SDREPORT083132552바이트 SHA `60d5ffcf283bdd1a69a62d8baac3f4f1dfad06c2562888c55e0491968663d91b`. TRIAL ZIP은 test와restore 각각firmware.stm, 안내/manifest/LICENSE만 포함. SOURCE ZIP은 대응 준비소스와 생성헤더/빌드 도구를 포함한다. 기본 FPGA/메뉴/게임/세이브는 교체하지 않는다.
+- 정상044 복원169056바이트 SHA `1c3b40a3459d24114cb4d91ee9d861d1a08025a670ef25317ef489092203693b`는 사용자가 준 마지막 정상파일이다. HW002성공125260바이트 파일은 별도이며 복원에 쓰지 않는다. 없는firmware.before-sdinfo072.stm을 요구하지 않는다. 전체SD백업은 사용자 수행 항목이다.
+- 최종normal03/negative4종03/ARM01/package02,2119파일 manifest `4b60051cd38f38cb9ef48ed20cbe918aed1c8e265bda58df1c6ebca58e0723df`. 초기 no-early-marker02의 더 이른 GPIO assertion/수집기 기대 불일치, package01 Make .ARG_VERSION 차이, Make 최초 의존성 실패/재시도를 보존했다. 완료 freeze/update 재실행과044–083archive편집 금지. 기존082 verifier 통과.
 
-## 다음 작업의 종료 조건
+## 다음 입력과 작업
 
-1. 초기화/mini 실패까지 케이스 밖에서 구별할 관측 흐름과 시간·결과표를 완성한다. 현재는 SD 초기화가 mini보다 먼저이므로 초기 고장은 검은 화면이다. mini 준비·초기 표식을 SD 앞에 놓을 수 있는지 실제 소유권/시작 전제를 검토한다. 순서 변경 시 해당 생산 소스와 최종 ARM을 다시 검증한다. fault 이후 공유IO로 실패화면을 강행하지 않는다.
-2. 500ms는 렌더링 기회이며 읽기ACK가 아니다. 총60초/1백만poll, 저장1000tick/10000poll와7×500ms 예산을 유지하고 실제벽시계·startup 한계와 구분한다. 최초오류, RESET/USB, 파일쓰기 권한 회수, 불확실한 DATA/ACK 재시도 금지를 보존한다.
-3. 정상044/HW002성공 펌웨어의 역할을 구분한 기존 자료로 설치/복원 파일·해시·순서표를 준비한다. 관측 계약과 함께 보고서전용P3 통과 여부를 판단한다. 현재 설치 파일은 없다. 사용자0바이트 원인을 미리 확정할 필요는 없지만 동일한 비구별 패키지는 보내지 않는다.
-4. CF68는 별도P2/동일쌍P3, 전체NES4LAB/P5/P6도 별도다. 기존GBC152/원본NES334 및074–081 source pin은 유지한다. 같은파일/LED/분해/PCUSB/확인한 부품 질문 금지. 실기는 외부이고 패키지→사용자실행→TXT/영상 회수다.
+1. 사용자083 실행을 기다린다. 전원 직전부터TV영상, 새HW083nnn.TXT(0바이트 포함) 또는 없음, 정상044복원 후 메뉴/GBC 결과가 입력이다. LED/분해/PCUSB/기존파일/확인한 부품 질문을 반복하지 않는다. 사용자 현장 실행 대신 로컬 성공을 실기로 기록하지 않는다.
+2. `tools/check_sdreport083.py <TXT>`는 기대3072바이트 전부와 비교한다. 파일 일치만으로 최종close/terminal/복원 성공을 주장하지 않는다. 마지막표식은 다음작업의 예고다. 코드7은 healthy IO의 내용 불일치일 수 있으며 shared fault와 구분한다.
+3. 표식 없음은 적용/startup/mini/표시 범위,1A만 관측은 초기화 범위,1B는 초기화 성공 후mount/후속 범위다. 표시 뒤RESET held로 화면이 꺼질 수 있어 전체영상을 본다.1초/0.5초 실제가독성은 아직 미확인이다.90초는 사용자의 관측 종료 기준이지 startup watchdog 보장이 아니다.
+4. 보고서전용 오프라인P3준비만 끝났다. 실제복원과P1실기관측은 대기. CF68 P2/동일쌍P3,전체NES4LAB/P5/P6는 별도다. 결과가 오면 해당실패경계만 수정/검증하고 큰 진전에서 한국어3구역PR을 만든다.
+
+## 재현
+
+`nes_report083_prepare.py --evidence081 <고정입력> --out <새source>` → 기존build_nes_report079_arm.ps1 → check_nes_report083_arm.py. obj-report079 출력명은 재사용이며 VERSION은083이다. test_nes_report_observation083.py는 normal/4negative를 각각 새폴더에서 실행한다. verify_nes_report083.py는동결증거/ZIP전체를검사한다. 개인고정입력 없이공개clone만으로재현된다고 주장하지 않는다.
 
 ---
 

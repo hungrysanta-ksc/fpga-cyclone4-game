@@ -1,6 +1,6 @@
 # 보고서 전용 진단의 관측·시간 계약 초안 — 078
 
-082 후속: 실제 초기화→첫 native mount→mini→전체 저장/readback→terminal 단일 실행667검사/대조2 완료. 현재 SDREPORT081의 초기화는 mini 이전이므로 초기 고장은 검은 화면일 수 있다. 다음은 SD 전 표식 가능성·전체 시간/결과 해석·044복원 계약이다. SRAM문구와7×500ms는 TV가독성 증거가 아니며 설치 보류다. [최신 결과](../analysis/REPORT-SESSION082-RESULT.ko.md). 아래 제안순서와 현재 실제순서를 구분한다.
+083 후속: SD 이전mini→1A초기화예고→실제초기화→1Bmount예고→실제저장을 구현했다. 코드679/타이머5/대조4/ARM·ZIP·정상044복원 검증으로 첫 관측 패키지를 준비했다. 실제 TV 가독성·저장·복원은 사용자 실행으로 확인한다. 현재 절차는 [083 실행 안내](SDREPORT083-RUN.ko.md)다. 아래078 설계 초안의 미구현 문구는 당시 기록이며 실제 완료/한계는 [083 결과](../analysis/REPORT-OBSERVATION083-RESULT.ko.md)를 따른다.
 
 상태: 설계 방향과 다음 구현 완료 조건. **아직 설치 가능한 구현이나 화면 검증 결과가 아니다.** [078 통합 시험](../analysis/REPORT-SESSION078-RESULT.ko.md)과 [P1 계획](development/NES-077-PROCESS-REVIEW.ko.md)을 따른다.0바이트 원인은 미확정이다.
 
