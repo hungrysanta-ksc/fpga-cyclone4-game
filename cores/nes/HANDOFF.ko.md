@@ -1,27 +1,28 @@
-# NES 현재 인계 — SPI101 전송 완료 순서
+# NES 현재 인계 —102 최종 오류 정지
 
-SPI 진단 경로의 TXE→BSY 종료 순서를 수정했다. 지연 시작·위상·오류336경우와 기존 하위 통합34경우, 보호 제거4개·원본 반례2개 및 같은 ARM 검사에 통과했다. 강제 중단과 핀 차단은 미완료다.
+최종 오류 정지 함수에 CS 해제→GPIO 분리→SPI1 리셋 유지 경로를 연결했다. 핀/레지스터 시작상태1024·실제 main 통합21·보호제거6·원본반례1·ARM MMIO16해석을 통과했다. 최초 오류부터 정지 진입까지의 지연과 실기 전기적 효과는 미검증이다.
 
-PR50 병합 `6977f6c8fdd30f1f09d1fffc9357e9f7731e0b84`와 이전 head 포함 확인. 현재 `codex/nes-spi-abort-101`. 브랜치명은 착수 목표를 유지하지만 이번 완료 범위는 정상 완료 순서이며 강제 중단 구현은 아니다. [101 결과](../../analysis/SPI101-RESULT.ko.md)·[101 계약](../../docs/nes-spi101-contract.md)을 먼저 읽는다. PR은 사용자만 병합하며 한국어 제목/작업 목표·작업 내용·작업 결과를 유지한다.
+PR51 병합 `bedfad5bf53d8c94a0da51f4c50e9406dbd4f8ed`와 head1f10e4dc 포함 확인. 현재 `codex/nes-spi-quiesce-102`. [102 결과](../../analysis/QUIESCE102-RESULT.ko.md)·[102 계약](../../docs/nes-quiesce102-contract.md)을 먼저 읽는다. PR은 사용자만 병합, 한국어 제목과 작업 목표/작업 내용/작업 결과 세 절을 유지한다.
 
-## 다음 작업과 완료 조건
+## 다음 우선 작업
 
-1. 101 ARM/097 이미지를 기준으로 실제 오류 경로의 SPI 강제 중단·CS/SPE/SCK/GPIO 상태를 구현·검증하고, UART/printf·타이머·CIC·RESET 연결을 확인한다. 이후 최종 파일 쌍·044 복원·외부IO/공통고장·관측 가능한 제한 실기를 확정한다.
-2. `nes_diag_blocked`는 RESET/USB 보호 뒤 무한 루프만 수행하며 SPI disable/mux 분리를 하지 않는다. 정상 종료 TXE→BSY와 고착 오류 강제 중단을 분리한다. 새로운 CS LOW/DR 접근 차단으로 진행 중 비트 취소를 주장하지 않는다. MCU reset/GPIO 재매핑/주변장치 reset 중 선택은 실제 핀·소유권·SPI 모드 근거와 오류 호출 위치를 함께 검토한다. 이미 출력된 부분 명령은 무효 처리하고 같은 세션에서 자동 재개하지 않는다.
-3. 실제 UART/printf·timer/CIC/resetGPIO와 observer는 다음 통합 대상이다.101 phase 모델은 blocked 본문만 새로 연결했고 observer는 stub이다. 전체 부팅/main 메뉴 루프는 아직 미검증. 현재 main2구간/full load/native/RTC/SRAM은100 연결을 재사용했다.
-4. 정상101은 TXE를 먼저 확인하고 BSY를 확인한다. exchange의 중복 TXE를 다시 추가하면 보고 후10초/10000 공유 예산을 소진했던 main01 반례를 참고한다. 예산을 늘리거나 fault를 초기화하지 않는다. 단일wait25tick이며 둘을 합친25tick 보장은 아니다. 진단 시 동시 SPI IRQ/DMA 부재의 소유권 전제가 남는다.
-5. 새 production 변경이 없으면101 ARM과097 ASM을 재사용한다. UART/abort 등 production이 바뀌면 host 원문·ARM 연결을 갱신한다. 동일 쌍/정확044복원/외부IO/공통고장/관측 절차 전 installable=false 유지. 사용자에게 기존 저장·클록·복원·부품·LED·분해·PC USB를 다시 요청하지 않는다.
+1. 실제 UART/printf·observer·timer·CIC와 오류 전달 경로를 연결해 최초 오류부터102 정지 함수 진입까지의 지연/종료를 검증한다. 이후 최종 ARM/FPGA·044 복원 조합, 외부IO/공통고장과 관측 가능한 제한 실기를 확정한다.
+2. 102 정리는 **nes_diag_blocked 진입 이후**의 보장이다. `nes_return_fail`/nativeSD 오류가 observer의 printf를 먼저 부르므로, 최초 오류 시점부터 핀이 정지됐다고 쓰지 않는다. 실제 UART/printf·observer의 대기/재귀/공유예산과 하위 timer/CIC 반환을 다음에 연결한다. 정상 수신/보고에 필요한 recoverable 오류와 공유 terminal 오류를 구분하고, 무조건 모든 report.error에서 peripheral reset을 걸지 않는다.
+3. 정리 helper는 CS HIGH→SCK/MOSI latchLOW+GPIO out/MISO input→CR2=0/SPE=0/RCC SPI1RST 유지,12writes/3DSB/대기없음이다. RESET/USB 보호 뒤 표시 전에 호출한다. 부분 명령은 폐기하며 자동 재개/STOP전송/SD로그/메뉴복원을 강행하지 않는다. Cortex/APB/GPIO 고장이나 pad delay는 이 모델로 닫히지 않는다.
+4. 실제 snes_reset 출력 쓰기는 연결했지만 RESET 입력감지/콘솔/초기화 전체는 모델이다. PA0 LOW latch는 기존 snes_init 전제. 다른 IRQ/DMA가 SPI와 핀을 동시사용하지 않는 진단 소유권도 전제다. CR2 disable은 이미 발행된 DMA 버스 요청 전체취소를 뜻하지 않는다.
+5. 바뀌지 않으면102 ARM과097 ASM을 재사용한다. 새 production C가 바뀌면 원문/ARM 연결을 다시 검증한다. 최종쌍/정확044복원/외부IO/두클록정지lockedHIGH CE9us/관측절차 전 installable=false. 사용자에게 기존 저장·클록·복원·부품·LED·분해·PC USB 질문/시험을 반복하지 않는다.
 
-## 최종 증거와 실패 보존
+## 완료·증거·실패
 
-- 생산변경은 SPI의 sync/exchange 두 진단 분기와 VERSION CF86-SPI101. 레거시 본문/CS/RTC099/native/main/platform은 원문 유지. 첫 TXE 실패 시 BSY 미진입. 원본100 sync 조기CS,exchange 이전응답 두 반례는 상태 모델이며 실제 ARM 타이밍으로 재현됐다는 의미가 아니다.
-- 최종 phase04 336 + unit01 13/main02 18/fat32-96-01 3, negative-sync/exchange/reverse/fault02 4개 및 baseline-sync/exchange02 2개. 최초 phase01 WinError623/negative-sync01 문자열 선택 실패/ARM01 main01 예산 실패와 phase02/03·build01을 모두 보존. 완료된 finalizer나044–101 archive를 수정하지 않는다.
-- ARM02 182416 SHA `af5992164120769ab7beafc093013bb2c97a0e40f68d122cf73c8a9753e5b590`, ELF `52ff6fc129c9811d4a52c398c2f126066c24bdc288217f8f21c278d47337442b`. 고정100 builder/checker 재사용으로 obj-nes-100/보조 이름100은 역사적 이름, 입력 VERSION101이 실제다. 새 fit/ASM/Questa/실기/설치 패키지 없음.
-- 098 메뉴주소0xC00000 두 수정,099 RTC 오류17/제한,094 sticky session을 유지한다.100 상태쓰기 오류는 RESET1회 해제 뒤 재보호할 수 있고, 보고서 RTC 실패는0바이트 가능. prepared 로그를 최종 메뉴 성공으로 쓰지 않는다.
-- 097 동일086fit RBF510856 SHA6d916f4235fcd0d4d725059f0a2f4317ea49e3637c04a53db0b8ced85cb220c1, packed219453 SHA6ebad40acadf9978b150391a786ecaf89a0e753989e088a10db8839c03ac4805,071encoder/no089terminalFF. 사용자base legacyEOFpadding/원본HDL 동등성 미증명.044복원169056 SHA1c3b40a3459d24114cb4d91ee9d861d1a08025a670ef25317ef489092203693b.
+- 생산 변경은 nes_diag_platform.c와 VERSION CF86-STOP102. SPI101 TXE→BSY/공유예산/RTC099/CS100/main/native/CF86/GBC 소스 보존.102 helper는 최종정지 전용이며 범용 SPI 오류마다 즉시 호출되는 것이 아니다.
+- 최종 pins01=1024, main02=18/fat32-96-02=3, negative-cs/clock/miso/reset/order/call01=6 + baseline01=1. ARM MMIO16초기값에서12stores/배리어3,9,12 비교. main 정상3/오류18은 실제 blocked 호출/핀상태 확인. 기존101위상336은 동일SPI소스의 과거 증거이며 새 실행이 아니다.
+- ARM01 182556 SHA `4d1c504b8ba2c343180d1a3265a79773e1acd3c51b160dab09e347b9b7ef325f`; ELF `a29fb0bdd0a14375304bddd55023400a55ae03a279ed0e3e0843bc3c654dc25b`. 고정100builder의 obj-nes-100/보조 이름은 역사적 이름. 새RTL/fit/STA/ASM/Questa/실기/설치패키지 없음.
+- 최초 main01/fat32-96-01은 호스트 include순서 컴파일 실패, 최종02에서 수정. 생산코드/ARM변경 없음. Make dependency재시도도 보존. 완료finalizer/044–102archive 수정금지. 실제전체observer/UART/timer/CIC/부팅/메뉴루프 미완료.
+- 098 메뉴주소0xC00000 수정·099 RTC 오류17·094 sticky session 유지. 보고서 RTC 실패0바이트 가능; status 오류는RESET해제1회후재보호할 수 있음. 준비TXT를 최종메뉴성공으로 쓰지 않는다.
+-097 동일086fit RBF510856 SHA6d916f4235fcd0d4d725059f0a2f4317ea49e3637c04a53db0b8ced85cb220c1/packed219453 SHA6ebad40acadf9978b150391a786ecaf89a0e753989e088a10db8839c03ac4805,071encoder/no089terminalFF. 사용자base legacyEOFpadding/원본HDL동등성 미증명.044복원169056 SHA1c3b40a3459d24114cb4d91ee9d861d1a08025a670ef25317ef489092203693b.
 
 ## 실기·게임 목표
 
-084 저장/재읽기/화면/044복원/메뉴/GBC,092 클록활동/TXT/복원 PASS 유지. 외부 실기는 사용자가 패키지 실행 후 로그를 보내는 방식이다. 두 클록 정지+locked HIGH CE9us 반례와 외부 전기적IO 승인은 미해결.
+084 저장/재읽기/화면/044복원/메뉴/GBC,092 클록활동/TXT/복원 PASS 유지. 외부 실기는 사용자 패키지실행→로그반환 방식. SPI가 정지되면 화면/TXT를 새로 출력할 수 있다고 약속하지 않는다.
 
-준비도4완료/7부분/1미완료·설치false. 첫 게임 SMB3(J),mapper4,PRG256KiB/CHR128KiB,393232bytes SHA dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49.80/96KiB진단은384KiB게임지원이 아니다. ROM/바이너리/사용자자료/라이선스는 Git에 넣지 않는다. 전체 코어자원/DMC/IRQ/영상/입력/음향은 별도다.
+준비도4완료/7부분/1미완료·설치false. 첫 게임 SMB3(J),mapper4,PRG256KiB/CHR128KiB,393232bytes SHA dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49.80/96KiB진단은384KiB지원이 아니다. 전체 코어자원/DMC/IRQ/영상/입력/음향 별도. ROM/바이너리/사용자자료/라이선스는 Git 금지.

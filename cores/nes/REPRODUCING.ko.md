@@ -139,3 +139,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## SPI101 완료 순서
 
 [101 계약](../../docs/nes-spi101-contract.md): 고정100에서 준비하고 위상336 및 기존100 통합34를 재실행한다. 새 GPIO/SPI 강제 중단 증거와 정상 완료 순서를 구별한다.
+
+## 최종 정지102
+
+[102 계약](../../docs/nes-quiesce102-contract.md): 고정101에서 준비해 실제 blocked/RESET/정리함수를 연결한다. 정지함수 진입 후 레지스터 상태와 최초오류부터의 지연을 구분한다.

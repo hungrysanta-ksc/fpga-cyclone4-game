@@ -1,13 +1,13 @@
 # NES 개발 현황
 
-현재101: SPI 진단 경로의 TXE→BSY 종료 순서를 수정했다. 지연 시작·위상·오류336경우와 기존 하위 통합34경우, 보호 제거4개·원본 반례2개 및 같은 ARM 검사에 통과했다. 강제 중단과 핀 차단은 미완료다.
+현재102: 최종 오류 정지 함수에 CS 해제→GPIO 분리→SPI1 리셋 유지 경로를 연결했다. 핀/레지스터 시작상태1024·실제 main 통합21·보호제거6·원본반례1·ARM MMIO16해석을 통과했다. 최초 오류부터 정지 진입까지의 지연과 실기 전기적 효과는 미검증이다.
 
-101 ARM/097 이미지를 기준으로 실제 오류 경로의 SPI 강제 중단·CS/SPE/SCK/GPIO 상태를 구현·검증하고, UART/printf·타이머·CIC·RESET 연결을 확인한다. 이후 최종 파일 쌍·044 복원·외부IO/공통고장·관측 가능한 제한 실기를 확정한다. 준비도4완료/7부분/1미완료, 설치 미승인.
+실제 UART/printf·observer·timer·CIC와 오류 전달 경로를 연결해 최초 오류부터102 정지 함수 진입까지의 지연/종료를 검증한다. 이후 최종 ARM/FPGA·044 복원 조합, 외부IO/공통고장과 관측 가능한 제한 실기를 확정한다. 준비도4완료/7부분/1미완료, 설치 미승인.
 
 ## 작업 진입점
 
-- [현재 인계](HANDOFF.ko.md) · [101 결과](../../analysis/SPI101-RESULT.ko.md) · [101 계약](../../docs/nes-spi101-contract.md)
-- [100 하위SPI](../../analysis/LOWER100-RESULT.ko.md) · [099 RTC](../../analysis/RTC099-RESULT.ko.md) · [097 이미지](../../analysis/CONFIG097-RESULT.ko.md)
+- [현재 인계](HANDOFF.ko.md) · [102 결과](../../analysis/QUIESCE102-RESULT.ko.md) · [102 계약](../../docs/nes-quiesce102-contract.md)
+- [101 SPI순서](../../analysis/SPI101-RESULT.ko.md) · [100 하위SPI](../../analysis/LOWER100-RESULT.ko.md) · [097 이미지](../../analysis/CONFIG097-RESULT.ko.md)
 
 ## 이전 단계별 근거
 
