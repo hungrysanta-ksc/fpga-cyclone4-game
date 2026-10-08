@@ -5,12 +5,12 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "088은 CF87을 읽는 실제 MCU GPIO reader다. 1966호스트 검사·C보호제거3개와 기준클록 있음/없음의 실제C파형→RTL 응답146912bit·RTL대조1개를 통과했다. 같은 C로 STM32F401 ARM 오브젝트를 컴파일했다. 전체 main/구성/mini/TXT session·링크된 펌웨어·ASM/실기 패키지는 아직 미완료다. CF87 RTL/fit과CF86·084 실기 성공은 보존한다.",
-  "next_action": "INTEGRATE_CF87_CONFIGURATION_READER088_REPORT_SESSION_WITH_BUDGET_ACCOUNTING",
+  "assessment": "089는 고정 CF87 fit의 ASM/압축과 오류 시 중단하는 MCU 구성 경로를 완성했다. 실제 구성·088 reader·084 mini/runtime의 호스트 합산은 정상/부재729572회, 진행 정지921626회로 기존100만 회 제한을 통과했다.304검사·실패 대조4개와 같은 C의 ARM 오브젝트를 확인했다. 제품 main/단일 SD·TXT·화면 세션과 최종 펌웨어 링크·실기 패키지는 아직 미완료다.",
+  "next_action": "INTEGRATE_PRODUCTION_CLOCK_REPORT_PLATFORM_AND_NATIVE_SD_BUDGET",
   "next_three_deliverables": [
-    "CF87 same-fitASM/압축·실제payload/IO예산계측·bounded configuration와reader088/084mini/TXT ONEsession",
-    "최종ARM링크/callsite·SPI/전환/RESET·동일CF87/MCU/044복원trial",
-    "사용자TXT/영상의기준클록관측후CF86외부/async/commoncause/최신코어MCU/전체SPI 진행"
+    "제품 플랫폼 함수에서089구성/088reader/RAM/084mini/실제SD/TXT/화면을 연결하고 전체 예산 검증",
+    "최종 ARM 링크/callsite와 SPI/구성전환/RESET 및 동일 ASM/ARM/044복원 trial",
+    "사용자 TXT/영상 회수 후 CF86 외부/async/commoncause/최신코어MCU/전체SPI 진행"
   ],
   "gates": [
     {
@@ -737,9 +737,10 @@
     "last_full_digital_session": "070 with frozen069 C and068 RTL",
     "last_offline_pair": "071 =068 FPGA +069 MCU; installable=false",
     "latest_mcu": "NES-SD077-CF68; compile-only",
-    "report_collector_last_hardware": "SDINFO074-BASE069; zero-byte/blank-screen failure",
-    "latest_host_session": "083 pre-SD mini/1A/1B +actual081 native/FatFS/writer/terminal679,timer5,causal4",
-    "report_only_arm": "SDREPORT083132552bytes;actual ARM order verified,trial/source ZIP+exact044 restore ready;physical pending"
+    "report_collector_last_hardware": "SDREPORT084 storage/readback/display and user044restore/menu/GBC PASS",
+    "latest_host_session": "089 host-orchestrated config/reader/mini/runtime304; nativeSD integration pending",
+    "report_only_arm": "084 physical PASS firmware preserved;089 config object only",
+    "clock_config": "089 same087fitASM +boundedconfig verified"
   },
   "hardware_readiness_review_initial061": {
     "date_kst": "2026-10-07",
@@ -781,8 +782,8 @@
       "scope": "Report session and external observation",
       "depends_on": [],
       "completion": "Actual multi-layer success/faults, IO protection, cumulative/boot time budget, user-visible outcome and recovery design",
-      "status": "partial_pre_SD_observation_and_trial_ready_user_video_TXT_pending",
-      "evidence": "analysis/REPORT-OBSERVATION083-RESULT.ko.md"
+      "status": "partial_084_storage_physical_pass_089_config_reader_mini_host_pass_full_clock_TXT_session_pending",
+      "evidence": "analysis/CLOCK-CONFIG089-RESULT.ko.md"
     },
     {
       "id": "P2",
@@ -829,7 +830,8 @@
       "completion": "CPU/video/input/audio/save, remaining accuracy/source adoption, same candidate board timing/game/cold-warm/endurance/GBC acceptance"
     }
   ],
-  "report_only_candidate": "SDREPORT083 first-observation trial ready; hardware unverified",
+  "report_only_candidate": "084 physical storage PASS; new clock-report platform not yet linked",
   "observation_candidate": "NES-CLOCK-OBSERVATION-087",
-  "observation_reader": "NES-CLOCK-READER-088"
+  "observation_reader": "NES-CLOCK-READER-088",
+  "observation_configuration": "NES-CLOCK-CONFIG-089"
 }

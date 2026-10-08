@@ -1,3 +1,26 @@
+# NES 현재 인계 — CF87 구성089와 호출 예산
+
+089는 고정 CF87 fit의 ASM/압축과 오류 시 중단하는 MCU 구성 경로를 완성했다. 실제 구성·088 reader·084 mini/runtime의 호스트 합산은 정상/부재729572회, 진행 정지921626회로 기존100만 회 제한을 통과했다.304검사·실패 대조4개와 같은 C의 ARM 오브젝트를 확인했다. 제품 main/단일 SD·TXT·화면 세션과 최종 펌웨어 링크·실기 패키지는 아직 미완료다.
+
+[089 결과](../../analysis/CLOCK-CONFIG089-RESULT.ko.md), [구성 계약](../../docs/nes-clock-config089-contract.ko.md)을 먼저 읽는다. PR39은2026-10-08T04:09:45Z 병합됐고 master `fef3935525cc621d8235337d15c623605943b895`에서 시작했다. 현재 브랜치 `codex/nes-clock-config-089`. 사용자만 병합한다.
+
+## 다음 작업
+
+1. **제품 플랫폼 함수**를 만든다. 현재 실제 구성·reader·mini의 순서는 host test가 호출하며 main에 연결하지 않았다. 초기 화면 marker→089 구성→088 reader→RAM→mini→실제081 SD init/mount→084 space/writer/readback/terminal을 연결한다. static alphabet을 사람이 읽을 raw snapshot/판정 TXT로 교체한다.
+2. 합산 정상/부재729572회, 진행 없음921626회다. 실제 SD init/space 등 추가 호출을 반드시 함께 계측한다. 특히 후자는 남은78374회뿐이다. writer의 기존 별도10초/10000회 허가 구간은 그대로 지키고, observer 실패 뒤 fault clear·retry별 scope restart는 금지한다. SysTick+window 정지 모델은 mini 복귀 중1000001회/74803바이트에서 차단된다. 이때 TXT를 약속하지 않는다.
+3. CF87 RBF510856/SHA `c96d4d3e846a9914a3ab34cfeabc9f4c755516b5166793a510f322f6ba774708`, RLE59700/SHA `e772ead5e070c71767df2318d91f5d83d629e8ffedd275b19e81c842133cb4a2`. 이미 same-fit ASM 완료했으므로 이유 없이 재생성하지 않는다. 고정 generated header의 descriptor를 사용한다. CRC32는06a503c4. configuration byte/bit 모델과 실제 전기 타이밍은 구분한다.
+4. 최종 ARM 링크/callsite, SPI/재구성/RESET 경계 및 동일 ASM/ARM/044 복원 manifest 후 report-only trial. 현재 ARM은17876바이트 object뿐이다. CF86 외부PSRAM/asyncclear/commoncause 및 전체 core/MCU/80-96KiB는 별도다.084 실기 저장·044복원/menu/GBC PASS를 보존하고 부품/LED/분해/PCUSB/저장 재질문은 하지 않는다.
+
+## 보존·검증
+
+host04는304검사, 최종 인과02는CRC/nSTATUS/sharedguard 제거3개 및byte단위 예산1개다. 후자는 로컬40000한도 실패이며 전체100만 초과 실험으로 부르지 않는다. ARM02가 host04와 같은 구성 C다. 원래087fit 입력은 보존됐고 새 map/fit/STA/Questa/하드웨어는 없다. 기존088 C와087 RTL 해시는 유지된다.
+
+host01/02 시각 초기화 순서 오류, host03 초기301통과, host04 추가304, ARM01 상대경로cc1 실패를 보존한다. `probes/nes-clock-config089/evidence/` 793파일 manifest `9f1a6a39c0b1d39b725d6f85a04653736ab77a06091986e398a85d1102914018`. verifier089 사용. 완료 `finalize_clock089.py` 재실행/044–088 archive 변경 금지. 준비도4/7/1, installable=false.
+
+---
+
+## 이전088 인계 기록
+
 # NES 현재 인계 — CF87 MCU reader088 검증
 
 088은 CF87을 읽는 실제 MCU GPIO reader다. 1966호스트 검사·C보호제거3개와 기준클록 있음/없음의 실제C파형→RTL 응답146912bit·RTL대조1개를 통과했다. 같은 C로 STM32F401 ARM 오브젝트를 컴파일했다. 전체 main/구성/mini/TXT session·링크된 펌웨어·ASM/실기 패키지는 아직 미완료다. CF87 RTL/fit과CF86·084 실기 성공은 보존한다.
