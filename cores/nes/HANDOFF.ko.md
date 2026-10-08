@@ -1,3 +1,21 @@
+# NES 현재 인계 — CLOCKREPORT090 실기PASS / 회수092
+
+CLOCKREPORT090 실기 회수092: HW090000.TXT1099바이트에서 두 연속 구간2/3의 count가1342354로 같고 VALID/LIVE=1, LAST_GAP=0이다. 사진의 동일파일/저장·재읽기성공/코드0 및 사용자 복원성공을 확인했다. 이번 보드·실행의 RESET-held 기준클록 활동과 관측·저장·표시 왕복은PASS다. 절대주파수/CF86외부보호/게임실행 승인은 별도다.
+
+[실기 결과092](../../analysis/CLOCK-HARDWARE092-RESULT.ko.md)를 먼저 읽는다. 새 관측 자료를 기다리던091 상태는 이번 회수로 해소됐다. 현재 PR42에 결과를 추가한다. 사용자만 병합하며 다음 진행 전 PR42/master 상태를 갱신한다.
+
+## 다음 작업
+
+1. **같은 저장/클록/복원 시험을 다시 요구하지 않는다.** 새HW090000 TXT1099/SHA `5ba647a785c5c35b82ae0acc09f08498b6d30c47277239d118d43e41c7cd29de`,사진같은파일/코드0,사용자복원PASS를 확보했다.현재메시지에없는menu/GBC재검증은추가주장하지않고과거084PASS를유지한다.
+2. 실제 RESET-held reference activity 근거를 CF86 외부PSRAM/async assertion/common-cause 정책에 반영한다. 절대CLKIN실측/두클록동시정지보호/전기지연/최신MCU/전체80·96KiB/쌍이미지는 별도남음. SMB3 mapper4 first-game 목표와384KiB적재/IRQ/PPU/입력/소리계획 유지.
+3. 회수 TXT는 새 tools/check_nes_clock_report092.py로 검사한다. ARM printf가 x/X 모두lowercase이므로090upper-only parser는실기정상TXT를거부한다.092는case만허용확장,원본수정없음.3정상/4변조검출,원본1099바이트/rawcounts2개1342354/seq2·3/flags07/301tick/172attempts/345frames 확인. EVER_GAP1은startup sticky이고LAST_GAP0이다.
+
+동결 `probes/nes-clock-hardware092/evidence/` 15파일 manifest `2b0854934f97256d330bc90c80b91732ce92e886cab5be3cd468695bb7a17641`. 기존044–091 archive/publicpins/배포패키지불변. 새ARM/RTL/Questa/패키지없음. photo/TXT원본Git에올리지않음. 전체NES준비도4/7/1/설치미승인과이번관측실기PASS를구분한다.
+
+---
+
+## 이전091 기록
+
 # NES 현재 인계 — 클록 관측 trial091 / 첫 게임 SMB3
 
 091는090의 실제 STM32 설정 함수·매크로를 레지스터 모델에 연결해 구성/관측/mini 복귀94검사와 전환 누락 대조3개를 통과했다. 생산 펌웨어는090 그대로이며 정상044 복원본을 포함한 클록 관측 trial/source ZIP을 완성했다. 다음은 사용자 HW090 TXT/화면 회수다. SMB3(J), mapper4·PRG256KiB/CHR128KiB를 첫 게임 목표로 등록했다.
