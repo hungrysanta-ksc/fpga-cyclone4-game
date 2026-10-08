@@ -1,3 +1,34 @@
+# NES 현재 인계 — CF86 조건부 전체 전송095
+
+094의 실제 C로 캡처한 80/96KiB 전체 전송을 CF86 SPI·메모리 RTL에 재생했다. 정상 클록 조건에서 총180224바이트,901152프레임,50464224응답 비트를 비교했고, 원시 PLL lock 상실 두 경우의 취소 파형과 대조3개를 확인했다. 정상 전체 실행은 독립 클록 감시 회로의34비트 반복 상태를 이용한 조건부 분리 검증이다.
+
+PR44 병합 `e2a11912f1799c75de33a7a34969cddc8c9b6183`, 현재 `codex/nes-cf86-replay-095`. [095 결과](../../analysis/REPLAY095-RESULT.ko.md), [조건/재현](../../docs/nes-replay095-contract.md)을 먼저 읽는다. 사용자만 PR을 병합한다.
+
+## 다음 작업과 완료 조건
+
+1. 실제077 SD/FatFS·FPGA 구성·공유 오류·시간/핀 소유권을094 세션과 연결해 검증한 뒤, 동일086 fit의 ASM/최종 ARM/044 복원 쌍을 만든다. 외부 IO와 공통 클록 고장 조건을 해결하거나 승인 범위를 명확히 하기 전에는 설치하지 않는다. 이번에는 C GPIO를 실행했지만 SD/FatFS 호출은 모델이었다. lower READY도 ARM 호출 증거와 호스트 모델을 구분한다.
+2. 같은 소스의 누적 시간/종료 조건, 첫 공유 오류 뒤 SD·SPI·SRAM·기본 구성 금지, 정상 메뉴 복귀, RESET/USB/핀 소유권을 실제 하위 호출로 검사한다.094 FAILED 상태와 verified 취소를 제거하지 않는다. 정상 클록 복귀가 이미지 재사용 허가가 아니다.
+3. 패키지 전에는 외부 IO·두 클록 동시 정지와 수동044 복원·관측 경계를 정리한다.084 저장/메뉴/GBC와092 클록/TXT/복원 성공을 반복 질문하지 않는다. 부품/LED/분해/PC USB 질문도 금지한다. 현재 새 설치 파일은 없다.
+4. SMB3(J) mapper4/384KiB 첫 게임, 전체 코어4LAB 여유 문제, IRQ/PPU/입력/소리 순서를 유지한다. 진단80/96KiB 통과를 게임 지원으로 바꾸지 않는다. 준비도4/7/1은 그대로다.
+
+## 다음 통합의 구체적인 경계
+
+094 `cf86_session094_host.c`의 `nes_diag_sd_reset`/`nes_diag_sd_failed`는 stub이고, `nes_diag_fpga_pgm`은 모델 `fpga_pgm`을 감싼다. `nes_return_spi_ready`도 성공/실패 모델이다. 다음에는 이 함수들과 모델 `f_open`/`f_read`/`f_lseek`/`f_close`를 최종094 ARM 소스에 들어간 실제 하위 구현으로 연결한다. 과거 `.inc` 조각만 복사하면 이후 보호 수정이 빠질 수 있으므로 동결094 ARM의 파일 해시를 기준으로 한다.
+
+082 `test_nes_report_session082.py`의 실제 FatFS/native CMD17/24 연결 방법과 카드/CRC/시간 모델은 참고할 수 있다. 단,082는 report-only 초기화 경로이고094는077 active-menu 경로다.081의 strong mount bridge나 report-only 초기화를 그대로 이식하거나 active077의 재초기화 거부를 제거하지 않는다. 이미 초기화된 메뉴에서 세션 진입하는 전제와 실제 하위 호출을 분리해 기록한다.
+
+완료 조건은 같은 호출 연쇄 안에서 정상 설정→헤더/전체 ROM 읽기→검증→STOP→기본 FPGA 복귀가 끝나는 것, SD 응답/CRC/읽기·구성 핀·READY·누적 시간 오류 뒤 첫 오류가 유지되는 것, 이후 디스크 명령/구성/ROM SPI가 발생하지 않는 것이다. FAT 캐시 때문에 `f_close` 호출 횟수만으로 디스크 무접근을 판정하지 말고 실제 CMD/핀 이벤트도 기록한다. 오류 후 RESET 유지/USB 차단과 정상 시 소유권 복구를 함께 검사한다. 생산 코드 변경이 필요하면 새 ARM와 관련 파형 검증 범위를 다시 판단한다.
+
+## 검증 경계와 보존
+
+정상 두 경우 총901152프레임/50464224응답 비트, raw-lock 취소2, 대조3. 조건부 guard 분리: 전체34비트/위상4000ns 반복 확인 후1024프레임 뒤 guard 클록만 정지. memory/SPI8MHz는 free-running. 무분리1024/분리8192도 통과했다. 하드웨어·CDC·임의클록 증명이 아니며 고장 시험에는 분리하지 않는다. capture02/03 full trace SHA 동일,03은 MOSI 시각 검사를 추가했다.
+
+생산 C9/RTL16은094 ARM/086 fit03 그대로다. 새 ARM/fit/STA/ASM 없음. 동결 `probes/nes-replay095/evidence/` 994파일/manifest `640ae3c35c3600f336204ef25fbcc3270eefbbb5bc7e433d14d7da9cedb83c07`. 초기 capture helper/SV 예약어 오류와 의도적으로 취소한 full80-01을 보존했다. 이후 정상 전체는 full80-02/full96-02, 고장은 fault02다. verifier는 `verify_nes_replay095.py`. finalizer 재실행/044–095 archive 수정 금지.
+
+---
+
+## 이전094 기록
+
 # NES 현재 인계 — CF86 MCU 세션094
 
 CF86 전용 MCU 세션에 시작 조건과 유지되는 실패 상태를 연결했다. 정상 80/96KiB 전체 적재·비교를 포함한 호스트 63경우와 보호 제거 대조 4개가 통과했고, 같은 핵심 C 9파일을 사용한 ARM 펌웨어 180928바이트를 링크했다. 실제 CF86 RTL 파형 재생과 실기 쌍은 다음 단계다.

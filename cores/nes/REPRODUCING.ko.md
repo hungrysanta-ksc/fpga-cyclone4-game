@@ -111,3 +111,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## CF86 MCU 세션094
 
 [결과](../../analysis/SESSION094-RESULT.ko.md)와 [계약/명령](../../docs/nes-session094-contract.md)을 따른다. 공개 호스트63/대조4는 새 출력 경로로 실행한다. ARM과 동결 verifier는 비공개077/094 증거가 필요하며 공개 clone만의 재현으로 표현하지 않는다.
+
+## CF86 전송 재생095
+
+[095 조건/명령](../../docs/nes-replay095-contract.md)을 따른다. guard 반복 상태 논증과 정상-only 분리를 명시하며 실제 전체 감시 회로 실행/실기라고 부르지 않는다. 동결 verifier는 비공개 증거를 요구한다.
