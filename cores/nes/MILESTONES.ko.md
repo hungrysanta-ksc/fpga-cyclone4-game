@@ -53,3 +53,5 @@
 - **104 타이머·IRQ**: 실제 timer/SysTick/LED/CIC/RESET 통합, 진단 ISR printf 재진입 수정.85호스트/6대조/ARM 분기 검증. 최종 파일조합·외부IO·실기 미완료. [104 결과](../../analysis/TIMER104-RESULT.ko.md).
 
 - **105 최종 파일 조합**:11역할/정상1·거부23,094 로그의RESET-held 범위 정리. 디버깅 기반의 검증/배포 준비이며 배선·게임기능 추가 아님. [105 결과](../../analysis/PAIR105-RESULT.ko.md).
+
+- **106 실기 조건**:3168경로 재계산, CE HIGH 외부예산109.565ns/경계 산술과관측600초 운영정책 정의. E1전기범위/E2공통고장 미완료. [106 결과](../../analysis/TRIAL106-RESULT.ko.md).

@@ -155,3 +155,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 파일 조합105
 
 [105 계약](../../docs/nes-pair105-contract.md):104/097/044 정확 조합과 역할 검사. 오프라인 통과는 설치 승인 또는 실기 성공이 아니다.
+
+## 실기 조건106
+
+[106 계약](../../docs/nes-trial106-contract.md):086원시경로 재계산과운영관측정책. 계산상양수/600초한도를물리승인·MCU완료보장으로쓰지않는다.
