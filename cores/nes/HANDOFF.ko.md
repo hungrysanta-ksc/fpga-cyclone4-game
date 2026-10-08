@@ -1,3 +1,25 @@
+# NES 현재 인계 — 클록 TXT 통합090
+
+090는 단일 제품 함수의 CF87 구성·클록 관측·mini 복귀·실제 SD 초기화/FatFS·TXT 저장/재읽기·최종 화면을 연결했다. 통합94검사·인과 대조4개, TXT16파일 대조와4변조 거부, 전체 ARM196248바이트 링크/호출 검증을 통과했다. 실제 SPI 핀 전환 점검과044 복원 포함 패키지 검증은 남아 있어 실기 배포 전이다.
+
+[090 결과](../../analysis/CLOCK-REPORT090-RESULT.ko.md), [090 계약](../../docs/nes-clock-report090-contract.ko.md)을 먼저 읽는다. PR40은2026-10-08T04:34:51Z 병합, master `6077d65b26ac53b6fc5f029aa1e7fb332d519b9d`에서 시작했다. 현재 `codex/nes-clock-report-090`. 사용자만 병합한다.
+
+## 바로 다음 작업과 완료 기준
+
+1. 090의 전체 세션94·ARM 링크는 완료했다. 반복 구현/라이선스 smoke/기존 저장 실기 재질문을 하지 않는다. 현재 GPIO 응답 모델이 실제 MODER/CR1 핀 전환을 전부 검증하지 않으므로 CF87 관측 종료→mini 재구성의 실제 매크로·CS/SPI idle·RESET 연속성을 점검하고 필요한 fault 대조만 추가한다.
+2. firmware196248/SHA `00f757fcd1ca0da08ce0e5564358e06b482071e6119d8827e6c81748fcfddebe`, 기존089 RLE59700/SHA `e772ead5e070c71767df2318d91f5d83d629e8ffedd275b19e81c842133cb4a2`와084 exact mini/정상044 복원 파일로 새로운 report-only trial/source 패키지와 manifest를 검증한다. old044–090 동결 파일은 바꾸지 않는다. 부팅 화면·관측 중 RESET·SD 단계·실패시 복원과 TXT 수거 절차를 구체화한다. 아직 설치 패키지를 전달하지 않았다.
+3. 새 실기에서 TXT/화면을 받아 RESET-held reference availability를 판정한다. ACTIVE는 측정 주파수 승인이 아니다. 부품·LED·분해·PCUSB·084저장/복원/menu/GBC는 이미 확정/답변됐으므로 반복 요구하지 않는다. CF86 외부PSRAM/async/common-cause 및 최신MCU/전체SPI80·96KiB는 다음 별도 범위다.
+
+## 근거와 제한
+
+host02 94검사/4인과, text01 16파일/4변조/initial미획득, ARM01 build02 성공/호출순서 통과. host01 93은 이전 snapshot이다. 실제 하드웨어 핀/카드/시간/SRAM/CRC assembly는 모델이며 new RTL/Questa/fit/ASM/ARM실행은 없다. writer 전739341–955390회/기존100만, writer60/10000, 시간11.32/12.82초는 모델 값이다. frozen SysTick 반례089를 유지하고 저장을 보장하지 않는다.
+
+ARM checker 최초 menu whole-file equality 실패는 미사용 메뉴복사 제외 때문이었다.11개 전체소스 hash+정확한 runtime prefix+13개 원본ARM입력을 확인했다. Make 최초 cdcuser.o dependency 실패/retry도 보존한다. 동결 `probes/nes-clock-report090/evidence/` 2063파일 manifest `5ecbc6fe3f5580943d0a9d991d880595caa1d30db37cb78815114bc2c42f0512`. verifier090를 사용하고 완료 finalizer를 재실행하지 않는다. 준비도4/7/1, installable=false.
+
+---
+
+## 이전089 기록
+
 # NES 현재 인계 — CF87 구성089와 호출 예산
 
 089는 고정 CF87 fit의 ASM/압축과 오류 시 중단하는 MCU 구성 경로를 완성했다. 실제 구성·088 reader·084 mini/runtime의 호스트 합산은 정상/부재729572회, 진행 정지921626회로 기존100만 회 제한을 통과했다.304검사·실패 대조4개와 같은 C의 ARM 오브젝트를 확인했다. 제품 main/단일 SD·TXT·화면 세션과 최종 펌웨어 링크·실기 패키지는 아직 미완료다.

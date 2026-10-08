@@ -5,12 +5,12 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "089는 고정 CF87 fit의 ASM/압축과 오류 시 중단하는 MCU 구성 경로를 완성했다. 실제 구성·088 reader·084 mini/runtime의 호스트 합산은 정상/부재729572회, 진행 정지921626회로 기존100만 회 제한을 통과했다.304검사·실패 대조4개와 같은 C의 ARM 오브젝트를 확인했다. 제품 main/단일 SD·TXT·화면 세션과 최종 펌웨어 링크·실기 패키지는 아직 미완료다.",
-  "next_action": "INTEGRATE_PRODUCTION_CLOCK_REPORT_PLATFORM_AND_NATIVE_SD_BUDGET",
+  "assessment": "090는 단일 제품 함수의 CF87 구성·클록 관측·mini 복귀·실제 SD 초기화/FatFS·TXT 저장/재읽기·최종 화면을 연결했다. 통합94검사·인과 대조4개, TXT16파일 대조와4변조 거부, 전체 ARM196248바이트 링크/호출 검증을 통과했다. 실제 SPI 핀 전환 점검과044 복원 포함 패키지 검증은 남아 있어 실기 배포 전이다.",
+  "next_action": "AUDIT_SPI_RESET_TRANSITION_AND_PACKAGE_CLOCK_TRIAL",
   "next_three_deliverables": [
-    "제품 플랫폼 함수에서089구성/088reader/RAM/084mini/실제SD/TXT/화면을 연결하고 전체 예산 검증",
-    "최종 ARM 링크/callsite와 SPI/구성전환/RESET 및 동일 ASM/ARM/044복원 trial",
-    "사용자 TXT/영상 회수 후 CF86 외부/async/commoncause/최신코어MCU/전체SPI 진행"
+    "CF87 관측 종료→mini의 실제 GPIO/SPI/RESET 연속성 점검",
+    "동일 firmware/CF87/mini/044복원 manifest와 report-only trial/source 패키지 검증",
+    "새 클록 TXT/화면 실기 회수 후 CF86 외부/async/commoncause와 전체NES 진행"
   ],
   "gates": [
     {
@@ -738,8 +738,8 @@
     "last_offline_pair": "071 =068 FPGA +069 MCU; installable=false",
     "latest_mcu": "NES-SD077-CF68; compile-only",
     "report_collector_last_hardware": "SDREPORT084 storage/readback/display and user044restore/menu/GBC PASS",
-    "latest_host_session": "089 host-orchestrated config/reader/mini/runtime304; nativeSD integration pending",
-    "report_only_arm": "084 physical PASS firmware preserved;089 config object only",
+    "latest_host_session": "090 production whole session94+4causal, actual nativeSD/TXT/mini",
+    "report_only_arm": "090 linked196248 compile-only;084physicalPASS preserved",
     "clock_config": "089 same087fitASM +boundedconfig verified"
   },
   "hardware_readiness_review_initial061": {
@@ -782,8 +782,8 @@
       "scope": "Report session and external observation",
       "depends_on": [],
       "completion": "Actual multi-layer success/faults, IO protection, cumulative/boot time budget, user-visible outcome and recovery design",
-      "status": "partial_084_storage_physical_pass_089_config_reader_mini_host_pass_full_clock_TXT_session_pending",
-      "evidence": "analysis/CLOCK-CONFIG089-RESULT.ko.md"
+      "status": "partial_090_whole_session_and_arm_pass_transition_and_trial_pending",
+      "evidence": "analysis/CLOCK-REPORT090-RESULT.ko.md"
     },
     {
       "id": "P2",
@@ -830,7 +830,7 @@
       "completion": "CPU/video/input/audio/save, remaining accuracy/source adoption, same candidate board timing/game/cold-warm/endurance/GBC acceptance"
     }
   ],
-  "report_only_candidate": "084 physical storage PASS; new clock-report platform not yet linked",
+  "report_only_candidate": "CLOCKREPORT090 linked/host verified; trial package pending",
   "observation_candidate": "NES-CLOCK-OBSERVATION-087",
   "observation_reader": "NES-CLOCK-READER-088",
   "observation_configuration": "NES-CLOCK-CONFIG-089"
