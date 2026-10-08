@@ -1,3 +1,26 @@
+# NES 현재 인계 — CF85 단일 클록 정지 차단
+
+085는 별도 입력 클록을 이용한 단일 클록 정지 차단을 실제 진단 핀 셸에 연결했다. 디지털 GPIO4경우/정지128경우/인과 대조3개를 통과했으며 검출 최대4.374µs, CE LOW 최대3.350µs다. 두 클록 동시 정지 반례는 남는다. 새 fit/STA·실제 기준 클록 가용성·최신 MCU 쌍/전체 세션·실기는 미완료이며 설치 파일은 없다. 084 저장/화면/정상044복원·메뉴/GBC 성공은 유지한다.
+
+[085 결과](../../analysis/CLOCK-GUARD085-RESULT.ko.md)와 [구현·재현·다음 승인 조건](../../docs/nes-clock-guard085-contract.ko.md)을 먼저 읽는다. PR35는 2026-10-08T01:54:37Z 병합됐고 master `bf29565e94fd9d63a57b013764dc4f612c710986`가 기존084 head를 포함한다. 현재 브랜치는 `codex/nes-clock-guard-085`다. 자동 병합하지 않는다.
+
+## 보존할 근거
+
+- 정상044/menu/GBC와084 사용자 TXT3072바이트 전체 일치·최종 성공 화면·수동044복원 성공은 완료다. 같은 파일/LED/부품/분해/PCUSB 질문을 반복하지 않는다.
+- 실험RTL CF85 / 과거 승인 범위의RTL CF68 / 전체 디지털 세션070(069 C) / 파일 쌍071(069 MCU) / 최신 코어MCU077 / 보고서 전용084를 구별한다. 084를 NES 펌웨어로 교체하거나071에 CF85를 섞지 않는다. CF85 새 ID85는 구형 MCU의 승인 대상이 아니다.
+- normal02 4 GPIO 실행·128정지·130360응답 비트/negative3. reference20/약21.477/22MHz, CLKIN8MHz. 두 클록 동시 정지 반례와 아날로그/CDC/배선 미검증을 보존한다. 모형 abort 뒤 데이터는 무효이며 SRAM·RUN 차단을 유지한다.
+- 새 evidence 471파일 manifest `aec4aabee2f45eeaf1bec3cb353d8501c629369513482e471477a4ccf6f320d0`. normal01/02와 대조 로그·실행 snapshot 보존. `finalize_clock085.py` 완료 재실행 금지,044–084 archive 수정 금지. 최종 결과는 [메타데이터](../../analysis/clock-guard085-verification.json)와 verifier를 사용한다.
+
+## 다음 작업
+
+1. 기존 `get_snes_sysclk()` 명령FE·96000000주기 측정창이 실제 base에서 지원되는지, RESET-held에도 SNES_SYSCLK가 유지되는지 먼저 대조한다. 이번에는 실기 측정하지 않았다. 공통 HSE 기반 MCU/PLL 카운터로 독립성을 대신하지 않는다.
+2. CF85의 새 fit/STA/CDC·A9 클록 라우팅·비동기 assert/reset release·외부 IO를 검사한다. 과거068 slack/PSRAM3168경로를 새 top에 재사용하지 않는다. 양쪽 클록 동시 정지의 처리 또는 제한 근거가 없으면 P2 설치 보류.
+3. 최신 MCU 승인/READY·최종 로그·전체80/96KiB 실제 C↔RTL·STOP/복구를 같은 후보에 연결하고, 해당 fit의 ASM/압축/ARM/base/menu/정상044 복원 쌍(P3)을 만든다. 이어 외부 실기 TXT/영상 회수(P4). 전체NES 자원4LAB/P5/P6는 별도다.
+
+---
+
+## 이전084 인계 기록
+
 # NES 현재 인계 — 084 실기 저장·재읽기 통과
 
 084 실기 저장·재읽기·화면 관측을 통과했다. 사용자 HW084001.TXT3072바이트가 기대값과 전체 일치하고, 영상의 같은 파일명·TXT SAVED + READBACK OK·Save code:0을 확인했다. 검토 화면에서 글자 잘림도 없다. 사용자가 정상044복원 후 메뉴·GBC도 모두 정상이라고 확인했다. 083 실제 원인 확정·반복 내구성·NES/CF68 전체 검증으로 확대하지 않는다. 준비도4완료7부분1미완료를 유지한다.
