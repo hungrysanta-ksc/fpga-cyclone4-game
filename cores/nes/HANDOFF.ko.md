@@ -1,27 +1,22 @@
-# NES 현재 인계 —107 보드 근거와 고장 종료 설계
+# NES 현재 인계 —108 CSS/NMI 종료 구현
 
-공개 회로도의 세대 불일치와 MCU·FPGA의 공통 HSE 의존성을 확인했다. 현재 NMI 벡터는 미처리 예외 루프를 가리킨다. 전기적 근거 확보와 고장 차단 구현에 필요한 항목을 분리했다.
+진단 세션에 한정한 CSS/NMI 고장 종료 경로를 구현했다. HSE 고장 시 직접 RESET·nCONFIG·SPI를 정리하고 복귀하지 않으며, 정상 종료 때 CSS를 해제한다. 실제 C 호스트63건/보호 제거 대조4건과 최종 ARM 벡터·종료 경로 검증을 통과했다.
 
-작업 의미: 실기 디버깅 기반의 설계 검토다. 잘못된 회로도나 MCU 타이머를 독립 보호 근거로 사용하는 경로를 배제했다. 코어 배선·게임 기능·새 실기 성공을 추가한 작업은 아니다.
+작업 의미: 실기 디버깅 기반의 고장 종료 기능 구현이다. 이전 미처리 NMI 루프에 없던 진단 소유권·고장 고정·직접 출력 차단을 추가했다. 게임 실행 배선이나 SMB3 호환성을 구현한 것은 아니다.
 
-PR56 병합3578defda4d5ed7104b1aaf765afe57fd675b854, 이전 head43db374de95b0218661b66e0a0f0253d60b066f6 포함을 확인했다. 현재 codex/nes-board-evidence-107. [107 결과](../../analysis/BOARD107-RESULT.ko.md)와 [후속 계약](../../docs/nes-board107-actions.ko.md)을 먼저 읽는다.
+PR57 병합e3b0f4853698995dcb8b8327d933a643a9d28951, head3f1dbfac 포함 확인. 현재codex/nes-css-nmi-108. [108 결과](../../analysis/CSS108-RESULT.ko.md), [계약](../../docs/nes-css108-contract.md)을 먼저 읽는다.
 
 ## 다음 행동
 
-다음은 진단 세션에 한정한 CSS/NMI 고장 종료 경로의 구현·호스트/ARM 검증이다. 정상 GBC 경로와 공유 fault를 보존하고, HSI 전환 후 SD/UART/메뉴 복구를 시도하지 않도록 한다. 이 기능의 고장 범위와 nCONFIG→패드 비활성→CE HIGH 지연을 분리해 기록한다. E1의 보드 전압·부하·배선 근거와 E2의 8µs 상한은 별도 미결이며, CSS 추가만으로 시험을 승인하지 않는다.
+다음은108을 기존104/097의 전체 SD·FatFS·main/menu 호스트 경로에 연결하는 통합 회귀다. 진입 거부·정상 반환·복구 중 고장·정상 종료 경계의 실제 CSS 연결을 검증하고, 모델 핀과 실제 PA0/PA1/PA4 매핑 차이를 명시적으로 해결한다. 108 ARM을105 파일 조합에 반영하는 것은 이 회귀 후 한 번만 한다. E1 전기적 범위와 E2 감지부터 CE HIGH까지의 최악 지연/고장 범위 판단은 여전히 별도다.
 
-- 공개 upstream cf7e21d7 KiCad192개 blob은 Pro Rev.D 회로도가 아니다. 특히 RevD 폴더는2011년 시트 Rev C다. 같은 revision 글자를 근거로 전원/풀업을 가져오지 않는다.
--104 SYSCLK=HSE PLL, MCO1 PA8=HSE. TIM2는 별도 발진기 아님. clock_init에 CSS enable 없음; 실제 부트 후 CSS 상태 측정은 아님. NMI/미처리 예외는 같은0x0800c60e 루프. CSS를 켜기만 하는 수정 금지.
--086 fit03 QSF/board.pin의 CLKIN M2, CE G16/J16, SNES_SYSCLK A9는 설정·배치 근거이며 배선/전압/지연 실측 아님. PA1 PROG_B→nCONFIG는 후보이며 high-Z→CE HIGH 시간을 생략하지 않는다.
-- E1/E2는 미결, installable/trial/start=false. 두 클록 정지 lockedHIGH CE9µs 반례 유지. [106 판정](../../docs/nes-trial106-decision.json)과 [관측 초안](../../docs/nes-trial106-observation.ko.md)은 현재에도 유효하다.600초는 사람이 기다리는 한도이며 펌웨어/8µs/SD완료 보장 아님.
-
-## 재사용할 근거
-
--107은 소스·심볼·핀·Git 객체 조사.14입력,192blob. 최초 checkout 줄바꿈 비교 실패 보존, Git 객체 원본 비교로 완료. 새 제품C/RTL/ARM/fit/STA/ASM/Questa/실기/설치 패키지 없음. 완료107 audit/finalizer 및044–107 archive 재작성 금지.
--105 pair11역할, 정상1/거부23, manifest bba0316dc6160c107edab5a41b6ea32e11b74e3fc227f23b69e967a79dbc797a. 새 소스가 바뀐 역할만 이후 갱신한다.
--104 ARM182640 SHA7f0601cc24b3fc7288afd4b2531fffaf3aca0c67300c5c4d2bb9aa57d4ac1cca, ELF1eeeb57746883eb96732f30b95b5e742356a383f5a7e63a3de5c9c7529f8f45f.103 sharedfault와report.error 구분/102차단12writes·3DSB/101TXE→BSY·공유예산 보존. NMI에서 기존 observer를 무검토 호출하지 않는다.
--097 동일086fit RBF510856 SHA6d916f4235fcd0d4d725059f0a2f4317ea49e3637c04a53db0b8ced85cb220c1, packed219453 SHA6ebad40acadf9978b150391a786ecaf89a0e753989e088a10db8839c03ac4805. 정확044복원169056 SHA1c3b40a3459d24114cb4d91ee9d861d1a08025a670ef25317ef489092203693b. 받은base legacy EOF/HDL동등성 미증명 유지.
-- 제품104는094 표식/TXT candidate 유지. 저장TXT는PREPARED_RESET_HELD, released는UARTonly. 새TXT/메뉴/복원은 따로 판정. 오류뒤 추가IO·보고 강제·자동 재시도 금지.
+- 새 CSS begin은 USB IRQ/RESET/CF86/diag begin 뒤 첫 f_open 전에 호출된다. 기존 CSSON이나 CSSF를 인수·clear하지 않고 거부한다. 정상 leave가 먼저 CSS end를 검사하며 fault일 때 observer/IRQ 복구로 넘어가지 않는다.
+- NMI에서 일반 nes_return_fail/observer/printf/SD/timer 호출 금지. fault108은 volatile32bit; nes_return_failed OR에 연결, reset/leave로 해제 안 됨. 정상 종료 후 claimed 이력은 남겨 늦은 CSSF NMI도 차단한다. 비활성 non-CSS는 원래 loop. RESET은 방향 제어/기존type보존이며 open-drain을 가정하지 않는다.
+- units04 실제C63건, negative4, arm-check04. 최종ARM183220 SHA394c1c442b6d767b5d41f891151eed12e82954b624a0b53a346dad8dc948692c; ELF98d53c9e64f98d815983eb9b9ec5765fe8862389b85cef01e7e68f0f27829db3. VERSION CF86-CSS108. 실제vector0x08018d31→NMI0x08018d30; stop15store명령(조건부fault1+MMIO14)/0calls/DSB3/ISB2. 실행시간 보장 아님.
+- 실제GPIO/CSS/NVIC는 모델, 전체 instruction preemption/CPU버스정지/전원고장 미검증.104/097 native 전체세션에108CSS를 붙인 실행은 아직 없다. 기존104 전체native PASS를108전체PASS로 쓰지 않는다.
+- E1/E2/실기/설치false. high-Z는CE HIGH보장아님. 양클록정지 lockedHIGH CE9µs 반례 유지. [107 후속 근거](../../docs/nes-board107-actions.ko.md)와 [106 관측 초안](../../docs/nes-trial106-observation.ko.md)을 사용한다.600초 관측은사람의한도.
+-105 pair는104 ARM의역사적11역할조합.097ASM/086fit/정확044복원 재사용. 같은FPGA를다시빌드하지않는다. 제품094marker/TXTcandidate 유지; PREPARED_RESET_HELD는release아님. NMI뒤새TXT·자동메뉴반환을약속하지않는다.
+- 실패보존: units01DLL623, 자동승인검토timeout1회재시도성공(안전거부아님), units02과다경계case122, 초기ARMchecker괄호/CR/공백, Make초기dependency/retry. 완료108finalizer/archive044–108재작성금지. 공개CSS파일/host/checker 해시는108metadata로고정.
 
 ## 사용자 규칙과 전체 목표
 
