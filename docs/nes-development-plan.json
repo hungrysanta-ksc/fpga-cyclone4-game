@@ -5,10 +5,10 @@
   "technical_candidate": "NES-SD077-CF68",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "082에서 실제081 초기화→첫 mount→080mini→FatFS/native CMD17/24 저장·재읽기→최종문구를 단일 호스트 실행으로 연결했다. 667검사·인과대조2 통과, 생산 소스/081 ARM은 불변이다. 외부 관측·시간/결과표·044복원은 남으며 설치 불가, P1 부분/준비도4완료7부분1미완료다.",
-  "next_action": "P1_EXTERNAL_OBSERVATION_TIME_RESULT_AND_044_RESTORE",
+  "assessment": "083 실기에서1A→1B→2→3 화면과 STEP3 고정, 사용자 보고 HW083000.TXT0바이트 및 좌우 글자 잘림을 확인했다. 사용 중인 FAT 앞부분을 탐색하다 writer10000poll을 소진하는083 조건을 재현했다. 084는 파일 생성 전 읽기 전용 공간 탐색·1C 표식·좌우 여백을 추가했고, 통합809·timer5·인과대조5·ARM·시험/044복원 ZIP 검증을 통과했다. 실제 SD 원인과084 저장·가독성·044복원/메뉴/GBC는 미확인이다. 준비도4완료7부분1미완료, CF68/NES 설치 미승인을 유지한다.",
+  "next_action": "USER_REPORT084_1C_WRITE_READBACK_AND_044_RESTORE",
   "next_three_deliverables": [
-    "082 단일 플랫폼 통과 이후 초기화/mini 외부관측·시간/결과표·044복원 계약 및 보고서전용P3 판단",
+    "사용자084 영상/새HW084 TXT → 1C탐색·2디렉터리·3쓰기 경계 구분,3072바이트 전체검사·최종화면·044복원/메뉴/GBC 확인",
     "제한 진단 외부 IO/클록 조건 정리(P2) 및 최종 MCU/FPGA/base/menu 쌍·독립 백업/복원 계획(P3)",
     "구별 가능한 저장·관측 시험 통과 후80/96KiB 적재/비교/STOP·메뉴 재진입/GBC 실기(P4)"
   ],
@@ -132,14 +132,14 @@
     {
       "id": "REPORT-SESSION",
       "status": "host_integration_pass_physical_open",
-      "evidence": "analysis/REPORT-SESSION082-RESULT.ko.md",
-      "detail": "082 combined init/native/FatFS/mini/writer/terminal667/causal2 complete. External observation/time/result map,044 recovery and physical remain; zero-byte root cause unknown."
+      "evidence": "analysis/REPORT-OBSERVATION083-RESULT.ko.md",
+      "detail": "083 pre-SD1A/1B markers and report-only trial/exact044 restore ready. User TV/video/HW083 and actual restoration pending; zero-byte root cause unknown."
     },
     {
       "id": "EXTERNAL-OBSERVABILITY",
       "status": "open",
-      "evidence": "docs/nes-report-observation078-contract.ko.md",
-      "detail": "073/074 zero-byte/blank screen; cartridge LEDs unavailable. Need externally observable outcomes and recovery policy before new distinguishable physical trial, not a blind074 retry"
+      "evidence": "analysis/REPORT-OBSERVATION083-RESULT.ko.md",
+      "detail": "083 pre-SD1A/1B markers and report-only trial/exact044 restore ready. User TV/video/HW083 and actual restoration pending; zero-byte root cause unknown."
     },
     {
       "id": "CURRENT-PAIR-RECOVERY",
@@ -738,8 +738,8 @@
     "last_offline_pair": "071 =068 FPGA +069 MCU; installable=false",
     "latest_mcu": "NES-SD077-CF68; compile-only",
     "report_collector_last_hardware": "SDINFO074-BASE069; zero-byte/blank-screen failure",
-    "latest_host_session": "082 single actual081 initialization/native CMD17/24/FatFS/080mini/writer/terminal:667 checks+2 causal, hardware modeled",
-    "report_only_arm": "Unchanged SDREPORT081132320bytes;082 host integration verified, external visibility/recovery/physical pending"
+    "latest_host_session": "083 pre-SD mini/1A/1B +actual081 native/FatFS/writer/terminal679,timer5,causal4",
+    "report_only_arm": "SDREPORT083132552bytes;actual ARM order verified,trial/source ZIP+exact044 restore ready;physical pending"
   },
   "hardware_readiness_review_initial061": {
     "date_kst": "2026-10-07",
@@ -781,8 +781,8 @@
       "scope": "Report session and external observation",
       "depends_on": [],
       "completion": "Actual multi-layer success/faults, IO protection, cumulative/boot time budget, user-visible outcome and recovery design",
-      "status": "partial_combined_platform_done_external_visibility_recovery_pending",
-      "evidence": "analysis/REPORT-SESSION082-RESULT.ko.md"
+      "status": "partial_pre_SD_observation_and_trial_ready_user_video_TXT_pending",
+      "evidence": "analysis/REPORT-OBSERVATION083-RESULT.ko.md"
     },
     {
       "id": "P2",
@@ -829,5 +829,5 @@
       "completion": "CPU/video/input/audio/save, remaining accuracy/source adoption, same candidate board timing/game/cold-warm/endurance/GBC acceptance"
     }
   ],
-  "report_only_candidate": "SDREPORT081 compile-only; unchanged production,082 host integration verified"
+  "report_only_candidate": "SDREPORT083 first-observation trial ready; hardware unverified"
 }

@@ -1,23 +1,24 @@
-# NES 현재 인계 — 082 초기화부터 저장·최종문구까지 단일 실행
+# NES 현재 인계 — 084 FAT 공간 탐색·화면 여백 재시험
 
-082에서 실제081 초기화→첫 mount→080mini→FatFS/native CMD17/24 저장·재읽기→최종문구를 단일 호스트 실행으로 연결했다. 667검사·인과대조2 통과, 생산 소스/081 ARM은 불변이다. 외부 관측·시간/결과표·044복원은 남으며 설치 불가, P1 부분/준비도4완료7부분1미완료다.
+083 실기에서1A→1B→2→3 화면과 STEP3 고정, 사용자 보고 HW083000.TXT0바이트 및 좌우 글자 잘림을 확인했다. 사용 중인 FAT 앞부분을 탐색하다 writer10000poll을 소진하는083 조건을 재현했다. 084는 파일 생성 전 읽기 전용 공간 탐색·1C 표식·좌우 여백을 추가했고, 통합809·timer5·인과대조5·ARM·시험/044복원 ZIP 검증을 통과했다. 실제 SD 원인과084 저장·가독성·044복원/메뉴/GBC는 미확인이다. 준비도4완료7부분1미완료, CF68/NES 설치 미승인을 유지한다.
 
-[082 결과](../../analysis/REPORT-SESSION082-RESULT.ko.md), [공정 계획](../../docs/development/NES-077-PROCESS-REVIEW.ko.md), [관측 계약](../../docs/nes-report-observation078-contract.ko.md)을 먼저 읽는다. 현재 가지는 `codex/nes-report-session-082`다. PR32 병합 master `648d399865e6746397037ecb3bbb4e6f5c9c51fc`에서 시작했으며 PR31은 닫힌 대체 이전 기록이다. 다음 PR은 master 대상이고 자동 병합하지 않는다.
+[084 결과](../../analysis/REPORT-SPACE084-RESULT.ko.md), [실행/복원](../../docs/SDREPORT084-RUN.ko.md), [메타데이터](../../analysis/report-space084-verification.json)를 먼저 읽는다. 현재branch `codex/nes-report-observation-083`의 [PR34](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/34)는 이번 작업 시open/미병합으로 확인했고 같은목표수정을추가한다. 자동병합하지않는다.
 
-## 완료와 보존
+## 완료·보존
 
-- 실제 final081 init→strong disk_initialize 상태 전달→file_init/FatFS 첫 CMD17→boot/mini→writer의 create/write/sync/close/open/readback/close→terminal을 한 번의 세션으로 실행했다. 단계 사이의 재초기화/오류 reset 없이 FAT16/32×SDSC/SDHC 네 조합 통과. 3072바이트를 실제 writer와 카드 FAT 체인 독립 검사로 확인했다.
-- 정상 native 명령은 FAT16 read11/write10, FAT32 read12/write10. SRAM587접근·7×500ms·최종문구 확인. 모든43 응답 위치/587 SRAM 위치 고장, 화면 변조/타이머/누적예산/wrap/초기화/카드/논리 code7을 포함해667검사다. 정상CRC 내용변조는 code7 실패문구, 공유 오류는 추가IO 없이 RESET/USB 보호 종료다.
-- 원래081 생산 소스 불변, 기존 ARM132320바이트 SHA `5931eec90956022104b8aa42851525b52b3f3a805d50a48ca71c33357357649d` 재사용. 새 펌웨어082/ARM빌드/실행/RTL/Questa/fit/ASM/실기는 없다. 실제 MCU startup과 TV 표시, 전기 타이밍은 검증 밖이다.
-- 최종normal-04/두negative-04. 새302파일 manifest `14023cb52e2239380743a891a2795d73e32bccab8657ce343d8b8df1f2692112`. 최초 file_status 헤더 오류와 code7에 대한 잘못된 시험 기대를 보존했다. 기존081 verifier도 통과. 044–082 동결 archive 및 완료한 freeze/update 스크립트는 재실행/편집하지 않는다.
-- 재현은 tools/test_nes_report_session082.py와 개인 고정081 증거가 필요하다. tools/verify_nes_report082.py는082/081 증거와 공개 소스 해시를 검사한다. 개별079/080/081 검사를667개에 합산하지 않는다.
+- 사용자083은1A/1B/2/3까지표시했지만STEP3고정/TXT0바이트/좌우잘림이다.0바이트는사용자보고이며원본TXT수신없음. 영상8초STEP2,10/40/49초STEP3샘플확인. 이번044복원/GBC는미확인.
+- 083실제코드+조밀한FAT모형에서stage3/fault16/1directorywrite/0bytes를재현했다. 사용자실제원인확정아님. 084는1C읽기전용공간탐색후RAM할당힌트만설정한다.60초/100만poll과writer10초/10000poll보존. 연속공간eligibility이며root확장은별도:fullroot+조밀FAT는stage2/write0제한실패를명시적으로검증했다.
+- 화면공통최대26문자/좌우3공백/33번째NUL;복원안내단축.809통합/실제timer5/causal5/ARM01통과. native/ff/timer등13입력동일,수정5소스host/ARM동일. 현재실기성공으로승격하지않는다.
+- ARM132880 SHA `b2895696ab5c665b2b9a0a4acf3997f0ca13442b40e6f1ebf4abc3513036db1e`. TRIAL+정상044+SOURCE를별도로컬ZIP으로전달한다. 정상044169056 SHA `1c3b40a3459d24114cb4d91ee9d861d1a08025a670ef25317ef489092203693b`. HW002용firmware와구분한다. SD에자동복사하지않았다.
+- 동결2537파일 manifest `1a43873e74e8a5cc888d099874d9ff17caa6959b4b12ffdd53a9d0987100a3d5`. finalnormal05/negative05/ARM01/package01. normal02의mount이전힌트기대오류,negative03의row기대메시지오류,Make초기dependency실패/재시도,video60초범위오류보존. freeze_feedback084.py/update_feedback084_docs.py완료재실행금지;044–084archive수정금지. occupied-repro/result.json은역사083복사본이므로별도provenance084.json을따른다.
 
-## 다음 작업의 종료 조건
+## 다음 작업과 완료 조건
 
-1. 초기화/mini 실패까지 케이스 밖에서 구별할 관측 흐름과 시간·결과표를 완성한다. 현재는 SD 초기화가 mini보다 먼저이므로 초기 고장은 검은 화면이다. mini 준비·초기 표식을 SD 앞에 놓을 수 있는지 실제 소유권/시작 전제를 검토한다. 순서 변경 시 해당 생산 소스와 최종 ARM을 다시 검증한다. fault 이후 공유IO로 실패화면을 강행하지 않는다.
-2. 500ms는 렌더링 기회이며 읽기ACK가 아니다. 총60초/1백만poll, 저장1000tick/10000poll와7×500ms 예산을 유지하고 실제벽시계·startup 한계와 구분한다. 최초오류, RESET/USB, 파일쓰기 권한 회수, 불확실한 DATA/ACK 재시도 금지를 보존한다.
-3. 정상044/HW002성공 펌웨어의 역할을 구분한 기존 자료로 설치/복원 파일·해시·순서표를 준비한다. 관측 계약과 함께 보고서전용P3 통과 여부를 판단한다. 현재 설치 파일은 없다. 사용자0바이트 원인을 미리 확정할 필요는 없지만 동일한 비구별 패키지는 보내지 않는다.
-4. CF68는 별도P2/동일쌍P3, 전체NES4LAB/P5/P6도 별도다. 기존GBC152/원본NES334 및074–081 source pin은 유지한다. 같은파일/LED/분해/PCUSB/확인한 부품 질문 금지. 실기는 외부이고 패키지→사용자실행→TXT/영상 회수다.
+1. 사용자084영상·새HW084TXT를회수해1C탐색/2생성/3쓰기/최종readback을구분한다. TXT는check_sdreport084.py로3072바이트전체검사한다. 최종화면과044복원·메뉴/GBC도별도확인한다.
+2. 1C면읽기오류/예산/연속빈공간여부,2면directory/name/확장,3면첫payload할당/쓰기경계를조사한다. 모형재현을실제카드원인으로단정하거나writer예산을무작정늘리지않는다. 공유fault뒤IO금지와불확실쓰기재시도금지를지킨다.
+3. 현장firmware→영상/TXT회수방식유지. LED·분해·PCUSB·기존파일·부품질문반복금지. 실제저장/복원확인후별도CF68외부조건P2/동일쌍P3/적재검증P4로이동한다. 전체NES4LAB/P5/P6는미완료다.
+
+재현:084prepare→기존build079wrapper→084ARM검사. obj-report079는역사출력명이다. verify084와이전083verifier를사용한다. 공개clone에없는고정개인입력필요성을명시한다.
 
 ---
 
