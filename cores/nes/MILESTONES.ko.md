@@ -43,3 +43,5 @@
 - **099 RTC 종료 보호**: RSF/INITF 대기 한도, 실제 RTC/main/FatFS30경우·대조4·ARM 검증. 하위 IO·실기는 미완료. [099 결과](../../analysis/RTC099-RESULT.ko.md).
 
 - **100 실제 하위 SPI**: SRAM·FPGA 명령·SPI 연결과 오류 후 CS LOW/DR 접근 차단.34경우·대조5·ARM, 주변장치/물리 핀은 미완료. [100 결과](../../analysis/LOWER100-RESULT.ko.md).
+
+- **101 SPI 완료 순서**: TXE→BSY 순서 수정,336위상/오류+34통합+4보호대조+2원본반례/ARM. 강제 중단은 미완료. [101 결과](../../analysis/SPI101-RESULT.ko.md).

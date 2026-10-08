@@ -22,7 +22,7 @@
 | 구성 | 현재 상태 | 소스·재현 |
 | --- | --- | --- |
 | GB/GBC | C44 실기 확인, 0.9.0 공개 완료 | [GBC 개발 안내](cores/gbc/README.md) |
-| NES | 044·084·092 실기 기준 보존;100 실제 SRAM/SPI 연결·오류 후 칩 선택 차단/ARM 검증 완료, 주변장치·핀·실기 준비 진행 중 | [NES 개발 현황](cores/nes/README.md) |
+| NES | 044·084·092 실기 기준 보존;101 SPI 전송 완료 순서·ARM 검증 완료, 강제 중단·주변장치·핀·실기 준비 미완료 | [NES 개발 현황](cores/nes/README.md) |
 | PC Engine | 조사 대기; HuCard 범위를 우선 검토 | [PCE 조사 범위](cores/pce/README.md) |
 
 현재 구현 대상은 **FXPAK Pro / Mk.III, STM32 + EP4CE15F17C8**입니다. 제품 이름이 바뀌어도 보드 지원 범위가 넓어지는 것은 아닙니다. NES/PCE의 동작 가능성·일정은 아직 확정하지 않았습니다.
