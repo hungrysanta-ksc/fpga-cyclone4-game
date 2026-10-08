@@ -1,5 +1,7 @@
 # NES 전체 공정 점검과 다음 작업 계획 — 077 기준
 
+현재089: 089는 고정 CF87 fit의 ASM/압축과 오류 시 중단하는 MCU 구성 경로를 완성했다. 실제 구성·088 reader·084 mini/runtime의 호스트 합산은 정상/부재729572회, 진행 정지921626회로 기존100만 회 제한을 통과했다.304검사·실패 대조4개와 같은 C의 ARM 오브젝트를 확인했다. 제품 main/단일 SD·TXT·화면 세션과 최종 펌웨어 링크·실기 패키지는 아직 미완료다. [089 결과](../../analysis/CLOCK-CONFIG089-RESULT.ko.md). 현재 HANDOFF를 이전 계획보다 우선한다.
+
 현재088: 088은 CF87을 읽는 실제 MCU GPIO reader다. 1966호스트 검사·C보호제거3개와 기준클록 있음/없음의 실제C파형→RTL 응답146912bit·RTL대조1개를 통과했다. 같은 C로 STM32F401 ARM 오브젝트를 컴파일했다. 전체 main/구성/mini/TXT session·링크된 펌웨어·ASM/실기 패키지는 아직 미완료다. CF87 RTL/fit과CF86·084 실기 성공은 보존한다. [088 결과](../../analysis/CLOCK-READER088-RESULT.ko.md). 아래과거다음작업보다현재HANDOFF를우선한다.
 
 현재087: 087은 메모리 접근 없이 RESET-held 기준 클록을 관측할 별도 CF87 회로다. 20MHz 기본800만 주기1경우와3주파수 축소 구간·고장 대조3개, 새 fit/내부STA/배선 감사를 통과했다. 10제어핀 비활성·32데이터핀 출력 차단을 배선 결과에서도 확인했다. 실제 MCU GPIO/TXT 통합·ARM/ASM·실기 패키지는 다음 작업이며 CF86 자체와084 성공 결과는 유지한다. [087 결과](../../analysis/CLOCK-OBSERVATION087-RESULT.ko.md). 과거 다음 작업보다 현재 HANDOFF를 우선한다.
