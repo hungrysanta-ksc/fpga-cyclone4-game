@@ -1,3 +1,28 @@
+# NES 현재 인계 — CF87 MCU reader088 검증
+
+088은 CF87을 읽는 실제 MCU GPIO reader다. 1966호스트 검사·C보호제거3개와 기준클록 있음/없음의 실제C파형→RTL 응답146912bit·RTL대조1개를 통과했다. 같은 C로 STM32F401 ARM 오브젝트를 컴파일했다. 전체 main/구성/mini/TXT session·링크된 펌웨어·ASM/실기 패키지는 아직 미완료다. CF87 RTL/fit과CF86·084 실기 성공은 보존한다.
+
+[088 결과](../../analysis/CLOCK-READER088-RESULT.ko.md), [reader 계약·통합 조건](../../docs/nes-clock-reader088-contract.ko.md)을우선한다. PR38은2026-10-08T03:32:54Z병합됐고master `72ed581bd6c333b1cd8c37ce776b2bb847dd9895`에서진행했다. 현재 `codex/nes-clock-reader-088`. 사용자만병합한다.
+
+## 바로 다음 작업과 함정
+
+1. **단일수집session으로통합**한다. CF87고정fit 별도사본ASM/압축→boundedconfiguration sink→RESET-held actualreader→report RAM보관→mini복귀→084 nativeSD/space/writer/readback/terminal을연결한다. 현재reader는main에서호출되지않고FPGA를구성하지않는다. CF87파일만071/CF86에섞지않는다.
+2. **예산계측이먼저다.** 정상reader공유검사389972회,frame541,3.005436초다. 기존60초/100만IO예산에byte별FPGA구성/초기mini/복귀를단순합산하면초과할수있다. 실제압축해제길이/호출수를계측해중복검사를줄이거나명시적으로분리된bounded phase를설계한다. fault를지우거나retry마다예산리셋금지. 관측부재/NO_PROGRESS는로그가능한결과이나false/공유fault뒤mini/SD/SRAM재사용금지.
+3. 새TXT는사람이읽을결과와raw16byte×3,sequence/count/window/divisor/flags,elapsed/attempt/frame,가정CLKIN값을담는다. READY=서비스/valid=완료구간이지clockPASS아니다. ACTIVE는활동이며20-22MHz/외부전기승인이아니다. 성공한정적084저장시험을다시요청하지않는다.
+4. sameCF87ASM/압축+최종ARM링크/callsite+SPI IO/구성전환/RESET소유권+044복원manifest까지닫은후report-onlytrial을전달하고사용자TXT/영상회수. CF86외부PSRAM/asyncclear/commoncause/최신코어MCU/전체80-96KiB는별도다. 부품/LED/분해/PCUSB질문반복금지.
+
+## 증거·실패 보존
+
+- host05/absent06 각각1966검사,생산C/헤더=ARM01. C보호제거3개(no-pair-check/no-deadline/no-owner-check)PASS(expectedfailure).450ticks+512query;tickwrap/freeze/오류뒤IO차단/소유권검사. flags변화2bit는정상변화가능하며CRC무결성이라고부르지않는다.
+- wave01은host04정상trace. host05추가손상검사후정상trace SHA가동일 `0893f2996ef2b603a0b7c359c572a37c21bc3b0695b1ad46668e12cffcc93e91`. absent-wave01은absent06trace. 각각73456bit/295453events/541frames/3.005436sec. wrong-divider01은C_MISO_MISMATCH로거부. 087생산RTL2개변경없어그fit을해당관측회로범위에서만유지.
+- ARM01은21912byte relocatable object SHA `7850f7beba96877876b74a84029c171412074797575d14ffced1fc5a60ef7cfb`. 링크된firmware/maincallsite/새ASM/실기/패키지없음. pinned084headers로컴파일. 실제timer/runtime는기존보호코드이고이host의시간/register/MISO는모형이다.
+- host01MinGWprintf64compile실패(ANSIstdio수정),host02/03invalid0+publishedgap1모형오류,host04초기1965PASS/host05추가1966PASS보존. 실행본snapshot과최종publicsource를구분한다. 새동결416files manifest `a4f589d7c30af2b5d76057c85778097a7a8154a793dfb4009d716fc84e0d4b94`;verifier088. finalizer완료재실행/044–087archive수정금지.
+- 모든FLOATjob종료/18000listener중지,라이선스오류/approvalreview거절없음.084physical저장/화면/044복원/menu/GBC PASS유지. 준비도4/7/1.
+
+---
+
+## 이전087 인계 기록
+
 # NES 현재 인계 — CF87 메모리 비활성 클록 관측
 
 087은 메모리 접근 없이 RESET-held 기준 클록을 관측할 별도 CF87 회로다. 20MHz 기본800만 주기1경우와3주파수 축소 구간·고장 대조3개, 새 fit/내부STA/배선 감사를 통과했다. 10제어핀 비활성·32데이터핀 출력 차단을 배선 결과에서도 확인했다. 실제 MCU GPIO/TXT 통합·ARM/ASM·실기 패키지는 다음 작업이며 CF86 자체와084 성공 결과는 유지한다.
