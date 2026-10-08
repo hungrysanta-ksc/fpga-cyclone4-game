@@ -123,3 +123,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 실제 구성·메뉴097
 
 [097 계약/명령](../../docs/nes-config097-contract.md)에 따라 같은086 fit ASM/CPF와 실제 사용자 파일을 최종094 native/메뉴 함수에 연결한다.176호스트/5대조이며 전체main·실기 승인과 구분한다.
+
+## 실제 메뉴 호출098
+
+[098 계약](../../docs/nes-menu098-contract.md)은 실제main주소와전체load_rom의원본실패·수정26경우/4대조/동일ARM을확인한다. RTC/SPI등하위장치모델과실기를구분한다.
