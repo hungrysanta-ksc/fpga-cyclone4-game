@@ -39,3 +39,5 @@
 - **069 CF68 MCU 연결**: READY-before-GPIO/CF68·구형 거부/shared fault 보호, 하위95·상위41/18/16+추가3/native2·대조7, bounded C72320비트·ARM 링크. 전체 C 캡처180224bytes는 새 보드 전체 재생 전이며 FPGA068 fit만 재사용. 설치 불가.
 
 - **070 전체 CF68 세션**: 실제069C→068핀80/96KiB180224byte/901152frames/50464224응답비트·마지막ACK/FINISH/STOP,원래클록prefix64/parked8192·응답대조1. [결과](../../analysis/CF68-SESSION-RESULT.ko.md), [계약](../../docs/nes-cf68-session-contract.md). 새쌍/실기 미완료.
+
+- **099 RTC 종료 보호**: RSF/INITF 대기 한도, 실제 RTC/main/FatFS30경우·대조4·ARM 검증. 하위 IO·실기는 미완료. [099 결과](../../analysis/RTC099-RESULT.ko.md).
