@@ -22,7 +22,7 @@
 | 구성 | 현재 상태 | 소스·재현 |
 | --- | --- | --- |
 | GB/GBC | C44 실기 확인, 0.9.0 공개 완료 | [GBC 개발 안내](cores/gbc/README.md) |
-| NES | 044·084·092 실기 기준 보존;104 실제 timer/IRQ/CIC 통합과 진단 ISR 출력 재진입 수정, 최종 파일조합·외부IO·실기 미완료 | [NES 개발 현황](cores/nes/README.md) |
+| NES | 105 진단 파일 조합·복원본 식별 완료, 외부IO·관측조건·실기 미완료. 코어 배선/게임 기능 추가 아님 | [NES 개발 현황](cores/nes/README.md) |
 | PC Engine | 조사 대기; HuCard 범위를 우선 검토 | [PCE 조사 범위](cores/pce/README.md) |
 
 현재 구현 대상은 **FXPAK Pro / Mk.III, STM32 + EP4CE15F17C8**입니다. 제품 이름이 바뀌어도 보드 지원 범위가 넓어지는 것은 아닙니다. NES/PCE의 동작 가능성·일정은 아직 확정하지 않았습니다.

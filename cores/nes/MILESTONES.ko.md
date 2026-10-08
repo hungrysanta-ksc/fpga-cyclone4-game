@@ -51,3 +51,5 @@
 - **103 오류 관측**: 공유 오류의 LED/UART 이전 정리, 실제 observer/printf/UART54호스트/6대조/ARM MMIO16. timer/CIC/물리시간 미완료. [103 결과](../../analysis/OBSERVER103-RESULT.ko.md).
 
 - **104 타이머·IRQ**: 실제 timer/SysTick/LED/CIC/RESET 통합, 진단 ISR printf 재진입 수정.85호스트/6대조/ARM 분기 검증. 최종 파일조합·외부IO·실기 미완료. [104 결과](../../analysis/TIMER104-RESULT.ko.md).
+
+- **105 최종 파일 조합**:11역할/정상1·거부23,094 로그의RESET-held 범위 정리. 디버깅 기반의 검증/배포 준비이며 배선·게임기능 추가 아님. [105 결과](../../analysis/PAIR105-RESULT.ko.md).

@@ -151,3 +151,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 타이머·IRQ104
 
 [104 계약](../../docs/nes-timer104-contract.md): 실제 C 함수와 GPIO/TIM2/선점 모델을 구분한다. 카드 상태 대조는 DISK_OK에서 시작한다. 출력/상태 보존을 함께 검사하며 제품 budget을 늘려 통과시키지 않는다.
+
+## 파일 조합105
+
+[105 계약](../../docs/nes-pair105-contract.md):104/097/044 정확 조합과 역할 검사. 오프라인 통과는 설치 승인 또는 실기 성공이 아니다.
