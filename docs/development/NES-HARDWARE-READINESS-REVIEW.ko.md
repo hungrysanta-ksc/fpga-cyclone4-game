@@ -1,8 +1,8 @@
 # NES 실기 진입 전 공정 점검과 진행 가이드
 
-현재102: 최종 오류 정지 함수에 CS 해제→GPIO 분리→SPI1 리셋 유지 경로를 연결했다. 핀/레지스터 시작상태1024·실제 main 통합21·보호제거6·원본반례1·ARM MMIO16해석을 통과했다. 최초 오류부터 정지 진입까지의 지연과 실기 전기적 효과는 미검증이다.
+현재103: 공유 오류가 확정되면 observer에서 LED·틱 조회·UART보다 먼저 RESET/USB 보호와 SPI·GPIO 차단을 수행한다. 이후 UART 출력/flush도 대기 없이 생략한다. 보고서 오류만 있는 복구 경로는 유지한다.
 
-[102 결과](../../analysis/QUIESCE102-RESULT.ko.md)와 [현재 인계](../../cores/nes/HANDOFF.ko.md)를 먼저 읽는다. 실제 UART/printf·observer·timer·CIC와 오류 전달 경로를 연결해 최초 오류부터102 정지 함수 진입까지의 지연/종료를 검증한다. 이후 최종 ARM/FPGA·044 복원 조합, 외부IO/공통고장과 관측 가능한 제한 실기를 확정한다. 준비도4완료/7부분/1미완료, 설치 미승인. 아래 과거 표와 구분한다.
+[103 결과](../../analysis/OBSERVER103-RESULT.ko.md)와 [현재 인계](../../cores/nes/HANDOFF.ko.md)를 먼저 읽는다. 실제 timer의 delay_us/delay_ms/nes_return_delay, SysTick/LED/CIC와 RESET 감지 경로를 현재 main에 연결한다. 공유 오류가 기록되기 전의 대기와 IRQ 전제를 검증한 뒤 최종 ARM/FPGA·044 복원 조합, 외부IO/공통고장·관측 가능한 제한 실기를 확정한다. 준비도4완료/7부분/1미완료, 설치 미승인. 아래 과거 표와 구분한다.
 
 ## 1. 판단과 목표
 
