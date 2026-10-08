@@ -5,11 +5,11 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "실제 timer·SysTick·LED·CIC·RESET 감지를 메뉴 복귀 경로에 연결했다. SysTick의 카드 상태 변경 알림이 진단 중 전역 printf 상태에 재진입하는 문제를 수정했다.",
-  "next_action": "PIN_FINAL_ARM_FPGA_RESTORE_PAIR_AND_REVIEW_EXTERNAL_IO_COMMON_CAUSE_TRIAL",
+  "assessment": "ARM104·CF86의097 ASM·정확044 복원 조합을11개 파일의 역할과 SHA256으로 고정했다. 이름이 같은 구형 파일, 진단/복원본 혼동, 설치 승인 플래그 변조를 오프라인에서 거부한다.",
+  "next_action": "RESOLVE_LIMITED_TRIAL_EXTERNAL_ASSUMPTIONS_COMMON_CAUSE_AND_OBSERVATION",
   "next_three_deliverables": [
-    "104 최종 ARM과097 동일 fit FPGA·정확044 복원 파일의 조합을 고정하고, 외부IO/공통고장 및 정상·실패 관측 절차를 검토해 제한 실기 가능 범위를 결정한다.",
-    "관측 가능한 제한 실기 패키지 및 사용자 로그 판정",
+    "106에서는 외부 IO의 미측정 가정과 공통고장 제외 범위를 하나의 제한 실기 판정표로 좁히고, 허용 가능한 조건의 근거와 정상·실패 관측·종료 한도를 확정한다. 파일 조합이나 같은 fit/ARM을 다시 만들지 않는다.",
+    "조건 충족 후 정확 파일 조합의 제한 실기 패키지/관측절차",
     "SMB3 384KiB/mapper4/IRQ/PPU/입력/소리 첫 플레이"
   ],
   "gates": [
@@ -48,8 +48,8 @@
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/TIMER104-RESULT.ko.md",
-      "remaining": "104 최종 ARM과097 동일 fit FPGA·정확044 복원 파일의 조합을 고정하고, 외부IO/공통고장 및 정상·실패 관측 절차를 검토해 제한 실기 가능 범위를 결정한다. RUN/video/input/audio 및 SMB3 미완료.084/092 실기PASS 유지."
+      "evidence": "analysis/PAIR105-RESULT.ko.md",
+      "remaining": "106에서는 외부 IO의 미측정 가정과 공통고장 제외 범위를 하나의 제한 실기 판정표로 좁히고, 허용 가능한 조건의 근거와 정상·실패 관측·종료 한도를 확정한다. 파일 조합이나 같은 fit/ARM을 다시 만들지 않는다. RUN/video/input/audio 및 SMB3 미완료."
     },
     {
       "id": "R5",
@@ -735,7 +735,7 @@
     "hardware_baseline": "NES-H1-SAMPLING-044",
     "diagnostic_fpga": "CF86/086, same fit03",
     "last_full_digital_session": "095 unchanged094 C→086 RTL; normal-only34-bit periodic guard abstraction, full80/96KiB +2 raw-lock cancellations",
-    "last_offline_pair": "071 =068 FPGA +069 MCU; installable=false",
+    "last_offline_pair": "105 =104 ARM +097 CF86 ASM +exact044 restore/base/menu/fixtures,11 roles; installable=false",
     "latest_mcu": "104 diagnostic ISR skips printf, card-state retained; linked ARM compile-only",
     "report_collector_last_hardware": "SDREPORT084 storage/readback/display and user044restore/menu/GBC PASS",
     "latest_host_session": "090 production whole session94+4causal, actual nativeSD/TXT/mini",
@@ -784,8 +784,8 @@
       "scope": "Report session and external observation",
       "depends_on": [],
       "completion": "Actual multi-layer success/faults, IO protection, cumulative/boot time budget, user-visible outcome and recovery design",
-      "status": "partial_actual_peripherals104_pass_final_pair_external_IO_open",
-      "evidence": "analysis/TIMER104-RESULT.ko.md"
+      "status": "partial_pair105_identity_pass_external_conditions_observation_open",
+      "evidence": "analysis/PAIR105-RESULT.ko.md"
     },
     {
       "id": "P2",
