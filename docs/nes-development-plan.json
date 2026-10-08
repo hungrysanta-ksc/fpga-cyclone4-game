@@ -5,12 +5,12 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "CF86의 고정 fit을 복사해3개 코너 VO/SDF를 생성하고, 클록 없이 비동기 clear와 조합 논리만 지나는264경로를 분석했다. 고장/qualification Q 이후 최대23.699ns, CE 최대21.080ns이며 실제 export 변조4개를 검출했다.092 기준클록 실기 활동은 유지하고, 두 클록 동시 정지/전기 승인/최신MCU·전체세션은 별도 미완료로 남긴다.",
-  "next_action": "INTEGRATE_ACTUAL_MCU_CF86_STICKY_SESSION_FAULT_THEN_FULL_SPI",
+  "assessment": "CF86 전용 MCU 세션에 시작 조건과 유지되는 실패 상태를 연결했다. 정상 80/96KiB 전체 적재·비교를 포함한 호스트 63경우와 보호 제거 대조 4개가 통과했고, 같은 핵심 C 9파일을 사용한 ARM 펌웨어 180928바이트를 링크했다. 실제 CF86 RTL 파형 재생과 실기 쌍은 다음 단계다.",
+  "next_action": "REPLAY_ACTUAL094_GPIO_FULL80_96K_ON_CF86_THEN_MATCHED_PAIR",
   "next_three_deliverables": [
-    "최신MCU/CF86 ID·RDY·fault후세션무효화 및 실제C경로검증",
-    "80/96KiB전체SPI·같은fitASM/최종ARM/044복원쌍;외부조건은명시적으로유지",
-    "SMB3 384KiB/mapper4/IRQ/PPU/입력/소리 첫플레이"
+    "094 실제 C GPIO를 CF86 고정 RTL에 80/96KiB 전체 재생하고 응답·고장·STOP을 비교한다. 이후 같은 fit의 ASM/최종 ARM/044 복원 쌍을 검증한다. 외부 IO·공통 클록 고장 조건은 별도 남긴다.",
+    "외부 IO/공통 클록 고장 조건과 같은 fit 쌍/044 복원 검증",
+    "SMB3 384KiB/mapper4/IRQ/PPU/입력/소리 첫 플레이"
   ],
   "gates": [
     {
@@ -733,14 +733,15 @@
   "process_review": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
   "candidate_roles": {
     "hardware_baseline": "NES-H1-SAMPLING-044",
-    "diagnostic_fpga": "CF68/068",
+    "diagnostic_fpga": "CF86/086, same fit03",
     "last_full_digital_session": "070 with frozen069 C and068 RTL",
     "last_offline_pair": "071 =068 FPGA +069 MCU; installable=false",
-    "latest_mcu": "NES-SD077-CF68; compile-only",
+    "latest_mcu": "094 CF86 upper session, linked on077 active menu; compile-only",
     "report_collector_last_hardware": "SDREPORT084 storage/readback/display and user044restore/menu/GBC PASS",
     "latest_host_session": "090 production whole session94+4causal, actual nativeSD/TXT/mini",
     "report_only_arm": "090 physical clock/TXT/display/restorePASS in092; unchanged196248 firmware",
-    "clock_config": "089 same087fitASM +boundedconfig verified"
+    "clock_config": "089 same087fitASM +boundedconfig verified",
+    "latest_cf86_host_session": "094 upper model63 +causal4, no full RTL replay"
   },
   "hardware_readiness_review_initial061": {
     "date_kst": "2026-10-07",
@@ -782,8 +783,8 @@
       "scope": "Report session and external observation",
       "depends_on": [],
       "completion": "Actual multi-layer success/faults, IO protection, cumulative/boot time budget, user-visible outcome and recovery design",
-      "status": "partial_reference_physical_pass_async_sdf_inventory_mcu_cf86_next",
-      "evidence": "analysis/ASSERTION093-RESULT.ko.md"
+      "status": "partial_cf86_upper_session_arm_verified_full_replay_open",
+      "evidence": "analysis/SESSION094-RESULT.ko.md"
     },
     {
       "id": "P2",

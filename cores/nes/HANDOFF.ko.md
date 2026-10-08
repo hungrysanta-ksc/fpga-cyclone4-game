@@ -1,3 +1,24 @@
+# NES 현재 인계 — CF86 MCU 세션094
+
+CF86 전용 MCU 세션에 시작 조건과 유지되는 실패 상태를 연결했다. 정상 80/96KiB 전체 적재·비교를 포함한 호스트 63경우와 보호 제거 대조 4개가 통과했고, 같은 핵심 C 9파일을 사용한 ARM 펌웨어 180928바이트를 링크했다. 실제 CF86 RTL 파형 재생과 실기 쌍은 다음 단계다.
+
+PR43 병합 확인: `b13a379730994ddd8095aea8bad1dcd9c48b323b`. 현재 `codex/nes-cf86-session-094`. [094 결과](../../analysis/SESSION094-RESULT.ko.md)와 [상태 계약](../../docs/nes-session094-contract.md)을 먼저 읽는다. 사용자가 PR을 병합한다.
+
+## 바로 다음 작업
+
+1. 094 실제 C GPIO를 CF86 고정 RTL에 80/96KiB 전체 재생하고 응답·고장·STOP을 비교한다. 이후 같은 fit의 ASM/최종 ARM/044 복원 쌍을 검증한다. 외부 IO·공통 클록 고장 조건은 별도 남긴다. 바뀐 C의 검사 비용/타이밍을 반영하며 과거070 결과를 최신 성공으로 쓰지 않는다.
+2. ARM은077 active-menu/native SD와076 whitelist를 유지한다. 호스트 lower READY/FatFS/card/config는 모델이다. 실제 lower session/전체 GPIO 전환을 후속 검증에 포함한다. 고장 후 새 접근/자동 복구 금지와 FAILED 유지, verified 취소를 반드시 보존한다.
+3. CF86 동일 fit의 ASM과 새 ARM을 묶기 전에 외부 IO·공통 원인 고장·관측 가능 종료/044 복원을 검토한다. 094는 installable=false이며 새 실기 요청은 없다. 084/092 성공, 부품명, LED, 분해, PC USB 질문을 반복하지 않는다.
+4. SMB3(J) mapper4/384KiB 첫 게임 목표를 유지한다. 80/96KiB 진단과 게임 지원을 구분한다. 전체 준비도4/7/1, 전체 코어 자원4LAB 여유 문제는 별도다.
+
+## 보존
+
+동결 `probes/nes-session094/evidence` 2617파일/manifest `d34c3dc8c1927b0981d1c4b5bef3ce06e1d29f183de7f031c3e0812331e96143`. 최종 host04 63, causal03 4, ARM04 180928바이트/SHA `70aa72fa1a70a90d501bac386ff4d159f46a12a48e15f0880c95f6fd78d208da`. 초기 오류와 최적화 함수명 검사 실패도 보존했다. finalizer 재실행·044–094 archive 수정 금지. 최종 검증기는 `tools/verify_nes_session094.py`. 새 RTL/fit/STA/ASM/Questa/물리 시험은 실행하지 않았다.
+
+---
+
+## 이전093 기록
+
 # NES 현재 인계 — CF86 차단 지연093 / 최신MCU 통합 다음
 
 CF86의 고정 fit을 복사해3개 코너 VO/SDF를 생성하고, 클록 없이 비동기 clear와 조합 논리만 지나는264경로를 분석했다. 고장/qualification Q 이후 최대23.699ns, CE 최대21.080ns이며 실제 export 변조4개를 검출했다.092 기준클록 실기 활동은 유지하고, 두 클록 동시 정지/전기 승인/최신MCU·전체세션은 별도 미완료로 남긴다.
