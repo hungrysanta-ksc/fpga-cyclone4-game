@@ -49,3 +49,5 @@
 - **102 최종 정지**: CS 해제→GPIO 분리→SPI1 reset 유지.1024핀/21통합/6대조/1원본/ARM MMIO16, 최초오류부터 진입지연은 미완료. [102 결과](../../analysis/QUIESCE102-RESULT.ko.md).
 
 - **103 오류 관측**: 공유 오류의 LED/UART 이전 정리, 실제 observer/printf/UART54호스트/6대조/ARM MMIO16. timer/CIC/물리시간 미완료. [103 결과](../../analysis/OBSERVER103-RESULT.ko.md).
+
+- **104 타이머·IRQ**: 실제 timer/SysTick/LED/CIC/RESET 통합, 진단 ISR printf 재진입 수정.85호스트/6대조/ARM 분기 검증. 최종 파일조합·외부IO·실기 미완료. [104 결과](../../analysis/TIMER104-RESULT.ko.md).
