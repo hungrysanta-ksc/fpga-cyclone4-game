@@ -115,3 +115,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## CF86 전송 재생095
 
 [095 조건/명령](../../docs/nes-replay095-contract.md)을 따른다. guard 반복 상태 논증과 정상-only 분리를 명시하며 실제 전체 감시 회로 실행/실기라고 부르지 않는다. 동결 verifier는 비공개 증거를 요구한다.
+
+## 실제 native096
+
+[096 계약/명령](../../docs/nes-native096-contract.md)에 따라 동결094 입력과 호스트 GCC를 사용한다.154경우/4대조, 동결 검증은 `verify_nes_native096.py`. 실제 구성 파일·main 메뉴·실기는 이 시험과 구분한다.
