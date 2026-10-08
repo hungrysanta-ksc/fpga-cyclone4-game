@@ -169,3 +169,5 @@
 - 사용자 목표 ROM은 원본을 바꾸지 않고 길이/헤더/해시와 첫 플레이 구간을 기록한다. 헤더의mapper·battery flag와 실제칩리비전/저장필요성은 구분한다. 진단ROM통과를 목표게임지원으로 확대하지 않고, 이후mapper확장에서도 첫게임/GBC회귀를 유지한다. 시험만 추가했으면 기존펌웨어해시/번호를 유지하며 report-only trial 준비와전체NES설치승인을 별도로 표시한다.
 
 - 호스트libc와임베디드printf의표기차이(예: %X가소문자를출력)를회수파서의의미오류와구분한다. 원본바이트는보존하고정상대소문자표기와수치/raw불일치·잘못된문자거부를함께검증한다. 누적startup sticky와현재완료구간fault를구분하며실기사용자복원보고의범위를추가menu/GBC시험으로확대하지않는다.
+
+- 비동기 고장 assertion은 recovery/removal이나 클록 FF 경로와 구별한다. 같은 routed DB의 복사본을 사용하고 SDF의PORT+IOPATH·단위·clock barrier·출력coverage를검사한다. 합산값을logic sensitivity/실측/전체고장지연으로확대하지않으며구조제거·지연증가대조를남긴다. 원본fit/제약을재작성하지않고EDA가복사본에만추가한설정과DB메타데이터를기록한다.

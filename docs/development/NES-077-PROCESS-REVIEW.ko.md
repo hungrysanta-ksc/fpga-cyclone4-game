@@ -1,5 +1,7 @@
 # NES 전체 공정 점검과 다음 작업 계획 — 077 기준
 
+현재093: CF86의 고정 fit을 복사해3개 코너 VO/SDF를 생성하고, 클록 없이 비동기 clear와 조합 논리만 지나는264경로를 분석했다. 고장/qualification Q 이후 최대23.699ns, CE 최대21.080ns이며 실제 export 변조4개를 검출했다.092 기준클록 실기 활동은 유지하고, 두 클록 동시 정지/전기 승인/최신MCU·전체세션은 별도 미완료로 남긴다. [093 결과](../../analysis/ASSERTION093-RESULT.ko.md). 다음은실제MCU/CF86세션보호와전체SPI연결이며 최신HANDOFF를우선한다.
+
 현재092: CLOCKREPORT090 실기 회수092: HW090000.TXT1099바이트에서 두 연속 구간2/3의 count가1342354로 같고 VALID/LIVE=1, LAST_GAP=0이다. 사진의 동일파일/저장·재읽기성공/코드0 및 사용자 복원성공을 확인했다. 이번 보드·실행의 RESET-held 기준클록 활동과 관측·저장·표시 왕복은PASS다. 절대주파수/CF86외부보호/게임실행 승인은 별도다. [092 결과](../../analysis/CLOCK-HARDWARE092-RESULT.ko.md). 최신 HANDOFF 우선.
 
 현재091: 091는090의 실제 STM32 설정 함수·매크로를 레지스터 모델에 연결해 구성/관측/mini 복귀94검사와 전환 누락 대조3개를 통과했다. 생산 펌웨어는090 그대로이며 정상044 복원본을 포함한 클록 관측 trial/source ZIP을 완성했다. 다음은 사용자 HW090 TXT/화면 회수다. SMB3(J), mapper4·PRG256KiB/CHR128KiB를 첫 게임 목표로 등록했다. [091 결과](../../analysis/CLOCK-TRIAL091-RESULT.ko.md). 최신 HANDOFF 우선.
