@@ -5,12 +5,12 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "090는 단일 제품 함수의 CF87 구성·클록 관측·mini 복귀·실제 SD 초기화/FatFS·TXT 저장/재읽기·최종 화면을 연결했다. 통합94검사·인과 대조4개, TXT16파일 대조와4변조 거부, 전체 ARM196248바이트 링크/호출 검증을 통과했다. 실제 SPI 핀 전환 점검과044 복원 포함 패키지 검증은 남아 있어 실기 배포 전이다.",
-  "next_action": "AUDIT_SPI_RESET_TRANSITION_AND_PACKAGE_CLOCK_TRIAL",
+  "assessment": "CLOCKREPORT090 실기 회수092: HW090000.TXT1099바이트에서 두 연속 구간2/3의 count가1342354로 같고 VALID/LIVE=1, LAST_GAP=0이다. 사진의 동일파일/저장·재읽기성공/코드0 및 사용자 복원성공을 확인했다. 이번 보드·실행의 RESET-held 기준클록 활동과 관측·저장·표시 왕복은PASS다. 절대주파수/CF86외부보호/게임실행 승인은 별도다.",
+  "next_action": "APPLY_PHYSICAL_REFERENCE_EVIDENCE_TO_CF86_EXTERNAL_ASYNC_COMMONCAUSE_REVIEW",
   "next_three_deliverables": [
-    "CF87 관측 종료→mini의 실제 GPIO/SPI/RESET 연속성 점검",
-    "동일 firmware/CF87/mini/044복원 manifest와 report-only trial/source 패키지 검증",
-    "새 클록 TXT/화면 실기 회수 후 CF86 외부/async/commoncause와 전체NES 진행"
+    "RESET-held reference활동 실기근거를CF86 외부/async/commoncause정책에반영",
+    "최신MCU/전체SPI/paired실기조건을검증",
+    "SMB3 384KiB/mapper4/IRQ/화면/입력/소리 및 첫플레이단계"
   ],
   "gates": [
     {
@@ -739,7 +739,7 @@
     "latest_mcu": "NES-SD077-CF68; compile-only",
     "report_collector_last_hardware": "SDREPORT084 storage/readback/display and user044restore/menu/GBC PASS",
     "latest_host_session": "090 production whole session94+4causal, actual nativeSD/TXT/mini",
-    "report_only_arm": "090 linked196248 compile-only;084physicalPASS preserved",
+    "report_only_arm": "090 physical clock/TXT/display/restorePASS in092; unchanged196248 firmware",
     "clock_config": "089 same087fitASM +boundedconfig verified"
   },
   "hardware_readiness_review_initial061": {
@@ -782,8 +782,8 @@
       "scope": "Report session and external observation",
       "depends_on": [],
       "completion": "Actual multi-layer success/faults, IO protection, cumulative/boot time budget, user-visible outcome and recovery design",
-      "status": "partial_090_whole_session_and_arm_pass_transition_and_trial_pending",
-      "evidence": "analysis/CLOCK-REPORT090-RESULT.ko.md"
+      "status": "partial_report_clock_observation_physical_pass_external_cf86_remaining",
+      "evidence": "analysis/CLOCK-HARDWARE092-RESULT.ko.md"
     },
     {
       "id": "P2",
@@ -830,8 +830,10 @@
       "completion": "CPU/video/input/audio/save, remaining accuracy/source adoption, same candidate board timing/game/cold-warm/endurance/GBC acceptance"
     }
   ],
-  "report_only_candidate": "CLOCKREPORT090 linked/host verified; trial package pending",
+  "report_only_candidate": "CLOCKREPORT090 physical reference activity/TXT/readback/display and user restore PASS in092",
   "observation_candidate": "NES-CLOCK-OBSERVATION-087",
   "observation_reader": "NES-CLOCK-READER-088",
-  "observation_configuration": "NES-CLOCK-CONFIG-089"
+  "observation_configuration": "NES-CLOCK-CONFIG-089",
+  "first_game_target": "cores/nes/first-game-target.json",
+  "mapper_expansion_policy": "SMB3 mapper4 first, extend mappers afterward; keep SMB3/GBC regression"
 }
