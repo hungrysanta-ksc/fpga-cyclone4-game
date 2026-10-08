@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-08",
-  "technical_candidate": "NES-CLOCK-GUARD-085",
+  "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "085는 별도 입력 클록을 이용한 단일 클록 정지 차단을 실제 진단 핀 셸에 연결했다. 디지털 GPIO4경우/정지128경우/인과 대조3개를 통과했으며 검출 최대4.374µs, CE LOW 최대3.350µs다. 두 클록 동시 정지 반례는 남는다. 새 fit/STA·실제 기준 클록 가용성·최신 MCU 쌍/전체 세션·실기는 미완료이며 설치 파일은 없다. 084 저장/화면/정상044복원·메뉴/GBC 성공은 유지한다.",
-  "next_action": "VERIFY_CF85_REFERENCE_AND_NEW_FIT_CDC_EXTERNAL_IO",
+  "assessment": "086은 실제 CF85 배치에서 발견한 raw 감시 신호의 영역 간 직접 연결을 수정했다. CF86 동일 생산 입력16개로 새 fit/STA·CDC 감사와4 GPIO/128정지/130360응답 비트·보호 제거4개를 통과했다. 제약된 내부39 summary 최소0.158ns, 새 PSRAM3168경로의 가정상 최소64.565ns다. 외부 IO·비동기 clear 지연·실제 기준 클록/공통 고장·최신 MCU 쌍/전체 세션·실기는 미완료이며 설치 파일은 없다. 084 저장/화면/정상044복원·메뉴/GBC 성공은 유지한다.",
+  "next_action": "VERIFY_REFERENCE_PROVENANCE_AND_CF86_EXTERNAL_ASYNC_BOUNDS",
   "next_three_deliverables": [
-    "RESET-held reference 가용성·기존 base FE 측정 의미·CF85 fit/STA/CDC/외부 IO·양클록 고장 정책(P2)",
-    "최신 MCU와 CF85 전체 적재/비교/STOP/복구 및 정확한 파일 쌍(P3)",
-    "같은 쌍으로80/96KiB 실기 TXT/영상·정상044복원/GBC(P4);084 저장 시험 반복 불필요"
+    "실제 base provenance 또는 PSRAM 접근 전 자체 기준 클록 관측·외부/비동기 차단 상한·공통 고장 정책(P2)",
+    "최신 MCU ID86/READY·전체80/96KiB 실제 C/SD/SPI/STOP/복구와 동일 파일 쌍(P3)",
+    "외부 실기 TXT/영상·정상044복원/GBC(P4);084 저장 시험 반복 불필요"
   ],
   "gates": [
     {
