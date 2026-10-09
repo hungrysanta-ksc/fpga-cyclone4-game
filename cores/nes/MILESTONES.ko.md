@@ -82,3 +82,5 @@
 - **123**: 실제PLL/PSRAM46핀 포함 코어 배치 성공.938LAB/PLL1,reader168MHz 동일클록 setup+1.432ns. 교차클록/reset raw−8.104ns·외부IO미해결. [결과](../../analysis/CLOCK123-RESULT.ko.md).
 
 - **124**: 실제 코어/reader/영상 reset 동기해제 배선,4프레임245760픽셀,reader16위상·bridge/호스트reset통과.933LAB/동일클록STA통과,묶음CDC/외부IO미완료. [결과](../../analysis/RESET124-RESULT.ko.md).
+
+- **125**: 같은124 배치의 데이터372쌍/3corner 제약 및 실제 캡처·유지 검사 통과. 정상5실행·조기캡처 부정대조2개. 제어6쌍/reset/외부IO와 실기 RUN 남음. [결과](../../analysis/CDC125-RESULT.ko.md).
