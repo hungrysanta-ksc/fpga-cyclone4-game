@@ -1,0 +1,96 @@
+{
+  "candidate": "NES-RUN-CONTRACT-133",
+  "base_merge": "4df157e5fbc8ce0d92a93b59eea0e8c1cbe91879",
+  "archived_files": 265,
+  "manifest_sha256": "83c2acf15d4730e4c207382ddc6e0b5a78252c1d6c70b14c4c59146251eb24c5",
+  "public_sources": {
+    "tools/nes_run133.py": "2df845fd736578547156d6638e1bd3d25aac0584e91dd9cf72359891a83336ac",
+    "tools/verify_nes_run133.py": "67c218687528e9cad1673a9e016f49ba8a52e2cdaa4a9eb87ab44de64b3efc90",
+    "tools/run_nes_run133.ps1": "6c2fac13e5a3497fa25574b82ce22b0c6859af7acd2bd6054c0f5fa7b44f9909",
+    "tests/nes-functional/run133_tb.sv": "83e33e789f87a5bbb59f265a6c26765bb24220167583e8c713f91383493c1780",
+    "tests/nes-functional/run133_pll_model.sv": "5bd55aadb4f3a753263932d45db7aa838173db61ac3618205204365ae1ef6afb",
+    "analysis/counter131-verification.json": "010313e7a7f2362ba92a94896211179bc85d7301421d4b03f2d4632181b6bd2b",
+    "analysis/cdc132-verification.json": "146365332270c477821a9b9026042e44cfa4a0825d93b82716d527759ff857bb",
+    "tools/nes_cdc125_sta.py": "eb29d39bf39f03e1e8dba8f196c193106a390c4de51263b9005bf2d4eaa56b61",
+    "tools/nes_functional.py": "28524fbf36ee98aae0675c070bf42883afb4489ed1ae499c0f3e4ef5c6a56d1e",
+    "tools/nes_ncr1_live.py": "0f73c59ebf8065290500c5246cb06c7394ae2153ee30dc32f4c70b3f0eeedb33"
+  },
+  "checks": {
+    "selected": "test03",
+    "runs": [
+      {
+        "phase_ps": 0,
+        "launches": 10,
+        "releases": 10,
+        "cancels": 11,
+        "requests": 210,
+        "responses": 206,
+        "chr_changes": 7,
+        "min_run_to_release_ns": 372513.658,
+        "min_chr_to_release_ns": 388720.954,
+        "checks": 7744,
+        "cancel_causes": {
+          "STOP": 2,
+          "STOP_BEFORE_RELOAD": 2,
+          "SPI_CRC": 2,
+          "RAW_RESET": 2,
+          "SOURCE_CLOCK_STOP": 1,
+          "MEMORY_CLOCK_STOP": 1,
+          "UNVERIFIED_START": 1
+        },
+        "reset_vector_and_loop_all_runs": true
+      },
+      {
+        "phase_ps": 3500,
+        "launches": 10,
+        "releases": 10,
+        "cancels": 11,
+        "requests": 210,
+        "responses": 206,
+        "chr_changes": 7,
+        "min_run_to_release_ns": 372517.158,
+        "min_chr_to_release_ns": 388718.502,
+        "checks": 7750,
+        "cancel_causes": {
+          "STOP": 2,
+          "STOP_BEFORE_RELOAD": 2,
+          "SPI_CRC": 2,
+          "RAW_RESET": 2,
+          "SOURCE_CLOCK_STOP": 1,
+          "MEMORY_CLOCK_STOP": 1,
+          "UNVERIFIED_START": 1
+        },
+        "reset_vector_and_loop_all_runs": true
+      }
+    ],
+    "actual_top_inputs": 37,
+    "hoisted_declarations": [
+      "wire guard_allow,guard_fault,external_memory_ready,startup_ready,release_memory;",
+      "wire rom_cpu_sample,rom_cpu_valid,rom_ppu_valid,rom_fault;",
+      "wire [3:0] rom_error_code;",
+      "wire rom_request;wire [21:0] rom_address;"
+    ],
+    "total_launches": 20,
+    "total_cancels": 22,
+    "total_responses": 412,
+    "causal_rejections": [
+      "missing-memory-ready-reset-gate",
+      "missing-run-reset-gate"
+    ],
+    "same_fit": "131fit05",
+    "new_fit": false,
+    "production_rtl_changed": false,
+    "seeded_image_and_check_completion": true,
+    "actual_spi_start_stop": true,
+    "actual_cpu_memory_service": true,
+    "ppu_and_pipeline_reset_connected": true,
+    "ppu_rendering_verified": false,
+    "snes_consumer_exercised": false,
+    "analog_pll_or_mtbf_verified": false,
+    "physical_trial": false,
+    "installable": false
+  },
+  "full_timing_pass": false,
+  "installable": false,
+  "next": "재사용131fit05/133test03의 RUN 기능 계약을 유지하고 실제 외부IO와 SNES 소비자 연결을 확인한다. 가상 포트와 실제 핀을 구분해 PSRAM/SPI/SNES 소유권·입출력 타이밍·소비자 관측 경로를 정리하고, 최소 RUN 상태·오류·044 복원을 확인할 실기 경로를 구현한다. 같은 초기화/전체쓰기/371CDC/배치를 무변경 반복하지 않는다."
+}

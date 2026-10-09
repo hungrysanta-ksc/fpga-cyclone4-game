@@ -5,12 +5,12 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "현재132: 131의 같은 배치에서 데이터 CDC371쌍과16동기화·reset 해제 체인을 재검증했다. CHR 설정183쌍·RUN/오류 제어115쌍의 시작·종료 계약과 외부IO는 미완료다.",
-  "next_action": "VERIFY_CURRENT_CHR_RUN_RESET_CONTRACT",
+  "assessment": "현재133: 실제 상위 회로에서 RUN 20회·취소/차단 22회·CPU 응답 412바이트를 검증했다. CHR 변경·reset·최초 요청의 기능 계약은 조건부 통과했으며, 실제 외부IO·SNES 소비자·실기 RUN은 미완료다.",
+  "next_action": "INTEGRATE_PHYSICAL_IO_AND_SNES_CONSUMER",
   "next_three_deliverables": [
-    "131fit05와132 경로 목록을 재사용해 CHR 설정 안정 구간과 RUN/STOP/오류→core/reader reset 해제 계약을 실제 결선에서 검증한다. 비동기 reset 체인 입력107음수행은 기능 하류와 구분하고 pulse/release 조건을 확인한다. 이어 실제 외부IO·SNES 소비자·관측 가능한 최소 RUN+044 복원으로 진행한다. 변경 없는 MAP/FIT/전체쓰기/371쌍 재검증은 반복하지 않는다.",
-    "실제외부IO·SNES소비자연결검증",
-    "관측가능한최소RUN·오류종료·독립044복원실기"
+    "재사용131fit05/133test03의 RUN 기능 계약을 유지하고 실제 외부IO와 SNES 소비자 연결을 확인한다. 가상 포트와 실제 핀을 구분해 PSRAM/SPI/SNES 소유권·입출력 타이밍·소비자 관측 경로를 정리하고, 최소 RUN 상태·오류·044 복원을 확인할 실기 경로를 구현한다. 같은 초기화/전체쓰기/371CDC/배치를 무변경 반복하지 않는다.",
+    "실제 핀·외부IO 계약과 SNES 소비자 상태/오류 관측",
+    "관측 가능한 최소 RUN·오류 종료·독립044 복원 실기"
   ],
   "gates": [
     {
@@ -77,9 +77,9 @@
     },
     {
       "id": "BOARD-FIT",
-      "status": "bundled_data_pass_lifecycle_config_io_open",
-      "evidence": "analysis/CDC132-RESULT.ko.md",
-      "detail": "Same131fit05:371held-data pairs/16chains pass; CHR183/RUN115 and async-release inputs/IO/MTBF open."
+      "status": "run_functional_contract_pass_physical_io_open",
+      "evidence": "analysis/RUN133-RESULT.ko.md",
+      "detail": "Same131fit05 and132 data371/16chains; actual joint20starts22cancels412CPUresponses at two phases. Analog/IO/SNES consumer open."
     },
     {
       "id": "DISPLAY-240",
@@ -827,8 +827,8 @@
         "P4"
       ],
       "completion": "Normal-speed70ns memory, resource headroom, real SNES video/queue/display contract; redesign before feature expansion if insufficient",
-      "status": "current_cdc_data_verified_lifecycle_open",
-      "evidence": "analysis/CDC132-RESULT.ko.md"
+      "status": "actual_joint_run_reset_verified_io_consumer_open",
+      "evidence": "analysis/RUN133-RESULT.ko.md"
     },
     {
       "id": "P6",
@@ -963,6 +963,18 @@
     "configuration_open_pairs": 183,
     "lifecycle_open_pairs": 115,
     "new_fit": false,
+    "full_timing_pass": false,
+    "installable": false
+  },
+  "run133": {
+    "evidence": "analysis/run133-verification.json",
+    "selected": "test03",
+    "production_rtl_changed": false,
+    "same_fit": "131fit05",
+    "run_starts": 20,
+    "cancel_or_rejected_start": 22,
+    "cpu_responses": 412,
+    "snes_consumer_exercised": false,
     "full_timing_pass": false,
     "installable": false
   }

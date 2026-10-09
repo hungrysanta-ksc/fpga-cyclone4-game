@@ -98,3 +98,5 @@
 - **131**: 카운터 사전 설정·제어 입력 매핑, 전체180,311핀 쓰기 회귀. 최종test02/fit05 memory setup +0.041ns(통과). [결과](../../analysis/COUNTER131-RESULT.ko.md).
 
 - **132**: 같은131배치의 데이터371쌍/16체인과actual reader 재검증. CHR183/RUN오류115쌍과외부IO미완료. [결과](../../analysis/CDC132-RESULT.ko.md).
+
+- **133**: 실제 상위 회로의20RUN·22취소/차단·412CPU응답 검증. CHR/reset 기능 계약 조건부 통과, 외부IO·SNES 소비자 미완료. [결과](../../analysis/RUN133-RESULT.ko.md).
