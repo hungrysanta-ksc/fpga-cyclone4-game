@@ -5,11 +5,11 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "130 상태 enable4개 제거. 최종fit01 sameclocksetup−0.158→−0.040ns, check_failed→remaining3 미해결. 카운터전체설정fit02는미채택, 설치불가.",
-  "next_action": "FIX_SELECTED_130_COUNTER_ENABLE_AND_SHARED_FAULT_PATH",
+  "assessment": "현재131: 카운터를 대기 상태에서 미리 준비해 바이트 수 조건과 분리했다. 전체180,311회 핀 쓰기·CHECK/RUN·오류 취소 회귀 통과. 최종test02/fit05의 memory setup은 +0.041ns로 같은 클록 setup 통과다. 전체 타이밍·설치 승인은 별도다.",
+  "next_action": "FOLLOW_SELECTED_131_TIMING_AND_NEW_HIERARCHY_AUDIT",
   "next_three_deliverables": [
-    "선택130fit01 카운터enable·공유오류 fanout 구조 개선과 영향 회귀",
-    "새 fit/타이밍·hierarchy CDC/IO·실제 SNES 소비자",
+    "선택131fit05의 같은 클록 setup·hold 통과를 기준으로 새 hierarchy의 CDC/제어·reset 경로와 외부IO를 검증한다. 이후 실제 SNES 소비자와 관측 가능한 최소 RUN·044 복원으로 진행한다. 근거 없이 다섯 배치나 전체 쓰기를 반복하지 않는다.",
+    "새 hierarchy CDC/IO·실제 SNES 소비자",
     "관측 가능한 최소 RUN·오류 종료·독립044 복원 실기"
   ],
   "gates": [
@@ -77,9 +77,9 @@
     },
     {
       "id": "BOARD-FIT",
-      "status": "state_enable_removed_counter_input_timing_fail",
-      "evidence": "analysis/ENABLE130-RESULT.ko.md",
-      "detail": "130fit01 14261LE/959LAB/26M9K/PLL1;memory168−0.040/raw−8.236ns. check_failed→remaining3enable 미해결. fit02미채택, 이전CDC승인미상속."
+      "status": "same_clock_setup_pass_cdc_open",
+      "evidence": "analysis/COUNTER131-RESULT.ko.md",
+      "detail": "test02/fit05 14078LE/954LAB;memory+0.041/raw-10.408ns. 전체CDC/IO미해결."
     },
     {
       "id": "DISPLAY-240",
@@ -827,8 +827,8 @@
         "P4"
       ],
       "completion": "Normal-speed70ns memory, resource headroom, real SNES video/queue/display contract; redesign before feature expansion if insufficient",
-      "status": "state_enable_removed_counter_input_timing_failed",
-      "evidence": "analysis/ENABLE130-RESULT.ko.md"
+      "status": "counter_preload_verified",
+      "evidence": "analysis/COUNTER131-RESULT.ko.md"
     },
     {
       "id": "P6",
@@ -943,6 +943,15 @@
     "selected_fit": "fit01",
     "LAB": 959,
     "memory168_setup_ns": -0.04,
+    "full_timing_pass": false,
+    "installable": false
+  },
+  "counter131": {
+    "evidence": "analysis/counter131-verification.json",
+    "selected": "test02/fit05",
+    "LAB": 954,
+    "memory168_setup_ns": 0.041,
+    "same_clock_setup_pass": true,
     "full_timing_pass": false,
     "installable": false
   }
