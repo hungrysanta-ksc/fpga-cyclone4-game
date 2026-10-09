@@ -198,3 +198,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 현재 전체80KiB 통합복구118
 
 동일116 ARM과기존host03 case70/ARM검사를재사용한다. `python tools/release_nes_full118.py --pair <pair109> --firmware <ARM116> --out <new>`는입력쌍해시/디코딩/fixture와ZIP12항목을검증한다. 새C/RTL/ARM빌드는없다. [118실기안내](../../docs/nes-full118-instructions.ko.md)를현재실행절차로사용한다.
+
+## 현재 정상속도메모리120
+
+기존FLOAT wrapper로 `run_nes_core_memory120.ps1`을실행한다. Baseline은공개052 artifact로검증되는이전live디렉터리이며새ASCII Out만사용한다. 핀단위는같은FLOAT RunOnly 세션에서 `nes_memory120_unit.py --out <new> --questa-bin <bin>`;근거검증은 `verify_nes_core120.py --evidence <frozen120>`.120은실제코어제한prefix/16위상핀시험이며전체8프레임은다음단계다.

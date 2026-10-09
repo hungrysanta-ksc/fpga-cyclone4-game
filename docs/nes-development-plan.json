@@ -5,12 +5,12 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "116 짧은 복구는 기본 FPGA 복구2.10초·메뉴 준비4.35초와 사용자 메뉴 복귀로 실기 통과했다. 기존113 전체80KiB 적재·비교·STOP 통과와 별개이며, 긴 실행 뒤 복구와 원인 확정은 남아 있다.",
-  "next_action": "COLLECT_FULL80_ARM116_RECOVERY_AND_MENU_RETURN",
+  "assessment": "119 실기에서 동일116/CF86의 전체80KiB 적재·읽기비교·STOP·기본FPGA·메뉴 복귀·사용자044 복원이 통과했다. 진행45기록/최종 verified1,load/compare81920,오류0,RUN0. 메뉴준비491.34초는 펌웨어 시각이며 독립 벽시계 측정이 아니다. 이번 GBC 플레이는 미보고다. 다음은 실제70ns 부품에서 정상속도 코어의 읽기 응답 기한 검토다.",
+  "next_action": "CHARACTERIZE_NORMAL_SPEED_CORE_70NS_MEMORY_SERVICE",
   "next_three_deliverables": [
-    "같은116 펌웨어로 NES VERIFY 094 80.nh1을1회 실행한다. 최대600초 관측 후 새 nes-progress-116.txt/nes-verify-last-094.txt와 메뉴 복귀 여부를 받는다. 짧은BASE/ENTRY 재시험은 하지 않는다.",
-    "전체 경로 성공 또는 마지막 복구 경계 확인 후 다음 최소 코어 연결 시험 선정",
-    "SMB3 384KiB/mapper4/IRQ/PPU/입력/소리 첫 플레이"
+    "119 제한80KiB 실기 성공 기준선 유지; 같은 적재/짧은 복구 시험 반복하지 않기",
+    "실제 CPU·PPU와70ns 모델에서 접근시간과소비시점 확인 후 메모리서비스/캐시 설계 선택",
+    "같은 최종 배선의 자원·클록·영상 소비자 확인 후 최소 RUN 관측 후보; SMB3 mapper4/384KiB 목표 유지"
   ],
   "gates": [
     {
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "partial_current_report_recovery_integration_open",
+      "status": "partial_full80_lifecycle_physical_pass_core_run_open",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/BASE116-RESULT.ko.md",
-      "remaining": "NES BASE 116.nh1을 한 번 실행하고 최대60초 관측한다. nes-progress-116.txt와 최종094TXT 유무, 실제 메뉴 복귀를 확인한다. 짧은 시험 성공을 전체80KiB 복구 성공으로 판단하지 않는다. 영상은 필요 없다. 게임RUN/영상/입력/소리 미완료."
+      "evidence": "analysis/CORE120-RESULT.ko.md",
+      "remaining": "119 제한80KiB 적재/검증/STOP/복구/메뉴/044복원 통과. 정상속도 코어 메모리·RUN·영상·입력·소리 미완료."
     },
     {
       "id": "R5",
@@ -125,27 +125,27 @@
     },
     {
       "id": "ROM-DEADLINE",
-      "status": "partial_physical_read_RTL_pass_board_timing_open",
-      "evidence": "analysis/ROM-PHYSICAL-RESULT.ko.md",
-      "detail": "052 3memory-clock pin read plus CDC measured4NES clocks uses25ns access assumption. Actual EBLL-70BLI identity is confirmed; full-core service deadline at70ns remains open. Slow8MHz CPU-free diagnostic does not close full-core timing."
+      "status": "actual_core_70ns_characterization",
+      "evidence": "analysis/CORE120-RESULT.ko.md",
+      "detail": "052의25ns/3클록 결과를70ns 보드에 재사용하지 않는다. 현재120은 실제 CPU·PPU/early request/CDC의 부품접근시간 민감도를 조사한다. 느린CF86/116 적재 실기 통과는정상속도 코어 기한을보장하지않는다."
     },
     {
       "id": "REPORT-SESSION",
-      "status": "base116_hardware_pending",
-      "evidence": "analysis/BASE116-RESULT.ko.md",
-      "detail": "113 펌웨어 실기에서80KiB 적재·전체 읽기 비교·STOP이 통과했다. BASE_START 이후 복구 완료는 확인되지 않았다.116은 그 복구 구간만 짧게 실행하며 세부 단계를 기록하는 후보이며, 실기 결과를 기다린다. NES BASE 116.nh1을 한 번 실행하고 최대60초 관측한다. nes-progress-116.txt와 최종094TXT 유무, 실제 메뉴 복귀를 확인한다. 짧은 시험 성공을 전체80KiB 복구 성공으로 판단하지 않는다. 영상은 필요 없다."
+      "status": "normal_full80_hardware_pass_fault_endurance_open",
+      "evidence": "analysis/CORE120-RESULT.ko.md",
+      "detail": "119 실기에서 동일116/CF86의 전체80KiB 적재·읽기비교·STOP·기본FPGA·메뉴 복귀·사용자044 복원이 통과했다. 진행45기록/최종 verified1,load/compare81920,오류0,RUN0. 메뉴준비491.34초는 펌웨어 시각이며 독립 벽시계 측정이 아니다. 이번 GBC 플레이는 미보고다. 반복진입·고장실기·내구성은 별도 미확인."
     },
     {
       "id": "EXTERNAL-OBSERVABILITY",
-      "status": "base116_hardware_pending",
-      "evidence": "analysis/BASE116-RESULT.ko.md",
-      "detail": "113 펌웨어 실기에서80KiB 적재·전체 읽기 비교·STOP이 통과했다. BASE_START 이후 복구 완료는 확인되지 않았다.116은 그 복구 구간만 짧게 실행하며 세부 단계를 기록하는 후보이며, 실기 결과를 기다린다. NES BASE 116.nh1을 한 번 실행하고 최대60초 관측한다. nes-progress-116.txt와 최종094TXT 유무, 실제 메뉴 복귀를 확인한다. 짧은 시험 성공을 전체80KiB 복구 성공으로 판단하지 않는다. 영상은 필요 없다."
+      "status": "normal_full80_hardware_pass_fault_endurance_open",
+      "evidence": "analysis/CORE120-RESULT.ko.md",
+      "detail": "119 실기에서 동일116/CF86의 전체80KiB 적재·읽기비교·STOP·기본FPGA·메뉴 복귀·사용자044 복원이 통과했다. 진행45기록/최종 verified1,load/compare81920,오류0,RUN0. 메뉴준비491.34초는 펌웨어 시각이며 독립 벽시계 측정이 아니다. 이번 GBC 플레이는 미보고다. 반복진입·고장실기·내구성은 별도 미확인."
     },
     {
       "id": "CURRENT-PAIR-RECOVERY",
-      "status": "base116_hardware_pending",
-      "evidence": "analysis/BASE116-RESULT.ko.md",
-      "detail": "113 펌웨어 실기에서80KiB 적재·전체 읽기 비교·STOP이 통과했다. BASE_START 이후 복구 완료는 확인되지 않았다.116은 그 복구 구간만 짧게 실행하며 세부 단계를 기록하는 후보이며, 실기 결과를 기다린다. NES BASE 116.nh1을 한 번 실행하고 최대60초 관측한다. nes-progress-116.txt와 최종094TXT 유무, 실제 메뉴 복귀를 확인한다. 짧은 시험 성공을 전체80KiB 복구 성공으로 판단하지 않는다. 영상은 필요 없다."
+      "status": "normal_full80_hardware_pass_fault_endurance_open",
+      "evidence": "analysis/CORE120-RESULT.ko.md",
+      "detail": "119 실기에서 동일116/CF86의 전체80KiB 적재·읽기비교·STOP·기본FPGA·메뉴 복귀·사용자044 복원이 통과했다. 진행45기록/최종 verified1,load/compare81920,오류0,RUN0. 메뉴준비491.34초는 펌웨어 시각이며 독립 벽시계 측정이 아니다. 이번 GBC 플레이는 미보고다. 반복진입·고장실기·내구성은 별도 미확인."
     }
   ],
   "guardrails": [
@@ -735,13 +735,13 @@
     "hardware_baseline": "NES-H1-SAMPLING-044",
     "diagnostic_fpga": "CF86/086, same fit03",
     "last_full_digital_session": "095 unchanged094 C→086 RTL; normal-only34-bit periodic guard abstraction, full80/96KiB +2 raw-lock cancellations",
-    "last_offline_pair": "105 =104 ARM +097 CF86 ASM +exact044 restore/base/menu/fixtures,11 roles; installable=false",
-    "latest_mcu": "104 diagnostic ISR skips printf, card-state retained; linked ARM compile-only",
+    "last_offline_pair": "118 unchanged ARM116 +CF86/base/menu/synthetic80 +exact044 restore; user full80 and restore pass in119",
+    "latest_mcu": "116 CF86-BASE116: full80 load/readback/STOP/base/menu physical PASS in119; current GBC gameplay not reported",
     "report_collector_last_hardware": "SDREPORT084 storage/readback/display and user044restore/menu/GBC PASS",
     "latest_host_session": "090 production whole session94+4causal, actual nativeSD/TXT/mini",
     "report_only_arm": "090 physical clock/TXT/display/restorePASS in092; unchanged196248 firmware",
     "clock_config": "089 same087fitASM +boundedconfig verified",
-    "latest_cf86_host_session": "104 actual timer/SysTick/LED/CIC/reset units60/main23/timer-stall2/controls6; register/event model, not exhaustive IRQ or physical timing",
+    "latest_cf86_host_session": "116 host03 eight cases andARM checks, actual116 physical full80 in119; prior layered models remain bounded",
     "latest_cf86_assembly": "097 ASM/CPF of086fit03; RBF510856 packed219453; same RTL/fit, not installation approval"
   },
   "hardware_readiness_review_initial061": {
@@ -784,8 +784,8 @@
       "scope": "Report session and external observation",
       "depends_on": [],
       "completion": "Actual multi-layer success/faults, IO protection, cumulative/boot time budget, user-visible outcome and recovery design",
-      "status": "base116_integrated_physical_pending",
-      "evidence": "analysis/BASE116-RESULT.ko.md"
+      "status": "normal_full80_report_recovery_physical_pass",
+      "evidence": "analysis/CORE120-RESULT.ko.md"
     },
     {
       "id": "P2",
@@ -808,8 +808,8 @@
         ],
         "report_only_package": "Existing validated path only; impact/observation/backup/restore conditions required"
       },
-      "status": "complete_for_base116_only",
-      "evidence": "analysis/base116-verification.json"
+      "status": "complete_for_same116_full80_limited_trial",
+      "evidence": "analysis/full118-verification.json"
     },
     {
       "id": "P4",
@@ -817,8 +817,8 @@
       "depends_on": [
         "P3"
       ],
-      "completion": "116 base-recovery-only single trial <=60seconds;115 physical80KiB load/readback/STOP passed, base restoration incomplete; restore not retested",
-      "status": "awaiting_user_base116_result"
+      "completion": "119 실기에서 동일116/CF86의 전체80KiB 적재·읽기비교·STOP·기본FPGA·메뉴 복귀·사용자044 복원이 통과했다. 진행45기록/최종 verified1,load/compare81920,오류0,RUN0. 메뉴준비491.34초는 펌웨어 시각이며 독립 벽시계 측정이 아니다. 이번 GBC 플레이는 미보고다.",
+      "status": "normal_full80_trial_menu_restore_pass"
     },
     {
       "id": "P5",
@@ -826,7 +826,8 @@
       "depends_on": [
         "P4"
       ],
-      "completion": "Normal-speed70ns memory, resource headroom, real SNES video/queue/display contract; redesign before feature expansion if insufficient"
+      "completion": "Normal-speed70ns memory, resource headroom, real SNES video/queue/display contract; redesign before feature expansion if insufficient",
+      "status": "in_progress_core_memory_70ns_then_board_fit_consumer"
     },
     {
       "id": "P6",
@@ -844,5 +845,19 @@
   "first_game_target": "cores/nes/first-game-target.json",
   "mapper_expansion_policy": "SMB3 mapper4 first, extend mappers afterward; keep SMB3/GBC regression",
   "hardware_iteration_policy": "최소 보호 동작과 검증된 파일 조합, 관측 방법, 종료·독립 복원 경로가 준비되면 제한 실기에서 데이터를 얻는 것을 우선한다. 남은 불확실성을 실제로 판별할 수 있는 시험을 먼저 정하고, 실기만으로 해결할 수 있는 항목을 같은 문서·모형 검사로 반복해서 미루지 않는다. 이는 모든 전기 조건의 입증을 생략한다는 의미가 아니다. 기존 승인 범위는 재승인을 요구하지 않으며, 고장 주입·전압 변경·노출 확대 등 범위가 달라질 때만 필요한 판단을 추가한다.",
-  "limited_trial_decision": "analysis/base116-verification.json"
+  "limited_trial_decision": "analysis/full118-verification.json",
+  "hardware_readiness_update120": {
+    "scope": "Limited CPU/PPU-free normal80 diagnostic; not fullNES/game percentage",
+    "counts": {
+      "complete": 6,
+      "partial": 5,
+      "incomplete": 1,
+      "total": 12
+    },
+    "changed_items": {
+      "H07": "complete for same116 browser entry/menu return observed in119",
+      "H11": "complete for same116/CF86/base/menu/fixture/044 exact118 package and observed119 trial"
+    },
+    "remaining": "H05/H06 external bounds; H08 failure observability; H09 faults/reentry/GBC; H10 model/RTL coverage boundaries; H12 completeSD/save backup andnewGBC notconfirmed"
+  }
 }
