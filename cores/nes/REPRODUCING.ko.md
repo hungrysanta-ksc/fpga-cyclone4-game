@@ -214,3 +214,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 123 실제 클록/핀 가능성 검사
 
 `nes_clock_fit123.py`는핀된059fit 입력에서읽기전용코어/PLL후보를생성하고map/fit/STA를수행한다. `nes_clock_audit123.tcl`을동일작업폴더에복사해quartus_sta -t로60개클록쌍최악경로를보고한다. `verify_nes_clock123.py --evidence <frozen123>`은46핀·클록·긍정및부정타이밍증거를보존했는지검증한다. 설치용이미지가아니며동결DB는수정하지않는다.
+
+## 124 도메인별 reset 구현
+
+`nes_reset124.py`는과거소스를유지하고새작업폴더의진단RTL만변형한다. `nes_reset124_fit.py`는고정059fit입력에서map/fit/STA를수행하며,동일폴더에서`nes_reset124_audit.tcl`로72클록쌍과1272init_done경로를보존한다. `run_nes_reset124_unit.ps1`, `run_nes_reset124_core.ps1`, `run_nes_reset124_transport.ps1`은기존FLOATwrapper/Questa/Python/새ASCII출력을받으며1seat직렬실행한다. core는고정052baseline을쓴다. `verify_nes_reset124.py --evidence <frozen124>`은기준프레임·해시·실제reset종착점을재검사한다. 전체CDC/실물타이밍통과나설치이미지는아니다.
