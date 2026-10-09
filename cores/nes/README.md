@@ -1,8 +1,8 @@
 # NES 개발 현황
 
-현재122: CF86 등록형 reader는 READ8/84MHz에서 CPU 기한 실패, READ16/168MHz 제어 후보에서 정상속도24프레임과16위상 핀 검증을 통과했다. 다음은 같은 후보의 보드 클록·로더 타이밍·자원/STA·실제 SNES 소비자 연결이다.168MHz 물리 타이밍과 실기 RUN/게임은 아직 미완료다.119 전체80KiB·메뉴·044복원 실기 기준은 유지한다.
+현재123: 실제 코어·등록형 reader·PLL84/168MHz와 PSRAM/클록46핀 배치 성공. 동일클록 내부타이밍은 통과했지만 교차클록/reset 및 외부IO는 미해결이다. 다음은 reset해제·묶음데이터CDC 연결이다. 로더/guard/실제SNES소비자와 실기RUN은 아직 제외되어 있다.119 실기 기준과122 기능 결과는 유지한다.
 
-[현재 인계](HANDOFF.ko.md) · [122 결과](../../analysis/SAFE122-RESULT.ko.md)
+[현재 인계](HANDOFF.ko.md) · [123 결과](../../analysis/CLOCK123-RESULT.ko.md)
 
 ## 이전 단계별 근거
 

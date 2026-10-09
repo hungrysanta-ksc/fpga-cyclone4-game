@@ -210,3 +210,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 122 등록형 reader 회귀
 
 `run_nes_safe_reader122.ps1`(6사례 전체프레임)과 `run_nes_safe122_unit.ps1`(16위상·110ns/HOLD제거 거부)을 기존 FLOAT RunOnly·핀된052live Baseline·새 ASCII Out으로 직렬 실행한다. `verify_nes_safe122.py --evidence <frozen122>`은 동결 failed01/unit01/full02/unit02와 공개 소스·기준 프레임을 재검증한다.168MHz 제어는 디지털 후보이며 보드 타이밍 근거가 아니다.
+
+## 123 실제 클록/핀 가능성 검사
+
+`nes_clock_fit123.py`는핀된059fit 입력에서읽기전용코어/PLL후보를생성하고map/fit/STA를수행한다. `nes_clock_audit123.tcl`을동일작업폴더에복사해quartus_sta -t로60개클록쌍최악경로를보고한다. `verify_nes_clock123.py --evidence <frozen123>`은46핀·클록·긍정및부정타이밍증거를보존했는지검증한다. 설치용이미지가아니며동결DB는수정하지않는다.

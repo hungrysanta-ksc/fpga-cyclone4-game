@@ -78,3 +78,5 @@
 - **121**: READ8/70ns 두입력×3위상,24프레임/1,474,560픽셀·패킷·이벤트일치. 보호 reader 고속통합이 다음. [결과](../../analysis/FRAMES121-RESULT.ko.md).
 
 - **122**: 등록형 reader READ8/84MHz 실제 CPU 기한 실패를 보존하고 READ16/168MHz·95.232ns 접근 후보의24프레임/16위상 핀 검증 통과. 보드 클록·로더·STA는 다음. [결과](../../analysis/SAFE122-RESULT.ko.md).
+
+- **123**: 실제PLL/PSRAM46핀 포함 코어 배치 성공.938LAB/PLL1,reader168MHz 동일클록 setup+1.432ns. 교차클록/reset raw−8.104ns·외부IO미해결. [결과](../../analysis/CLOCK123-RESULT.ko.md).
