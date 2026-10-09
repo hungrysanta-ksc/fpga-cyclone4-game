@@ -1,0 +1,623 @@
+{
+  "candidate": "NES-SAFE-READER-122",
+  "base_merge": "79daf3f539c1f0956d71f2fc50c0984e3293c4ef",
+  "archived_files": 273,
+  "manifest_sha256": "c1ab5259bc25c4635880dbe762c079101e66f407775176143bddacfb6bc77024",
+  "public_sources": {
+    "tools/nes_safe_reader122.py": "45f843fab021d94c16a8cb91ca8b2b4981aa36e46d15989ace8df1131443393a",
+    "tools/run_nes_safe_reader122.ps1": "996d1e9df0189e1f50dd319031f30cd7f95836896bae2cc03eaa3bdea2f17f87",
+    "tools/nes_safe122_unit.py": "a2455478cb0d5faa61ff6e50b7b7e87abcfaedd6b77149a5f741167e11b39bda",
+    "tools/run_nes_safe122_unit.ps1": "1e07f3344fb1d422519cd06279a9e5643b60437f29b9102500b784bcd227bb65",
+    "tools/verify_nes_safe122.py": "aa8d146b5a03681c912b792bc005bf92ff396728264cce4df3743f52436fef96",
+    "tests/nes-functional/safe122_monitor.svh": "a487d5cb22dd31ca226eb93d021f31d8f0bc72f252062407cb849590f4e51280",
+    "tools/nes_ncr1_live.py": "0f73c59ebf8065290500c5246cb06c7394ae2153ee30dc32f4c70b3f0eeedb33",
+    "tools/nes_functional.py": "28524fbf36ee98aae0675c070bf42883afb4489ed1ae499c0f3e4ef5c6a56d1e",
+    "tools/build_nes_chr_residency.py": "e8b93c3356a0fb6e8f3e71571440e6522e785d0ac285b4d97b3816c015754255",
+    "tools/build_nes_trace_replay.py": "1b9e25b9af887c6b4329f1f883f61b98f3b320360ed3853144d09f60a292161a",
+    "tools/build_nes_fine_scroll.py": "7df76753f229f70d4e2ffc2e39a3a30e6c0410175f0c8799b9da8f28c6894fd1",
+    "tools/verify_nes_rtl_fetch.py": "629cfd7c2a66c22097038a09f3b3bf5879f1e0c71268be1daab6a5fd8d5d275e",
+    "tools/nes_spi_boot.py": "df8c77d1acb8a4d17bacb70411c9df230621b3142da60968e85f561bdc2c6234"
+  },
+  "review_inputs": {
+    "src/nes/diagnostic/nes_diag_safe_rom_physical.sv": "ed93655834e467105a5287543eea0426b265e0f3bedbc4788295fe7e49e4441c",
+    "src/nes/diagnostic/nes_diag_rom_loader.sv": "b730c7adf6bdf9408c8f7c2a17e59af7465d80c9fd25677d56b15d6075d3e3f4",
+    "src/nes/diagnostic/nes_diag_clock_guard085.sv": "94497b4b1ae47a4d7348529d9faeed87d63743e10f5037f76bf305ffc25c32db",
+    "analysis/spi-readback-verification.json": "2c00c2b3780a546dc4f82de6b496c781942902717fa2409ac94a798c9e7c60e6",
+    "tests/nes-functional/rom_physical_tb.sv": "0bd5945daaaa6d3ad8e759f1075300b274f9613efeb8408c053f00a35e1da16f",
+    "tests/nes-functional/rom_physical_model.sv": "ae1cce275a9a2718933e675171968c4889c38ce2fc9c47d36c74e0ae0d883139"
+  },
+  "cases": [
+    {
+      "case": "fine_x",
+      "passed": true,
+      "frames": [
+        {
+          "frame": 1,
+          "window": 0,
+          "fine_x": 1,
+          "release_tick": 1756477,
+          "pixels": 61440,
+          "pixel_sha256": "cf84fb669c6bec7c958f470545b5dc9de307e62743cf9a6a99ad4f6e87da5d44",
+          "packet_sha256": "25abeccf893edc65deb47dc0a1d14cc9236d7d2a01ff3ee0c58b7e3f4ea0a16d"
+        },
+        {
+          "frame": 2,
+          "window": 0,
+          "fine_x": 1,
+          "release_tick": 2113845,
+          "pixels": 61440,
+          "pixel_sha256": "89dfba4836a6efe0c26df2851f7c5db0de7ff7e4a13d9293134505ba6088ea9d",
+          "packet_sha256": "bcaf4130082ac00adaa9ddb9b0aca0e7240e35f6ffe793658f2dd7b21e465278"
+        },
+        {
+          "frame": 3,
+          "window": 0,
+          "fine_x": 1,
+          "release_tick": 2471209,
+          "pixels": 61440,
+          "pixel_sha256": "cf84fb669c6bec7c958f470545b5dc9de307e62743cf9a6a99ad4f6e87da5d44",
+          "packet_sha256": "f04bf4a9888d706a05748fb38895e232b16415e25efe200d571de9e8901cb370"
+        },
+        {
+          "frame": 4,
+          "window": 0,
+          "fine_x": 1,
+          "release_tick": 2828577,
+          "pixels": 61440,
+          "pixel_sha256": "89dfba4836a6efe0c26df2851f7c5db0de7ff7e4a13d9293134505ba6088ea9d",
+          "packet_sha256": "2299d88c3ee8a180e97fde99e9df1f10a31d66f9f3e9e444f618fa6b943db6c1"
+        }
+      ],
+      "fetches": 65552,
+      "bus_bytes": 8032,
+      "raw_attributes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "tick_offsets_vs052": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rom_requests": 312400,
+      "rom_responses": 312399,
+      "latency_min": 5,
+      "latency_max": 5,
+      "phase_ns": 3.5,
+      "log_sha256": "b9ac5e1d8cad2d490a2cb93e799da4b68de95e0a51cabbbc7168ad09400e9a2b"
+    },
+    {
+      "case": "banks32",
+      "passed": true,
+      "frames": [
+        {
+          "frame": 1,
+          "window": 1,
+          "fine_x": 0,
+          "release_tick": 1756477,
+          "pixels": 61440,
+          "pixel_sha256": "810b75a8ae9734dd7d55afd3d67fe0221f49ad347bb1bbbe9f764c57d7e3aaf7",
+          "packet_sha256": "efcdb6863d05ab942ccc15abec017b137649947c76e44c4ebd21cf64112b4a02"
+        },
+        {
+          "frame": 2,
+          "window": 1,
+          "fine_x": 0,
+          "release_tick": 2113845,
+          "pixels": 61440,
+          "pixel_sha256": "f79c5d8db8729779bdf7d4380ee899d2d3f26ef6e6592407f0d521a458510f1f",
+          "packet_sha256": "1c36d58851bb0770599f5fbc4167eb726a77a6d90c036c0c4acbc0041a28f71b"
+        },
+        {
+          "frame": 3,
+          "window": 0,
+          "fine_x": 0,
+          "release_tick": 2471209,
+          "pixels": 61440,
+          "pixel_sha256": "e99cb9af4cf3e9cc7d2a27112b09a683a702eb8e6669b39841dc9fffda00e22a",
+          "packet_sha256": "340f5bd7164a3c4dfee9a23764f431cb6eb46271f50e974bd2d1cfa4ed4ea15c"
+        },
+        {
+          "frame": 4,
+          "window": 0,
+          "fine_x": 0,
+          "release_tick": 2828577,
+          "pixels": 61440,
+          "pixel_sha256": "e84d48135602deea1d61dd930068174342643ee6932acd5f3a76ba68c6063011",
+          "packet_sha256": "15df13600fc4d9a50958fc83b0072a0f3e01293d3dd1da267e4e64591412e98c"
+        }
+      ],
+      "fetches": 65552,
+      "bus_bytes": 8032,
+      "raw_attributes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "tick_offsets_vs052": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rom_requests": 312388,
+      "rom_responses": 312387,
+      "latency_min": 5,
+      "latency_max": 5,
+      "phase_ns": 3.5,
+      "log_sha256": "3c63fdedad05b4dc80bc7908c046d7ecd0e897ff8522733b835f981a5f7d70c7"
+    },
+    {
+      "case": "fine_x",
+      "passed": true,
+      "frames": [
+        {
+          "frame": 1,
+          "window": 0,
+          "fine_x": 1,
+          "release_tick": 1756477,
+          "pixels": 61440,
+          "pixel_sha256": "cf84fb669c6bec7c958f470545b5dc9de307e62743cf9a6a99ad4f6e87da5d44",
+          "packet_sha256": "25abeccf893edc65deb47dc0a1d14cc9236d7d2a01ff3ee0c58b7e3f4ea0a16d"
+        },
+        {
+          "frame": 2,
+          "window": 0,
+          "fine_x": 1,
+          "release_tick": 2113845,
+          "pixels": 61440,
+          "pixel_sha256": "89dfba4836a6efe0c26df2851f7c5db0de7ff7e4a13d9293134505ba6088ea9d",
+          "packet_sha256": "bcaf4130082ac00adaa9ddb9b0aca0e7240e35f6ffe793658f2dd7b21e465278"
+        },
+        {
+          "frame": 3,
+          "window": 0,
+          "fine_x": 1,
+          "release_tick": 2471209,
+          "pixels": 61440,
+          "pixel_sha256": "cf84fb669c6bec7c958f470545b5dc9de307e62743cf9a6a99ad4f6e87da5d44",
+          "packet_sha256": "f04bf4a9888d706a05748fb38895e232b16415e25efe200d571de9e8901cb370"
+        },
+        {
+          "frame": 4,
+          "window": 0,
+          "fine_x": 1,
+          "release_tick": 2828577,
+          "pixels": 61440,
+          "pixel_sha256": "89dfba4836a6efe0c26df2851f7c5db0de7ff7e4a13d9293134505ba6088ea9d",
+          "packet_sha256": "2299d88c3ee8a180e97fde99e9df1f10a31d66f9f3e9e444f618fa6b943db6c1"
+        }
+      ],
+      "fetches": 65552,
+      "bus_bytes": 8032,
+      "raw_attributes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "tick_offsets_vs052": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rom_requests": 312400,
+      "rom_responses": 312399,
+      "latency_min": 5,
+      "latency_max": 5,
+      "phase_ns": 0.0,
+      "log_sha256": "604b7e48558abd69b43f4e58c20293591433ed02b4f8186e630479fdb87bea62"
+    },
+    {
+      "case": "banks32",
+      "passed": true,
+      "frames": [
+        {
+          "frame": 1,
+          "window": 1,
+          "fine_x": 0,
+          "release_tick": 1756477,
+          "pixels": 61440,
+          "pixel_sha256": "810b75a8ae9734dd7d55afd3d67fe0221f49ad347bb1bbbe9f764c57d7e3aaf7",
+          "packet_sha256": "efcdb6863d05ab942ccc15abec017b137649947c76e44c4ebd21cf64112b4a02"
+        },
+        {
+          "frame": 2,
+          "window": 1,
+          "fine_x": 0,
+          "release_tick": 2113845,
+          "pixels": 61440,
+          "pixel_sha256": "f79c5d8db8729779bdf7d4380ee899d2d3f26ef6e6592407f0d521a458510f1f",
+          "packet_sha256": "1c36d58851bb0770599f5fbc4167eb726a77a6d90c036c0c4acbc0041a28f71b"
+        },
+        {
+          "frame": 3,
+          "window": 0,
+          "fine_x": 0,
+          "release_tick": 2471209,
+          "pixels": 61440,
+          "pixel_sha256": "e99cb9af4cf3e9cc7d2a27112b09a683a702eb8e6669b39841dc9fffda00e22a",
+          "packet_sha256": "340f5bd7164a3c4dfee9a23764f431cb6eb46271f50e974bd2d1cfa4ed4ea15c"
+        },
+        {
+          "frame": 4,
+          "window": 0,
+          "fine_x": 0,
+          "release_tick": 2828577,
+          "pixels": 61440,
+          "pixel_sha256": "e84d48135602deea1d61dd930068174342643ee6932acd5f3a76ba68c6063011",
+          "packet_sha256": "15df13600fc4d9a50958fc83b0072a0f3e01293d3dd1da267e4e64591412e98c"
+        }
+      ],
+      "fetches": 65552,
+      "bus_bytes": 8032,
+      "raw_attributes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "tick_offsets_vs052": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rom_requests": 312388,
+      "rom_responses": 312387,
+      "latency_min": 5,
+      "latency_max": 5,
+      "phase_ns": 0.0,
+      "log_sha256": "94fec4b4b8959c62dcbb587cc7cec776f6105dde1db54aef0ba09966d1a85ba1"
+    },
+    {
+      "case": "fine_x",
+      "passed": true,
+      "frames": [
+        {
+          "frame": 1,
+          "window": 0,
+          "fine_x": 1,
+          "release_tick": 1756477,
+          "pixels": 61440,
+          "pixel_sha256": "cf84fb669c6bec7c958f470545b5dc9de307e62743cf9a6a99ad4f6e87da5d44",
+          "packet_sha256": "25abeccf893edc65deb47dc0a1d14cc9236d7d2a01ff3ee0c58b7e3f4ea0a16d"
+        },
+        {
+          "frame": 2,
+          "window": 0,
+          "fine_x": 1,
+          "release_tick": 2113845,
+          "pixels": 61440,
+          "pixel_sha256": "89dfba4836a6efe0c26df2851f7c5db0de7ff7e4a13d9293134505ba6088ea9d",
+          "packet_sha256": "bcaf4130082ac00adaa9ddb9b0aca0e7240e35f6ffe793658f2dd7b21e465278"
+        },
+        {
+          "frame": 3,
+          "window": 0,
+          "fine_x": 1,
+          "release_tick": 2471209,
+          "pixels": 61440,
+          "pixel_sha256": "cf84fb669c6bec7c958f470545b5dc9de307e62743cf9a6a99ad4f6e87da5d44",
+          "packet_sha256": "f04bf4a9888d706a05748fb38895e232b16415e25efe200d571de9e8901cb370"
+        },
+        {
+          "frame": 4,
+          "window": 0,
+          "fine_x": 1,
+          "release_tick": 2828577,
+          "pixels": 61440,
+          "pixel_sha256": "89dfba4836a6efe0c26df2851f7c5db0de7ff7e4a13d9293134505ba6088ea9d",
+          "packet_sha256": "2299d88c3ee8a180e97fde99e9df1f10a31d66f9f3e9e444f618fa6b943db6c1"
+        }
+      ],
+      "fetches": 65552,
+      "bus_bytes": 8032,
+      "raw_attributes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "tick_offsets_vs052": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rom_requests": 312400,
+      "rom_responses": 312399,
+      "latency_min": 5,
+      "latency_max": 5,
+      "phase_ns": 5.625,
+      "log_sha256": "28caa4ad70a176ce807954fd49e7302ee5df6e5294b225fedeca500753b1d067"
+    },
+    {
+      "case": "banks32",
+      "passed": true,
+      "frames": [
+        {
+          "frame": 1,
+          "window": 1,
+          "fine_x": 0,
+          "release_tick": 1756477,
+          "pixels": 61440,
+          "pixel_sha256": "810b75a8ae9734dd7d55afd3d67fe0221f49ad347bb1bbbe9f764c57d7e3aaf7",
+          "packet_sha256": "efcdb6863d05ab942ccc15abec017b137649947c76e44c4ebd21cf64112b4a02"
+        },
+        {
+          "frame": 2,
+          "window": 1,
+          "fine_x": 0,
+          "release_tick": 2113845,
+          "pixels": 61440,
+          "pixel_sha256": "f79c5d8db8729779bdf7d4380ee899d2d3f26ef6e6592407f0d521a458510f1f",
+          "packet_sha256": "1c36d58851bb0770599f5fbc4167eb726a77a6d90c036c0c4acbc0041a28f71b"
+        },
+        {
+          "frame": 3,
+          "window": 0,
+          "fine_x": 0,
+          "release_tick": 2471209,
+          "pixels": 61440,
+          "pixel_sha256": "e99cb9af4cf3e9cc7d2a27112b09a683a702eb8e6669b39841dc9fffda00e22a",
+          "packet_sha256": "340f5bd7164a3c4dfee9a23764f431cb6eb46271f50e974bd2d1cfa4ed4ea15c"
+        },
+        {
+          "frame": 4,
+          "window": 0,
+          "fine_x": 0,
+          "release_tick": 2828577,
+          "pixels": 61440,
+          "pixel_sha256": "e84d48135602deea1d61dd930068174342643ee6932acd5f3a76ba68c6063011",
+          "packet_sha256": "15df13600fc4d9a50958fc83b0072a0f3e01293d3dd1da267e4e64591412e98c"
+        }
+      ],
+      "fetches": 65552,
+      "bus_bytes": 8032,
+      "raw_attributes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "tick_offsets_vs052": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rom_requests": 312388,
+      "rom_responses": 312387,
+      "latency_min": 5,
+      "latency_max": 5,
+      "phase_ns": 5.625,
+      "log_sha256": "6151658158610d07e315d4dd4a6fffc3125d2370c5f27530193b9f762ca1bbdc"
+    }
+  ],
+  "unit_cases": [
+    {
+      "checks": 35842,
+      "accepted": 538,
+      "completed": 525,
+      "canceled": 13,
+      "pins": 537,
+      "min_clocks": 5,
+      "max_clocks": 5,
+      "phase_ps": 0,
+      "setup_checks": 537,
+      "hold_checks": 526
+    },
+    {
+      "checks": 35841,
+      "accepted": 538,
+      "completed": 525,
+      "canceled": 13,
+      "pins": 537,
+      "min_clocks": 5,
+      "max_clocks": 5,
+      "phase_ps": 375,
+      "setup_checks": 537,
+      "hold_checks": 526
+    },
+    {
+      "checks": 35842,
+      "accepted": 538,
+      "completed": 525,
+      "canceled": 13,
+      "pins": 537,
+      "min_clocks": 5,
+      "max_clocks": 5,
+      "phase_ps": 750,
+      "setup_checks": 537,
+      "hold_checks": 526
+    },
+    {
+      "checks": 35841,
+      "accepted": 538,
+      "completed": 525,
+      "canceled": 13,
+      "pins": 537,
+      "min_clocks": 5,
+      "max_clocks": 5,
+      "phase_ps": 1125,
+      "setup_checks": 537,
+      "hold_checks": 526
+    },
+    {
+      "checks": 35841,
+      "accepted": 538,
+      "completed": 525,
+      "canceled": 13,
+      "pins": 537,
+      "min_clocks": 5,
+      "max_clocks": 5,
+      "phase_ps": 1500,
+      "setup_checks": 537,
+      "hold_checks": 526
+    },
+    {
+      "checks": 35840,
+      "accepted": 538,
+      "completed": 525,
+      "canceled": 13,
+      "pins": 537,
+      "min_clocks": 5,
+      "max_clocks": 5,
+      "phase_ps": 1875,
+      "setup_checks": 537,
+      "hold_checks": 526
+    },
+    {
+      "checks": 35840,
+      "accepted": 538,
+      "completed": 525,
+      "canceled": 13,
+      "pins": 537,
+      "min_clocks": 5,
+      "max_clocks": 5,
+      "phase_ps": 2250,
+      "setup_checks": 537,
+      "hold_checks": 526
+    },
+    {
+      "checks": 35838,
+      "accepted": 538,
+      "completed": 525,
+      "canceled": 13,
+      "pins": 536,
+      "min_clocks": 5,
+      "max_clocks": 5,
+      "phase_ps": 2625,
+      "setup_checks": 537,
+      "hold_checks": 526
+    },
+    {
+      "checks": 35841,
+      "accepted": 538,
+      "completed": 525,
+      "canceled": 13,
+      "pins": 537,
+      "min_clocks": 5,
+      "max_clocks": 5,
+      "phase_ps": 3000,
+      "setup_checks": 537,
+      "hold_checks": 526
+    },
+    {
+      "checks": 35839,
+      "accepted": 538,
+      "completed": 525,
+      "canceled": 13,
+      "pins": 537,
+      "min_clocks": 5,
+      "max_clocks": 5,
+      "phase_ps": 3375,
+      "setup_checks": 537,
+      "hold_checks": 526
+    },
+    {
+      "checks": 35841,
+      "accepted": 538,
+      "completed": 525,
+      "canceled": 13,
+      "pins": 537,
+      "min_clocks": 5,
+      "max_clocks": 5,
+      "phase_ps": 3750,
+      "setup_checks": 537,
+      "hold_checks": 526
+    },
+    {
+      "checks": 35839,
+      "accepted": 538,
+      "completed": 525,
+      "canceled": 13,
+      "pins": 537,
+      "min_clocks": 5,
+      "max_clocks": 5,
+      "phase_ps": 4125,
+      "setup_checks": 537,
+      "hold_checks": 526
+    },
+    {
+      "checks": 35839,
+      "accepted": 538,
+      "completed": 525,
+      "canceled": 13,
+      "pins": 537,
+      "min_clocks": 5,
+      "max_clocks": 5,
+      "phase_ps": 4500,
+      "setup_checks": 537,
+      "hold_checks": 526
+    },
+    {
+      "checks": 35839,
+      "accepted": 538,
+      "completed": 525,
+      "canceled": 13,
+      "pins": 537,
+      "min_clocks": 5,
+      "max_clocks": 5,
+      "phase_ps": 4875,
+      "setup_checks": 537,
+      "hold_checks": 526
+    },
+    {
+      "checks": 35840,
+      "accepted": 538,
+      "completed": 525,
+      "canceled": 13,
+      "pins": 537,
+      "min_clocks": 5,
+      "max_clocks": 5,
+      "phase_ps": 5250,
+      "setup_checks": 537,
+      "hold_checks": 526
+    },
+    {
+      "checks": 35841,
+      "accepted": 538,
+      "completed": 525,
+      "canceled": 13,
+      "pins": 537,
+      "min_clocks": 5,
+      "max_clocks": 5,
+      "phase_ps": 5625,
+      "setup_checks": 537,
+      "hold_checks": 526
+    }
+  ],
+  "frames": 24,
+  "pixels": 1474560,
+  "fetches": 393312,
+  "bus_bytes": 48192,
+  "production_changed": false,
+  "new_hardware_package": false,
+  "baseline_failure": {
+    "case": "fine_x",
+    "phase_ns": 3.5,
+    "read_cycles": 8,
+    "control_mhz": 84,
+    "tick": 852209,
+    "cpu_address": "0xe184",
+    "reason": "CPU deadline waiting behind PPU transaction"
+  },
+  "selected": {
+    "read_cycles": 16,
+    "control_mhz_nominal": 168,
+    "quantized_period_ns": 5.952,
+    "capture_access_ns": 95.232,
+    "post_sample_hold_ns": 5.952,
+    "active_ns": 101.184,
+    "board_timing_proven": false
+  },
+  "scope": "Actual052 CPU/PPU/early service/CDC + unchangedCF86 registered reader at168MHz control/16cycles maintaining95.232ns capture access. Four frames each fixture per phase; fixed70ns pin model. No board/PLL/STM32/loader/SNES software or physical timing proof.",
+  "next": "Same-candidate168MHz clock/PLL/reset/ownership/resource/STA feasibility first; preserve loader write widths and fault semantics. Then real SNES consumer and observable bounded RUN/044restore hardware package. Do not repeat same80/BASE/ENTRY."
+}
