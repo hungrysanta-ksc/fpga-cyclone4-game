@@ -66,3 +66,5 @@
 - **111 제한 실기 발행**: 사용자 명시적 선택을 기록하고80KiB 1회 시험/정확044 복원 ZIP12항목을 제공. 실기 결과 대기. [111 결과](../../analysis/TRIAL111-RESULT.ko.md).
 
 - **112 단계 로그 개선판**: 111 짧은관측을 반영, write/sync/close 체크포인트·16KiB진행·기존예산보존과고장후IO금지 검증. 새ARM/80KiB패키지 제공, 실기결과대기. [112 결과](../../analysis/CHECKPOINT112-RESULT.ko.md).
+
+| 113 | 112 무로그 중단 재현·bounded SD 읽기 인계 수정·진입 전용113 제공,실기 대기 | [113](../../analysis/ENTRY113-RESULT.ko.md) |

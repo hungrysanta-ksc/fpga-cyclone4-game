@@ -175,6 +175,14 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 
 사용자 선택 후 `tools/release_nes_trial111.py --pair <review109> --out <new>`로 생성한다. `tools/verify_nes_trial111.py --evidence <frozen111>`는 전달 무결성을 확인한다. [실기 안내](../../docs/nes-trial111-instructions.ko.md)가 현재 실행 절차이며, 위110 검토 지시는 선택 전 이력이다. 변경 없는 ARM/FPGA는 재빌드하지 않는다.
 
-## 현재 단계 로그 개선판112
+## 역사적 단계 로그 개선판112
 
 `prepare_nes_checkpoint112.py --evidence108 <frozen108> --out <new>`로 준비하고 기존100 ARM builder/고정mini를 사용한다. `test_nes_checkpoint112.py --evidence109 <frozen109> --gcc <gcc> --out <new> --cases 0:0,0:303,0:201,50:0`는 실제C통합/고장/예산을 재현한다. `check_nes_checkpoint112_arm.py`가 실제ELF/host소스를 대조한다. `release_nes_checkpoint112.py --pair <pair109> --firmware <ARM112> --out <new>`로전달물을만들고`verify_nes_checkpoint112.py --evidence <frozen112>`로무결성을확인한다. [실기 안내](../../docs/nes-checkpoint112-instructions.ko.md).
+
+## 현재 진입 전용113
+
+`prepare_nes_entry113.py --evidence112 <frozen112> --out <new>`로 소스를 준비하고 `build_nes_entry113_arm.ps1`에 기존 ARM/host GCC/Make/UnixBin/고정mini 인자를 전달한다.113은 begin을run에서 한 번만 실행하므로 옛100검사기의 중복 begin 요구를 그대로 적용하지 않는다.
+
+`test_nes_entry113.py --baseline <frozen112/host03> --gcc <gcc> --out <new> --old --cases 61`은 기존 무로그 거절을 재현한다. `--old` 없이 기본10개 사례를 실행하면 수정·실제FatFS 로그 재열기와80KiB 회귀를 확인한다. 모형에 완료된 다중읽기 상태를 주입하며 실제 메뉴 전체/CMD18/전기파형을 실행한 것은 아니다.
+
+`check_nes_entry113_arm.py --arm <arm113> --host <final-host113> --objdump <arm-objdump> --out <new>`는 실제ELF/벡터/새진입순서/C소스를 대조한다. `release_nes_entry113.py --pair <pair109> --firmware <ARM113> --out <new>`로 패키지를 만들고 `verify_nes_entry113.py --evidence <frozen113>`으로 검증한다. [실기 안내](../../docs/nes-entry113-instructions.ko.md).
