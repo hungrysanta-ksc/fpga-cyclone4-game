@@ -246,3 +246,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 131 카운터 사전 설정
 
 기존FLOAT 경로의 `run_nes_counter131_diff.ps1`와 `run_nes_counter131.ps1`을 직렬 실행한다. `nes_counter131_fit.py`의 새MAP/FIT/STA 완료 후 `review_nes_counter131.py`로 실제제어입력/clock별setup·hold를 확인한다. `verify_nes_counter131.py --evidence <frozen131>`은 인접130동결자료도 필요하다. [131 결과](../../analysis/COUNTER131-RESULT.ko.md)의 선택 후보와 모델 범위·미완료 조건을 유지한다.
+
+## 132 현재 CDC 재검증
+
+`nes_cdc132_inventory.py`로131fit05를별도복사하고 `nes_cdc132_sta.py`로현재경로를분류한다. 새MAP/FIT없음. `run_nes_cdc132_protocol.ps1`은기존FLOAT경로로actual131reader를시험하며125의고정fixture를사용한다. `verify_nes_cdc132.py --evidence <frozen132>`는인접125/131증거도필요하다. 124manifest불일치입력을재사용하거나과거archive를수정하지않는다. [132 결과](../../analysis/CDC132-RESULT.ko.md).

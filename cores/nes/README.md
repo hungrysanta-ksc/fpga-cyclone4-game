@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재131: 카운터를 대기 상태에서 미리 준비해 바이트 수 조건과 분리했다. 전체180,311회 핀 쓰기·CHECK/RUN·오류 취소 회귀 통과. 최종test02/fit05의 memory setup은 +0.041ns로 같은 클록 setup 통과다. 전체 타이밍·설치 승인은 별도다. [131 결과](../../analysis/COUNTER131-RESULT.ko.md)를 우선한다.
+현재132: 131의 같은 배치에서 데이터 CDC371쌍과16동기화·reset 해제 체인을 재검증했다. CHR 설정183쌍·RUN/오류 제어115쌍의 시작·종료 계약과 외부IO는 미완료다. [132 결과](../../analysis/CDC132-RESULT.ko.md)를 우선한다.
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 
