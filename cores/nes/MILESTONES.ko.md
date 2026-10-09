@@ -68,3 +68,5 @@
 - **112 단계 로그 개선판**: 111 짧은관측을 반영, write/sync/close 체크포인트·16KiB진행·기존예산보존과고장후IO금지 검증. 새ARM/80KiB패키지 제공, 실기결과대기. [112 결과](../../analysis/CHECKPOINT112-RESULT.ko.md).
 
 | 113 | 112 무로그 중단 재현·bounded SD 읽기 인계 수정·진입 전용113 제공,실기 대기 | [113](../../analysis/ENTRY113-RESULT.ko.md) |
+
+| 114–116 | 실기80KiB 적재·전체 비교·STOP 통과, BASE_START 이후 복구 미완료.116 복구 전용 진단 제공 | [116](../../analysis/BASE116-RESULT.ko.md) |
