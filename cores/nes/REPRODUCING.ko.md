@@ -167,3 +167,6 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## CSS 통합109
 
 [109 계약](../../docs/nes-css109-contract.md)에 따라104/108고정입력으로 통합·고장·새파일조합을 검사한다. PA1/PB8 모델,호스트결과출력과제품UART억제를구분한다.
+## 검토 후보110
+
+`tools/stage_nes_trial110.py --pair <review109> --out <new>`로 검토용 후보만 생성한다. `tools/verify_nes_trial110.py --evidence <frozen110>`로 원본/ZIP/정책을 확인한다. 실행 지시가 아니며 [사용자 선택](../../docs/nes-trial110-review.ko.md)이 먼저다.
