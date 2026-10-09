@@ -80,3 +80,5 @@
 - **122**: 등록형 reader READ8/84MHz 실제 CPU 기한 실패를 보존하고 READ16/168MHz·95.232ns 접근 후보의24프레임/16위상 핀 검증 통과. 보드 클록·로더·STA는 다음. [결과](../../analysis/SAFE122-RESULT.ko.md).
 
 - **123**: 실제PLL/PSRAM46핀 포함 코어 배치 성공.938LAB/PLL1,reader168MHz 동일클록 setup+1.432ns. 교차클록/reset raw−8.104ns·외부IO미해결. [결과](../../analysis/CLOCK123-RESULT.ko.md).
+
+- **124**: 실제 코어/reader/영상 reset 동기해제 배선,4프레임245760픽셀,reader16위상·bridge/호스트reset통과.933LAB/동일클록STA통과,묶음CDC/외부IO미완료. [결과](../../analysis/RESET124-RESULT.ko.md).

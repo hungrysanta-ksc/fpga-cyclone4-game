@@ -5,11 +5,11 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "123 읽기전용실제코어/PLL84·168/PSRAM46핀 배치성공.938LAB·reader내부setup+1.432ns이나 교차클록/reset−8.104ns 및 외부IO미해결. 로더/guard/실제소비자미포함.",
-  "next_action": "IMPLEMENT_DOMAIN_RESET_AND_BOUNDED_BUNDLED_CDC",
+  "assessment": "124 도메인별reset배선구현,실제4프레임/reader16위상/bridge39/frontend13/reset14통과.933LAB·168내부setup0.816ns,전체raw−8.477ns·묶음CDC/외부IO미완료.",
+  "next_action": "BOUND_BUNDLED_DATA_CDC_ON_124_ROUTED_DB",
   "next_three_deliverables": [
-    "init_done/RUN/reset조건의도메인별해제및reader/transport연결검증",
-    "묶음데이터/제어동기화안정시간과같은배치경로최대지연의정확한제약;전체falsepath금지",
+    "같은124배치에서reader/bridge묶음데이터·제어CDC안정유지/캡처시점/최대지연연결",
+    "정확한대상제약과부정대조;rawreset해제회로경계유지/전체falsepath금지",
     "로더쓰기375ns·guard·독점소유권·전체자원/소비자연결후관측/종료/044복원가능한최소RUN실기"
   ],
   "gates": [
@@ -77,9 +77,9 @@
     },
     {
       "id": "BOARD-FIT",
-      "status": "read_only_core_physical_pin_PLL_fit_pass_CDC_reset_IO_open",
-      "evidence": "analysis/CLOCK123-RESULT.ko.md",
-      "detail": "123 13558LE/938LAB/26M9K/PLL1/46물리핀264가상핀.168동일클록setup+1.432ns,전체−8.104ns. 로더/guard없는부분자원이며최종보드여유아님."
+      "status": "domain_reset_wired_local_STA_pass_bundled_CDC_IO_open",
+      "evidence": "analysis/RESET124-RESULT.ko.md",
+      "detail": "124 13540LE/933LAB/26M9K/PLL1/46물리핀264가상핀.168동일클록setup0.816ns,전체−8.477ns. init_done reset종착점6release비트만;loader/guard미포함."
     },
     {
       "id": "DISPLAY-240",
@@ -127,7 +127,7 @@
       "id": "ROM-DEADLINE",
       "status": "safe_read16_168mhz_functional_pass_board_timing_open",
       "evidence": "analysis/SAFE122-RESULT.ko.md",
-      "detail": "READ8 safe-reader CPU기한반례852209; READ16/168MHz·95.232ns접근24프레임/16위상핀통과. 제품RTL불변;보드타이밍/로더/guard소유권통합미완료. 123 reader동일클록물리setup+1.432ns;교차클록/reset/외부IO미완료."
+      "detail": "READ8 safe-reader CPU기한반례852209; READ16/168MHz·95.232ns접근24프레임/16위상핀통과. 제품RTL불변;보드타이밍/로더/guard소유권통합미완료. 123 reader동일클록물리setup+1.432ns;교차클록/reset/외부IO미완료. 124 reset변형fine_x4프레임통과/절대tick−4·상대동일;168setup0.816ns,묶음CDC/외부IO미완료."
     },
     {
       "id": "REPORT-SESSION",
@@ -827,8 +827,8 @@
         "P4"
       ],
       "completion": "Normal-speed70ns memory, resource headroom, real SNES video/queue/display contract; redesign before feature expansion if insufficient",
-      "status": "read_only_physical_clock_fit_pass_reset_CDC_consumer_pending",
-      "evidence": "analysis/CLOCK123-RESULT.ko.md"
+      "status": "domain_reset_wired_bundled_CDC_consumer_pending",
+      "evidence": "analysis/RESET124-RESULT.ko.md"
     },
     {
       "id": "P6",
@@ -888,5 +888,15 @@
     "reader_setup_min_ns": 1.432,
     "all_timing_pass": false,
     "production_changed": false
+  },
+  "domain_reset124": {
+    "evidence": "analysis/reset124-verification.json",
+    "LAB": 933,
+    "reader_setup_min_ns": 0.816,
+    "full_timing_pass": false,
+    "diagnostic_rtl_changed": true,
+    "frames": 4,
+    "pixels": 245760,
+    "init_done_reset_endpoints": 6
   }
 }

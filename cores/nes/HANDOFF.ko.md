@@ -1,22 +1,22 @@
-# NES 현재 인계 —123 물리 배치 성공, 교차 클록 타이밍 미해결
+# NES 현재 인계 —124 도메인별 reset 구현, 다음은 묶음 데이터 CDC
 
-[123 결과](../../analysis/CLOCK123-RESULT.ko.md) · [검증 메타](../../analysis/clock123-verification.json) · [122 기능 기준](../../analysis/SAFE122-RESULT.ko.md)
+[124 결과](../../analysis/RESET124-RESULT.ko.md) · [검증 메타](../../analysis/reset124-verification.json) · [123 물리 기준](../../analysis/CLOCK123-RESULT.ko.md)
 
-## 다음 작업의 우선순위
+## 바로 이어서 할 일
 
-**코어 초기화/reset을 각 도메인에 연결하는 방식과 묶음 데이터 CDC 제약부터 해결한다.** 168MHz reader의 같은 클록 내부 setup은 최종 fit02에서3corner 최솟값+1.432ns다. NES+9.014ns,host84+2.885ns다. 클록 속도를 낮추는 것부터 시작하거나 변하지 않은122 전체 프레임을 반복하지 않는다. 전체 raw slack은−8.104ns이며 전기적/전체STA통과가 아니다.
+**같은124 fit01의 reader/영상 bridge CDC를 분석하고 실제 안정 유지 시간에 맞는 제한을 검증한다.** reader address_hold→PSRAM주소, data_hold→서비스/CPU 직접 소비 경로,request/ack 첫 동기화 단계,bridge req/reply 및 peer-up 신호를 구분한다. 단순 handshake 존재나 음수 raw slack만으로 통과/불가능을 선언하지 않는다. 실제 수신 캡처 시점과 종착점까지의 최대 지연,새 요청이 데이터를 덮어쓰는 시점을 함께 확인한다. 전체 클록 false-path는 금지한다. RTL 변화 없이 분석·제약 검사를 할 때124 DB 사본을 재사용하고 재합성/전체 프레임 반복부터 하지 않는다.
 
-123의 `nes_clock_fit123.py`가 생성한 `nes_live_joint.sv`에서 `reset_request=boot_reset||!run_enable`, `reset=reset_request||!memory_ready`이고 memory_ready는 코어 도메인의 local_memory.init_done이다. 이 reset이84MHz transport와168MHz reader로 전달된다. 원시60개 최악 경로에는 init_done→다른 도메인의 데이터/reset 입력 위반이 있다. 비동기 assert와 도메인별 동기 release를 유지하는 연결을 구현하고, 기존 reader 안의 source_reset/memory_reset 및 raw reset gating과 중복·우회를 함께 검사한다. 단순 전 클록 false-path는 금지한다.
+`init_done`의 비동기 reset 종착점은 합성 후 core_release/host_release/memory_reset의 각2비트,총6개다. 1,272경로 중36 recovery/removal과1,236 로컬 setup/hold를 보존했다. 원시 reset→release 레지스터의 비동기 회복 검사는 아직 면제하지 않았다. reset helper의 clock-stop/짧은 펄스 시험은 디지털 기능이고 실물 최소 펄스/MTBF/PLL 공통 고장 검증이 아니다.
 
-그다음 reader address_hold/data_hold와 request/ack toggle,영상 bridge의 req/reply 묶음 데이터에 대해 실제 안정 유지 구간과 동기화 단계를 조사한다. 데이터의 종착점이 CPU의 직접 소비 조합 경로까지 이어지는 경우도 포함한다. 같은 라우팅DB에서 경로 최대지연·정확한 제약을 검증하며 handshake의 존재만으로 모든 CDC를 통과 처리하지 않는다. 전체 IO는 미제약 상태다.
+## 구현과 검증 기준
 
-## 확정된 결과와 범위
+`nes_reset124.py`는 옛 소스를 수정하지 않고 정확한 문자열 일치 후 새 작업 폴더의 RTL만 바꾼다. init_release는 raw_stop만 사용해 RAM scrub를 시작한다. core_release의 common_reset은 raw_stop 또는 memory_ready 미완료다. reader/transport는 common_reset을 받아 각 도메인에서 해제한다. RAM init에 common_reset을 되먹이면 교착이므로 금지한다. reader의 raw reset OR 우회를 되살리지 않는다. bridge/host 단계의 동기 해제를 유지하며 독립 reset은 지원하지 않는다.
 
-fit02: EP4CE15F17C8,13,558LE,938/963LAB(25남음),26M9K,PLL1개. 보드 핀표와일치하는 PSRAM/CLKIN/SNES_SYSCLK46개 물리핀,가상264핀이다. PLL은8MHz에서84/168MHz를 만든다. 코어 STA22MHz는 보수적 목표이며122 기능 시뮬레이션은21.477MHz다. 코어·reader 공통 소스는122와같다. 차이나는 TB/메모리모델2파일은 합성하지 않는다.
+fit01:13,540LE,933/963LAB,26M9K,PLL1,46실제핀/264가상핀. 코어 STA22MHz,PLL84/168MHz;동일도메인setup10.263/2.610/0.816ns. 같은클록 setup/hold/recovery/removal은 모두양수,전체 raw−8.477ns로미통과.30LAB는최종여유아님. 로더/CHECK·guard·실제SNES프로그램 제외.
 
-로더/CHECK·guard·실제SNES프로그램은 제외한 읽기 전용 가능성 검사다. RUN/reset/컨트롤·SNES버스/관측은 가상입력이다.25LAB는 최종 통합 여유가 아니다. full123 빌드나 설치패키지가 있다는 뜻이 아니다. fit01은 PPU 관측주소3개가 미지정 물리핀으로 바뀌었고,fit02는 기능 경로 밖의 보존 관측레지스터로 이를 분리했다. 첫fit/audit경로오류·UTF8보고서해석오류도 보존한다.
+unit01:16위상8,400읽기/208취소,110ns·no-HOLD 거부. transport04:reset14검사,bridge3조합×13,frontend13,raw-bypass 거부. core01:변경된 같은RTL fine_x/3.5ns4프레임245,760픽셀/65,552이벤트/8,032바이트 일치,상대시각동일/절대tick−4. 기존122의다른입력·위상은역사적기준이며124모든위상시험으로확대하지않는다. core로그numeric40경고보존;publicdriver는실행뒤두개메타문구만수정했고검증기가정확히대조한다.
 
-그 뒤 로더 WRITE375ns와 guard의 감시시간·소유권을 보존하며 통합한다.8MHz의 WRITE3클록을168MHz에 그대로 옮기면17.856ns가 된다. 도메인 분리/쓰기시간 매개변수화 중 실제 설계를 정하고 로더·CHECK·RUN 핀 구동이 겹치지 않는지 확인한다. 실제SNES소비자/DMA/표시 기한,새RUN 진행관측·오류종료·독립044복원 준비 후 실기로 간다.
+그다음 로더 WRITE375ns와 guard 감시시간·소유권을 보존해통합한다.8MHz WRITE3를168MHz에그대로옮기면17.856ns라금지한다. 실제SNES소비자/DMA/표시기한,새RUN진행관측·오류종료·독립044복원준비후실기를우선한다. 같은119 full80/BASE/ENTRY,변경없는124프레임·fit을반복하지않는다.
 
 ## 유지할 실기 기준과 목표
 
@@ -24,8 +24,12 @@ fit02: EP4CE15F17C8,13,558LE,938/963LAB(25남음),26M9K,PLL1개. 보드 핀표�
 
 첫 게임 목표: Super Mario Bros 3 (J),mapper4,PRG256KiB+CHR128KiB,393232bytes,SHA `dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49`. 현재 진단 크기를384KiB 지원으로 확대 해석하지 않는다. 이후 맵퍼·호환성을 넓힌다.
 
+## 이번 시험 도구 보정 이력
+
+처음 transport01은 원래 공개031 frontend라 배치의044와달랐고 최종해시검증이거부했다. transport02/03은정확한044에서구031시험의5클록응답/overread8기대가실패했다. 최종transport04는044두샘플확인에맞는6클록/복합오류9로고치고120ns기한과다른검사를유지했다. 수정전고정044원본도동일13항목PASS,최종6RTL은fit와바이트일치한다. 최초`evidence`715파일은수정하지않았고현재는`evidence-final`을검증한다. 앞으로같은파일명만으로시험소스를선택하지말고실제배치입력해시부터대조한다.
+
 ## 재현과 보존
 
-`nes_clock_fit123.py --baseline <pinned059fit> --out <newASCII> --quartus-bin <bin64>`은 map/fit/STA를 실행한다. 같은 출력 디렉터리에 `nes_clock_audit123.tcl`을 복사해 `quartus_sta -t`로 클록쌍을 조사한다. 동결 DB에서 직접 쓰지 말고 새 작업 사본을 만든다. `verify_nes_clock123.py --evidence <frozen123>`은 재빌드 없이 증거를 검증한다. 기존044–113/116/118/120–123 자료·완료 finalizer는 수정/재실행하지 않는다. 제품 소스는 그대로이며 새 C/RTL/ARM/ASM/실기이미지/Questa 작업은 없다.
+`nes_reset124_fit.py --baseline <pinned059fit> --out <newASCII> --quartus-bin <bin64>`과같은폴더의`nes_reset124_audit.tcl`로배치/경로를재현한다. unit/core/transport의`run_nes_reset124_*.ps1`은기존1seat FLOAT wrapper를직렬로사용한다. core baseline은고정052입력이다. `verify_nes_reset124.py --evidence <frozen124>`는재실행없이검증하며기준비교용임시폴더만쓴다. 동결DB에서직접타이밍도구를실행하지않는다.
 
-PR68 병합878c8ce 확인. 한국어 제목과 작업 목표·작업 내용·작업 결과·작업 의미 네 항목을 지키며 사용자가 병합한다. GBC152·원래NES334·모든 과거 공개 핀은 보존한다. ROM/바이너리/미디어/라이선스/개인경로는 Git에 올리지 않는다.
+044–113/116/118/120–124 증거와완료finalizer는불변이다. 제품GBC152·원래NES334·모든공개핀보존,ROM/바이너리/라이선스/개인경로Git제외. PR69병합확인. 한국어제목과작업목표/작업내용/작업결과/작업의미4절,사용자가병합한다. 새SD패키지나실기시험요청없음.
