@@ -202,3 +202,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 현재 정상속도메모리120
 
 기존FLOAT wrapper로 `run_nes_core_memory120.ps1`을실행한다. Baseline은공개052 artifact로검증되는이전live디렉터리이며새ASCII Out만사용한다. 핀단위는같은FLOAT RunOnly 세션에서 `nes_memory120_unit.py --out <new> --questa-bin <bin>`;근거검증은 `verify_nes_core120.py --evidence <frozen120>`.120은실제코어제한prefix/16위상핀시험이며전체8프레임은다음단계다.
+
+## 121 전체 프레임 회귀
+
+`run_nes_core_frames121.ps1`을 기존 FLOAT RunOnly 경로와핀된052live Baseline/새ASCII Out으로실행한다. `verify_nes_frames121.py --evidence <frozen121>`은6사례/24프레임을보존된기준과재비교한다. 테스트벤치consumer이며실제SNES소프트웨어나보드PLL시험은아니다.
