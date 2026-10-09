@@ -194,3 +194,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 `test_nes_base116.py --evidence113 <frozen113> --gcc <gcc> --out <new>`는 짧은 정상 복구, DONE/BSY/TXE/토큰/SD/CSS 오류, 전체80KiB 회귀8개를 실행한다. 실제FatFS 로그 재열기2개도 포함한다. 핀·시간·카드·초기 상태는 모형이다.
 
 `check_nes_base116_arm.py --arm <arm116> --host <final-host116> --objdump <arm-objdump> --out <new>`로 실제 ELF와 C를 대조한다. `release_nes_base116.py --pair <pair109> --firmware <ARM116> --out <new>`로 패키지를 만들고 `verify_nes_base116.py --evidence <frozen116>`으로 검증한다. [116 실기 안내](../../docs/nes-base116-instructions.ko.md).
+
+## 현재 전체80KiB 통합복구118
+
+동일116 ARM과기존host03 case70/ARM검사를재사용한다. `python tools/release_nes_full118.py --pair <pair109> --firmware <ARM116> --out <new>`는입력쌍해시/디코딩/fixture와ZIP12항목을검증한다. 새C/RTL/ARM빌드는없다. [118실기안내](../../docs/nes-full118-instructions.ko.md)를현재실행절차로사용한다.

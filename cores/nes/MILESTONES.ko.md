@@ -70,3 +70,5 @@
 | 113 | 112 무로그 중단 재현·bounded SD 읽기 인계 수정·진입 전용113 제공,실기 대기 | [113](../../analysis/ENTRY113-RESULT.ko.md) |
 
 | 114–116 | 실기80KiB 적재·전체 비교·STOP 통과, BASE_START 이후 복구 미완료.116 복구 전용 진단 제공 | [116](../../analysis/BASE116-RESULT.ko.md) |
+
+| 117–118 | 짧은116 복구·메뉴 실기 통과,같은ARM 전체80KiB 통합복구 전달물 | [118](../../analysis/FULL118-RESULT.ko.md) |
