@@ -238,3 +238,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 129 reader 소유권 등록
 
 기존 FLOAT 경로의 `run_nes_reader129.ps1`에 `-Baseline <probes>`와 새ASCII 출력/Python/Questa/wrapper를 지정한다. `nes_reader129_fit.py`의 MAP/FIT/STA 완료 후 `review_nes_reader129.py`를 실행한다. 최종은test01/fit01이며 후속fit02–05는 미채택이다. `verify_nes_reader129.py --evidence <frozen129>`는 채택·미채택 증거를 구별해 검사한다. [129 결과](../../analysis/READER129-RESULT.ko.md)의 모델 범위와 남은 타이밍 실패를 유지한다.
+
+## 130 로더 상태 합성 설정
+
+`nes_enable130_fit.py`에 `--baseline <probes> --out <fresh ASCII path> --quartus-bin <bin>`을 지정해 MAP/FIT/STA를 수행한다. 완료 후 `review_nes_enable130.py`로 같은 출력과 Quartus 경로를 전달한다. 최종fit01은 상태만 변경하며 fit02의 카운터 설정은 미채택이다. `verify_nes_enable130.py --evidence <frozen130>`은 인접129증거와 함께 입력 재생성·동작 코드 동일성·실제 포트·타이밍을 검사한다. 새 기능 시뮬레이션은 없으며 [130 결과](../../analysis/ENABLE130-RESULT.ko.md)의 미통과 범위를 유지한다.

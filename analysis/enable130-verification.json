@@ -1,0 +1,110 @@
+{
+  "candidate": "NES-ENABLE-130",
+  "base_merge": "5ab3754a99b802d390b0c8be48918fa04a855cb5",
+  "archived_files": 1773,
+  "manifest_sha256": "511eaaa612656cd6c42448a5801f812a5b57ed4f1758a6e282bff76993f91d90",
+  "public_sources": {
+    "tools/nes_enable130.py": "c909798a21d124912bf409b1438af622a7408ded6398cdc8da9c181a608bb91b",
+    "tools/nes_enable130_fit.py": "60dd756ffa13f63d47c52dd91b275c7de48340389257e0f8b86b036b782df8cb",
+    "tools/nes_enable130_baseline.py": "cdbcc4086b57fe771209542a2c4022cf439791e2ff38246b634d747e5b77faf7",
+    "tools/nes_enable130_paths.tcl": "fd2656d976e91d1efb5d97896ff13e655af490412d6498cab71a182f2b857bf3",
+    "tools/review_nes_enable130.py": "13089f18100078b22d284a2c02e4842d6279e7b3fc51ae8f2789c790294730ac",
+    "tools/verify_nes_enable130.py": "2841ab5ee09cdebfd846fba52d05e34dc25c462d3e362ed173986756a9d69bb9",
+    "analysis/reader129-verification.json": "304b0bc52bf133e1db02fbb71a29211d403a1f9a3c8de869a21336d1c3ef5a7a",
+    "tools/nes_loader127.py": "b470dc9cee847b8ad24520a37ab4e2af6f5e431e25e66ad057db31246f0920cc",
+    "tools/nes_reset124_audit.tcl": "023b265b599431c11715e8bac65812cffb589f1e8b854333bffd9a793f3d532e",
+    "tools/nes_control126.tcl": "b9860562325716ba691a089a404053be3ba27848e5b8187fd89a5a83f5852bda",
+    "tools/nes_reader129_paths.tcl": "d6902810aaa55bf5b605f3b6514d809140cbd4883ef7fc501dd8bab5353041af"
+  },
+  "checks": {
+    "selected": "fit01",
+    "selected_review": {
+      "resources": {
+        "Total logic elements": 14261,
+        "Total registers": 5320,
+        "Total pins": 46,
+        "Total virtual pins": 264,
+        "Total PLLs": 1,
+        "LAB": 959,
+        "M9K": 26
+      },
+      "same_clock_setup_min_ns": {
+        "nes": 7.805,
+        "pll|altpll_component|auto_generated|pll1|clk[0]": 3.388,
+        "pll|altpll_component|auto_generated|pll1|clk[1]": -0.04
+      },
+      "raw_clock_pair_min_ns": -8.236,
+      "clock_rows": 84,
+      "fit_passed": true,
+      "same_clock_setup_pass": false,
+      "full_timing_pass": false,
+      "old126_data_constraints_reused": false,
+      "installable": false,
+      "diagnostic_reset_chain": {
+        "first_stage_fanout": 1,
+        "stage_paths": 6,
+        "min_stage_slack_ns": 0.383,
+        "local_release_paths": 1776,
+        "min_local_release_slack_ns": -4.695
+      },
+      "reader_owner_paths": {
+        "old_direct_paths": 0,
+        "owner_stage_paths": 219,
+        "minimum_setup_ns": 0.95,
+        "valid_register_setup_paths": 0
+      },
+      "loader_ports": {
+        "registers": 16,
+        "enable_inputs": 3,
+        "state_enable_inputs": 0,
+        "reported_paths": 9846,
+        "minimum_setup_ns": -0.04,
+        "minimum_hold_ns": 0.179
+      }
+    },
+    "rejected_fit02": {
+      "resources": {
+        "Total logic elements": 14195,
+        "Total registers": 5320,
+        "Total pins": 46,
+        "Total virtual pins": 264,
+        "Total PLLs": 1,
+        "LAB": 961,
+        "M9K": 26
+      },
+      "same_clock_setup_min_ns": {
+        "nes": 8.675,
+        "pll|altpll_component|auto_generated|pll1|clk[0]": 1.434,
+        "pll|altpll_component|auto_generated|pll1|clk[1]": -1.47
+      },
+      "raw_clock_pair_min_ns": -8.91,
+      "clock_rows": 84,
+      "fit_passed": true,
+      "same_clock_setup_pass": false,
+      "full_timing_pass": false,
+      "old126_data_constraints_reused": false,
+      "installable": false
+    },
+    "baseline_enable_ports": {
+      "state": 4,
+      "counter": 3
+    },
+    "selected_enable_ports": {
+      "state": 0,
+      "counter": 3
+    },
+    "rejected_enable_ports": {
+      "state": 0,
+      "counter": 0
+    },
+    "behavioral_source_identical_to129": true,
+    "prior129_manifest": "10ff116cdb29ca1d2e35d9bd4aff7c7866cb404a57a2128be999d50480ca4c9b",
+    "new_functional_simulation": false,
+    "new_asm_arm_package": false,
+    "full_timing_pass": false,
+    "installable": false
+  },
+  "full_timing_pass": false,
+  "installable": false,
+  "next": "Start130fit01 state-only, inspect actual boot.check_failed -> loader.remaining3 enable path -.040 and SPI fault fanout before any further fit. Do not repeat blanket counter enable removal or129 rejected variants. Then new CDC/IO, actual SNES consumer, observable minimalRUN with044restore."
+}
