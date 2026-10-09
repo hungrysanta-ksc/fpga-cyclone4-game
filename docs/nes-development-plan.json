@@ -5,10 +5,10 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "111의1분 이상 로딩/리셋 미복귀/전원 재투입 메뉴 정상/로그 없음 관측을 반영했다.112는 단계 로그를 추가한80KiB 개선판이며 실행 패키지와044 복원이 준비됐다. 새 실기 결과를 기다린다.",
-  "next_action": "COLLECT_CHECKPOINT112_LOG_AND_ACTUAL_MENU_RESTORE",
+  "assessment": "112는10분 이상 로딩·로그 없음으로 실패했고 복원 정상 보고를 받았다.113은 SD 읽기 인계의 무로그 거절을 재현·수정한 진입 전용 패키지다. 물리 원인은 아직 확정하지 않았으며 새 실기 결과를 기다린다.",
+  "next_action": "COLLECT_ENTRY113_HANDOFF_LOG_AND_MENU_RETURN",
   "next_three_deliverables": [
-    "112 패키지로80KiB 1회 실행, 중간 리셋 없이 최대600초 관측 후 nes-progress-112.txt와nes-verify-last-094.txt 또는 없음/0바이트, 실제메뉴/시간/044복원 후메뉴·GBC를 받는다. 영상 불필요. 마지막 기록을 기준으로 다음 최소 실험을 정한다.",
+    "NES ENTRY 113.nh1을1회 실행하고 최대60초 관측한다. nes-progress-113.txt와최종094TXT/메뉴복귀/044복원 결과를 받는다. 영상 불필요. 성공하면80KiB 실기, 실패하면 마지막 기록 또는 로그 이전 경로를 좁힌다.",
     "마지막 체크포인트로 최초 실패경계 또는 정상 실기기준선을 확정",
     "SMB3 384KiB/mapper4/IRQ/PPU/입력/소리 첫 플레이"
   ],
@@ -48,8 +48,8 @@
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/CHECKPOINT112-RESULT.ko.md",
-      "remaining": "112 패키지로80KiB 1회 실행, 중간 리셋 없이 최대600초 관측 후 nes-progress-112.txt와nes-verify-last-094.txt 또는 없음/0바이트, 실제메뉴/시간/044복원 후메뉴·GBC를 받는다. 영상 불필요. 마지막 기록을 기준으로 다음 최소 실험을 정한다. 게임RUN/영상/입력/소리 미완료."
+      "evidence": "analysis/ENTRY113-RESULT.ko.md",
+      "remaining": "NES ENTRY 113.nh1을1회 실행하고 최대60초 관측한다. nes-progress-113.txt와최종094TXT/메뉴복귀/044복원 결과를 받는다. 영상 불필요. 성공하면80KiB 실기, 실패하면 마지막 기록 또는 로그 이전 경로를 좁힌다. 게임RUN/영상/입력/소리 미완료."
     },
     {
       "id": "R5",
@@ -131,21 +131,21 @@
     },
     {
       "id": "REPORT-SESSION",
-      "status": "checkpoint112_hardware_pending",
-      "evidence": "analysis/CHECKPOINT112-RESULT.ko.md",
-      "detail": "111의1분 이상 로딩/리셋 미복귀/전원 재투입 메뉴 정상/로그 없음 관측을 반영했다.112는 단계 로그를 추가한80KiB 개선판이며 실행 패키지와044 복원이 준비됐다. 새 실기 결과를 기다린다. 112 패키지로80KiB 1회 실행, 중간 리셋 없이 최대600초 관측 후 nes-progress-112.txt와nes-verify-last-094.txt 또는 없음/0바이트, 실제메뉴/시간/044복원 후메뉴·GBC를 받는다. 영상 불필요. 마지막 기록을 기준으로 다음 최소 실험을 정한다."
+      "status": "entry113_hardware_pending",
+      "evidence": "analysis/ENTRY113-RESULT.ko.md",
+      "detail": "112는10분 이상 로딩·로그 없음으로 실패했고 복원 정상 보고를 받았다.113은 SD 읽기 인계의 무로그 거절을 재현·수정한 진입 전용 패키지다. 물리 원인은 아직 확정하지 않았으며 새 실기 결과를 기다린다. NES ENTRY 113.nh1을1회 실행하고 최대60초 관측한다. nes-progress-113.txt와최종094TXT/메뉴복귀/044복원 결과를 받는다. 영상 불필요. 성공하면80KiB 실기, 실패하면 마지막 기록 또는 로그 이전 경로를 좁힌다."
     },
     {
       "id": "EXTERNAL-OBSERVABILITY",
-      "status": "checkpoint112_hardware_pending",
-      "evidence": "analysis/CHECKPOINT112-RESULT.ko.md",
-      "detail": "111의1분 이상 로딩/리셋 미복귀/전원 재투입 메뉴 정상/로그 없음 관측을 반영했다.112는 단계 로그를 추가한80KiB 개선판이며 실행 패키지와044 복원이 준비됐다. 새 실기 결과를 기다린다. 112 패키지로80KiB 1회 실행, 중간 리셋 없이 최대600초 관측 후 nes-progress-112.txt와nes-verify-last-094.txt 또는 없음/0바이트, 실제메뉴/시간/044복원 후메뉴·GBC를 받는다. 영상 불필요. 마지막 기록을 기준으로 다음 최소 실험을 정한다."
+      "status": "entry113_hardware_pending",
+      "evidence": "analysis/ENTRY113-RESULT.ko.md",
+      "detail": "112는10분 이상 로딩·로그 없음으로 실패했고 복원 정상 보고를 받았다.113은 SD 읽기 인계의 무로그 거절을 재현·수정한 진입 전용 패키지다. 물리 원인은 아직 확정하지 않았으며 새 실기 결과를 기다린다. NES ENTRY 113.nh1을1회 실행하고 최대60초 관측한다. nes-progress-113.txt와최종094TXT/메뉴복귀/044복원 결과를 받는다. 영상 불필요. 성공하면80KiB 실기, 실패하면 마지막 기록 또는 로그 이전 경로를 좁힌다."
     },
     {
       "id": "CURRENT-PAIR-RECOVERY",
-      "status": "checkpoint112_hardware_pending",
-      "evidence": "analysis/CHECKPOINT112-RESULT.ko.md",
-      "detail": "111의1분 이상 로딩/리셋 미복귀/전원 재투입 메뉴 정상/로그 없음 관측을 반영했다.112는 단계 로그를 추가한80KiB 개선판이며 실행 패키지와044 복원이 준비됐다. 새 실기 결과를 기다린다. 112 패키지로80KiB 1회 실행, 중간 리셋 없이 최대600초 관측 후 nes-progress-112.txt와nes-verify-last-094.txt 또는 없음/0바이트, 실제메뉴/시간/044복원 후메뉴·GBC를 받는다. 영상 불필요. 마지막 기록을 기준으로 다음 최소 실험을 정한다."
+      "status": "entry113_hardware_pending",
+      "evidence": "analysis/ENTRY113-RESULT.ko.md",
+      "detail": "112는10분 이상 로딩·로그 없음으로 실패했고 복원 정상 보고를 받았다.113은 SD 읽기 인계의 무로그 거절을 재현·수정한 진입 전용 패키지다. 물리 원인은 아직 확정하지 않았으며 새 실기 결과를 기다린다. NES ENTRY 113.nh1을1회 실행하고 최대60초 관측한다. nes-progress-113.txt와최종094TXT/메뉴복귀/044복원 결과를 받는다. 영상 불필요. 성공하면80KiB 실기, 실패하면 마지막 기록 또는 로그 이전 경로를 좁힌다."
     }
   ],
   "guardrails": [
@@ -784,8 +784,8 @@
       "scope": "Report session and external observation",
       "depends_on": [],
       "completion": "Actual multi-layer success/faults, IO protection, cumulative/boot time budget, user-visible outcome and recovery design",
-      "status": "checkpoint112_integrated_physical_pending",
-      "evidence": "analysis/CHECKPOINT112-RESULT.ko.md"
+      "status": "entry113_integrated_physical_pending",
+      "evidence": "analysis/ENTRY113-RESULT.ko.md"
     },
     {
       "id": "P2",
@@ -808,8 +808,8 @@
         ],
         "report_only_package": "Existing validated path only; impact/observation/backup/restore conditions required"
       },
-      "status": "complete_for_limited_checkpoint112_only",
-      "evidence": "analysis/checkpoint112-verification.json"
+      "status": "complete_for_entry113_only",
+      "evidence": "analysis/entry113-verification.json"
     },
     {
       "id": "P4",
@@ -817,8 +817,8 @@
       "depends_on": [
         "P3"
       ],
-      "completion": "112 single80KiB stageTXT/finalTXT orabsent,menu/time and044restore/GBC;111 short observation inconclusive",
-      "status": "awaiting_user_checkpoint112_result"
+      "completion": "113 entry-only single trial <=60seconds;112 failed >600seconds with no log;restore normal reported",
+      "status": "awaiting_user_entry113_result"
     },
     {
       "id": "P5",
@@ -844,5 +844,5 @@
   "first_game_target": "cores/nes/first-game-target.json",
   "mapper_expansion_policy": "SMB3 mapper4 first, extend mappers afterward; keep SMB3/GBC regression",
   "hardware_iteration_policy": "최소 보호 동작과 검증된 파일 조합, 관측 방법, 종료·독립 복원 경로가 준비되면 제한 실기에서 데이터를 얻는 것을 우선한다. 남은 불확실성을 실제로 판별할 수 있는 시험을 먼저 정하고, 실기만으로 해결할 수 있는 항목을 같은 문서·모형 검사로 반복해서 미루지 않는다. 이는 모든 전기 조건의 입증을 생략한다는 의미가 아니다. 기존 승인 범위는 재승인을 요구하지 않으며, 고장 주입·전압 변경·노출 확대 등 범위가 달라질 때만 필요한 판단을 추가한다.",
-  "limited_trial_decision": "analysis/checkpoint112-verification.json"
+  "limited_trial_decision": "analysis/entry113-verification.json"
 }
