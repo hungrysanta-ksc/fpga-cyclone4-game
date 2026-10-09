@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재127: 로더·검증 후 RUN·클록 감시를 실제 코어에 통합했다. 기능 시험과 FPGA 배치는 통과했지만 168MHz 내부 타이밍이 −2.647ns로 미통과다. 다음은 명령 판정·오류 reset 경로 개선이다. [127 결과](../../analysis/LOADER127-RESULT.ko.md)를 우선한다. 실기용 파일은 아직 만들지 않는다.
+현재128: SPI 명령 처리와 로더 구조를 개선해 168MHz setup 위반을 −2.647ns에서 −0.446ns로 줄였다. 기능·오류 시험은 통과했지만 reader reset 경로가 남아 실기 파일은 아직 생성하지 않는다. [128 결과](../../analysis/COMMAND128-RESULT.ko.md)를 우선한다.
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 

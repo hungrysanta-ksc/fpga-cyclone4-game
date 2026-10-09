@@ -1,0 +1,98 @@
+{
+  "candidate": "NES-COMMAND-128",
+  "base_merge": "dfd1454db4e0fc7dd18325ad87ca36e74c98ccfa",
+  "archived_files": 3773,
+  "manifest_sha256": "3078ead176dd6b070b71b032b9c75a1e584b03f94784f9cdeb41bf5c8c0905eb",
+  "public_sources": {
+    "tools/nes_command128.py": "b6f3042107735f44c975df650ac99caa27fe9a40be483424fa9a6196905a81a7",
+    "tools/nes_command128_test.py": "c80470116820455b8f5bac5f786fc7cc1e26356b65ce7a6911e5d0d45467fe08",
+    "tools/nes_command128_boot.py": "2bcadb0f9c33c1ddbb55538ef2c25f91281e484927e6c7e94ef100bf1da2526e",
+    "tools/nes_command128_diff.py": "f2215d784f8b25d6b16d2e7b13b9f3da7a39645c6962d6f31ec995eb63cbec24",
+    "tools/nes_command128_fit.py": "89b84f3fb23c5d48d2a025b2959958a3d0922ae7b751d0368b1fde8385d91ded",
+    "tools/nes_command128_refit.py": "a82cddb056afa0f951e5eddb3ed93b43cdd7863184d7a06a040806e764e37b29",
+    "tools/review_nes_command128.py": "f9d1644b94950ee154d182fb46e1e22562cff4cf53846f84eb5927d5fb0f275e",
+    "tools/verify_nes_command128.py": "b254e52cb49fa2e671ca89f376d409af1967cdd3784b13f63182efb5638bccf9",
+    "tools/run_nes_command128.ps1": "c0d776b11d3ba4383d2fdf824e86b58ab227ac4e9e46eb3456d9a3348fb25a9f",
+    "tools/run_nes_command128_boot.ps1": "1ee7a641aff50da4839125f4ef1125a963d4e3c8687ac944c99e6cf683db3772",
+    "tools/run_nes_command128_diff.ps1": "a8351b27b5498d6ddc6a41d9d4a61b2da1418ce99afa4e31217ce1d3310af831",
+    "src/nes/diagnostic/nes_rom_spi128.sv": "21ce6873df1547055f6bffc5cee5622b9af9151a5dfab985550926cd476a8501",
+    "src/nes/diagnostic/nes_rom_loader128.sv": "bd53f0323dbee8b3fb818819a6cb9ff713701d441e33b1189567ee12cac85033",
+    "tests/nes-functional/command128_helpers.svh": "895aec10bbad52e8bcd0c7f62e1e6e6b264ba27a56b9cf6322eaf92307fa0009",
+    "tests/nes-functional/command128_cases.svh": "d296e032768adc37420f6fe3eb65e06b09e52cd4abe2bb2b340b4271c26d952d",
+    "tests/nes-functional/loader128_diff_tb.sv": "242f6f09dabfd3d5c9d454f5b8c333f93f325c718f4c76d71d35ac537f0b8a06",
+    "analysis/loader127-verification.json": "b9715a394ca8bc0a6face0e89ad78c3871ebde7e2b2079d65c84b8d31f1bfeef",
+    "src/nes/diagnostic/nes_bridge_sync126.qsf": "01fbe9e130a731c8f582a55cc8545b75c8eceb2163befe25ff08ff55f9a6d94b",
+    "tools/nes_reset124_audit.tcl": "023b265b599431c11715e8bac65812cffb589f1e8b854333bffd9a793f3d532e",
+    "tools/nes_control126.tcl": "b9860562325716ba691a089a404053be3ba27848e5b8187fd89a5a83f5852bda",
+    "tests/nes-functional/spi_readback_control_tb.sv": "781f7fd47be565252beda8e3b96c722f5943e2fc88e1662ca4433b399c346375",
+    "tests/nes-functional/rom_boot_model.sv": "d0c18f965fe2d6bde1a393d2f19920923c0e88f405bcc6dd77a0cd6806d23389",
+    "tests/nes-functional/loader127_tb.sv": "9da44755e7f39500d7bc5842d5210fd34ce6d0d3cd6fed89ceb09ddd7f87d8e2",
+    "tests/nes-functional/decoder127_monitor.svh": "a4e9432ea995fae844c55f1b8e94307748331d704a43bf3f21cab8273ea6311a"
+  },
+  "checks": {
+    "final_fit": {
+      "resources": {
+        "Total logic elements": 14147,
+        "Total registers": 5318,
+        "Total pins": 46,
+        "Total virtual pins": 264,
+        "Total PLLs": 1,
+        "LAB": 955,
+        "M9K": 26
+      },
+      "same_clock_setup_min_ns": {
+        "nes": 9.027,
+        "pll|altpll_component|auto_generated|pll1|clk[0]": 1.028,
+        "pll|altpll_component|auto_generated|pll1|clk[1]": -0.446
+      },
+      "raw_clock_pair_min_ns": -6.953,
+      "clock_rows": 84,
+      "fit_passed": true,
+      "same_clock_setup_pass": false,
+      "full_timing_pass": false,
+      "old126_data_constraints_reused": false,
+      "installable": false,
+      "diagnostic_reset_chain": {
+        "first_stage_fanout": 1,
+        "stage_paths": 6,
+        "min_stage_slack_ns": 0.384,
+        "local_release_paths": 1776,
+        "min_local_release_slack_ns": -4.482
+      }
+    },
+    "decoder_checks_per_speed": 166,
+    "decoder_negatives_per_speed": 18,
+    "half_sck_ns": [
+      60,
+      18
+    ],
+    "additional_ordered_acks_per_speed": 512,
+    "retirement_boundaries": [
+      "hard-fault-before-START",
+      "raw-reset-queued-START",
+      "stopped-clock-reset-hold",
+      "overlapping-frame"
+    ],
+    "boot_counts": [
+      180311,
+      308,
+      128,
+      86
+    ],
+    "check_cancel_positions_per_image": 24,
+    "check_cancel_total": 48,
+    "seeded_ready_misuse_cases": 6,
+    "loader_one_step_cases": 26112,
+    "causal_rejections": [
+      "unverified-START",
+      "fault-priority-removed",
+      "sticky-DATA-gate-removed",
+      "loader-error-code-changed"
+    ],
+    "full_spi_cpu_session": false,
+    "installable": false
+  },
+  "full_timing_pass": false,
+  "installable": false,
+  "next": "Use frozen128fit07. Fix loader release_reset[1] -> reader check_response_address[8] same168MHz reset/enable path without relaxing immediate raw cancellation. Preserve READ16/168MHz and write22/64/22/22 minima125/375/125/125ns. Verify only affected reader reset/ownership boundaries, then actual fit timing and new hierarchy CDC/IO, SNES consumer and observable minimumRUN+044 restore. Do not repeat unchanged storage/parts/full119/clock checks."
+}
