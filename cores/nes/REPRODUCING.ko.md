@@ -206,3 +206,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 121 전체 프레임 회귀
 
 `run_nes_core_frames121.ps1`을 기존 FLOAT RunOnly 경로와핀된052live Baseline/새ASCII Out으로실행한다. `verify_nes_frames121.py --evidence <frozen121>`은6사례/24프레임을보존된기준과재비교한다. 테스트벤치consumer이며실제SNES소프트웨어나보드PLL시험은아니다.
+
+## 122 등록형 reader 회귀
+
+`run_nes_safe_reader122.ps1`(6사례 전체프레임)과 `run_nes_safe122_unit.ps1`(16위상·110ns/HOLD제거 거부)을 기존 FLOAT RunOnly·핀된052live Baseline·새 ASCII Out으로 직렬 실행한다. `verify_nes_safe122.py --evidence <frozen122>`은 동결 failed01/unit01/full02/unit02와 공개 소스·기준 프레임을 재검증한다.168MHz 제어는 디지털 후보이며 보드 타이밍 근거가 아니다.

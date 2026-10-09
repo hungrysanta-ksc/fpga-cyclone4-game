@@ -5,12 +5,12 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "121 정상속도 READ8/70ns 실제코어 두입력·3위상24프레임 및 기준픽셀/패킷/이벤트 일치.119 전체80KiB 실기 기준선은유지. 다음은등록형보호reader 고속통합/기한검사와최종보드자원·소비자다.",
-  "next_action": "INTEGRATE_SAFE_READER_WITH_NORMAL_SPEED_CORE",
+  "assessment": "122 CF86등록형 reader READ8/84MHz CPU기한실패 확인; READ16/168MHz·95.232ns접근 후보의24프레임/16위상 핀검증통과. 실제보드168MHz타이밍·로더/guard/소비자통합은미완료.119실기기준유지.",
+  "next_action": "CHECK_SAME_CANDIDATE_CLOCK_LOADER_RESOURCE_STA",
   "next_three_deliverables": [
-    "CF86 SETUP/ACTIVE/HOLD/RELEASE reader를고속코어에연결해실제CPU·PPU기한확인; 실패시서비스/캐시개선",
-    "동일후보의클록/reset/핀소유권과보드fit/STA·실제SNES소비자연결;0594LAB여유재사용금지",
-    "최소RUN관측·오류종료·044복원후제한실기;같은80/BASE/ENTRY반복금지"
+    "READ16/168MHz 후보의 PLL/클록·로더쓰기시간·reset/소유권·자원/물리STA 확인; 기존8MHz카운터단순교체금지",
+    "같은후보의실제SNES소비자/DMA/표시기한통합;168MHz불가시reader/서비스개선",
+    "최소RUN관측·오류종료·044복원준비후제한실기;같은80/BASE/ENTRY반복금지"
   ],
   "gates": [
     {
@@ -72,8 +72,8 @@
     {
       "id": "VIDEO-CAUSAL",
       "status": "partial_live_core_diagnostic_pass",
-      "evidence": "analysis/FRAMES121-RESULT.ko.md",
-      "detail": "121 read8/70ns 3위상×2진단의완전한24프레임을기준과비교. 실제SNES소비자/DMA·표시기한은미완료."
+      "evidence": "analysis/SAFE122-RESULT.ko.md",
+      "detail": "122 등록형reader READ16/168MHz3위상×2진단24프레임기준일치. 실제SNES소비자/DMA/표시기한미완료."
     },
     {
       "id": "BOARD-FIT",
@@ -125,9 +125,9 @@
     },
     {
       "id": "ROM-DEADLINE",
-      "status": "read8_70ns_full_frames_three_phases_pass_safe_reader_open",
-      "evidence": "analysis/FRAMES121-RESULT.ko.md",
-      "detail": "121 6사례24프레임/1474560픽셀일치.052고속reader이며CF86등록형reader의추가지연·보드PLL·전기기한은미검증."
+      "status": "safe_read16_168mhz_functional_pass_board_timing_open",
+      "evidence": "analysis/SAFE122-RESULT.ko.md",
+      "detail": "READ8 safe-reader CPU기한반례852209; READ16/168MHz·95.232ns접근24프레임/16위상핀통과. 제품RTL불변;보드타이밍/로더/guard소유권통합미완료."
     },
     {
       "id": "REPORT-SESSION",
@@ -827,8 +827,8 @@
         "P4"
       ],
       "completion": "Normal-speed70ns memory, resource headroom, real SNES video/queue/display contract; redesign before feature expansion if insufficient",
-      "status": "full_frames_70ns_pass_safe_reader_board_consumer_pending",
-      "evidence": "analysis/FRAMES121-RESULT.ko.md"
+      "status": "safe_reader_frames_pass_board_clock_consumer_pending",
+      "evidence": "analysis/SAFE122-RESULT.ko.md"
     },
     {
       "id": "P6",
@@ -867,6 +867,16 @@
     "pixels": 1474560,
     "evidence": "analysis/frames121-verification.json",
     "production_changed": false,
+    "same116_hardware_preserved": true
+  },
+  "safe_reader122": {
+    "cases": 6,
+    "frames": 24,
+    "pixels": 1474560,
+    "unit_phases": 16,
+    "evidence": "analysis/safe122-verification.json",
+    "production_changed": false,
+    "board_168mhz_proven": false,
     "same116_hardware_preserved": true
   }
 }
