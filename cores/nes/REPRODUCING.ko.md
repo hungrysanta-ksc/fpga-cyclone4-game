@@ -170,3 +170,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 검토 후보110
 
 `tools/stage_nes_trial110.py --pair <review109> --out <new>`로 검토용 후보만 생성한다. `tools/verify_nes_trial110.py --evidence <frozen110>`로 원본/ZIP/정책을 확인한다. 실행 지시가 아니며 [사용자 선택](../../docs/nes-trial110-review.ko.md)이 먼저다.
+
+## 현재 실행 패키지111
+
+사용자 선택 후 `tools/release_nes_trial111.py --pair <review109> --out <new>`로 생성한다. `tools/verify_nes_trial111.py --evidence <frozen111>`는 전달 무결성을 확인한다. [실기 안내](../../docs/nes-trial111-instructions.ko.md)가 현재 실행 절차이며, 위110 검토 지시는 선택 전 이력이다. 변경 없는 ARM/FPGA는 재빌드하지 않는다.
