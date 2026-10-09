@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재129: reader의 CHECK/RUN 소유권을 등록해 기존 reset→주소 병목을 분리했다. 같은 클록 최악 setup은 −0.446ns에서 −0.158ns로 개선됐지만 로더 WRITE→HOLD 경로가 미해결이다. 최종은 reader만 바꾼 fit01이며, 후속 로더 실험은 채택하지 않았다. [129 결과](../../analysis/READER129-RESULT.ko.md)를 우선한다.
+현재130: 로더 상태 레지스터의 자동 enable 추론을 끄고 실제 배치의 해당 입력4개를 제거했다. 같은 클록 최악 setup은 −0.158→−0.040ns로 개선됐지만 여전히 미통과다. 최종은 상태에만 적용한 fit01이며 카운터까지 바꾼 fit02는 미채택이다. [130 결과](../../analysis/ENABLE130-RESULT.ko.md)를 우선한다.
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 

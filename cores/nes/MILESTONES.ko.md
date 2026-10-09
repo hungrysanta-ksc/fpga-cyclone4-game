@@ -92,3 +92,5 @@
 - **128**: 명령 반영 분리·진단 reset·상태별 로더·ACK carry 개선. 기능/오류 시험 통과,168MHz −2.647→−0.446ns. reader reset 경로는 미해결. [결과](../../analysis/COMMAND128-RESULT.ko.md).
 
 - **129**: reader 소유권 등록으로 reset→주소 경로 분리. 최종fit01 same-clock −0.446→−0.158ns. 로더 실험은 미채택, 다음 WRITE→HOLD enable 개선. [결과](../../analysis/READER129-RESULT.ko.md).
+
+- **130**: 상태 enable4개 제거, 같은 클록 최악−0.158→−0.040ns. 최종fit01, 카운터까지 변경한fit02는 미채택. 동작 코드 동일성으로129 시험 재사용. [결과](../../analysis/ENABLE130-RESULT.ko.md).
