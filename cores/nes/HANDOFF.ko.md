@@ -1,22 +1,20 @@
-# NES 현재 인계 —109 CSS 통합과 파일 조합
+# NES 현재 인계 —110 제한 실기 선택 대기
 
-ARM108의 실제 CSS 진입·고장·해제 경로를 SD/FatFS·설정 전송·메뉴 복구 호스트 세션에 연결했다. 통합38건과 보호 제거 대조4건을 통과했고, ARM108/기존CF86/정확044복원11역할 조합을 새로 고정했다.
+전기적 보증과 정상 전원·80KiB 1회 기능 시험을 구분했다.109 조합의 검토용 후보와 정확044 복원을 준비했으며, 미측정 조건을 남긴 제한 시험 진행 여부는 사용자 선택을 기다린다.
 
-작업 의미: 실기 디버깅 기반의 통합 검증과 배포 준비다. 독립 시험에 머물렀던 고장 종료를 기존 전체 진단 흐름과 결합하고 파일 혼합을 검출한다. NES 코어 배선·게임 호환성 구현은 아니다.
-
-PR58 병합33b19045929e3bdd316926b7f333da75f7bbe230, head3870d87f 포함 확인. 현재codex/nes-css-integration-109. [109 결과](../../analysis/CSS109-RESULT.ko.md)와 [계약](../../docs/nes-css109-contract.md)을 먼저 읽는다.
+PR59 병합eeed238d9e3026f02a94493084480012c35852f1, head9c205ee6 포함 확인. 현재codex/nes-trial-disposition-110. [110 결과](../../analysis/TRIAL110-RESULT.ko.md)와 [선택안](../../docs/nes-trial110-review.ko.md)을 우선한다.
 
 ## 다음 행동
 
-다음은 변경된 고장 경로를 기준으로 E1 전기적 조건과 E2 고장 범위·차단 지연의 미확인 항목을 판정하는 것이다. 근거가 없는 상한을 만들지 말고, 보장 가능한 범위와 제한 실기에서 제외할 고장·데이터 손실·수동 복원 조건을 구체적으로 구분한다. 그 판단 전에는 설치·실기 시작을 승인하지 않는다. 같은 통합 시험·ARM/FPGA 빌드·파일 조합을 변화 없이 반복하지 않는다.
+제한80KiB 시험 또는 실기 보류에 대한 사용자 선택을 먼저 반영한다. 단순 PR 병합·계속 요청을 이 범위 변경 동의로 간주하지 않는다. 선택 전 설치 패키지를 발행하지 않고, 기존 통합·빌드·파일 조합을 다시 수행하지 않는다.
 
--108 actual CSS5개 입력을104 전체 진단 host 흐름에 연결. 최종 normal02 20/fat32-96-01 3/fault03 15/negative4 PASS. 전체 MCU main/부팅/ARM instruction interleaving·물리 시간은 아님. main 메뉴 두 구간/load_rom 및 실제 lower C 경계를 보존.
-- 실제 autoconf PA1 nCONFIG/PB8 READY 대조. 이전 PA6/PA5 모델 교정, MISO는PB4만 갱신. PA1출력/HSE/GPIO clock 등 부팅 상태 모델 전제, 진입 거부3개 별도검사. fault01 productprintf 억제와fault02 APB2RSTR 초기전제 실패,normal01중간PASS 보존.
--108 펌웨어 그대로183220 SHA394c1c442b6d767b5d41f891151eed12e82954b624a0b53a346dad8dc948692c. VERSION CF86-CSS108,ELF98d53c9e64f98d815983eb9b9ec5765fe8862389b85cef01e7e68f0f27829db3. 새ARM/RTL/fit/ASM/Questa/실기 없음.
-- 새11역할 pair109 manifest 788dca6e5546456340ef03579b91a46a0496724a899432df389d48f0c69aae69,pair01/정상1+거부23.097ASM/086fit/정확044복원 재사용.105pair는104 ARM의 역사적 조합으로 보존. 같은조합 재포장PR 금지.
-- NMI12지점은 실제C 종료/기록된 후속IO 없음 검증. 모델13CSSwrites와ARM15store명령 구분. fault는legacyreset으로 지워지지 않으며 nCONFIG LOW로 설정을 잃는다. UART/SD/시간/일반observer를 NMI에서 호출하지 않는다. 정상해제 후 claimed 유지.
-- E1/E2/8µs/install/trial/start=false. 양클록정지lockedHIGH CE9µs반례 미해결. [107 근거목록](../../docs/nes-board107-actions.ko.md)/[106 판단](../../docs/nes-trial106-decision.json) 재사용하되106의105pair참조를현재109와구분.600초는사람의관측한도.
--094 표식/TXT 유지,PREPARED_RESET_HELD는release증명아님. NMI후새TXT·자동메뉴반환 약속금지. 완료109finalizer/archive044–109재작성금지. no approvalreview rejection.
+- 질문은 정상 전원·80KiB 1회·고장 주입 없이 실행할지, 회로/계측 근거 전에는 실기를 보류할지다. 미측정 전기 조건과8µs 차단, RAM/SD 데이터 손실·메뉴 멈춤·수동044 복원 제약을 설명했다. 자동 승인 검토 문제가 아닌 범위 변경 판단이다.
+- 제한 시험 선택이 도착하면 직접 사용자 메시지를 근거로 새 결정 기록과 실행용 패키지를 만든다. 완료110 기록은 선택 전 상태로 보존한다. E1/E2 미완료와8µs 미증명, 전체NES installable=false를 제한 기능 시험 동의와 분리한다.96KiB/게임/고장 주입/반복 실행은 포함하지 않는다.
+- 보류 선택이면109 후보를 실행하지 않는다.107의 전압·부하·PCB·CE 근거 요구를 재사용한다. 부품 사진·LED·PC USB·정상 저장/클록 시험 반복 요청은 하지 않는다. 새 근거 없이 똑같은 검색/검사PR을 만들지 않는다.
+- Intel 공식 검색색인 PS표8-12의500ns는nSTATUS/CONF_DONE이며 사용자I/O 또는CE 시간 아님. 직접 Intel/ISSI PDF403 기록. ISSI 고정D3 원본 SHA7af724d9271eb2e935194cb2b75f1e923a421d02b6b7c8d731ca8809dd26da72 재사용. ST RM0368 F401 행동/UM1840 계열 일반 설명을 구분하고 CSSON 코드는 변경하지 않음.
+- 검토 stage02 ZIP13항목, 시험6역할+복원3역할. SHA2949430fed8b88e4b435a6ef40db579978f3d39193b537c3fe4ab80d7365d803. DO-NOT-INSTALL/review-only, 승인false.96 입력/표식 없음. stage01은 문장 정리 전 자료로 보존. archive044–110 및 완료finalizer 재작성 금지.
+-109 통합38/보호대조4/조합정상1거부23, pair109 manifest788dca6e5546456340ef03579b91a46a0496724a899432df389d48f0c69aae69 유지. ARM108183220 SHA394c1c442b6d767b5d41f891151eed12e82954b624a0b53a346dad8dc948692c, VERSION CF86-CSS108.097ASM/086fit/정확044 재사용.105는 역사적104ARM조합.
+- 새 제품C/RTL/ARM/fit/STA/ASM/Questa/실기 없음. nCONFIG high-Z≠CE HIGH상한. 양클록정지lockedHIGH CE9µs 반례 유지.600초는사람의관측한도. PREPARED_RESET_HELD TXT는release 증명아님. 새TXT/실제메뉴/수동복원 별도판정.
 
 ## 사용자 규칙과 전체 목표
 
