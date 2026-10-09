@@ -179,10 +179,18 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 
 `prepare_nes_checkpoint112.py --evidence108 <frozen108> --out <new>`로 준비하고 기존100 ARM builder/고정mini를 사용한다. `test_nes_checkpoint112.py --evidence109 <frozen109> --gcc <gcc> --out <new> --cases 0:0,0:303,0:201,50:0`는 실제C통합/고장/예산을 재현한다. `check_nes_checkpoint112_arm.py`가 실제ELF/host소스를 대조한다. `release_nes_checkpoint112.py --pair <pair109> --firmware <ARM112> --out <new>`로전달물을만들고`verify_nes_checkpoint112.py --evidence <frozen112>`로무결성을확인한다. [실기 안내](../../docs/nes-checkpoint112-instructions.ko.md).
 
-## 현재 진입 전용113
+## 역사적 진입 전용113
 
 `prepare_nes_entry113.py --evidence112 <frozen112> --out <new>`로 소스를 준비하고 `build_nes_entry113_arm.ps1`에 기존 ARM/host GCC/Make/UnixBin/고정mini 인자를 전달한다.113은 begin을run에서 한 번만 실행하므로 옛100검사기의 중복 begin 요구를 그대로 적용하지 않는다.
 
 `test_nes_entry113.py --baseline <frozen112/host03> --gcc <gcc> --out <new> --old --cases 61`은 기존 무로그 거절을 재현한다. `--old` 없이 기본10개 사례를 실행하면 수정·실제FatFS 로그 재열기와80KiB 회귀를 확인한다. 모형에 완료된 다중읽기 상태를 주입하며 실제 메뉴 전체/CMD18/전기파형을 실행한 것은 아니다.
 
 `check_nes_entry113_arm.py --arm <arm113> --host <final-host113> --objdump <arm-objdump> --out <new>`는 실제ELF/벡터/새진입순서/C소스를 대조한다. `release_nes_entry113.py --pair <pair109> --firmware <ARM113> --out <new>`로 패키지를 만들고 `verify_nes_entry113.py --evidence <frozen113>`으로 검증한다. [실기 안내](../../docs/nes-entry113-instructions.ko.md).
+
+## 현재 기본 FPGA 복구 전용116
+
+`prepare_nes_base116.py --evidence113 <frozen113> --out <new>`로 준비하고, 기존 `build_nes_entry113_arm.ps1`에 ARM/hostGCC/Make/UnixBin/고정mini 인자를 전달한다. 새RTL/ASM은 필요 없다.
+
+`test_nes_base116.py --evidence113 <frozen113> --gcc <gcc> --out <new>`는 짧은 정상 복구, DONE/BSY/TXE/토큰/SD/CSS 오류, 전체80KiB 회귀8개를 실행한다. 실제FatFS 로그 재열기2개도 포함한다. 핀·시간·카드·초기 상태는 모형이다.
+
+`check_nes_base116_arm.py --arm <arm116> --host <final-host116> --objdump <arm-objdump> --out <new>`로 실제 ELF와 C를 대조한다. `release_nes_base116.py --pair <pair109> --firmware <ARM116> --out <new>`로 패키지를 만들고 `verify_nes_base116.py --evidence <frozen116>`으로 검증한다. [116 실기 안내](../../docs/nes-base116-instructions.ko.md).
