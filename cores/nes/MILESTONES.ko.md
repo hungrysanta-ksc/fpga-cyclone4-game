@@ -88,3 +88,5 @@
 - **126**: bridge4체인8QSF 동기화 배치 속성 적용·재배치. 제어/reset10체인·로컬reset4290경로·데이터372쌍 통과.13568LE/933LAB,전체MTBF·외부IO·RUN미완료. 다음로더375ns/소유권통합. [결과](../../analysis/CONTROL126-RESULT.ko.md).
 
 - **127**: 로더·검증 후 RUN·클록 감시를 실제 코어에 연결. 기능 시험·954LAB 배치 통과,168MHz −2.647ns 미통과. 다음 명령 판정·진단 reset 경로 개선. [결과](../../analysis/LOADER127-RESULT.ko.md).
+
+- **128**: 명령 반영 분리·진단 reset·상태별 로더·ACK carry 개선. 기능/오류 시험 통과,168MHz −2.647→−0.446ns. reader reset 경로는 미해결. [결과](../../analysis/COMMAND128-RESULT.ko.md).

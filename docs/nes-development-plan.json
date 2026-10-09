@@ -5,12 +5,12 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "127 로더·verified RUN·guard 실제통합. 기능시험/954LAB배치PASS,168MHzsetup−2.647ns미통과. 실기파일생성전 명령판정·진단reset경로개선필요.",
-  "next_action": "FIX_127_COMMAND_RETIREMENT_AND_DIAGNOSTIC_RESET_TIMING",
+  "assessment": "128 명령·로더 구조 개선과 기능시험 완료. 168MHzsetup−2.647→−0.446ns, reader reset 경로 미해결. 설치 불가.",
+  "next_action": "FIX_128_READER_RESET_ENABLE_PATH",
   "next_three_deliverables": [
-    "127 SPI 명령 판정·진단 reset 경로 분리와 영향받는 경계 시험",
-    "새 fit/같은클록 타이밍/변경 hierarchy CDC·IO 및 실제 SNES 소비자",
-    "관측가능한 최소 RUN·오류종료·독립044복원 실기"
+    "128fit07 reader reset/enable 경로 단축과 영향받는 취소·소유권 시험",
+    "새 fit/타이밍·hierarchy CDC/IO·실제 SNES 소비자",
+    "관측 가능한 최소 RUN·오류 종료·독립044 복원 실기"
   ],
   "gates": [
     {
@@ -77,9 +77,9 @@
     },
     {
       "id": "BOARD-FIT",
-      "status": "integrated_loader_fit_pass_memory168_timing_fail",
-      "evidence": "analysis/LOADER127-RESULT.ko.md",
-      "detail": "127fit02 14127LE/954LAB/26M9K/PLL1;같은클록memory168−2.647ns/raw−10.383ns. 남은9LAB은최종여유아님.126CDC승인미상속."
+      "status": "command_loader_improved_reader_reset_timing_fail",
+      "evidence": "analysis/COMMAND128-RESULT.ko.md",
+      "detail": "128fit07 14147LE/955LAB/26M9K/PLL1;memory168−0.446ns/raw−6.953ns. reader reset/enable 미해결, 이전CDC승인미상속."
     },
     {
       "id": "DISPLAY-240",
@@ -827,8 +827,8 @@
         "P4"
       ],
       "completion": "Normal-speed70ns memory, resource headroom, real SNES video/queue/display contract; redesign before feature expansion if insufficient",
-      "status": "loader_guard_integrated_memory168_timing_failed",
-      "evidence": "analysis/LOADER127-RESULT.ko.md"
+      "status": "command_loader_improved_reader_reset_timing_failed",
+      "evidence": "analysis/COMMAND128-RESULT.ko.md"
     },
     {
       "id": "P6",
@@ -920,6 +920,13 @@
     "evidence": "analysis/loader127-verification.json",
     "LAB": 954,
     "memory168_setup_ns": -2.647,
+    "full_timing_pass": false,
+    "installable": false
+  },
+  "command128": {
+    "evidence": "analysis/command128-verification.json",
+    "LAB": 955,
+    "memory168_setup_ns": -0.446,
     "full_timing_pass": false,
     "installable": false
   }

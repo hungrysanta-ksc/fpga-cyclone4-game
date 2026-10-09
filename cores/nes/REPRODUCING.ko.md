@@ -230,3 +230,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 127 로더·소유권·클록 감시 통합
 
 기존 FLOAT 경로의 `run_nes_loader127.ps1`/`run_nes_loader127_decoder.ps1`에 `-Baseline <probes>`, 새 ASCII `-Out`과 기존 Python/Questa/wrapper 경로를 전달한다. `nes_loader127_fit.py --baseline <probes> --out <newASCII> --quartus-bin <bin64>`는 실제126코어+086래퍼를 생성하여 MAP/FIT/STA를 수행한다. `review_nes_loader127.py --out <same> --quartus-bin <bin64>`는 새 같은클록 setup실패까지 보고한다. `verify_nes_loader127.py --evidence <frozen127>`의 PASS는 기록 무결성과 시험범위 확인이며, timing/설치승인 PASS가 아니다.
+
+## 128 명령·로더 타이밍 개선
+
+기존 FLOAT 경로의 `run_nes_command128.ps1`/`run_nes_command128_boot.ps1`/`run_nes_command128_diff.ps1`에 `-Baseline <probes>`와 새 ASCII 출력/Python/Questa/wrapper 경로를 지정한다. `nes_command128_fit.py` 후 phase 완료를 확인하고 `review_nes_command128.py`를 실행한다. `verify_nes_command128.py --evidence <frozen128>`로 해시·실패를 포함한 결과를 확인한다. 최종 test06/boot05/diff02/fit07의 범위는 [128 결과](../../analysis/COMMAND128-RESULT.ko.md)를 따른다. fit 성공은 timing/설치승인이 아니다.

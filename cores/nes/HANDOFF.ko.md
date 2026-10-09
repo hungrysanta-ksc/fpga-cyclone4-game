@@ -1,27 +1,27 @@
-# NES 현재 인계 —127 로더 통합, 다음은168MHz 명령·reset 경로
+# NES 현재 인계 —128 명령·로더 개선, 다음은 reader reset 경로
 
-[127 결과](../../analysis/LOADER127-RESULT.ko.md) · [검증 메타](../../analysis/loader127-verification.json)
+[128 결과](../../analysis/COMMAND128-RESULT.ko.md) · [검증 메타](../../analysis/command128-verification.json)
 
 ## 바로 이어서 할 일
 
-**동결127 fit02를 기준으로 `mem_fault→check_next`와 `checked_data→fault` 경로를 구조적으로 줄인다.** 실제 코어에 로더·검증 후 RUN·가드가 연결됐지만 memory168 setup−2.647ns로 실기 파일을 만들 단계가 아니다. 배치 성공을 타이밍 성공으로 혼동하지 않는다. 명령 판정 단계 분리와 진단 로컬 reset 해제를 먼저 검토한다. 기존124의 common assert/local release 원칙을 새 decoder/loader에 대조한다.
+**동결128 fit07의 `loader|release_reset[1] → reader|check_response_address[8]` 경로를 줄인다.** 168MHz setup은−0.446ns로 아직 실패한다. 명령 판정과 로더 구조 개선으로127의−2.647ns에서 줄었지만 실기 패키지 승인으로 해석하지 않는다. 먼저 reader reset/enable fanout과 조합 경로를 확인하고, 원시 오류의 즉시 취소를 약화시키지 않는 변경을 선택한다. 영향받는 reset·CHECK/RUN 소유권 경계만 시험한 뒤 새 fit/STA를 실행한다.
 
-최종 fit02:14,127LE/954LAB/5,296regs/26M9K/PLL1/물리46핀+가상264핀. 남은9LAB은 최종 소비자나 MMC3 여유가 아니다. NES8.963/host2.527/mem−2.647ns, 전체raw−10.383ns. 85°C guard mem_fault→check_next15,0°C checked_data2→fault−2.258ns가 남는다. live.sdc에는 blanket falsepath/multicycle이 없다. 과거126의 데이터372쌍/제어10체인 결과를 새 hierarchy에 그대로 적용하지 않는다. 이후 새 경로의 제약을 다시 확인해야 한다.
+fit07은14,147LE/955LAB/5,318regs/26M9K/PLL1,46물리핀+264가상핀이다. 같은 클록 NES9.027/host1.028/mem−0.446ns,raw−6.953ns. 남은8LAB은 최종 소비자·MMC3 여유가 아니다. 새 진단 reset 첫 단계 fanout1과6단계경로 최소0.384ns만 확인했다. 하류1,776혼합경로의−4.482ns를 승인하지 않았다. 이전126의372데이터쌍/10제어체인 승인도 상속하지 않는다. blanket false path나 근거 없는 multicycle 금지.
 
 ## 구현 계약과 재사용할 시험
 
-- 168MHz 쓰기 SETUP22/WRITE64/HOLD22/RELEASE22:5.952ns 모델130.944/380.928/130.944/130.944ns. 최소125/375/125/125ns다. WRITE63은374.976ns라 거부한다. 새 비트스트림의 물리 핀 보증은 별도다.
-- RUN은 실제 SPI CHECK/순차 ACK/FINISH/verified 이후 START만 허용한다. 외부ext_arm으로 메모리 RUN 우회 금지. boot의 실제 START 배선은 연결됐다. 영상 arm은 기존대로 별도다.
-- 최종 SPI decoder는 CHECK 비교3개만 선행 레지스터에 계산한다. 프레임 offset은8바이트 중 앞쪽에서 고정되고 index는명령 종료 때만 바뀌며CHECK length는불변이다. DATA의 동적인length/ready비교는 즉시 비교를 유지한다. 명령 경계에서 기존 비교와의 동등성을 계속 시험한다.
-- unit02:80/96KiB 핀쓰기180,224+오류87바이트, CHECK260/RUN128/쓰기·유지86오류 위치, guard3, 부정 대조3 통과. decoder02:half-SCK60/18ns 각각149검사/18오류/16ACK/96query, 비교 일치와 미검증RUN 우회 거부. unit02와 최종decoder/fit의 loader/boot/reader/guard 해시 일치. 바뀐 decoder만 추가시험했다.
-- CPU 전체세션과 SPI 전체전송을 묶은 검증은 아직 없다. RAM70ns·decoder 응답16바이트는 모델이다. 원시 reset으로 취소하는 경우는 프로토콜 오류의 쓰기 drain과 구별한다. 양쪽 클록이 멈추면 guard가검출하지못하는 반례 유지.
-- 최종 guard는heartbeat21분주/상대clockage672/startup33603이다. 파이프라인을 바꾸면서 이시간을줄이거나공유오류보호를해제하지않는다. 변경 없는 full80/BASE/ENTRY/전체프레임을 반복하지말고 바뀐경계를시험한다.
+- SPI 종료 시 검증하고 다음 메모리 클록에 반영한다. hard fault가 queued START보다 우선한다. raw reset은 pending을 즉시 취소하고 멈춘 클록에서는 reset 해제가 불가능해야 한다. 새 프레임 겹침은 오류다.
+- CHECK/순차 ACK/FINISH 후 verified가 설정된 START만 RUN에 연결한다. ACK 하위8비트 carry와 기존3비교 선행 레지스터는 프레임 간 안정화 계약을 갖는다. final test06: 두 SPI속도에서각166검사/18오류,512ACK와3개 큰 주소 경계,4개 취소 경계. 전체80/96KiB decoder replay는 아니다.
+- CHECK response의 조합 gate는 제거했지만 reader 등록값은 취소 reset으로 지워진다. 중복 CHECK command gate 대신 sticky check_failed를 유지한다. 불법 BEGIN이 내부 RECEIVE를 만들더라도 이후 DATA와 외부 RUN을 차단해야 한다. 내부 오류 상태 전체 동등성은 주장하지 않는다.
+- final boot05: 두 이미지180,224+오류87바이트 쓰기, CHECK308/RUN128, drain86위치, CHECK취소48위치, seededREADY불법6사례. 실제 loader/boot/reader와70ns RAM모델이며 CPU전체세션은 아니다. 직접 post-fault DATA 부정 대조를 두 번째 BEGIN보다 먼저 해야 누락된 gate가 다른 오류에 가려지지 않는다.
+- final diff02: 실제127/128 한 클록 전이26,112조건. count0/total−1/total,remaining1/2/22/64,모드/명령/오류 조합. 도달 불가능한 FAILED+fault0와 임의 레지스터 손상은 범위 밖이다. 오류코드 변경 부정 대조도 통과했다.
+- READ16/168MHz와 쓰기22/64/22/22(최소125/375/125/125ns), guard21/672/startup33603을 유지한다. 두 클록 정지 반례는 남는다. 기존119 full80/BASE/ENTRY/부품·storage·clock 시험을 이유 없이 반복하지 않는다.
 
-## 동결과 재현
+## 실패 기록·동결·재현
 
-127 evidence는1,171파일,manifest c2a31d101697953dcc1d02fc3ef82036ff24d16a134a144b0eb74749aa99a6c8. unit01의부정시험문구불일치,초기LAB제목파서오류,fit01의−2.508ns실패,fit02의미해결경로를모두보존한다. fit01→fit02는959→954LAB이나최악memorysetup개선성공은아니다. 동결notes의140ns-class초안표기는125/375/125/125ns로읽어야한다. 완료finalizer/옛archive수정금지.
+3,773파일 manifest `3078ead176dd6b070b71b032b9c75a1e584b03f94784f9cdeb41bf5c8c0905eb`. final은 test06/boot05/diff02/fit07이다. test02 선언순서, test04 시험watchdog, diff01 도달불가능상태, fit02 조기audit, fit05/boot04 복사누락 발견 후 의도적중단을 모두 보존했다. 새 로더의 공개/boot/fit 해시는 일치한다. fit06 −0.413ns에서 fit07 −0.446ns로 최악값이 조금 나빠졌으며, 병목은 주소 carry에서 reset 해제로 이동했다. 완료 finalizer나 archive044–128 수정 금지.
 
-`run_nes_loader127.ps1`은기존FLOATwrapper와`-Baseline <probes>`/새ASCII출력을사용한다. `run_nes_loader127_decoder.ps1`은최종decoder경계/빠른SPI검증이다. `nes_loader127_fit.py --baseline <probes> --out <newASCII> --quartus-bin <bin64>`후`review_nes_loader127.py`로클록별실제실패까지확인한다. `verify_nes_loader127.py --evidence <frozen127>`는빌드없이전체해시·시험·배치결과를재검증한다. 새최종제약이나실기패키지는아직없다.
+`run_nes_command128.ps1`, `run_nes_command128_boot.ps1`, `run_nes_command128_diff.ps1`는 기존 FLOAT wrapper·Python·Questa 경로와 `-Baseline <probes>`/새 ASCII `-Out`을 사용한다. 한 seat이므로 직렬 실행한다. `nes_command128_fit.py --baseline <probes> --out <newASCII> --quartus-bin <bin64>` 후 **모든 phase 종료를 확인하고** `review_nes_command128.py --out <same> --quartus-bin <bin64>`를 실행한다. `verify_nes_command128.py --evidence <frozen128>`는 기록·해시 확인이며 타이밍/실기 승인 PASS가 아니다.
 
 ## 유지할 실기 기준과 목표
 
@@ -31,6 +31,4 @@
 
 ## 재현과 게시
 
-PR72병합확인. 한국어제목과작업목표/작업내용/작업결과/작업의미4절,사용자가병합한다. GBC152/원래NES334/모든공개핀보존. ROM·바이너리·미디어·라이선스·개인경로는Git제외. 새ARM/ASM/패키지/실기는없다. 다음은위타이밍병목을고친뒤SNES소비자·관측가능한최소RUN+044복원이다.
-
-게시 검사에서 decoder 실행기의 공백만 있는 빈 줄 하나가 발견되어 그 공백만 제거했다. 실행·동결 원본은 보존했고 공개 검증기는 이 정확한 한 줄 차이만 허용한다. RTL과 시험 결과는 변경하지 않았다. 첫 게시 검사 실패 기록도 보존한다.
+PR73 병합 확인. 한국어 제목과 작업 목표/작업 내용/작업 결과/작업 의미4절, 사용자가 병합한다. GBC152/원래NES334/모든 공개 핀 보존. ROM·바이너리·미디어·라이선스·개인경로 Git 제외. 다음 목표는 위 reader reset 경로 개선→새 CDC/IO→SNES 소비자→관측 가능한 최소 RUN+044 복원이다. 이번에는 ARM/ASM/패키지/실기를 추가하지 않았다.
