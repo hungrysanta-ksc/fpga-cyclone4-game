@@ -1,0 +1,307 @@
+{
+  "candidate": "NES-CONTROL-CDC-126",
+  "base_merge": "5cd4d28f71fd8d0a340f4be34a67c91e95c6046f",
+  "archived_files": 2078,
+  "manifest_sha256": "0b81e9d875b04683f59a0de3599a2770c2b86437bca51e9ce6bdc3d85550a5d0",
+  "public_sources": {
+    "tools/nes_control126.py": "7055c7d1ef466968d8707b219b86843da1fac069c4c8d669215e9e619d952dc0",
+    "tools/nes_control126.tcl": "b9860562325716ba691a089a404053be3ba27848e5b8187fd89a5a83f5852bda",
+    "tools/review_nes_control126.py": "4b89f33c26050d3dd707caef02d830dc8f7a215a909d0dea839d1a62d636e2e4",
+    "tools/verify_nes_control126.py": "d308092178452d2c0635fddc796a5c92b469c0c3e061761b3ec9516028c58b76",
+    "src/nes/diagnostic/nes_bridge_sync126.qsf": "01fbe9e130a731c8f582a55cc8545b75c8eceb2163befe25ff08ff55f9a6d94b",
+    "analysis/reset124-verification.json": "50817a45870740c7c4b3545b9e974ecfa278f52e9c06bd4b39696fd0063986f3",
+    "analysis/cdc125-verification.json": "0c3bf612006f3133cc07b8478610852e10dc925150ac758535d319ba74de6495",
+    "tools/nes_reset124_audit.tcl": "023b265b599431c11715e8bac65812cffb589f1e8b854333bffd9a793f3d532e",
+    "tools/verify_nes_reset124.py": "1b30d13ddaa14f38f2fd4e71860a4d8f4dbb4c75fc75bfd4225a63007c1f801a",
+    "tools/nes_cdc125_sta.py": "eb29d39bf39f03e1e8dba8f196c193106a390c4de51263b9005bf2d4eaa56b61"
+  },
+  "reused125": {
+    "inventory125.tcl": "f2ba1cc1f352ae4fbbb688271d1266d892cc3eacdf9c56fbfa983e9e6cfefe94",
+    "bundled125.sdc": "794e47cc20a28a0ebb4721a9e208804c0040b4f0721f974f091f710d6a458bb4",
+    "pairs125.tcl": "16f8b8146adecabf7971eb033d18da7af49eb441f766cf8961da9152d5851622",
+    "constraints125.tcl": "b0bf93347a1865b1af0143e2370dac5f1f9e3a7780bc6c3c94f0d1a544db89bb"
+  },
+  "checks": {
+    "topology": {
+      "baseline": {
+        "chains": [
+          {
+            "kind": "control",
+            "name": "nes_rom_physical:physical|ack_sync[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 44.309,
+            "hold_min_ns": 0.256,
+            "tool_settling_min_ns": 76.698,
+            "method": "User Specified",
+            "mtbf_inclusion_flag": "Yes"
+          },
+          {
+            "kind": "control",
+            "name": "nes_rom_physical:physical|request_sync[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 4.993,
+            "hold_min_ns": 0.195,
+            "tool_settling_min_ns": 7.597,
+            "method": "User Specified",
+            "mtbf_inclusion_flag": "Yes"
+          },
+          {
+            "kind": "control",
+            "name": "nes_transport:transport|nes_packet_cdc_ram:bridge|ack_sync[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 10.734,
+            "hold_min_ns": 0.269,
+            "tool_settling_min_ns": 19.332,
+            "method": "Automatic",
+            "mtbf_inclusion_flag": "No"
+          },
+          {
+            "kind": "control",
+            "name": "nes_transport:transport|nes_packet_cdc_ram:bridge|host_up_q[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 44.494,
+            "hold_min_ns": 0.197,
+            "tool_settling_min_ns": 81.863,
+            "method": "Automatic",
+            "mtbf_inclusion_flag": "No"
+          },
+          {
+            "kind": "control",
+            "name": "nes_transport:transport|nes_packet_cdc_ram:bridge|queue_up_h[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 9.87,
+            "hold_min_ns": 0.61,
+            "tool_settling_min_ns": 17.503,
+            "method": "Automatic",
+            "mtbf_inclusion_flag": "No"
+          },
+          {
+            "kind": "control",
+            "name": "nes_transport:transport|nes_packet_cdc_ram:bridge|req_sync[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 44.284,
+            "hold_min_ns": 0.268,
+            "tool_settling_min_ns": 81.078,
+            "method": "Automatic",
+            "mtbf_inclusion_flag": "No"
+          },
+          {
+            "kind": "release",
+            "name": "nes_domain_reset124:core_release|release_reset[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 44.493,
+            "hold_min_ns": 0.197,
+            "tool_settling_min_ns": 40.44,
+            "method": "User Specified",
+            "mtbf_inclusion_flag": "Yes"
+          },
+          {
+            "kind": "release",
+            "name": "nes_rom_physical:physical|memory_reset[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 4.783,
+            "hold_min_ns": 0.268,
+            "tool_settling_min_ns": 4.783,
+            "method": "User Specified",
+            "mtbf_inclusion_flag": "Yes"
+          },
+          {
+            "kind": "release",
+            "name": "nes_transport:transport|nes_domain_reset124:host_release|release_reset[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 10.246,
+            "hold_min_ns": 0.457,
+            "tool_settling_min_ns": 6.041,
+            "method": "User Specified",
+            "mtbf_inclusion_flag": "Yes"
+          },
+          {
+            "kind": "release",
+            "name": "nes_domain_reset124:init_release|release_reset[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 44.086,
+            "hold_min_ns": 0.347,
+            "tool_settling_min_ns": 80.198,
+            "method": "User Specified",
+            "mtbf_inclusion_flag": "Yes"
+          }
+        ],
+        "local_reset_rows": 4290,
+        "local_reset_min_ns": 0.671
+      },
+      "candidate": {
+        "chains": [
+          {
+            "kind": "control",
+            "name": "nes_rom_physical:physical|ack_sync[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 44.283,
+            "hold_min_ns": 0.268,
+            "tool_settling_min_ns": 75.943,
+            "method": "User Specified",
+            "mtbf_inclusion_flag": "Yes"
+          },
+          {
+            "kind": "control",
+            "name": "nes_rom_physical:physical|request_sync[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 4.762,
+            "hold_min_ns": 0.262,
+            "tool_settling_min_ns": 7.268,
+            "method": "User Specified",
+            "mtbf_inclusion_flag": "Yes"
+          },
+          {
+            "kind": "control",
+            "name": "nes_transport:transport|nes_packet_cdc_ram:bridge|ack_sync[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 9.696,
+            "hold_min_ns": 0.679,
+            "tool_settling_min_ns": 18.765,
+            "method": "User Specified",
+            "mtbf_inclusion_flag": "Yes"
+          },
+          {
+            "kind": "control",
+            "name": "nes_transport:transport|nes_packet_cdc_ram:bridge|host_up_q[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 44.286,
+            "hold_min_ns": 0.268,
+            "tool_settling_min_ns": 81.624,
+            "method": "User Specified",
+            "mtbf_inclusion_flag": "Yes"
+          },
+          {
+            "kind": "control",
+            "name": "nes_transport:transport|nes_packet_cdc_ram:bridge|queue_up_h[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 10.734,
+            "hold_min_ns": 0.269,
+            "tool_settling_min_ns": 18.042,
+            "method": "User Specified",
+            "mtbf_inclusion_flag": "Yes"
+          },
+          {
+            "kind": "control",
+            "name": "nes_transport:transport|nes_packet_cdc_ram:bridge|req_sync[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 44.494,
+            "hold_min_ns": 0.196,
+            "tool_settling_min_ns": 81.928,
+            "method": "User Specified",
+            "mtbf_inclusion_flag": "Yes"
+          },
+          {
+            "kind": "release",
+            "name": "nes_domain_reset124:core_release|release_reset[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 44.307,
+            "hold_min_ns": 0.255,
+            "tool_settling_min_ns": 39.241,
+            "method": "User Specified",
+            "mtbf_inclusion_flag": "Yes"
+          },
+          {
+            "kind": "release",
+            "name": "nes_rom_physical:physical|memory_reset[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 4.762,
+            "hold_min_ns": 0.262,
+            "tool_settling_min_ns": 4.762,
+            "method": "User Specified",
+            "mtbf_inclusion_flag": "Yes"
+          },
+          {
+            "kind": "release",
+            "name": "nes_transport:transport|nes_domain_reset124:host_release|release_reset[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 10.944,
+            "hold_min_ns": 0.196,
+            "tool_settling_min_ns": 6.438,
+            "method": "User Specified",
+            "mtbf_inclusion_flag": "Yes"
+          },
+          {
+            "kind": "release",
+            "name": "nes_domain_reset124:init_release|release_reset[0]",
+            "first_fanout": 1,
+            "setup_min_ns": 44.262,
+            "hold_min_ns": 0.263,
+            "tool_settling_min_ns": 79.606,
+            "method": "User Specified",
+            "mtbf_inclusion_flag": "Yes"
+          }
+        ],
+        "local_reset_rows": 4290,
+        "local_reset_min_ns": 1.171
+      }
+    },
+    "fit": {
+      "LE": 13568,
+      "LAB": 933,
+      "M9K": 26,
+      "same_clock_setup_min_ns": {
+        "nes": 8.845,
+        "pll|altpll_component|auto_generated|pll1|clk[0]": 3.221,
+        "pll|altpll_component|auto_generated|pll1|clk[1]": 1.313
+      },
+      "raw_min_ns": -7.976,
+      "clock_pair_rows": 72,
+      "init_done_path_rows": 1272,
+      "reset_endpoints": [
+        "nes_domain_reset124:core_release|release_reset[0]",
+        "nes_domain_reset124:core_release|release_reset[1]",
+        "nes_rom_physical:physical|memory_reset[0]",
+        "nes_rom_physical:physical|memory_reset[1]",
+        "nes_transport:transport|nes_domain_reset124:host_release|release_reset[0]",
+        "nes_transport:transport|nes_domain_reset124:host_release|release_reset[1]"
+      ],
+      "reset_recovery_removal_rows": 36,
+      "physical_pins": 46,
+      "virtual_pins": 264
+    },
+    "data": {
+      "reader_address": {
+        "pairs": 22,
+        "max_data_delay_ns": 1.271,
+        "raw_budget_ns": 4.0,
+        "sdc_max_delay_ns": 5.952,
+        "min_slack_ns": 2.176
+      },
+      "reader_data": {
+        "pairs": 257,
+        "max_data_delay_ns": 10.088,
+        "raw_budget_ns": 40.0,
+        "sdc_max_delay_ns": 45.454,
+        "min_slack_ns": 37.476
+      },
+      "bridge_request": {
+        "pairs": 46,
+        "max_data_delay_ns": 6.688,
+        "raw_budget_ns": 40.0,
+        "sdc_max_delay_ns": 45.454,
+        "min_slack_ns": 40.862
+      },
+      "bridge_reply": {
+        "pairs": 47,
+        "max_data_delay_ns": 1.263,
+        "raw_budget_ns": 10.0,
+        "sdc_max_delay_ns": 11.904,
+        "min_slack_ns": 7.787
+      }
+    },
+    "raw_cross_min_ns": -7.976,
+    "rtl_source_count": 47,
+    "qsf_assignments": 8,
+    "mtbf_calculated": false
+  },
+  "diagnostic_qsf_changed": true,
+  "rtl_changed": false,
+  "map_rerun": false,
+  "fit_rerun": true,
+  "full_timing_pass": false,
+  "mtbf_signoff": false,
+  "external_io_signoff": false,
+  "installable": false,
+  "next": "Use126fit02 candidate and eight exact QSF assignments for loader375ns/guard/memory ownership integration. No repeat of unchanged CDC or full-core functional regressions before meaningful new wiring."
+}
