@@ -1,8 +1,8 @@
 # NES 개발 현황
 
-현재126: 영상 bridge4체인을 명시적인 동기화 배치 대상으로 지정하고 재배치했다. 제어·reset10체인과 데이터372쌍 검증 통과,933LAB/내부타이밍 유지. 다음은 로더375ns·메모리 소유권·guard의 실제 통합이다. [126 결과](../../analysis/CONTROL126-RESULT.ko.md)를 우선한다. 전체MTBF·외부IO·실기RUN은 미완료다.
+현재127: 로더·검증 후 RUN·클록 감시를 실제 코어에 통합했다. 기능 시험과 FPGA 배치는 통과했지만 168MHz 내부 타이밍이 −2.647ns로 미통과다. 다음은 명령 판정·오류 reset 경로 개선이다. [127 결과](../../analysis/LOADER127-RESULT.ko.md)를 우선한다. 실기용 파일은 아직 만들지 않는다.
 
-[현재 인계](HANDOFF.ko.md) · [126 결과](../../analysis/CONTROL126-RESULT.ko.md)
+[현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 
 ## 이전 단계별 근거
 

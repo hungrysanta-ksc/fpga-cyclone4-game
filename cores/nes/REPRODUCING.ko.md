@@ -226,3 +226,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 126 제어 동기화 배치
 
 `nes_control126.py --baseline124 <frozen124-final> --baseline125 <frozen125> --out <newASCII> --quartus-bin <bin64>`로같은매핑/정확8QSF/새fit·STA를수행한다. `review_nes_control126.py --out <same> --quartus-bin <bin64>`로새내부타이밍·reset보고를검사한다. `verify_nes_control126.py --evidence <frozen126>`는전체해시·실제체인·데이터제약을재검사한다. 동기화속성변경에는Fitter재실행이필요하며,종료성공만으로적용성공을판단하지않는다.실제UserSpecified인식과Ignoredassignment부재를검사한다.
+
+## 127 로더·소유권·클록 감시 통합
+
+기존 FLOAT 경로의 `run_nes_loader127.ps1`/`run_nes_loader127_decoder.ps1`에 `-Baseline <probes>`, 새 ASCII `-Out`과 기존 Python/Questa/wrapper 경로를 전달한다. `nes_loader127_fit.py --baseline <probes> --out <newASCII> --quartus-bin <bin64>`는 실제126코어+086래퍼를 생성하여 MAP/FIT/STA를 수행한다. `review_nes_loader127.py --out <same> --quartus-bin <bin64>`는 새 같은클록 setup실패까지 보고한다. `verify_nes_loader127.py --evidence <frozen127>`의 PASS는 기록 무결성과 시험범위 확인이며, timing/설치승인 PASS가 아니다.
