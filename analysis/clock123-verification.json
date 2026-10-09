@@ -1,0 +1,658 @@
+{
+  "candidate": "NES-CLOCK-FIT-123",
+  "base_merge": "878c8ce71a9bcae70a3c69ba652292d1e00559e3",
+  "archived_files": 755,
+  "manifest_sha256": "774f4e60a36bfe0dc045c46beb84428c4ba19b2680e85faeff58742978043279",
+  "public_sources": {
+    "tools/nes_clock_fit123.py": "5f226c0dc1f300317cef10599b45db6cd89cdda71f03e98dc70d2060fdf6cab5",
+    "tools/nes_clock_audit123.tcl": "248baa4cf2bbaa3c900be3a21fad39b1941f1f7381d0265e2bead1ae7bf1502d",
+    "tools/verify_nes_clock123.py": "cd3351a6afbba5913eb566f01b5e60514feb02c756926eb9bf0eed049e5d724f",
+    "src/fpga/pin.qsf": "a2671b23901c888864524b3639115d865a9788fc9a92506930140e3896df4c54",
+    "src/fpga/gbc_bus_pll0.v": "4c5e3aff3ecf1e69936fcef5331ff7ab8abbc9b24302193be9d8f475d09075ac",
+    "src/nes/diagnostic/nes_diag_safe_rom_physical.sv": "ed93655834e467105a5287543eea0426b265e0f3bedbc4788295fe7e49e4441c",
+    "analysis/spi-readback-verification.json": "2c00c2b3780a546dc4f82de6b496c781942902717fa2409ac94a798c9e7c60e6",
+    "analysis/safe122-verification.json": "bec6b21522a2d979c9c12839f83bf005f4afadc5ae87c1125e72208914e630a5"
+  },
+  "final_audit": {
+    "clocks": [
+      {
+        "name": "board8",
+        "period": "125.000"
+      },
+      {
+        "name": "nes",
+        "period": "45.454"
+      },
+      {
+        "name": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "period": "11.904"
+      },
+      {
+        "name": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "period": "5.952"
+      }
+    ],
+    "rows": [
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "setup",
+        "from_clock": "nes",
+        "to_clock": "nes",
+        "from": "nes_probe:dut|NES:core|PPU:ppu|ClockGen:clock|SS_CLKGEN_BACK[3]",
+        "to": "nes_probe:dut|NES:core|PPU:ppu|OAMEval:spriteeval|oam_data[3]",
+        "slack": "9.014",
+        "data_delay": "36.348"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "hold",
+        "from_clock": "nes",
+        "to_clock": "nes",
+        "from": "nes_ncr1_encoder:encoder|palette_q[18]",
+        "to": "nes_ncr1_encoder:encoder|palette_q[18]",
+        "slack": "0.454",
+        "data_delay": "0.746"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "recovery",
+        "from_clock": "nes",
+        "to_clock": "nes",
+        "from": "nes_probe:dut|NES:core|savestates:savestates|reset_ss",
+        "to": "nes_probe:dut|NES:core|T65:cpu|Res_n_i",
+        "slack": "38.625",
+        "data_delay": "6.728"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "removal",
+        "from_clock": "nes",
+        "to_clock": "nes",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_transport:transport|nes_packet_cdc_ram:bridge|q_req_epoch[4]",
+        "slack": "3.185",
+        "data_delay": "3.471"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "setup",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_transport:transport|nes_host_stage:stage|altsyncram:ram_rtl_0|altsyncram_u2h1:auto_generated|ram_block1a4~portb_address_reg0",
+        "slack": "-6.669",
+        "data_delay": "4.233"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "hold",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_transport:transport|nes_packet_cdc_ram:bridge|reply_accept",
+        "to": "nes_transport:transport|nes_packet_cdc_ram:bridge|rsp_accept",
+        "slack": "2.138",
+        "data_delay": "0.795"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "recovery",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_transport:transport|nes_snes_frontend:frontend|write_address[11]",
+        "slack": "-6.544",
+        "data_delay": "4.113"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "removal",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_transport:transport|nes_host_stage:stage|reg_rdata[2]",
+        "slack": "4.829",
+        "data_delay": "3.472"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "setup",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_rom_physical:physical|data_hold[4]",
+        "slack": "-7.717",
+        "data_delay": "4.826"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "hold",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_rom_physical:physical|address_hold[9]",
+        "to": "nes_rom_physical:physical|psram_address[7]",
+        "slack": "2.806",
+        "data_delay": "0.943"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "recovery",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_rom_physical:physical|data_hold[6]",
+        "slack": "-6.556",
+        "data_delay": "3.669"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "removal",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_rom_physical:physical|psram_address[16]",
+        "slack": "5.369",
+        "data_delay": "3.478"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "setup",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "to_clock": "nes",
+        "from": "nes_transport:transport|nes_packet_cdc_ram:bridge|req_seq[8]",
+        "to": "nes_transport:transport|nes_packet_cdc_ram:bridge|q_req_seq[8]",
+        "slack": "-4.573",
+        "data_delay": "6.683"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "hold",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "to_clock": "nes",
+        "from": "nes_transport:transport|nes_packet_cdc_ram:bridge|req_epoch[0]",
+        "to": "nes_transport:transport|nes_packet_cdc_ram:bridge|q_req_epoch[0]",
+        "slack": "2.065",
+        "data_delay": "5.153"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "setup",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_transport:transport|nes_host_stage:stage|consumed[10]",
+        "to": "nes_transport:transport|nes_host_stage:stage|altsyncram:ram_rtl_0|altsyncram_u2h1:auto_generated|ram_block1a0~portb_address_reg0",
+        "slack": "2.885",
+        "data_delay": "8.842"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "hold",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_transport:transport|nes_host_stage:stage|state.FAULT",
+        "to": "nes_transport:transport|nes_host_stage:stage|state.FAULT",
+        "slack": "0.434",
+        "data_delay": "0.746"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "setup",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "to_clock": "nes",
+        "from": "nes_rom_physical:physical|data_hold[5]",
+        "to": "nes_probe:dut|NES:core|T65:cpu|BAL[8]",
+        "slack": "-8.104",
+        "data_delay": "10.198"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "hold",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "to_clock": "nes",
+        "from": "nes_rom_physical:physical|data_hold[6]",
+        "to": "nes_probe:dut|NES:core|APU:apu|DmcChan:Dmc|sample_buffer[6]",
+        "slack": "0.962",
+        "data_delay": "4.049"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "setup",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_rom_physical:physical|ack_toggle",
+        "to": "nes_rom_physical:physical|psram_address[10]",
+        "slack": "1.432",
+        "data_delay": "4.437"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "type": "hold",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_rom_physical:physical|reading_active",
+        "to": "nes_rom_physical:physical|reading_active",
+        "slack": "0.455",
+        "data_delay": "0.746"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "setup",
+        "from_clock": "nes",
+        "to_clock": "nes",
+        "from": "nes_probe:dut|NES:core|PPU:ppu|ClockGen:clock|SS_CLKGEN_BACK[3]",
+        "to": "nes_probe:dut|NES:core|PPU:ppu|OAMEval:spriteeval|oam_data[1]",
+        "slack": "10.571",
+        "data_delay": "34.803"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "hold",
+        "from_clock": "nes",
+        "to_clock": "nes",
+        "from": "nes_probe:dut|NES:core|PPU:ppu|SpriteSet:sprite_gen|Sprite:sprite0|pix1[7]",
+        "to": "nes_probe:dut|NES:core|PPU:ppu|SpriteSet:sprite_gen|Sprite:sprite0|pix1[7]",
+        "slack": "0.402",
+        "data_delay": "0.669"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "recovery",
+        "from_clock": "nes",
+        "to_clock": "nes",
+        "from": "nes_probe:dut|NES:core|savestates:savestates|reset_ss",
+        "to": "nes_probe:dut|NES:core|T65:cpu|Res_n_i",
+        "slack": "38.960",
+        "data_delay": "6.403"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "removal",
+        "from_clock": "nes",
+        "to_clock": "nes",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_transport:transport|nes_packet_cdc_ram:bridge|q_saved_length[10]",
+        "slack": "2.848",
+        "data_delay": "3.114"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "setup",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_transport:transport|nes_host_stage:stage|altsyncram:ram_rtl_0|altsyncram_u2h1:auto_generated|ram_block1a4~portb_address_reg0",
+        "slack": "-6.014",
+        "data_delay": "3.906"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "hold",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_transport:transport|nes_packet_cdc_ram:bridge|reply_accept",
+        "to": "nes_transport:transport|nes_packet_cdc_ram:bridge|rsp_accept",
+        "slack": "1.824",
+        "data_delay": "0.738"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "recovery",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_transport:transport|nes_snes_frontend:frontend|write_address[11]",
+        "slack": "-5.834",
+        "data_delay": "3.750"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "removal",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_transport:transport|nes_host_stage:stage|reg_rdata[2]",
+        "slack": "4.209",
+        "data_delay": "3.110"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "setup",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_rom_physical:physical|data_hold[4]",
+        "slack": "-6.985",
+        "data_delay": "4.474"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "hold",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_rom_physical:physical|address_hold[9]",
+        "to": "nes_rom_physical:physical|psram_address[7]",
+        "slack": "2.452",
+        "data_delay": "0.875"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "recovery",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_rom_physical:physical|state.IDLE",
+        "slack": "-5.840",
+        "data_delay": "3.335"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "removal",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_rom_physical:physical|psram_address[11]",
+        "slack": "4.718",
+        "data_delay": "3.128"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "setup",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "to_clock": "nes",
+        "from": "nes_transport:transport|nes_packet_cdc_ram:bridge|req_seq[8]",
+        "to": "nes_transport:transport|nes_packet_cdc_ram:bridge|q_req_seq[8]",
+        "slack": "-4.600",
+        "data_delay": "6.407"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "hold",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "to_clock": "nes",
+        "from": "nes_transport:transport|nes_packet_cdc_ram:bridge|req_epoch[0]",
+        "to": "nes_transport:transport|nes_packet_cdc_ram:bridge|q_req_epoch[0]",
+        "slack": "1.898",
+        "data_delay": "4.591"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "setup",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_transport:transport|nes_snes_frontend:frontend|addr_sync[12]",
+        "to": "nes_transport:transport|nes_snes_frontend:frontend|write_address[14]",
+        "slack": "3.297",
+        "data_delay": "8.078"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "hold",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_transport:transport|nes_host_stage:stage|state.FAULT",
+        "to": "nes_transport:transport|nes_host_stage:stage|state.FAULT",
+        "slack": "0.383",
+        "data_delay": "0.669"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "setup",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "to_clock": "nes",
+        "from": "nes_rom_physical:physical|data_hold[5]",
+        "to": "nes_probe:dut|NES:core|T65:cpu|BAL[8]",
+        "slack": "-7.939",
+        "data_delay": "9.729"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "hold",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "to_clock": "nes",
+        "from": "nes_rom_physical:physical|data_hold[6]",
+        "to": "nes_probe:dut|NES:core|APU:apu|DmcChan:Dmc|sample_buffer[6]",
+        "slack": "0.978",
+        "data_delay": "3.670"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "setup",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_rom_physical:physical|ack_toggle",
+        "to": "nes_rom_physical:physical|psram_address[10]",
+        "slack": "1.705",
+        "data_delay": "4.174"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "type": "hold",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_rom_physical:physical|reading_active",
+        "to": "nes_rom_physical:physical|reading_active",
+        "slack": "0.403",
+        "data_delay": "0.669"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "setup",
+        "from_clock": "nes",
+        "to_clock": "nes",
+        "from": "nes_probe:dut|NES:core|PPU:ppu|ClockGen:clock|SS_CLKGEN_BACK[3]",
+        "to": "nes_probe:dut|NES:core|PPU:ppu|OAMEval:spriteeval|oam_data[6]",
+        "slack": "29.159",
+        "data_delay": "16.239"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "hold",
+        "from_clock": "nes",
+        "to_clock": "nes",
+        "from": "nes_packet_memory_producer:producer|p_data[0]",
+        "to": "nes_transport:transport|nes_packet_cdc_ram:bridge|nes_packet_queue_ram:queue|altsyncram:memory_rtl_0|altsyncram_prf1:auto_generated|ram_block1a0~porta_datain_reg0",
+        "slack": "0.160",
+        "data_delay": "0.484"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "recovery",
+        "from_clock": "nes",
+        "to_clock": "nes",
+        "from": "nes_probe:dut|NES:core|savestates:savestates|reset_ss",
+        "to": "nes_probe:dut|NES:core|T65:cpu|Res_n_i",
+        "slack": "42.316",
+        "data_delay": "3.073"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "removal",
+        "from_clock": "nes",
+        "to_clock": "nes",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_transport:transport|nes_packet_cdc_ram:bridge|q_req_seq[13]",
+        "slack": "1.414",
+        "data_delay": "1.529"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "setup",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_transport:transport|nes_host_stage:stage|altsyncram:ram_rtl_0|altsyncram_u2h1:auto_generated|ram_block1a4~portb_address_reg0",
+        "slack": "-3.118",
+        "data_delay": "1.846"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "hold",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_transport:transport|nes_packet_cdc_ram:bridge|reply_epoch[4]",
+        "to": "nes_transport:transport|nes_packet_cdc_ram:bridge|rsp_epoch[4]",
+        "slack": "1.008",
+        "data_delay": "0.313"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "recovery",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_transport:transport|nes_snes_frontend:frontend|write_address[11]",
+        "slack": "-3.177",
+        "data_delay": "1.887"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "removal",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_transport:transport|nes_host_stage:stage|reg_rdata[2]",
+        "slack": "2.234",
+        "data_delay": "1.528"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "setup",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_rom_physical:physical|data_hold[4]",
+        "slack": "-3.645",
+        "data_delay": "2.163"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "hold",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_rom_physical:physical|address_hold[9]",
+        "to": "nes_rom_physical:physical|psram_address[7]",
+        "slack": "1.276",
+        "data_delay": "0.379"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "recovery",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_rom_physical:physical|state.IDLE",
+        "slack": "-3.169",
+        "data_delay": "1.693"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "removal",
+        "from_clock": "nes",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_local_memory:local_memory|init_done",
+        "to": "nes_rom_physical:physical|request_sync[0]",
+        "slack": "2.447",
+        "data_delay": "1.532"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "setup",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "to_clock": "nes",
+        "from": "nes_transport:transport|nes_packet_cdc_ram:bridge|req_seq[6]",
+        "to": "nes_transport:transport|nes_packet_cdc_ram:bridge|q_req_seq[6]",
+        "slack": "-2.172",
+        "data_delay": "3.169"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "hold",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "to_clock": "nes",
+        "from": "nes_transport:transport|nes_packet_cdc_ram:bridge|req_epoch[0]",
+        "to": "nes_transport:transport|nes_packet_cdc_ram:bridge|q_req_epoch[0]",
+        "slack": "0.714",
+        "data_delay": "2.262"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "setup",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_transport:transport|nes_host_stage:stage|consumed[10]",
+        "to": "nes_transport:transport|nes_host_stage:stage|altsyncram:ram_rtl_0|altsyncram_u2h1:auto_generated|ram_block1a0~portb_address_reg0",
+        "slack": "7.915",
+        "data_delay": "3.914"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "hold",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[0]",
+        "from": "nes_transport:transport|nes_host_stage:stage|state.FAULT",
+        "to": "nes_transport:transport|nes_host_stage:stage|state.FAULT",
+        "slack": "0.178",
+        "data_delay": "0.307"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "setup",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "to_clock": "nes",
+        "from": "nes_rom_physical:physical|data_hold[5]",
+        "to": "nes_probe:dut|NES:core|T65:cpu|BAL[8]",
+        "slack": "-3.641",
+        "data_delay": "4.627"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "hold",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "to_clock": "nes",
+        "from": "nes_rom_physical:physical|data_hold[6]",
+        "to": "nes_probe:dut|NES:core|APU:apu|DmcChan:Dmc|sample_buffer[6]",
+        "slack": "0.109",
+        "data_delay": "1.656"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "setup",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_rom_physical:physical|ack_toggle",
+        "to": "nes_rom_physical:physical|psram_address[10]",
+        "slack": "3.828",
+        "data_delay": "2.072"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "type": "hold",
+        "from_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "to_clock": "pll|altpll_component|auto_generated|pll1|clk[1]",
+        "from": "nes_rom_physical:physical|reading_active",
+        "to": "nes_rom_physical:physical|reading_active",
+        "slack": "0.188",
+        "data_delay": "0.307"
+      }
+    ],
+    "same_clock_setup_min_ns": {
+      "nes": 9.014,
+      "pll|altpll_component|auto_generated|pll1|clk[0]": 2.885,
+      "pll|altpll_component|auto_generated|pll1|clk[1]": 1.432
+    },
+    "raw_min_ns": -8.104,
+    "LE": 13558,
+    "LAB": 938,
+    "remaining_LAB": 25,
+    "M9K": 26
+  },
+  "installable": false,
+  "production_changed": false,
+  "loader_present": false,
+  "guard_present": false,
+  "full_timing_pass": false,
+  "external_io_signoff": false,
+  "physical_pin_count": 46,
+  "virtual_pin_count": 264,
+  "PLLs": 1,
+  "next": "Fix core-init/reset deassertion per domain and inventory bounded bundled-data CDC paths; keep raw violations until justified exact constraints. Then loader timing/ownership and full resource+SNES consumer. No repeated122 fullframes or119 full80 without changes."
+}

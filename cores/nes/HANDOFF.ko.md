@@ -1,25 +1,22 @@
-# NES 현재 인계 —122 보호 reader 코어 회귀 통과
+# NES 현재 인계 —123 물리 배치 성공, 교차 클록 타이밍 미해결
 
-[122 결과](../../analysis/SAFE122-RESULT.ko.md) · [검증 메타](../../analysis/safe122-verification.json) · [121 비교 기준](../../analysis/FRAMES121-RESULT.ko.md)
+[123 결과](../../analysis/CLOCK123-RESULT.ko.md) · [검증 메타](../../analysis/clock123-verification.json) · [122 기능 기준](../../analysis/SAFE122-RESULT.ko.md)
 
-## 바로 이어 할 작업
+## 다음 작업의 우선순위
 
-**READ16/168MHz 등록형 CF86 reader 후보의 실제 클록·자원·STA 가능성을 먼저 확인한다.** 정상 속도 코어의 전체 프레임 회귀는 끝났다. 같은 회귀나119의80KiB·BASE·ENTRY 시험을 이유 없이 반복하지 않는다. 이번 변경은 테스트벤치 바인딩과 파라미터이며 제품 RTL·펌웨어는 그대로다. 아직 보드에 설치할122 패키지는 없다.
+**코어 초기화/reset을 각 도메인에 연결하는 방식과 묶음 데이터 CDC 제약부터 해결한다.** 168MHz reader의 같은 클록 내부 setup은 최종 fit02에서3corner 최솟값+1.432ns다. NES+9.014ns,host84+2.885ns다. 클록 속도를 낮추는 것부터 시작하거나 변하지 않은122 전체 프레임을 반복하지 않는다. 전체 raw slack은−8.104ns이며 전기적/전체STA통과가 아니다.
 
-보드 후보에서 기존8MHz 로더의 WRITE3클록=375ns를 유지할 도메인 분리 또는 시간 매개변수화를 결정한다.168MHz에 그대로 연결하면17.856ns여서 이전 쓰기 근거가 사라진다. guard085의8MHz memory/20–22MHz reference heartbeat·timeout도 새 클록에 맞춰 검증해야 한다. raw fault 비동기 취소,각 도메인 동기 reset 해제,로드/CHECK/RUN 독점 소유권을 보존한다. 같은 후보 PLL/핀/CDC/내부 STA·실제 SNES 소비자/DMA/표시 기한까지 연결한다.059의959/963LAB·가상핀·PLL0이나 진단191LAB를 최종 여유로 재사용/단순 합산하지 않는다.
+123의 `nes_clock_fit123.py`가 생성한 `nes_live_joint.sv`에서 `reset_request=boot_reset||!run_enable`, `reset=reset_request||!memory_ready`이고 memory_ready는 코어 도메인의 local_memory.init_done이다. 이 reset이84MHz transport와168MHz reader로 전달된다. 원시60개 최악 경로에는 init_done→다른 도메인의 데이터/reset 입력 위반이 있다. 비동기 assert와 도메인별 동기 release를 유지하는 연결을 구현하고, 기존 reader 안의 source_reset/memory_reset 및 raw reset gating과 중복·우회를 함께 검사한다. 단순 전 클록 false-path는 금지한다.
 
-168MHz가 물리 fit/STA에서 불가능하면 reader/서비스 구조를 수정한다. NES 감속·프레임 버림·데이터 검사 제거로 숨기지 않는다. 최소 RUN의 관측·오류 종료·독립044복원 경로가 준비되면 실기를 우선한다.
+그다음 reader address_hold/data_hold와 request/ack toggle,영상 bridge의 req/reply 묶음 데이터에 대해 실제 안정 유지 구간과 동기화 단계를 조사한다. 데이터의 종착점이 CPU의 직접 소비 조합 경로까지 이어지는 경우도 포함한다. 같은 라우팅DB에서 경로 최대지연·정확한 제약을 검증하며 handshake의 존재만으로 모든 CDC를 통과 처리하지 않는다. 전체 IO는 미제약 상태다.
 
-구체적 출발점은 [변경하지 않은 safe reader](../../src/nes/diagnostic/nes_diag_safe_rom_physical.sv), [8MHz 로더](../../src/nes/diagnostic/nes_diag_rom_loader.sv), [guard085](../../src/nes/diagnostic/nes_diag_clock_guard085.sv)다. [086 보드 구성 도구](../../tools/nes_clock_reset086.py)와 [059 전체 코어 구성 도구](../../tools/nes_spi_readback_checks.py)는 연결 구조를 확인하는 자료로 사용한다. 각각 따로 통과한 수치를 합쳐 통합 통과로 처리하지 않는다. 실제 클록 선언·PLL 생성·핀 매핑과 같은 빌드에서 자원/미배치 핀/타이밍 예외/CDC 목록을 남겨야 한다. loader와 reader가 다른 도메인이 되면 정지·소유권 인계가 두 핀 구동기를 동시에 활성화하지 않는지 확인한다.
+## 확정된 결과와 범위
 
-## 이번에 확인한 사실과 경계
+fit02: EP4CE15F17C8,13,558LE,938/963LAB(25남음),26M9K,PLL1개. 보드 핀표와일치하는 PSRAM/CLKIN/SNES_SYSCLK46개 물리핀,가상264핀이다. PLL은8MHz에서84/168MHz를 만든다. 코어 STA22MHz는 보수적 목표이며122 기능 시뮬레이션은21.477MHz다. 코어·reader 공통 소스는122와같다. 차이나는 TB/메모리모델2파일은 합성하지 않는다.
 
-- failed01: CF86 safe reader READ8/84MHz·70ns는 첫 fine_x/위상3.5ns에서 CPU deadline tick852209.852198 PPU요청→852199 CPU주소변경→852204 CPU수락→852208 CPU소비 시미완료. 다른 사례를 실패했다고 확대하지 않는다.
-- unit01: 위 READ8 reader 단독16위상8,400완료/208취소·110ns 거부 PASS. 단독 핀 PASS와 공유 CPU/PPU 기한은 다르다.
-- full02: 동일 safe RTL, READ16/168MHz 제어,70ns 모델.3.5/0/5.625ns×fine_x/banks32×4프레임=24프레임/1,474,560픽셀 및패킷/PPU이벤트일치.95.232ns 캡처 접근 시간은 READ8/84MHz와 동일. 코어46.560ns는 유지했다.
-- unit02: READ16,16위상0..5.625ns,8,400완료/208취소. 정상 샘플 후 HOLD5.952ns/CE활성101.184ns와 응답 전 핀 해제 관측.110ns 및 HOLD제거 변형 거부. 비동기 reset취소는 별도다.
+로더/CHECK·guard·실제SNES프로그램은 제외한 읽기 전용 가능성 검사다. RUN/reset/컨트롤·SNES버스/관측은 가상입력이다.25LAB는 최종 통합 여유가 아니다. full123 빌드나 설치패키지가 있다는 뜻이 아니다. fit01은 PPU 관측주소3개가 미지정 물리핀으로 바뀌었고,fit02는 기능 경로 밖의 보존 관측레지스터로 이를 분리했다. 첫fit/audit경로오류·UTF8보고서해석오류도 보존한다.
 
-고정지연 모델이며 메타안정성·보드패드/PCB·전압/부하·모든 위상/지터 보증이 아니다. CHECK=0이고 SPI로더/STM32/guard/PLL/실제SNES프로그램은 통합되지 않았다. 자체 입력은80/96KiB,배경전용·불변CHR이다. 새 제품RTL/C/ARM/fit/STA/ASM/SD패키지는 없다.168MHz는 reader 내부 제어 목표이며 PSRAM168MHz 동기버스를 뜻하지 않는다.
+그 뒤 로더 WRITE375ns와 guard의 감시시간·소유권을 보존하며 통합한다.8MHz의 WRITE3클록을168MHz에 그대로 옮기면17.856ns가 된다. 도메인 분리/쓰기시간 매개변수화 중 실제 설계를 정하고 로더·CHECK·RUN 핀 구동이 겹치지 않는지 확인한다. 실제SNES소비자/DMA/표시 기한,새RUN 진행관측·오류종료·독립044복원 준비 후 실기로 간다.
 
 ## 유지할 실기 기준과 목표
 
@@ -29,6 +26,6 @@
 
 ## 재현과 보존
 
-`run_nes_safe_reader122.ps1`과 `run_nes_safe122_unit.ps1`은 Python/기존 FloatWrapper/QuestaBin/핀된052live Baseline/새 ASCII Out을 받는다. 기존 FLOAT RunOnly 한 좌석으로 직렬 실행한다. uncounted 라이선스·smoke 반복은 금지한다. `verify_nes_safe122.py --evidence <frozen122>`는 새 시뮬레이션 없이 동결 해시/실패이력/프레임을 재검증한다. full02/unit02가 최종이고 failed01/unit01 실행 당시 소스도 보존한다. 완료 finalizer 재실행이나044–113/116/118/120–122 동결 자료 수정은 금지한다.
+`nes_clock_fit123.py --baseline <pinned059fit> --out <newASCII> --quartus-bin <bin64>`은 map/fit/STA를 실행한다. 같은 출력 디렉터리에 `nes_clock_audit123.tcl`을 복사해 `quartus_sta -t`로 클록쌍을 조사한다. 동결 DB에서 직접 쓰지 말고 새 작업 사본을 만든다. `verify_nes_clock123.py --evidence <frozen123>`은 재빌드 없이 증거를 검증한다. 기존044–113/116/118/120–123 자료·완료 finalizer는 수정/재실행하지 않는다. 제품 소스는 그대로이며 새 C/RTL/ARM/ASM/실기이미지/Questa 작업은 없다.
 
-PR67 병합 `79daf3f539c1f0956d71f2fc50c0984e3293c4ef` 확인. 한국어 PR제목과 작업 목표·작업 내용·작업 결과·작업 의미 네 항목을 유지하고 사용자만 병합한다. GBC152·원래NES334·과거 공개 소스 핀을 보존한다. ROM/바이너리/미디어/라이선스/개인 경로는 Git에 올리지 않는다.
+PR68 병합878c8ce 확인. 한국어 제목과 작업 목표·작업 내용·작업 결과·작업 의미 네 항목을 지키며 사용자가 병합한다. GBC152·원래NES334·모든 과거 공개 핀은 보존한다. ROM/바이너리/미디어/라이선스/개인경로는 Git에 올리지 않는다.
