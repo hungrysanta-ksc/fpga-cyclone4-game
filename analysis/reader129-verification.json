@@ -1,0 +1,100 @@
+{
+  "candidate": "NES-READER-129",
+  "base_merge": "533a01875cba62239a4b9ce696e23bf953567ef0",
+  "archived_files": 2502,
+  "manifest_sha256": "10ff116cdb29ca1d2e35d9bd4aff7c7866cb404a57a2128be999d50480ca4c9b",
+  "public_sources": {
+    "tools/nes_reader129.py": "2d16662f137f35b9ee53eab5840aa311b1c6a4c7da79b81ca12f5d2b162b2ec7",
+    "tools/nes_reader129_fit.py": "b6dd7f3c55b39a9417aae501f33d5be92171da234dd457a092094bd03959933d",
+    "tools/nes_reader129_refit.py": "11dd73b2ca4b9759bb182af0da0bf2f789bce8d5e4ad15041299d7d05dbb8b99",
+    "tools/nes_reader129_test.py": "922509c0027c932e2c194f8af52b6d58cad00daf2c0174602028086114a26334",
+    "tools/nes_reader129_diff.py": "56352c89e73093085feb0a109a85e2cc6d1439e0271be0e7bc300cd152ccebc4",
+    "tools/review_nes_reader129.py": "de0cfc37f7acbc44af76f5a8ca00b3867aae03eb6b0215dc50112f383423d6d1",
+    "tools/verify_nes_reader129.py": "6e4f47aa8346699ffc5132e65168b346d15a8d14873013aee122f14a7d1785bf",
+    "tools/nes_reader129_paths.tcl": "d6902810aaa55bf5b605f3b6514d809140cbd4883ef7fc501dd8bab5353041af",
+    "tools/run_nes_reader129.ps1": "e41c22eac34aff7f02407a0f8459a2c3c5cc4c0246eafc395ee2a4fec2521330",
+    "tools/run_nes_reader129_diff.ps1": "c56f10fcdc04506ff9991fdf71bd80435cbccc48ebb24fe18602555c311ad6e8",
+    "tests/nes-functional/reader129_helpers.svh": "6f87b3a600c06ed17593dfcd93d5b8d627aea49d608c12feaf7987d6976a7b60",
+    "tests/nes-functional/reader129_cases.svh": "a51c113265c049e31a80349ea56e95eaa867aeb5244ad0d3748927d04a500abe",
+    "analysis/command128-verification.json": "b13102dcdff7293066cf0b5c8478a0ce764c4cb48d9763686b0928729fa42a93",
+    "src/nes/diagnostic/nes_rom_loader128.sv": "bd53f0323dbee8b3fb818819a6cb9ff713701d441e33b1189567ee12cac85033",
+    "src/nes/diagnostic/nes_rom_spi128.sv": "21ce6873df1547055f6bffc5cee5622b9af9151a5dfab985550926cd476a8501",
+    "src/nes/diagnostic/nes_bridge_sync126.qsf": "01fbe9e130a731c8f582a55cc8545b75c8eceb2163befe25ff08ff55f9a6d94b",
+    "tools/nes_reset124_audit.tcl": "023b265b599431c11715e8bac65812cffb589f1e8b854333bffd9a793f3d532e",
+    "tools/nes_control126.tcl": "b9860562325716ba691a089a404053be3ba27848e5b8187fd89a5a83f5852bda",
+    "tests/nes-functional/loader128_diff_tb.sv": "242f6f09dabfd3d5c9d454f5b8c333f93f325c718f4c76d71d35ac537f0b8a06"
+  },
+  "checks": {
+    "final_fit": {
+      "resources": {
+        "Total logic elements": 14183,
+        "Total registers": 5320,
+        "Total pins": 46,
+        "Total virtual pins": 264,
+        "Total PLLs": 1,
+        "LAB": 960,
+        "M9K": 26
+      },
+      "same_clock_setup_min_ns": {
+        "nes": 9.28,
+        "pll|altpll_component|auto_generated|pll1|clk[0]": 3.172,
+        "pll|altpll_component|auto_generated|pll1|clk[1]": -0.158
+      },
+      "raw_clock_pair_min_ns": -8.298,
+      "clock_rows": 84,
+      "fit_passed": true,
+      "same_clock_setup_pass": false,
+      "full_timing_pass": false,
+      "old126_data_constraints_reused": false,
+      "installable": false,
+      "diagnostic_reset_chain": {
+        "first_stage_fanout": 1,
+        "stage_paths": 6,
+        "min_stage_slack_ns": 0.456,
+        "local_release_paths": 1776,
+        "min_local_release_slack_ns": -4.28
+      },
+      "reader_owner_paths": {
+        "old_direct_paths": 0,
+        "owner_stage_paths": 219,
+        "minimum_setup_ns": 0.808,
+        "valid_register_setup_paths": 0
+      }
+    },
+    "seeded_images_bytes": [
+      81920,
+      98304
+    ],
+    "pin_writes_error_cases": 87,
+    "check_reads": 308,
+    "run_reads": 128,
+    "write_fault_positions": 86,
+    "check_cancel_reused": 48,
+    "additional_cancel_cases": 96,
+    "stopped_clock_cases": 3,
+    "ready_misuse_cases": 6,
+    "final_causal_rejections": 2,
+    "unadopted_loader_experiments": [
+      {
+        "test": "test02",
+        "diff": "diff01",
+        "fit": "fit03",
+        "one_step_cases": 26112,
+        "adopted": false
+      },
+      {
+        "test": "test03",
+        "diff": "diff02",
+        "fit": "fit04",
+        "one_step_cases": 26112,
+        "adopted": false
+      }
+    ],
+    "full_image_writes_repeated": false,
+    "full_spi_cpu_session": false,
+    "installable": false
+  },
+  "full_timing_pass": false,
+  "installable": false,
+  "next": "Start from selected129fit01 reader-only. Inspect loader state.WRITE->state.HOLD enable logic at-.158ns and other same-domain paths. Avoid redoing the standalone phase shortcut/counter split or standard refit attempts129fit02-05; they did not improve the selected result. A new structural enable/state design needs an explicit timing rationale plus affected error/drain equivalence before fitting. Then close new hierarchy CDC/IO, actual SNES consumer and observable minimumRUN with independent044 restore. E1/E2/fullMTBF/8us/bothclockhaltCE9us remainopen."
+}

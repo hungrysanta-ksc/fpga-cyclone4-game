@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재128: SPI 명령 처리와 로더 구조를 개선해 168MHz setup 위반을 −2.647ns에서 −0.446ns로 줄였다. 기능·오류 시험은 통과했지만 reader reset 경로가 남아 실기 파일은 아직 생성하지 않는다. [128 결과](../../analysis/COMMAND128-RESULT.ko.md)를 우선한다.
+현재129: reader의 CHECK/RUN 소유권을 등록해 기존 reset→주소 병목을 분리했다. 같은 클록 최악 setup은 −0.446ns에서 −0.158ns로 개선됐지만 로더 WRITE→HOLD 경로가 미해결이다. 최종은 reader만 바꾼 fit01이며, 후속 로더 실험은 채택하지 않았다. [129 결과](../../analysis/READER129-RESULT.ko.md)를 우선한다.
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 

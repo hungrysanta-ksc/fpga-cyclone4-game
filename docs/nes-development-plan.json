@@ -5,10 +5,10 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "128 명령·로더 구조 개선과 기능시험 완료. 168MHzsetup−2.647→−0.446ns, reader reset 경로 미해결. 설치 불가.",
-  "next_action": "FIX_128_READER_RESET_ENABLE_PATH",
+  "assessment": "129 reader 소유권 분리 완료. 최종test01/fit01 sameclocksetup−0.446→−0.158ns, 로더WRITE/HOLD enable 미해결. 후속phase/counter실험미채택, 설치불가.",
+  "next_action": "FIX_SELECTED_129_LOADER_STATE_ENABLE_PATH",
   "next_three_deliverables": [
-    "128fit07 reader reset/enable 경로 단축과 영향받는 취소·소유권 시험",
+    "선택129fit01 로더 상태enable 지연 원인에 근거한 구조 개선·영향 경계 시험",
     "새 fit/타이밍·hierarchy CDC/IO·실제 SNES 소비자",
     "관측 가능한 최소 RUN·오류 종료·독립044 복원 실기"
   ],
@@ -77,9 +77,9 @@
     },
     {
       "id": "BOARD-FIT",
-      "status": "command_loader_improved_reader_reset_timing_fail",
-      "evidence": "analysis/COMMAND128-RESULT.ko.md",
-      "detail": "128fit07 14147LE/955LAB/26M9K/PLL1;memory168−0.446ns/raw−6.953ns. reader reset/enable 미해결, 이전CDC승인미상속."
+      "status": "reader_owner_path_closed_loader_state_timing_fail",
+      "evidence": "analysis/READER129-RESULT.ko.md",
+      "detail": "129fit01 14183LE/960LAB/26M9K/PLL1;memory168−0.158/raw−8.298ns. loaderWRITE/HOLD enable 미해결. fit02-05 미채택, 이전CDC승인미상속."
     },
     {
       "id": "DISPLAY-240",
@@ -827,8 +827,8 @@
         "P4"
       ],
       "completion": "Normal-speed70ns memory, resource headroom, real SNES video/queue/display contract; redesign before feature expansion if insufficient",
-      "status": "command_loader_improved_reader_reset_timing_failed",
-      "evidence": "analysis/COMMAND128-RESULT.ko.md"
+      "status": "reader_owner_registered_loader_state_timing_failed",
+      "evidence": "analysis/READER129-RESULT.ko.md"
     },
     {
       "id": "P6",
@@ -927,6 +927,14 @@
     "evidence": "analysis/command128-verification.json",
     "LAB": 955,
     "memory168_setup_ns": -0.446,
+    "full_timing_pass": false,
+    "installable": false
+  },
+  "reader129": {
+    "evidence": "analysis/reader129-verification.json",
+    "selected_fit": "fit01",
+    "LAB": 960,
+    "memory168_setup_ns": -0.158,
     "full_timing_pass": false,
     "installable": false
   }
