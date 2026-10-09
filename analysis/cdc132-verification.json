@@ -1,0 +1,135 @@
+{
+  "candidate": "NES-CDC-REFRESH-132",
+  "base_merge": "1d2257d0398348cdff66928f97899ce87c5f7c81",
+  "archived_files": 967,
+  "manifest_sha256": "2dbee394e209ba2e40a49c737d08496c81ed4d1a9a00457ec537f3346858e214",
+  "public_sources": {
+    "tools/nes_cdc132_inventory.py": "814f1337e29441fef5920bdd3018723f5abd3ee9ccbb45628195f84c4328f634",
+    "tools/nes_cdc132_sta.py": "5013792dcf3a74c3e05e16d6cf774c0c03d87bcfe1eca8a36812fc8dab0cd41e",
+    "tools/nes_cdc132_protocol.py": "fbeb82b72eec43863ae1837d4ddac3126069bf7cedb91558fe40876fd0774a49",
+    "tools/run_nes_cdc132_protocol.ps1": "83983434b967db922b979f5b6fca6684d1a5f97b045e2b27b03e81c26b772e09",
+    "tools/verify_nes_cdc132.py": "6c96ea036045ce74226369d9fd54a631c0e7ad08995540c2ab628584ef356623",
+    "analysis/counter131-verification.json": "010313e7a7f2362ba92a94896211179bc85d7301421d4b03f2d4632181b6bd2b",
+    "analysis/cdc125-verification.json": "0c3bf612006f3133cc07b8478610852e10dc925150ac758535d319ba74de6495",
+    "analysis/reset124-verification.json": "50817a45870740c7c4b3545b9e974ecfa278f52e9c06bd4b39696fd0063986f3",
+    "tools/nes_loader127.py": "b470dc9cee847b8ad24520a37ab4e2af6f5e431e25e66ad057db31246f0920cc",
+    "tools/nes_cdc125_sta.py": "eb29d39bf39f03e1e8dba8f196c193106a390c4de51263b9005bf2d4eaa56b61",
+    "tools/nes_cdc125_inventory.tcl": "f2ba1cc1f352ae4fbbb688271d1266d892cc3eacdf9c56fbfa983e9e6cfefe94",
+    "tools/nes_control126.tcl": "b9860562325716ba691a089a404053be3ba27848e5b8187fd89a5a83f5852bda",
+    "tests/nes-functional/cdc125_reader.svh": "da4ea7899abc0da31648e33ec3cbf3417c2691f6625ab1e40e5adf30a2daf468"
+  },
+  "checks": {
+    "sta": {
+      "candidate": "NES-CDC-REFRESH-132",
+      "passed": true,
+      "groups": {
+        "reader_address": {
+          "rows": 63,
+          "pairs": 21,
+          "max_data_delay_ns": 0.911,
+          "raw_min_slack_ns": -3.762,
+          "budget_ns": 4.0,
+          "sdc_max_delay_ns": 5.952,
+          "conditional_capture_min_ns": 11.904,
+          "constrained_min_slack_ns": 2.188
+        },
+        "reader_data": {
+          "rows": 846,
+          "pairs": 257,
+          "max_data_delay_ns": 12.518,
+          "raw_min_slack_ns": -10.408,
+          "budget_ns": 40.0,
+          "sdc_max_delay_ns": 45.454,
+          "conditional_capture_min_ns": 90.908,
+          "constrained_min_slack_ns": 35.044
+        },
+        "bridge_request": {
+          "rows": 138,
+          "pairs": 46,
+          "max_data_delay_ns": 6.972,
+          "raw_min_slack_ns": -4.872,
+          "budget_ns": 40.0,
+          "sdc_max_delay_ns": 45.454,
+          "conditional_capture_min_ns": 90.908,
+          "constrained_min_slack_ns": 40.58
+        },
+        "bridge_reply": {
+          "rows": 141,
+          "pairs": 47,
+          "max_data_delay_ns": 1.094,
+          "raw_min_slack_ns": -3.945,
+          "budget_ns": 10.0,
+          "sdc_max_delay_ns": 11.904,
+          "conditional_capture_min_ns": 23.808,
+          "constrained_min_slack_ns": 7.957
+        },
+        "control_first_stage": {
+          "rows": 24,
+          "pairs": 8,
+          "max_data_delay_ns": 6.743,
+          "raw_min_slack_ns": -4.63
+        },
+        "configuration_open": {
+          "rows": 1869,
+          "pairs": 183,
+          "max_data_delay_ns": 8.759,
+          "raw_min_slack_ns": -6.647
+        },
+        "lifecycle_open": {
+          "rows": 345,
+          "pairs": 115,
+          "max_data_delay_ns": 7.384,
+          "raw_min_slack_ns": -5.277
+        }
+      },
+      "raw_rows": 3426,
+      "raw_pairs": 677,
+      "constrained_pairs": 371,
+      "constrained_rows": 1113,
+      "chains": 16,
+      "release_chains": 8,
+      "chain_paths": 96,
+      "chain_min_setup_ns": 4.076,
+      "chain_min_hold_ns": 0.194,
+      "local_reset_rows": 6492,
+      "local_reset_min_ns": -4.601,
+      "local_reset_pass": false,
+      "new_fit": false,
+      "full_timing_pass": false,
+      "mtbf_signoff": false,
+      "external_io_signoff": false,
+      "installable": false
+    },
+    "reader_reads": 1050,
+    "reader_cancels": 26,
+    "reader_phases_ps": [
+      0,
+      3500
+    ],
+    "early_capture_rejected": true,
+    "bridge125_exact_reused": true,
+    "sta_cache_changes": [
+      "db/live.cycloneive_io_sim_cache.31um_ss_1200mv_85c_slow.hsd",
+      "db/live.taw.rdb"
+    ],
+    "reset_negative_rows": 107,
+    "reset_negative_only_at_release_chain_inputs": true,
+    "non_chain_reset_rows": 6168,
+    "non_chain_reset_min_ns": 0.498,
+    "external_unconstrained_ports": {
+      "input": 83,
+      "output": 227
+    },
+    "rejected124": {
+      "expected": "60a57739bcc05057e36898864041fff8d2665b5ea92112042a6cd610f2f10015",
+      "observed": "4e0d6d510c7adde847831b7a77f5ebac7bd197e27f4778f64c174bbe2a5339d3",
+      "used": false,
+      "action": "Rejected124 archive input; reused independently pinned125 protocol fixtures. Cause of pre-existing124 manifest mismatch is unestablished; do not repair old archive or claim124 reverified."
+    },
+    "physical_trial": false,
+    "installable": false
+  },
+  "full_timing_pass": false,
+  "installable": false,
+  "next": "131fit05와132 경로 목록을 재사용해 CHR 설정 안정 구간과 RUN/STOP/오류→core/reader reset 해제 계약을 실제 결선에서 검증한다. 비동기 reset 체인 입력107음수행은 기능 하류와 구분하고 pulse/release 조건을 확인한다. 이어 실제 외부IO·SNES 소비자·관측 가능한 최소 RUN+044 복원으로 진행한다. 변경 없는 MAP/FIT/전체쓰기/371쌍 재검증은 반복하지 않는다."
+}

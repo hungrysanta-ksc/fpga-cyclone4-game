@@ -96,3 +96,5 @@
 - **130**: 상태 enable4개 제거, 같은 클록 최악−0.158→−0.040ns. 최종fit01, 카운터까지 변경한fit02는 미채택. 동작 코드 동일성으로129 시험 재사용. [결과](../../analysis/ENABLE130-RESULT.ko.md).
 
 - **131**: 카운터 사전 설정·제어 입력 매핑, 전체180,311핀 쓰기 회귀. 최종test02/fit05 memory setup +0.041ns(통과). [결과](../../analysis/COUNTER131-RESULT.ko.md).
+
+- **132**: 같은131배치의 데이터371쌍/16체인과actual reader 재검증. CHR183/RUN오류115쌍과외부IO미완료. [결과](../../analysis/CDC132-RESULT.ko.md).
