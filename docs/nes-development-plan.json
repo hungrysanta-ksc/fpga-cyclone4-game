@@ -5,11 +5,11 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "125 같은124배치 데이터372쌍/3corner 제약과 캡처·유지/조기캡처거부 통과. 제어6쌍/reset/외부IO·실기RUN미완료.",
-  "next_action": "VERIFY_SIX_CONTROL_CHAINS_THEN_LOADER_RUN_INTEGRATION",
+  "assessment": "126 bridge4체인명시적동기화배치적용.10체인·로컬reset4290·데이터372쌍통과.13568LE/933LAB,전체raw−7.976ns/MTBF/외부IO·실기RUN미완료.",
+  "next_action": "INTEGRATE_LOADER_375NS_CHECK_RUN_OWNERSHIP_AND_GUARD_ON_126",
   "next_three_deliverables": [
-    "같은124배치 제어6쌍 실제체인/fanout/settling/reset경계와조건부CDC판정",
-    "로더WRITE375ns·guard·독점소유권·최종자원/SNES소비자통합",
+    "126fit02/8QSF기준 로더WRITE375ns·CHECK/RUN독점소유권·guard통합",
+    "최종자원·변경된배선타이밍·실제SNES소비자연결검증",
     "진행관측·오류종료·독립044복원준비후최소RUN실기"
   ],
   "gates": [
@@ -77,9 +77,9 @@
     },
     {
       "id": "BOARD-FIT",
-      "status": "bundled_data_checked_control_reset_IO_open",
-      "evidence": "analysis/CDC125-RESULT.ko.md",
-      "detail": "같은124 933LAB배치 데이터372쌍/3corner통과,제어6쌍/reset/IO남음. loader/guard미포함."
+      "status": "explicit_control_sync_fit_pass_loader_IO_pending",
+      "evidence": "analysis/CONTROL126-RESULT.ko.md",
+      "detail": "126fit02 13568LE/933LAB/26M9K/PLL1;10체인·372데이터쌍검증통과.전체raw−7.976/MTBF/IO남음,loader/guard미포함."
     },
     {
       "id": "DISPLAY-240",
@@ -827,8 +827,8 @@
         "P4"
       ],
       "completion": "Normal-speed70ns memory, resource headroom, real SNES video/queue/display contract; redesign before feature expansion if insufficient",
-      "status": "bundled_data_checked_control_consumer_pending",
-      "evidence": "analysis/CDC125-RESULT.ko.md"
+      "status": "explicit_control_sync_fit_pass_loader_consumer_pending",
+      "evidence": "analysis/CONTROL126-RESULT.ko.md"
     },
     {
       "id": "P6",
@@ -904,6 +904,15 @@
     "data_pairs": 372,
     "control_pairs_open": 6,
     "same124_fit": true,
+    "full_timing_pass": false,
+    "installable": false
+  },
+  "control_cdc126": {
+    "evidence": "analysis/control126-verification.json",
+    "chains": 10,
+    "qsf_assignments": 8,
+    "LE": 13568,
+    "LAB": 933,
     "full_timing_pass": false,
     "installable": false
   }

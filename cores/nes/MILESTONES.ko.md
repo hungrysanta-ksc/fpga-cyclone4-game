@@ -84,3 +84,5 @@
 - **124**: 실제 코어/reader/영상 reset 동기해제 배선,4프레임245760픽셀,reader16위상·bridge/호스트reset통과.933LAB/동일클록STA통과,묶음CDC/외부IO미완료. [결과](../../analysis/RESET124-RESULT.ko.md).
 
 - **125**: 같은124 배치의 데이터372쌍/3corner 제약 및 실제 캡처·유지 검사 통과. 정상5실행·조기캡처 부정대조2개. 제어6쌍/reset/외부IO와 실기 RUN 남음. [결과](../../analysis/CDC125-RESULT.ko.md).
+
+- **126**: bridge4체인8QSF 동기화 배치 속성 적용·재배치. 제어/reset10체인·로컬reset4290경로·데이터372쌍 통과.13568LE/933LAB,전체MTBF·외부IO·RUN미완료. 다음로더375ns/소유권통합. [결과](../../analysis/CONTROL126-RESULT.ko.md).

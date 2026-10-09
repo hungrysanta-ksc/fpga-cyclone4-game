@@ -222,3 +222,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 125 묶음 데이터 CDC
 
 `nes_cdc125_sta.py --evidence124 <frozen124-final> --out <newASCII> --quartus-bin <bin64>`가 같은 배치의 정확한372쌍을 검증한다. `run_nes_cdc125_protocol.ps1`에는 Python/FloatWrapper/QuestaBin/Out/Baseline(124-final)을 지정한다. 기존1seat FLOAT로 reader2/bridge3위상과조기캡처부정대조2개를 실행한다. `verify_nes_cdc125.py --evidence <frozen125>`는 재실행없이 원시 경로·소스·DB·로그를 검사한다. 모든CDC/실물MTBF/IO통과나설치이미지가 아니다.
+
+## 126 제어 동기화 배치
+
+`nes_control126.py --baseline124 <frozen124-final> --baseline125 <frozen125> --out <newASCII> --quartus-bin <bin64>`로같은매핑/정확8QSF/새fit·STA를수행한다. `review_nes_control126.py --out <same> --quartus-bin <bin64>`로새내부타이밍·reset보고를검사한다. `verify_nes_control126.py --evidence <frozen126>`는전체해시·실제체인·데이터제약을재검사한다. 동기화속성변경에는Fitter재실행이필요하며,종료성공만으로적용성공을판단하지않는다.실제UserSpecified인식과Ignoredassignment부재를검사한다.

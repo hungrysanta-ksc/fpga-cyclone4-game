@@ -1,8 +1,8 @@
 # NES 개발 현황
 
-현재125: 같은124 배치의 메모리·영상 묶음 데이터372쌍을 세 corner에서 검증했다. 데이터 지연과 수신 대기 시간을 대응시켰으며,첫 동기화 단계·reset·외부IO와 실기 RUN 통합은 남는다. [125 결과](../../analysis/CDC125-RESULT.ko.md)를 우선한다.119/122/124 기준과 최소 RUN 실기 우선 방침을 유지한다.
+현재126: 영상 bridge4체인을 명시적인 동기화 배치 대상으로 지정하고 재배치했다. 제어·reset10체인과 데이터372쌍 검증 통과,933LAB/내부타이밍 유지. 다음은 로더375ns·메모리 소유권·guard의 실제 통합이다. [126 결과](../../analysis/CONTROL126-RESULT.ko.md)를 우선한다. 전체MTBF·외부IO·실기RUN은 미완료다.
 
-[현재 인계](HANDOFF.ko.md) · [125 결과](../../analysis/CDC125-RESULT.ko.md)
+[현재 인계](HANDOFF.ko.md) · [126 결과](../../analysis/CONTROL126-RESULT.ko.md)
 
 ## 이전 단계별 근거
 
