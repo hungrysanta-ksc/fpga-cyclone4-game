@@ -242,3 +242,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 130 로더 상태 합성 설정
 
 `nes_enable130_fit.py`에 `--baseline <probes> --out <fresh ASCII path> --quartus-bin <bin>`을 지정해 MAP/FIT/STA를 수행한다. 완료 후 `review_nes_enable130.py`로 같은 출력과 Quartus 경로를 전달한다. 최종fit01은 상태만 변경하며 fit02의 카운터 설정은 미채택이다. `verify_nes_enable130.py --evidence <frozen130>`은 인접129증거와 함께 입력 재생성·동작 코드 동일성·실제 포트·타이밍을 검사한다. 새 기능 시뮬레이션은 없으며 [130 결과](../../analysis/ENABLE130-RESULT.ko.md)의 미통과 범위를 유지한다.
+
+## 131 카운터 사전 설정
+
+기존FLOAT 경로의 `run_nes_counter131_diff.ps1`와 `run_nes_counter131.ps1`을 직렬 실행한다. `nes_counter131_fit.py`의 새MAP/FIT/STA 완료 후 `review_nes_counter131.py`로 실제제어입력/clock별setup·hold를 확인한다. `verify_nes_counter131.py --evidence <frozen131>`은 인접130동결자료도 필요하다. [131 결과](../../analysis/COUNTER131-RESULT.ko.md)의 선택 후보와 모델 범위·미완료 조건을 유지한다.

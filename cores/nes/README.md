@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재130: 로더 상태 레지스터의 자동 enable 추론을 끄고 실제 배치의 해당 입력4개를 제거했다. 같은 클록 최악 setup은 −0.158→−0.040ns로 개선됐지만 여전히 미통과다. 최종은 상태에만 적용한 fit01이며 카운터까지 바꾼 fit02는 미채택이다. [130 결과](../../analysis/ENABLE130-RESULT.ko.md)를 우선한다.
+현재131: 카운터를 대기 상태에서 미리 준비해 바이트 수 조건과 분리했다. 전체180,311회 핀 쓰기·CHECK/RUN·오류 취소 회귀 통과. 최종test02/fit05의 memory setup은 +0.041ns로 같은 클록 setup 통과다. 전체 타이밍·설치 승인은 별도다. [131 결과](../../analysis/COUNTER131-RESULT.ko.md)를 우선한다.
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 

@@ -94,3 +94,5 @@
 - **129**: reader 소유권 등록으로 reset→주소 경로 분리. 최종fit01 same-clock −0.446→−0.158ns. 로더 실험은 미채택, 다음 WRITE→HOLD enable 개선. [결과](../../analysis/READER129-RESULT.ko.md).
 
 - **130**: 상태 enable4개 제거, 같은 클록 최악−0.158→−0.040ns. 최종fit01, 카운터까지 변경한fit02는 미채택. 동작 코드 동일성으로129 시험 재사용. [결과](../../analysis/ENABLE130-RESULT.ko.md).
+
+- **131**: 카운터 사전 설정·제어 입력 매핑, 전체180,311핀 쓰기 회귀. 최종test02/fit05 memory setup +0.041ns(통과). [결과](../../analysis/COUNTER131-RESULT.ko.md).
