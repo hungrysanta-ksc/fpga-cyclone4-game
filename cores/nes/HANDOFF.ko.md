@@ -1,30 +1,27 @@
-# NES 현재 인계 —126 동기화 배치 적용, 다음은 로더·소유권 통합
+# NES 현재 인계 —127 로더 통합, 다음은168MHz 명령·reset 경로
 
-[126 결과](../../analysis/CONTROL126-RESULT.ko.md) · [검증 메타](../../analysis/control126-verification.json) · [125 데이터 계약](../../analysis/CDC125-RESULT.ko.md)
+[127 결과](../../analysis/LOADER127-RESULT.ko.md) · [검증 메타](../../analysis/loader127-verification.json)
 
 ## 바로 이어서 할 일
 
-**126 fit02를 기준으로 로더 WRITE375ns·CHECK/RUN 메모리 소유권·guard를 실제 코어에 연결한다.** 이번에 제어 체인 구조와 명시적 배치 설정을 완료했으므로 변경 없는 CDC 분석만 다시 수행하지 않는다. 남은 아날로그/외부 조건은 별도로 기록하며 전체 통과로 선언하지 않는다.
+**동결127 fit02를 기준으로 `mem_fault→check_next`와 `checked_data→fault` 경로를 구조적으로 줄인다.** 실제 코어에 로더·검증 후 RUN·가드가 연결됐지만 memory168 setup−2.647ns로 실기 파일을 만들 단계가 아니다. 배치 성공을 타이밍 성공으로 혼동하지 않는다. 명령 판정 단계 분리와 진단 로컬 reset 해제를 먼저 검토한다. 기존124의 common assert/local release 원칙을 새 decoder/loader에 대조한다.
 
-새 배치의 출발점은동결126의fit02/candidate다. [bridge QSF](../../src/nes/diagnostic/nes_bridge_sync126.qsf)의 정확한8개설정을 유지한다. QSF는`transport|bridge|ack_sync[0]`같은instance경로를 쓰며,TimeQuest의entity:instance명이나중괄호를그대로쓰지않는다. hierarchy가바뀌면명시적으로갱신하고Fitter의Ignored assignment와실제User Specified인식을검사한다. RTL/배선변경후에는새후보에서데이터372쌍과내부타이밍을재평가한다.
+최종 fit02:14,127LE/954LAB/5,296regs/26M9K/PLL1/물리46핀+가상264핀. 남은9LAB은 최종 소비자나 MMC3 여유가 아니다. NES8.963/host2.527/mem−2.647ns, 전체raw−10.383ns. 85°C guard mem_fault→check_next15,0°C checked_data2→fault−2.258ns가 남는다. live.sdc에는 blanket falsepath/multicycle이 없다. 과거126의 데이터372쌍/제어10체인 결과를 새 hierarchy에 그대로 적용하지 않는다. 이후 새 경로의 제약을 다시 확인해야 한다.
 
-8MHz WRITE3를168MHz로옮기면17.856ns가되어금지한다. 실제write활성/hold/release시간을375ns기준과연결하고READ16/168MHz와독점소유권을분리한다. CHECK에서RUN으로넘길때정지·배타·오류경로를보존하고guard카운터의8MHz전제를그대로옮기지않는다. 이후실제SNES소비자·진행관측·오류종료·독립044복원을묶어최소RUN실기를우선한다. 동일119 full80/BASE/ENTRY나변경없는전체프레임은반복하지않는다.
+## 구현 계약과 재사용할 시험
 
-## 최종 구현과 검증 범위
+- 168MHz 쓰기 SETUP22/WRITE64/HOLD22/RELEASE22:5.952ns 모델130.944/380.928/130.944/130.944ns. 최소125/375/125/125ns다. WRITE63은374.976ns라 거부한다. 새 비트스트림의 물리 핀 보증은 별도다.
+- RUN은 실제 SPI CHECK/순차 ACK/FINISH/verified 이후 START만 허용한다. 외부ext_arm으로 메모리 RUN 우회 금지. boot의 실제 START 배선은 연결됐다. 영상 arm은 기존대로 별도다.
+- 최종 SPI decoder는 CHECK 비교3개만 선행 레지스터에 계산한다. 프레임 offset은8바이트 중 앞쪽에서 고정되고 index는명령 종료 때만 바뀌며CHECK length는불변이다. DATA의 동적인length/ready비교는 즉시 비교를 유지한다. 명령 경계에서 기존 비교와의 동등성을 계속 시험한다.
+- unit02:80/96KiB 핀쓰기180,224+오류87바이트, CHECK260/RUN128/쓰기·유지86오류 위치, guard3, 부정 대조3 통과. decoder02:half-SCK60/18ns 각각149검사/18오류/16ACK/96query, 비교 일치와 미검증RUN 우회 거부. unit02와 최종decoder/fit의 loader/boot/reader/guard 해시 일치. 바뀐 decoder만 추가시험했다.
+- CPU 전체세션과 SPI 전체전송을 묶은 검증은 아직 없다. RAM70ns·decoder 응답16바이트는 모델이다. 원시 reset으로 취소하는 경우는 프로토콜 오류의 쓰기 drain과 구별한다. 양쪽 클록이 멈추면 guard가검출하지못하는 반례 유지.
+- 최종 guard는heartbeat21분주/상대clockage672/startup33603이다. 파이프라인을 바꾸면서 이시간을줄이거나공유오류보호를해제하지않는다. 변경 없는 full80/BASE/ENTRY/전체프레임을 반복하지말고 바뀐경계를시험한다.
 
-124매핑DB/47개소스입력을재사용하고bridge4체인의양단계8레지스터QSF속성만추가했다. 실제fit/STA수행,새RTL·MAP·Questa·전체코어프레임·ARM/ASM·설치패키지는없다. 최종13,568LE/933LAB/4,955regs/26M9K/PLL1/46실제핀264가상핀. 동일도메인setup NES8.845/host3.221/reader1.313ns,전체raw−7.976ns로전체타이밍은미통과. 남은30LAB는loader/guard/최종소비자를포함한여유가아니다.
+## 동결과 재현
 
-제어6체인과reset해제4체인(core/reader/host/init_release)모두첫단계fanout1,두단계,60개setup/hold양수. 최소4.762/0.196ns. 로컬해제후reset4,290경로최소1.171ns. 기존init_done비동기종착점6비트/36recovery-removal과이번release4체인8비트를혼동하지않는다. bridge4체인의보고가Automatic/No에서UserSpecified/Yes로바뀌었지만MTBF는여전히NotCalculated다. 도구settling에는최종단계출력slack도포함되므로단계간setup수치와같다고하지않는다.
+127 evidence는1,171파일,manifest c2a31d101697953dcc1d02fc3ef82036ff24d16a134a144b0eb74749aa99a6c8. unit01의부정시험문구불일치,초기LAB제목파서오류,fit01의−2.508ns실패,fit02의미해결경로를모두보존한다. fit01→fit02는959→954LAB이나최악memorysetup개선성공은아니다. 동결notes의140ns-class초안표기는125/375/125/125ns로읽어야한다. 완료finalizer/옛archive수정금지.
 
-새배치에서도125데이터372쌍×3corner통과:주소/반환/요청/응답slack2.176/37.476/40.862/7.787ns. raw데이터예산4/40/40/10ns,SDC한수신주기5.952/45.454/45.454/11.904ns유지. 원시첫단계비동기/전체reset펄스/아날로그MTBF/외부IO조건미완료,blanket falsepath없음.
-
-124공통reset/도메인별해제유지. RAM scrub는raw_stop만사용하고memory_ready를되먹이지않는다. reader원시reset OR우회/독립reset금지.124 fine_x4프레임의내용·상대tick일치/절대tick−4는역사적기능기준이며126postroute시뮬레이션으로확대하지않는다.
-
-## 실패와 보존
-
-fit01의잘못된QSF표기로8개속성이무시됐으며메타검사가거부했다. 최종fit02는정확한instance표기/무시경고즉시실패/실제보고대조를사용한다. 초기fit02검증의LE13540고정가정은실제packing13568변경으로실패했고장치한도검사로고쳤다.933LAB/4955regs유지,새빌드반복없음. 이전실패·원시로그·공식도움말을모두보존한다.
-
-126동결2,078파일/manifest0b81e9d875b04683f59a0de3599a2770c2b86437bca51e9ce6bdc3d85550a5d0. 완료finalizer와옛archive수정금지.125조건부디지털캡처계약과124의최종evidence-final기준유지. 파일이름만으로031/044소스를혼용하지말고해시부터확인한다.
+`run_nes_loader127.ps1`은기존FLOATwrapper와`-Baseline <probes>`/새ASCII출력을사용한다. `run_nes_loader127_decoder.ps1`은최종decoder경계/빠른SPI검증이다. `nes_loader127_fit.py --baseline <probes> --out <newASCII> --quartus-bin <bin64>`후`review_nes_loader127.py`로클록별실제실패까지확인한다. `verify_nes_loader127.py --evidence <frozen127>`는빌드없이전체해시·시험·배치결과를재검증한다. 새최종제약이나실기패키지는아직없다.
 
 ## 유지할 실기 기준과 목표
 
@@ -34,6 +31,6 @@ fit01의잘못된QSF표기로8개속성이무시됐으며메타검사가거부�
 
 ## 재현과 게시
 
-`nes_control126.py --baseline124 <frozen124-final> --baseline125 <frozen125> --out <newASCII> --quartus-bin <bin64>`는원래매핑을복사하고baseline분석/정확8QSF/fit/STA/새데이터검사를수행한다. 이후`review_nes_control126.py --out <same> --quartus-bin <bin64>`로동일클록/reset감사를새로실행한다. `verify_nes_control126.py --evidence <frozen126>`는재실행없이모든증거를대조한다. 동결DB에서도구를직접실행하지않는다.
+PR72병합확인. 한국어제목과작업목표/작업내용/작업결과/작업의미4절,사용자가병합한다. GBC152/원래NES334/모든공개핀보존. ROM·바이너리·미디어·라이선스·개인경로는Git제외. 새ARM/ASM/패키지/실기는없다. 다음은위타이밍병목을고친뒤SNES소비자·관측가능한최소RUN+044복원이다.
 
-PR71병합확인. 한국어제목과작업목표/작업내용/작업결과/작업의미4절,사용자가병합한다. GBC152/원래NES334/모든공개핀보존,ROM·바이너리·미디어·라이선스·개인경로Git제외. 이번에는새실기요청없음.
+게시 검사에서 decoder 실행기의 공백만 있는 빈 줄 하나가 발견되어 그 공백만 제거했다. 실행·동결 원본은 보존했고 공개 검증기는 이 정확한 한 줄 차이만 허용한다. RTL과 시험 결과는 변경하지 않았다. 첫 게시 검사 실패 기록도 보존한다.

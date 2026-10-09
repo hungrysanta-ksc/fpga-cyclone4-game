@@ -1,0 +1,89 @@
+{
+  "candidate": "NES-LOADER-127",
+  "base_merge": "cd6325e7f2980dc26a7ff9c6d492003ee6c3cbd2",
+  "archived_files": 1171,
+  "manifest_sha256": "c2a31d101697953dcc1d02fc3ef82036ff24d16a134a144b0eb74749aa99a6c8",
+  "public_sources": {
+    "tools/nes_loader127.py": "b470dc9cee847b8ad24520a37ab4e2af6f5e431e25e66ad057db31246f0920cc",
+    "tools/nes_loader127_test.py": "01760f1a8950f1ebba15c58a8ad1957ca09199fb71a8dbeaacd463fa4bc2e887",
+    "tools/nes_loader127_decoder.py": "44a6f98518df50f649707d0009536b12ff47cd6cfdbf1e2661f59ca757b370a8",
+    "tools/nes_loader127_fit.py": "05a9e5e35048abac7c1f9a99bac03fba11bd28f0e6bbb569a568a306ba5c24ac",
+    "tools/review_nes_loader127.py": "df16879b9c1918098d43e70441c1ff9a415d2a54368d376e4df6089e6958ec18",
+    "tools/verify_nes_loader127.py": "e8776af24529b06cae49fbc5361b54c3d5505e0a9302c8ab0227a85bfed04a93",
+    "tools/run_nes_loader127.ps1": "c707bd11d2877f433d0b0a550c7eca332a6f26c099a48055a2baddb8911d7da5",
+    "tools/run_nes_loader127_decoder.ps1": "5fb2608d3664d3c9fbedfab772143649804e5ef66618f1fdd1eeab2b61898052",
+    "src/nes/diagnostic/nes_rom_loader127.sv": "0cac05f668bc807581ebd73241b9f6e1f0c3ec3e47cba0a9ce6589c8e478133a",
+    "src/nes/diagnostic/nes_diag_clock_guard127.sv": "f1936729ba7505b4d3030a86d9c8b4d88ce4490500bffb7d38ea26cace64b6e3",
+    "tests/nes-functional/loader127_tb.sv": "9da44755e7f39500d7bc5842d5210fd34ce6d0d3cd6fed89ceb09ddd7f87d8e2",
+    "tests/nes-functional/guard127_tb.sv": "c8805e9390e6ee48af0339d7ffba7360e0d2d07230a17a9b0ba33feec398e8db",
+    "tests/nes-functional/decoder127_monitor.svh": "a4e9432ea995fae844c55f1b8e94307748331d704a43bf3f21cab8273ea6311a",
+    "analysis/control126-verification.json": "37ed9799dc35f7b51811af9aa3618df5aa37337a08152563086591642f17db2f",
+    "analysis/clock086-verification.json": "b7c43a80aef466226836c19885b28aa0178014c96cf8dde2752931af42112ac7",
+    "src/nes/diagnostic/nes_bridge_sync126.qsf": "01fbe9e130a731c8f582a55cc8545b75c8eceb2163befe25ff08ff55f9a6d94b",
+    "tools/nes_reset124_audit.tcl": "023b265b599431c11715e8bac65812cffb589f1e8b854333bffd9a793f3d532e",
+    "tests/nes-functional/spi_readback_control_tb.sv": "781f7fd47be565252beda8e3b96c722f5943e2fc88e1662ca4433b399c346375",
+    "tests/nes-functional/rom_boot_model.sv": "d0c18f965fe2d6bde1a393d2f19920923c0e88f405bcc6dd77a0cd6806d23389"
+  },
+  "checks": {
+    "final_fit": {
+      "resources": {
+        "Total logic elements": 14127,
+        "Total registers": 5296,
+        "Total pins": 46,
+        "Total virtual pins": 264,
+        "Total PLLs": 1,
+        "LAB": 954,
+        "M9K": 26
+      },
+      "same_clock_setup_min_ns": {
+        "nes": 8.963,
+        "pll|altpll_component|auto_generated|pll1|clk[0]": 2.527,
+        "pll|altpll_component|auto_generated|pll1|clk[1]": -2.647
+      },
+      "raw_clock_pair_min_ns": -10.383,
+      "clock_rows": 84,
+      "fit_passed": true,
+      "same_clock_setup_pass": false,
+      "full_timing_pass": false,
+      "old126_data_constraints_reused": false,
+      "installable": false
+    },
+    "loader_counts": {
+      "pin_writes": 180311,
+      "check_reads": 260,
+      "run_reads": 128,
+      "write_hold_fault_positions": 86
+    },
+    "decoder_checks_per_speed": 149,
+    "decoder_negative_cases_per_speed": 18,
+    "decoder_half_sck_ns": [
+      60,
+      18
+    ],
+    "guard_cases": 3,
+    "causal_rejections": [
+      "write63cycles",
+      "unverified_RUN",
+      "old31cycle_timeout"
+    ],
+    "unchanged_loader_guard_reused": true,
+    "full_spi_cpu_session": false,
+    "installable": false
+  },
+  "full_timing_pass": false,
+  "installable": false,
+  "next": "Restructure command retirement and diagnostic local reset paths; reuse127fit02 source, preserveSETUP/WRITE/HOLD/RELEASE minima125/375/125/125ns and verified-only RUN. Rerun affected decoder/reset tests and fitting, then new hierarchy-specific CDC/IO constraints, SNES consumer and observable minimum RUN+044 restore.",
+  "publication_correction": {
+    "reason": "git diff whitespace audit caught one space-only blank line in decoder driver; remove only that space, preserve executed/frozen sources, verifier explicitly accepts this exact difference. Verifier itself updated for that check. No RTL change or test rerun.",
+    "files": {
+      "tools/nes_loader127_decoder.py": {
+        "frozen_public_sha256": "3c412ed0a9cb3bd9d43c8a2550b6891c91466c8b3d7c9be1103222a88861f25e",
+        "published_sha256": "44a6f98518df50f649707d0009536b12ff47cd6cfdbf1e2661f59ca757b370a8"
+      },
+      "tools/verify_nes_loader127.py": {
+        "frozen_public_sha256": "8d09060925a5805eec1218c7bf6ba633f746b509a91958227720cda044c36421",
+        "published_sha256": "e8776af24529b06cae49fbc5361b54c3d5505e0a9302c8ab0227a85bfed04a93"
+      }
+    }
+  }
+}

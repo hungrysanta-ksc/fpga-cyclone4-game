@@ -5,12 +5,12 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "126 bridge4체인명시적동기화배치적용.10체인·로컬reset4290·데이터372쌍통과.13568LE/933LAB,전체raw−7.976ns/MTBF/외부IO·실기RUN미완료.",
-  "next_action": "INTEGRATE_LOADER_375NS_CHECK_RUN_OWNERSHIP_AND_GUARD_ON_126",
+  "assessment": "127 로더·verified RUN·guard 실제통합. 기능시험/954LAB배치PASS,168MHzsetup−2.647ns미통과. 실기파일생성전 명령판정·진단reset경로개선필요.",
+  "next_action": "FIX_127_COMMAND_RETIREMENT_AND_DIAGNOSTIC_RESET_TIMING",
   "next_three_deliverables": [
-    "126fit02/8QSF기준 로더WRITE375ns·CHECK/RUN독점소유권·guard통합",
-    "최종자원·변경된배선타이밍·실제SNES소비자연결검증",
-    "진행관측·오류종료·독립044복원준비후최소RUN실기"
+    "127 SPI 명령 판정·진단 reset 경로 분리와 영향받는 경계 시험",
+    "새 fit/같은클록 타이밍/변경 hierarchy CDC·IO 및 실제 SNES 소비자",
+    "관측가능한 최소 RUN·오류종료·독립044복원 실기"
   ],
   "gates": [
     {
@@ -77,9 +77,9 @@
     },
     {
       "id": "BOARD-FIT",
-      "status": "explicit_control_sync_fit_pass_loader_IO_pending",
-      "evidence": "analysis/CONTROL126-RESULT.ko.md",
-      "detail": "126fit02 13568LE/933LAB/26M9K/PLL1;10체인·372데이터쌍검증통과.전체raw−7.976/MTBF/IO남음,loader/guard미포함."
+      "status": "integrated_loader_fit_pass_memory168_timing_fail",
+      "evidence": "analysis/LOADER127-RESULT.ko.md",
+      "detail": "127fit02 14127LE/954LAB/26M9K/PLL1;같은클록memory168−2.647ns/raw−10.383ns. 남은9LAB은최종여유아님.126CDC승인미상속."
     },
     {
       "id": "DISPLAY-240",
@@ -827,8 +827,8 @@
         "P4"
       ],
       "completion": "Normal-speed70ns memory, resource headroom, real SNES video/queue/display contract; redesign before feature expansion if insufficient",
-      "status": "explicit_control_sync_fit_pass_loader_consumer_pending",
-      "evidence": "analysis/CONTROL126-RESULT.ko.md"
+      "status": "loader_guard_integrated_memory168_timing_failed",
+      "evidence": "analysis/LOADER127-RESULT.ko.md"
     },
     {
       "id": "P6",
@@ -913,6 +913,13 @@
     "qsf_assignments": 8,
     "LE": 13568,
     "LAB": 933,
+    "full_timing_pass": false,
+    "installable": false
+  },
+  "loader127": {
+    "evidence": "analysis/loader127-verification.json",
+    "LAB": 954,
+    "memory168_setup_ns": -2.647,
     "full_timing_pass": false,
     "installable": false
   }
