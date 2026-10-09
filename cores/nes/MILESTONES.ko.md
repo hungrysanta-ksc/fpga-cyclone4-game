@@ -90,3 +90,5 @@
 - **127**: 로더·검증 후 RUN·클록 감시를 실제 코어에 연결. 기능 시험·954LAB 배치 통과,168MHz −2.647ns 미통과. 다음 명령 판정·진단 reset 경로 개선. [결과](../../analysis/LOADER127-RESULT.ko.md).
 
 - **128**: 명령 반영 분리·진단 reset·상태별 로더·ACK carry 개선. 기능/오류 시험 통과,168MHz −2.647→−0.446ns. reader reset 경로는 미해결. [결과](../../analysis/COMMAND128-RESULT.ko.md).
+
+- **129**: reader 소유권 등록으로 reset→주소 경로 분리. 최종fit01 same-clock −0.446→−0.158ns. 로더 실험은 미채택, 다음 WRITE→HOLD enable 개선. [결과](../../analysis/READER129-RESULT.ko.md).

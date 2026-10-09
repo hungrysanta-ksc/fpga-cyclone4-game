@@ -234,3 +234,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 128 명령·로더 타이밍 개선
 
 기존 FLOAT 경로의 `run_nes_command128.ps1`/`run_nes_command128_boot.ps1`/`run_nes_command128_diff.ps1`에 `-Baseline <probes>`와 새 ASCII 출력/Python/Questa/wrapper 경로를 지정한다. `nes_command128_fit.py` 후 phase 완료를 확인하고 `review_nes_command128.py`를 실행한다. `verify_nes_command128.py --evidence <frozen128>`로 해시·실패를 포함한 결과를 확인한다. 최종 test06/boot05/diff02/fit07의 범위는 [128 결과](../../analysis/COMMAND128-RESULT.ko.md)를 따른다. fit 성공은 timing/설치승인이 아니다.
+
+## 129 reader 소유권 등록
+
+기존 FLOAT 경로의 `run_nes_reader129.ps1`에 `-Baseline <probes>`와 새ASCII 출력/Python/Questa/wrapper를 지정한다. `nes_reader129_fit.py`의 MAP/FIT/STA 완료 후 `review_nes_reader129.py`를 실행한다. 최종은test01/fit01이며 후속fit02–05는 미채택이다. `verify_nes_reader129.py --evidence <frozen129>`는 채택·미채택 증거를 구별해 검사한다. [129 결과](../../analysis/READER129-RESULT.ko.md)의 모델 범위와 남은 타이밍 실패를 유지한다.
