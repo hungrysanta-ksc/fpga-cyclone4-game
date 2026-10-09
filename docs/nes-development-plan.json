@@ -5,11 +5,11 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "사용자가 정상 전원·80KiB 1회 제한 실기 시험을 선택했다. 실행용111 패키지와 정확044 복원을 제공하며, 새 TXT·실제 메뉴 복귀·수동 복원 결과를 기다린다.",
-  "next_action": "COLLECT_APPROVED_TRIAL111_NORMAL80_HARDWARE_OBSERVATIONS",
+  "assessment": "111의1분 이상 로딩/리셋 미복귀/전원 재투입 메뉴 정상/로그 없음 관측을 반영했다.112는 단계 로그를 추가한80KiB 개선판이며 실행 패키지와044 복원이 준비됐다. 새 실기 결과를 기다린다.",
+  "next_action": "COLLECT_CHECKPOINT112_LOG_AND_ACTUAL_MENU_RESTORE",
   "next_three_deliverables": [
-    "111 패키지로 외부 실기에서 80KiB 시험 1회를 실행하고 nes-verify-last-094.txt, 실제 메뉴 복귀/시간/마지막 화면, 정상044 복원 후 메뉴·GBC 결과를 수집한다. 같은 범위를 다시 승인받거나 변경 없는 빌드·통합 시험을 반복하지 않는다.",
-    "실기 결과로 적재·비교·메뉴 반환 기준선 또는 최초 실패 경계를 확정하고 다음 최소 실험을 결정",
+    "112 패키지로80KiB 1회 실행, 중간 리셋 없이 최대600초 관측 후 nes-progress-112.txt와nes-verify-last-094.txt 또는 없음/0바이트, 실제메뉴/시간/044복원 후메뉴·GBC를 받는다. 영상 불필요. 마지막 기록을 기준으로 다음 최소 실험을 정한다.",
+    "마지막 체크포인트로 최초 실패경계 또는 정상 실기기준선을 확정",
     "SMB3 384KiB/mapper4/IRQ/PPU/입력/소리 첫 플레이"
   ],
   "gates": [
@@ -48,8 +48,8 @@
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/TRIAL111-RESULT.ko.md",
-      "remaining": "111 패키지로 외부 실기에서 80KiB 시험 1회를 실행하고 nes-verify-last-094.txt, 실제 메뉴 복귀/시간/마지막 화면, 정상044 복원 후 메뉴·GBC 결과를 수집한다. 같은 범위를 다시 승인받거나 변경 없는 빌드·통합 시험을 반복하지 않는다. RUN/video/input/audio/SMB3 미완료."
+      "evidence": "analysis/CHECKPOINT112-RESULT.ko.md",
+      "remaining": "112 패키지로80KiB 1회 실행, 중간 리셋 없이 최대600초 관측 후 nes-progress-112.txt와nes-verify-last-094.txt 또는 없음/0바이트, 실제메뉴/시간/044복원 후메뉴·GBC를 받는다. 영상 불필요. 마지막 기록을 기준으로 다음 최소 실험을 정한다. 게임RUN/영상/입력/소리 미완료."
     },
     {
       "id": "R5",
@@ -131,21 +131,21 @@
     },
     {
       "id": "REPORT-SESSION",
-      "status": "baseline084_pass_current111_pending",
-      "evidence": "analysis/TRIAL111-RESULT.ko.md",
-      "detail": "084 storage and restore passed.109 software integration retained; current111 physical report and lifecycle not observed yet."
+      "status": "checkpoint112_hardware_pending",
+      "evidence": "analysis/CHECKPOINT112-RESULT.ko.md",
+      "detail": "111의1분 이상 로딩/리셋 미복귀/전원 재투입 메뉴 정상/로그 없음 관측을 반영했다.112는 단계 로그를 추가한80KiB 개선판이며 실행 패키지와044 복원이 준비됐다. 새 실기 결과를 기다린다. 112 패키지로80KiB 1회 실행, 중간 리셋 없이 최대600초 관측 후 nes-progress-112.txt와nes-verify-last-094.txt 또는 없음/0바이트, 실제메뉴/시간/044복원 후메뉴·GBC를 받는다. 영상 불필요. 마지막 기록을 기준으로 다음 최소 실험을 정한다."
     },
     {
       "id": "EXTERNAL-OBSERVABILITY",
-      "status": "trial111_ready_observation_pending",
-      "evidence": "docs/nes-trial111-instructions.ko.md",
-      "detail": "Return fresh094 TXT or absent/empty, actual menu return/time/lastscreen,044 restoration.600sec human limit; persisted PREPARED is not release proof."
+      "status": "checkpoint112_hardware_pending",
+      "evidence": "analysis/CHECKPOINT112-RESULT.ko.md",
+      "detail": "111의1분 이상 로딩/리셋 미복귀/전원 재투입 메뉴 정상/로그 없음 관측을 반영했다.112는 단계 로그를 추가한80KiB 개선판이며 실행 패키지와044 복원이 준비됐다. 새 실기 결과를 기다린다. 112 패키지로80KiB 1회 실행, 중간 리셋 없이 최대600초 관측 후 nes-progress-112.txt와nes-verify-last-094.txt 또는 없음/0바이트, 실제메뉴/시간/044복원 후메뉴·GBC를 받는다. 영상 불필요. 마지막 기록을 기준으로 다음 최소 실험을 정한다."
     },
     {
       "id": "CURRENT-PAIR-RECOVERY",
-      "status": "trial111_package_ready_physical_pending",
-      "evidence": "analysis/trial111-verification.json",
-      "detail": "109 ARM108/CF86/exact044 reused.111 authorized scoped80KiB package; backup and new actual restoration/menu/GBC observation remain."
+      "status": "checkpoint112_hardware_pending",
+      "evidence": "analysis/CHECKPOINT112-RESULT.ko.md",
+      "detail": "111의1분 이상 로딩/리셋 미복귀/전원 재투입 메뉴 정상/로그 없음 관측을 반영했다.112는 단계 로그를 추가한80KiB 개선판이며 실행 패키지와044 복원이 준비됐다. 새 실기 결과를 기다린다. 112 패키지로80KiB 1회 실행, 중간 리셋 없이 최대600초 관측 후 nes-progress-112.txt와nes-verify-last-094.txt 또는 없음/0바이트, 실제메뉴/시간/044복원 후메뉴·GBC를 받는다. 영상 불필요. 마지막 기록을 기준으로 다음 최소 실험을 정한다."
     }
   ],
   "guardrails": [
@@ -784,8 +784,8 @@
       "scope": "Report session and external observation",
       "depends_on": [],
       "completion": "Actual multi-layer success/faults, IO protection, cumulative/boot time budget, user-visible outcome and recovery design",
-      "status": "partial_software_verified_trial111_hardware_pending",
-      "evidence": "analysis/TRIAL111-RESULT.ko.md"
+      "status": "checkpoint112_integrated_physical_pending",
+      "evidence": "analysis/CHECKPOINT112-RESULT.ko.md"
     },
     {
       "id": "P2",
@@ -808,8 +808,8 @@
         ],
         "report_only_package": "Existing validated path only; impact/observation/backup/restore conditions required"
       },
-      "status": "complete_for_limited_trial111_only",
-      "evidence": "analysis/trial111-verification.json"
+      "status": "complete_for_limited_checkpoint112_only",
+      "evidence": "analysis/checkpoint112-verification.json"
     },
     {
       "id": "P4",
@@ -817,8 +817,8 @@
       "depends_on": [
         "P3"
       ],
-      "completion": "111 single80KiB actual TXT/menu/time/lastscreen and044 restore/menu/GBC;96KiB/game/repeated/fault trials excluded",
-      "status": "awaiting_user_trial111_result"
+      "completion": "112 single80KiB stageTXT/finalTXT orabsent,menu/time and044restore/GBC;111 short observation inconclusive",
+      "status": "awaiting_user_checkpoint112_result"
     },
     {
       "id": "P5",
@@ -844,5 +844,5 @@
   "first_game_target": "cores/nes/first-game-target.json",
   "mapper_expansion_policy": "SMB3 mapper4 first, extend mappers afterward; keep SMB3/GBC regression",
   "hardware_iteration_policy": "최소 보호 동작과 검증된 파일 조합, 관측 방법, 종료·독립 복원 경로가 준비되면 제한 실기에서 데이터를 얻는 것을 우선한다. 남은 불확실성을 실제로 판별할 수 있는 시험을 먼저 정하고, 실기만으로 해결할 수 있는 항목을 같은 문서·모형 검사로 반복해서 미루지 않는다. 이는 모든 전기 조건의 입증을 생략한다는 의미가 아니다. 기존 승인 범위는 재승인을 요구하지 않으며, 고장 주입·전압 변경·노출 확대 등 범위가 달라질 때만 필요한 판단을 추가한다.",
-  "limited_trial_decision": "docs/nes-trial111-decision.json"
+  "limited_trial_decision": "analysis/checkpoint112-verification.json"
 }

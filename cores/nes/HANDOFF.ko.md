@@ -1,19 +1,19 @@
-# NES 현재 인계 —111 제한 실기 결과 대기
+# NES 현재 인계 —112 단계 로그 개선판 결과 대기
 
-사용자가 정상 전원·80KiB 1회 제한 실기 시험을 선택했다. 실행용111 패키지와 정확044 복원을 제공하며, 새 TXT·실제 메뉴 복귀·수동 복원 결과를 기다린다.
+111의1분 이상 로딩/리셋 미복귀/전원 재투입 메뉴 정상/로그 없음 관측을 반영했다.112는 단계 로그를 추가한80KiB 개선판이며 실행 패키지와044 복원이 준비됐다. 새 실기 결과를 기다린다.
 
-PR60 병합 `b49f9e2c8ea50ad15cf914d404011b0f1aad2be3`, head `c13e79108f5b064e38f708366d3506005549e90a` 포함 확인. 현재 `codex/nes-hardware-trial-111`. [111 결과](../../analysis/TRIAL111-RESULT.ko.md) · [실기 안내](../../docs/nes-trial111-instructions.ko.md) · [사용자 선택 기록](../../docs/nes-trial111-decision.json).
+PR61 head `8f43431c21f1698c30e65aba1b990e207c48c5f5` 기준, 확인 시점 open/unmerged다. 현재 `codex/nes-progress-log-112`. [112 결과](../../analysis/CHECKPOINT112-RESULT.ko.md) · [실기 안내](../../docs/nes-checkpoint112-instructions.ko.md).
 
 ## 다음 행동
 
-111 패키지로 외부 실기에서 80KiB 시험 1회를 실행하고 nes-verify-last-094.txt, 실제 메뉴 복귀/시간/마지막 화면, 정상044 복원 후 메뉴·GBC 결과를 수집한다. 같은 범위를 다시 승인받거나 변경 없는 빌드·통합 시험을 반복하지 않는다.
+112 패키지로80KiB 1회 실행, 중간 리셋 없이 최대600초 관측 후 nes-progress-112.txt와nes-verify-last-094.txt 또는 없음/0바이트, 실제메뉴/시간/044복원 후메뉴·GBC를 받는다. 영상 불필요. 마지막 기록을 기준으로 다음 최소 실험을 정한다.
 
-- 이번 사용자 메시지는 명시적 실기 선택이다.110 선택 대기는 해소됐다. 단순 PR 병합으로 추정한 동의가 아니다. 정상 전원·자체80KiB·1회만 포함하며96KiB/게임 RUN/고장 주입/반복 시험은 제외한다.
-- ZIP `NES111-80KiB-TRIAL-and-RESTORE044.zip`: 588031바이트, SHA `a63d464e19b013f0b69d71d89cd742ce26defb21d7282ab4788defb05fa915a6`. 시험6역할/복원3역할과 문서3항목. `01-TRIAL-SD-ROOT` 내용만 먼저 SD루트에 복사하고, `02-RESTORE044-SD-ROOT`는 시험 후 별도로 적용한다. 표식 `.nh1` 0바이트는 정상. 110 검토 ZIP을 설치하지 않는다.
-- 선택 파일 `NES VERIFY 094 80.nh1`, 로그 `/sd2snes/nes-verify-last-094.txt`, ARM버전 `CF86-CSS108`을 유지한다. 패키지111 번호와 혼동하지 않는다. PREPARED_RESET_HELD 기록은 실제 RESET 해제/메뉴 복귀 증명이 아니다. 최대600초는 사람의 관측 한도다.
-- 결과가 없거나0바이트여도 재시험부터 요청하지 않는다. 선택 전 메뉴/표식, 실제 복귀, 경과시간, 마지막 화면, 복원 결과로 실패 경계를 좁힌다. 성공하면 실기 기준선으로 고정하고 다음 최소 기능 실험을 정한다.
--109 통합38/보호대조4/조합정상1거부23, pair manifest `788dca6e5546456340ef03579b91a46a0496724a899432df389d48f0c69aae69` 재사용. ARM108183220바이트 SHA `394c1c442b6d767b5d41f891151eed12e82954b624a0b53a346dad8dc948692c`;097ASM/086fit/정확044 그대로. 새 제품C/RTL/빌드/Questa/실기 없음.
-- 제한 시험 설치승인만true. 전체NES 배포/게임RUN/전기E1·E2/8µs보장은false. 양클록 정지lockedHIGH CE9µs 반례와 nCONFIG high-Z≠CE HIGH 상한을 유지한다. 109/110의 과거정책과 archive044–111, 완료finalizer를 소급수정하지 않는다.
+- 사용자111 관측은600초 미만 중단으로 영구 멈춤을 확정하지 않는다. 전원 재투입 메뉴 정상과044 복원/GBC 성공은 다르다. 실제 소스113초는 통신 대기 하한이며 SD/구성 등 추가,600초는 사람의 관측 한도다. 호스트174초 등은 보드 ETA로 쓰지 않는다.
+-112 ZIP588448바이트 SHA `91a9c9cb9d1ec084be7725b3d2a7c80176c5eddb1d6f0b947d4375a2072b0889`,12항목. `01-TRIAL-SD-ROOT`와`02-RESTORE044-SD-ROOT`를 분리 적용. 표식 `NES VERIFY 094 80.nh1`은0바이트 정상. 새 ARM `CF86-LOG112`184452바이트 SHA `ac778c02d7561f2813c0930a8fecd3af67b4ca886455a214b068a3fbbb40fb16`.097CF86/base/menu/자체80KiB/정확044는109 역할 해시 유지.
+- `nes-progress-112.txt`는512바이트 순차 append,각write/sync/close,정상80에서33기록. 시작/완료와적재·비교16KiB,elapsed_ms. MENU_PREPARED와094 PREPARED 모두 실제RESET해제/화면 증명 아님. CS유휴/전경 단계 경계에서만로그; observer/ISR/NMI 쓰기없음. CSS/공유고장 뒤 SD/FPGA 추가IO금지. 체크포인트창은 원래IO시작시각/남은polls복구,60초예산 연장안함. SD전원차단 원자성 보장없음.
+- 최종시험: host03 24개, budget01 1개, readback01/readback96-01 실제FatFS파일재열기. FAT16/32 제품명령1814/1943,시험기 추가읽기36/39 별도. readback96은회귀전용,96실기승인 아님. 변경C·헤더6개 ARM/host같음,벡터08018f95→NMI08018f94/기존stop15stores0calls 확인. 실제MCU 실행/WCET 아님.
+- 초기arm01중복문자열 준비실패/host01DLL623/arm-check01키오류/Make의존성첫재시도 보존. 새FPGA/RTL/fit/STA/ASM/Questa 없음. 현재 ARM 생성기+기존100builder의obj-nes-100명은 역사적 명명. CSS108원본/최초GBC·NES 소스와 archive044–112/완료finalizer 수정금지.
+- 사용자111 제한시험승인과이번개선판직접요청을 적용했다. 이미승인된범위 재질문안함. 전체NES/게임RUN/E1E2/8µs 미완료,양클록정지lockedHIGH CE9µs 반례유지. 같은패키지반복 대신실제마지막단계에 맞춘수정.
 
 ## 실기 우선 개발 원칙
 
