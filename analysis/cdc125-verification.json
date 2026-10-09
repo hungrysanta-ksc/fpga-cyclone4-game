@@ -1,0 +1,94 @@
+{
+  "candidate": "NES-BUNDLED-CDC-125",
+  "base_merge": "85e98c9243ea917fc7879ef53caab76778556a66",
+  "archived_files": 910,
+  "manifest_sha256": "36a3effc9f2ce72ca3bd660724b9bc9392f0f9d0fe52aa0c95f54e6171c3039c",
+  "public_sources": {
+    "tools/nes_cdc125_inventory.tcl": "f2ba1cc1f352ae4fbbb688271d1266d892cc3eacdf9c56fbfa983e9e6cfefe94",
+    "tools/nes_cdc125_sta.py": "eb29d39bf39f03e1e8dba8f196c193106a390c4de51263b9005bf2d4eaa56b61",
+    "tools/nes_cdc125_protocol.py": "1cde3b76e7d196672c3c4730fc203c6a11ac1c95bcad2e921d859425c3da0d59",
+    "tools/run_nes_cdc125_protocol.ps1": "1f2dce3cc34157fd932deab180393cd897c7df7d66f2ad41f6444f56da3e76d5",
+    "tools/verify_nes_cdc125.py": "927c1570282b12102edfced27317a32f098c4cdf8457d6da1c229ad1b8d07110",
+    "tests/nes-functional/cdc125_reader.svh": "da4ea7899abc0da31648e33ec3cbf3417c2691f6625ab1e40e5adf30a2daf468",
+    "tests/nes-functional/cdc125_bridge.svh": "cba287f670e1e6d58bda95518b607240742ca3ccd34b92d2c812ca2976c123fa",
+    "analysis/reset124-verification.json": "50817a45870740c7c4b3545b9e974ecfa278f52e9c06bd4b39696fd0063986f3"
+  },
+  "checks": {
+    "groups": {
+      "reader_address": {
+        "budget_ns": 4.0,
+        "sdc_max_delay_ns": 5.952,
+        "destination_period_ns": 5.952,
+        "conditional_capture_min_ns": 11.904,
+        "max_data_delay_ns": 1.319,
+        "rows": 66,
+        "pairs": 22,
+        "constrained_min_slack_ns": 1.777
+      },
+      "reader_data": {
+        "budget_ns": 40.0,
+        "sdc_max_delay_ns": 45.454,
+        "destination_period_ns": 45.454,
+        "conditional_capture_min_ns": 90.908,
+        "max_data_delay_ns": 10.599,
+        "rows": 855,
+        "pairs": 257,
+        "constrained_min_slack_ns": 36.975
+      },
+      "bridge_request": {
+        "budget_ns": 40.0,
+        "sdc_max_delay_ns": 45.454,
+        "destination_period_ns": 45.454,
+        "conditional_capture_min_ns": 90.908,
+        "max_data_delay_ns": 6.704,
+        "rows": 138,
+        "pairs": 46,
+        "constrained_min_slack_ns": 40.859
+      },
+      "bridge_reply": {
+        "budget_ns": 10.0,
+        "sdc_max_delay_ns": 11.904,
+        "destination_period_ns": 11.904,
+        "conditional_capture_min_ns": 23.808,
+        "max_data_delay_ns": 1.094,
+        "rows": 141,
+        "pairs": 47,
+        "constrained_min_slack_ns": 7.955
+      }
+    },
+    "raw_rows": 1218,
+    "data_pairs": 372,
+    "control_pairs": 6,
+    "constrained_rows": 1116,
+    "raw_min_slack_ns": -8.477,
+    "protocol": {
+      "reader-0": [
+        "# CDC125 reader address=11.919000 data=108.231000 checks=537/525 hold=1037",
+        "# PASS PHYSICAL checks=35315 accepted=538 completed=525 canceled=13 pins=537 latency=5..5 phase_ps=0"
+      ],
+      "reader-3500": [
+        "# CDC125 reader address=11.915000 data=108.235000 checks=537/525 hold=1036",
+        "# PASS PHYSICAL checks=35315 accepted=538 completed=525 canceled=13 pins=537 latency=5..5 phase_ps=3500"
+      ],
+      "bridge-0.1": [
+        "# CDC125 bridge request=100.309000 reply=23.815000 checks=6427/6427 hold=12847",
+        "# PASS NES PACKET CDC checks=13 responses=6426 readbytes=6405"
+      ],
+      "bridge-1.1": [
+        "# CDC125 bridge request=98.228000 reply=23.809000 checks=6427/6427 hold=12847",
+        "# PASS NES PACKET CDC checks=13 responses=6426 readbytes=6405"
+      ],
+      "bridge-5.5": [
+        "# CDC125 bridge request=92.759000 reply=23.813000 checks=6427/6427 hold=12847",
+        "# PASS NES PACKET CDC checks=13 responses=6426 readbytes=6405"
+      ]
+    },
+    "negative_controls": 2
+  },
+  "fit_reused": true,
+  "production_rtl_changed": false,
+  "full_timing_pass": false,
+  "external_io_signoff": false,
+  "installable": false,
+  "next": "Inspect actual six control synchronizer chains, first-stage fanout, local settling slack and reset release topology in same124 routed DB; use explicit CDC disposition, no blanket waivers. Then integrate loader375ns/guard/ownership/SNES consumer and minimum observable RUN with044 restore."
+}

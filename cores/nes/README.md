@@ -1,8 +1,8 @@
 # NES 개발 현황
 
-현재124: 코어·reader·영상 경로의 도메인별 reset 해제를 구현하고4프레임·정지클록·배치를 검증했다.933LAB,동일클록 내부타이밍 통과,전체 raw−8.477ns·묶음데이터CDC·외부IO는 미해결이다. [124 결과](../../analysis/RESET124-RESULT.ko.md)를 우선한다.119/122 기준과 최소RUN 실기 우선 방침을 유지한다.
+현재125: 같은124 배치의 메모리·영상 묶음 데이터372쌍을 세 corner에서 검증했다. 데이터 지연과 수신 대기 시간을 대응시켰으며,첫 동기화 단계·reset·외부IO와 실기 RUN 통합은 남는다. [125 결과](../../analysis/CDC125-RESULT.ko.md)를 우선한다.119/122/124 기준과 최소 RUN 실기 우선 방침을 유지한다.
 
-[현재 인계](HANDOFF.ko.md) · [124 결과](../../analysis/RESET124-RESULT.ko.md)
+[현재 인계](HANDOFF.ko.md) · [125 결과](../../analysis/CDC125-RESULT.ko.md)
 
 ## 이전 단계별 근거
 
