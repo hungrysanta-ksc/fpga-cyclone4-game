@@ -250,3 +250,7 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 132 현재 CDC 재검증
 
 `nes_cdc132_inventory.py`로131fit05를별도복사하고 `nes_cdc132_sta.py`로현재경로를분류한다. 새MAP/FIT없음. `run_nes_cdc132_protocol.ps1`은기존FLOAT경로로actual131reader를시험하며125의고정fixture를사용한다. `verify_nes_cdc132.py --evidence <frozen132>`는인접125/131증거도필요하다. 124manifest불일치입력을재사용하거나과거archive를수정하지않는다. [132 결과](../../analysis/CDC132-RESULT.ko.md).
+
+## 133 실제 RUN 계약
+
+`run_nes_run133.ps1`으로 기존FLOAT 경로를 사용한다. 고정131fit05 입력, 이상적PLL/70nsRAM 모델, 초기값으로 넣은 이미지·적재·CHECK 완료 범위를 유지한다. 실제SPI 명령과CPU reset vector/명령 읽기, STOP/오류/클록 정지를 검사한다. `verify_nes_run133.py --evidence <frozen133>`은 인접131증거도 필요하다. [133 결과](../../analysis/RUN133-RESULT.ko.md).

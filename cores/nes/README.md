@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재132: 131의 같은 배치에서 데이터 CDC371쌍과16동기화·reset 해제 체인을 재검증했다. CHR 설정183쌍·RUN/오류 제어115쌍의 시작·종료 계약과 외부IO는 미완료다. [132 결과](../../analysis/CDC132-RESULT.ko.md)를 우선한다.
+현재133: 실제 상위 회로에서 RUN 20회·취소/차단 22회·CPU 응답 412바이트를 검증했다. CHR 변경·reset·최초 요청의 기능 계약은 조건부 통과했으며, 실제 외부IO·SNES 소비자·실기 RUN은 미완료다. [133 결과](../../analysis/RUN133-RESULT.ko.md)를 우선한다.
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 
