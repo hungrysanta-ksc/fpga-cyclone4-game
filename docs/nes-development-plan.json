@@ -5,12 +5,12 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "현재135: 최소 RUN 물리 셸의 같은 클록 setup·hold 통과(memory168 +0.152ns). 오류 우선순위·CPU RUN 검증 완료. 새 CDC/reset/외부IO와 MCU 식별·유한 RUN·로그·복원 연결은 미완료이며 설치용 패키지는 없다.",
-  "next_action": "REVIEW_PHYSICAL135_CDC_AND_INTEGRATE_STRICT_MCU_RUN",
+  "assessment": "현재136: 최초 최소 CPU RUN·로그·STOP/메뉴/044 복원 패키지 준비 완료. 실기 CPU 활동 결과 대기, 화면/입력/오디오/SMB3 미완료.",
+  "next_action": "COLLECT_FIRST_BOUNDED_RUN136_HARDWARE_RESULT",
   "next_three_deliverables": [
-    "선택135fit03를 재사용해 새 hierarchy의 reader held-data/guard/reset/관측 reset과 외부IO 계약을 확인한다. 무변경 MAP/FIT/전체 적재를 반복하지 않는다. 이어 최소 RUN 전용 MCU 식별59+D4, bit별 shared-fault/RDY/예산, 유한 RUN/STOP·진행TXT·base/menu·044복원을 연결한다. ARM116의 CF86 식별86을 그대로 쓰거나 여러 ID를 무조건 허용하지 않는다. 전체 화면/MMC3는 별도다.",
-    "새 후보 전용59/D4 MCU 식별·bit별guard·유한RUN·진행TXT·STOP 통합",
-    "base/menu·정확한044복원과 최소RUN 실기 패키지"
+    "사용자136 실기에서 두 TXT·메뉴 복귀·044 메뉴/GBC 복원 결과를 확인한다. 실패 시 마지막 성공 단계~첫 실패 경계만 수정한다. 정상 CPU 활동 확인 뒤 기존H1 소비자와 실제 NES 화면·입력을 연결한다. 새 실패 없이 같은 오프라인 시험·배치·로그 확장을 반복하지 않는다.",
+    "실제 NES 화면·입력의 최소 통합 실기",
+    "SMB3 mapper4·384KiB·플레이·오디오 실기"
   ],
   "gates": [
     {
@@ -19,8 +19,8 @@
       "title": "Latest resource and memory feasibility",
       "depends_on": [],
       "exit": "Pinned synthesis/resource table, explicit exclusions, memory service contract and integration-headroom decision; not full board signoff",
-      "evidence": "analysis/SPI-READBACK-RESULT.ko.md",
-      "remaining": "전체059 959/963LAB로4개 여유. CF86 진단191LAB/CF87 관측27LAB와 별개. 전체 영상 소비자 포함 자원·실기 메모리 서비스 기한 미완료."
+      "evidence": "analysis/COMMAND135-RESULT.ko.md",
+      "remaining": "135 최소셸885/963LAB·12M9K·95실핀/0가상핀/PLL1 같은클록통과.131 전체joint954LAB와 구분. 영상소비자·MMC3추가 최종자원미확인."
     },
     {
       "id": "R2",
@@ -48,8 +48,8 @@
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/CORE120-RESULT.ko.md",
-      "remaining": "119 제한80KiB 적재/검증/STOP/복구/메뉴/044복원 통과. 정상속도 코어 메모리·RUN·영상·입력·소리 미완료."
+      "evidence": "analysis/RUN136-RESULT.ko.md",
+      "remaining": "136 MCU59/D4·유한RUN·STOP·최종쌍 준비. 실기활동/복구·화면/입력/소리 미확인."
     },
     {
       "id": "R5",
@@ -59,7 +59,8 @@
         "R3",
         "R4"
       ],
-      "exit": "Same complete candidate fit/STA/CDC/IO review, source-adoption clearance, recoverable test package, diagnostic then designated SMB3 hardware scenarios"
+      "exit": "Same complete candidate fit/STA/CDC/IO review, source-adoption clearance, recoverable test package, diagnostic then designated SMB3 hardware scenarios",
+      "scope_note": "Full-game gate; R3 accuracy does not block milestone A/B restricted normal RUN."
     }
   ],
   "open_issues": [
@@ -77,9 +78,9 @@
     },
     {
       "id": "BOARD-FIT",
-      "status": "run_functional_contract_pass_physical_io_open",
-      "evidence": "analysis/RUN133-RESULT.ko.md",
-      "detail": "Same131fit05 and132 data371/16chains; actual joint20starts22cancels412CPUresponses at two phases. Analog/IO/SNES consumer open."
+      "status": "minimum135_same_clock_pass_scoped_cdc_io_open",
+      "evidence": "analysis/COMMAND135-RESULT.ko.md",
+      "detail": "135fit03 실제95핀·885LAB·같은클록setup.152/hold.180. raw-6.767와새CDC/reset/IO열림;전체게임배치아님."
     },
     {
       "id": "DISPLAY-240",
@@ -101,9 +102,9 @@
     },
     {
       "id": "RESOURCE-PACKING",
-      "status": "joint_fit_pass_narrow_headroom",
-      "evidence": "analysis/SPI-READBACK-RESULT.ko.md",
-      "detail": "05914180LE/959LAB/5203registers/26M9K,288virtual/22unlocated pins/PLL0.4LAB remains; full board/consumer/STA and measured timing remain open."
+      "status": "minimum_run_fits_full_video_mapper_integration_open",
+      "evidence": "analysis/COMMAND135-RESULT.ko.md",
+      "detail": "135최소셸885LAB,131전체joint954LAB는서로다름.0594LAB표기는역사.최종SNES소비자/MMC3통합자원미확인."
     },
     {
       "id": "VIDEO-REPRESENTATION",
@@ -113,9 +114,9 @@
     },
     {
       "id": "VIDEO-CLOCK-DRIFT",
-      "status": "model_exposes_integration_requirement",
-      "evidence": "analysis/packet-queue-clock-audit.json",
-      "detail": "StaticboardCLKIN8MHz->GBC151/36,bus21/2 PLLs;SNESphi2async input. NES clock46.560846ns exists inTB;no boardNESphase lock.026finitequeue drift requirement remains open."
+      "status": "current_source_clock_wired_consumer_drift_open",
+      "evidence": "analysis/BOARD134-RESULT.ko.md",
+      "detail": "134/135 NESsource는SNES_SYSCLK(A9),memory는CLKINPLL.실제SNES소비자미연결이므로표시큐·속도/드리프트완료아님.과거026문제는영상연결때확인."
     },
     {
       "id": "OAM-INITIALIZATION",
@@ -125,9 +126,9 @@
     },
     {
       "id": "ROM-DEADLINE",
-      "status": "safe_read16_168mhz_functional_pass_board_timing_open",
-      "evidence": "analysis/SAFE122-RESULT.ko.md",
-      "detail": "READ8 safe-reader CPU기한반례852209; READ16/168MHz·95.232ns접근24프레임/16위상핀통과. 제품RTL불변;보드타이밍/로더/guard소유권통합미완료. 123 reader동일클록물리setup+1.432ns;교차클록/reset/외부IO미완료. 124 reset변형fine_x4프레임통과/절대tick−4·상대동일;168setup0.816ns,묶음CDC/외부IO미완료."
+      "status": "functional_read16_pass_minimum135_fitted_physical_run_open",
+      "evidence": "analysis/COMMAND135-RESULT.ko.md",
+      "detail": "122READ16/168MHz제한24프레임통과,135로더/guard/physicalshell동일클록통과.사용중CDC/IO최소검토와새MCU실기RUN이남음."
     },
     {
       "id": "REPORT-SESSION",
@@ -1025,5 +1026,64 @@
     "same_clock_timing_pass": true,
     "full_timing_pass": false,
     "installable": false
+  },
+  "planning_review": {
+    "date": "2026-10-10",
+    "evidence": "docs/development/NES-MILESTONE-AUDIT-135.ko.md",
+    "scope": "planning_only_after135",
+    "implementation_changed": false,
+    "legacy_readiness_scope": "119 restricted load/verify/restore, not current RUN or game completion"
+  },
+  "current_minimum_run_candidate": {
+    "candidate": "NES-MINIMUM-RUN-136",
+    "selected": "135fit03/ARM136",
+    "evidence": "analysis/run136-verification.json",
+    "hardware_executed": false,
+    "package_ready": true
+  },
+  "user_observable_milestones": [
+    {
+      "id": "A",
+      "goal": "최초 유한RUN SD 패키지 전달",
+      "status": "package_ready_delivered_for_user_trial"
+    },
+    {
+      "id": "B",
+      "goal": "실기 CPU 활동/STOP/메뉴·044복원",
+      "status": "not_tested"
+    },
+    {
+      "id": "C",
+      "goal": "실제 NES 생성 화면·패드 반응",
+      "status": "partial_components_only"
+    },
+    {
+      "id": "D",
+      "goal": "SMB3(J) mapper4/384KiB 플레이·오디오",
+      "status": "partial_components_not_integrated"
+    },
+    {
+      "id": "E",
+      "goal": "호환맵퍼·정확성·장시간 안정성",
+      "status": "deferred_until_feedback"
+    }
+  ],
+  "run136": {
+    "evidence": "analysis/run136-verification.json",
+    "package": {
+      "zip_sha256": "973bd739d98a51a8d05c27d19b36b74208ad882f9ed958c03247e6cc290ea04b",
+      "zip_bytes": 678761,
+      "members": 12,
+      "firmware_bytes": 185780,
+      "firmware_sha256": "e5b7591fec88ec28aaea97ea31ddb0cc9c2fcc295c10bc47a4b392b8a451a215",
+      "fpga_bytes": 315708,
+      "fpga_sha256": "60c67adbb2662dbb9b8f2bc9adc352ab31b2b77241ccff06e28ceedafdba7566",
+      "fixture_sha256": "c8bda70ddf6a16e54e68f9e612a0e3b73598943aae0169680909b746720dad35",
+      "fixture_bytes": 81936,
+      "physical": false,
+      "normal_trial_ready": true
+    },
+    "physical": false,
+    "game_ready": false
   }
 }

@@ -1,5 +1,7 @@
 # FPGA Core Development — sd2snesHST
 
+현재136: **최초 최소 RUN 실기 패키지 준비 완료, 사용자 결과 대기**. [135 이후 공정 점검](docs/development/NES-MILESTONE-AUDIT-135.ko.md)에 완료/미완료·재사용·후순위와 실기 중심 마일스톤을 정리했다. 이후 [136 구현/시험 결과](analysis/RUN136-RESULT.ko.md)와 [실기 절차](docs/nes-run136-instructions.ko.md)를 연결했다.
+
 **sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다.
 제품 이름의 **HST는 HungrySanTa = 제작팀 이름**을 뜻합니다.
 
@@ -22,7 +24,7 @@
 | 구성 | 현재 상태 | 소스·재현 |
 | --- | --- | --- |
 | GB/GBC | C44 실기 확인, 0.9.0 공개 완료 | [GBC 개발 안내](cores/gbc/README.md) |
-| NES | 135 최소 RUN 같은 클록 타이밍 통과;새 CDC·MCU 연결/실기 준비 중 | [NES 개발 안내](cores/nes/README.md) |
+| NES | 136 최소 CPU RUN·로그·044 복원 패키지 준비, 실기 결과 대기 | [NES 개발 안내](cores/nes/README.md) |
 | PC Engine | 조사 대기; HuCard 범위를 우선 검토 | [PCE 조사 범위](cores/pce/README.md) |
 
 현재 구현 대상은 **FXPAK Pro / Mk.III, STM32 + EP4CE15F17C8**입니다. 제품 이름이 바뀌어도 보드 지원 범위가 넓어지는 것은 아닙니다. NES/PCE의 동작 가능성·일정은 아직 확정하지 않았습니다.

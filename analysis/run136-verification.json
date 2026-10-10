@@ -1,0 +1,165 @@
+{
+  "candidate": "NES-MINIMUM-RUN-136",
+  "base_merge": "a8b4450a6f81cf0f6997a681fa6e5ec41439e692",
+  "archived_files": 3184,
+  "manifest_sha256": "3ccc89d8de556aff6f91a893706053cef661e01fe5978f5cec7584d04116a43c",
+  "selected": {
+    "fit": "135fit03",
+    "host": "host05",
+    "rtl": "rtl02",
+    "arm": "arm03",
+    "arm_check": "arm-check03",
+    "io": "io03",
+    "release": "release01"
+  },
+  "package": {
+    "zip_sha256": "973bd739d98a51a8d05c27d19b36b74208ad882f9ed958c03247e6cc290ea04b",
+    "zip_bytes": 678761,
+    "members": 12,
+    "firmware_bytes": 185780,
+    "firmware_sha256": "e5b7591fec88ec28aaea97ea31ddb0cc9c2fcc295c10bc47a4b392b8a451a215",
+    "fpga_bytes": 315708,
+    "fpga_sha256": "60c67adbb2662dbb9b8f2bc9adc352ab31b2b77241ccff06e28ceedafdba7566",
+    "fixture_sha256": "c8bda70ddf6a16e54e68f9e612a0e3b73598943aae0169680909b746720dad35",
+    "fixture_bytes": 81936,
+    "physical": false,
+    "normal_trial_ready": true
+  },
+  "sta": {
+    "candidate": "NES-CDC-REFRESH-136",
+    "passed": true,
+    "groups": {
+      "reader_address": {
+        "rows": 63,
+        "pairs": 21,
+        "max_data_delay_ns": 1.077,
+        "raw_min_slack_ns": -3.951,
+        "budget_ns": 4.0,
+        "sdc_max_delay_ns": 5.952,
+        "conditional_capture_min_ns": 11.904,
+        "constrained_min_slack_ns": 1.999
+      },
+      "reader_data": {
+        "rows": 789,
+        "pairs": 249,
+        "max_data_delay_ns": 8.897,
+        "raw_min_slack_ns": -6.767,
+        "budget_ns": 40.0,
+        "sdc_max_delay_ns": 45.454,
+        "conditional_capture_min_ns": 90.908,
+        "constrained_min_slack_ns": 38.685
+      },
+      "control_first_stage": {
+        "rows": 12,
+        "pairs": 4,
+        "max_data_delay_ns": 6.624,
+        "raw_min_slack_ns": -4.536
+      },
+      "configuration_open": {
+        "rows": 1191,
+        "pairs": 116,
+        "max_data_delay_ns": 8.563,
+        "raw_min_slack_ns": -6.43
+      },
+      "lifecycle_open": {
+        "rows": 345,
+        "pairs": 115,
+        "max_data_delay_ns": 6.99,
+        "raw_min_slack_ns": -4.861
+      }
+    },
+    "raw_rows": 2400,
+    "raw_pairs": 505,
+    "constrained_pairs": 270,
+    "constrained_rows": 810,
+    "chains": 12,
+    "release_chains": 8,
+    "chain_paths": 72,
+    "chain_min_setup_ns": 4.762,
+    "chain_min_hold_ns": 0.194,
+    "local_reset_rows": 3642,
+    "local_reset_min_ns": -4.506,
+    "local_reset_pass": false,
+    "new_fit": false,
+    "full_timing_pass": false,
+    "mtbf_signoff": false,
+    "external_io_signoff": false,
+    "installable": false
+  },
+  "io": {
+    "passed": true,
+    "rows": 2280,
+    "psram_input_max_ns": 7.219,
+    "psram_output_max_ns": 12.078,
+    "spi_route_max_ns": 10.133,
+    "psram_read_window_ns": 95.232,
+    "psram_access_ns": 70,
+    "setup_uncertainty_allowance_ns": 2,
+    "pcb_roundtrip_assumed_ns": 2,
+    "conditional_read_margin_ns": 1.935,
+    "reset_rows": 3642,
+    "reset_negative_rows": 80,
+    "negative_only_release_async_inputs": true,
+    "downstream_reset_min_ns": 0.561,
+    "normal_trial_only": true,
+    "new_fit": false,
+    "full_io_signoff": false,
+    "board_delay_measured": false,
+    "mtbf_calculated": false
+  },
+  "rtl": {
+    "passed": true,
+    "trace_sha256": "0c0bf18347891e465442ee01e565a29b0cd09026eab770be0946021f5795f77e",
+    "results": [
+      "# PASS136 MCU22frames RUN16reads first=3430 last=73722 stopped=75636 phase_ps=0",
+      "# PASS136 MCU22frames RUN16reads first=3430 last=73722 stopped=75636 phase_ps=3500"
+    ],
+    "seeded_load_verified": true,
+    "pll_model": true,
+    "physical": false
+  },
+  "arm": {
+    "firmware_bytes": 185780,
+    "firmware_sha256": "e5b7591fec88ec28aaea97ea31ddb0cc9c2fcc295c10bc47a4b392b8a451a215",
+    "elf_sha256": "7d36e45b5fee363e5a96b6171fd8c3d9f0760c0d22073557005ca00f22c45258",
+    "nmi_address": "0x0801909c",
+    "vector_word": "0x801909d",
+    "stop_stores": 15,
+    "stop_calls": 0,
+    "stop_dsb": 3,
+    "stop_isb": 2,
+    "host_sources_match": true,
+    "strong_nmi": true,
+    "arm_execution": false,
+    "physical": false,
+    "installable": false
+  },
+  "normal_trial_ready": true,
+  "physical": false,
+  "new_map_fit": false,
+  "game_ready": false,
+  "source_lock": {
+    "rtl/regs_savestates.sv": "used_in_selected135",
+    "rtl/bus_savestates.vhd": "used_in_selected135",
+    "rtl/dpram.vhd": "not_in_selected135",
+    "rtl/mappers/MMC3.sv": "not_in_selected135"
+  },
+  "public_sources": {
+    "src/nes/firmware/nes_run136.h": "9afadde2089710c9b67d3da93120cf800c0709244f55ab36f97df448b4fef366",
+    "src/nes/firmware/nes_run136.inc": "0002b0fb668f68b86d75b9d16b0d5f3ababcf377203b38379641f84155c5392a",
+    "docs/nes-run136-instructions.ko.md": "5fce4bd03cce3c2e25d2e5459c15d291beac5b7abcf5fbf4a710fa12eadab5c6",
+    "tools/nes_run136_inventory.py": "4c73824776b153c6ab1dac5d6295184b121bfaeff1e9316e539c0e3492d22afc",
+    "tools/nes_run136_sta.py": "050b30b5a3fc9365375b894db3873364443edaa2c8adce81649ba2e97ee888d0",
+    "tools/nes_run136_io.py": "e1658510b777792f00c9e09cce71fdf1847c13aae252fda54370dd9c89698a46",
+    "tools/nes_run136_mcu.py": "491fb169cd0e67b6f987ad505a7542f0848f3474eb00e9595dc7b3c2b238dd2f",
+    "tools/prepare_nes_run136.py": "badad4349d71f9490f4dd9705e804ae5617a9c03b16f5ab5397a57348371df81",
+    "tools/test_nes_run136.py": "8c00a23f27b271952181abf92f0e8e0911c7ba498e77e895ad7a399fecd3405f",
+    "tools/test_nes_run136_rtl.py": "64b16dbd9dac67463078e6ad09cc10bc9139bedaf54bd97e0d64ee440b52f92e",
+    "tools/build_nes_run136_arm.ps1": "c3367ca78e9ce46dd74d79d8d4ae55b23f39b8dd0aee86b2fb5e58ac5fb4b767",
+    "tools/check_nes_run136_arm.py": "60cb98008981ac9e0f0bafc8c15ea7ed8b23ee2bd1b46e78a75f3966ae90e2e7",
+    "tools/nes_run136_assemble.py": "1d9e9fecbdd1d354c01566fccf3d6baf4c5e1c8752a3425198c704a06121d738",
+    "tools/release_nes_run136.py": "ba2f0114c6ba5fb06a4626d8619626fb9d1a1b03274a0d925f95e808252c4724",
+    "tools/verify_nes_run136.py": "85f3be225547f0e8326299db7b70f4dbecf2166929695f3841491766882cb273"
+  },
+  "next": "사용자136 실기에서 두 TXT·메뉴 복귀·044 메뉴/GBC 복원 결과를 확인한다. 실패 시 마지막 성공 단계~첫 실패 경계만 수정한다. 정상 CPU 활동 확인 뒤 기존H1 소비자와 실제 NES 화면·입력을 연결한다. 새 실패 없이 같은 오프라인 시험·배치·로그 확장을 반복하지 않는다."
+}
