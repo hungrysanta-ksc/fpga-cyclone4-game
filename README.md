@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재144: **143 실기 표시·메뉴 복귀 확인, 읽을 수 있는 NES 그림 시험 대기**. [144 결과](analysis/SCREEN144-RESULT.ko.md) · [실행 안내](docs/nes-screen144-instructions.ko.md).
+현재145: **144 문자·메뉴 복귀 통과, 부분 갱신은 미해결. 검정·고정 그림 영상 시험 준비 완료**. [145 결과](analysis/SCREEN145-RESULT.ko.md) · [실행 안내](docs/nes-screen145-instructions.ko.md).
 
 **sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다.
 제품 이름의 **HST는 HungrySanTa = 제작팀 이름**을 뜻합니다.

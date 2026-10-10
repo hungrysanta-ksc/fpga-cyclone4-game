@@ -1,5 +1,7 @@
 # NES 검증 재현 범위
 
+145: [범위·재현 순서](../../analysis/SCREEN145-RESULT.ko.md). `verify_nes_screen145.py --baseline <private-probes>`는 동결 private 증거와 공개 pin/패키지를 검사한다. 실제 NES ROM/코어는144 그대로이며 새 SNES 고정 동작·60초 MCU·ROM버스만 관련 검증했다.
+
 138: [재현 순서·선택본](../../analysis/DISPLAY138-RESULT.ko.md). `verify_nes_display138.py`는 동결 증거를읽기전용검사한다. 137픽셀검증은변경없는소스범위에서재사용한다.
 
 137: `nes_screen137.py` / `test_nes_screen137.py` / counter·bus·client 시험 / `verify_nes_screen137.py`. 선택fit03/test01+counter01/bus01/client06–08. 고정135/122 개인증거와기존FLOAT가필요하다. [범위와 결과](../../analysis/SCREEN137-RESULT.ko.md). 새실기패키지는아직없다.
