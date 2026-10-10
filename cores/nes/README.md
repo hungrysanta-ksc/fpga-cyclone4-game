@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재135: 최소 RUN 물리 셸의 같은 클록 setup·hold 통과(memory168 +0.152ns). 오류 우선순위·CPU RUN 검증 완료. 새 CDC/reset/외부IO와 MCU 식별·유한 RUN·로그·복원 연결은 미완료이며 설치용 패키지는 없다. [135 결과](../../analysis/COMMAND135-RESULT.ko.md)를 우선한다.
+현재136: **최초 최소 CPU RUN 실기 패키지 준비 완료**, 사용자 TXT·메뉴/044 복원 결과 대기. [136 결과](../../analysis/RUN136-RESULT.ko.md) · [실기 절차](../../docs/nes-run136-instructions.ko.md) · [공정 점검과 A–E 계획](../../docs/development/NES-MILESTONE-AUDIT-135.ko.md). 화면·입력·소리·SMB3는 아직 미완료다.
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 
