@@ -1,4 +1,8 @@
-# NES 현재 인계 —141 실기 대기
+# NES 현재 인계 —141 실행·메뉴 통과, 화면 관찰 대기
+
+**최신 실기 판정:** ROM 오류0/RUN·STOP·자동 메뉴 복귀·TXT 성공. 사용자는 진단 화면을 관찰하지 못했다. [실기 결과](../../analysis/SCREEN141-HARDWARE-RESULT.ko.md)를 아래 제작 시점의 실기 대기 문구보다 우선한다.
+
+같은141을 화면 관찰 목적으로 한 번만 재실행한다. 약8분30초부터 대기하고 진단 그림의 정상/검정/깨짐과 메뉴 복귀를 확인한다. 사진/짧은 영상 권장. 새 펌웨어·무변경 빌드·044/GBC 복원 반복은 필요 없다. 정상 화면 확인 뒤 패드·SMB3 mapper4/384KiB·오디오로 진행한다.
 
 [결과](../../analysis/SCREEN141-RESULT.ko.md) · [실행 안내](../../docs/nes-screen141-instructions.ko.md) · [검증 메타](../../analysis/screen141-verification.json)
 
@@ -35,7 +39,7 @@ reader16위상에서8,400읽기/208취소와 주소·데이터 CDC 및 setup/hol
 
 선택 fit05/arm01/armcheck02/host04/core06/reader01/inventory05/sta05/io05/asm05/release01. 동결 evidence 내부는 역할명 fit/arm/armcheck/host/core/reader/inventory/sta/io/asm/release로 저장했다. 원본 시도 번호는 메타 selected에 있다. core06의140 대조 로그는 core03에서 재사용했으며 생산 소스 차이는 cache service뿐이고 LEGACY=1/CAPTURE=0으로 나머지 두 변경을 끈 대조다.16ns 실패를 없애거나12ns 통과를 전체 타이밍 승인으로 쓰지 않는다. 공개 core driver는 같은 시험의 휴대 가능한 재생 도구이며 이미 완료한 전체 시험을 이유 없이 반복하지 않는다.
 
-메뉴 버그 수정은 실제 증상 해결 확인 전이다. 다음 TXT와 사용자 자동 메뉴 관찰을 따로 판정한다. PREPARED 이후 UART 전용 보고를 TXT 누락 실패로 혼동하지 않는다. 변하지 않은044 복원은 요청하지 않는다. 실기와PC 연결은 어렵다. SD 패키지→사용자 실기→TXT 회수 방식, 영상은선택이다.
+141 이번 실기에서 사용자 자동 메뉴 복귀를 확인했다. 정상 영상은 미관찰이므로 별도로 판정한다. PREPARED 이후 UART 전용 보고를 TXT 누락 실패로 혼동하지 않는다. 변하지 않은044 복원은 요청하지 않는다. 실기와PC 연결은 어렵다. SD 패키지→사용자 실기→TXT 회수 방식, 영상은선택이다.
 
 SMB3(J) SHA dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49. GBC152/원래NES334 및 모든 과거 public pin 보존. 부품은 사용자 사진의 FXPAK Pro Mk.III Rev.D/2022-05-02,STM32F401RCT6,EP4CE15F17C8N,PSRAM IS66WVE4M16EBLL-70BLI 두 개를 기준으로 한다. 다시 제품명/속도를 묻지 않는다.
 
