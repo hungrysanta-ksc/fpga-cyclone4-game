@@ -5,12 +5,12 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "현재133: 실제 상위 회로에서 RUN 20회·취소/차단 22회·CPU 응답 412바이트를 검증했다. CHR 변경·reset·최초 요청의 기능 계약은 조건부 통과했으며, 실제 외부IO·SNES 소비자·실기 RUN은 미완료다.",
-  "next_action": "INTEGRATE_PHYSICAL_IO_AND_SNES_CONSUMER",
+  "assessment": "현재134: 최소 RUN의 실제 핀95개와 SPI CPU 진행 관측을 구현·검증했다. 새 배치 memory168 setup −0.330ns로 미통과이며 설치용 패키지는 없다. 화면 소비자·게임 기능은 미완료다.",
+  "next_action": "FIX_PHYSICAL134_SAME_CLOCK_AND_INTEGRATE_MCU_RUN",
   "next_three_deliverables": [
-    "재사용131fit05/133test03의 RUN 기능 계약을 유지하고 실제 외부IO와 SNES 소비자 연결을 확인한다. 가상 포트와 실제 핀을 구분해 PSRAM/SPI/SNES 소유권·입출력 타이밍·소비자 관측 경로를 정리하고, 최소 RUN 상태·오류·044 복원을 확인할 실기 경로를 구현한다. 같은 초기화/전체쓰기/371CDC/배치를 무변경 반복하지 않는다.",
-    "실제 핀·외부IO 계약과 SNES 소비자 상태/오류 관측",
-    "관측 가능한 최소 RUN·오류 종료·독립044 복원 실기"
+    "134fit02의 diagnostic_release -> SPI pending_body_error[2] 같은 클록 -0.330ns 경로를 상세 보고서로 수정한다. 변경 경계 시험과 새 배치의 reader/guard/reset/외부IO만 확인한 뒤 MCU70/D4 관측·유한 RUN·STOP·진행TXT·메뉴/044복원을 연결해 최소 실기 패키지로 간다. 전체 화면 소비자·MMC3는 별도이며 무변경 전체 적재/부품/저장/131배치를 반복하지 않는다.",
+    "새 최소RUN 배치의 영향 CDC/reset/IO와 MCU70/D4 관측/유한 실행 연결",
+    "진행TXT·STOP·base/menu·044복원을 포함한 최소RUN 실기 패키지"
   ],
   "gates": [
     {
@@ -975,6 +975,24 @@
     "cancel_or_rejected_start": 22,
     "cpu_responses": 412,
     "snes_consumer_exercised": false,
+    "full_timing_pass": false,
+    "installable": false
+  },
+  "board134": {
+    "evidence": "analysis/board134-verification.json",
+    "selected": "test02/fit02",
+    "status_reads": 14,
+    "actual_cpu_sample_events": 6712,
+    "injected_saturation_events": 8,
+    "pin_assignments_checked": 95,
+    "virtual_pins": 0,
+    "logic_elements": 12001,
+    "LAB": 893,
+    "M9K": 12,
+    "same_clock_setup_min_ns": -0.33,
+    "same_clock_hold_min_ns": 0.179,
+    "raw_setup_min_ns": -6.173,
+    "same_clock_timing_pass": false,
     "full_timing_pass": false,
     "installable": false
   }
