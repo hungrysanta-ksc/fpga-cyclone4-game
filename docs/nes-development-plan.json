@@ -2,13 +2,13 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-10",
-  "technical_candidate": "NES-SCREEN-143",
+  "technical_candidate": "NES-SCREEN-144",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "143 단색/직접타일/ROMatlas/NES 비교. 정상기준자체잡음형:141/142 외형만의실패확정철회. 실기픽셀판정대기.",
-  "next_action": "COLLECT_SCREEN143_REFERENCE_COMPARISON",
+  "assessment": "143 기본 표시 비교와 자동 메뉴 복귀 사용자 확인. 단계 표식 불일치는 별도 보존.144 읽을 수 있는 NES 그림과 뱅크 전환 실기 대기.",
+  "next_action": "COLLECT_SCREEN144_READABLE_NES_BANNERS",
   "next_three_deliverables": [
-    "143 한 번으로 A파랑/B빨강·청록/C-ROM atlas/D기존 NES 화면을 기준 PNG와 비교하고 두 TXT·자동 메뉴 복귀를 받는다. C/D의 잡음 모양 자체는 정상 기준에도 있으므로 고장으로 단정하지 않는다. A/B가 정상이고 C/D가 기준과 비슷하면 명확한 NES 패턴·입력/게임 연결로 진행하고, 다르면 해당 첫 경계만 수정한다.",
+    "144 한 번으로 NES144 글자·테두리·A/B 그림과 메뉴 복귀 확인. 두 TXT 회수; 표식만을 위한143/044 반복 없음.",
     "화면 성공 후 패드 반응 연결",
     "SMB3 mapper4·384KiB·플레이·오디오 실기"
   ],
@@ -19,8 +19,8 @@
       "title": "Latest resource and memory feasibility",
       "depends_on": [],
       "exit": "Pinned synthesis/resource table, explicit exclusions, memory service contract and integration-headroom decision; not full board signoff",
-      "evidence": "analysis/DISPLAY138-RESULT.ko.md",
-      "remaining": "138fit01 같은클록/363heldpairs/17chains/조건부IO 통과. 외부실측/MTBF/모든고장signoff미완료."
+      "evidence": "analysis/SCREEN142-RESULT.ko.md",
+      "remaining": "142 배치의 같은 클록·CDC·조건부 IO 근거 재사용. 보드 실측·전체 IO·MTBF는 미완료."
     },
     {
       "id": "R2",
@@ -28,8 +28,8 @@
       "title": "Causal video-load feasibility and trace replay",
       "depends_on": [],
       "exit": "Measured actual trace workloads and SNES replay within deadline; no future lookahead or silent output loss; sample limits explicit",
-      "evidence": "analysis/SCREEN137-RESULT.ko.md",
-      "remaining": "137실제producer3프레임과별도65816/PPU/DMA183552픽셀통과.동시co-simulation·새화면실기는아님.",
+      "evidence": "analysis/SCREEN144-RESULT.ko.md",
+      "remaining": "현재 코어4프레임과 별도 SNES3프레임의 읽을 수 있는 그림 정확성 통과. 실제144 결과 대기; 전체 동시 시뮬레이션은 아님.",
       "consumer_evidence": "analysis/SCREEN137-RESULT.ko.md"
     },
     {
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "screen143_reference_comparison_pending",
+      "status": "partial_screen143_visual_and_menu_pass_readable144_pending",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/SCREEN143-RESULT.ko.md",
-      "remaining": "143 한 번으로 A파랑/B빨강·청록/C-ROM atlas/D기존 NES 화면을 기준 PNG와 비교하고 두 TXT·자동 메뉴 복귀를 받는다. C/D의 잡음 모양 자체는 정상 기준에도 있으므로 고장으로 단정하지 않는다. A/B가 정상이고 C/D가 기준과 비슷하면 명확한 NES 패턴·입력/게임 연결로 진행하고, 다르면 해당 첫 경계만 수정한다."
+      "evidence": "analysis/SCREEN143-HARDWARE-RESULT.ko.md",
+      "remaining": "144 읽을 수 있는 실제 NES 그림 실기 확인 후 패드·게임·오디오 연결."
     },
     {
       "id": "R5",
@@ -72,15 +72,15 @@
     },
     {
       "id": "VIDEO-CAUSAL",
-      "status": "noise_like_expected_reference_requires_comparison",
-      "evidence": "analysis/SCREEN143-RESULT.ko.md",
-      "detail": "142 소프트웨어 stage6 72회 유지. 정상RGB잡음형을확인했으므로외형만으로실기실패를확정하지않는다."
+      "status": "screen143_visual_pass_readable144_pending",
+      "evidence": "analysis/SCREEN144-RESULT.ko.md",
+      "detail": "잡음형 외형만의 실패 해석은 철회했고143 기본 표시·메뉴 실기 통과.144 글자 기준으로 실제 경로를 확인한다."
     },
     {
       "id": "BOARD-FIT",
-      "status": "screen137_same_clock_pass_active_io_cdc_open",
-      "evidence": "analysis/SCREEN137-RESULT.ko.md",
-      "detail": "137fit03 924LAB/50M9K/122실핀 setup+.060/hold+.176/raw-6.600.전체타이밍/활성IO/실기화면은미확인."
+      "status": "same142_routing_reused_conditional_io",
+      "evidence": "analysis/SCREEN142-RESULT.ko.md",
+      "detail": "142 같은 클록setup+.185/hold+.150ns 재사용;144 ROM/MIF·ASM만 변경. 전체 IO·MTBF 승인 아님."
     },
     {
       "id": "DISPLAY-240",
@@ -147,6 +147,12 @@
       "status": "screen141_first_run_user_menu_pass_repeat_prepared_only",
       "evidence": "analysis/SCREEN141-HARDWARE-RESULT.ko.md",
       "detail": "두141 시험의기록된ROM/최초/STOP오류0. 첫시험메뉴사용자성공;재실행메뉴는PREPARED기록만확인. 사진3장정상영상실패. 부팅/패킷/VRAM최초실패경계미확정."
+    },
+    {
+      "id": "SCREEN-TELEMETRY",
+      "status": "untrusted_stale_data_hypothesis_reproduced",
+      "evidence": "analysis/SCREEN144-RESULT.ko.md",
+      "detail": "143 stage112/mask8 vs 실제A/B/C.80ns 지연 주입으로 이전0x70 취득 재현; 보드 원인 미확정.144 원시 로그 신뢰0 명시, 실기 진행을 이 표식만으로 차단하지 않음."
     }
   ],
   "guardrails": [
@@ -2432,5 +2438,6 @@
     "interpretation": "SNES program reached stage6 72times, error0 and flags7. Boot/WRAM entry and continuing software packet/display loop supported; actual tile/atlas/palette/VRAM contents unverified. Stage6 is after synchronous DMA register writes, not VRAM readback or physical pixels. No claim of normal game execution or measured TV FPS.",
     "next": "SNES 부팅 재검증을 반복하지 말고 그림 데이터 정확성을 우선한다. 기존044와 비교해 내부에서 만든 단순 타일/색상 표시, ROM atlas DMA, 패킷 본문→VRAM/팔레트 경계를 최소 시험으로 분리한다. 전체 재적재를 줄일 수 있는 짧은 표시 대조를 우선 검토하고, 바뀐 경계만 검증한 다음 실기로 간다."
   },
-  "screen143": "analysis/screen143-verification.json"
+  "screen143": "analysis/screen143-verification.json",
+  "screen144": "analysis/screen144-verification.json"
 }
