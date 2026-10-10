@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재133: 실제 상위 회로에서 RUN 20회·취소/차단 22회·CPU 응답 412바이트를 검증했다. CHR 변경·reset·최초 요청의 기능 계약은 조건부 통과했으며, 실제 외부IO·SNES 소비자·실기 RUN은 미완료다. [133 결과](../../analysis/RUN133-RESULT.ko.md)를 우선한다.
+현재134: 최소 RUN의 실제 핀95개와 SPI CPU 진행 관측을 구현·검증했다. 새 배치 memory168 setup −0.330ns로 미통과이며 설치용 패키지는 없다. 화면 소비자·게임 기능은 미완료다. [134 결과](../../analysis/BOARD134-RESULT.ko.md)를 우선한다.
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 

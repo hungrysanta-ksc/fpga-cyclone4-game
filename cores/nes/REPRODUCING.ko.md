@@ -1,5 +1,7 @@
 # NES 검증 재현 범위
 
+134: run_nes_board134.ps1 / nes_board134_fit.py / nes_board134_timing.tcl / verify_nes_board134.py. 선택test02/fit02. 새ASCII 출력과 고정131 baseline 필요. [범위와 결과](../../analysis/BOARD134-RESULT.ko.md).
+
 공개 저장소에는 자체 작성한 연결 RTL·진단 생성기·시험과 결과 요약을 보관한다. 전체 NES 게임 실행 파일이나 실기용 053 이미지는 없다.
 
 ## 공개 파일만으로 실행하는 메모리 회귀
