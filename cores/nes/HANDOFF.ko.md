@@ -1,4 +1,15 @@
-# NES 현재 인계 —138 화면 실기 대기
+# NES 현재 인계 —138 실기 ROM deadline 실패
+
+[138 실기 결과](../../analysis/SCREEN138-HARDWARE-RESULT.ko.md) · [관측 메타](../../analysis/screen138-hardware-observation.json)
+
+138 실기 CPU ROM deadline 오류1을 먼저 해결한다. 동일 RTL의 클록 위상·CPU/PPU 공유 요청을 좁혀 조사하고, 미재현이면 최초 실패 주소·pending·age만 관측한다. 최초 RUN 오류를 STOP 결과와 분리해 보존한 수정 후보로 화면 실기를 재개한다. 동일138·전체 저장/부품 시험은 반복하지 않는다. 정상 화면 뒤 입력·SMB3로 진행한다.
+
+47개 진행 기록, DISPLAY_NEXT522580ms / STOP532920ms / MENU_PREPARED536040ms. 81920바이트 적재/비교 성공, first=last=stopped123028, run_passed0/rom_error1. STOP/base/menu와 사용자 복원 성공. 이번 GBC 플레이 미보고. flags3은 STOP 이후 reset1+sticky2이며 RUN 중 reset 증거가 아니다. run_error3이 앞선 오류를 덮어썼으므로 최초 ROM 오류를 따른다. 기존138 동결 근거와 ZIP을 수정하지 않는다. 새 물리 성공으로 승격하지 않는다.
+
+추가 재현01: 선택138 기능 입력48개 그대로, SNES반주기23.280ns/위상3.5ns·이상PLL84/168MHz·70nsRAM에서 RUN100ms/전체102.161ms·184344검사 동안 ROM 오류 미재현. 실제65816 동시 실행·배선·모든 위상을 재현하지 않았다. 위상만 바꾸거나 READ16을 줄이는 수정 근거가 없다. 다음 작업은 첫 deadline의 CPU 주소/pending 주소·소유자/age 최소 관측과 MCU 최초 오류 보존을 묶어 새 실기 후보를 만드는 것이다. 이번에는 새 펌웨어/배치를 만들지 않았다.
+
+## 138 제작 당시 기록 — 아래 실기 대기/NEXT는 위 결과로 대체
+
 
 [138 결과](../../analysis/DISPLAY138-RESULT.ko.md) · [실행 안내](../../docs/nes-display138-instructions.ko.md) · [메타](../../analysis/display138-verification.json)
 

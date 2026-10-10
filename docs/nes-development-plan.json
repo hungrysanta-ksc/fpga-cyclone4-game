@@ -2,13 +2,13 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-10",
-  "technical_candidate": "NES-SCREEN-137",
+  "technical_candidate": "NES-SCREEN-138",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "현재138:실제 화면 패키지 준비 완료, 사용자 실기 결과 대기.136 CPU실기 완료 유지.",
-  "next_action": "COLLECT_SCREEN138_HARDWARE_RESULT",
+  "assessment": "138 실기 화면/RUN 실패(CPU ROM deadline1). 적재·메뉴·복원 성공.136 CPU 활동 성공은 유지.",
+  "next_action": "FIX_SCREEN138_CPU_ROM_DEADLINE",
   "next_three_deliverables": [
-    "138 화면 실기에서 두 TXT·패턴 표시·메뉴 복귀·044 메뉴/GBC 복원을 먼저 확인한다. 실패하면 마지막 성공 단계와 실제 화면을 근거로 해당 경계만 수정한다. 통과하면 패드 입력을 연결하고 이후 SMB3 mapper4·384KiB·플레이·오디오로 진행한다. 새 실패 없이 같은 배치·전체 적재·영상·저장 시험을 반복하지 않는다.",
+    "138 실기 CPU ROM deadline 오류1을 먼저 해결한다. 동일 RTL의 클록 위상·CPU/PPU 공유 요청을 좁혀 조사하고, 미재현이면 최초 실패 주소·pending·age만 관측한다. 최초 RUN 오류를 STOP 결과와 분리해 보존한 수정 후보로 화면 실기를 재개한다. 동일138·전체 저장/부품 시험은 반복하지 않는다. 정상 화면 뒤 입력·SMB3로 진행한다.",
     "화면 성공 후 패드 반응 연결",
     "SMB3 mapper4·384KiB·플레이·오디오 실기"
   ],
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "partial_screen_package_ready_physical_pending",
+      "status": "partial_screen138_hardware_run_failed",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/DISPLAY138-RESULT.ko.md",
-      "remaining": "표시전용MCU·FPGA·복원패키지완료.화면실기·입력·오디오미완료."
+      "evidence": "analysis/SCREEN138-HARDWARE-RESULT.ko.md",
+      "remaining": "CPU ROM deadline1 해결 후 실제 화면, 입력, 오디오 확인."
     },
     {
       "id": "R5",
@@ -72,9 +72,9 @@
     },
     {
       "id": "VIDEO-CAUSAL",
-      "status": "partial_live_core_diagnostic_pass",
-      "evidence": "analysis/SCREEN137-RESULT.ko.md",
-      "detail": "137실제코어3프레임184320픽셀·SNES포트와별도실제SNES DMA183552표시픽셀통과.새화면실기대기."
+      "status": "screen138_hardware_run_failed",
+      "evidence": "analysis/SCREEN138-HARDWARE-RESULT.ko.md",
+      "detail": "137 모델 통과를 유지하되138 실기는 ROM deadline1/관측 정지로 실패. 글리치의 직접 원인은 아직 미확정."
     },
     {
       "id": "BOARD-FIT",
@@ -1056,7 +1056,7 @@
     {
       "id": "C",
       "goal": "실제 NES 생성 화면·패드 반응",
-      "status": "partial_screen_package_ready_physical_input_pending"
+      "status": "partial_screen138_hardware_deadline_failed"
     },
     {
       "id": "D",
@@ -1321,6 +1321,57 @@
     "input": false,
     "audio": false,
     "source_lock_holds": 4,
-    "next": "138 화면 실기에서 두 TXT·패턴 표시·메뉴 복귀·044 메뉴/GBC 복원을 먼저 확인한다. 실패하면 마지막 성공 단계와 실제 화면을 근거로 해당 경계만 수정한다. 통과하면 패드 입력을 연결하고 이후 SMB3 mapper4·384KiB·플레이·오디오로 진행한다. 새 실패 없이 같은 배치·전체 적재·영상·저장 시험을 반복하지 않는다."
+    "next": "138 실기 CPU ROM deadline 오류1을 먼저 해결한다. 동일 RTL의 클록 위상·CPU/PPU 공유 요청을 좁혀 조사하고, 미재현이면 최초 실패 주소·pending·age만 관측한다. 최초 RUN 오류를 STOP 결과와 분리해 보존한 수정 후보로 화면 실기를 재개한다. 동일138·전체 저장/부품 시험은 반복하지 않는다. 정상 화면 뒤 입력·SMB3로 진행한다."
+  },
+  "hardware_screen138": {
+    "candidate": "NES-SCREEN-138",
+    "screen_passed": false,
+    "run_passed": false,
+    "raw_sha256": {
+      "nes-progress-138.txt": "aa85770282eb4c3ffcb36239d723da91fc39bb51022d347a147134cbf811acc9",
+      "nes-screen-last-138.txt": "dea46670d56ea6fabe821aa4a9c1b975756d94c096dad1a94c6ec08fc0ab7c57"
+    },
+    "final": {
+      "candidate": "NES-SCREEN-138",
+      "board_expected_hex": "5a",
+      "board_seen": "1",
+      "board_observed_hex": "5a",
+      "geometry_kib": "80",
+      "load_result": "0",
+      "file_result": "0",
+      "loaded_bytes": "81920",
+      "compared_bytes": "81920",
+      "verify_error": "0",
+      "verified": "1",
+      "end_accepted": "1",
+      "stop_ok": "1",
+      "base_attempted": "1",
+      "base_restored": "1",
+      "safe_to_reload": "1",
+      "menu_state": "PREPARED_RESET_HELD",
+      "start_sent": "1",
+      "run_passed": "0",
+      "run_error": "3",
+      "observer_id_hex": "d5",
+      "run_first": "123028",
+      "run_last": "123028",
+      "run_stopped": "123028",
+      "run_flags": "3",
+      "run_rom_error": "1"
+    },
+    "progress_records": 47,
+    "milestone_elapsed_ms": {
+      "DISPLAY_NEXT": 522580,
+      "DISPLAY_STOPPED": 532920,
+      "MENU_PREPARED": 536040
+    },
+    "user_confirmed": {
+      "menu_return": true,
+      "restoration": true,
+      "gbc_this_run": null,
+      "pattern_success": false
+    },
+    "interpretation": "CPU ROM deadline fault1; constant valid sample count123028. Final flags3 is post-STOP, not evidence of reset during RUN. run_error3 overwrites earlier MCU failures; STOP command succeeded.",
+    "next": "Target CPU/PPU shared ROM deadline; preserve first RUN failure separately from STOP; no repeat of unchanged138 trial."
   }
 }
