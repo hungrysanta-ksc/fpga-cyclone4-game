@@ -8,7 +8,7 @@
 
 [147 결과](../../analysis/GAME147-RESULT.ko.md) · [재현](../../docs/nes-game147-reproduction.ko.md)
 
-PR90에는146 실기 결과만 커밋했다(`eecec90`). 실제 게임 작업은 `codex/nes-game-147`의 새 PR로 분리한다. PR90 미머지 상태에서는 새 PR의 기준 브랜치를146으로 두며, 사용자 머지 뒤 실제 master의 도달 관계를 확인해 기준을 갱신한다.
+PR90에는146 실기 결과만 커밋했다(`eecec90`). 실제 게임 작업은 `codex/nes-game-147`의 새 PR로 분리한다. PR90은 c38bad708988e301df336c227f4ea78cdad77b69로 머지됐으며 master가146 결과 커밋에 도달함을 확인했다. PR91의 기준은 master로 갱신했다.
 
 147은 PRG256KiB/CHR128KiB 물리 주소·캐시 태그와19비트 적재/CHECK/SPI, 식별5F·BEGIN인수2를 구현했다. 기존 MMC3를 재사용한다. unit04의98검사·8실제쓰기·6CHECK읽기·6오류조건과 잘린태그 대조군을 통과했다. 시험 전용 카운터 주입이므로 전체384KiB 적재 검증은 아니다.
 

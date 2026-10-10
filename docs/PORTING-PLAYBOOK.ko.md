@@ -18,7 +18,9 @@ producer/consumer, 도메인 주파수·관계, async assert/sync release, paylo
 
 ## 4. 검증과 타이밍
 
-모델/단위 → 오류 주입 → 실제 코어·MCU·표시 프로그램 통합 → 동일 후보 full-fit/STA → 제한된 실기 → 장면별 실기의 순서로 진행한다. 각 결과는 후보 ID, 소스/SDC 해시, 도구·seed, stimulus, model scope, pass/fail, evidence를 가진다. 제약 5종 slack과 미제약 경로, ignored exception, clock transfer, MTBF 계산 범위, 외부 I/O timing을 각각 판정한다. 경고를 없애려고 false path나 SDC를 임의 완화하지 않는다.
+목표 게임 ROM을 먼저 정하고, 변경된 구현의 필수 경계·실행 장애와 필요한 배치/타이밍만 확인한 뒤 실제 ROM의 제한 실기로 진행한다. 광범위한 단위 시험·고장 주입·진단 체계 전체 완성은 첫 게임 실행의 선행 조건이 아니다. 기존 근거를 재사용하고 실기 플레이에서 얻은 실패에 맞춰 검증을 넓힌다. 자세한 공통 기준은 [실기 ROM 우선 공정](development/MILESTONE-WORKFLOW.ko.md)을 따른다.
+
+각 결과는 후보 ID, 소스/SDC 해시, 도구·seed, stimulus, model scope, pass/fail, evidence를 가진다. 필요한 제약 slack과 미제약 경로, ignored exception, clock transfer, MTBF 계산 범위, 외부 I/O timing을 구분해 기록한다. 경고를 없애려고 false path나 SDC를 임의 완화하지 않는다. 전체 검증 완료와 제한 실기 진입 가능 여부를 혼동하지 않는다.
 
 ## 5. 지속 처리와 배포
 
