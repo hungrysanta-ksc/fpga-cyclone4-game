@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재141: **실기 ROM 실행·자동 메뉴 복귀 통과, 진단 화면은 미관찰**. [실기 결과](analysis/SCREEN141-HARDWARE-RESULT.ko.md) · [현재 인계](cores/nes/HANDOFF.ko.md).
+현재141: **두 차례 실기 ROM 실행 통과, 화면 관찰 재실행에서 글리치 확인**. 정상 영상 출력은 미완료이며 같은141 재시험은 종료한다. [실기 결과](analysis/SCREEN141-HARDWARE-RESULT.ko.md) · [현재 인계](cores/nes/HANDOFF.ko.md).
 
 **sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다.
 제품 이름의 **HST는 HungrySanTa = 제작팀 이름**을 뜻합니다.
