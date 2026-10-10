@@ -145,11 +145,18 @@
     "interpretation": "Second141 run: load/compare and RUN/STOP/base pass, all recorded ROM/first/STOP errors zero. Photos show colored noise and broad diagonal bands; normal diagnostic picture failed. Still photos cannot establish motion, signal sync, exact physical cause, SNES program boot or successful packet/VRAM delivery. Prior first141 menu return remains user-confirmed; repeat log ends at MENU_PREPARED, not proof of visible return.",
     "next": "같은141 재시험은 종료한다. 정상 영상 실패를 기준으로 SNES 소비자 부팅/프로그램 ROM·WRAM 이행 → 화면 패킷 수신 → VRAM·팔레트 DMA 순서의 최초 실패 경계를 확인한다. 기존044 성공 경로를 비교 재사용하고, 필요하면 이 경계의 최소 상태만 기존 SPI로 회수해 STOP 뒤 TXT에 기록한다. 짧은 정적 표시 경로로 분리할 수 있는지도 검토하되 그 성공을 실제 NES 화면 성공으로 대체하지 않는다. 수정된 후보가 준비되기 전 동일한9분 적재·044/GBC 복원 반복은 요청하지 않는다."
   },
-  "current_assessment": "ROM read activity/RUN/STOP passed twice; visible glitch, normal video failed. Camera diagonal bands excluded by user clarification. Silence expected without audio output; slow visible changes are not measured NES FPS. Next142 boot/packet/VRAM stage experiment.",
+  "current_assessment": "Noise-like user screen needs expected-reference comparison; software progress evidence retained. Neither physical pixel failure nor success established by appearance alone.",
   "subsequent_user_observation": {
     "diagonal_bands": "camera_CRT_scan_artifact_excluded_from_FPGA_diagnosis",
     "audio": "silent_no_noise",
     "motion": "about1-2 slight changes during roughly10seconds",
     "measured_fps": null
+  },
+  "assessment_correction143": {
+    "reason": "Expected emulator diagnostic output is itself noise-like;143 live RGB exactly equals142 reference.",
+    "normal_physical_pixels_confirmed": false,
+    "visual_failure_from_appearance_established": false,
+    "user_report_retained": true,
+    "next": "143 한 번으로 A파랑/B빨강·청록/C-ROM atlas/D기존 NES 화면을 기준 PNG와 비교하고 두 TXT·자동 메뉴 복귀를 받는다. C/D의 잡음 모양 자체는 정상 기준에도 있으므로 고장으로 단정하지 않는다. A/B가 정상이고 C/D가 기준과 비슷하면 명확한 NES 패턴·입력/게임 연결로 진행하고, 다르면 해당 첫 경계만 수정한다."
   }
 }
