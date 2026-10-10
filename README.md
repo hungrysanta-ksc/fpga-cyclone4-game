@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재146: **표시·메뉴 복귀 실기 결과 수집 완료. 다음 목표는 실제 SMB3(J) ROM 실행**. 빠른 A/B 정합성은 판정 보류하며 추가 패턴 시험을 요구하지 않습니다. [146 실기 결과](analysis/SCREEN146-HARDWARE-RESULT.ko.md).
+현재148: **실제 SMB3(J) 초기 PPU 읽기 장애 수정, 30프레임 RTL 실행 통과**. 다음은 게임 적재·화면·입력 연결과 실기 ROM 패키지입니다. [148 결과](analysis/GAME148-RESULT.ko.md).
 
 **sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다.
 제품 이름의 **HST는 HungrySanTa = 제작팀 이름**을 뜻합니다.

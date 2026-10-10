@@ -1,0 +1,140 @@
+{
+  "candidate": "NES-GAME-147",
+  "date_kst": "2026-10-11",
+  "status": "PARTIAL_NOT_INSTALLABLE",
+  "base_pr": 90,
+  "baseline_manifest_sha256": "b533b53f59b667181acd8c243b013fce5dc29a7284df978bae3d4bcd6a42f967",
+  "manifest_sha256": "240e0bc8a6dac23d94c02b9c9b63b43cf3d5cf36a5b10528f0b0065737ac0cc8",
+  "file_count": 251,
+  "rom": {
+    "name": "Super Mario Bros 3 (J).nes",
+    "sha256": "dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49",
+    "mapper": 4,
+    "prg_bytes": 262144,
+    "chr_bytes": 131072
+  },
+  "public_sources": {
+    "tools/nes_game147.py": "c48bf5abb35b815faa941f5f46bfd9d184afd982b14e5dd5e119e48707921f10",
+    "tools/test_nes_game147_path.py": "b095c20a9afa450d16c689a781456565a4f956aa3a549d20c53f2e7e8d622717",
+    "tools/test_nes_game147_prefetch.py": "c003d6f62aa8a3ec48b470a74390f279830ebf7f7575c95626b14ca87e60ea67",
+    "tests/nes-functional/game147_tb.sv": "bd0577d5a86747ff70004e265055c458432e209ecaf695164277dd88e2fadeec",
+    "tests/nes-functional/game147_path_tb.sv": "7f934e28195c9bb050697eee6c934102e0b8504d7129aa47bf9381fce64fbeeb",
+    "tests/nes-functional/game147_prefetch_tb.sv": "a6cbf24a4d9d49149c2c10f1f366042a255fdfa0443b1c3767bfa7cd48d663f7",
+    "tools/verify_nes_game147.py": "9a974abef4f590409fdd7a9a079769d1380a240cdb677b5273c295bf6fad328a",
+    "analysis/GAME147-RESULT.ko.md": "d9f8d8d7b3dfebcf1a64434e9c3ea9c4dcef360334f3ebd48d27a7fc5b8d2b50",
+    "docs/nes-game147-reproduction.ko.md": "4641ce19900cfef1c49a05055af58373c9d55e439df652dc45b14bad7da885b5"
+  },
+  "path_unit": {
+    "passed": true,
+    "summary": "PASS PATH147 checks=98 writes=8 reads=6 negative=6",
+    "sources": {
+      "nes_rom_loader.sv": "779a1a502aa78f61f8d1d6fed28b0892a405d808783fcd88687f3e214fc4090e",
+      "nes_rom_boot.sv": "960e299bd9a1bd3cbdcb001ea9f15649160cd46cdb132767d9c15ad2029a1a74",
+      "nes_rom_physical.sv": "79e9d1b4e5cdc0d59e42cb2769080b5d71b4cbcb2849beb568e6a1a0d857c298",
+      "nes_rom_spi.sv": "e81d751b3f7adf5699ed6c34b19773d375691faf7b6a0e4d983d2efa46e85fe3",
+      "nes_rom_service.sv": "1b69187a2217ca9b6888b80cc7da56c4e9ad2b4365986d04e2d5eada0d0d2399",
+      "game147_path_tb.sv": "6aea2eb981170b58f953a5c467d15066ab00d17129ad98a21eb4ba2e15cb5bf1"
+    },
+    "negative": "Truncated PRG tag rejected at second-bank miss check3",
+    "scope": "Seeded count boundaries;8 actual write cycles,6 CHECK reads,19-bit SPI status/ACK rollover/finish/START,6 negative lifecycle cases,7 full-bank cache reads. Not a full384KiB write/compare or MCU integration test."
+  },
+  "prefetch_boundary": {
+    "passed": true,
+    "cases": [
+      "PASS PREFETCH147 enable=0 phase=0.000000 requests=3 speculation=0 error=2",
+      "PASS PREFETCH147 enable=1 phase=0.000000 requests=3 speculation=1 error=0",
+      "PASS PREFETCH147 enable=0 phase=3.500000 requests=3 speculation=0 error=2",
+      "PASS PREFETCH147 enable=1 phase=3.500000 requests=3 speculation=1 error=0"
+    ],
+    "sources": {
+      "nes_rom_service.sv": "1b69187a2217ca9b6888b80cc7da56c4e9ad2b4365986d04e2d5eada0d0d2399",
+      "nes_rom_physical.sv": "79e9d1b4e5cdc0d59e42cb2769080b5d71b4cbcb2849beb568e6a1a0d857c298",
+      "game147_prefetch_tb.sv": "a6cbf24a4d9d49149c2c10f1f366042a255fdfa0443b1c3767bfa7cd48d663f7"
+    },
+    "scope": "Seeded game-prefix two-cache-byte state,70ns physical reader, phases0/3.5ns. Prefetch enabled meets deadline; disabled must report PPU error2. Not all PPUDATA timing, whole game, fitted board, or native SNES display proof."
+  },
+  "source_reproduction": {
+    "passed": true,
+    "source_count": 26,
+    "sources": {
+      "rtl/bus_savestates.vhd": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9",
+      "rtl/t65/T65_Pack.vhd": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb",
+      "rtl/t65/T65_ALU.vhd": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b",
+      "rtl/t65/T65_MCode.vhd": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5",
+      "rtl/t65/T65.vhd": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692",
+      "rtl/statemanager.vhd": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6",
+      "rtl/savestates.vhd": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0",
+      "rtl/regs_savestates.sv": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95",
+      "rtl/cheatcodes.sv": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918",
+      "rtl/ppu.sv": "5e5adcf2dff53438b309dd30b6f831709011b568e6a09eb3b8174c7d3f607e46",
+      "rtl/apu.sv": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586",
+      "rtl/nes.v": "3783184065abb330eb928a7066eae3409fb30ccfbd35115499b24ef39a412f86",
+      "rtl/composite_board.sv": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895",
+      "rtl/compat.v": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731",
+      "sys/iir_filter.v": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8",
+      "cart_nrom.sv": "aab8314bd8134bb33dff42ef7beebc4b109e81148d9ee11ccd2886a97673faf8",
+      "nes_probe.sv": "c99e2d6cf1728c29f96c37e489da2a280be29cf8fa5869c4d335314f93b2283b",
+      "nes_local_memory.sv": "09a5109f5ea187b740ffbceb865c505c485dee13e87ee1cb665de937046d6ec4",
+      "nes_rom_service.sv": "1b69187a2217ca9b6888b80cc7da56c4e9ad2b4365986d04e2d5eada0d0d2399",
+      "nes_rom_physical.sv": "79e9d1b4e5cdc0d59e42cb2769080b5d71b4cbcb2849beb568e6a1a0d857c298",
+      "nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+      "nes_rom_loader.sv": "779a1a502aa78f61f8d1d6fed28b0892a405d808783fcd88687f3e214fc4090e",
+      "nes_rom_boot.sv": "960e299bd9a1bd3cbdcb001ea9f15649160cd46cdb132767d9c15ad2029a1a74",
+      "nes_rom_spi.sv": "e81d751b3f7adf5699ed6c34b19773d375691faf7b6a0e4d983d2efa46e85fe3",
+      "nes_spi_boot.sv": "3e55dd0a4fdf50021113f50641ecd89b18e07f25986a33a5dbd462a794751d9f",
+      "game147_tb.sv": "1f867715a3a5f0d1af81ebe756b613701a368d1c226050809b15e747cbc2fc7b"
+    },
+    "generator_sha256": "c48bf5abb35b815faa941f5f46bfd9d184afd982b14e5dd5e119e48707921f10"
+  },
+  "core_runs": [
+    {
+      "run": "core02",
+      "passed": false,
+      "requested_frames": 30,
+      "failure_frame": 24,
+      "line": 193,
+      "dot": 231,
+      "sim_ns": 395399602.32,
+      "address": "21e1ff",
+      "error": "PPU sample deadline: valid0",
+      "log_sha256": "27355a158a5ab71147c58e120fecbddedd22446431bdd41222615ed8b5692328"
+    },
+    {
+      "run": "core03",
+      "passed": false,
+      "prefetch": true,
+      "requested_frames": 30,
+      "failure_frame": 26,
+      "line": 193,
+      "dot": 237,
+      "sim_ns": 428678641.68,
+      "address": "21e100",
+      "error": "PPU sample deadline: valid0",
+      "log_sha256": "8eedfe39f9ac61843b59bd3e04fbc77832f0c307a482e767c77d3c73b6291bde"
+    }
+  ],
+  "initial_picture": {
+    "frame": 20,
+    "private_hex_sha256": "e984f5748ac3087d646c2d679ecc171815a010a0307fe95fe9e3612576fddd0a",
+    "pixels": 61440,
+    "interpretation": "Red curtain and black/white floor recognizable in RTL output; not an independent pixel oracle or physical display proof."
+  },
+  "loader_projection": {
+    "measured146_bytes": 81920,
+    "measured146_load_compare_ms": 518990,
+    "game_bytes": 393216,
+    "linear_seconds": 2491.152,
+    "scope": "Projection only, not measured game loading time; bulk loader needed before package."
+  },
+  "not_done": [
+    "PPU deadline handling for CIRAM-to-CHR PPUDATA overlap",
+    "384KiB MCU transfer and full compare",
+    "Game SNES video with sprites/scroll/banked CHR",
+    "Pad wiring",
+    "Audio",
+    "Fitted resource/timing validation",
+    "Physical game package and gameplay"
+  ],
+  "physical_test": false,
+  "sd_package": false
+}
