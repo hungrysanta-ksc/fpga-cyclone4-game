@@ -1,8 +1,8 @@
-# NES 현재 인계 —141 실기 대기
+# NES141 결과 — 메뉴 복귀 예산 복구와 ROM 응답 개선
 
-[결과](../../analysis/SCREEN141-RESULT.ko.md) · [실행 안내](../../docs/nes-screen141-instructions.ko.md) · [검증 메타](../../analysis/screen141-verification.json)
+## 작업 목표와 판정
 
-141을 한 번 실행해 두 TXT, 진단 화면, 자동 메뉴 복귀를 확인한다. 같은044/GBC 복원 시험은 반복하지 않는다. 실패하면 최초 context와 실패 경계를 비교하고, 성공하면 패드 입력과 SMB3 mapper4/384KiB 연결로 진행한다.
+140 실기에서 확인된 검은 화면·메뉴 복귀 실패와 ROM 응답 오류를 수정하고 다음 실기 후보를 만든다. **수정·필요한 오프라인 검증·패키지 준비를 완료했다. 실기 해결 여부는 아직 미확인이다.** PR86 머지6de7144를 기준으로 기존 결과와 동결 자료는 보존했다.
 
 ## 메뉴 복귀 변경
 
@@ -29,14 +29,3 @@ reader16위상에서8,400읽기/208취소와 주소·데이터 CDC 및 setup/hol
 [실행 안내](../docs/nes-screen141-instructions.ko.md)의 NES SCREEN 141.nh1을 한 번 실행한다. 적재·대조약9분,이후약10초 진단 표시와 자동 메뉴 복귀가 목표다. 두 TXT와 화면·메뉴 관찰을 받는다. MENU_PREPARED는 마지막 SD 기록일 뿐 실제 RESET 해제·메뉴 표시의 증거는 아니다. 동일044/GBC 복원 시험은 사용자 요청에 따라 반복하지 않는다.
 
 이번 변경은 실제 코어의 ROM 공급 경로와 MCU 메뉴 복귀를 수정한 작업이다. 일반 디버그 프레임워크 확장이 아니다. 첫 게임 SMB3(J),mapper4/PRG256KiB+CHR128KiB 목표는 유지한다. 정상 화면 확인 뒤 패드·실제 게임 연결·오디오 순으로 진행한다.
-
-
-## 재개 시 필수 확인
-
-선택 fit05/arm01/armcheck02/host04/core06/reader01/inventory05/sta05/io05/asm05/release01. 동결 evidence 내부는 역할명 fit/arm/armcheck/host/core/reader/inventory/sta/io/asm/release로 저장했다. 원본 시도 번호는 메타 selected에 있다. core06의140 대조 로그는 core03에서 재사용했으며 생산 소스 차이는 cache service뿐이고 LEGACY=1/CAPTURE=0으로 나머지 두 변경을 끈 대조다.16ns 실패를 없애거나12ns 통과를 전체 타이밍 승인으로 쓰지 않는다. 공개 core driver는 같은 시험의 휴대 가능한 재생 도구이며 이미 완료한 전체 시험을 이유 없이 반복하지 않는다.
-
-메뉴 버그 수정은 실제 증상 해결 확인 전이다. 다음 TXT와 사용자 자동 메뉴 관찰을 따로 판정한다. PREPARED 이후 UART 전용 보고를 TXT 누락 실패로 혼동하지 않는다. 변하지 않은044 복원은 요청하지 않는다. 실기와PC 연결은 어렵다. SD 패키지→사용자 실기→TXT 회수 방식, 영상은선택이다.
-
-SMB3(J) SHA dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49. GBC152/원래NES334 및 모든 과거 public pin 보존. 부품은 사용자 사진의 FXPAK Pro Mk.III Rev.D/2022-05-02,STM32F401RCT6,EP4CE15F17C8N,PSRAM IS66WVE4M16EBLL-70BLI 두 개를 기준으로 한다. 다시 제품명/속도를 묻지 않는다.
-
-Questa는 기존 FLOAT wrapper와1seat를 재사용한다. uncounted Terminal Services 실패경로/새 유료 라이선스 요구를 반복하지 않는다. 한 번에 한 작업. Git에는 ROM/펌웨어/FPGA 바이너리/미디어/라이선스/개인경로를 넣지 않는다. PR은 한국어 제목과 작업 목표·작업 내용·작업 결과·작업 의미4절, 사용자가머지한다.

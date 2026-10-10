@@ -2,13 +2,13 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-10",
-  "technical_candidate": "NES-SCREEN-140",
+  "technical_candidate": "NES-SCREEN-141",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "140 실기: 적재·대조·저장은 성공, 동일 CPU ROM deadline1/context/샘플123028 재발. 메뉴 복귀·리셋 복귀 실패, 전원 재인가 메뉴 성공. 모델 개선은 실기 해결로 검증되지 않음.",
-  "next_action": "FIX_SCREEN140_ROM_DEADLINE_AND_MENU_RETURN",
+  "assessment": "메뉴 대기예산·실제 CPU 소비경계·ROM 캐시 수정141 실기대기;ACK16ns 스트레스 실패 보존. 실기 성공 미확인.",
+  "next_action": "COLLECT_SCREEN141_HARDWARE_RESULT",
   "next_three_deliverables": [
-    "140 실기의 동일 CPU ROM 마감 실패와 검은 화면/메뉴 복귀 실패를 해결한다. 메뉴 준비 이후 reset·CIC·SRAM·보호 상태와0xE184 요청/응답 경계의 모델 차이를 좁혀 확인한 수정 후보로 간다. 동일140 재시험·추가 영상·무변경 fit/부품/저장 시험·동일044 반복 복원은 생략한다. 정상 화면 뒤 패드·SMB3 mapper4/384KiB·오디오로 진행한다.",
+    "141을 한 번 실행해 두 TXT, 진단 화면, 자동 메뉴 복귀를 확인한다. 같은044/GBC 복원 시험은 반복하지 않는다. 실패하면 최초 context와 실패 경계를 비교하고, 성공하면 패드 입력과 SMB3 mapper4/384KiB 연결로 진행한다.",
     "화면 성공 후 패드 반응 연결",
     "SMB3 mapper4·384KiB·플레이·오디오 실기"
   ],
@@ -1904,5 +1904,319 @@
     "next": "Investigate prepared-to-release/CIC/SRAM/menu handshake and CPU request/response timing together; keep140 failure as regression evidence, do not treat delayed-model PASS as a hardware fix. Add only narrowly scoped evidence needed to distinguish recovery outcomes. No identical140 rerun or video needed.",
     "restoration_policy": "User waives routine repeat044 tests for unchanged restoration artifacts. Preserve known-good044. Revisit only a concrete changed restoration artifact/path or evidence of regression, explaining the change; distinguish candidate STOP/base/menu return from independent044 restoration."
   },
-  "hardware_test_policy": "사용자 지시: 동일044 복원본의 매회 재설치·메뉴/GBC 반복 시험은 생략한다. 후보 자체 STOP/base/menu 복귀는 별도 기록한다. 복원본/경로 변경이나 구체적 회귀 근거가 생길 때만 재확인 이유와 범위를 명시한다. 과거 동결 실행 안내보다 현재 정책을 우선하며 미시험을 PASS로 기록하지 않는다."
+  "hardware_test_policy": "사용자 지시: 동일044 복원본의 매회 재설치·메뉴/GBC 반복 시험은 생략한다. 후보 자체 STOP/base/menu 복귀는 별도 기록한다. 복원본/경로 변경이나 구체적 회귀 근거가 생길 때만 재확인 이유와 범위를 명시한다. 과거 동결 실행 안내보다 현재 정책을 우선하며 미시험을 PASS로 기록하지 않는다.",
+  "screen141": {
+    "candidate": "NES-SCREEN-141",
+    "base_merge": "6de714461240dc7e207c5eac89b017973f1eee58",
+    "manifest_sha256": "f89c820ae51ce92367e203e69b934eafc4163002ce365e37f3422f18fc1350fb",
+    "file_count": 4082,
+    "selected": {
+      "fit": "fit05",
+      "arm": "arm01",
+      "armcheck": "armcheck02",
+      "host": "host04",
+      "budget-negative": "budget-negative01",
+      "core": "core06",
+      "reader": "reader01",
+      "inventory": "inventory05",
+      "sta": "sta05",
+      "io": "io05",
+      "asm": "asm05"
+    },
+    "package": {
+      "zip_sha256": "d48f84f8401100bb1998d24556cf573e2f3b918541b7e19824e3ba8bc2349a2f",
+      "zip_bytes": 754672,
+      "members": 12,
+      "firmware_sha256": "737d43e9d0c173349492d49cc233d222649c1085bcccfdc284b9ec112a72e447",
+      "fpga_sha256": "157cd53e3f24e07f881e8c5819a49e541c20a8fd5a743f29b0ae1881c43e4a7c",
+      "fixture_sha256": "3daf26c8e2d0002c288efdf2ff694cdc14f0266b9cb32bb3efda8b9bf5d173df",
+      "normal_trial_ready": true,
+      "physical": false
+    },
+    "core": {
+      "passed": true,
+      "phases": [
+        {
+          "phase_ns": 0.0,
+          "old_fault": true,
+          "new_fault": false
+        },
+        {
+          "phase_ns": 0.5,
+          "old_fault": true,
+          "new_fault": false
+        },
+        {
+          "phase_ns": 1.0,
+          "old_fault": true,
+          "new_fault": false
+        },
+        {
+          "phase_ns": 1.5,
+          "old_fault": true,
+          "new_fault": false
+        },
+        {
+          "phase_ns": 2.0,
+          "old_fault": true,
+          "new_fault": false
+        },
+        {
+          "phase_ns": 2.5,
+          "old_fault": true,
+          "new_fault": false
+        },
+        {
+          "phase_ns": 3.0,
+          "old_fault": true,
+          "new_fault": false
+        },
+        {
+          "phase_ns": 3.5,
+          "old_fault": true,
+          "new_fault": false
+        },
+        {
+          "phase_ns": 4.0,
+          "old_fault": true,
+          "new_fault": false
+        },
+        {
+          "phase_ns": 4.5,
+          "old_fault": true,
+          "new_fault": false
+        },
+        {
+          "phase_ns": 5.0,
+          "old_fault": true,
+          "new_fault": false
+        },
+        {
+          "phase_ns": 5.5,
+          "old_fault": true,
+          "new_fault": false
+        }
+      ],
+      "old_signature_reproduced": true,
+      "cases": [
+        {
+          "phase_ns": 3.5,
+          "checks": 260745,
+          "cpu_reads": 99641,
+          "final_bus_captures": 99641,
+          "frames": {
+            "core-0-3.5-frame-1.hex": {
+              "sha256": "89dfba4836a6efe0c26df2851f7c5db0de7ff7e4a13d9293134505ba6088ea9d",
+              "pixels": 61440
+            }
+          }
+        },
+        {
+          "phase_ns": 0,
+          "checks": 260745,
+          "cpu_reads": 99641,
+          "final_bus_captures": 99641,
+          "frames": {
+            "core-0-0-frame-1.hex": {
+              "sha256": "89dfba4836a6efe0c26df2851f7c5db0de7ff7e4a13d9293134505ba6088ea9d",
+              "pixels": 61440
+            }
+          }
+        },
+        {
+          "phase_ns": 11.25,
+          "checks": 260745,
+          "cpu_reads": 99641,
+          "final_bus_captures": 99641,
+          "frames": {
+            "core-0-11.25-frame-1.hex": {
+              "sha256": "89dfba4836a6efe0c26df2851f7c5db0de7ff7e4a13d9293134505ba6088ea9d",
+              "pixels": 61440
+            }
+          }
+        }
+      ],
+      "request_delay_ns": 5,
+      "full_ack_delay_ns": 12,
+      "boundary_ack_delay_ns": 16,
+      "physical": false,
+      "sdf": false,
+      "delays_measured": false
+    },
+    "sta": {
+      "candidate": "NES-CDC-REFRESH-141",
+      "passed": true,
+      "groups": {
+        "reader_address": {
+          "rows": 63,
+          "pairs": 21,
+          "max_data_delay_ns": 1.218,
+          "raw_min_slack_ns": -4.095,
+          "budget_ns": 4.0,
+          "sdc_max_delay_ns": 5.952,
+          "conditional_capture_min_ns": 11.904,
+          "constrained_min_slack_ns": 1.855
+        },
+        "reader_data": {
+          "rows": 969,
+          "pairs": 305,
+          "max_data_delay_ns": 10.591,
+          "raw_min_slack_ns": -8.487,
+          "budget_ns": 40.0,
+          "sdc_max_delay_ns": 45.454,
+          "conditional_capture_min_ns": 90.908,
+          "constrained_min_slack_ns": 36.965
+        },
+        "bridge_request": {
+          "rows": 138,
+          "pairs": 46,
+          "max_data_delay_ns": 6.588,
+          "raw_min_slack_ns": -4.514,
+          "budget_ns": 40.0,
+          "sdc_max_delay_ns": 45.454,
+          "conditional_capture_min_ns": 90.908,
+          "constrained_min_slack_ns": 40.938
+        },
+        "bridge_reply": {
+          "rows": 141,
+          "pairs": 47,
+          "max_data_delay_ns": 1.292,
+          "raw_min_slack_ns": -4.156,
+          "budget_ns": 10.0,
+          "sdc_max_delay_ns": 11.904,
+          "conditional_capture_min_ns": 23.808,
+          "constrained_min_slack_ns": 7.746
+        },
+        "control_first_stage": {
+          "rows": 24,
+          "pairs": 8,
+          "max_data_delay_ns": 6.577,
+          "raw_min_slack_ns": -4.468
+        },
+        "configuration_open": {
+          "rows": 3468,
+          "pairs": 240,
+          "max_data_delay_ns": 11.137,
+          "raw_min_slack_ns": -9.019
+        },
+        "lifecycle_open": {
+          "rows": 345,
+          "pairs": 115,
+          "max_data_delay_ns": 7.323,
+          "raw_min_slack_ns": -5.203
+        }
+      },
+      "raw_rows": 5148,
+      "raw_pairs": 782,
+      "constrained_pairs": 419,
+      "constrained_rows": 1257,
+      "chains": 17,
+      "release_chains": 9,
+      "chain_paths": 102,
+      "chain_min_setup_ns": 4.269,
+      "chain_min_hold_ns": 0.195,
+      "local_reset_rows": 8544,
+      "local_reset_min_ns": -4.739,
+      "local_reset_pass": false,
+      "new_fit": false,
+      "full_timing_pass": false,
+      "mtbf_signoff": false,
+      "external_io_signoff": false,
+      "installable": false
+    },
+    "io": {
+      "passed": true,
+      "snes_input_max_ns": 13.355,
+      "snes_output_max_ns": 18.678,
+      "snes_raw_release_max_ns": 20.416,
+      "snes_sample_envelope_ns": 133.265,
+      "snes_test_sample_ns": 160,
+      "snes_io_measured": false,
+      "rows": 13047,
+      "psram_input_max_ns": 6.682,
+      "psram_output_max_ns": 11.911,
+      "spi_route_max_ns": 12.317,
+      "psram_read_window_ns": 95.232,
+      "psram_access_ns": 70,
+      "setup_uncertainty_allowance_ns": 2,
+      "pcb_roundtrip_assumed_ns": 2,
+      "conditional_read_margin_ns": 2.639,
+      "reset_rows": 8544,
+      "reset_negative_rows": 84,
+      "negative_only_release_async_inputs": true,
+      "downstream_reset_min_ns": 0.473,
+      "normal_trial_only": true,
+      "new_fit": false,
+      "full_io_signoff": false,
+      "board_delay_measured": false,
+      "mtbf_calculated": false
+    },
+    "arm": {
+      "firmware_bytes": 186468,
+      "firmware_sha256": "737d43e9d0c173349492d49cc233d222649c1085bcccfdc284b9ec112a72e447",
+      "elf_sha256": "bcadc19a156d0b1319f339db28776e5215be19372ed98532f7faaf403cbe901f",
+      "nmi_address": "0x08019148",
+      "vector_word": "0x8019149",
+      "stop_stores": 15,
+      "stop_calls": 0,
+      "stop_dsb": 3,
+      "stop_isb": 2,
+      "host_sources_match": true,
+      "strong_nmi": true,
+      "arm_execution": false,
+      "physical": false,
+      "installable": false
+    },
+    "logic_elements": 13790,
+    "LAB": 924,
+    "registers": 5359,
+    "M9K": 50,
+    "PLL": 1,
+    "physical_pins": 122,
+    "virtual_pins": 0,
+    "same_clock_setup_min_ns": 0.087,
+    "same_clock_hold_min_ns": 0.146,
+    "normal_trial_ready": true,
+    "physical_screen_tested": false,
+    "game_ready": false,
+    "input": false,
+    "audio": false,
+    "source_lock_holds": 4,
+    "public_sources": {
+      "docs/nes-screen141-instructions.ko.md": "77750980c378211f012b3203238631f461e39b2364b5e8124c69218bd1be3ff1",
+      "tools/nes_screen141.py": "5253a999adba3fa00ad3e574c6868de5732872848475f4c11ae7a730ff5614b3",
+      "tools/test_nes_screen141.py": "cdb01ed3b3fc557a50f5d6a8bcf00d93e27f63e272609dfd03839090ea4c5711",
+      "tools/test_nes_screen141_budget.py": "6c80e04ce19df286b8c52883b8b6f62048cb2d20a0fc080ad843279aa764abbb",
+      "tools/test_nes_screen141_core.py": "8d72bd054821c454c0c6bbc5da4f0cb09f1f9056b65ebdf36c8e316863865333",
+      "tools/test_nes_screen141_reader.py": "4e6299aaf4e47de1f274f97814df7e74c5a92ab350fe30a29c3238942685b25a",
+      "tools/nes_screen141_models.py": "3551e259bc64914e8d370dfae380f36d8e3b3107d21f00233bb2be670659842f",
+      "tools/read_nes_screen141.py": "de37931716ebd33052b1c66f3299b77ab9401b9e4177d8c9622e0ca56426c793",
+      "tools/build_nes_screen141_arm.ps1": "fd0477a1c6d01f2caa36f63c4c0fe3a6021500b684f13a2059bf6dd0c3ff332a",
+      "tools/check_nes_screen141_arm.py": "7da071bf3ccf69fe7fb3660ec6ef7119da975d08bf9045db234f99b393a0a9e2",
+      "tools/inventory_nes_screen141.py": "acff6c13b3969e19312245c649dd3723280f89e3b7954f4d15df159fcf5947f7",
+      "tools/nes_screen141_sta.py": "f316867b0ca3c54ad07aa8b933f53dfa14d8cffd25273172c53e81f39a829927",
+      "tools/nes_screen141_io.py": "e27704357fffc43dd855e1a4da7aa45685e4027fbcf913d7968eb920e6b16bd9",
+      "tools/assemble_nes_screen141.py": "afa4ca993fb38d4fd71210da0692a23c08d4fdec0c2f6cbb00f3ffc457800a71",
+      "tools/release_nes_screen141.py": "8e3b4b6f7a6977f432bf8da01720c4f2bc9316579d3f6659e38a6ecde53e5161",
+      "tools/verify_nes_screen141.py": "e826fe76e1b02eb855bd85b5f39e3979166db6e43f640fb0a4c82f4274f6dc4e",
+      "tests/nes-functional/screen141_tb.sv": "3ae61623c8642c2ac7e2b1f7f5c3335c82ee6dc45ef45e2e9382e5dc4d5ef655",
+      "tests/nes-functional/screen141_boundary_tb.sv": "371cb611fedff8c5f33dca1b749bc1f9c7dd9420fb191a45e78b92c26ed43fff",
+      "tests/nes-functional/screen141_cache_tb.sv": "0daa6ac7bbba7853f0108354aae3fd564266b496dd0f9bd4bb173b757f793e56"
+    },
+    "nominal_frame_sha256": "89dfba4836a6efe0c26df2851f7c5db0de7ff7e4a13d9293134505ba6088ea9d",
+    "old_menu_return_sha256": "92602c6fbc028a93d35d04ce605f3dba02fe3d98faf4f14343d79b7c256b25ce",
+    "limits": {
+      "physical": false,
+      "extended_stress": "Samefit05 with request5/ACK16ns fails PPU deadline at55.822ms/sample165488. Retained in initial/core05. Final full cases use5/12ns; boundary units use5/16ns. Neither is measured/SDF/metastability.",
+      "routed_first_stage_data_minus_skew_ns": {
+        "request": 3.729,
+        "ack": 4.359
+      },
+      "menu": "Host reproduces budget leakage only, not a proven physical black-screen root cause.",
+      "cache": "CPU8 direct mapped bytes and PPU2 recent bytes; current64KiBPRG/32KiBCHR immutable geometry, reset invalidation; not arbitrary mapper/CHR-RAM/WCET guarantee.",
+      "early_attempts": "Initial host hex-replacement guard, Windows DLL623, nested fixture-log guard; simulation01 READ_CYCLES default issue, Questa fatal returns0; subsequent harness rejects Fatal explicitly. No new license error.",
+      "waived": "User waived unchanged044/GBC retesting; candidate menu return still required."
+    },
+    "next": "141을 한 번 실행해 두 TXT, 진단 화면, 자동 메뉴 복귀를 확인한다. 같은044/GBC 복원 시험은 반복하지 않는다. 실패하면 최초 context와 실패 경계를 비교하고, 성공하면 패드 입력과 SMB3 mapper4/384KiB 연결로 진행한다."
+  }
 }
