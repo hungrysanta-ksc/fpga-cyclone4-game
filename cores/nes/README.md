@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재142: **SNES 화면 부팅·패킷·VRAM 단계 구분 후보 실기 대기**. [결과](../../analysis/SCREEN142-RESULT.ko.md) · [실행 안내](../../docs/nes-screen142-instructions.ko.md).141의 ROM 활동 통과와 글리치는 구분하며 정상 영상은 미달성입니다.
+현재142: **SNES 화면 처리 완료 지점72회 관측, 정상 영상은 글리치로 실패**. 부팅보다 그림 데이터·VRAM 경로를 우선 확인합니다. [실기 결과](../../analysis/SCREEN142-HARDWARE-RESULT.ko.md) · [현재 인계](../../cores/nes/HANDOFF.ko.md).
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 
