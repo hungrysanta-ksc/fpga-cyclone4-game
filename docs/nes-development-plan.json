@@ -2,13 +2,13 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-10",
-  "technical_candidate": "NES-SCREEN-142",
+  "technical_candidate": "NES-SCREEN-143",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "142 stage6/error0/frames72: SNES 화면 처리 루프 진행, 실제 글리치. 그림 데이터/atlas DMA/VRAM 내용 정확성 우선.",
-  "next_action": "ISOLATE_ATLAS_PAYLOAD_VRAM_AFTER_SCREEN142",
+  "assessment": "143 단색/직접타일/ROMatlas/NES 비교. 정상기준자체잡음형:141/142 외형만의실패확정철회. 실기픽셀판정대기.",
+  "next_action": "COLLECT_SCREEN143_REFERENCE_COMPARISON",
   "next_three_deliverables": [
-    "SNES 부팅 재검증을 반복하지 말고 그림 데이터 정확성을 우선한다. 기존044와 비교해 내부에서 만든 단순 타일/색상 표시, ROM atlas DMA, 패킷 본문→VRAM/팔레트 경계를 최소 시험으로 분리한다. 전체 재적재를 줄일 수 있는 짧은 표시 대조를 우선 검토하고, 바뀐 경계만 검증한 다음 실기로 간다.",
+    "143 한 번으로 A파랑/B빨강·청록/C-ROM atlas/D기존 NES 화면을 기준 PNG와 비교하고 두 TXT·자동 메뉴 복귀를 받는다. C/D의 잡음 모양 자체는 정상 기준에도 있으므로 고장으로 단정하지 않는다. A/B가 정상이고 C/D가 기준과 비슷하면 명확한 NES 패턴·입력/게임 연결로 진행하고, 다르면 해당 첫 경계만 수정한다.",
     "화면 성공 후 패드 반응 연결",
     "SMB3 mapper4·384KiB·플레이·오디오 실기"
   ],
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "partial_screen142_software_display_loop_pass_pixels_fail",
+      "status": "screen143_reference_comparison_pending",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/SCREEN142-HARDWARE-RESULT.ko.md",
-      "remaining": "SNES 부팅 재검증을 반복하지 말고 그림 데이터 정확성을 우선한다. 기존044와 비교해 내부에서 만든 단순 타일/색상 표시, ROM atlas DMA, 패킷 본문→VRAM/팔레트 경계를 최소 시험으로 분리한다. 전체 재적재를 줄일 수 있는 짧은 표시 대조를 우선 검토하고, 바뀐 경계만 검증한 다음 실기로 간다."
+      "evidence": "analysis/SCREEN143-RESULT.ko.md",
+      "remaining": "143 한 번으로 A파랑/B빨강·청록/C-ROM atlas/D기존 NES 화면을 기준 PNG와 비교하고 두 TXT·자동 메뉴 복귀를 받는다. C/D의 잡음 모양 자체는 정상 기준에도 있으므로 고장으로 단정하지 않는다. A/B가 정상이고 C/D가 기준과 비슷하면 명확한 NES 패턴·입력/게임 연결로 진행하고, 다르면 해당 첫 경계만 수정한다."
     },
     {
       "id": "R5",
@@ -72,9 +72,9 @@
     },
     {
       "id": "VIDEO-CAUSAL",
-      "status": "screen142_stage6_72_times_visual_glitch_data_unverified",
-      "evidence": "analysis/SCREEN142-HARDWARE-RESULT.ko.md",
-      "detail": "부팅/WRAM진입/화면전송명령경로72회 관측. 그림본문/atlas/VRAM정확성 미검증; 같은142재시험생략."
+      "status": "noise_like_expected_reference_requires_comparison",
+      "evidence": "analysis/SCREEN143-RESULT.ko.md",
+      "detail": "142 소프트웨어 stage6 72회 유지. 정상RGB잡음형을확인했으므로외형만으로실기실패를확정하지않는다."
     },
     {
       "id": "BOARD-FIT",
@@ -2431,5 +2431,6 @@
     "menu_return_confirmed": null,
     "interpretation": "SNES program reached stage6 72times, error0 and flags7. Boot/WRAM entry and continuing software packet/display loop supported; actual tile/atlas/palette/VRAM contents unverified. Stage6 is after synchronous DMA register writes, not VRAM readback or physical pixels. No claim of normal game execution or measured TV FPS.",
     "next": "SNES 부팅 재검증을 반복하지 말고 그림 데이터 정확성을 우선한다. 기존044와 비교해 내부에서 만든 단순 타일/색상 표시, ROM atlas DMA, 패킷 본문→VRAM/팔레트 경계를 최소 시험으로 분리한다. 전체 재적재를 줄일 수 있는 짧은 표시 대조를 우선 검토하고, 바뀐 경계만 검증한 다음 실기로 간다."
-  }
+  },
+  "screen143": "analysis/screen143-verification.json"
 }

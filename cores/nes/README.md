@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재142: **SNES 화면 처리 완료 지점72회 관측, 정상 영상은 글리치로 실패**. 부팅보다 그림 데이터·VRAM 경로를 우선 확인합니다. [실기 결과](../../analysis/SCREEN142-HARDWARE-RESULT.ko.md) · [현재 인계](../../cores/nes/HANDOFF.ko.md).
+현재143: **단색·직접 타일·ROM DMA·NES 화면 비교 시험 대기**. 기존 정상 기준도 잡음형이므로141/142 외형만의 실패 확정을 정정했습니다. [143 결과](../../analysis/SCREEN143-RESULT.ko.md) · [실행 안내](../../docs/nes-screen143-instructions.ko.md).
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 
