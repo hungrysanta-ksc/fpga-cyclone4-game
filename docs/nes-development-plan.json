@@ -5,10 +5,10 @@
   "technical_candidate": "NES-SCREEN-139",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "139 최초ROM오류 수집·조기복귀 패키지 준비.138 화면실패 유지;원인/화면성공 미확정.",
-  "next_action": "COLLECT_FAULT139_HARDWARE_RESULT",
+  "assessment": "139 실기 최초상태수집·조기종료·사용자복원 성공. CPU0xE184 pending age3/응답0에서deadline1;화면구동 실패 유지.",
+  "next_action": "REPRODUCE_AND_FIX_CPU_ROM_RESPONSE_DEADLINE",
   "next_three_deliverables": [
-    "139 수정 패키지의 두 TXT·메뉴 복귀·044 메뉴/GBC 복원 결과를 받는다. 최초 fault context로 CPU/PPU pending·주소·age를 구분한 뒤 원인 경계만 수정한다. 같은138 재시험·전체 적재·저장/부품/무변경 배치는 반복하지 않는다. 정상 화면 뒤 입력·SMB3 mapper4/384KiB·오디오로 진행한다.",
+    "139 실기에서 CPU 주소=pending 주소0xE184,CPU pending/age3/응답0/유효0,오류1과샘플123028을 확인했다. 해당 요청 시작→reader 응답/ACK→CPU 소비 경계와 이전CPU/PPU 중재를 집중 재현한 뒤 원인 경계만 수정한다. 같은139 재시험·영상·저장/부품/전체 적재/무변경 fit은 요구하지 않는다.",
     "화면 성공 후 패드 반응 연결",
     "SMB3 mapper4·384KiB·플레이·오디오 실기"
   ],
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "partial_screen138_hardware_run_failed",
+      "status": "partial_screen139_hardware_run_failed_context_captured",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/SCREEN138-HARDWARE-RESULT.ko.md",
-      "remaining": "CPU ROM deadline1 해결 후 실제 화면, 입력, 오디오 확인."
+      "evidence": "analysis/SCREEN139-HARDWARE-RESULT.ko.md",
+      "remaining": "0xE184 CPU pending/age3의 응답 마감 원인 수정 후 실제 화면, 입력, 오디오 확인."
     },
     {
       "id": "R5",

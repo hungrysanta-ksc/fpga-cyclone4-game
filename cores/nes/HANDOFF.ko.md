@@ -1,14 +1,16 @@
-# NES 현재 인계 —139 최초 오류 수집 실기 대기
+# NES 현재 인계 —139 실기 최초 오류 확인, 읽기 응답 마감 수정
 
 [139 결과](../../analysis/FAULT139-RESULT.ko.md) · [실행 안내](../../docs/nes-fault139-instructions.ko.md) · [메타](../../analysis/fault139-verification.json)
 
-139 수정 패키지의 두 TXT·메뉴 복귀·044 메뉴/GBC 복원 결과를 받는다. 최초 fault context로 CPU/PPU pending·주소·age를 구분한 뒤 원인 경계만 수정한다. 같은138 재시험·전체 적재·저장/부품/무변경 배치는 반복하지 않는다. 정상 화면 뒤 입력·SMB3 mapper4/384KiB·오디오로 진행한다.
+139 실기에서 CPU 주소=pending 주소0xE184,CPU pending/age3/응답0/유효0,오류1과샘플123028을 확인했다. 해당 요청 시작→reader 응답/ACK→CPU 소비 경계와 이전CPU/PPU 중재를 집중 재현한 뒤 원인 경계만 수정한다. 같은139 재시험·영상·저장/부품/전체 적재/무변경 fit은 요구하지 않는다.
+
+[139 실기 결과](../../analysis/SCREEN139-HARDWARE-RESULT.ko.md): 전체80KiB 적재·대조,최초상태수집,STOP오류0,base/menu준비,사용자복원 성공. 표시단계 체크포인트80ms,메뉴준비528100ms. 글리치여부·메뉴복귀육안·이번GBC플레이는미확인. 화면/RUN성공으로승격하지않는다.
 
 138은80KiB 적재/전체 비교·STOP·메뉴·사용자 복원 성공,CPU ROM deadline1로 화면 실패다. 첫/마지막/STOP 카운터123028,실기 화면 직전522580ms/메뉴536040ms. [138 실기 결과](../../analysis/SCREEN138-HARDWARE-RESULT.ko.md)를 유지한다. 21.48MHz/위상3.5ns 이상모델100ms에서는 미재현했다.139는 원인 수집판이며 화면 오류 수정 완료가 아니다.
 
-## 실기 요청
+## 실기 후속
 
-`NES139-SCREEN-and-RESTORE044.zip`의01-SCREEN139-SD-ROOT 내용 복사,0바이트 `NES SCREEN 139.nh1` 한 번 실행. 앞의적재·대조는약9분참고,전체10분관찰한도. ROM오류관측시50ms간격조회후조기종료;정상은최대200회×50ms. `nes-progress-139.txt`와 `nes-screen-last-139.txt`,메뉴/복원/GBC 결과를 받는다. 영상필수아님. 재분해/LED/PC직결요구없음.
+두139 TXT를 확보했고 복원 성공을 확인했다. 같은139 시험과 추가 영상은 필요 없다. 다음은 위 최초 실패 경계의 재현·수정이며 새 실기 후보를 준비할 때 실행 안내를 제공한다.139 제작/실행 안내는 당시 패키지의 고정 기록으로 유지한다.
 
 ## 선택본과 재사용
 

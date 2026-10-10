@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재139: **최초 ROM 오류 수집 실기 대기**.138 실패를 해결 완료로 승격하지 않습니다. [139 결과](../../analysis/FAULT139-RESULT.ko.md) · [실행 안내](../../docs/nes-fault139-instructions.ko.md).
+현재139: **실기 최초 오류 수집 성공, NES 실행 실패**. 같은 주소0xE184의 CPU 요청이 응답 대기 중인 상태를 확보했습니다. [139 실기 결과](../../analysis/SCREEN139-HARDWARE-RESULT.ko.md) · [현재 인계](HANDOFF.ko.md).
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 

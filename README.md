@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재139: **최초 ROM 오류 수집·조기 복귀 패키지 준비 완료**.138 화면 실패의 원인을 좁히기 위한 수정판이며 화면 성공은 아직 미확인입니다. [139 결과](analysis/FAULT139-RESULT.ko.md) · [실행 안내](docs/nes-fault139-instructions.ko.md).
+현재139: **실기 최초 오류 수집·조기 종료 확인, CPU ROM 응답 마감 실패 조사 중**. CPU 주소와 미완료 주소0xE184,age3에서 응답이 도착하지 않았습니다. [139 실기 결과](analysis/SCREEN139-HARDWARE-RESULT.ko.md).
 
 **sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다.
 제품 이름의 **HST는 HungrySanTa = 제작팀 이름**을 뜻합니다.
