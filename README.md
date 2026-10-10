@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재148: **실제 SMB3(J) 초기 PPU 읽기 장애 수정, 30프레임 RTL 실행 통과**. 다음은 게임 적재·화면·입력 연결과 실기 ROM 패키지입니다. [148 결과](analysis/GAME148-RESULT.ko.md).
+현재150: **실제 SMB3 화면·패드 연결과 첫 실기 패키지 준비 완료, 실기 결과 대기**. 전체 화면 복사 중 검정 구간이 있는 초기 출력이며60fps 구현은 미완료입니다. [150 결과](analysis/GAME150-RESULT.ko.md).
 
 **sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다.
 제품 이름의 **HST는 HungrySanTa = 제작팀 이름**을 뜻합니다.
@@ -24,7 +24,7 @@
 | 구성 | 현재 상태 | 소스·재현 |
 | --- | --- | --- |
 | GB/GBC | C44 실기 확인, 0.9.0 공개 완료 | [GBC 개발 안내](cores/gbc/README.md) |
-| NES | 136 CPU 활동 통과;138 화면 실기 ROM deadline 실패 조사 중 | [NES 개발 안내](cores/nes/README.md) |
+| NES | 150 실제 게임 화면·패드 시험판 준비;실기 확인 대기 | [NES 개발 안내](cores/nes/README.md) |
 | PC Engine | 조사 대기; HuCard 범위를 우선 검토 | [PCE 조사 범위](cores/pce/README.md) |
 
 현재 구현 대상은 **FXPAK Pro / Mk.III, STM32 + EP4CE15F17C8**입니다. 제품 이름이 바뀌어도 보드 지원 범위가 넓어지는 것은 아닙니다. NES/PCE의 동작 가능성·일정은 아직 확정하지 않았습니다.

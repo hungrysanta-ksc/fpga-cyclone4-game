@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재148: **실제 SMB3(J) 초기 PPU 읽기 장애 수정, 30프레임 RTL 실행 통과**. 다음은 게임 적재·화면·입력 연결과 실기 ROM 패키지입니다. [148 결과](../../analysis/GAME148-RESULT.ko.md).
+현재150: **실제 SMB3 화면·패드 연결과 첫 실기 패키지 준비 완료, 실기 결과 대기**. 전체 화면 복사 중 검정 구간이 있는 초기 출력이며60fps 구현은 미완료입니다. [150 결과](../../analysis/GAME150-RESULT.ko.md).
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 

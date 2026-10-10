@@ -1,0 +1,177 @@
+{
+  "candidate": "NES-GAME-150",
+  "status": "ACTUAL_GAME_TRIAL_READY_PHYSICAL_PENDING",
+  "manifest_sha256": "d1cd32d592afd88f19b3cb7b1cca095872dcecff1ccaae0e92719febd84aa603",
+  "file_count": 4235,
+  "public_sources": {
+    "src/nes/diagnostic/nes_game_frame150.sv": "acb8eff9c17143f69dd3c49c83c667e893025554b98aee8f45e89b8d8fc65174",
+    "src/nes/diagnostic/nes_game_pad150.sv": "b6cd3909ff4184386ce64c3aa214c6f81139d6e36683b244e9e5a279c750515c",
+    "src/nes/diagnostic/nes_game_bus150.sv": "1e4b1146bcbacfcae90baca2233546a1ce62c3b27edeafe78d69d274a6b01ef6",
+    "tools/build_nes_game150.py": "290e2b2c06a9001aa55eeadb38194504ed386e27eac66575a91e8537a2bb5624",
+    "tools/nes_game150.py": "8d657f17449785c999164f39c49e2befa9744711436c1d296719f71f3d8398db",
+    "tools/nes_game150_arm.py": "8f559a108cedbb4410eff7ffe213607795942eb4a333dcd8b84860bf2f415c87",
+    "tools/check_nes_game150_arm.py": "da639ec0d11f5903b75fb7b1b85b51f75d4619f86d763e752c6445eaa96fbdf8",
+    "tools/check_nes_game150_timing.py": "c8865e8e6c1c2894cdfa02a9a77412ea4908ba7be8010c602bba4b4f82fc9120",
+    "tools/test_nes_game150.py": "02efbed315ea8d7b66c03ec4f321664485dc5b3fbb3a38d75e9e7bb3fcba8391",
+    "tools/test_nes_game150_client.py": "851708c6345749abad419d6ebf0f6490167546eba375259ee68a6db548185a34",
+    "tools/assemble_nes_game150.py": "946eea183453c31f1d5d3874c40262fdd0f3afeb9e99802d907a44d93a1a6e6c",
+    "tools/release_nes_game150.py": "452b78c03dd35d2ea8fa1101ec1c2bc278ca478086a6b78a06b30fd252d38442",
+    "tools/verify_nes_game150.py": "6c9ef3f2f224fc977bfd7d5310aaac9180a48d64bd14003800e3521c6541b9ed",
+    "tests/nes-functional/game150_video_tb.sv": "b49aeb4a29ce4e55f1148d7d58a037b1c78f6e2c26aade6ef654dc681c1cd136",
+    "tests/nes-functional/game150_rom_tb.sv": "0cab412d61f0356d1414b5922fb8e4b3ae7b5683c2bcd077ab2c218c49500383",
+    "snes/video_probe/capture_game150.lua": "567408eb5d82a6607f0933cd008bfb42106a0c05d07a162bf0af098f13ce6d4c"
+  },
+  "selected": [
+    "video02",
+    "client03",
+    "rom01",
+    "fit02",
+    "arm02",
+    "armcheck01",
+    "asm01",
+    "release01"
+  ],
+  "previous_core_frames_reused148": 30,
+  "physical_test": false,
+  "sd_package": true,
+  "fit": {
+    "logic_elements": 13590,
+    "labs": 923,
+    "registers": 4937,
+    "m9k": 52,
+    "pll": 1,
+    "physical_pins": 122,
+    "virtual_pins": 0
+  },
+  "timing": {
+    "passed": true,
+    "same_clock_setup_ns": 0.01,
+    "same_clock_hold_ns": 0.179,
+    "snes_envelope_ns": 201.355,
+    "sample_ns": 270,
+    "psram_conditional_margin_ns": 0.7799999999999985,
+    "pad_held_delay_ns": 6.516,
+    "negative_recovery": [
+      {
+        "corner": "8_slow_1200mv_85c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus150:consumer|host_release[1]",
+        "delay": "4.253",
+        "slack": "-7.129"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus150:consumer|host_release[0]",
+        "delay": "4.253",
+        "slack": "-6.663"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus150:consumer|host_release[1]",
+        "delay": "3.912",
+        "slack": "-6.406"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus150:consumer|host_release[0]",
+        "delay": "3.912",
+        "slack": "-5.969"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus150:consumer|host_release[1]",
+        "delay": "2.016",
+        "slack": "-3.480"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus150:consumer|host_release[0]",
+        "delay": "2.016",
+        "slack": "-3.293"
+      }
+    ],
+    "psram_address_margin_ns": 5.087999999999997,
+    "psram_active_margin_ns": 0.7799999999999985,
+    "prior_unphased_margin_ns": -0.863999999999999,
+    "address_launch_cycles": 17,
+    "ce_oe_launch_cycles": 16,
+    "row_counts": [
+      108,
+      6453
+    ],
+    "pcb_allowance_ns": 2,
+    "mtbf_calculated": false,
+    "full_io_signoff": false,
+    "scope": "Conditional routed boundaries; existing unmeasured electrical and clock-halt limits remain open."
+  },
+  "video": {
+    "passed": true,
+    "summary": "PASS GAME150 pixels=57344 pad=80 frozen_capture/release/recapture/reset checks=57424",
+    "inputs": {
+      "pixels": "765a4271ffd48b56555f3ac97aabf6ea3d1b632dee6b5ee4d5816d36d82c35f4"
+    },
+    "sources": {
+      "nes_game_frame150.sv": "acb8eff9c17143f69dd3c49c83c667e893025554b98aee8f45e89b8d8fc65174",
+      "nes_game_pad150.sv": "b6cd3909ff4184386ce64c3aa214c6f81139d6e36683b244e9e5a279c750515c",
+      "nes_game_bus150.sv": "1e4b1146bcbacfcae90baca2233546a1ce62c3b27edeafe78d69d274a6b01ef6",
+      "game150_video_tb.sv": "b49aeb4a29ce4e55f1148d7d58a037b1c78f6e2c26aade6ef654dc681c1cd136"
+    },
+    "scope": "Stored real-game frame replay; final pixel mapping, frozen ownership, continuous DMA address changes, pad serial order and reset. Not concurrent CPU/PPU or physical timing."
+  },
+  "client": {
+    "passed": true,
+    "exact_rgb_frames": 2,
+    "pixels": 114688,
+    "input_sha": "765a4271ffd48b56555f3ac97aabf6ea3d1b632dee6b5ee4d5816d36d82c35f4",
+    "sources": {
+      "tools/build_nes_game150.py": "290e2b2c06a9001aa55eeadb38194504ed386e27eac66575a91e8537a2bb5624",
+      "snes/video_probe/capture_game150.lua": "567408eb5d82a6607f0933cd008bfb42106a0c05d07a162bf0af098f13ce6d4c"
+    },
+    "scope": "Actual SNES CPU/DMA/PPU against modeled framebuffer, including bank wrap; not physical bus or game speed."
+  },
+  "arm": {
+    "firmware_bytes": 186860,
+    "firmware_sha256": "94aa2def9f8a03fa6f297160b443308c2eed2dae1364436b66f053c71eb8ab19",
+    "elf_sha256": "446f80f259fbdae37ec076fd09d92b30c0daded2273e68762bf4a369d0d3d351",
+    "nmi_address": "0x08019148",
+    "vector_word": "0x8019149",
+    "stop_stores": 15,
+    "stop_calls": 0,
+    "stop_dsb": 3,
+    "stop_isb": 2,
+    "transport_source_matches": true,
+    "strong_nmi": true,
+    "arm_execution": false,
+    "physical": false,
+    "installable": false
+  },
+  "package": {
+    "zip_sha256": "cbc438fafdb8978ab32201b679aaa12895835ed497b1ff29c8df997cd6dd96e8",
+    "zip_bytes": 925971,
+    "members": 12,
+    "firmware_sha256": "94aa2def9f8a03fa6f297160b443308c2eed2dae1364436b66f053c71eb8ab19",
+    "fpga_sha256": "959db2314564cdb32825da25d4598565ffbca143696fb0109be25383b67429c6",
+    "rom_sha256": "dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49",
+    "normal_trial_ready": true,
+    "physical": false
+  },
+  "limitations": [
+    "forced-blank full-frame DMA; not60fps",
+    "audio",
+    "emphasis",
+    "save persistence",
+    "physical game/input/menu/loading time",
+    "existing IO/MTBF/clock halt limits"
+  ]
+}
