@@ -5,12 +5,12 @@
   "technical_candidate": "NES-SCREEN-146",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "145 고정 그림·메뉴 실기PASS.146 긴 검정 제거+30→2 TV프레임 비교·블랭크 종료 보호 로컬PASS/실기 대기. 게임·입력·로딩 단축 미완료.",
-  "next_action": "COLLECT_SCREEN146_CONTINUOUS_VIDEO",
+  "assessment": "146 적재/RUN/STOP/표시/메뉴 실기PASS, 빠른 A/B 정합성 판정보류. 사용자 지시로 패턴 추가시험 종료. 실제 SMB3 ROM 구현은 새 PR에서 진행한다.",
+  "next_action": "RUN_ACTUAL_SMB3_AND_CONNECT_GAME_VIDEO",
   "next_three_deliverables": [
-    "146 한 번의 적재로 느린/빠른 표시 영상·두TXT·메뉴 확인",
-    "실기 첫 실패 경계만 수정하거나 통과하면 패드·SMB3 mapper4/384KiB·오디오로 전진",
-    "검증 완료 START·오류 차단을 유지한 로딩 단축"
+    "실제SMB3 256+128KiB 코어 실행에 필요한 물리뱅크·캐시·적재 범위 확장",
+    "384KiB MCU 적재·대조 및 스프라이트·스크롤·CHR전환을 지원하는 SNES 출력/패드 연결",
+    "최소 변경 검증 후 실기게임: 메뉴복귀·로그와 마리오 이동/스크롤/프레임 끊김 확인"
   ],
   "gates": [
     {
@@ -28,8 +28,8 @@
       "title": "Causal video-load feasibility and trace replay",
       "depends_on": [],
       "exit": "Measured actual trace workloads and SNES replay within deadline; no future lookahead or silent output loss; sample limits explicit",
-      "evidence": "analysis/SCREEN145-HARDWARE-RESULT.ko.md",
-      "remaining": "146 로컬30→2프레임 갱신 검증 완료,실기 대기. 게임용 속도·입력·오디오·호환성 미완료.",
+      "evidence": "analysis/SCREEN146-HARDWARE-RESULT.ko.md",
+      "remaining": "추가A/B 판정은 사용자 지시로 생략. 실제 게임의 화면 전송·입력·속도·오디오 미완료.",
       "consumer_evidence": "analysis/SCREEN137-RESULT.ko.md"
     },
     {
@@ -48,8 +48,8 @@
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/SCREEN145-HARDWARE-RESULT.ko.md",
-      "remaining": "146 로컬30→2프레임 갱신 검증 완료,실기 대기. 게임용 속도·입력·오디오·호환성 미완료."
+      "evidence": "analysis/SCREEN146-HARDWARE-RESULT.ko.md",
+      "remaining": "추가A/B 판정은 사용자 지시로 생략. 실제 게임의 화면 전송·입력·속도·오디오 미완료."
     },
     {
       "id": "R5",

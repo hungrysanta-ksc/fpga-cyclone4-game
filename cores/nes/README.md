@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재146: **145 실기 기준을 유지하며 긴 검정을 제거한 연속 표시 시험판 준비 완료**. [146 결과](../../analysis/SCREEN146-RESULT.ko.md) · [실행 안내](../../docs/nes-screen146-instructions.ko.md).
+현재146: **표시·메뉴 복귀 실기 결과 수집 완료. 다음 목표는 실제 SMB3(J) ROM 실행**. 빠른 A/B 정합성은 판정 보류하며 추가 패턴 시험을 요구하지 않습니다. [146 실기 결과](../../analysis/SCREEN146-HARDWARE-RESULT.ko.md).
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 
