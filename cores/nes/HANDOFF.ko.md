@@ -1,25 +1,23 @@
-# NES 현재 인계 —139 실기 최초 오류 확인, 읽기 응답 마감 수정
+# NES 현재 인계 —140 응답 경계 수정 실기 대기
 
-[139 결과](../../analysis/FAULT139-RESULT.ko.md) · [실행 안내](../../docs/nes-fault139-instructions.ko.md) · [메타](../../analysis/fault139-verification.json)
+[140 결과](../../analysis/RESPONSE140-RESULT.ko.md) · [실행 안내](../../docs/nes-response140-instructions.ko.md) · [메타](../../analysis/response140-verification.json)
 
-139 실기에서 CPU 주소=pending 주소0xE184,CPU pending/age3/응답0/유효0,오류1과샘플123028을 확인했다. 해당 요청 시작→reader 응답/ACK→CPU 소비 경계와 이전CPU/PPU 중재를 집중 재현한 뒤 원인 경계만 수정한다. 같은139 재시험·영상·저장/부품/전체 적재/무변경 fit은 요구하지 않는다.
+140 실기의 두 TXT와 화면·메뉴 복귀·044 메뉴/GBC 복원 결과를 받는다. RUN통과와 화면정상은 구분한다. 재실패하면 최초context/샘플수를139와 대조하며 무변경 fit/적재/부품/저장 시험은 반복하지 않는다. 정상화면 뒤 패드·SMB3 mapper4/384KiB·오디오로 간다.
 
-[139 실기 결과](../../analysis/SCREEN139-HARDWARE-RESULT.ko.md): 전체80KiB 적재·대조,최초상태수집,STOP오류0,base/menu준비,사용자복원 성공. 표시단계 체크포인트80ms,메뉴준비528100ms. 글리치여부·메뉴복귀육안·이번GBC플레이는미확인. 화면/RUN성공으로승격하지않는다.
+## 원인 근거와 실제 변경
 
-138은80KiB 적재/전체 비교·STOP·메뉴·사용자 복원 성공,CPU ROM deadline1로 화면 실패다. 첫/마지막/STOP 카운터123028,실기 화면 직전522580ms/메뉴536040ms. [138 실기 결과](../../analysis/SCREEN138-HARDWARE-RESULT.ko.md)를 유지한다. 21.48MHz/위상3.5ns 이상모델100ms에서는 미재현했다.139는 원인 수집판이며 화면 오류 수정 완료가 아니다.
-
-## 실기 후속
-
-두139 TXT를 확보했고 복원 성공을 확인했다. 같은139 시험과 추가 영상은 필요 없다. 다음은 위 최초 실패 경계의 재현·수정이며 새 실기 후보를 준비할 때 실행 안내를 제공한다.139 제작/실행 안내는 당시 패키지의 고정 기록으로 유지한다.
+139 실기는0xE184 CPU pending/age3/응답0/오류1,샘플123028에서 실패했다. 같은139 실제 코어의 무지연 모델은 이 경계에서age4/응답1로 통과했다. 요청5ns/ACK8ns 디지털 지연을 적용하면 최초context까지 실기와 같아진다.140은 ACK를 데이터 sample 다음 HOLD(핀 해제) 에지에서 발행하며 기존 RELEASE까지의 한 메모리 클록 대기를 없앴다. PSRAM READ16/168MHz95.232ns·post-sampleHOLD·CHECK·주소/데이터레지스터·2단동기화는 그대로다. 측정된 물리 원인 확정이나 metastability 해결을 주장하지 않는다.
 
 ## 선택본과 재사용
 
-fit02/arm03/armcheck03/host05/rtl01/inventory01/sta01/io01/asm01/release01. fit01준비파일명오류와host02/arm01 CRC치환실패는제외. arm02/host04뒤보고서초기화추가로arm03/host05확정. source/ROM reader/control 타이밍은유지하며관측배선+식별만변경.137전체픽셀·SNES소비자검증재사용;이번46검사는동일에지와STOP후보존/후속사건보존경계다. testscript print의5A/D5만5B/D6로교정했으며실제RTL/검사는처음부터5B/D6였다.
+fit01/arm01/armcheck01/host01/reader01/sta01/io01/asm01/release01. unit03은12위상 중 기존10실패/수정0실패. full01은139식별자의 실제코어에서EARLY_ACK를0/1로 바꾼 비교;후자는생산140 reader와주석/공백·시험지연을제거해동일함을검증한다. loader5C/observerD7는상수변경이며MCU호스트20/ARM으로확인한다. 단일위상67.161ms/198527샘플통과,61440픽셀한프레임은trace01무지연139와완전일치. 전체픽셀/소비자는137근거재사용. reader01은16위상8400읽기208취소와CDC/setuphold/110ns/noHOLD반례검사다. unit01예약어컴파일실패와unit02ACTIVE-ACK실험은채택하지않았다. 최종은HOLD-ACK다.
 
-## 로그 해석/다음 수정
+## 실기 요청과 판정
 
-`run_first_error`는RUN실패,`run_stop_error`는종료관측실패다. 기존run_error는최초RUN오류우선. fault_context_valid1일때 hi/lo를결합하며 bit63=0,62busy/61pending_ppu/60ready/59response/58cpu_sample/57ppu_sample/56cpu_valid/55ppu_valid,54:47age,46:25pending주소,24:0CPU주소다. 주소는PC가아닌매핑주소,age는NES클록. `tools/read_nes_fault139.py <report>`사용. 같은클록의최초fault발생에지에캡처하며STOP후에도남는다. 오류없이기존70만조회하고71/72는오류후조회한다. RUN중SD기록은금지. 공유SPI/RDY고장은종료후SD를강행하지않는다.
+`NES140-SCREEN-and-RESTORE044.zip`의01-SCREEN140-SD-ROOT 내용을SD최상위복사,0바이트 `NES SCREEN 140.nh1`한번실행. 적재·대조약9분,정상표시약10초,전체10분관찰기준. 두TXT `nes-progress-140.txt`, `nes-screen-last-140.txt`,화면/메뉴복귀/044메뉴GBC를받는다. 화면보이면사진한장/짧은영상유용하지만필수아님. RUN중SD금지/RESET재유지→STOP→base/menu→저장/044유지.139처럼최초오류와STOP오류를구분하고오류시조기복귀한다. run_passed는영상자동판정이아니다.
 
-같은클록+.108/+.179ns,363heldpairs/17chains조건부통과. config240쌍은CHR승인값이RUN전고정되는계약이며새observer fanout포함. raw−8.454ns/MTBF/실제PCB지연/전기조건미승인. I/O+2.478ns는PCB2ns가정이다. 이미완료된부품/저장/모형/배치를반복하지말고새실기결과로다음수정선택.
+## 물리 여유와 보류
 
-첫게임목표SMB3(J),mapper4/PRG256KiB+CHR128KiB,SHA dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49. 입력·오디오·실제게임은미완료. GBC152/원래NES334·044·136·E1/E2·8µs/양클록정지CE9µs·124격리·source-lock4유지. 동결044–139/완료finalizer수정금지. PR한국어4절,사용자머지.
+13640LE/932LAB/5184reg/50M9K/PLL1/122핀. 같은클록setup+.199/hold+.179ns,363heldpairs/17chains 통과. GPIO/PSRAM 조건부읽기여유+.430ns(PCB왕복2ns/setup등2ns가정)는139+2.478ns보다작다. 보드지연·MTBF·raw교차/reset전부승인아님. 현재ACK/REQ첫단계data-skew최대4.385/3.896ns가8/5ns모델범위안임을확인했지만모든아날로그실패보증아님. E1/E2·8µs/양클록정지CE9µs·124격리·source-lock4유지.
+
+첫게임SMB3(J),mapper4/PRG256KiB+CHR128KiB,SHA dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49. 입력·오디오·실제게임미완료. GBC152/원래NES334와동결044–140자료보존;완료finalizer재실행금지. PR한국어4절,사용자머지.

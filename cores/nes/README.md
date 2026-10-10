@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재139: **실기 최초 오류 수집 성공, NES 실행 실패**. 같은 주소0xE184의 CPU 요청이 응답 대기 중인 상태를 확보했습니다. [139 실기 결과](../../analysis/SCREEN139-HARDWARE-RESULT.ko.md) · [현재 인계](HANDOFF.ko.md).
+현재140: **읽기 완료 응답 수정 실기 대기**.실기와 같은 최초 실패 상태를 모델에서 재현·수정했습니다. [140 결과](../../analysis/RESPONSE140-RESULT.ko.md) · [실행 안내](../../docs/nes-response140-instructions.ko.md).
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 
