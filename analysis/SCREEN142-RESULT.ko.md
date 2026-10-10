@@ -1,8 +1,8 @@
-# NES 현재 인계 —142 화면 부팅 경계 실기 대기
+# NES142 결과 — SNES 화면 실행 단계의 실기 구분
 
-[결과](../../analysis/SCREEN142-RESULT.ko.md) · [실행 안내](../../docs/nes-screen142-instructions.ko.md) · [검증 메타](../../analysis/screen142-verification.json)
+## 작업 목표
 
-142를 한 번 실행해 두 TXT의 screen_stage/error/flags/frames와 화면 색·형태, 자동 메뉴 복귀를 확인한다. 처음 막힌 부팅/패킷/VRAM 경계만 수정한다. 같은141·044/GBC 반복 및 일반 디버그 확장은 생략한다.
+141의 ROM 활동·오류0과 실제 글리치가 공존하는 이유를 좁히기 위해 SNES 화면 프로그램이 어디까지 실행했는지 회수한다. PR87 머지112fd8b를 기준으로 변경했다. **새 실기 후보와 변경 경계 검증은 완료, 글리치 원인 확정·정상 영상 달성은 아직 미완료다.**
 
 ## 현재 증상의 해석
 
@@ -42,15 +42,3 @@ MCU는 strict5E/D9로 식별하고 STOP 후 상태를 회수하여 기존 TXT에
 [142 실행 안내](../docs/nes-screen142-instructions.ko.md)에 따라 한 번 시험한다. 약9분 적재 후10초 표시, 전체10분 관찰 기준은 같다. 변경된 화면 경계의 결과를 얻는 시험이며 같은141 재시험은 아니다. 다음에는stage/오류/횟수와 화면 관찰로 첫 실패 구간을 고쳐 정상 화면을 우선한다. 일반 디버그 기능 확대·044/GBC 반복은 하지 않는다.
 
 이 변경은 실기 화면의 부팅·전송 경계를 실제 배선에 연결하고 초기 표시를 명시한 작업이다. 전체 게임 완료나 글리치 해결 선언은 아니다. SMB3(J),mapper4/PRG256KiB+CHR128KiB·패드·오디오는 다음 단계다.141 ACK16ns 실패, E1/E2·8µs·양클록정지 CE9µs·source-lock4·124격리는 그대로 보류한다.
-
-## 재개 시 주의
-
-선택fit03의 배치를rom04로복사하여MIF만 갱신했다. 동결fit은rom04다. source HEX뿐 아니라db의생성MIF를 확인해야 하며cdb성공문자열만 믿지 않는다. rom03은실패증거로보존했다. ARM02/armcheck03/host03/status02/client02/sta03/io03/inputs01/asm01/release01을 사용한다. public verifier로동결해시와시험한ROM·패키지를검사한다. 완료finalizer를재실행하지않는다.
-
-141 첫시험 메뉴복귀사용자PASS,재실행은MENU_PREPARED기록만있고별도관찰미보고. 두회모두ROM오류0이지만화면글리치다. 대각선띠는사용자설명대로카메라현상. 소음없음/드문움직임은추가관측이며FPS수치로바꾸지않는다. stage6횟수도TVFPS가아니다. 오디오미구현이므로무음을CPU실패로판정하지않는다.
-
-모델이바뀌어도새진단체계를늘리지말고다음TXT로확인된첫실패경계만수정한다. stage0~2면SNES부트/ROM/WRAM,3~5면패킷/프론트엔드/DMA,frames>0인데글리치면VRAM/팔레트/데이터정확성우선. 오류응답은원본값보존. stage가중간이어도frames양수일수있다. 화면정상판정에는사용자관찰필요.
-
-SMB3(J) SHA dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49. GBC152/원래NES334 및 모든 과거 public pin 보존. 부품은 사용자 사진의 FXPAK Pro Mk.III Rev.D/2022-05-02,STM32F401RCT6,EP4CE15F17C8N,PSRAM IS66WVE4M16EBLL-70BLI 두 개를 기준으로 한다. 다시 제품명/속도를 묻지 않는다.
-
-Questa는 기존 FLOAT wrapper와1seat를 재사용한다. uncounted Terminal Services 실패경로/새 유료 라이선스 요구를 반복하지 않는다. 한 번에 한 작업. Git에는 ROM/펌웨어/FPGA 바이너리/미디어/라이선스/개인경로를 넣지 않는다. PR은 한국어 제목과 작업 목표·작업 내용·작업 결과·작업 의미4절, 사용자가머지한다.

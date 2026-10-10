@@ -2,13 +2,13 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-10",
-  "technical_candidate": "NES-SCREEN-141",
+  "technical_candidate": "NES-SCREEN-142",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "141 두 차례 ROM 실행/STOP 오류0. 첫 시험 메뉴 복귀 성공, 재실행 정상 영상은 글리치로 실패. SNES 표시 경로 수정 필요.",
-  "next_action": "ISOLATE_SNES_BOOT_PACKET_VRAM_AFTER_SCREEN141_GLITCH",
+  "assessment": "141 ROM 활동 통과/화면 글리치.142 부팅·패킷·VRAM 단계와software전송횟수 회수 실기대기. 대각선카메라띠 제외,무음예상,저FPS미확정.",
+  "next_action": "COLLECT_SCREEN142_HARDWARE_RESULT",
   "next_three_deliverables": [
-    "같은141 재시험은 종료한다. 정상 영상 실패를 기준으로 SNES 소비자 부팅/프로그램 ROM·WRAM 이행 → 화면 패킷 수신 → VRAM·팔레트 DMA 순서의 최초 실패 경계를 확인한다. 기존044 성공 경로를 비교 재사용하고, 필요하면 이 경계의 최소 상태만 기존 SPI로 회수해 STOP 뒤 TXT에 기록한다. 짧은 정적 표시 경로로 분리할 수 있는지도 검토하되 그 성공을 실제 NES 화면 성공으로 대체하지 않는다. 수정된 후보가 준비되기 전 동일한9분 적재·044/GBC 복원 반복은 요청하지 않는다.",
+    "142를 한 번 실행해 두 TXT의 screen_stage/error/flags/frames와 화면 색·형태, 자동 메뉴 복귀를 확인한다. 처음 막힌 부팅/패킷/VRAM 경계만 수정한다. 같은141·044/GBC 반복 및 일반 디버그 확장은 생략한다.",
     "화면 성공 후 패드 반응 연결",
     "SMB3 mapper4·384KiB·플레이·오디오 실기"
   ],
@@ -2367,5 +2367,6 @@
       "next": "같은141 재시험은 종료한다. 정상 영상 실패를 기준으로 SNES 소비자 부팅/프로그램 ROM·WRAM 이행 → 화면 패킷 수신 → VRAM·팔레트 DMA 순서의 최초 실패 경계를 확인한다. 기존044 성공 경로를 비교 재사용하고, 필요하면 이 경계의 최소 상태만 기존 SPI로 회수해 STOP 뒤 TXT에 기록한다. 짧은 정적 표시 경로로 분리할 수 있는지도 검토하되 그 성공을 실제 NES 화면 성공으로 대체하지 않는다. 수정된 후보가 준비되기 전 동일한9분 적재·044/GBC 복원 반복은 요청하지 않는다."
     },
     "current_assessment": "ROM execution passed twice; normal video failed on observed repeat. First-run menu return confirmed; repeat visual menu return not separately reported."
-  }
+  },
+  "screen142": "analysis/screen142-verification.json"
 }
