@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재138 실기: **화면 실패 / 적재·메뉴·복원 성공**. CPU ROM 응답 마감 오류1을 먼저 해결한다. [실기 결과](../../analysis/SCREEN138-HARDWARE-RESULT.ko.md). 동일138 반복 시험은 요청하지 않는다.
+현재139: **실기 최초 오류 수집 성공, NES 실행 실패**. 같은 주소0xE184의 CPU 요청이 응답 대기 중인 상태를 확보했습니다. [139 실기 결과](../../analysis/SCREEN139-HARDWARE-RESULT.ko.md) · [현재 인계](HANDOFF.ko.md).
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 

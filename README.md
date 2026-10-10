@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재138 실기: **적재·대조·메뉴 복귀·복원 성공, 화면 실행 실패**. CPU ROM 응답 마감 오류1과 관측 카운터 정지를 확인했다. [실기 결과와 다음 수정 범위](analysis/SCREEN138-HARDWARE-RESULT.ko.md). 동일138 재시험은 필요 없으며 화면·패드·소리·SMB3는 미완료다.
+현재139: **실기 최초 오류 수집·조기 종료 확인, CPU ROM 응답 마감 실패 조사 중**. CPU 주소와 미완료 주소0xE184,age3에서 응답이 도착하지 않았습니다. [139 실기 결과](analysis/SCREEN139-HARDWARE-RESULT.ko.md).
 
 **sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다.
 제품 이름의 **HST는 HungrySanTa = 제작팀 이름**을 뜻합니다.
