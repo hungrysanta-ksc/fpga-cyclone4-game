@@ -264,3 +264,11 @@ python -B tools/run_nes_public_units.py --questa-bin $QUESTA --out $FRESH_OUTPUT
 ## 133 실제 RUN 계약
 
 `run_nes_run133.ps1`으로 기존FLOAT 경로를 사용한다. 고정131fit05 입력, 이상적PLL/70nsRAM 모델, 초기값으로 넣은 이미지·적재·CHECK 완료 범위를 유지한다. 실제SPI 명령과CPU reset vector/명령 읽기, STOP/오류/클록 정지를 검사한다. `verify_nes_run133.py --evidence <frozen133>`은 인접131증거도 필요하다. [133 결과](../../analysis/RUN133-RESULT.ko.md).
+
+## 146 연속 표시 시험
+
+145 동결자료와144 NES 코어/패킷 자료를 재사용한다. `nes_screen146.py`로 별도ARM/host 소스를 만들고 기존ARM 도구인자를 `build_nes_screen146_arm.ps1`에 전달한다. `test_nes_screen146.py`와 `check_nes_screen146_arm.py`로MCU·NMI를 확인한다.
+
+`build_nes_screen146.py --chr-hex <144chr> --out <fresh>` 후 `test_nes_screen146_client.py`를normal/mixed/late/bad_length/bad_header 모드로 실행한다. 실제검증된휴대용Mesen을 사용한다. `test_nes_screen146_negative.py`는테스트전용ROM의보호분기우회가늦은표시검사에서거부되는지확인한다. late는블랭크판독주입이며물리적DMA지연은아니다.
+
+`update_nes_screen146_rom.py`로145배치를새경로에복사해실제생성MIF까지24576바이트교체하고, `assemble_nes_screen146.py`로ASM/CPF만수행한다. 기존FLOAT wrapper의RunOnly/AfterSmokeScript로 `test_nes_screen146_bus.py`를실행한다. `render_nes_screen146_reference.py`와 `release_nes_screen146.py`로참조그림·기존044복원본포함패키지를만든다. `verify_nes_screen146.py --baseline <probes>`는동결증거·공개소스·재사용배치·ZIP무결성을검사하며실기PASS를뜻하지않는다. 완료한출력디렉터리를덮어쓰거나freezer를다시실행하지않는다.
