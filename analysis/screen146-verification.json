@@ -1,0 +1,850 @@
+{
+  "candidate": "NES-SCREEN-146",
+  "base_commit": "b7923d1194d77784ed04a7ddbeaacf7b8773471e",
+  "manifest_sha256": "b533b53f59b667181acd8c243b013fce5dc29a7284df978bae3d4bcd6a42f967",
+  "file_count": 4701,
+  "public_sources": {
+    "docs/nes-screen146-instructions.ko.md": "17b847a4141c7ff87a2a2b151decd2bdab5c04e09f5ac2455f2c48c92956c142",
+    "snes/video_probe/capture_screen146.lua": "acbf7553ae436a4142f31849a080fbc00ba061a623ca86fc0947bf718c38d532",
+    "tools/assemble_nes_screen146.py": "d374b1c4e7b709bb0582a950e92a92f8ccf953df13c136602cd5b2f290997618",
+    "tools/build_nes_screen146.py": "b45895327c4b0240f06b86e04b7c0c644d139d7f7bd35859be8e9af1183e7380",
+    "tools/build_nes_screen146_arm.ps1": "4d4ed36419f9d38e7ed784473d6967050922ae70c51d87d69e7e0835237d3dad",
+    "tools/check_nes_screen146_arm.py": "13729a414061286a3f7f6291e1bdaffefbd56718e45ffc3f7140c56d604ca404",
+    "tools/nes_screen146.py": "62c52308b7c7f2c236c8fe5fe334bd1e07dcdbe927af4dce3ae069b7c32c4194",
+    "tools/release_nes_screen146.py": "78703174ca456ac04926c5a23431c288254f3fa78fcefe661bc7c761dc019471",
+    "tools/render_nes_screen146_reference.py": "6cebe22d41c5eef35eda9598be9421c0e0f0159c8957f14c21dfe1e938a446b9",
+    "tools/test_nes_screen146.py": "894ab989c9092e0dd125687698e6d9a9d14810ebb9452f3fca77c3c769cc0192",
+    "tools/test_nes_screen146_bus.py": "221eeb1cf3256185095c3f421e31778a2ccc4450ef9346dee96722f4b257524f",
+    "tools/test_nes_screen146_client.py": "223de3ad43bc86df7de32d8326974ad0c9f112fead5f839a819fa20c90808b04",
+    "tools/test_nes_screen146_negative.py": "0fe6013eb0177ef02d44ffa8d93882cf260b5b7101cbf4b416de1925d8947a13",
+    "tools/update_nes_screen146_rom.py": "41abe11a18d769c9913fe660b59289ac846b6710c0235cb8b7a3e90a4a876075",
+    "tools/verify_nes_screen146.py": "4c26b32c3d990028ad12e9c0378acfc329b880be41401cce2bcf2f9499024169"
+  },
+  "selected": {
+    "client": "client01",
+    "host": "host01",
+    "arm": "arm01",
+    "armcheck": "armcheck01",
+    "fit": "rom01",
+    "asm": "asm01",
+    "bus": "bus01",
+    "normal": "normal02",
+    "mixed": "mixed01",
+    "late": "late01",
+    "negative": "negative02",
+    "bad_length": "bad_length01",
+    "bad_header": "bad_header01",
+    "reference": "reference01"
+  },
+  "package": {
+    "zip_sha256": "0f457e597ae646f9be9ff62f4e6aee8f1fbec0e29ee6933dde2519ed6fdb50f6",
+    "zip_bytes": 713561,
+    "members": 13,
+    "firmware_sha256": "4a1a16769f083ef99a2f7984ce28abafce4a9a3680350c228af0004b97d62d43",
+    "fpga_sha256": "88b35f8df465812a5bf4c0130d0bcb95c7273a22053259cd02212129b6939866",
+    "fixture_sha256": "c51d08ac1fd6b73621cbe54586ce17a3ab1ccc91eded7c38f0f36bbb067aade1",
+    "normal_trial_ready": true,
+    "physical": false
+  },
+  "unchanged_routing_inputs": {
+    "board.qpf": "5ca3b93bf79d37b0b8a784c0982a7d9fd066fa68254fbdd3ea58a5336dff1b77",
+    "board.qsf": "544558e02fced078c2ea7287139c01a30c84078f3032b9b443b1a43e63aa2923",
+    "board.sdc": "59dbe2401cc57a7646271fc222b69cd0c27dfb0bfb0c9514641213c39b9cd1ac",
+    "cart_nrom.sv": "aab8314bd8134bb33dff42ef7beebc4b109e81148d9ee11ccd2886a97673faf8",
+    "fxpak_nes_run134_top.sv": "b3cbdee37c6b3cb3fff6f002061af252dfb6c0a7cfee02e4b16495c0ddad56aa",
+    "fxpak_nes_screen137_top.sv": "a8f8fc29c653c5a34f60cf5c19316fd5f12f0d404a6c53c70469ca4d76256d32",
+    "nes_clock_pll123.v": "bcc55cf38d516acbdaa0b0402ce2320d32f67df52d1a8549379a48b0d995c8bc",
+    "nes_diag_clock_guard127.sv": "f1936729ba7505b4d3030a86d9c8b4d88ce4490500bffb7d38ea26cace64b6e3",
+    "nes_diag_startup_guard.sv": "80e7e13ba034b0a1a706945cd8015f3789110363a300e39c21e62086a29460a2",
+    "nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "nes_host_stage.sv": "3f96a113a38cbe4caa2b46ba41f1bff7662b53e3756ccdb20bc2c43860d8a162",
+    "nes_live_joint.sv": "51258b1d1e711af0f78d44af14f76460b887253fff46dd0803999b64145046bf",
+    "nes_local_memory.sv": "09a5109f5ea187b740ffbceb865c505c485dee13e87ee1cb665de937046d6ec4",
+    "nes_ncr1_encoder.sv": "bcc5e1d3ff24511b2227107b90d1da4bc0b521179e1432bd50c8a2209e2a108a",
+    "nes_ncr1_ppu_tap.sv": "c9ccca0512f21062efb8756fc1f167aa1bdb4e44b07216719da9c5f8f66ac003",
+    "nes_packet_cdc_ram.sv": "10401823947cac9ed2d440ea513f5bbc20798c18169401eb366c34a603d0237c",
+    "nes_packet_memory_producer.sv": "3fc53be9e6e64052713e8027dd3cde0537e819db84afb78d885458d0f033beac",
+    "nes_packet_queue_ram.sv": "7a1a3dc5a42c65b9a4010e41a9ddb228e4bb468ab23fe13fc04f79ca3595f1b1",
+    "nes_probe.sv": "e07337d68bbc654201b5db8b1f184ebd80ec06923e4c9d3e5400a509b4728fb9",
+    "nes_rom_boot.sv": "7c339ee6fcbca88aefeb6d34d9e5535d3acee717639ae8fa99e4b7c890203faa",
+    "nes_rom_loader.sv": "ee2fd29ab30c53e24d50929c4eb635867f5796118edcafef5e9e028e31a83ecf",
+    "nes_rom_physical.sv": "79e9d1b4e5cdc0d59e42cb2769080b5d71b4cbcb2849beb568e6a1a0d857c298",
+    "nes_rom_service.sv": "a1c89c7ef284a05d6f46a3b33316a38284ded1b3a1d9bc7241ee005e1ccff168",
+    "nes_rom_spi.sv": "caa522383cb55286d3274a17a4b98718e1ac080b72c023b87e3cd365137fbc6d",
+    "nes_run_observer134.sv": "f33893b3eacbfc87a003f612b324009ede2b33d14373086d185cb7e98af621e6",
+    "nes_screen_bus137.sv": "478d2b9258121a00b8433ea8cad75bacafeb02e0c946d330b4932085cdb30b5c",
+    "nes_screen_status142.sv": "3ac62074b8d4d5288a7cf1202facdaa40d6d8654fc19a43f0fe5ce64ffc00f16",
+    "nes_snes_frontend.sv": "d4695fb16a1b58bb59028ececb784f1f4965353626599d8df42629267c26b3a4",
+    "nes_spi_boot.sv": "88432adf70530bbdf0e1bca7870431a26bf5fb0ac8077d557372168a6312f15f",
+    "nes_transport.sv": "c5260595c648195cb24f3707bc7e5b6adc63fce35bff2900fadf232dc6bfbcd6",
+    "output_files/board.fit.rpt": "5709bace8a21c86d51065cdfdcbc738e8773f3f4d2f0aecd15858eb1afde2c00",
+    "output_files/board.fit.summary": "41f454d0089a21570e25fccb39dd7705a84a97d9888abb6bd66da8f942d391a7",
+    "output_files/board.sta.rpt": "f74f45f6078d84fc202e8c89999e25d8c56e5c7ca4ff6dc53d0a81b3d0fb13f4",
+    "output_files/board.sta.summary": "b6fead9f65f690bbf10820aa1c3535d591adb2304ab47a8befa0fb3182c313e0",
+    "rtl/apu.sv": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586",
+    "rtl/bus_savestates.vhd": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9",
+    "rtl/cheatcodes.sv": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918",
+    "rtl/compat.v": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731",
+    "rtl/composite_board.sv": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895",
+    "rtl/nes.v": "373ef01deb947e1dcdb09585c207bb0c5bf5c58d8578903951d123f90d7d341a",
+    "rtl/ppu.sv": "e155b3b59000f5c52a5ab2e72b6745be682fd9a515d59c0360f208eafbfc090e",
+    "rtl/regs_savestates.sv": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95",
+    "rtl/savestates.vhd": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0",
+    "rtl/statemanager.vhd": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6",
+    "sys/iir_filter.v": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8",
+    "rtl/t65/T65.vhd": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692",
+    "rtl/t65/T65_ALU.vhd": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b",
+    "rtl/t65/T65_MCode.vhd": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5",
+    "rtl/t65/T65_Pack.vhd": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb"
+  },
+  "reuse": {
+    "previous_manifest": "e01bb67b463c3c6124813cdfe8090bd1972f2f90066e119729e19cb6965d0fc8",
+    "nes_fixture_sha256": "c51d08ac1fd6b73621cbe54586ce17a3ab1ccc91eded7c38f0f36bbb067aade1",
+    "core_result_sha256": "66b612af1d81d32d30160c991b647e91c895933f84a03208d8ee3f84613bf8a4",
+    "core_execution_repeated": false,
+    "new_map_fit_sta": false,
+    "loader_spi_unchanged": true,
+    "initial_failures": [
+      "First timing assertion assumed vblank begins at240; actual initial frame began225, later240. RGB passed; assertion corrected and normal02 selected.",
+      "First test-only mutation matched five vblank-read instructions instead of one and was rejected before writing a ROM. Following negative01 had no ROM and failed startup; NOT counted as causal rejection. Unique guard-context mutation in negative02 executed all30 packets and failed specifically at delayed-reveal assertion."
+    ]
+  },
+  "actual_client": {
+    "normal": {
+      "passed": true,
+      "mode": "normal",
+      "model": [
+        30,
+        60240,
+        0
+      ],
+      "exact_rgb_frames": 395,
+      "timing": [
+        {
+          "packet": 1,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 225,
+          "reveal_line": 238
+        },
+        {
+          "packet": 2,
+          "hold_frames": 30,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 3,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 4,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 5,
+          "hold_frames": 30,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 6,
+          "hold_frames": 30,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 7,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 8,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 9,
+          "hold_frames": 30,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 10,
+          "hold_frames": 30,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 11,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 12,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 13,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 14,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 15,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 16,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 17,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 18,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 19,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 20,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 21,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 22,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 23,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 24,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 25,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 26,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 27,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 28,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 29,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 30,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        }
+      ],
+      "inputs": {
+        "rom": "31212ece07e8104ca3fb5a8265171612ce9b5c64d2569488e1e0968d4b84bcaf",
+        "packets": "d00bdd548757e4f38117f9379c853e75472ff4a0cf1f3616eedfc7ed49cf2680",
+        "mesen": "f5d9a9c69f436b4dfaa74969527852a0dd8db52e4ea9fb15e5b6393dd984b796",
+        "lua": "4400922e246dd38ad77186405e2737009385f5b6e04af5015667bf684046f360"
+      },
+      "scope": "Actual SNES CPU/PPU/DMA with30 supplied packets, not concurrent FPGA or physical proof."
+    },
+    "mixed": {
+      "passed": true,
+      "mode": "mixed",
+      "model": [
+        30,
+        60240,
+        0
+      ],
+      "exact_rgb_frames": 395,
+      "timing": [
+        {
+          "packet": 1,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 225,
+          "reveal_line": 238
+        },
+        {
+          "packet": 2,
+          "hold_frames": 30,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 3,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 4,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 5,
+          "hold_frames": 30,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 6,
+          "hold_frames": 30,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 7,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 8,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 9,
+          "hold_frames": 30,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 10,
+          "hold_frames": 30,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 11,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 12,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 13,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 14,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 15,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 16,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 17,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 18,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 19,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 20,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 21,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 22,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 23,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 24,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 25,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 26,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 27,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 28,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 29,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 30,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        }
+      ],
+      "inputs": {
+        "rom": "31212ece07e8104ca3fb5a8265171612ce9b5c64d2569488e1e0968d4b84bcaf",
+        "packets": "7590ed33673a5fb51a31b71d953cf21c3f88e88d223dd82eb2c832656365388d",
+        "mesen": "f5d9a9c69f436b4dfaa74969527852a0dd8db52e4ea9fb15e5b6393dd984b796",
+        "lua": "1cdbc41a64bce13ad66a035a7fc77179ddac863517df9ff0f524995d037dcf41"
+      },
+      "scope": "Actual SNES CPU/PPU/DMA with30 supplied packets, not concurrent FPGA or physical proof."
+    },
+    "late": {
+      "passed": true,
+      "mode": "late",
+      "model": [
+        30,
+        60240,
+        0
+      ],
+      "exact_rgb_frames": 395,
+      "timing": [
+        {
+          "packet": 1,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 225,
+          "reveal_line": 238
+        },
+        {
+          "packet": 2,
+          "hold_frames": 30,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 3,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 4,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 5,
+          "hold_frames": 30,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 6,
+          "hold_frames": 30,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 7,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 8,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 9,
+          "hold_frames": 30,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 10,
+          "hold_frames": 30,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 11,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 12,
+          "hold_frames": 30,
+          "upload_master_clocks": 18406,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 13,
+          "hold_frames": 2,
+          "upload_master_clocks": 357500,
+          "start_line": 240,
+          "reveal_line": 240
+        },
+        {
+          "packet": 14,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 15,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 16,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 17,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 18,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 19,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 20,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 21,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 22,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 23,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 24,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 25,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 26,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 27,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 28,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 29,
+          "hold_frames": 2,
+          "upload_master_clocks": 18398,
+          "start_line": 240,
+          "reveal_line": 253
+        },
+        {
+          "packet": 30,
+          "hold_frames": 2,
+          "upload_master_clocks": 18390,
+          "start_line": 240,
+          "reveal_line": 253
+        }
+      ],
+      "inputs": {
+        "rom": "31212ece07e8104ca3fb5a8265171612ce9b5c64d2569488e1e0968d4b84bcaf",
+        "packets": "d00bdd548757e4f38117f9379c853e75472ff4a0cf1f3616eedfc7ed49cf2680",
+        "mesen": "f5d9a9c69f436b4dfaa74969527852a0dd8db52e4ea9fb15e5b6393dd984b796",
+        "lua": "df8ec3dc2be65041f5a9d4567c69a97cc87211cfb3162127c6c356f20f7707bb"
+      },
+      "scope": "Actual SNES CPU/PPU/DMA with30 supplied packets, not concurrent FPGA or physical proof."
+    },
+    "negative": {
+      "passed": true,
+      "guard_bypass_rejected": true,
+      "full_run": [
+        30,
+        60240,
+        0
+      ],
+      "original_rom_sha256": "31212ece07e8104ca3fb5a8265171612ce9b5c64d2569488e1e0968d4b84bcaf",
+      "mutated_rom_sha256": "90907ab51c5ad5929107068cf4ea1a74c0d9daf3705ecd0e22ea3957d4ea74a1"
+    },
+    "bad_length": {
+      "passed": true,
+      "mode": "bad_length",
+      "model": [
+        0,
+        0,
+        2
+      ],
+      "exact_rgb_frames": 0,
+      "timing": [],
+      "inputs": {
+        "rom": "31212ece07e8104ca3fb5a8265171612ce9b5c64d2569488e1e0968d4b84bcaf",
+        "packets": "d00bdd548757e4f38117f9379c853e75472ff4a0cf1f3616eedfc7ed49cf2680",
+        "mesen": "f5d9a9c69f436b4dfaa74969527852a0dd8db52e4ea9fb15e5b6393dd984b796",
+        "lua": "7c1553e7aa4a576f0ab4596981318a49706c275365217e2a70b01a4da2c5669e"
+      },
+      "scope": "Actual SNES CPU/PPU/DMA with30 supplied packets, not concurrent FPGA or physical proof."
+    },
+    "bad_header": {
+      "passed": true,
+      "mode": "bad_header",
+      "model": [
+        0,
+        2008,
+        7
+      ],
+      "exact_rgb_frames": 0,
+      "timing": [],
+      "inputs": {
+        "rom": "31212ece07e8104ca3fb5a8265171612ce9b5c64d2569488e1e0968d4b84bcaf",
+        "packets": "d00bdd548757e4f38117f9379c853e75472ff4a0cf1f3616eedfc7ed49cf2680",
+        "mesen": "f5d9a9c69f436b4dfaa74969527852a0dd8db52e4ea9fb15e5b6393dd984b796",
+        "lua": "ff1357a2c3355b6e04395c8ad6ebb31f800716642841abdb0dc01ad90993bb0b"
+      },
+      "scope": "Actual SNES CPU/PPU/DMA with30 supplied packets, not concurrent FPGA or physical proof."
+    }
+  },
+  "physical146": false,
+  "hardware_baseline145": "held picture and menu PASS; no normal-speed approval"
+}

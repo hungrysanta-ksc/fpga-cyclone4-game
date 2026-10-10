@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재145: **검정·고정 NES 그림·자동 메뉴 복귀 실기 통과**. [실기 결과](../../analysis/SCREEN145-HARDWARE-RESULT.ko.md) · [현재 인계](../../cores/nes/HANDOFF.ko.md).
+현재146: **145 실기 기준을 유지하며 긴 검정을 제거한 연속 표시 시험판 준비 완료**. [146 결과](../../analysis/SCREEN146-RESULT.ko.md) · [실행 안내](../../docs/nes-screen146-instructions.ko.md).
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 

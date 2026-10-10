@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-11",
-  "technical_candidate": "NES-SCREEN-145",
+  "technical_candidate": "NES-SCREEN-146",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "145 영상에서 검정 약1.5초/그림 약3초 고정 반복과 실제 메뉴 복귀 확인. 로그80KiB 대조 RUN/STOP 오류0. 연속 갱신·게임·로딩 단축은 미완료.",
-  "next_action": "RESUME_CONTINUOUS_DISPLAY_AND_INPUT_AFTER_MERGE",
+  "assessment": "145 고정 그림·메뉴 실기PASS.146 긴 검정 제거+30→2 TV프레임 비교·블랭크 종료 보호 로컬PASS/실기 대기. 게임·입력·로딩 단축 미완료.",
+  "next_action": "COLLECT_SCREEN146_CONTINUOUS_VIDEO",
   "next_three_deliverables": [
-    "145 고정 표시 실기 기준을 보존하며 긴 블랭크를 줄인 연속 표시 확인",
-    "패드와 SMB3 mapper4/384KiB·오디오 연결",
-    "검증 완료 START와 오류 차단을 유지한 로딩 단축"
+    "146 한 번의 적재로 느린/빠른 표시 영상·두TXT·메뉴 확인",
+    "실기 첫 실패 경계만 수정하거나 통과하면 패드·SMB3 mapper4/384KiB·오디오로 전진",
+    "검증 완료 START·오류 차단을 유지한 로딩 단축"
   ],
   "gates": [
     {
@@ -29,7 +29,7 @@
       "depends_on": [],
       "exit": "Measured actual trace workloads and SNES replay within deadline; no future lookahead or silent output loss; sample limits explicit",
       "evidence": "analysis/SCREEN145-HARDWARE-RESULT.ko.md",
-      "remaining": "145 긴 검정/고정 표시는 실기 통과. 게임용 연속 갱신·입력·오디오·호환성은 미완료.",
+      "remaining": "146 로컬30→2프레임 갱신 검증 완료,실기 대기. 게임용 속도·입력·오디오·호환성 미완료.",
       "consumer_evidence": "analysis/SCREEN137-RESULT.ko.md"
     },
     {
@@ -49,7 +49,7 @@
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
       "evidence": "analysis/SCREEN145-HARDWARE-RESULT.ko.md",
-      "remaining": "145 긴 검정/고정 표시는 실기 통과. 게임용 연속 갱신·입력·오디오·호환성은 미완료."
+      "remaining": "146 로컬30→2프레임 갱신 검증 완료,실기 대기. 게임용 속도·입력·오디오·호환성 미완료."
     },
     {
       "id": "R5",
@@ -72,9 +72,9 @@
     },
     {
       "id": "VIDEO-CAUSAL",
-      "status": "145_held_video_pass_continuous_refresh_open",
-      "evidence": "analysis/SCREEN145-HARDWARE-RESULT.ko.md",
-      "detail": "긴 검정/고정 표시에서 안정된 A/B·메뉴를 확인했다.144 빠른 갱신의 정확한 원인 및 정상 속도 갱신은 미확정; 동일145 반복 없이 연속 표시/입력으로 전진."
+      "status": "145_hardware_pass_146_continuous_trial_ready",
+      "evidence": "analysis/SCREEN146-RESULT.ko.md",
+      "detail": "146 정상/혼합/늦음 입력 각395RGB 및 보호 분기 거부 확인. 실제 속도·144 원인 확정 아님;한 번의146 영상으로 비교."
     },
     {
       "id": "BOARD-FIT",

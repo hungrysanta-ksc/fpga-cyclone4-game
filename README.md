@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재145: **검정·고정 NES 그림·자동 메뉴 복귀 실기 통과**. [실기 결과](analysis/SCREEN145-HARDWARE-RESULT.ko.md) · [현재 인계](cores/nes/HANDOFF.ko.md).
+현재146: **145 실기 기준을 유지하며 긴 검정을 제거한 연속 표시 시험판 준비 완료**. [146 결과](analysis/SCREEN146-RESULT.ko.md) · [실행 안내](docs/nes-screen146-instructions.ko.md).
 
 **sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다.
 제품 이름의 **HST는 HungrySanTa = 제작팀 이름**을 뜻합니다.
