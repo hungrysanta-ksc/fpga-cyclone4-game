@@ -25,7 +25,7 @@
     {
       "id": "nes",
       "status": "diagnostic_rtl_integration_in_progress",
-      "candidate": "NES-MINIMUM-RUN-136",
+      "candidate": "NES-SCREEN-137",
       "planned_product_version": null,
       "released": false,
       "implementation_commit": null,
@@ -37,16 +37,16 @@
       ],
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
-      "verification": "analysis/H1-HARDWARE-044-RESULT.ko.md",
+      "verification": "analysis/SCREEN137-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "bounded-run-package-ready-hardware-pending",
+      "investigation": "physical-run-passed-live-screen-wiring-verified",
       "hardware_baseline": "NES-H1-SAMPLING-044",
-      "hardware_verified_scope": "User-reported LINK SCREEN1->2->3->1 repeating without automatic exit; protocol44 no-fault RESET exit/base recovery log; user-reported GBC gameplay normal",
-      "development_evidence": "analysis/RUN136-RESULT.ko.md",
-      "hardware_candidate": "NES-H1-SAMPLING-044",
+      "hardware_verified_scope": "136 normal80KiB load/verify/CPU ROM sample activity/STOP/base/menu and user restoration passed; no physical NES screen yet. Prior044 H1 pattern loop and GBC baseline retained.",
+      "development_evidence": "analysis/SCREEN137-RESULT.ko.md",
+      "hardware_candidate": "NES-MINIMUM-RUN-136",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "사용자136 실기에서 두 TXT·메뉴 복귀·044 메뉴/GBC 복원 결과를 확인한다. 실패 시 마지막 성공 단계~첫 실패 경계만 수정한다. 정상 CPU 활동 확인 뒤 기존H1 소비자와 실제 NES 화면·입력을 연결한다. 새 실패 없이 같은 오프라인 시험·배치·로그 확장을 반복하지 않는다.",
+      "next_gate": "선택137fit03와 test01+counter01/bus01/client06–08을 재사용해 MCU 표시 전용 식별·SNES RESET 해제/재유지·유한 표시·STOP/base/menu/044 복원을 실기 패키지로 연결한다. 새 배치의 활성 SNES/PSRAM I/O와 CDC/reset 변경 경계만 확인하며, 같은 영상·전체 적재·MAP/FIT를 이유 없이 반복하지 않는다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "NES136 MCU + unchanged135fit03 + synthetic80 +044 restore",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -58,7 +58,23 @@
       "limited_trial_decision": "analysis/run136-verification.json",
       "limited_trial_instructions": "docs/nes-run136-instructions.ko.md",
       "short_recovery116_hardware": "117 short BASE/menu pass retained; full80 recovery subsequently passed in119",
-      "full80_116_hardware": "119 실기에서 동일116/CF86의 전체80KiB 적재·읽기비교·STOP·기본FPGA·메뉴 복귀·사용자044 복원이 통과했다. 진행45기록/최종 verified1,load/compare81920,오류0,RUN0. 메뉴준비491.34초는 펌웨어 시각이며 독립 벽시계 측정이 아니다. 이번 GBC 플레이는 미보고다."
+      "full80_116_hardware": "119 실기에서 동일116/CF86의 전체80KiB 적재·읽기비교·STOP·기본FPGA·메뉴 복귀·사용자044 복원이 통과했다. 진행45기록/최종 verified1,load/compare81920,오류0,RUN0. 메뉴준비491.34초는 펌웨어 시각이며 독립 벽시계 측정이 아니다. 이번 GBC 플레이는 미보고다.",
+      "hardware_run136": {
+        "passed": true,
+        "raw_sha256": {
+          "nes-run-last-136.txt": "e41bb45c0852fbabb68675c1f94fc55ecde480a66ba3bc1289fabf12acc21c34",
+          "nes-progress-136.txt": "4b2e312e411378a07fd99761ef1d289631e7e1a69a2a8876b547543e3979b4a8"
+        },
+        "records": 47,
+        "elapsed_ms": 491600,
+        "first": 7002,
+        "last": 124484,
+        "stopped": 132438,
+        "menu_return_user_confirmed": true,
+        "restore_user_confirmed": true,
+        "gbc_play_this_run": null
+      },
+      "screen137_package_ready": false
     },
     {
       "id": "pce",

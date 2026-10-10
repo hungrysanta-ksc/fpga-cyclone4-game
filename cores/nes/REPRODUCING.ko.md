@@ -1,5 +1,7 @@
 # NES 검증 재현 범위
 
+137: `nes_screen137.py` / `test_nes_screen137.py` / counter·bus·client 시험 / `verify_nes_screen137.py`. 선택fit03/test01+counter01/bus01/client06–08. 고정135/122 개인증거와기존FLOAT가필요하다. [범위와 결과](../../analysis/SCREEN137-RESULT.ko.md). 새실기패키지는아직없다.
+
 135: run_nes_command135.ps1 / nes_command135_fit.py / nes_command135_timing.tcl / verify_nes_command135.py. 선택test02/fit03,기존FLOAT/새ASCII출력/고정134·128 baseline. [정확한 범위](../../analysis/COMMAND135-RESULT.ko.md).
 
 134: run_nes_board134.ps1 / nes_board134_fit.py / nes_board134_timing.tcl / verify_nes_board134.py. 선택test02/fit02. 새ASCII 출력과 고정131 baseline 필요. [범위와 결과](../../analysis/BOARD134-RESULT.ko.md).
