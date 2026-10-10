@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재134: 최소 RUN의 실제 핀95개와 SPI CPU 진행 관측을 구현·검증했다. 새 배치 memory168 setup −0.330ns로 미통과이며 설치용 패키지는 없다. 화면 소비자·게임 기능은 미완료다. [134 결과](../../analysis/BOARD134-RESULT.ko.md)를 우선한다.
+현재135: 최소 RUN 물리 셸의 같은 클록 setup·hold 통과(memory168 +0.152ns). 오류 우선순위·CPU RUN 검증 완료. 새 CDC/reset/외부IO와 MCU 식별·유한 RUN·로그·복원 연결은 미완료이며 설치용 패키지는 없다. [135 결과](../../analysis/COMMAND135-RESULT.ko.md)를 우선한다.
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 

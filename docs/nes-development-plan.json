@@ -5,12 +5,12 @@
   "technical_candidate": "NES-CLOCK-RESET-086",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "현재134: 최소 RUN의 실제 핀95개와 SPI CPU 진행 관측을 구현·검증했다. 새 배치 memory168 setup −0.330ns로 미통과이며 설치용 패키지는 없다. 화면 소비자·게임 기능은 미완료다.",
-  "next_action": "FIX_PHYSICAL134_SAME_CLOCK_AND_INTEGRATE_MCU_RUN",
+  "assessment": "현재135: 최소 RUN 물리 셸의 같은 클록 setup·hold 통과(memory168 +0.152ns). 오류 우선순위·CPU RUN 검증 완료. 새 CDC/reset/외부IO와 MCU 식별·유한 RUN·로그·복원 연결은 미완료이며 설치용 패키지는 없다.",
+  "next_action": "REVIEW_PHYSICAL135_CDC_AND_INTEGRATE_STRICT_MCU_RUN",
   "next_three_deliverables": [
-    "134fit02의 diagnostic_release -> SPI pending_body_error[2] 같은 클록 -0.330ns 경로를 상세 보고서로 수정한다. 변경 경계 시험과 새 배치의 reader/guard/reset/외부IO만 확인한 뒤 MCU70/D4 관측·유한 RUN·STOP·진행TXT·메뉴/044복원을 연결해 최소 실기 패키지로 간다. 전체 화면 소비자·MMC3는 별도이며 무변경 전체 적재/부품/저장/131배치를 반복하지 않는다.",
-    "새 최소RUN 배치의 영향 CDC/reset/IO와 MCU70/D4 관측/유한 실행 연결",
-    "진행TXT·STOP·base/menu·044복원을 포함한 최소RUN 실기 패키지"
+    "선택135fit03를 재사용해 새 hierarchy의 reader held-data/guard/reset/관측 reset과 외부IO 계약을 확인한다. 무변경 MAP/FIT/전체 적재를 반복하지 않는다. 이어 최소 RUN 전용 MCU 식별59+D4, bit별 shared-fault/RDY/예산, 유한 RUN/STOP·진행TXT·base/menu·044복원을 연결한다. ARM116의 CF86 식별86을 그대로 쓰거나 여러 ID를 무조건 허용하지 않는다. 전체 화면/MMC3는 별도다.",
+    "새 후보 전용59/D4 MCU 식별·bit별guard·유한RUN·진행TXT·STOP 통합",
+    "base/menu·정확한044복원과 최소RUN 실기 패키지"
   ],
   "gates": [
     {
@@ -993,6 +993,36 @@
     "same_clock_hold_min_ns": 0.179,
     "raw_setup_min_ns": -6.173,
     "same_clock_timing_pass": false,
+    "full_timing_pass": false,
+    "installable": false
+  },
+  "command135": {
+    "evidence": "analysis/command135-verification.json",
+    "selected": "test02/fit03",
+    "cause_combinations": 4194304,
+    "boot_clocked_combinations": 4096,
+    "decoder_checks_per_phase": 166,
+    "negative_controls": 3,
+    "actual_cpu_samples": 6712,
+    "injected_saturation_events": 8,
+    "status_reads": 14,
+    "pin_assignments_checked": 95,
+    "virtual_pins": 0,
+    "logic_elements": 12026,
+    "LAB": 885,
+    "registers": 4088,
+    "M9K": 12,
+    "PLL": 1,
+    "same_clock_setup_min_ns": 0.152,
+    "same_clock_hold_min_ns": 0.18,
+    "target_setup_min_ns": {
+      "pending_causes": 0.355,
+      "check_failed": 1.201,
+      "loaded_bytes": 0.19
+    },
+    "loaded_bytes_registers_without_enable": 17,
+    "raw_setup_min_ns": -6.767,
+    "same_clock_timing_pass": true,
     "full_timing_pass": false,
     "installable": false
   }
