@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재136: **최초 최소 CPU RUN 실기 패키지 준비 완료**, 사용자 TXT·메뉴/044 복원 결과 대기. [136 결과](../../analysis/RUN136-RESULT.ko.md) · [실기 절차](../../docs/nes-run136-instructions.ko.md) · [공정 점검과 A–E 계획](../../docs/development/NES-MILESTONE-AUDIT-135.ko.md). 화면·입력·소리·SMB3는 아직 미완료다.
+현재137: **136 CPU RUN 실기·메뉴/복원 통과**, 실제 화면 경로 구현 및3프레임 비교 통과. [137 결과](../../analysis/SCREEN137-RESULT.ko.md). 다음은 MCU 표시 전환을 연결한 실기 패키지이며, 화면 실기·패드·소리·SMB3는 미완료다.
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 

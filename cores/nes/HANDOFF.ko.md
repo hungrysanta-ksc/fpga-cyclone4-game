@@ -1,25 +1,33 @@
-# NES 현재 인계 —136 최초 최소 RUN 실기 패키지
+# NES 현재 인계 —137 실제 화면 경로 구현
 
-[136 결과](../../analysis/RUN136-RESULT.ko.md) · [검증메타](../../analysis/run136-verification.json) · [실기 안내](../../docs/nes-run136-instructions.ko.md) · [A–E 계획](../../docs/development/NES-MILESTONE-AUDIT-135.ko.md)
+[137 결과](../../analysis/SCREEN137-RESULT.ko.md) · [검증 메타](../../analysis/screen137-verification.json) · [A–E 계획](../../docs/development/NES-MILESTONE-AUDIT-135.ko.md)
 
-## 지금 할 일
+## 현재 판정
 
-사용자136 실기에서 두 TXT·메뉴 복귀·044 메뉴/GBC 복원 결과를 확인한다. 실패 시 마지막 성공 단계~첫 실패 경계만 수정한다. 정상 CPU 활동 확인 뒤 기존H1 소비자와 실제 NES 화면·입력을 연결한다. 새 실패 없이 같은 오프라인 시험·배치·로그 확장을 반복하지 않는다.
+A 패키지 전달과 B 최초CPU활동 실기는 완료했다.136 두 TXT의47기록/491600ms/81920바이트 적재·비교/오류0/CPU7002→124484→STOP132438을 확인했다. 사용자 메뉴 복귀·복원 확인, 이번 GBC플레이는 별도 미보고다. 같은136을 다시 실행하도록 요구하지 않는다.
 
-`NES RUN 136.nh1`은빈선택파일이며 새NES-RUN136 펌웨어·fpga_n136.bi3·합성run136.nes를함께사용한다. RUN 대기16ms와전체SD적재시간을구분한다. 기존119약491초,이번실기미측정,사용자관찰기준10분. 영상필수아님. 로그는 `/sd2snes/nes-progress-136.txt`, `/sd2snes/nes-run-last-136.txt`. 최종메뉴PREPARED는RESET해제/화면복귀증명이아니므로사용자확인필요.
+C는 화면 구현/제한 디지털 시험까지 진전했다.137test01 실제 코어3프레임184320픽셀·SNES포트,client06 실제65816/PPU183552픽셀,client07/08잘못된 길이/헤더 차단,bus01compact ROM64KiB매핑이 통과했다. 실제 보드 화면·입력·오디오는 아직 미확인이다.
 
-## 선택본과 재사용
+## 바로 이어 할 일
 
-135fit03 RTL/QSF/라우팅불변,ARM136은실제116소스기반. selectedhost05/RTL02/ARM03/ARM-check03/STA01/IO03/ASM01/release01. 로더59/관측D4만허용. **RUN STOP응답flags2/count81920**; 구형적재전STOP idle0규칙으로되돌리지않는다. 초기RTL대조실패로발견해수정했다. RUN중SD쓰지않고고장후로그강행하지않는다. 정상경로만STOP/base/menu복구.
+선택137fit03와 test01+counter01/bus01/client06–08을 재사용해 MCU 표시 전용 식별·SNES RESET 해제/재유지·유한 표시·STOP/base/menu/044 복원을 실기 패키지로 연결한다. 새 배치의 활성 SNES/PSRAM I/O와 CDC/reset 변경 경계만 확인하며, 같은 영상·전체 적재·MAP/FIT를 이유 없이 반복하지 않는다.
 
-현재배치270heldpairs/12chains검토,음수reset80행은동기화체인비동기입력. 패드지연포함읽기조건부여유1.935ns는PCB왕복2ns미측정가정하에서만성립한다. 전체IO/MTBF/모든고장안전성미완료. E1/E2/8µs/양클록정지CE9µs반례보존. 더넓은signoff는이번정상한번의시험과구분한다.
+- 실제136 `nes_cf86_session094.c`의owner094는 get_snes_reset()을 요구한다. 표시 전용 상태와 reset 해제/재유지 경계를 구현하고 기존USB IRQ 차단·CSS/NMI·bit별RDY/shared fault 검사를 유지한다. 단순 조건 삭제나 전체세션 보호 우회 금지.
+- 현재137의59/D4는 내부 배선 시험용이다. 화면용 단일 식별을 새 MCU와 FPGA에 맞추고136/구형86을 무조건 허용하지 않는다. 표시 중에는ROM/packet 버스만활성화하며 SD기록은 표시 전과STOP/복구 뒤로 제한한다.
+- 표시 시간을 유한하게 정하고 종료 전SNES RESET을 다시 유지한다. RUN→READY STOP은flags2/count81920이다. 정상STOP/base/menu와044복원을 포함한 단일 패키지를 전달한다. 고장 뒤SD/UART복구를강행하지 않는다.
+- 137fit03의 새로운 SNES 활성핀·programROM 출력 경로와PSRAM/CDC/reset 변경을 확인한다. 같은 클록통과를 전체signoff로 확대하지 않는다. source/식별 변경이 필요하면 그 변경에 따른 새 배치를 수행하며, 무변경 배치는 반복하지 않는다.
+- 첫 화면실기를 얻은 뒤 패드 입력을 붙인다. 전체PC trace·장시간조합을 화면실기의 선행조건으로 만들지 않는다. 이것은C전체완료가 아니라 최소화면피드백순서다.
 
-실기활동미확인상태. 16관측/카운터증가는CPU명령정확성·PPU화면·게임성공과다르다. 기존H1영상진단과실제NESproducer연결은다음C. 135셸885LAB/12M9K/95실핀의자원여유를화면/MMC3제품여유로상속하지않는다.
+## 정확한 선택본
 
-## 보존과 이후 목표
+선택fit03(13592LE/924LAB/50M9K/122핀/0가상/PLL1), 같은 클록setup+.060/hold+.176ns; raw−6.600ns는별도CDC/reset미완료. test01과fit03의RTL 차이는 loaded_bytes 독립 갱신 하나뿐이다. counter01이135대비26112조합/잘못된증가대조군으로검사했다. 전체영상재시험으로표현하지 않는다. builder137의ROM/atlas는fit01/fit03/실제client가동일하다.
 
-119 동일116/CF86 전체80KiB 적재/검증/메뉴·044복원실기통과,해당GBC미보고.044기존GBC정상근거유지.113정지근본원인미확정.124archive격리와125독립핀근거유지. 완료finalizer재실행·동결044–136수정금지.136새실기결과는별도관측기록으로추가한다.
+현재고정fine_x 진단 PRG64KiB+CHR16KiB,3프레임 검증,고정16KiB SNESatlas·239행 crop. 내부cart_nrom.sv라는 이름과 달리 기존제한MMC3진단결선이포함된다. 이를SMB3의384KiB제품지원으로확대하지 않는다. 데이터가바뀌는CHR/일반PPU/입력/오디오는별도다.
 
-SMB3(J)첫목표: mapper4/PRG256KiB+CHR128KiB/393232bytes/SHA `dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49`. 현재80KiB합성NROM진단을게임384KiB지원으로해석하지않는다. C화면/입력→D SMB3플레이/오디오→E맵퍼호환성. 기존6/5/1은제한진단지표.
+fit01 timing실패·fit02 준비assert(6개를7개로예상)·초기Mesen설정/runtime/Lua IO·startup vblank225검증기수정·초기진행parser수정은새증거에보존한다. 이전044–136을수정하지않았다. 완료finalizer재실행금지.
 
-source-lock 보류4건미해결;새upstream원본반입/공개바이너리없음. Git은소스/도구/문서만,개인ZIP은로컬. GBC152/원래NES334/과거공개핀보존. 한국어PR제목및작업목표/내용/결과/의미4항목,사용자머지. PR81병합확인.
+## 유지할 기준
+
+136실기정상RUN과119전체적재/복구,044메뉴/GBC근거 유지. 첫게임SMB3(J) mapper4/PRG256KiB+CHR128KiB/SHA `dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49`. D는시작·이동·스크롤·장면전환·종료·오디오구분, E는실제실패중심맵퍼확장이다.
+
+E1/E2·MTBF·8µs/양클록정지CE9µs반례·124격리·source-lock4건 유지. GBC152/원래NES334/기존공개핀보존. Git에는소스/도구/문서만, 바이너리·개인로그·미디어·라이선스공개금지. PR제목한국어, 작업목표/내용/결과/의미4항목, 사용자머지. PR82병합확인.
