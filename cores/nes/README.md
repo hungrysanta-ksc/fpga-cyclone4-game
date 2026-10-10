@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재145: **144 문자·메뉴 복귀 통과, 부분 갱신은 미해결. 검정·고정 그림 영상 시험 준비 완료**. [145 결과](../../analysis/SCREEN145-RESULT.ko.md) · [실행 안내](../../docs/nes-screen145-instructions.ko.md).
+현재145: **검정·고정 NES 그림·자동 메뉴 복귀 실기 통과**. [실기 결과](../../analysis/SCREEN145-HARDWARE-RESULT.ko.md) · [현재 인계](../../cores/nes/HANDOFF.ko.md).
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 
