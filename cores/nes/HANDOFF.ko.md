@@ -1,8 +1,10 @@
-# NES 현재 인계 —140 응답 경계 수정 실기 대기
+# NES 현재 인계 —140 실기 재실패와 메뉴 복귀 실패
 
 [140 결과](../../analysis/RESPONSE140-RESULT.ko.md) · [실행 안내](../../docs/nes-response140-instructions.ko.md) · [메타](../../analysis/response140-verification.json)
 
-140 실기의 두 TXT와 화면·메뉴 복귀·044 메뉴/GBC 복원 결과를 받는다. RUN통과와 화면정상은 구분한다. 재실패하면 최초context/샘플수를139와 대조하며 무변경 fit/적재/부품/저장 시험은 반복하지 않는다. 정상화면 뒤 패드·SMB3 mapper4/384KiB·오디오로 간다.
+**140 실기 확인 완료: 적재·대조·TXT는 성공했지만 NES 실행과 메뉴 복귀는 실패했다.** [실기 결과](../../analysis/SCREEN140-HARDWARE-RESULT.ko.md)와 [관측 메타](../../analysis/screen140-hardware-observation.json)를 현재 판정으로 우선한다.
+
+140 실기의 동일 CPU ROM 마감 실패와 검은 화면/메뉴 복귀 실패를 해결한다. 메뉴 준비 이후 reset·CIC·SRAM·보호 상태와0xE184 요청/응답 경계의 모델 차이를 좁혀 확인한 수정 후보로 간다. 동일140 재시험·추가 영상·무변경 fit/부품/저장 시험·동일044 반복 복원은 생략한다. 정상 화면 뒤 패드·SMB3 mapper4/384KiB·오디오로 진행한다.
 
 ## 원인 근거와 실제 변경
 
@@ -12,9 +14,17 @@
 
 fit01/arm01/armcheck01/host01/reader01/sta01/io01/asm01/release01. unit03은12위상 중 기존10실패/수정0실패. full01은139식별자의 실제코어에서EARLY_ACK를0/1로 바꾼 비교;후자는생산140 reader와주석/공백·시험지연을제거해동일함을검증한다. loader5C/observerD7는상수변경이며MCU호스트20/ARM으로확인한다. 단일위상67.161ms/198527샘플통과,61440픽셀한프레임은trace01무지연139와완전일치. 전체픽셀/소비자는137근거재사용. reader01은16위상8400읽기208취소와CDC/setuphold/110ns/noHOLD반례검사다. unit01예약어컴파일실패와unit02ACTIVE-ACK실험은채택하지않았다. 최종은HOLD-ACK다.
 
-## 실기 요청과 판정
+## 실기 결과와 다음 작업 경계
 
-`NES140-SCREEN-and-RESTORE044.zip`의01-SCREEN140-SD-ROOT 내용을SD최상위복사,0바이트 `NES SCREEN 140.nh1`한번실행. 적재·대조약9분,정상표시약10초,전체10분관찰기준. 두TXT `nes-progress-140.txt`, `nes-screen-last-140.txt`,화면/메뉴복귀/044메뉴GBC를받는다. 화면보이면사진한장/짧은영상유용하지만필수아님. RUN중SD금지/RESET재유지→STOP→base/menu→저장/044유지.139처럼최초오류와STOP오류를구분하고오류시조기복귀한다. run_passed는영상자동판정이아니다.
+strict5C/D7 확인, 적재·대조81920바이트/47기록 정상. 최초context440181c30800e184, 유효샘플123028, CPU/pending0xE184·age3·응답0·오류1이139와 같다. STOP오류0, 기본FPGA 복원과 메뉴 준비는 완료했지만 사용자 관찰은 검은 화면 지속/리셋 복귀 실패/전원 재인가 메뉴 성공이다. 140 지연 모델 PASS를 실기 원인 해결로 승격하지 않는다.
+
+DISPLAY_NEXT524870ms→STOPPED524940ms, MENU_PREPARED528110ms.70ms는 MCU 처리 포함 간격이다. main.c는 준비 로그 뒤 reset 해제/CIC/SRAM 검사/메뉴 처리를 한다. released 보고는 persist=false(UART만)이므로 최종 TXT만으로 reset 미해제나 MCU 정지 위치를 단정할 수 없다. 다음 후보는 이 복귀 경계를 좁혀 확인하며 기존 RUN 중 SD 금지/오류 시 reset 유지 원칙을 보존한다. 별도 디버그 체계 완성보다 정상 화면/메뉴 실기 후보 전달을 우선한다.
+
+## 044 반복 시험 생략 — 사용자 정책
+
+사용자 지시: 동일044 복원본의 매회 재설치·메뉴/GBC 반복 시험은 생략한다. 후보 자체 STOP/base/menu 복귀는 별도 기록한다. 복원본/경로 변경이나 구체적 회귀 근거가 생길 때만 재확인 이유와 범위를 명시한다. 과거 동결 실행 안내보다 현재 정책을 우선하며 미시험을 PASS로 기록하지 않는다.
+
+동일140 재시험이나 추가 영상은 필요 없다. 이번 결과 반영에서 새 펌웨어/패키지는 만들지 않았으며140 제작 증거·패키지·고정 실행 안내는 역사 자료로 보존한다. 첫 게임 목표와 미완료 기능은 아래와 같다.
 
 ## 물리 여유와 보류
 

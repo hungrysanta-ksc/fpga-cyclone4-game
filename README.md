@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재140: **ROM 응답 경계 수정·실기 패키지 준비 완료**.139과 같은 오류를 지연 모델에서 재현하고 수정 효과를 확인했습니다. 실기 화면은 아직 미확인입니다. [140 결과](analysis/RESPONSE140-RESULT.ko.md) · [실행 안내](docs/nes-response140-instructions.ko.md).
+현재140: **실기에서 같은 CPU ROM 마감 오류가 반복됐고 메뉴 복귀도 실패했습니다.** 적재·대조·로그 저장은 성공했습니다. [실기 결과](analysis/SCREEN140-HARDWARE-RESULT.ko.md) · [현재 인계](cores/nes/HANDOFF.ko.md). 동일044 복원 반복 시험은 생략합니다.
 
 **sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다.
 제품 이름의 **HST는 HungrySanTa = 제작팀 이름**을 뜻합니다.

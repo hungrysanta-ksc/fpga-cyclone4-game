@@ -5,10 +5,10 @@
   "technical_candidate": "NES-SCREEN-140",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "139과같은오류지연모델재현;RUN ACK를HOLD핀해제에지로당긴140실기패키지준비.실기화면미확인.",
-  "next_action": "COLLECT_RESPONSE140_HARDWARE_RESULT",
+  "assessment": "140 실기: 적재·대조·저장은 성공, 동일 CPU ROM deadline1/context/샘플123028 재발. 메뉴 복귀·리셋 복귀 실패, 전원 재인가 메뉴 성공. 모델 개선은 실기 해결로 검증되지 않음.",
+  "next_action": "FIX_SCREEN140_ROM_DEADLINE_AND_MENU_RETURN",
   "next_three_deliverables": [
-    "140 실기의 두 TXT와 화면·메뉴 복귀·044 메뉴/GBC 복원 결과를 받는다. RUN통과와 화면정상은 구분한다. 재실패하면 최초context/샘플수를139와 대조하며 무변경 fit/적재/부품/저장 시험은 반복하지 않는다. 정상화면 뒤 패드·SMB3 mapper4/384KiB·오디오로 간다.",
+    "140 실기의 동일 CPU ROM 마감 실패와 검은 화면/메뉴 복귀 실패를 해결한다. 메뉴 준비 이후 reset·CIC·SRAM·보호 상태와0xE184 요청/응답 경계의 모델 차이를 좁혀 확인한 수정 후보로 간다. 동일140 재시험·추가 영상·무변경 fit/부품/저장 시험·동일044 반복 복원은 생략한다. 정상 화면 뒤 패드·SMB3 mapper4/384KiB·오디오로 진행한다.",
     "화면 성공 후 패드 반응 연결",
     "SMB3 mapper4·384KiB·플레이·오디오 실기"
   ],
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "partial_screen139_hardware_run_failed_context_captured",
+      "status": "partial_screen140_hardware_run_and_menu_failed",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/SCREEN139-HARDWARE-RESULT.ko.md",
-      "remaining": "0xE184 CPU pending/age3의 응답 마감 원인 수정 후 실제 화면, 입력, 오디오 확인."
+      "evidence": "analysis/SCREEN140-HARDWARE-RESULT.ko.md",
+      "remaining": "140 실기의 동일 CPU ROM 마감 실패와 검은 화면/메뉴 복귀 실패를 해결한다. 메뉴 준비 이후 reset·CIC·SRAM·보호 상태와0xE184 요청/응답 경계의 모델 차이를 좁혀 확인한 수정 후보로 간다. 동일140 재시험·추가 영상·무변경 fit/부품/저장 시험·동일044 반복 복원은 생략한다. 정상 화면 뒤 패드·SMB3 mapper4/384KiB·오디오로 진행한다."
     },
     {
       "id": "R5",
@@ -72,9 +72,9 @@
     },
     {
       "id": "VIDEO-CAUSAL",
-      "status": "screen138_hardware_run_failed",
-      "evidence": "analysis/SCREEN138-HARDWARE-RESULT.ko.md",
-      "detail": "137 모델 통과를 유지하되138 실기는 ROM deadline1/관측 정지로 실패. 글리치의 직접 원인은 아직 미확정."
+      "status": "screen140_hardware_same_deadline_failed",
+      "evidence": "analysis/SCREEN140-HARDWARE-RESULT.ko.md",
+      "detail": "140 strict5C/D7에서139와 같은context440181c30800e184/샘플123028/오류1. 지연 모델 개선으로 실기 실패가 해결되지 않음."
     },
     {
       "id": "BOARD-FIT",
@@ -126,9 +126,9 @@
     },
     {
       "id": "ROM-DEADLINE",
-      "status": "functional_read16_pass_minimum135_fitted_physical_run_open",
-      "evidence": "analysis/COMMAND135-RESULT.ko.md",
-      "detail": "122READ16/168MHz제한24프레임통과,135로더/guard/physicalshell동일클록통과.사용중CDC/IO최소검토와새MCU실기RUN이남음."
+      "status": "screen140_hardware_same_deadline_failed",
+      "evidence": "analysis/SCREEN140-HARDWARE-RESULT.ko.md",
+      "detail": "140 strict5C/D7에서139와 같은context440181c30800e184/샘플123028/오류1. 지연 모델 개선으로 실기 실패가 해결되지 않음."
     },
     {
       "id": "REPORT-SESSION",
@@ -144,9 +144,9 @@
     },
     {
       "id": "CURRENT-PAIR-RECOVERY",
-      "status": "normal_full80_hardware_pass_fault_endurance_open",
-      "evidence": "analysis/CORE120-RESULT.ko.md",
-      "detail": "119 실기에서 동일116/CF86의 전체80KiB 적재·읽기비교·STOP·기본FPGA·메뉴 복귀·사용자044 복원이 통과했다. 진행45기록/최종 verified1,load/compare81920,오류0,RUN0. 메뉴준비491.34초는 펌웨어 시각이며 독립 벽시계 측정이 아니다. 이번 GBC 플레이는 미보고다. 반복진입·고장실기·내구성은 별도 미확인."
+      "status": "screen140_menu_prepared_but_user_return_failed",
+      "evidence": "analysis/SCREEN140-HARDWARE-RESULT.ko.md",
+      "detail": "STOP/base/menu 준비 성공, 실제 메뉴/리셋 복귀 실패. 전원 재인가 메뉴 성공. SD는준비까지만기록하므로reset해제실행여부는미확정.044반복시험생략정책은별도."
     }
   ],
   "guardrails": [
@@ -1821,6 +1821,88 @@
     },
     "read_window_ns": 95.232,
     "changed_function": "RUN ACK moves RELEASE->HOLD; pin phases/data sampling/CHECK response and synchronizers unchanged",
-    "next": "140 실기의 두 TXT와 화면·메뉴 복귀·044 메뉴/GBC 복원 결과를 받는다. RUN통과와 화면정상은 구분한다. 재실패하면 최초context/샘플수를139와 대조하며 무변경 fit/적재/부품/저장 시험은 반복하지 않는다. 정상화면 뒤 패드·SMB3 mapper4/384KiB·오디오로 간다."
-  }
+    "next": "140 실기의 동일 CPU ROM 마감 실패와 검은 화면/메뉴 복귀 실패를 해결한다. 메뉴 준비 이후 reset·CIC·SRAM·보호 상태와0xE184 요청/응답 경계의 모델 차이를 좁혀 확인한 수정 후보로 간다. 동일140 재시험·추가 영상·무변경 fit/부품/저장 시험·동일044 반복 복원은 생략한다. 정상 화면 뒤 패드·SMB3 mapper4/384KiB·오디오로 진행한다."
+  },
+  "hardware_screen140": {
+    "candidate": "NES-SCREEN-140",
+    "run_passed": false,
+    "screen_success_confirmed": false,
+    "raw_sha256": {
+      "nes-screen-last-140.txt": "75aa4a12a89c04389bccd0e012af776fe5b20acca92c59a1fc6a869d17d151a0",
+      "nes-progress-140.txt": "d73585417cc9d3c0cb16e487b34f580974b22d7b09085cae45fe252f6f17283f"
+    },
+    "final": {
+      "candidate": "NES-SCREEN-140",
+      "board_expected_hex": "5c",
+      "board_seen": "1",
+      "board_observed_hex": "5c",
+      "geometry_kib": "80",
+      "load_result": "0",
+      "file_result": "0",
+      "loaded_bytes": "81920",
+      "compared_bytes": "81920",
+      "verify_error": "0",
+      "verified": "1",
+      "end_accepted": "1",
+      "stop_ok": "1",
+      "base_attempted": "1",
+      "base_restored": "1",
+      "safe_to_reload": "1",
+      "menu_state": "PREPARED_RESET_HELD",
+      "start_sent": "1",
+      "run_passed": "0",
+      "run_error": "1",
+      "observer_id_hex": "d7",
+      "run_first": "123028",
+      "run_last": "123028",
+      "run_stopped": "123028",
+      "run_flags": "3",
+      "run_rom_error": "1",
+      "run_first_error": "1",
+      "run_stop_error": "0",
+      "fault_context_valid": "1",
+      "fault_context_hi": "440181c3",
+      "fault_context_lo": "0800e184"
+    },
+    "decoded": {
+      "first_run_error": 1,
+      "stop_error": 0,
+      "rom_error": 1,
+      "context_valid": true,
+      "cpu_address": "0x000e184",
+      "pending_address": "0x00e184",
+      "age_nes_clocks": 3,
+      "ppu_valid": false,
+      "cpu_valid": false,
+      "ppu_sample": false,
+      "cpu_sample": true,
+      "rom_response": false,
+      "rom_ready": false,
+      "pending_ppu": false,
+      "busy": true
+    },
+    "progress_records": 47,
+    "record_bytes": 512,
+    "milestone_elapsed_ms": {
+      "DISPLAY_NEXT": 524870,
+      "DISPLAY_STOPPED": 524940,
+      "BASE_DONE": 525820,
+      "MENU_PREPARED": 528110
+    },
+    "display_phase_elapsed_ms": 70,
+    "same_fault_as139": true,
+    "user_confirmed": {
+      "logs_written": true,
+      "black_screen_after_about_9_minutes": true,
+      "menu_return_this_run": false,
+      "reset_button_menu_return": false,
+      "power_cycle_menu_return": true,
+      "restoration": null,
+      "gbc_this_run": null
+    },
+    "interpretation": "140 strict5C/D7 loaded; same CPU deadline1/context/sample123028 as139. STOP error0 and base/menu preparation complete, but user saw persistent black screen and reset did not return menu. MENU_PREPARED is the final SD record by design; released report uses persist=false/UART only. Absence of later TXT does not prove reset was never released. Power-cycle menu is not044 restoration.",
+    "next": "Investigate prepared-to-release/CIC/SRAM/menu handshake and CPU request/response timing together; keep140 failure as regression evidence, do not treat delayed-model PASS as a hardware fix. Add only narrowly scoped evidence needed to distinguish recovery outcomes. No identical140 rerun or video needed.",
+    "restoration_policy": "User waives routine repeat044 tests for unchanged restoration artifacts. Preserve known-good044. Revisit only a concrete changed restoration artifact/path or evidence of regression, explaining the change; distinguish candidate STOP/base/menu return from independent044 restoration."
+  },
+  "hardware_test_policy": "사용자 지시: 동일044 복원본의 매회 재설치·메뉴/GBC 반복 시험은 생략한다. 후보 자체 STOP/base/menu 복귀는 별도 기록한다. 복원본/경로 변경이나 구체적 회귀 근거가 생길 때만 재확인 이유와 범위를 명시한다. 과거 동결 실행 안내보다 현재 정책을 우선하며 미시험을 PASS로 기록하지 않는다."
 }

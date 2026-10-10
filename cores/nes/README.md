@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재140: **읽기 완료 응답 수정 실기 대기**.실기와 같은 최초 실패 상태를 모델에서 재현·수정했습니다. [140 결과](../../analysis/RESPONSE140-RESULT.ko.md) · [실행 안내](../../docs/nes-response140-instructions.ko.md).
+현재140: **실기 RUN과 메뉴 복귀 실패**.139와 같은 최초 오류/샘플 수가 확인됐으며 전원 재인가 메뉴 부팅은 성공했습니다. [실기 결과](../../analysis/SCREEN140-HARDWARE-RESULT.ko.md) · [현재 인계](HANDOFF.ko.md). 동일044 복원 반복 시험은 생략합니다.
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 
