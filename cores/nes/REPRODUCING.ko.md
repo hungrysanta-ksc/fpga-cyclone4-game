@@ -1,5 +1,7 @@
 # NES 검증 재현 범위
 
+138: [재현 순서·선택본](../../analysis/DISPLAY138-RESULT.ko.md). `verify_nes_display138.py`는 동결 증거를읽기전용검사한다. 137픽셀검증은변경없는소스범위에서재사용한다.
+
 137: `nes_screen137.py` / `test_nes_screen137.py` / counter·bus·client 시험 / `verify_nes_screen137.py`. 선택fit03/test01+counter01/bus01/client06–08. 고정135/122 개인증거와기존FLOAT가필요하다. [범위와 결과](../../analysis/SCREEN137-RESULT.ko.md). 새실기패키지는아직없다.
 
 135: run_nes_command135.ps1 / nes_command135_fit.py / nes_command135_timing.tcl / verify_nes_command135.py. 선택test02/fit03,기존FLOAT/새ASCII출력/고정134·128 baseline. [정확한 범위](../../analysis/COMMAND135-RESULT.ko.md).

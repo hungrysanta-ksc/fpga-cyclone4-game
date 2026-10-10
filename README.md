@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재137: **136 최소 RUN 실기·메뉴 복귀·복원 통과. 실제 NES 화면 소비자 구현과 제한 영상 검증 완료**. 다음은 MCU 표시 전환·복귀를 연결한 화면 실기 패키지다. [137 결과](analysis/SCREEN137-RESULT.ko.md) · [A–E 계획](docs/development/NES-MILESTONE-AUDIT-135.ko.md).
+현재138: **NES 실제 화면 실기 시험 패키지 준비 완료**.136 CPU RUN·메뉴/복원 성공을 유지하고 이제 약10초 표시·정상 복귀를 확인한다. [138 결과](analysis/DISPLAY138-RESULT.ko.md) · [실행 안내](docs/nes-display138-instructions.ko.md). 화면 실기·패드·소리·SMB3는 아직 미완료다.
 
 **sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다.
 제품 이름의 **HST는 HungrySanTa = 제작팀 이름**을 뜻합니다.

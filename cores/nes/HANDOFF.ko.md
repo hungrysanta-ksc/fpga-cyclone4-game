@@ -1,33 +1,25 @@
-# NES 현재 인계 —137 실제 화면 경로 구현
+# NES 현재 인계 —138 화면 실기 대기
 
-[137 결과](../../analysis/SCREEN137-RESULT.ko.md) · [검증 메타](../../analysis/screen137-verification.json) · [A–E 계획](../../docs/development/NES-MILESTONE-AUDIT-135.ko.md)
+[138 결과](../../analysis/DISPLAY138-RESULT.ko.md) · [실행 안내](../../docs/nes-display138-instructions.ko.md) · [메타](../../analysis/display138-verification.json)
 
-## 현재 판정
+138은 화면용 단일 패키지다.136의 CPU RUN/메뉴/복원은 이미 실기로 통과했다. 이제 실물의 패턴 화면을 먼저 확인하며 같은 오프라인 시험을 다시 쌓지 않는다.
 
-A 패키지 전달과 B 최초CPU활동 실기는 완료했다.136 두 TXT의47기록/491600ms/81920바이트 적재·비교/오류0/CPU7002→124484→STOP132438을 확인했다. 사용자 메뉴 복귀·복원 확인, 이번 GBC플레이는 별도 미보고다. 같은136을 다시 실행하도록 요구하지 않는다.
+138 화면 실기에서 두 TXT·패턴 표시·메뉴 복귀·044 메뉴/GBC 복원을 먼저 확인한다. 실패하면 마지막 성공 단계와 실제 화면을 근거로 해당 경계만 수정한다. 통과하면 패드 입력을 연결하고 이후 SMB3 mapper4·384KiB·플레이·오디오로 진행한다. 새 실패 없이 같은 배치·전체 적재·영상·저장 시험을 반복하지 않는다.
 
-C는 화면 구현/제한 디지털 시험까지 진전했다.137test01 실제 코어3프레임184320픽셀·SNES포트,client06 실제65816/PPU183552픽셀,client07/08잘못된 길이/헤더 차단,bus01compact ROM64KiB매핑이 통과했다. 실제 보드 화면·입력·오디오는 아직 미확인이다.
+## 사용자에게 전달한 시험
 
-## 바로 이어 할 일
+`NES138-SCREEN-and-RESTORE044.zip`의01-SCREEN138-SD-ROOT를 SD 최상위에 복사하고 `NES SCREEN 138.nh1`(0바이트)을 선택한다. 이전136 전체 약8분12초를 참고하되 새실기는미측정. 전체10분 관찰 한도, 마지막 약10초 패턴 표시 후 메뉴 복귀 목표. 회수 파일은 `nes-progress-138.txt`, `nes-screen-last-138.txt`. 화면 사진/짧은 영상과 메뉴/044 GBC 결과를 받는다. 이전136 재시험·분해·LED·PC USB 연결을 요구하지 않는다.
 
-선택137fit03와 test01+counter01/bus01/client06–08을 재사용해 MCU 표시 전용 식별·SNES RESET 해제/재유지·유한 표시·STOP/base/menu/044 복원을 실기 패키지로 연결한다. 새 배치의 활성 SNES/PSRAM I/O와 CDC/reset 변경 경계만 확인하며, 같은 영상·전체 적재·MAP/FIT를 이유 없이 반복하지 않는다.
+## 선택본과 변경 경계
 
-- 실제136 `nes_cf86_session094.c`의owner094는 get_snes_reset()을 요구한다. 표시 전용 상태와 reset 해제/재유지 경계를 구현하고 기존USB IRQ 차단·CSS/NMI·bit별RDY/shared fault 검사를 유지한다. 단순 조건 삭제나 전체세션 보호 우회 금지.
-- 현재137의59/D4는 내부 배선 시험용이다. 화면용 단일 식별을 새 MCU와 FPGA에 맞추고136/구형86을 무조건 허용하지 않는다. 표시 중에는ROM/packet 버스만활성화하며 SD기록은 표시 전과STOP/복구 뒤로 제한한다.
-- 표시 시간을 유한하게 정하고 종료 전SNES RESET을 다시 유지한다. RUN→READY STOP은flags2/count81920이다. 정상STOP/base/menu와044복원을 포함한 단일 패키지를 전달한다. 고장 뒤SD/UART복구를강행하지 않는다.
-- 137fit03의 새로운 SNES 활성핀·programROM 출력 경로와PSRAM/CDC/reset 변경을 확인한다. 같은 클록통과를 전체signoff로 확대하지 않는다. source/식별 변경이 필요하면 그 변경에 따른 새 배치를 수행하며, 무변경 배치는 반복하지 않는다.
-- 첫 화면실기를 얻은 뒤 패드 입력을 붙인다. 전체PC trace·장시간조합을 화면실기의 선행조건으로 만들지 않는다. 이것은C전체완료가 아니라 최소화면피드백순서다.
+fit01/arm02/armcheck01/host07/rtl01/inventory01/sta01/io01/asm01/release01. FPGA는137fit03의 SPI59→5A 두상수/observerD4→D5 한상수만변경했고 새배치를했다. ROM/atlas/다른RTL은같다. 전체픽셀137과독립counter/bus/client 결과를재사용하며RTL138은4.152ms/21검사의변경경계만확인했다. 호스트07은실제16경로, ARM과생산소스일치·NMI확인. README나복사된예전함수명run136/094/137top을후보ID로오해하지않는다.
 
-## 정확한 선택본
+RELEASING 정착1ms만 RESET 양레벨을허용한다. 이후DISPLAY는RESET해제,USB IRQ차단·SD비소유·공통고장없음·DONE/RDY를요구한다. 200관측×50ms대기중1ms마다검사. 종료전RESET재유지,STOPflags2/count81920필수. 공통고장뒤추가SD/UART복구없음. `run_passed`는CPU/STOP판정이며SNES영상오류를MCU가자동수집한것이아니다.
 
-선택fit03(13592LE/924LAB/50M9K/122핀/0가상/PLL1), 같은 클록setup+.060/hold+.176ns; raw−6.600ns는별도CDC/reset미완료. test01과fit03의RTL 차이는 loaded_bytes 독립 갱신 하나뿐이다. counter01이135대비26112조합/잘못된증가대조군으로검사했다. 전체영상재시험으로표현하지 않는다. builder137의ROM/atlas는fit01/fit03/실제client가동일하다.
+타이밍+.305/+.177ns는같은클록범위.363heldpairs/17chains조건부통과,음수reset114행은체인비동기입력. I/O는미측정PCB가정에따른정상실기시험용이며MTBF/전기승인아님. 상세수치는138결과참조.
 
-현재고정fine_x 진단 PRG64KiB+CHR16KiB,3프레임 검증,고정16KiB SNESatlas·239행 crop. 내부cart_nrom.sv라는 이름과 달리 기존제한MMC3진단결선이포함된다. 이를SMB3의384KiB제품지원으로확대하지 않는다. 데이터가바뀌는CHR/일반PPU/입력/오디오는별도다.
+## 다음 수정 판단
 
-fit01 timing실패·fit02 준비assert(6개를7개로예상)·초기Mesen설정/runtime/Lua IO·startup vblank225검증기수정·초기진행parser수정은새증거에보존한다. 이전044–136을수정하지않았다. 완료finalizer재실행금지.
+두TXT의마지막성공단계를먼저읽는다. DISPLAY_NEXT뒤멈춤은표시진입/실행/STOP범위, DISPLAY_STOPPED후는기존base/menu복귀범위. 정상TXT인데화면이없으면SNES reset/vector/ROM read/소비자부트/packet흐름으로좁힌다. 장시간traceframework나동일전체적재를먼저만들지않는다. 화면이정상이면패드입력,이어서첫목표SMB3(J) mapper4 PRG256KiB+CHR128KiB/SHA dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49. 현재고정fine_x80KiB·16KiBatlas·239행만검증,일반CHR/오디오/게임호환성은별도다.
 
-## 유지할 기준
-
-136실기정상RUN과119전체적재/복구,044메뉴/GBC근거 유지. 첫게임SMB3(J) mapper4/PRG256KiB+CHR128KiB/SHA `dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49`. D는시작·이동·스크롤·장면전환·종료·오디오구분, E는실제실패중심맵퍼확장이다.
-
-E1/E2·MTBF·8µs/양클록정지CE9µs반례·124격리·source-lock4건 유지. GBC152/원래NES334/기존공개핀보존. Git에는소스/도구/문서만, 바이너리·개인로그·미디어·라이선스공개금지. PR제목한국어, 작업목표/내용/결과/의미4항목, 사용자머지. PR82병합확인.
+E1/E2·8µs/양클록정지CE9µs·124격리·source-lock4·GBC152/원래NES334보존. PR제목한국어, 작업목표/내용/결과/의미4항목, 사용자머지. 동결증거044–138와완료finalizer수정금지.

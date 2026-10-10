@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재137: **136 CPU RUN 실기·메뉴/복원 통과**, 실제 화면 경로 구현 및3프레임 비교 통과. [137 결과](../../analysis/SCREEN137-RESULT.ko.md). 다음은 MCU 표시 전환을 연결한 실기 패키지이며, 화면 실기·패드·소리·SMB3는 미완료다.
+현재138: **화면 실기 패키지 준비 완료**, 사용자 화면·메뉴·044 복원 확인 대기. [138 결과](../../analysis/DISPLAY138-RESULT.ko.md) · [실행 안내](../../docs/nes-display138-instructions.ko.md).
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 
