@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재140: **실기 RUN과 메뉴 복귀 실패**.139와 같은 최초 오류/샘플 수가 확인됐으며 전원 재인가 메뉴 부팅은 성공했습니다. [실기 결과](../../analysis/SCREEN140-HARDWARE-RESULT.ko.md) · [현재 인계](HANDOFF.ko.md). 동일044 복원 반복 시험은 생략합니다.
+현재141: **두 차례 실기 ROM 실행 통과, 화면 관찰 재실행에서 글리치 확인**. 정상 영상 출력은 미완료이며 같은141 재시험은 종료한다. [실기 결과](../../analysis/SCREEN141-HARDWARE-RESULT.ko.md) · [현재 인계](../../cores/nes/HANDOFF.ko.md).
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 

@@ -84,3 +84,5 @@ A와B는 디버깅 기반 완료가 아니라 실기 피드백을 시작하는 �
 근거: [135 결과](../../analysis/COMMAND135-RESULT.ko.md), [134 결선](../../analysis/BOARD134-RESULT.ko.md), [133 RUN](../../analysis/RUN133-RESULT.ko.md), [119/120 실기 기준](../../analysis/CORE120-RESULT.ko.md), [현재 인계](../../cores/nes/HANDOFF.ko.md).
 
 후속136: A 패키지를 구현해 전달 준비를 완료했다. B 실제CPU활동과복원은사용자결과대기다. 위표는135점검시점이며현재상태는[136결과](../../analysis/RUN136-RESULT.ko.md)와계획JSON을참조한다.
+
+**141 현재:** 메뉴 복귀·ROM 공급 수정 실기 후보. [141 결과](../../analysis/SCREEN141-RESULT.ko.md)를 기준으로 두TXT/화면/메뉴를 확인한다. 변하지 않은044/GBC 복원 반복은 생략한다.
