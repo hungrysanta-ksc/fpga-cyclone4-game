@@ -2,14 +2,14 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-10",
-  "technical_candidate": "NES-SCREEN-137",
+  "technical_candidate": "NES-SCREEN-138",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "현재137:136 최소RUN 실기·메뉴·복원 통과. 실제 화면 경로와3프레임 디지털 검증 통과. 화면 실기·입력·오디오·SMB3 미완료.",
-  "next_action": "DELIVER_BOUNDED_SCREEN_HARDWARE_PACKAGE",
+  "assessment": "138 실기 화면/RUN 실패(CPU ROM deadline1). 적재·메뉴·복원 성공.136 CPU 활동 성공은 유지.",
+  "next_action": "FIX_SCREEN138_CPU_ROM_DEADLINE",
   "next_three_deliverables": [
-    "선택137fit03와 test01+counter01/bus01/client06–08을 재사용해 MCU 표시 전용 식별·SNES RESET 해제/재유지·유한 표시·STOP/base/menu/044 복원을 실기 패키지로 연결한다. 새 배치의 활성 SNES/PSRAM I/O와 CDC/reset 변경 경계만 확인하며, 같은 영상·전체 적재·MAP/FIT를 이유 없이 반복하지 않는다.",
-    "화면 실기 결과를 먼저 받고 패드 반응 연결",
+    "138 실기 CPU ROM deadline 오류1을 먼저 해결한다. 동일 RTL의 클록 위상·CPU/PPU 공유 요청을 좁혀 조사하고, 미재현이면 최초 실패 주소·pending·age만 관측한다. 최초 RUN 오류를 STOP 결과와 분리해 보존한 수정 후보로 화면 실기를 재개한다. 동일138·전체 저장/부품 시험은 반복하지 않는다. 정상 화면 뒤 입력·SMB3로 진행한다.",
+    "화면 성공 후 패드 반응 연결",
     "SMB3 mapper4·384KiB·플레이·오디오 실기"
   ],
   "gates": [
@@ -19,8 +19,8 @@
       "title": "Latest resource and memory feasibility",
       "depends_on": [],
       "exit": "Pinned synthesis/resource table, explicit exclusions, memory service contract and integration-headroom decision; not full board signoff",
-      "evidence": "analysis/SCREEN137-RESULT.ko.md",
-      "remaining": "137화면포함924/963LAB·50/56M9K·122실핀.같은클록통과.활성IO/새CDC·reset과최종MCU쌍미완료."
+      "evidence": "analysis/DISPLAY138-RESULT.ko.md",
+      "remaining": "138fit01 같은클록/363heldpairs/17chains/조건부IO 통과. 외부실측/MTBF/모든고장signoff미완료."
     },
     {
       "id": "R2",
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "partial_cpu_run_physical_pass_screen_digital_pass",
+      "status": "partial_screen138_hardware_run_failed",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/SCREEN137-RESULT.ko.md",
-      "remaining": "136실기정상RUN/STOP/메뉴/복원통과.137표시소유권MCU·화면실기·입력·오디오미완료."
+      "evidence": "analysis/SCREEN138-HARDWARE-RESULT.ko.md",
+      "remaining": "CPU ROM deadline1 해결 후 실제 화면, 입력, 오디오 확인."
     },
     {
       "id": "R5",
@@ -72,9 +72,9 @@
     },
     {
       "id": "VIDEO-CAUSAL",
-      "status": "partial_live_core_diagnostic_pass",
-      "evidence": "analysis/SCREEN137-RESULT.ko.md",
-      "detail": "137실제코어3프레임184320픽셀·SNES포트와별도실제SNES DMA183552표시픽셀통과.새화면실기대기."
+      "status": "screen138_hardware_run_failed",
+      "evidence": "analysis/SCREEN138-HARDWARE-RESULT.ko.md",
+      "detail": "137 모델 통과를 유지하되138 실기는 ROM deadline1/관측 정지로 실패. 글리치의 직접 원인은 아직 미확정."
     },
     {
       "id": "BOARD-FIT",
@@ -1056,7 +1056,7 @@
     {
       "id": "C",
       "goal": "실제 NES 생성 화면·패드 반응",
-      "status": "partial_live_screen_path_verified_hardware_input_pending"
+      "status": "partial_screen138_hardware_deadline_failed"
     },
     {
       "id": "D",
@@ -1154,5 +1154,224 @@
     "input_connected": false,
     "audio_connected": false,
     "next": "선택137fit03와 test01+counter01/bus01/client06–08을 재사용해 MCU 표시 전용 식별·SNES RESET 해제/재유지·유한 표시·STOP/base/menu/044 복원을 실기 패키지로 연결한다. 새 배치의 활성 SNES/PSRAM I/O와 CDC/reset 변경 경계만 확인하며, 같은 영상·전체 적재·MAP/FIT를 이유 없이 반복하지 않는다."
+  },
+  "display138": {
+    "candidate": "NES-SCREEN-138",
+    "base_merge": "4cbba8005a9242a426aae88e3f5facb47ac38bf1",
+    "manifest_sha256": "adbd48d99279cf698a6d3f6a9bf40504b79605c65cb37d7464bd6d7020b066fb",
+    "file_count": 5155,
+    "selected": {
+      "fit": "fit01",
+      "arm": "arm02",
+      "arm_check": "armcheck01",
+      "host": "host07",
+      "rtl": "rtl01",
+      "sta": "sta01",
+      "io": "io01",
+      "asm": "asm01",
+      "release": "release01"
+    },
+    "package": {
+      "zip_sha256": "8adebe9f18f1bd4c8422bd4352c4fdd9b5763c4e9f581135adc2f7f0f1e60e41",
+      "zip_bytes": 747542,
+      "members": 12,
+      "firmware_sha256": "bd5620e1d4bfe110bd2f0b8ab7225e18ec4ff8157963f46248a467194ee5075e",
+      "fpga_sha256": "5eed721c09636cb3b0b2745be461bdd636abf3477e7f2a2b2ba3bff201045a3c",
+      "fixture_sha256": "3daf26c8e2d0002c288efdf2ff694cdc14f0266b9cb32bb3efda8b9bf5d173df",
+      "normal_trial_ready": true,
+      "physical": false
+    },
+    "sta": {
+      "candidate": "NES-CDC-REFRESH-138",
+      "passed": true,
+      "groups": {
+        "reader_address": {
+          "rows": 63,
+          "pairs": 21,
+          "max_data_delay_ns": 0.911,
+          "raw_min_slack_ns": -3.786,
+          "budget_ns": 4.0,
+          "sdc_max_delay_ns": 5.952,
+          "conditional_capture_min_ns": 11.904,
+          "constrained_min_slack_ns": 2.164
+        },
+        "reader_data": {
+          "rows": 789,
+          "pairs": 249,
+          "max_data_delay_ns": 8.368,
+          "raw_min_slack_ns": -6.22,
+          "budget_ns": 40.0,
+          "sdc_max_delay_ns": 45.454,
+          "conditional_capture_min_ns": 90.908,
+          "constrained_min_slack_ns": 39.232
+        },
+        "bridge_request": {
+          "rows": 138,
+          "pairs": 46,
+          "max_data_delay_ns": 6.612,
+          "raw_min_slack_ns": -4.531,
+          "budget_ns": 40.0,
+          "sdc_max_delay_ns": 45.454,
+          "conditional_capture_min_ns": 90.908,
+          "constrained_min_slack_ns": 40.921
+        },
+        "bridge_reply": {
+          "rows": 141,
+          "pairs": 47,
+          "max_data_delay_ns": 1.094,
+          "raw_min_slack_ns": -3.96,
+          "budget_ns": 10.0,
+          "sdc_max_delay_ns": 11.904,
+          "conditional_capture_min_ns": 23.808,
+          "constrained_min_slack_ns": 7.942
+        },
+        "control_first_stage": {
+          "rows": 24,
+          "pairs": 8,
+          "max_data_delay_ns": 6.725,
+          "raw_min_slack_ns": -4.659
+        },
+        "configuration_open": {
+          "rows": 1866,
+          "pairs": 182,
+          "max_data_delay_ns": 8.28,
+          "raw_min_slack_ns": -6.142
+        },
+        "lifecycle_open": {
+          "rows": 345,
+          "pairs": 115,
+          "max_data_delay_ns": 7.436,
+          "raw_min_slack_ns": -5.38
+        }
+      },
+      "raw_rows": 3366,
+      "raw_pairs": 668,
+      "constrained_pairs": 363,
+      "constrained_rows": 1089,
+      "chains": 17,
+      "release_chains": 9,
+      "chain_paths": 102,
+      "chain_min_setup_ns": 4.783,
+      "chain_min_hold_ns": 0.194,
+      "local_reset_rows": 7122,
+      "local_reset_min_ns": -4.395,
+      "local_reset_pass": false,
+      "new_fit": false,
+      "full_timing_pass": false,
+      "mtbf_signoff": false,
+      "external_io_signoff": false,
+      "installable": false
+    },
+    "io": {
+      "passed": true,
+      "snes_input_max_ns": 14.283,
+      "snes_output_max_ns": 19.299,
+      "snes_raw_release_max_ns": 21.276,
+      "snes_sample_envelope_ns": 134.814,
+      "snes_test_sample_ns": 160,
+      "snes_io_measured": false,
+      "rows": 13047,
+      "psram_input_max_ns": 6.936,
+      "psram_output_max_ns": 11.793,
+      "spi_route_max_ns": 12.687,
+      "psram_read_window_ns": 95.232,
+      "psram_access_ns": 70,
+      "setup_uncertainty_allowance_ns": 2,
+      "pcb_roundtrip_assumed_ns": 2,
+      "conditional_read_margin_ns": 2.503,
+      "reset_rows": 7122,
+      "reset_negative_rows": 114,
+      "negative_only_release_async_inputs": true,
+      "downstream_reset_min_ns": 0.492,
+      "normal_trial_only": true,
+      "new_fit": false,
+      "full_io_signoff": false,
+      "board_delay_measured": false,
+      "mtbf_calculated": false
+    },
+    "arm": {
+      "firmware_bytes": 186028,
+      "firmware_sha256": "bd5620e1d4bfe110bd2f0b8ab7225e18ec4ff8157963f46248a467194ee5075e",
+      "elf_sha256": "8b29505487de8c7dbebf1170e96dcb8afe839e1167537c04bf1d8faba5192d44",
+      "nmi_address": "0x08019148",
+      "vector_word": "0x8019149",
+      "stop_stores": 15,
+      "stop_calls": 0,
+      "stop_dsb": 3,
+      "stop_isb": 2,
+      "host_sources_match": true,
+      "strong_nmi": true,
+      "arm_execution": false,
+      "physical": false,
+      "installable": false
+    },
+    "logic_elements": 13651,
+    "LAB": 929,
+    "M9K": 50,
+    "registers": 5122,
+    "physical_pins": 122,
+    "virtual_pins": 0,
+    "PLL": 1,
+    "same_clock_setup_min_ns": 0.305,
+    "same_clock_hold_min_ns": 0.177,
+    "raw_setup_min_ns": -6.22,
+    "normal_trial_ready": true,
+    "physical_screen_tested": false,
+    "game_ready": false,
+    "input": false,
+    "audio": false,
+    "source_lock_holds": 4,
+    "next": "138 실기 CPU ROM deadline 오류1을 먼저 해결한다. 동일 RTL의 클록 위상·CPU/PPU 공유 요청을 좁혀 조사하고, 미재현이면 최초 실패 주소·pending·age만 관측한다. 최초 RUN 오류를 STOP 결과와 분리해 보존한 수정 후보로 화면 실기를 재개한다. 동일138·전체 저장/부품 시험은 반복하지 않는다. 정상 화면 뒤 입력·SMB3로 진행한다."
+  },
+  "hardware_screen138": {
+    "candidate": "NES-SCREEN-138",
+    "screen_passed": false,
+    "run_passed": false,
+    "raw_sha256": {
+      "nes-progress-138.txt": "aa85770282eb4c3ffcb36239d723da91fc39bb51022d347a147134cbf811acc9",
+      "nes-screen-last-138.txt": "dea46670d56ea6fabe821aa4a9c1b975756d94c096dad1a94c6ec08fc0ab7c57"
+    },
+    "final": {
+      "candidate": "NES-SCREEN-138",
+      "board_expected_hex": "5a",
+      "board_seen": "1",
+      "board_observed_hex": "5a",
+      "geometry_kib": "80",
+      "load_result": "0",
+      "file_result": "0",
+      "loaded_bytes": "81920",
+      "compared_bytes": "81920",
+      "verify_error": "0",
+      "verified": "1",
+      "end_accepted": "1",
+      "stop_ok": "1",
+      "base_attempted": "1",
+      "base_restored": "1",
+      "safe_to_reload": "1",
+      "menu_state": "PREPARED_RESET_HELD",
+      "start_sent": "1",
+      "run_passed": "0",
+      "run_error": "3",
+      "observer_id_hex": "d5",
+      "run_first": "123028",
+      "run_last": "123028",
+      "run_stopped": "123028",
+      "run_flags": "3",
+      "run_rom_error": "1"
+    },
+    "progress_records": 47,
+    "milestone_elapsed_ms": {
+      "DISPLAY_NEXT": 522580,
+      "DISPLAY_STOPPED": 532920,
+      "MENU_PREPARED": 536040
+    },
+    "user_confirmed": {
+      "menu_return": true,
+      "restoration": true,
+      "gbc_this_run": null,
+      "pattern_success": false
+    },
+    "interpretation": "CPU ROM deadline fault1; constant valid sample count123028. Final flags3 is post-STOP, not evidence of reset during RUN. run_error3 overwrites earlier MCU failures; STOP command succeeded.",
+    "next": "Target CPU/PPU shared ROM deadline; preserve first RUN failure separately from STOP; no repeat of unchanged138 trial."
   }
 }

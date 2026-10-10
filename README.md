@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재137: **136 최소 RUN 실기·메뉴 복귀·복원 통과. 실제 NES 화면 소비자 구현과 제한 영상 검증 완료**. 다음은 MCU 표시 전환·복귀를 연결한 화면 실기 패키지다. [137 결과](analysis/SCREEN137-RESULT.ko.md) · [A–E 계획](docs/development/NES-MILESTONE-AUDIT-135.ko.md).
+현재138 실기: **적재·대조·메뉴 복귀·복원 성공, 화면 실행 실패**. CPU ROM 응답 마감 오류1과 관측 카운터 정지를 확인했다. [실기 결과와 다음 수정 범위](analysis/SCREEN138-HARDWARE-RESULT.ko.md). 동일138 재시험은 필요 없으며 화면·패드·소리·SMB3는 미완료다.
 
 **sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다.
 제품 이름의 **HST는 HungrySanTa = 제작팀 이름**을 뜻합니다.
@@ -24,7 +24,7 @@
 | 구성 | 현재 상태 | 소스·재현 |
 | --- | --- | --- |
 | GB/GBC | C44 실기 확인, 0.9.0 공개 완료 | [GBC 개발 안내](cores/gbc/README.md) |
-| NES | 136 CPU RUN 실기 통과,137 실제 화면 경로 구현;화면 실기 준비 중 | [NES 개발 안내](cores/nes/README.md) |
+| NES | 136 CPU 활동 통과;138 화면 실기 ROM deadline 실패 조사 중 | [NES 개발 안내](cores/nes/README.md) |
 | PC Engine | 조사 대기; HuCard 범위를 우선 검토 | [PCE 조사 범위](cores/pce/README.md) |
 
 현재 구현 대상은 **FXPAK Pro / Mk.III, STM32 + EP4CE15F17C8**입니다. 제품 이름이 바뀌어도 보드 지원 범위가 넓어지는 것은 아닙니다. NES/PCE의 동작 가능성·일정은 아직 확정하지 않았습니다.
