@@ -1,22 +1,60 @@
+# NES 현재 인계 — 154 PPU 상태 실기 회수, 일반 배경 읽기 기한 수정으로 진행
+
+[154 실기 결과](../../analysis/GAME154-HARDWARE-RESULT.ko.md) · [실제 로그 해석](../../analysis/game154-hardware-verification.json)
+
+154 추가 관측은 실기 수용 완료다. ROM393216바이트 적재·비교, 오류2 문맥·추가 PPU 상태 TXT, STOP/기본 FPGA/실제 메뉴 복귀가 통과했다. 게임은 실패했다. 사용자의 첫 Start는 선택 화면, 두 번째 Start는 다음 장면 진입 후 정지·복귀다. 선택 화면 기준 한 번과 전체 흐름 두 번은 모순이 아니며 중복 입력 결함으로 분류하지 않는다. 다른 버튼과 실제 스테이지 플레이는 미확인이다.
+
+실제 오류 문맥 `e200c2f4:20217a10`은153과 같다. actual=pending0x217A10,age1,busy/PPUsample1,ready/response/valid0. 새 상태 `60818800:28404040`은 line193/dot6,render1,sprite0,bgtable0,VRAM0x0A10,latch/pins0x10,read2007/write2007파이프0,ALE/hint/address_valid0이다. dot6은 일반 배경 패턴 읽기다. 현재 ALE/address_valid/hint0은 해당 단계에서 예상되므로 곧바로 결함으로 판정하지 않는다. `$2007` 겹침 전용 힌트 확장만을 해법으로 가정하지 않는다. 파이프0으로 더 앞선2007영향까지 배제하지도 않는다.
+
+NEXT:일반 배경 dot5→6의 논리/물리주소 유효화→공유서비스 승인→응답→샘플을 짧게 재현한다. 직전 CPU/PPU 요청 점유, 샘플 직전 MMC3 주소 변경, 백엔드 응답 위상을 구분하여 처음 어긋난 경계를 고친다. 현재 관측에는 직전 이력이 없어 이들은 가설이다. 필요한 실제 PPU/서비스 결선을 사용하되 인위적 조건 통과를 실기 원인 확정으로 올리지 않는다. 원인 없이 큰 캐시/클록 변경·기한 검사 삭제·전체110/240프레임 재시작을 하지 않는다. 최소 수정 검증 뒤 같은 SMB3 실기로 돌아간다. 추가 일반화 진단 체계나 같은154/044/GBC/A-B 시험을 요구하지 않는다.
+
+진행104기록seq0..103,DISPLAY232670→STOPPED242030=9360ms,메뉴준비245210ms. 사용자 메뉴복귀 확인. screen_frames17/trusted0은 FPS가 아니다. 실제 PPU 상태를154 합성 모델 값60b6a800:484043fe 또는153주입문맥30217a19와 혼동하지 않는다. 이번 영상 없음; 장면 독립 확인이 아닌 사용자 관찰로 보존한다.
+
+이번 PR96 업데이트는 결과·인계만이다. firmware/FPGA/ZIP/frozen2330/공개 도구 pin은 불변이다. 원본두TXT는private probes/nes-game154-hardware. 구현·시험판은 다음 작업이며 PR은 사용자가 머지한다. 한국어4절/개인계정 정책 유지.
+
+---
+
+## 이전154 준비 기록
+
+# NES 현재 인계 — 154 PPU 오류 순간 상태 수집, 실기 대기
+
+[154 결과](../../analysis/GAME154-RESULT.ko.md) · [설치](../../docs/nes-game154-instructions.ko.md) · [검증](../../analysis/game154-verification.json)
+
+153은 실제 PPU 오류2 뒤 STOP·TXT·자동 메뉴 복귀에 성공했다. Start 중복이 없었고 다른 버튼은 미확인이다. 실제 문맥은 `e200c2f4:20217a10`: 요구=대기주소0x217a10/age1이며 응답·유효값이 없다. 원인은 아직 미확정이다.154는 오류 순간64비트 PPU 상태만 추가한 시험판이며 게임 정지 수정이나 플레이 성공으로 계산하지 않는다.
+
+다음은 같은 SMB3(J)의 실기 한 번이다. `NES GAME 154.nh1` 실행 후 선택 화면에서 Start 한 번으로 WORLD1 쪽으로 간다. 사용자가 현재 선택 화면의 진입 방법을 확인했다. 초기 타이틀 연출의 입력과 구분하며 무조건 두 번 연타시키지 않는다. 두 TXT와 메뉴 복귀 여부를 받는다. 같은 증상이면 영상 생략 가능, 진행되면 방향/A/B를 확인한다. 원격 실기이므로 PC 연결을 요구하지 않는다. 같은153/044/GBC/A-B 시험이나 변경 없는30프레임을 반복하지 않는다.
+
+154의 SPI74/75는 최초 오류 에지의 line/dot, 배경패턴/스프라이트/렌더링/ALE, read/write2007파이프, vram주소/래치/핀, hint/address-valid를 보존한다. 기존 주소 문맥과 같은 에지다. MCU는 기존 STOP와 상태 유지 검사를 통과한 뒤 읽고 보조 응답 형식 불일치는valid0으로만 남긴다. 전송/클록 보호는 유지한다. `tools/decode_nes_game154.py`로 최종 TXT를 해독한다. 상태는 요청 이력이 아니므로 이전 요청 점유나 PSRAM 정상 여부까지 단정하지 않는다.
+
+FPGA·MCU는 새63/DD 조합이다. ROM서비스/캐시/샘플기한/매퍼/게임 입력·전송 결정은152와 같고153 복귀 수정은 유지했다. 실제보드 정보는 기존확정 Rev.D/STM32F401RCT6/EP4CE15F17C8N/IS66WVE4M16EBLL-70BLI×2를 재사용한다. 새배치 setup+.084/hold+.173,조건부PSRAM3.257ns. 전체IO/MTBF 완료아님. ARM187124/NMI/수신960정상10음성/실제C-FatFS메뉴 모델의 정상보조·잘못된ID 모두통과. 합성주입값을실제153관측값으로인용하지않는다.
+
+실제152코어와 같은 ROM으로 Start 경로를 조사했으며 최종 범위는 검증JSON/core_investigation을 따른다. 추상5NESedge백엔드는 실제PSRAM/CDC/MCU/SNES가 아니다. 참조 Mesen의 두입력30/90은 WORLD1까지가지만 FPGA검증이아니다. 초기core01 선언순서실패,core02~04 조사설정변경을 위한 의도적중단은 제품실패·라이선스오류로분류하지 않는다. 최신 core05 결과와 이전 중단 증거는동결 investigation에 있다.
+
+실기로그가오면 read2007파이프와 dot/렌더링/주소래치로 실패경계를선택해 최소재현·수정→같은게임으로진행한다. 추가일반화관측/무조건캐시확대/기한검사삭제는하지않는다. 스테이지플레이,표시속도,입력DMA공백,소리,저장은미완료다. 동결154와옛공개pin/ROM/GBC는보존한다. ROM/ZIP/바이너리/영상/라이선스/개인경로를Git에올리지않는다. 한국어PR4절,사용자가머지,GitHub는hungrysanta-ksc만사용한다.
+
+---
+
+## 이전153 기록
+
 # NES 현재 인계 — 153 오류 회수 실기 통과, PPU 기한 원인 수정으로 진행
-+
-+[153 실기 결과](../../analysis/GAME153-HARDWARE-RESULT.ko.md) · [원시 기록·해석](../../analysis/game153-hardware-verification.json)
-+
-+153의오류문맥수신·TXT·STOP·기본FPGA·자동메뉴복귀를실기로수용했다. loaded/compared393216,verified1,stop_ok/base_restored1,stop_error0. RUN은실패:run_rom_error2,first_error1. **실제**문맥e200c2f4:20217a10,bit63PPUtag1,actual=pending0x217a10,age1,busy/pendingPPU1,ready/response/cpu_sample/cpu_valid/ppu_valid0,ppu_sample1. 모델주입값e200c2f4:30217a19와혼동금지.151pending0x217a18과8바이트차이지만151actual없어동일원인확정금지.
-+
-+104개512byte진행기록seq0..103. LOAD완료95290/CHECK233010/DISPLAY_NEXT233020/DISPLAY_STOPPED242230/BASE243090/MENU_PREPARED245380ms. RUN구간9.210s,STOP표시→메뉴준비3.150s는MCU시각이며정확한실제화면/오류시각아님. count26415116STOP후유지. 최종PREPARED_RESET_HELD는저장시점이며사용자가후속실제메뉴복귀확인. 화면stage6/frames17/trusted0은FPS나화면정상증거아님.
-+
-+사용자는이전과같은스테이지시작지점에서멈춘듯한뒤바로메뉴복귀,이번Start중복없음을확인. 다른버튼미확인. 새영상없음;정확한장면독립확인이나실제스테이지플레이PASS로승격금지. 같은153영상/실행/044복원요구불필요.
-+
-+NEXT:실제SMB3Start이후0x217a10주변요청/응답/PPU샘플순서를좁힌다. 오류순간주소는맞고busyage1인데유효데이터/응답없음. 늦은요청발행,직전요청점유,선행읽기·캐시교체,백엔드응답전달을구분한다. addr일치만으로PSRAM정상/고장·prefetch원인확정금지. 현재로그엔직전이력/PPUscanline/cycle/mapperregs없음. 초기30프레임만무변경반복금지;실기진입에필요한변경경계검증후같은게임으로진행. 재현부족할때만최소추가관측. 오류검사삭제/무조건캐시확대/클록늘이기로PASS만들지않음. Start중복은이번없으므로입력수정을먼저추가하지않고PPU해결후방향/A/B를확인.
-+
-+이번PR95는실기결과/인계업데이트만.153firmware/FPGA/ZIP/frozen1845/공개sourcepin불변. 원본두TXT는private probes/nes-game153-hardware. 새RTL/ARM/Questa/FIT/패키지없음. 이전153수정목표달성,정상게임플레이·표시속도·DMA입력공백·소리·저장·기존IO/MTBF는미완료. 다음구현은사용자머지후새PR;한국어4절/개인계정만사용.
-+
-+---
-+
-+## 이전153 준비 기록 — 현재 실기 결과는 위를 따른다
-+
-+# NES 현재 인계 — 153 오류 회수 수정판, 실기 결과 대기
+
+[153 실기 결과](../../analysis/GAME153-HARDWARE-RESULT.ko.md) · [원시 기록·해석](../../analysis/game153-hardware-verification.json)
+
+153의오류문맥수신·TXT·STOP·기본FPGA·자동메뉴복귀를실기로수용했다. loaded/compared393216,verified1,stop_ok/base_restored1,stop_error0. RUN은실패:run_rom_error2,first_error1. **실제**문맥e200c2f4:20217a10,bit63PPUtag1,actual=pending0x217a10,age1,busy/pendingPPU1,ready/response/cpu_sample/cpu_valid/ppu_valid0,ppu_sample1. 모델주입값e200c2f4:30217a19와혼동금지.151pending0x217a18과8바이트차이지만151actual없어동일원인확정금지.
+
+104개512byte진행기록seq0..103. LOAD완료95290/CHECK233010/DISPLAY_NEXT233020/DISPLAY_STOPPED242230/BASE243090/MENU_PREPARED245380ms. RUN구간9.210s,STOP표시→메뉴준비3.150s는MCU시각이며정확한실제화면/오류시각아님. count26415116STOP후유지. 최종PREPARED_RESET_HELD는저장시점이며사용자가후속실제메뉴복귀확인. 화면stage6/frames17/trusted0은FPS나화면정상증거아님.
+
+사용자는이전과같은스테이지시작지점에서멈춘듯한뒤바로메뉴복귀,이번Start중복없음을확인. 다른버튼미확인. 새영상없음;정확한장면독립확인이나실제스테이지플레이PASS로승격금지. 같은153영상/실행/044복원요구불필요.
+
+NEXT:실제SMB3Start이후0x217a10주변요청/응답/PPU샘플순서를좁힌다. 오류순간주소는맞고busyage1인데유효데이터/응답없음. 늦은요청발행,직전요청점유,선행읽기·캐시교체,백엔드응답전달을구분한다. addr일치만으로PSRAM정상/고장·prefetch원인확정금지. 현재로그엔직전이력/PPUscanline/cycle/mapperregs없음. 초기30프레임만무변경반복금지;실기진입에필요한변경경계검증후같은게임으로진행. 재현부족할때만최소추가관측. 오류검사삭제/무조건캐시확대/클록늘이기로PASS만들지않음. Start중복은이번없으므로입력수정을먼저추가하지않고PPU해결후방향/A/B를확인.
+
+이번PR95는실기결과/인계업데이트만.153firmware/FPGA/ZIP/frozen1845/공개sourcepin불변. 원본두TXT는private probes/nes-game153-hardware. 새RTL/ARM/Questa/FIT/패키지없음. 이전153수정목표달성,정상게임플레이·표시속도·DMA입력공백·소리·저장·기존IO/MTBF는미완료. 다음구현은사용자머지후새PR;한국어4절/개인계정만사용.
+
+---
+
+## 이전153 준비 기록 — 현재 실기 결과는 위를 따른다
+
+# NES 현재 인계 — 153 오류 회수 수정판, 실기 결과 대기
 
 [153 결과](../../analysis/GAME153-RESULT.ko.md) · [설치](../../docs/nes-game153-instructions.ko.md) · [검증](../../analysis/game153-verification.json)
 
