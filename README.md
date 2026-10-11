@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재153 실기: **PPU 오류 문맥·TXT·메뉴 복귀 성공**. 실제 요구와 처리 중 주소는 모두 `0x217A10`이며 PPU 읽기 기한 오류는 남아 있습니다. 이번 Start 중복 없음, 다른 버튼은 미확인입니다. [153 실기 결과](analysis/GAME153-HARDWARE-RESULT.ko.md).
+현재154: **SMB3 진입 오류 순간의 PPU 상태 수집판 준비, 실기 대기**.153의 로그·메뉴 복귀는 실기 통과했고 게임 정지 원인은 미해결입니다. [154 안내](docs/nes-game154-instructions.ko.md) · [검증 결과](analysis/GAME154-RESULT.ko.md).
 
 이전151 실기: **SMB3 제목·캐릭터 표시와 메뉴 복귀 성공, PPU 읽기 오류로 조기 종료**. 정상 플레이·전체 버튼 입력은 미완료입니다. [151 실기 결과](analysis/GAME151-HARDWARE-RESULT.ko.md).
 

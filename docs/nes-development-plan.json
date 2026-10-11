@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-11",
-  "technical_candidate": "NES-GAME-153",
+  "technical_candidate": "NES-GAME-154",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "153 실기에서 새PPU오류문맥/TXT/STOP/기본FPGA/자동메뉴복귀 통과. 실제요구=처리중0x217a10,age1인데샘플시응답/유효데이터없음. PPU읽기기한 원인과 정상플레이는미해결. 이번Start중복없음,다른버튼미확인.",
-  "next_action": "NARROW_ACTUAL_GAME_PPU_REQUEST_RESPONSE_DEADLINE_217A10",
+  "assessment": "153 오류 문맥과 메뉴 복귀 실기 통과.154는 게임 정지 순간 PPU 상태64비트를 추가하는 시험판이며 원인 수정/플레이는 미완료.",
+  "next_action": "RUN154_ACTUAL_SMB3_CAPTURE_PPU_FIRST_FAULT_STATE",
   "next_three_deliverables": [
     "실제 SMB3 Start 이후0x217A10 주변 요청 발행·응답·PPU 샘플 순서를 좁히기",
     "확인된 선행 읽기·캐시·중재 또는 응답 전달의 첫 실패 경계를 수정하고 최소 검증",
@@ -859,7 +859,7 @@
   "first_game_target": "cores/nes/first-game-target.json",
   "mapper_expansion_policy": "SMB3 mapper4 first, extend mappers afterward; keep SMB3/GBC regression",
   "hardware_iteration_policy": "최소 보호 동작과 검증된 파일 조합, 관측 방법, 종료·독립 복원 경로가 준비되면 제한 실기에서 데이터를 얻는 것을 우선한다. 남은 불확실성을 실제로 판별할 수 있는 시험을 먼저 정하고, 실기만으로 해결할 수 있는 항목을 같은 문서·모형 검사로 반복해서 미루지 않는다. 이는 모든 전기 조건의 입증을 생략한다는 의미가 아니다. 기존 승인 범위는 재승인을 요구하지 않으며, 고장 주입·전압 변경·노출 확대 등 범위가 달라질 때만 필요한 판단을 추가한다.",
-  "limited_trial_decision": "analysis/game153-verification.json",
+  "limited_trial_decision": "analysis/game154-verification.json",
   "hardware_readiness_update120": {
     "scope": "Limited CPU/PPU-free normal80 diagnostic; not fullNES/game percentage",
     "counts": {
@@ -2454,5 +2454,11 @@
     "next": "Target actual matching-address PPU deadline; no same153 repeat",
     "hardware_verification": "analysis/game153-hardware-verification.json",
     "recovery_hardware_passed": true
+  },
+  "game154": {
+    "verification": "analysis/game154-verification.json",
+    "hardware_pending": true,
+    "ppu_cause_fixed": false,
+    "next": "twoTXT/menu, then targeted PPU address/request fix"
   }
 }

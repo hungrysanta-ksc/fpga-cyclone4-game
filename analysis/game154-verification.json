@@ -1,0 +1,223 @@
+{
+  "candidate": "NES-GAME-154",
+  "status": "PPU_FIRST_FAULT_STATE_READY_PHYSICAL_PENDING_CAUSE_OPEN",
+  "manifest_sha256": "67002e69816538e047a7be9368708b4fea6f0b7cde1b085468a471d69414de47",
+  "file_count": 2330,
+  "public_sources": {
+    "tools/nes_game154.py": "41e4d49328a6efcfc2dab44902d420d623ecf777c9d0509b4582253c642f58b8",
+    "tools/nes_game154_arm.py": "00460b30a0c26a153d0ca786cb00eb572e1b463428d1a68768c2234edcc4b72d",
+    "tools/check_nes_game154_arm.py": "d6f6c0593170240c9a44fef75278752b041d57d6b840290404831b6f64b32811",
+    "tools/assemble_nes_game154.py": "4e204e00c7af6bb7f5b20746b957ab03536c2d8e5fc2bfa3ed2061f5e7a6507e",
+    "tools/test_nes_game154_core.py": "b04cb4b4e4bb919afe7193dfb11583f131e47a939b1e941fcd351b75937d9b87",
+    "tools/test_nes_game154_observer.py": "46cae2aab20f2cb3fbc058d90546778a0d3065cb0f65ecf171971e8bc92e99f1",
+    "tools/test_nes_game154_decoder.py": "08cbb22e84fd5aeea295028c9cd6566e4eecf305ff85cb68051e5a48b7922acc",
+    "tools/test_nes_game154_recovery.py": "48691b0257a354bd9d6e3ce41594a5070f0647a7206bbd1891ada2b1008dca97",
+    "tools/decode_nes_game154.py": "a03c54c71c864ba212b039042169bb2a7107ab8eccb69cee900a99027f264b7f",
+    "tools/release_nes_game154.py": "1e18e2440fb4a68293242f86a603a4991ed3f878b88ec9b8fe7d6d3513bc2112",
+    "tools/verify_nes_game154.py": "376919bad31eb02f9408f06791f909687df48d668d8e8bc931e90cf245c3644e",
+    "tests/nes-functional/game154_observer_tb.sv": "922dc45e3318549861f5fda9284dea6b6c94380ee5ac6d20c29c0b7a9a15d101"
+  },
+  "selected": [
+    "asm",
+    "arm",
+    "armcheck",
+    "host",
+    "decoder",
+    "observer",
+    "release"
+  ],
+  "physical_test": false,
+  "sd_package": true,
+  "ppu_deadline_fixed": false,
+  "ids": [
+    "63",
+    "DD"
+  ],
+  "fit": {
+    "logic_elements": 13678,
+    "labs": 924,
+    "registers": 5054,
+    "m9k": 52,
+    "pll": 1,
+    "physical_pins": 122,
+    "virtual_pins": 0
+  },
+  "timing": {
+    "passed": true,
+    "same_clock_setup_ns": 0.084,
+    "same_clock_hold_ns": 0.173,
+    "snes_envelope_ns": 201.543,
+    "sample_ns": 270,
+    "psram_conditional_margin_ns": 3.256999999999999,
+    "pad_held_delay_ns": 6.595,
+    "negative_recovery": [
+      {
+        "corner": "8_slow_1200mv_85c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "4.242",
+        "slack": "-6.653"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "4.242",
+        "slack": "-6.653"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "3.903",
+        "slack": "-5.963"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "3.903",
+        "slack": "-5.963"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "1.978",
+        "slack": "-3.256"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "1.978",
+        "slack": "-3.256"
+      }
+    ],
+    "psram_address_margin_ns": 8.182999999999996,
+    "psram_active_margin_ns": 3.256999999999999,
+    "prior_unphased_margin_ns": 2.230999999999998,
+    "address_launch_cycles": 17,
+    "ce_oe_launch_cycles": 16,
+    "row_counts": [
+      108,
+      6552
+    ],
+    "pcb_allowance_ns": 2,
+    "mtbf_calculated": false,
+    "full_io_signoff": false,
+    "scope": "Conditional routed boundaries; existing unmeasured electrical and clock-halt limits remain open."
+  },
+  "host": {
+    "valid-aux": {
+      "passed": true,
+      "auxiliary_valid": true
+    },
+    "bad-aux": {
+      "passed": true,
+      "auxiliary_valid": false
+    },
+    "passed": true,
+    "actual_sources": {
+      "ff.c": "e3be7c9011fccba08f2a81879d999e9a711f5d502abc2919e245a8c1a8dac930",
+      "ccsbcs.c": "ce3caa7046c39ab35356c0a221df0a44535e4223c1c9ace328c92566891ea02f",
+      "nes_diag_runtime.c": "756aae44617b47e0dcb76f9cf2879a9eba4f35b3b477be6b53b2d1262cdebcbc",
+      "nes_menu_return.c": "0b398a26b5bc48bb993905e8d83fda35c8417e5674cd836315914e2865d9787f",
+      "nes_menu076.c": "24c267409f2843651a5176e7a5881a813c96bd133b70caaf4d488e8d53d64af2",
+      "nes_cf86_session094.c": "66869649865ad733fd8a5603e51f43686d3a128328627432f51ddb38a903c2f3",
+      "nes_cf86_session094.h": "de31c213a2a555f6de50349fc1c2110d473d06beb06956bb23da3d0b15395cad",
+      "nes_h1_stm32.c": "536a1f9b0a3c403311657fec890814d044d0b5193dbac5aba90124e6d426e212",
+      "nes_h1_session.c": "96e0c01c71f349f3c39e9d258128887c5caec6b39f6c6e0d624dae31818da488",
+      "nes_rom_spi.c": "f7fb845c71975b73d47969880c05a55d379a68aa89f6a6d32aa49761d9ae2cfb",
+      "nes_rom_verify.c": "9cc67a7ca7046d6b21e56dd1dae1a090c8c190f7c8b6eda5bfe64d019addb083",
+      "nes_menu_diagnostic.c": "9fb918ca83a549b9ff3db31e19380e5c69a1db0ff727770ab6017ef721206c49",
+      "nes_checkpoint112.c": "15bf14f4152c4980a43214765b6235b9fb9d368767d4fa25876569d076ea0c54",
+      "nes_run136.inc": "6ad63771b25d5cbc5a471f960a0d1ad6fd0dc1e40682f5e2fec3b86c12eab21b",
+      "nes_run136.h": "fdd34fd30112864c259f90db4791ef5c3e96e22cb3dcb08929f1160211efd12e"
+    },
+    "physical": false,
+    "scope": "Actual MCU/FatFS/menu with modeled SD/GPIO/SPI peer. New PPU state read after STOP; malformed auxiliary ID leaves validity0 and preserves recovery. Not transport clock failure or actual fault cause proof."
+  },
+  "decoder": {
+    "passed": true,
+    "valid": 960,
+    "invalid": 10,
+    "source_sha256": "6ad63771b25d5cbc5a471f960a0d1ad6fd0dc1e40682f5e2fec3b86c12eab21b",
+    "physical": false
+  },
+  "observer": {
+    "passed": true,
+    "observer_sha256": "4171ebac5e17f1f0fcb47c0abdace1af610550b771a3bb0a7f2830a30b7af031",
+    "test_sha256": "922dc45e3318549861f5fda9284dea6b6c94380ee5ac6d20c29c0b7a9a15d101",
+    "result": "PASS154 observer checks=41 exact-edge/split-pages/STOP/first-fault/reset",
+    "physical": false,
+    "scope": "Synthetic fault edge and PPU state, exact new SPI observer. Not actual153 root cause."
+  },
+  "arm": {
+    "firmware_bytes": 187124,
+    "firmware_sha256": "cb0091109fc9e65906264eeaf96da51e45ed4b8d1893c9842d4a0c60e992582b",
+    "elf_sha256": "8061c5d7bcf6b5eaa3a34f753caf79d1b6a639b4343620c0dede61bf3500c22c",
+    "nmi_address": "0x08019148",
+    "vector_word": "0x8019149",
+    "stop_stores": 15,
+    "stop_calls": 0,
+    "stop_dsb": 3,
+    "stop_isb": 2,
+    "transport_source_matches": true,
+    "strong_nmi": true,
+    "arm_execution": false,
+    "physical": false,
+    "installable": false
+  },
+  "package": {
+    "zip_sha256": "345449c995a1d4fb4ce228410ace8c6a3036fbaad228655609355341cc7a71c1",
+    "zip_bytes": 927791,
+    "members": 12,
+    "firmware_sha256": "cb0091109fc9e65906264eeaf96da51e45ed4b8d1893c9842d4a0c60e992582b",
+    "fpga_sha256": "4892f093eb0ec79536f0f21de9d00f63f3672859ae973f7379104ec73e8d60d3",
+    "normal_trial_ready": true,
+    "physical": false,
+    "ppu_deadline_fixed": false
+  },
+  "core_investigation": {
+    "passed": false,
+    "exit_code": 4294967295,
+    "physical_model": false,
+    "abstract_latency": 5,
+    "frames": 240,
+    "start_frame": 30,
+    "scope": "Actual core/mapper/game with two15frame Start presses60frames apart. Abstract backend unless physical flag. No SNES display or MCU. Not proof of physical root cause.",
+    "status": "intentionally_interrupted",
+    "last_completed_frame": 110,
+    "target_completed": false,
+    "root_cause_reproduced": false,
+    "license_failure": false,
+    "reason": "Bounded at110-frame progress; prioritize actual-game first-fault state instead of another long replay."
+  },
+  "limitations": [
+    "Physical153 PPU deadline cause not fixed",
+    "Auxiliary state is not request history",
+    "Synthetic injected host/observer states are not physical observations",
+    "Abstract5NESedge backend is not physical PSRAM/phase/SNES/MCU proof",
+    "Held30vblank/DMA input gaps/audio/emphasis/save remain open",
+    "External IO/MTBF incomplete"
+  ],
+  "publication_format_only": {
+    "tools/assemble_nes_game154.py": {
+      "executed_sha256": "e68a7c2f2c5055458e8fe8c105cad690cb767720995040803dd7b93d46760fe8",
+      "published_sha256": "4e204e00c7af6bb7f5b20746b957ab03536c2d8e5fc2bfa3ed2061f5e7a6507e",
+      "change": "Remove trailing empty CRLF line only; frozen executed bytes unchanged."
+    },
+    "tools/check_nes_game154_arm.py": {
+      "executed_sha256": "cd1d7f9d8cd15e0fcbc4b2140fde8a4b1f1cf08c78fdde4d5d15632842227626",
+      "published_sha256": "d6f6c0593170240c9a44fef75278752b041d57d6b840290404831b6f64b32811",
+      "change": "Remove trailing empty CRLF line only; frozen executed bytes unchanged."
+    }
+  }
+}
