@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재151: **늦은 쓰기 데이터로 인한 프레임 반환 누락을 모델에서 재현·수정하고 실제 마리오 재시험판 준비**. 게임 화면을 약0.5초 유지하며 실기 해결 여부는 확인 대기입니다. [151 결과](analysis/GAME151-RESULT.ko.md).
+현재151 실기: **SMB3 제목·캐릭터 표시와 메뉴 복귀 성공, PPU 읽기 오류로 조기 종료**. 정상 플레이·전체 버튼 입력은 미완료입니다. [151 실기 결과](analysis/GAME151-HARDWARE-RESULT.ko.md).
 
 **sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다.
 제품 이름의 **HST는 HungrySanTa = 제작팀 이름**을 뜻합니다.
@@ -24,7 +24,7 @@
 | 구성 | 현재 상태 | 소스·재현 |
 | --- | --- | --- |
 | GB/GBC | C44 실기 확인, 0.9.0 공개 완료 | [GBC 개발 안내](cores/gbc/README.md) |
-| NES | 151 쓰기 수신 수정·게임 재시험판 준비;실기 해결 확인 대기 | [NES 개발 안내](cores/nes/README.md) |
+| NES | 151 게임 제목·캐릭터 출력 성공;PPU 읽기 오류·전체 입력 미완료 | [NES 개발 안내](cores/nes/README.md) |
 | PC Engine | 조사 대기; HuCard 범위를 우선 검토 | [PCE 조사 범위](cores/pce/README.md) |
 
 현재 구현 대상은 **FXPAK Pro / Mk.III, STM32 + EP4CE15F17C8**입니다. 제품 이름이 바뀌어도 보드 지원 범위가 넓어지는 것은 아닙니다. NES/PCE의 동작 가능성·일정은 아직 확정하지 않았습니다.
