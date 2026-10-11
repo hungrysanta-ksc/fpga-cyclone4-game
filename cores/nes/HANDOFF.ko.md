@@ -1,3 +1,23 @@
+# NES 현재 인계 — 160 렌더링 재개 주소 예측 실기판
+
+[160 결과](../../analysis/GAME160-RESULT.ko.md) · [실기 안내](../../docs/nes-game160-instructions.ko.md) · [검증](../../analysis/game160-verification.json) · [159 실기](../../analysis/GAME159-HARDWARE-RESULT.ko.md)
+
+PR101 머지7f93ac599a958d9073eb571468cc7dd8d6459ed3 확인.159 월드맵 진입·방향키 이동은 실기 통과. 첫 레벨 A전환은26.240초 뒤 line193/dot336/217000 PPU오류2이며60초 제한이 아니다. CPU03F86E 응답 뒤 reader가 빈 구간에도 현재PPUvalid0이 힌트를 막았고 실제217000 요청은 샘플3클록 전이었다.
+
+160은 실제PPU2001 쓰기→re_sr 재개→ALE/하위래치 경계에서 같은 실패를 재현했다. 직전 ALE가 없는 짝수 패턴 읽기에 옛 하위래치가 남아 일반예측217078/70과 실제217000이 달라진다. re_sr[1]&&!re_sr[2]의 제한된 재개 구간만 보존된 하위래치와 다음상위주소를 한PPU주기 미리 예측하고 현재valid 조건을 우회한다. 가시줄/비스프라이트/지정패턴위상/빈PPUDATA pipeline으로 제한. 실제PPU주소·상태·매퍼/IRQ·서비스/reader/캐시/기한/클록·159raw CPU/DMA읽기 조건은 유지.159의 이전re_sr가 로그에 없어 실기원인 확정은 아니다.
+
+선택test05 실제PPU결선+70ns모델:dot334/336×래치00/5A×위상0/3.5/5.5ns=12수정PASS/12예측차단대조오류2.159회귀39PASS/39대조중18오류 유지. 실제8CE초기화 뒤 unknown거부. 초기PPU위치/name/scroll/latch와CPU출력버스는 설정한 값이므로 전체게임/CPU명령/전체DMA/모든PPUDATA겹침 검증은 아니다. test01잘못된신호명 elaboration실패,02구판재현/03단일수정 탐색,04초기pipelineX발견으로 최종근거제외.05만 선택하고 이전시도보존.
+
+fit01 명목setup-.170FAIL로배포제외. fit02 byte_count→miso_hold 및 loader state→loaded_bytes 두경로에 더엄격한5.3ns배치지침 추가. 추가예산+.076,정확155명목SDC setup+.207/hold+.138,조건부PSRAM+3.026/SNES199.984<270ns. 실제클록/falsepath/multicycle완화없음.13725LE/5005regs/122pins/virtual0/PLL1/56M9K. PCB2ns/reset release음수recovery/전체IO/MTBF한계 유지. test05와최종ASM RTLhash일치;배치만달라 기능반복불필요. ARM188604/NMI15stores0calls/host13회수256마스크. strict69/E3;APU채널차단156 유지.
+
+NEXT:160전체SD폴더 적용→NES GAME 160.nh1→첫Start→1PLAYER Start놓기→월드맵 첫레벨에서A→레벨내 이동·점프. 두160TXT·메뉴복귀·플레이되면짧은영상. 기존적재약3분50초는참고치;60초실행상한 내 월드맵에서지체하지않는다. 044/GBC/159/A-B/무변경전체부팅 반복하지않는다. 실패하면 최초오류·16클록이 재개모델과맞는지 우선비교;추측으로캐시/중재확대금지. 통과하면 실제조작·스크롤 우선후 임시이력RAM축소·음원복구. 오디오/속도/저장/첫레벨플레이 아직미완료.
+
+이전frozen자료·공개핀·ZIP불변,완료finish.py재실행금지. ROM/media/binaries/licenses/privatepaths Git금지. 한국어4PR절(목표/내용/결과/의미),개인hungrysanta-ksc만사용,사용자머지.
+
+---
+
+## 이전 작업 인계
+
 # NES 현재 인계 — 159 월드맵 진입·이동 통과, 첫 레벨 전환 미완료
 
 [159 실기 결과](../../analysis/GAME159-HARDWARE-RESULT.ko.md) · [해시·패드·16클록](../../analysis/game159-hardware-verification.json)
