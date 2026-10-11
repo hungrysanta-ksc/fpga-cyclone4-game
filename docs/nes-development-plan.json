@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-163",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "163 본체 사운드 초기화·상태 로그·기능검증·RAM내용만 갱신한 실기판 준비.162 플레이/복귀 성공 보존, 실제 소리는 미확인; 연속 화면/입력 유지 미완료.",
-  "next_action": "VERIFY_SOUND163_THEN_CONTINUOUS_VIDEO",
+  "assessment": "163 사용자 청취로 사운드 정상, 영상 첫 레벨 플레이 확인, ROM 오류0. 로그 STOP/base/menu준비 통과. 다음 연속 화면; DOWN 유지·장시간 실행 미완료.",
+  "next_action": "AFTER_PR105_MERGE_CONTINUOUS_VIDEO_THEN_LONG_PLAY_AND_HELD_INPUT",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2581,12 +2581,16 @@
   },
   "game163": {
     "verification": "analysis/game163-verification.json",
-    "hardware_pending": true,
-    "physical_audio": false,
+    "hardware_pending": false,
+    "physical_audio": true,
     "continuous_video": false,
     "held_input_fixed": false,
     "run_budget_seconds": 60,
     "reset_logging": false,
-    "next": "Actual163 sound/effects, first-level play, twoTXT and menu; A9 proves client FLG20 readback only. If silent, split by status before minimal source/DAC activity checks. Then continuous video, AV validated before unlimited run/reset logging, then held-input quality."
+    "next": "After PR105 merge, improve continuous video on actual SMB3 while retaining163 SPC initialization and working162 audio. Minimum changed-path checks then hardware. After AV quality, remove normal60s cap with fault/console-reset capture and safe logging, then assess sustained input. No repeated sound-only/044/GBC/unchanged full-load tests.",
+    "gameplay_passed": true,
+    "base_restored_and_menu_prepared": true,
+    "physical_menu_return_confirmed_this_session": false,
+    "hardware_verification": "analysis/game163-hardware-verification.json"
   }
 }

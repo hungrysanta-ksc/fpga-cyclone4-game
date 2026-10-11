@@ -24,7 +24,7 @@
     },
     {
       "id": "nes",
-      "status": "spc_audio_trial_ready_continuous_video_pending",
+      "status": "first_level_play_and_audio_passed_continuous_video_pending",
       "candidate": "NES-GAME-162",
       "planned_product_version": null,
       "released": false,
@@ -46,7 +46,7 @@
       "development_evidence": "analysis/game163-verification.json",
       "hardware_candidate": "NES-GAME-162",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "Actual163 sound/effects, first-level play, twoTXT and menu; A9 proves client FLG20 readback only. If silent, split by status before minimal source/DAC activity checks. Then continuous video, AV validated before unlimited run/reset logging, then held-input quality.",
+      "next_gate": "After PR105 merge, improve continuous video on actual SMB3 while retaining163 SPC initialization and working162 audio. Minimum changed-path checks then hardware. After AV quality, remove normal60s cap with fault/console-reset capture and safe logging, then assess sustained input. No repeated sound-only/044/GBC/unchanged full-load tests.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "162 MCU+FPGA strict6B/E5",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -219,7 +219,7 @@
       "game147": "analysis/game147-verification.json",
       "game148": "analysis/game148-verification.json",
       "game154_hardware": "analysis/game154-hardware-verification.json",
-      "hardware_evidence": "analysis/game162-hardware-verification.json",
+      "hardware_evidence": "analysis/game163-hardware-verification.json",
       "hardware_game156": {
         "verification": "analysis/game156-hardware-verification.json",
         "select_cursor_passed": true,
@@ -284,6 +284,15 @@
         "run_rom_error": 0,
         "display_interval_ms": 60660,
         "root_cause_confirmed": false
+      },
+      "hardware_game163": {
+        "verification": "analysis/game163-hardware-verification.json",
+        "level1_gameplay_session_passed": true,
+        "physical_audio_passed": true,
+        "base_restored_and_menu_prepared": true,
+        "physical_menu_return_confirmed_this_session": false,
+        "run_rom_error": 0,
+        "display_interval_ms": 60650
       }
     },
     {
