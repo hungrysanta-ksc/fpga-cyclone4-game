@@ -1,0 +1,1184 @@
+{
+  "candidate": "NES-GAME-162",
+  "status": "AUDIO_TRIAL_READY_CONTINUOUS_VIDEO_PENDING",
+  "manifest_sha256": "987bcd771e9ecb1d3074ac3981f3504cb656ec4a8b7354a22cec19c2f69a2fd6",
+  "file_count": 2253,
+  "public_sources": {
+    "tools/nes_game162.py": "0e7d309d369a6fe7392d8fa92ad226e332fbaae734b91ed3a8efb8e35805cb0f",
+    "tools/test_nes_game162_audio.py": "a7d2319612c55331c7772d1fd5929b947abefc2cfdd73f52c4e16fa242c71d97",
+    "tools/check_nes_game162_audio_timing.py": "c21c6a5b6590fcf94608a3c6558de797ee2524d6940acaae62bc35490d7461c9",
+    "tools/check_nes_game162_arm.py": "25ae89d9d081fbc470756eda91724215f46ffed69f56fbbcfcfcef8dde9abb80",
+    "tools/test_nes_game162_host.py": "8e3711637b435b2de904984ba55d6afb331a773b51cce3ca35443bebf60f2ed9",
+    "tools/assemble_nes_game162.py": "be6f03c81c32e55ad6b913d12c64853b65f07a876f08efee1ba341c1d011cdcb",
+    "tools/release_nes_game162.py": "514d033278016ac87a985f287ac9d8170f8f0a999b02747f8e7016177567c4db",
+    "tools/verify_nes_game162.py": "a60b87e465536ab7ef59039643fb1fd0fc92a3bdb2361c056899f55333d39c84",
+    "src/nes/diagnostics/nes_dac162.sv": "51257d720a3a00aedcad9b8eeab10e22015930208e2929250869a41396666064",
+    "tests/nes-functional/game162_audio_tb.sv": "a061b921ee2d2c713dad8ff32a27650b974ca5efd9b0b5329bb8ec783251a5c8",
+    "tests/nes-functional/game162_apu_tb.sv": "a5afaeda50fa8036558d27ee850469984a4aa10f13839fcffa44ae01981151e2",
+    "docs/nes-game162-instructions.ko.md": "6e847064caf6e7369cc4a34f09fdec37fab5f417074c0f5b57298b85f39f851c",
+    "analysis/GAME162-RESULT.ko.md": "69161f675449c45a83bb99ed30b2bb79253ea8be3697f57f1292c66ab4805f70"
+  },
+  "selected": {
+    "asm": "nes162-asm01",
+    "arm": "nes162-arm01",
+    "armcheck": "nes162-armcheck01",
+    "audio": "nes162-audio01",
+    "regression": "nes162-regression01",
+    "host": "nes162-host02",
+    "release": "release01"
+  },
+  "physical_audio": false,
+  "continuous_video": false,
+  "held_input_fixed": false,
+  "reset_logging": false,
+  "ids": [
+    "6B",
+    "E5"
+  ],
+  "fit": {
+    "logic_elements": 14711,
+    "registers": 5572,
+    "labs": 960,
+    "labs_total": 963,
+    "m9k": 56,
+    "m9k_total": 56,
+    "physical_pins": 122,
+    "virtual_pins": 0,
+    "pll": 1,
+    "memory_bits": 466864
+  },
+  "timing": {
+    "passed": true,
+    "same_clock_setup_ns": 0.121,
+    "same_clock_hold_ns": 0.177,
+    "snes_envelope_ns": 199.00300000000001,
+    "sample_ns": 270,
+    "psram_conditional_margin_ns": 2.341,
+    "pad_held_delay_ns": 6.549,
+    "negative_recovery": [],
+    "psram_address_margin_ns": 7.383999999999997,
+    "psram_active_margin_ns": 2.341,
+    "prior_unphased_margin_ns": 1.121999999999998,
+    "address_launch_cycles": 17,
+    "ce_oe_launch_cycles": 16,
+    "row_counts": [
+      108,
+      6840
+    ],
+    "pcb_allowance_ns": 2,
+    "mtbf_calculated": false,
+    "full_io_signoff": false,
+    "scope": "Conditional routed boundaries; existing unmeasured electrical and clock-halt limits remain open.",
+    "implementation_budget_setup_ns": 0.121,
+    "implementation_budget_passed": true,
+    "nominal_sdc_sha256": "59dbe2401cc57a7646271fc222b69cd0c27dfb0bfb0c9514641213c39b9cd1ac",
+    "routed_files_preserved": 306,
+    "new_fit": false,
+    "nominal_contract": "Exact155 clock SDC; no period/falsepath/multicycle change. Extra1565.5ns target is only placement guidance; its miss remains separate."
+  },
+  "audio_timing": {
+    "passed": true,
+    "mailbox_data_max_ns": 1.287,
+    "dac_output_max_ns": 5.22,
+    "rows": 57,
+    "data_pairs": 16,
+    "corners": 3,
+    "contract": "Two receiver synchronizer stages then capture; source holds until returned acknowledgment. Data bound one84MHz period. Pin propagation under one84MHz period; pin waveform matched to existing GBC serializer. Not complete analog DAC/PCB signoff.",
+    "mtbf_calculated": false,
+    "physical_audio": false
+  },
+  "audio": {
+    "passed": true,
+    "sources": {
+      "rtl/bus_savestates.vhd": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9",
+      "rtl/regs_savestates.sv": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95",
+      "rtl/apu.sv": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586",
+      "rtl/nes.v": "5f712e3430987efa12c9a3e0e5ad71392e1bf9e7a7d152dd965ddafb6c117c76",
+      "nes_dac162.sv": "51257d720a3a00aedcad9b8eeab10e22015930208e2929250869a41396666064",
+      "gbc_reference": "e5b896255aa37cb9b48448e8f1bec086e35f1f8d729372c8aa7873bf9050cb3b"
+    },
+    "results": {
+      "apu": "PASS162 APU all32 read/write OAM256+256 DMC17 pulsechanges=        165",
+      "audio84": "PASS162 AUDIO packets=38 transfers=38 pinchecks=78223",
+      "audio-phase": "PASS162 AUDIO packets=38 transfers=38 pinchecks=76012"
+    },
+    "physical": false,
+    "scope": "Actual APU/DMA modules, gate from prepared NES; DMC byte response modeled, not full game or PSRAM arbitration. Independent filter/CDC checks and unchanged GBC formatter pin comparison; no analog audio quality proof."
+  },
+  "regression": {
+    "passed": true,
+    "rom_sha256": "dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49",
+    "sources": {
+      "rtl/bus_savestates.vhd": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9",
+      "rtl/t65/T65_Pack.vhd": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb",
+      "rtl/t65/T65_ALU.vhd": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b",
+      "rtl/t65/T65_MCode.vhd": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5",
+      "rtl/t65/T65.vhd": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692",
+      "rtl/statemanager.vhd": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6",
+      "rtl/savestates.vhd": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0",
+      "rtl/regs_savestates.sv": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95",
+      "rtl/cheatcodes.sv": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918",
+      "rtl/ppu.sv": "9cf4c1138f22dfd6d0ef02b0c39a2cd63b417bd01427aae152ea1240e53c67b2",
+      "rtl/apu.sv": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586",
+      "rtl/nes.v": "5f712e3430987efa12c9a3e0e5ad71392e1bf9e7a7d152dd965ddafb6c117c76",
+      "rtl/composite_board.sv": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895",
+      "rtl/compat.v": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731",
+      "sys/iir_filter.v": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8",
+      "cart_nrom.sv": "e3f26834ea8f6272fd4d8310db3bd1dc44f609fafb2b4b68f90960f6ef742ee4",
+      "nes_probe.sv": "b21ac8f079ad486ecfaf6b68317e415c33cee6d647732937e2f69d98fdedd44d",
+      "nes_local_memory.sv": "09a5109f5ea187b740ffbceb865c505c485dee13e87ee1cb665de937046d6ec4",
+      "nes_rom_service.sv": "7f076fdc8734f957e788770bec031e35587d7f823a2713e471125bc7682f4539",
+      "nes_rom_physical.sv": "79e9d1b4e5cdc0d59e42cb2769080b5d71b4cbcb2849beb568e6a1a0d857c298",
+      "nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+      "game160_transition_tb.sv": "328bf8f309bb1136384b82bacaa6aaa9ce4c3e452f957e6b171d7fd6c119da02",
+      "game159_eligibility_tb.sv": "f6966189510d2492a36ae8810e80b0d2a9f0bd12aa1209c1eaecdc30d2ec7b9d"
+    },
+    "runs": [
+      {
+        "phase_ns": 0,
+        "dot": 334,
+        "latch": 0,
+        "control": 0,
+        "failed": 0,
+        "error": 0,
+        "checked": 2,
+        "log_sha256": "3dfd98ef6fad658c05fed10443674dec75d37a7fa847ba19054c64496ef50a90"
+      },
+      {
+        "phase_ns": 0,
+        "dot": 334,
+        "latch": 0,
+        "control": 1,
+        "failed": 1,
+        "error": 2,
+        "checked": 0,
+        "log_sha256": "ca1b11af5134ca1e09bc235e58147ca00de204c50f14cf4a27e4d5f71e2e7c34"
+      },
+      {
+        "phase_ns": 0,
+        "dot": 334,
+        "latch": 90,
+        "control": 0,
+        "failed": 0,
+        "error": 0,
+        "checked": 2,
+        "log_sha256": "71c16b1b901442c3c76e1556d7fa6b2b3c944e6ac1736c83fa219e4dabf0a1b8"
+      },
+      {
+        "phase_ns": 0,
+        "dot": 334,
+        "latch": 90,
+        "control": 1,
+        "failed": 1,
+        "error": 2,
+        "checked": 0,
+        "log_sha256": "ceb7391266f36c1c4af2b1f14003d6386f007b3d13e60e8d2d9f61cb06c036dc"
+      },
+      {
+        "phase_ns": 0,
+        "dot": 336,
+        "latch": 0,
+        "control": 0,
+        "failed": 0,
+        "error": 0,
+        "checked": 1,
+        "log_sha256": "1fcadf26c7758ade8813c5c55e42750d926220daa636af5d1d057762b8e6b501"
+      },
+      {
+        "phase_ns": 0,
+        "dot": 336,
+        "latch": 0,
+        "control": 1,
+        "failed": 1,
+        "error": 2,
+        "checked": 0,
+        "log_sha256": "ca72221df37b5ab83c48ea13c29fc322e13bf3c8177a59d6cc9156f5c07b5c8f"
+      },
+      {
+        "phase_ns": 0,
+        "dot": 336,
+        "latch": 90,
+        "control": 0,
+        "failed": 0,
+        "error": 0,
+        "checked": 1,
+        "log_sha256": "fdeb005a3647f9618793a742321a9eba2c31708354458835ab82d4fa7ff99ae1"
+      },
+      {
+        "phase_ns": 0,
+        "dot": 336,
+        "latch": 90,
+        "control": 1,
+        "failed": 1,
+        "error": 2,
+        "checked": 0,
+        "log_sha256": "d3fe3ef9dca9cc509ed97147977d0bedd006e766ba11a094a8d410e024e16de9"
+      },
+      {
+        "phase_ns": 3.5,
+        "dot": 334,
+        "latch": 0,
+        "control": 0,
+        "failed": 0,
+        "error": 0,
+        "checked": 2,
+        "log_sha256": "46d545b4df77a78354c49d30995ab9283c171b290253bf99f332aab91e5c6bc4"
+      },
+      {
+        "phase_ns": 3.5,
+        "dot": 334,
+        "latch": 0,
+        "control": 1,
+        "failed": 1,
+        "error": 2,
+        "checked": 0,
+        "log_sha256": "1d85667b93e169c0264d824da50b401377cb8ca7f2641017ca64d5877ed6600c"
+      },
+      {
+        "phase_ns": 3.5,
+        "dot": 334,
+        "latch": 90,
+        "control": 0,
+        "failed": 0,
+        "error": 0,
+        "checked": 2,
+        "log_sha256": "0dc4b5641ea245f39c460ac818cff7c19dbda77bbed2d12231d32a37195730a2"
+      },
+      {
+        "phase_ns": 3.5,
+        "dot": 334,
+        "latch": 90,
+        "control": 1,
+        "failed": 1,
+        "error": 2,
+        "checked": 0,
+        "log_sha256": "22e7ff85ecd20e983614a2c066be87278fe8e1e79472e5d440c8acdf62701682"
+      },
+      {
+        "phase_ns": 3.5,
+        "dot": 336,
+        "latch": 0,
+        "control": 0,
+        "failed": 0,
+        "error": 0,
+        "checked": 1,
+        "log_sha256": "15776abe475a776ac632792759ef6b5eb6ebf6296460c30248e85d96ccdf03f1"
+      },
+      {
+        "phase_ns": 3.5,
+        "dot": 336,
+        "latch": 0,
+        "control": 1,
+        "failed": 1,
+        "error": 2,
+        "checked": 0,
+        "log_sha256": "d1fb7ba071f02ecacac1e1f032910c201ce167da9ba80da37eb26628fa37cfe7"
+      },
+      {
+        "phase_ns": 3.5,
+        "dot": 336,
+        "latch": 90,
+        "control": 0,
+        "failed": 0,
+        "error": 0,
+        "checked": 1,
+        "log_sha256": "98b7c5ecd1ba04c586e88cec141aa01769e6e68c3eb1df1d4b6cb1351b1384a0"
+      },
+      {
+        "phase_ns": 3.5,
+        "dot": 336,
+        "latch": 90,
+        "control": 1,
+        "failed": 1,
+        "error": 2,
+        "checked": 0,
+        "log_sha256": "64b668ceaa705308f5057c67483225de4f37f5f2d7f1fe08896dad63b5d58160"
+      },
+      {
+        "phase_ns": 5.5,
+        "dot": 334,
+        "latch": 0,
+        "control": 0,
+        "failed": 0,
+        "error": 0,
+        "checked": 2,
+        "log_sha256": "bf8fd03ab86612f2a1269a7bcdc488ff6824b04b799e227f830fc5c0fe92d9a0"
+      },
+      {
+        "phase_ns": 5.5,
+        "dot": 334,
+        "latch": 0,
+        "control": 1,
+        "failed": 1,
+        "error": 2,
+        "checked": 0,
+        "log_sha256": "b53a4d754a57c54556228437c5413066e00979d62966fac97cbe7d338f7393a0"
+      },
+      {
+        "phase_ns": 5.5,
+        "dot": 334,
+        "latch": 90,
+        "control": 0,
+        "failed": 0,
+        "error": 0,
+        "checked": 2,
+        "log_sha256": "92a40b8a4c7b062c13e51f5c701c4d0567c8cbb8e4c1ded587c3bacd2c04b7c1"
+      },
+      {
+        "phase_ns": 5.5,
+        "dot": 334,
+        "latch": 90,
+        "control": 1,
+        "failed": 1,
+        "error": 2,
+        "checked": 0,
+        "log_sha256": "86110d1146591341fa8602e5f0f2d60a37b5f380cd0de2b4d29754608ad48f21"
+      },
+      {
+        "phase_ns": 5.5,
+        "dot": 336,
+        "latch": 0,
+        "control": 0,
+        "failed": 0,
+        "error": 0,
+        "checked": 1,
+        "log_sha256": "ce15aeb404664d5f4bf6abb918bfce47ef7b3883ad3bbe1f9f7cff01f98a01ce"
+      },
+      {
+        "phase_ns": 5.5,
+        "dot": 336,
+        "latch": 0,
+        "control": 1,
+        "failed": 1,
+        "error": 2,
+        "checked": 0,
+        "log_sha256": "4024907322dc04f7ddd4b2e265c9f80b373f0d0365377640bdd1b2e38374b6aa"
+      },
+      {
+        "phase_ns": 5.5,
+        "dot": 336,
+        "latch": 90,
+        "control": 0,
+        "failed": 0,
+        "error": 0,
+        "checked": 1,
+        "log_sha256": "bcfbd897bfe05d2ba61da625dda253eee0a14da9ae2e4898d481cec8d0534881"
+      },
+      {
+        "phase_ns": 5.5,
+        "dot": 336,
+        "latch": 90,
+        "control": 1,
+        "failed": 1,
+        "error": 2,
+        "checked": 0,
+        "log_sha256": "1a27905c2f39924b4fd7c77211075d9dc68496321828f85df328d94c59c1f5bb"
+      }
+    ],
+    "regression159": [
+      {
+        "phase_ns": 0,
+        "control": 0,
+        "rows": [
+          [
+            -1,
+            0,
+            0,
+            0,
+            2,
+            5,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            3,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            0,
+            2,
+            3,
+            0
+          ],
+          [
+            3,
+            0,
+            0,
+            0,
+            2,
+            3,
+            0
+          ],
+          [
+            4,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            5,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            6,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            7,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            8,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            9,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            10,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            11,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ]
+        ],
+        "log_sha256": "7b72375a641cbe6a21116b031d783ef4d8faa90631a67c74181b04b78eccb312"
+      },
+      {
+        "phase_ns": 0,
+        "control": 1,
+        "rows": [
+          [
+            -1,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            0,
+            4,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            0,
+            4,
+            1
+          ],
+          [
+            2,
+            1,
+            0,
+            0,
+            2,
+            4,
+            1
+          ],
+          [
+            3,
+            1,
+            0,
+            0,
+            2,
+            4,
+            1
+          ],
+          [
+            4,
+            1,
+            0,
+            0,
+            2,
+            4,
+            1
+          ],
+          [
+            5,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            6,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            7,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            8,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            9,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            10,
+            1,
+            0,
+            0,
+            2,
+            4,
+            1
+          ],
+          [
+            11,
+            1,
+            0,
+            0,
+            2,
+            4,
+            1
+          ]
+        ],
+        "log_sha256": "777f701366f006e001f020eeefdd0dfad339494f8bd8424abe9b398a6167cb1f"
+      },
+      {
+        "phase_ns": 3.5,
+        "control": 0,
+        "rows": [
+          [
+            -1,
+            0,
+            0,
+            0,
+            2,
+            5,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            3,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            0,
+            2,
+            3,
+            0
+          ],
+          [
+            3,
+            0,
+            0,
+            0,
+            2,
+            3,
+            0
+          ],
+          [
+            4,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            5,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            6,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            7,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            8,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            9,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            10,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            11,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ]
+        ],
+        "log_sha256": "b560c2e1ce8588a9087435dae4d963d5a32f27cbea04840086eb262446e1d86a"
+      },
+      {
+        "phase_ns": 3.5,
+        "control": 1,
+        "rows": [
+          [
+            -1,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            0,
+            4,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            0,
+            4,
+            1
+          ],
+          [
+            2,
+            1,
+            0,
+            0,
+            2,
+            4,
+            1
+          ],
+          [
+            3,
+            1,
+            0,
+            0,
+            2,
+            4,
+            1
+          ],
+          [
+            4,
+            1,
+            0,
+            0,
+            2,
+            4,
+            1
+          ],
+          [
+            5,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            6,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            7,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            8,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            9,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            10,
+            1,
+            0,
+            0,
+            2,
+            4,
+            1
+          ],
+          [
+            11,
+            1,
+            0,
+            0,
+            2,
+            4,
+            1
+          ]
+        ],
+        "log_sha256": "3cdde2f9a57b524395983671f973c12116585dafa076bede8b37dead654209e3"
+      },
+      {
+        "phase_ns": 5.5,
+        "control": 0,
+        "rows": [
+          [
+            -1,
+            0,
+            0,
+            0,
+            2,
+            5,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            3,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            0,
+            2,
+            3,
+            0
+          ],
+          [
+            3,
+            0,
+            0,
+            0,
+            2,
+            3,
+            0
+          ],
+          [
+            4,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            5,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            6,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            7,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            8,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            9,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            10,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ],
+          [
+            11,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0
+          ]
+        ],
+        "log_sha256": "7e42c1cbf0f35ee105410dd43413013179af9cd2124c53f52df944bd75e35fd4"
+      },
+      {
+        "phase_ns": 5.5,
+        "control": 1,
+        "rows": [
+          [
+            -1,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            0,
+            4,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            0,
+            4,
+            1
+          ],
+          [
+            2,
+            1,
+            0,
+            0,
+            2,
+            4,
+            1
+          ],
+          [
+            3,
+            1,
+            0,
+            0,
+            2,
+            4,
+            1
+          ],
+          [
+            4,
+            1,
+            0,
+            0,
+            2,
+            4,
+            1
+          ],
+          [
+            5,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            6,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            7,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            8,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            9,
+            1,
+            1,
+            2,
+            1,
+            4,
+            1
+          ],
+          [
+            10,
+            1,
+            0,
+            0,
+            2,
+            4,
+            1
+          ],
+          [
+            11,
+            1,
+            0,
+            0,
+            2,
+            4,
+            1
+          ]
+        ],
+        "log_sha256": "f8c39c6079ca48bd58d7591ab07f3da5873955083b40938575dcc4b316fa98d3"
+      }
+    ],
+    "regression159_original_sha256": "e75472a43b394267080c6a5c8dad5c1b1b7ab00d077c3139f867a0f1966aea53",
+    "physical": false,
+    "scope": "Actual2001 register write/re_sr enable/ALE/latch/PPU/service/READ16 paths. Dot/scanline/name/scroll/CPU output bus driven and previous low latch seeded; not full instruction/game replay. Two target dots/two old latch values/three memory phases, paired preview-off controls. Original159 regression gets only new unused wire declaration; its constant enabled-render stimulus never asserts restart."
+  },
+  "host": {
+    "passed": true,
+    "recovery_cases": 13,
+    "formatter_masks": 256,
+    "source_sha256": "9edd1a9ed35ef3829e16e09acf7768cfce523a9dcc80beccfbd2e461dd83c59a",
+    "format_source_sha256": "fc2dd42cdb1652664cffa7bb431cade1e2b5f1b15fb8c7e019593f0bb57775d7",
+    "physical": false,
+    "scope": "Actual RUN/STOP/decoder/formatter; synthetic SPI, not full FatFS or board execution."
+  },
+  "armcheck": {
+    "firmware_bytes": 188604,
+    "firmware_sha256": "ba04b98b25f6e2ae71a6da14bd820a7056ac8b6f5c2758b5caef87ebc4ab3ffe",
+    "elf_sha256": "4db4c20fb114a0b653884b97f38d5c34873671bb54e3a74cb7e1442eb6a6d669",
+    "nmi_address": "0x08019148",
+    "vector_word": "0x8019149",
+    "stop_stores": 15,
+    "stop_calls": 0,
+    "stop_dsb": 3,
+    "stop_isb": 2,
+    "transport_source_matches": true,
+    "strong_nmi": true,
+    "arm_execution": false,
+    "physical": false,
+    "installable": false
+  },
+  "package": {
+    "zip_sha256": "33e61414c64ec8d02fdb1984db7c94a120229ca5e4953d219354041d7dd886e8",
+    "zip_bytes": 943096,
+    "members": 12,
+    "firmware_sha256": "ba04b98b25f6e2ae71a6da14bd820a7056ac8b6f5c2758b5caef87ebc4ab3ffe",
+    "fpga_sha256": "ee7aa8d6291054343f033622fb1b1c54b9c9d66b21185d113b188ad856de487c",
+    "normal_trial_ready": true,
+    "physical_audio": false,
+    "reused161_sources": {
+      "game-program.hex": "8d0feae00f8302e23ecd9ac90a16237fb8ed05f2044c5d55590147428b026966",
+      "nes_game_frame150.sv": "acb8eff9c17143f69dd3c49c83c667e893025554b98aee8f45e89b8d8fc65174",
+      "nes_game_bus151.sv": "82f6c9ce7cb491b6decbb3d82d7125a2bb301436782039b42ba41d14261d274a",
+      "nes_game_pad150.sv": "68a7fc00658bc4256bd83e318814c6add9d6d1d49d2c631743c1eb9839eb5640",
+      "nes_rom_service.sv": "7f076fdc8734f957e788770bec031e35587d7f823a2713e471125bc7682f4539",
+      "nes_rom_physical.sv": "79e9d1b4e5cdc0d59e42cb2769080b5d71b4cbcb2849beb568e6a1a0d857c298",
+      "nes_live_joint.sv": "eedff46523a05501fc5ae0aef7d990995e4482ade5663cd4ff9f64d190ce4199",
+      "nes_probe.sv": "b21ac8f079ad486ecfaf6b68317e415c33cee6d647732937e2f69d98fdedd44d",
+      "rtl/ppu.sv": "9cf4c1138f22dfd6d0ef02b0c39a2cd63b417bd01427aae152ea1240e53c67b2",
+      "cart_nrom.sv": "e3f26834ea8f6272fd4d8310db3bd1dc44f609fafb2b4b68f90960f6ef742ee4",
+      "board.sdc": "ca2e86fdf7559dc8aeddf55562f17c398a698c058f21f79d984c0c3d782b83e7"
+    }
+  },
+  "limits": [
+    "Actual APU/DMA tested; modeled DMC data, not full game or analog quality",
+    "Same161 video: full57344 forced-blank DMA and hold6; no continuous-video claim",
+    "No fixed audio/video delay compensation yet",
+    "Frame/pad/ROM service/PPU/mapper/reader preserved exactly",
+    "56/56M9K and960/963LAB; trim temporary observation if video needs resources",
+    "FullIO/MTBF/PCB2ns/reset-recovery still conditional",
+    "Normal60s budget retained until sound/video validation; no reset-triggered final log yet"
+  ]
+}

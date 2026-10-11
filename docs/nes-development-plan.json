@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-11",
-  "technical_candidate": "NES-GAME-161",
+  "technical_candidate": "NES-GAME-162",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "161 실기 첫 레벨 진입·플레이·약60초 실행·메뉴 복귀 통과, ROM 오류0. DOWN 유지 중 해제 현상은 미해결. 전체 호환성·속도·오디오 완료 아님.",
-  "next_action": "AFTER_PR103_MERGE_INVESTIGATE_HELD_INPUT",
+  "assessment": "162 사운드 경로 구현·기능·배치 통과, 실제 음원은 미확인.161 첫 레벨 성공 보존; 연속 화면과 지속 입력은 미완료.",
+  "next_action": "VERIFY_SOUND162_THEN_IMPLEMENT_CONTINUOUS_VIDEO",
   "next_three_deliverables": [
-    "지속 누름 원본 패드 스냅샷부터 NES 소비까지 변경 경계 확인",
-    "확인된 원인만 최소 수정·회귀 검증",
-    "SMB3 실기 첫 레벨에서 앉기 유지·이동·점프·대시 확인"
+    "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
+    "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
+    "장시간 실기 조작·입력 유지 및 동시 입력 확인"
   ],
   "gates": [
     {
@@ -2544,10 +2544,35 @@
     "hold_vblanks": 6,
     "continuous_display_complete": false,
     "device_m9k_used": 56,
-    "next": "After user merges PR103, investigate intermittent released states during a held DOWN: source autojoy snapshot/host commit, CDC/current_buttons, NES strobe/read/serial completion. Preserve161 cache fix and finite recovery. Existing152 per-hold-vblank polling already present; do not repeat it or blame display gaps alone. No firmware change in this result-only turn.",
+    "next": "사용자 우선순위 변경: 사운드 출력과 끊기지 않는 화면을 먼저 실제 SMB3로 확인한다. 이어60초 자동 종료를 해제하고 오류/본체 리셋 시 상태 보존·안전 정지·TXT 저장·메뉴 복귀를 구현한다. 이 환경에서 장시간 조작·입력 유지를 평가한다. DOWN/NONE 문제는 미해결로 유지하되 입력 단독 진단을 선행 목표로 삼지 않는다.",
     "gameplay_scope": "one bounded session with first-level entry/play; not full compatibility",
     "full_gameplay_compatibility_passed": false,
     "continuous_held_input_passed": false,
     "hardware_verification": "analysis/game161-hardware-verification.json"
+  },
+  "user_priority_after161": {
+    "status": "planned_not_implemented",
+    "source": "user instruction after PR103 merge",
+    "order": [
+      "sound_and_continuous_video",
+      "extended_play_with_fault_and_console_reset_logging",
+      "sustained_input_quality_in_real_game"
+    ],
+    "normal_play_time_cap_target": null,
+    "keep_health_timeouts": true,
+    "write_final_log_after_safe_stop": true,
+    "reset_log_supported_now": false,
+    "power_loss_final_log_guaranteed": false,
+    "held_down_issue_resolved": false
+  },
+  "game162": {
+    "verification": "analysis/game162-verification.json",
+    "hardware_pending": true,
+    "physical_audio": false,
+    "continuous_video": false,
+    "held_input_fixed": false,
+    "run_budget_seconds": 60,
+    "reset_logging": false,
+    "next": "Actual162 sound/effects and first-level play/logs/menu, then continuous-video implementation. After AV validation, remove60s cap with fault/reset final logging, then long-session input quality."
   }
 }
