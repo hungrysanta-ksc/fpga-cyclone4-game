@@ -1,3 +1,41 @@
+# NES 현재 인계 — 159 월드맵 진입·이동 통과, 첫 레벨 전환 미완료
+
+[159 실기 결과](../../analysis/GAME159-HARDWARE-RESULT.ko.md) · [해시·패드·16클록](../../analysis/game159-hardware-verification.json)
+
+사용자 및 영상: Start로월드맵진입/방향키이동성공. A첫레벨진입의화면축소뒤오류종료/메뉴복귀. 실제레벨플레이미통과. 31.90s영상1fps전체/23~26s4fps표본,음성/모든프레임미분석. 60초제한이아님:run_first_error1/run_rom_error2,DISPLAY232680→258920=26.240s,menu262110. 펌웨어구간/영상/CPU관측카운터/FPS구분. full393216loadcompare/verified1/104records/68E2/STOPcounter75239400유지/stoperror0/baseTXT메뉴PASS. Pad33중last16,방향/SELECT/START/A+release,처음17덮어씀,마지막A/NONE. 물리클릭시각/전체입력완료아님.
+
+다른오류:158line193dot8/217A18→159line193dot336/217000. context e70142e0:00217000 CPUvalid1/PPUvalid0/age2/busyPPU1. CPU03F86E요청-11/응답-6;reader-5/-4비었음;현재217B00→217000변경및즉시요청-3;sample0까지응답없음. 따라서CPU점유만탓하거나시간연장부터하지않는다.
+
+중요: historyhint_valid는rawPPU힌트가아닌 nes_live_joint의 rawhint&&(rom_ppu_valid||local3A0000..3A07FF) 결과다. 마지막16클록모두0;현재CHR217B00invalid로결합조건차단됨. rawhint존재자체는미관측. 힌트비트217078→217070은actual217000과다름. faultsnapshotrender1/sprite0/ALE0/read2007write2007pipeline0/vram0078/latch00이지만이전pipeline/render/ALE전이는알수없음. 레벨전환렌더재개/PPUDATA/ALE외부하위래치와earlyaddress를우선비교. 원인확정아님.
+
+NEXT 실제PPU/latch/service로dot333~336·빈reader·무효217078hint·새217000요청3클록전경계를짧게재현. 159rawread조건과정상CPU/DMA/PPU기한유지,안전한주소/유효시점을검토하고최소수정후같은SMB3첫레벨/A이동점프실기. 힌트단순무조건허용/전역PPU우선/샘플기한해제/무근거캐시확대금지. 부족한관측만필요시추가. 이번은PR101결과기록만,새펌웨어없음. 같은159재시험·044/GBC복원·A/B·전체부팅반복불필요. 임시M9K56/56이력축소는원인해결뒤. APU차단유지/오디오속도저장미완료.
+
+frozen159/완료finalizer/ZIP/publicpins불변;제작당시메타physicalfalse는동결시점이고현재결과는GAME159-HARDWARE가우선. 사용자머지후다음구현. 한국어PR4절/개인hungrysanta-ksc.
+
+---
+
+## 이전 제작 기록
+
+# NES 현재 인계 — 159 매퍼 쓰기 중 ROM 읽기 차단 실기판
+
+[159 결과](../../analysis/GAME159-RESULT.ko.md) · [실기 안내](../../docs/nes-game159-instructions.ko.md) · [검증](../../analysis/game159-verification.json) · [158 실기 이력](../../analysis/GAME158-HARDWARE-RESULT.ko.md)
+
+PR100 머지3ef0a0714fd803bdfdfeb0c7208b4f8a84a127c5 확인.158은 새 CHR주소를 일찍 예측했지만 낮은 비트면 응답 뒤CPU03C001→옛205A18→새217A18 순서로 늦어 오류2.159는 실제raw쓰기 중 cart_pre 이전에 prg_allow가1인 구간의 불필요한 조기CPU읽기를 차단한다. rom_cpu_address_valid에 mr_int 하나 추가. 현재MMC3 prg_conflict0이며 다른매퍼 버스충돌까지 검증한 것은 아니다. pendingMMC3hint/actualmapper/IRQ/PPU/service/reader/cache/clock/consumer/pad/fault 모두158동일. 나머지FPGA/ARM은159/68/E2식별만. APU채널 쓰기 차단156 유지.
+
+선택test04: CPU/DMA출력버스·분주위상·PPU위치를 구동하되 rawmux/쓰기/allow/earlyvalid/read/sample 결선은 실제것.12쓰기위상+초기ready/캐시를 설정한158관측경계 ×3메모리위상=39수정통과, 대조39모두불필요읽기1회/18오류2.각실행48자격조건+CPU6/DMA6정상샘플,6실행. 실제CPU명령/전체DMA재생이 아니다. 관측경계19CPU03C001→24옛205A18→29새217A18→31오류가,수정판19새217A18→24응답보관→26새주소유효→31정상으로 바뀐다.158실기rawR/W미관측이므로 물리원인 확정 아님. 오래된낮은캐시/초기busy형성은 기록창이전미확정.
+
+test01은 reset동안분주1고정으로cpu_ce를막은시험대watchdog;test02기본위상PASS/test03초기경계추가PASS지만CPU000001;test04 PRGbank6=1E로03C001및뒤의정상읽기까지맞춤. 예전시도 보존,최종통계와혼합금지. host01 13회수/256format, reuse01식한곳+ID정확비교, ARM188604NMI15stores0calls. 기존FLOAT사용,새라이선스불필요.
+
+fit01/asm01 LE13670/5005regs/56M9K/122pins/virtual0/PLL1. 추가5.5ns배치예산-.036FAIL. 같은배치·정확155명목SDC로setup+.095/hold+.160,조건부PSRAM+3.035/SNES202.2<270ns통과. SDC59dbe240...기존과같고실제클록/falsepath/multicycle변경없음. 추가예산실패와명목통과둘다기록. 재배치불필요. PCB2ns/비동기reset recovery음수/전체IO/MTBF한계유지. M9K56/56임시이력축소는원인해결뒤.
+
+NEXT:159전체SD폴더 적용→NES GAME 159.nh1→첫Start→1PLAYER Start한번떼기→진행되면방향키/A/B. 두159TXT와메뉴복귀결과. 플레이되면짧은영상,같은실패영상불필요. 기존적재약3분50초참고/실행약60초상한/오류조기종료,전체7분무반응이면중단기록.044/GBC복원·158재시험·A/B·무변경전체부팅을선행조건으로반복하지않는다. 실패하면실제요청순서와최초오류를비교하고정당한CPU읽기와충돌하는지먼저확인,관측없는캐시/중재확대금지. 진행되면조작/스크롤후음원차단해제.
+
+실기성공·정상오디오·속도·저장미완료. frozen159와이전공개핀/ZIP불변,완료finish.py재실행금지. ROM/media/binary/privatepaths/licenses Git금지. 한국어4PR절/개인hungrysanta-ksc/사용자머지. 포팅참고가이드는158에서기록한고정upstream/기존검증재사용원칙유지.
+
+---
+
+## 이전 작업 인계
+
 # NES 현재 인계 — 158 예측 이후 읽기 발행 지연 확인
 
 [158 실기 결과](../../analysis/GAME158-HARDWARE-RESULT.ko.md) · [해시·16클록 해석](../../analysis/game158-hardware-verification.json)
