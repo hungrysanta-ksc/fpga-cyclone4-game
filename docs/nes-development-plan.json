@@ -5,12 +5,12 @@
   "technical_candidate": "NES-GAME-153",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "실제 SMB3 화면151 통과 후 PPU 읽기 오류 조사 중.152는WORLD1에서정지·최종TXT/메뉴실패.153의새PPU표식수신수정과실제MCU/FatFS/메뉴모델검증완료,실기확인대기. PPU원인은미해결.",
-  "next_action": "RUN153_ACTUAL_SMB3_RECOVER_TYPED_PPU_CONTEXT_AND_MENU",
+  "assessment": "153 실기에서 새PPU오류문맥/TXT/STOP/기본FPGA/자동메뉴복귀 통과. 실제요구=처리중0x217a10,age1인데샘플시응답/유효데이터없음. PPU읽기기한 원인과 정상플레이는미해결. 이번Start중복없음,다른버튼미확인.",
+  "next_action": "NARROW_ACTUAL_GAME_PPU_REQUEST_RESPONSE_DEADLINE_217A10",
   "next_three_deliverables": [
-    "153 실제 SMB3 실행에서 오류 문맥 TXT와 자동 메뉴 복귀 확인",
-    "실제 PPU 요구·처리 중 주소를 대조하여 읽기 기한 오류를 좁히고 변경 경계만 수정·검증",
-    "같은 SMB3의 월드맵→스테이지→이동·점프를 실기 확인한 뒤 표시 속도·입력 공백 개선"
+    "실제 SMB3 Start 이후0x217A10 주변 요청 발행·응답·PPU 샘플 순서를 좁히기",
+    "확인된 선행 읽기·캐시·중재 또는 응답 전달의 첫 실패 경계를 수정하고 최소 검증",
+    "같은 게임으로 스테이지 진입·이동·점프를 실기 확인"
   ],
   "gates": [
     {
@@ -41,15 +41,15 @@
     },
     {
       "id": "R4",
-      "status": "partial_153_fault_recovery_model_pass_hardware_pending",
+      "status": "partial_153_fault_recovery_hardware_pass_game_deadline_open",
       "title": "Real producer/memory/consumer and lifecycle integration",
       "depends_on": [
         "R1",
         "R2"
       ],
       "exit": "Load/RUN/video/input/audio/menu/reset through actual interfaces, bounded queues and latency, explicit approved display policy; GBC regression",
-      "evidence": "analysis/GAME153-RESULT.ko.md",
-      "remaining": "151 화면·메뉴 실기 성공 후152 복귀 회귀를153에서 수정했다. 새 오류 문맥/메뉴의 실기 확인, PPU 정지 원인 수정과 정상 플레이가 남았다."
+      "evidence": "analysis/GAME153-HARDWARE-RESULT.ko.md",
+      "remaining": "오류 회수·메뉴 복귀는153 실기 통과. PPU 읽기 기한 원인 수정, 정상 스테이지 플레이와 다른 버튼 확인이 남았다."
     },
     {
       "id": "R5",
@@ -2448,9 +2448,11 @@
   "screen144": "analysis/screen144-verification.json",
   "game153": {
     "verification": "analysis/game153-verification.json",
-    "hardware_pending": true,
+    "hardware_pending": false,
     "ppu_cause_fixed": false,
     "fpga_reused152": true,
-    "next": "twoTXT/video/menu, then actual vs pending PPU request diagnosis"
+    "next": "Target actual matching-address PPU deadline; no same153 repeat",
+    "hardware_verification": "analysis/game153-hardware-verification.json",
+    "recovery_hardware_passed": true
   }
 }
