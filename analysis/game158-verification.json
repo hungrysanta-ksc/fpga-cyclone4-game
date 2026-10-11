@@ -1,0 +1,2026 @@
+{
+  "candidate": "NES-GAME-158",
+  "status": "PENDING_MMC3_WRITE_PREVIEW_READY_PHYSICAL_PENDING",
+  "manifest_sha256": "3951f3dd1a2a8bb9c5db74ebbb976c7615aa13371825f896ab0e7dd8b8772826",
+  "file_count": 2243,
+  "public_sources": {
+    "tools/nes_game158.py": "5c09eb1d276f06d391e1065d7810d1a9f0eb279fd60b6995ff83706e0f42d86e",
+    "tools/check_nes_game158_arm.py": "408a620dd1ea01ed2666b3ca35f71ef983f94a475e806a130bb0fef1164baca8",
+    "tools/assemble_nes_game158.py": "274b52daa712597f5d6aa2175b3701f51a219fed847b02effe813c66ef87a111",
+    "tools/test_nes_game158.py": "c23286c76b43eff26e241b7fa589ee5695964c1cbb9dc330c8d7d5333396146d",
+    "tools/test_nes_game158_host.py": "51403ec22f6f26eb1fd58c0d3b7e294e8b908aa14a89eac9cc8ceb38b9686c0e",
+    "tools/check_nes_game158_reuse.py": "f9c62eb183e0917b56802a9cd16c9f15731f9315fbd8e5977d5b14cd5b610bdf",
+    "tools/decode_nes_game158.py": "a8829e87a4d3353c9b67f6ad98794bc76d634e9cb1e76b0b134a6e2db128b4be",
+    "tools/release_nes_game158.py": "c453e15fab9c29b90527a923c843ef083699a36314ac445b35c07dd60f0100b1",
+    "tools/verify_nes_game158.py": "46fdab250d0e0a0b4de4ba3e0f4aa8892f089b78d635365d4dee942008800a13",
+    "tests/nes-functional/game158_transition_tb.sv": "69ee2485979368aebeb3a4deada0651333c62b7ce235a5a1dd1934ff337dd20e",
+    "tests/nes-functional/game158_mapper_tb.sv": "ac8d35d6d923c29a877f1f2a76957fea149c699acbbcb33415c1a4e808525f50"
+  },
+  "selected": {
+    "asm": "nes158-asm01",
+    "arm": "nes158-arm01",
+    "armcheck": "nes158-armcheck02",
+    "test": "nes158-test03",
+    "host": "nes158-host02",
+    "reuse": "nes158-reuse03",
+    "release": "release01"
+  },
+  "physical_test": false,
+  "gameplay_passed": false,
+  "ppu_fix": "pending-write model passed; physical unconfirmed; late logical-address failure retained",
+  "ids": [
+    "67",
+    "E1"
+  ],
+  "fit": {
+    "logic_elements": 13731,
+    "registers": 5005,
+    "physical_pins": 122,
+    "virtual_pins": 0,
+    "pll": 1,
+    "m9k": 56,
+    "m9k_total": 56,
+    "memory_bits": 466864
+  },
+  "timing": {
+    "passed": true,
+    "same_clock_setup_ns": 0.099,
+    "same_clock_hold_ns": 0.171,
+    "snes_envelope_ns": 200.492,
+    "sample_ns": 270,
+    "psram_conditional_margin_ns": 2.996999999999999,
+    "pad_held_delay_ns": 6.232,
+    "negative_recovery": [
+      {
+        "corner": "8_slow_1200mv_85c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "4.515",
+        "slack": "-7.376"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "4.515",
+        "slack": "-6.911"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "4.167",
+        "slack": "-6.644"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "4.167",
+        "slack": "-6.204"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "2.094",
+        "slack": "-3.549"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "2.094",
+        "slack": "-3.361"
+      }
+    ],
+    "psram_address_margin_ns": 7.2209999999999965,
+    "psram_active_margin_ns": 2.996999999999999,
+    "prior_unphased_margin_ns": 1.2689999999999984,
+    "address_launch_cycles": 17,
+    "ce_oe_launch_cycles": 16,
+    "row_counts": [
+      108,
+      6846
+    ],
+    "pcb_allowance_ns": 2,
+    "mtbf_calculated": false,
+    "full_io_signoff": false,
+    "scope": "Conditional routed boundaries; existing unmeasured electrical and clock-halt limits remain open.",
+    "implementation_budget_setup_ns": 0.099,
+    "implementation_budget_passed": true,
+    "nominal_sdc_sha256": "59dbe2401cc57a7646271fc222b69cd0c27dfb0bfb0c9514641213c39b9cd1ac",
+    "routed_files_preserved": 303,
+    "new_fit": false,
+    "nominal_contract": "Exact155 clock SDC; no period/falsepath/multicycle change. Extra1565.5ns target is only placement guidance; its miss remains separate."
+  },
+  "test": {
+    "passed": true,
+    "rom_sha256": "dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49",
+    "sources": {
+      "rtl/bus_savestates.vhd": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9",
+      "rtl/t65/T65_Pack.vhd": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb",
+      "rtl/t65/T65_ALU.vhd": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b",
+      "rtl/t65/T65_MCode.vhd": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5",
+      "rtl/t65/T65.vhd": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692",
+      "rtl/statemanager.vhd": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6",
+      "rtl/savestates.vhd": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0",
+      "rtl/regs_savestates.sv": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95",
+      "rtl/cheatcodes.sv": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918",
+      "rtl/ppu.sv": "24a6ad0cfb2b75cbc08a8b848f8b37a2f6080d1d7cd6ebfc1b05146c02495d31",
+      "rtl/apu.sv": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586",
+      "rtl/nes.v": "745095cf7123c209e2173c038c89a84ae4de414904dc16194cce8d95763135e1",
+      "rtl/composite_board.sv": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895",
+      "rtl/compat.v": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731",
+      "sys/iir_filter.v": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8",
+      "cart_nrom.sv": "e3f26834ea8f6272fd4d8310db3bd1dc44f609fafb2b4b68f90960f6ef742ee4",
+      "nes_probe.sv": "3c4660fb222ad1f0fdeca03f178c14d5f80712913e1957d6c5acd4f56bddedb2",
+      "nes_local_memory.sv": "09a5109f5ea187b740ffbceb865c505c485dee13e87ee1cb665de937046d6ec4",
+      "nes_rom_service.sv": "4d6f7b95308859fa29944fa7ee6482a0ae534770b465ffaee35733d67b6ab173",
+      "nes_rom_physical.sv": "79e9d1b4e5cdc0d59e42cb2769080b5d71b4cbcb2849beb568e6a1a0d857c298",
+      "nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+      "game158_transition_tb.sv": "69ee2485979368aebeb3a4deada0651333c62b7ce235a5a1dd1934ff337dd20e"
+    },
+    "runs": [
+      {
+        "phase_ns": 0,
+        "control": 0,
+        "rows": [
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ]
+        ],
+        "log_sha256": "3af5b3d591acbf0ed248ee80ae444e115fbb846c50546da78edd234cb2ec082d"
+      },
+      {
+        "phase_ns": 0,
+        "control": 1,
+        "rows": [
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ]
+        ],
+        "log_sha256": "455d02fd80e907cd713d99080fa1640be8f3204f1862543722883f14502428ad"
+      },
+      {
+        "phase_ns": 3.5,
+        "control": 0,
+        "rows": [
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ]
+        ],
+        "log_sha256": "e25f5171802248f52d9b2da5ca6c779dfcbfdfc8ace4fec8bc5805f9b62e8dca"
+      },
+      {
+        "phase_ns": 3.5,
+        "control": 1,
+        "rows": [
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ]
+        ],
+        "log_sha256": "1273852e788a6a670ff7eeada7443f7563ccb59c1cc1aa1090bd059c526ea77b"
+      },
+      {
+        "phase_ns": 5.5,
+        "control": 0,
+        "rows": [
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            5
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            4
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            0,
+            1,
+            2,
+            1,
+            5
+          ]
+        ],
+        "log_sha256": "8c4c7c72c840f34d1dd66169721f755a7bfc29ce2f4bdba3960d749f6872ee71"
+      },
+      {
+        "phase_ns": 5.5,
+        "control": 1,
+        "rows": [
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ],
+          [
+            2,
+            1,
+            1,
+            2,
+            1,
+            5
+          ]
+        ],
+        "log_sha256": "4ebad56b9ad6861dcf716838606085ff8df5410e0ffe3ea22da96ac8fefbf3c0"
+      }
+    ],
+    "physical": false,
+    "exact_hardware_replay": false,
+    "scope": "Synthetic line193/dot8 late bank-data or invert commit, plus late logical PPU address change negative. Actual PPU/MMC3/service/READ16 with70ns model;12 prior CPU-read start offsets and3 memory phases. CPU write bus driven early, actual cart_pre/commit strobes at retained relative phase; no live CPU program. Control disables only pending-write prediction. Actual PPU bytes compared against exact private target CHR; early normal mapping unchanged. Not full-game/all-bank/all-phase electrical proof."
+  },
+  "host": {
+    "passed": true,
+    "recovery_cases": 13,
+    "formatter_masks": 256,
+    "source_sha256": "5db65f308e55ae94c080345d2d39615fde7367a469b54237a0c75fc24b518aec",
+    "format_source_sha256": "96b2676e73424e040b96bfdcd17b9b601a93a79c16f4358220402915df9011fd",
+    "physical": false,
+    "scope": "Actual RUN/STOP/decoder/formatter; synthetic SPI, not full FatFS or board execution."
+  },
+  "reuse": {
+    "passed": true,
+    "normalized": {
+      "nes_rom_spi.sv": "identity only; exact157 behavior",
+      "nes_run_observer134.sv": "identity only; exact157 behavior",
+      "nes_screen_status151.sv": "identity only; exact157 behavior",
+      "nes_pad_trace156.sv": "identity only; exact157 behavior",
+      "nes_ppu_history157.sv": "identity only; exact157 behavior"
+    },
+    "unchanged": {
+      "rtl/bus_savestates.vhd": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9",
+      "rtl/t65/T65_Pack.vhd": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb",
+      "rtl/t65/T65_ALU.vhd": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b",
+      "rtl/t65/T65_MCode.vhd": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5",
+      "rtl/t65/T65.vhd": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692",
+      "rtl/statemanager.vhd": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6",
+      "rtl/savestates.vhd": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0",
+      "rtl/regs_savestates.sv": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95",
+      "rtl/cheatcodes.sv": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918",
+      "rtl/ppu.sv": "24a6ad0cfb2b75cbc08a8b848f8b37a2f6080d1d7cd6ebfc1b05146c02495d31",
+      "rtl/apu.sv": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586",
+      "rtl/composite_board.sv": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895",
+      "rtl/compat.v": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731",
+      "sys/iir_filter.v": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8",
+      "nes_probe.sv": "3c4660fb222ad1f0fdeca03f178c14d5f80712913e1957d6c5acd4f56bddedb2",
+      "nes_local_memory.sv": "09a5109f5ea187b740ffbceb865c505c485dee13e87ee1cb665de937046d6ec4",
+      "nes_rom_service.sv": "4d6f7b95308859fa29944fa7ee6482a0ae534770b465ffaee35733d67b6ab173",
+      "nes_rom_physical.sv": "79e9d1b4e5cdc0d59e42cb2769080b5d71b4cbcb2849beb568e6a1a0d857c298",
+      "nes_rom_loader.sv": "779a1a502aa78f61f8d1d6fed28b0892a405d808783fcd88687f3e214fc4090e",
+      "nes_rom_boot.sv": "960e299bd9a1bd3cbdcb001ea9f15649160cd46cdb132767d9c15ad2029a1a74",
+      "nes_spi_boot.sv": "3e55dd0a4fdf50021113f50641ecd89b18e07f25986a33a5dbd462a794751d9f",
+      "nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+      "nes_diag_clock_guard127.sv": "f1936729ba7505b4d3030a86d9c8b4d88ce4490500bffb7d38ea26cace64b6e3",
+      "nes_diag_startup_guard.sv": "80e7e13ba034b0a1a706945cd8015f3789110363a300e39c21e62086a29460a2",
+      "nes_live_joint.sv": "71c02f9daeec6727a2038051d7f335e642de39032c52d43509505e8c2e0e11c1",
+      "nes_clock_pll123.v": "bcc55cf38d516acbdaa0b0402ce2320d32f67df52d1a8549379a48b0d995c8bc",
+      "fxpak_nes_screen137_top.sv": "a43813623e3305c9a719503145954b1b682a6c326c41a9695808452f414e9cf0",
+      "nes_game_frame150.sv": "acb8eff9c17143f69dd3c49c83c667e893025554b98aee8f45e89b8d8fc65174",
+      "nes_game_pad150.sv": "68a7fc00658bc4256bd83e318814c6add9d6d1d49d2c631743c1eb9839eb5640",
+      "nes_game_bus151.sv": "82f6c9ce7cb491b6decbb3d82d7125a2bb301436782039b42ba41d14261d274a",
+      "board.sdc": "25dee3f21659c94bb0140e73358a2a34e9ac16c391036ea0d5d2e92c4eec17d4",
+      "game-program.hex": "01b72c5ecc0eb2756779a4baf363a8f6960a6b4bb082282112daed3b63f523cc",
+      "board.qsf": "ca39f05fedcf9273d2134f4edc89f91e571ae8c08c84de6fb0d4ee30d07cc9a8",
+      "board.qpf": "8242ee5e59a70da6149cb823d27ca626c19cecce70342b4e21184bb2adb3d6c3"
+    },
+    "apu_isolation_retained": true,
+    "service_reader_ppu_unchanged": true,
+    "mapper_state_commit_unchanged": true,
+    "arm_identity_only": true,
+    "physical": false,
+    "scope": "Source equality for unchanged logic, pure pending-write hint lookup and one raw-write connection; not gate equivalence or game-level proof."
+  },
+  "armcheck": {
+    "firmware_bytes": 188604,
+    "firmware_sha256": "e77da05f87193de422b4dc3571d463d161ece57762c6192faaf5ee3ca1fd7c53",
+    "elf_sha256": "1815b8f26cfc321cba7c47ca3ca18aef1887cc012172b7bd403c70b03c1d5c99",
+    "nmi_address": "0x08019148",
+    "vector_word": "0x8019149",
+    "stop_stores": 15,
+    "stop_calls": 0,
+    "stop_dsb": 3,
+    "stop_isb": 2,
+    "transport_source_matches": true,
+    "strong_nmi": true,
+    "arm_execution": false,
+    "physical": false,
+    "installable": false
+  },
+  "mapper_test": {
+    "commits": 536,
+    "source_sha256": "ac8d35d6d923c29a877f1f2a76957fea149c699acbbcb33415c1a4e808525f50",
+    "log_sha256": "9eaea28205871972b3b11f54dc3cab941dca505595308f2c264290b42024021c"
+  },
+  "limitations": [
+    "Synthetic fixed write lead9 clocks,12 prior CPU starts,3 memory phases; not real CPU game replay/all phases",
+    "No hardware proof that157 was caused by MMC3 write rather than logical PPU address change",
+    "36 late logical-address failures remain by design",
+    "56/56M9K temporary history; no new headroom",
+    "156 APU channel isolation retained; audio notfixed",
+    "Full IO/MTBF/gameplay/speed/save remain open"
+  ],
+  "package": {
+    "zip_sha256": "ae825628138ba735991a52975e4bdb8447ee14ce1073743baa2e39b6867dbe62",
+    "zip_bytes": 929789,
+    "members": 12,
+    "firmware_sha256": "e77da05f87193de422b4dc3571d463d161ece57762c6192faaf5ee3ca1fd7c53",
+    "fpga_sha256": "8ad8a937e87de559a23b56c007837f7d4a533a8aef9f19fa9fae0f45fe36faa3",
+    "normal_trial_ready": true,
+    "physical": false,
+    "gameplay_passed": false
+  }
+}
