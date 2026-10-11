@@ -1,3 +1,33 @@
+# NES 현재 인계 — 163 사운드·플레이 통과, 다음은 연속 화면
+
+[163 실기 결과](../../analysis/GAME163-HARDWARE-RESULT.ko.md) · [로그 분석](../../analysis/game163-hardware-verification.json)
+
+사용자 직접 청취: 사운드 정상, 플레이 정상. 영상 표본: 첫 레벨 진입·이동·점프 확인. 6B/E5,393216바이트 적재·비교,104레코드, run/ROM/first/stop 오류0. SPC A9/FLG20 읽기 확인1; screen_error169는 성공. 펌웨어 실행60.650초, STOP 뒤메뉴준비3.130초. 로그상 STOP/base/menu 준비 성공; 영상 끝은 월드맵으로 실제 파일메뉴 복귀는 이번 세션 별도 미확인. 기침은 외부음으로 제외, 독립 청취·전체음질 측정 아님.
+
+**NEXT PR105 머지 후 연속 화면 개선.** 사운드 무음 목표는 이번 실기 통과했으므로 사운드 전용 진단을 더 늘리지 않는다.163 SPC/FLG 초기화·162 음성 경로를 보존하고 전체57344 DMA 강제블랭크/hold6의 화면 갱신 경로를 개선한다. LAB3/M9K0, 최소 변경검증 후 실제 SMB3. hold0만으로 완료 판정 금지. 그다음60초 제한 해제·오류/본체리셋 안전 로그 → 장시간 입력 유지 평가. DOWN 유지/연속 화면 아직 미해결, 현재60초 유지/리셋로그 미구현. pad306 마지막16/290덮어쓰기, screen405신뢰0으로 FPS 아님. 무변경163사운드/044/GBC/전체적재 재시험 없음.
+
+이번은 결과만 기록, 새 빌드/패키지 없음. frozen163 2510파일 manifest d8626eade5547e594de623d7077d153eeff5482b2cdea59940a499785209bfc5 및 공개핀/완료finalizer 불변. 사용자머지·한국어4PR절·개인GitHub 유지.
+
+---
+
+## 아래는 제작 당시 기록 — 실기 대기 상태는 위 결과로 대체
+
+# NES 현재 인계 — 163 본체 사운드 초기화 실기판
+
+[163 결과](../../analysis/GAME163-RESULT.ko.md) · [실기 안내](../../docs/nes-game163-instructions.ko.md) · [검증](../../analysis/game163-verification.json)
+
+PR104 머지 확인.162 첫 레벨·복귀 성공/무음에 대해163은 본체 SPC/DSP 유한 초기화·FLG20 확인을 추가했다. GBC89바이트 payload, NES native ABI/DP10, 본문670/ROM2048. FPGA 로직·배치 불변, generatedMIF만 검증교체/update_mif/ASM으로 갱신한다. 원본HEX만 바꾸면 반영되지 않아 RBF 동일 검사가 거부했던 실패도 보존.6B/E5는162 로직 재사용에 따른 의도된 ID이며 무조건 여러ID 허용 아님.
+
+실기 로그 A9와spc_unmute_confirmed1은 FLG20 읽기 확인, 실제 청취 성공 아님. E1~E5 실패에도 화면 진행. 기존 screen_error는163에서 초기화 상태로 재사용하므로169를 게임 오류로 해석하지 않는다.0/미지값은 미확인; 이전162 잘못 적용도 성공 처리 안 함. 실패FLG 원시값/아날로그활동은 아직 미관측.
+
+Mesen 실제CPU/SPC 정상+5주입 실패/각2정확RGB+14패드; 상태RTL54위상·늦은쓰기/SPI/STOP/reset; MCU13회수/256입력/512상태판정; ARM188824/NMI15stores0calls 통과.47개 로직·배치보고서 정확재사용, 새MAP/FIT/STA없음.14711LE/960LAB/56M9K, setup+.121/hold+.177 및 전체IO/MTBF/PCB/reset 한계 유지. client01/02 경로 오류·asm01 반영누락/asm02 CRLF검사실패 보존.
+
+NEXT 실제163 음악·효과음/첫 레벨/두TXT/메뉴 확인. 소리가 없으면 초기화 결과부터 분기하고 최소 APU/DAC 활동만 필요시 관측. 이후 연속 화면 → AV 확인 뒤60초 해제·오류/본체 리셋 로그 → 장시간 입력 품질. 현재 화면·60초·DOWN 문제 그대로, warm reset·아날로그 소리 미검증. 동결163과 이전 자료/공개핀/044 불변, 완료finalizer재실행 금지. 사용자머지/한국어4PR절/개인GitHub, 동일162/044/GBC/무변경 전체부팅 반복 없음.
+
+---
+
+## 이전162 실기 결과 — 다음 구현은 위163으로 진행됨
+
 # NES 현재 인계 — 162 플레이·복귀 통과, 무음 수정 우선
 
 [162 실기 결과](../../analysis/GAME162-HARDWARE-RESULT.ko.md) · [로그 분석](../../analysis/game162-hardware-verification.json)

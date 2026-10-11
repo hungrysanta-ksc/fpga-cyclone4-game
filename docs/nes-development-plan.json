@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-11",
-  "technical_candidate": "NES-GAME-162",
+  "technical_candidate": "NES-GAME-163",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "162 실기 첫 레벨·정상60초 종료·메뉴 복귀 통과, ROM 오류0. 사운드 무음으로 목표 미달성; 본체 SPC/DSP 초기화 누락 우선 조사. 연속 화면·지속 입력 미해결.",
-  "next_action": "AFTER_PR104_MERGE_FIX_SOUND_INITIALIZATION_THEN_CONTINUOUS_VIDEO",
+  "assessment": "163 사용자 청취로 사운드 정상, 영상 첫 레벨 플레이 확인, ROM 오류0. 로그 STOP/base/menu준비 통과. 다음 연속 화면; DOWN 유지·장시간 실행 미완료.",
+  "next_action": "AFTER_PR105_MERGE_CONTINUOUS_VIDEO_THEN_LONG_PLAY_AND_HELD_INPUT",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2578,5 +2578,19 @@
     "gameplay_passed": true,
     "menu_return_passed": true,
     "hardware_verification": "analysis/game162-hardware-verification.json"
+  },
+  "game163": {
+    "verification": "analysis/game163-verification.json",
+    "hardware_pending": false,
+    "physical_audio": true,
+    "continuous_video": false,
+    "held_input_fixed": false,
+    "run_budget_seconds": 60,
+    "reset_logging": false,
+    "next": "After PR105 merge, improve continuous video on actual SMB3 while retaining163 SPC initialization and working162 audio. Minimum changed-path checks then hardware. After AV quality, remove normal60s cap with fault/console-reset capture and safe logging, then assess sustained input. No repeated sound-only/044/GBC/unchanged full-load tests.",
+    "gameplay_passed": true,
+    "base_restored_and_menu_prepared": true,
+    "physical_menu_return_confirmed_this_session": false,
+    "hardware_verification": "analysis/game163-hardware-verification.json"
   }
 }
