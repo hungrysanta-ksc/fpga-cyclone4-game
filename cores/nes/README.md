@@ -1,6 +1,8 @@
 # NES 개발 현황
 
-현재151 실기: **SMB3 제목·캐릭터 표시와 메뉴 복귀 성공, PPU 읽기 오류로 조기 종료**. 정상 플레이·전체 버튼 입력은 미완료입니다. [151 실기 결과](../../analysis/GAME151-HARDWARE-RESULT.ko.md).
+현재152 실기: **WORLD1 안내 후 정지·최종로그/메뉴복귀 실패**. 새PPU 문맥을 MCU가 거부하는 결함을 확인했으며152 재시험은 필요 없습니다. [실기 결과](../../analysis/GAME152-HARDWARE-RESULT.ko.md).
+
+이전151 실기: **SMB3 제목·캐릭터 표시와 메뉴 복귀 성공, PPU 읽기 오류로 조기 종료**. 정상 플레이·전체 버튼 입력은 미완료입니다. [151 실기 결과](../../analysis/GAME151-HARDWARE-RESULT.ko.md).
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 

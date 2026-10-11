@@ -1,4 +1,36 @@
-# NES 현재 인계 — 151 화면 성공, PPU 읽기 오류 우선 수정
+# NES 현재 인계 — 152 오류 문맥 수신 결함, 복귀·최종로그 실패
+
+[152 실기 결과](../../analysis/GAME152-HARDWARE-RESULT.ko.md) · [원시 로그·재현](../../analysis/game152-hardware-verification.json)
+
+현재152 재시험하지 않는다.83행 seq0..82,마지막DISPLAY_NEXT232740ms;LOAD/CHECK393216완료경로. 실제RUN 코드는START직전 기록,그 이후SD금지이므로 마지막행이멈춘위치라는뜻아님. 최종nes-game-last없음.94.13초영상14~15제목→16초WORLD1/MARIO×4 시작안내월드맵,이후90초대까지동일. 실제스테이지플레이미확인. 사용자프리즈후60초이상대기/메뉴FAIL/본체RESET메뉴FAIL/전원재인가메뉴PASS.14초Start1회보고;중복입력은미확정(30vblank표시샘플/held상태의다중단계소비가능). 다른버튼은정지후이므로판정불가.
+
+확정결함:152서비스새context bit63=1(PPUactual주소) vs배포MCU context146의 `(hi[3]&0x80u)` 거부. 실제run136/context146 C를사용한host시험에서taggedPPU오류→contextfalse→fail094→leave/STOP/DISPLAY_STOPPED각0을재현. 거부한조건제거대조는각1/문맥정상,기존형식·invalidID/valid/error3개거부유지. 실제152 faultcode/context는없으므로실기관측이오류2였다고단정하지않는다. 잠재경로fail094는SNESRESET유지/cleanupbase건너뜀/finalpersistfalse로증상과부합. 게임최초정지원인과복귀실패를분리한다.
+
+NEXT153: 기존152/frozen/패키지는그대로보존하고 MCU수신에bit63형식반영. 소스함수실제연결로 taggedPPU error→context→STOP→최종TXT·메뉴복귀 검증,잘못된응답/guard거부는유지. 같은FPGA와배치를재사용할수있으니단순MCU수정때MAP/FIT/30프레임/fullwrite/A-B/044반복금지. 이후한번의SMB3실기로actualPPU주소확보. 수신기호환시험은비트정의변경의필수경계;FPGA단위/ARM링크별개PASS로대체금지. 오류를숨기거나느슨한응답허용으로우회금지.
+
+이번은PR94에결과/인계/공개재현도구추가만. 새firmware/RTL/ZIP없음. 공개도구 tools/reproduce_nes_game152_context.py --baseline <probes> --out <freshASCII> --gcc <hostgcc>;현재GCC는sandbox DLL WinError623일수있어허용host실행필요,라이선스아님. private probes/nes-game152-hardware에원본/188프레임/접촉시트/재현보존. 모든152 pin/manifest/ZIP불변.
+
+---
+
+## 이전152 제작 기록 — 위 실기 결과가 우선
+
+# NES 현재 인계 — 152 입력 개선판 준비, PPU 원인 미해결
+
+[152 결과](../../analysis/GAME152-RESULT.ko.md) · [설치](../../docs/nes-game152-instructions.ko.md) · [검증](../../analysis/game152-verification.json)
+
+PR93 merged9b26d7b6a8375ff2cc10e8a6774bf5cced39d2d2.152는62/DC 조합. 사용자에게 NES GAME 152.nh1 한 번 실행, nes-progress-152.txt/nes-game-last-152.txt와 화면 이후 영상·버튼 이름·첫 화면/메뉴 시각을 받는다. 같은SMB3 ROM/384KiB 적재·대조·최대60초RUN·오류STOP/base/menu. 로딩 가속은 변경하지 않았다.151 실측 약3분50초, 실행총7분 관찰 상한이다.
+
+**PPU 오류 수정은 미완료. 실제151 오류를 모델에서 재현한 것이 아니다.** 같은 서비스 동작을 유지하며 fault_context bit63=1일 때 low25에 실제PPU 요구주소(상위3비트0)를 기록한다.0이면 기존CPU물리주소. pending주소는bits46:25,age는54:47. bit63은주소형식표식이지오류원인아님;backenderror가동시에있으면기존우선순위가우선. 다음로그에서pending과actual을비교한다. 같으면요청기한/백엔드점유/응답,다르면주소변경·선행읽기·캐시 경계를 우선검토하되주소만으로원인확정금지. 부족할경우에만해당경계의최소추적추가.
+
+입력은30vblank 화면유지루프에서매vblank수집. 실제SNES모델62회/8개버튼1프레임펄스PASS,기존1512회/0개;2RGB114688픽셀동일. 전체DMA/프레임대기공백의frame34펄스는여전히누락. 처음검증기가이펄스까지기대해실패한client01보존,제한을명시한client02+old01선택. 실제버튼/게임소비확인아님. 약0.2~0.5초누르고떼며제목→맵→스테이지를확인한다. 표시자체는30vblank유지이고NES로직은계속실행;60fps/음성/저장미완료.
+
+선택asm01에fit01전체DB/소스/보고서포함.13648LE927LAB4989reg52M9K1PLL122physical0virtual;setup+.102hold+.179,조건부PSRAM+1.725ns/SNES200.273<270ns. 기존151서비스에서context배선외코드일치.6문맥경계/32768ROM주소/ARM186860 strongNMI/압축복원·패키지PASS. 전체IO/MTBF/전기실측아님. 변경없는부팅30프레임/19초전체핀모델/전량적재/044/A-B반복안함. 이번범위는입력개선+빠진오류주소,원인수정완료라고승격금지.151자료및이전공개pin보존,freezer/완료시험재실행금지.
+
+---
+
+## 이전151 인계 — 현재 다음 작업은 위152를 따른다
+
+# 151 화면 성공, PPU 읽기 오류 기록
 
 [151 실기 결과](../../analysis/GAME151-HARDWARE-RESULT.ko.md) · [원시 로그·문맥](../../analysis/game151-hardware-verification.json)
 

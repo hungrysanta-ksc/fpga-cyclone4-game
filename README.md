@@ -1,6 +1,8 @@
 # FPGA Core Development — sd2snesHST
 
-현재151 실기: **SMB3 제목·캐릭터 표시와 메뉴 복귀 성공, PPU 읽기 오류로 조기 종료**. 정상 플레이·전체 버튼 입력은 미완료입니다. [151 실기 결과](analysis/GAME151-HARDWARE-RESULT.ko.md).
+현재152 실기: **WORLD1 안내 후 정지·최종로그/메뉴복귀 실패**. 새PPU 문맥을 MCU가 거부하는 결함을 확인했으며152 재시험은 필요 없습니다. [실기 결과](analysis/GAME152-HARDWARE-RESULT.ko.md).
+
+이전151 실기: **SMB3 제목·캐릭터 표시와 메뉴 복귀 성공, PPU 읽기 오류로 조기 종료**. 정상 플레이·전체 버튼 입력은 미완료입니다. [151 실기 결과](analysis/GAME151-HARDWARE-RESULT.ko.md).
 
 **sd2snesHST의 개발 저장소**입니다. FXPAK Pro의 코어 구현, 재현 빌드, 검증 근거와 이식 경험을 관리합니다.
 제품 이름의 **HST는 HungrySanTa = 제작팀 이름**을 뜻합니다.
@@ -24,7 +26,7 @@
 | 구성 | 현재 상태 | 소스·재현 |
 | --- | --- | --- |
 | GB/GBC | C44 실기 확인, 0.9.0 공개 완료 | [GBC 개발 안내](cores/gbc/README.md) |
-| NES | 151 게임 제목·캐릭터 출력 성공;PPU 읽기 오류·전체 입력 미완료 | [NES 개발 안내](cores/nes/README.md) |
+| NES | 152 월드맵 안내 후 정지;오류 복귀·최종로그 수신 결함 확인 | [NES 개발 안내](cores/nes/README.md) |
 | PC Engine | 조사 대기; HuCard 범위를 우선 검토 | [PCE 조사 범위](cores/pce/README.md) |
 
 현재 구현 대상은 **FXPAK Pro / Mk.III, STM32 + EP4CE15F17C8**입니다. 제품 이름이 바뀌어도 보드 지원 범위가 넓어지는 것은 아닙니다. NES/PCE의 동작 가능성·일정은 아직 확정하지 않았습니다.
