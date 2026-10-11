@@ -1,0 +1,185 @@
+{
+  "candidate": "NES-GAME-153",
+  "status": "TAGGED_FAULT_RECOVERY_HARDWARE_PENDING_PPU_CAUSE_OPEN",
+  "manifest_sha256": "2f05f60551fdbaa5c39bef238ed409e9e95f2800e7f2774803890b8ccfeea25c",
+  "file_count": 1845,
+  "public_sources": {
+    "tools/nes_game153_arm.py": "99144bb088bd8d310fba1d7a4c10244e48ca3f5b5e32ba52fd86e8d0ec6bc697",
+    "tools/check_nes_game153_arm.py": "dae4dc29711c6ca19376c528d7ea82464bff5526a7c35828d38e0f96e36ee792",
+    "tools/test_nes_game153_context.py": "87595761b22929350cc375e9e17a6d8d981cb2fb7b4c14c59fc702adc941256b",
+    "tools/test_nes_game153_recovery.py": "616859d0a36ef5f60419871c772970340cd8633a8f47122ad6b6e5190677bd2d",
+    "tools/release_nes_game153.py": "3c46896e6aa6d809546e7a2fe13404fc65179cc03984e7e1c977ea1c0effb8bf",
+    "tools/verify_nes_game153.py": "d37ccb846a4fbaf28be5cc0f1a8bba86f2b786ae4e22160b1a248dabfa314ff3"
+  },
+  "selected": [
+    "arm",
+    "armcheck",
+    "host",
+    "context",
+    "release"
+  ],
+  "physical_test": false,
+  "sd_package": true,
+  "ppu_deadline_fixed": false,
+  "ids": [
+    "62",
+    "DC"
+  ],
+  "reused152": {
+    "manifest_sha256": "b31bc7f677d4ec5444a66cfd932b082074c3438ffc7551d1fa79881a999af43a",
+    "fpga_sha256": "3fa965058abd3af8e103f1911aa28a496d16d1bf0b0fcc6c2975534b76aa8b9e",
+    "fit": {
+      "logic_elements": 13648,
+      "labs": 927,
+      "registers": 4989,
+      "m9k": 52,
+      "pll": 1,
+      "physical_pins": 122,
+      "virtual_pins": 0
+    },
+    "timing": {
+      "passed": true,
+      "same_clock_setup_ns": 0.102,
+      "same_clock_hold_ns": 0.179,
+      "snes_envelope_ns": 200.27300000000002,
+      "sample_ns": 270,
+      "psram_conditional_margin_ns": 1.7249999999999996,
+      "pad_held_delay_ns": 6.423,
+      "negative_recovery": [
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_game_bus151:consumer|host_release[1]",
+          "delay": "3.952",
+          "slack": "-6.814"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_game_bus151:consumer|host_release[0]",
+          "delay": "3.952",
+          "slack": "-6.347"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_game_bus151:consumer|host_release[1]",
+          "delay": "3.619",
+          "slack": "-6.101"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_game_bus151:consumer|host_release[0]",
+          "delay": "3.619",
+          "slack": "-5.663"
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_game_bus151:consumer|host_release[1]",
+          "delay": "1.863",
+          "slack": "-3.317"
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_game_bus151:consumer|host_release[0]",
+          "delay": "1.863",
+          "slack": "-3.130"
+        }
+      ],
+      "psram_address_margin_ns": 6.727999999999998,
+      "psram_active_margin_ns": 1.7249999999999996,
+      "prior_unphased_margin_ns": 0.7759999999999998,
+      "address_launch_cycles": 17,
+      "ce_oe_launch_cycles": 16,
+      "row_counts": [
+        108,
+        6552
+      ],
+      "pcb_allowance_ns": 2,
+      "mtbf_calculated": false,
+      "full_io_signoff": false,
+      "scope": "Conditional routed boundaries; existing unmeasured electrical and clock-halt limits remain open."
+    }
+  },
+  "host": {
+    "fixed153": {
+      "passed": true,
+      "source_sha256": "4a1a14e9d784b08679d57e7b985d5a7b7a584b0e587bb9c6e270d056bafc035a"
+    },
+    "released152_condition": {
+      "passed": true,
+      "source_sha256": "f7bf12f02c7403a8ad9c538e5b12dd2e41c6de5079a9feb84a4405eed124df9b"
+    },
+    "passed": true,
+    "actual_sources": {
+      "ff.c": "e3be7c9011fccba08f2a81879d999e9a711f5d502abc2919e245a8c1a8dac930",
+      "ccsbcs.c": "ce3caa7046c39ab35356c0a221df0a44535e4223c1c9ace328c92566891ea02f",
+      "nes_diag_runtime.c": "756aae44617b47e0dcb76f9cf2879a9eba4f35b3b477be6b53b2d1262cdebcbc",
+      "nes_menu_return.c": "0b398a26b5bc48bb993905e8d83fda35c8417e5674cd836315914e2865d9787f",
+      "nes_menu076.c": "24c267409f2843651a5176e7a5881a813c96bd133b70caaf4d488e8d53d64af2",
+      "nes_cf86_session094.c": "66869649865ad733fd8a5603e51f43686d3a128328627432f51ddb38a903c2f3",
+      "nes_cf86_session094.h": "de31c213a2a555f6de50349fc1c2110d473d06beb06956bb23da3d0b15395cad",
+      "nes_h1_stm32.c": "acfa7dc87f62182b9f20ce936ebc0023cc85d75c870b02f4d5b73143bd57a5b2",
+      "nes_h1_session.c": "96e0c01c71f349f3c39e9d258128887c5caec6b39f6c6e0d624dae31818da488",
+      "nes_rom_spi.c": "f7fb845c71975b73d47969880c05a55d379a68aa89f6a6d32aa49761d9ae2cfb",
+      "nes_rom_verify.c": "0cdfb98bda5d45d09ff14c349df0e0a455298f7b56271a96fb65919d028400a9",
+      "nes_menu_diagnostic.c": "6dac6bf99aa177610522c2d7ca41c1272dbc3d6faf3be5c97adc3563511fa0fa",
+      "nes_checkpoint112.c": "91100543e293ed7f39722043d61d6e078870e11c42d4e6a7460e389531af8a2a",
+      "nes_run136.inc": "4a1a14e9d784b08679d57e7b985d5a7b7a584b0e587bb9c6e270d056bafc035a",
+      "nes_run136.h": "aa11fe19dc6dafb814e824805c8e53e70a2ed88ce5a230190868b6bc255b816d"
+    },
+    "physical": false,
+    "scope": "Actual MCU/FatFS/menu C; modeled SD/GPIO/SPI peer and old bitbang transport adapter. Synthetic tagged error2, not physical152 cause."
+  },
+  "context": {
+    "passed": true,
+    "valid": 30,
+    "invalid": 10,
+    "source_sha256": "4a1a14e9d784b08679d57e7b985d5a7b7a584b0e587bb9c6e270d056bafc035a",
+    "physical": false
+  },
+  "arm": {
+    "firmware_bytes": 186852,
+    "firmware_sha256": "c12d4b7b01b678e4766d1fd7fb19da26e874dec6996cdd855db85c3f2647d1be",
+    "elf_sha256": "0345d90bd2fca2dff5a3e4f35b32319e477e5572e8ea5f9aefbf024134778557",
+    "nmi_address": "0x08019148",
+    "vector_word": "0x8019149",
+    "stop_stores": 15,
+    "stop_calls": 0,
+    "stop_dsb": 3,
+    "stop_isb": 2,
+    "transport_source_matches": true,
+    "strong_nmi": true,
+    "arm_execution": false,
+    "physical": false,
+    "installable": false
+  },
+  "package": {
+    "zip_sha256": "58b2e3929a0e3de66422a2eedb64dedb875451018af81109164ffb5f55f57173",
+    "zip_bytes": 927007,
+    "members": 12,
+    "firmware_sha256": "c12d4b7b01b678e4766d1fd7fb19da26e874dec6996cdd855db85c3f2647d1be",
+    "fpga_sha256": "3fa965058abd3af8e103f1911aa28a496d16d1bf0b0fcc6c2975534b76aa8b9e",
+    "fpga_identical152": true,
+    "normal_trial_ready": true,
+    "physical": false,
+    "ppu_deadline_fixed": false
+  },
+  "limitations": [
+    "Physical152 error/context unavailable",
+    "Actual PPU deadline cause not fixed",
+    "Host hardware/card/transport models are not ARM or electrical proof",
+    "DMA/wait input gaps and Start duplicate consumption unconfirmed",
+    "Held30vblank not60fps; audio/emphasis/save open",
+    "Prior152 IO/MTBF limitations retained"
+  ]
+}
