@@ -1,3 +1,39 @@
+# NES 현재 인계 — 155 Select에서도 PPU 오류, 입력 이후 경계 재조사
+
+[155 실기 결과](../../analysis/GAME155-HARDWARE-RESULT.ko.md) · [원본 해시·해석](../../analysis/game155-hardware-verification.json)
+
+**155는 실제 정지를 해결하지 못했다.** 첫Start로선택화면,Select입력에서화살표이동대신오류후메뉴복귀.154두번째Start/스테이지전환과다른트리거다. 모든두번째버튼실패/Select비트정상수신/스테이지플레이를확정하지않는다. 사용자관찰상Select에서도실패하므로스테이지진입만재현대상으로삼지않는다. 추가영상/같은155/044/GBC/A-B재시험불필요.
+
+실제로그64/DE/393216loadcomparePASS. ROMerror2/PPUdeadline,contexte200c2f4:30217a18:actual=pending217a18/age1/busyPPU1/readyresponsevalid0. PPU60820800:28606060:line193/dot8/render1/sprite0/bgtable0/logical0A18/latchpins18/readwrite2007=0/ALEhintaddrvalid0. dot8은BG상위비트면,normal155는dot3~6만켜므로hint0자체정상.154는dot6/0A10/217A10이나사용자트리거가다르므로lowplane해결·2dot개선으로승격금지. 이전2007영향·매퍼변경·직전점유·예측발행·캐시교체는현재스냅샷만으로미확인.
+
+STOPcount14220446유지/stop_error0/base/safe1/최종TXT741바이트/사용자실제메뉴PASS. 104x512seq0..103;DISPLAY_NEXT232670->STOPPED237640=4970ms/MENU240800까지3160ms. 입력시각/FPS아님;screenframes9/trusted0. 기존회수경로는수용하고게임실패와분리한다.
+
+NEXT:선택화면Start대Select에서실제패드바이트/strobe/read/shift를대조하고BGdot5~8의예측논리주소/실제주소/같은MMC3뱅크물리태그/요청승인/응답/캐시교체이력을연결한다. 패드가직접ROMerror2를생성하지않지만입력오류가게임경로를바꿀가능성은열어둔다. 주기적CPU점유/고정뱅크/강제PPU타일모델만다시통과시키지않는다. 기존소스·증거로좁힌뒤부족할때만최소직전이력. 실제게임을우선하고긴전체부팅/무조건캐시확대/기한삭제를피한다.
+
+이번PR97에는결과·인계만추가한다.155펌웨어/FPGA/ZIP/frozen2359/manifest485444c85297c1cf610d4d2db6e77d4959827c3a51b0b7334aa6079c9f9ff654불변. 새로운구현·빌드·패키지없음. 다음구현은사용자머지후진행. 원본TXT는privateprobes/nes-game155-hardware. 한국어PR4절/개인GitHub/usermerges유지.
+
+---
+
+## 이전155 준비 기록
+
+# NES 현재 인계 — 155 일반 배경 선행 읽기, 다음 SMB3 실기
+
+[155 결과](../../analysis/GAME155-RESULT.ko.md) · [실기 안내](../../docs/nes-game155-instructions.ko.md) · [고정값](../../analysis/game155-verification.json)
+
+PR96 머지4639d4b4e5ac2e054ebdb429b8ca410782095b56에서 시작. 다음은 NES GAME 155.nh1 한 번이다. 첫 Start로 선택 화면, 버튼을 뗀 뒤 다음 Start로 전환한다. 같은 지점에서 종료되는지, 진행된다면 방향/A/B가 동작하는지 확인한다. twoTXT nes-progress-155/nes-game-last-155와 실제 메뉴 복귀 여부를 받는다. 같은 증상이면 영상 생략 가능.154/044/GBC/A-B/변경 없는 전체 부팅을 다시 요구하지 않는다.
+
+155는 실기154의 일반 BG line193/dot6 기한 실패를 겨냥한 선행 읽기 후보다. dot2 뒤 타일 이름이 확정된 구간에서 low/high plane 예측을 순서대로 준비한다. 실제 MMC3 lookup을 재사용하며 old PPUDATA overlap이 우선한다. 서비스의 demand priority/physical tags/READ16/샘플기한/클록/캐시크기/IRQ 입력/표시/패드 동작은 유지했다. 오류 검사를 지우거나 코어를 늦추지 않았다. 기존64비트 상태의 hint는 이제 일반 선행 읽기도 포함한다.
+
+선택 collision01은 actual155 PPU/MMC3/service/READ16/70ns에 합성된4타일과12개 CPU상대시점을 넣어 메모리3위상,후보36조건 모두정확바이트/기한통과. 같은소스normal155만0으로강제한대조는각위상PPUerror2. 정확한154요청이력·실기원인확정·전체게임PASS 아님. 초기탐색의X는 내부reset_noSS해제전시작한모델설정문제였고 선택시험은해제대기+unknown거부를포함한다. 오래걸린154core05/초기30프레임을재실행하지않았다.
+
+MCU155는154에서ID63/DD→64/DE와표식·경로·버전만변경. 모든소스와SPI관측기는정규화비교통과.154의실제C/FatFS/menu회수및관측기시험재사용;새host/observer전체시험을실행했다고쓰지않는다.155실제C해독960정상10비정상/ARM187124/NMI15stores0calls통과. fit01 setup+.015ns/hold+.178ns,조건부PSRAM+2.736ns/SNES203.311<270ns. 여유작음/전체IO·MTBF미완료. selectedasm01/reuse02/decoder01/armcheck01;재사용검사01의0x64전역치환실패는검사기오류다.
+
+실기실패시새최종로그의주소/line/dot/age/2007/힌트를154와비교하고변경경계만좁힌다. successfulRUN이라도이동·점프는사용자화면으로판정. 로딩/held30vblank/DMA입력공백/무음/저장은그대로미완료다. 초기파일과동결155·옛publicpin은보존한다. 완료freezer재실행금지. ROM/ZIP/바이너리/라이선스/개인경로를Git에올리지않는다. 한국어PR4절/개인hungrysanta-ksc만/사용자머지를유지한다.
+
+---
+
+## 이전154 기록
+
 # NES 현재 인계 — 154 PPU 상태 실기 회수, 일반 배경 읽기 기한 수정으로 진행
 
 [154 실기 결과](../../analysis/GAME154-HARDWARE-RESULT.ko.md) · [실제 로그 해석](../../analysis/game154-hardware-verification.json)
