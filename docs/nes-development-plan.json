@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "164 정상 플레이는 끊김으로 미달성. PocketNES/NesDS 우선/Nested 변환 전제/FCEUX/PDF 대조 완료. 실제SMB3 CHR 형식변환1048576픽셀 통과·고유5529타일로 전체상주불가. VRAM40KiB와 전송 시나리오는 설계초안; 동적캐시/PSRAM접근/SNES실행/fit 미완료. 새165 펌웨어 없음.",
-  "next_action": "IMPLEMENT_BOUNDED_GRAPHICS_STATE_CHR_CACHE_ACCESS_AND_SNES_CONSUMER_THEN_REAL_SMB3",
+  "assessment": "164 끊김 개선 진행.165관측CHR캐시 부품 구현/독립Questa PASS:8192타일401432조회.실제PPU연결/필요타일집합/미완성보충/호스트CDC/SNES/fit 미완료.기술 후보164,새실기펌웨어없음.",
+  "next_action": "CONNECT_ACTUAL_PPU_CHR_STATE_REQUIRED_SET_FILL_AND_HOST_CONSUMER",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2618,5 +2618,12 @@
     "dirty_tile_only_adopted": false,
     "followup": "docs/nes-native-video-feasibility.ko.md",
     "offline_probe": "analysis/nes-native-video-feasibility.json"
+  },
+  "native_chr165": {
+    "status": "standalone_component_pass_not_connected",
+    "contract": "docs/nes-native-chr165-contract.ko.md",
+    "verification": "analysis/native-chr165-verification.json",
+    "host_cdc": false,
+    "hardware": false
   }
 }

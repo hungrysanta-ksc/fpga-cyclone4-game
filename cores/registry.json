@@ -46,7 +46,7 @@
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-162",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "PR106 merged. Research decision: fixed-screen final-pixel dirty tiles alone are insufficient as the main smooth-scrolling strategy. Next assess minimal SMB3 SNES-native CHR/map/scroll/OAM/palette/raster export, VRAM/resources/vblank budget; preserve FPGA execution and163SPC/162audio/STOPmenu. Minimum changed-boundary checks then real SMB3. Native path not implemented or60fps proven; candidate remains164. If infeasible record concrete constraints and compare pixel scroll reuse/delta. After usable AV remove60s cap with safe fault/reset logs, then long held-input. No repeated164/044/GBC/sound-only/full-load tests.",
+      "next_gate": "PR107 kept open by user. Passive CHR165 cache standalone tested; next actual same-edge logical/physical PPU sample binding, required native graphics state/tile set and missing-byte supply, host CDC/lease and SNES consumer. No arbitrary extra PSRAM requests, stale/partial tile publication or CPU deadline relaxation. Replace pixel-buffer resources before physical build; minimal checks then realSMB3. Candidate164/audio/menu unchanged. After usable AV:60s removal with safe fault/reset logs, then held-input.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "162 MCU+FPGA strict6B/E5",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -310,6 +310,11 @@
         "status": "source_research_and_offline_format_budget_probe_complete_runtime_open",
         "followup": "docs/nes-native-video-feasibility.ko.md",
         "offline_probe": "analysis/nes-native-video-feasibility.json"
+      },
+      "native_chr165": {
+        "status": "standalone_component_pass_not_connected",
+        "contract": "docs/nes-native-chr165-contract.ko.md",
+        "verification": "analysis/native-chr165-verification.json"
       }
     },
     {

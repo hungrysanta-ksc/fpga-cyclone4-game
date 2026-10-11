@@ -1,5 +1,7 @@
 # FPGA Core Development — sd2snesHST
 
+165 부품 진척: PPU가 받은 CHR를 재사용하는 캐시 RTL과 뱅크/미완성 타일 보호 검사를 통과했습니다. 실제 코어·SNES 연결 전이며 설치 후보는164입니다. [완료 범위와 다음 연결](docs/nes-native-chr165-contract.ko.md).
+
 후속: 사용자 PDF·Nested 변환 방식·FCEUX를 대조하고 SMB3 CHR의 BG/OBJ 형식 변환과 정적 용량을 확인했습니다. 실기 개선은 아직 미검증입니다. [설계와 완료 범위](docs/nes-native-video-feasibility.ko.md).
 
 164 이후 조사: **고정 좌표의 변경 픽셀 타일만 보내는 안보다 SNES의 CHR·타일맵·스크롤·스프라이트 활용을 우선 검토**합니다. 새 펌웨어는 없으며, 다음은 최소 SMB3 경로의 자원·전송 예산 확인입니다. [비교 근거와 계획](docs/nes-video-transfer-research.ko.md).
