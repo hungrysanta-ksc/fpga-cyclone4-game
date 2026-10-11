@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 연결 진척: 실제 SMB3 부팅 시뮬레이션의 PPU 수신 데이터를 CHR 캐시에 연결하고 원본 ROM과 대조했습니다. SNES 출력/실기 속도 개선은 아직 미완료이며 설치 후보는164입니다.",
-  "next_action": "NATIVE_REQUIRED_GRAPHICS_STATE_FILL_AND_HOST_CONSUMER",
+  "assessment": "165 표시 상태 진척: 행별 스크롤·표시 설정과 팔레트32색의 고정 묶음을 구현하고 경계 검사를 통과했습니다. 타일맵/OAM/CHR의 같은 세대 연결과 SNES 표시·실기 속도 개선은 아직 미완료이며 설치 후보는164입니다.",
+  "next_action": "NATIVE_OAM_MAP_REQUIRED_SET_COMMON_GENERATION_AND_SNES",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2628,5 +2628,12 @@
     "binding_verification": "analysis/native-tap165-verification.json",
     "binding_contract": "docs/nes-native-tap165-contract.ko.md",
     "next": "Actual PPU binding passed. Next native BG/OBJ required set and coherent palette/OAM/scroll/raster generation, partial-byte fill and physical bank versions, host CDC/lease/SNES consumer replacing38M9K. Minimum changed-boundary checks then real SMB3. No165 package; candidate164/audio/menu preserved."
+  },
+  "native_raster165": {
+    "status": "state_packet_boundary_pass_not_complete_frame",
+    "verification": "analysis/native-raster165-verification.json",
+    "contract": "docs/nes-native-raster165-contract.ko.md",
+    "next": "Native raster state packet passed, not whole-frame readiness. Next actual OAM/nametable/required BG-OBJ set, common CHR/state generation, bounded missing bytes and physical bank versions; then host CDC/SNES consumer replacing38M9K and minimum changed checks -> real SMB3. Raw Loopy v/t needs fetch-coordinate mapping. Keep164/audio/STOPmenu; no new package or unchanged broad tests.",
+    "hardware": false
   }
 }

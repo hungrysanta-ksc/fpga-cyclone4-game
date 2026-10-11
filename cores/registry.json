@@ -46,7 +46,7 @@
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-162",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "Actual PPU binding passed. Next native BG/OBJ required set and coherent palette/OAM/scroll/raster generation, partial-byte fill and physical bank versions, host CDC/lease/SNES consumer replacing38M9K. Minimum changed-boundary checks then real SMB3. No165 package; candidate164/audio/menu preserved.",
+      "next_gate": "Native raster state packet passed, not whole-frame readiness. Next actual OAM/nametable/required BG-OBJ set, common CHR/state generation, bounded missing bytes and physical bank versions; then host CDC/SNES consumer replacing38M9K and minimum changed checks -> real SMB3. Raw Loopy v/t needs fetch-coordinate mapping. Keep164/audio/STOPmenu; no new package or unchanged broad tests.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "162 MCU+FPGA strict6B/E5",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -317,6 +317,13 @@
         "verification": "analysis/native-chr165-verification.json",
         "binding_verification": "analysis/native-tap165-verification.json",
         "binding_contract": "docs/nes-native-tap165-contract.ko.md"
+      },
+      "native_raster165": {
+        "status": "state_packet_boundary_pass_not_complete_frame",
+        "verification": "analysis/native-raster165-verification.json",
+        "contract": "docs/nes-native-raster165-contract.ko.md",
+        "next": "Native raster state packet passed, not whole-frame readiness. Next actual OAM/nametable/required BG-OBJ set, common CHR/state generation, bounded missing bytes and physical bank versions; then host CDC/SNES consumer replacing38M9K and minimum changed checks -> real SMB3. Raw Loopy v/t needs fetch-coordinate mapping. Keep164/audio/STOPmenu; no new package or unchanged broad tests.",
+        "hardware": false
       }
     },
     {
