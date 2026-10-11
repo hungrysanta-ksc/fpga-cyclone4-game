@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-11",
-  "technical_candidate": "NES-GAME-156",
+  "technical_candidate": "NES-GAME-157",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "156 실기 Select 커서·버튼 이력·메뉴 복귀 확인. 음원 차단에도155와 같은 PPU 기한 오류로 Start 이후 정지; 플레이 미완료.",
-  "next_action": "FIX_BG_HIGH_PLANE_REQUEST_RESPONSE_BOUNDARY_THEN_ACTUAL_SMB3",
+  "assessment": "156 Select 성공, Start PPU기한 오류 미해결.157은 실제 오류 직전16클록의 최소 관측 시험판.",
+  "next_action": "RUN157_SMB3_AND_DECODE_FIRST_FAULT_HISTORY",
   "next_three_deliverables": [
     "실제 SMB3 Start 이후 line193/dot8/0x217A18 직전 예측·매핑·승인·캐시·응답 경계 좁히기",
     "확인된 선행 읽기·캐시·중재 또는 응답 전달의 첫 실패 경계를 수정하고 최소 검증",
@@ -859,7 +859,7 @@
   "first_game_target": "cores/nes/first-game-target.json",
   "mapper_expansion_policy": "SMB3 mapper4 first, extend mappers afterward; keep SMB3/GBC regression",
   "hardware_iteration_policy": "최소 보호 동작과 검증된 파일 조합, 관측 방법, 종료·독립 복원 경로가 준비되면 제한 실기에서 데이터를 얻는 것을 우선한다. 남은 불확실성을 실제로 판별할 수 있는 시험을 먼저 정하고, 실기만으로 해결할 수 있는 항목을 같은 문서·모형 검사로 반복해서 미루지 않는다. 이는 모든 전기 조건의 입증을 생략한다는 의미가 아니다. 기존 승인 범위는 재승인을 요구하지 않으며, 고장 주입·전압 변경·노출 확대 등 범위가 달라질 때만 필요한 판단을 추가한다.",
-  "limited_trial_decision": "analysis/game156-verification.json",
+  "limited_trial_decision": "analysis/game157-verification.json",
   "hardware_readiness_update120": {
     "scope": "Limited CPU/PPU-free normal80 diagnostic; not fullNES/game percentage",
     "counts": {
@@ -2481,5 +2481,14 @@
     "select_cursor_passed": true,
     "recovery_hardware_passed": true,
     "sound_cause_confirmed": false
+  },
+  "game157": {
+    "verification": "analysis/game157-verification.json",
+    "hardware_pending": true,
+    "ppu_fix": false,
+    "gameplay_passed": false,
+    "temporary_history_m9k": 3,
+    "device_m9k_used": 56,
+    "next": "Actual157 SMB3 firstStart->1PStart, then movement/jump if possible; twoTXT/menu; distinguish request/grant/reply boundary."
   }
 }
