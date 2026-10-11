@@ -1,3 +1,23 @@
+# NES 현재 인계 — 156 음원 차단·버튼 이력, 실제 SMB3 비교 대기
+
+[156 결과](../../analysis/GAME156-RESULT.ko.md) · [실기 안내](../../docs/nes-game156-instructions.ko.md) · [검증](../../analysis/game156-verification.json)
+
+155 실제 Select에서도 PPUerror2가 나고 메뉴로 복귀했다. 사용자가 사운드 시작과 겹침을 제안했다.155 외부DAC는0이지만 내부APU/DMC는활성이다. Mesen240프레임3비교에서Select는pulse1쓰기/2PLAYER변경,4015DMCenable없음;Start는이후DMCenable4회다. 참조일뿐FPGA활동·원인확정아니다. DMC만으로양쪽실패를단정하지않는다.
+
+156은APU.CS에서읽기/4017쓰기만허용해음원채널/DMC쓰기를차단한다.전체APUreset/클록변경/ROM패치없음. OAM DMAget/put·PPU·mapper·서비스·기한·입력전달·화면전송유지. 음원상태가달라져게임분기가바뀔수있어최종수정아니다. CPU사운드드라이버는계속실행되므로실패해도그코드의ROM접근영향을배제못한다.
+
+새패드관측은8비트완독후변화만최근16건+NESmasterticks(256tick내림)에저장한다. 맨처음완독은기준상태로기록;중복held는생략;부분/추가읽기는새완독으로기록하지않음. 사용자물리클릭/모든입력증거아니다. 오류/STOP후RAM불변,MCU76/80..8F로읽고최종TXT버튼이름/비트/시각/total을저장한다. SD쓰기RUN중금지. badauxvalid0은새gamefault가아니며기존보호·STOP는유지한다.
+
+짧은actualAPU/DMA와실제gate추출시험,원본pad와256mask,ring260,last16,partial/overread/duplicate/STOP/SPI,actualC13recoverycases/256formatmasks,linkedARM을확인했다. 긴실제ROM부팅/155합성충돌반복없음. 초기test01필수parameter/02packageimport/03강제입력의net전파오류는test04수정;fit02setup-.437거부후ring640비트레지스터를M9K+2clockresponse로바꾸고test05통과;fit03-.093/fit04-.038/fit05-.614거부후512비트1M9K/256tick양자화test08/fit06setup-.092PSRAM-.096거부후CHECK5.5ns/activeIO12ns배치예산fit07배치선택;추가5.5ns목표-.010은미달보존,동일155실제clockSDC기준nominal07setup+.246/hold+.153/PSRAM+4.571PASS. ARM01들여쓰기Werror->ARM02수정. DLL623 sandbox호스트실행은권한부여실행으로통과,라이선스오류아님.
+
+다음은한번156실기:첫Start선택->Select. 통과하면Select로1P복귀->Start->이동점프. nes-progress-156/nes-game-last-156와실제메뉴/장면을받는다. 같은실패는영상생략. 버튼로그로Start/Select정상완독·해제·동시입력부터확인하고PPU오류와대조한다. 정상진행해도APU원인확정/사운드완성으로승격금지. 같은155/044/GBC/A-B재시험금지.
+
+개인용ZIP/ROM/media/licenses는Git금지. frozen156과옛publicpins는불변. 완료freezer재실행금지. 한국어PR4절(목표/내용/결과/의미),hungrysanta-ksc만,사용자머지. 표시속도·DMA입력공백·오디오·저장·외부IO/MTBF는미완료.
+
+---
+
+## 이전155 실기 기록
+
 # NES 현재 인계 — 155 Select에서도 PPU 오류, 입력 이후 경계 재조사
 
 [155 실기 결과](../../analysis/GAME155-HARDWARE-RESULT.ko.md) · [원본 해시·해석](../../analysis/game155-hardware-verification.json)

@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재155 실기: **선택 화면의 Select에서도 PPU 읽기 기한 오류, 로그·메뉴 복귀 정상**. 일반 배경 선행 읽기로 실제 정지를 해결하지 못했으며 입력 이후 경계를 재조사합니다. [155 실기 결과](../../analysis/GAME155-HARDWARE-RESULT.ko.md).
+현재156: **음원 채널 차단·버튼 읽기 이력 시험판, SMB3 실기 대기**. 사운드 원인과 실제 정지 해결은 미확정입니다. [156 안내](../../docs/nes-game156-instructions.ko.md) · [결과](../../analysis/GAME156-RESULT.ko.md).
 
 이전151 실기: **SMB3 제목·캐릭터 표시와 메뉴 복귀 성공, PPU 읽기 오류로 조기 종료**. 정상 플레이·전체 버튼 입력은 미완료입니다. [151 실기 결과](../../analysis/GAME151-HARDWARE-RESULT.ko.md).
 
