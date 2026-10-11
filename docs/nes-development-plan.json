@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-155",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "일반 배경 선행 읽기 후보의 짧은 충돌 모델·배치 통과. 실제154 원인확정과 게임플레이는 미완료.",
-  "next_action": "RUN155_ACTUAL_SMB3_BG_PREFETCH",
+  "assessment": "155 선택 화면의 Select에서도 PPU 기한 오류가 발생했다. STOP·TXT·메뉴 복귀는 통과. 입력 전달 자체와 입력 뒤 화면 처리의 인과를 구분한다.",
+  "next_action": "SELECTION_START_SELECT_PAD_AND_BG_DEADLINE_BOUNDARY",
   "next_three_deliverables": [
     "실제 SMB3 Start 이후0x217A10 주변 요청 발행·응답·PPU 샘플 순서를 좁히기",
     "확인된 선행 읽기·캐시·중재 또는 응답 전달의 첫 실패 경계를 수정하고 최소 검증",
@@ -2466,8 +2466,10 @@
   },
   "game155": {
     "verification": "analysis/game155-verification.json",
-    "hardware_pending": true,
+    "hardware_pending": false,
     "gameplay_passed": false,
-    "next": "secondStart transition/move/jump/twoTXT/menu"
+    "next": "selection Start/Select actual pad byte and BG dot5-8 request/reply/cache",
+    "hardware_verification": "analysis/game155-hardware-verification.json",
+    "physical_fix_passed": false
   }
 }

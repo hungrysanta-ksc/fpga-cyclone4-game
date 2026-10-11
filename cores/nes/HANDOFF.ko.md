@@ -1,3 +1,21 @@
+# NES 현재 인계 — 155 Select에서도 PPU 오류, 입력 이후 경계 재조사
+
+[155 실기 결과](../../analysis/GAME155-HARDWARE-RESULT.ko.md) · [원본 해시·해석](../../analysis/game155-hardware-verification.json)
+
+**155는 실제 정지를 해결하지 못했다.** 첫Start로선택화면,Select입력에서화살표이동대신오류후메뉴복귀.154두번째Start/스테이지전환과다른트리거다. 모든두번째버튼실패/Select비트정상수신/스테이지플레이를확정하지않는다. 사용자관찰상Select에서도실패하므로스테이지진입만재현대상으로삼지않는다. 추가영상/같은155/044/GBC/A-B재시험불필요.
+
+실제로그64/DE/393216loadcomparePASS. ROMerror2/PPUdeadline,contexte200c2f4:30217a18:actual=pending217a18/age1/busyPPU1/readyresponsevalid0. PPU60820800:28606060:line193/dot8/render1/sprite0/bgtable0/logical0A18/latchpins18/readwrite2007=0/ALEhintaddrvalid0. dot8은BG상위비트면,normal155는dot3~6만켜므로hint0자체정상.154는dot6/0A10/217A10이나사용자트리거가다르므로lowplane해결·2dot개선으로승격금지. 이전2007영향·매퍼변경·직전점유·예측발행·캐시교체는현재스냅샷만으로미확인.
+
+STOPcount14220446유지/stop_error0/base/safe1/최종TXT741바이트/사용자실제메뉴PASS. 104x512seq0..103;DISPLAY_NEXT232670->STOPPED237640=4970ms/MENU240800까지3160ms. 입력시각/FPS아님;screenframes9/trusted0. 기존회수경로는수용하고게임실패와분리한다.
+
+NEXT:선택화면Start대Select에서실제패드바이트/strobe/read/shift를대조하고BGdot5~8의예측논리주소/실제주소/같은MMC3뱅크물리태그/요청승인/응답/캐시교체이력을연결한다. 패드가직접ROMerror2를생성하지않지만입력오류가게임경로를바꿀가능성은열어둔다. 주기적CPU점유/고정뱅크/강제PPU타일모델만다시통과시키지않는다. 기존소스·증거로좁힌뒤부족할때만최소직전이력. 실제게임을우선하고긴전체부팅/무조건캐시확대/기한삭제를피한다.
+
+이번PR97에는결과·인계만추가한다.155펌웨어/FPGA/ZIP/frozen2359/manifest485444c85297c1cf610d4d2db6e77d4959827c3a51b0b7334aa6079c9f9ff654불변. 새로운구현·빌드·패키지없음. 다음구현은사용자머지후진행. 원본TXT는privateprobes/nes-game155-hardware. 한국어PR4절/개인GitHub/usermerges유지.
+
+---
+
+## 이전155 준비 기록
+
 # NES 현재 인계 — 155 일반 배경 선행 읽기, 다음 SMB3 실기
 
 [155 결과](../../analysis/GAME155-RESULT.ko.md) · [실기 안내](../../docs/nes-game155-instructions.ko.md) · [고정값](../../analysis/game155-verification.json)
