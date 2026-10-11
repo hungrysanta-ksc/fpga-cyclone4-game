@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-11",
-  "technical_candidate": "NES-GAME-158",
+  "technical_candidate": "NES-GAME-159",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "158 새 CHR주소 예측은 도달했으나 CPU읽기·힌트만료·옛뱅크 요청으로 기한 실패. 실제 쓰기 구간의 CPU 조기읽기 자격을 우선 확인한다.",
-  "next_action": "CHECK_RAW_WRITE_CPU_READ_ELIGIBILITY_AND_HINT_GRANT_SCHEDULE",
+  "assessment": "158과 같은 요청 순서를 모델에서 재현.159는 raw 쓰기 중 불필요한 조기ROM읽기 자격을 차단해 경계 통과; 실제 스테이지 진입은 대기.",
+  "next_action": "RUN159_SMB3_RAW_READ_QUALIFICATION",
   "next_three_deliverables": [
-    "실제 raw R/W·cart_pre·mapper allow·CPU 조기읽기 결선으로158 요청 순서 재현",
-    "불필요한 쓰기구간 ROM읽기 확인 시 최소 수정; 정상CPU/DMA·PPU기한 검사, 필요할 때만 힌트 보관·중재 검토",
-    "같은 SMB3 스테이지 진입·이동·점프 실기; 원인해결 후 임시 이력 축소"
+    "159 실기 SMB3 스테이지 진입·이동·점프와 두TXT/메뉴 확인",
+    "실패 시 최초오류와16클록 요청순서 비교; 정당한CPU읽기와 충돌 여부를 근거로 최소 수정",
+    "플레이 통과 뒤 조작·스크롤 확인, 임시이력RAM 축소·음원 차단 해제"
   ],
   "gates": [
     {
@@ -859,7 +859,7 @@
   "first_game_target": "cores/nes/first-game-target.json",
   "mapper_expansion_policy": "SMB3 mapper4 first, extend mappers afterward; keep SMB3/GBC regression",
   "hardware_iteration_policy": "최소 보호 동작과 검증된 파일 조합, 관측 방법, 종료·독립 복원 경로가 준비되면 제한 실기에서 데이터를 얻는 것을 우선한다. 남은 불확실성을 실제로 판별할 수 있는 시험을 먼저 정하고, 실기만으로 해결할 수 있는 항목을 같은 문서·모형 검사로 반복해서 미루지 않는다. 이는 모든 전기 조건의 입증을 생략한다는 의미가 아니다. 기존 승인 범위는 재승인을 요구하지 않으며, 고장 주입·전압 변경·노출 확대 등 범위가 달라질 때만 필요한 판단을 추가한다.",
-  "limited_trial_decision": "analysis/game158-verification.json",
+  "limited_trial_decision": "analysis/game159-verification.json",
   "hardware_readiness_update120": {
     "scope": "Limited CPU/PPU-free normal80 diagnostic; not fullNES/game percentage",
     "counts": {
@@ -2510,5 +2510,14 @@
     "recovery_hardware_passed": true,
     "early_future_hint_confirmed": true,
     "write_only_cpu_read_confirmed": false
+  },
+  "game159": {
+    "verification": "analysis/game159-verification.json",
+    "hardware_pending": true,
+    "gameplay_passed": false,
+    "raw_read_qualification": "boundary model passed; physical cause unconfirmed",
+    "temporary_history_m9k": 3,
+    "device_m9k_used": 56,
+    "next": "Actual159 SMB3 firstStart->1PLAYER Start once/release; move/jump if possible; twoTXT/menu. Compare first fault and arbitration if failure."
   }
 }
