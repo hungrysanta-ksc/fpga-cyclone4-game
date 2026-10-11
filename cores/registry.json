@@ -37,16 +37,16 @@
       ],
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
-      "verification": "analysis/GAME159-RESULT.ko.md",
+      "verification": "analysis/GAME159-HARDWARE-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "raw-read-qualification-physical-pending",
+      "investigation": "world-map-pass-level-entry-dot336-ppu-deadline",
       "hardware_baseline": "NES-H1-SAMPLING-044",
-      "hardware_verified_scope": "158 full393216loadcompare/history16/pad5/STOP/TXT/base/video+actualmenu PASS. Correctfuture217A18hint at-15 but CPU03C001 -12..-7, hint expires thenold205A18read until-2, new217A18sample0miss. GameplayFAIL. Sourcecandidate rawwrite earlyCPUread qualification; actualrawRWnotlogged.",
+      "hardware_verified_scope": "159 worldmapentry/directionalmovementPASS;firstlevelAtransitionFAULT2not60stimeout;104records/full393216/68E2/STOPbaseTXTmenuPASS. line193dot336217000requested-3;CPUreply-6/idle-5,-4;qualifiedhint0;rawhintandearlierPPUstateunobserved.",
       "development_evidence": "analysis/game159-verification.json",
       "hardware_candidate": "NES-GAME-159",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "Actual159 SMB3 firstStart->1PLAYER Start once/release; move/jump if possible; twoTXT/menu. Compare first fault and arbitration if failure.",
+      "next_gate": "Reproduce actual PPU/latch/service dot333..336 boundary with idle reader, invalid217078 hint and demand217000 three clocks before sample. Preserve159 raw CPU/DMA read qualification and deadlines; check safe early-address/validity conditions before minimal change, then actualSMB3 worldmap->A firstlevel->move/jump. No timeout-only extension or same159/044/A-B replay.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "159 MCU+FPGA strict68/E2",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -246,6 +246,15 @@
         "early_future_hint_confirmed": true,
         "write_only_cpu_read_confirmed": false,
         "context": "e200c2f4:30217a18"
+      },
+      "hardware_game159": {
+        "verification": "analysis/game159-hardware-verification.json",
+        "world_map_passed": true,
+        "level1_entry_passed": false,
+        "full_gameplay_passed": false,
+        "recovery_passed": true,
+        "timeout_exit": false,
+        "context": "e70142e0:00217000"
       }
     },
     {

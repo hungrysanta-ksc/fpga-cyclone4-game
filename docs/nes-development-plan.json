@@ -5,12 +5,12 @@
   "technical_candidate": "NES-GAME-159",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "158과 같은 요청 순서를 모델에서 재현.159는 raw 쓰기 중 불필요한 조기ROM읽기 자격을 차단해 경계 통과; 실제 스테이지 진입은 대기.",
-  "next_action": "RUN159_SMB3_RAW_READ_QUALIFICATION",
+  "assessment": "159 월드맵 진입·이동 통과. 첫 레벨 A전환에서dot336 PPU기한오류2;시간제한아님. 렌더전환/PPUDATA/ALE주소래치와선행읽기유효조건을비교한다.",
+  "next_action": "REPRODUCE_LEVEL_ENTRY_DOT336_PPU_ADDRESS_AND_HINT_QUALIFICATION",
   "next_three_deliverables": [
-    "159 실기 SMB3 스테이지 진입·이동·점프와 두TXT/메뉴 확인",
-    "실패 시 최초오류와16클록 요청순서 비교; 정당한CPU읽기와 충돌 여부를 근거로 최소 수정",
-    "플레이 통과 뒤 조작·스크롤 확인, 임시이력RAM 축소·음원 차단 해제"
+    "159dot333~336 실제PPU/주소래치/서비스의빈reader·무효hint·늦은217000수요 재현",
+    "정상샘플과159rawread조건을유지하며안전한조기주소·유효조건 최소수정/검증",
+    "같은SMB3 첫레벨진입/A·이동·점프 실기;통과후스크롤·음원복구"
   ],
   "gates": [
     {
@@ -2513,11 +2513,16 @@
   },
   "game159": {
     "verification": "analysis/game159-verification.json",
-    "hardware_pending": true,
+    "hardware_pending": false,
     "gameplay_passed": false,
-    "raw_read_qualification": "boundary model passed; physical cause unconfirmed",
+    "raw_read_qualification": "worldmap entry/movement passed in hardware; level-entry boundary still fails",
     "temporary_history_m9k": 3,
     "device_m9k_used": 56,
-    "next": "Actual159 SMB3 firstStart->1PLAYER Start once/release; move/jump if possible; twoTXT/menu. Compare first fault and arbitration if failure."
+    "next": "Reproduce actual PPU/latch/service dot333..336 boundary with idle reader, invalid217078 hint and demand217000 three clocks before sample. Preserve159 raw CPU/DMA read qualification and deadlines; check safe early-address/validity conditions before minimal change, then actualSMB3 worldmap->A firstlevel->move/jump. No timeout-only extension or same159/044/A-B replay.",
+    "hardware_verification": "analysis/game159-hardware-verification.json",
+    "world_map_hardware_passed": true,
+    "level1_entry_passed": false,
+    "recovery_hardware_passed": true,
+    "timeout_exit": false
   }
 }
