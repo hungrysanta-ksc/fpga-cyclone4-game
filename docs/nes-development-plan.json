@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-11",
-  "technical_candidate": "NES-GAME-157",
+  "technical_candidate": "NES-GAME-158",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "157 실기 이력으로 선행 읽기 완료 후 샘플 직전 CHR 물리주소 전환 확인. 게임 실패/회수 성공; 정확한 매퍼 쓰기는 미확정.",
-  "next_action": "REPRODUCE_AND_FIX_LATE_CHR_ADDRESS_TRANSITION",
+  "assessment": "157 주소 변경 직후 PPU 데이터 기한 실패.158은 예정된 MMC3 쓰기를 선행 조회에만 적용했으며 실기 성공은 미확인.",
+  "next_action": "RUN158_SMB3_PENDING_MMC3_WRITE_PREVIEW",
   "next_three_deliverables": [
-    "실제 MMC3/PPU/service/reader에서 dot8 직전 뱅크 변경과 논리주소 변경을 구분하는 짧은 재현",
-    "주소 전환 후 샘플까지 데이터 확보 수정·최소 검증, 임시 이력3M9K 축소 검토",
-    "같은 SMB3 스테이지 진입·이동·점프 실기 확인"
+    "158 실기에서 SMB3 1PLAYER Start 후 스테이지 진입과 이동·점프 확인, TXT 두 개 회수",
+    "실패 시 매퍼 쓰기와 PPU 논리주소 전환 구분에 필요한 최소 근거 확인; 반복 예측 수정 전에 원본 메모리 시간 계약 대조",
+    "진입 성공 시 조작·스크롤 확인 뒤 음원 차단 해제; 원인이 확인된 임시 이력 축소"
   ],
   "gates": [
     {
@@ -859,7 +859,7 @@
   "first_game_target": "cores/nes/first-game-target.json",
   "mapper_expansion_policy": "SMB3 mapper4 first, extend mappers afterward; keep SMB3/GBC regression",
   "hardware_iteration_policy": "최소 보호 동작과 검증된 파일 조합, 관측 방법, 종료·독립 복원 경로가 준비되면 제한 실기에서 데이터를 얻는 것을 우선한다. 남은 불확실성을 실제로 판별할 수 있는 시험을 먼저 정하고, 실기만으로 해결할 수 있는 항목을 같은 문서·모형 검사로 반복해서 미루지 않는다. 이는 모든 전기 조건의 입증을 생략한다는 의미가 아니다. 기존 승인 범위는 재승인을 요구하지 않으며, 고장 주입·전압 변경·노출 확대 등 범위가 달라질 때만 필요한 판단을 추가한다.",
-  "limited_trial_decision": "analysis/game157-verification.json",
+  "limited_trial_decision": "analysis/game158-verification.json",
   "hardware_readiness_update120": {
     "scope": "Limited CPU/PPU-free normal80 diagnostic; not fullNES/game percentage",
     "counts": {
@@ -2495,5 +2495,15 @@
     "recovery_hardware_passed": true,
     "physical_address_transition_confirmed": true,
     "mapper_write_confirmed": false
+  },
+  "game158": {
+    "verification": "analysis/game158-verification.json",
+    "hardware_pending": true,
+    "ppu_fix": "pending-write model only",
+    "gameplay_passed": false,
+    "temporary_history_m9k": 3,
+    "device_m9k_used": 56,
+    "porting_references": "docs/nes-porting-reference-guide.ko.md",
+    "next": "Actual158 SMB3 firstStart->1PLAYER Start once/release; move/jump if possible; twoTXT/menu; distinguish mapper-write from logical PPU change if failure."
   }
 }

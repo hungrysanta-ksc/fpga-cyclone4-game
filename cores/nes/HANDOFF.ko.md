@@ -1,3 +1,25 @@
+# NES 현재 인계 — 158 MMC3 변경 전 그래픽 읽기 실기 시험판
+
+[158 결과](../../analysis/GAME158-RESULT.ko.md) · [실기 안내](../../docs/nes-game158-instructions.ko.md) · [검증](../../analysis/game158-verification.json) · [이식 참고 자료](../../docs/nes-porting-reference-guide.ko.md)
+
+PR99 머지289674a14407459a0823b154ab425e9f731f62c9 확인.157 실기의 확정 사실은 dot8 샘플 한 클록 전 물리 CHR주소205A18→217A18 변경, 즉시 승인됐지만 응답이 늦어 오류2로 종료한 것이다. MMC3 쓰기인지 PPU 논리주소 변경인지는 로그에 없어 미확정이다. CPU 점유만 원인으로 단정하지 않는다.
+
+158은 CPU의 mw_int/주소/데이터를 실제 cart_ce보다 먼저 관측해 MMC3 선행 조회에만 예정된8000 CHR모드/8001 CHR뱅크 값을 적용한다. 실제 mapper 레지스터·주소·IRQ·PPU·service·reader·physical-tag·샘플 기한·클록은 그대로다. ARM은 식별/이름만158로 변경.67/E1 엄격검사.156 APU채널 쓰기 차단과 기존 버튼/직전16클록 이력은 유지한다. 실기 수정 성공·오디오 완료로 표시하지 않는다.
+
+선택 test03/host02/reuse03/arm01+armcheck02/fit02+asm01/release01.72개의 뱅크 쓰기 충돌 모델은 정상 CHR 수신,108개 preview-off는 오류2,36개 늦은 논리주소 변경은 여전히 오류2.536 commit에서 정상주소 조기변경·취소·선택/정렬·모드 검사. 실제 CPU 게임 대신 버스/strobe를 구동했고 write lead9클록 고정, 이전 CPU읽기 시작12종/메모리위상3종이다. 전체 위상/게임 성공으로 확대하지 않는다. mapperTB/로그는 별도 해시 고정(result.sources에 누락된 범위를 숨기지 않는다). test01/02도 PASS인 이전 범위. 초기 materializer/정규화 실패와 샌드박스 도구실행 제한은 별도 보존, 라이선스 교체 불필요.
+
+새 배치13731LE/5005regs/56M9K/122physical/0virtual/1PLL. setup+.099ns,hold+.171ns,조건부PSRAM+2.997ns; 추가5.5ns 배치예산도+.099PASS. 동일155SDC를 유지하고 명목 재검사했으며 무변경 재배치는 하지 않았다. PCB2ns 가정/비동기reset recovery 음수/전체IO/MTBF 제한은 기존대로. 임시 이력 포함M9K56/56이므로 여유로 계산하지 말고 원인 확인 후 축소한다.
+
+NEXT:158 전체 SD폴더 적용 → NES GAME 158.nh1 → 첫 Start → 1PLAYER Start 한 번 후 떼기 → 진행되면 이동/A·B. nes-progress-158.txt와nes-game-last-158.txt,메뉴복귀 여부. 게임이 진행되면 짧은 영상; 같은 실패 영상은 불필요. 이전 로딩 약3분50초는 참고치이며158 실측이 아니다. 전체7분 무반응이면 중단/기록.044/GBC 복원·157 재시험·고정뱅크·무변경 전체부팅을 선행조건으로 반복하지 않는다.
+
+실패 시158 decoder로 최초 오류와 마지막16클록을157과 비교한다. 매퍼 쓰기와 논리주소 전환 구분이 필요하면 최소 관측만 추가한다. 예측 예외를 계속 덧대기 전에 원본 MiSTer SDRAM의 PPU/CPU 채널과 우리 PSRAM 공유 서비스의 시간 계약을 검토한다. 진행되면 조작·스크롤 먼저, 이후 음원 차단 해제. 고정 MiSTer/Mesen2 MMC3/NESTang/NESdev 자료의 확인 범위와 채택 순서는 참고 가이드에 기록했다. 다른 코어도 기존 검증 재사용→플랫폼 연결 차이→최소 검사→실제 목표ROM 순서다.
+
+frozen158/이전 source pins/배포ZIP 불변. 완료finish.py 재실행 금지. ROM/media/binary/private paths/licenses Git 금지. PR 한국어4절/개인hungrysanta-ksc/사용자 머지. 과거157 메타데이터의hardware_pending은 동결 시점 기록이며157의 현재 실기 사실은GAME157-HARDWARE가 우선한다.
+
+---
+
+## 이전 작업 인계
+
 # NES 현재 인계 — 157 주소 전환 직후 PPU 기한 오류 확인
 
 [157 실기 결과](../../analysis/GAME157-HARDWARE-RESULT.ko.md) · [원본 해시·16클록 해석](../../analysis/game157-hardware-verification.json)
