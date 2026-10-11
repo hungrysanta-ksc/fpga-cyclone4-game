@@ -1,0 +1,188 @@
+{
+  "candidate": "NES-GAME-151",
+  "status": "WRITE_END_FIX_ACTUAL_GAME_HARDWARE_PENDING",
+  "manifest_sha256": "c020a2031d9b8a33bbcaaa665498754159a5ef7b8aea56d36d7936c7dd5e0d51",
+  "file_count": 2430,
+  "public_sources": {
+    "src/nes/diagnostic/nes_game_bus151.sv": "82f6c9ce7cb491b6decbb3d82d7125a2bb301436782039b42ba41d14261d274a",
+    "src/nes/diagnostic/nes_screen_status151.sv": "9cab2f40e9c9e76586232727ab3b1708db239100cf93333f93e7d8230fa94a7f",
+    "tests/nes-functional/game151_write_tb.sv": "c0faaf0814bca21fb7c628fc3b52555a85e61359a51917d944b7c2e79898c48e",
+    "tools/build_nes_game151.py": "6d6e736551f90e87e1f6b2789b73cfd109cebb7ff06de7920a635e70589fe274",
+    "tools/nes_game151.py": "75d1cc348b1d98262b67c74c3e88447c07f4117643c7d524ac1e730a20931fc5",
+    "tools/nes_game151_arm.py": "41817ee63bba4b37d60c55c572020b9ff83e44f93943cf164aa74cc026aebb15",
+    "tools/check_nes_game151_arm.py": "c05a7dc5007b91fef75098e518721f7d000223a73afa6c852a26324e3a531158",
+    "tools/assemble_nes_game151.py": "b2d47f24eb8d9e5341cf07d144eff22382bfbebb612fa19c1fb6f17b612f5637",
+    "tools/test_nes_game151_client.py": "22dd32ba6df49d37eb639b084cbfff32ec26d3ba0edd023e86c870e819235a3e",
+    "tools/test_nes_game151.py": "0c4a6213fb51fcdd2fa54ed44be81f1c96abdcb501d8060c5069fb4becd8e67f",
+    "tools/release_nes_game151.py": "7614a2542dd91dd5cfef33dc7230dcd5228d0e4fd4a9ea681c35c18d9e6d7ec3",
+    "tools/verify_nes_game151.py": "7d2d52bbc27816999697fd457464f55211c2d3c2eef4e36aafc7d22505cd5c3b"
+  },
+  "selected": [
+    "fit",
+    "asm",
+    "test",
+    "client",
+    "arm",
+    "armcheck-sandbox-failed",
+    "armcheck",
+    "release"
+  ],
+  "physical_test": false,
+  "sd_package": true,
+  "ids": [
+    "61",
+    "DB"
+  ],
+  "source_boundaries": {
+    "changed150": [
+      "nes_rom_spi.sv",
+      "nes_run_observer134.sv",
+      "fxpak_nes_screen137_top.sv",
+      "nes_screen_status142.sv (replaced)",
+      "nes_game_bus150.sv (replaced)",
+      "game-program.hex"
+    ],
+    "spi_commands_unchanged": true,
+    "client_show_frame_numbers": [
+      3,
+      39
+    ],
+    "scope": "Frozen models/source boundary, not physical root cause or full timing signoff."
+  },
+  "test": {
+    "passed": true,
+    "results": {
+      "write": "PASS GAME151 write checks=36 causal_negatives=18 phases3 delays0/80/160ns immediate_end_garbage reset/inactive/foreign",
+      "rom": "PASS GAME150 ROM32768 compact mirrors/vectors/raw ownership",
+      "video": "PASS GAME150 pixels=57344 pad=80 frozen_capture/release/recapture/reset checks=57424"
+    },
+    "scope": "Late data model0/80/160ns at3 phases, old causal controls; stored pixels, not measured physical write timing."
+  },
+  "client": {
+    "passed": true,
+    "exact_rgb_frames": 2,
+    "pixels": 114688,
+    "input_sha": "765a4271ffd48b56555f3ac97aabf6ea3d1b632dee6b5ee4d5816d36d82c35f4",
+    "sources": {
+      "tools/build_nes_game151.py": "6d6e736551f90e87e1f6b2789b73cfd109cebb7ff06de7920a635e70589fe274",
+      "snes/video_probe/capture_game150.lua": "567408eb5d82a6607f0933cd008bfb42106a0c05d07a162bf0af098f13ce6d4c"
+    },
+    "scope": "Actual SNES CPU/DMA/PPU against modeled framebuffer, including bank wrap; not physical bus or game speed."
+  },
+  "timing": {
+    "passed": true,
+    "same_clock_setup_ns": 0.021,
+    "same_clock_hold_ns": 0.174,
+    "snes_envelope_ns": 201.566,
+    "sample_ns": 270,
+    "psram_conditional_margin_ns": 3.3869999999999996,
+    "pad_held_delay_ns": 6.463,
+    "negative_recovery": [
+      {
+        "corner": "8_slow_1200mv_85c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "4.578",
+        "slack": "-7.446"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "4.578",
+        "slack": "-6.979"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "4.242",
+        "slack": "-6.728"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "4.242",
+        "slack": "-6.291"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "2.161",
+        "slack": "-3.616"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "2.161",
+        "slack": "-3.429"
+      }
+    ],
+    "psram_address_margin_ns": 10.152999999999995,
+    "psram_active_margin_ns": 3.3869999999999996,
+    "prior_unphased_margin_ns": 2.1069999999999975,
+    "address_launch_cycles": 17,
+    "ce_oe_launch_cycles": 16,
+    "row_counts": [
+      108,
+      6552
+    ],
+    "pcb_allowance_ns": 2,
+    "mtbf_calculated": false,
+    "full_io_signoff": false,
+    "scope": "Conditional routed boundaries; existing unmeasured electrical and clock-halt limits remain open."
+  },
+  "arm": {
+    "firmware_bytes": 186860,
+    "firmware_sha256": "15895a877419007d36db894b5ffdccbecd34ee6d877599094f1d3cf667936f93",
+    "elf_sha256": "f1bda1e86b2b45611df62ff03f1ee096b96445e085ddd22230040ed710abbcb5",
+    "nmi_address": "0x08019148",
+    "vector_word": "0x8019149",
+    "stop_stores": 15,
+    "stop_calls": 0,
+    "stop_dsb": 3,
+    "stop_isb": 2,
+    "transport_source_matches": true,
+    "strong_nmi": true,
+    "arm_execution": false,
+    "physical": false,
+    "installable": false
+  },
+  "package": {
+    "zip_sha256": "a44ef26d252d849ff3c34b041018c491883e44f1dce3d1495d1ed2c023ed70eb",
+    "zip_bytes": 926988,
+    "members": 12,
+    "firmware_sha256": "15895a877419007d36db894b5ffdccbecd34ee6d877599094f1d3cf667936f93",
+    "fpga_sha256": "5dc492e047a2e07e7f9f61261adfbc5f41701660b09d006d892ea7ac45b580ee",
+    "rom_sha256": "dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49",
+    "normal_trial_ready": true,
+    "physical": false
+  },
+  "fit": {
+    "logic_elements": 13644,
+    "labs": 916,
+    "registers": 4986,
+    "m9k": 52,
+    "pll": 1,
+    "physical_pins": 122,
+    "virtual_pins": 0
+  },
+  "limitations": [
+    "physical cause not confirmed",
+    "visible frame held30vblank, not60fps",
+    "input sampled per displayed frame",
+    "telemetry remains untrusted",
+    "audio/emphasis/save",
+    "existing IO/MTBF/clock-halt limits"
+  ],
+  "user_correction": "Ignore subjective1505-6min; stopwatch next trial."
+}
