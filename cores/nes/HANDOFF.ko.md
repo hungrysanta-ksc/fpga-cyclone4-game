@@ -1,3 +1,21 @@
+# NES 현재 인계 — 154 PPU 상태 실기 회수, 일반 배경 읽기 기한 수정으로 진행
+
+[154 실기 결과](../../analysis/GAME154-HARDWARE-RESULT.ko.md) · [실제 로그 해석](../../analysis/game154-hardware-verification.json)
+
+154 추가 관측은 실기 수용 완료다. ROM393216바이트 적재·비교, 오류2 문맥·추가 PPU 상태 TXT, STOP/기본 FPGA/실제 메뉴 복귀가 통과했다. 게임은 실패했다. 사용자의 첫 Start는 선택 화면, 두 번째 Start는 다음 장면 진입 후 정지·복귀다. 선택 화면 기준 한 번과 전체 흐름 두 번은 모순이 아니며 중복 입력 결함으로 분류하지 않는다. 다른 버튼과 실제 스테이지 플레이는 미확인이다.
+
+실제 오류 문맥 `e200c2f4:20217a10`은153과 같다. actual=pending0x217A10,age1,busy/PPUsample1,ready/response/valid0. 새 상태 `60818800:28404040`은 line193/dot6,render1,sprite0,bgtable0,VRAM0x0A10,latch/pins0x10,read2007/write2007파이프0,ALE/hint/address_valid0이다. dot6은 일반 배경 패턴 읽기다. 현재 ALE/address_valid/hint0은 해당 단계에서 예상되므로 곧바로 결함으로 판정하지 않는다. `$2007` 겹침 전용 힌트 확장만을 해법으로 가정하지 않는다. 파이프0으로 더 앞선2007영향까지 배제하지도 않는다.
+
+NEXT:일반 배경 dot5→6의 논리/물리주소 유효화→공유서비스 승인→응답→샘플을 짧게 재현한다. 직전 CPU/PPU 요청 점유, 샘플 직전 MMC3 주소 변경, 백엔드 응답 위상을 구분하여 처음 어긋난 경계를 고친다. 현재 관측에는 직전 이력이 없어 이들은 가설이다. 필요한 실제 PPU/서비스 결선을 사용하되 인위적 조건 통과를 실기 원인 확정으로 올리지 않는다. 원인 없이 큰 캐시/클록 변경·기한 검사 삭제·전체110/240프레임 재시작을 하지 않는다. 최소 수정 검증 뒤 같은 SMB3 실기로 돌아간다. 추가 일반화 진단 체계나 같은154/044/GBC/A-B 시험을 요구하지 않는다.
+
+진행104기록seq0..103,DISPLAY232670→STOPPED242030=9360ms,메뉴준비245210ms. 사용자 메뉴복귀 확인. screen_frames17/trusted0은 FPS가 아니다. 실제 PPU 상태를154 합성 모델 값60b6a800:484043fe 또는153주입문맥30217a19와 혼동하지 않는다. 이번 영상 없음; 장면 독립 확인이 아닌 사용자 관찰로 보존한다.
+
+이번 PR96 업데이트는 결과·인계만이다. firmware/FPGA/ZIP/frozen2330/공개 도구 pin은 불변이다. 원본두TXT는private probes/nes-game154-hardware. 구현·시험판은 다음 작업이며 PR은 사용자가 머지한다. 한국어4절/개인계정 정책 유지.
+
+---
+
+## 이전154 준비 기록
+
 # NES 현재 인계 — 154 PPU 오류 순간 상태 수집, 실기 대기
 
 [154 결과](../../analysis/GAME154-RESULT.ko.md) · [설치](../../docs/nes-game154-instructions.ko.md) · [검증](../../analysis/game154-verification.json)

@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재154: **SMB3 진입 오류 순간의 PPU 상태 수집판 준비, 실기 대기**.153의 로그·메뉴 복귀는 실기 통과했고 게임 정지 원인은 미해결입니다. [154 안내](docs/nes-game154-instructions.ko.md) · [검증 결과](analysis/GAME154-RESULT.ko.md).
+현재154 실기: **PPU 상태·TXT·메뉴 복귀 성공, 게임 진입 실패**.193번 줄/dot6의 배경 읽기에서153과 같은 기한 오류가 확인됐습니다. [154 실기 결과](analysis/GAME154-HARDWARE-RESULT.ko.md).
 
 이전151 실기: **SMB3 제목·캐릭터 표시와 메뉴 복귀 성공, PPU 읽기 오류로 조기 종료**. 정상 플레이·전체 버튼 입력은 미완료입니다. [151 실기 결과](analysis/GAME151-HARDWARE-RESULT.ko.md).
 
