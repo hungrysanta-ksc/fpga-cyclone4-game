@@ -24,7 +24,7 @@
     },
     {
       "id": "nes",
-      "status": "first_level_play_and_audio_passed_continuous_video_pending",
+      "status": "blackout_removed_audio_retained_playability_failed_video_latency",
       "candidate": "NES-GAME-162",
       "planned_product_version": null,
       "released": false,
@@ -43,10 +43,10 @@
       "investigation": "active-chr-preservation-hold6-physical-pending",
       "hardware_baseline": "NES-H1-SAMPLING-044",
       "hardware_verified_scope": "160 full393216/104records/69E3/lastA/STOPbaseMENUprepared;firstlevelFAIL2dot6actual205FF0 afterhint217FF8reply;not60timeout. Presentation30vblankheld,152perholdvblankpad retained.",
-      "development_evidence": "analysis/game163-verification.json",
+      "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-162",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "After PR105 merge, improve continuous video on actual SMB3 while retaining163 SPC initialization and working162 audio. Minimum changed-path checks then hardware. After AV quality, remove normal60s cap with fault/console-reset capture and safe logging, then assess sustained input. No repeated sound-only/044/GBC/unchanged full-load tests.",
+      "next_gate": "After PR106 merge, reduce video transfer volume and complete-snapshot latency for playable SMB3; compare existing GBC presentation before design, preserve163 SPC/162 audio and safeSTOP/menu. Minimum changed-path checks then real ROM. Do not increase vblank DMA beyond its budget or claim hold removal gives60fps. After usable AV, remove normal60s cap with safe fault/reset logging, then long held-input assessment. No repeated164/044/GBC/sound-only/unchanged full-load tests.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "162 MCU+FPGA strict6B/E5",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -55,8 +55,8 @@
       "first_game_target": "cores/nes/first-game-target.json",
       "latest_mcu": "NES-GAME162-DEV",
       "limited_trial_candidate": "NES-GAME-162",
-      "limited_trial_decision": "analysis/game163-verification.json",
-      "limited_trial_instructions": "docs/nes-game163-instructions.ko.md",
+      "limited_trial_decision": "analysis/game164-verification.json",
+      "limited_trial_instructions": "docs/nes-game164-instructions.ko.md",
       "short_recovery116_hardware": "117 short BASE/menu pass retained; full80 recovery subsequently passed in119",
       "full80_116_hardware": "119 실기에서 동일116/CF86의 전체80KiB 적재·읽기비교·STOP·기본FPGA·메뉴 복귀·사용자044 복원이 통과했다. 진행45기록/최종 verified1,load/compare81920,오류0,RUN0. 메뉴준비491.34초는 펌웨어 시각이며 독립 벽시계 측정이 아니다. 이번 GBC 플레이는 미보고다.",
       "hardware_run136": {
@@ -219,7 +219,7 @@
       "game147": "analysis/game147-verification.json",
       "game148": "analysis/game148-verification.json",
       "game154_hardware": "analysis/game154-hardware-verification.json",
-      "hardware_evidence": "analysis/game163-hardware-verification.json",
+      "hardware_evidence": "analysis/game164-hardware-verification.json",
       "hardware_game156": {
         "verification": "analysis/game156-hardware-verification.json",
         "select_cursor_passed": true,
@@ -291,6 +291,16 @@
         "physical_audio_passed": true,
         "base_restored_and_menu_prepared": true,
         "physical_menu_return_confirmed_this_session": false,
+        "run_rom_error": 0,
+        "display_interval_ms": 60650
+      },
+      "hardware_game164": {
+        "verification": "analysis/game164-hardware-verification.json",
+        "blackout_removal_passed": true,
+        "audio_result": "user reports seems normal",
+        "playability_passed": false,
+        "physical_menu_return_confirmed": true,
+        "held_down_tested": false,
         "run_rom_error": 0,
         "display_interval_ms": 60650
       }
