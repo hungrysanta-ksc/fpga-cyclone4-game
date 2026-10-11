@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재148: **실제 SMB3(J) 초기 PPU 읽기 장애 수정, 30프레임 RTL 실행 통과**. 다음은 게임 적재·화면·입력 연결과 실기 ROM 패키지입니다. [148 결과](../../analysis/GAME148-RESULT.ko.md).
+현재150 실기: **384KiB 적재·전량 대조·RUN/STOP·메뉴 복귀 통과, 게임 그림은 표시되지 않아 미완료**. 점멸 원인과 실제 픽셀 전달 경계를 다음 작업에서 좁힙니다. [150 실기 결과](../../analysis/GAME150-HARDWARE-RESULT.ko.md).
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 
