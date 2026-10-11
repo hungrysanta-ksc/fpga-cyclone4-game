@@ -1,5 +1,7 @@
 # FPGA Core Development — sd2snesHST
 
+165 화면 데이터 연결 진척: 실제 CIRAM·OAM 스냅샷과 CHR·행 상태의 공통 수집/조회/해제를 구현했습니다. 필요 타일 완성·SNES 표시·실기 속도 개선은 미완료이며 설치 후보는164입니다. [완료 범위와 다음 연결](docs/nes-native-scene165-contract.ko.md).
+
 165 표시 상태 진척: 행별 스크롤·표시 설정과 팔레트32색의 고정 묶음을 구현하고 경계 검사를 통과했습니다. 타일맵/OAM/CHR의 같은 세대 연결과 SNES 표시·실기 속도 개선은 아직 미완료이며 설치 후보는164입니다. [완료 범위와 다음 연결](docs/nes-native-raster165-contract.ko.md).
 
 165 연결 진척: 실제 SMB3 부팅 시뮬레이션의 PPU 수신 데이터를 CHR 캐시에 연결하고 원본 ROM과 대조했습니다. SNES 출력/실기 속도 개선은 아직 미완료이며 설치 후보는164입니다. [완료 범위와 다음 연결](docs/nes-native-tap165-contract.ko.md).
