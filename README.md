@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재163 실기: **사운드 출력·첫 레벨 플레이 통과, 실행·ROM 오류0**. 다음은 연속 화면 개선이며, 이후 장시간 실행과 입력 유지를 확인합니다. [163 실기 결과](analysis/GAME163-HARDWARE-RESULT.ko.md).
+현재164: **반복 검정 구간 제거를 위한 실기판 준비**.163에서 확인한 사운드를 유지하고 수직 공백 분할 전송으로 변경했습니다. 부분 갱신·지연은 남으며60fps는 아닙니다. [164 결과](analysis/GAME164-RESULT.ko.md) · [실기 안내](docs/nes-game164-instructions.ko.md).
 
 이전151 실기: **SMB3 제목·캐릭터 표시와 메뉴 복귀 성공, PPU 읽기 오류로 조기 종료**. 정상 플레이·전체 버튼 입력은 미완료입니다. [151 실기 결과](analysis/GAME151-HARDWARE-RESULT.ko.md).
 

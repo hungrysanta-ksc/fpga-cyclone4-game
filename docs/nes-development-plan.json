@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-11",
-  "technical_candidate": "NES-GAME-163",
+  "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "163 사용자 청취로 사운드 정상, 영상 첫 레벨 플레이 확인, ROM 오류0. 로그 STOP/base/menu준비 통과. 다음 연속 화면; DOWN 유지·장시간 실행 미완료.",
-  "next_action": "AFTER_PR105_MERGE_CONTINUOUS_VIDEO_THEN_LONG_PLAY_AND_HELD_INPUT",
+  "assessment": "163 사운드 실기 성공 유지.164 반복검정 제거용 수직공백 분할전송 모델 검증·실기판 준비. 전체동시교체/60fps/지연해결은 미완료; 부분갱신 남음.",
+  "next_action": "HARDWARE164_VISIBLE_UPDATE_THEN_REDUCE_VIDEO_LATENCY",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2592,5 +2592,17 @@
     "base_restored_and_menu_prepared": true,
     "physical_menu_return_confirmed_this_session": false,
     "hardware_verification": "analysis/game163-hardware-verification.json"
+  },
+  "game164": {
+    "verification": "analysis/game164-verification.json",
+    "hardware_pending": true,
+    "physical_audio_baseline": "163 pass",
+    "continuous_video_goal_complete": false,
+    "atomic_frame_flip": false,
+    "smooth_60fps": false,
+    "held_input_fixed": false,
+    "run_budget_seconds": 60,
+    "reset_logging": false,
+    "next": "Actual164 SMB3 repeated-black removal/sound/move-jump/menu with twoTXT and short video. Partial updates and lower snapshot rate remain; improve video bandwidth after physical evidence. Then remove60s limit with safe fault/reset logs, then held-input quality. Preserve163sound and minimal-check/real-ROM priority."
   }
 }
