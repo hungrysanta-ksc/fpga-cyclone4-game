@@ -1,0 +1,212 @@
+{
+  "candidate": "NES-GAME-156",
+  "status": "SOUND_ISOLATION_PAD_TRACE_READY_PHYSICAL_PENDING",
+  "manifest_sha256": "a7170c81514b515e1ed99c2365230bdc9cff97ad40e7c36dc1db43816ebe5a36",
+  "file_count": 2628,
+  "public_sources": {
+    "tools/check_nes_game156_timing.py": "50acf1869ed7554fda997a06e8296decb17f15098ae01f872b4a8f06c7bc8229",
+    "tools/nes_game156.py": "bbf84fd97baa72e8beac17ee17a03a0fbb69c2a048bec5af7e8d508dd736bc3d",
+    "tools/check_nes_game156_arm.py": "a5c52dcbf0fb02120ab7880072ad8651221cf70d931d00b2d6472c1012613e27",
+    "tools/assemble_nes_game156.py": "6a33927beb4489d34db20eb4c2d8afd10ed69cd1519cf8866ff5c1cd62b0a70f",
+    "tools/test_nes_game156.py": "a46879e09027ea9876607402539f9d566de8356dfd7e6b3726b31642a1465b3e",
+    "tools/test_nes_game156_host.py": "fb9c1b5141dc7a020d4fa12a41c84fb29aa9860e3dc11720fa80cf5db3108983",
+    "tools/release_nes_game156.py": "cd4fa228d4bf352958734f49c9a3f840bac606adcffd91b11670ac7c38c1d297",
+    "tools/verify_nes_game156.py": "adbddcb6a5374b732b09ac104c131edbc0d538630321f879577bb83089d4c8d1",
+    "tests/nes-functional/game156_apu_tb.sv": "bc991a354fdcf6b359c7e281bbfb90266379e9edf4002143ae94eee5da7431c4",
+    "tests/nes-functional/game156_trace_tb.sv": "49aba85de19790298d032a0becd021fa408cdd1338dd9515fbecf78e4d93d1e5",
+    "src/nes/diagnostics/nes_pad_trace156.sv": "1e4563df2b2a7db2ea67d944afb1da2b5c1f72a4f14c86bf37163f6f06aa944a",
+    "src/nes/diagnostics/nes_pad_trace156.inc": "e2bb76777100a9b6494009ddf00feafa71998cfc259291f3c0d8814d72c2f55d",
+    "src/nes/diagnostics/nes_pad_format156.inc": "6b1db43080b6cbe74e95c56c8b7468d5c068e6c199077d5a04540182903d6ee9",
+    "src/nes/diagnostics/nes_game156_budget.sdc": "55f3d622db754ac53b3200b2e36f1bc71fb2623f5db8567d1da8133c942685b7"
+  },
+  "selected": [
+    "asm",
+    "arm",
+    "armcheck",
+    "test",
+    "host",
+    "release"
+  ],
+  "physical_test": false,
+  "gameplay_passed": false,
+  "exact_hardware_cause_confirmed": false,
+  "ids": [
+    "65",
+    "DF"
+  ],
+  "fit": {
+    "logic_elements": 13593,
+    "registers": 4994,
+    "physical_pins": 122,
+    "virtual_pins": 0,
+    "pll": 1,
+    "memory_bits": 465408
+  },
+  "timing": {
+    "passed": true,
+    "same_clock_setup_ns": 0.246,
+    "same_clock_hold_ns": 0.153,
+    "snes_envelope_ns": 201.453,
+    "sample_ns": 270,
+    "psram_conditional_margin_ns": 4.570999999999998,
+    "pad_held_delay_ns": 6.622,
+    "negative_recovery": [
+      {
+        "corner": "8_slow_1200mv_85c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "3.905",
+        "slack": "-6.320"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "3.905",
+        "slack": "-6.320"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "3.582",
+        "slack": "-5.645"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "3.582",
+        "slack": "-5.645"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "1.836",
+        "slack": "-3.120"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "1.836",
+        "slack": "-3.120"
+      }
+    ],
+    "psram_address_margin_ns": 9.936999999999994,
+    "psram_active_margin_ns": 4.570999999999998,
+    "prior_unphased_margin_ns": 3.233999999999998,
+    "address_launch_cycles": 17,
+    "ce_oe_launch_cycles": 16,
+    "row_counts": [
+      108,
+      6840
+    ],
+    "pcb_allowance_ns": 2,
+    "mtbf_calculated": false,
+    "full_io_signoff": false,
+    "scope": "Conditional routed boundaries; existing unmeasured electrical and clock-halt limits remain open.",
+    "implementation_budget_setup_ns": -0.01,
+    "implementation_budget_passed": false,
+    "nominal_sdc_sha256": "59dbe2401cc57a7646271fc222b69cd0c27dfb0bfb0c9514641213c39b9cd1ac",
+    "routed_files_preserved": 295,
+    "new_fit": false,
+    "nominal_contract": "Exact155 clock SDC; no period/falsepath/multicycle change. Extra1565.5ns target is only placement guidance; its miss remains separate."
+  },
+  "test": {
+    "passed": true,
+    "sources": {
+      "rtl/bus_savestates.vhd": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9",
+      "rtl/regs_savestates.sv": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95",
+      "rtl/apu.sv": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586",
+      "rtl/nes.v": "4873c1197b5549c0737476eb41d3e417c799d6c9e46e5ff65b84d977080f949c",
+      "nes_game_pad150.sv": "68a7fc00658bc4256bd83e318814c6add9d6d1d49d2c631743c1eb9839eb5640",
+      "nes_run_observer134.sv": "03852075a1289b9044de6003691b35b988e1da37cb423e6b2517b83ec34ff4a9",
+      "nes_pad_trace156.sv": "1e4563df2b2a7db2ea67d944afb1da2b5c1f72a4f14c86bf37163f6f06aa944a"
+    },
+    "testbenches": {
+      "apu156_tb.sv": "2390ebdf0ca3af7d801ae19f7ff86aaea37682f5795f2c1c9ebee2cf786190c3",
+      "trace156_tb.sv": "49aba85de19790298d032a0becd021fa408cdd1338dd9515fbecf78e4d93d1e5"
+    },
+    "actual_nes_only_gate_change": true,
+    "physical": false,
+    "scope": "Actual APU/DMA modules with gate extracted from NES instance; no full game. Actual pad vs155 all256 bytes, completed read trace and actual observer SPI/ring/STOP. Trace clocks10ns/46.560846ns;SPI half100ns/190ns."
+  },
+  "host": {
+    "passed": true,
+    "recovery_cases": 13,
+    "formatter_masks": 256,
+    "source_sha256": "7ab6210a876d0ef08c9ef55a1c38be1028001386f856508831e7d5206a6849f7",
+    "format_source_sha256": "5870071c3c3af0a574ebe413f0da622bd6be902248b58757302c6e5f93684617",
+    "physical": false,
+    "scope": "Actual RUN/STOP C with synthetic SPI; malformed optional pad data retains STOP and checkpoint. Actual formatter all masks and capacity. Not full FatFS or physical menu."
+  },
+  "arm": {
+    "firmware_bytes": 187952,
+    "firmware_sha256": "79278dec4be6a2cdf0a1ff1923bb18db6e9bcb50262822fef4cd90a13dd3a7ee",
+    "elf_sha256": "f2fbd5a9c045b32b140472b932012b41125312a646d82145d4368b5f081b37d8",
+    "nmi_address": "0x08019148",
+    "vector_word": "0x8019149",
+    "stop_stores": 15,
+    "stop_calls": 0,
+    "stop_dsb": 3,
+    "stop_isb": 2,
+    "transport_source_matches": true,
+    "strong_nmi": true,
+    "arm_execution": false,
+    "physical": false,
+    "installable": false
+  },
+  "package": {
+    "zip_sha256": "81b27fe87300a5193dc928aab9722b7c6de64062e3065296cde7808374196832",
+    "zip_bytes": 928670,
+    "members": 12,
+    "firmware_sha256": "79278dec4be6a2cdf0a1ff1923bb18db6e9bcb50262822fef4cd90a13dd3a7ee",
+    "fpga_sha256": "82359093ece3cceaf270762785fb79a672efc4ffa88b23eba1d0b86fe1ad9b45",
+    "normal_trial_ready": true,
+    "physical": false,
+    "gameplay_passed": false
+  },
+  "reference": {
+    "none": {
+      "button": "none",
+      "frames": 240,
+      "apu_write_count": 688,
+      "dmc_enable_writes": [],
+      "scope": "Mesen reference software behavior, not actual FPGA APU or hardware root cause."
+    },
+    "select": {
+      "button": "select",
+      "frames": 240,
+      "apu_write_count": 698,
+      "dmc_enable_writes": [],
+      "scope": "Mesen reference software behavior, not actual FPGA APU or hardware root cause."
+    },
+    "start": {
+      "button": "start",
+      "frames": 240,
+      "apu_write_count": 1084,
+      "dmc_enable_writes": [
+        "APUWRITE 157 22 81 58121 4015 1f",
+        "APUWRITE 193 12 122 58121 4015 1f",
+        "APUWRITE 223 6 311 58121 4015 1f",
+        "APUWRITE 229 12 128 58121 4015 1f"
+      ],
+      "scope": "Mesen reference software behavior, not actual FPGA APU or hardware root cause."
+    }
+  },
+  "limitations": [
+    "Reference emulator does not establish actual FPGA sound activity",
+    "Channel isolation changes status/DMC and possibly game control flow; CPU sound driver remains",
+    "Pad trace means completed8bit read, not physical click; missed/partial inputs absent",
+    "No new full game replay or unchanged155 collision test",
+    "Held frames, DMA input gap, audio, save and full IO/MTBF remain open"
+  ]
+}
