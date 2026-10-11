@@ -5,12 +5,12 @@
   "technical_candidate": "NES-GAME-158",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "157 주소 변경 직후 PPU 데이터 기한 실패.158은 예정된 MMC3 쓰기를 선행 조회에만 적용했으며 실기 성공은 미확인.",
-  "next_action": "RUN158_SMB3_PENDING_MMC3_WRITE_PREVIEW",
+  "assessment": "158 새 CHR주소 예측은 도달했으나 CPU읽기·힌트만료·옛뱅크 요청으로 기한 실패. 실제 쓰기 구간의 CPU 조기읽기 자격을 우선 확인한다.",
+  "next_action": "CHECK_RAW_WRITE_CPU_READ_ELIGIBILITY_AND_HINT_GRANT_SCHEDULE",
   "next_three_deliverables": [
-    "158 실기에서 SMB3 1PLAYER Start 후 스테이지 진입과 이동·점프 확인, TXT 두 개 회수",
-    "실패 시 매퍼 쓰기와 PPU 논리주소 전환 구분에 필요한 최소 근거 확인; 반복 예측 수정 전에 원본 메모리 시간 계약 대조",
-    "진입 성공 시 조작·스크롤 확인 뒤 음원 차단 해제; 원인이 확인된 임시 이력 축소"
+    "실제 raw R/W·cart_pre·mapper allow·CPU 조기읽기 결선으로158 요청 순서 재현",
+    "불필요한 쓰기구간 ROM읽기 확인 시 최소 수정; 정상CPU/DMA·PPU기한 검사, 필요할 때만 힌트 보관·중재 검토",
+    "같은 SMB3 스테이지 진입·이동·점프 실기; 원인해결 후 임시 이력 축소"
   ],
   "gates": [
     {
@@ -2498,12 +2498,17 @@
   },
   "game158": {
     "verification": "analysis/game158-verification.json",
-    "hardware_pending": true,
-    "ppu_fix": "pending-write model only",
+    "hardware_pending": false,
+    "ppu_fix": "early mapped hint observed, actual deadline failure remains",
     "gameplay_passed": false,
     "temporary_history_m9k": 3,
     "device_m9k_used": 56,
     "porting_references": "docs/nes-porting-reference-guide.ko.md",
-    "next": "Actual158 SMB3 firstStart->1PLAYER Start once/release; move/jump if possible; twoTXT/menu; distinguish mapper-write from logical PPU change if failure."
+    "next": "First reproduce actual raw CPU R/W->cart_pre/prg_allow->early-read eligibility, plus captured low-plane/CPU/hint-loss/old-bank sequence. Eliminate write-only ROM speculation if confirmed, preserving CPU/DMA reads and deadlines. Only then evaluate retained CHR hint/deadline arbitration if legitimate contention remains. Minimum changed-boundary test then actualSMB3; no same158/044/A-B/full boot repeat.",
+    "hardware_verification": "analysis/game158-hardware-verification.json",
+    "history_hardware_passed": true,
+    "recovery_hardware_passed": true,
+    "early_future_hint_confirmed": true,
+    "write_only_cpu_read_confirmed": false
   }
 }

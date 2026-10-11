@@ -37,16 +37,16 @@
       ],
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
-      "verification": "analysis/GAME158-RESULT.ko.md",
+      "verification": "analysis/GAME158-HARDWARE-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "pending-mmc3-write-preview-physical-pending",
+      "investigation": "predicted-chr-hint-lost-during-cpu-read-and-old-bank-request",
       "hardware_baseline": "NES-H1-SAMPLING-044",
-      "hardware_verified_scope": "157 full393216loadcompare/history16/pad5/STOP/TXT/base/actualmenu PASS. Old205A18 prefetch completed; CPU read completed before idle-2; physicalPPU changes217A18 at-1, immediate read but sample0 faults. Gameplay FAIL; exact mapper write unproven.",
+      "hardware_verified_scope": "158 full393216loadcompare/history16/pad5/STOP/TXT/base/video+actualmenu PASS. Correctfuture217A18hint at-15 but CPU03C001 -12..-7, hint expires thenold205A18read until-2, new217A18sample0miss. GameplayFAIL. Sourcecandidate rawwrite earlyCPUread qualification; actualrawRWnotlogged.",
       "development_evidence": "analysis/game158-verification.json",
       "hardware_candidate": "NES-GAME-158",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "Actual158 SMB3 firstStart->1PLAYER Start once/release; move/jump if possible; twoTXT/menu; distinguish mapper-write from logical PPU change if failure.",
+      "next_gate": "First reproduce actual raw CPU R/W->cart_pre/prg_allow->early-read eligibility, plus captured low-plane/CPU/hint-loss/old-bank sequence. Eliminate write-only ROM speculation if confirmed, preserving CPU/DMA reads and deadlines. Only then evaluate retained CHR hint/deadline arbitration if legitimate contention remains. Minimum changed-boundary test then actualSMB3; no same158/044/A-B/full boot repeat.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "158 MCU+FPGA strict67/E1",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -237,7 +237,16 @@
         "mapper_write_confirmed": false,
         "context": "e30042f4:30217a18"
       },
-      "porting_references": "docs/nes-porting-reference-guide.ko.md"
+      "porting_references": "docs/nes-porting-reference-guide.ko.md",
+      "hardware_game158": {
+        "verification": "analysis/game158-hardware-verification.json",
+        "history_passed": true,
+        "gameplay_passed": false,
+        "recovery_passed": true,
+        "early_future_hint_confirmed": true,
+        "write_only_cpu_read_confirmed": false,
+        "context": "e200c2f4:30217a18"
+      }
     },
     {
       "id": "pce",

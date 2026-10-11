@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재158: **MMC3 주소 변경을 미리 준비하는 실기 시험판 완성**. 경계 시험은 통과했으며 실제 SMB3 스테이지 진입은 확인 대기입니다. [158 안내](../../docs/nes-game158-instructions.ko.md) · [결과](../../analysis/GAME158-RESULT.ko.md) · [이식 참고 자료](../../docs/nes-porting-reference-guide.ko.md).
+현재158: **새 CHR주소 예측 도달 확인, 읽기 기회를 놓쳐 게임 진입은 실패**. 전체 적재·TXT·메뉴 복귀는 통과했습니다. 다음은 매퍼 쓰기 구간의 불필요한 CPU ROM 읽기 자격부터 확인합니다. [실기 결과](../../analysis/GAME158-HARDWARE-RESULT.ko.md) · [이식 참고 자료](../../docs/nes-porting-reference-guide.ko.md).
 
 이전151 실기: **SMB3 제목·캐릭터 표시와 메뉴 복귀 성공, PPU 읽기 오류로 조기 종료**. 정상 플레이·전체 버튼 입력은 미완료입니다. [151 실기 결과](../../analysis/GAME151-HARDWARE-RESULT.ko.md).
 

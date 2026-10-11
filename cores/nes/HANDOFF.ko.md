@@ -1,3 +1,21 @@
+# NES 현재 인계 — 158 예측 이후 읽기 발행 지연 확인
+
+[158 실기 결과](../../analysis/GAME158-HARDWARE-RESULT.ko.md) · [해시·16클록 해석](../../analysis/game158-hardware-verification.json)
+
+사용자 Start 스테이지 진입 실패/메뉴 복귀 확인. 영상14.83초 표본도 선택화면 뒤 메뉴를 확인하며 실제 스테이지 플레이는 보이지 않는다. 전체393216바이트 적재·비교,104진행기록,Start/해제2구간,STOP/TXT/base/메뉴 PASS. 같은158 재시험·추가 영상·044복원 불필요. 실기 게임은 미완료다.
+
+핵심: 새217A18 hint가-15..-8 유효하지만 -12 이전205A10응답 때 CPU03C001이 선택된다. -11..-8 use_prefetch1/ready0. -8 낮은 비트면 정상샘플. -7 CPU응답 때 hint_valid0이고 현재PPU205A18이어서 그옛주소 요청. -5 실제PPU217A18전환, -2 옛응답 뒤 새217A18요청, 0샘플미스. 단순 예측생성실패가아니다. line193dot8/PPU상태는157과같지만문맥은e200c2f4:30217a18/CPUvalid0/age1로달라졌다. 응답+요청 행 주소는새요청임.
+
+NEXT 최우선은 source상 불필요CPUread 자격: rom_cpu_address_valid=prg_addr[15]&&prg_allow, prg_write=mw_int&&cart_pre, MMC3 ROMallow=!prg_write. rawwrite/pre0 구간에도 allow1이라 speculative read 가능,선택mapper4 conflict0. 이경로를 실제결선으로 짧게재현하고 확인되면 rawread로정당화된요청만남기는최소수정을한다. 실제이번03C001이해당쓰기였는지는 rawRW/PC없어서미확정. cpumem_read와 busconflict/CPU-DMA sample 계약도같이검토,다른mapper까지일괄변경금지.
+
+기존158TB는 cpumem_addr/read/address_valid를강제하고cpu_sample0, 고정writelead9클록으로실제쓰기자격결선을우회했다. 같은합성72PASS만반복하지말고실기관측lowplane->CPU->hint만료->oldbank순서를회귀사례로넣는다. 정상CPU/DMA와PPUlow/high기한 유지. 이작은수정후에도정당한읽기충돌이남으면hint보관/기한중재검토. 무조건PPU우선/옛뱅크대입/기한해제/무근거캐시확대금지. 최소변경검증뒤같은SMB3실기. M9K56/56 임시이력은원인확인뒤축소. APU차단유지/오디오미완료.
+
+이번PR100은실기결과추가만. frozen158/ZIP/publicpins불변,완료finish.py재실행금지. game158-verification.json의physical_test=false는제작당시동결기록이고현재판정은GAME158-HARDWARE. 사용자머지후다음구현. 한국어PR4절/개인hungrysanta-ksc/사용자머지 유지.
+
+---
+
+## 이전158 제작 기록
+
 # NES 현재 인계 — 158 MMC3 변경 전 그래픽 읽기 실기 시험판
 
 [158 결과](../../analysis/GAME158-RESULT.ko.md) · [실기 안내](../../docs/nes-game158-instructions.ko.md) · [검증](../../analysis/game158-verification.json) · [이식 참고 자료](../../docs/nes-porting-reference-guide.ko.md)
