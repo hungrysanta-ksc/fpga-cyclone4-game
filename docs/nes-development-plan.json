@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-11",
-  "technical_candidate": "NES-GAME-162",
+  "technical_candidate": "NES-GAME-163",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "162 실기 첫 레벨·정상60초 종료·메뉴 복귀 통과, ROM 오류0. 사운드 무음으로 목표 미달성; 본체 SPC/DSP 초기화 누락 우선 조사. 연속 화면·지속 입력 미해결.",
-  "next_action": "AFTER_PR104_MERGE_FIX_SOUND_INITIALIZATION_THEN_CONTINUOUS_VIDEO",
+  "assessment": "163 본체 사운드 초기화·상태 로그·기능검증·RAM내용만 갱신한 실기판 준비.162 플레이/복귀 성공 보존, 실제 소리는 미확인; 연속 화면/입력 유지 미완료.",
+  "next_action": "VERIFY_SOUND163_THEN_CONTINUOUS_VIDEO",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2578,5 +2578,15 @@
     "gameplay_passed": true,
     "menu_return_passed": true,
     "hardware_verification": "analysis/game162-hardware-verification.json"
+  },
+  "game163": {
+    "verification": "analysis/game163-verification.json",
+    "hardware_pending": true,
+    "physical_audio": false,
+    "continuous_video": false,
+    "held_input_fixed": false,
+    "run_budget_seconds": 60,
+    "reset_logging": false,
+    "next": "Actual163 sound/effects, first-level play, twoTXT and menu; A9 proves client FLG20 readback only. If silent, split by status before minimal source/DAC activity checks. Then continuous video, AV validated before unlimited run/reset logging, then held-input quality."
   }
 }

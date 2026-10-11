@@ -1,0 +1,231 @@
+{
+  "candidate": "NES-GAME-163",
+  "status": "SPC_INITIALIZATION_TRIAL_READY",
+  "manifest_sha256": "d8626eade5547e594de623d7077d153eeff5482b2cdea59940a499785209bfc5",
+  "file_count": 2510,
+  "public_sources": {
+    "tools/assemble_nes_game163.py": "59a9109516da9706da9192017514006b1adb91ea38a825866d5b2faa25984f3f",
+    "tools/build_nes_game163.py": "3e029fbe54a220607acca6b3e0a7c0f982a2574d06228713fc029fb0cc80580a",
+    "tools/check_nes_game163_arm.py": "8e8d2e0a0f54b1a9267e5f9c1cf53ca254f52a4782ca446b1a3b7a90925d8acd",
+    "tools/nes_game163.py": "1ff29b2aabd1096bf6afae27f1bf2ca9d475799f30a80957ef726f7a53117d34",
+    "tools/nes_spc163.py": "2972790f8c600469b0c693d035d6c8634446bd6b2440d9baf0800fb30300b131",
+    "tools/release_nes_game163.py": "8fd7101ce626b2f82c0b3a2bddb2e0419861c3b57cfbf362e994e6b71da58969",
+    "tools/test_nes_game163_client.py": "68442d0c1cce838bfd0ace5755e4af522b6226c86ad433be89f76c0e32b315e6",
+    "tools/test_nes_game163_host.py": "8731791d66346a6614aeceb8cce850f9373e922413b30f909ff0f1f246c378f9",
+    "tools/test_nes_game163_status.py": "60a89f81a8aac0707bbe79bb97bf42f86dcc781ed60f0f47eed8d445289b806a",
+    "tools/verify_nes_game163.py": "081afc1bd158f02fa31f5ac45baf2e0ec170aacbeb6fb6bcc7cee18ba45e515c",
+    "tests/nes-functional/game163_status_tb.sv": "05b28f34e8f469c157f7a3a2e424206735dfef8d9a49a7aaec5137a6e68ca606",
+    "docs/nes-game163-instructions.ko.md": "060c4e952726371c7f32a3c38408863787fd116393cd57e9e248ae407a3f445c"
+  },
+  "base_merge": "23e41b59a227d17b459cabe73d01fdc022ff7d0a",
+  "physical_audio": false,
+  "continuous_video": false,
+  "held_input_fixed": false,
+  "new_map_fit": false,
+  "rtl_ids": [
+    "6B",
+    "E5"
+  ],
+  "rtl_reused": "162",
+  "fit_reused": {
+    "logic_elements": 14711,
+    "registers": 5572,
+    "labs": 960,
+    "labs_total": 963,
+    "m9k": 56,
+    "m9k_total": 56,
+    "physical_pins": 122,
+    "virtual_pins": 0,
+    "pll": 1,
+    "memory_bits": 466864
+  },
+  "client": {
+    "passed": true,
+    "cases": [
+      {
+        "mode": 0,
+        "status_hex": "A9",
+        "frame": 0,
+        "master_clock": 106020,
+        "exact_rgb_frames": 2,
+        "pad_polls": 14
+      },
+      {
+        "mode": 1,
+        "status_hex": "E1",
+        "frame": 19,
+        "master_clock": 7058512,
+        "exact_rgb_frames": 2,
+        "pad_polls": 14
+      },
+      {
+        "mode": 2,
+        "status_hex": "E2",
+        "frame": 18,
+        "master_clock": 6667320,
+        "exact_rgb_frames": 2,
+        "pad_polls": 14
+      },
+      {
+        "mode": 3,
+        "status_hex": "E3",
+        "frame": 20,
+        "master_clock": 7208322,
+        "exact_rgb_frames": 2,
+        "pad_polls": 14
+      },
+      {
+        "mode": 4,
+        "status_hex": "E4",
+        "frame": 18,
+        "master_clock": 6718504,
+        "exact_rgb_frames": 2,
+        "pad_polls": 14
+      },
+      {
+        "mode": 5,
+        "status_hex": "E5",
+        "frame": 0,
+        "master_clock": 106014,
+        "exact_rgb_frames": 2,
+        "pad_polls": 14
+      }
+    ],
+    "program_sha256": "a9002bfd4b895ba0529543e959985a9876111813da8990566b5f7b79e8f1346e",
+    "sources": {
+      "tools/nes_spc163.py": "2972790f8c600469b0c693d035d6c8634446bd6b2440d9baf0800fb30300b131",
+      "tools/build_nes_game163.py": "3e029fbe54a220607acca6b3e0a7c0f982a2574d06228713fc029fb0cc80580a",
+      "tools/test_nes_game163_client.py": "68442d0c1cce838bfd0ace5755e4af522b6226c86ad433be89f76c0e32b315e6",
+      "src/renderer/base/g9_snes_io.py": "72ebc8c7178e7f06733d44ece88ddfa7a74bcc85cf644d680a025932f2983716",
+      "snes/video_probe/capture_game161.lua": "a33a8ddc4d5d6294c0979098c978932dd8c63d868c729dba3fa499e565ae28bd"
+    },
+    "scope": "Actual SNES CPU and SPC for positive boot; five injected port failures; two prior exact RGB frames/pad polls each. Not physical DAC/analog sound or warm reset proof."
+  },
+  "status_test": {
+    "passed": true,
+    "cases": 54,
+    "rtl_sha256": "bf4c6d3cb0519d74db874466bafcc4803d5ec302b46c398ce57e8d4701d9ace8",
+    "test_sha256": "05b28f34e8f469c157f7a3a2e424206735dfef8d9a49a7aaec5137a6e68ca606",
+    "scope": "Unchanged162 status RTL: A9/E1-E5 late-write capture, SPI, STOP retention and reset; modeled pins, not physical bus measurement."
+  },
+  "host": {
+    "passed": true,
+    "recovery_cases": 13,
+    "formatter_masks": 256,
+    "source_sha256": "9edd1a9ed35ef3829e16e09acf7768cfce523a9dcc80beccfbd2e461dd83c59a",
+    "format_source_sha256": "f6a6d1dbdf0d07a0310cc86bb8d3c4879b3d9bfc32e71ea50c59e725fb53f5e3",
+    "physical": false,
+    "scope": "Actual RUN/STOP/decoder/formatter; synthetic SPI, not full FatFS or board execution."
+  },
+  "status_formatter_decisions": 512,
+  "arm": {
+    "firmware_bytes": 188824,
+    "firmware_sha256": "1794e5dbd29a0d429c440bf66a3c8418b36d92834f5a4e820c469c7eb54da095",
+    "elf_sha256": "fbebc23b55a34fd83055948b9ce45274a9886d2c7644201efa55399198bb9a24",
+    "nmi_address": "0x08019148",
+    "vector_word": "0x8019149",
+    "stop_stores": 15,
+    "stop_calls": 0,
+    "stop_dsb": 3,
+    "stop_isb": 2,
+    "transport_source_matches": true,
+    "strong_nmi": true,
+    "arm_execution": false,
+    "physical": false,
+    "installable": false
+  },
+  "assembly": {
+    "candidate": "NES-GAME-163",
+    "passed": true,
+    "method": "verified generated program-ROM MIF replacement, quartus_cdb --update_mif then ASM/CPF; no MAP/FIT/STA",
+    "generated_mif": "db/board.ram0_nes_game_bus151_c083f7f7.hdl.mif",
+    "mif_sha256": "21ad1724d33c7573738e87345c0c58b4dbbc055c04346d7fdff496641040d07f",
+    "rtl_ids": [
+      "6B",
+      "E5"
+    ],
+    "client": "163",
+    "program_sha256": "a9002bfd4b895ba0529543e959985a9876111813da8990566b5f7b79e8f1346e",
+    "rbf_bytes": 510856,
+    "rbf_sha256": "4c2ef12a9bdc6236e5a310f4ed7dfe24cac689e40b5a5746d81b3a26e951af43",
+    "packed_bytes": 347239,
+    "packed_sha256": "eef39ca5c4f8cd2cb61cf7f52dee244422c85faa2f478184a9c0c1f0ac6da94b",
+    "unchanged_routing_and_sources": {
+      "board.qpf": "8242ee5e59a70da6149cb823d27ca626c19cecce70342b4e21184bb2adb3d6c3",
+      "board.qsf": "6d5840c8cf6e4d940cd2d523ce5efee6ea9f829de260b0aed9167efbc92fb172",
+      "board.sdc": "ca2e86fdf7559dc8aeddf55562f17c398a698c058f21f79d984c0c3d782b83e7",
+      "cart_nrom.sv": "e3f26834ea8f6272fd4d8310db3bd1dc44f609fafb2b4b68f90960f6ef742ee4",
+      "db/pll_altpll.v": "50353402f1e08523368f3fbeac5ceb64f63f64b73aaf5e613db17f657f9009d3",
+      "fxpak_nes_screen137_top.sv": "6af3b4b883162af89799f424628deb2e0ac9f7670226c4202207a790da2aa066",
+      "nes_clock_pll123.v": "bcc55cf38d516acbdaa0b0402ce2320d32f67df52d1a8549379a48b0d995c8bc",
+      "nes_dac162.sv": "51257d720a3a00aedcad9b8eeab10e22015930208e2929250869a41396666064",
+      "nes_diag_clock_guard127.sv": "f1936729ba7505b4d3030a86d9c8b4d88ce4490500bffb7d38ea26cace64b6e3",
+      "nes_diag_startup_guard.sv": "80e7e13ba034b0a1a706945cd8015f3789110363a300e39c21e62086a29460a2",
+      "nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+      "nes_game_bus151.sv": "82f6c9ce7cb491b6decbb3d82d7125a2bb301436782039b42ba41d14261d274a",
+      "nes_game_frame150.sv": "acb8eff9c17143f69dd3c49c83c667e893025554b98aee8f45e89b8d8fc65174",
+      "nes_game_pad150.sv": "68a7fc00658bc4256bd83e318814c6add9d6d1d49d2c631743c1eb9839eb5640",
+      "nes_live_joint.sv": "eedff46523a05501fc5ae0aef7d990995e4482ade5663cd4ff9f64d190ce4199",
+      "nes_local_memory.sv": "09a5109f5ea187b740ffbceb865c505c485dee13e87ee1cb665de937046d6ec4",
+      "nes_pad_trace156.sv": "ef422ffae1304a861e38af603c7e8884ce2fc6fc711b79dc036a12744b2ad58b",
+      "nes_ppu_history157.sv": "ab64f557c5f7602ad0cf4db7f092b92d30cc5d9045184dc870359bcbd79ae5cb",
+      "nes_probe.sv": "b21ac8f079ad486ecfaf6b68317e415c33cee6d647732937e2f69d98fdedd44d",
+      "nes_rom_boot.sv": "960e299bd9a1bd3cbdcb001ea9f15649160cd46cdb132767d9c15ad2029a1a74",
+      "nes_rom_loader.sv": "779a1a502aa78f61f8d1d6fed28b0892a405d808783fcd88687f3e214fc4090e",
+      "nes_rom_physical.sv": "79e9d1b4e5cdc0d59e42cb2769080b5d71b4cbcb2849beb568e6a1a0d857c298",
+      "nes_rom_service.sv": "7f076fdc8734f957e788770bec031e35587d7f823a2713e471125bc7682f4539",
+      "nes_rom_spi.sv": "68220930658da7bead9f55a4bd7eeb631f57d958c2ab852f79d9dfc37e618080",
+      "nes_run_observer134.sv": "dc91bc130df91e524078bc7172274f2b6f9c91d1b9966722509d8a102024020d",
+      "nes_screen_status151.sv": "bf4c6d3cb0519d74db874466bafcc4803d5ec302b46c398ce57e8d4701d9ace8",
+      "nes_spi_boot.sv": "3e55dd0a4fdf50021113f50641ecd89b18e07f25986a33a5dbd462a794751d9f",
+      "nominal156.sdc": "59dbe2401cc57a7646271fc222b69cd0c27dfb0bfb0c9514641213c39b9cd1ac",
+      "output_files/board.fit.rpt": "7f6e819eb58843fb31aac97c7df08bc19cd910ad4cff5961f78d0ac16e7efdff",
+      "output_files/board.fit.summary": "9e9da9c9ea0572a158d19492e491cc1d4f1855d472fb0d2c2d61e6af7ca65e46",
+      "output_files/board.sta.rpt": "5e17e4b11634630a8ad81960a1e231a10fece505fdf943d42f7ab231b3a9bb37",
+      "output_files/board.sta.summary": "3af96cecfaec7c484a59bd37dcf5b08ffe41191c3a31bc1065117024e15ec82b",
+      "rtl/apu.sv": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586",
+      "rtl/bus_savestates.vhd": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9",
+      "rtl/cheatcodes.sv": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918",
+      "rtl/compat.v": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731",
+      "rtl/composite_board.sv": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895",
+      "rtl/nes.v": "5f712e3430987efa12c9a3e0e5ad71392e1bf9e7a7d152dd965ddafb6c117c76",
+      "rtl/ppu.sv": "9cf4c1138f22dfd6d0ef02b0c39a2cd63b417bd01427aae152ea1240e53c67b2",
+      "rtl/regs_savestates.sv": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95",
+      "rtl/savestates.vhd": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0",
+      "rtl/statemanager.vhd": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6",
+      "rtl/t65/T65.vhd": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692",
+      "rtl/t65/T65_ALU.vhd": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b",
+      "rtl/t65/T65_MCode.vhd": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5",
+      "rtl/t65/T65_Pack.vhd": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb",
+      "sys/iir_filter.v": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8"
+    },
+    "new_map_fit": false,
+    "physical": false
+  },
+  "package": {
+    "zip_sha256": "52100ec7dcb7347c09d7d9fe830d44cc41f2c95dba02632bcc90b32f3eceffa7",
+    "zip_bytes": 943415,
+    "members": 12,
+    "firmware_sha256": "1794e5dbd29a0d429c440bf66a3c8418b36d92834f5a4e820c469c7eb54da095",
+    "fpga_sha256": "eef39ca5c4f8cd2cb61cf7f52dee244422c85faa2f478184a9c0c1f0ac6da94b",
+    "normal_trial_ready": true,
+    "physical_audio": false,
+    "preserved": {
+      "01-GAME163-SD-ROOT/sd2snes/fpga_base.bi3": "eff3f675c93a0209caf4987d72e0f277492c3dddc2b4c2aff334a667b4dbfbc7",
+      "01-GAME163-SD-ROOT/sd2snes/m3nu.bin": "f53b777a0bbe37668cd88cf8c80c5e5a0a60f861f58d1d4d3d9b082e9d1b4325",
+      "02-RESTORE044-SD-ROOT/sd2snes/firmware.stm": "1c3b40a3459d24114cb4d91ee9d861d1a08025a670ef25317ef489092203693b",
+      "02-RESTORE044-SD-ROOT/sd2snes/fpga_base.bi3": "eff3f675c93a0209caf4987d72e0f277492c3dddc2b4c2aff334a667b4dbfbc7",
+      "02-RESTORE044-SD-ROOT/sd2snes/m3nu.bin": "f53b777a0bbe37668cd88cf8c80c5e5a0a60f861f58d1d4d3d9b082e9d1b4325",
+      "01-GAME163-SD-ROOT/sd2snes/nes/game163.nes": "dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49",
+      "01-GAME163-SD-ROOT/NES GAME 163.nh1": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "limits": [
+    "Physical SPC state and audible DAC output unverified until163 test",
+    "screen_error is repurposed sticky SPC status; 169/A9 is success, not run_error",
+    "Exact162 RTL identity6B/E5 retained; new163 program status distinguishes changed client",
+    "Same161 video forced blank/hold6 and input limits",
+    "Same162 placement and conditional timing, fullIO/MTBF/PCB/reset open",
+    "60s retained; no reset logging yet"
+  ]
+}
