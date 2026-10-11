@@ -1,3 +1,17 @@
+# NES 현재 인계 — 161 첫 레벨 플레이 통과·지속 입력 조사 대기
+
+[실기 결과](../../analysis/GAME161-HARDWARE-RESULT.ko.md) · [수치·입력 이력](../../analysis/game161-hardware-verification.json)
+
+첫 레벨 진입·이동·점프·메뉴 복귀가 영상과 사용자 보고로 확인되었다. 대시도 사용자 확인. 실행 구간60.660초는 제목·선택·월드맵 포함이며 레벨 안에서만60초를 의미하지 않는다. 적재·비교393216바이트/104레코드/6A-E4/실행·ROM·STOP 오류0. 정상 예산 종료 후3.190초에 메뉴 준비, 영상에서 실제 복귀 확인. 오류 문맥0, historyflags1은 정상 말단 이력이다. screen_frames365는 telemetryuntrusted로 FPS로 쓰지 않는다.
+
+사용자가 DOWN 유지 중 일어남을 보고했다. 완료된8비트 읽기 변화250건 중 마지막16개에 DOWN/NONE 반복3회가 있지만 물리 버튼과 원본 입력값은 미관측이다. 원인은 미확정. 다음은 PR103 머지 후 `$4212` busy/`$4218-$4219` 스냅샷 → `$6002-$6003` commit → CDC/current_buttons → NES strobe/read를 연결해 지속 입력이 끊기는 경계를 찾고 최소 수정 후 실기 SMB3로 확인한다.152 매hold-vblank 폴링은 이미 있고 current_buttons는 새값/reset까지 보존하므로 같은 개선을 반복하거나 폴링 공백만 원인으로 단정하지 않는다. 임의 debounce부터 넣지 않는다.
+
+이번 요청은 결과 기록만: 새 코드/빌드/실기판 없음. 캐시161·rawread159·restart160·유한STOP/base/menu, APU 차단을 보존한다. M9K56/56과 기존 전체IO/MTBF/PCB/reset 미완료도 유지. 전체 호환성·지속 입력·연속 표시·속도·오디오·저장은 완료 아님. 사용자 머지 전 다음 구현 금지. 동결161과 이전 공개핀/ZIP/완료finalizer 불변;같은161/044/GBC/A-B/무변경 전체부팅 반복 없음.
+
+---
+
+## 아래는 제작 당시 인계 — 실기 대기 상태는 위 결과로 대체
+
 # NES 현재 인계 — 161 현재 그래픽 데이터 보존·표시 대기6프레임
 
 [161 결과](../../analysis/GAME161-RESULT.ko.md) · [실기 안내](../../docs/nes-game161-instructions.ko.md) · [검증](../../analysis/game161-verification.json) · [160 실기](../../analysis/GAME160-HARDWARE-RESULT.ko.md)

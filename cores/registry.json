@@ -24,7 +24,7 @@
     },
     {
       "id": "nes",
-      "status": "actual_game_hardware_fault_investigation",
+      "status": "first_level_play_passed_held_input_investigation",
       "candidate": "NES-GAME-161",
       "planned_product_version": null,
       "released": false,
@@ -46,7 +46,7 @@
       "development_evidence": "analysis/game161-verification.json",
       "hardware_candidate": "NES-GAME-161",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "Actual161 SMB3 firstlevelA->move/jump;twoTXT/menu/shortvideo for shorter holds and DMA flicker. Compare earliest fault if failure.",
+      "next_gate": "After user merges PR103, investigate intermittent released states during a held DOWN: source autojoy snapshot/host commit, CDC/current_buttons, NES strobe/read/serial completion. Preserve161 cache fix and finite recovery. Existing152 per-hold-vblank polling already present; do not repeat it or blame display gaps alone. No firmware change in this result-only turn.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "161 MCU+FPGA strict6A/E4",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -219,7 +219,7 @@
       "game147": "analysis/game147-verification.json",
       "game148": "analysis/game148-verification.json",
       "game154_hardware": "analysis/game154-hardware-verification.json",
-      "hardware_evidence": "analysis/game155-hardware-verification.json",
+      "hardware_evidence": "analysis/game161-hardware-verification.json",
       "hardware_game156": {
         "verification": "analysis/game156-hardware-verification.json",
         "select_cursor_passed": true,
@@ -264,6 +264,16 @@
         "timeout_exit": false,
         "context": "e200c2ff:f0205ff0",
         "presentation_continuous": false
+      },
+      "hardware_game161": {
+        "verification": "analysis/game161-hardware-verification.json",
+        "level1_entry_passed": true,
+        "level1_gameplay_session_passed": true,
+        "full_gameplay_compatibility_passed": false,
+        "continuous_held_input_passed": false,
+        "menu_return_passed": true,
+        "run_rom_error": 0,
+        "display_interval_ms": 60660
       }
     },
     {

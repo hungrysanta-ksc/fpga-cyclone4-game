@@ -5,12 +5,12 @@
   "technical_candidate": "NES-GAME-161",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "160실기와같은캐시교체경계에서기존실패/161보존통과.표시hold30->6,모델RGB/패드전달통과.실제첫레벨·표시체감은대기.",
-  "next_action": "RUN161_FIRST_LEVEL_AND_HOLD6_PRESENTATION",
+  "assessment": "161 실기 첫 레벨 진입·플레이·약60초 실행·메뉴 복귀 통과, ROM 오류0. DOWN 유지 중 해제 현상은 미해결. 전체 호환성·속도·오디오 완료 아님.",
+  "next_action": "AFTER_PR103_MERGE_INVESTIGATE_HELD_INPUT",
   "next_three_deliverables": [
-    "161 첫레벨A진입·이동점프/두TXT/메뉴복귀 확인",
-    "짧은영상으로표시대기단축체감·DMA점멸 확인;실패시최초오류비교",
-    "플레이통과후조작스크롤·전송표시지연개선,임시이력RAM축소·음원복구"
+    "지속 누름 원본 패드 스냅샷부터 NES 소비까지 변경 경계 확인",
+    "확인된 원인만 최소 수정·회귀 검증",
+    "SMB3 실기 첫 레벨에서 앉기 유지·이동·점프·대시 확인"
   ],
   "gates": [
     {
@@ -2539,11 +2539,15 @@
   },
   "game161": {
     "verification": "analysis/game161-verification.json",
-    "hardware_pending": true,
-    "gameplay_passed": false,
+    "hardware_pending": false,
+    "gameplay_passed": true,
     "hold_vblanks": 6,
     "continuous_display_complete": false,
     "device_m9k_used": 56,
-    "next": "Actual161 SMB3 firstlevelA->move/jump;twoTXT/menu/shortvideo for shorter holds and DMA flicker. Compare earliest fault if failure."
+    "next": "After user merges PR103, investigate intermittent released states during a held DOWN: source autojoy snapshot/host commit, CDC/current_buttons, NES strobe/read/serial completion. Preserve161 cache fix and finite recovery. Existing152 per-hold-vblank polling already present; do not repeat it or blame display gaps alone. No firmware change in this result-only turn.",
+    "gameplay_scope": "one bounded session with first-level entry/play; not full compatibility",
+    "full_gameplay_compatibility_passed": false,
+    "continuous_held_input_passed": false,
+    "hardware_verification": "analysis/game161-hardware-verification.json"
   }
 }

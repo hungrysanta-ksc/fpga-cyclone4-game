@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재161: **현재 그래픽 데이터 보존·화면 유지6프레임으로 줄인 실기판 준비**. 변경 경계는 통과했고 첫 레벨 플레이·실제 표시 개선은 대기입니다. [안내](docs/nes-game161-instructions.ko.md) · [결과](analysis/GAME161-RESULT.ko.md).
+현재161 실기: **첫 레벨 진입·플레이와 약60초 실행·메뉴 복귀 통과, ROM 오류0**. 방향키 유지 중 해제되는 현상은 미해결이며 PR103 머지 후 우선 조사합니다. [실기 결과](analysis/GAME161-HARDWARE-RESULT.ko.md).
 
 이전151 실기: **SMB3 제목·캐릭터 표시와 메뉴 복귀 성공, PPU 읽기 오류로 조기 종료**. 정상 플레이·전체 버튼 입력은 미완료입니다. [151 실기 결과](analysis/GAME151-HARDWARE-RESULT.ko.md).
 
