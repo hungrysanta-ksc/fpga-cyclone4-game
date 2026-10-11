@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "163 사운드 실기 성공 유지.164 반복검정 제거용 수직공백 분할전송 모델 검증·실기판 준비. 전체동시교체/60fps/지연해결은 미완료; 부분갱신 남음.",
-  "next_action": "HARDWARE164_VISIBLE_UPDATE_THEN_REDUCE_VIDEO_LATENCY",
+  "assessment": "164 검정 구간 제거 통과, 사용자 청취상 사운드 정상으로 보임. 심한 끊김으로 정상 플레이 불가. ROM 오류0·실제 메뉴 복귀 통과. 다음 영상 전송량/갱신 지연 개선; DOWN 유지 이번 미시험.",
+  "next_action": "AFTER_PR106_MERGE_REDUCE_VIDEO_TRANSFER_AND_SNAPSHOT_LATENCY",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2595,7 +2595,7 @@
   },
   "game164": {
     "verification": "analysis/game164-verification.json",
-    "hardware_pending": true,
+    "hardware_pending": false,
     "physical_audio_baseline": "163 pass",
     "continuous_video_goal_complete": false,
     "atomic_frame_flip": false,
@@ -2603,6 +2603,12 @@
     "held_input_fixed": false,
     "run_budget_seconds": 60,
     "reset_logging": false,
-    "next": "Actual164 SMB3 repeated-black removal/sound/move-jump/menu with twoTXT and short video. Partial updates and lower snapshot rate remain; improve video bandwidth after physical evidence. Then remove60s limit with safe fault/reset logs, then held-input quality. Preserve163sound and minimal-check/real-ROM priority."
+    "next": "After PR106 merge, reduce video transfer volume and complete-snapshot latency for playable SMB3; compare existing GBC presentation before design, preserve163 SPC/162 audio and safeSTOP/menu. Minimum changed-path checks then real ROM. Do not increase vblank DMA beyond its budget or claim hold removal gives60fps. After usable AV, remove normal60s cap with safe fault/reset logging, then long held-input assessment. No repeated164/044/GBC/sound-only/unchanged full-load tests.",
+    "blackout_removal_passed": true,
+    "audio_result": "user reports seems normal",
+    "playability_passed": false,
+    "held_input_tested": false,
+    "menu_return_passed": true,
+    "hardware_verification": "analysis/game164-hardware-verification.json"
   }
 }

@@ -24,7 +24,7 @@
     },
     {
       "id": "nes",
-      "status": "vblank_video_trial_ready_progressive_updates",
+      "status": "blackout_removed_audio_retained_playability_failed_video_latency",
       "candidate": "NES-GAME-162",
       "planned_product_version": null,
       "released": false,
@@ -46,7 +46,7 @@
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-162",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "Actual164 SMB3 repeated-black removal/sound/move-jump/menu with twoTXT and short video. Partial updates and lower snapshot rate remain; improve video bandwidth after physical evidence. Then remove60s limit with safe fault/reset logs, then held-input quality. Preserve163sound and minimal-check/real-ROM priority.",
+      "next_gate": "After PR106 merge, reduce video transfer volume and complete-snapshot latency for playable SMB3; compare existing GBC presentation before design, preserve163 SPC/162 audio and safeSTOP/menu. Minimum changed-path checks then real ROM. Do not increase vblank DMA beyond its budget or claim hold removal gives60fps. After usable AV, remove normal60s cap with safe fault/reset logging, then long held-input assessment. No repeated164/044/GBC/sound-only/unchanged full-load tests.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "162 MCU+FPGA strict6B/E5",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -219,7 +219,7 @@
       "game147": "analysis/game147-verification.json",
       "game148": "analysis/game148-verification.json",
       "game154_hardware": "analysis/game154-hardware-verification.json",
-      "hardware_evidence": "analysis/game163-hardware-verification.json",
+      "hardware_evidence": "analysis/game164-hardware-verification.json",
       "hardware_game156": {
         "verification": "analysis/game156-hardware-verification.json",
         "select_cursor_passed": true,
@@ -291,6 +291,16 @@
         "physical_audio_passed": true,
         "base_restored_and_menu_prepared": true,
         "physical_menu_return_confirmed_this_session": false,
+        "run_rom_error": 0,
+        "display_interval_ms": 60650
+      },
+      "hardware_game164": {
+        "verification": "analysis/game164-hardware-verification.json",
+        "blackout_removal_passed": true,
+        "audio_result": "user reports seems normal",
+        "playability_passed": false,
+        "physical_menu_return_confirmed": true,
+        "held_down_tested": false,
         "run_rom_error": 0,
         "display_interval_ms": 60650
       }
