@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재150: **실제 SMB3 화면·패드 연결과 첫 실기 패키지 준비 완료, 실기 결과 대기**. 전체 화면 복사 중 검정 구간이 있는 초기 출력이며60fps 구현은 미완료입니다. [150 결과](../../analysis/GAME150-RESULT.ko.md).
+현재150 실기: **384KiB 적재·전량 대조·RUN/STOP·메뉴 복귀 통과, 게임 그림은 표시되지 않아 미완료**. 점멸 원인과 실제 픽셀 전달 경계를 다음 작업에서 좁힙니다. [150 실기 결과](../../analysis/GAME150-HARDWARE-RESULT.ko.md).
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 
