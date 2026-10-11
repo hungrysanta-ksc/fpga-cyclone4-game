@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재156: **실기 Select 커서 이동·메뉴 복귀 확인, Start 후 PPU 읽기 오류는 지속**. 음원 차단 상태에서도155와 같은 오류이며 스테이지 플레이는 미완료입니다. [실기 결과](analysis/GAME156-HARDWARE-RESULT.ko.md).
+현재157: **실기 정지 직전 CHR 물리주소 변경 확인, 게임 진입은 미해결**. 선행 읽기는 완료됐지만 새 주소로 바뀐 다음 한 클록 만에 PPU 샘플이 도착했습니다. TXT·메뉴 복귀는 통과했습니다. [실기 결과](analysis/GAME157-HARDWARE-RESULT.ko.md) · [다음 계획](cores/nes/HANDOFF.ko.md).
 
 이전151 실기: **SMB3 제목·캐릭터 표시와 메뉴 복귀 성공, PPU 읽기 오류로 조기 종료**. 정상 플레이·전체 버튼 입력은 미완료입니다. [151 실기 결과](analysis/GAME151-HARDWARE-RESULT.ko.md).
 

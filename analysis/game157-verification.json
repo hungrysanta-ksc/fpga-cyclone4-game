@@ -1,0 +1,228 @@
+{
+  "candidate": "NES-GAME-157",
+  "status": "PASSIVE_FIRST_FAULT_HISTORY_READY_PHYSICAL_PENDING",
+  "manifest_sha256": "8378552ef38d3a5d3aa05425999530dede4b8d267d8e3621ec00a3acaa299e16",
+  "file_count": 2835,
+  "public_sources": {
+    "tools/nes_game157.py": "c8a3569887ca467fe411f280367a477e47fabe6e284ef6af6817dd6228ab7d49",
+    "tools/check_nes_game157_arm.py": "6df667a799df016eab0faebb21bfba64c2467de53ce0ded57b5036a8562778f3",
+    "tools/assemble_nes_game157.py": "51ac3c16bd7b934744ee05ea84cb314aa332ce1669ca309f82e3bfbb066410e5",
+    "tools/test_nes_game157.py": "ba0106af27f66c6ddfd34f1f61129544849adef74a739c98260dfed2ac55db12",
+    "tools/test_nes_game157_host.py": "40854cb1b1e5a8f5fc2e92626f592d0c70d9e6e6e5869f81ecfac7393f488180",
+    "tools/check_nes_game157_reuse.py": "cf0087e3f8a378a2a3082cb86b2ecd490b79d0cf1b108f5eea99db24ce45205d",
+    "tools/decode_nes_game157.py": "cbd655fbad603bc54fb85672e99d8e2560ec52771bb54c937132cfc9c11b756b",
+    "tools/release_nes_game157.py": "b22a9b0273deb03b2a4327effbcd2c5efd2ee21504dc7b2f7e5be13d1caf2dbe",
+    "tools/verify_nes_game157.py": "2e3c10ad921834ac9a9c7d8a3ff3eaabc3222028cdf57e102e3e2602210d8735",
+    "tests/nes-functional/game157_history_tb.sv": "bd4761f488e76b43793e797cd0699de483bb97b8ac1c12fff1ce73b51c396338",
+    "tests/nes-functional/game157_service_tb.sv": "a90de78e3505e7d3690e16d8922cf5417a5c00fe2f7221beec2a5f380137d0e7",
+    "src/nes/diagnostics/nes_ppu_history157.sv": "38a3fd4ff859f6344b83f5364bf3a4f78d4fcf111104cb7bebb74c56d3297097",
+    "src/nes/diagnostics/nes_ppu_history157.inc": "21fcd5cf9714b554e1b5588b8836c8d249036cb6bd50673687d08635df8e8e49"
+  },
+  "selected": [
+    "asm",
+    "arm",
+    "armcheck",
+    "test",
+    "host",
+    "reuse",
+    "release"
+  ],
+  "physical_test": false,
+  "gameplay_passed": false,
+  "ppu_fix": false,
+  "ids": [
+    "66",
+    "E0"
+  ],
+  "fit": {
+    "logic_elements": 13763,
+    "registers": 5005,
+    "physical_pins": 122,
+    "virtual_pins": 0,
+    "pll": 1,
+    "m9k": 56,
+    "m9k_total": 56,
+    "memory_bits": 466864
+  },
+  "timing": {
+    "passed": true,
+    "same_clock_setup_ns": 0.055,
+    "same_clock_hold_ns": 0.128,
+    "snes_envelope_ns": 199.238,
+    "sample_ns": 270,
+    "psram_conditional_margin_ns": 3.763,
+    "pad_held_delay_ns": 6.568,
+    "negative_recovery": [
+      {
+        "corner": "8_slow_1200mv_85c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "3.956",
+        "slack": "-6.813"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "3.956",
+        "slack": "-6.346"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "3.623",
+        "slack": "-6.103"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "3.623",
+        "slack": "-5.660"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "1.880",
+        "slack": "-3.334"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "1.880",
+        "slack": "-3.146"
+      }
+    ],
+    "psram_address_margin_ns": 7.940999999999999,
+    "psram_active_margin_ns": 3.763,
+    "prior_unphased_margin_ns": 1.988999999999999,
+    "address_launch_cycles": 17,
+    "ce_oe_launch_cycles": 16,
+    "row_counts": [
+      108,
+      6846
+    ],
+    "pcb_allowance_ns": 2,
+    "mtbf_calculated": false,
+    "full_io_signoff": false,
+    "scope": "Conditional routed boundaries; existing unmeasured electrical and clock-halt limits remain open.",
+    "implementation_budget_setup_ns": -0.042,
+    "implementation_budget_passed": false,
+    "nominal_sdc_sha256": "59dbe2401cc57a7646271fc222b69cd0c27dfb0bfb0c9514641213c39b9cd1ac",
+    "routed_files_preserved": 303,
+    "new_fit": false,
+    "nominal_contract": "Exact155 clock SDC; no period/falsepath/multicycle change. Extra1565.5ns target is only placement guidance; its miss remains separate."
+  },
+  "test": {
+    "passed": true,
+    "sources": {
+      "nes_run_observer134.sv": "f75cd14a40f2bac2df2a7ffeb9006219bb6b738e458ee6f11cb61d597620ebff",
+      "nes_pad_trace156.sv": "54bd0ffd77c58c4b75f3161997c082c43620dedded0167f27908a520bea4d7a6",
+      "nes_ppu_history157.sv": "38a3fd4ff859f6344b83f5364bf3a4f78d4fcf111104cb7bebb74c56d3297097",
+      "nes_rom_service.sv": "4d6f7b95308859fa29944fa7ee6482a0ae534770b465ffaee35733d67b6ab173"
+    },
+    "testbenches": {
+      "history157_tb.sv": "bd4761f488e76b43793e797cd0699de483bb97b8ac1c12fff1ce73b51c396338",
+      "service157_tb.sv": "a90de78e3505e7d3690e16d8922cf5417a5c00fe2f7221beec2a5f380137d0e7"
+    },
+    "physical": false,
+    "scope": "Actual SPI observer/retained ring/service. Two synthetic request histories produce identical156 fault tuple but distinguishable history. Not physical root-cause reproduction."
+  },
+  "host": {
+    "passed": true,
+    "recovery_cases": 13,
+    "formatter_masks": 256,
+    "source_sha256": "a7971a252744866e14a4de65cb8c05c2647fd9d7b17dc20948ff5e106f5f4657",
+    "format_source_sha256": "34bf28035f10aea5f5b9a16353ac8464376a56ae80269c0c9f78feb22ff44464",
+    "physical": false,
+    "scope": "Actual RUN/STOP/decoder/formatter; synthetic SPI, not full FatFS or board execution."
+  },
+  "reuse": {
+    "passed": true,
+    "normalized": {
+      "nes_rom_service.sv": "exact156 after removal of output-only taps",
+      "nes_live_joint.sv": "exact156 after removal of output-only taps",
+      "fxpak_nes_screen137_top.sv": "exact156 after removal of output-only taps"
+    },
+    "unchanged": {
+      "rtl/bus_savestates.vhd": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9",
+      "rtl/t65/T65_Pack.vhd": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb",
+      "rtl/t65/T65_ALU.vhd": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b",
+      "rtl/t65/T65_MCode.vhd": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5",
+      "rtl/t65/T65.vhd": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692",
+      "rtl/statemanager.vhd": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6",
+      "rtl/savestates.vhd": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0",
+      "rtl/regs_savestates.sv": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95",
+      "rtl/cheatcodes.sv": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918",
+      "rtl/ppu.sv": "24a6ad0cfb2b75cbc08a8b848f8b37a2f6080d1d7cd6ebfc1b05146c02495d31",
+      "rtl/apu.sv": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586",
+      "rtl/nes.v": "4873c1197b5549c0737476eb41d3e417c799d6c9e46e5ff65b84d977080f949c",
+      "rtl/composite_board.sv": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895",
+      "rtl/compat.v": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731",
+      "sys/iir_filter.v": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8",
+      "cart_nrom.sv": "7d95cb72ae5caba56048f6d842d0408e87502d3f6b4dcfb0b5d376ae5343933b",
+      "nes_probe.sv": "3c4660fb222ad1f0fdeca03f178c14d5f80712913e1957d6c5acd4f56bddedb2",
+      "nes_local_memory.sv": "09a5109f5ea187b740ffbceb865c505c485dee13e87ee1cb665de937046d6ec4",
+      "nes_rom_physical.sv": "79e9d1b4e5cdc0d59e42cb2769080b5d71b4cbcb2849beb568e6a1a0d857c298",
+      "nes_rom_loader.sv": "779a1a502aa78f61f8d1d6fed28b0892a405d808783fcd88687f3e214fc4090e",
+      "nes_rom_boot.sv": "960e299bd9a1bd3cbdcb001ea9f15649160cd46cdb132767d9c15ad2029a1a74",
+      "nes_spi_boot.sv": "3e55dd0a4fdf50021113f50641ecd89b18e07f25986a33a5dbd462a794751d9f",
+      "nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+      "nes_diag_clock_guard127.sv": "f1936729ba7505b4d3030a86d9c8b4d88ce4490500bffb7d38ea26cace64b6e3",
+      "nes_diag_startup_guard.sv": "80e7e13ba034b0a1a706945cd8015f3789110363a300e39c21e62086a29460a2",
+      "nes_clock_pll123.v": "bcc55cf38d516acbdaa0b0402ce2320d32f67df52d1a8549379a48b0d995c8bc",
+      "nes_game_frame150.sv": "acb8eff9c17143f69dd3c49c83c667e893025554b98aee8f45e89b8d8fc65174",
+      "nes_game_pad150.sv": "68a7fc00658bc4256bd83e318814c6add9d6d1d49d2c631743c1eb9839eb5640",
+      "nes_game_bus151.sv": "82f6c9ce7cb491b6decbb3d82d7125a2bb301436782039b42ba41d14261d274a",
+      "board.sdc": "25dee3f21659c94bb0140e73358a2a34e9ac16c391036ea0d5d2e92c4eec17d4",
+      "game-program.hex": "01b72c5ecc0eb2756779a4baf363a8f6960a6b4bb082282112daed3b63f523cc",
+      "board.qpf": "8242ee5e59a70da6149cb823d27ca626c19cecce70342b4e21184bb2adb3d6c3"
+    },
+    "apu_isolation_retained": true,
+    "service_decisions_unchanged": true,
+    "physical": false,
+    "scope": "Exact source reuse after removing passive output taps, not placed gate equivalence or root-cause fix."
+  },
+  "armcheck": {
+    "firmware_bytes": 188604,
+    "firmware_sha256": "f31a3fcadfabc0e66b7ee8f0676282570b655882cc6dcc9cbfafcc4b0c42a02f",
+    "elf_sha256": "f83ae3005adaf4e302fb5ca6614b220433c69f9c2397fd2928a2fa0453a21a1f",
+    "nmi_address": "0x08019148",
+    "vector_word": "0x8019149",
+    "stop_stores": 15,
+    "stop_calls": 0,
+    "stop_dsb": 3,
+    "stop_isb": 2,
+    "transport_source_matches": true,
+    "strong_nmi": true,
+    "arm_execution": false,
+    "physical": false,
+    "installable": false
+  },
+  "limitations": [
+    "Synthetic ambiguity proof, not hardware cause replay",
+    "Last16 clocks cannot recover history before the window",
+    "56/56M9K: remove/shrink temporary history after cause is known",
+    "156 audio isolation retained; not permanent audio fix",
+    "Full IO/MTBF/gameplay/speed/save remain open"
+  ],
+  "package": {
+    "zip_sha256": "88eff563ca9feb8710c0e11a32542347823e429feb7f44b2878bb8e5b6a6e1eb",
+    "zip_bytes": 929230,
+    "members": 12,
+    "firmware_sha256": "f31a3fcadfabc0e66b7ee8f0676282570b655882cc6dcc9cbfafcc4b0c42a02f",
+    "fpga_sha256": "1a92cfc096d60de7a6eea60d3d9796b1b3d4a1620c75f9586796bbfb99f3c814",
+    "normal_trial_ready": true,
+    "physical": false,
+    "gameplay_passed": false
+  }
+}

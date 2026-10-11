@@ -1,3 +1,39 @@
+# NES 현재 인계 — 157 주소 전환 직후 PPU 기한 오류 확인
+
+[157 실기 결과](../../analysis/GAME157-HARDWARE-RESULT.ko.md) · [원본 해시·16클록 해석](../../analysis/game157-hardware-verification.json)
+
+게임 진입 실패/자동 메뉴 복귀는 사용자 확인. 전체393216바이트 적재·비교,104진행기록,패드5건(NONE/START/NONE/START/NONE),16클록 이력,STOP/TXT/base가 통과했다. 게임 플레이·다른 버튼·오디오는 미완료다. 동일157 재시험·추가 영상은 불필요하다.
+
+가장 중요한 새 근거: 상대-13에205A18 선행 요청, -8에그응답과새CPU03C001요청, -3에CPU응답, -2에busy0/ready1/PPU205A18유효1. -1에실제PPU205A18→217A18/예측205A10→217A10이함께바뀌고즉시새요청, 0에PPU샘플/응답0/유효0으로fault2. 응답+새요청동시행의transaction_address는새요청이며이전응답주소는앞선pending에서판독한다. 선행읽기누락/직전CPU점유가이번즉시원인이라는설명과맞지않는다.
+
+line193/dot8/PPU상태60820800:28606060은156과같지만오류문맥은e30042f4:30217a18(CPUvalid1/age0)로156CPUvalid0/age1과다르다. 과거논리PPU주소/매퍼쓰기주소·값/CPU PC는없다. 같은레지스터조합매핑의소스와두물리주소의상위부분동시변경은MMC3매핑전환을유력하게하지만특정bankwrite확정아니다. 논리주소상위변경도대조한다. 사운드채널차단유지;CPU사운드드라이버영향까지배제금지.
+
+NEXT: 실제MMC3/PPU/서비스/reader로dot8직전bank-data,bank-select/invert전환과논리주소변경대조군을짧게재현한다. 새물리주소발생부터샘플까지데이터확보를수정하고NES매퍼동작의미를보존한다. 오래된뱅크데이터대입/기한검사삭제/맹목캐시확대금지. 변경경계최소검증뒤SMB3스테이지/이동/점프실기로간다. 원인해결뒤임시3M9K관측축소·제거(현재56/56). 새대형진단틀·무변경전체부팅·同157/044/GBC/A-B반복금지.
+
+이번PR99는결과추가만. frozen157/배포ZIP/공개pins불변;완료finish.py/publish.py재실행금지. 빌드당시game157-verification.json의physical_test=false는동결기록이며현재판정은GAME157-HARDWARE가우선. 사용자머지후다음구현. 한국어PR4절/개인hungrysanta-ksc/사용자머지규칙유지.
+
+---
+
+## 이전157 시험판 준비 기록
+
+# NES 현재 인계 — 157 실제 게임 정지 직전 이력 시험판
+
+[157 결과](../../analysis/GAME157-RESULT.ko.md) · [실기 안내](../../docs/nes-game157-instructions.ko.md) · [검증](../../analysis/game157-verification.json)
+
+PR98 머지5b82510 확인 후157 준비.156 Select 성공/Start 동일PPU오류는 유지된 사실이며 수정 완료가 아니다. 실제서비스에 CPU선점 대 늦은PPU주소 두 합성경로를 주면 같은156 최초오류 문맥이 나온다. 새16클록 이력은 둘을 구분하지만 실제원인재현은 아니다. 기존 스냅샷만으로 하나를 고르지 않는다.
+
+157은 직전16 NES클록의 line/dot,상태12,전송주소,예측주소,실제PPU주소96비트를 남긴다. 오류클록 포함 후 정지;SPI77헤더/A0-BF 두48비트페이지;MCU STOP 뒤 회수해 TXT추가. fault_seen일 때만 마지막행=최초오류. 응답+새요청동시에는전송주소가새요청이며 이전응답주소는앞선기록과대조한다. 창이전/CPU PC/매퍼레지스터/응답데이터는없다. 게임/서비스/기한/패드/화면/156APU차단 기능은유지,관측제거소스정규화PASS. 새valid0도STOP/복귀계속.16x96은임시3M9K추가하여56/56가득찬상태;원인확인뒤축소/제거. 향후오디오메모리여유로계산금지.
+
+선택test04/host02/reuse01/ARM02+armcheck02/fit02+asm01/release01. test02예약어compile/test03CPU캐시상태모델단언실패보존. fit01/arm01materializer단언수정;초기호스트샌드박스실행제한은기존호스트권한으로해결,새라이선스요구없음. nominalsetup+.055hold+.128/PSRAM조건부+3.763. 추가5.5ns배치예산-.042미달은별도보존. 클록/예외완화없음. 전체IO/MTBF미완료.
+
+NEXT실기: NES GAME157 첫Start→1PLAYER에서Start한번누르고떼기→진행되면이동점프. Select반복불필요. nes-progress-157/nes-game-last-157와메뉴복귀여부. 같은실패영상생략가능. 새이력으로BGdot5~8예측/주소변경/CPU점유/승인/응답/캐시 첫실패경계를선택하고최소수정검증뒤같은게임으로복귀. 같은156/044/GBC/A-B/무변경장시간전체부팅금지. 이번은PPU수정판아님을명시한다.
+
+frozen157/기존공개pins/배포ZIP불변;완료finish.py/publish.py재실행금지. ROM/media/binary/privatepaths/licensesGit금지. PR한국어4절/개인hungrysanta-ksc/사용자머지. 과거156progress.json의hardware_pending은동결당시기록이며현재156결과는GAME156-HARDWARE가우선한다.
+
+---
+
+## 이전156 실기 결과
+
 # NES 현재 인계 — 156 Select 성공, Start 이후 같은 PPU 오류
 
 [156 실기 결과](../../analysis/GAME156-HARDWARE-RESULT.ko.md) · [해시·버튼·진행 기록](../../analysis/game156-hardware-verification.json)
