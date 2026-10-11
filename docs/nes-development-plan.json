@@ -5,12 +5,12 @@
   "technical_candidate": "NES-GAME-157",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "156 Select 성공, Start PPU기한 오류 미해결.157은 실제 오류 직전16클록의 최소 관측 시험판.",
-  "next_action": "RUN157_SMB3_AND_DECODE_FIRST_FAULT_HISTORY",
+  "assessment": "157 실기 이력으로 선행 읽기 완료 후 샘플 직전 CHR 물리주소 전환 확인. 게임 실패/회수 성공; 정확한 매퍼 쓰기는 미확정.",
+  "next_action": "REPRODUCE_AND_FIX_LATE_CHR_ADDRESS_TRANSITION",
   "next_three_deliverables": [
-    "실제 SMB3 Start 이후 line193/dot8/0x217A18 직전 예측·매핑·승인·캐시·응답 경계 좁히기",
-    "확인된 선행 읽기·캐시·중재 또는 응답 전달의 첫 실패 경계를 수정하고 최소 검증",
-    "같은 게임으로 스테이지 진입·이동·점프를 실기 확인"
+    "실제 MMC3/PPU/service/reader에서 dot8 직전 뱅크 변경과 논리주소 변경을 구분하는 짧은 재현",
+    "주소 전환 후 샘플까지 데이터 확보 수정·최소 검증, 임시 이력3M9K 축소 검토",
+    "같은 SMB3 스테이지 진입·이동·점프 실기 확인"
   ],
   "gates": [
     {
@@ -2484,11 +2484,16 @@
   },
   "game157": {
     "verification": "analysis/game157-verification.json",
-    "hardware_pending": true,
+    "hardware_pending": false,
     "ppu_fix": false,
     "gameplay_passed": false,
     "temporary_history_m9k": 3,
     "device_m9k_used": 56,
-    "next": "Actual157 SMB3 firstStart->1PStart, then movement/jump if possible; twoTXT/menu; distinguish request/grant/reply boundary."
+    "next": "Reproduce late physical-address transition using actual MMC3/PPU/service/reader: bank-data/select-invert versus logical-address-change control; minimum justified fix then actual SMB3 stage/move/jump. No stale-bank substitution, deadline waiver, blind cache growth or unchanged full boot; shrink temporary3M9K history when resolved.",
+    "hardware_verification": "analysis/game157-hardware-verification.json",
+    "history_hardware_passed": true,
+    "recovery_hardware_passed": true,
+    "physical_address_transition_confirmed": true,
+    "mapper_write_confirmed": false
   }
 }

@@ -37,16 +37,16 @@
       ],
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
-      "verification": "analysis/GAME157-RESULT.ko.md",
+      "verification": "analysis/GAME157-HARDWARE-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "first-fault-last16-requests-physical-pending",
+      "investigation": "late-chr-physical-address-transition-before-ppu-sample",
       "hardware_baseline": "NES-H1-SAMPLING-044",
-      "hardware_verified_scope": "156 full ROM load/compare, completed pad trace15 (SELECT04/release four pairs), actual Select cursor and STOP/TXT/base/menu pass. Start still faults at155 identical PPU line193 dot8/217A18. Gameplay failed; physical first-Start click count unknown.",
+      "hardware_verified_scope": "157 full393216loadcompare/history16/pad5/STOP/TXT/base/actualmenu PASS. Old205A18 prefetch completed; CPU read completed before idle-2; physicalPPU changes217A18 at-1, immediate read but sample0 faults. Gameplay FAIL; exact mapper write unproven.",
       "development_evidence": "analysis/game157-verification.json",
       "hardware_candidate": "NES-GAME-157",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "Actual157 SMB3 firstStart->1PStart, then movement/jump if possible; twoTXT/menu; distinguish request/grant/reply boundary.",
+      "next_gate": "Reproduce late physical-address transition using actual MMC3/PPU/service/reader: bank-data/select-invert versus logical-address-change control; minimum justified fix then actual SMB3 stage/move/jump. No stale-bank substitution, deadline waiver, blind cache growth or unchanged full boot; shrink temporary3M9K history when resolved.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "157 MCU+FPGA strict66/E0",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -227,6 +227,15 @@
         "gameplay_passed": false,
         "same155_fault": true,
         "sound_cause_confirmed": false
+      },
+      "hardware_game157": {
+        "verification": "analysis/game157-hardware-verification.json",
+        "history_passed": true,
+        "gameplay_passed": false,
+        "recovery_passed": true,
+        "physical_address_transition_confirmed": true,
+        "mapper_write_confirmed": false,
+        "context": "e30042f4:30217a18"
       }
     },
     {
