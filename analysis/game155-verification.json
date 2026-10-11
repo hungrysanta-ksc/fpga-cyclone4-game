@@ -1,0 +1,617 @@
+{
+  "candidate": "NES-GAME-155",
+  "status": "ORDINARY_BG_PREFETCH_READY_PHYSICAL_PENDING",
+  "manifest_sha256": "485444c85297c1cf610d4d2db6e77d4959827c3a51b0b7334aa6079c9f9ff654",
+  "file_count": 2359,
+  "public_sources": {
+    "tools/nes_game155.py": "b9668f73a53c11d0cf6198808edc51ef56dc61737acc88220e366505d6a42884",
+    "tools/check_nes_game155_arm.py": "77301ff5910e31d7112aedb72508c9f220157e34c61d48e6e392374afb1d9449",
+    "tools/assemble_nes_game155.py": "590c852697c5569eedb3f96220a3e8c909fa142f69147d5a381989c6d344c7b0",
+    "tools/test_nes_game155.py": "6bc22ceff14e9d8288154db3453789d5a6e9dff2e26f9fe3aae1115455c6b1e4",
+    "tools/test_nes_game155_decoder.py": "3764cb3340546cf84f784ce4430b724ff6d892b705abbb6ff8db64d06f45c9b7",
+    "tools/check_nes_game155_reuse.py": "a4c3580fd325c3c8740c4a9b6a54a9f68b5c8da9712e64873795dcda1d3afc92",
+    "tools/release_nes_game155.py": "98f109769d1eeb396c8b3ad3c3559d16ab550093fd65a4e5712938b463933612",
+    "tools/verify_nes_game155.py": "3989863015b4fd57fcad27ffa2d20b4d4237c3b2325727d886c17450b88ae3b7",
+    "tests/nes-functional/game155_collision_tb.sv": "07235c7f0ccb9fcd066656552a197b9d38aa90fd029af53ac1e7bfa5e6acce7e"
+  },
+  "selected": [
+    "asm",
+    "arm",
+    "armcheck",
+    "collision",
+    "decoder",
+    "reuse",
+    "release"
+  ],
+  "physical_test": false,
+  "gameplay_passed": false,
+  "exact_hardware_cause_confirmed": false,
+  "ids": [
+    "64",
+    "DE"
+  ],
+  "fit": {
+    "logic_elements": 13709,
+    "registers": 5054,
+    "physical_pins": 122,
+    "virtual_pins": 0,
+    "pll": 1,
+    "memory_bits": 464896
+  },
+  "timing": {
+    "passed": true,
+    "same_clock_setup_ns": 0.015,
+    "same_clock_hold_ns": 0.178,
+    "snes_envelope_ns": 203.311,
+    "sample_ns": 270,
+    "psram_conditional_margin_ns": 2.735999999999999,
+    "pad_held_delay_ns": 6.471,
+    "negative_recovery": [
+      {
+        "corner": "8_slow_1200mv_85c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "4.341",
+        "slack": "-6.687"
+      },
+      {
+        "corner": "8_slow_1200mv_85c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "4.341",
+        "slack": "-6.687"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "3.992",
+        "slack": "-5.986"
+      },
+      {
+        "corner": "8_slow_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "3.992",
+        "slack": "-5.986"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[1]",
+        "delay": "2.042",
+        "slack": "-3.293"
+      },
+      {
+        "corner": "MIN_fast_1200mv_0c",
+        "group": "recovery",
+        "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+        "to": "nes_game_bus151:consumer|host_release[0]",
+        "delay": "2.042",
+        "slack": "-3.293"
+      }
+    ],
+    "psram_address_margin_ns": 9.096999999999996,
+    "psram_active_margin_ns": 2.735999999999999,
+    "prior_unphased_margin_ns": 2.371999999999998,
+    "address_launch_cycles": 17,
+    "ce_oe_launch_cycles": 16,
+    "row_counts": [
+      108,
+      6552
+    ],
+    "pcb_allowance_ns": 2,
+    "mtbf_calculated": false,
+    "full_io_signoff": false,
+    "scope": "Conditional routed boundaries; existing unmeasured electrical and clock-halt limits remain open."
+  },
+  "collision": {
+    "passed": true,
+    "rom_sha256": "dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49",
+    "sources": {
+      "rtl/bus_savestates.vhd": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9",
+      "rtl/t65/T65_Pack.vhd": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb",
+      "rtl/t65/T65_ALU.vhd": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b",
+      "rtl/t65/T65_MCode.vhd": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5",
+      "rtl/t65/T65.vhd": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692",
+      "rtl/statemanager.vhd": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6",
+      "rtl/savestates.vhd": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0",
+      "rtl/regs_savestates.sv": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95",
+      "rtl/cheatcodes.sv": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918",
+      "rtl/ppu.sv": "24a6ad0cfb2b75cbc08a8b848f8b37a2f6080d1d7cd6ebfc1b05146c02495d31",
+      "rtl/apu.sv": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586",
+      "rtl/nes.v": "9d59fdb483ffac712d53dded755e75db3e0f9770db9ad0a2d03c9ce7eef04f32",
+      "rtl/composite_board.sv": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895",
+      "rtl/compat.v": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731",
+      "sys/iir_filter.v": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8",
+      "cart_nrom.sv": "7d95cb72ae5caba56048f6d842d0408e87502d3f6b4dcfb0b5d376ae5343933b",
+      "nes_probe.sv": "3c4660fb222ad1f0fdeca03f178c14d5f80712913e1957d6c5acd4f56bddedb2",
+      "nes_local_memory.sv": "09a5109f5ea187b740ffbceb865c505c485dee13e87ee1cb665de937046d6ec4",
+      "nes_rom_service.sv": "a76a57420f8d71bc2856f25e3b0513ffb59596d8b3b62d3344615ea63c72abad",
+      "nes_rom_physical.sv": "79e9d1b4e5cdc0d59e42cb2769080b5d71b4cbcb2849beb568e6a1a0d857c298",
+      "nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+      "game155_collision_tb.sv": "07235c7f0ccb9fcd066656552a197b9d38aa90fd029af53ac1e7bfa5e6acce7e"
+    },
+    "runs": [
+      {
+        "phase_ns": 0,
+        "control": 0,
+        "cases": 12,
+        "faults": 0,
+        "rows": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            0,
+            0
+          ],
+          [
+            3,
+            0,
+            0
+          ],
+          [
+            4,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            6,
+            0,
+            0
+          ],
+          [
+            7,
+            0,
+            0
+          ],
+          [
+            8,
+            0,
+            0
+          ],
+          [
+            9,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ],
+          [
+            11,
+            0,
+            0
+          ]
+        ],
+        "log_sha256": "ab420bb97bf968d3cf0fdbe170f43f82f8b05d14d5c669c5433e307fb62df86d"
+      },
+      {
+        "phase_ns": 0,
+        "control": 1,
+        "cases": 12,
+        "faults": 9,
+        "rows": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            1,
+            2
+          ],
+          [
+            3,
+            1,
+            2
+          ],
+          [
+            4,
+            1,
+            2
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            6,
+            1,
+            2
+          ],
+          [
+            7,
+            1,
+            2
+          ],
+          [
+            8,
+            1,
+            2
+          ],
+          [
+            9,
+            0,
+            0
+          ],
+          [
+            10,
+            1,
+            2
+          ],
+          [
+            11,
+            1,
+            2
+          ]
+        ],
+        "log_sha256": "828fcccffc749f9c6141acf413135e25e826b1ca00be202aff406fb9cdf71360"
+      },
+      {
+        "phase_ns": 3.5,
+        "control": 0,
+        "cases": 12,
+        "faults": 0,
+        "rows": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            0,
+            0
+          ],
+          [
+            3,
+            0,
+            0
+          ],
+          [
+            4,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            6,
+            0,
+            0
+          ],
+          [
+            7,
+            0,
+            0
+          ],
+          [
+            8,
+            0,
+            0
+          ],
+          [
+            9,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ],
+          [
+            11,
+            0,
+            0
+          ]
+        ],
+        "log_sha256": "cb3566ccb004a6637ea4b21361dea43d847fc17b333ccaa7a423642407bd7018"
+      },
+      {
+        "phase_ns": 3.5,
+        "control": 1,
+        "cases": 12,
+        "faults": 9,
+        "rows": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            1,
+            2
+          ],
+          [
+            3,
+            1,
+            2
+          ],
+          [
+            4,
+            1,
+            2
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            6,
+            1,
+            2
+          ],
+          [
+            7,
+            1,
+            2
+          ],
+          [
+            8,
+            1,
+            2
+          ],
+          [
+            9,
+            0,
+            0
+          ],
+          [
+            10,
+            1,
+            2
+          ],
+          [
+            11,
+            1,
+            2
+          ]
+        ],
+        "log_sha256": "b44c0cfd01cb9a7cb3835b51b4f02d3857cc3011ee769be3546171b321e0c671"
+      },
+      {
+        "phase_ns": 5.5,
+        "control": 0,
+        "cases": 12,
+        "faults": 0,
+        "rows": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            0,
+            0
+          ],
+          [
+            3,
+            0,
+            0
+          ],
+          [
+            4,
+            0,
+            0
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            6,
+            0,
+            0
+          ],
+          [
+            7,
+            0,
+            0
+          ],
+          [
+            8,
+            0,
+            0
+          ],
+          [
+            9,
+            0,
+            0
+          ],
+          [
+            10,
+            0,
+            0
+          ],
+          [
+            11,
+            0,
+            0
+          ]
+        ],
+        "log_sha256": "1fc0fa04eb5ed20baf5ab567d23d282e2968333b9629dd29d1d1adfcec88869e"
+      },
+      {
+        "phase_ns": 5.5,
+        "control": 1,
+        "cases": 12,
+        "faults": 9,
+        "rows": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            2,
+            1,
+            2
+          ],
+          [
+            3,
+            1,
+            2
+          ],
+          [
+            4,
+            1,
+            2
+          ],
+          [
+            5,
+            0,
+            0
+          ],
+          [
+            6,
+            1,
+            2
+          ],
+          [
+            7,
+            1,
+            2
+          ],
+          [
+            8,
+            1,
+            2
+          ],
+          [
+            9,
+            0,
+            0
+          ],
+          [
+            10,
+            1,
+            2
+          ],
+          [
+            11,
+            1,
+            2
+          ]
+        ],
+        "log_sha256": "eae85b6c20ce2f24d4d7e54a6b5dc9ed289f9addbcca4ef0f475b59bf8b27a14"
+      }
+    ],
+    "physical": false,
+    "exact_hardware_replay": false,
+    "scope": "Synthetic line193, four known tile names, fixed MMC3 bank,12 continuous CPU phases; actual PPU address generation/MMC3/service/READ16 with70ns model. Three memory phases. Control removes new normal hint only; old overlap logic retained. Not game-level or all-phase electrical proof."
+  },
+  "reuse": {
+    "passed": true,
+    "reused154_manifest": "67002e69816538e047a7be9368708b4fea6f0b7cde1b085468a471d69414de47",
+    "changed_files": [
+      "src/nes_checkpoint112.c",
+      "src/nes_h1_stm32.c",
+      "src/nes_menu_diagnostic.c",
+      "src/nes_rom_verify.c",
+      "src/nes_run136.inc",
+      "src/VERSION"
+    ],
+    "reused154_host_and_observer_under_identity_normalization": true,
+    "new_host_run": false,
+    "new_observer_run": false,
+    "physical": false,
+    "scope": "All MCU source bytes preserved or exactly identity/name normalized. Actual154 recovery/observer tests reused; new155 decoder and linked ARM checks are separate."
+  },
+  "decoder": {
+    "passed": true,
+    "valid": 960,
+    "invalid": 10,
+    "source_sha256": "577419a8c4c2379fd0bb01b0bc7fbe7608ac996b1f43a88f968a62e780dcde48",
+    "physical": false
+  },
+  "arm": {
+    "firmware_bytes": 187124,
+    "firmware_sha256": "f8b9cd9ef1a08f3bd846f24f49a0dc44f939362815defa751929167a7ee98da0",
+    "elf_sha256": "4b565eb0a5a441b89615b66687b976a485b6a2f1225fc5c449229bc7ec69a5e4",
+    "nmi_address": "0x08019148",
+    "vector_word": "0x8019149",
+    "stop_stores": 15,
+    "stop_calls": 0,
+    "stop_dsb": 3,
+    "stop_isb": 2,
+    "transport_source_matches": true,
+    "strong_nmi": true,
+    "arm_execution": false,
+    "physical": false,
+    "installable": false
+  },
+  "package": {
+    "zip_sha256": "1b8b19bceac47f53cf7944df7f41736d1f12744d257179e0c1518746fa65bcdb",
+    "zip_bytes": 928122,
+    "members": 12,
+    "firmware_sha256": "f8b9cd9ef1a08f3bd846f24f49a0dc44f939362815defa751929167a7ee98da0",
+    "fpga_sha256": "5435fca0285d3f7f652033ed7d687667bfce05493bd2da8ed373be46debf0a9e",
+    "normal_trial_ready": true,
+    "physical": false,
+    "gameplay_passed": false
+  },
+  "limitations": [
+    "Synthetic surrounding state/CPU occupancy, not actual154 request history",
+    "No new whole-game boot replay",
+    "New155 normal hint is included in existing64bit PPU state hint field",
+    "154 MCU recovery/observer evidence reused after exact identity/name normalization",
+    "Held frames/DMA input gaps/audio/save/full external IO/MTBF remain open"
+  ]
+}
