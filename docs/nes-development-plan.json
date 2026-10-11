@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
-  "date_kst": "2026-10-11",
+  "date_kst": "2026-10-12",
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "164 검정 구간 제거 통과, 사용자 청취상 사운드 정상으로 보임. 심한 끊김으로 정상 플레이 불가. ROM 오류0·실제 메뉴 복귀 통과. 다음 영상 전송량/갱신 지연 개선; DOWN 유지 이번 미시험.",
-  "next_action": "AFTER_PR106_MERGE_REDUCE_VIDEO_TRANSFER_AND_SNAPSHOT_LATENCY",
+  "assessment": "164 검정 제거/사운드/메뉴 복귀 확인, 정상 플레이는 끊김으로 미달성. PR106 머지 후6개 공개 구현 조사. 고정 좌표 완성 픽셀 차분 단독 대신 SNES CHR/맵/스크롤/스프라이트 경로의 최소 SMB3 적용 가능성 우선 확인. 구현/실기 성능 미검증; 새165 없음.",
+  "next_action": "ASSESS_MINIMAL_SMB3_SNES_NATIVE_GRAPHICS_EXPORT_AND_BUDGET_THEN_REAL_ROM",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2610,5 +2610,11 @@
     "held_input_tested": false,
     "menu_return_passed": true,
     "hardware_verification": "analysis/game164-hardware-verification.json"
+  },
+  "video_research_after164": {
+    "document": "docs/nes-video-transfer-research.ko.md",
+    "evidence": "analysis/nes-video-transfer-research.json",
+    "native_path_implemented": false,
+    "dirty_tile_only_adopted": false
   }
 }

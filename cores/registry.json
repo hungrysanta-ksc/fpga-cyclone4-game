@@ -46,7 +46,7 @@
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-162",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "After PR106 merge, reduce video transfer volume and complete-snapshot latency for playable SMB3; compare existing GBC presentation before design, preserve163 SPC/162 audio and safeSTOP/menu. Minimum changed-path checks then real ROM. Do not increase vblank DMA beyond its budget or claim hold removal gives60fps. After usable AV, remove normal60s cap with safe fault/reset logging, then long held-input assessment. No repeated164/044/GBC/sound-only/unchanged full-load tests.",
+      "next_gate": "PR106 merged. Research decision: fixed-screen final-pixel dirty tiles alone are insufficient as the main smooth-scrolling strategy. Next assess minimal SMB3 SNES-native CHR/map/scroll/OAM/palette/raster export, VRAM/resources/vblank budget; preserve FPGA execution and163SPC/162audio/STOPmenu. Minimum changed-boundary checks then real SMB3. Native path not implemented or60fps proven; candidate remains164. If infeasible record concrete constraints and compare pixel scroll reuse/delta. After usable AV remove60s cap with safe fault/reset logs, then long held-input. No repeated164/044/GBC/sound-only/full-load tests.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "162 MCU+FPGA strict6B/E5",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -303,6 +303,11 @@
         "held_down_tested": false,
         "run_rom_error": 0,
         "display_interval_ms": 60650
+      },
+      "video_research_after164": {
+        "document": "docs/nes-video-transfer-research.ko.md",
+        "evidence": "analysis/nes-video-transfer-research.json",
+        "status": "research_complete_implementation_open"
       }
     },
     {
