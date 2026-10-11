@@ -24,7 +24,7 @@
     },
     {
       "id": "nes",
-      "status": "audio_trial_ready_continuous_video_pending",
+      "status": "first_level_play_passed_audio_silent",
       "candidate": "NES-GAME-162",
       "planned_product_version": null,
       "released": false,
@@ -46,7 +46,7 @@
       "development_evidence": "analysis/game162-verification.json",
       "hardware_candidate": "NES-GAME-162",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "Actual162 sound/effects and first-level play/logs/menu, then continuous-video implementation. After AV validation, remove60s cap with fault/reset final logging, then long-session input quality.",
+      "next_gate": "After PR104 merge, first investigate missing SNES SPC/DSP unmute initialization: reuse the bounded GBC bootstrap with FLG readback, adapt WRAM/ABI and log status. Confirm source-to-DAC activity only as needed; no broad debug expansion. Then actual SMB3 sound/play/menu and continuous video; AV before unlimited play/reset logging and input-quality assessment.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "162 MCU+FPGA strict6B/E5",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -219,7 +219,7 @@
       "game147": "analysis/game147-verification.json",
       "game148": "analysis/game148-verification.json",
       "game154_hardware": "analysis/game154-hardware-verification.json",
-      "hardware_evidence": "analysis/game161-hardware-verification.json",
+      "hardware_evidence": "analysis/game162-hardware-verification.json",
       "hardware_game156": {
         "verification": "analysis/game156-hardware-verification.json",
         "select_cursor_passed": true,
@@ -274,6 +274,16 @@
         "menu_return_passed": true,
         "run_rom_error": 0,
         "display_interval_ms": 60660
+      },
+      "hardware_game162": {
+        "verification": "analysis/game162-hardware-verification.json",
+        "level1_gameplay_session_passed": true,
+        "menu_return_passed": true,
+        "physical_audio_passed": false,
+        "audio_result": "silent",
+        "run_rom_error": 0,
+        "display_interval_ms": 60660,
+        "root_cause_confirmed": false
       }
     },
     {

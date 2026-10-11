@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재162: **사운드 복원 실기판 준비**.161 첫 레벨 플레이 성공을 보존했고 음악·효과음은 실기 확인 대기입니다. 연속 화면이 다음 구현이며 이후 장시간 플레이·입력 유지를 확인합니다. [162 결과](analysis/GAME162-RESULT.ko.md) · [시험 안내](docs/nes-game162-instructions.ko.md).
+현재162 실기: **첫 레벨 플레이·정상 메뉴 복귀 통과, 사운드는 무음**. 다음은 NES 클라이언트의 본체 사운드 초기화 누락을 확인하고 수정한 뒤 연속 화면으로 진행합니다. [162 실기 결과](analysis/GAME162-HARDWARE-RESULT.ko.md).
 
 이전151 실기: **SMB3 제목·캐릭터 표시와 메뉴 복귀 성공, PPU 읽기 오류로 조기 종료**. 정상 플레이·전체 버튼 입력은 미완료입니다. [151 실기 결과](analysis/GAME151-HARDWARE-RESULT.ko.md).
 
