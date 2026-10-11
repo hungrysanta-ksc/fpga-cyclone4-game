@@ -1,3 +1,39 @@
+# NES 현재 인계 — 160 첫 레벨 전환 실패, 데이터 교체와 표시 지연
+
+[160 실기 결과](../../analysis/GAME160-HARDWARE-RESULT.ko.md) · [원본 해시·16클록](../../analysis/game160-hardware-verification.json)
+
+실기160은첫레벨A에서오류2/메뉴복귀.16.440초로시간제한아님.159dot336217000과다르게line193dot6actual205FF0/pending217FF8age1. 현재205FF0이-7~-2까지valid1,미래217FF8응답(-2)뒤같은주소가-1에valid0,0샘플오류. 기존2슬롯FIFO응답교체가현재사용중인두번째슬롯을버리는경계가우선후보;내부태그미관측이므로확정금지. 같은응답클록의217FF8중복요청도별도검토. 첫레벨플레이미완료. 마지막A포함16입력기록/전체적재대조/STOP/base/메뉴준비정상.
+
+사용자요청:프레임끊김때문에입력타이밍을판단하기어려우니가능하면해제. 실제160game-program.hex와152생성바이트완전일치확인.30vblank화면유지/게임계속실행;입력은152부터매holdvblank전달,단DMA/프레임대기공백유지.151코드만보고입력이0.5초마다라고오판하지말것. 대기는오류검출필수아닌57344바이트전체forcedblank전송점멸완화. 단순해제는150점멸위험/60fps아님으로이번패키지는유지. 표시지연개선은후속구현범위로명시하고기존152입력개선을반복하지않는다.
+
+NEXT actualservice에서현재205FF0이previous슬롯인경우미래217FF8fill/동시중복request를짧게재현. 현재필요바이트보존/처리중hint중복억제의근거를확인해최소수정,정상샘플기한유지후실제SMB3첫레벨. 표시보유시간·전송대기를분리하고가독성·입력유지하며화면나이줄이기;무조건hold0/blank제거금지. 동일160/044/GBC/A-B/무변경전체부팅반복불필요. APU차단유지. 연속화면/첫레벨/속도/오디오/저장미완료.
+
+이번PR102결과기록만,새펌웨어없음. frozen160/ZIP/공개핀/완료finalizer불변. 제작시physicalfalse는역사기록,현재상태는이실기기록우선. 한국어4PR절/개인계정/사용자머지.
+
+---
+
+## 이전 제작 기록
+
+# NES 현재 인계 — 160 렌더링 재개 주소 예측 실기판
+
+[160 결과](../../analysis/GAME160-RESULT.ko.md) · [실기 안내](../../docs/nes-game160-instructions.ko.md) · [검증](../../analysis/game160-verification.json) · [159 실기](../../analysis/GAME159-HARDWARE-RESULT.ko.md)
+
+PR101 머지7f93ac599a958d9073eb571468cc7dd8d6459ed3 확인.159 월드맵 진입·방향키 이동은 실기 통과. 첫 레벨 A전환은26.240초 뒤 line193/dot336/217000 PPU오류2이며60초 제한이 아니다. CPU03F86E 응답 뒤 reader가 빈 구간에도 현재PPUvalid0이 힌트를 막았고 실제217000 요청은 샘플3클록 전이었다.
+
+160은 실제PPU2001 쓰기→re_sr 재개→ALE/하위래치 경계에서 같은 실패를 재현했다. 직전 ALE가 없는 짝수 패턴 읽기에 옛 하위래치가 남아 일반예측217078/70과 실제217000이 달라진다. re_sr[1]&&!re_sr[2]의 제한된 재개 구간만 보존된 하위래치와 다음상위주소를 한PPU주기 미리 예측하고 현재valid 조건을 우회한다. 가시줄/비스프라이트/지정패턴위상/빈PPUDATA pipeline으로 제한. 실제PPU주소·상태·매퍼/IRQ·서비스/reader/캐시/기한/클록·159raw CPU/DMA읽기 조건은 유지.159의 이전re_sr가 로그에 없어 실기원인 확정은 아니다.
+
+선택test05 실제PPU결선+70ns모델:dot334/336×래치00/5A×위상0/3.5/5.5ns=12수정PASS/12예측차단대조오류2.159회귀39PASS/39대조중18오류 유지. 실제8CE초기화 뒤 unknown거부. 초기PPU위치/name/scroll/latch와CPU출력버스는 설정한 값이므로 전체게임/CPU명령/전체DMA/모든PPUDATA겹침 검증은 아니다. test01잘못된신호명 elaboration실패,02구판재현/03단일수정 탐색,04초기pipelineX발견으로 최종근거제외.05만 선택하고 이전시도보존.
+
+fit01 명목setup-.170FAIL로배포제외. fit02 byte_count→miso_hold 및 loader state→loaded_bytes 두경로에 더엄격한5.3ns배치지침 추가. 추가예산+.076,정확155명목SDC setup+.207/hold+.138,조건부PSRAM+3.026/SNES199.984<270ns. 실제클록/falsepath/multicycle완화없음.13725LE/5005regs/122pins/virtual0/PLL1/56M9K. PCB2ns/reset release음수recovery/전체IO/MTBF한계 유지. test05와최종ASM RTLhash일치;배치만달라 기능반복불필요. ARM188604/NMI15stores0calls/host13회수256마스크. strict69/E3;APU채널차단156 유지.
+
+NEXT:160전체SD폴더 적용→NES GAME 160.nh1→첫Start→1PLAYER Start놓기→월드맵 첫레벨에서A→레벨내 이동·점프. 두160TXT·메뉴복귀·플레이되면짧은영상. 기존적재약3분50초는참고치;60초실행상한 내 월드맵에서지체하지않는다. 044/GBC/159/A-B/무변경전체부팅 반복하지않는다. 실패하면 최초오류·16클록이 재개모델과맞는지 우선비교;추측으로캐시/중재확대금지. 통과하면 실제조작·스크롤 우선후 임시이력RAM축소·음원복구. 오디오/속도/저장/첫레벨플레이 아직미완료.
+
+이전frozen자료·공개핀·ZIP불변,완료finish.py재실행금지. ROM/media/binaries/licenses/privatepaths Git금지. 한국어4PR절(목표/내용/결과/의미),개인hungrysanta-ksc만사용,사용자머지.
+
+---
+
+## 이전 작업 인계
+
 # NES 현재 인계 — 159 월드맵 진입·이동 통과, 첫 레벨 전환 미완료
 
 [159 실기 결과](../../analysis/GAME159-HARDWARE-RESULT.ko.md) · [해시·패드·16클록](../../analysis/game159-hardware-verification.json)

@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재159: **SMB3 월드맵 진입·이동 실기 통과, 첫 레벨 전환의 그래픽 읽기 오류 조사 중**. 종료 원인은60초 제한이 아니며 TXT·메뉴 복귀는 정상입니다. [실기 결과](analysis/GAME159-HARDWARE-RESULT.ko.md).
+현재160: **첫 레벨 전환은 PPU오류2로 실패, 데이터 교체 경계와 느린 화면 갱신 개선 필요**. 마지막A·로그·복귀 경로는 확인했습니다. [실기 결과](analysis/GAME160-HARDWARE-RESULT.ko.md).
 
 이전151 실기: **SMB3 제목·캐릭터 표시와 메뉴 복귀 성공, PPU 읽기 오류로 조기 종료**. 정상 플레이·전체 버튼 입력은 미완료입니다. [151 실기 결과](analysis/GAME151-HARDWARE-RESULT.ko.md).
 

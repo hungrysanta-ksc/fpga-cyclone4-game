@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-11",
-  "technical_candidate": "NES-GAME-159",
+  "technical_candidate": "NES-GAME-160",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "159 월드맵 진입·이동 통과. 첫 레벨 A전환에서dot336 PPU기한오류2;시간제한아님. 렌더전환/PPUDATA/ALE주소래치와선행읽기유효조건을비교한다.",
-  "next_action": "REPRODUCE_LEVEL_ENTRY_DOT336_PPU_ADDRESS_AND_HINT_QUALIFICATION",
+  "assessment": "160 첫레벨전환오류2.205FF0정상데이터가미래217FF8응답직후무효화되는캐시교체경계가우선후보.30vblank표시보유는입력시각판단을방해;입력은152에서이미매holdvblank처리.",
+  "next_action": "REPRODUCE_ACTIVE_PPU_CACHE_EVICTION_AND_IMPROVE_PRESENTATION_LATENCY",
   "next_three_deliverables": [
-    "159dot333~336 실제PPU/주소래치/서비스의빈reader·무효hint·늦은217000수요 재현",
-    "정상샘플과159rawread조건을유지하며안전한조기주소·유효조건 최소수정/검증",
-    "같은SMB3 첫레벨진입/A·이동·점프 실기;통과후스크롤·음원복구"
+    "현재PPU바이트를선행응답이밀어내는경계/중복hint요청 재현 후 최소 수정",
+    "152의매holdvblank입력을보존하며30프레임표시대기·전체DMA점멸개선;단순대기삭제를60fps로취급하지않음",
+    "같은SMB3 첫레벨진입·이동·점프 실기;통과후스크롤/음원복구"
   ],
   "gates": [
     {
@@ -859,7 +859,7 @@
   "first_game_target": "cores/nes/first-game-target.json",
   "mapper_expansion_policy": "SMB3 mapper4 first, extend mappers afterward; keep SMB3/GBC regression",
   "hardware_iteration_policy": "최소 보호 동작과 검증된 파일 조합, 관측 방법, 종료·독립 복원 경로가 준비되면 제한 실기에서 데이터를 얻는 것을 우선한다. 남은 불확실성을 실제로 판별할 수 있는 시험을 먼저 정하고, 실기만으로 해결할 수 있는 항목을 같은 문서·모형 검사로 반복해서 미루지 않는다. 이는 모든 전기 조건의 입증을 생략한다는 의미가 아니다. 기존 승인 범위는 재승인을 요구하지 않으며, 고장 주입·전압 변경·노출 확대 등 범위가 달라질 때만 필요한 판단을 추가한다.",
-  "limited_trial_decision": "analysis/game159-verification.json",
+  "limited_trial_decision": "analysis/game160-verification.json",
   "hardware_readiness_update120": {
     "scope": "Limited CPU/PPU-free normal80 diagnostic; not fullNES/game percentage",
     "counts": {
@@ -2523,6 +2523,18 @@
     "world_map_hardware_passed": true,
     "level1_entry_passed": false,
     "recovery_hardware_passed": true,
+    "timeout_exit": false
+  },
+  "game160": {
+    "verification": "analysis/game160-verification.json",
+    "hardware_pending": false,
+    "gameplay_passed": false,
+    "render_restart": "12 boundary cases passed; physical cause unconfirmed",
+    "temporary_history_m9k": 3,
+    "device_m9k_used": 56,
+    "next": "Reproduce current205FF0 in previous slot across speculative217FF8 fill, preserve active-demand byte and prevent duplicate pending prefetch as justified; check actual service samples, then sameSMB3 level entry. Separately improve snapshot presentation without blindly removing30hold and restoring full DMA flicker.",
+    "hardware_verification": "analysis/game160-hardware-verification.json",
+    "level1_entry_passed": false,
     "timeout_exit": false
   }
 }
