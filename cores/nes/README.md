@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-현재150 실기: **384KiB 적재·전량 대조·RUN/STOP·메뉴 복귀 통과, 게임 그림은 표시되지 않아 미완료**. 점멸 원인과 실제 픽셀 전달 경계를 다음 작업에서 좁힙니다. [150 실기 결과](../../analysis/GAME150-HARDWARE-RESULT.ko.md).
+현재151 실기: **SMB3 제목·캐릭터 표시와 메뉴 복귀 성공, PPU 읽기 오류로 조기 종료**. 정상 플레이·전체 버튼 입력은 미완료입니다. [151 실기 결과](../../analysis/GAME151-HARDWARE-RESULT.ko.md).
 
 [현재 인계](HANDOFF.ko.md) · [127 결과](../../analysis/LOADER127-RESULT.ko.md)
 
