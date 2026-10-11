@@ -1,3 +1,37 @@
+# NES 현재 인계 — 161 첫 레벨 플레이 통과·지속 입력 조사 대기
+
+[실기 결과](../../analysis/GAME161-HARDWARE-RESULT.ko.md) · [수치·입력 이력](../../analysis/game161-hardware-verification.json)
+
+첫 레벨 진입·이동·점프·메뉴 복귀가 영상과 사용자 보고로 확인되었다. 대시도 사용자 확인. 실행 구간60.660초는 제목·선택·월드맵 포함이며 레벨 안에서만60초를 의미하지 않는다. 적재·비교393216바이트/104레코드/6A-E4/실행·ROM·STOP 오류0. 정상 예산 종료 후3.190초에 메뉴 준비, 영상에서 실제 복귀 확인. 오류 문맥0, historyflags1은 정상 말단 이력이다. screen_frames365는 telemetryuntrusted로 FPS로 쓰지 않는다.
+
+사용자가 DOWN 유지 중 일어남을 보고했다. 완료된8비트 읽기 변화250건 중 마지막16개에 DOWN/NONE 반복3회가 있지만 물리 버튼과 원본 입력값은 미관측이다. 원인은 미확정. 다음은 PR103 머지 후 `$4212` busy/`$4218-$4219` 스냅샷 → `$6002-$6003` commit → CDC/current_buttons → NES strobe/read를 연결해 지속 입력이 끊기는 경계를 찾고 최소 수정 후 실기 SMB3로 확인한다.152 매hold-vblank 폴링은 이미 있고 current_buttons는 새값/reset까지 보존하므로 같은 개선을 반복하거나 폴링 공백만 원인으로 단정하지 않는다. 임의 debounce부터 넣지 않는다.
+
+이번 요청은 결과 기록만: 새 코드/빌드/실기판 없음. 캐시161·rawread159·restart160·유한STOP/base/menu, APU 차단을 보존한다. M9K56/56과 기존 전체IO/MTBF/PCB/reset 미완료도 유지. 전체 호환성·지속 입력·연속 표시·속도·오디오·저장은 완료 아님. 사용자 머지 전 다음 구현 금지. 동결161과 이전 공개핀/ZIP/완료finalizer 불변;같은161/044/GBC/A-B/무변경 전체부팅 반복 없음.
+
+---
+
+## 아래는 제작 당시 인계 — 실기 대기 상태는 위 결과로 대체
+
+# NES 현재 인계 — 161 현재 그래픽 데이터 보존·표시 대기6프레임
+
+[161 결과](../../analysis/GAME161-RESULT.ko.md) · [실기 안내](../../docs/nes-game161-instructions.ko.md) · [검증](../../analysis/game161-verification.json) · [160 실기](../../analysis/GAME160-HARDWARE-RESULT.ko.md)
+
+PR102 머지3100e5c78286ff93ea68168ff587512adb58b1b6 확인.160에서205FF0valid가미래217FF8응답뒤사라졌음.161은이전캐시슬롯이현재CHR주소면그슬롯보존,새응답은다른슬롯에입력. 실제수요우선/샘플기한/태그/reader변경없음. pendingPPU와같은힌트는응답클록포함중복요청억제,다른주소는허용.159rawread/160renderrestart/실제PPU/매퍼IRQ/클록모두유지. 내부태그실기미관측으로물리원인확정아님.
+
+cache01 actualservice:정상요청응답으로초기캐시형성(내부force없음),old160 eviction+duplicate+fault2재현,new15검사PASS.8회미래fill동안현재바이트보존/다른hint응답클록허용/실제수요우선/샘플응답우회/reset/PPUCPU기한오류유지. 백엔드시각주입모델이지전체게임아님. regression01 새service와실제PPU/READ16으로16012재개정상12대조및15939정상39대조중18오류기존통계보존.
+
+사용자화면요청:152의hold30→6만수정+161title/checksum. 매holdvblank패드수집기존유지,전체57344DMA/강제소거/반환동일. 모델두RGB화면114688픽셀동일/hold중6회씩+표시전2회=14패드전달. 의도대기60Hz약.5→.1초일뿐전송/캡처추가로10fps/60fps아님. DMAwait입력공백/강제소거점멸남음. 덜끊기는지·점멸심해지는지짧은실기영상으로판단. 기존152패드개선성과중복계산금지.
+
+fit01/asm01 13755LE5005regs56/56M9K122pins0virtualPLL1. 추가5.5/5.3배치지침-.074FAIL보존;같은배치정확155명목SDC setup+.061hold+.159/조건부PSRAM+5.193/SNES202.028<270PASS. 실클록/falsepath/multicycle완화·재배치반복없음. PCB2ns/reset음수recovery/전체IO/MTBF미완료. host13/256;ARM188604/NMI15stores0calls;6A/E4. armcheck01구형DLL623sandbox실패,host02PASS;FLOAT정상완료. 임시이력RAM56/56으로새여유없음. APU채널차단유지.
+
+NEXT 161폴더전체적용→NES GAME 161.nh1→첫Start/1PLAYERStart놓기→월드맵첫레벨A→이동점프. 두161TXT/메뉴복귀/짧은영상. 이전적재약3분50초참고/실행약60초상한/전체7분무반응이면중단기록. 같은160/044/GBC/A-B/무변경전체부팅반복없음. 실패시최초요구주소/응답/캐시유효비교;통과시실제이동스크롤우선후이력축소·음원복구. 첫레벨/연속표시/속도/오디오/저장미완료.
+
+frozen161이전자료·공개핀·ZIP불변,완료finish.py재실행금지. ROM/media/binary/license/privatepaths Git금지. 한국어4PR절/개인hungrysanta-ksc/사용자머지.
+
+---
+
+## 이전 작업 인계
+
 # NES 현재 인계 — 160 첫 레벨 전환 실패, 데이터 교체와 표시 지연
 
 [160 실기 결과](../../analysis/GAME160-HARDWARE-RESULT.ko.md) · [원본 해시·16클록](../../analysis/game160-hardware-verification.json)
