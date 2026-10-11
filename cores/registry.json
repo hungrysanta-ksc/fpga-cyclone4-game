@@ -46,7 +46,7 @@
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-162",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "PR107 kept open by user. Passive CHR165 cache standalone tested; next actual same-edge logical/physical PPU sample binding, required native graphics state/tile set and missing-byte supply, host CDC/lease and SNES consumer. No arbitrary extra PSRAM requests, stale/partial tile publication or CPU deadline relaxation. Replace pixel-buffer resources before physical build; minimal checks then realSMB3. Candidate164/audio/menu unchanged. After usable AV:60s removal with safe fault/reset logs, then held-input.",
+      "next_gate": "Actual PPU binding passed. Next native BG/OBJ required set and coherent palette/OAM/scroll/raster generation, partial-byte fill and physical bank versions, host CDC/lease/SNES consumer replacing38M9K. Minimum changed-boundary checks then real SMB3. No165 package; candidate164/audio/menu preserved.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "162 MCU+FPGA strict6B/E5",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -312,9 +312,11 @@
         "offline_probe": "analysis/nes-native-video-feasibility.json"
       },
       "native_chr165": {
-        "status": "standalone_component_pass_not_connected",
+        "status": "actual_ppu_capture_pass_host_consumer_open",
         "contract": "docs/nes-native-chr165-contract.ko.md",
-        "verification": "analysis/native-chr165-verification.json"
+        "verification": "analysis/native-chr165-verification.json",
+        "binding_verification": "analysis/native-tap165-verification.json",
+        "binding_contract": "docs/nes-native-tap165-contract.ko.md"
       }
     },
     {

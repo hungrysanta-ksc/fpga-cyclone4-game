@@ -1,5 +1,7 @@
 # FPGA Core Development — sd2snesHST
 
+165 연결 진척: 실제 SMB3 부팅 시뮬레이션의 PPU 수신 데이터를 CHR 캐시에 연결하고 원본 ROM과 대조했습니다. SNES 출력/실기 속도 개선은 아직 미완료이며 설치 후보는164입니다. [완료 범위와 다음 연결](docs/nes-native-tap165-contract.ko.md).
+
 165 부품 진척: PPU가 받은 CHR를 재사용하는 캐시 RTL과 뱅크/미완성 타일 보호 검사를 통과했습니다. 실제 코어·SNES 연결 전이며 설치 후보는164입니다. [완료 범위와 다음 연결](docs/nes-native-chr165-contract.ko.md).
 
 후속: 사용자 PDF·Nested 변환 방식·FCEUX를 대조하고 SMB3 CHR의 BG/OBJ 형식 변환과 정적 용량을 확인했습니다. 실기 개선은 아직 미검증입니다. [설계와 완료 범위](docs/nes-native-video-feasibility.ko.md).
