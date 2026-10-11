@@ -5,10 +5,10 @@
   "technical_candidate": "NES-GAME-156",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "사운드 가설의 음원 차단·버튼 완독 이력 시험판. 실제 게임 정지 해결은 미완료.",
-  "next_action": "RUN156_ACTUAL_SMB3_SELECT_SOUND_ISOLATION",
+  "assessment": "156 실기 Select 커서·버튼 이력·메뉴 복귀 확인. 음원 차단에도155와 같은 PPU 기한 오류로 Start 이후 정지; 플레이 미완료.",
+  "next_action": "FIX_BG_HIGH_PLANE_REQUEST_RESPONSE_BOUNDARY_THEN_ACTUAL_SMB3",
   "next_three_deliverables": [
-    "실제 SMB3 Start 이후0x217A10 주변 요청 발행·응답·PPU 샘플 순서를 좁히기",
+    "실제 SMB3 Start 이후 line193/dot8/0x217A18 직전 예측·매핑·승인·캐시·응답 경계 좁히기",
     "확인된 선행 읽기·캐시·중재 또는 응답 전달의 첫 실패 경계를 수정하고 최소 검증",
     "같은 게임으로 스테이지 진입·이동·점프를 실기 확인"
   ],
@@ -2474,8 +2474,12 @@
   },
   "game156": {
     "verification": "analysis/game156-verification.json",
-    "hardware_pending": true,
+    "hardware_pending": false,
     "gameplay_passed": false,
-    "next": "Select first; decode completed controller bytes and PPU fault; no repeat155/044"
+    "next": "Locate ordinary BG high-plane prediction/mapping/grant/cache/reply boundary before dot8; minimum changed validation then actual SMB3 stage/move/jump.",
+    "hardware_verification": "analysis/game156-hardware-verification.json",
+    "select_cursor_passed": true,
+    "recovery_hardware_passed": true,
+    "sound_cause_confirmed": false
   }
 }

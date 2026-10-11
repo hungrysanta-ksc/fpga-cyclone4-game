@@ -1,3 +1,19 @@
+# NES 현재 인계 — 156 Select 성공, Start 이후 같은 PPU 오류
+
+[156 실기 결과](../../analysis/GAME156-HARDWARE-RESULT.ko.md) · [해시·버튼·진행 기록](../../analysis/game156-hardware-verification.json)
+
+실제 Select 커서 이동과 메뉴 복귀는 사용자 확인. 완료된 패드 읽기15건에 SELECT04/해제4쌍과 마지막 START08/해제가 있다. 초기 START는 두 수신 구간으로 나타나지만 물리 클릭 횟수나 중복 버그는 미확정이다. A/B·이동·점프는 미확인. 입력 전체 고장 가설보다 PPU 경계 수정을 우선한다.
+
+채널 쓰기 차단 상태에서도155와 정확히 같은 PPUerror2, e200c2f4:30217a18,60820800:28606060(line193/dot8,217A18,age1,응답·유효0)이 남았다. 음원만을 유일 원인으로 삼지 않는다. Select 통과의 원인이 음원 차단인지 APU상태/게임 분기/새 배치인지 미확정이며 CPU 사운드 코드는 계속 돈다. 진단 음원 차단을 정상 오디오 수정으로 승격하지 않는다.
+
+NEXT: 일반 BG 상위 비트면 dot5~8의 예측·MMC3물리태그·공유서비스 승인·캐시·응답·샘플을 기존 근거로 좁힌다. 직전 점유/매퍼변경/응답지연을 구분할 수 없을 때만 최소 직전 이력을 추가한다. 원인에 맞춘 변경 검증 뒤 같은SMB3 Start→스테이지→이동·점프 실기로 돌아간다. 기한검사삭제/맹목캐시확대/음원전체재설계/모든버튼진단을 선행조건으로 삼지 않는다. 동일156/044/GBC/A-B/무변경장시간부팅 반복 금지.
+
+이번PR98은 결과만 추가. frozen156/기존publicpins/배포ZIP 불변, 완료finish.py/publish.py 재실행 금지. 원본2TXT는 로컬 nes-game156-hardware에 별도 보관. 기존 GAME156-RESULT/검증의 physical_pending은 빌드 당시 동결 기록이며 현재 실기 판정은 위 결과가 우선한다. 새 패키지는 없다. 사용자 머지 후 다음 구현을 시작한다.
+
+---
+
+## 이전156 시험판 준비 기록
+
 # NES 현재 인계 — 156 음원 차단·버튼 이력, 실제 SMB3 비교 대기
 
 [156 결과](../../analysis/GAME156-RESULT.ko.md) · [실기 안내](../../docs/nes-game156-instructions.ko.md) · [검증](../../analysis/game156-verification.json)

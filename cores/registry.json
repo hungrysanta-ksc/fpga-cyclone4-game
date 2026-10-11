@@ -37,16 +37,16 @@
       ],
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
-      "verification": "analysis/GAME156-RESULT.ko.md",
+      "verification": "analysis/GAME156-HARDWARE-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "sound-channel-isolation-pad-trace-physical-pending",
+      "investigation": "select-passed-start-same-ppu-deadline-with-audio-isolation",
       "hardware_baseline": "NES-H1-SAMPLING-044",
-      "hardware_verified_scope": "155 full ROM load/compare, PPUerror2/context/state capture, STOP/TXT/base/actual-menu pass. Select on player selection triggers failure; stage play and Select mapping not verified.",
+      "hardware_verified_scope": "156 full ROM load/compare, completed pad trace15 (SELECT04/release four pairs), actual Select cursor and STOP/TXT/base/menu pass. Start still faults at155 identical PPU line193 dot8/217A18. Gameplay failed; physical first-Start click count unknown.",
       "development_evidence": "analysis/game156-verification.json",
       "hardware_candidate": "NES-GAME-156",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "One156 actual SMB3: firstStart then Select; if successful return1P then Start/move/jump/twoTXT/menu.",
+      "next_gate": "Locate ordinary BG high-plane prediction/mapping/grant/cache/reply boundary before dot8; minimum changed validation then actual SMB3 stage/move/jump.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "156 MCU +156 FPGA, strict65/DF",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -219,7 +219,15 @@
       "game147": "analysis/game147-verification.json",
       "game148": "analysis/game148-verification.json",
       "game154_hardware": "analysis/game154-hardware-verification.json",
-      "hardware_evidence": "analysis/game155-hardware-verification.json"
+      "hardware_evidence": "analysis/game155-hardware-verification.json",
+      "hardware_game156": {
+        "verification": "analysis/game156-hardware-verification.json",
+        "select_cursor_passed": true,
+        "recovery_passed": true,
+        "gameplay_passed": false,
+        "same155_fault": true,
+        "sound_cause_confirmed": false
+      }
     },
     {
       "id": "pce",

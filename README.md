@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-현재156: **음원 채널 차단·버튼 읽기 이력 시험판, SMB3 실기 대기**. 사운드 원인과 실제 정지 해결은 미확정입니다. [156 안내](docs/nes-game156-instructions.ko.md) · [결과](analysis/GAME156-RESULT.ko.md).
+현재156: **실기 Select 커서 이동·메뉴 복귀 확인, Start 후 PPU 읽기 오류는 지속**. 음원 차단 상태에서도155와 같은 오류이며 스테이지 플레이는 미완료입니다. [실기 결과](analysis/GAME156-HARDWARE-RESULT.ko.md).
 
 이전151 실기: **SMB3 제목·캐릭터 표시와 메뉴 복귀 성공, PPU 읽기 오류로 조기 종료**. 정상 플레이·전체 버튼 입력은 미완료입니다. [151 실기 결과](analysis/GAME151-HARDWARE-RESULT.ko.md).
 
