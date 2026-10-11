@@ -1,6 +1,6 @@
 # NES 화면 전송 방식 조사와 다음 구현 결정
 
-2026-10-12. PR106 머지 `a467be7e1e2dc15f2e9fb83dce71330917188d5c` 이후 조사. 사용자 요청에 따라 변경 타일 구현에 앞서 공개 소스를 비교했다. **조사·계획 변경이며 새165 RTL/펌웨어/실기 패키지는 없다.** 현재 실기 기준은 [164 결과](../analysis/GAME164-HARDWARE-RESULT.ko.md)다.
+2026-10-12. PR106 머지 `a467be7e1e2dc15f2e9fb83dce71330917188d5c` 이후 조사. 사용자 요청에 따라 변경 타일 구현에 앞서 공개 소스를 비교했다. **조사·최소 형식/용량 프로토타입이며 새165 RTL/펌웨어/실기 패키지는 없다.** 현재 실기 기준은 [164 결과](../analysis/GAME164-HARDWARE-RESULT.ko.md)다. 사용자 후속 의견·PDF 및 FCEUX 비교는 [적용 경계와 용량 확인](nes-native-video-feasibility.ko.md)에 반영했다. 우선순위는 PocketNES/NesDS의 실행 중 패턴 재사용, Nested의 SNES 출력 참고, FCEUX의 픽셀 경로 대조 순이다.
 
 ## 결정
 

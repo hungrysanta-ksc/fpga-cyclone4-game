@@ -1,3 +1,19 @@
+# NES 현재 인계 — 사용자 참고 자료 반영과 CHR 형식/용량 프로토타입
+
+PR107은 아직 미머지이며 이번 결과를 같은 PR에 추가한다. [후속 설계](../../docs/nes-native-video-feasibility.ko.md) · [검증 범위/출처](../../analysis/nes-native-video-feasibility.json).
+
+Nested는 PC 패키징과 SNES 런타임을 분리해 참고한다. 우선 참고는 PocketNES/NesDS이며 FCEUX는 XBuf/전체 텍스처 출력과 CPU 비용 대조다. 사용자 PDF2쪽은 타일 재사용/가장자리 갱신 원칙에 반영했고, NES 기법을 SNES 전송 성능으로 오인하지 않는다. 기존 OAM DMA/scroll/IRQ를 다시 만들지 않는다.
+
+실제 목표 ROM CHR8192타일/바이트고유5529. 2bpp만88464바이트라 전체 상주 불가. BG2bpp/OBJ4bpp 배치 변환1048576픽셀 비교와 잘못된 순서 대조군 통과. 후보VRAM40KiB/가정트래픽1056·4128·13344바이트는 정적 계산, 실제 작업집합/FPS/FPGA fit/SNES 실행 증명 아님.047tap은 스프라이트off·scroll0 진단이며164에는arm0, 기존 palette tap은BG16색뿐이다.
+
+NEXT 실제 상태/물리CHR 식별·캐시 세대와 읽기 경로를 정해 최소 관측/소비 구현으로 간다. CHR 적재 시 변환 가능성을 검토하되 PSRAM 추가읽기가 CPU/PPU 기한과 충돌하지 않게 한다. 38M9K 픽셀 버퍼 대체의 회수 가능성과 두 구조 동시 유지 불가를 구분한다. NES8×16→SNES OBJ 변환/행별 선택·우선순위/MMC3분할/맵240↔256 래핑을 누락하지 않는다. 필요한 변경 검사 후 실제SMB3, 범용 재작성/새 장기 진단 없음.
+
+새165 RTL/펌웨어/빌드/패키지 없음. 기술 후보164, 사운드/STOP메뉴/동결근거·971공개핀 보존. usable AV 다음60초 제한/오류·본체리셋 안전로그/장시간 입력 유지. 한국어4PR절·개인GitHub·사용자머지 유지.
+
+---
+
+## 아래는 앞선 조사 기록
+
 # NES 현재 인계 — 164 이후 화면 전송 조사와 방향 결정
 
 PR106 머지 `a467be7e1e2dc15f2e9fb83dce71330917188d5c` 확인. [공개 구현 비교·결정](../../docs/nes-video-transfer-research.ko.md) · [고정 출처와 계산](../../analysis/nes-video-transfer-research.json).

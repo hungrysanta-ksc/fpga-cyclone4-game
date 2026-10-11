@@ -1,5 +1,7 @@
 # NES 개발 현황
 
+후속: 사용자 PDF·Nested 변환 방식·FCEUX를 대조하고 SMB3 CHR의 BG/OBJ 형식 변환과 정적 용량을 확인했습니다. 실기 개선은 아직 미검증입니다. [설계와 완료 범위](../../docs/nes-native-video-feasibility.ko.md).
+
 164 이후 조사: **고정 좌표의 변경 픽셀 타일만 보내는 안보다 SNES의 CHR·타일맵·스크롤·스프라이트 활용을 우선 검토**합니다. 새 펌웨어는 없으며, 다음은 최소 SMB3 경로의 자원·전송 예산 확인입니다. [비교 근거와 계획](../../docs/nes-video-transfer-research.ko.md).
 
 현재164 실기: **검정 구간 제거 통과·사운드 정상으로 보임, 심한 갱신 지연으로 정상 플레이 미달성**. 다음은 영상 전송량·갱신 지연 개선이며, DOWN 유지는 이번 미시험입니다. [164 실기 결과](../../analysis/GAME164-HARDWARE-RESULT.ko.md).
