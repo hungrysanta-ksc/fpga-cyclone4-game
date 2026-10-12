@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-165 영상 경로 진척: secondary OAM의 데이터 리셋을 유효 비트로 분리해 전체 FPGA 배치·배선에 성공했습니다(15,052LE,963/963LAB,35M9K). OAM 동작 비교와 무효 데이터 차단 시험은 통과했지만 CHECK 응답 경로의 setup이 기존5.5ns 목표에서−1.218ns로 부족합니다. 다음은 이 경로 수정과 IO/CDC 확인 후 MCU 연결·SMB3 실기입니다. 설치164·세이브 SRAM 보존, 새SD 없음. [배치 성공과 남은 타이밍](docs/nes-oam-secondary165-contract.ko.md).
+165 영상 경로 진척: CHECK 카운터·레지스터 제어를 개선해 최악 setup을−1.218ns에서-0.488ns로 바꿨고 같은 클록 setup 부족이 남았습니다. 전체 배치15,015LE/961LAB/35M9K,786432상태 비교·SPI98검사 통과. 외부IO·CDC와 MCU 연결은 아직 미완료입니다. 설치164·세이브 SRAM 보존, 새SD 없음. [CHECK 타이밍 결과](docs/nes-check165-contract.ko.md).
 
 현재164 실기: **검정 구간 제거 통과·사운드 정상으로 보임, 심한 갱신 지연으로 정상 플레이 미달성**. 다음은 영상 전송량·갱신 지연 개선이며, DOWN 유지는 이번 미시험입니다. [164 실기 결과](analysis/GAME164-HARDWARE-RESULT.ko.md).
 

@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 영상 경로 진척: secondary OAM의 데이터 리셋을 유효 비트로 분리해 전체 FPGA 배치·배선에 성공했습니다(15,052LE,963/963LAB,35M9K). OAM 동작 비교와 무효 데이터 차단 시험은 통과했지만 CHECK 응답 경로의 setup이 기존5.5ns 목표에서−1.218ns로 부족합니다. 다음은 이 경로 수정과 IO/CDC 확인 후 MCU 연결·SMB3 실기입니다. 설치164·세이브 SRAM 보존, 새SD 없음.",
-  "next_action": "FIX_ROUTED_CHECK_RESPONSE_TIMING_THEN_MCU_RUN",
+  "assessment": "165 영상 경로 진척: CHECK 카운터·레지스터 제어를 개선해 최악 setup을−1.218ns에서-0.488ns로 바꿨고 같은 클록 setup 부족이 남았습니다. 전체 배치15,015LE/961LAB/35M9K,786432상태 비교·SPI98검사 통과. 외부IO·CDC와 MCU 연결은 아직 미완료입니다. 설치164·세이브 SRAM 보존, 새SD 없음.",
+  "next_action": "CHECK_TIMING_IMPROVED_STILL_OPEN",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2774,6 +2774,14 @@
     "verification": "analysis/oam-secondary165-verification.json",
     "contract": "docs/nes-oam-secondary165-contract.ko.md",
     "next": "Use selected secondary map03 routed DB: repair CHECK response-address comparison to check_next/load_data (7 levels, -1.218ns under unchanged 5.5ns budget); preserve response validity/address/error and command completion order. Changed-boundary test then fit/setup/hold and necessary external IO/CDC, MCU RUN receive/convert/ACK with audio/input/STOP/time/full-link/stack, then real SMB3 first level. Do not repeat unchanged OAM/boot/A-B/044 or relax SDC; reserve save SRAM.",
+    "hardware": false,
+    "superseded_by": "check165"
+  },
+  "check165": {
+    "status": "check_timing_improved_still_open",
+    "verification": "analysis/check165-verification.json",
+    "contract": "docs/nes-check165-contract.ko.md",
+    "next": "Use selected CHECK map03: repair measured boot check_failed -> loader state.RECEIVE (-0.488ns at nominal5.952ns), byte_count -> miso_hold (-0.332ns at5.3ns target), and check_next -> check_busy (-0.174ns at5.5ns target); no uncontrolled latency/SDC relaxation or repeated attribute-only fits. Then necessary external IO/video CDC and MCU RUN receive/convert/ACK with existing audio/input/STOP/elapsed time, whole firmware link/stack, SMB3 first-level hardware. Preserve save SRAM and164; no unchanged OAM/boot/A-B/044 repeat.",
     "hardware": false
   }
 }

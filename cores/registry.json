@@ -40,13 +40,13 @@
       "verification": "analysis/GAME164-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "full_fit_pass_check_timing_open",
+      "investigation": "check_timing_improved_still_open",
       "hardware_baseline": "NES-H1-SAMPLING-044",
       "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-164",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "Use selected secondary map03 routed DB: repair CHECK response-address comparison to check_next/load_data (7 levels, -1.218ns under unchanged 5.5ns budget); preserve response validity/address/error and command completion order. Changed-boundary test then fit/setup/hold and necessary external IO/CDC, MCU RUN receive/convert/ACK with audio/input/STOP/time/full-link/stack, then real SMB3 first level. Do not repeat unchanged OAM/boot/A-B/044 or relax SDC; reserve save SRAM.",
+      "next_gate": "Use selected CHECK map03: repair measured boot check_failed -> loader state.RECEIVE (-0.488ns at nominal5.952ns), byte_count -> miso_hold (-0.332ns at5.3ns target), and check_next -> check_busy (-0.174ns at5.5ns target); no uncontrolled latency/SDC relaxation or repeated attribute-only fits. Then necessary external IO/video CDC and MCU RUN receive/convert/ACK with existing audio/input/STOP/elapsed time, whole firmware link/stack, SMB3 first-level hardware. Preserve save SRAM and164; no unchanged OAM/boot/A-B/044 repeat.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -463,6 +463,14 @@
         "verification": "analysis/oam-secondary165-verification.json",
         "contract": "docs/nes-oam-secondary165-contract.ko.md",
         "next": "Use selected secondary map03 routed DB: repair CHECK response-address comparison to check_next/load_data (7 levels, -1.218ns under unchanged 5.5ns budget); preserve response validity/address/error and command completion order. Changed-boundary test then fit/setup/hold and necessary external IO/CDC, MCU RUN receive/convert/ACK with audio/input/STOP/time/full-link/stack, then real SMB3 first level. Do not repeat unchanged OAM/boot/A-B/044 or relax SDC; reserve save SRAM.",
+        "hardware": false,
+        "superseded_by": "check165"
+      },
+      "check165": {
+        "status": "check_timing_improved_still_open",
+        "verification": "analysis/check165-verification.json",
+        "contract": "docs/nes-check165-contract.ko.md",
+        "next": "Use selected CHECK map03: repair measured boot check_failed -> loader state.RECEIVE (-0.488ns at nominal5.952ns), byte_count -> miso_hold (-0.332ns at5.3ns target), and check_next -> check_busy (-0.174ns at5.5ns target); no uncontrolled latency/SDC relaxation or repeated attribute-only fits. Then necessary external IO/video CDC and MCU RUN receive/convert/ACK with existing audio/input/STOP/elapsed time, whole firmware link/stack, SMB3 first-level hardware. Preserve save SRAM and164; no unchanged OAM/boot/A-B/044 repeat.",
         "hardware": false
       }
     },

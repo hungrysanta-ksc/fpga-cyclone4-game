@@ -1,3 +1,21 @@
+# NES 현재 인계 — CHECK 경로 수정
+
+같은 PR108 OPEN. [계약](../../docs/nes-check165-contract.ko.md) · [검증](../../analysis/check165-verification.json).
+
+165 영상 경로 진척: CHECK 카운터·레지스터 제어를 개선해 최악 setup을−1.218ns에서-0.488ns로 바꿨고 같은 클록 setup 부족이 남았습니다. 전체 배치15,015LE/961LAB/35M9K,786432상태 비교·SPI98검사 통과. 외부IO·CDC와 MCU 연결은 아직 미완료입니다. 설치164·세이브 SRAM 보존, 새SD 없음.
+
+SELECTcheck map03/reproduce03: secondarymap03대비nes_rom_spi.sv만변경,나머지60입력byteexact. low8/high11증가를bitXOR/prefix로,load_data8bit AUTO_CE OFF,check_next19bit ALLOW_SYNCH_CTRL OFF. 다음값/오류우선순위/SPI식별6B/CE/retirementedge불변;OAM/audio/pad/saveSRAM불변. test01 524288counter+262144priority=786432상태/모든reg 비교+wrongcarry negative PASS. path02 master상승edge98checks8writes6reads6negative/ACK롤오버/finish/START PASS. map03두속성만제거하면test01/path02실행RTL과byteexact. 증거재사용은속성한정이며새배치는새STA. 전체코어는실제FIT,새게임boot아님.
+
+map01mem-.552/load_dataENA;map02mem-.536/check_nextSCLR;map03mem-0.488. sameclock_pass=False;최악 nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|check_failed -> nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|state.RECEIVE. rawmixed-12.665/IO54in57outOPEN. nominal-only재분석/SDC완화없음. 전체timing승인아님.
+
+path01와unmodifiedbaseline path-base01은둘다78번째옛5F기대에서실패. current6B맞춘별도path02 PASS;원래149pinned파일불변. no새license문제. 완료archive/record/audit/pins수정금지.
+
+NEXT Use selected CHECK map03: repair measured boot check_failed -> loader state.RECEIVE (-0.488ns at nominal5.952ns), byte_count -> miso_hold (-0.332ns at5.3ns target), and check_next -> check_busy (-0.174ns at5.5ns target); no uncontrolled latency/SDC relaxation or repeated attribute-only fits. Then necessary external IO/video CDC and MCU RUN receive/convert/ACK with existing audio/input/STOP/elapsed time, whole firmware link/stack, SMB3 first-level hardware. Preserve save SRAM and164; no unchanged OAM/boot/A-B/044 repeat.
+
+사용자머지/개인GitHub/한국어4PR절. 설치164와SMB3(J)우선. no새SD/MCU완성/60fps주장. 다음턴PR상태부터확인.
+
+---
+
 # NES 현재 인계 — 전체 FPGA 배치 성공, CHECK 타이밍 수정이 다음
 
 같은 PR108 OPEN. [계약](../../docs/nes-oam-secondary165-contract.ko.md) · [검증](../../analysis/oam-secondary165-verification.json). 설치164/원본GBC/세이브 SRAM 보존. 새SD없음.
