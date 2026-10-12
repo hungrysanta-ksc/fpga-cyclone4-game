@@ -1,3 +1,17 @@
+# NES 현재 인계 — 타이머 상태의 명령 조건 단순화
+
+PR108 OPEN. [계약](../../docs/nes-phaseguard165-contract.ko.md) · [검증](../../analysis/phaseguard165-verification.json).
+
+165 영상 경로 진척: 로더 SETUP·RELEASE의 중복 명령 충돌 조건을 제거하고 동작을 비교했습니다. 새 개발 기준으로 채택했습니다. 선택 구현 phaseguard165/map01/reproduce01. 후보 15039LE/960LAB/35M9K, 실제 클록 setup-0.083ns. 외부IO·CDC·MCU와 실기는 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.
+
+첫 후보 map01은 START→상태 최소 setup을 -0.092에서 +0.805ns로 개선했다. 전체 최악 setup은 -0.083ns, 최소 hold는 +0.130ns이며 15039LE/960LAB/35M9K다. 메모리 이외 host/NES/board setup은 +1.139/+8.144/+121.793ns다. 종전 state165의 -0.092ns/963LAB보다 좋아 map01을 채택한다. 남은 최악 경로는 loaded_bytes[6]→pending_counter_clear이며 equality4단과 자격 결합2단, 데이터 지연5.956ns다. SPI STOP 조건을 별도 저장한 map02는 기능 비교·연결 시험과 FIT를 통과하고15001LE/960LAB을 썼지만, 요청 태그→CHECK 카운터 경로가 -0.449ns로 악화되어 채택하지 않는다. 실기 배포나 전체 타이밍 통과는 아니다.
+
+SELECT phaseguard165/map01/reproduce01; adopted=True; nominal_same_clock_pass=False. Timed-state redundant conflict removal only; fault/error/data/timer and WRITE/HOLD drain unchanged. All16state codes/294912conditions/1056one-byte sequences+STOPnegative PASS.60other inputs exact state165map01. Local4release registers/12setup-hold paths PASS. No full-ROM/game/MCU/SD/fullIOCDCreset approval. Preserve164/GBC/saveSRAM and completed archives/finalizers/publicpins.
+
+NEXT SELECT phaseguard165/map01/reproduce01, not rejectedmap02. Reuse294912loader conditions/1056sequences and exact unchangedSPI/reader evidence. Remaining nominal -0.083ns loaded_bytes[6] -> pending_counter_clear: inspect offset=={5'd0,loaded_bytes} equality depth/partition and static clear eligibility on SAME capture edge. Do not pre-sample loaded_bytes: loader may advance while SPI frame is arriving. Do not repeat rejected STOP operand split map02 (-0.449 tag->check_next), compare165 response-mask/phase/drain variants, unchanged fits/fullwrites/OAM/A-B/044. Preserve state single owner/error priorities/WRITE-HOLD drain, local4release QSF, exact clocks/SDC. After same-clock closure, check necessary native-video held-data/control/reset/externalIO on selected hierarchy; connect MCU E6/version2 status73, E5 observer70, E0/F6 receive-convert-ACK/audio/input/STOP/elapsed-time/full-link/stack then minimal SMB3(J) first-level hardware. Save SRAM remains reserved; no broad debug expansion. Both candidate builds/FLOAT finished. SPI01 connected elaboration failed because old test force targeted a now-wire predicate; SPI02 targets equivalent captured operands and passes, not a hardware/license fault. Preserve failedSPI01 and completedarchives/finalizers/publicpins.
+
+---
+
 # NES 현재 인계 — 로더 상태 전환 분리
 
 PR108 OPEN. [계약](../../docs/nes-state165-contract.ko.md) · [검증](../../analysis/state165-verification.json).

@@ -1,0 +1,427 @@
+{
+  "synthesis_pass": true,
+  "fit_pass": true,
+  "resources": {
+    "estimated_le": 19449,
+    "combinational": 14026,
+    "registers": 8358,
+    "memory_bits": 197104,
+    "pins": 122,
+    "virtual_pins": 0
+  },
+  "fit_le": 15039,
+  "used_labs": 960,
+  "m9k_blocks": 35,
+  "same_clock_pass": false,
+  "timing": {
+    "rows": 198,
+    "corners": [
+      "8_slow_1200mv_0c",
+      "8_slow_1200mv_85c",
+      "MIN_fast_1200mv_0c"
+    ],
+    "minima_ns": {
+      "board8": {
+        "setup": 121.793,
+        "hold": 0.196
+      },
+      "core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+        "setup": 1.139,
+        "hold": 0.179
+      },
+      "core|pll|altpll_component|auto_generated|pll1|clk[1]": {
+        "setup": -0.197,
+        "hold": 0.18
+      },
+      "nes": {
+        "setup": 8.144,
+        "hold": 0.13
+      }
+    },
+    "worst_setup": {
+      "corner": "8_slow_1200mv_85c",
+      "clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+      "kind": "setup",
+      "from": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|check_response_address[3]",
+      "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|check_next[3]",
+      "slack": "-0.197"
+    },
+    "raw_mixed_setup_min_ns": -14.864,
+    "unconstrained": {
+      "Unconstrained Clocks": 0,
+      "Unconstrained Input Ports": 54,
+      "Unconstrained Output Ports": 57
+    }
+  },
+  "timing_approved": false,
+  "nominal": {
+    "rows": 198,
+    "minima_ns": {
+      "board8": {
+        "setup": 121.793,
+        "hold": 0.196
+      },
+      "core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+        "setup": 1.139,
+        "hold": 0.179
+      },
+      "core|pll|altpll_component|auto_generated|pll1|clk[1]": {
+        "setup": -0.083,
+        "hold": 0.18
+      },
+      "nes": {
+        "setup": 8.144,
+        "hold": 0.13
+      }
+    },
+    "passed": false,
+    "worst_setup": {
+      "corner": "8_slow_1200mv_85c",
+      "clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+      "kind": "setup",
+      "from": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|loaded_bytes[6]",
+      "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|pending_counter_clear",
+      "slack": "-0.083"
+    },
+    "sdc_sha256": "59dbe2401cc57a7646271fc222b69cd0c27dfb0bfb0c9514641213c39b9cd1ac",
+    "preserved_files": 367,
+    "scope": "Exact pinned155 clocks only. Original stricter budgets and reports retained. No fit, clock-period, falsepath or multicycle change. Not IO/CDC signoff."
+  },
+  "baseline_nominal": {
+    "rows": 198,
+    "minima_ns": {
+      "board8": {
+        "setup": 122.589,
+        "hold": 0.27
+      },
+      "core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+        "setup": 1.372,
+        "hold": 0.179
+      },
+      "core|pll|altpll_component|auto_generated|pll1|clk[1]": {
+        "setup": -0.092,
+        "hold": 0.18
+      },
+      "nes": {
+        "setup": 8.126,
+        "hold": 0.151
+      }
+    },
+    "passed": false,
+    "worst_setup": {
+      "corner": "8_slow_1200mv_85c",
+      "clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+      "kind": "setup",
+      "from": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|start",
+      "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|state.SETUP",
+      "slack": "-0.092"
+    },
+    "sdc_sha256": "59dbe2401cc57a7646271fc222b69cd0c27dfb0bfb0c9514641213c39b9cd1ac",
+    "preserved_files": 367,
+    "scope": "Exact pinned155 clocks only. Original stricter budgets and reports retained. No fit, clock-period, falsepath or multicycle change. Not IO/CDC signoff."
+  },
+  "start_to_state_setup_ns": 0.805,
+  "release_to_held_setup_ns": 5.177,
+  "local_release_chain_setup_hold_pass": true,
+  "functional_test": {
+    "passed": true,
+    "states": 294912,
+    "sequences": 1056,
+    "all_state_codes": 16,
+    "remaining_cases": [
+      0,
+      1,
+      2,
+      22,
+      64,
+      127
+    ],
+    "wrong_stop_rejected": true,
+    "source_sha256": "223177c18fa83286799e0e6df20b4d5ee7687a099ed297681f74a24c73b7275f",
+    "reference_sha256": "a2db80e071bafdcf604c49a62f65073d3438a338a8ec51169d8f6e62803193c3",
+    "scope": "One-step seeded old-register/pin comparison, followed by actual single-byte writes with eight command/reset actions over132 phases. Not whole-ROM load or gameplay.",
+    "public_sources": {
+      "tools/nes_phaseguard165.py": "728b765ca263de3630619aa4d70af1801896bde83301ab5bf21418f917bedacb",
+      "tools/test_nes_phaseguard165.py": "76fe6bbc26443c46cd4dd22f2f9d0e5624ab0ef603f7ee12fbdf13351948e6ad",
+      "tools/test_nes_state165.py": "a9acc7c6af9f37bcb0685428c61626492d403cd3fbd5cf88e3c9f5902520d349",
+      "tools/test_nes_drain165.py": "ed67892983cbf1552ab25fbfd9e6c158ec64416b818a28a5aee5a6be8340f4a2",
+      "tests/nes-functional/counter131_diff_tb.sv": "967169dec075459ee0f82840e3abc6cde5cb3303aec2957f0deb4e897532dfbf"
+    }
+  },
+  "source_byte_reproduction": true,
+  "unchanged_files": 60,
+  "scope": "Timed-state redundant command-conflict decoding removed; original timer, data and fault/error priority preserved. Seeded one-step comparison plus actual one-byte command/reset sequences, not full-ROM load, complete-state formal proof, new game boot or MCU/SNES run. Exact old SPI/reader RTL evidence reused. New fit and local release chains checked; external IO/CDC/reset signoff remains open.",
+  "cartridge_sram_reserved": true,
+  "hardware_package": false,
+  "public_sources": {
+    "tools/nes_phaseguard165.py": "728b765ca263de3630619aa4d70af1801896bde83301ab5bf21418f917bedacb",
+    "tools/test_nes_phaseguard165.py": "76fe6bbc26443c46cd4dd22f2f9d0e5624ab0ef603f7ee12fbdf13351948e6ad",
+    "tools/test_nes_state165.py": "a9acc7c6af9f37bcb0685428c61626492d403cd3fbd5cf88e3c9f5902520d349",
+    "tools/test_nes_drain165.py": "ed67892983cbf1552ab25fbfd9e6c158ec64416b818a28a5aee5a6be8340f4a2",
+    "tests/nes-functional/counter131_diff_tb.sv": "967169dec075459ee0f82840e3abc6cde5cb3303aec2957f0deb4e897532dfbf",
+    "tools/check_nes_phaseguard165.py": "87ee8125d018e186bb399b4701f7f8083548badf7bd05e66e80645a431ec2e9d",
+    "tools/nes_phaseguard165_paths.tcl": "cb0099ebad2577ebfe8ec527e528f088da40d827073f547c8d74413828e719c9",
+    "tools/nes_state165_paths.tcl": "eee1c9f630b6e331e4bd2df87b3c3a2fe268e26c9aeee324c204cbbf07c99413",
+    "tools/nes_release165.py": "5d98b2abb22849a4fdeb0eac650c9dedbf8754a5b3e947686d9d205654ea09c1",
+    "tools/nes_release165_paths.tcl": "fa28becc33d7a18a06775c2552c8737c535d2375af2cc60434b477a68e74685d",
+    "tools/check_nes_check165.py": "fc6072220ae0c4cf9c71baa3ba8d0d12ce044143d4705684aa1d008231c071dc",
+    "tools/check_nes_oam_port165.py": "086c311b5ebb4d089a16c932bf442f5b17e660327251ac8b17d52d392486894b",
+    "tools/check_nes_retire165.py": "a0d664100f777adedd89a1b2c71d14eeafc97063f0977c52d7e4a978f361df99",
+    "tools/check_nes_retire165_nominal.py": "111d7bdc8922a17282c633fb149809bb95eeec934fc94f60211fafd0615bd4a4",
+    "tools/nes_secondary165_timing.tcl": "1bd243a64c8c9ebaf46ffef4b02891673f0217e119901d8e1016c94a681a412f",
+    "tools/nes_predecode165_paths.tcl": "2f0f7ede5c7503c719779cd9f29d867f61dbc41ec362c6f0da4f1bd0985561c7",
+    "tools/nes_stopclear165.py": "837895f70c5bb12e2df5186126de9287ed71ece6ada7164567d2b38afa6f43d5",
+    "tools/test_nes_stopclear165.py": "fa40c06c0541ba7696837557df55d5f5de40c600dbd266696a377bdbb6b28050",
+    "tools/test_nes_predecode165.py": "ab4fdeb584218281a22a9d7d7f3b16915fd846999508ced15c4839239d15c434",
+    "tools/test_nes_check165.py": "776ae44261b0ee17a777da5a227d493b296761b400436cd74634e2229a7fa4a4",
+    "tests/nes-functional/tag165_tb.sv": "bd040f247a8ff05a1fa161bc5d8f0cb3c9af3212a61787516b22532f0afb3934",
+    "tools/check_nes_stopclear165.py": "feb12ef8edc2e7d9b6c06f314aa5e18e91d640e965db75bab872806fb46ac050"
+  },
+  "candidate": "map01",
+  "selected": "phaseguard165/map01/reproduce01",
+  "adopted": true,
+  "rejected_candidate": "map02/reproduce02 (STOP operand split)",
+  "details": "첫 후보 map01은 START→상태 최소 setup을 -0.092에서 +0.805ns로 개선했다. 전체 최악 setup은 -0.083ns, 최소 hold는 +0.130ns이며 15039LE/960LAB/35M9K다. 메모리 이외 host/NES/board setup은 +1.139/+8.144/+121.793ns다. 종전 state165의 -0.092ns/963LAB보다 좋아 map01을 채택한다. 남은 최악 경로는 loaded_bytes[6]→pending_counter_clear이며 equality4단과 자격 결합2단, 데이터 지연5.956ns다. SPI STOP 조건을 별도 저장한 map02는 기능 비교·연결 시험과 FIT를 통과하고15001LE/960LAB을 썼지만, 요청 태그→CHECK 카운터 경로가 -0.449ns로 악화되어 채택하지 않는다. 실기 배포나 전체 타이밍 통과는 아니다.",
+  "next": "SELECT phaseguard165/map01/reproduce01, not rejectedmap02. Reuse294912loader conditions/1056sequences and exact unchangedSPI/reader evidence. Remaining nominal -0.083ns loaded_bytes[6] -> pending_counter_clear: inspect offset=={5'd0,loaded_bytes} equality depth/partition and static clear eligibility on SAME capture edge. Do not pre-sample loaded_bytes: loader may advance while SPI frame is arriving. Do not repeat rejected STOP operand split map02 (-0.449 tag->check_next), compare165 response-mask/phase/drain variants, unchanged fits/fullwrites/OAM/A-B/044. Preserve state single owner/error priorities/WRITE-HOLD drain, local4release QSF, exact clocks/SDC. After same-clock closure, check necessary native-video held-data/control/reset/externalIO on selected hierarchy; connect MCU E6/version2 status73, E5 observer70, E0/F6 receive-convert-ACK/audio/input/STOP/elapsed-time/full-link/stack then minimal SMB3(J) first-level hardware. Save SRAM remains reserved; no broad debug expansion. Both candidate builds/FLOAT finished. SPI01 connected elaboration failed because old test force targeted a now-wire predicate; SPI02 targets equivalent captured operands and passes, not a hardware/license fault. Preserve failedSPI01 and completedarchives/finalizers/publicpins.",
+  "pr": 108,
+  "stop_clear_trial": {
+    "synthesis_pass": true,
+    "fit_pass": true,
+    "resources": {
+      "estimated_le": 19449,
+      "combinational": 14026,
+      "registers": 8360,
+      "memory_bits": 197104,
+      "pins": 122,
+      "virtual_pins": 0
+    },
+    "fit_le": 15001,
+    "used_labs": 960,
+    "m9k_blocks": 35,
+    "same_clock_pass": false,
+    "timing": {
+      "rows": 198,
+      "corners": [
+        "8_slow_1200mv_0c",
+        "8_slow_1200mv_85c",
+        "MIN_fast_1200mv_0c"
+      ],
+      "minima_ns": {
+        "board8": {
+          "setup": 122.011,
+          "hold": 0.195
+        },
+        "core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+          "setup": 1.665,
+          "hold": 0.179
+        },
+        "core|pll|altpll_component|auto_generated|pll1|clk[1]": {
+          "setup": -0.473,
+          "hold": 0.18
+        },
+        "nes": {
+          "setup": 7.441,
+          "hold": 0.142
+        }
+      },
+      "worst_setup": {
+        "corner": "8_slow_1200mv_85c",
+        "clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+        "kind": "setup",
+        "from": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|check_response_address[10]",
+        "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|check_next[2]",
+        "slack": "-0.473"
+      },
+      "raw_mixed_setup_min_ns": -17.401,
+      "unconstrained": {
+        "Unconstrained Clocks": 0,
+        "Unconstrained Input Ports": 54,
+        "Unconstrained Output Ports": 57
+      }
+    },
+    "timing_approved": false,
+    "nominal": {
+      "rows": 198,
+      "minima_ns": {
+        "board8": {
+          "setup": 122.011,
+          "hold": 0.195
+        },
+        "core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+          "setup": 1.665,
+          "hold": 0.179
+        },
+        "core|pll|altpll_component|auto_generated|pll1|clk[1]": {
+          "setup": -0.449,
+          "hold": 0.18
+        },
+        "nes": {
+          "setup": 7.441,
+          "hold": 0.142
+        }
+      },
+      "passed": false,
+      "worst_setup": {
+        "corner": "8_slow_1200mv_85c",
+        "clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+        "kind": "setup",
+        "from": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|check_request_tag[15]",
+        "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|check_next[9]",
+        "slack": "-0.449"
+      },
+      "sdc_sha256": "59dbe2401cc57a7646271fc222b69cd0c27dfb0bfb0c9514641213c39b9cd1ac",
+      "preserved_files": 367,
+      "scope": "Exact pinned155 clocks only. Original stricter budgets and reports retained. No fit, clock-period, falsepath or multicycle change. Not IO/CDC signoff."
+    },
+    "baseline_nominal": {
+      "rows": 198,
+      "minima_ns": {
+        "board8": {
+          "setup": 121.793,
+          "hold": 0.196
+        },
+        "core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+          "setup": 1.139,
+          "hold": 0.179
+        },
+        "core|pll|altpll_component|auto_generated|pll1|clk[1]": {
+          "setup": -0.083,
+          "hold": 0.18
+        },
+        "nes": {
+          "setup": 8.144,
+          "hold": 0.13
+        }
+      },
+      "passed": false,
+      "worst_setup": {
+        "corner": "8_slow_1200mv_85c",
+        "clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+        "kind": "setup",
+        "from": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|loaded_bytes[6]",
+        "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|pending_counter_clear",
+        "slack": "-0.083"
+      },
+      "sdc_sha256": "59dbe2401cc57a7646271fc222b69cd0c27dfb0bfb0c9514641213c39b9cd1ac",
+      "preserved_files": 367,
+      "scope": "Exact pinned155 clocks only. Original stricter budgets and reports retained. No fit, clock-period, falsepath or multicycle change. Not IO/CDC signoff."
+    },
+    "functional_test": {
+      "passed": true,
+      "states": 294912,
+      "sequences": 1056,
+      "all_state_codes": 16,
+      "remaining_cases": [
+        0,
+        1,
+        2,
+        22,
+        64,
+        127
+      ],
+      "wrong_stop_rejected": true,
+      "source_sha256": "223177c18fa83286799e0e6df20b4d5ee7687a099ed297681f74a24c73b7275f",
+      "reference_sha256": "a2db80e071bafdcf604c49a62f65073d3438a338a8ec51169d8f6e62803193c3",
+      "scope": "One-step seeded old-register/pin comparison, followed by actual single-byte writes with eight command/reset actions over132 phases. Not whole-ROM load or gameplay.",
+      "public_sources": {
+        "tools/nes_phaseguard165.py": "728b765ca263de3630619aa4d70af1801896bde83301ab5bf21418f917bedacb",
+        "tools/test_nes_phaseguard165.py": "76fe6bbc26443c46cd4dd22f2f9d0e5624ab0ef603f7ee12fbdf13351948e6ad",
+        "tools/test_nes_state165.py": "a9acc7c6af9f37bcb0685428c61626492d403cd3fbd5cf88e3c9f5902520d349",
+        "tools/test_nes_drain165.py": "ed67892983cbf1552ab25fbfd9e6c158ec64416b818a28a5aee5a6be8340f4a2",
+        "tests/nes-functional/counter131_diff_tb.sv": "967169dec075459ee0f82840e3abc6cde5cb3303aec2957f0deb4e897532dfbf"
+      }
+    },
+    "spi_functional_test": {
+      "passed": true,
+      "captures": 393741,
+      "retirement_live_length_changed": true,
+      "wrong_offset_rejected": true,
+      "sequential_summary": "PASS TAG165 edges=1026691 reads=100 acks=7 corruptions=19 cancels=72 overlaps=2",
+      "source_sha256": "5a22357593f7ed1b366ffc4b408a39582f73241aec3163f4083e56e1af50b839",
+      "reference_sha256": "0c5c7e4a9f93448d11e462eec69682c80e4f0ca3545842b8cd398f2dca25c1bb",
+      "public_sources": {
+        "tools/nes_stopclear165.py": "837895f70c5bb12e2df5186126de9287ed71ece6ada7164567d2b38afa6f43d5",
+        "tools/test_nes_stopclear165.py": "fa40c06c0541ba7696837557df55d5f5de40c600dbd266696a377bdbb6b28050",
+        "tools/test_nes_predecode165.py": "ab4fdeb584218281a22a9d7d7f3b16915fd846999508ced15c4839239d15c434",
+        "tools/test_nes_check165.py": "776ae44261b0ee17a777da5a227d493b296761b400436cd74634e2229a7fa4a4",
+        "tests/nes-functional/tag165_tb.sv": "bd040f247a8ff05a1fa161bc5d8f0cb3c9af3212a61787516b22532f0afb3934"
+      }
+    },
+    "start_to_state_setup_ns": 0.164,
+    "release_to_held_setup_ns": 6.461,
+    "local_release_chain_setup_hold_pass": true,
+    "source_byte_reproduction": true,
+    "unchanged_files": 60,
+    "unchanged_from_state165": 59,
+    "scope": "SPI STOP clear operands captured separately on the same original SS-rise edge. Actual connected SPI/boot/READ16 regression with seeded loader READY/count, not full-ROM loading, game or MCU/SNES test. Loader phaseguard equivalence reused byte-exact. External IO/CDC/reset remains open.",
+    "cartridge_sram_reserved": true,
+    "hardware_package": false,
+    "public_sources": {
+      "tools/nes_phaseguard165.py": "728b765ca263de3630619aa4d70af1801896bde83301ab5bf21418f917bedacb",
+      "tools/test_nes_phaseguard165.py": "76fe6bbc26443c46cd4dd22f2f9d0e5624ab0ef603f7ee12fbdf13351948e6ad",
+      "tools/test_nes_state165.py": "a9acc7c6af9f37bcb0685428c61626492d403cd3fbd5cf88e3c9f5902520d349",
+      "tools/test_nes_drain165.py": "ed67892983cbf1552ab25fbfd9e6c158ec64416b818a28a5aee5a6be8340f4a2",
+      "tests/nes-functional/counter131_diff_tb.sv": "967169dec075459ee0f82840e3abc6cde5cb3303aec2957f0deb4e897532dfbf",
+      "tools/check_nes_phaseguard165.py": "87ee8125d018e186bb399b4701f7f8083548badf7bd05e66e80645a431ec2e9d",
+      "tools/nes_phaseguard165_paths.tcl": "cb0099ebad2577ebfe8ec527e528f088da40d827073f547c8d74413828e719c9",
+      "tools/nes_state165_paths.tcl": "eee1c9f630b6e331e4bd2df87b3c3a2fe268e26c9aeee324c204cbbf07c99413",
+      "tools/nes_release165.py": "5d98b2abb22849a4fdeb0eac650c9dedbf8754a5b3e947686d9d205654ea09c1",
+      "tools/nes_release165_paths.tcl": "fa28becc33d7a18a06775c2552c8737c535d2375af2cc60434b477a68e74685d",
+      "tools/check_nes_check165.py": "fc6072220ae0c4cf9c71baa3ba8d0d12ce044143d4705684aa1d008231c071dc",
+      "tools/check_nes_oam_port165.py": "086c311b5ebb4d089a16c932bf442f5b17e660327251ac8b17d52d392486894b",
+      "tools/check_nes_retire165.py": "a0d664100f777adedd89a1b2c71d14eeafc97063f0977c52d7e4a978f361df99",
+      "tools/check_nes_retire165_nominal.py": "111d7bdc8922a17282c633fb149809bb95eeec934fc94f60211fafd0615bd4a4",
+      "tools/nes_secondary165_timing.tcl": "1bd243a64c8c9ebaf46ffef4b02891673f0217e119901d8e1016c94a681a412f",
+      "tools/nes_predecode165_paths.tcl": "2f0f7ede5c7503c719779cd9f29d867f61dbc41ec362c6f0da4f1bd0985561c7",
+      "tools/nes_stopclear165.py": "837895f70c5bb12e2df5186126de9287ed71ece6ada7164567d2b38afa6f43d5",
+      "tools/test_nes_stopclear165.py": "fa40c06c0541ba7696837557df55d5f5de40c600dbd266696a377bdbb6b28050",
+      "tools/test_nes_predecode165.py": "ab4fdeb584218281a22a9d7d7f3b16915fd846999508ced15c4839239d15c434",
+      "tools/test_nes_check165.py": "776ae44261b0ee17a777da5a227d493b296761b400436cd74634e2229a7fa4a4",
+      "tests/nes-functional/tag165_tb.sv": "bd040f247a8ff05a1fa161bc5d8f0cb3c9af3212a61787516b22532f0afb3934",
+      "tools/check_nes_stopclear165.py": "feb12ef8edc2e7d9b6c06f314aa5e18e91d640e965db75bab872806fb46ac050"
+    }
+  },
+  "raw_result_sha256": {
+    "map01": "c19adfae109e26e893260eb4cc376469871ce291dee91f47dd1dcbc0ab64b029",
+    "map02": "2cf46e4b037808e2d21df242264f45574a7957086f400a3541c00d3533c25787",
+    "spi02": "392e2fbbe1f343d6c24e93d0c8f023ed5f87c4a7e42bc197b82c0d76c8e6e95e",
+    "test01": "3af7e697f9eedbd47037b21f7da603be795e3bfa87e4dec90c34152c94a3ffbf"
+  },
+  "raw_log_sha256": {
+    "map01/fit.log": "63b332f3af4cf86a212ead3e18b434973d0a7d565b7be25257502cadbf8cdcd4",
+    "map01/map.log": "826077ceed00f7faa973035f56b43b62eb352c38e612af56cc69c52e5717df45",
+    "map01/nominal-driver.log": "84ab65c41140cb94a12683fb44a520ac0ad7799b326fd2a6f4b7b3cdc39c6d04",
+    "map01/nominal165.log": "7afad0f5db1ffd81756ed4e51662caeff24608447f61b35da12c9d5808c354c2",
+    "map01/paths.log": "f8ea750162b5c38227b424b5b9c5d3547c93f06313e1c254fa3626bcfd53e10d",
+    "map01/phaseguard165-analysis.log": "f433e57713978718085fba5353dae500dc7701156206ae0255f11b340da80ad8",
+    "map01/release165-analysis.log": "e80534998327864dbe0279b9beeb511d1fb725e42f5e48886f55d177cc23c84e",
+    "map01/timing.log": "9415ea99b0843169e9348db3d8248429bb4bb89c852dac505b6295dcd10566e2",
+    "map02/fit.log": "c059105df5dc9728b4f8d6724f0e7a5df41f6e8e97a3f191a76813763f53cc50",
+    "map02/map.log": "8527ada22c410ff1387e021d18066d532883619a3f13e64c6afbf5d48f357d04",
+    "map02/nominal-driver.log": "84ab65c41140cb94a12683fb44a520ac0ad7799b326fd2a6f4b7b3cdc39c6d04",
+    "map02/nominal165.log": "3a1ab6c14aee3abf6858097274a0005e3af28e0fcd2dcbebabba83c8f3c9827c",
+    "map02/paths.log": "3ad4ca0544832d6f678e9926cf9ef51791ff97cd6f6f9abe6fcc696ce59d2dd5",
+    "map02/phaseguard165-analysis.log": "1716064db3c68381a5209a9b7257f61b5a13c57cb9dac02f39c99afea57352c8",
+    "map02/release165-analysis.log": "1d2ce28bb0efc2de885cc687c76063c25321beb3c6d093d6dccec512a107e86d",
+    "map02/timing.log": "a2febc868578a8415f6440b1bdbb2465fa7ba6c1d6769cf2779654673da39286",
+    "spi01/capture.log": "3a0eb0952ea4240d56d081f30b1f6527ab137eb59e7aaa8d697aa8fa6fcf578f",
+    "spi01/compile.log": "6024043038bd62efac4d78ca533ead85c941af9c49946d50521bd0beeed782ed",
+    "spi01/connected.log": "4a345d57e5db5b28aeaaa52d7998ad836b6088796b38a22f59dd6606fe0448a2",
+    "spi01/vlib.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "spi01/work/@_opt/href.log": "16c474b519e2ae0a39c9a60a79dbdf06f87bb64f7a332d9b58b334e21ec6f3d5",
+    "spi02/capture.log": "692cbdd11a9fceb5d314acd3c310fa532eabd55d825f6ac7e563457f1abe17a2",
+    "spi02/compile.log": "40152a04fe219449c19ec19168f92552769cd0fca99c5dfe11f05c6bbbbc4b80",
+    "spi02/connected.log": "5d38283b2743697be9ff3706737a81943ae9271c4e14692684bae315aa1526ac",
+    "spi02/negative-compile.log": "00cafe95d6851b22de7a9c26a3c91fb7e27cc50e8a604ea28280f7541766347e",
+    "spi02/negative.log": "cc53110ffe9ef7015dfbab41e7b3432cfcd7f00aa99159b12ee5d55c801f5411",
+    "spi02/vlib.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "spi02/work/@_opt/href.log": "f5c79a76d555ca449c550d5fa755f2b4cb32df1f5ee0ec7563819486e1077080",
+    "spi02/work/@_opt1/href.log": "291e6089f5a10c7b6355e1df18ac35af1ef93ac4f7d5fc077562b444af6bb803",
+    "test01/compile.log": "b78d342359f64ee9b1e25289a0ea91d0043577a49b4ae11e4c5081b3b2b1bb2a",
+    "test01/equivalence.log": "be8efddfabdb5c7549b03690fdd4a28f96a769ad2c6b5daaeab7c3cae8d32de7",
+    "test01/negative-compile.log": "5828f8c4dd9f5028f4bd6ba38e82bca73fb0c383c943d6efb62e7e782ac27ea5",
+    "test01/negative.log": "11c8b18a5da004c0fbba536138a445478932c2dd7cdba79c5d75d312d834440a",
+    "test01/vlib.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test01/work/@_opt/href.log": "0c7b4a34bdd1402bc4e433a8bdb748b2c0f4927893a4a35be02aba7502da4794"
+  }
+}

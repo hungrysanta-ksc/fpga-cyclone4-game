@@ -1,3 +1,5 @@
+- Latest165 PHASEGUARD: PR108OPEN SELECT phaseguard165/map01/reproduce01;candidate-0.083ns/15039LE/960LAB35M9K adopted=True/nominalpass=False. Timed-state redundant conflict removal;294912conditions/1056sequences/STOPnegativePASS.60inputs unchanged/local4releasechainsPASS. ReadPHASEGUARDcontract/HANDOFF. NoSD/MCU/fullIOCDCreset;keep164/GBC/saveSRAM;archives/finalizersimmutable.
+
 - Latest165 STATE: PR108OPEN SELECT state165/map01/reproduce01;map01-0.092ns/15077LE/963LAB35M9K adopted=True/nominalpass=False. Single stateowner/existing fault-error-data-timer retained.294912conditions/1056singlebyte command-resetseq/STOPnegativePASS.60inputs unchanged/local4releasechainsPASS. ReadSTATEcontract/HANDOFF. NoSD/MCU/fullIOCDCreset;keep164/GBC/saveSRAM;archives/finalizersimmutable.
 
 - Latest165 RELEASE: PR108OPEN SELECT predecode165/map03/reproduce03final;map01-0.583ns/15073LE/963LAB35M9K adopted=False. Four host-release QSF dontmerge assignments/local4regs/firstfanout1/12stagepaths PASS;all60other inputs exact eligibility02;priorfunctionalreused,noFLOAT. ReadRELEASEcontract/HANDOFF. NoSD/MCU/IOCDC approval;keep164/GBC/saveSRAM;completedarchivesimmutable.
