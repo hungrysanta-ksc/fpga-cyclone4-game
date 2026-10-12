@@ -1,3 +1,17 @@
+# NES 현재 인계 — CHECK 요청 주소 계약과 배치 결과
+
+PR108 OPEN. [계약](../../docs/nes-tag165-contract.ko.md) · [검증](../../analysis/tag165-verification.json).
+
+165 영상 경로 진척: CHECK 요청 주소를 별도 저장하는 구조와 실제 SPI/reader 중단 경계를 검증했습니다. 전체 타이밍이 기존보다 나빠 새 후보를 채택하지 않았다. 선택 구현 predecode165/map03/reproduce03final. 새 후보 15068LE/962LAB/35M9K, 실제 클록 setup-0.616ns. 외부IO·CDC·MCU 실행 연결은 미완료이며 설치164·세이브 SRAM 보존, 새SD 없음.
+
+map01 guarded tag capture REJECT -0.678ns overall/-0.335 tag feedback. map02 independent capture -0.616ns;adopted=False. SELECT predecode165/map03/reproduce03final. Tag invariant only whilebusy; rejected READ may refresh inactive tag, never launches. Same response-edge address comparison, no early-address stability assumption. Actual SPI/boot/READ16 100reads/7ACK/19corrupt/72cancel/2priority,1026691edges;wrongcapture+missingbit negatives PASS. Conditional1409024state+393216capture are NOTunconditional all-state equivalence/formal proof.60other inputs unchanged. No SD/newgame/ARM/MCU/IOCDC approval. Completed archives/public pins immutable.
+
+NEXT SELECT predecode165/map03/reproduce03final. Tag trial map02 nominal -0.616ns: nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|fault -> nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|pending_causes[2]. Preserve the established CHECK request-tag invariant and same-edge response rejection. Inspect this actual worst path and all-clock minima before another structural change; do not repeat compare165 local equations/SPEED or tag165 map01 guarded capture. Keep request-tag capture separate from dynamic response errors. Existing129/130/131 rejected phase-counter variants are not a new rationale. Only changed-boundary tests and justified fit, then minimum native-video IO/CDC + MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack and SMB3(J). No repeated CHECK/OAM/full writes/A-B/044 or save SRAM.
+
+User merges; Korean4PRsections; personalGitHub only. Keep164/audio/input/saveSRAM. No unchangedfullwrites/OAM/A-B/044.
+
+---
+
 # NES 현재 인계 — 타이밍 후보 미채택, 기존 기준 유지
 
 PR108 OPEN. [후보 비교](../../docs/nes-compare165-contract.ko.md) · [검증](../../analysis/compare165-verification.json).

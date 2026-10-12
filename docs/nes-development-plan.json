@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 영상 경로 진척: 추가 회로 후보4개와 모듈별 SPEED 설정을 검증했지만 전체 타이밍 개선은 없어 모두 미채택했습니다. 기존 predecode165/map03의15,040LE/963LAB/35M9K, 실제 클록 setup−0.153ns 기준을 유지합니다. 외부IO·CDC·MCU 실행 연결은 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.",
-  "next_action": "CHECK_REQUEST_RESPONSE_OWNERSHIP_CONTRACT",
+  "assessment": "165 영상 경로 진척: CHECK 요청 주소를 별도 저장하는 구조와 실제 SPI/reader 중단 경계를 검증했습니다. 전체 타이밍이 기존보다 나빠 새 후보를 채택하지 않았다. 선택 구현 predecode165/map03/reproduce03final. 새 후보 15068LE/962LAB/35M9K, 실제 클록 setup-0.616ns. 외부IO·CDC·MCU 실행 연결은 미완료이며 설치164·세이브 SRAM 보존, 새SD 없음.",
+  "next_action": "ROUTED_WORST_PATH_REVIEW",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2807,6 +2807,15 @@
     "verification": "analysis/compare165-verification.json",
     "contract": "docs/nes-compare165-contract.ko.md",
     "next": "Retain predecode165 map03/reproduce03final (-0.153ns); no new RTL/SD selected. Do not repeat compare165 map01-04 or per-instance SPEED map06 (same result), and reject map05 invalid braced-node assignments. Before another full fit, derive a sequential ownership contract for CHECK request tag/counter/response: exactly which registers are stable from request acceptance through response and ACK. Use that contract to remove the response-address comparison from the counter feedback path, or precompute ownership validity where the tag is already stable. Preserve wrong-address, STOP/reset, fault and command retirement edges; do not simply waive arbitrary-state failures without proving reachability. Test only the changed boundary, then one full fit with counter/capture/loader and all-clock minima. Once safe, connect necessary native-video IO/CDC/reset and MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack to minimum SMB3(J) hardware. Keep installed164/GBC/save SRAM; no repeated full writes/OAM/A-B/044.",
+    "hardware": false
+  },
+  "tag165": {
+    "status": "not_adopted",
+    "adopted": false,
+    "selected": "predecode165/map03/reproduce03final",
+    "verification": "analysis/tag165-verification.json",
+    "contract": "docs/nes-tag165-contract.ko.md",
+    "next": "SELECT predecode165/map03/reproduce03final. Tag trial map02 nominal -0.616ns: nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|fault -> nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|pending_causes[2]. Preserve the established CHECK request-tag invariant and same-edge response rejection. Inspect this actual worst path and all-clock minima before another structural change; do not repeat compare165 local equations/SPEED or tag165 map01 guarded capture. Keep request-tag capture separate from dynamic response errors. Existing129/130/131 rejected phase-counter variants are not a new rationale. Only changed-boundary tests and justified fit, then minimum native-video IO/CDC + MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack and SMB3(J). No repeated CHECK/OAM/full writes/A-B/044 or save SRAM.",
     "hardware": false
   }
 }
