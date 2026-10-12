@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-165 영상 경로 진척: SNES WRAM 내부의 실제65816 비교·동적DMA로 두 장면114688픽셀 일치를 확인했습니다. 두 번째 비교120.8→29.7ms로 개선했지만60fps는 미달성입니다. 세이브SRAM을 보존하며 다음은 실제 MCU 수신·표시ACK 연결입니다. 설치 후보는164입니다. [실행 계약·측정·다음 연결](docs/nes-native-local165-contract.ko.md).
+165 영상 경로 진척: C 송신기와 실제 SNES 수신·비교·표시 응답을 동시 실행해227왕복과229376픽셀 일치를 확인했습니다. 중간 버스는 PC 모델이며 실기 SPI·FPGA 접속부와60fps는 미완료입니다. 세이브 SRAM을 보존하고 설치 후보164를 유지합니다. [수신·응답 계약과 남은 연결](docs/nes-native-sink165-contract.ko.md).
 
 현재164 실기: **검정 구간 제거 통과·사운드 정상으로 보임, 심한 갱신 지연으로 정상 플레이 미달성**. 다음은 영상 전송량·갱신 지연 개선이며, DOWN 유지는 이번 미시험입니다. [164 실기 결과](analysis/GAME164-HARDWARE-RESULT.ko.md).
 

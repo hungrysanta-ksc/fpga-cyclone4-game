@@ -1,3 +1,19 @@
+# NES 현재 인계 — C와 SNES 수신·표시 응답 왕복
+
+PR107 같은 브랜치. [계약](../../docs/nes-native-sink165-contract.ko.md) · [검증](../../analysis/native-sink165-verification.json). 설치164 유지. 카트리지 SRAM/세이브/복구 영역 사용금지, 기존 GBC/164 사운드·입력·STOP 코드 무변경. 새SD없음.
+
+sink01: C producer와 실제SNES65816/SPC/WRAM/PPU 동시 실행, 파일 mailbox로227packet/ACK 왕복. ACK는실제SNES쓰기이며호스트주입아님. 실제SPI/FPGA/MMIO/MCU게임루프는미연결. 기존변환된frame12/15재사용, converter 재실행/새boot없음. normal137packets/3commits(두장면+noop)/18727packetB+1644ACKB, stop90/1commit/12462B+1080B. 4캡처229376activepixels 일치(고유2장면114688). 실제compare6/2/0명령,5493/18/0B. 정상끝invalidsectionE0;두번째비교STOP E4/새DMA게시없음. C IOfail/staleserial/gen/sequence/badACK5거부;BUSY재진입금지. SPC A9/visiblevblank/forcedblank없음/모델DOWNsample150/94,물리소리·입력유지증명아님.
+
+새 C sink24B ARM(호스트32),text704B,직접stack packet304/seal88/pattern24+callback중첩. 이전stage460B 대신쓸경로, old/new표읽기없음. nominal60340/65424차이5084 NOTfull-link/heap/stack승인. SNES body2651B/ROM4096B로기존2048decode와호환안됨. 기존164에client만설치금지. 헤더/상태1200..1239,수신량1080..108B,local의1000/1100/DP40..6F 유지,body7E2000. 정확한ABI는계약필독.
+
+packet16Bheader+최대240data,BEGIN1/DATA2/SEAL3. serial32정확+1,seq16장면내+1,gen16;DATA section0..5연속offset/상한/SEAL실제길이 확인. ACK12B(status/op/seq/serial/gen/65/9A),status1은표시완료뿐. 게시전C BUSY,응답모호/오류는FAULT공통reset필수/재시도금지. 이전stage의미게시실패재시작규칙을그대로상속금지. SNES badheader는ACK없이quiet;adaptertimeguard필수. STOP은comparison반환후DMA전검사(물리최대지연/메뉴복귀검증아님).
+
+NEXT **SPI packet/ACK 하드웨어와 SNES bus/4KiBROM decode** 구현. ready6000/STOP6001/length6004..5,packet400000..4000FF,ACK6010..1B/publish601C=A5,pad6002..3. packet완전CRC/길이검사후immutable게시;ACK원자retire;공통reset. 기존164 framebuffer40뱅크/6000와동시활성금지. 새paired식별을명시하고기존6B/E5무조건허용금지. Cexchange callback에유한guard/time/STOP 연결하고긴wait가mainloop오디오/입력/로그를막지않게한다. 이후38M9K교체/full-link/fit변경경계검사후SMB3첫레벨실기. 새generic진단/같은boot/A-B/044반복금지. SPI39.59ms/compare29.7ms/60fps는미해결. 테스트의파일폴링/캡처ACK지연시간을전송성능으로쓰지않는다.
+
+기존publicpins/archives보존. 완료probes/nes-native-sink165 record/audit/publish재실행금지. 개인GitHub/한국어4PR절/사용자머지.
+
+---
+
 # NES 현재 인계 — SNES 내부 비교 완료, 실제 전송 연결 우선
 
 PR107 같은 브랜치, 아직 실기165 패키지는 없다. [새 계약](../../docs/nes-native-local165-contract.ko.md) · [검증](../../analysis/native-local165-verification.json). 설치164 사운드/입력/STOP/메뉴·GBC 저장 무변경. 카트리지 SRAM·세이브/복구 영역 사용금지. SNES WRAM7F 주소를 MCU sram_*에 연결금지.
