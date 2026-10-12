@@ -1,3 +1,19 @@
+# NES 현재 인계 — 실제 보드 연결 완료, 논리 자원 축소 필요
+
+기존 PR108 열린 상태에서 후속 작업. [계약](../../docs/nes-sink-board165-contract.ko.md) · [검증](../../analysis/sink-board165-verification.json). 설치164/원본GBC/사용자세이브 보존. 새SD없음.
+
+선택 board03/test04. actual164 top + native producer + sink bridge, 기존38M9K/frame150/bus151 제거. 공통reset/active,ROMfault2FF/nativeSPIfault STOP,패드CDC,4그룹MISO배타 연결. 실제122핀/SDC동일. audio/pad/observer원본동일. RAM_ADDR0/OE1/WE1/DATAZ. status73 E6/version2,observer70 E5(옛D4주석틀림),sinkE0 F6. 구형E5/version1 MCU실행금지. boot/native 내부중재유지. realMCUguard/시간/오디오입력/오류로그와전체링크아직미완료.
+
+새materializer tools/nes_sink_board165.py + nes_native_ram_board165.py 사용. 기존공개RTL직접수정하지않음. board01 uninferred13/registeroverflow;동기읽기/출력mux분리로large8배열RAM추론(6M9K/2rasterAUTO). compact4/raster2/requiredtile1/SPIbuffer1,latency보존. board02/03 map21442estimatedLE/16441comb/8294reg/197104memorybits/PLL1. board03 actualFIT170011/171000:16441comb >15408. 배치실패/STA미실행. 164map16362->fit14711이었으므로estimatedLE와최종fit혼동금지. 1033comb줄여도전체fit보장아님.
+
+최대localcomb OAMEval5664(164도5662),compact1359/raster637/nativeSPI494/sink489. 새관측만으로OAM이커진것아님. 다음은실제비용기반OAM비동기읽기·행복사·쓰기선택/compact구조축소. 기존OAM일괄삭제/CE변경/오디오제거/세이브SRAM차용/무근거SDC완화금지. 구조변경경계와짧은SMB3실자료확인후전체fit;무변경배치반복금지. 자원해결후realMCURUN→전체링크/스택/최소타이밍→SMB3실기. generic진단증설/boot/A-B/044반복금지.
+
+test04 FRAMELEASE1740checks9scenes7rejects;실제SMB3기록3(frame12/15mode0+12mode2)dump/events/old exact;SPI1717records/47blocks191requests두위상0/3.5기존전송exact. actualtopperipherals13checks/DAC5593edges,CPU/loaderlifecycle만stub. 새게임부팅/소리품질/물리타이밍시험아님. test01stub생성빈포트/test02선언순서/test03D4기대값오류보존. 최종observer250kHz/E5,기타SPI2.625MHz. checker초기rasterAUTO를M9K라단정한오류수정. board03/test04최종sources해시일치.
+
+완료 probes/nes-sink-board165 및 이전 record/audit/finalizer 재실행금지. 기존pins/archives불변. 개인GitHub/한국어4PR절/사용자머지. 새RTL은이PR108후속커밋이며별도PR생성하지않음.
+
+---
+
 # NES 현재 인계 — FPGA 패킷·SNES 응답 접속부
 
 PR107 머지019a92ef 이후 새 브랜치 codex/nes-sink-fpga-165. [계약](../../docs/nes-sink-bridge165-contract.ko.md) · [검증](../../analysis/sink-bridge165-verification.json). 설치164/사운드·입력·STOP·메뉴/원본GBC 그대로,카트리지 SRAM·세이브·복구 영역 사용금지. 새SD없음.

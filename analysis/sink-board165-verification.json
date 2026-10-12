@@ -1,0 +1,198 @@
+{
+  "functional_tests_pass": true,
+  "synthesis_pass": true,
+  "fit_pass": false,
+  "selected": [
+    "test04",
+    "board03"
+  ],
+  "candidate": "NES-GAME-164",
+  "pr": 108,
+  "parent_integrated": true,
+  "framebuffer_removed": true,
+  "cartridge_sram_reserved": true,
+  "board_pins_unchanged": true,
+  "test_scope": "Actual board peripheral top with core lifecycle stub; RAM changed modules actual replay and lease test; full real core synthesis is separate.",
+  "lease": [
+    "# PASS FRAMELEASE165 checks=1740 scenes=9 rejects=7"
+  ],
+  "replayed_cases": [
+    "frame-12-mode-0",
+    "frame-15-mode-0",
+    "frame-12-mode-2"
+  ],
+  "spi_phases": 2,
+  "spi_records": 1717,
+  "board_checks": [
+    "# PASS SINKBOARD165 checks=13 dac_edges=5593"
+  ],
+  "resources": {
+    "estimated_le": 21442,
+    "combinational": 16441,
+    "registers": 8294,
+    "memory_bits": 197104,
+    "pins": 122,
+    "virtual_pins": 0
+  },
+  "device_le_limit": 15408,
+  "fit_errors": [
+    "Error (170011): Design contains 16441 blocks of type combinational node.  However, the device contains only 15408 blocks.",
+    "Error (171000): Can't fit design in device"
+  ],
+  "largest_local_entities": [
+    {
+      "hierarchy": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|OAMEval:spriteeval",
+      "local_combinational": 5664,
+      "local_registers": 2344,
+      "hierarchy_memory_bits": 0
+    },
+    {
+      "hierarchy": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_frame165:native_frame|nes_native_compact_planes165:compact",
+      "local_combinational": 1359,
+      "local_registers": 1068,
+      "hierarchy_memory_bits": 26464
+    },
+    {
+      "hierarchy": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_frame165:native_frame|nes_native_raster_frame165:raster",
+      "local_combinational": 637,
+      "local_registers": 388,
+      "hierarchy_memory_bits": 17120
+    },
+    {
+      "hierarchy": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|T65:cpu",
+      "local_combinational": 583,
+      "local_registers": 169,
+      "hierarchy_memory_bits": 0
+    },
+    {
+      "hierarchy": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|APUMixer:mixer",
+      "local_combinational": 507,
+      "local_registers": 0,
+      "hierarchy_memory_bits": 0
+    },
+    {
+      "hierarchy": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_spi165:native_spi",
+      "local_combinational": 494,
+      "local_registers": 290,
+      "hierarchy_memory_bits": 2048
+    },
+    {
+      "hierarchy": "|fxpak_nes_screen137_top|nes_sink_bridge165:sink|nes_sink_spi165:endpoint",
+      "local_combinational": 489,
+      "local_registers": 422,
+      "hierarchy_memory_bits": 2048
+    },
+    {
+      "hierarchy": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu",
+      "local_combinational": 470,
+      "local_registers": 119,
+      "hierarchy_memory_bits": 0
+    },
+    {
+      "hierarchy": "|fxpak_nes_screen137_top|nes_run_observer134:observer",
+      "local_combinational": 432,
+      "local_registers": 241,
+      "hierarchy_memory_bits": 1968
+    },
+    {
+      "hierarchy": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|PaletteRam:palette_ram",
+      "local_combinational": 413,
+      "local_registers": 169,
+      "hierarchy_memory_bits": 0
+    },
+    {
+      "hierarchy": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_export165:native_export",
+      "local_combinational": 412,
+      "local_registers": 198,
+      "hierarchy_memory_bits": 0
+    },
+    {
+      "hierarchy": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|T65:cpu|T65_MCode:mcode",
+      "local_combinational": 383,
+      "local_registers": 0,
+      "hierarchy_memory_bits": 0
+    }
+  ],
+  "changed_ram_inference": [
+    {
+      "instance": "fetch",
+      "array": "required_tiles",
+      "requested_type": "M9K"
+    },
+    {
+      "instance": "compact",
+      "array": "rows",
+      "requested_type": "M9K"
+    },
+    {
+      "instance": "compact",
+      "array": "exceptions",
+      "requested_type": "M9K"
+    },
+    {
+      "instance": "compact",
+      "array": "objects",
+      "requested_type": "M9K"
+    },
+    {
+      "instance": "compact",
+      "array": "maps",
+      "requested_type": "M9K"
+    },
+    {
+      "instance": "raster",
+      "array": "rows",
+      "requested_type": "AUTO"
+    },
+    {
+      "instance": "raster",
+      "array": "colors",
+      "requested_type": "AUTO"
+    },
+    {
+      "instance": "native_spi",
+      "array": "buffer",
+      "requested_type": "M9K"
+    }
+  ],
+  "client_identity": "E6/2",
+  "observer_identity": "E5",
+  "sink_identity": "F6",
+  "actual_full_core_synthesized": true,
+  "core_lifecycle_stub_in_board_sim": true,
+  "whole_firmware_link": false,
+  "hardware_fit": false,
+  "hardware_package": false,
+  "sixty_fps": false,
+  "public_sources": {
+    "tools/test_nes_sink_board165.py": "9b7e8ca6fd41d58b6537b15a8e400607632b6828ea351b15bdeb5b322b51061f",
+    "tools/nes_sink_board165.py": "52669994175804af151876d441d731c74334fb377ae1c16728b02e3bf5b73ea2",
+    "tools/nes_native_ram_board165.py": "a9554c2ba041f8a97a9678ac6aa8c0818d429ad8a24f05e102c2b4c13ceb9bbd",
+    "tests/nes-functional/sink_board165_tb.sv": "364befc870ecff70ef7beb08352b428e952e5c6f27cf55b571c5c37419bbf994",
+    "tools/check_nes_sink_board165.py": "0558b4fc0d8d2fbf78f23f47a9e86a0a2266015ee3d4c79509a5a2a938dc65cc"
+  },
+  "raw_result_sha256": {
+    "test04": "b7fff0457ff5014aed0fee35b147a5e6eb8ed39172daaa6866e89f86df63acea",
+    "board03": "22461c112f7899372b4bbd392131f5da2f0cac1ee5d86b6c7640e7f15deb1b80"
+  },
+  "raw_log_sha256": {
+    "test04/board.log": "3792b6a90b4a0405cdb30480cd549df0d40277df7bdd75ca82be3f39899e94a9",
+    "test04/frame-12-mode-0.log": "654d8be781372e79cb0868e5a1d94cefd6ebea967b419c2dc001070fd9ff8e24",
+    "test04/frame-12-mode-2.log": "7e77add11a6ddf2d05637b24f6f99644dd4d7146bd18a96d86eb0af99d1f4f75",
+    "test04/frame-15-mode-0.log": "e1c6c9e26c06d5305574ed0e0a12ce0ea5d2e22d488478cb897fa7da0236bdd5",
+    "test04/lease.log": "983536622b57ea5804d57f0e25d65add3e2d9ed32a583f7e37e350a3964f678f",
+    "test04/phase0.log": "aeff3b5f2dacf6029eadee317b532093e7683c3ee12c02dcfa5c5ea0dd3b7dd2",
+    "test04/phase3.5.log": "8969cb2a90e88a3f342540a2de141cd55e813f97bf9137de1a3a2f098d5731cb",
+    "test04/vlib.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test04/vlog.log": "d213ee21e3931447ac4b7119f8da73a1bb7e03d17130427b260c482e751bb57c",
+    "test04/work/@_opt/href.log": "4bd2355fd9e5721a13a22e4f3a9b93fa460fea73c837bc71d4fcf7bcc3ca8336",
+    "test04/work/@_opt1/href.log": "a418f50272b3df1107abf0e3b7e0de857887b7b66b7e00b7798d9778f0952f2e",
+    "test04/work/@_opt2/href.log": "4bd2355fd9e5721a13a22e4f3a9b93fa460fea73c837bc71d4fcf7bcc3ca8336",
+    "board03/fit.log": "3fc782e30e0d632b8af59f2ffa2c6d4426fc4bc3f76be74c1a09dcf50b0885dd",
+    "board03/map.log": "553605cd249fd3e76dad0314bf7cb551ae6735968884de38e93e157d46317033"
+  },
+  "prepared_input_sha256": "bc030ca47f1f7934e4d9004a301eb6927cbb05dd0fe599c04b3ea7e3220f82df",
+  "final_qsf_sha256": "1ba7871aea08c9a9e12fc5091be8f714b9a14126cf9cdaf33532f00dc06004d1",
+  "final_sdc_sha256": "ca2e86fdf7559dc8aeddf55562f17c398a698c058f21f79d984c0c3d782b83e7",
+  "next": "Reduce actual OAM/native scene logic cost while preserving behavior and saves; focused changed-path comparison then full parent fit. Once it fits, bind actual MCU RUN guard/time/audio/input + sink ACK, full-link/stack/minimum timing -> SMB3 first-level hardware. No unchanged boot/A-B/044 repetition."
+}

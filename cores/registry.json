@@ -40,13 +40,13 @@
       "verification": "analysis/GAME164-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "spi_snes_sink_bridge_rtl_and_synthesis_pass_parent_open",
+      "investigation": "physical_parent_connected_functional_pass_fit_resource_blocked",
       "hardware_baseline": "NES-H1-SAMPLING-044",
       "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-164",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "Replace old framebuffer bus/38M9K in actual parent; bind exclusive E0/E1 MISO, common reset/active/fault/STOP and pad, then real MCU RUN guard/time/audio/input scheduling. Full link/stack/fit/changed I/O checks -> SMB3 first-level hardware. No new generic diagnostics or unchanged boot/A-B/044.",
+      "next_gate": "Reduce actual OAM/native scene logic cost while preserving behavior and saves; focused changed-path comparison then full parent fit. Once it fits, bind actual MCU RUN guard/time/audio/input + sink ACK, full-link/stack/minimum timing -> SMB3 first-level hardware. No unchanged boot/A-B/044 repetition.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -431,6 +431,14 @@
         "verification": "analysis/sink-bridge165-verification.json",
         "contract": "docs/nes-sink-bridge165-contract.ko.md",
         "next": "Replace old framebuffer bus/38M9K in actual parent; bind exclusive E0/E1 MISO, common reset/active/fault/STOP and pad, then real MCU RUN guard/time/audio/input scheduling. Full link/stack/fit/changed I/O checks -> SMB3 first-level hardware. No new generic diagnostics or unchanged boot/A-B/044.",
+        "hardware": false,
+        "superseded_by": "sink_board165"
+      },
+      "sink_board165": {
+        "status": "physical_parent_connected_functional_pass_fit_resource_blocked",
+        "verification": "analysis/sink-board165-verification.json",
+        "contract": "docs/nes-sink-board165-contract.ko.md",
+        "next": "Reduce actual OAM/native scene logic cost while preserving behavior and saves; focused changed-path comparison then full parent fit. Once it fits, bind actual MCU RUN guard/time/audio/input + sink ACK, full-link/stack/minimum timing -> SMB3 first-level hardware. No unchanged boot/A-B/044 repetition.",
         "hardware": false
       }
     },
