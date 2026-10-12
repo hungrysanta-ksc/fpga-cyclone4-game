@@ -1,3 +1,15 @@
+# NES 현재 인계 — 로더 상태 전환 분리
+
+PR108 OPEN. [계약](../../docs/nes-state165-contract.ko.md) · [검증](../../analysis/state165-verification.json).
+
+165 영상 경로 진척: 로더 상태 전환을 오류·데이터 처리에서 분리하고 294912조건·1056쓰기/중단 시나리오를 비교했습니다. 새 후보를 다음 구현 기준으로 채택했습니다. 선택 구현 state165/map01/reproduce01. 15077LE/963LAB/35M9K, 실제 클록 setup-0.092ns. 외부IO·CDC·MCU와 실기는 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.
+
+SELECT state165/map01/reproduce01;adopted=True;nominal_same_clock_pass=False. Single state-owner always;original fault/error/data priority and timer preserved. Empty original state-only branches/tasks intentional. WRITE/HOLD bad command holds current edge then existing fault drains;no pulse shortening. State165test01 all16codes/294912conditions/1056actual single-byte sequences+wrongSTOP negative PASS.60other inputs exact release165map01. Existing4hostrelease QSF assignments/newchain topology PASS. No full-ROM/newgame/MCU/SD or fullIOCDCreset approval. Preserve164/GBC/saveSRAM and completed archives/finalizers/publicpins.
+
+NEXT SELECT state165/map01/reproduce01;state165map01 nominal -0.092ns, worst nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|start -> nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|state.SETUP. Actual path start->fault~3->phase_step~0->Selector9~0->state~60/61->SETUP:5levels,68percent routing. Also READY->WRITE/RECEIVE -.001ns. Preserve new single-state-owner contract; inspect shared command/timed-phase guard for SETUP hold/entry and those near-zero paths, without assuming START is a legal SETUP entry. No unchanged fit or old compare165 drain/phase/counter repeats, no clock/SDC relaxation. Preserve fault/STOP/write drain and four local release QSF assignments with fresh hierarchy checks. Then minimum IO/CDC/reset+MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack and SMB3(J) hardware;no unchanged fullwrites/OAM/A-B/044/saveSRAM.
+
+---
+
 # NES 현재 인계 — 영상 mailbox 리셋 해제 분리
 
 PR108 OPEN. [계약](../../docs/nes-release165-contract.ko.md) · [검증](../../analysis/release165-verification.json).
