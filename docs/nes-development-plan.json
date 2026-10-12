@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 영상 경로 진척: CHR 캐시·행별 상태・CIRAM/OAM 수집에 실제 BG/OBJ 패턴의 물리 타일 목록과 표시 위치를 연결했습니다. fine X8가지의2048픽셀 대조와 공통 수집/해제 검사를 통과했습니다. SNES 갱신 명령·부족 타일 보충·실기 속도 개선은 미완료이며 설치 후보는164입니다.",
-  "next_action": "NATIVE_BOUNDED_COMMAND_CONSUMER_PHYSICAL_TILE_FILL_AND_SNES",
+  "assessment": "165 영상 경로 진척: fetch 이벤트를 SNES 타일맵·스프라이트·스크롤 갱신으로 변환하는 PC 참조 소비자를 구현했습니다. SNES 모델에서 두 장면114688픽셀이 일치했고 스크롤 변경은573바이트/4명령으로 vblank 안에 완료했습니다. 실기 생산자·부족 CHR 보충·전송 연결은 남아 있으며 설치 후보는164입니다.",
+  "next_action": "NATIVE_ONLINE_PRODUCER_PHYSICAL_FILL_GAME_WORKLOAD_AND_SNES_TRANSPORT",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2648,6 +2648,13 @@
     "verification": "analysis/native-fetch165-verification.json",
     "contract": "docs/nes-native-fetch165-contract.ko.md",
     "next": "Actual pattern events and conservative physical required-set passed. Next bounded native BG-map/OBJ/row command consumer, physical tile allocation and bounded missing-byte fill, then host CDC/SNES replacing38M9K. Raw worst-case73472B event stream must not become whole-frame buffer/transfer. Snapshotvalid is not full readiness. Minimum changed checks then real SMB3; retain164/audio/menu, no unchanged boot/044 replay.",
+    "hardware": false
+  },
+  "native_commands165": {
+    "status": "PC_command_reference_SNES_pixels_pass_live_producer_fill_transport_open",
+    "verification": "analysis/native-commands165-verification.json",
+    "contract": "docs/nes-native-commands165-contract.ko.md",
+    "next": "PC native command reference and actual SNES model pixels PASS; NOTlive producer. Next online bounded fetch/raster producer +physical CHR fill and actual SMB3 workload together, then host CDC/ACK/SNES consumer replacing38M9K. Retain164/audio/menu; do not port PC full-event/shadow buffers or repeat unchanged boot/Questa/044. Minimum changed checks then real first level.",
     "hardware": false
   }
 }

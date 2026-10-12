@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-165 영상 경로 진척: CHR 캐시·행별 상태・CIRAM/OAM 수집에 실제 BG/OBJ 패턴의 물리 타일 목록과 표시 위치를 연결했습니다. fine X8가지의2048픽셀 대조와 공통 수집/해제 검사를 통과했습니다. SNES 갱신 명령·부족 타일 보충·실기 속도 개선은 미완료이며 설치 후보는164입니다. [완료 범위와 다음 구현](docs/nes-native-fetch165-contract.ko.md).
+165 영상 경로 진척: fetch 이벤트를 SNES 타일맵·스프라이트·스크롤 갱신으로 변환하는 PC 참조 소비자를 구현했습니다. SNES 모델에서 두 장면114688픽셀이 일치했고 스크롤 변경은573바이트/4명령으로 vblank 안에 완료했습니다. 실기 생산자·부족 CHR 보충·전송 연결은 남아 있으며 설치 후보는164입니다. [완료 범위와 다음 구현](docs/nes-native-commands165-contract.ko.md).
 
 현재164 실기: **검정 구간 제거 통과·사운드 정상으로 보임, 심한 갱신 지연으로 정상 플레이 미달성**. 다음은 영상 전송량·갱신 지연 개선이며, DOWN 유지는 이번 미시험입니다. [164 실기 결과](analysis/GAME164-HARDWARE-RESULT.ko.md).
 
