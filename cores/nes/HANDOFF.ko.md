@@ -1,3 +1,17 @@
+# NES 현재 인계 — 유한 C 표시 변환과 SNES 픽셀 일치
+
+PR107 같은 브랜치. [새 계약](../../docs/nes-native-video165-contract.ko.md) · [검증](../../analysis/native-video165-verification.json). C수신기 COMMITTED 장면→SNES BG/OBJ/맵/OAM/CGRAM/HDMA 변환기를 구현했다. 선택video03: 서로 다른 실제SMB3 frame12/15를 재사용,114688픽셀을 실제SNES CPU/DMA/PPU 모델에서 원본과 일치시켰다. 새boot/RTL/FLOAT없음. PC가업로드명령과차분을조립하므로 MCU루프/실기전송은아직미완료.
+
+stage callback은BG16/OBJ32바이트를외부임시저장소에만쓰기;직접표시VRAM금지. 완성전실패시후보전체폐기/재시도없음. C valid≠SNES표시ACK. BG는정확한61비트physical+plane-mapping키(해시아님),OBJ tag/mask키. rank정렬/실제mask/팔레트경계분할/행32개평가한도/1023BG·128OBJ패턴상한. 후보별키재할당,장면간캐시는아님. 6거부각2사례+복구PASS. 초기5493B6명령/다음18B2명령/vblank226. 작은부팅표본차이이며FPS/첫레벨부하아님.
+
+메모리 중요:02패턴전체보관27662B는baseline26364+receiver18064=72090B로64KB초과여서미채택.03은패턴stream/키만보관하여candidate15888B;합계60316B/링커RAM65424B 차이5108B는heap/stack/정렬/새bus미반영 단순합계. ARMobject2216B/directstack704B. 두candidate/64KBshadow 추가금지. 실제전체링크와callback/인터럽트stack확인필수. harness의pattern전체배열은PC staging모델뿐.
+
+**NEXT:** 외부staging 버스와 SNES vblank 소비자/완료ACK를 구현하고 MCU RUN 수신·변환·업로드 스케줄을 연결한다. 기존50ms대기를그대로두면수신기한불가,1200회카운트를새작업과합쳐실제60초로오인금지. 오류/CF86/STOP·사운드/입력보존. 단일candidate/외부staging,전체SRAM링크,기존38M9K프레임버퍼제거교체,FPGAfit/타이밍/직렬39.59ms예산을확인뒤SMB3첫레벨실기. 현재56/56M9K에단순추가금지. 같은boot/A-B/044반복금지. 사용가능영상뒤60초제한/오류·본체reset로그/DOWN유지.
+
+01컴파일들여쓰기경고/02픽셀PASS이나메모리초과설계보존.03선택,기존archive/pin수정없음. probes/nes-native-video165 완료record/audit재실행금지. 설치164/개인GitHub/한국어4PR절/사용자머지.
+
+---
+
 # NES 현재 인계 — SPI 접속부와 유한 C 수신기
 
 PR107 같은 브랜치. [새 계약](../../docs/nes-native-spi165-contract.ko.md) · [검증](../../analysis/native-spi165-verification.json). 실제 SPI D0~D3/256바이트 버퍼, 기존 host84MHz mailbox 연결, 기존149 가드 엔진의1~259바이트 생성 변형, 유한 C 수신기를 구현했다. **MCU 게임 루프/SNES 명령 소비자/38M9K 교체/fit/실기 미완료.** ARM 오브젝트 컴파일을 실기 성공으로 해석하지 않는다. 설치164 유지.
