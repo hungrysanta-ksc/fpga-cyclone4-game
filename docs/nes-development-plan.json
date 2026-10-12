@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 영상 경로 진척: 분할 경계의 저·고 플레인이 같은 타일의 서로 다른 행을 읽는 조건을 보존하도록 수정했습니다. 표시9프레임을 완전 수집·압축했고 원본 NES516,096픽셀과 일치했습니다. SNES 모델의 서로 다른 두 화면도 일치했으며 두 화면 사이 갱신량은22바이트였습니다. 실기 속도·기판 연결은 미완료이며 설치 후보는164입니다.",
-  "next_action": "CONNECT_NATIVE_PLANES_RASTER_FILL_AND_ACK_TO_BOARD_PATH",
+  "assessment": "165 영상 경로 진척: 수정 수집기·압축기·행 상태를 실제 NES 코어에 한 장면으로 연결했습니다. 표시9프레임의516,096픽셀이 원본과 일치했고, 유한 CHR 보충 인터페이스와 오류·취소도 검증했습니다. 실제 PSRAM 중재·호스트/SNES 연결·실기 속도는 미완료이며 설치 후보는164입니다.",
+  "next_action": "CONNECT_BOUNDED_FILL_TO_PHYSICAL_MEMORY_AND_HOST_ACK",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2670,6 +2670,14 @@
     "verification": "analysis/native-planes165-verification.json",
     "contract": "docs/nes-native-planes165-contract.ko.md",
     "next": "Corrected same-tile mixed-plane capture and directly connected compact replay PASS. Next common-generation fetch/compact/raster admission, bounded physical CHR fill, host CDC/ACK and actual SNES consumer replacing38M9K; minimum fit/changed checks then real SMB3. Preserve164/audio/STOPmenu; do not repeat unchanged boot/A-B/044.",
+    "hardware": false,
+    "superseded_by": "native_frame165"
+  },
+  "native_frame165": {
+    "status": "actual_core_common_frame_and_bounded_fill_interface_pass_physical_transport_open",
+    "verification": "analysis/native-frame165-verification.json",
+    "contract": "docs/nes-native-frame165-contract.ko.md",
+    "next": "Connect bounded fill to actual CPU/PPU-priority memory grant/response/flush, then host CDC/ACK and SNES consumer replacing38M9K. Minimum changed checks/fit then real SMB3 first level; no unchanged boot, split-cell, A-B or044 replay.",
     "hardware": false
   }
 }

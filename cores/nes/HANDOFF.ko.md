@@ -1,3 +1,21 @@
+# NES 현재 인계 — 실제 코어의 공통 장면과 유한 CHR 보충
+
+PR107에 추가했다. [계약·재현·다음 연결](../../docs/nes-native-frame165-contract.ko.md) · [검증 요약](../../analysis/native-frame165-verification.json).
+
+**완료:** 새 `nes_native_frame165`가 planes/compact와 새 raster_frame을 같은 NES 클록·generation·release로 연결한다. 이전 CIRAM/OAM 스냅샷의 무변경 조건은 중복 요구하지 않는다. 실제 CPU/PPU/MMC3에 동일 BINDING을 연결한 frame03에서20프레임을 실행했고 이전 픽셀20개는 동일했다. 표시1~11은 거부,12~20은 모두224행/30BG묶음/2OBJ/2예외/7401이벤트/2226위치바이트다. 공통 조회 포트의 데이터로516096픽셀이 원본과 완전히 일치했다. 필요 물리 타일은 이 부팅 표본에서15개/240바이트다. 첫 레벨·60fps 증명이 아니다.
+
+`geometry_valid`는 타일 바이트/호스트/SNES 준비 완료가 아니다. mask1e/연속 팔레트2버전/동일 배경색을 요구한다. 행 중간 fineX·팔레트·mode·mask 변경은 거부한다. v/t 접근은 scroll_seen으로 기록하되 전체 실제 fetch/압축/행 완성이 함께 있어야 한다. 다른 raster 오류를 무조건 무시하지 않는다. 공통 generation은 required-set의16비트 번호만 사용하며 공유 release가 모두 취소한다. 첫 raster 행 이전 ROMfault로 PPUCE가 멈춰도 실패를 반환한다. query kind0..6/범위/generation 검사, error24=ROM/23:16raster/15:8compact/7:0fetch. 조회는 NES 클록 전용이다.
+
+새 `nes_native_fill165`는 최대512물리타일/8192바이트·총262144클록·단계1024클록으로 제한한 보충 인터페이스다. 한 번에 한 요청·한 바이트만 보관하고 실제 tag/lane 주소를 쓴다. 캐시 hit 최적화는 아직 없으며 필요한 타일의16바이트 전체를 공급한다. source generation/valid, 조회, 응답 주소/번호/오류, grant·응답·sink대기와 총 예산을 검사한다. 완료 전 바이트는 임시이며 실패하면 폐기한다. 완료 뒤 lease가 취소되어도 success를 막는다. pending 취소/reset은 quarantine과 mem_abort를 거치며 **mem_idle은 미래의 옛 응답이 없다는 flush ACK**여야 한다. 단순 버스 유휴를 연결하면 안 된다. start 수락 조건과 done/clear는 계약 문서를 따른다.
+
+선택 lease04:1740검사/9합성장면/7거부, 실제 공통조회→fill 직접 연결33타일528모델바이트 PASS. 선택 fill03:9실제필요집합+15경계/오류/취소사례 PASS, 각 정상240ROM바이트 정확. lookup와메모리backend는 모델이며 **실제 PSRAM arbiter 연결은 아직 없다.** frame03은 실제 코어 결선, 부모 전체는 컴파일만 했다. verify01은 공통query→독립픽셀 참조다. 새 SNES 모델/fit/ARM/SD는 이번에 실행하지 않았다. 기존 SNES 플레인 소비자 검증은 재사용한다.
+
+**NEXT 최우선:** 기존 ROM서비스의 CPU/PPU 기한을 보존하는 grant/응답/flush adapter를 실제 메모리 경로에 연결한다. 무조건 보충읽기/새독립PSRAM소유자/CPU정지는 금지. 이어 같은 장면의 hostCDC·업로드ACK·SNES명령 소비자와38M9K픽셀버퍼 교체를 묶어 구현한다. 현재56/56M9K에단순추가금지;PC전체이벤트/VRAM그래프를그대로이식하지않는다. 최소변경검사/실제fit뒤 SMB3첫레벨실기로간다. 이미 통과한 같은20프레임/플레인관측/합성A-B/044는 무변경 반복하지 않는다.
+
+164 사운드·STOP메뉴/설치후보 유지. 실기 영상이 사용 가능해진 뒤60초 제한·오류/본체리셋 로그·장시간입력유지. 개인GitHub/한국어4PR절/사용자머지. 과거archive/pin/완료record 불변. 실패보존:frame01/02는선언컴파일,lease01은합성행간격을줄여33복사클록위반,fill01은signed -1비교 검사기오류. lease02/03·fill02통과도보존했고완료뒤취소조건을보강한최종04/03선택. FLOAT 라이선스 문제 없음. 모델의fill클록수/기본예산은물리WCET/속도증명이아니다.
+
+---
+
 # NES 현재 인계 — 분할 경계 타일 누락 해결
 
 PR107에 이어서 기록했다. [계약·재현·다음 구현](../../docs/nes-native-planes165-contract.ko.md) · [검증 요약](../../analysis/native-planes165-verification.json).
