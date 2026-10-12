@@ -1,3 +1,19 @@
+# NES 현재 인계 — 타이밍 후보 미채택, 기존 기준 유지
+
+PR108 OPEN. [후보 비교](../../docs/nes-compare165-contract.ko.md) · [검증](../../analysis/compare165-verification.json).
+
+165 영상 경로 진척: 추가 회로 후보4개와 모듈별 SPEED 설정을 검증했지만 전체 타이밍 개선은 없어 모두 미채택했습니다. 기존 predecode165/map03의15,040LE/963LAB/35M9K, 실제 클록 setup−0.153ns 기준을 유지합니다. 외부IO·CDC·MCU 실행 연결은 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.
+
+SELECT remains predecode165 map03/reproduce03final, NOT any compare165 candidate. REJECT map01guardedcompare nominal-.222, map02+drain-.300, map03+splitcauses-.367, map04+parallelfault-.560. All functional/fullfit PASS but overall timing worse. map06 baselineRTL+two SPEED assignments readback accepted/noignored, same15040LE963LAB/nominal-.153;no benefit,notadopted. map05 braces were literal invalidnode warnings;excluded. Do NOT confuse targeted counter+.453 with overall PASS. All clocks/SDC unchanged; no newSD/MCU/ARM or gameboot.
+
+Experiments:1409024counterstates+438272capture AND retirement/Boolean1048576;loader3342336all128timers;actualSPI98/8writes6reads6negative. Negativecontrols wrongaddressbit/missingREADcause/wrongSTOPtransition/missingSTOPfault. Newcause2regs belong rejectedmap03/04 only. Completedfrozen/publicpins immutable; oldbaseline retained exactly.
+
+NEXT Retain predecode165 map03/reproduce03final (-0.153ns); no new RTL/SD selected. Do not repeat compare165 map01-04 or per-instance SPEED map06 (same result), and reject map05 invalid braced-node assignments. Before another full fit, derive a sequential ownership contract for CHECK request tag/counter/response: exactly which registers are stable from request acceptance through response and ACK. Use that contract to remove the response-address comparison from the counter feedback path, or precompute ownership validity where the tag is already stable. Preserve wrong-address, STOP/reset, fault and command retirement edges; do not simply waive arbitrary-state failures without proving reachability. Test only the changed boundary, then one full fit with counter/capture/loader and all-clock minima. Once safe, connect necessary native-video IO/CDC/reset and MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack to minimum SMB3(J) hardware. Keep installed164/GBC/save SRAM; no repeated full writes/OAM/A-B/044.
+
+사용자머지/개인GitHub/한국어4PR절. 다음턴PR상태확인. 국소식변경/무변경fit/일반진단확장반복금지.
+
+---
+
 # NES 현재 인계 — 명령 사전 판별과 적재 완료 상태
 
 PR108 OPEN. [계약](../../docs/nes-predecode165-contract.ko.md) · [검증](../../analysis/predecode165-verification.json).
