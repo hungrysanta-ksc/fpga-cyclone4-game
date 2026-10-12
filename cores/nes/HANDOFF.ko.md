@@ -1,3 +1,17 @@
+# NES 현재 인계 — CHECK 갱신 허용 입력
+
+PR108 OPEN. [계약](../../docs/nes-retirece165-contract.ko.md) · [검증](../../analysis/retirece165-verification.json).
+
+165 영상 경로 진척: CHECK 카운터의 오류 차단을 전용 갱신 허용 입력으로 분리하고 로더 상태별 명령 판정과 결합했습니다. 전체 타이밍 개선이 없어 기존 개발 기준을 유지합니다. 선택 phaseguard165/map01/reproduce01; 마지막 후보 15048LE/962LAB/35M9K, 실제 클록 최악 setup-1.974ns. 전체IO·CDC·MCU·실기는 미완료, 설치164와 세이브 SRAM 보존, 새SD 없음.
+
+map01은 오류→카운터+1.364ns와 길이 비교+0.209ns를 달성했지만 load_valid→상태−0.336ns가 남았다. map02는 오류→카운터+0.922ns, 길이+0.467ns, STOP→상태+0.723ns로 세 경로를 통과했고14999LE/960LAB을 사용했으나 상태→오류 코드−0.265ns가 최악이었다. map03은 그 오류 코드 경로도+0.665ns로 개선했지만 SPI fault→pending_causes[2]가−1.974ns로 악화됐고15048LE/962LAB을 썼다. 세 후보 모두 기존 전체 최악−0.083ns보다 좋지 않아 미채택이다. 기능 비교와 세 번의 결합 SPI 시험은 통과했지만 전체 타이밍 개선은 달성하지 못했다. map03 추가 경로 보고서의 최초 호출은 작업 디렉터리가 잘못되어 스크립트를 찾지 못했다. 실패 로그를 보존하고 올바른 경로로 STA 보고서만 실행했으며 RTL·배치를 재실행하거나 바꾸지 않았다.
+
+SELECT phaseguard165/map01/reproduce01;adopted=False;nominalpass=False. SPI786432counter+393741capture/faultnegative;three candidates actualSPI100reads7ACK19bad72cancel2overlap. map02loader exactreuse294912/1056;map03error-code owner NEW294912/1056+STOP/code negatives;newcombinedSPI confirmed. Counter19ON/19routedena;explicit IMPLEMENT hint absentMAP, don't claim applied. Original60unchanged map01/59map02-03;local4release12pathsPASS. Preserve164/GBC/saveSRAM;no newSD/fullIOCDCreset/MCU approval. Completed archives/finalizers/publicpins immutable.
+
+NEXT 선택 phaseguard165/map01/reproduce01을 유지한다. 개별 조합식 수정→전체 재배치만 반복하는 방식은 중단한다. 다음에는 실제 MCU SPI 프레임 간격과 SS/SCK 겹침·응답·ACK·STOP/reset 계약을 먼저 확인해, 명령 캡처와 실행 자격 판정을 명시적인 여러 클록 단계로 나눌 수 있는지 검토한다. 이것은 기존 같은 클록 처리 계약을 바꾸는 설계이므로 단순한 동등성 주장이나 false path로 넘기지 않는다. 외부 응답 지연 한도, queued 명령 중 오류·STOP 우선순위, 새 프레임의 fail-closed 처리와 식별 버전/MCU 호환성을 정의하고 변경 경계 시험을 통과한 구조만 한 번 배치한다. 추가 지연을 허용할 수 없다는 근거가 나오면 그 결과를 남기고 공통 오류 신호의 지역화 대안을 선택한다. 이번3후보·이전 length165/STOP 분리·무변경 fit/전체ROM 쓰기는 반복하지 않는다. 내부 타이밍 이후 필요한 외부IO/영상CDC/reset와 MCU E6/version2 상태73·E5 관측70·E0/F6 수신/변환/ACK·사운드·입력·STOP·경과시간을 연결해 SMB3 첫 레벨 실기로 진행한다. 설치164/GBC와 세이브 SRAM은 보존한다.
+
+---
+
 # NES 현재 인계 — 적재 길이 비교 구조 개선
 
 PR108 OPEN. [계약](../../docs/nes-length165-contract.ko.md) · [검증](../../analysis/length165-verification.json).

@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-165 영상 경로 진척: 적재 길이 비교와 STOP 상태 판정을 개선하는 세 후보를 검증했습니다. 전체 타이밍 개선을 확인하지 못해 채택하지 않았습니다. 선택 구현 phaseguard165/map01/reproduce01의 기존 최악 setup−0.083ns를 유지합니다. 마지막 후보 15042LE/960LAB/35M9K, 실제 클록 setup-0.410ns. 외부IO·CDC·MCU와 실기는 미완료, 설치164·세이브 SRAM 보존, 새SD 없음. [길이 비교 검증](../../docs/nes-length165-contract.ko.md).
+165 영상 경로 진척: CHECK 카운터의 오류 차단을 전용 갱신 허용 입력으로 분리하고 로더 상태별 명령 판정과 결합했습니다. 전체 타이밍 개선이 없어 기존 개발 기준을 유지합니다. 선택 phaseguard165/map01/reproduce01; 마지막 후보 15048LE/962LAB/35M9K, 실제 클록 최악 setup-1.974ns. 전체IO·CDC·MCU·실기는 미완료, 설치164와 세이브 SRAM 보존, 새SD 없음. [갱신 허용 경로 검증](../../docs/nes-retirece165-contract.ko.md).
 
 현재164 실기: **검정 구간 제거 통과·사운드 정상으로 보임, 심한 갱신 지연으로 정상 플레이 미달성**. 다음은 영상 전송량·갱신 지연 개선이며, DOWN 유지는 이번 미시험입니다. [164 실기 결과](../../analysis/GAME164-HARDWARE-RESULT.ko.md).
 

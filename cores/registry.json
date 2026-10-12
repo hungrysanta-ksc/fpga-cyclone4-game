@@ -46,7 +46,7 @@
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-164",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "선택 phaseguard165/map01을 기준으로 진행한다. 이번 numeric keep의 비교 경계 효과와 map03의 상태별 판정은 실험 근거로만 재사용한다. 다음에는 check_failed의 CHECK 카운터·상태·오류 처리 팬아웃과 START/STOP 우선순위를 함께 읽고, 명령 완료 시점과 오류 대응을 바꾸지 않는 공통 자격 신호/다음 상태 구조를 설계한 뒤 변경 경계 동등성 시험과 한 번의 배치로 평가한다. 같은 세 후보의 무변경 재배치, 이전 STOP 저장 레지스터 분리, 클록 완화·false path 추가는 반복하지 않는다. 내부 타이밍 통과 후 필요한 외부IO/CDC와 E6/version2 상태73·E5 관측70, E0/F6 수신·변환 ACK 및 사운드·입력·STOP·경과시간 MCU 연결을 마무리해 SMB3 첫 레벨 실기로 간다. 불필요한 전체 ROM 쓰기와044 복원 반복은 생략한다.",
+      "next_gate": "선택 phaseguard165/map01/reproduce01을 유지한다. 개별 조합식 수정→전체 재배치만 반복하는 방식은 중단한다. 다음에는 실제 MCU SPI 프레임 간격과 SS/SCK 겹침·응답·ACK·STOP/reset 계약을 먼저 확인해, 명령 캡처와 실행 자격 판정을 명시적인 여러 클록 단계로 나눌 수 있는지 검토한다. 이것은 기존 같은 클록 처리 계약을 바꾸는 설계이므로 단순한 동등성 주장이나 false path로 넘기지 않는다. 외부 응답 지연 한도, queued 명령 중 오류·STOP 우선순위, 새 프레임의 fail-closed 처리와 식별 버전/MCU 호환성을 정의하고 변경 경계 시험을 통과한 구조만 한 번 배치한다. 추가 지연을 허용할 수 없다는 근거가 나오면 그 결과를 남기고 공통 오류 신호의 지역화 대안을 선택한다. 이번3후보·이전 length165/STOP 분리·무변경 fit/전체ROM 쓰기는 반복하지 않는다. 내부 타이밍 이후 필요한 외부IO/영상CDC/reset와 MCU E6/version2 상태73·E5 관측70·E0/F6 수신/변환/ACK·사운드·입력·STOP·경과시간을 연결해 SMB3 첫 레벨 실기로 진행한다. 설치164/GBC와 세이브 SRAM은 보존한다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -550,6 +550,15 @@
         "verification": "analysis/length165-verification.json",
         "contract": "docs/nes-length165-contract.ko.md",
         "next": "선택 phaseguard165/map01을 기준으로 진행한다. 이번 numeric keep의 비교 경계 효과와 map03의 상태별 판정은 실험 근거로만 재사용한다. 다음에는 check_failed의 CHECK 카운터·상태·오류 처리 팬아웃과 START/STOP 우선순위를 함께 읽고, 명령 완료 시점과 오류 대응을 바꾸지 않는 공통 자격 신호/다음 상태 구조를 설계한 뒤 변경 경계 동등성 시험과 한 번의 배치로 평가한다. 같은 세 후보의 무변경 재배치, 이전 STOP 저장 레지스터 분리, 클록 완화·false path 추가는 반복하지 않는다. 내부 타이밍 통과 후 필요한 외부IO/CDC와 E6/version2 상태73·E5 관측70, E0/F6 수신·변환 ACK 및 사운드·입력·STOP·경과시간 MCU 연결을 마무리해 SMB3 첫 레벨 실기로 간다. 불필요한 전체 ROM 쓰기와044 복원 반복은 생략한다.",
+        "hardware": false
+      },
+      "retirece165": {
+        "status": "not_adopted",
+        "selected": "phaseguard165/map01/reproduce01",
+        "adopted": false,
+        "verification": "analysis/retirece165-verification.json",
+        "contract": "docs/nes-retirece165-contract.ko.md",
+        "next": "선택 phaseguard165/map01/reproduce01을 유지한다. 개별 조합식 수정→전체 재배치만 반복하는 방식은 중단한다. 다음에는 실제 MCU SPI 프레임 간격과 SS/SCK 겹침·응답·ACK·STOP/reset 계약을 먼저 확인해, 명령 캡처와 실행 자격 판정을 명시적인 여러 클록 단계로 나눌 수 있는지 검토한다. 이것은 기존 같은 클록 처리 계약을 바꾸는 설계이므로 단순한 동등성 주장이나 false path로 넘기지 않는다. 외부 응답 지연 한도, queued 명령 중 오류·STOP 우선순위, 새 프레임의 fail-closed 처리와 식별 버전/MCU 호환성을 정의하고 변경 경계 시험을 통과한 구조만 한 번 배치한다. 추가 지연을 허용할 수 없다는 근거가 나오면 그 결과를 남기고 공통 오류 신호의 지역화 대안을 선택한다. 이번3후보·이전 length165/STOP 분리·무변경 fit/전체ROM 쓰기는 반복하지 않는다. 내부 타이밍 이후 필요한 외부IO/영상CDC/reset와 MCU E6/version2 상태73·E5 관측70·E0/F6 수신/변환/ACK·사운드·입력·STOP·경과시간을 연결해 SMB3 첫 레벨 실기로 진행한다. 설치164/GBC와 세이브 SRAM은 보존한다.",
         "hardware": false
       }
     },
