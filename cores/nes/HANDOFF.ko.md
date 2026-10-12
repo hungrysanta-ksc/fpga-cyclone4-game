@@ -1,3 +1,17 @@
+# NES 현재 인계 — 전체 FPGA 배치 성공, CHECK 타이밍 수정이 다음
+
+같은 PR108 OPEN. [계약](../../docs/nes-oam-secondary165-contract.ko.md) · [검증](../../analysis/oam-secondary165-verification.json). 설치164/원본GBC/세이브 SRAM 보존. 새SD없음.
+
+SELECT secondary map03/reproduce: board03+AREA+range4address+secondary valid-mask. 무효 바이트는FF; reset/clear는valid만0, fresh write와valid1이같은edge; copy는masked값. 내부raw저장만다르고외부CE/latency/우선순위불변. primary변화없고extra기능보존; RAM블록변환아님. 기타59입력byteexact. MAP19421estimatedLE13998comb8316reg197104bits122physical0virtual1PLL. 실제FIT/ROUTE15052LE963/963LAB35/56M9K PASS. 이전13928comb8284reg/964LAB보다논리70·reg32증가하지만reset/control구성으로배치가능. LAB여유0. Fitter내부첫net실패후자동재시도성공원시로그보존.
+
+test03 everyedge216362/2426copy3111CPU10473SS2012collisions, primary256/secondary64/state/native/output PASS. valid01 row0..15/1024byte/stale37주입/wrong-valid row0byte32검출 PASS. functional시나리오이지formal/새SMB3boot아님;기존board/SPIstub범위그대로. 전체core는실제MAP/FIT. 재생성모든입력byteexact. REJECT map01factored13939comb, map02/test02상수주소함수의전역mem sensitivity로36ns비교실패;최종map03모든읽기explicitternary통과. 실패보존,license문제아님.
+
+STA3corners198sameclockrows: setupNES8.479/host1.937/board119.620/mem-1.218ns;holdmin+.155. 메모리최악reader check_response_address15->SPIcontrol check_next7,7logic levels,5.500nsmaxdelay. 기존SDC그대로이며nominal-only재분석안함. mixedraw-12.396/입력54출력57미제약OPEN. FIT성공은timing/IO/CDC/실기승인아님.
+
+NEXT 실제routed CHECK비교->다음주소/데이터갱신경로를줄이고 valid/address/error/command완료순서보존. 추가논리가LAB초과를재발시키지않게변경경계검증+FIT/STA. 이어필요외부IO/CDC, MCU RUN수신변환ACK+기존audio/input/STOP/실제시간/full-link/중첩stack,SMB3첫레벨. 임의SDC완화/세이브SRAM사용/오디오입력삭제금지. 이전실패OAM옵션/무변경MAP/FIT/boot/A-B/044반복금지. E6/2status/E5observer/F6sink/RAMidle동일. 완료record/audit/archives/pins불변. 다음턴PR108상태확인,개인GitHub,한국어4PR절,사용자가머지.
+
+---
+
 # NES 현재 인계 — OAM 주소 명시로1719개 절감, LAB1개 초과
 
 같은 PR108 OPEN. [계약](../../docs/nes-oam-port165-contract.ko.md) · [검증](../../analysis/oam-port165-verification.json). 설치164/원본GBC/세이브 SRAM 보존. 새SD없음.

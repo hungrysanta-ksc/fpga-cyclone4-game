@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 영상 경로 진척: OAM의 주소 범위를 명확히 표현해 조합 논리를15,647개에서13,928개로1,719개 더 줄였고 기존 동작 비교를 통과했습니다. 실제 배치는964LAB로 칩 한도963LAB를1개 초과해 아직 실패합니다. 다음은 남은 OAM 저장·복사/배치 제어 비용 축소입니다. 설치164·세이브 SRAM 보존, 새SD 없음.",
-  "next_action": "REDUCE_REMAINING_OAM_LAB_COST_THEN_FIT",
+  "assessment": "165 영상 경로 진척: secondary OAM의 데이터 리셋을 유효 비트로 분리해 전체 FPGA 배치·배선에 성공했습니다(15,052LE,963/963LAB,35M9K). OAM 동작 비교와 무효 데이터 차단 시험은 통과했지만 CHECK 응답 경로의 setup이 기존5.5ns 목표에서−1.218ns로 부족합니다. 다음은 이 경로 수정과 IO/CDC 확인 후 MCU 연결·SMB3 실기입니다. 설치164·세이브 SRAM 보존, 새SD 없음.",
+  "next_action": "FIX_ROUTED_CHECK_RESPONSE_TIMING_THEN_MCU_RUN",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2766,6 +2766,14 @@
     "verification": "analysis/oam-port165-verification.json",
     "contract": "docs/nes-oam-port165-contract.ko.md",
     "next": "Use selected range map02: reduce remaining primary OAM row-copy/storage or LAB control grouping; no repeated shared-read/physical-area/packed-area/bank-enable-OFF attempts. Preserve CPU/PPU consume edges and save SRAM. Full fit/timing -> MCU RUN receive/convert/ACK plus audio/input/STOP/time and whole-link/stack -> real SMB3 first level.",
+    "hardware": false,
+    "superseded_by": "oam_secondary165"
+  },
+  "oam_secondary165": {
+    "status": "full_fit_pass_check_timing_open",
+    "verification": "analysis/oam-secondary165-verification.json",
+    "contract": "docs/nes-oam-secondary165-contract.ko.md",
+    "next": "Use selected secondary map03 routed DB: repair CHECK response-address comparison to check_next/load_data (7 levels, -1.218ns under unchanged 5.5ns budget); preserve response validity/address/error and command completion order. Changed-boundary test then fit/setup/hold and necessary external IO/CDC, MCU RUN receive/convert/ACK with audio/input/STOP/time/full-link/stack, then real SMB3 first level. Do not repeat unchanged OAM/boot/A-B/044 or relax SDC; reserve save SRAM.",
     "hardware": false
   }
 }

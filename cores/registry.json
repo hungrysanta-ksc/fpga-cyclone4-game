@@ -40,13 +40,13 @@
       "verification": "analysis/GAME164-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "oam_address_range_reduced_1719_fit_one_lab_blocked",
+      "investigation": "full_fit_pass_check_timing_open",
       "hardware_baseline": "NES-H1-SAMPLING-044",
       "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-164",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "Use selected range map02: reduce remaining primary OAM row-copy/storage or LAB control grouping; no repeated shared-read/physical-area/packed-area/bank-enable-OFF attempts. Preserve CPU/PPU consume edges and save SRAM. Full fit/timing -> MCU RUN receive/convert/ACK plus audio/input/STOP/time and whole-link/stack -> real SMB3 first level.",
+      "next_gate": "Use selected secondary map03 routed DB: repair CHECK response-address comparison to check_next/load_data (7 levels, -1.218ns under unchanged 5.5ns budget); preserve response validity/address/error and command completion order. Changed-boundary test then fit/setup/hold and necessary external IO/CDC, MCU RUN receive/convert/ACK with audio/input/STOP/time/full-link/stack, then real SMB3 first level. Do not repeat unchanged OAM/boot/A-B/044 or relax SDC; reserve save SRAM.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -455,6 +455,14 @@
         "verification": "analysis/oam-port165-verification.json",
         "contract": "docs/nes-oam-port165-contract.ko.md",
         "next": "Use selected range map02: reduce remaining primary OAM row-copy/storage or LAB control grouping; no repeated shared-read/physical-area/packed-area/bank-enable-OFF attempts. Preserve CPU/PPU consume edges and save SRAM. Full fit/timing -> MCU RUN receive/convert/ACK plus audio/input/STOP/time and whole-link/stack -> real SMB3 first level.",
+        "hardware": false,
+        "superseded_by": "oam_secondary165"
+      },
+      "oam_secondary165": {
+        "status": "full_fit_pass_check_timing_open",
+        "verification": "analysis/oam-secondary165-verification.json",
+        "contract": "docs/nes-oam-secondary165-contract.ko.md",
+        "next": "Use selected secondary map03 routed DB: repair CHECK response-address comparison to check_next/load_data (7 levels, -1.218ns under unchanged 5.5ns budget); preserve response validity/address/error and command completion order. Changed-boundary test then fit/setup/hold and necessary external IO/CDC, MCU RUN receive/convert/ACK with audio/input/STOP/time/full-link/stack, then real SMB3 first level. Do not repeat unchanged OAM/boot/A-B/044 or relax SDC; reserve save SRAM.",
         "hardware": false
       }
     },
