@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 영상 경로 진척: 로더 명령 차단과 SPI 응답 직렬화를 개선했습니다. 전체 배치15,053LE/963LAB/35M9K, 로더52,224상태·SPI15,680비트·실제 경로98검사 통과. 실제 클록 기준 CHECK setup−0.217ns는 아직 미달이며 host여유+0.021ns입니다. 외부IO·CDC·MCU 연결 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.",
-  "next_action": "SPI_REPLY_IMPROVED_NOMINAL_CHECK_TIMING_OPEN",
+  "assessment": "165 영상 경로 진척: CHECK 명령 사전 판별·로더 완료 플래그로 제어 경로를 개선했습니다. 전체 배치15,040LE/963LAB/35M9K, 명령·카운터1179648사례/로더628736사례/SPI98검사 통과. 실제 같은 클록 setup 미달이 남음(-0.153ns). 외부IO·CDC·MCU 연결은 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.",
+  "next_action": "PREDECODE_TIMING_IMPROVED_STILL_OPEN",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2790,6 +2790,14 @@
     "verification": "analysis/retire165-verification.json",
     "contract": "docs/nes-retire165-contract.ko.md",
     "next": "Selected retire165 map02/reproduce02: fix boot check_failed -> control check_next nominal -0.217ns (5.952ns period) using measured cone, preserve hard-fault precedence and retirement edge. Host margin +0.021ns and963/963LAB require whole-fit checks after any RTL change. Rejected parallel counter-clear/XOR map03 worsened feedback to nominal -1.002ns; do not repeat. Investigate predecoding stable pending command/header/body predicates at their existing capture edge before dynamic hard-fault gating; this is a proposal, not implemented. Keep stricter5.5/5.3ns budget misses separate; no clock/falsepath relaxation. Then necessary external IO/video CDC, MCU receive-convert-ACK/audio/input/STOP/time and full-link/stack, minimum SMB3 first-level hardware. Preserve save SRAM and installed164; no unchanged OAM/fullboot/A-B/044 repeats.",
+    "hardware": false,
+    "superseded_by": "predecode165"
+  },
+  "predecode165": {
+    "status": "predecode_timing_improved_still_open",
+    "verification": "analysis/predecode165-verification.json",
+    "contract": "docs/nes-predecode165-contract.ko.md",
+    "next": "Reuse selected map03: fix measured nominal -0.153ns path nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|check_next[0] -> nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|check_next[17] without moving retirement/fault edges or relaxing clocks. Routed path crosses response-address comparison -> counter_retire_ok -> final counter mux, not the carry increment itself; inspect comparator factoring/fanout or stable-tag capture contract before another fit. Inspect counter/capture/loader groups together, not only first worst row. Then necessary IO/video CDC and MCU RUN receive-convert-ACK/audio/input/STOP/time/full-link/stack, minimum SMB3(J) hardware. Keep save SRAM reserved/installed164/GBC. Do not repeat unchanged OAM/full writes/A-B/044 or rejected generic-body predecode/masked-XOR map04; preserve failed fixtures and completed archives.",
     "hardware": false
   }
 }

@@ -1,3 +1,5 @@
+- Latest165 PREDECODE samePR108OPEN SELECTmap03/reproduce03final;2RTL/59unchanged. FIT15040LE/963LAB35M9K;budget-0.605/nominal-0.153ns nominalpass=False;IOCDC-MCUOPEN. SPI786432+capture393216/loader628736/actualSPI98PASS;failedfixturespreserved. ReadPREDECODEcontract/HANDOFF;keep164/saveSRAM,noSD;completedarchivesimmutable.
+
 - Latest165 RETIRE samePR108OPEN SELECTmap02/reproduce02 loader-inhibit+serialsnapshot;3RTL/58unchanged. FIT15053LE963LAB35M9K;budget-.426/nominal-.217nsFAIL;host+.021/hold+.159/IOCDC-MCUOPEN. loader52224/serial256frames15680bits1347840edges/SPI98PASS. REJECTmap03counterXOR nominal-1.002 despite786432PASS. ReadRETIREcontract/HANDOFF;keep164/saveSRAM,nonewSD;completedarchivesimmutable.
 
 - Latest165 CHECK samePR108OPEN SELECTmap03/reproduce03 XORprefix+load_dataCEOFF+check_nextSCTRLOFF onlySPI,60inputsunchanged. FIT15015LE/961LAB35M9K PASS;memory-0.488ns sameclock=False;IOCDC/MCUOPEN. 786432states/wrongcarry+SPI98checks8writes6reads6negativePASS;attribute-onlyexactreuse. Preserve164/audio/input/saveSRAM;noSD. ReadCHECKcontract/HANDOFF;completedrecord/audit immutable.

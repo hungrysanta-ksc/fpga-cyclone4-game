@@ -1,3 +1,19 @@
+# NES 현재 인계 — 명령 사전 판별과 적재 완료 상태
+
+PR108 OPEN. [계약](../../docs/nes-predecode165-contract.ko.md) · [검증](../../analysis/predecode165-verification.json).
+
+165 영상 경로 진척: CHECK 명령 사전 판별·로더 완료 플래그로 제어 경로를 개선했습니다. 전체 배치15,040LE/963LAB/35M9K, 명령·카운터1179648사례/로더628736사례/SPI98검사 통과. 실제 같은 클록 setup 미달이 남음(-0.153ns). 외부IO·CDC·MCU 연결은 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.
+
+SELECT predecode165 map03/reproduce03final; retire165map02기준2RTL SPI/loader만변경59입력불변. pending counter clear/inc를기존SS상승캡처edge에저장, 명령별조건전개;동적하드fault/응답/충돌은원래retirementedge검사. loader count_complete는loaded_bytes와동일edge갱신. clocklatency/6B/audio/pad/saveSRAM불변. SPI786432+capture393216/negative2 PASS,loader628736/negative1 PASS,actualSPI98/8writes6reads6negative PASS. lengthfixture refdut치환오류/oldcountseed불일치 path02/03 보존;어댑터2주입만보정.새fullboot아님.
+
+FIT15040LE/963LAB35M9K/8332reg122physical0virtual1PLL. unchangedbudget-0.605 vs exact155nominal-0.153;sameclocknominalpass=False;hold+0.155. rawmixed-15.504/IO54in57outOPEN. targetedcounter/capture/address각각은검증JSON참조. 최악행만보고하위미달누락금지. noSD/ARM/새MCU완료/전체timing승인.
+
+NEXT Reuse selected map03: fix measured nominal -0.153ns path nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|check_next[0] -> nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|check_next[17] without moving retirement/fault edges or relaxing clocks. Routed path crosses response-address comparison -> counter_retire_ok -> final counter mux, not the carry increment itself; inspect comparator factoring/fanout or stable-tag capture contract before another fit. Inspect counter/capture/loader groups together, not only first worst row. Then necessary IO/video CDC and MCU RUN receive-convert-ACK/audio/input/STOP/time/full-link/stack, minimum SMB3(J) hardware. Keep save SRAM reserved/installed164/GBC. Do not repeat unchanged OAM/full writes/A-B/044 or rejected generic-body predecode/masked-XOR map04; preserve failed fixtures and completed archives.
+
+이전frozen/publicpins/record/audit불변. 사용자머지/한국어4PR절/개인GitHub. 다음턴PR상태먼저확인.
+
+---
+
 # NES 현재 인계 — SPI 응답 개선, 실제 CHECK 타이밍은 미완료
 
 PR108 OPEN. [계약](../../docs/nes-retire165-contract.ko.md) · [검증](../../analysis/retire165-verification.json).
