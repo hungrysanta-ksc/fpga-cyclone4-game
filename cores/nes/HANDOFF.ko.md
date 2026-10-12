@@ -1,3 +1,17 @@
+# NES 현재 인계 — 명령3단계와 데이터 선준비
+
+PR108 OPEN. [계약](../../docs/nes-commandstage165-contract.ko.md) · [검증](../../analysis/commandstage165-verification.json).
+
+165 영상 경로 진척: 실제164 MCU의 SPI 전송 간격을 확인하고 명령 캡처·판정·실행을3단계로 분리했습니다. FPGA1클록 추가, 두 후보의 기능·실제SPI 상태 응답 검증 통과. map01은 길이→원인 +0.672ns/원인→오류 +2.970ns/원인→카운터 자격 +2.628ns를 확보했지만 응답 주소→load_data -0.332ns가 남았다. map02는 데이터 선준비로 쓰기 허용 경로와 분리했다. 마지막 결과 15009LE/962LAB/35M9K, 전체 최악 -0.204ns; check_request_tag[6] → load_begin. 선택 phaseguard165/map01/reproduce01, 내부 실제클록 통과=False. 전체IO/CDC·MCU 연결·실기는 미완료, 새SD 없음.
+
+SPI1클록 지연 변경/응답 실험ID74. map01 test03, map02 test04;각393741 거래결과+120취소+219wire/100READ/7ACK/19bad/72cancel/2priority. 같은edge 동등성 아님. map02는 valid=0 payload 관찰 금지;actual loader consumes accepted_valid only. 60입력 불변, 독립재현/지역release4/12PASS. test01 negative fixture 결함과 test02 수정 소스·로그 보존. 기존 loader/counter 근거 재사용, 전체 게임/MCU/IOCDC 승인 아님. SELECT phaseguard165/map01/reproduce01;adopted=False;nominalpass=False.
+
+NEXT 선택 phaseguard165/map01은 유지한다. 명령3단계의 외부 지연 허용 가능성은 확인됐으므로 같은 MCU 간격 조사를 반복하지 않는다. 다음은 실제 잔여 경로 check_request_tag[6] → load_begin (-0.204ns)의7단 LUT 경로를 기준으로 C1에서 명령별 실행 허용 비트를 각각 등록하고 C2의 공통 오류 차단 뒤 최종 명령 재디코딩3단을 제거하는 후보 한 개를 검증한다. 오류 우선순위를 다음 클록으로 미루거나 응답 검사를 생략하지 않는다. 같은 두 후보의 무변경 배치나 작은 조합식 탐색은 반복하지 않는다. 실험 SPI 식별자74는 아직 설치용으로 승인하지 않았다. 후속 MCU는 기존6b를 묵인하지 말고 정확한 후보 식별자를 확인하고 SS high/setup 2µs 계약을 유지해야 한다. E6/version2 상태73·E5 관측70·E0/F6 수신/변환/ACK, 사운드·입력·STOP·경과시간, full-link/stack을 연결한 뒤 SMB3(J) 첫 레벨 실기로 간다. 설치164·GBC·세이브 SRAM 보존; 새SD 없음; 전체 ROM 쓰기·A/B·044 반복 생략.
+
+완료 archive/finalizer/public pins는 불변이다. 설치164/GBC/saveSRAM 보존.
+
+---
+
 # NES 현재 인계 — CHECK 갱신 허용 입력
 
 PR108 OPEN. [계약](../../docs/nes-retirece165-contract.ko.md) · [검증](../../analysis/retirece165-verification.json).
