@@ -1,3 +1,17 @@
+# NES 현재 인계 — 로더 READY 직접 판정
+
+PR108 OPEN. [계약](../../docs/nes-eligibility165-contract.ko.md) · [검증](../../analysis/eligibility165-verification.json).
+
+165 영상 경로 진척: 로더 READY 판정을 단순화하고 reader 마지막 사이클 판정을 미리 계산해 실제 SPI/boot/reader 동등성을 검증했습니다. 전체 타이밍 이득이 없어 새 후보를 채택하지 않았습니다. 선택 구현 predecode165/map03/reproduce03final. 후보 15017LE/963LAB/35M9K, 실제 클록 setup-1.994ns. 외부IO·CDC·MCU 연결과 실기 확인은 남아 있으며 설치164·세이브 SRAM을 보존합니다. 새SD 없음.
+
+SELECT predecode165/map03/reproduce03final;adopted=False. map01 fault path+.919 but reader remaining->data_hold-.856 rejected. map02 adds read_last==(remaining==1) during ACTIVE, prior remaining==2 predicts terminal;sample/CE/OE/ACK/HOLD/RELEASE unchanged. Reader old-register/pin equivalence120reads/126cancel/5stoppedreset at counts1/2/3/16 and two board-count phases;wrongterminal rejected. Loader direct !active_reset&&!fault&&READY equals loaded&&!loader_run&&!boot_fault, used by check_active/check_failed. No new latency or changed write state machine. SPI tag02 executable text reused (one stale comment corrected). New connected sequential PASS TAG165 edges=1271681 reads=124 acks=7 corruptions=19 cancels=72 overlaps=2;1024eligibility combinations +26loader fault points;negative missingfault rejected. Prior conditional1409024/393216 reused,NOTformal/unconditionalproof.57inputs unchanged. No newSD/MCU/game/SNES/IOCDC approval;completedarchivesimmutable.
+
+NEXT SELECT predecode165/map03/reproduce03final. Rejected eligibility165 map02 nominal -1.994ns, worst nes_dac162:audio|dac_release[1] -> nes_live_joint:core|nes_native_spi165:native_spi|held[13]. Mapping explicitly merges native_records.dr[1],native_prepared.sr[1],pad.host_release[1] into audio.dac_release[1]; this is shared reset-release fanout, NOT an audio sample defect. Inspect split/local preserved release and SPI held enable fanout with same-edge handshake/reset/cancel semantics, then check all clocks including memory -.203ns. Reuse READY/reader-terminal/CHECK tests; do not repeat compare165 equations/SPEED, tag165 guarded capture, or unmodified fits. Then necessary native-video IO/CDC/reset + MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack and minimum SMB3(J) hardware. No unchanged CHECK/OAM/full writes/A-B/044 or cartridge save SRAM.
+
+User merges; Korean4sections; personalGitHub only. No unchanged CHECK/OAM/fullwrites/A-B/044;saveSRAM reserved.
+
+---
+
 # NES 현재 인계 — CHECK 요청 주소 계약과 배치 결과
 
 PR108 OPEN. [계약](../../docs/nes-tag165-contract.ko.md) · [검증](../../analysis/tag165-verification.json).
