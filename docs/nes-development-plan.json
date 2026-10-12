@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 영상 경로 진척: 수신 장면을 SNES 타일·스프라이트·스크롤로 바꾸는 유한 C 변환기를 구현했습니다. 두 SMB3 장면114688픽셀이 SNES 모델에서 원본과 일치하고 출력 후보는15888바이트입니다. 실기 staging·MCU 실행 루프·프레임버퍼 교체는 미완료이며 설치 후보는164입니다.",
-  "next_action": "CONNECT_NATIVE_EXTERNAL_STAGING_MCU_SNES_REPLACE_FRAMEBUFFER",
+  "assessment": "165 영상 경로 진척: 세이브용 카트리지 SRAM 사용을 배제하고 SNES WRAM 후보·C 차분·표시 ACK 소유권을 구현했습니다. SNES 모델114688픽셀 일치. 실제 MCU 전송·프레임버퍼 교체는 미완료이며 표 전체 재독출 병목을 먼저 피해야 합니다. 설치 후보는164입니다.",
+  "next_action": "CONNECT_SNES_WRAM_MAILBOX_LOCAL_COMPARE_ACK_WITHOUT_SAVE_SRAM",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2710,6 +2710,14 @@
     "verification": "analysis/native-video165-verification.json",
     "contract": "docs/nes-native-video165-contract.ko.md",
     "next": "Connect external staging callback and SNES vblank consumer/ACK; schedule MCU receive/build/upload in RUN with existing guard/STOP. Single candidate only, actual SRAM link, replace38M9K framebuffer, fit/timing/serial budget then SMB3 first-level hardware. No repeated unchanged boot/A-B/044.",
+    "hardware": false,
+    "superseded_by": "native_stage165"
+  },
+  "native_stage165": {
+    "status": "wram_c_delta_snes_model_pass_save_sram_preserved_mailbox_open",
+    "verification": "analysis/native-stage165-verification.json",
+    "contract": "docs/nes-native-stage165-contract.ko.md",
+    "next": "Preserve cartridge SRAM/save/recovery contents. Connect SNES bank7F mailbox and display ACK; avoid full table MCU readback using SNES-local comparison/batching. Then RUN scheduler, full SRAM link, replace38M9K, fit/minimum changed checks and SMB3 first-level hardware. No unchanged boot/A-B/044.",
     "hardware": false
   }
 }

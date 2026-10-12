@@ -1,3 +1,17 @@
+# NES 현재 인계 — 세이브 SRAM 보호와 WRAM 차분
+
+PR107 같은 브랜치. [새 계약](../../docs/nes-native-stage165-contract.ko.md) · [검증](../../analysis/native-stage165-verification.json). 사용자 지적에 따라 U511 카트리지 SRAM을 영상 저장소로 쓰겠다는 제안을 철회했다. 로컬 SA-1/GSU는 E00000–E7FFFF를 별도 RAM으로 보내며 IS_SAVERAM 쓰기도 연결한다. 모든 코어의 물리 저장 위치가 같다는 뜻은 아니다. 기존 GBC E20000 snapshot/복구 영역까지 보호. **카트리지 SRAM·세이브/복구 영역을 영상용으로 전용하지 않는다.** 기존164 RAM_WE=1/데이터Z와 원본 저장 코드 무변경, 실기 쓰기 없음.
+
+stage02: SNES WRAM bank7F의 두32KiB 후보, 단일 MCU 관리 구조 ARM460B. C 차분/순차 pattern staging/64B step/최대32명령/serial32+gen16 ACK. 미게시 실패만 폐기·재시작, 게시 전 arm하고 모호한 실패/실패ACK는FAULT 유지·commonreset 필수. 오래된 ACK 무시/무변경도 ACK. 9거부+경계병합/축소재확장/소유권 검사PASS. stage01 CPU HDMA복사 PASS도 보존하고 stage02 직접bank7F HDMA 선택. 매 commit마다 HDMA포인터를 새 후보로 변경, 바이트동일/0명령이어도 생략금지. WRAM->WRAM DMA 금지.
+
+기존video03 두 장면 재사용. C 생성5493논리B6명령(HDMA21제외 초기PPUDMA5472)/다음18B2명령, 실제SNES WRAM DMA/PPU114688픽셀 일치/vblank226. C의ACK는host 주입; ROM fixture로 WRAM 공급한 모델이며 MCU mailbox/물리 왕복은 미구현. 새로운 코어boot/FLOAT 없음.
+
+**성능 주의:** 18B는 PPU 갱신뿐. 새후보5493B쓰기+10986B/174회읽기를 그대로 MCU로 왕복시키면 병목. bank7F는SNES주소이며 기존MCU sram_*에연결금지. 다음에는SNES 내부비교 또는 묶음 결과를 실제client/mailbox/표시ACK에연결하여 전체표 MCU재독출을피한다. 기존SPI39.59ms도미해결. 새 일반진단을 늘리지 않는다.
+
+ARMtext1290/step직접stack168. 단순합계60776/링커65424차이4648은전체link/heap/중첩callback/IRQ승인아님. 관리구조2개/전체MCUshadow금지. 실제 RUN 스케줄/전체링크/38M9K교체/fit 뒤 SMB3첫레벨실기로간다. 사운드·입력·STOP메뉴/설치164 유지. 새165SD 없음. 사용가능화면뒤60초제한/오류·reset로그/DOWN유지. old pins/archive 불변, probes/nes-native-stage165 완료record/audit재실행금지.
+
+---
+
 # NES 현재 인계 — 유한 C 표시 변환과 SNES 픽셀 일치
 
 PR107 같은 브랜치. [새 계약](../../docs/nes-native-video165-contract.ko.md) · [검증](../../analysis/native-video165-verification.json). C수신기 COMMITTED 장면→SNES BG/OBJ/맵/OAM/CGRAM/HDMA 변환기를 구현했다. 선택video03: 서로 다른 실제SMB3 frame12/15를 재사용,114688픽셀을 실제SNES CPU/DMA/PPU 모델에서 원본과 일치시켰다. 새boot/RTL/FLOAT없음. PC가업로드명령과차분을조립하므로 MCU루프/실기전송은아직미완료.
