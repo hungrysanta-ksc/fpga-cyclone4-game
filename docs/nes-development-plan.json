@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 영상 경로 진척: 온라인 BG/OBJ 압축 RTL을 구현하고 실제 SMB3 이벤트로 검증했습니다. 두 실제 부팅 화면을2226바이트의 위치/태그 정보로 복원했고 SNES 모델에서도 원본 픽셀과 일치했습니다. 다른7개 표시 프레임의 분할 경계에서 타일 하나가 빠지는 수집 조건을 발견했으며 다음 수정 대상입니다. 설치 후보는164입니다.",
-  "next_action": "FIX_ACTUAL_SPLIT_FETCH_PAIR_BEFORE_LIVE_NATIVE_FILL_TRANSPORT",
+  "assessment": "165 영상 경로 진척: 분할 경계의 저·고 플레인이 같은 타일의 서로 다른 행을 읽는 조건을 보존하도록 수정했습니다. 표시9프레임을 완전 수집·압축했고 원본 NES516,096픽셀과 일치했습니다. SNES 모델의 서로 다른 두 화면도 일치했으며 두 화면 사이 갱신량은22바이트였습니다. 실기 속도·기판 연결은 미완료이며 설치 후보는164입니다.",
+  "next_action": "CONNECT_NATIVE_PLANES_RASTER_FILL_AND_ACK_TO_BOARD_PATH",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2662,6 +2662,14 @@
     "verification": "analysis/native-compact165-verification.json",
     "contract": "docs/nes-native-compact165-contract.ko.md",
     "next": "FIRST resolve actual fetch error04 at split row185 col28/30 using first low/high physical/logical/descriptor mismatch and consumed planes; do not ignore fault. Then direct online compact binding and raster contract, bounded physical CHR fill/host CDC/ACK/SNES replacing38M9K, minimum fit and real SMB3. Current164 remains hardware candidate.",
+    "hardware": false,
+    "superseded_by": "native_planes165"
+  },
+  "native_planes165": {
+    "status": "mixed_plane_loss_fixed_nine_game_frames_and_SNES_pixels_pass_board_open",
+    "verification": "analysis/native-planes165-verification.json",
+    "contract": "docs/nes-native-planes165-contract.ko.md",
+    "next": "Corrected same-tile mixed-plane capture and directly connected compact replay PASS. Next common-generation fetch/compact/raster admission, bounded physical CHR fill, host CDC/ACK and actual SNES consumer replacing38M9K; minimum fit/changed checks then real SMB3. Preserve164/audio/STOPmenu; do not repeat unchanged boot/A-B/044.",
     "hardware": false
   }
 }

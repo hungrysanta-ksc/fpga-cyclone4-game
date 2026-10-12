@@ -40,13 +40,13 @@
       "verification": "analysis/GAME164-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "native-command-reference-pass-live-producer-and-transport-open",
+      "investigation": "native-mixed-plane-capture-fixed-live-fill-transport-open",
       "hardware_baseline": "NES-H1-SAMPLING-044",
       "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-164",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "FIRST resolve actual fetch error04 at split row185 col28/30 using first low/high physical/logical/descriptor mismatch and consumed planes; do not ignore fault. Then direct online compact binding and raster contract, bounded physical CHR fill/host CDC/ACK/SNES replacing38M9K, minimum fit and real SMB3. Current164 remains hardware candidate.",
+      "next_gate": "Corrected same-tile mixed-plane capture and directly connected compact replay PASS. Next common-generation fetch/compact/raster admission, bounded physical CHR fill, host CDC/ACK and actual SNES consumer replacing38M9K; minimum fit/changed checks then real SMB3. Preserve164/audio/STOPmenu; do not repeat unchanged boot/A-B/044.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -351,6 +351,14 @@
         "verification": "analysis/native-compact165-verification.json",
         "contract": "docs/nes-native-compact165-contract.ko.md",
         "next": "FIRST resolve actual fetch error04 at split row185 col28/30 using first low/high physical/logical/descriptor mismatch and consumed planes; do not ignore fault. Then direct online compact binding and raster contract, bounded physical CHR fill/host CDC/ACK/SNES replacing38M9K, minimum fit and real SMB3. Current164 remains hardware candidate.",
+        "hardware": false,
+        "superseded_by": "native_planes165"
+      },
+      "native_planes165": {
+        "status": "mixed_plane_loss_fixed_nine_game_frames_and_SNES_pixels_pass_board_open",
+        "verification": "analysis/native-planes165-verification.json",
+        "contract": "docs/nes-native-planes165-contract.ko.md",
+        "next": "Corrected same-tile mixed-plane capture and directly connected compact replay PASS. Next common-generation fetch/compact/raster admission, bounded physical CHR fill, host CDC/ACK and actual SNES consumer replacing38M9K; minimum fit/changed checks then real SMB3. Preserve164/audio/STOPmenu; do not repeat unchanged boot/A-B/044.",
         "hardware": false
       }
     },
