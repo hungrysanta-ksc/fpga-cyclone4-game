@@ -1,3 +1,15 @@
+# NES 현재 인계 — 영상 mailbox 리셋 해제 분리
+
+PR108 OPEN. [계약](../../docs/nes-release165-contract.ko.md) · [검증](../../analysis/release165-verification.json).
+
+165 영상 경로 진척: 영상 mailbox 리셋 해제 레지스터4개의 병합을 방지해 지역별 분리를 확인했습니다. 이번 후보는 기존 기준보다 전체 타이밍이 나빠 채택하지 않았습니다. 선택 구현 predecode165/map03/reproduce03final. 후보 15073LE/963LAB/35M9K, 실제 클록 setup-0.583ns. RTL·클록·SDC는 이전 후보와 같으며 기능 시험은 재사용했습니다. 외부IO·CDC·MCU와 실기는 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.
+
+Only four DONT_MERGE_REGISTER ON assignments to native_records.dr[0:1]/native_prepared.sr[0:1]. All60 other files exact eligibility165map02. QSF readback ON/local4regs/firstfanout1/stage12setuphold PASS. Reuse prior RTL functional evidence;no newFLOAT/game/MCU/SD. Selected predecode165/map03/reproduce03final;adopted=False;whole IO/CDC/reset/MTBF approval still OPEN. Completed archives/finalizers/publicpins immutable. Preserve164/audio/input/saveSRAM.
+
+NEXT SELECT predecode165/map03/reproduce03final;retain release165map01 as isolated-host experiment, not installable. QSF four-release-register isolation verified; nominal -0.583ns worst nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|load_begin -> nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|state.WRITE. This is a 7-level same-clock load_begin->fault~2->state~43/44/45/52/53/73->WRITE/HOLD path, not the old reader predicate or host release. Inspect independent state-transition equations versus shared fault/error task, preserving exact WRITE/HOLD pulse drain and command conflict/STOP priority. Do not repeat compare165.drain (already rejected), old phase/counter variants, blind refits or global dont_merge/preserve. Reuse four local-release assignments only with new hierarchy timing evidence. Then necessary native-video IO/CDC/reset and MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack, minimum SMB3(J) hardware. No unchanged CHECK/OAM/full writes/A-B/044;saveSRAM reserved.
+
+---
+
 # NES 현재 인계 — 로더 READY 직접 판정
 
 PR108 OPEN. [계약](../../docs/nes-eligibility165-contract.ko.md) · [검증](../../analysis/eligibility165-verification.json).

@@ -1,0 +1,263 @@
+{
+  "synthesis_pass": true,
+  "fit_pass": true,
+  "resources": {
+    "estimated_le": 19439,
+    "combinational": 14016,
+    "registers": 8358,
+    "memory_bits": 197104,
+    "pins": 122,
+    "virtual_pins": 0
+  },
+  "fit_le": 15073,
+  "used_labs": 963,
+  "m9k_blocks": 35,
+  "same_clock_pass": false,
+  "timing": {
+    "rows": 198,
+    "corners": [
+      "8_slow_1200mv_0c",
+      "8_slow_1200mv_85c",
+      "MIN_fast_1200mv_0c"
+    ],
+    "minima_ns": {
+      "board8": {
+        "setup": 123.205,
+        "hold": 0.197
+      },
+      "core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+        "setup": 1.215,
+        "hold": 0.179
+      },
+      "core|pll|altpll_component|auto_generated|pll1|clk[1]": {
+        "setup": -0.583,
+        "hold": 0.18
+      },
+      "nes": {
+        "setup": 7.401,
+        "hold": 0.134
+      }
+    },
+    "worst_setup": {
+      "corner": "8_slow_1200mv_85c",
+      "clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+      "kind": "setup",
+      "from": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|load_begin",
+      "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|state.WRITE",
+      "slack": "-0.583"
+    },
+    "raw_mixed_setup_min_ns": -12.376,
+    "unconstrained": {
+      "Unconstrained Clocks": 0,
+      "Unconstrained Input Ports": 54,
+      "Unconstrained Output Ports": 57
+    }
+  },
+  "timing_approved": false,
+  "nominal": {
+    "rows": 198,
+    "minima_ns": {
+      "board8": {
+        "setup": 123.205,
+        "hold": 0.197
+      },
+      "core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+        "setup": 1.215,
+        "hold": 0.179
+      },
+      "core|pll|altpll_component|auto_generated|pll1|clk[1]": {
+        "setup": -0.583,
+        "hold": 0.18
+      },
+      "nes": {
+        "setup": 7.401,
+        "hold": 0.134
+      }
+    },
+    "passed": false,
+    "worst_setup": {
+      "corner": "8_slow_1200mv_85c",
+      "clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+      "kind": "setup",
+      "from": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|load_begin",
+      "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|state.WRITE",
+      "slack": "-0.583"
+    },
+    "sdc_sha256": "59dbe2401cc57a7646271fc222b69cd0c27dfb0bfb0c9514641213c39b9cd1ac",
+    "preserved_files": 367,
+    "scope": "Exact pinned155 clocks only. Original stricter budgets and reports retained. No fit, clock-period, falsepath or multicycle change. Not IO/CDC signoff."
+  },
+  "baseline_nominal": {
+    "rows": 198,
+    "minima_ns": {
+      "board8": {
+        "setup": 122.734,
+        "hold": 0.335
+      },
+      "core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+        "setup": -1.994,
+        "hold": 0.179
+      },
+      "core|pll|altpll_component|auto_generated|pll1|clk[1]": {
+        "setup": -0.203,
+        "hold": 0.18
+      },
+      "nes": {
+        "setup": 8.027,
+        "hold": 0.154
+      }
+    },
+    "passed": false,
+    "worst_setup": {
+      "corner": "8_slow_1200mv_85c",
+      "clock": "core|pll|altpll_component|auto_generated|pll1|clk[0]",
+      "kind": "setup",
+      "from": "nes_dac162:audio|dac_release[1]",
+      "to": "nes_live_joint:core|nes_native_spi165:native_spi|held[13]",
+      "slack": "-1.994"
+    },
+    "sdc_sha256": "59dbe2401cc57a7646271fc222b69cd0c27dfb0bfb0c9514641213c39b9cd1ac",
+    "preserved_files": 367,
+    "scope": "Exact pinned155 clocks only. Original stricter budgets and reports retained. No fit, clock-period, falsepath or multicycle change. Not IO/CDC signoff."
+  },
+  "rtl_changed": false,
+  "source_byte_reproduction": true,
+  "unchanged_files": 60,
+  "qsf_assignments": [
+    {
+      "target": "core|native_records|dr[0]",
+      "value": "ON"
+    },
+    {
+      "target": "core|native_records|dr[1]",
+      "value": "ON"
+    },
+    {
+      "target": "core|native_prepared|sr[0]",
+      "value": "ON"
+    },
+    {
+      "target": "core|native_prepared|sr[1]",
+      "value": "ON"
+    }
+  ],
+  "release_registers": [
+    {
+      "chain": "records",
+      "stage": "0",
+      "node": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[0]"
+    },
+    {
+      "chain": "records",
+      "stage": "1",
+      "node": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[1]"
+    },
+    {
+      "chain": "prepared",
+      "stage": "0",
+      "node": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[0]"
+    },
+    {
+      "chain": "prepared",
+      "stage": "1",
+      "node": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[1]"
+    }
+  ],
+  "release_second_fanout": {
+    "records": 177,
+    "prepared": 20
+  },
+  "release_chain_min_ns": {
+    "setup": 8.701,
+    "hold": 0.195
+  },
+  "release_to_held_setup_ns": 6.75,
+  "functional_reuse": {
+    "eligibility_public_sha256": "77908eb93cabe671196614233ecec2d1c9f7a61b314c7c95a33da05512f57e47",
+    "connected": "PASS TAG165 edges=1271681 reads=124 acks=7 corruptions=19 cancels=72 overlaps=2",
+    "reader": {
+      "passed": true,
+      "cases": 5,
+      "reads": 120,
+      "cancels": 126,
+      "stopped_resets": 5,
+      "records": [
+        [
+          "1",
+          "0",
+          "937",
+          "24",
+          "12"
+        ],
+        [
+          "2",
+          "0",
+          "1036",
+          "24",
+          "14"
+        ],
+        [
+          "3",
+          "0",
+          "1139",
+          "24",
+          "16"
+        ],
+        [
+          "16",
+          "0",
+          "2869",
+          "24",
+          "42"
+        ],
+        [
+          "16",
+          "3",
+          "2866",
+          "24",
+          "42"
+        ]
+      ],
+      "wrong_terminal_rejected": true,
+      "source_sha256": "06b762b31e89c81e1053c14502b65ad041212b7984f03224e156909caf87f973",
+      "reference_sha256": "79e9d1b4e5cdc0d59e42cb2769080b5d71b4cbcb2849beb568e6a1a0d857c298",
+      "scope": "Register/pin equivalence for CHECK and RUN owners, READ_CYCLES1/2/3/16, two board-count phases. Constant data model for short counts; board READ16 70ns model is covered by connected eligibility test.",
+      "public_sources": {
+        "tools/nes_eligibility165.py": "96f30a74e7922beacb5790ebaeb82618240484a37e7536ed7bd81b7a711ee9d7",
+        "tools/test_nes_reader_last165.py": "dcc3fc50e57f5defddeb0dea5b9e89db5ecf5348175587273c6376be99b39de1"
+      }
+    },
+    "mailbox_source_sha256": "2707002b6a2654b88d6d38c5efd0d9df000cb4aa81cecb630326f6c8a332c3f7",
+    "mailbox_public_sha256": "aaf686c81833e3db07d0210204ad3c4cbfc06d0949174483c365e71aa4e483d3"
+  },
+  "scope": "Four merge-prevention assignments only. RTL and timing constraints byte-identical to eligibility165 map02; prior functional evidence reused, not rerun. Fitted local release chain topology and stage setup/hold verified, not full reset/CDC/MTBF/IO signoff or new gameplay.",
+  "cartridge_sram_reserved": true,
+  "hardware_package": false,
+  "public_sources": {
+    "tools/nes_release165.py": "5d98b2abb22849a4fdeb0eac650c9dedbf8754a5b3e947686d9d205654ea09c1",
+    "tools/check_nes_release165.py": "f79b8bdbca23056380d5b26adac65f06b5ca3b44457c2d6ee8048af49ee5ae00",
+    "tools/nes_release165_paths.tcl": "fa28becc33d7a18a06775c2552c8737c535d2375af2cc60434b477a68e74685d",
+    "tools/check_nes_check165.py": "fc6072220ae0c4cf9c71baa3ba8d0d12ce044143d4705684aa1d008231c071dc",
+    "tools/check_nes_oam_port165.py": "086c311b5ebb4d089a16c932bf442f5b17e660327251ac8b17d52d392486894b",
+    "tools/check_nes_retire165.py": "a0d664100f777adedd89a1b2c71d14eeafc97063f0977c52d7e4a978f361df99",
+    "tools/check_nes_retire165_nominal.py": "111d7bdc8922a17282c633fb149809bb95eeec934fc94f60211fafd0615bd4a4",
+    "tools/nes_secondary165_timing.tcl": "1bd243a64c8c9ebaf46ffef4b02891673f0217e119901d8e1016c94a681a412f",
+    "tools/nes_predecode165_paths.tcl": "2f0f7ede5c7503c719779cd9f29d867f61dbc41ec362c6f0da4f1bd0985561c7"
+  },
+  "selected": "predecode165/map03/reproduce03final",
+  "adopted": false,
+  "pr": 108,
+  "next": "SELECT predecode165/map03/reproduce03final;retain release165map01 as isolated-host experiment, not installable. QSF four-release-register isolation verified; nominal -0.583ns worst nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|load_begin -> nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|state.WRITE. This is a 7-level same-clock load_begin->fault~2->state~43/44/45/52/53/73->WRITE/HOLD path, not the old reader predicate or host release. Inspect independent state-transition equations versus shared fault/error task, preserving exact WRITE/HOLD pulse drain and command conflict/STOP priority. Do not repeat compare165.drain (already rejected), old phase/counter variants, blind refits or global dont_merge/preserve. Reuse four local-release assignments only with new hierarchy timing evidence. Then necessary native-video IO/CDC/reset and MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack, minimum SMB3(J) hardware. No unchanged CHECK/OAM/full writes/A-B/044;saveSRAM reserved.",
+  "raw_result_sha256": {
+    "map01": "af386749dc2b037166c1f3ea741bad9e3241f76facf702d1e2eda3ac98dd853c"
+  },
+  "raw_log_sha256": {
+    "map01/fit.log": "b8f221492c1543927fdad40b18a38310c7dfc614fc3a819fea7744b8e6cb22a9",
+    "map01/map.log": "907774cd3ac552d77b97c09c82c491a49924e1938b26497c36e6d4532ea47018",
+    "map01/nominal-driver.log": "84ab65c41140cb94a12683fb44a520ac0ad7799b326fd2a6f4b7b3cdc39c6d04",
+    "map01/nominal165.log": "6ac23cae179a5f8ebd500a755372f821a4913ce479ef7d43f951d270aac05689",
+    "map01/paths.log": "1b6a9e850f78ccb93d73aabbbef193becf6a31b83df15f66ac0f2f24697bbee8",
+    "map01/release165-analysis.log": "74022fdc01d6fadaf40bcd6ae68cf551a1a86d7d5cad4899d6db8291190049dd",
+    "map01/timing.log": "6d254ec2b38f83c864f34d06992adf84e0bbfc86489ef5c119d970e46e0b90e7"
+  }
+}
