@@ -1,3 +1,17 @@
+# NES 현재 인계 — SPI 접속부와 유한 C 수신기
+
+PR107 같은 브랜치. [새 계약](../../docs/nes-native-spi165-contract.ko.md) · [검증](../../analysis/native-spi165-verification.json). 실제 SPI D0~D3/256바이트 버퍼, 기존 host84MHz mailbox 연결, 기존149 가드 엔진의1~259바이트 생성 변형, 유한 C 수신기를 구현했다. **MCU 게임 루프/SNES 명령 소비자/38M9K 교체/fit/실기 미완료.** ARM 오브젝트 컴파일을 실기 성공으로 해석하지 않는다. 설치164 유지.
+
+선택spi04 RTL + c05 C. 이전host02 frame12의1717레코드 재사용, 새boot없음. 두 위상0/3.5ns에서47블록/191요청 모두 C 요청과 일치,1714데이터 레코드/15타일240바이트 동일. packed11196B/wire12489B/CS간격 포함39.59ms: 이 직렬 구간만으로60fps 불가, 최종FPS 아님. CHR한바이트당레코드 유지, 타일묶기/차분전송 미구현. bulk1355가드/오류사례 PASS. C저장18064B/ARMtext2176B/poll직접stack560B; 실제전체SRAM링크필요.
+
+STATUS D6+flags/token/len/CRC8, READ payload+CRC16, 전체READ후token POP. POP/D3응답은명령반영전이므로후속STATUS필수. C는COMMIT후POP확인유실도FAILED/게시금지. PREPARED≠SNES표시완료. prepare(false)/IOfail은현재세션failstop,정상ABORT는IDLE. commonreset때C도reset;독립endpointreset금지/무조건재시도금지. 부모boot/native MISO 배타연결COMPILE만;물리CDC/타이밍미검증. 새SPI결선만exportMAX4194304/fillMAX2097152/WAIT131072 정책,기존기본값불변. source와serial을연결한기한시험아직없음/512타일처리보장아님.
+
+**다음:** C receiver + bulk callback을실제게임루프에연결하고기존SNES참조를유한C명령/vblank소비자로이식한다. 기존38M9K프레임버퍼를교체하며현재56/56M9K에단순추가금지. STOP/error/reset/사운드·입력스케줄과합산SRAM·배치·타이밍확인뒤SMB3첫레벨실기. generic진단/같은boot/A-B/044반복금지. 현재40ms전송병목은계측근거로줄이되SPI속도무근거상향금지. 사용가능화면뒤60초제한/오류·본체reset로그/DOWN유지.
+
+초기01폴더중복/02wire선언/03MinGW출력형식/04bulk누적poll상한실패보존.04RTL/C통과재사용하고05는시험누적상한수정+terminalIO음성검사만재실행.05sandbox DLL오류뒤host실행통과,라이선스오류아님. oldarchive/publicpins불변. probes/nes-native-spi165 완료record/audit재실행금지. 개인GitHub/한국어4PR절/사용자머지.
+
+---
+
 # NES 현재 인계 — 장면 전송·호스트 클록 경계·PREPARED/COMMIT
 
 PR107 동일 브랜치. [새 계약](../../docs/nes-native-host165-contract.ko.md) · [검증](../../analysis/native-host165-verification.json). 기존 공유 reader를 유지하고 공통 장면 query/fill을96비트 레코드로 전송하는 exporter, 순방향96/역방향17비트 mailbox를 연결했다. 부모 전체는 컴파일만 했고 host포트는논리ready/valid다. **실제SPI/MMIO·MCU·SNES업로드/표시완료·fit·새SD는미완료.** PC수신기를펌웨어로오인하지않는다.

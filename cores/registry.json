@@ -40,13 +40,13 @@
       "verification": "analysis/GAME164-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "native-logical-host-link-pass-physical-endpoint-open",
+      "investigation": "native-spi-c-receiver-pass-mcu-snes-runtime-open",
       "hardware_baseline": "NES-H1-SAMPLING-044",
       "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-164",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "Connect logical ready/valid records to actual SPI/MMIO and bounded MCU receiver, then SNES commands/vblank completion replacing38M9K framebuffer. Measure real packed bytes; minimum changed tests/physical fit then SMB3 first-level. No unchanged boot/planes/A-B/044 reruns.",
+      "next_gate": "Wire bounded C receiver/bulk callback into MCU game loop; implement bounded native SNES commands/vblank consumer and replace38M9K framebuffer. SRAM link/resource/timing and combined source lease/serial budget checks, then real SMB3 first level. Current serial sample39.59ms is NOT60fps.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -383,6 +383,14 @@
         "verification": "analysis/native-host165-verification.json",
         "contract": "docs/nes-native-host165-contract.ko.md",
         "next": "Connect logical ready/valid records to actual SPI/MMIO and bounded MCU receiver, then SNES commands/vblank completion replacing38M9K framebuffer. Measure real packed bytes; minimum changed tests/physical fit then SMB3 first-level. No unchanged boot/planes/A-B/044 reruns.",
+        "hardware": false,
+        "superseded_by": "native_spi165"
+      },
+      "native_spi165": {
+        "status": "native_spi_rtl_c_receiver_pass_mcu_snes_runtime_open",
+        "verification": "analysis/native-spi165-verification.json",
+        "contract": "docs/nes-native-spi165-contract.ko.md",
+        "next": "Wire bounded C receiver/bulk callback into MCU game loop; implement bounded native SNES commands/vblank consumer and replace38M9K framebuffer. SRAM link/resource/timing and combined source lease/serial budget checks, then real SMB3 first level. Current serial sample39.59ms is NOT60fps.",
         "hardware": false
       }
     },

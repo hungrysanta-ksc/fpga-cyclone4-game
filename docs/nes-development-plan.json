@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 영상 경로 진척: 장면 전송·양방향 클록 경계·호스트 준비/게시 승인 연결을 구현했습니다. 실제 게임 수집값5장면이 호스트를 거쳐286720픽셀과 일치했고 취소·reset도 통과했습니다. 실제 SPI/MCU/SNES 연결과 실기 속도는 미완료이며 설치 후보는164입니다.",
-  "next_action": "CONNECT_NATIVE_SPI_MCU_AND_SNES_REPLACE_FRAMEBUFFER",
+  "assessment": "165 영상 경로 진척: 실제 SPI 접속부와 유한 C 수신기를 구현했습니다. SMB3 수집 장면1717레코드가 SPI를 거쳐 원본과 일치했고, 제어 포함12489바이트·약39.59ms입니다. MCU 실행 루프·SNES 표시·실기 속도는 미완료이며 설치 후보는164입니다.",
+  "next_action": "CONNECT_NATIVE_MCU_SNES_REPLACE_FRAMEBUFFER",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2694,6 +2694,14 @@
     "verification": "analysis/native-host165-verification.json",
     "contract": "docs/nes-native-host165-contract.ko.md",
     "next": "Connect logical ready/valid records to actual SPI/MMIO and bounded MCU receiver, then SNES commands/vblank completion replacing38M9K framebuffer. Measure real packed bytes; minimum changed tests/physical fit then SMB3 first-level. No unchanged boot/planes/A-B/044 reruns.",
+    "hardware": false,
+    "superseded_by": "native_spi165"
+  },
+  "native_spi165": {
+    "status": "native_spi_rtl_c_receiver_pass_mcu_snes_runtime_open",
+    "verification": "analysis/native-spi165-verification.json",
+    "contract": "docs/nes-native-spi165-contract.ko.md",
+    "next": "Wire bounded C receiver/bulk callback into MCU game loop; implement bounded native SNES commands/vblank consumer and replace38M9K framebuffer. SRAM link/resource/timing and combined source lease/serial budget checks, then real SMB3 first level. Current serial sample39.59ms is NOT60fps.",
     "hardware": false
   }
 }
