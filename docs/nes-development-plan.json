@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 영상 경로 진척: CHECK 카운터·레지스터 제어를 개선해 최악 setup을−1.218ns에서-0.488ns로 바꿨고 같은 클록 setup 부족이 남았습니다. 전체 배치15,015LE/961LAB/35M9K,786432상태 비교·SPI98검사 통과. 외부IO·CDC와 MCU 연결은 아직 미완료입니다. 설치164·세이브 SRAM 보존, 새SD 없음.",
-  "next_action": "CHECK_TIMING_IMPROVED_STILL_OPEN",
+  "assessment": "165 영상 경로 진척: 로더 명령 차단과 SPI 응답 직렬화를 개선했습니다. 전체 배치15,053LE/963LAB/35M9K, 로더52,224상태·SPI15,680비트·실제 경로98검사 통과. 실제 클록 기준 CHECK setup−0.217ns는 아직 미달이며 host여유+0.021ns입니다. 외부IO·CDC·MCU 연결 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.",
+  "next_action": "SPI_REPLY_IMPROVED_NOMINAL_CHECK_TIMING_OPEN",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2782,6 +2782,14 @@
     "verification": "analysis/check165-verification.json",
     "contract": "docs/nes-check165-contract.ko.md",
     "next": "Use selected CHECK map03: repair measured boot check_failed -> loader state.RECEIVE (-0.488ns at nominal5.952ns), byte_count -> miso_hold (-0.332ns at5.3ns target), and check_next -> check_busy (-0.174ns at5.5ns target); no uncontrolled latency/SDC relaxation or repeated attribute-only fits. Then necessary external IO/video CDC and MCU RUN receive/convert/ACK with existing audio/input/STOP/elapsed time, whole firmware link/stack, SMB3 first-level hardware. Preserve save SRAM and164; no unchanged OAM/boot/A-B/044 repeat.",
+    "hardware": false,
+    "superseded_by": "retire165"
+  },
+  "retire165": {
+    "status": "spi_reply_improved_nominal_check_timing_open",
+    "verification": "analysis/retire165-verification.json",
+    "contract": "docs/nes-retire165-contract.ko.md",
+    "next": "Selected retire165 map02/reproduce02: fix boot check_failed -> control check_next nominal -0.217ns (5.952ns period) using measured cone, preserve hard-fault precedence and retirement edge. Host margin +0.021ns and963/963LAB require whole-fit checks after any RTL change. Rejected parallel counter-clear/XOR map03 worsened feedback to nominal -1.002ns; do not repeat. Investigate predecoding stable pending command/header/body predicates at their existing capture edge before dynamic hard-fault gating; this is a proposal, not implemented. Keep stricter5.5/5.3ns budget misses separate; no clock/falsepath relaxation. Then necessary external IO/video CDC, MCU receive-convert-ACK/audio/input/STOP/time and full-link/stack, minimum SMB3 first-level hardware. Preserve save SRAM and installed164; no unchanged OAM/fullboot/A-B/044 repeats.",
     "hardware": false
   }
 }

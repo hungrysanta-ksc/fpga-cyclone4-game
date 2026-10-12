@@ -1,3 +1,21 @@
+# NES 현재 인계 — SPI 응답 개선, 실제 CHECK 타이밍은 미완료
+
+PR108 OPEN. [계약](../../docs/nes-retire165-contract.ko.md) · [검증](../../analysis/retire165-verification.json).
+
+165 영상 경로 진척: 로더 명령 차단과 SPI 응답 직렬화를 개선했습니다. 전체 배치15,053LE/963LAB/35M9K, 로더52,224상태·SPI15,680비트·실제 경로98검사 통과. 실제 클록 기준 CHECK setup−0.217ns는 아직 미달이며 host여유+0.021ns입니다. 외부IO·CDC·MCU 연결 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.
+
+SELECT retire165 map02/reproduce02 variant=serial. baseline check165map03대비 loader/boot/SPI3입력변경,58입력byteexact. loader공통inhibit factoring+SPI56bit snapshot shift. completionedge/STOP/오류우선순위/6B 식별불변. loader52224state/wrong-inhibit, serial256frame15680bit1347840edge/wrongbit, actualSPI98checks8writes6reads6negative PASS. no새전체boot/MCU/SD. generator후속variant추가는실행RTLbyteexact로재사용;옛실행generator보존.
+
+기존SDC동일:3corner198행 memory−.426(5.5target),host+.021,NES+5.344,holdmin+.159. Exact155 clock-only별도STA nominal−.217(check_failed->check_next15),367소스/설정/routed파일불변. falsepath/clock완화없고둘다FAIL. rawmixed−15.982/IO54in57outOPEN. FIT15053LE963LAB35M9K8329reg122physical0virtual1PLL. LAB여유0/host여유작음. 이전baseline−.488는그대로보존.
+
+REJECT retiremap03 explicit counter_clear/inc XOR식:786432states+wrongfaultgate+actualSPI PASS지만memorybudget−1.454/nominal−1.002로악화. check_next3->check_next18 feedback. 15049LE961LAB. 선택candidate로오해하지말것. 첫STA cwd/path실패와미실행선언위치초안보존;license문제아님.
+
+NEXT Selected retire165 map02/reproduce02: fix boot check_failed -> control check_next nominal -0.217ns (5.952ns period) using measured cone, preserve hard-fault precedence and retirement edge. Host margin +0.021ns and963/963LAB require whole-fit checks after any RTL change. Rejected parallel counter-clear/XOR map03 worsened feedback to nominal -1.002ns; do not repeat. Investigate predecoding stable pending command/header/body predicates at their existing capture edge before dynamic hard-fault gating; this is a proposal, not implemented. Keep stricter5.5/5.3ns budget misses separate; no clock/falsepath relaxation. Then necessary external IO/video CDC, MCU receive-convert-ACK/audio/input/STOP/time and full-link/stack, minimum SMB3 first-level hardware. Preserve save SRAM and installed164; no unchanged OAM/fullboot/A-B/044 repeats.
+
+완료archive/record/audit 및 이전pins불변. 사용자머지/개인GitHub/한국어4PR절. 다음턴PR상태먼저확인. 실기목표SMB3(J),설치164/GBC/세이브SRAM보존.
+
+---
+
 # NES 현재 인계 — CHECK 경로 수정
 
 같은 PR108 OPEN. [계약](../../docs/nes-check165-contract.ko.md) · [검증](../../analysis/check165-verification.json).
