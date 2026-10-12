@@ -1,3 +1,17 @@
+# NES 현재 인계 — SNES 내부 비교 완료, 실제 전송 연결 우선
+
+PR107 같은 브랜치, 아직 실기165 패키지는 없다. [새 계약](../../docs/nes-native-local165-contract.ko.md) · [검증](../../analysis/native-local165-verification.json). 설치164 사운드/입력/STOP/메뉴·GBC 저장 무변경. 카트리지 SRAM·세이브/복구 영역 사용금지. SNES WRAM7F 주소를 MCU sram_*에 연결금지.
+
+local03: 실제65816 비교938B+동적업로더288B, SNES7F 두32KiB 후보. 기존video03 두장면만 재사용, CPU가 만든6/2명령과114688픽셀 일치. 최초5493logical/5472PPUDMA,다음18B. 9사례:2장면/역방향무변경/주소/크기/64B경계병합/예산/32명령/oddHDMA. visible데이터쓰기vblank. local01/02도 보존;03 fixture WRAM초기화로MVN미초기화읽기 제거. 일반NES코어부팅/FLOAT 반복없음.
+
+성능: 두 번째 비교2595110→693782→638300masterticks(약120.8→32.3→29.7ms), 무변경564700(26.3ms),명령초과1356928(63.2ms,초기보다느림). 모델이고송수신/표시대기/MCU변환 제외,60fps아님. 두후보전체MCU재독출10986B174calls를 대체할 수 있는 코드지만 실제호출부/왕복은아직교체안함. SPI39.59ms와후보5493B공급 남음. 미세최적화만계속하지말고실제연결의병목측정우선.
+
+ABI: nativeA/X16 DBR/DP0,DP40..6F;길이1000/1010,base1020/1022,display1024,status1025,count1026,charged1028,payload102A,scroll102C/102E,budget1030,list1100..11FF,uploadscratch1070. status3는로컬완료이며물리ACK아님. 비교중및게시목록/후보소유권불변,serial/gen완료게시필수. 서비스callback은scratch보존;시험padpolling은실기입력/사운드연속증명아님. HDMA포인터는무변경에도새후보로전환.
+
+NEXT 실제 MCU→SNES WRAM 수신+localcompare호출+표시ACK를 묶어서 연결. 긴 비교에도입력/STOP/수신 살아있게 스케줄. 실제client 공간(시험ROM2964B는배치승인아님)/MCU전체link·heap·중첩stack/38M9K교체·fit 변경경계 검사후 SMB3첫레벨실기. 기존C stage460B는참고소유권모델이며그대로전체표재독출연결금지. 같은boot/A-B/044 재검사하지않음. 이후60초제한/오류·reset로그/DOWN유지. 기존모든pins/archives보존;완료probes/nes-native-local165 record/audit재실행금지.
+
+---
+
 # NES 현재 인계 — 세이브 SRAM 보호와 WRAM 차분
 
 PR107 같은 브랜치. [새 계약](../../docs/nes-native-stage165-contract.ko.md) · [검증](../../analysis/native-stage165-verification.json). 사용자 지적에 따라 U511 카트리지 SRAM을 영상 저장소로 쓰겠다는 제안을 철회했다. 로컬 SA-1/GSU는 E00000–E7FFFF를 별도 RAM으로 보내며 IS_SAVERAM 쓰기도 연결한다. 모든 코어의 물리 저장 위치가 같다는 뜻은 아니다. 기존 GBC E20000 snapshot/복구 영역까지 보호. **카트리지 SRAM·세이브/복구 영역을 영상용으로 전용하지 않는다.** 기존164 RAM_WE=1/데이터Z와 원본 저장 코드 무변경, 실기 쓰기 없음.

@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 영상 경로 진척: 세이브용 카트리지 SRAM 사용을 배제하고 SNES WRAM 후보·C 차분·표시 ACK 소유권을 구현했습니다. SNES 모델114688픽셀 일치. 실제 MCU 전송·프레임버퍼 교체는 미완료이며 표 전체 재독출 병목을 먼저 피해야 합니다. 설치 후보는164입니다.",
-  "next_action": "CONNECT_SNES_WRAM_MAILBOX_LOCAL_COMPARE_ACK_WITHOUT_SAVE_SRAM",
+  "assessment": "165 영상 경로 진척: SNES WRAM 내부의 실제65816 비교·동적DMA로 두 장면114688픽셀 일치를 확인했습니다. 두 번째 비교120.8→29.7ms로 개선했지만60fps는 미달성입니다. 세이브SRAM을 보존하며 다음은 실제 MCU 수신·표시ACK 연결입니다. 설치 후보는164입니다.",
+  "next_action": "CONNECT_ACTUAL_WRAM_RECEIVER_LOCAL_COMPARE_DISPLAY_ACK",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2718,6 +2718,14 @@
     "verification": "analysis/native-stage165-verification.json",
     "contract": "docs/nes-native-stage165-contract.ko.md",
     "next": "Preserve cartridge SRAM/save/recovery contents. Connect SNES bank7F mailbox and display ACK; avoid full table MCU readback using SNES-local comparison/batching. Then RUN scheduler, full SRAM link, replace38M9K, fit/minimum changed checks and SMB3 first-level hardware. No unchanged boot/A-B/044.",
+    "hardware": false,
+    "superseded_by": "native_local165"
+  },
+  "native_local165": {
+    "status": "snes_local_diff_dynamic_dma_model_pass_mailbox_open_not60fps",
+    "verification": "analysis/native-local165-verification.json",
+    "contract": "docs/nes-native-local165-contract.ko.md",
+    "next": "Connect actual MCU-to-SNES WRAM receive, local compare and token/generation display ACK; preserve save SRAM and service input/STOP during comparison. Then full link/client space/replace38M9K/fit/minimal changed tests and SMB3 hardware. No unchanged boot/A-B/044 or generic diagnostic expansion.",
     "hardware": false
   }
 }

@@ -40,13 +40,13 @@
       "verification": "analysis/GAME164-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "native-wram-delta-pass-save-sram-preserved-mailbox-open",
+      "investigation": "snes_local_diff_dynamic_dma_model_pass_mailbox_open_not60fps",
       "hardware_baseline": "NES-H1-SAMPLING-044",
       "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-164",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "Preserve cartridge SRAM/save/recovery contents. Connect SNES bank7F mailbox and display ACK; avoid full table MCU readback using SNES-local comparison/batching. Then RUN scheduler, full SRAM link, replace38M9K, fit/minimum changed checks and SMB3 first-level hardware. No unchanged boot/A-B/044.",
+      "next_gate": "Connect actual MCU-to-SNES WRAM receive, local compare and token/generation display ACK; preserve save SRAM and service input/STOP during comparison. Then full link/client space/replace38M9K/fit/minimal changed tests and SMB3 hardware. No unchanged boot/A-B/044 or generic diagnostic expansion.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -407,6 +407,14 @@
         "verification": "analysis/native-stage165-verification.json",
         "contract": "docs/nes-native-stage165-contract.ko.md",
         "next": "Preserve cartridge SRAM/save/recovery contents. Connect SNES bank7F mailbox and display ACK; avoid full table MCU readback using SNES-local comparison/batching. Then RUN scheduler, full SRAM link, replace38M9K, fit/minimum changed checks and SMB3 first-level hardware. No unchanged boot/A-B/044.",
+        "hardware": false,
+        "superseded_by": "native_local165"
+      },
+      "native_local165": {
+        "status": "snes_local_diff_dynamic_dma_model_pass_mailbox_open_not60fps",
+        "verification": "analysis/native-local165-verification.json",
+        "contract": "docs/nes-native-local165-contract.ko.md",
+        "next": "Connect actual MCU-to-SNES WRAM receive, local compare and token/generation display ACK; preserve save SRAM and service input/STOP during comparison. Then full link/client space/replace38M9K/fit/minimal changed tests and SMB3 hardware. No unchanged boot/A-B/044 or generic diagnostic expansion.",
         "hardware": false
       }
     },
