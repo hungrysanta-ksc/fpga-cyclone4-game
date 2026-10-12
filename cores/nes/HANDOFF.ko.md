@@ -1,3 +1,21 @@
+# NES 현재 인계 — FPGA 패킷·SNES 응답 접속부
+
+PR107 머지019a92ef 이후 새 브랜치 codex/nes-sink-fpga-165. [계약](../../docs/nes-sink-bridge165-contract.ko.md) · [검증](../../analysis/sink-bridge165-verification.json). 설치164/사운드·입력·STOP·메뉴/원본GBC 그대로,카트리지 SRAM·세이브·복구 영역 사용금지. 새SD없음.
+
+선택 bridge03 + map02. SPI E0/F6 status16/CRC8, E1 command+packet16..256+CRC16BE(max259). 단일256B RAM,길이/CRC완료후게시·소유중덮어쓰기차단,12B ACK전부쓰기+601C=A5때원자retire. snapshot중ACK게시안찢어짐,불완전전송/ACK는공통reset까지fault. SNES6000ready/6001STOP-or-fault/6004..5length/400000..FFpacket/6010..1BACK/6002..3pad. 4KiBROM해석 body8000..8FBF/vectorFFC0..FFFF/holesFF. rawRD/reset/active는버스구동취소. 이전sink클라이언트2651B/4096ROM재사용;카트리지 SRAM포트없음.
+
+이전실제C/SNES sink01 normal137+stop90의227packet/ACK를RTL SPI+SNES버스로재생. 두위상0/3.5ns각35741bytechecks/42766wireB/908transactions,actualC adapter도동일TX/RX와17오류검사PASS. ACK는이번TB버스쓰기재생이며동시65816/실기/FPS시험아님. ROM4KiB전부/늦은쓰기/연속RD/소유권/reset/STOP확인. bridge01한글경로QuestaDB실패보존;02PASS+map01무시async_reg/폭경고발견->Quartus속성+명시8bit선택의03최종. FLOAT sandbox호스트식별불일치후기존허가host래퍼성공,새라이선스문제아님.
+
+ARM adaptercontext16/text426/directstack544+status12,상위packet304+callback/IRQ중첩별도. Cguard필수/poll1..65536은시간아님;첫E0F6확인후E1,유한E0poll;legacyD6/E5허용금지. 부모sender가ACKop/seq/serial/gen/65/9A검사하며모호오류는FAULT공통reset,재시도금지. actualMCURUN service/time/STOP아직콜백미연결.
+
+map02 EP4CE15F17C8 단독synthesis1082LE/581reg/34816bits,4096x8ROM+256x8dualport M9K추론;ROMMIF4096bytes일치. ROM쓰지않는write입력0의10030경고3. Fitter/전체자원/물리핀/IO/CDC/MTBF미승인,새속성도승인대체아님.
+
+NEXT 실제최상위에서기존framebuffer버스/38M9K를새bridge로교체. 기존boot/native/sink SPI MISO배타,commonreset/active/STOP/fault/pad연결+164audio보존. 현재모듈은부모미인스턴스화,구버스와동시활성금지. MCU실제RUN에수신→변환→sink/guard시간·오류·STOP·오디오입력서비스연결;긴poll로서비스막지않기. 전체SRAM/중첩stack·client공간·fit·변경IO최소확인뒤SMB3첫레벨실기. SPI39.59ms/비교29.7ms/60fps열림. 같은boot/A-B/044나generic진단증설금지. 사용가능화면후60초제한/오류·본체reset로그/DOWN유지순서.
+
+기존pins/archives불변. 완료 probes/nes-sink-bridge165 record/audit 및이전finalizer재실행금지. 개인GitHub/한국어4PR절/사용자머지.
+
+---
+
 # NES 현재 인계 — C와 SNES 수신·표시 응답 왕복
 
 PR107 같은 브랜치. [계약](../../docs/nes-native-sink165-contract.ko.md) · [검증](../../analysis/native-sink165-verification.json). 설치164 유지. 카트리지 SRAM/세이브/복구 영역 사용금지, 기존 GBC/164 사운드·입력·STOP 코드 무변경. 새SD없음.

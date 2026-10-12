@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 영상 경로 진척: C 송신기와 실제 SNES 수신·비교·표시 응답을 동시 실행해227왕복과229376픽셀 일치를 확인했습니다. 중간 버스는 PC 모델이며 실기 SPI·FPGA 접속부와60fps는 미완료입니다. 세이브 SRAM을 보존하고 설치 후보164를 유지합니다.",
-  "next_action": "CONNECT_SPI_SNES_PACKET_ACK_BRIDGE_AND_REPLACE_FRAMEBUFFER",
+  "assessment": "165 영상 경로 진척: FPGA의 SPI 패킷 수신·SNES 읽기·완료 응답 접속부와 C 어댑터를 구현했습니다. 두 위상에서227왕복과오류 차단을 확인했고,접속부 단독 합성도 통과했습니다. 실제 최상위 연결·프레임버퍼 교체·전체 배치·60fps는 미완료이며 설치 후보164와 세이브 SRAM을 보존합니다.",
+  "next_action": "REPLACE_FRAMEBUFFER_AND_BIND_PARENT_MCU_SINK",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2734,6 +2734,14 @@
     "verification": "analysis/native-sink165-verification.json",
     "contract": "docs/nes-native-sink165-contract.ko.md",
     "next": "Implement bounded SPI packet/ACK bridge and SNES bus/4KiB ROM decode for sink ABI, bind MCU guard/time/STOP. Replace38M9K framebuffer, full link/client space/fit/minimum changed checks then SMB3 hardware. Preserve save SRAM; no unchanged boot/A-B/044.",
+    "hardware": false,
+    "superseded_by": "sink_bridge165"
+  },
+  "sink_bridge165": {
+    "status": "spi_snes_sink_bridge_rtl_and_synthesis_pass_parent_open",
+    "verification": "analysis/sink-bridge165-verification.json",
+    "contract": "docs/nes-sink-bridge165-contract.ko.md",
+    "next": "Replace old framebuffer bus/38M9K in actual parent; bind exclusive E0/E1 MISO, common reset/active/fault/STOP and pad, then real MCU RUN guard/time/audio/input scheduling. Full link/stack/fit/changed I/O checks -> SMB3 first-level hardware. No new generic diagnostics or unchanged boot/A-B/044.",
     "hardware": false
   }
 }
