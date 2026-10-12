@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 영상 경로 진척: 실제 FPGA 최상위의 구형 프레임버퍼를 새 패킷 경로로 교체했습니다. RAM 추론 수정과 변경 경로 시험·전체 합성은 통과했으나 실제 배치는 조합 논리16,441개가 칩 한도15,408개를 넘어 실패했습니다. 다음은 OAM·장면 회로의 자원 축소입니다. 설치 후보164와 세이브 SRAM을 보존하며 새SD는 없습니다.",
-  "next_action": "REDUCE_PARENT_LOGIC_THEN_FIT_AND_MCU_RUN",
+  "assessment": "165 영상 경로 진척: 실제 보드 전체를 면적 우선으로 합성해 조합 논리를16,441개에서15,647개로794개 줄였습니다. 칩 한도15,408개를239개 초과해 실제 배치는 아직 실패합니다. 효과가 없었던 두 OAM 표현 변경은 채택하지 않았으며, 다음은 메모리 접근 구조의 실질적 축소입니다. 설치164·세이브 SRAM 보존, 새SD 없음.",
+  "next_action": "REDUCE_OAM_MEMORY_PORT_COST_THEN_FIT",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2750,6 +2750,14 @@
     "verification": "analysis/sink-board165-verification.json",
     "contract": "docs/nes-sink-board165-contract.ko.md",
     "next": "Reduce actual OAM/native scene logic cost while preserving behavior and saves; focused changed-path comparison then full parent fit. Once it fits, bind actual MCU RUN guard/time/audio/input + sink ACK, full-link/stack/minimum timing -> SMB3 first-level hardware. No unchanged boot/A-B/044 repetition.",
+    "hardware": false,
+    "superseded_by": "oam_select165"
+  },
+  "oam_select165": {
+    "status": "area_synthesis_reduced_794_fit_resource_blocked",
+    "verification": "analysis/oam-select165-verification.json",
+    "contract": "docs/nes-oam-select165-contract.ko.md",
+    "next": "Use area07 unchanged RTL as cost baseline. Reduce actual OAM memory/read-port cost, not equivalent onehot/row-writer expressions. Preserve CPU/PPU consumption timing and collision priority; test changed boundaries and real SMB3 if timing changes. Full fit/timing -> actual MCU RUN guard/time/audio/input/sink ACK/full-link/stack -> SMB3 hardware. No save SRAM or unchanged boot/A-B/044.",
     "hardware": false
   }
 }

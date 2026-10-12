@@ -1,3 +1,17 @@
+# NES 현재 인계 — AREA794 감소, 실제 OAM 저장·읽기 구조 축소 필요
+
+같은 PR108 OPEN. [계약](../../docs/nes-oam-select165-contract.ko.md) · [검증](../../analysis/oam-select165-verification.json). 설치164/원본GBC/세이브 SRAM 보존. 새SD없음.
+
+선택 map07/reproduce: nes_oam_select165.py 기본area는board03 RTL/SDC/ROM 등60파일byteexact, QSF CYCLONEII_OPTIMIZATION_TECHNIQUE AREA만추가. 실제report Area확인. 글로벌 OPTIMIZATION_TECHNIQUE는이장치에적용안돼map06Balanced;재시도금지. 현재공개generator재생성자료reproduce와map07입력전체일치. 21070estimatedLE/15647comb/8294reg/197104bits/122physical0virtual1PLL. 기존21442/16441에서794comb절감. 실제FIT170011/171000:15647>15408. 239개감소만으로최종fit보장아님/STA없음.
+
+REJECT map02 onehotread16440comb/OAM5664;map04 rowwriter16441/OAM5664. test01/02 각각216362edges/2426copies/3111CPUwrites/10473SSwrites/2012collisions동일. Nativeobserver/primary256+secondary64/state/output매edge비교. 두변형의기능성공은자원개선아님;활성RTL에는채택하지않음. map01자동탐색CIRAM누락/map03explicitgenerate/prepare05줄바꿈검사실패/map06잘못된설정이름 보존. 원본testTB불변. activeareaRTL동일로이전boardtest04와SMB3자료재사용,전체부팅추가안함.
+
+NEXT OAM5663의실제memory/readports/rowcopy비용축소. 단순onehot/행쓰기/동일AREA재배치반복금지. 내부RAM사전읽기검토시CPU/PPUCE와소비edge계약먼저정의;읽기1clock추가를무작정dropin금지/CE속도변경금지. 원래rowcopy/CPU/SSwrite priority보존. changedboundaries+시점바뀌면actualSMB3비교->전체fit/타이밍->realMCURUNguard/time/audio/input/sinkACK/full-link/stack->SMB3실기. 외부세이브SRAM/오디오삭제/SDC완화금지. 기존E6/2status,E5observer,F6sink/RAMidle동일. min안전후실기우선/generic진단·boot/A-B/044반복금지.
+
+완료 probes/nes-oam-select165 record/audit와기존archives/pins불변. 다음턴PR상태갱신;사용자머지/개인GitHub/한국어4PR절.
+
+---
+
 # NES 현재 인계 — 실제 보드 연결 완료, 논리 자원 축소 필요
 
 기존 PR108 열린 상태에서 후속 작업. [계약](../../docs/nes-sink-board165-contract.ko.md) · [검증](../../analysis/sink-board165-verification.json). 설치164/원본GBC/사용자세이브 보존. 새SD없음.
