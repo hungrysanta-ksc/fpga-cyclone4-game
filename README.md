@@ -1,16 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-165 화면 데이터 연결 진척: 실제 CIRAM·OAM 스냅샷과 CHR·행 상태의 공통 수집/조회/해제를 구현했습니다. 필요 타일 완성·SNES 표시·실기 속도 개선은 미완료이며 설치 후보는164입니다. [완료 범위와 다음 연결](docs/nes-native-scene165-contract.ko.md).
-
-165 표시 상태 진척: 행별 스크롤·표시 설정과 팔레트32색의 고정 묶음을 구현하고 경계 검사를 통과했습니다. 타일맵/OAM/CHR의 같은 세대 연결과 SNES 표시·실기 속도 개선은 아직 미완료이며 설치 후보는164입니다. [완료 범위와 다음 연결](docs/nes-native-raster165-contract.ko.md).
-
-165 연결 진척: 실제 SMB3 부팅 시뮬레이션의 PPU 수신 데이터를 CHR 캐시에 연결하고 원본 ROM과 대조했습니다. SNES 출력/실기 속도 개선은 아직 미완료이며 설치 후보는164입니다. [완료 범위와 다음 연결](docs/nes-native-tap165-contract.ko.md).
-
-165 부품 진척: PPU가 받은 CHR를 재사용하는 캐시 RTL과 뱅크/미완성 타일 보호 검사를 통과했습니다. 실제 코어·SNES 연결 전이며 설치 후보는164입니다. [완료 범위와 다음 연결](docs/nes-native-chr165-contract.ko.md).
-
-후속: 사용자 PDF·Nested 변환 방식·FCEUX를 대조하고 SMB3 CHR의 BG/OBJ 형식 변환과 정적 용량을 확인했습니다. 실기 개선은 아직 미검증입니다. [설계와 완료 범위](docs/nes-native-video-feasibility.ko.md).
-
-164 이후 조사: **고정 좌표의 변경 픽셀 타일만 보내는 안보다 SNES의 CHR·타일맵·스크롤·스프라이트 활용을 우선 검토**합니다. 새 펌웨어는 없으며, 다음은 최소 SMB3 경로의 자원·전송 예산 확인입니다. [비교 근거와 계획](docs/nes-video-transfer-research.ko.md).
+165 영상 경로 진척: CHR 캐시·행별 상태・CIRAM/OAM 수집에 실제 BG/OBJ 패턴의 물리 타일 목록과 표시 위치를 연결했습니다. fine X8가지의2048픽셀 대조와 공통 수집/해제 검사를 통과했습니다. SNES 갱신 명령·부족 타일 보충·실기 속도 개선은 미완료이며 설치 후보는164입니다. [완료 범위와 다음 구현](docs/nes-native-fetch165-contract.ko.md).
 
 현재164 실기: **검정 구간 제거 통과·사운드 정상으로 보임, 심한 갱신 지연으로 정상 플레이 미달성**. 다음은 영상 전송량·갱신 지연 개선이며, DOWN 유지는 이번 미시험입니다. [164 실기 결과](analysis/GAME164-HARDWARE-RESULT.ko.md).
 

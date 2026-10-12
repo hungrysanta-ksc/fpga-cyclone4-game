@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 화면 데이터 연결 진척: 실제 CIRAM·OAM 스냅샷과 CHR·행 상태의 공통 수집/조회/해제를 구현했습니다. 필요 타일 완성·SNES 표시·실기 속도 개선은 미완료이며 설치 후보는164입니다.",
-  "next_action": "NATIVE_REQUIRED_PHYSICAL_TILES_FETCH_MAPPING_AND_SNES",
+  "assessment": "165 영상 경로 진척: CHR 캐시·행별 상태・CIRAM/OAM 수집에 실제 BG/OBJ 패턴의 물리 타일 목록과 표시 위치를 연결했습니다. fine X8가지의2048픽셀 대조와 공통 수집/해제 검사를 통과했습니다. SNES 갱신 명령·부족 타일 보충·실기 속도 개선은 미완료이며 설치 후보는164입니다.",
+  "next_action": "NATIVE_BOUNDED_COMMAND_CONSUMER_PHYSICAL_TILE_FILL_AND_SNES",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2641,6 +2641,13 @@
     "verification": "analysis/native-scene165-verification.json",
     "contract": "docs/nes-native-scene165-contract.ko.md",
     "next": "Common NES-domain CHR/raster/CIRAM-OAM lease passed. Next actual BG/OBJ fetch coordinates, required physical tile set, mapper mirroring/bank versions and bounded missing-byte fill, then host CDC/SNES updates replacing38M9K. snapshot_valid is not complete-frame readiness. Minimum changed checks then real SMB3. Preserve164/audio/menu; no new package or unchanged broad replay.",
+    "hardware": false
+  },
+  "native_fetch165": {
+    "status": "physical_required_set_coordinates_pass_native_commands_fill_open",
+    "verification": "analysis/native-fetch165-verification.json",
+    "contract": "docs/nes-native-fetch165-contract.ko.md",
+    "next": "Actual pattern events and conservative physical required-set passed. Next bounded native BG-map/OBJ/row command consumer, physical tile allocation and bounded missing-byte fill, then host CDC/SNES replacing38M9K. Raw worst-case73472B event stream must not become whole-frame buffer/transfer. Snapshotvalid is not full readiness. Minimum changed checks then real SMB3; retain164/audio/menu, no unchanged boot/044 replay.",
     "hardware": false
   }
 }
