@@ -1,3 +1,17 @@
+# NES 현재 인계 — 명령별 실행 허용
+
+PR108 OPEN. [계약](../../docs/nes-commandpulse165-contract.ko.md) · [검증](../../analysis/commandpulse165-verification.json).
+
+165 영상 경로 진척: BEGIN·DATA·END·START·STOP·CHECK READ 허용을 앞 단계에서 등록하고, STOP 처리를 상태별로 판정하는 로더와 결합했습니다. 6개 실행 허용 레지스터를 실제 배치에서 확인했다. 15055LE/963LAB/35M9K, 실제 최악 setup-0.136ns; load_begin → state.WRITE. 응답→BEGIN +0.831ns, 오류→DATA +1.592ns, 명령→사전 허용 +1.936ns. 선택 phaseguard165/map01/reproduce01, 내부 실제클록 통과=False. 전체IO/CDC·MCU 연결·실기는 미완료, 새SD 없음.
+
+6pulse approvals registered C1, live fault gated C2; no additional latency over commandstage. Experimental74/valid-only payload/SS2us contract retained.393741result+120boundary includes immediate fault-edge pulse assertion;219wire/100read/7ACK/19bad/72cancel/2priority;3wrongRTL rejected. Same-edge equivalence to phaseguard NOTclaimed. map01 60unchanged/map02 59unchanged/independent reproduce/6routedFF/localrelease4/12PASS. map02 SPI393741/120/3negatives reuse map01;guardloader294912/1056 reuse RETIRECE02;NEW combined219wire1125909edgesPASS. MCUgap prior evidence reused;no new game/fullMCU/IOCDC approval. SELECT phaseguard165/map01/reproduce01;adopted=False;nominalpass=False.
+
+NEXT 기준 phaseguard165/map01/reproduce01을 유지한다. 이번 map02는 후속 구조 검토용이며 채택한 배포 기준이 아니다. 잔여 load_begin → state.WRITE (-0.136ns)은7단 LUT이며 data delay6.013ns 중 배선4.030ns(67%)다. 응답 주소→실행 허용과 STOP은 통과했으므로 다시 손대지 않는다. 다음은 로더의 공통 다음 상태 선택망을 WRITE/RECEIVE 등 목적 상태별 전이식으로 분리하는 한 후보를 검토한다. WRITE/HOLD drain·STOP·같은클록 오류·미사용4비트 상태의 기존 결과를 보존하고 변경 경계 비교 및 결합SPI 시험을 통과한 뒤 한 번 배치한다. 자동 상태 인코딩이나 속성만 바꿔 우연히 좋아지기를 기대하는 무변경 refit는 하지 않는다. 실험ID74/C0캡처-C1판정-C2실행/valid=0 payload 비관찰/SS high·setup2µs 계약과 같은클록 fault 우선순위를 보존한다. 후속 MCU는 정확한 식별자를 검사하고 E6/version2 상태73·E5 관측70·E0/F6 수신/변환/ACK, 사운드·입력·STOP·경과시간과 full-link/stack을 연결한다. 최소 조건을 갖추면 SMB3(J) 첫 레벨 실기로 진행한다. 설치164·GBC·세이브 SRAM 보존; 전체 ROM 쓰기·A/B·044 반복 생략.
+
+완료 archive/finalizer/public pins는 불변이다. 설치164/GBC/saveSRAM 보존.
+
+---
+
 # NES 현재 인계 — 명령3단계와 데이터 선준비
 
 PR108 OPEN. [계약](../../docs/nes-commandstage165-contract.ko.md) · [검증](../../analysis/commandstage165-verification.json).

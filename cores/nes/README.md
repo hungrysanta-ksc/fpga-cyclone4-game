@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-165 영상 경로 진척: 실제164 MCU의 SPI 전송 간격을 확인하고 명령 캡처·판정·실행을3단계로 분리했습니다. FPGA1클록 추가, 두 후보의 기능·실제SPI 상태 응답 검증 통과. map01은 길이→원인 +0.672ns/원인→오류 +2.970ns/원인→카운터 자격 +2.628ns를 확보했지만 응답 주소→load_data -0.332ns가 남았다. map02는 데이터 선준비로 쓰기 허용 경로와 분리했다. 마지막 결과 15009LE/962LAB/35M9K, 전체 최악 -0.204ns; check_request_tag[6] → load_begin. 선택 phaseguard165/map01/reproduce01, 내부 실제클록 통과=False. 전체IO/CDC·MCU 연결·실기는 미완료, 새SD 없음. [명령 단계 검증](../../docs/nes-commandstage165-contract.ko.md).
+165 영상 경로 진척: BEGIN·DATA·END·START·STOP·CHECK READ 허용을 앞 단계에서 등록하고, STOP 처리를 상태별로 판정하는 로더와 결합했습니다. 6개 실행 허용 레지스터를 실제 배치에서 확인했다. 15055LE/963LAB/35M9K, 실제 최악 setup-0.136ns; load_begin → state.WRITE. 응답→BEGIN +0.831ns, 오류→DATA +1.592ns, 명령→사전 허용 +1.936ns. 선택 phaseguard165/map01/reproduce01, 내부 실제클록 통과=False. 전체IO/CDC·MCU 연결·실기는 미완료, 새SD 없음. [명령 실행 경로 검증](../../docs/nes-commandpulse165-contract.ko.md).
 
 현재164 실기: **검정 구간 제거 통과·사운드 정상으로 보임, 심한 갱신 지연으로 정상 플레이 미달성**. 다음은 영상 전송량·갱신 지연 개선이며, DOWN 유지는 이번 미시험입니다. [164 실기 결과](../../analysis/GAME164-HARDWARE-RESULT.ko.md).
 
