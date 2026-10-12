@@ -1,3 +1,19 @@
+# NES 현재 인계 — OAM 주소 명시로1719개 절감, LAB1개 초과
+
+같은 PR108 OPEN. [계약](../../docs/nes-oam-port165-contract.ko.md) · [검증](../../analysis/oam-port165-verification.json). 설치164/원본GBC/세이브 SRAM 보존. 새SD없음.
+
+SELECT map02/reproduce: board03 + AREA + secondary extra OAM 주소4곳만수정. row_ex<8 guard아래 {row_ex,low2}+32 -> {1'b1,row_ex[2:0],low2}. 기존주소도32..63이지만명시후사용하지않는extra하류를더제거. 기능/CE/latency/쓰기priority변화없음,기능삭제/RAM사전읽기아님.59기타입력byteexact. 전체19351estimatedLE/13928comb/8284reg/197104bits/122physical0virtual1PLL;OAM5663->3939. 실제FIT14983LE/35M9K,964/963LAB error170012/171000. 실패중간자원일뿐배치완료아님;STA없음. AREA대비1719/board03대비2513comb절감.
+
+test02 actual banked reference 216362edges/2426copy/3111CPU/10473SS/2012collisions PASS;native+allprimary256/secondary64/state/output. range01 row0..15 accepted8/reject8/all1024byte PASS,wrong-bank대조row0byte0검출.32guardedindex계산전수대조.전체formalproof/새SMB3boot아님.소비시점불변이라기존fullgame/board/SPI결과범위재사용.최종generator재생성입력과선택map02byteexact.후속생성옵션수정은실행모듈본문별도비교.
+
+REJECT map01 shared-read15665comb(기능PASS),fit03physical-areaON/fit04MinimizeArea설정실제적용확인했지만둘다964LAB,동일MAP DB재사용;map05bankCErecognitionOFF15761comb초과.이설정들은선택map02에없음.기존onehot/rowwriter실패도반복금지.초기checker가옛board03Balanced까지Area요구한검사오류보존/수정;RTL실패아님.
+
+NEXT remaining primary OAM rowcopy/storage/LAB control grouping축소.비동기RAM변환이필요하면PPUCE사이사전읽기/CPU즉시주소/rowcopy/SS동시쓰기소비edge먼저정의;추가지연무조건삽입/CE속도변경금지.변경부분필수검증->전체fit->같은배치setuphold/PSRAM/SPI/SNES최소타이밍->realMCURUN수신변환ACK+실제경과시간audioinputSTOP/full-link중첩stack->SMB3첫레벨실기.1LAB여유만으로timing보장아님.세이브SRAM/오디오입력삭제/SDC완화금지.E6/2status/E5observer/F6sink/RAMidle동일.실기우선,unchangedboot/A-B/044반복금지.
+
+새 probes/nes-oam-port165 record/audit와기존archives/pins완료후불변.다음턴PR상태갱신/사용자머지/개인GitHub/한국어4PR절.
+
+---
+
 # NES 현재 인계 — AREA794 감소, 실제 OAM 저장·읽기 구조 축소 필요
 
 같은 PR108 OPEN. [계약](../../docs/nes-oam-select165-contract.ko.md) · [검증](../../analysis/oam-select165-verification.json). 설치164/원본GBC/세이브 SRAM 보존. 새SD없음.

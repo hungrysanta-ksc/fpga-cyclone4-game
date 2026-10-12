@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 영상 경로 진척: 실제 보드 전체를 면적 우선으로 합성해 조합 논리를16,441개에서15,647개로794개 줄였습니다. 칩 한도15,408개를239개 초과해 실제 배치는 아직 실패합니다. 효과가 없었던 두 OAM 표현 변경은 채택하지 않았으며, 다음은 메모리 접근 구조의 실질적 축소입니다. 설치164·세이브 SRAM 보존, 새SD 없음.",
-  "next_action": "REDUCE_OAM_MEMORY_PORT_COST_THEN_FIT",
+  "assessment": "165 영상 경로 진척: OAM의 주소 범위를 명확히 표현해 조합 논리를15,647개에서13,928개로1,719개 더 줄였고 기존 동작 비교를 통과했습니다. 실제 배치는964LAB로 칩 한도963LAB를1개 초과해 아직 실패합니다. 다음은 남은 OAM 저장·복사/배치 제어 비용 축소입니다. 설치164·세이브 SRAM 보존, 새SD 없음.",
+  "next_action": "REDUCE_REMAINING_OAM_LAB_COST_THEN_FIT",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2758,6 +2758,14 @@
     "verification": "analysis/oam-select165-verification.json",
     "contract": "docs/nes-oam-select165-contract.ko.md",
     "next": "Use area07 unchanged RTL as cost baseline. Reduce actual OAM memory/read-port cost, not equivalent onehot/row-writer expressions. Preserve CPU/PPU consumption timing and collision priority; test changed boundaries and real SMB3 if timing changes. Full fit/timing -> actual MCU RUN guard/time/audio/input/sink ACK/full-link/stack -> SMB3 hardware. No save SRAM or unchanged boot/A-B/044.",
+    "hardware": false,
+    "superseded_by": "oam_port165"
+  },
+  "oam_port165": {
+    "status": "oam_address_range_reduced_1719_fit_one_lab_blocked",
+    "verification": "analysis/oam-port165-verification.json",
+    "contract": "docs/nes-oam-port165-contract.ko.md",
+    "next": "Use selected range map02: reduce remaining primary OAM row-copy/storage or LAB control grouping; no repeated shared-read/physical-area/packed-area/bank-enable-OFF attempts. Preserve CPU/PPU consume edges and save SRAM. Full fit/timing -> MCU RUN receive/convert/ACK plus audio/input/STOP/time and whole-link/stack -> real SMB3 first level.",
     "hardware": false
   }
 }
