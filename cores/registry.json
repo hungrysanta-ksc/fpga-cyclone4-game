@@ -40,13 +40,13 @@
       "verification": "analysis/GAME164-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "native-common-frame-fill-interface-pass-physical-transport-open",
+      "investigation": "native-shared-reader-fill-pass-host-transport-open",
       "hardware_baseline": "NES-H1-SAMPLING-044",
       "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-164",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "Connect bounded fill to actual CPU/PPU-priority memory grant/response/flush, then host CDC/ACK and SNES consumer replacing38M9K. Minimum changed checks/fit then real SMB3 first level; no unchanged boot, split-cell, A-B or044 replay.",
+      "next_gate": "Connect same-generation geometry/raster/CHR stream to host CDC and upload ACK, then actual SNES consumer replacing38M9K. Minimum changed checks and resource/timing fit, then SMB3 first-level hardware. No unchanged boot/planes/A-B/044 repetition.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -367,6 +367,14 @@
         "verification": "analysis/native-frame165-verification.json",
         "contract": "docs/nes-native-frame165-contract.ko.md",
         "next": "Connect bounded fill to actual CPU/PPU-priority memory grant/response/flush, then host CDC/ACK and SNES consumer replacing38M9K. Minimum changed checks/fit then real SMB3 first level; no unchanged boot, split-cell, A-B or044 replay.",
+        "hardware": false,
+        "superseded_by": "native_memory165"
+      },
+      "native_memory165": {
+        "status": "actual_core_shared_reader_fill_pass_host_transport_open",
+        "verification": "analysis/native-memory165-verification.json",
+        "contract": "docs/nes-native-memory165-contract.ko.md",
+        "next": "Connect same-generation geometry/raster/CHR stream to host CDC and upload ACK, then actual SNES consumer replacing38M9K. Minimum changed checks and resource/timing fit, then SMB3 first-level hardware. No unchanged boot/planes/A-B/044 repetition.",
         "hardware": false
       }
     },

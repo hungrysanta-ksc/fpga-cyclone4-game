@@ -1,3 +1,17 @@
+# NES 현재 인계 — 기존 ROM reader를 공유하는 CHR 보충
+
+PR107 동일 브랜치. [연결 계약](../../docs/nes-native-memory165-contract.ko.md) · [검증 결과](../../analysis/native-memory165-verification.json). 아래 과거 인계의 PSRAM arbiter 미연결 상태를 갱신한다.
+
+**완료:** memory01 실제 SMB3 CPU/PPU/MMC3+70ns PSRAM 모델에 공통 장면→fill→arbiter→기존 READ16 reader를 연결했다.20프레임 CPU/PPU 바이트·기한 검사 통과, 기존20출력 동일. frame12/14/16/18/20에15타일240바이트씩 총1200바이트 정확; 실제 받은 CHR로286720픽셀 일치. generation은12~16으로 frame과 다르다. 보충 뒤 전체8192 필요 비트를 진단 덤프하여 다음 프레임 수집을 건너뛴다. 제품 FPS나60fps 증명이 아니다. reader 원본 해시 유지, CPU/PPU CE/캐시 동작 무변경. 부모 joint는 동일 생성물 컴파일만 했으며 MCU/SPI/SNES 전체 실행은 아니다.
+
+안전 구간은 NTSC/MMC3 전용: div_cpu3, PPU242<=line<260, 현재 상위ROM읽기 캐시 hit, CPU/PPU/prefetch 대기 없음, reset/pause/DMA/DMC 없음, reader준비/core새요청없음. core 우선. 응답 조건7NES클록/실제최대5; 배치STA/MTBF/모든클록·매퍼 보장 아님. arbiter01 8위상1352검사: 우선순위/금지구간/응답분리/취소배출/공통reset/메모리클록정지·회복/잘못된주소·오류 PASS. 취소·timeout으로readerreset하거나소유권풀지않는다. 공통reset은reader도함께. 보충시작/진행중hostquery차단;fill_idle은옛보충응답없음. 기존fill기본1024는유지하고이결선만wait65536,total262144,max512tiles/8192B. success는hostACK아님;임시바이트는실패시폐기.
+
+**다음:** 같은generation의 위치/행/보충바이트를hostCDC·수신저장·업로드ACK로연결하고SNES명령소비자와38M9K픽셀버퍼교체를묶는다. 현재56/56M9K에단순추가금지. 시험의8192전체재조회는제품경로에넣지않는다. 최소변경검사/실제자원·타이밍뒤SMB3첫레벨실기. 같은20boot/planes/합성A-B/044무변경반복금지. 첫레벨·버튼·장시간부하는이번미검증. 설치후보164/163사운드/STOP메뉴유지;새SD없음. 화면·사운드확보뒤60초제한·오류/본체reset로그·입력유지.
+
+선택memory01/arbiter01/verify01. 이번실행실패없음;이전archive/pin불변. probes/nes-native-memory165의완료record/audit재실행금지. 개인GitHub/한국어4PR절/사용자머지.
+
+---
+
 # NES 현재 인계 — 실제 코어의 공통 장면과 유한 CHR 보충
 
 PR107에 추가했다. [계약·재현·다음 연결](../../docs/nes-native-frame165-contract.ko.md) · [검증 요약](../../analysis/native-frame165-verification.json).
