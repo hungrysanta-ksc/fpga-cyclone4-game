@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 영상 경로 진척: CHR 보충기를 기존 ROM 읽기 회로에 연결했습니다. 실제 SMB3 20프레임의 출력은 동일했고, 공유 메모리로 받은5장면1200바이트로286720픽셀이 일치했습니다. 호스트·SNES 연결과 실기 속도는 미완료이며 설치 후보는164입니다.",
-  "next_action": "CONNECT_NATIVE_HOST_CDC_ACK_AND_SNES_REPLACE_FRAMEBUFFER",
+  "assessment": "165 영상 경로 진척: 장면 전송·양방향 클록 경계·호스트 준비/게시 승인 연결을 구현했습니다. 실제 게임 수집값5장면이 호스트를 거쳐286720픽셀과 일치했고 취소·reset도 통과했습니다. 실제 SPI/MCU/SNES 연결과 실기 속도는 미완료이며 설치 후보는164입니다.",
+  "next_action": "CONNECT_NATIVE_SPI_MCU_AND_SNES_REPLACE_FRAMEBUFFER",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2686,6 +2686,14 @@
     "verification": "analysis/native-memory165-verification.json",
     "contract": "docs/nes-native-memory165-contract.ko.md",
     "next": "Connect same-generation geometry/raster/CHR stream to host CDC and upload ACK, then actual SNES consumer replacing38M9K. Minimum changed checks and resource/timing fit, then SMB3 first-level hardware. No unchanged boot/planes/A-B/044 repetition.",
+    "hardware": false,
+    "superseded_by": "native_host165"
+  },
+  "native_host165": {
+    "status": "native_export_cdc_prepared_commit_pass_physical_host_open",
+    "verification": "analysis/native-host165-verification.json",
+    "contract": "docs/nes-native-host165-contract.ko.md",
+    "next": "Connect logical ready/valid records to actual SPI/MMIO and bounded MCU receiver, then SNES commands/vblank completion replacing38M9K framebuffer. Measure real packed bytes; minimum changed tests/physical fit then SMB3 first-level. No unchanged boot/planes/A-B/044 reruns.",
     "hardware": false
   }
 }

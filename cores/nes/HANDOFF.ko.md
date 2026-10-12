@@ -1,3 +1,31 @@
+# NES 현재 인계 — 장면 전송·호스트 클록 경계·PREPARED/COMMIT
+
+PR107 동일 브랜치. [새 계약](../../docs/nes-native-host165-contract.ko.md) · [검증](../../analysis/native-host165-verification.json). 기존 공유 reader를 유지하고 공통 장면 query/fill을96비트 레코드로 전송하는 exporter, 순방향96/역방향17비트 mailbox를 연결했다. 부모 전체는 컴파일만 했고 host포트는논리ready/valid다. **실제SPI/MMIO·MCU·SNES업로드/표시완료·fit·새SD는미완료.** PC수신기를펌웨어로오인하지않는다.
+
+BEGIN→query0..5→fill바이트→END→호스트PREPARED/REJECT→COMMIT/ABORT. END는표시허가아님. 같은generation ACK시에원본lease를다시검사하고COMMIT만표시후보로승인한다. 잘못된세대ACK무시. timeout/실패시원본해제+ABORT,이미넘긴임시레코드는회수하지않는다. host멈춰ABORT미수락이면새장면시작금지. 기본전체1048576NES클록,시험262144;fill65536wait/262144total유지. 공통reset양쪽필수/수신임시데이터도flush.2FFtoggle+수신추가1edge/helddata,실제CDC STA/MTBF미검증.
+
+host02 11사례: 이전실제SMB3봉인frame12/14/16/18/20재생+실제fill/export/CDC,backend는ROM바이트지연모델. 기존memory01공유reader/CPU기한근거재사용,새boot없음. 정상5phase/역압력/호스트clockpause/옛ACKPASS. querymiss/REJECT/ACKtimeout/END후lease취소4ABORT0COMMIT. 추가로host정지중다음generation이이미봉인된경우이전ABORT후다음장면COMMIT복구. 전송중commonreset후65535세대만COMMIT. verify02 PC수신5거부,정상286720+reset57344+취소복구57344픽셀일치. 기존SNES명령참조연결:첫5493B6명령/이후0,5부팅영상동일이라움직임·첫레벨·FPS아님. 새SNES실행없음.
+
+레코드kind3/gen16/index13/data64. 정상1717레코드=원시20604B,기존2226B압축위치량과혼동금지. query6전체8192는host로안보낸다. **다음:** 실제SPI/MMIO접속부+유한MCU수신/검사/PREPARED/COMMIT을연결하고유효폭·타일단위패킹/실제전송예산확정. SNES명령/vblank완료와38M9K교체를묶는다. 현재56/56M9K에추가만금지. 변경경로최소검사/실제fit뒤SMB3첫레벨실기. generic진단확장·같은boot/planes/A-B/044반복금지.164사운드/STOP메뉴유지;사용가능영상뒤60초제한/오류·본체reset로그/입력유지.
+
+최종선택host02/verify02. 초기host01/verify01도보존. 최종리뷰에서ABORT대기중다음generation이봉인되면DRAIN이멈추는조건을수정했고11번째사례로복구검증. 이전archive/pin불변. 완료record/audit재실행금지. 개인GitHub/한국어4PR절/사용자머지.
+
+---
+
+# NES 현재 인계 — 장면 전송·호스트 클록 경계·PREPARED/COMMIT
+
+PR107 동일 브랜치. [새 계약](../../docs/nes-native-host165-contract.ko.md) · [검증](../../analysis/native-host165-verification.json). 기존 공유 reader를 유지하고 공통 장면 query/fill을96비트 레코드로 전송하는 exporter, 순방향96/역방향17비트 mailbox를 연결했다. 부모 전체는 컴파일만 했고 host포트는논리ready/valid다. **실제SPI/MMIO·MCU·SNES업로드/표시완료·fit·새SD는미완료.** PC수신기를펌웨어로오인하지않는다.
+
+BEGIN→query0..5→fill바이트→END→호스트PREPARED/REJECT→COMMIT/ABORT. END는표시허가아님. 같은generation ACK시에원본lease를다시검사하고COMMIT만표시후보로승인한다. 잘못된세대ACK무시. timeout/실패시원본해제+ABORT,이미넘긴임시레코드는회수하지않는다. host멈춰ABORT미수락이면새장면시작금지. 기본전체1048576NES클록,시험262144;fill65536wait/262144total유지. 공통reset양쪽필수/수신임시데이터도flush.2FFtoggle+수신추가1edge/helddata,실제CDC STA/MTBF미검증.
+
+host01 10사례: 이전실제SMB3봉인frame12/14/16/18/20재생+실제fill/export/CDC,backend는ROM바이트지연모델. 기존memory01공유reader/CPU기한근거재사용,새boot없음. 정상5phase/역압력/호스트clockpause/옛ACKPASS. querymiss/REJECT/ACKtimeout/END후lease취소4ABORT0COMMIT. 전송중commonreset후65535세대만COMMIT. verify01 PC수신5거부,정상286720+reset57344픽셀일치. 기존SNES명령참조연결:첫5493B6명령/이후0,5부팅영상동일이라움직임·첫레벨·FPS아님. 새SNES실행없음.
+
+레코드kind3/gen16/index13/data64. 정상1717레코드=원시20604B,기존2226B압축위치량과혼동금지. query6전체8192는host로안보낸다. **다음:** 실제SPI/MMIO접속부+유한MCU수신/검사/PREPARED/COMMIT을연결하고유효폭·타일단위패킹/실제전송예산확정. SNES명령/vblank완료와38M9K교체를묶는다. 현재56/56M9K에추가만금지. 변경경로최소검사/실제fit뒤SMB3첫레벨실기. generic진단확장·같은boot/planes/A-B/044반복금지.164사운드/STOP메뉴유지;사용가능영상뒤60초제한/오류·본체reset로그/입력유지.
+
+이번선택host01/verify01,실패실행없음. 이전archive/pin불변. 완료record/audit재실행금지. 개인GitHub/한국어4PR절/사용자머지.
+
+---
+
 # NES 현재 인계 — 기존 ROM reader를 공유하는 CHR 보충
 
 PR107 동일 브랜치. [연결 계약](../../docs/nes-native-memory165-contract.ko.md) · [검증 결과](../../analysis/native-memory165-verification.json). 아래 과거 인계의 PSRAM arbiter 미연결 상태를 갱신한다.
