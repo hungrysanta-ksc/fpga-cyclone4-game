@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-165 영상 경로 진척: 로더 SETUP·RELEASE의 중복 명령 충돌 조건을 제거하고 동작을 비교했습니다. 새 개발 기준으로 채택했습니다. 선택 구현 phaseguard165/map01/reproduce01. 후보 15039LE/960LAB/35M9K, 실제 클록 setup-0.083ns. 외부IO·CDC·MCU와 실기는 미완료, 설치164·세이브 SRAM 보존, 새SD 없음. [명령 조건 검증](docs/nes-phaseguard165-contract.ko.md).
+165 영상 경로 진척: 적재 길이 비교와 STOP 상태 판정을 개선하는 세 후보를 검증했습니다. 전체 타이밍 개선을 확인하지 못해 채택하지 않았습니다. 선택 구현 phaseguard165/map01/reproduce01의 기존 최악 setup−0.083ns를 유지합니다. 마지막 후보 15042LE/960LAB/35M9K, 실제 클록 setup-0.410ns. 외부IO·CDC·MCU와 실기는 미완료, 설치164·세이브 SRAM 보존, 새SD 없음. [길이 비교 검증](docs/nes-length165-contract.ko.md).
 
 현재164 실기: **검정 구간 제거 통과·사운드 정상으로 보임, 심한 갱신 지연으로 정상 플레이 미달성**. 다음은 영상 전송량·갱신 지연 개선이며, DOWN 유지는 이번 미시험입니다. [164 실기 결과](analysis/GAME164-HARDWARE-RESULT.ko.md).
 

@@ -1,3 +1,5 @@
+- Latest165 LENGTH: PR108OPEN SELECT phaseguard165/map01/reproduce01;candidate-0.410ns/15042LE/960LAB35M9K adopted=False/nominalpass=False. Balanced live equality/no latency;393741capture+SPI100reads7ACK19bad72cancel2overlapPASS/uppergroupnegative.60inputs unchanged/local4releasechainsPASS. ReadLENGTHcontract/HANDOFF. NoSD/MCU/fullIOCDCreset;keep164/GBC/saveSRAM;archives/finalizersimmutable.
+
 - Latest165 PHASEGUARD: PR108OPEN SELECT phaseguard165/map01/reproduce01;candidate-0.083ns/15039LE/960LAB35M9K adopted=True/nominalpass=False. Timed-state redundant conflict removal;294912conditions/1056sequences/STOPnegativePASS.60inputs unchanged/local4releasechainsPASS. ReadPHASEGUARDcontract/HANDOFF. NoSD/MCU/fullIOCDCreset;keep164/GBC/saveSRAM;archives/finalizersimmutable.
 
 - Latest165 STATE: PR108OPEN SELECT state165/map01/reproduce01;map01-0.092ns/15077LE/963LAB35M9K adopted=True/nominalpass=False. Single stateowner/existing fault-error-data-timer retained.294912conditions/1056singlebyte command-resetseq/STOPnegativePASS.60inputs unchanged/local4releasechainsPASS. ReadSTATEcontract/HANDOFF. NoSD/MCU/fullIOCDCreset;keep164/GBC/saveSRAM;archives/finalizersimmutable.

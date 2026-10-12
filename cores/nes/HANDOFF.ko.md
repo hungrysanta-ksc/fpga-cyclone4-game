@@ -1,3 +1,17 @@
+# NES 현재 인계 — 적재 길이 비교 구조 개선
+
+PR108 OPEN. [계약](../../docs/nes-length165-contract.ko.md) · [검증](../../analysis/length165-verification.json).
+
+165 영상 경로 진척: 적재 길이 비교와 STOP 상태 판정을 개선하는 세 후보를 검증했습니다. 전체 타이밍 개선을 확인하지 못해 채택하지 않았습니다. 선택 구현 phaseguard165/map01/reproduce01의 기존 최악 setup−0.083ns를 유지합니다. 마지막 후보 15042LE/960LAB/35M9K, 실제 클록 setup-0.410ns. 외부IO·CDC·MCU와 실기는 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.
+
+map01(15039LE/960LAB)은 기존과 같은−0.083ns였다. map02(15029LE/963LAB)는 numeric keep 적용으로 길이 비교가5단/+0.258ns가 됐지만 STOP→state가−1.010ns로 악화됐다. map03(15042LE/960LAB)은 상태별 명령 판정으로 STOP→state를−0.115ns로 회복했고 길이 비교는+0.444ns였으나 check_failed→check_next[17]가−0.410ns로 최악이 됐다. 세 후보 모두 기존 전체 최악−0.083ns보다 좋지 않아 채택하지 않았다. 숫자 keep의 적용과 특정 경로 개선은 확인했지만 전체 타이밍 해결이나 프레임 속도 개선을 달성했다는 뜻은 아니다. map03 검사기의 설명문만 잘못 상속된 것을 수정하고 같은 결과를 재검증했으며, 수정 전 검사기·결과도 별도 보존했다. 기능 및 배치 재실행은 하지 않았다.
+
+SELECT phaseguard165/map01/reproduce01; adopted=False;candidate_nominal_same_clock_pass=False. Live combinational equality/no added latency;393741capture-retirement+actualSPI100reads7ACK19bad72cancel2overlap PASS/uppergroupnegative. map03 state-only command factoring NEW294912+1056/wrongSTOPnegativePASS;SPI component evidence reused by exact attribute normalization. NO new combined map03 replay.60otherinputs exact perstep/59vsoriginal/local4release12pathsPASS. Quartus keep uses numeric1: verify all14nodes inMAP settings and routednames;stringtrue map01 had no such assignments, do not assume sourceattribute honored. All3candidates NOTadopted; baseline-.083 retained. No full-ROM/game/MCU/SD/fullIOCDCreset approval. Preserve164/GBC/saveSRAM and completedarchives/finalizers/publicpins.
+
+NEXT 선택 phaseguard165/map01을 기준으로 진행한다. 이번 numeric keep의 비교 경계 효과와 map03의 상태별 판정은 실험 근거로만 재사용한다. 다음에는 check_failed의 CHECK 카운터·상태·오류 처리 팬아웃과 START/STOP 우선순위를 함께 읽고, 명령 완료 시점과 오류 대응을 바꾸지 않는 공통 자격 신호/다음 상태 구조를 설계한 뒤 변경 경계 동등성 시험과 한 번의 배치로 평가한다. 같은 세 후보의 무변경 재배치, 이전 STOP 저장 레지스터 분리, 클록 완화·false path 추가는 반복하지 않는다. 내부 타이밍 통과 후 필요한 외부IO/CDC와 E6/version2 상태73·E5 관측70, E0/F6 수신·변환 ACK 및 사운드·입력·STOP·경과시간 MCU 연결을 마무리해 SMB3 첫 레벨 실기로 간다. 불필요한 전체 ROM 쓰기와044 복원 반복은 생략한다.
+
+---
+
 # NES 현재 인계 — 타이머 상태의 명령 조건 단순화
 
 PR108 OPEN. [계약](../../docs/nes-phaseguard165-contract.ko.md) · [검증](../../analysis/phaseguard165-verification.json).
