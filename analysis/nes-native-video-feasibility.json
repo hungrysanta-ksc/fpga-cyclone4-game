@@ -1,0 +1,119 @@
+{
+  "kind": "offline_chr_layout_and_illustrative_budget_not_game_trace",
+  "rom_sha256": "dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49",
+  "mapper": 4,
+  "prg_bytes": 262144,
+  "chr_bytes": 131072,
+  "chr_tiles": 8192,
+  "unique_chr_tiles": 5529,
+  "verified_pixels": 1048576,
+  "plane_order_negative_rejected": true,
+  "proposed_vram_regions": [
+    {
+      "name": "BG patterns 1024x16",
+      "start": 0,
+      "size": 16384
+    },
+    {
+      "name": "OBJ patterns 512x32",
+      "start": 16384,
+      "size": 16384
+    },
+    {
+      "name": "BG map A 64x32x2",
+      "start": 32768,
+      "size": 4096
+    },
+    {
+      "name": "BG map B 64x32x2",
+      "start": 36864,
+      "size": 4096
+    }
+  ],
+  "proposed_vram_bytes": 40960,
+  "actual_working_set_measured": false,
+  "fpga_fit_performed": false,
+  "snes_execution_tested": false,
+  "scenarios": [
+    {
+      "name": "cached_scroll",
+      "proposed_base": {
+        "map_strip": 128,
+        "full_oam": 544,
+        "palette": 160,
+        "registers": 32,
+        "raster": 128,
+        "metadata": 64
+      },
+      "bg_converted_bytes": 0,
+      "obj_converted_bytes": 0,
+      "total_bytes": 1056,
+      "payload_only_min_vblanks": 1
+    },
+    {
+      "name": "one_kib_BG_and_OBJ_miss",
+      "proposed_base": {
+        "map_strip": 128,
+        "full_oam": 544,
+        "palette": 160,
+        "registers": 32,
+        "raster": 128,
+        "metadata": 64
+      },
+      "bg_converted_bytes": 1024,
+      "obj_converted_bytes": 2048,
+      "total_bytes": 4128,
+      "payload_only_min_vblanks": 1
+    },
+    {
+      "name": "four_kib_BG_and_OBJ_miss",
+      "proposed_base": {
+        "map_strip": 128,
+        "full_oam": 544,
+        "palette": 160,
+        "registers": 32,
+        "raster": 128,
+        "metadata": 64
+      },
+      "bg_converted_bytes": 4096,
+      "obj_converted_bytes": 8192,
+      "total_bytes": 13344,
+      "payload_only_min_vblanks": 3
+    }
+  ],
+  "date_kst": "2026-10-12",
+  "tool": "tools/analyze_nes_native_video.py",
+  "tool_sha256": "e0ddbe38dd0139e9d16ebe9b6add78175fd07fc02931d2e157aadc4d62de2d1c",
+  "no_rom_bytes_exported": true,
+  "baseline_candidate": "NES-GAME-164",
+  "new_firmware": false,
+  "additional_sources": [
+    {
+      "url": "https://github.com/TASEmulators/fceux/blob/ce042d758a08f9434a6625580b2cc72495e8aa9a/src/ppu.cpp",
+      "research_copy_sha256": "eb785e5cc0c1c3287afcda72adc813dcb76375f932c40079d9cf6971700b45a4"
+    },
+    {
+      "url": "https://github.com/TASEmulators/fceux/blob/ce042d758a08f9434a6625580b2cc72495e8aa9a/src/fceu.cpp",
+      "research_copy_sha256": "95cdde6dc0d68a4468cdb63c77fe5ff80dd22360b41b2f80eff337c4cb2b8842"
+    },
+    {
+      "url": "https://github.com/TASEmulators/fceux/blob/ce042d758a08f9434a6625580b2cc72495e8aa9a/src/drivers/Qt/ConsoleViewerSDL.cpp",
+      "research_copy_sha256": "fd7f0eaf445eb77ca1e6f48fc339ab5f605324e3e5c2a22b71f8aabf669ccb52"
+    },
+    {
+      "url": "https://github.com/TASEmulators/fceux/blob/ce042d758a08f9434a6625580b2cc72495e8aa9a/src/drivers/sdl/sdl-video.cpp",
+      "research_copy_sha256": "f029a8b2d447dc92e3f6a5dd889d4f222292375509d6d560ab7865de540d1e7a"
+    },
+    {
+      "url": "https://github.com/Myself086/Project-Nested/blob/cc2c892be2e4f105a4780879022777b57f62052f/Project%20Nested/Injection/Injector.cs",
+      "research_copy_sha256": "28584339197e0b7f15a6b90555c3fdafff4371fe1f71417040b021f3a36304d8"
+    }
+  ],
+  "user_reference_pdf": {
+    "title": "nes 화면을 효율적으로 그리는 방법.pdf",
+    "sha256": "a8d6665703e36da0c5f15b94586a09df971b66e96316c7888cff5277be243c72",
+    "pages": 2,
+    "visual_and_text_review": true,
+    "role": "reference_not_instructions_or_verified_performance_evidence"
+  }
+}

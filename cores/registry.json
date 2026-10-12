@@ -25,7 +25,7 @@
     {
       "id": "nes",
       "status": "blackout_removed_audio_retained_playability_failed_video_latency",
-      "candidate": "NES-GAME-162",
+      "candidate": "NES-GAME-164",
       "planned_product_version": null,
       "released": false,
       "implementation_commit": null,
@@ -37,24 +37,24 @@
       ],
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
-      "verification": "analysis/GAME162-RESULT.ko.md",
+      "verification": "analysis/GAME164-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "active-chr-preservation-hold6-physical-pending",
+      "investigation": "c_snes_receive_display_ack_roundtrip_pass_spi_bridge_open",
       "hardware_baseline": "NES-H1-SAMPLING-044",
-      "hardware_verified_scope": "160 full393216/104records/69E3/lastA/STOPbaseMENUprepared;firstlevelFAIL2dot6actual205FF0 afterhint217FF8reply;not60timeout. Presentation30vblankheld,152perholdvblankpad retained.",
+      "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
       "development_evidence": "analysis/game164-verification.json",
-      "hardware_candidate": "NES-GAME-162",
+      "hardware_candidate": "NES-GAME-164",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "After PR106 merge, reduce video transfer volume and complete-snapshot latency for playable SMB3; compare existing GBC presentation before design, preserve163 SPC/162 audio and safeSTOP/menu. Minimum changed-path checks then real ROM. Do not increase vblank DMA beyond its budget or claim hold removal gives60fps. After usable AV, remove normal60s cap with safe fault/reset logging, then long held-input assessment. No repeated164/044/GBC/sound-only/unchanged full-load tests.",
+      "next_gate": "Implement bounded SPI packet/ACK bridge and SNES bus/4KiB ROM decode for sink ABI, bind MCU guard/time/STOP. Replace38M9K framebuffer, full link/client space/fit/minimum changed checks then SMB3 hardware. Preserve save SRAM; no unchanged boot/A-B/044.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
-      "paired_candidate": "162 MCU+FPGA strict6B/E5",
+      "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
       "observation_reader": "NES-CLOCK-READER-088",
       "observation_configuration": "NES-CLOCK-CONFIG-089",
       "first_game_target": "cores/nes/first-game-target.json",
-      "latest_mcu": "NES-GAME162-DEV",
-      "limited_trial_candidate": "NES-GAME-162",
+      "latest_mcu": "NES-GAME164-DEV",
+      "limited_trial_candidate": "NES-GAME-164",
       "limited_trial_decision": "analysis/game164-verification.json",
       "limited_trial_instructions": "docs/nes-game164-instructions.ko.md",
       "short_recovery116_hardware": "117 short BASE/menu pass retained; full80 recovery subsequently passed in119",
@@ -303,6 +303,127 @@
         "held_down_tested": false,
         "run_rom_error": 0,
         "display_interval_ms": 60650
+      },
+      "video_research_after164": {
+        "document": "docs/nes-video-transfer-research.ko.md",
+        "evidence": "analysis/nes-video-transfer-research.json",
+        "status": "source_research_and_offline_format_budget_probe_complete_runtime_open",
+        "followup": "docs/nes-native-video-feasibility.ko.md",
+        "offline_probe": "analysis/nes-native-video-feasibility.json"
+      },
+      "native_chr165": {
+        "status": "actual_ppu_capture_pass_host_consumer_open",
+        "contract": "docs/nes-native-chr165-contract.ko.md",
+        "verification": "analysis/native-chr165-verification.json",
+        "binding_verification": "analysis/native-tap165-verification.json",
+        "binding_contract": "docs/nes-native-tap165-contract.ko.md"
+      },
+      "native_raster165": {
+        "status": "state_packet_boundary_pass_not_complete_frame",
+        "verification": "analysis/native-raster165-verification.json",
+        "contract": "docs/nes-native-raster165-contract.ko.md",
+        "next": "Native raster state packet passed, not whole-frame readiness. Next actual OAM/nametable/required BG-OBJ set, common CHR/state generation, bounded missing bytes and physical bank versions; then host CDC/SNES consumer replacing38M9K and minimum changed checks -> real SMB3. Raw Loopy v/t needs fetch-coordinate mapping. Keep164/audio/STOPmenu; no new package or unchanged broad tests.",
+        "hardware": false
+      },
+      "native_scene165": {
+        "status": "common_state_memory_lease_pass_required_tiles_open",
+        "verification": "analysis/native-scene165-verification.json",
+        "contract": "docs/nes-native-scene165-contract.ko.md",
+        "next": "Common NES-domain CHR/raster/CIRAM-OAM lease passed. Next actual BG/OBJ fetch coordinates, required physical tile set, mapper mirroring/bank versions and bounded missing-byte fill, then host CDC/SNES updates replacing38M9K. snapshot_valid is not complete-frame readiness. Minimum changed checks then real SMB3. Preserve164/audio/menu; no new package or unchanged broad replay.",
+        "hardware": false
+      },
+      "native_fetch165": {
+        "status": "physical_required_set_coordinates_pass_native_commands_fill_open",
+        "verification": "analysis/native-fetch165-verification.json",
+        "contract": "docs/nes-native-fetch165-contract.ko.md",
+        "next": "Actual pattern events and conservative physical required-set passed. Next bounded native BG-map/OBJ/row command consumer, physical tile allocation and bounded missing-byte fill, then host CDC/SNES replacing38M9K. Raw worst-case73472B event stream must not become whole-frame buffer/transfer. Snapshotvalid is not full readiness. Minimum changed checks then real SMB3; retain164/audio/menu, no unchanged boot/044 replay.",
+        "hardware": false
+      },
+      "native_commands165": {
+        "status": "PC_command_reference_SNES_pixels_pass_live_producer_fill_transport_open",
+        "verification": "analysis/native-commands165-verification.json",
+        "contract": "docs/nes-native-commands165-contract.ko.md",
+        "next": "PC native command reference and actual SNES model pixels PASS; NOTlive producer. Next online bounded fetch/raster producer +physical CHR fill and actual SMB3 workload together, then host CDC/ACK/SNES consumer replacing38M9K. Retain164/audio/menu; do not port PC full-event/shadow buffers or repeat unchanged boot/Questa/044. Minimum changed checks then real first level.",
+        "hardware": false
+      },
+      "native_compact165": {
+        "status": "online_RTL_replay_and_two_game_pictures_pass_split_pair_loss_open",
+        "verification": "analysis/native-compact165-verification.json",
+        "contract": "docs/nes-native-compact165-contract.ko.md",
+        "next": "FIRST resolve actual fetch error04 at split row185 col28/30 using first low/high physical/logical/descriptor mismatch and consumed planes; do not ignore fault. Then direct online compact binding and raster contract, bounded physical CHR fill/host CDC/ACK/SNES replacing38M9K, minimum fit and real SMB3. Current164 remains hardware candidate.",
+        "hardware": false,
+        "superseded_by": "native_planes165"
+      },
+      "native_planes165": {
+        "status": "mixed_plane_loss_fixed_nine_game_frames_and_SNES_pixels_pass_board_open",
+        "verification": "analysis/native-planes165-verification.json",
+        "contract": "docs/nes-native-planes165-contract.ko.md",
+        "next": "Corrected same-tile mixed-plane capture and directly connected compact replay PASS. Next common-generation fetch/compact/raster admission, bounded physical CHR fill, host CDC/ACK and actual SNES consumer replacing38M9K; minimum fit/changed checks then real SMB3. Preserve164/audio/STOPmenu; do not repeat unchanged boot/A-B/044.",
+        "hardware": false,
+        "superseded_by": "native_frame165"
+      },
+      "native_frame165": {
+        "status": "actual_core_common_frame_and_bounded_fill_interface_pass_physical_transport_open",
+        "verification": "analysis/native-frame165-verification.json",
+        "contract": "docs/nes-native-frame165-contract.ko.md",
+        "next": "Connect bounded fill to actual CPU/PPU-priority memory grant/response/flush, then host CDC/ACK and SNES consumer replacing38M9K. Minimum changed checks/fit then real SMB3 first level; no unchanged boot, split-cell, A-B or044 replay.",
+        "hardware": false,
+        "superseded_by": "native_memory165"
+      },
+      "native_memory165": {
+        "status": "actual_core_shared_reader_fill_pass_host_transport_open",
+        "verification": "analysis/native-memory165-verification.json",
+        "contract": "docs/nes-native-memory165-contract.ko.md",
+        "next": "Connect same-generation geometry/raster/CHR stream to host CDC and upload ACK, then actual SNES consumer replacing38M9K. Minimum changed checks and resource/timing fit, then SMB3 first-level hardware. No unchanged boot/planes/A-B/044 repetition.",
+        "hardware": false,
+        "superseded_by": "native_host165"
+      },
+      "native_host165": {
+        "status": "native_export_cdc_prepared_commit_pass_physical_host_open",
+        "verification": "analysis/native-host165-verification.json",
+        "contract": "docs/nes-native-host165-contract.ko.md",
+        "next": "Connect logical ready/valid records to actual SPI/MMIO and bounded MCU receiver, then SNES commands/vblank completion replacing38M9K framebuffer. Measure real packed bytes; minimum changed tests/physical fit then SMB3 first-level. No unchanged boot/planes/A-B/044 reruns.",
+        "hardware": false,
+        "superseded_by": "native_spi165"
+      },
+      "native_spi165": {
+        "status": "native_spi_rtl_c_receiver_pass_mcu_snes_runtime_open",
+        "verification": "analysis/native-spi165-verification.json",
+        "contract": "docs/nes-native-spi165-contract.ko.md",
+        "next": "Wire bounded C receiver/bulk callback into MCU game loop; implement bounded native SNES commands/vblank consumer and replace38M9K framebuffer. SRAM link/resource/timing and combined source lease/serial budget checks, then real SMB3 first level. Current serial sample39.59ms is NOT60fps.",
+        "hardware": false,
+        "superseded_by": "native_video165"
+      },
+      "native_video165": {
+        "status": "bounded_c_native_video_snes_model_pass_board_staging_open",
+        "verification": "analysis/native-video165-verification.json",
+        "contract": "docs/nes-native-video165-contract.ko.md",
+        "next": "Connect external staging callback and SNES vblank consumer/ACK; schedule MCU receive/build/upload in RUN with existing guard/STOP. Single candidate only, actual SRAM link, replace38M9K framebuffer, fit/timing/serial budget then SMB3 first-level hardware. No repeated unchanged boot/A-B/044.",
+        "hardware": false,
+        "superseded_by": "native_stage165"
+      },
+      "native_stage165": {
+        "status": "wram_c_delta_snes_model_pass_save_sram_preserved_mailbox_open",
+        "verification": "analysis/native-stage165-verification.json",
+        "contract": "docs/nes-native-stage165-contract.ko.md",
+        "next": "Preserve cartridge SRAM/save/recovery contents. Connect SNES bank7F mailbox and display ACK; avoid full table MCU readback using SNES-local comparison/batching. Then RUN scheduler, full SRAM link, replace38M9K, fit/minimum changed checks and SMB3 first-level hardware. No unchanged boot/A-B/044.",
+        "hardware": false,
+        "superseded_by": "native_local165"
+      },
+      "native_local165": {
+        "status": "snes_local_diff_dynamic_dma_model_pass_mailbox_open_not60fps",
+        "verification": "analysis/native-local165-verification.json",
+        "contract": "docs/nes-native-local165-contract.ko.md",
+        "next": "Connect actual MCU-to-SNES WRAM receive, local compare and token/generation display ACK; preserve save SRAM and service input/STOP during comparison. Then full link/client space/replace38M9K/fit/minimal changed tests and SMB3 hardware. No unchanged boot/A-B/044 or generic diagnostic expansion.",
+        "hardware": false,
+        "superseded_by": "native_sink165"
+      },
+      "native_sink165": {
+        "status": "c_snes_receive_display_ack_roundtrip_pass_spi_bridge_open",
+        "verification": "analysis/native-sink165-verification.json",
+        "contract": "docs/nes-native-sink165-contract.ko.md",
+        "next": "Implement bounded SPI packet/ACK bridge and SNES bus/4KiB ROM decode for sink ABI, bind MCU guard/time/STOP. Replace38M9K framebuffer, full link/client space/fit/minimum changed checks then SMB3 hardware. Preserve save SRAM; no unchanged boot/A-B/044.",
+        "hardware": false
       }
     },
     {

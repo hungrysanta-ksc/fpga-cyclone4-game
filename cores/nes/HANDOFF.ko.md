@@ -1,3 +1,299 @@
+# NES 현재 인계 — C와 SNES 수신·표시 응답 왕복
+
+PR107 같은 브랜치. [계약](../../docs/nes-native-sink165-contract.ko.md) · [검증](../../analysis/native-sink165-verification.json). 설치164 유지. 카트리지 SRAM/세이브/복구 영역 사용금지, 기존 GBC/164 사운드·입력·STOP 코드 무변경. 새SD없음.
+
+sink01: C producer와 실제SNES65816/SPC/WRAM/PPU 동시 실행, 파일 mailbox로227packet/ACK 왕복. ACK는실제SNES쓰기이며호스트주입아님. 실제SPI/FPGA/MMIO/MCU게임루프는미연결. 기존변환된frame12/15재사용, converter 재실행/새boot없음. normal137packets/3commits(두장면+noop)/18727packetB+1644ACKB, stop90/1commit/12462B+1080B. 4캡처229376activepixels 일치(고유2장면114688). 실제compare6/2/0명령,5493/18/0B. 정상끝invalidsectionE0;두번째비교STOP E4/새DMA게시없음. C IOfail/staleserial/gen/sequence/badACK5거부;BUSY재진입금지. SPC A9/visiblevblank/forcedblank없음/모델DOWNsample150/94,물리소리·입력유지증명아님.
+
+새 C sink24B ARM(호스트32),text704B,직접stack packet304/seal88/pattern24+callback중첩. 이전stage460B 대신쓸경로, old/new표읽기없음. nominal60340/65424차이5084 NOTfull-link/heap/stack승인. SNES body2651B/ROM4096B로기존2048decode와호환안됨. 기존164에client만설치금지. 헤더/상태1200..1239,수신량1080..108B,local의1000/1100/DP40..6F 유지,body7E2000. 정확한ABI는계약필독.
+
+packet16Bheader+최대240data,BEGIN1/DATA2/SEAL3. serial32정확+1,seq16장면내+1,gen16;DATA section0..5연속offset/상한/SEAL실제길이 확인. ACK12B(status/op/seq/serial/gen/65/9A),status1은표시완료뿐. 게시전C BUSY,응답모호/오류는FAULT공통reset필수/재시도금지. 이전stage의미게시실패재시작규칙을그대로상속금지. SNES badheader는ACK없이quiet;adaptertimeguard필수. STOP은comparison반환후DMA전검사(물리최대지연/메뉴복귀검증아님).
+
+NEXT **SPI packet/ACK 하드웨어와 SNES bus/4KiBROM decode** 구현. ready6000/STOP6001/length6004..5,packet400000..4000FF,ACK6010..1B/publish601C=A5,pad6002..3. packet완전CRC/길이검사후immutable게시;ACK원자retire;공통reset. 기존164 framebuffer40뱅크/6000와동시활성금지. 새paired식별을명시하고기존6B/E5무조건허용금지. Cexchange callback에유한guard/time/STOP 연결하고긴wait가mainloop오디오/입력/로그를막지않게한다. 이후38M9K교체/full-link/fit변경경계검사후SMB3첫레벨실기. 새generic진단/같은boot/A-B/044반복금지. SPI39.59ms/compare29.7ms/60fps는미해결. 테스트의파일폴링/캡처ACK지연시간을전송성능으로쓰지않는다.
+
+기존publicpins/archives보존. 완료probes/nes-native-sink165 record/audit/publish재실행금지. 개인GitHub/한국어4PR절/사용자머지.
+
+---
+
+# NES 현재 인계 — SNES 내부 비교 완료, 실제 전송 연결 우선
+
+PR107 같은 브랜치, 아직 실기165 패키지는 없다. [새 계약](../../docs/nes-native-local165-contract.ko.md) · [검증](../../analysis/native-local165-verification.json). 설치164 사운드/입력/STOP/메뉴·GBC 저장 무변경. 카트리지 SRAM·세이브/복구 영역 사용금지. SNES WRAM7F 주소를 MCU sram_*에 연결금지.
+
+local03: 실제65816 비교938B+동적업로더288B, SNES7F 두32KiB 후보. 기존video03 두장면만 재사용, CPU가 만든6/2명령과114688픽셀 일치. 최초5493logical/5472PPUDMA,다음18B. 9사례:2장면/역방향무변경/주소/크기/64B경계병합/예산/32명령/oddHDMA. visible데이터쓰기vblank. local01/02도 보존;03 fixture WRAM초기화로MVN미초기화읽기 제거. 일반NES코어부팅/FLOAT 반복없음.
+
+성능: 두 번째 비교2595110→693782→638300masterticks(약120.8→32.3→29.7ms), 무변경564700(26.3ms),명령초과1356928(63.2ms,초기보다느림). 모델이고송수신/표시대기/MCU변환 제외,60fps아님. 두후보전체MCU재독출10986B174calls를 대체할 수 있는 코드지만 실제호출부/왕복은아직교체안함. SPI39.59ms와후보5493B공급 남음. 미세최적화만계속하지말고실제연결의병목측정우선.
+
+ABI: nativeA/X16 DBR/DP0,DP40..6F;길이1000/1010,base1020/1022,display1024,status1025,count1026,charged1028,payload102A,scroll102C/102E,budget1030,list1100..11FF,uploadscratch1070. status3는로컬완료이며물리ACK아님. 비교중및게시목록/후보소유권불변,serial/gen완료게시필수. 서비스callback은scratch보존;시험padpolling은실기입력/사운드연속증명아님. HDMA포인터는무변경에도새후보로전환.
+
+NEXT 실제 MCU→SNES WRAM 수신+localcompare호출+표시ACK를 묶어서 연결. 긴 비교에도입력/STOP/수신 살아있게 스케줄. 실제client 공간(시험ROM2964B는배치승인아님)/MCU전체link·heap·중첩stack/38M9K교체·fit 변경경계 검사후 SMB3첫레벨실기. 기존C stage460B는참고소유권모델이며그대로전체표재독출연결금지. 같은boot/A-B/044 재검사하지않음. 이후60초제한/오류·reset로그/DOWN유지. 기존모든pins/archives보존;완료probes/nes-native-local165 record/audit재실행금지.
+
+---
+
+# NES 현재 인계 — 세이브 SRAM 보호와 WRAM 차분
+
+PR107 같은 브랜치. [새 계약](../../docs/nes-native-stage165-contract.ko.md) · [검증](../../analysis/native-stage165-verification.json). 사용자 지적에 따라 U511 카트리지 SRAM을 영상 저장소로 쓰겠다는 제안을 철회했다. 로컬 SA-1/GSU는 E00000–E7FFFF를 별도 RAM으로 보내며 IS_SAVERAM 쓰기도 연결한다. 모든 코어의 물리 저장 위치가 같다는 뜻은 아니다. 기존 GBC E20000 snapshot/복구 영역까지 보호. **카트리지 SRAM·세이브/복구 영역을 영상용으로 전용하지 않는다.** 기존164 RAM_WE=1/데이터Z와 원본 저장 코드 무변경, 실기 쓰기 없음.
+
+stage02: SNES WRAM bank7F의 두32KiB 후보, 단일 MCU 관리 구조 ARM460B. C 차분/순차 pattern staging/64B step/최대32명령/serial32+gen16 ACK. 미게시 실패만 폐기·재시작, 게시 전 arm하고 모호한 실패/실패ACK는FAULT 유지·commonreset 필수. 오래된 ACK 무시/무변경도 ACK. 9거부+경계병합/축소재확장/소유권 검사PASS. stage01 CPU HDMA복사 PASS도 보존하고 stage02 직접bank7F HDMA 선택. 매 commit마다 HDMA포인터를 새 후보로 변경, 바이트동일/0명령이어도 생략금지. WRAM->WRAM DMA 금지.
+
+기존video03 두 장면 재사용. C 생성5493논리B6명령(HDMA21제외 초기PPUDMA5472)/다음18B2명령, 실제SNES WRAM DMA/PPU114688픽셀 일치/vblank226. C의ACK는host 주입; ROM fixture로 WRAM 공급한 모델이며 MCU mailbox/물리 왕복은 미구현. 새로운 코어boot/FLOAT 없음.
+
+**성능 주의:** 18B는 PPU 갱신뿐. 새후보5493B쓰기+10986B/174회읽기를 그대로 MCU로 왕복시키면 병목. bank7F는SNES주소이며 기존MCU sram_*에연결금지. 다음에는SNES 내부비교 또는 묶음 결과를 실제client/mailbox/표시ACK에연결하여 전체표 MCU재독출을피한다. 기존SPI39.59ms도미해결. 새 일반진단을 늘리지 않는다.
+
+ARMtext1290/step직접stack168. 단순합계60776/링커65424차이4648은전체link/heap/중첩callback/IRQ승인아님. 관리구조2개/전체MCUshadow금지. 실제 RUN 스케줄/전체링크/38M9K교체/fit 뒤 SMB3첫레벨실기로간다. 사운드·입력·STOP메뉴/설치164 유지. 새165SD 없음. 사용가능화면뒤60초제한/오류·reset로그/DOWN유지. old pins/archive 불변, probes/nes-native-stage165 완료record/audit재실행금지.
+
+---
+
+# NES 현재 인계 — 유한 C 표시 변환과 SNES 픽셀 일치
+
+PR107 같은 브랜치. [새 계약](../../docs/nes-native-video165-contract.ko.md) · [검증](../../analysis/native-video165-verification.json). C수신기 COMMITTED 장면→SNES BG/OBJ/맵/OAM/CGRAM/HDMA 변환기를 구현했다. 선택video03: 서로 다른 실제SMB3 frame12/15를 재사용,114688픽셀을 실제SNES CPU/DMA/PPU 모델에서 원본과 일치시켰다. 새boot/RTL/FLOAT없음. PC가업로드명령과차분을조립하므로 MCU루프/실기전송은아직미완료.
+
+stage callback은BG16/OBJ32바이트를외부임시저장소에만쓰기;직접표시VRAM금지. 완성전실패시후보전체폐기/재시도없음. C valid≠SNES표시ACK. BG는정확한61비트physical+plane-mapping키(해시아님),OBJ tag/mask키. rank정렬/실제mask/팔레트경계분할/행32개평가한도/1023BG·128OBJ패턴상한. 후보별키재할당,장면간캐시는아님. 6거부각2사례+복구PASS. 초기5493B6명령/다음18B2명령/vblank226. 작은부팅표본차이이며FPS/첫레벨부하아님.
+
+메모리 중요:02패턴전체보관27662B는baseline26364+receiver18064=72090B로64KB초과여서미채택.03은패턴stream/키만보관하여candidate15888B;합계60316B/링커RAM65424B 차이5108B는heap/stack/정렬/새bus미반영 단순합계. ARMobject2216B/directstack704B. 두candidate/64KBshadow 추가금지. 실제전체링크와callback/인터럽트stack확인필수. harness의pattern전체배열은PC staging모델뿐.
+
+**NEXT:** 외부staging 버스와 SNES vblank 소비자/완료ACK를 구현하고 MCU RUN 수신·변환·업로드 스케줄을 연결한다. 기존50ms대기를그대로두면수신기한불가,1200회카운트를새작업과합쳐실제60초로오인금지. 오류/CF86/STOP·사운드/입력보존. 단일candidate/외부staging,전체SRAM링크,기존38M9K프레임버퍼제거교체,FPGAfit/타이밍/직렬39.59ms예산을확인뒤SMB3첫레벨실기. 현재56/56M9K에단순추가금지. 같은boot/A-B/044반복금지. 사용가능영상뒤60초제한/오류·본체reset로그/DOWN유지.
+
+01컴파일들여쓰기경고/02픽셀PASS이나메모리초과설계보존.03선택,기존archive/pin수정없음. probes/nes-native-video165 완료record/audit재실행금지. 설치164/개인GitHub/한국어4PR절/사용자머지.
+
+---
+
+# NES 현재 인계 — SPI 접속부와 유한 C 수신기
+
+PR107 같은 브랜치. [새 계약](../../docs/nes-native-spi165-contract.ko.md) · [검증](../../analysis/native-spi165-verification.json). 실제 SPI D0~D3/256바이트 버퍼, 기존 host84MHz mailbox 연결, 기존149 가드 엔진의1~259바이트 생성 변형, 유한 C 수신기를 구현했다. **MCU 게임 루프/SNES 명령 소비자/38M9K 교체/fit/실기 미완료.** ARM 오브젝트 컴파일을 실기 성공으로 해석하지 않는다. 설치164 유지.
+
+선택spi04 RTL + c05 C. 이전host02 frame12의1717레코드 재사용, 새boot없음. 두 위상0/3.5ns에서47블록/191요청 모두 C 요청과 일치,1714데이터 레코드/15타일240바이트 동일. packed11196B/wire12489B/CS간격 포함39.59ms: 이 직렬 구간만으로60fps 불가, 최종FPS 아님. CHR한바이트당레코드 유지, 타일묶기/차분전송 미구현. bulk1355가드/오류사례 PASS. C저장18064B/ARMtext2176B/poll직접stack560B; 실제전체SRAM링크필요.
+
+STATUS D6+flags/token/len/CRC8, READ payload+CRC16, 전체READ후token POP. POP/D3응답은명령반영전이므로후속STATUS필수. C는COMMIT후POP확인유실도FAILED/게시금지. PREPARED≠SNES표시완료. prepare(false)/IOfail은현재세션failstop,정상ABORT는IDLE. commonreset때C도reset;독립endpointreset금지/무조건재시도금지. 부모boot/native MISO 배타연결COMPILE만;물리CDC/타이밍미검증. 새SPI결선만exportMAX4194304/fillMAX2097152/WAIT131072 정책,기존기본값불변. source와serial을연결한기한시험아직없음/512타일처리보장아님.
+
+**다음:** C receiver + bulk callback을실제게임루프에연결하고기존SNES참조를유한C명령/vblank소비자로이식한다. 기존38M9K프레임버퍼를교체하며현재56/56M9K에단순추가금지. STOP/error/reset/사운드·입력스케줄과합산SRAM·배치·타이밍확인뒤SMB3첫레벨실기. generic진단/같은boot/A-B/044반복금지. 현재40ms전송병목은계측근거로줄이되SPI속도무근거상향금지. 사용가능화면뒤60초제한/오류·본체reset로그/DOWN유지.
+
+초기01폴더중복/02wire선언/03MinGW출력형식/04bulk누적poll상한실패보존.04RTL/C통과재사용하고05는시험누적상한수정+terminalIO음성검사만재실행.05sandbox DLL오류뒤host실행통과,라이선스오류아님. oldarchive/publicpins불변. probes/nes-native-spi165 완료record/audit재실행금지. 개인GitHub/한국어4PR절/사용자머지.
+
+---
+
+# NES 현재 인계 — 장면 전송·호스트 클록 경계·PREPARED/COMMIT
+
+PR107 동일 브랜치. [새 계약](../../docs/nes-native-host165-contract.ko.md) · [검증](../../analysis/native-host165-verification.json). 기존 공유 reader를 유지하고 공통 장면 query/fill을96비트 레코드로 전송하는 exporter, 순방향96/역방향17비트 mailbox를 연결했다. 부모 전체는 컴파일만 했고 host포트는논리ready/valid다. **실제SPI/MMIO·MCU·SNES업로드/표시완료·fit·새SD는미완료.** PC수신기를펌웨어로오인하지않는다.
+
+BEGIN→query0..5→fill바이트→END→호스트PREPARED/REJECT→COMMIT/ABORT. END는표시허가아님. 같은generation ACK시에원본lease를다시검사하고COMMIT만표시후보로승인한다. 잘못된세대ACK무시. timeout/실패시원본해제+ABORT,이미넘긴임시레코드는회수하지않는다. host멈춰ABORT미수락이면새장면시작금지. 기본전체1048576NES클록,시험262144;fill65536wait/262144total유지. 공통reset양쪽필수/수신임시데이터도flush.2FFtoggle+수신추가1edge/helddata,실제CDC STA/MTBF미검증.
+
+host02 11사례: 이전실제SMB3봉인frame12/14/16/18/20재생+실제fill/export/CDC,backend는ROM바이트지연모델. 기존memory01공유reader/CPU기한근거재사용,새boot없음. 정상5phase/역압력/호스트clockpause/옛ACKPASS. querymiss/REJECT/ACKtimeout/END후lease취소4ABORT0COMMIT. 추가로host정지중다음generation이이미봉인된경우이전ABORT후다음장면COMMIT복구. 전송중commonreset후65535세대만COMMIT. verify02 PC수신5거부,정상286720+reset57344+취소복구57344픽셀일치. 기존SNES명령참조연결:첫5493B6명령/이후0,5부팅영상동일이라움직임·첫레벨·FPS아님. 새SNES실행없음.
+
+레코드kind3/gen16/index13/data64. 정상1717레코드=원시20604B,기존2226B압축위치량과혼동금지. query6전체8192는host로안보낸다. **다음:** 실제SPI/MMIO접속부+유한MCU수신/검사/PREPARED/COMMIT을연결하고유효폭·타일단위패킹/실제전송예산확정. SNES명령/vblank완료와38M9K교체를묶는다. 현재56/56M9K에추가만금지. 변경경로최소검사/실제fit뒤SMB3첫레벨실기. generic진단확장·같은boot/planes/A-B/044반복금지.164사운드/STOP메뉴유지;사용가능영상뒤60초제한/오류·본체reset로그/입력유지.
+
+최종선택host02/verify02. 초기host01/verify01도보존. 최종리뷰에서ABORT대기중다음generation이봉인되면DRAIN이멈추는조건을수정했고11번째사례로복구검증. 이전archive/pin불변. 완료record/audit재실행금지. 개인GitHub/한국어4PR절/사용자머지.
+
+---
+
+# NES 현재 인계 — 장면 전송·호스트 클록 경계·PREPARED/COMMIT
+
+PR107 동일 브랜치. [새 계약](../../docs/nes-native-host165-contract.ko.md) · [검증](../../analysis/native-host165-verification.json). 기존 공유 reader를 유지하고 공통 장면 query/fill을96비트 레코드로 전송하는 exporter, 순방향96/역방향17비트 mailbox를 연결했다. 부모 전체는 컴파일만 했고 host포트는논리ready/valid다. **실제SPI/MMIO·MCU·SNES업로드/표시완료·fit·새SD는미완료.** PC수신기를펌웨어로오인하지않는다.
+
+BEGIN→query0..5→fill바이트→END→호스트PREPARED/REJECT→COMMIT/ABORT. END는표시허가아님. 같은generation ACK시에원본lease를다시검사하고COMMIT만표시후보로승인한다. 잘못된세대ACK무시. timeout/실패시원본해제+ABORT,이미넘긴임시레코드는회수하지않는다. host멈춰ABORT미수락이면새장면시작금지. 기본전체1048576NES클록,시험262144;fill65536wait/262144total유지. 공통reset양쪽필수/수신임시데이터도flush.2FFtoggle+수신추가1edge/helddata,실제CDC STA/MTBF미검증.
+
+host01 10사례: 이전실제SMB3봉인frame12/14/16/18/20재생+실제fill/export/CDC,backend는ROM바이트지연모델. 기존memory01공유reader/CPU기한근거재사용,새boot없음. 정상5phase/역압력/호스트clockpause/옛ACKPASS. querymiss/REJECT/ACKtimeout/END후lease취소4ABORT0COMMIT. 전송중commonreset후65535세대만COMMIT. verify01 PC수신5거부,정상286720+reset57344픽셀일치. 기존SNES명령참조연결:첫5493B6명령/이후0,5부팅영상동일이라움직임·첫레벨·FPS아님. 새SNES실행없음.
+
+레코드kind3/gen16/index13/data64. 정상1717레코드=원시20604B,기존2226B압축위치량과혼동금지. query6전체8192는host로안보낸다. **다음:** 실제SPI/MMIO접속부+유한MCU수신/검사/PREPARED/COMMIT을연결하고유효폭·타일단위패킹/실제전송예산확정. SNES명령/vblank완료와38M9K교체를묶는다. 현재56/56M9K에추가만금지. 변경경로최소검사/실제fit뒤SMB3첫레벨실기. generic진단확장·같은boot/planes/A-B/044반복금지.164사운드/STOP메뉴유지;사용가능영상뒤60초제한/오류·본체reset로그/입력유지.
+
+이번선택host01/verify01,실패실행없음. 이전archive/pin불변. 완료record/audit재실행금지. 개인GitHub/한국어4PR절/사용자머지.
+
+---
+
+# NES 현재 인계 — 기존 ROM reader를 공유하는 CHR 보충
+
+PR107 동일 브랜치. [연결 계약](../../docs/nes-native-memory165-contract.ko.md) · [검증 결과](../../analysis/native-memory165-verification.json). 아래 과거 인계의 PSRAM arbiter 미연결 상태를 갱신한다.
+
+**완료:** memory01 실제 SMB3 CPU/PPU/MMC3+70ns PSRAM 모델에 공통 장면→fill→arbiter→기존 READ16 reader를 연결했다.20프레임 CPU/PPU 바이트·기한 검사 통과, 기존20출력 동일. frame12/14/16/18/20에15타일240바이트씩 총1200바이트 정확; 실제 받은 CHR로286720픽셀 일치. generation은12~16으로 frame과 다르다. 보충 뒤 전체8192 필요 비트를 진단 덤프하여 다음 프레임 수집을 건너뛴다. 제품 FPS나60fps 증명이 아니다. reader 원본 해시 유지, CPU/PPU CE/캐시 동작 무변경. 부모 joint는 동일 생성물 컴파일만 했으며 MCU/SPI/SNES 전체 실행은 아니다.
+
+안전 구간은 NTSC/MMC3 전용: div_cpu3, PPU242<=line<260, 현재 상위ROM읽기 캐시 hit, CPU/PPU/prefetch 대기 없음, reset/pause/DMA/DMC 없음, reader준비/core새요청없음. core 우선. 응답 조건7NES클록/실제최대5; 배치STA/MTBF/모든클록·매퍼 보장 아님. arbiter01 8위상1352검사: 우선순위/금지구간/응답분리/취소배출/공통reset/메모리클록정지·회복/잘못된주소·오류 PASS. 취소·timeout으로readerreset하거나소유권풀지않는다. 공통reset은reader도함께. 보충시작/진행중hostquery차단;fill_idle은옛보충응답없음. 기존fill기본1024는유지하고이결선만wait65536,total262144,max512tiles/8192B. success는hostACK아님;임시바이트는실패시폐기.
+
+**다음:** 같은generation의 위치/행/보충바이트를hostCDC·수신저장·업로드ACK로연결하고SNES명령소비자와38M9K픽셀버퍼교체를묶는다. 현재56/56M9K에단순추가금지. 시험의8192전체재조회는제품경로에넣지않는다. 최소변경검사/실제자원·타이밍뒤SMB3첫레벨실기. 같은20boot/planes/합성A-B/044무변경반복금지. 첫레벨·버튼·장시간부하는이번미검증. 설치후보164/163사운드/STOP메뉴유지;새SD없음. 화면·사운드확보뒤60초제한·오류/본체reset로그·입력유지.
+
+선택memory01/arbiter01/verify01. 이번실행실패없음;이전archive/pin불변. probes/nes-native-memory165의완료record/audit재실행금지. 개인GitHub/한국어4PR절/사용자머지.
+
+---
+
+# NES 현재 인계 — 실제 코어의 공통 장면과 유한 CHR 보충
+
+PR107에 추가했다. [계약·재현·다음 연결](../../docs/nes-native-frame165-contract.ko.md) · [검증 요약](../../analysis/native-frame165-verification.json).
+
+**완료:** 새 `nes_native_frame165`가 planes/compact와 새 raster_frame을 같은 NES 클록·generation·release로 연결한다. 이전 CIRAM/OAM 스냅샷의 무변경 조건은 중복 요구하지 않는다. 실제 CPU/PPU/MMC3에 동일 BINDING을 연결한 frame03에서20프레임을 실행했고 이전 픽셀20개는 동일했다. 표시1~11은 거부,12~20은 모두224행/30BG묶음/2OBJ/2예외/7401이벤트/2226위치바이트다. 공통 조회 포트의 데이터로516096픽셀이 원본과 완전히 일치했다. 필요 물리 타일은 이 부팅 표본에서15개/240바이트다. 첫 레벨·60fps 증명이 아니다.
+
+`geometry_valid`는 타일 바이트/호스트/SNES 준비 완료가 아니다. mask1e/연속 팔레트2버전/동일 배경색을 요구한다. 행 중간 fineX·팔레트·mode·mask 변경은 거부한다. v/t 접근은 scroll_seen으로 기록하되 전체 실제 fetch/압축/행 완성이 함께 있어야 한다. 다른 raster 오류를 무조건 무시하지 않는다. 공통 generation은 required-set의16비트 번호만 사용하며 공유 release가 모두 취소한다. 첫 raster 행 이전 ROMfault로 PPUCE가 멈춰도 실패를 반환한다. query kind0..6/범위/generation 검사, error24=ROM/23:16raster/15:8compact/7:0fetch. 조회는 NES 클록 전용이다.
+
+새 `nes_native_fill165`는 최대512물리타일/8192바이트·총262144클록·단계1024클록으로 제한한 보충 인터페이스다. 한 번에 한 요청·한 바이트만 보관하고 실제 tag/lane 주소를 쓴다. 캐시 hit 최적화는 아직 없으며 필요한 타일의16바이트 전체를 공급한다. source generation/valid, 조회, 응답 주소/번호/오류, grant·응답·sink대기와 총 예산을 검사한다. 완료 전 바이트는 임시이며 실패하면 폐기한다. 완료 뒤 lease가 취소되어도 success를 막는다. pending 취소/reset은 quarantine과 mem_abort를 거치며 **mem_idle은 미래의 옛 응답이 없다는 flush ACK**여야 한다. 단순 버스 유휴를 연결하면 안 된다. start 수락 조건과 done/clear는 계약 문서를 따른다.
+
+선택 lease04:1740검사/9합성장면/7거부, 실제 공통조회→fill 직접 연결33타일528모델바이트 PASS. 선택 fill03:9실제필요집합+15경계/오류/취소사례 PASS, 각 정상240ROM바이트 정확. lookup와메모리backend는 모델이며 **실제 PSRAM arbiter 연결은 아직 없다.** frame03은 실제 코어 결선, 부모 전체는 컴파일만 했다. verify01은 공통query→독립픽셀 참조다. 새 SNES 모델/fit/ARM/SD는 이번에 실행하지 않았다. 기존 SNES 플레인 소비자 검증은 재사용한다.
+
+**NEXT 최우선:** 기존 ROM서비스의 CPU/PPU 기한을 보존하는 grant/응답/flush adapter를 실제 메모리 경로에 연결한다. 무조건 보충읽기/새독립PSRAM소유자/CPU정지는 금지. 이어 같은 장면의 hostCDC·업로드ACK·SNES명령 소비자와38M9K픽셀버퍼 교체를 묶어 구현한다. 현재56/56M9K에단순추가금지;PC전체이벤트/VRAM그래프를그대로이식하지않는다. 최소변경검사/실제fit뒤 SMB3첫레벨실기로간다. 이미 통과한 같은20프레임/플레인관측/합성A-B/044는 무변경 반복하지 않는다.
+
+164 사운드·STOP메뉴/설치후보 유지. 실기 영상이 사용 가능해진 뒤60초 제한·오류/본체리셋 로그·장시간입력유지. 개인GitHub/한국어4PR절/사용자머지. 과거archive/pin/완료record 불변. 실패보존:frame01/02는선언컴파일,lease01은합성행간격을줄여33복사클록위반,fill01은signed -1비교 검사기오류. lease02/03·fill02통과도보존했고완료뒤취소조건을보강한최종04/03선택. FLOAT 라이선스 문제 없음. 모델의fill클록수/기본예산은물리WCET/속도증명이아니다.
+
+---
+
+# NES 현재 인계 — 분할 경계 타일 누락 해결
+
+PR107에 이어서 기록했다. [계약·재현·다음 구현](../../docs/nes-native-planes165-contract.ko.md) · [검증 요약](../../analysis/native-planes165-verification.json).
+
+**원인 확정:** 원본 PPU는 같은 BG 타일에서 저·고 플레인을 서로 다른 fine Y로 읽는다. NES 193행의 dot216에서는 1→0(표시185행28열), dot232에서는 0→1(30열)이다. 실제 BgPainter 66,528쌍의 입력·로드 레지스터를 대조했다. 기존 7개 거부의 직접 원인은 수집기의 동일 행 강제 조건이었다. 특정 CPU 쓰기 명령의 인과까지 추적하지는 않았다.
+
+새 `nes_native_planes165.sv`는 같은 물리/논리 타일·속성·위치의 BG만 허용하고 bit56(혼합 표시), bit55:53(저 fine Y)을 추가한다. 고 fine Y는 bit15:13을 유지한다. 다른 타일/은행과 혼합 OBJ는 거부한다. 새 `nes_native_compact_planes165.sv`의 예외 표는 20비트×최대128개다. 첫 열·128/129개 경계·형식 거부 시험을 통과했다. 논리 RAM은 28,384비트(+384)이며 실제 M9K/LAB/타이밍은 미확인이다. 기존 pinned fetch/compact/raster/164는 보존했다. 이전 소비자는 확장 비트를 모르므로 그대로 연결하지 않는다.
+
+`pair01`은 실제 20프레임 관측이다. `planes01`은 같은 에지·간격을 재생해 새 fetch→compact를 직접 연결했다. **새 생산자를 실제 게임 인스턴스에 직접 결선한 시험은 아니다.** 표시12~20프레임 전부 7,401이벤트/30 BG묶음/2 OBJ/2 예외/2,226 위치바이트를 보존했고 원본516,096픽셀과 일치했다. 기존 수집기를 함께 재생하면 이전 7개 오류04가 재현되며 정상 이벤트는 전부 동일하다. 6개 오류 주입과 `limits01`의 6개 새 형식 사례도 통과했다. 완성 CHR는 PC ROM이 공급했으며 기판 보충은 미구현이다.
+
+`snes01`은 서로 다른12→15번째 화면114,688픽셀이 일치했다. 처음5,493바이트/6명령, 변경22바이트/2명령이며 vblank226행에 완료했다. 추가 blank는 없었다. 부팅 표본이므로 애니메이션 최악량/FPS/첫 레벨 증명으로 확대하지 않는다. 이전 `stream02`의 전체20프레임 픽셀·이벤트·행 상태·판정은 정확히 재현됐다. 관측 스크립트 문자열만 정리하고 Python AST 동일성을 확인했다. RTL 실행 후 기능 변경은 없다. 원시 로그/실행 소스/판독값은 비공개 보존했다.
+
+**NEXT:** 혼합 셀 문제는 닫고 수정 수집기·압축기·raster를 같은 세대의 게시 경로로 연결한다. 접근 자체를 거부하는 raster 오류10은 실제 셀/행 표현 계약에 맞춰 연결하며 모든 경우에 무시하지 않는다. 유한 물리 CHR 보충 → host CDC/업로드 ACK/실제 SNES 소비자 → 기존38M9K 픽셀 버퍼 교체/최소 fit → 실제 SMB3 첫 레벨 순서다. 현재56/56M9K에 단순 추가할 수 없다. 이번 PC 가공과 완성 CHR 공급을 실기 구현으로 오해하지 않는다. 같은 부팅/타일 관측/합성 A-B/044를 변경 없이 반복하지 않는다.
+
+164 사운드·STOP/메뉴·설치 후보를 유지하며165 패키지는 없다. 이후60초 제한·오류/본체 리셋 로그·장시간 입력 유지를 다룬다. 개인 GitHub·한국어4개 PR 항목·사용자 머지를 유지한다. 완료된 private record를 재실행하거나 과거 archive를 수정하지 않는다. 첫 실행은 샌드박스 호스트 식별 차이로 중단되어 기존 FLOAT를 호스트에서 실행했다. 새 라이선스는 필요하지 않았다. 테스트 컴파일 오류는 없고 의도적 거부는 통과 조건이다. 기록 도중 LF 정규화 해시와 원본 CRLF 해시를 혼동한 검사기는 구분 필드를 추가해 바로잡았으며 실제 시험 결과에는 영향이 없다.
+
+---
+
+# NES 현재 인계 — 온라인 압축과 실제 분할 경계 확인
+
+PR107에 추가했다. [계약·검증·다음 순서](../../docs/nes-native-compact165-contract.ko.md) · [검증 자료](../../analysis/native-compact165-verification.json).
+
+온라인 생산자는33BG셀 비교/최대32행그룹,128OBJ조각,128fine Y예외만 저장한다. 데이터RAM28000비트는 논리량이며 실제M9K/LAB/타이밍은 아직 모른다. 같은 행을 재사용하고 평가순위별 OBJ를 합치므로 전체 이벤트 버퍼/정렬 그래프는 없다. 변경 BG행을33클록 복사하는 동안 새 BG가 오면 보류한다. 소유권·범위조회·release/새 빈 세대·시작 오류·용량 초과를 포함한10사례 PASS. 실제 게임 이벤트 간격 재생이며 게임 인스턴스에 새 압축기를 직접 결선한 실행은 아니다.
+
+실제 SMB3 부팅20프레임에서1~11은 표시 비활성,12~20은mask1e였다.13·17의7401이벤트는30BG그룹/2OBJ/2fineY예외로2226바이트 위치정보가 됐다. 원본 PPU와 완전 일치했고 PC RowConsumer→실제SNES 모델 두 화면114688픽셀도 일치했다. 두 화면은 서로 같아서 첫5493바이트/6명령 후0바이트다. 움직임 대역폭/FPS로 확대하지 않는다. 첫 레벨이나 버튼 입력은 이번 대상이 아니다. 완성 CHR는PC가ROM에서 공급했으며 기판 보충 구현이 아니다.
+
+실제185행(NES193행)에서 일부 셀만fineY가 달라 기존 참조의 행 전체 동일 조건이 실패했다. 새 예외 RAM과파생패턴2개로 보존한다. 기존 rastererror10은 접근 자체 거부라PC참조에서만 별도로 해석했고 다른 오류는 거부했다. 이전 pinnedraster/보드 게시게이트는 그대로다. 실제 gate를 완화하기 전 per-cell데이터와행상태가 함께 완전하다는 계약을 연결해야 한다.
+
+**NEXT 최우선:**12/14/16/18/20프레임의185행28열,15/19의185행30열에서fetch오류04로BG1셀이 빠진다. 첫 거부의 실제 저/고 물리·논리주소/설명자와 실제 PPU 플레인을 관측해 원인을 확정하고 합법적 혼합이라면 제한된 예외로 표현한다. 분할 VRAM변경과 관련된 것으로 추정하지만 어느 pair 비교가 실패했는지는 아직 모른다. 오류04 무시/이전타일 대체 금지. 이 수집 문제를 남긴 채 다른 진단·보충부터 늘리지 않는다.
+
+이후 온라인 생산자 직접 결선·raster 표현 계약→물리 CHR유한보충/hostCDC/ACK/SNES소비자→기존38M9K픽셀버퍼교체/최소fit→실제SMB3 첫 레벨 순서다. 이미 평가된 fetch를 쓴다면 이전CIRAM/OAM 스냅샷의 무변경 조건을 중복필수화하지 않는다. 현재56/56M9K에단순추가금지.164사운드·STOP메뉴/설치후보유지;새SD패키지없음. 그 뒤60초 제한·오류/본체리셋로그·장시간입력유지.
+
+stream01 선언컴파일/compact01 cell예약어/rows01 동일화면0예산거부를기대한검사기실패 보존;각02선택. 완료된 record/finalizer 재실행금지. 라이선스실패없고 FLOAT종료. 한국어4PR절/개인GitHub/사용자머지/공개pin유지.
+
+---
+
+# NES 현재 인계 — SNES 갱신 명령과 픽셀 대조 통과
+
+PR107 열린 상태에 후속 구현을 추가했다. [계약·재현·한계](../../docs/nes-native-commands165-contract.ko.md) · [검증](../../analysis/native-commands165-verification.json).
+
+`nes_native_commands165.py`는 개발 PC의 참조 소비자다. 앞선 fetch165 비트 형식과 물리 태그를 그대로 사용하여 BG행 묶음·스프라이트 평가 행 마스크/순서·패턴 슬롯·VRAM/OAM/CGRAM/HDMA 바이트를 만든다. 실제 FPGA/MCU 생산자에 연결한 것은 아니다. 전체 원시 이벤트/64KiB shadow VRAM/정렬 그래프는 PC 편의를 위한 것이며 기판에 그대로 구현하지 않는다.
+
+선택 시험02는 실제 SNES CPU/DMA/PPU 모델에서 두 합성 장면114688픽셀이 원본 이벤트의 독립 기준과 완전 일치했다. 초기5755바이트/6명령은 blank 중 적재했고, 수평·수직 스크롤/타일/OBJ 변화는573바이트/4명령으로 vblank의230행까지 완료했다. 공개 후 추가 forced blank 없음. 변화 없는 장면은0명령.13가지 거부는 이전 게시 상태를 보존한다. 실제 SMB3 이벤트/실기 FPS/최악 전송시간 증명은 아니다. 시험01의 고정 스크롤 대조도 PASS이며 두 원시 결과를 보존했다.
+
+BG2bpp16KiB+OBJ4bpp16KiB+64×32맵4KiB=36KiB. 이전 이중맵40KiB 제안과 달리 한 vblank에 끝나는 묶음만 받아 맵 하나를 갱신한다. `payload+96*commands<=5000`,32명령은 정책 한도이며 WCET가 아니다. 초기만 예외로 blank 적재한다. 실제 업로드 ACK 후에만 commit/슬롯 상태를 전진시켜야 한다.
+
+제한: mask1e만,224행×33BG셀 완비,32BG행묶음/1023BG타일,128OBJ조각/512OBJ패턴/한 행32객체,팔레트2묶음/공통 배경색. 평가는 행별 실제8개에서 가져오며 OBJ순서에 순환이 생기면 거부한다. 미지원 래스터/클리핑/강조/용량 초과를 조용히 틀리게 출력하지 않는다. 원래snapshot_valid는 여전히 전체frame-ready가 아니다.
+
+NEXT: 이 참조를 기준으로 실제 fetch/raster의 온라인 제한 생산자·물리 타일 보충을 연결하고 같은 게임 실행에서 SMB3의 지원 범위/working set/전송량을 함께 확인한다. 전체부팅만 따로 반복하거나 합성 진단 장면을 계속 늘리지 않는다. 이후 hostCDC/전송ACK/실제SNES소비자와38M9K픽셀버퍼 교체를 묶는다. 현56/56M9K에 단순 추가 금지. 최소 변경 검사·자원/타이밍 통과 후 실제 첫 레벨로 간다. 정상 사운드·STOP/메뉴를 유지하고, 이후60초 제한·오류/본체리셋 로그·장시간 입력 유지 순서다.
+
+설치 후보164 유지, 새165 SD패키지 없음. registry 최상위에 남아 있던162후보/160실기 요약은 보관된164결과에 맞춰 정정했다. 기존 RTL/공개pin/Questa/전체적재/044복원은 변경 없이 재검사하지 않았다. 한국어4PR절/개인GitHub/사용자머지/기존FLOAT 유지.
+
+---
+
+# NES 현재 인계 — 실제 패턴 읽기·물리 타일·표시 위치
+
+PR107 열린 상태에 이어서 구현했다. [계약과 다음 구현](../../docs/nes-native-fetch165-contract.ko.md) · [검증](../../analysis/native-fetch165-verification.json).
+
+실제 BgPainter/SpriteAddressGen 적재 시점과 같은 클록의 실제 물리 CHR 주소를 묶었다. 별도 MMC3 레지스터 모사는 없다. BG는 이전 행 미리읽기 두 타일과 표시 중 뒤따르는 타일의 열 번호를 기록하고, OBJ는 실제 평가 순서/X/속성/반전이 반영된 주소를 기록한다. 물리8192타일별 BG/OBJ2비트 집합은 같은 논리 슬롯의 여러 물리 뱅크도 보존한다. 저/고 비트플레인 사이 뱅크/행/위치가 다르면 거부한다.
+
+수집 시작은7행 dot257이다. 앞선 미리읽기 시작을 놓친 경우8행 상태/메모리 수집도 막는다. 오류가8행 이전에 나고 PPU CE가 멈춰도 공통 owned를 반환하고 조회는 차단한다. 정상은 필요 목록·기존 CHR/raster/메모리 봉인을 함께 기다린다. 기존 frozen 소스는 바꾸지 않고 시작 허용 입력을 추가한 scene 생성본을 사용한다. 공통 세대는 필요 목록의16비트 번호이며 release 후8192클록 scrub/다음7행 시작을 기다린다.
+
+test02:26755검사·54패턴 쌍·2048실제 BgPainter픽셀(fine X0~7)·6거부시나리오 PASS. 실제 MMC3 뱅크 쓰기/반전, 실제 SpriteAddressGen8×8/8×16/flip/속성/X, 전8192타일 조회·동결·재초기화를 확인했다. 생성된 두 인스턴스 배선을 그대로 추출한 연결 시험13검사도 PASS. 전체 부모는 생성·컴파일만 했으며 연결 시험은 합성 행 일정/메모리0이다. 컴파일 오류·경고0, 시뮬레이션 오류0/미연결 시험 포트 경고44+27. test01도 통과했고 연결 검사를 추가한02를 선택했다. 앞선 실제 게임20프레임 부팅 등 변경 없는 검증은 재사용했다.
+
+**실제 게임 속도는 아직 개선하지 못했다.** snapshot_valid는 타일 바이트와 표시 명령의 준비 완료가 아니다.64비트 fetch 이벤트는 아직 저장/소비하지 않는다. 필요 집합은 클리핑/표시 비활성 때문에 안 보이는 적재도 포함할 수 있는 보수적 집합이다. 원시 이벤트 최대9184개를 통째로 저장하면73472바이트이므로 그 버퍼나 전송을 만들지 않는다.
+
+NEXT 실사용할 제한된 BG타일맵·OBJ·행 명령 소비자로 이벤트를 줄이고, 물리 태그별 타일 할당/부족 바이트 보충을 연결한다. 현재 논리슬롯 캐시는 여러 물리 버전이나 부분 타일을 모두 보관할 수 없으므로 hit만으로 게시하지 않는다. PSRAM 기한/기존 CPU·PPU 우선순위를 보존하는 유한 보충 예산이 필요하다. host CDC/SNES 출력과38M9K 픽셀 버퍼 교체를 함께 진행한다. 실제 자원·타이밍과 최소 변경 경계 검사 후 SMB3 첫 레벨 실기로 넘어간다. 필요 목록·좌표·메모리 수집을 다시 구현/전체 부팅 재시험하지 않는다.
+
+설치후보164·사운드·STOP메뉴 유지. 새165 패키지 없음. 이후60초 제한·오류/본체리셋 로그·장시간 입력 유지 순서. 한국어4PR절/개인GitHub/사용자머지/기존FLOAT/기존소스pin 유지.
+
+---
+
+# NES 현재 인계 — CIRAM·OAM과 공통 화면 데이터 소유권
+
+PR107 열린 상태에 후속 구현을 추가한다. [메모리/소유권 계약](../../docs/nes-native-scene165-contract.ko.md) · [검증](../../analysis/native-scene165-verification.json).
+
+실제 CIRAM에 독립 읽기 포트를 추가하고 실제 OAMEval 배열을 조회한다. CPU 쓰기를 별도 모사하지 않아 속성 마스크·렌더링 시작8바이트 복사·렌더링 중 무시되는 쓰기를 원본대로 구분한다. NES8행 dot1부터2KB CIRAM+256B OAM을2305클록으로 복사하고,232행 dot1/ROM 오류에서 기존 CHR캐시를 동결한다. CHR 메타데이터 마무리와 기존 행 상태 봉인을 기다린 뒤 공통 owned를 올린다. 수집 중 또는 종료 경계의 메모리 변경/미완료 복사는 거부하며, 소유 중 다음 원본 변경은 고정 버퍼를 덮어쓰지 않는다. 공통 release/reset이 세 조회와 복사를 취소한다.
+
+test02 합성7프레임6991검사/거부5시나리오 PASS. 원본 local-memory CPU/PPU/init_done을53634클록 대조했고 OAM 적재 뒤 원본과 같은 주소의 바이트도 비교했다. 두 세대2304바이트 전수 조회, 실제 OAM CPU마스크/시드한 행 복사, 무시되는 렌더링 쓰기, 비CIRAM활동, 부분CHRmiss, 실패 후 최신 바이트 재수집까지 확인했다. 컴파일 오류·경고0, 시뮬레이션 오류0/경고18(시험의 미사용 OAM 출력). test01도통과했고 추가검사한02를선택했다. 부모 보드는 생성·컴파일만 했고 실제 게임 실행/전체 기능 동등성은 아니다. 기존 CHR/행 상태RTL/앞선20프레임 게임 검증은 그대로 유지한다.
+
+**snapshot_valid는 전체 프레임 ready가 아니다.** 일부 CHR가미완성인 valid묶음에서 실제miss를확인했다. 물리CIRAM2KB를NES논리4KB/SNES맵으로오인하지않는다. 원시Loopy·주OAM은프리페치/미러링/행별sprite평가와연결해야한다. 특히7행fetch→8행표시경계, 같은논리슬롯의여러물리뱅크·부족바이트와필요타일집합이남았다. 모든제어/조회는NES클록;host신호직결금지. 원본에없는OAM초기값도새로가정하지않는다.
+
+NEXT 실제 BG/OBJ fetch에서 필요한 물리타일과 좌표·mapper버전을 정하고 부분CHR보충/게시조건을 연결한다. 이미 구현한 메모리관측·공통소유권·캐시·팔레트를다시만들지않는다. 이어hostCDC/SNES갱신명령으로연결하고38M9K픽셀버퍼를대체한다. 상태전체3904~4896바이트를매프레임전송하기로결정한것은아니다. 실제자원/타이밍확인과최소변경검사후실제SMB3로간다. 현56/56M9K에단순추가/무제한PSRAM읽기/기한완화금지.
+
+설치후보164·사운드·STOP메뉴유지. 새165패키지/실기속도증명없음. 영상·음성다음60초제한해제/오류·본체리셋로그/장시간입력유지. 한국어4PR절/개인GitHub/사용자머지/기존FLOAT 유지. 완료finalizer나무변경전체부팅·적재·044/GBC재시험은반복하지않는다.
+
+---
+
+# NES 현재 인계 — 행별 표시 상태와 팔레트 묶음
+
+PR107을 열어두고 같은 PR에 구현을 추가했다. [계약/패킷 형식](../../docs/nes-native-raster165-contract.ko.md) · [검증](../../analysis/native-raster165-verification.json).
+
+실제 PPU의 Loopy v/t/fine X, 표시 마스크/패턴 모드, 실제 PaletteRam32색과 지연2006/2007 적용을 노출했다. 생성된 nes_live_joint에는 새 상태 수집기를 배선했으며 전체 코어/연결부 컴파일을 확인했다. test05는 합성9프레임1336검사/오류8시나리오, 실제 PaletteRam 쓰기·별칭·corruption 및 시드한 실제 PPU 관측 포트를 검증했다. 새로운 SMB3 실행이나 전체 보드 시뮬레이션은 아니다. 앞선 실제 부팅20프레임/CHR 수신 근거는 그대로 유지한다.
+
+224개 행(각7바이트)과 최대32회 팔레트 버전(각32바이트)을 수집·봉인한다. 팔레트는 먼저192비트 래치한 뒤32NES클록으로 직렬 저장한다. 소유 중 원본 변경은 덮어쓰지 않고 release/reset은 조회를 취소한다. 행 누락/복사 충돌/버전 초과/수평 변경을 거부한다. ROM 오류는 PPU CE가 멈춰도 NES클록에서 실패 묶음으로 즉시 닫는다. 16비트 세대는 순환하며 무한 고유 번호가 아니다.
+
+**state valid는 전 화면 ready가 아니다.** v/t는 원시 Loopy 값이며 프리페치 진행분을 보정하지 않은 SNES 스크롤로 사용하면 안 된다. CHR와 상태 lease는 아직 독립이다. OAM/타일맵·MMC3 뱅크 버전·부분CHR·실제 픽셀 파이프라인·host CDC/SNES 소비자는 미완료다. 상태 데이터1600~2592바이트는 다른 화면 데이터와 전송 비용을 제외한 값이며 FPS/합성 메모리 증명이 아니다.
+
+NEXT 실제 OAM/타일맵·BG/OBJ 필요집합과 CHR/state 공통 세대를 구현한다. 이미 된 팔레트/행 수집·캐시·부팅을 무변경 반복하지 않는다. 필요한 부족바이트/같은 슬롯 뱅크 버전을 해결하고 host전달/SNES 표시로 연결, 기존38M9K 픽셀 버퍼 대체 후 최소 검증·실제SMB3로 간다. 56/56M9K에 단순 추가하거나 무제한 PSRAM 읽기/CPU·PPU 기한 완화는 하지 않는다. 수평 변경 거부가 SMB3의 필요한 분할을 막는지는 실제 fetch와 함께 확인해야 한다.
+
+설치 후보164/사운드/STOP메뉴 유지, 새165패키지 없음. 정상 영상·음성 다음60초 제한/오류·본체리셋 안전로그, 장시간 입력 유지 순서 유지. attempt01/02 생성기 선언 형식 실패와04의 복합오류를 하나만 기대한 검사 실패를 보존했다. 최종05 컴파일 오류·경고0/시뮬레이션 오류0·경고39(원본3+시험의 미사용 출력36). 기존 FLOAT 사용, 불필요한 라이선스/전체적재/044/GBC 반복 금지. 한국어 PR4절·개인계정·사용자 머지 원칙 유지.
+
+---
+
+# NES 현재 인계 — 실제 PPU와 CHR 캐시 연결
+
+PR107을 열어둔 채 같은 PR에 후속 구현을 추가한다. [연결 계약](../../docs/nes-native-tap165-contract.ko.md) · [정확한 결과](../../analysis/native-tap165-verification.json).
+
+test03 실제164 CPU/PPU/MMC3/70ns 모델로 SMB3 부팅20프레임을 실행했다. 강제 PPU 일정 대신 같은 에지 논리주소·물리주소·수신바이트·valid를 캐시에 연결하고 모든512슬롯의 BG16/OBJ32 응답을 검사했다. 캐시를 동결해 읽는 동안에도 게임은 계속 실행한다. 원본 ROM 수신값과 비교했고, 기존 코드 보존은 추가관측의 역변환 검사로 확인했다. 수신 비활성 전체재실행은 하지 않았다. MCU 적재/버튼/첫 레벨 플레이/실기 시험은 아니다.
+
+관측 포트를 추가한 NES/probe와 캐시 연결문을 실행 검증했다. nes_live_joint도 같은 연결문으로 생성/컴파일했지만 전체 보드 PLL/SPI/호스트와 함께 실행하지는 않았다. 원본164 파일은 변경하지 않았고 추가 부분을 제거하면 원래 바이트로 복원된다. 기존 독립캐시165 소스/검증은 그대로 재사용했다. 새165 설치 패키지는 없다.
+
+NEXT 배경·스프라이트 필요타일/팔레트32색/OAM/스크롤·래스터를 같은 화면 세대로 묶고, 부분타일·한 슬롯의 여러 뱅크 사용을 해결한다. 전 화면 준비를 단순 캐시 완성 슬롯 수로 판정하지 않는다. 그 후 hostCDC/전송세대/SNES 소비자를 연결하고38M9K픽셀버퍼를 대체한다. 무제한 PSRAM읽기·CPU/PPU 기한완화·현56M9K에 단순추가는 금지. 최소 변경 검사 후 실제SMB3로 이동한다. 목표는 실기 화면 끊김 개선이며 캐시 진단 자체의 확대가 아니다.
+
+설치 후보164/사운드/STOP메뉴 유지. 조작 가능한 영상·음성 다음60초 제한 해제·오류/본체리셋 안전로그, 그 다음 장시간 입력 유지. test01 선언순서 컴파일 실패, test02의24프레임/24576조회 통과 후 부당한 뱅크교체/완성타일 필수조건 실패도 보존했다. test03은 실제 읽힌 타일의 완성/부분/미사용 수를 측정하며 특정 게임 구간에 뱅크교체를 강요하지 않는다. 기존 FLOAT 사용, 새 라이선스/무변경 전체 적재/GBC/044 검사를 반복하지 않는다.
+
+---
+
+# NES 현재 인계 — 165 CHR 재사용 캐시 부품 검증 통과
+
+사용자가 PR107을 열어둔 채 계속하도록 요청해 같은 PR에 구현을 추가한다. [부품 계약/다음 연결](../../docs/nes-native-chr165-contract.ko.md) · [검증](../../analysis/native-chr165-verification.json).
+
+관측 전용 CHR 캐시를 구현했다. PPU 정상 수신 바이트를512논리슬롯에 보관하고 물리태그18비트/바이트완성마스크16비트로 은행전환·미완성 데이터를 거부한다. 이전 메타데이터 쓰기 완료 뒤동결, 연속쓰기우회/해제중조회취소/리셋512클록소거, SNES BG2/OBJ4 변환 포함. 추가ROM요청/게임대기 출력은 없다.
+
+test01 실제SMB3 CHR131072바이트/8192타일,401432조회/8218음성조건 PASS. 합성 PPU샘플 일정이며 실제 CPU/PPU/mapper 실행은 아님. 같은NES클록 인터페이스만 검증. 호스트CDC/현재164연결/합성배치/SNES실행/실기판은 미완료. 일부만 보이는 타일은 관측만으로 완성되지 않으므로 필요한집합+부족바이트보충을 해결해야 한다.
+
+NEXT 실제 샘플의 논리chr_addr·같은에지 물리주소/데이터/valid 연결(지연된 debug out_ppumem_addr 금지), 팔레트/OAM/래스터·필요타일집합·부족데이터 경로, 호스트동결세대/CDC/SNES소비를 최소로 연결한다. 무제한 PSRAM읽기나 CPU/PPU기한완화 금지.38M9K픽셀버퍼 대체로 자원을 회수할 후보이며 현56/56에 단순추가하지 않는다. 최소변경 검사 후SMB3 이동/점프/스크롤.
+
+설치 후보는164 유지, 새165펌웨어/패키지 없음. 사운드/STOP메뉴·동결근거 보존. 기존FLOAT래퍼로한번실행 완료,라이선스스모크반복없음. unusable영상 개선 다음60초제한/오류·리셋로그/입력유지 순서. 사용자머지·한국어4PR절·개인GitHub 유지.
+
+---
+
+## 이전 조사/형식 프로토타입 기록
+
+# NES 현재 인계 — 사용자 참고 자료 반영과 CHR 형식/용량 프로토타입
+
+PR107은 아직 미머지이며 이번 결과를 같은 PR에 추가한다. [후속 설계](../../docs/nes-native-video-feasibility.ko.md) · [검증 범위/출처](../../analysis/nes-native-video-feasibility.json).
+
+Nested는 PC 패키징과 SNES 런타임을 분리해 참고한다. 우선 참고는 PocketNES/NesDS이며 FCEUX는 XBuf/전체 텍스처 출력과 CPU 비용 대조다. 사용자 PDF2쪽은 타일 재사용/가장자리 갱신 원칙에 반영했고, NES 기법을 SNES 전송 성능으로 오인하지 않는다. 기존 OAM DMA/scroll/IRQ를 다시 만들지 않는다.
+
+실제 목표 ROM CHR8192타일/바이트고유5529. 2bpp만88464바이트라 전체 상주 불가. BG2bpp/OBJ4bpp 배치 변환1048576픽셀 비교와 잘못된 순서 대조군 통과. 후보VRAM40KiB/가정트래픽1056·4128·13344바이트는 정적 계산, 실제 작업집합/FPS/FPGA fit/SNES 실행 증명 아님.047tap은 스프라이트off·scroll0 진단이며164에는arm0, 기존 palette tap은BG16색뿐이다.
+
+NEXT 실제 상태/물리CHR 식별·캐시 세대와 읽기 경로를 정해 최소 관측/소비 구현으로 간다. CHR 적재 시 변환 가능성을 검토하되 PSRAM 추가읽기가 CPU/PPU 기한과 충돌하지 않게 한다. 38M9K 픽셀 버퍼 대체의 회수 가능성과 두 구조 동시 유지 불가를 구분한다. NES8×16→SNES OBJ 변환/행별 선택·우선순위/MMC3분할/맵240↔256 래핑을 누락하지 않는다. 필요한 변경 검사 후 실제SMB3, 범용 재작성/새 장기 진단 없음.
+
+새165 RTL/펌웨어/빌드/패키지 없음. 기술 후보164, 사운드/STOP메뉴/동결근거·971공개핀 보존. usable AV 다음60초 제한/오류·본체리셋 안전로그/장시간 입력 유지. 한국어4PR절·개인GitHub·사용자머지 유지.
+
+---
+
+## 아래는 앞선 조사 기록
+
+# NES 현재 인계 — 164 이후 화면 전송 조사와 방향 결정
+
+PR106 머지 `a467be7e1e2dc15f2e9fb83dce71330917188d5c` 확인. [공개 구현 비교·결정](../../docs/nes-video-transfer-research.ko.md) · [고정 출처와 계산](../../analysis/nes-video-transfer-research.json).
+
+사용자 요청으로 변경 타일 구현 전에 조사했다. 완성 픽셀의 고정 좌표 차분만으로 연속 화면을 해결하는 안은 채택하지 않는다. 기존 청크에 순수 데이터88/896타일만 들어가며, 스크롤하면 넓은 영역이 바뀔 수 있다. 실제 변경률은 미측정. Project Nested/PocketNES/NesDS의 CHR·맵·스크롤·OAM 갱신 방식을 참고해 **SNES 그래픽 기능을 활용하는 최소 SMB3 경로의 적용 가능성을 다음에 확인한다.** retro-go의 LCD 차분/프레임 스킵이나 MiSTer 직접 영상 출력은 SNES 대역폭 증명이 아니다.
+
+NEXT: 현재 PPU/매퍼의 실제 상태/패턴을 관측·전달할 경계, MMC3 상태창/CHR 전환, SNES 배경/스프라이트 모드·VRAM·RAM/LAB·수직공백 예산을 좁은 범위로 설계한다. 기존 CPU/PPU/APU/MMC3 실행 의미와163SPC/162오디오/STOP메뉴를 유지한다. 최소 갱신 묶음/오버플로/전송기한 검사 후 실제 SMB3 이동·점프·스크롤로 확인한다. 프레임 끝 레지스터 하나로 중간 전환을 대신하거나 타이틀 절감률로60fps를 주장하지 않는다. 수용 불가라면 구체적인 제약을 남기고 픽셀 스크롤 재사용/차분을 비교한다. 모든 매퍼·범용 진단을 새 선행조건으로 만들지 않는다.
+
+조사/문서만 변경. 새165 RTL·펌웨어·빌드·실기 패키지 없음, 기술 후보는164 유지. native 표시의 자원/호환성/속도는 미확정.164 끊김·DOWN 유지 미시험·60초 제한 상태 그대로. 화면/사운드 다음은60초 해제와 오류/본체리셋 안전로그, 이어 장시간 입력 유지. 동일164/044/GBC/사운드전용/무변경적재 반복 없음. 동결 근거·공개핀·완료finalizer 보존, 사용자 머지/한국어4PR절/개인계정 유지.
+
+---
+
+## 아래164 당시 NEXT는 위 조사 결정으로 대체
+
 # NES 현재 인계 — 164 검정 구간 제거 통과, 갱신 지연으로 플레이 불가
 
 [164 실기 결과](../../analysis/GAME164-HARDWARE-RESULT.ko.md) · [로그 분석](../../analysis/game164-hardware-verification.json)

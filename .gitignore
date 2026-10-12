@@ -2546,3 +2546,162 @@
 # NES164 physical blackout and stutter result
 !analysis/GAME164-HARDWARE-RESULT.ko.md
 !analysis/game164-hardware-verification.json
+
+# NES video transfer research after164 (no new hardware candidate)
+!docs/nes-video-transfer-research.ko.md
+!analysis/nes-video-transfer-research.json
+
+# Native video feasibility followup; no hardware package
+!tools/analyze_nes_native_video.py
+!docs/nes-native-video-feasibility.ko.md
+!analysis/nes-native-video-feasibility.json
+
+# Native CHR165 standalone component
+!src/nes/diagnostic/nes_native_chr165.sv
+!tests/nes-functional/native_chr165_tb.sv
+!tools/test_nes_native_chr165.py
+!docs/nes-native-chr165-contract.ko.md
+!analysis/native-chr165-verification.json
+
+# Actual PPU native CHR binding165
+!src/nes/diagnostic/nes_native_tap165.sv
+!tools/nes_native_tap165.py
+!tools/test_nes_native_tap165.py
+!tests/nes-functional/native_tap165_checks.svh
+!docs/nes-native-tap165-contract.ko.md
+!analysis/native-tap165-verification.json
+
+# Native raster state packet165
+!src/nes/diagnostic/nes_native_raster165.sv
+!tools/nes_native_raster165.py
+!tools/test_nes_native_raster165.py
+!tests/nes-functional/native_raster165_tb.sv
+!docs/nes-native-raster165-contract.ko.md
+!analysis/native-raster165-verification.json
+
+# Native CIRAM/OAM and shared scene lease165
+!src/nes/diagnostic/nes_native_ciram165.sv
+!src/nes/diagnostic/nes_native_scene165.sv
+!tools/nes_native_scene165.py
+!tools/test_nes_native_scene165.py
+!tests/nes-functional/native_scene165_tb.sv
+!docs/nes-native-scene165-contract.ko.md
+!analysis/native-scene165-verification.json
+
+# Native physical tile requirements and fetch coordinates165
+!src/nes/diagnostic/nes_native_fetch165.sv
+!tools/nes_native_fetch165.py
+!tools/test_nes_native_fetch165.py
+!tests/nes-functional/native_fetch165_tb.sv
+!tests/nes-functional/native_fetch_join165_tb.sv
+!docs/nes-native-fetch165-contract.ko.md
+!analysis/native-fetch165-verification.json
+
+# Native SNES command reference165
+!tools/nes_native_commands165.py
+!tools/test_nes_native_commands165.py
+!snes/video_probe/capture_native_commands165.lua
+!docs/nes-native-commands165-contract.ko.md
+!analysis/native-commands165-verification.json
+
+# Online native compaction and actual game stream165
+!src/nes/diagnostic/nes_native_compact165.sv
+!tests/nes-functional/native_compact165_tb.sv
+!tools/nes_native_compact165.py
+!tools/nes_native_rows165.py
+!tools/test_nes_native_stream165.py
+!tools/test_nes_native_compact165.py
+!tools/test_nes_native_rows165.py
+!docs/nes-native-compact165-contract.ko.md
+!analysis/native-compact165-verification.json
+
+# Same-tile low/high plane split165
+!src/nes/diagnostic/nes_native_planes165.sv
+!src/nes/diagnostic/nes_native_compact_planes165.sv
+!tests/nes-functional/native_planes165_tb.sv
+!tools/nes_native_planes165.py
+!tools/test_nes_native_pair165.py
+!tools/test_nes_native_planes165.py
+!tools/test_nes_native_planes_snes165.py
+!tools/test_nes_native_plane_limits165.py
+!docs/nes-native-planes165-contract.ko.md
+!analysis/native-planes165-verification.json
+
+# Common frame and bounded CHR fill165
+!src/nes/diagnostic/nes_native_frame165.sv
+!src/nes/diagnostic/nes_native_raster_frame165.sv
+!src/nes/diagnostic/nes_native_fill165.sv
+!tests/nes-functional/native_frame_lease165_tb.sv
+!tests/nes-functional/native_fill165_tb.sv
+!tools/nes_native_frame165.py
+!tools/test_nes_native_frame165.py
+!tools/test_nes_native_frame_lease165.py
+!tools/test_nes_native_fill165.py
+!tools/verify_nes_native_frame165.py
+!docs/nes-native-frame165-contract.ko.md
+!analysis/native-frame165-verification.json
+
+# Shared physical reader CHR fill165
+!src/nes/diagnostic/nes_native_arbiter165.sv
+!tests/nes-functional/native_arbiter165_tb.sv
+!tools/nes_native_memory165.py
+!tools/test_nes_native_memory165.py
+!tools/test_nes_native_arbiter165.py
+!tools/verify_nes_native_memory165.py
+!docs/nes-native-memory165-contract.ko.md
+!analysis/native-memory165-verification.json
+
+# Native logical host transfer165
+!src/nes/diagnostic/nes_native_export165.sv
+!src/nes/diagnostic/nes_native_mailbox165.sv
+!tests/nes-functional/native_host165_tb.sv
+!tools/nes_native_host165.py
+!tools/nes_native_receiver165.py
+!tools/test_nes_native_host165.py
+!tools/verify_nes_native_host165.py
+!docs/nes-native-host165-contract.ko.md
+!analysis/native-host165-verification.json
+
+# Native SPI and bounded C receiver165
+!src/nes/diagnostic/nes_native_spi165.sv
+!src/nes/firmware/nes_native165.c
+!src/nes/firmware/nes_native165.h
+!tests/nes-functional/native_spi165_tb.sv
+!tests/nes-functional/native_receiver165_host.c
+!tools/nes_native_spi165.py
+!tools/test_nes_native_spi165.py
+!docs/nes-native-spi165-contract.ko.md
+!analysis/native-spi165-verification.json
+
+# Bounded C native video compiler165
+!src/nes/firmware/nes_native_video165.h
+!src/nes/firmware/nes_native_video165.c
+!tests/nes-functional/native_video165_host.c
+!tools/test_nes_native_video165.py
+!docs/nes-native-video165-contract.ko.md
+!analysis/native-video165-verification.json
+
+# Save-preserving SNES WRAM staging and C delta165
+!src/nes/firmware/nes_native_stage165.h
+!src/nes/firmware/nes_native_stage165.c
+!tests/nes-functional/native_stage165_host.c
+!tools/test_nes_native_stage165.py
+!docs/nes-native-stage165-contract.ko.md
+!analysis/native-stage165-verification.json
+
+# SNES local WRAM comparison and dynamic DMA165
+!tools/nes_native_local165.py
+!tools/test_nes_native_local165.py
+!snes/video_probe/capture_native_local165.lua
+!docs/nes-native-local165-contract.ko.md
+!analysis/native-local165-verification.json
+
+# Concurrent C producer and SNES WRAM receive/display ACK165
+!src/nes/firmware/nes_native_sink165.h
+!src/nes/firmware/nes_native_sink165.c
+!tests/nes-functional/native_sink165_host.c
+!tools/build_nes_sink165.py
+!tools/test_nes_native_sink165.py
+!snes/video_probe/capture_native_sink165.lua
+!docs/nes-native-sink165-contract.ko.md
+!analysis/native-sink165-verification.json
