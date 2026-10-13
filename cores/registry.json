@@ -46,7 +46,7 @@
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-164",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "실기 결과가 가리킨 fill/arbiter의 vblank 사용권 대기와 MCU 소비 지연을 선택된 설정으로 재현한다. 사용권 획득 전 대기·획득 후 응답 watchdog·전송 대기를 구분하고, CPU/PPU 우선순위와 전체 유한 상한·취소 drain을 보존해 필요한 경로만 수정한다. 세부 fill 오류는 기존 ABORT 경로에 최소한으로 전달한다. 일괄 timeout 확대나 별도 범용 진단 대신 수정된 SMB3 실기로 복귀한다. 같은166·044·무변경 FIT는 반복하지 않는다. 이후 AV 품질→장기 플레이/물리 리셋 로그→입력 유지 순서를 유지한다.",
+      "next_gate": "실기 ZIP은 보류한다. 기능 수정은 유지하고 map04(Standard Fit, placement multiplier1.0)의 실제168MHz ROM CHECK 경로 check_response_address[8]→check_next[13] 경로(-0.003ns)를 직접 분석한다. 기존 compare165의 기각된 비교식/설정과 map01~05를 반복하지 않는다. 해당 제어 영역의 배치 보존·국소 제어/팬아웃 개선을 먼저 검토하고 필요한 경계만 검증한다. 클록/false-path 완화·seed 순회 금지. 실제 클록 setup/hold와 새 배치의 조건부 IO/reset이 통과하면 기존167 MCU·미변경 SNES 결과를 재사용해 ASM/ZIP 후 SMB3 실기로 간다. 같은166·044·무변경 부팅은 요청하지 않는다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -664,6 +664,16 @@
         "aborts": 383,
         "ends": 0,
         "commits": 0
+      },
+      "pacing167": {
+        "status": "functional_pass_timing_fail_no_hardware_package",
+        "verification": "analysis/pacing167-verification.json",
+        "contract": "docs/nes-pacing167-contract.ko.md",
+        "functional": true,
+        "nominal_timing": false,
+        "hardware_package": false,
+        "adopted": false,
+        "best_candidate": "map04"
       }
     },
     {

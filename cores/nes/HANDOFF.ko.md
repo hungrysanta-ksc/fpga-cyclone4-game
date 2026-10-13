@@ -1,3 +1,13 @@
+# NES167 — 기능 수정 통과, 타이밍 미달로 배포 보류
+
+NES167 정상 대기 분리·취소 세부 이유 수정은 기능 검증을 통과했다. 그러나 FPGA 실제 클록 setup은 최선map04도-0.003ns로 미달이어서 실기 ZIP을 보류했다. 기존 승인 FPGA는 유지하며 ROM CHECK 경로를 직접 개선한 뒤 실기로 진행한다.
+
+실기 ZIP은 보류한다. 기능 수정은 유지하고 map04(Standard Fit, placement multiplier1.0)의 실제168MHz ROM CHECK 경로 check_response_address[8]→check_next[13] 경로(-0.003ns)를 직접 분석한다. 기존 compare165의 기각된 비교식/설정과 map01~05를 반복하지 않는다. 해당 제어 영역의 배치 보존·국소 제어/팬아웃 개선을 먼저 검토하고 필요한 경계만 검증한다. 클록/false-path 완화·seed 순회 금지. 실제 클록 setup/hold와 새 배치의 조건부 IO/reset이 통과하면 기존167 MCU·미변경 SNES 결과를 재사용해 ASM/ZIP 후 SMB3 실기로 간다. 같은166·044·무변경 부팅은 요청하지 않는다.
+
+[계약](../../docs/nes-pacing167-contract.ko.md) · [검증](../../analysis/pacing167-verification.json). SamePR109 OPEN. Approved baseline remains boundary165/map02; candidate map04 NOTadopted. Reproduce with --standard-fit only. map05 placement2 rejected-.837. Wide-policy test02 12joint+32fill cases, narrow equiv02 18cases/22outputs incl400000cycle wrap, ARM01/check03 margin1076,16rawABORTnibblesPASS. No newIO/ASM/SDpackage or hardware result. All failed candidates and source-pin addendum preserved. Next avoid tiny counter/seed/refit loop; target CHECK region.
+
+---
+
 # NES166 실기01 — 반복 fill 취소 구간 확인
 
 NES166도 무영상 증상은 동일했으나, BEGIN383/ABORT383/END0/COMMIT0으로 프레임 완성 전 반복 취소를 확인했다. 첫·마지막 취소 이유4는 CHR fill 실패 요약이며 세부 오류는 미확정이다. 첫 프레임은 총1508개 데이터 레코드 중 CHR36바이트를 받았다. ROM 오류0, RUN60010ms, STOP·기본 코어 복구·메뉴 준비는 로그상 완료됐다.

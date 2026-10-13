@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-NES166도 무영상 증상은 동일했으나, BEGIN383/ABORT383/END0/COMMIT0으로 프레임 완성 전 반복 취소를 확인했다. 첫·마지막 취소 이유4는 CHR fill 실패 요약이며 세부 오류는 미확정이다. 첫 프레임은 총1508개 데이터 레코드 중 CHR36바이트를 받았다. ROM 오류0, RUN60010ms, STOP·기본 코어 복구·메뉴 준비는 로그상 완료됐다. [실기 결과](docs/nes-game166-hardware01.ko.md).
+NES167 정상 대기 분리·취소 세부 이유 수정은 기능 검증을 통과했다. 그러나 FPGA 실제 클록 setup은 최선map04도-0.003ns로 미달이어서 실기 ZIP을 보류했다. 기존 승인 FPGA는 유지하며 ROM CHECK 경로를 직접 개선한 뒤 실기로 진행한다. [167 결과](docs/nes-pacing167-contract.ko.md).
 
 현재164 실기: **검정 구간 제거 통과·사운드 정상으로 보임, 심한 갱신 지연으로 정상 플레이 미달성**. 다음은 영상 전송량·갱신 지연 개선이며, DOWN 유지는 이번 미시험입니다. [164 실기 결과](analysis/GAME164-HARDWARE-RESULT.ko.md).
 
