@@ -1,3 +1,13 @@
+# NES171 — CHR 선행 읽기 FIFO 실기 대기
+
+NES171 실기 시험판을 준비했다.170의 화면 정지 원인인 그래픽 수집 전체 시간 초과를 줄이도록 FPGA에256×27비트 FIFO(M9K1개)를 추가해 읽기와 MCU 소비 대기를 분리했다. 같은 모델 조건에서 기존654바이트 중단→2048바이트 완료, 최대8192바이트도 통과했다.15014LE/959LAB/36M9K 배치와 실제 클록 기준 setup+0.024ns·hold+0.127ns, 조건부 IO·ARM 여유1024바이트를 확인했다. 시간 제한·사운드·입력·SNES169 표시는 유지하며 연속 AV 실기는 아직 대기다.
+
+NES171-SMB3-CHR-FIFO.zip의01-GAME171-SD-ROOT를 적용하고 NES GAME 171.nh1로 SMB3 첫 레벨을 실행한다. 첫 화면 이후 지속 갱신·사운드·입력·약60초 메뉴 복귀와 두 TXT를 확인한다. 가능하면20~30초 영상, 동일 정지/무화면이면 TXT·설명만 받는다.0x34가 남으면 실제 생산/소비 진행량에 따라 경계를 좁힌다. 같은170/044·무변경FIT·범용 진단 반복 없이 연속 AV→장기 실행/오류·본체 리셋 로그→입력 유지 순서를 지킨다. 세이브 SRAM/GBC/164 보호와 CPU/PPU 우선·7에지 감시를 유지한다.
+
+[실기 안내](../../docs/nes-game171-ready.ko.md) · [변경·검증 계약](../../docs/nes-prefetch171-contract.ko.md) · [검증 근거](../../analysis/prefetch171-verification.json). PR110 OPEN/samebranch. SELECT map02/test02/cancel02/arm01/armcheck01/report01/release01.28 RTL cases incl512tile two phases/full FIFO clear-generation-reset. 60 other FPGA inputs exact169; only fill changed, same limits. FIFO synchronous head avoids read-during-write stale data; all bytes tentative until unchanged COMMIT/display ACK. Firmware2e7dc90c / FPGAd67ad0a2 / ZIP4782ef2f. Model is not measured hardware pacing/FPS. No full IO/CDC/MTBF claim;24 legacy negative reset paths remain separately recorded. Declaration-order test01 and no-pending cancel01 fixture failures retained. Sandbox host/binutils failures are not license entitlement or RTL failures. No active jobs; completed archive/finalizers immutable.
+
+---
+
 # NES170 실기 — 표시 완료 후 CHR 수집 시간 초과
 
 NES170 실기에서13회 표시 완료 ACK·음악·스타트 반응을 확인했지만 이후 화면이 멈췄다. 영상 후보21회 중13회 완료,8회 중단이며 최초·마지막 중단0x34는 CHR 수집의 전체 시간 예산 초과다. 정상60초 제한으로 종료했고 ROM/표시 통신 오류는0이다. 연속 AV 목표는 미달성이다.
