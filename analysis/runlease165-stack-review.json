@@ -1,0 +1,88 @@
+{
+  "callbacks": {
+    "nes_game149_transfer": [
+      "load_select",
+      "wait_us"
+    ],
+    "nes_native165_bulk": [
+      "load_select",
+      "wait_us"
+    ],
+    "nes_native165_poll": [
+      "transfer"
+    ],
+    "nes_native165_prepare": [
+      "transfer"
+    ],
+    "guard": [
+      "native_ticks165",
+      "native_service165"
+    ],
+    "transfer": [
+      "native_transfer165"
+    ],
+    "nes_runtime165_begin": [
+      "native_ticks165"
+    ],
+    "packet": [
+      "nes_sink_spi165_exchange"
+    ],
+    "nes_native_video165_build": [
+      "nes_sink165_pattern"
+    ],
+    "nes_sink_spi165_exchange": [
+      "guard",
+      "transfer"
+    ],
+    "internal_nprintf": [
+      "outchar",
+      "outstr"
+    ]
+  },
+  "library_stack_bytes": {
+    "__aeabi_uldivmod": 16,
+    "__aeabi_idiv0": 0,
+    "memcpy": 0,
+    "strlen": 8,
+    "crc8.constprop.0": 12,
+    "__udivmoddi4": 32,
+    "memcmp": 0,
+    "memset": 0
+  },
+  "library_bodies": {
+    "__aeabi_uldivmod": "bb10f3ab222afae6a62532a973525f4446b245d1756cecef5131abfa9f0ec579",
+    "__aeabi_idiv0": "4e381509a1f63568ba1eafef3b6a7bfc50af0d8e76e96d5b2aee3584e9029aa6",
+    "memcpy": "43853f2e814c10c48e5348aee1224fe83728a1cd846d8c577708b7de6ba6df2a",
+    "strlen": "16ec4a28411a9a93dee80b70a7e231d713797066b1b8d80d377164256dceccaf",
+    "crc8.constprop.0": "5e5d281698cefd32077ee895143ff60b3dca7bc230a92c098b5fee9bc769d39b",
+    "__udivmoddi4": "b575790f68f82249406a530c03d55e0b15351921b8113aeb0b7e81233a067d97",
+    "memcmp": "21ce407aaab381f9a00eaed4d4c1790725f169338875afde23370ea12296a6ba",
+    "memset": "e09311aa7753c5b92fadbd3fe937c8a8152e606d2c59e69c9d6a05aca31482a6"
+  },
+  "platform_bodies": {
+    "SysTick_Hook": "db25e08e5d796e0e396126c53eb5cb1524c523d6a43b99f28730554bf2e967ce",
+    "TIM2_IRQHandler": "f35a60f8413e4dbcab0c24d330540b65152bc0a8674071388888ca8d42fc8c4e",
+    "NMI_Handler": "a1791e03750a6e6cdc9c1b7b71166ac52d92cbe0911e89d09b843fa599368579",
+    "stop108": "03a75973188dc3cfde1976a4692fb348ee334d019e1bd56ce3e69a6d9c9a8d42",
+    "uart_putc": "c3b901b6d1b7163795c36a0487d0be50016cb66d976095cf4741bba504f0e135"
+  },
+  "platform_sources": {
+    "stm32f4xx/timer.c": "1ef987e14dad3a341070417e8c8167bab9122370ce5248f3c43a8f3dd6fda8c0",
+    "stm32f4xx/uart.c": "5b50ad260cd4f5d66eb9411350b6b1c7835712cd6869b45961a496735c75e6c7",
+    "stm32f4xx/usbhw.c": "d19ccac42067e4c9355649de296a665437a9d80f435389411dd9822bdcd98192",
+    "nes_menu_diagnostic.c": "e05aba5402e10085469bf18f07c47b0609a56d240295d774a893156c42b82dd8",
+    "nes_runtime_board165.inc": "cc4c453d9a7916e870a4e70faab2c944390829f54aab83ea94b5d1ec02c4ead8",
+    "nes_run136.inc": "a5ff97f13e06cb64d1287594fa2ecbc45e81c412dd3aec9e275d41f83b351e47",
+    "printf.c": "d4d601ba78d5564d22947bfc28d56a1c09a64c757dc1b15954e1907656aeb16c"
+  },
+  "review_notes": [
+    "UART newline recurses once with carriage return; allow two32B frames.",
+    "SysTick includes sdn_changed printf. Hook is empty. TIM2 allowed even though RUN polling does not enable it.",
+    "NVIC OTG disabled before diagnostic entry, restored only after recovery. STM32 UART polling; SD IRQ commented.",
+    "NMI strong handler uses8B and calls stop108 with0B/no further call; terminal HardFault not recoverable execution path.",
+    "Budget108B per exception (104B extended FP frame plus4B alignment) for SysTick,TIM2,NMI, even if nesting/FP state not exercised.",
+    "Library fingerprints pin exact reviewed prologues: udiv wrapper16/helper32,strlen8,crc8 constprop12; memcpy/memcmp/memset0.",
+    "No live malloc/sbrk symbols; static RAM determined from heap_start through stack, including ahbram.",
+    "No exhaustive unchanged menu/GBC proof; outside RUN permanent33952B workspace removed."
+  ]
+}

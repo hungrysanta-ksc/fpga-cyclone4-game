@@ -1,3 +1,127 @@
+# NES167 실기 — 첫 화면 확인, 8번째 영상의 ACK 검사 실패
+
+NES167 실기에서 첫 화면이 약1~2초 보인 뒤 메뉴로 복귀했다. BEGIN/END/COMMIT 각8회·ABORT0회, SNES 표시 ACK 완료7회로 새 영상 경로의 첫 출력은 확인했다. 이후 sink 응답 내용 검사 오류3으로 조기 종료했다. ROM 검증·STOP·메뉴 복귀는 통과했고, 연속 영상·실제 사운드는 미확인이다.
+
+실패한8번째 영상의 SNES 패킷 응답 검사를 우선 조사한다. 기존 성공7회/마지막세대22·수신세대24를 기준으로 연속 프레임의 변경량·32개 DMA 명령 상한·5000 전송 예산·길이/순번/세대 소유권을 최소 재현한다. sink 오류3만으로 SNES 거절(E0~E4)과 응답 토큰/서명 불일치를 구분할 수 없으므로 실패 패킷의 op/section/offset/length, 기대 토큰 및 실제12바이트 ACK를 안전 정지 후 기존 TXT에 기록하는 최소 보강을 우선한다. 응답 검사를 끄거나 상한을 무조건 늘리지 않는다. 필요한 수정 뒤 SMB3 실기로 복귀하며 같은167·044·무변경 FIT를 반복하지 않는다. 이후 연속 AV→장기 플레이/오류·본체 리셋 로그→입력 유지 순서를 유지한다.
+
+[실기 결과](../../docs/nes-game167-hardware01.ko.md) · [근거](../../analysis/game167-hardware01-verification.json). PR109 OPEN. No new RTL/FW/FIT/ZIP. Previous archives immutable.
+
+---
+
+# NES167 — 새 영상 수집 시험판 실기 대기
+
+NES167 실기 시험판을 준비했다. 원시 자격 캡처와 명령 판정을 분리하고 적재 카운터 산술 분리를 결합해 내부 setup+0.245ns/hold+0.126ns,14944LE/956LAB/35M9K를 통과했다. 조건부 외부 연결·영상 리셋 검사를 통과해167 MCU와 새 FPGA를 패키징했다. 화면 복구·속도·사운드는 새 실기 결과로 확인해야 한다.
+
+NES167-SMB3-FILL-WAIT.zip의01-GAME167-SD-ROOT 내용을 SD 루트에 적용하고 NES GAME 167.nh1로 SMB3(J) 첫 레벨의 화면·사운드·약60초 메뉴 복귀를 확인한다. nes-progress-167.txt/nes-game-last-167.txt와 화면이 나오면20~30초 영상을 받는다. 검정이면 촬영 불필요. 결과 전에는 새 범용 진단·무변경 FIT/부팅·166/044 반복 시험을 추가하지 않는다. 실패하면 최초 fill 세부 사유와 BEGIN/END/ABORT/COMMIT/native_frames에 따라 실제 경로만 고친다. 이후 연속 AV 품질→장기 플레이/오류·본체 리셋 로그→입력 유지 순서를 지킨다.
+
+[설치 안내](../../docs/nes-game167-ready.ko.md) · [계약](../../docs/nes-rawstage167-contract.ko.md) · [검증](../../analysis/rawstage167-verification.json). PR109 OPEN. SELECT rawstage167/map01 + pacing167/arm01/armcheck03 + release01. C0raw/C1causes/C2decode/C3accept/C4counter, NOTsameedge. 369165+180+24+219SPI14016bits/3negativePASS;loader exactreuse294912/1056/524288.61reproduced/59unchanged;FIT14944LE956LAB35M9K setup+.245/hold+.126;IOconditionalPASS/payloadreset0/24syncpathsremain. Package99f9cf59/fw783a3c83/FPGAd1e82782;164restoreexact/privateROMnotGit. test01 reservedtaskword preserved/test02 PASS. Alljobsfinished; do not rerun completedrecord/audit or unchangedhardware166/044/fit.
+
+---
+
+# NES167 C2/C3 — CHECK 개선, 전체 타이밍 미달
+
+NES167 CHECK의 오류 판정(C2)과 카운터 반영(C3)을 분리해 카운터 경로+1.011ns·판정+0.699ns를 확보했다. 기능·SPI 응답은 통과했으나 전체 setup은 로더 fault→명령 자격-0.190ns, 적재 카운터-0.041ns여서 후보는 미채택이다. 새 실기 ZIP은 없고 승인 FPGA는boundary165/map02를 유지한다.
+
+CHECK 카운터는 더 작은 식으로 반복 배치하지 않는다. commitstage167/map01은 후속 구조 연구용이며 승인/최선 전체 타이밍 기준은 아니다. 남은 fault→run_enable→check_active→body_causes→pending_causes의5단계(배선70%)를 대상으로, SS 캡처 C0에서 원시 자격을 저장하고 이후 단계에서 명령 원인·오류를 판정하는 명시적 파이프라인을 설계한다. C0 관측 값, live fault 차단, STOP/write drain, 단계별 SS 겹침/reset, 실제2us 간격 및 응답 snapshot 호환성을 먼저 검증한다. 기존 loadcount167의 적재 산술 분리 결과는 재사용하되 새 SPI와 결합 경계는 검증한다. 그 구조 변경 뒤 한 번 FIT하고 실제 클록·조건부 IO/reset이 통과하면 기존167 MCU/영상 근거를 재사용해 패키지와 SMB3 실기로 간다.166·044·무변경 부팅·seed 순회는 반복하지 않는다.
+
+[계약](../../docs/nes-commitstage167-contract.ko.md) · [검증](../../analysis/commitstage167-verification.json). PR109 OPEN. C2 acceptance/C3 counter NOT same-edge; latefault preserves accepted metadata/reset cancels. 1048576+24+219SPI14016bits/3negativePASS. Initial inconsistent-carry fixture preserved; use test02. 60inputs unchanged; oneFIT; no newIO/ASM/SD. Completed record/audit/archives immutable.
+
+---
+
+# NES167 후속 — 기능 통과, 두 배치 미채택
+
+NES167 정상 대기 수정은 기능 검증을 통과했으나 실기 ZIP은 여전히 보류다. CHECK 갱신 펄스화는 해당 경로를+0.581ns로 개선했지만 적재 카운터가-0.349ns였다. 적재 카운터 갱신·산술 분리 후 해당 경로는+0.338ns, CHECK는-0.144ns여서 두 후보 모두 미채택이다. 승인 FPGA는boundary165/map02, 다음 분석 기준은pacing167/map04(-0.003ns)를 유지한다.
+
+같은 클록 카운터 식·seed·설정으로 전체 FIT를 다시 반복하지 않는다. MCU의 기존2us SS 간격 안에서 오류 판정(C2)과 CHECK 카운터 반영(C3)을 분리할 수 있는지 먼저 계약을 정한다. fault/STOP/reset 우선순위, 응답과 명령 겹침, 주소·상태 snapshot이 관측 가능한 edge, SPI ID/MCU 호환성을 명시한다. 같은 edge 등가로 주장하거나 false path로 완화하지 않는다. 가능하면 변경 경계만 검증한 뒤 한 번 배치한다. 불가하면 근거와 함께 영역 배치 보존을 검토한다. 내부 타이밍과 조건부 IO/reset 통과 후167 MCU·미변경 SNES 근거를 재사용해 패키지와 SMB3 실기로 간다.166·044 재시험은 요청하지 않는다.
+
+[계약](../../docs/nes-counterpulse167-contract.ko.md) · [검증](../../analysis/counterpulse167-verification.json). SamePR109 OPEN. Two fits only; archives immutable. Do not rerun completed record/audit. Next define explicit C2/C3 response-fault/counter commitment, not same-edge claim. No SD.
+
+---
+
+# NES167 — 기능 수정 통과, 타이밍 미달로 배포 보류
+
+NES167 정상 대기 분리·취소 세부 이유 수정은 기능 검증을 통과했다. 그러나 FPGA 실제 클록 setup은 최선map04도-0.003ns로 미달이어서 실기 ZIP을 보류했다. 기존 승인 FPGA는 유지하며 ROM CHECK 경로를 직접 개선한 뒤 실기로 진행한다.
+
+실기 ZIP은 보류한다. 기능 수정은 유지하고 map04(Standard Fit, placement multiplier1.0)의 실제168MHz ROM CHECK 경로 check_response_address[8]→check_next[13] 경로(-0.003ns)를 직접 분석한다. 기존 compare165의 기각된 비교식/설정과 map01~05를 반복하지 않는다. 해당 제어 영역의 배치 보존·국소 제어/팬아웃 개선을 먼저 검토하고 필요한 경계만 검증한다. 클록/false-path 완화·seed 순회 금지. 실제 클록 setup/hold와 새 배치의 조건부 IO/reset이 통과하면 기존167 MCU·미변경 SNES 결과를 재사용해 ASM/ZIP 후 SMB3 실기로 간다. 같은166·044·무변경 부팅은 요청하지 않는다.
+
+[계약](../../docs/nes-pacing167-contract.ko.md) · [검증](../../analysis/pacing167-verification.json). SamePR109 OPEN. Approved baseline remains boundary165/map02; candidate map04 NOTadopted. Reproduce with --standard-fit only. map05 placement2 rejected-.837. Wide-policy test02 12joint+32fill cases, narrow equiv02 18cases/22outputs incl400000cycle wrap, ARM01/check03 margin1076,16rawABORTnibblesPASS. No newIO/ASM/SDpackage or hardware result. All failed candidates and source-pin addendum preserved. Next avoid tiny counter/seed/refit loop; target CHECK region.
+
+---
+
+# NES166 실기01 — 반복 fill 취소 구간 확인
+
+NES166도 무영상 증상은 동일했으나, BEGIN383/ABORT383/END0/COMMIT0으로 프레임 완성 전 반복 취소를 확인했다. 첫·마지막 취소 이유4는 CHR fill 실패 요약이며 세부 오류는 미확정이다. 첫 프레임은 총1508개 데이터 레코드 중 CHR36바이트를 받았다. ROM 오류0, RUN60010ms, STOP·기본 코어 복구·메뉴 준비는 로그상 완료됐다.
+
+실기 결과가 가리킨 fill/arbiter의 vblank 사용권 대기와 MCU 소비 지연을 선택된 설정으로 재현한다. 사용권 획득 전 대기·획득 후 응답 watchdog·전송 대기를 구분하고, CPU/PPU 우선순위와 전체 유한 상한·취소 drain을 보존해 필요한 경로만 수정한다. 세부 fill 오류는 기존 ABORT 경로에 최소한으로 전달한다. 일괄 timeout 확대나 별도 범용 진단 대신 수정된 SMB3 실기로 복귀한다. 같은166·044·무변경 FIT는 반복하지 않는다. 이후 AV 품질→장기 플레이/물리 리셋 로그→입력 유지 순서를 유지한다.
+
+[결과](../../docs/nes-game166-hardware01.ko.md) · [근거](../../analysis/game166-hardware01-verification.json). PR109 OPEN/same branch. First/last export4 != proven fill4 timeout; intermediate reasons unknown. First1508 includes36CHR (1472geometry). 130ms host BEGIN→ABORT is not fill-only elapsed. SNES display not reached; no newFW/RTL/package this result turn. Prior166 archives remain immutable.
+
+---
+
+# NES166 — 최소 영상 수신 기록 실기 대기
+
+NES166 시험판을 준비했다.165와 동일한 FPGA에서 영상 시작·완성·취소·승인과 첫 취소 이유를 기록한다. WRAM 잔존 데이터 상태에서도 첫 SNES 화면은 정상이며, 느린 진행의 기존 대기 제한 취소는 모델로 재현했다. 실기 원인은 아직 미확정이고 영상 복구판은 아니다.
+
+NES GAME 166.nh1 실기 실행 후 nes-progress-166.txt/nes-game-last-166.txt로 BEGIN 부재·반복 ABORT·승인/표시 정체를 구분한다. 검정 화면이면 촬영·조작 불필요. 새 범용 진단·임의 timeout 확대·CPU 우선순위 변경·044 반복 대신 확인된 경로만 고쳐 SMB3 AV로 복귀한다.
+
+[계약](../../docs/nes-trace166-contract.ko.md) · [검증](../../analysis/trace166-verification.json). SamePR109 OPEN. SELECT arm02/armcheck04/test03/wait02/release02;48Btrace/static26520/free38904/RUN37320/IRQ508/margin1076. Original165 FPGA exact ca2b3bfe, newFW b520a229, package cebf7987. WRAM128KiB dirty first image61184pixels/45ACK/BEGIN-END-COMMIT1 ABORT0. Slowwait models prove possibleabort NOT hardwarecause. Firstreason1 combineslease/enable/total;reason4 fillsummaryonly. No clock/FPGA/timeoutchanges;noSDwritesduringRUN. Failed sandboxDLL/hostID and Unicodewait01 preserved;wait02/test03 actualPASS. armcheck02 relocation fingerprint failure reviewed13bodies;armcheck03PASS. Completed archives immutable.
+
+---
+
+# NES165 실기01 — 영상 미출력 분석
+
+NES165 첫 실기에서 사운드·60초 종료·메뉴 복귀는 통과했으나 영상은 출력되지 않았다. 표시 완료0, ROM 오류0, native_result=1이다. 수신 오류21은 시간 만료의 부수 결과일 수 있다. 긴 정상 대기가 fill/export 취소로 이어지는지와 취소 이유 누락을 우선 조사한다.
+
+[실기 결과](../../docs/nes-game165-hardware01.ko.md) · [근거](../../analysis/game165-hardware01-verification.json). PR109 OPEN, same branch. RUN60020ms/tick, ROM393216checked, STOP/base/menu pass. Finalflags1 is postSTOP, not RUNstall. Receiver21 is false-transfer/status wrapper and runtime first cause deadline1. ABORT reason currently discarded; not yet proven why no COMMIT. Primary hypothesis WAIT131072 (~6.1ms) includes legal outside-vblank/host stalls. No newfirmware/FIT/SD this result turn; preserve previous evidence.
+
+같은165 재시험 대신, vblank만 허용하는 CHR fill의 WAIT131072와 MCU backpressure를 재현한다. BEGIN/END/ABORT/COMMIT 횟수·첫 취소 이유를 보존해 수신 단계와 취소 원인을 구분한 뒤 필요한 경로만 고치고 SMB3 실기로 확인한다. 상한 무조건 확대·CPU/PPU 우선순위 해제·044 반복은 하지 않는다. 영상 복구 후 AV 품질→장기 플레이/물리 리셋 로그→입력 유지 순서를 유지한다.
+
+---
+
+# NES 현재 인계 — 새 영상 경로 실기 시험 대기
+
+PR109 OPEN / codex/nes-native-runtime-165. [계약](../../docs/nes-coupled165-contract.ko.md) · [실기 안내](../../docs/nes-game165-instructions.ko.md) · [결과](../../analysis/coupled165-verification.json).
+
+NES165 SMB3 실기 시험판을 준비했다. 새 영상 경로의 MCU→실제 SNES 표시 ACK 결합을 통과했고, RUN 전용 버퍼로 메뉴·GBC의 RAM 여유를 회복했다. 전체 ARM 링크와 RUN/IRQ 스택 검토·기존 FPGA 배치의 ASM을 완료했다. 화면 속도·사운드·메뉴 복귀의 새 실기 결과는 아직 미확인이다.
+
+SELECT FPGA boundary165/map02 unchanged + coupled165/asm01; MCU coupled165/arm01 / armcheck02; coupled test05; release02. RUN-only noinline workspace33952B, stack bound37320+IRQ508/free38952/margin1124, static26472. save_report4864 restored outside RUN. Scalar errors survive, receiver/video/io NULL before return. 86 reachable functions/callback and reviewed library/IRQ fingerprints; not all menu formal proof or measured highwater. Exact45SNES ACK x2/61184pixels each; normal1frame, deadline-at-SEAL0frames despite visible image. Filebus/native191capture model, NOTphysical. Test01 DLL/02dotnet/03Unicode invalid;04pass;05final. No newFIT/FLOAT. ASM/CPF preserves selected baseline/archive. Package702ca2f7, firmware0093c48e, FPGAca2b3bfe. PrivateROMnoGit,164rollbackexact,saveSRAMreserved. Conditional external IO/MTBF24syncreset remains.
+
+새 NES165-SMB3-NATIVE-VIDEO 시험판으로 제목→월드맵→첫 레벨 이동·점프·사운드·화면 속도와 메뉴 복귀를 확인한다. nes-progress-165.txt/nes-game-last-165.txt 및20~30초 영상을 받기 전에는 또 다른 범용 진단이나 무변경 FPGA FIT/전체 부팅을 반복하지 않는다. 실패하면 최초native_result/receiver/sink/video/ROM 오류에 따라 실제 경로만 수정한다. AV가 확인되면 장기 플레이와 오류/물리 리셋 로그, 입력 유지 품질 순서로 진행한다. 044 복원 시험은 반복하지 않고 필요시 동봉164로 복원한다.
+
+Do not use old runtime165/arm02 (permanent34KB allocation) for the SD pair. Newmaterializer wraps it then replaces adapter/log lifetime; preparation-runlease165.json is final. Newchecker pins actual compiler/platform; code/compiler/binding changes require fresh review, not automatic margin reuse. Long-play/physicalresetlogs deferred untilAV hardware outcome. Completed evidence/finalizers immutable.
+
+---
+
+# NES 현재 인계 — MCU native 영상 루프 전체 링크
+
+PR109 OPEN, 같은 codex/nes-native-runtime-165 브랜치. [계약](../../docs/nes-runtime165-contract.ko.md) · [결과](../../analysis/runtime165-verification.json).
+
+165 새 영상 경로를 실제 MCU 게임 루프에 연결하고 전체 ARM 링크를 통과했다. 수신→변환→SNES 표시 ACK 후 다음 프레임을 처리한다. 로그 스택은4864→768바이트로 줄였고, 정적RAM60424/65424바이트·여유5000바이트다. 명시적 RUN 호출 경로의 스택 합계3120바이트는 전체 IRQ/메뉴 경로 승인이 아니다. FPGA는boundary165/map02 그대로이며 새SD·실기·60fps는 아직 미확인이다.
+
+SELECT FPGA boundary165/map02/reproduce02 unchanged;MCU runtime165/arm02. Full ARM196052B; RAM includes ahbram=60424/65424/free5000. Native receiver18064/video15888 union log4096/runtime100. save_report4864->768;listed foreground3120 is NOT whole-program/IRQ bound. New runtime10cases+invalidarg, native191transactions + synthetic sink45ACK, no retry. No new actualSNES/physical/FLOAT/FIT. Source1393copied/7changed/13added. Strict74/E6v2/E5/D6/F6;clocktick6000;RUN noSD;existing reset-beforeSTOP/CF86 failclosed.
+
+runtime165/arm02의 실제 RUN/오류/STOP/메뉴 복귀와 SysTick·라이브러리·일반 메뉴/GBC를 포함한 스택 여유를 먼저 확인한다. 필요하면 수명이 겹치지 않는 MCU 버퍼 공유로 해결하며 세이브 SRAM은 사용하지 않는다. 이어 실제 SNES ACK와 MCU 시간/오류 서비스의 최소 결합 시험만 수행하고, 선택 boundary165/map02와 쌍을 이룬 SMB3(J) 첫 레벨 시험판을 만든다. 변경 없는 FPGA 재배치·전체 ROM/부팅/A-B/044 반복은 하지 않는다. 60초는 tick 기준6000이며 장기 플레이/물리 리셋 로그는 AV 실기 확인 후 진행한다.
+
+Actual run adapter src/nes/firmware/nes_runtime_board165.inc; materializer tools/nes_runtime165.py uses private164 evidence ARM, not old public generic include. Native synchronous conversion callbacks upload patterns and call guard between transactions. Never call observer SPI recursively inside SPI engine. video/log union only after runtime terminates; use copied error scalars. Stop/report paths and other cores still need stack/IRQ review. Do not substitute timing-loop counts for ticks, or mark ID/ACK model as physical execution. Keep 164/GBC/saveSRAM. test01/armcheck01 environment;armcheck02 CRLF;armcheck03 excludes ahbram INVALID;use armcheck04/test04. Completed archives/finalizers immutable.
+
+---
+
+# NES 현재 인계 — 영상 IO·CDC 리셋 경계
+
+PR108 merged6073122. 새 브랜치 codex/nes-native-runtime-165. [계약](../../docs/nes-boundary165-contract.ko.md) · [검증](../../analysis/boundary165-verification.json).
+
+165 영상 경로 진척: 새 영상 mailbox·SPI 수신부의 리셋을 각 클록에서 해제하도록 수정했다. 내부 setup+0.158ns/hold+0.143ns, 14977LE/961LAB/35M9K와 조건부 IO 지연 검사를 통과했다. 영상 데이터·제어부의 음수 recovery/removal 경로는 1197개에서0개로 줄었다. 선택 boundary165/map02/reproduce02. MCU 통합·full-link·새 실기는 미완료이며 새SD는 없다.
+
+SELECT boundary165/map02/reproduce02. Two RTL/59unchanged;2FIT;map01 raw-resetOR rejected, map02 purelocal release adopted. NEW450deliveries72resets12halt/6phases+wrongreset negative;SPI1717records/47blocks/12489wireB x2 exact. Firstfanout11;native payload rawnegative1197->0;remaining24 release/fault sync paths explicitly OPEN, not falsepathed. PSRAM conditional+2.935ns/SNES77.411ns/SPI163.821ns. Not fullIO/MTBF/MCU/60fps/hardware. Original routed copy exact;archives immutable.
+
+NEXT boundary165/map02를 기준으로 실제164 MCU 게임 루프에 수신→PREPARED→COMMIT→영상 변환→패킷→SNES 표시 ACK→consumed를 연결한다. 식별자74/E6 version2/E5/D6/F6를 정확히 검사하고 기존 CF86·사운드·입력·STOP·메뉴 복귀를 유지한다. SPI를 잡지 않은 경계에서 시간/오류를 서비스하고 반복 횟수 대신 단조 경과 시간을 사용한다. RUN 중 SD 기록은 금지하고 안전한 STOP 뒤 기록한다. receiver18064B+video15888B와 기존 전역·스택을 실제 ARM full-link로 확인한다. 필요한 새 경계 시험 후 SMB3(J) 첫 레벨 실기로 진행하며 기존 ROM 쓰기·부팅·A/B·044 반복 및 무변경 refit를 추가하지 않는다. 기존 전기적 E1/E2·MTBF·클록 정지 한계는 조건부 위험으로 계속 명시한다.
+
+MCU code map: src/nes/firmware/nes_native165 (receiver), nes_native_video165 (conversion), nes_native_sink165 (packet/ACK), nes_sink_spi165 (E0/E1), tools/nes_native_spi165.py::bulk_engine (bounded1..259B SPI). Actual164 RUN baseline is probes/nes-game164/evidence/arm/src/nes_run136.inc, not the older public generic include. Keep one caller-owned receiver+video; no duplicate full candidate/table readback and no cartridge SRAM. A synchronous build/seal must call guard/time/STOP between transactions; do not invoke SPI service recursively while SPI ownership is held. ID mismatch/CRC/ambiguous ACK -> STOP/reset, no blind retry. Final consumed only after display ACK. Full ARM link/stack must replace estimates before packaging.
+
+Keep164/GBC/saveSRAM. No SD created; completed record/audit/archive immutable.
+
+---
+
 # NES 현재 인계 — 상태 직접 저장·읽기 캡처
 
 PR108 OPEN. [계약](../../docs/nes-directstate165-contract.ko.md) · [검증](../../analysis/directstate165-verification.json).

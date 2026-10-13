@@ -40,15 +40,15 @@
       "verification": "analysis/GAME164-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "predecode_timing_improved_still_open",
+      "investigation": "167_first_picture_then_sink_ack_validation_failure",
       "hardware_baseline": "NES-H1-SAMPLING-044",
       "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
-      "development_evidence": "analysis/game164-verification.json",
-      "hardware_candidate": "NES-GAME-164",
+      "development_evidence": "analysis/rawstage167-verification.json",
+      "hardware_candidate": "NES-GAME-167",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "선택 기준을 directstate165/map01/reproduce01로 변경한다. 양수 여유를 더 늘리기 위한 미세 논리·seed·무변경 refit는 중단한다. 먼저 동일 배치에서 외부54입력/57출력과 혼합 클록 경로를 PSRAM70ns/SNES/MCU-SPI/영상 mailbox/reset으로 분류하고 기존 보드 근거를 재사용할 수 있는 범위를 확인한다. 실제 새 경계의 요청/응답 데이터 안정성·ACK 소유권·공통 reset/STOP 회수 및 필요한 지연 제약을 점검한다. 그 다음 MCU에 실험 SPI0x74와 E6/version2 상태73·E5관측70·E0/F6 패킷 수신/변환/SNES ACK를 연결하고, 기존 사운드·입력·경과시간·STOP 서비스를 유지한다. full-link/stack과 최소 변경 경계 검증 후 SMB3(J) 첫 레벨 실기 패키지로 넘어간다. 새로운 일반 진단체계나 전체 ROM/A-B/044 반복을 선행 조건으로 추가하지 않는다. 변경으로 배치가 달라질 때만 해당 완성 후보의 전체 타이밍을 다시 확인한다. 내부 통과만으로60fps·실기 안전성·장시간 입력 유지를 완료 처리하지 않는다. 설치164/GBC/세이브 SRAM은 보존한다.",
+      "next_gate": "실패한8번째 영상의 SNES 패킷 응답 검사를 우선 조사한다. 기존 성공7회/마지막세대22·수신세대24를 기준으로 연속 프레임의 변경량·32개 DMA 명령 상한·5000 전송 예산·길이/순번/세대 소유권을 최소 재현한다. sink 오류3만으로 SNES 거절(E0~E4)과 응답 토큰/서명 불일치를 구분할 수 없으므로 실패 패킷의 op/section/offset/length, 기대 토큰 및 실제12바이트 ACK를 안전 정지 후 기존 TXT에 기록하는 최소 보강을 우선한다. 응답 검사를 끄거나 상한을 무조건 늘리지 않는다. 필요한 수정 뒤 SMB3 실기로 복귀하며 같은167·044·무변경 FIT를 반복하지 않는다. 이후 연속 AV→장기 플레이/오류·본체 리셋 로그→입력 유지 순서를 유지한다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
-      "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
+      "paired_candidate": "167 MCU+rawstage167 FPGA; user first picture,7display ACKs,8th display failure; audio unconfirmed",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
       "observation_reader": "NES-CLOCK-READER-088",
       "observation_configuration": "NES-CLOCK-CONFIG-089",
@@ -605,7 +605,77 @@
         "contract": "docs/nes-directstate165-contract.ko.md",
         "next": "선택 기준을 directstate165/map01/reproduce01로 변경한다. 양수 여유를 더 늘리기 위한 미세 논리·seed·무변경 refit는 중단한다. 먼저 동일 배치에서 외부54입력/57출력과 혼합 클록 경로를 PSRAM70ns/SNES/MCU-SPI/영상 mailbox/reset으로 분류하고 기존 보드 근거를 재사용할 수 있는 범위를 확인한다. 실제 새 경계의 요청/응답 데이터 안정성·ACK 소유권·공통 reset/STOP 회수 및 필요한 지연 제약을 점검한다. 그 다음 MCU에 실험 SPI0x74와 E6/version2 상태73·E5관측70·E0/F6 패킷 수신/변환/SNES ACK를 연결하고, 기존 사운드·입력·경과시간·STOP 서비스를 유지한다. full-link/stack과 최소 변경 경계 검증 후 SMB3(J) 첫 레벨 실기 패키지로 넘어간다. 새로운 일반 진단체계나 전체 ROM/A-B/044 반복을 선행 조건으로 추가하지 않는다. 변경으로 배치가 달라질 때만 해당 완성 후보의 전체 타이밍을 다시 확인한다. 내부 통과만으로60fps·실기 안전성·장시간 입력 유지를 완료 처리하지 않는다. 설치164/GBC/세이브 SRAM은 보존한다.",
         "hardware": false
-      }
+      },
+      "boundary165": {
+        "status": "selected",
+        "selected": "boundary165/map02/reproduce02",
+        "adopted": true,
+        "verification": "analysis/boundary165-verification.json",
+        "contract": "docs/nes-boundary165-contract.ko.md",
+        "next": "boundary165/map02를 기준으로 실제164 MCU 게임 루프에 수신→PREPARED→COMMIT→영상 변환→패킷→SNES 표시 ACK→consumed를 연결한다. 식별자74/E6 version2/E5/D6/F6를 정확히 검사하고 기존 CF86·사운드·입력·STOP·메뉴 복귀를 유지한다. SPI를 잡지 않은 경계에서 시간/오류를 서비스하고 반복 횟수 대신 단조 경과 시간을 사용한다. RUN 중 SD 기록은 금지하고 안전한 STOP 뒤 기록한다. receiver18064B+video15888B와 기존 전역·스택을 실제 ARM full-link로 확인한다. 필요한 새 경계 시험 후 SMB3(J) 첫 레벨 실기로 진행하며 기존 ROM 쓰기·부팅·A/B·044 반복 및 무변경 refit를 추가하지 않는다. 기존 전기적 E1/E2·MTBF·클록 정지 한계는 조건부 위험으로 계속 명시한다.",
+        "hardware": false
+      },
+      "runtime165": {
+        "status": "mcu_linked_stack_review_pending",
+        "selected_mcu": "runtime165/arm02",
+        "selected_fpga": "boundary165/map02/reproduce02",
+        "verification": "analysis/runtime165-verification.json",
+        "contract": "docs/nes-runtime165-contract.ko.md",
+        "mcu_integrated": true,
+        "full_arm_link": true,
+        "ram_after_static": 5000,
+        "whole_program_stack_approved": false,
+        "physical": false,
+        "hardware_package": false
+      },
+      "coupled165": {
+        "status": "physical_trial_ready",
+        "selected_mcu": "coupled165/arm01",
+        "selected_fpga": "boundary165/map02",
+        "verification": "analysis/coupled165-verification.json",
+        "contract": "docs/nes-coupled165-contract.ko.md",
+        "instructions": "docs/nes-game165-instructions.ko.md",
+        "hardware_package": true,
+        "physical": false,
+        "run_stack_margin": 1124
+      },
+      "hardware165": {
+        "status": "audio_and_return_pass_video_fail",
+        "verification": "analysis/game165-hardware01-verification.json",
+        "contract": "docs/nes-game165-hardware01.ko.md",
+        "video": false,
+        "audio": true,
+        "menu_return": true,
+        "root_cause_confirmed": false
+      },
+      "trace166": {
+        "verification": "analysis/trace166-verification.json",
+        "hardware_package": true,
+        "video_fixed": false,
+        "physical": false
+      },
+      "hardware166": {
+        "status": "video_fail_precommit_fill_abort_localized",
+        "verification": "analysis/game166-hardware01-verification.json",
+        "contract": "docs/nes-game166-hardware01.ko.md",
+        "video": false,
+        "fill_suberror_confirmed": false,
+        "begins": 383,
+        "aborts": 383,
+        "ends": 0,
+        "commits": 0
+      },
+      "pacing167": {
+        "status": "functional_pass_timing_fail_no_hardware_package",
+        "verification": "analysis/pacing167-verification.json",
+        "contract": "docs/nes-pacing167-contract.ko.md",
+        "functional": true,
+        "nominal_timing": false,
+        "hardware_package": false,
+        "adopted": false,
+        "best_candidate": "map04"
+      },
+      "investigation_evidence": "analysis/game167-hardware01-verification.json"
     },
     {
       "id": "pce",

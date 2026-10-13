@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-13",
-  "technical_candidate": "NES-GAME-164",
+  "technical_candidate": "NES-GAME-167-HARDWARE-PARTIAL-ACK-FAIL",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 영상 경로 진척: 로더 상태를 직접 저장하고 ROM 읽기의 데이터 캡처 허용을 분리했습니다. 실제 내부4클록·3조건의 setup/hold가 모두 통과했다. 최악 setup+0.094ns, hold+0.120ns,15010LE/959LAB/35M9K이며 다음 연결 작업의 기준으로 채택한다. 선택 directstate165/map01/reproduce01. 외부IO·영상CDC/reset·MCU 연결·실기는 미완료이며 새SD는 없습니다.",
-  "next_action": "내부 타이밍 최적화를 종료하고 채택한 directstate165/map01 기준으로 외부IO·영상CDC/reset 및 MCU 실제 영상 수신/ACK 연결을 진행한다.",
+  "assessment": "NES167 실기에서 첫 화면이 약1~2초 보인 뒤 메뉴로 복귀했다. BEGIN/END/COMMIT 각8회·ABORT0회, SNES 표시 ACK 완료7회로 새 영상 경로의 첫 출력은 확인했다. 이후 sink 응답 내용 검사 오류3으로 조기 종료했다. ROM 검증·STOP·메뉴 복귀는 통과했고, 연속 영상·실제 사운드는 미확인이다.",
+  "next_action": "실패한8번째 영상의 SNES 패킷 응답 검사를 우선 조사한다. 기존 성공7회/마지막세대22·수신세대24를 기준으로 연속 프레임의 변경량·32개 DMA 명령 상한·5000 전송 예산·길이/순번/세대 소유권을 최소 재현한다. sink 오류3만으로 SNES 거절(E0~E4)과 응답 토큰/서명 불일치를 구분할 수 없으므로 실패 패킷의 op/section/offset/length, 기대 토큰 및 실제12바이트 ACK를 안전 정지 후 기존 TXT에 기록하는 최소 보강을 우선한다. 응답 검사를 끄거나 상한을 무조건 늘리지 않는다. 필요한 수정 뒤 SMB3 실기로 복귀하며 같은167·044·무변경 FIT를 반복하지 않는다. 이후 연속 AV→장기 플레이/오류·본체 리셋 로그→입력 유지 순서를 유지한다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -53,7 +53,7 @@
     },
     {
       "id": "R5",
-      "status": "partial_165_fit_internal_timing_pass_io_cdc_mcu_open",
+      "status": "partial_165_native_boundary_pass_mcu_open",
       "title": "Full board fit/STA and hardware/game acceptance",
       "depends_on": [
         "R3",
@@ -61,8 +61,8 @@
       ],
       "exit": "Same complete candidate fit/STA/CDC/IO review, source-adoption clearance, recoverable test package, diagnostic then designated SMB3 hardware scenarios",
       "scope_note": "Full-game acceptance; unresolved accuracy/IO scope is explicit and does not require repeating A/B before the bounded actual-SMB3 trial.",
-      "evidence": "analysis/directstate165-verification.json",
-      "remaining": "165 전체 배치와 실제 클록setup/hold 통과. 외부IO·영상CDC/reset·MCU 수신/ACK·full-link/stack 및 새 SMB3 실기가 남았다."
+      "evidence": "analysis/boundary165-verification.json",
+      "remaining": "FPGA 배치·내부 타이밍·영상 로컬리셋·조건부 IO 통과. MCU 수신/표시ACK·full-link/stack 및 새 SMB3 실기가 남았다."
     }
   ],
   "open_issues": [
@@ -80,9 +80,9 @@
     },
     {
       "id": "BOARD-FIT",
-      "status": "165_fit_internal_timing_pass_external_open",
-      "evidence": "analysis/directstate165-verification.json",
-      "detail": "165 directstate15010LE/959LAB/35M9K, 실제 내부setup+0.094/hold+0.120ns. 외부IO·CDC/reset·MCU 및 실기 승인은 별도다."
+      "status": "165_fit_native_boundary_pass_mcu_open",
+      "evidence": "analysis/boundary165-verification.json",
+      "detail": "165 영상 경로 진척: 새 영상 mailbox·SPI 수신부의 리셋을 각 클록에서 해제하도록 수정했다. 내부 setup+0.158ns/hold+0.143ns, 14977LE/961LAB/35M9K와 조건부 IO 지연 검사를 통과했다. 영상 데이터·제어부의 음수 recovery/removal 경로는 1197개에서0개로 줄었다. 선택 boundary165/map02/reproduce02. MCU 통합·full-link·새 실기는 미완료이며 새SD는 없다."
     },
     {
       "id": "DISPLAY-240",
@@ -2920,7 +2920,7 @@
     "hardware": false
   },
   "current_165_milestones": {
-    "selected": "directstate165/map01/reproduce01",
+    "selected": "boundary165/map02/reproduce02",
     "fit": true,
     "actual_internal_clock_setup_hold": true,
     "full_io_cdc_reset": false,
@@ -2928,7 +2928,80 @@
     "full_link_stack": false,
     "hardware_package": false,
     "hardware_smb3": false,
-    "source": "analysis/directstate165-verification.json",
-    "note": "Older R1-R4 evidence records prior hardware stages; current165 approval is limited to these explicit fields. Installed164 hardware remains the fallback."
-  }
+    "source": "analysis/boundary165-verification.json",
+    "note": "Internal clocks and changed native reset boundary passed; physical/electrical/MTBF limits remain conditional. Actual MCU integration/full-link and hardware remain next.",
+    "conditional_io_bounds": true,
+    "native_payload_local_reset": true
+  },
+  "boundary165": {
+    "status": "selected",
+    "selected": "boundary165/map02/reproduce02",
+    "adopted": true,
+    "verification": "analysis/boundary165-verification.json",
+    "contract": "docs/nes-boundary165-contract.ko.md",
+    "next": "boundary165/map02를 기준으로 실제164 MCU 게임 루프에 수신→PREPARED→COMMIT→영상 변환→패킷→SNES 표시 ACK→consumed를 연결한다. 식별자74/E6 version2/E5/D6/F6를 정확히 검사하고 기존 CF86·사운드·입력·STOP·메뉴 복귀를 유지한다. SPI를 잡지 않은 경계에서 시간/오류를 서비스하고 반복 횟수 대신 단조 경과 시간을 사용한다. RUN 중 SD 기록은 금지하고 안전한 STOP 뒤 기록한다. receiver18064B+video15888B와 기존 전역·스택을 실제 ARM full-link로 확인한다. 필요한 새 경계 시험 후 SMB3(J) 첫 레벨 실기로 진행하며 기존 ROM 쓰기·부팅·A/B·044 반복 및 무변경 refit를 추가하지 않는다. 기존 전기적 E1/E2·MTBF·클록 정지 한계는 조건부 위험으로 계속 명시한다.",
+    "hardware": false
+  },
+  "runtime165": {
+    "status": "mcu_linked_stack_review_pending",
+    "selected_mcu": "runtime165/arm02",
+    "selected_fpga": "boundary165/map02/reproduce02",
+    "verification": "analysis/runtime165-verification.json",
+    "contract": "docs/nes-runtime165-contract.ko.md",
+    "mcu_integrated": true,
+    "full_arm_link": true,
+    "ram_after_static": 5000,
+    "whole_program_stack_approved": false,
+    "physical": false,
+    "hardware_package": false
+  },
+  "coupled165": {
+    "status": "physical_trial_ready",
+    "selected_mcu": "coupled165/arm01",
+    "selected_fpga": "boundary165/map02",
+    "verification": "analysis/coupled165-verification.json",
+    "contract": "docs/nes-coupled165-contract.ko.md",
+    "instructions": "docs/nes-game165-instructions.ko.md",
+    "hardware_package": true,
+    "physical": false,
+    "run_stack_margin": 1124
+  },
+  "hardware165": {
+    "status": "audio_and_return_pass_video_fail",
+    "verification": "analysis/game165-hardware01-verification.json",
+    "contract": "docs/nes-game165-hardware01.ko.md",
+    "video": false,
+    "audio": true,
+    "menu_return": true,
+    "root_cause_confirmed": false
+  },
+  "trace166": {
+    "verification": "analysis/trace166-verification.json",
+    "contract": "docs/nes-trace166-contract.ko.md",
+    "hardware_package": true,
+    "video_fixed": false,
+    "physical": false
+  },
+  "hardware166": {
+    "status": "video_fail_precommit_fill_abort_localized",
+    "verification": "analysis/game166-hardware01-verification.json",
+    "contract": "docs/nes-game166-hardware01.ko.md",
+    "video": false,
+    "fill_suberror_confirmed": false,
+    "begins": 383,
+    "aborts": 383,
+    "ends": 0,
+    "commits": 0
+  },
+  "pacing167": {
+    "status": "functional_pass_timing_fail_no_hardware_package",
+    "verification": "analysis/pacing167-verification.json",
+    "contract": "docs/nes-pacing167-contract.ko.md",
+    "functional": true,
+    "nominal_timing": false,
+    "hardware_package": false,
+    "adopted": false,
+    "best_candidate": "map04"
+  },
+  "summary": "NES167 실기에서 첫 화면이 약1~2초 보인 뒤 메뉴로 복귀했다. BEGIN/END/COMMIT 각8회·ABORT0회, SNES 표시 ACK 완료7회로 새 영상 경로의 첫 출력은 확인했다. 이후 sink 응답 내용 검사 오류3으로 조기 종료했다. ROM 검증·STOP·메뉴 복귀는 통과했고, 연속 영상·실제 사운드는 미확인이다."
 }
