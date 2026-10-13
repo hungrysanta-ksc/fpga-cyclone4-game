@@ -1,3 +1,13 @@
+# NES166 — 최소 영상 수신 기록 실기 대기
+
+NES166 시험판을 준비했다.165와 동일한 FPGA에서 영상 시작·완성·취소·승인과 첫 취소 이유를 기록한다. WRAM 잔존 데이터 상태에서도 첫 SNES 화면은 정상이며, 느린 진행의 기존 대기 제한 취소는 모델로 재현했다. 실기 원인은 아직 미확정이고 영상 복구판은 아니다.
+
+NES GAME 166.nh1 실기 실행 후 nes-progress-166.txt/nes-game-last-166.txt로 BEGIN 부재·반복 ABORT·승인/표시 정체를 구분한다. 검정 화면이면 촬영·조작 불필요. 새 범용 진단·임의 timeout 확대·CPU 우선순위 변경·044 반복 대신 확인된 경로만 고쳐 SMB3 AV로 복귀한다.
+
+[계약](../../docs/nes-trace166-contract.ko.md) · [검증](../../analysis/trace166-verification.json). SamePR109 OPEN. SELECT arm02/armcheck04/test03/wait02/release02;48Btrace/static26520/free38904/RUN37320/IRQ508/margin1076. Original165 FPGA exact ca2b3bfe, newFW b520a229, package cebf7987. WRAM128KiB dirty first image61184pixels/45ACK/BEGIN-END-COMMIT1 ABORT0. Slowwait models prove possibleabort NOT hardwarecause. Firstreason1 combineslease/enable/total;reason4 fillsummaryonly. No clock/FPGA/timeoutchanges;noSDwritesduringRUN. Failed sandboxDLL/hostID and Unicodewait01 preserved;wait02/test03 actualPASS. armcheck02 relocation fingerprint failure reviewed13bodies;armcheck03PASS. Completed archives immutable.
+
+---
+
 # NES165 실기01 — 영상 미출력 분석
 
 NES165 첫 실기에서 사운드·60초 종료·메뉴 복귀는 통과했으나 영상은 출력되지 않았다. 표시 완료0, ROM 오류0, native_result=1이다. 수신 오류21은 시간 만료의 부수 결과일 수 있다. 긴 정상 대기가 fill/export 취소로 이어지는지와 취소 이유 누락을 우선 조사한다.

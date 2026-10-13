@@ -46,7 +46,7 @@
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-164",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "같은165 재시험 대신, vblank만 허용하는 CHR fill의 WAIT131072와 MCU backpressure를 재현한다. BEGIN/END/ABORT/COMMIT 횟수·첫 취소 이유를 보존해 수신 단계와 취소 원인을 구분한 뒤 필요한 경로만 고치고 SMB3 실기로 확인한다. 상한 무조건 확대·CPU/PPU 우선순위 해제·044 반복은 하지 않는다. 영상 복구 후 AV 품질→장기 플레이/물리 리셋 로그→입력 유지 순서를 유지한다.",
+      "next_gate": "NES GAME 166.nh1 실기 실행 후 nes-progress-166.txt/nes-game-last-166.txt로 BEGIN 부재·반복 ABORT·승인/표시 정체를 구분한다. 검정 화면이면 촬영·조작 불필요. 새 범용 진단·임의 timeout 확대·CPU 우선순위 변경·044 반복 대신 확인된 경로만 고쳐 SMB3 AV로 복귀한다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -647,6 +647,12 @@
         "audio": true,
         "menu_return": true,
         "root_cause_confirmed": false
+      },
+      "trace166": {
+        "verification": "analysis/trace166-verification.json",
+        "hardware_package": true,
+        "video_fixed": false,
+        "physical": false
       }
     },
     {
