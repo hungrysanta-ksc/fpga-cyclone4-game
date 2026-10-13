@@ -46,7 +46,7 @@
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-164",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "NES GAME 166.nh1 실기 실행 후 nes-progress-166.txt/nes-game-last-166.txt로 BEGIN 부재·반복 ABORT·승인/표시 정체를 구분한다. 검정 화면이면 촬영·조작 불필요. 새 범용 진단·임의 timeout 확대·CPU 우선순위 변경·044 반복 대신 확인된 경로만 고쳐 SMB3 AV로 복귀한다.",
+      "next_gate": "실기 결과가 가리킨 fill/arbiter의 vblank 사용권 대기와 MCU 소비 지연을 선택된 설정으로 재현한다. 사용권 획득 전 대기·획득 후 응답 watchdog·전송 대기를 구분하고, CPU/PPU 우선순위와 전체 유한 상한·취소 drain을 보존해 필요한 경로만 수정한다. 세부 fill 오류는 기존 ABORT 경로에 최소한으로 전달한다. 일괄 timeout 확대나 별도 범용 진단 대신 수정된 SMB3 실기로 복귀한다. 같은166·044·무변경 FIT는 반복하지 않는다. 이후 AV 품질→장기 플레이/물리 리셋 로그→입력 유지 순서를 유지한다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -653,6 +653,17 @@
         "hardware_package": true,
         "video_fixed": false,
         "physical": false
+      },
+      "hardware166": {
+        "status": "video_fail_precommit_fill_abort_localized",
+        "verification": "analysis/game166-hardware01-verification.json",
+        "contract": "docs/nes-game166-hardware01.ko.md",
+        "video": false,
+        "fill_suberror_confirmed": false,
+        "begins": 383,
+        "aborts": 383,
+        "ends": 0,
+        "commits": 0
       }
     },
     {

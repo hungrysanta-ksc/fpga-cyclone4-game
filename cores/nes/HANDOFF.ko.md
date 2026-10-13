@@ -1,3 +1,13 @@
+# NES166 실기01 — 반복 fill 취소 구간 확인
+
+NES166도 무영상 증상은 동일했으나, BEGIN383/ABORT383/END0/COMMIT0으로 프레임 완성 전 반복 취소를 확인했다. 첫·마지막 취소 이유4는 CHR fill 실패 요약이며 세부 오류는 미확정이다. 첫 프레임은 총1508개 데이터 레코드 중 CHR36바이트를 받았다. ROM 오류0, RUN60010ms, STOP·기본 코어 복구·메뉴 준비는 로그상 완료됐다.
+
+실기 결과가 가리킨 fill/arbiter의 vblank 사용권 대기와 MCU 소비 지연을 선택된 설정으로 재현한다. 사용권 획득 전 대기·획득 후 응답 watchdog·전송 대기를 구분하고, CPU/PPU 우선순위와 전체 유한 상한·취소 drain을 보존해 필요한 경로만 수정한다. 세부 fill 오류는 기존 ABORT 경로에 최소한으로 전달한다. 일괄 timeout 확대나 별도 범용 진단 대신 수정된 SMB3 실기로 복귀한다. 같은166·044·무변경 FIT는 반복하지 않는다. 이후 AV 품질→장기 플레이/물리 리셋 로그→입력 유지 순서를 유지한다.
+
+[결과](../../docs/nes-game166-hardware01.ko.md) · [근거](../../analysis/game166-hardware01-verification.json). PR109 OPEN/same branch. First/last export4 != proven fill4 timeout; intermediate reasons unknown. First1508 includes36CHR (1472geometry). 130ms host BEGIN→ABORT is not fill-only elapsed. SNES display not reached; no newFW/RTL/package this result turn. Prior166 archives remain immutable.
+
+---
+
 # NES166 — 최소 영상 수신 기록 실기 대기
 
 NES166 시험판을 준비했다.165와 동일한 FPGA에서 영상 시작·완성·취소·승인과 첫 취소 이유를 기록한다. WRAM 잔존 데이터 상태에서도 첫 SNES 화면은 정상이며, 느린 진행의 기존 대기 제한 취소는 모델로 재현했다. 실기 원인은 아직 미확정이고 영상 복구판은 아니다.
