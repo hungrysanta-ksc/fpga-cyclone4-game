@@ -1,3 +1,13 @@
+# NES168 실기 — E3 전송 예산 초과 확정, 다음은 큰 변경 처리
+
+NES168 실기에서 첫 화면 후 종료 증상은 같았지만 원인은 확인됐다. 표시 완료7회 뒤8번째 영상(세대20)의 SEAL에 SNES가 E3(변경분 전송 예산 초과)를 반환했다. 순번46·세션8·세대20·서명은 모두 일치하고 불일치는 상태 코드뿐이다. ROM 오류0·STOP·기본 FPGA 복구·메뉴 준비는 통과했다. 진단 목적은 달성했으며 연속 플레이는 아직 실패다.
+
+다음 구현은 E3를 일으키는 합법적인 큰 화면 변경을 게임 종료 없이 완료하는 경로다. 현재 변경 구간 합계+명령당96 비용과5000 상한,32명령 제한을 기준으로 최소 재현하고 유한 분할/표시 전환 방식을 결정한다. 여러 vblank로 나눌 경우 이전 표시와 갱신 중 VRAM·CGRAM·OAM·HDMA의 일관성, 변경 후보 소유권, 마지막 완료 뒤에만 ACK/세대 갱신, STOP·시간 제한·사운드/입력 서비스를 함께 보장한다. 무조건 상한 증대·검사 제거·성공 ACK 위조·무한 재시도·영구 프레임 폐기는 금지한다. 필요하면 명시적 대체 표시 정책의 시각적 영향을 문서화한다. 해당 경계의 최소 검증 후 바로 SMB3 실기로 간다.168 재시험·추가 영상·044 복원·무변경 FPGA FIT는 불필요하다. 연속 AV→장기 플레이/오류·본체 리셋 로그→입력 유지 순서와 세이브 SRAM/GBC/164 보호를 유지한다.
+
+[실기 결과](../../docs/nes-game168-hardware01.ko.md) · [원문 해석](../../analysis/game168-hardware01-verification.json). PR110 OPEN. SEAL seq46/serial8/gen20, ACKe3/status-only01. Configured5000=sum DMA bytes+96/command; actual charge/count unknown.7display ACK/8received;3560ms NOTFPS. Existing arm02/FPGA/SNES unchanged; no new FW/FIT/ZIP. Completed archives immutable.
+
+---
+
 # NES168 — 최초 SNES 실패 응답 실기 확인
 
 NES168은167의 첫 화면 이후 종료 원인을 구분하는 MCU 시험판이다. 처음 실패한 요청16바이트·응답12바이트와 불일치 항목을32바이트 상태에 보존한다. FPGA·SNES·갱신 상한은167과 같고, 영상 오류 수정 완료는 아니다. 실제 SNES의 E2/E3 거절 구분과 기존 정상 화면·안전 종료 검사를 통과해 실기 패키지를 준비했다.
