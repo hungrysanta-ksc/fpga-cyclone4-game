@@ -1,3 +1,17 @@
+# NES 현재 인계 — 목적 상태별 전이
+
+PR108 OPEN. [계약](../../docs/nes-destination165-contract.ko.md) · [검증](../../analysis/destination165-verification.json).
+
+165 영상 경로 진척: 로더의 공통 상태 선택을 목적 상태별 병렬 전이식으로 분리했습니다. BEGIN→상태는−0.136ns/7단에서+0.331ns/6단으로 개선됐고 실제 상태 레지스터4개를 확인했다. 전체15022LE/963LAB/35M9K, 최악−0.160ns(command[6]→pending_causes[1])로 기존 선택−0.083ns보다 나빠 미채택이다. remaining→loaded_bytes−0.123ns, byte_count→command−0.109ns, state→error_code−0.031ns도 남아 한 경로만의 문제가 아니다. 선택 phaseguard165/map01/reproduce01; 전체IO/CDC·MCU 연결·실기는 미완료, 새SD 없음.
+
+NEW loader294912states/1056sequences/all16codes/STOP+unused negatives;NEW joint219wire1125909edges100READ7ACK19bad72cancel2priorityPASS. Unchanged SPI393741/120/3negatives and MCUgap reused.60otherinputs exact/independent reproduction/localrelease4/12PASS. No latency/clock/SDC change over pulsejoint, ID74/C0C1C2/valid-onlypayload/SS2us retained. SELECT phaseguard165/map01/reproduce01;adopted=False;nominalpass=False.
+
+NEXT 선택 phaseguard165/map01/reproduce01은 유지한다. destination165/map01은 상태 경로가 개선된 구조 검토용이며 채택·배포 기준이 아니다. 이번 병렬 상태 전이와 통과한 SPI 최종 실행 허용은 재수정하지 않는다. 다음은 실패 경로3개(command→주소검사, byte_count→command, remaining→loaded_bytes)의 실제 레지스터 갱신 조건을 함께 검토한다. SPI 첫 명령 바이트 수신 시 offset 검사 종류를 함께 등록하고 명령 레지스터의 소유권/갱신 허용을 분리하는 구조, 로더 terminal 판정을 동일 클록의 next-remaining과 일치하도록 유지하는 구조를 우선 검토한다. 단순한 사전 샘플링으로 live length·ready·fault를 늦추거나 WRITE/HOLD·STOP/리셋 시점을 바꾸지 않는다. 새 보조 레지스터는 실제 SPI 및 쓰기 시퀀스에서 불변식을 확인하고, 직접 상태 주입 시험에서도 관련 값을 일치시킨다. 변경 경계 검증 후 한 번 전체 배치하고 세 실패 경로와 state→error_code를 모두 확인한다. 같은 소스 refit/seed·속성 탐색이나 최악 경로 하나만 바꾸는 반복은 생략한다. ID74/C0C1C2/valid-only payload/SS high·setup2µs 계약을 유지한다. 내부 조건이 갖춰지면 필요한 외부IO·영상CDC/reset와 MCU E6/version2 상태73·E5 관측70·E0/F6 수신·변환·ACK, 사운드·입력·STOP·시간 및 full-link/stack을 연결하고 최소 SMB3(J) 첫 레벨 실기로 간다. 설치164/GBC/세이브 SRAM 보존; 새SD 없음; 전체ROM·A/B·044 반복 생략.
+
+완료 archive/finalizer/public pins 불변. 설치164/GBC/saveSRAM 보존; 새SD 없음.
+
+---
+
 # NES 현재 인계 — 명령별 실행 허용
 
 PR108 OPEN. [계약](../../docs/nes-commandpulse165-contract.ko.md) · [검증](../../analysis/commandpulse165-verification.json).
