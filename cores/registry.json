@@ -40,15 +40,15 @@
       "verification": "analysis/GAME164-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "168_hardware_seal_E3_budget_rejection_confirmed",
+      "investigation": "169_banked_large_update_hardware_ready",
       "hardware_baseline": "NES-H1-SAMPLING-044",
       "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
-      "development_evidence": "analysis/sink168-verification.json",
+      "development_evidence": "analysis/banked169-verification.json",
       "hardware_candidate": "NES-GAME-168",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "다음 구현은 E3를 일으키는 합법적인 큰 화면 변경을 게임 종료 없이 완료하는 경로다. 현재 변경 구간 합계+명령당96 비용과5000 상한,32명령 제한을 기준으로 최소 재현하고 유한 분할/표시 전환 방식을 결정한다. 여러 vblank로 나눌 경우 이전 표시와 갱신 중 VRAM·CGRAM·OAM·HDMA의 일관성, 변경 후보 소유권, 마지막 완료 뒤에만 ACK/세대 갱신, STOP·시간 제한·사운드/입력 서비스를 함께 보장한다. 무조건 상한 증대·검사 제거·성공 ACK 위조·무한 재시도·영구 프레임 폐기는 금지한다. 필요하면 명시적 대체 표시 정책의 시각적 영향을 문서화한다. 해당 경계의 최소 검증 후 바로 SMB3 실기로 간다.168 재시험·추가 영상·044 복원·무변경 FPGA FIT는 불필요하다. 연속 AV→장기 플레이/오류·본체 리셋 로그→입력 유지 순서와 세이브 SRAM/GBC/164 보호를 유지한다.",
+      "next_gate": "NES169-SMB3-BANKED-VIDEO.zip의01-GAME169-SD-ROOT를 적용하고 NES GAME 169.nh1에서 SMB3 플레이어 선택→월드맵→첫 레벨을 진행한다. 첫 화면 이후 조기 종료가 없어졌는지, 큰 갱신 중 검정/혼합 화면이 있는지, 사운드·약60초 메뉴 복귀를 확인하고 두 TXT와 가능하면 영상을 받는다. 기존 약4분 적재·검증은 유지한다. 실패하면 sink_trace 원문·native_frames·STOP 결과를 우선 분석한다. 반복168/044·무변경FIT·추가 범용진단은 하지 않는다. 연속 AV 다음 장기 플레이/오류·리셋 로그, 그다음 입력 유지를 검증한다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
-      "paired_candidate": "168 MCU + identical167 FPGA/SNES;7display ACKs,8th SEAL explicitE3 budget rejection;continuous AV not passed",
+      "paired_candidate": "169 MCU names +167 routing/SNES169 banked ROM;physical pending",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
       "observation_reader": "NES-CLOCK-READER-088",
       "observation_configuration": "NES-CLOCK-CONFIG-089",
@@ -675,7 +675,7 @@
         "adopted": false,
         "best_candidate": "map04"
       },
-      "investigation_evidence": "analysis/game168-hardware01-verification.json"
+      "investigation_evidence": "analysis/banked169-verification.json"
     },
     {
       "id": "pce",

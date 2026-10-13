@@ -1,3 +1,13 @@
+# NES169 — E3 큰 갱신을 비표시 VRAM에 준비, 실기 대기
+
+NES169은168 실기의 E3 종료를 처리한다. 작은 변경은 기존 경로, 큰 변경은 비표시 SNES VRAM에 최대6청크로 준비한 뒤 최종 vblank에서 BG/OBJ/맵·색상·OAM·HDMA를 전환한다. 실제65816 검사에서21개 완료 화면1284864픽셀·이전 화면 유지·최대 크기·전송 중 STOP을 확인했다. MCU 실행과 FPGA 배치는 유지하고 SNES ROM만 갱신한 실기 시험판을 준비했다. 실기 연속 AV·FPS는 아직 미확인이다.
+
+NES169-SMB3-BANKED-VIDEO.zip의01-GAME169-SD-ROOT를 적용하고 NES GAME 169.nh1에서 SMB3 플레이어 선택→월드맵→첫 레벨을 진행한다. 첫 화면 이후 조기 종료가 없어졌는지, 큰 갱신 중 검정/혼합 화면이 있는지, 사운드·약60초 메뉴 복귀를 확인하고 두 TXT와 가능하면 영상을 받는다. 기존 약4분 적재·검증은 유지한다. 실패하면 sink_trace 원문·native_frames·STOP 결과를 우선 분석한다. 반복168/044·무변경FIT·추가 범용진단은 하지 않는다. 연속 AV 다음 장기 플레이/오류·리셋 로그, 그다음 입력 유지를 검증한다.
+
+[안내](../../docs/nes-game169-ready.ko.md) · [구현·경계](../../docs/nes-banked169-contract.ko.md) · [근거](../../analysis/banked169-verification.json). SELECT client01/arm01/armcheck02/verify01/asm01/release01;body3154/4096;SNES14+2metadata bytes, MCU unchanged32trace/1044margin/report3966. E2/E3 only fallback; rawstage167 routed65 files unchanged/MIF+CDB+ASM only. Maximum6x4096 then CGRAM/OAM1248+registers/HDMA;no post-reveal blank;STOP mid-copyE4. Completed archives immutable. PR110 existing open branch unless refreshed merge.
+
+---
+
 # NES168 실기 — E3 전송 예산 초과 확정, 다음은 큰 변경 처리
 
 NES168 실기에서 첫 화면 후 종료 증상은 같았지만 원인은 확인됐다. 표시 완료7회 뒤8번째 영상(세대20)의 SEAL에 SNES가 E3(변경분 전송 예산 초과)를 반환했다. 순번46·세션8·세대20·서명은 모두 일치하고 불일치는 상태 코드뿐이다. ROM 오류0·STOP·기본 FPGA 복구·메뉴 준비는 통과했다. 진단 목적은 달성했으며 연속 플레이는 아직 실패다.
