@@ -1,3 +1,13 @@
+# NES169 실기 — 첫 BEGIN 응답 실패, 표시 기동 경계 조사
+
+NES169 실기는 로딩 화면 유지 후 메뉴로 복귀했다. ROM393216바이트 검증·첫 영상 COMMIT은 성공했지만 첫 BEGIN(세션1/세대12)에 유효한 ACK가 없어 표시0회로 종료했다. DISPLAY5/sink2이며 정상60초 만료나168의 E3 재발이 아니다. STOP·기본 FPGA·메뉴 복구는 정상이다. 분할 갱신과 연속 AV의 실기 목표는 미달성이다.
+
+SNES 리셋 해제→물리 부트 ROM/WRAM 복사→초기화→첫 BEGIN ACK 경계를 우선 확인한다.169 ROM 갱신 이미지와 실제 실행 연결을 대조하고, 필요할 때만 exchange 최초 실패 위치·마지막 F6 상태를 종료 TXT에 최소 추가한다. 원인이 확인된 수정과 최소 검증 후 SMB3 실기로 복귀한다. 같은169/044·무변경FIT·추가 영상은 요청하지 않는다. 연속 AV→장기 플레이/오류·본체 리셋 로그→입력 유지 순서와 세이브 SRAM/GBC/164 보호를 유지한다.
+
+[실기 결과](../../docs/nes-game169-hardware01.ko.md) · [원문·해시·대조](../../analysis/game169-hardware01-verification.json). PR110 OPEN. ACKvalid0 means no actual ACK, zero fields are placeholders. Request BEGIN seq0/serial1/gen12, native_frames0; stage0/flags0/SPCinvalid auxiliary, NOT definitive reset failure. Firmware DISPLAY interval13490ms versus user ~60s kept separately. Compact4096/MIF/logical32768SFC match; RBF packed decode only, NOT RBF ROM-bit readback. MCU6 critical files exact168. Next physical startup/F6 subcause, NOT more E3 budget edits. Existing169 local tests retained; no new FW/FIT/ZIP or same169 test. Completed archives immutable.
+
+---
+
 # NES169 — E3 큰 갱신을 비표시 VRAM에 준비, 실기 대기
 
 NES169은168 실기의 E3 종료를 처리한다. 작은 변경은 기존 경로, 큰 변경은 비표시 SNES VRAM에 최대6청크로 준비한 뒤 최종 vblank에서 BG/OBJ/맵·색상·OAM·HDMA를 전환한다. 실제65816 검사에서21개 완료 화면1284864픽셀·이전 화면 유지·최대 크기·전송 중 STOP을 확인했다. MCU 실행과 FPGA 배치는 유지하고 SNES ROM만 갱신한 실기 시험판을 준비했다. 실기 연속 AV·FPS는 아직 미확인이다.
