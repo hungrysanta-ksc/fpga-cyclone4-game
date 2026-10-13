@@ -1,3 +1,19 @@
+# NES 현재 인계 — 상태 직접 저장·읽기 캡처
+
+PR108 OPEN. [계약](../../docs/nes-directstate165-contract.ko.md) · [검증](../../analysis/directstate165-verification.json).
+
+165 영상 경로 진척: 로더 상태를 직접 저장하고 ROM 읽기의 데이터 캡처 허용을 분리했습니다. 실제 내부4클록·3조건의 setup/hold가 모두 통과했다. 최악 setup+0.094ns, hold+0.120ns,15010LE/959LAB/35M9K이며 다음 연결 작업의 기준으로 채택한다. 선택 directstate165/map01/reproduce01. 외부IO·영상CDC/reset·MCU 연결·실기는 미완료이며 새SD는 없습니다.
+
+직전 상태 피드백−0.597ns는+1.380ns, ROM 읽기 캡처−0.429ns는+1.324ns로 개선됐다. 새 capture 예측 경로도+1.499ns다. 실제 상태 레지스터는0/1/2/3/4/5/7/8의8개이며 숫자 state와 출력에 기여하지 않는FAILED 비트 및 도달 불가9..15 비트는 최적화됐다. capture_low/high2개는 독립 레지스터로 남았다. 전체 최악 경로는 CHECK 응답 주소→SPI 오류 코드+0.094ns로 여유가 작지만 실제 주기에서 setup/hold를 만족한다. 더 엄격한5.5ns 배치 목표는−0.358ns로 여전히 미달이며 실제 주기5.952ns 통과와 구분한다. 원래 클록을 늦추거나 false path를 추가한 결과가 아니다. 전체IO/CDC 및 실기는 아직 승인하지 않았다.
+
+NEW loader294912/1056/all16codes/onehot+terminal/STOP+unused negatives;reader120reads126cancel5stoppedreset;READ16pins16phase70ns/110ns+noHOLDnegative;actualSPI219wire1125909edges100READ7ACK19bad72cancel2priorityPASS.59inputs exact/reproduce01/localrelease4/12PASS;oneFIT. UnchangedSPI393741/120 andMCUgap reused. Fixture01 wrongrefdut identifier/joint01 missingreference compile preserved;loader02/reader01/joint02/pins01 final. SELECT directstate165/map01/reproduce01;adopted=True;nominalpass=True.
+
+NEXT 선택 기준을 directstate165/map01/reproduce01로 변경한다. 양수 여유를 더 늘리기 위한 미세 논리·seed·무변경 refit는 중단한다. 먼저 동일 배치에서 외부54입력/57출력과 혼합 클록 경로를 PSRAM70ns/SNES/MCU-SPI/영상 mailbox/reset으로 분류하고 기존 보드 근거를 재사용할 수 있는 범위를 확인한다. 실제 새 경계의 요청/응답 데이터 안정성·ACK 소유권·공통 reset/STOP 회수 및 필요한 지연 제약을 점검한다. 그 다음 MCU에 실험 SPI0x74와 E6/version2 상태73·E5관측70·E0/F6 패킷 수신/변환/SNES ACK를 연결하고, 기존 사운드·입력·경과시간·STOP 서비스를 유지한다. full-link/stack과 최소 변경 경계 검증 후 SMB3(J) 첫 레벨 실기 패키지로 넘어간다. 새로운 일반 진단체계나 전체 ROM/A-B/044 반복을 선행 조건으로 추가하지 않는다. 변경으로 배치가 달라질 때만 해당 완성 후보의 전체 타이밍을 다시 확인한다. 내부 통과만으로60fps·실기 안전성·장시간 입력 유지를 완료 처리하지 않는다. 설치164/GBC/세이브 SRAM은 보존한다.
+
+완료 archive/finalizer/public pins 불변. 설치164/GBC/saveSRAM 보존; 새SD 없음.
+
+---
+
 # NES 현재 인계 — 명령·카운터 갱신
 
 PR108 OPEN. [계약](../../docs/nes-update165-contract.ko.md) · [검증](../../analysis/update165-verification.json).
