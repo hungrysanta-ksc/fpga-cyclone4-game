@@ -1,3 +1,17 @@
+# NES 현재 인계 — 새 영상 경로 실기 시험 대기
+
+PR109 OPEN / codex/nes-native-runtime-165. [계약](../../docs/nes-coupled165-contract.ko.md) · [실기 안내](../../docs/nes-game165-instructions.ko.md) · [결과](../../analysis/coupled165-verification.json).
+
+NES165 SMB3 실기 시험판을 준비했다. 새 영상 경로의 MCU→실제 SNES 표시 ACK 결합을 통과했고, RUN 전용 버퍼로 메뉴·GBC의 RAM 여유를 회복했다. 전체 ARM 링크와 RUN/IRQ 스택 검토·기존 FPGA 배치의 ASM을 완료했다. 화면 속도·사운드·메뉴 복귀의 새 실기 결과는 아직 미확인이다.
+
+SELECT FPGA boundary165/map02 unchanged + coupled165/asm01; MCU coupled165/arm01 / armcheck02; coupled test05; release02. RUN-only noinline workspace33952B, stack bound37320+IRQ508/free38952/margin1124, static26472. save_report4864 restored outside RUN. Scalar errors survive, receiver/video/io NULL before return. 86 reachable functions/callback and reviewed library/IRQ fingerprints; not all menu formal proof or measured highwater. Exact45SNES ACK x2/61184pixels each; normal1frame, deadline-at-SEAL0frames despite visible image. Filebus/native191capture model, NOTphysical. Test01 DLL/02dotnet/03Unicode invalid;04pass;05final. No newFIT/FLOAT. ASM/CPF preserves selected baseline/archive. Package702ca2f7, firmware0093c48e, FPGAca2b3bfe. PrivateROMnoGit,164rollbackexact,saveSRAMreserved. Conditional external IO/MTBF24syncreset remains.
+
+새 NES165-SMB3-NATIVE-VIDEO 시험판으로 제목→월드맵→첫 레벨 이동·점프·사운드·화면 속도와 메뉴 복귀를 확인한다. nes-progress-165.txt/nes-game-last-165.txt 및20~30초 영상을 받기 전에는 또 다른 범용 진단이나 무변경 FPGA FIT/전체 부팅을 반복하지 않는다. 실패하면 최초native_result/receiver/sink/video/ROM 오류에 따라 실제 경로만 수정한다. AV가 확인되면 장기 플레이와 오류/물리 리셋 로그, 입력 유지 품질 순서로 진행한다. 044 복원 시험은 반복하지 않고 필요시 동봉164로 복원한다.
+
+Do not use old runtime165/arm02 (permanent34KB allocation) for the SD pair. Newmaterializer wraps it then replaces adapter/log lifetime; preparation-runlease165.json is final. Newchecker pins actual compiler/platform; code/compiler/binding changes require fresh review, not automatic margin reuse. Long-play/physicalresetlogs deferred untilAV hardware outcome. Completed evidence/finalizers immutable.
+
+---
+
 # NES 현재 인계 — MCU native 영상 루프 전체 링크
 
 PR109 OPEN, 같은 codex/nes-native-runtime-165 브랜치. [계약](../../docs/nes-runtime165-contract.ko.md) · [결과](../../analysis/runtime165-verification.json).

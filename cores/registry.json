@@ -46,7 +46,7 @@
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-164",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "runtime165/arm02의 실제 RUN/오류/STOP/메뉴 복귀와 SysTick·라이브러리·일반 메뉴/GBC를 포함한 스택 여유를 먼저 확인한다. 필요하면 수명이 겹치지 않는 MCU 버퍼 공유로 해결하며 세이브 SRAM은 사용하지 않는다. 이어 실제 SNES ACK와 MCU 시간/오류 서비스의 최소 결합 시험만 수행하고, 선택 boundary165/map02와 쌍을 이룬 SMB3(J) 첫 레벨 시험판을 만든다. 변경 없는 FPGA 재배치·전체 ROM/부팅/A-B/044 반복은 하지 않는다. 60초는 tick 기준6000이며 장기 플레이/물리 리셋 로그는 AV 실기 확인 후 진행한다.",
+      "next_gate": "새 NES165-SMB3-NATIVE-VIDEO 시험판으로 제목→월드맵→첫 레벨 이동·점프·사운드·화면 속도와 메뉴 복귀를 확인한다. nes-progress-165.txt/nes-game-last-165.txt 및20~30초 영상을 받기 전에는 또 다른 범용 진단이나 무변경 FPGA FIT/전체 부팅을 반복하지 않는다. 실패하면 최초native_result/receiver/sink/video/ROM 오류에 따라 실제 경로만 수정한다. AV가 확인되면 장기 플레이와 오류/물리 리셋 로그, 입력 유지 품질 순서로 진행한다. 044 복원 시험은 반복하지 않고 필요시 동봉164로 복원한다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -627,6 +627,17 @@
         "whole_program_stack_approved": false,
         "physical": false,
         "hardware_package": false
+      },
+      "coupled165": {
+        "status": "physical_trial_ready",
+        "selected_mcu": "coupled165/arm01",
+        "selected_fpga": "boundary165/map02",
+        "verification": "analysis/coupled165-verification.json",
+        "contract": "docs/nes-coupled165-contract.ko.md",
+        "instructions": "docs/nes-game165-instructions.ko.md",
+        "hardware_package": true,
+        "physical": false,
+        "run_stack_margin": 1124
       }
     },
     {
