@@ -1,3 +1,19 @@
+# NES 현재 인계 — 영상 IO·CDC 리셋 경계
+
+PR108 merged6073122. 새 브랜치 codex/nes-native-runtime-165. [계약](../../docs/nes-boundary165-contract.ko.md) · [검증](../../analysis/boundary165-verification.json).
+
+165 영상 경로 진척: 새 영상 mailbox·SPI 수신부의 리셋을 각 클록에서 해제하도록 수정했다. 내부 setup+0.158ns/hold+0.143ns, 14977LE/961LAB/35M9K와 조건부 IO 지연 검사를 통과했다. 영상 데이터·제어부의 음수 recovery/removal 경로는 1197개에서0개로 줄었다. 선택 boundary165/map02/reproduce02. MCU 통합·full-link·새 실기는 미완료이며 새SD는 없다.
+
+SELECT boundary165/map02/reproduce02. Two RTL/59unchanged;2FIT;map01 raw-resetOR rejected, map02 purelocal release adopted. NEW450deliveries72resets12halt/6phases+wrongreset negative;SPI1717records/47blocks/12489wireB x2 exact. Firstfanout11;native payload rawnegative1197->0;remaining24 release/fault sync paths explicitly OPEN, not falsepathed. PSRAM conditional+2.935ns/SNES77.411ns/SPI163.821ns. Not fullIO/MTBF/MCU/60fps/hardware. Original routed copy exact;archives immutable.
+
+NEXT boundary165/map02를 기준으로 실제164 MCU 게임 루프에 수신→PREPARED→COMMIT→영상 변환→패킷→SNES 표시 ACK→consumed를 연결한다. 식별자74/E6 version2/E5/D6/F6를 정확히 검사하고 기존 CF86·사운드·입력·STOP·메뉴 복귀를 유지한다. SPI를 잡지 않은 경계에서 시간/오류를 서비스하고 반복 횟수 대신 단조 경과 시간을 사용한다. RUN 중 SD 기록은 금지하고 안전한 STOP 뒤 기록한다. receiver18064B+video15888B와 기존 전역·스택을 실제 ARM full-link로 확인한다. 필요한 새 경계 시험 후 SMB3(J) 첫 레벨 실기로 진행하며 기존 ROM 쓰기·부팅·A/B·044 반복 및 무변경 refit를 추가하지 않는다. 기존 전기적 E1/E2·MTBF·클록 정지 한계는 조건부 위험으로 계속 명시한다.
+
+MCU code map: src/nes/firmware/nes_native165 (receiver), nes_native_video165 (conversion), nes_native_sink165 (packet/ACK), nes_sink_spi165 (E0/E1), tools/nes_native_spi165.py::bulk_engine (bounded1..259B SPI). Actual164 RUN baseline is probes/nes-game164/evidence/arm/src/nes_run136.inc, not the older public generic include. Keep one caller-owned receiver+video; no duplicate full candidate/table readback and no cartridge SRAM. A synchronous build/seal must call guard/time/STOP between transactions; do not invoke SPI service recursively while SPI ownership is held. ID mismatch/CRC/ambiguous ACK -> STOP/reset, no blind retry. Final consumed only after display ACK. Full ARM link/stack must replace estimates before packaging.
+
+Keep164/GBC/saveSRAM. No SD created; completed record/audit/archive immutable.
+
+---
+
 # NES 현재 인계 — 상태 직접 저장·읽기 캡처
 
 PR108 OPEN. [계약](../../docs/nes-directstate165-contract.ko.md) · [검증](../../analysis/directstate165-verification.json).
