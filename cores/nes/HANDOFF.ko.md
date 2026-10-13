@@ -1,3 +1,13 @@
+# NES172 — 준비 확인 후 첫 표시 요청, 실기 대기
+
+NES172는 ROM 진입·WRAM 복사 검증·표시 준비 완료를 구분하고 준비 완료 후에만 첫 화면 데이터를 전송한다.171 FIFO와 FPGA 배선은 유지하고 SNES ROM·MCU 시작 순서를 바꿨다. 실제65816 부팅4경우, C 대기9경우,6회 표시·270ACK 및 ARM 여유1024바이트·로그4020바이트 검증을 통과했다. 실기 원인 해결과 연속 화면 성공은 아직 미확인이다.
+
+NES172-SMB3-BOOT-READY.zip을 함께 적용하고 NES GAME 172.nh1을 실행한다. 준비 실패 시 기존 로그의 stage0/1/E1/2/3으로 reset/ROM/복사/초기화/패킷 경계를 좁힌다. 첫 화면이 나오면 지속 갱신·음악·메뉴 복귀와 두 TXT를 받고 가능하면 짧은 영상을 확인한다. 같은 무화면이면 영상·171/044 재시험은 불필요하다. 준비 후60초 실행하며 총6분 관찰 상한을 둔다. 연속 AV→장기 실행/오류·리셋 로그→입력 유지 순서와 세이브 SRAM/GBC/164 보호를 유지한다.
+
+[계약](../../docs/nes-boot172-contract.ko.md) · [검증](../../analysis/boot172-verification.json). PR110 OPEN. SELECT client01/test03/gate02/display01/arm02/armcheck03/asm01/report02/release01. No new FIT;65 routing/source files unchanged171;3163B copied/verified in4096B ROM. Boot mismatch stageE1 differs from SPC errorE1. Failure run_first_error6/native SERVICE2; preserve earlier errors. Initial inlining failed stack margin1008; noinline final1024. Ready gate before runtime begin, so60s starts after ready. No SD during RUN, no blind retry. Do not rerun completed record or alter archives.
+
+---
+
 # NES171 실기 — 첫 BEGIN 응답 미완료
 
 NES171 실기에서 첫 화면 표시 전에 종료됐다. ROM393216바이트 적재·비교와 첫 영상 후보 COMMIT1은 성공했지만, 첫 BEGIN 요청이 FPGA에 보관된 채 SNES 완료 ACK 없이65536회 대기 한도에 도달했다. 표시 구간13410ms, 표시 완료0회, ROM 오류0이며 STOP·기본 FPGA·메뉴 준비는 정상이다.170의0x34 수집 시간 초과와 다르고169의 초기 응답 실패와 같은 경계다. FIFO의 연속 화면 개선 효과는 아직 실기에서 확인하지 못했다.
