@@ -46,7 +46,7 @@
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-164",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "boundary165/map02를 기준으로 실제164 MCU 게임 루프에 수신→PREPARED→COMMIT→영상 변환→패킷→SNES 표시 ACK→consumed를 연결한다. 식별자74/E6 version2/E5/D6/F6를 정확히 검사하고 기존 CF86·사운드·입력·STOP·메뉴 복귀를 유지한다. SPI를 잡지 않은 경계에서 시간/오류를 서비스하고 반복 횟수 대신 단조 경과 시간을 사용한다. RUN 중 SD 기록은 금지하고 안전한 STOP 뒤 기록한다. receiver18064B+video15888B와 기존 전역·스택을 실제 ARM full-link로 확인한다. 필요한 새 경계 시험 후 SMB3(J) 첫 레벨 실기로 진행하며 기존 ROM 쓰기·부팅·A/B·044 반복 및 무변경 refit를 추가하지 않는다. 기존 전기적 E1/E2·MTBF·클록 정지 한계는 조건부 위험으로 계속 명시한다.",
+      "next_gate": "runtime165/arm02의 실제 RUN/오류/STOP/메뉴 복귀와 SysTick·라이브러리·일반 메뉴/GBC를 포함한 스택 여유를 먼저 확인한다. 필요하면 수명이 겹치지 않는 MCU 버퍼 공유로 해결하며 세이브 SRAM은 사용하지 않는다. 이어 실제 SNES ACK와 MCU 시간/오류 서비스의 최소 결합 시험만 수행하고, 선택 boundary165/map02와 쌍을 이룬 SMB3(J) 첫 레벨 시험판을 만든다. 변경 없는 FPGA 재배치·전체 ROM/부팅/A-B/044 반복은 하지 않는다. 60초는 tick 기준6000이며 장기 플레이/물리 리셋 로그는 AV 실기 확인 후 진행한다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -614,6 +614,19 @@
         "contract": "docs/nes-boundary165-contract.ko.md",
         "next": "boundary165/map02를 기준으로 실제164 MCU 게임 루프에 수신→PREPARED→COMMIT→영상 변환→패킷→SNES 표시 ACK→consumed를 연결한다. 식별자74/E6 version2/E5/D6/F6를 정확히 검사하고 기존 CF86·사운드·입력·STOP·메뉴 복귀를 유지한다. SPI를 잡지 않은 경계에서 시간/오류를 서비스하고 반복 횟수 대신 단조 경과 시간을 사용한다. RUN 중 SD 기록은 금지하고 안전한 STOP 뒤 기록한다. receiver18064B+video15888B와 기존 전역·스택을 실제 ARM full-link로 확인한다. 필요한 새 경계 시험 후 SMB3(J) 첫 레벨 실기로 진행하며 기존 ROM 쓰기·부팅·A/B·044 반복 및 무변경 refit를 추가하지 않는다. 기존 전기적 E1/E2·MTBF·클록 정지 한계는 조건부 위험으로 계속 명시한다.",
         "hardware": false
+      },
+      "runtime165": {
+        "status": "mcu_linked_stack_review_pending",
+        "selected_mcu": "runtime165/arm02",
+        "selected_fpga": "boundary165/map02/reproduce02",
+        "verification": "analysis/runtime165-verification.json",
+        "contract": "docs/nes-runtime165-contract.ko.md",
+        "mcu_integrated": true,
+        "full_arm_link": true,
+        "ram_after_static": 5000,
+        "whole_program_stack_approved": false,
+        "physical": false,
+        "hardware_package": false
       }
     },
     {

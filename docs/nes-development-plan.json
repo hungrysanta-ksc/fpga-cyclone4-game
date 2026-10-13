@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-164",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "165 영상 경로 진척: 새 영상 mailbox·SPI 수신부의 리셋을 각 클록에서 해제하도록 수정했다. 내부 setup+0.158ns/hold+0.143ns, 14977LE/961LAB/35M9K와 조건부 IO 지연 검사를 통과했다. 영상 데이터·제어부의 음수 recovery/removal 경로는 1197개에서0개로 줄었다. 선택 boundary165/map02/reproduce02. MCU 통합·full-link·새 실기는 미완료이며 새SD는 없다.",
-  "next_action": "boundary165/map02를 기준으로 실제164 MCU 게임 루프에 수신→PREPARED→COMMIT→영상 변환→패킷→SNES 표시 ACK→consumed를 연결한다. 식별자74/E6 version2/E5/D6/F6를 정확히 검사하고 기존 CF86·사운드·입력·STOP·메뉴 복귀를 유지한다. SPI를 잡지 않은 경계에서 시간/오류를 서비스하고 반복 횟수 대신 단조 경과 시간을 사용한다. RUN 중 SD 기록은 금지하고 안전한 STOP 뒤 기록한다. receiver18064B+video15888B와 기존 전역·스택을 실제 ARM full-link로 확인한다. 필요한 새 경계 시험 후 SMB3(J) 첫 레벨 실기로 진행하며 기존 ROM 쓰기·부팅·A/B·044 반복 및 무변경 refit를 추가하지 않는다. 기존 전기적 E1/E2·MTBF·클록 정지 한계는 조건부 위험으로 계속 명시한다.",
+  "assessment": "165 새 영상 경로를 실제 MCU 게임 루프에 연결하고 전체 ARM 링크를 통과했다. 수신→변환→SNES 표시 ACK 후 다음 프레임을 처리한다. 로그 스택은4864→768바이트로 줄였고, 정적RAM60424/65424바이트·여유5000바이트다. 명시적 RUN 호출 경로의 스택 합계3120바이트는 전체 IRQ/메뉴 경로 승인이 아니다. FPGA는boundary165/map02 그대로이며 새SD·실기·60fps는 아직 미확인이다.",
+  "next_action": "runtime165/arm02의 실제 RUN/오류/STOP/메뉴 복귀와 SysTick·라이브러리·일반 메뉴/GBC를 포함한 스택 여유를 먼저 확인한다. 필요하면 수명이 겹치지 않는 MCU 버퍼 공유로 해결하며 세이브 SRAM은 사용하지 않는다. 이어 실제 SNES ACK와 MCU 시간/오류 서비스의 최소 결합 시험만 수행하고, 선택 boundary165/map02와 쌍을 이룬 SMB3(J) 첫 레벨 시험판을 만든다. 변경 없는 FPGA 재배치·전체 ROM/부팅/A-B/044 반복은 하지 않는다. 60초는 tick 기준6000이며 장기 플레이/물리 리셋 로그는 AV 실기 확인 후 진행한다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -2941,5 +2941,18 @@
     "contract": "docs/nes-boundary165-contract.ko.md",
     "next": "boundary165/map02를 기준으로 실제164 MCU 게임 루프에 수신→PREPARED→COMMIT→영상 변환→패킷→SNES 표시 ACK→consumed를 연결한다. 식별자74/E6 version2/E5/D6/F6를 정확히 검사하고 기존 CF86·사운드·입력·STOP·메뉴 복귀를 유지한다. SPI를 잡지 않은 경계에서 시간/오류를 서비스하고 반복 횟수 대신 단조 경과 시간을 사용한다. RUN 중 SD 기록은 금지하고 안전한 STOP 뒤 기록한다. receiver18064B+video15888B와 기존 전역·스택을 실제 ARM full-link로 확인한다. 필요한 새 경계 시험 후 SMB3(J) 첫 레벨 실기로 진행하며 기존 ROM 쓰기·부팅·A/B·044 반복 및 무변경 refit를 추가하지 않는다. 기존 전기적 E1/E2·MTBF·클록 정지 한계는 조건부 위험으로 계속 명시한다.",
     "hardware": false
+  },
+  "runtime165": {
+    "status": "mcu_linked_stack_review_pending",
+    "selected_mcu": "runtime165/arm02",
+    "selected_fpga": "boundary165/map02/reproduce02",
+    "verification": "analysis/runtime165-verification.json",
+    "contract": "docs/nes-runtime165-contract.ko.md",
+    "mcu_integrated": true,
+    "full_arm_link": true,
+    "ram_after_static": 5000,
+    "whole_program_stack_approved": false,
+    "physical": false,
+    "hardware_package": false
   }
 }

@@ -1,3 +1,17 @@
+# NES 현재 인계 — MCU native 영상 루프 전체 링크
+
+PR109 OPEN, 같은 codex/nes-native-runtime-165 브랜치. [계약](../../docs/nes-runtime165-contract.ko.md) · [결과](../../analysis/runtime165-verification.json).
+
+165 새 영상 경로를 실제 MCU 게임 루프에 연결하고 전체 ARM 링크를 통과했다. 수신→변환→SNES 표시 ACK 후 다음 프레임을 처리한다. 로그 스택은4864→768바이트로 줄였고, 정적RAM60424/65424바이트·여유5000바이트다. 명시적 RUN 호출 경로의 스택 합계3120바이트는 전체 IRQ/메뉴 경로 승인이 아니다. FPGA는boundary165/map02 그대로이며 새SD·실기·60fps는 아직 미확인이다.
+
+SELECT FPGA boundary165/map02/reproduce02 unchanged;MCU runtime165/arm02. Full ARM196052B; RAM includes ahbram=60424/65424/free5000. Native receiver18064/video15888 union log4096/runtime100. save_report4864->768;listed foreground3120 is NOT whole-program/IRQ bound. New runtime10cases+invalidarg, native191transactions + synthetic sink45ACK, no retry. No new actualSNES/physical/FLOAT/FIT. Source1393copied/7changed/13added. Strict74/E6v2/E5/D6/F6;clocktick6000;RUN noSD;existing reset-beforeSTOP/CF86 failclosed.
+
+runtime165/arm02의 실제 RUN/오류/STOP/메뉴 복귀와 SysTick·라이브러리·일반 메뉴/GBC를 포함한 스택 여유를 먼저 확인한다. 필요하면 수명이 겹치지 않는 MCU 버퍼 공유로 해결하며 세이브 SRAM은 사용하지 않는다. 이어 실제 SNES ACK와 MCU 시간/오류 서비스의 최소 결합 시험만 수행하고, 선택 boundary165/map02와 쌍을 이룬 SMB3(J) 첫 레벨 시험판을 만든다. 변경 없는 FPGA 재배치·전체 ROM/부팅/A-B/044 반복은 하지 않는다. 60초는 tick 기준6000이며 장기 플레이/물리 리셋 로그는 AV 실기 확인 후 진행한다.
+
+Actual run adapter src/nes/firmware/nes_runtime_board165.inc; materializer tools/nes_runtime165.py uses private164 evidence ARM, not old public generic include. Native synchronous conversion callbacks upload patterns and call guard between transactions. Never call observer SPI recursively inside SPI engine. video/log union only after runtime terminates; use copied error scalars. Stop/report paths and other cores still need stack/IRQ review. Do not substitute timing-loop counts for ticks, or mark ID/ACK model as physical execution. Keep 164/GBC/saveSRAM. test01/armcheck01 environment;armcheck02 CRLF;armcheck03 excludes ahbram INVALID;use armcheck04/test04. Completed archives/finalizers immutable.
+
+---
+
 # NES 현재 인계 — 영상 IO·CDC 리셋 경계
 
 PR108 merged6073122. 새 브랜치 codex/nes-native-runtime-165. [계약](../../docs/nes-boundary165-contract.ko.md) · [검증](../../analysis/boundary165-verification.json).

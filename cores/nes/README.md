@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-165 영상 경로 진척: 새 영상 mailbox·SPI 수신부의 리셋을 각 클록에서 해제하도록 수정했다. 내부 setup+0.158ns/hold+0.143ns, 14977LE/961LAB/35M9K와 조건부 IO 지연 검사를 통과했다. 영상 데이터·제어부의 음수 recovery/removal 경로는 1197개에서0개로 줄었다. 선택 boundary165/map02/reproduce02. MCU 통합·full-link·새 실기는 미완료이며 새SD는 없다. [영상 경계 검증](../../docs/nes-boundary165-contract.ko.md).
+165 새 영상 경로를 실제 MCU 게임 루프에 연결하고 전체 ARM 링크를 통과했다. 수신→변환→SNES 표시 ACK 후 다음 프레임을 처리한다. 로그 스택은4864→768바이트로 줄였고, 정적RAM60424/65424바이트·여유5000바이트다. 명시적 RUN 호출 경로의 스택 합계3120바이트는 전체 IRQ/메뉴 경로 승인이 아니다. FPGA는boundary165/map02 그대로이며 새SD·실기·60fps는 아직 미확인이다. [MCU 통합 검증](../../docs/nes-runtime165-contract.ko.md).
 
 현재164 실기: **검정 구간 제거 통과·사운드 정상으로 보임, 심한 갱신 지연으로 정상 플레이 미달성**. 다음은 영상 전송량·갱신 지연 개선이며, DOWN 유지는 이번 미시험입니다. [164 실기 결과](../../analysis/GAME164-HARDWARE-RESULT.ko.md).
 
