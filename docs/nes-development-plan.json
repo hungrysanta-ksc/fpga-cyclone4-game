@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-13",
-  "technical_candidate": "NES-GAME-167-COMMITSTAGE-NOT-APPROVED",
+  "technical_candidate": "NES-GAME-167-HARDWARE-READY",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "NES167 정상 대기 분리·취소 세부 이유 수정은 기능 검증을 통과했다. 그러나 FPGA 실제 클록 setup은 최선map04도-0.003ns로 미달이어서 실기 ZIP을 보류했다. 기존 승인 FPGA는 유지하며 ROM CHECK 경로를 직접 개선한 뒤 실기로 진행한다.",
-  "next_action": "CHECK 카운터는 더 작은 식으로 반복 배치하지 않는다. commitstage167/map01은 후속 구조 연구용이며 승인/최선 전체 타이밍 기준은 아니다. 남은 fault→run_enable→check_active→body_causes→pending_causes의5단계(배선70%)를 대상으로, SS 캡처 C0에서 원시 자격을 저장하고 이후 단계에서 명령 원인·오류를 판정하는 명시적 파이프라인을 설계한다. C0 관측 값, live fault 차단, STOP/write drain, 단계별 SS 겹침/reset, 실제2us 간격 및 응답 snapshot 호환성을 먼저 검증한다. 기존 loadcount167의 적재 산술 분리 결과는 재사용하되 새 SPI와 결합 경계는 검증한다. 그 구조 변경 뒤 한 번 FIT하고 실제 클록·조건부 IO/reset이 통과하면 기존167 MCU/영상 근거를 재사용해 패키지와 SMB3 실기로 간다.166·044·무변경 부팅·seed 순회는 반복하지 않는다.",
+  "assessment": "NES167 실기 시험판을 준비했다. 원시 자격 캡처와 명령 판정을 분리하고 적재 카운터 산술 분리를 결합해 내부 setup+0.245ns/hold+0.126ns,14944LE/956LAB/35M9K를 통과했다. 조건부 외부 연결·영상 리셋 검사를 통과해167 MCU와 새 FPGA를 패키징했다. 화면 복구·속도·사운드는 새 실기 결과로 확인해야 한다.",
+  "next_action": "NES167-SMB3-FILL-WAIT.zip의01-GAME167-SD-ROOT 내용을 SD 루트에 적용하고 NES GAME 167.nh1로 SMB3(J) 첫 레벨의 화면·사운드·약60초 메뉴 복귀를 확인한다. nes-progress-167.txt/nes-game-last-167.txt와 화면이 나오면20~30초 영상을 받는다. 검정이면 촬영 불필요. 결과 전에는 새 범용 진단·무변경 FIT/부팅·166/044 반복 시험을 추가하지 않는다. 실패하면 최초 fill 세부 사유와 BEGIN/END/ABORT/COMMIT/native_frames에 따라 실제 경로만 고친다. 이후 연속 AV 품질→장기 플레이/오류·본체 리셋 로그→입력 유지 순서를 지킨다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -3003,5 +3003,5 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES167 CHECK의 오류 판정(C2)과 카운터 반영(C3)을 분리해 카운터 경로+1.011ns·판정+0.699ns를 확보했다. 기능·SPI 응답은 통과했으나 전체 setup은 로더 fault→명령 자격-0.190ns, 적재 카운터-0.041ns여서 후보는 미채택이다. 새 실기 ZIP은 없고 승인 FPGA는boundary165/map02를 유지한다."
+  "summary": "NES167 실기 시험판을 준비했다. 원시 자격 캡처와 명령 판정을 분리하고 적재 카운터 산술 분리를 결합해 내부 setup+0.245ns/hold+0.126ns,14944LE/956LAB/35M9K를 통과했다. 조건부 외부 연결·영상 리셋 검사를 통과해167 MCU와 새 FPGA를 패키징했다. 화면 복구·속도·사운드는 새 실기 결과로 확인해야 한다."
 }

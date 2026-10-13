@@ -1,6 +1,6 @@
 # FPGA Core Development — sd2snesHST
 
-NES167 CHECK의 오류 판정(C2)과 카운터 반영(C3)을 분리해 카운터 경로+1.011ns·판정+0.699ns를 확보했다. 기능·SPI 응답은 통과했으나 전체 setup은 로더 fault→명령 자격-0.190ns, 적재 카운터-0.041ns여서 후보는 미채택이다. 새 실기 ZIP은 없고 승인 FPGA는boundary165/map02를 유지한다. [167 단계 분리 결과](docs/nes-commitstage167-contract.ko.md).
+NES167 실기 시험판을 준비했다. 원시 자격 캡처와 명령 판정을 분리하고 적재 카운터 산술 분리를 결합해 내부 setup+0.245ns/hold+0.126ns,14944LE/956LAB/35M9K를 통과했다. 조건부 외부 연결·영상 리셋 검사를 통과해167 MCU와 새 FPGA를 패키징했다. 화면 복구·속도·사운드는 새 실기 결과로 확인해야 한다. [167 시험판 준비](docs/nes-rawstage167-contract.ko.md).
 
 현재164 실기: **검정 구간 제거 통과·사운드 정상으로 보임, 심한 갱신 지연으로 정상 플레이 미달성**. 다음은 영상 전송량·갱신 지연 개선이며, DOWN 유지는 이번 미시험입니다. [164 실기 결과](analysis/GAME164-HARDWARE-RESULT.ko.md).
 

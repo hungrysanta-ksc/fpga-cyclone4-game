@@ -40,15 +40,15 @@
       "verification": "analysis/GAME164-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "commitstage167_counter_pass_whole_timing_failed",
+      "investigation": "rawstage167_paired_hardware_trial_ready",
       "hardware_baseline": "NES-H1-SAMPLING-044",
       "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
-      "development_evidence": "analysis/game164-verification.json",
-      "hardware_candidate": "NES-GAME-164",
+      "development_evidence": "analysis/rawstage167-verification.json",
+      "hardware_candidate": "NES-GAME-167",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "CHECK 카운터는 더 작은 식으로 반복 배치하지 않는다. commitstage167/map01은 후속 구조 연구용이며 승인/최선 전체 타이밍 기준은 아니다. 남은 fault→run_enable→check_active→body_causes→pending_causes의5단계(배선70%)를 대상으로, SS 캡처 C0에서 원시 자격을 저장하고 이후 단계에서 명령 원인·오류를 판정하는 명시적 파이프라인을 설계한다. C0 관측 값, live fault 차단, STOP/write drain, 단계별 SS 겹침/reset, 실제2us 간격 및 응답 snapshot 호환성을 먼저 검증한다. 기존 loadcount167의 적재 산술 분리 결과는 재사용하되 새 SPI와 결합 경계는 검증한다. 그 구조 변경 뒤 한 번 FIT하고 실제 클록·조건부 IO/reset이 통과하면 기존167 MCU/영상 근거를 재사용해 패키지와 SMB3 실기로 간다.166·044·무변경 부팅·seed 순회는 반복하지 않는다.",
+      "next_gate": "NES167-SMB3-FILL-WAIT.zip의01-GAME167-SD-ROOT 내용을 SD 루트에 적용하고 NES GAME 167.nh1로 SMB3(J) 첫 레벨의 화면·사운드·약60초 메뉴 복귀를 확인한다. nes-progress-167.txt/nes-game-last-167.txt와 화면이 나오면20~30초 영상을 받는다. 검정이면 촬영 불필요. 결과 전에는 새 범용 진단·무변경 FIT/부팅·166/044 반복 시험을 추가하지 않는다. 실패하면 최초 fill 세부 사유와 BEGIN/END/ABORT/COMMIT/native_frames에 따라 실제 경로만 고친다. 이후 연속 AV 품질→장기 플레이/오류·본체 리셋 로그→입력 유지 순서를 지킨다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
-      "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
+      "paired_candidate": "167 MCU+rawstage167 FPGA strict74/E6v2/E5/D6/F6; A9 SPC retained; new hardware trial pending",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
       "observation_reader": "NES-CLOCK-READER-088",
       "observation_configuration": "NES-CLOCK-CONFIG-089",
@@ -675,7 +675,7 @@
         "adopted": false,
         "best_candidate": "map04"
       },
-      "investigation_evidence": "analysis/commitstage167-verification.json"
+      "investigation_evidence": "analysis/rawstage167-verification.json"
     },
     {
       "id": "pce",

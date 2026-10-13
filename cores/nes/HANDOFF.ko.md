@@ -1,3 +1,13 @@
+# NES167 — 새 영상 수집 시험판 실기 대기
+
+NES167 실기 시험판을 준비했다. 원시 자격 캡처와 명령 판정을 분리하고 적재 카운터 산술 분리를 결합해 내부 setup+0.245ns/hold+0.126ns,14944LE/956LAB/35M9K를 통과했다. 조건부 외부 연결·영상 리셋 검사를 통과해167 MCU와 새 FPGA를 패키징했다. 화면 복구·속도·사운드는 새 실기 결과로 확인해야 한다.
+
+NES167-SMB3-FILL-WAIT.zip의01-GAME167-SD-ROOT 내용을 SD 루트에 적용하고 NES GAME 167.nh1로 SMB3(J) 첫 레벨의 화면·사운드·약60초 메뉴 복귀를 확인한다. nes-progress-167.txt/nes-game-last-167.txt와 화면이 나오면20~30초 영상을 받는다. 검정이면 촬영 불필요. 결과 전에는 새 범용 진단·무변경 FIT/부팅·166/044 반복 시험을 추가하지 않는다. 실패하면 최초 fill 세부 사유와 BEGIN/END/ABORT/COMMIT/native_frames에 따라 실제 경로만 고친다. 이후 연속 AV 품질→장기 플레이/오류·본체 리셋 로그→입력 유지 순서를 지킨다.
+
+[설치 안내](../../docs/nes-game167-ready.ko.md) · [계약](../../docs/nes-rawstage167-contract.ko.md) · [검증](../../analysis/rawstage167-verification.json). PR109 OPEN. SELECT rawstage167/map01 + pacing167/arm01/armcheck03 + release01. C0raw/C1causes/C2decode/C3accept/C4counter, NOTsameedge. 369165+180+24+219SPI14016bits/3negativePASS;loader exactreuse294912/1056/524288.61reproduced/59unchanged;FIT14944LE956LAB35M9K setup+.245/hold+.126;IOconditionalPASS/payloadreset0/24syncpathsremain. Package99f9cf59/fw783a3c83/FPGAd1e82782;164restoreexact/privateROMnotGit. test01 reservedtaskword preserved/test02 PASS. Alljobsfinished; do not rerun completedrecord/audit or unchangedhardware166/044/fit.
+
+---
+
 # NES167 C2/C3 — CHECK 개선, 전체 타이밍 미달
 
 NES167 CHECK의 오류 판정(C2)과 카운터 반영(C3)을 분리해 카운터 경로+1.011ns·판정+0.699ns를 확보했다. 기능·SPI 응답은 통과했으나 전체 setup은 로더 fault→명령 자격-0.190ns, 적재 카운터-0.041ns여서 후보는 미채택이다. 새 실기 ZIP은 없고 승인 FPGA는boundary165/map02를 유지한다.
