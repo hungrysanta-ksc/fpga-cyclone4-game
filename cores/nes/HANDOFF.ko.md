@@ -1,3 +1,13 @@
+# NES172 실기 — 초기 표시 통과, 다음 영상 후보 미수신
+
+NES172 실기에서 표시 준비와 14회 표시 완료 응답을 통과했지만 이후 화면이 멈췄다. 버튼·스테이지 음악은 계속 반응했고 정상 약60초 한도로 메뉴에 복귀했다. BEGIN/END/COMMIT 각14, ABORT0, 마지막 generation27이다.170의 수집 시간 초과와 달리 다음 BEGIN이 수신되지 않은 경계이며, 연속 화면 목표는 미달성이다.
+
+마지막 generation27 뒤 fetch/compact/raster 결합·전송 전 허용 조건과 공통 release·exporter DRAIN/fill_busy를 우선 확인한다. 전송 전 반복 거부와 해제/수집 미진행을 구분하고, 필요할 때 해당 경계의 최소 상태만 종료 로그에 남긴다. 변경 경계 검증 후 실제 SMB3로 복귀하며 같은172/044·부팅/A-B·무변경FIT·근거 없는 시간 제한 증가는 반복하지 않는다. 연속 AV→장기 실행/오류·본체 리셋 로그→입력 유지 순서와 세이브 SRAM/GBC/164 보호를 유지한다.
+
+[결과](../../docs/nes-game172-hardware01.ko.md) · [필드·소스 해시](../../analysis/game172-hardware01-verification.json). PR110 OPEN; no new firmware/FPGA/ZIP. DISPLAY60050ms includes boot; runtime6000ticks starts afterready. receiver21 is secondary to deadline1; trace_state4 is lastvalidatedCOMMIT snapshot, NOTliveFPGA/receiver state. ABORT0 does not cover pre-BEGIN invalidgeometry release. User AV/menu report + video samples; no independent audio/FPS claim. Keep172 build/evidence archives immutable.
+
+---
+
 # NES172 — 준비 확인 후 첫 표시 요청, 실기 대기
 
 NES172는 ROM 진입·WRAM 복사 검증·표시 준비 완료를 구분하고 준비 완료 후에만 첫 화면 데이터를 전송한다.171 FIFO와 FPGA 배선은 유지하고 SNES ROM·MCU 시작 순서를 바꿨다. 실제65816 부팅4경우, C 대기9경우,6회 표시·270ACK 및 ARM 여유1024바이트·로그4020바이트 검증을 통과했다. 실기 원인 해결과 연속 화면 성공은 아직 미확인이다.

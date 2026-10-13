@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-14",
-  "technical_candidate": "NES-GAME-172-BOOT-READY",
+  "technical_candidate": "NES-GAME-172-HW01-VIDEO-STALL",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "NES172는 ROM 진입·WRAM 복사 검증·표시 준비 완료를 구분하고 준비 완료 후에만 첫 화면 데이터를 전송한다.171 FIFO와 FPGA 배선은 유지하고 SNES ROM·MCU 시작 순서를 바꿨다. 실제65816 부팅4경우, C 대기9경우,6회 표시·270ACK 및 ARM 여유1024바이트·로그4020바이트 검증을 통과했다. 실기 원인 해결과 연속 화면 성공은 아직 미확인이다.",
-  "next_action": "NES172-SMB3-BOOT-READY.zip을 함께 적용하고 NES GAME 172.nh1을 실행한다. 준비 실패 시 기존 로그의 stage0/1/E1/2/3으로 reset/ROM/복사/초기화/패킷 경계를 좁힌다. 첫 화면이 나오면 지속 갱신·음악·메뉴 복귀와 두 TXT를 받고 가능하면 짧은 영상을 확인한다. 같은 무화면이면 영상·171/044 재시험은 불필요하다. 준비 후60초 실행하며 총6분 관찰 상한을 둔다. 연속 AV→장기 실행/오류·리셋 로그→입력 유지 순서와 세이브 SRAM/GBC/164 보호를 유지한다.",
+  "assessment": "NES172 실기에서 표시 준비와 14회 표시 완료 응답을 통과했지만 이후 화면이 멈췄다. 버튼·스테이지 음악은 계속 반응했고 정상 약60초 한도로 메뉴에 복귀했다. BEGIN/END/COMMIT 각14, ABORT0, 마지막 generation27이다.170의 수집 시간 초과와 달리 다음 BEGIN이 수신되지 않은 경계이며, 연속 화면 목표는 미달성이다.",
+  "next_action": "마지막 generation27 뒤 fetch/compact/raster 결합·전송 전 허용 조건과 공통 release·exporter DRAIN/fill_busy를 우선 확인한다. 전송 전 반복 거부와 해제/수집 미진행을 구분하고, 필요할 때 해당 경계의 최소 상태만 종료 로그에 남긴다. 변경 경계 검증 후 실제 SMB3로 복귀하며 같은172/044·부팅/A-B·무변경FIT·근거 없는 시간 제한 증가는 반복하지 않는다. 연속 AV→장기 실행/오류·본체 리셋 로그→입력 유지 순서와 세이브 SRAM/GBC/164 보호를 유지한다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -3003,7 +3003,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES171 실기 시험판을 준비했다.170의 화면 정지 원인인 그래픽 수집 전체 시간 초과를 줄이도록 FPGA에256×27비트 FIFO(M9K1개)를 추가해 읽기와 MCU 소비 대기를 분리했다. 같은 모델 조건에서 기존654바이트 중단→2048바이트 완료, 최대8192바이트도 통과했다.15014LE/959LAB/36M9K 배치와 실제 클록 기준 setup+0.024ns·hold+0.127ns, 조건부 IO·ARM 여유1024바이트를 확인했다. 시간 제한·사운드·입력·SNES169 표시는 유지하며 연속 AV 실기는 아직 대기다.",
+  "summary": "NES172 실기에서 표시 준비와 14회 표시 완료 응답을 통과했지만 이후 화면이 멈췄다. 버튼·스테이지 음악은 계속 반응했고 정상 약60초 한도로 메뉴에 복귀했다. BEGIN/END/COMMIT 각14, ABORT0, 마지막 generation27이다.170의 수집 시간 초과와 달리 다음 BEGIN이 수신되지 않은 경계이며, 연속 화면 목표는 미달성이다.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3032,5 +3032,15 @@
     "evidence": "analysis/boot172-verification.json",
     "contract": "docs/nes-boot172-contract.ko.md",
     "instructions": "docs/nes-game172-ready.ko.md"
+  },
+  "hardware_game172": {
+    "evidence": "analysis/game172-hardware01-verification.json",
+    "document": "docs/nes-game172-hardware01.ko.md",
+    "display_ack_count": 14,
+    "received_abort_count": 0,
+    "last_generation": 27,
+    "normal_deadline": true,
+    "continuous_video_passed": false,
+    "next_boundary": "pre_BEGIN_admission_join_release_DRAIN"
   }
 }
