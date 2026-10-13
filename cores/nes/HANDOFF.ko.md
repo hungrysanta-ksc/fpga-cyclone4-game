@@ -1,3 +1,17 @@
+# NES 현재 인계 — 명령·카운터 갱신
+
+PR108 OPEN. [계약](../../docs/nes-update165-contract.ko.md) · [검증](../../analysis/update165-verification.json).
+
+165 영상 경로 진척: SPI 명령 종류를 수신 시 저장하고 로더 종료 판정을 카운터와 같은 클록에 갱신하도록 분리했습니다. 명령 수신+1.458ns·명령 종류→주소검사+3.821ns·종료비트→적재카운터+1.603ns로 세 목표 경로는 통과했다. 그러나 최악 경로는 state[0]→state[2] −0.597ns로 이동했다. 상태 해석→destination 재인코딩→상태 갱신의5논리단계/6.472ns 중 배선4.111ns(64%)이며, 같은 상태 피드백의 실패 전이 경로도7단계/−0.520ns다. 별도로 READ16 read_last→data_hold enable은1논리단계지만5.048ns 배선(80%)/−0.429ns여서 상태 한 경로만 수정해서 끝날 상황이 아니다. 기존 채택 기준 phaseguard−0.083ns보다 나쁘므로 후보를 채택하지 않는다. 선택 phaseguard165/map01/reproduce01; 전체IO/CDC·MCU 연결·실기는 미완료, 새SD 없음.
+
+NEW loader294912/1056/all16codes/terminal invariant+negative;NEW SPI393741/120/4negatives+219wire1125909edges100READ7ACK19bad72cancel2priority/invariantsPASS.59otherinputs exact/reproduce03/localrelease4/12PASS. map01 generatorguard/map02 declaration failure preserved;map03 final/onlyoneFIT. MCUgap reused;no new latency over destination/ID74/C0C1C2/valid-onlypayload/SS2us. SELECT phaseguard165/map01/reproduce01;adopted=False;nominalpass=False.
+
+NEXT 이번에 통과한 SPI 명령 수신·명령 종류·terminal 경로를 다시 미세 조정하지 않는다. 다음에는 실제 state→Equal→destination→state 경로를 기준으로 상태 판정의 등록/상태 표현 변경을 검토한다. 단순 ONE_HOT 옵션 재시도 대신 중복 decode와 실패 전이의 공유를 줄이는 RTL 후보의 논리 깊이·추가 FF·모든16개 상태 코드의 의미를 먼저 명시하고, STOP/오류 코드/쓰기 배출/reset의 같은 클록 동작을 유지한다. READ16 read_last→data_hold enable의 긴 배선도 동시에 검토하며, 필요하면 같은 값을 유지하는 지역 복제 레지스터를 후보에 포함하되 읽기 샘플 시점은 바꾸지 않는다. 기능·전체 배치·모든 내부 클록 setup/hold를 통과한 뒤 필요한 외부IO·영상CDC/reset 및 MCU RUN/시간/사운드/입력/STOP/full-link/stack을 연결하고 최소 SMB3(J) 첫 레벨 실기로 넘어간다. 새 SD 패키지는 아직 만들지 않는다.
+
+완료 archive/finalizer/public pins 불변. 설치164/GBC/saveSRAM 보존; 새SD 없음.
+
+---
+
 # NES 현재 인계 — 목적 상태별 전이
 
 PR108 OPEN. [계약](../../docs/nes-destination165-contract.ko.md) · [검증](../../analysis/destination165-verification.json).
