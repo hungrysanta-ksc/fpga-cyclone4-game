@@ -40,15 +40,15 @@
       "verification": "analysis/GAME164-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "169_first_BEGIN_exchange_failed_no_display_ACK",
+      "investigation": "170_first_exchange_boundary_hardware_ready",
       "hardware_baseline": "NES-H1-SAMPLING-044",
       "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
-      "development_evidence": "analysis/game169-hardware01-verification.json",
-      "hardware_candidate": "NES-GAME-169",
+      "development_evidence": "analysis/startup170-verification.json",
+      "hardware_candidate": "NES-GAME-170",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "SNES 리셋 해제→물리 부트 ROM/WRAM 복사→초기화→첫 BEGIN ACK 경계를 우선 확인한다.169 ROM 갱신 이미지와 실제 실행 연결을 대조하고, 필요할 때만 exchange 최초 실패 위치·마지막 F6 상태를 종료 TXT에 최소 추가한다. 원인이 확인된 수정과 최소 검증 후 SMB3 실기로 복귀한다. 같은169/044·무변경FIT·추가 영상은 요청하지 않는다. 연속 AV→장기 플레이/오류·본체 리셋 로그→입력 유지 순서와 세이브 SRAM/GBC/164 보호를 유지한다.",
+      "next_gate": "NES GAME 170.nh1을 한 번 실행하고 nes-progress-170.txt/nes-game-last-170.txt 및 화면·메뉴 복귀 여부를 받는다. 동일한 로딩 화면이면 영상·버튼 입력은 불필요하다. sink_io170 사유/수신 상태로 초기busy·상태 오류·65536회 소진을 구분한다. pending 소진과 기동 표식0이면 리셋/실제 부트 경계를 우선한다. 확인한 원인의 최소 수정 후 SMB3 실기로 간다. 같은169/044·무변경FIT를 반복하지 않고 연속 AV→장기 플레이/오류·리셋 로그→입력 유지 순서를 지킨다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
-      "paired_candidate": "169 MCU +167 routing/SNES169 ROM;physical first BEGIN exchange failed",
+      "paired_candidate": "170 MCU first-exchange trace + unchanged169 FPGA/SNES; hardware pending",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
       "observation_reader": "NES-CLOCK-READER-088",
       "observation_configuration": "NES-CLOCK-CONFIG-089",
@@ -675,7 +675,7 @@
         "adopted": false,
         "best_candidate": "map04"
       },
-      "investigation_evidence": "analysis/game169-hardware01-verification.json"
+      "investigation_evidence": "analysis/startup170-verification.json"
     },
     {
       "id": "pce",

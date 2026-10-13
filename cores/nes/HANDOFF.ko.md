@@ -1,3 +1,13 @@
+# NES170 — 첫 표시 통신 실패 구분판, 실기 대기
+
+NES170 실기 시험판을 준비했다.169의 첫 BEGIN 실패를 구분하도록 MCU에 최초 통신 실패 위치·폴링 횟수·상태 응답20바이트를 추가했다. 통신 동작267개 비교와 TXT4020/4096바이트·RUN/IRQ 후1024바이트 여유를 확인했다.169의 FPGA/SNES·리셋·대기 제한은 유지하며 화면 수정 완료판은 아니다. 사용자가169 종료 시간을 약13~14초, 총 약4분으로 정정했다.
+
+NES GAME 170.nh1을 한 번 실행하고 nes-progress-170.txt/nes-game-last-170.txt 및 화면·메뉴 복귀 여부를 받는다. 동일한 로딩 화면이면 영상·버튼 입력은 불필요하다. sink_io170 사유/수신 상태로 초기busy·상태 오류·65536회 소진을 구분한다. pending 소진과 기동 표식0이면 리셋/실제 부트 경계를 우선한다. 확인한 원인의 최소 수정 후 SMB3 실기로 간다. 같은169/044·무변경FIT를 반복하지 않고 연속 AV→장기 플레이/오류·리셋 로그→입력 유지 순서를 지킨다.
+
+[실기 안내](../../docs/nes-game170-ready.ko.md) · [변경·검증·분기](../../docs/nes-startup170-contract.ko.md) · [근거](../../analysis/startup170-verification.json). PR110 OPEN, samebranch. SELECT arm02/armcheck02/test02/report01/romcheck01/release01. FPGA6ba98335 exact169, no newFIT/ASM. Postfit4netlists/4M9K atoms4096B exact169; NOT physicalreadback. MCU trace20B/firmware197652/static26572/RUN37320/IRQ508/margin1024;report4020. RR bit7=status received NOTCRCvalid, RX1..15, polls32. No retry/limit/reset changes, no RUN SD writes. arm01 wrong Makefile .o anchor corrected .c; sandbox subst/GCC623 retried host; failed artifacts retained. User169 timing correction supersedes ~60s; no newclock issue. Keep164/GBC/saveSRAM. Completed archives immutable.
+
+---
+
 # NES169 실기 — 첫 BEGIN 응답 실패, 표시 기동 경계 조사
 
 NES169 실기는 로딩 화면 유지 후 메뉴로 복귀했다. ROM393216바이트 검증·첫 영상 COMMIT은 성공했지만 첫 BEGIN(세션1/세대12)에 유효한 ACK가 없어 표시0회로 종료했다. DISPLAY5/sink2이며 정상60초 만료나168의 E3 재발이 아니다. STOP·기본 FPGA·메뉴 복구는 정상이다. 분할 갱신과 연속 AV의 실기 목표는 미달성이다.
