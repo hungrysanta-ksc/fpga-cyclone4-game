@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-165 영상 경로 진척: C 송신기와 실제 SNES 수신·비교·표시 응답을 동시 실행해227왕복과229376픽셀 일치를 확인했습니다. 중간 버스는 PC 모델이며 실기 SPI·FPGA 접속부와60fps는 미완료입니다. 세이브 SRAM을 보존하고 설치 후보164를 유지합니다. [수신·응답 계약과 남은 연결](../../docs/nes-native-sink165-contract.ko.md).
+165 영상 경로 진척: 로더 상태를 직접 저장하고 ROM 읽기의 데이터 캡처 허용을 분리했습니다. 실제 내부4클록·3조건의 setup/hold가 모두 통과했다. 최악 setup+0.094ns, hold+0.120ns,15010LE/959LAB/35M9K이며 다음 연결 작업의 기준으로 채택한다. 선택 directstate165/map01/reproduce01. 외부IO·영상CDC/reset·MCU 연결·실기는 미완료이며 새SD는 없습니다. [상태·읽기 캡처 검증](../../docs/nes-directstate165-contract.ko.md).
 
 현재164 실기: **검정 구간 제거 통과·사운드 정상으로 보임, 심한 갱신 지연으로 정상 플레이 미달성**. 다음은 영상 전송량·갱신 지연 개선이며, DOWN 유지는 이번 미시험입니다. [164 실기 결과](../../analysis/GAME164-HARDWARE-RESULT.ko.md).
 

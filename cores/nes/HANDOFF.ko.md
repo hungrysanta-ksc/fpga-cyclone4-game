@@ -1,3 +1,315 @@
+# NES 현재 인계 — 상태 직접 저장·읽기 캡처
+
+PR108 OPEN. [계약](../../docs/nes-directstate165-contract.ko.md) · [검증](../../analysis/directstate165-verification.json).
+
+165 영상 경로 진척: 로더 상태를 직접 저장하고 ROM 읽기의 데이터 캡처 허용을 분리했습니다. 실제 내부4클록·3조건의 setup/hold가 모두 통과했다. 최악 setup+0.094ns, hold+0.120ns,15010LE/959LAB/35M9K이며 다음 연결 작업의 기준으로 채택한다. 선택 directstate165/map01/reproduce01. 외부IO·영상CDC/reset·MCU 연결·실기는 미완료이며 새SD는 없습니다.
+
+직전 상태 피드백−0.597ns는+1.380ns, ROM 읽기 캡처−0.429ns는+1.324ns로 개선됐다. 새 capture 예측 경로도+1.499ns다. 실제 상태 레지스터는0/1/2/3/4/5/7/8의8개이며 숫자 state와 출력에 기여하지 않는FAILED 비트 및 도달 불가9..15 비트는 최적화됐다. capture_low/high2개는 독립 레지스터로 남았다. 전체 최악 경로는 CHECK 응답 주소→SPI 오류 코드+0.094ns로 여유가 작지만 실제 주기에서 setup/hold를 만족한다. 더 엄격한5.5ns 배치 목표는−0.358ns로 여전히 미달이며 실제 주기5.952ns 통과와 구분한다. 원래 클록을 늦추거나 false path를 추가한 결과가 아니다. 전체IO/CDC 및 실기는 아직 승인하지 않았다.
+
+NEW loader294912/1056/all16codes/onehot+terminal/STOP+unused negatives;reader120reads126cancel5stoppedreset;READ16pins16phase70ns/110ns+noHOLDnegative;actualSPI219wire1125909edges100READ7ACK19bad72cancel2priorityPASS.59inputs exact/reproduce01/localrelease4/12PASS;oneFIT. UnchangedSPI393741/120 andMCUgap reused. Fixture01 wrongrefdut identifier/joint01 missingreference compile preserved;loader02/reader01/joint02/pins01 final. SELECT directstate165/map01/reproduce01;adopted=True;nominalpass=True.
+
+NEXT 선택 기준을 directstate165/map01/reproduce01로 변경한다. 양수 여유를 더 늘리기 위한 미세 논리·seed·무변경 refit는 중단한다. 먼저 동일 배치에서 외부54입력/57출력과 혼합 클록 경로를 PSRAM70ns/SNES/MCU-SPI/영상 mailbox/reset으로 분류하고 기존 보드 근거를 재사용할 수 있는 범위를 확인한다. 실제 새 경계의 요청/응답 데이터 안정성·ACK 소유권·공통 reset/STOP 회수 및 필요한 지연 제약을 점검한다. 그 다음 MCU에 실험 SPI0x74와 E6/version2 상태73·E5관측70·E0/F6 패킷 수신/변환/SNES ACK를 연결하고, 기존 사운드·입력·경과시간·STOP 서비스를 유지한다. full-link/stack과 최소 변경 경계 검증 후 SMB3(J) 첫 레벨 실기 패키지로 넘어간다. 새로운 일반 진단체계나 전체 ROM/A-B/044 반복을 선행 조건으로 추가하지 않는다. 변경으로 배치가 달라질 때만 해당 완성 후보의 전체 타이밍을 다시 확인한다. 내부 통과만으로60fps·실기 안전성·장시간 입력 유지를 완료 처리하지 않는다. 설치164/GBC/세이브 SRAM은 보존한다.
+
+완료 archive/finalizer/public pins 불변. 설치164/GBC/saveSRAM 보존; 새SD 없음.
+
+---
+
+# NES 현재 인계 — 명령·카운터 갱신
+
+PR108 OPEN. [계약](../../docs/nes-update165-contract.ko.md) · [검증](../../analysis/update165-verification.json).
+
+165 영상 경로 진척: SPI 명령 종류를 수신 시 저장하고 로더 종료 판정을 카운터와 같은 클록에 갱신하도록 분리했습니다. 명령 수신+1.458ns·명령 종류→주소검사+3.821ns·종료비트→적재카운터+1.603ns로 세 목표 경로는 통과했다. 그러나 최악 경로는 state[0]→state[2] −0.597ns로 이동했다. 상태 해석→destination 재인코딩→상태 갱신의5논리단계/6.472ns 중 배선4.111ns(64%)이며, 같은 상태 피드백의 실패 전이 경로도7단계/−0.520ns다. 별도로 READ16 read_last→data_hold enable은1논리단계지만5.048ns 배선(80%)/−0.429ns여서 상태 한 경로만 수정해서 끝날 상황이 아니다. 기존 채택 기준 phaseguard−0.083ns보다 나쁘므로 후보를 채택하지 않는다. 선택 phaseguard165/map01/reproduce01; 전체IO/CDC·MCU 연결·실기는 미완료, 새SD 없음.
+
+NEW loader294912/1056/all16codes/terminal invariant+negative;NEW SPI393741/120/4negatives+219wire1125909edges100READ7ACK19bad72cancel2priority/invariantsPASS.59otherinputs exact/reproduce03/localrelease4/12PASS. map01 generatorguard/map02 declaration failure preserved;map03 final/onlyoneFIT. MCUgap reused;no new latency over destination/ID74/C0C1C2/valid-onlypayload/SS2us. SELECT phaseguard165/map01/reproduce01;adopted=False;nominalpass=False.
+
+NEXT 이번에 통과한 SPI 명령 수신·명령 종류·terminal 경로를 다시 미세 조정하지 않는다. 다음에는 실제 state→Equal→destination→state 경로를 기준으로 상태 판정의 등록/상태 표현 변경을 검토한다. 단순 ONE_HOT 옵션 재시도 대신 중복 decode와 실패 전이의 공유를 줄이는 RTL 후보의 논리 깊이·추가 FF·모든16개 상태 코드의 의미를 먼저 명시하고, STOP/오류 코드/쓰기 배출/reset의 같은 클록 동작을 유지한다. READ16 read_last→data_hold enable의 긴 배선도 동시에 검토하며, 필요하면 같은 값을 유지하는 지역 복제 레지스터를 후보에 포함하되 읽기 샘플 시점은 바꾸지 않는다. 기능·전체 배치·모든 내부 클록 setup/hold를 통과한 뒤 필요한 외부IO·영상CDC/reset 및 MCU RUN/시간/사운드/입력/STOP/full-link/stack을 연결하고 최소 SMB3(J) 첫 레벨 실기로 넘어간다. 새 SD 패키지는 아직 만들지 않는다.
+
+완료 archive/finalizer/public pins 불변. 설치164/GBC/saveSRAM 보존; 새SD 없음.
+
+---
+
+# NES 현재 인계 — 목적 상태별 전이
+
+PR108 OPEN. [계약](../../docs/nes-destination165-contract.ko.md) · [검증](../../analysis/destination165-verification.json).
+
+165 영상 경로 진척: 로더의 공통 상태 선택을 목적 상태별 병렬 전이식으로 분리했습니다. BEGIN→상태는−0.136ns/7단에서+0.331ns/6단으로 개선됐고 실제 상태 레지스터4개를 확인했다. 전체15022LE/963LAB/35M9K, 최악−0.160ns(command[6]→pending_causes[1])로 기존 선택−0.083ns보다 나빠 미채택이다. remaining→loaded_bytes−0.123ns, byte_count→command−0.109ns, state→error_code−0.031ns도 남아 한 경로만의 문제가 아니다. 선택 phaseguard165/map01/reproduce01; 전체IO/CDC·MCU 연결·실기는 미완료, 새SD 없음.
+
+NEW loader294912states/1056sequences/all16codes/STOP+unused negatives;NEW joint219wire1125909edges100READ7ACK19bad72cancel2priorityPASS. Unchanged SPI393741/120/3negatives and MCUgap reused.60otherinputs exact/independent reproduction/localrelease4/12PASS. No latency/clock/SDC change over pulsejoint, ID74/C0C1C2/valid-onlypayload/SS2us retained. SELECT phaseguard165/map01/reproduce01;adopted=False;nominalpass=False.
+
+NEXT 선택 phaseguard165/map01/reproduce01은 유지한다. destination165/map01은 상태 경로가 개선된 구조 검토용이며 채택·배포 기준이 아니다. 이번 병렬 상태 전이와 통과한 SPI 최종 실행 허용은 재수정하지 않는다. 다음은 실패 경로3개(command→주소검사, byte_count→command, remaining→loaded_bytes)의 실제 레지스터 갱신 조건을 함께 검토한다. SPI 첫 명령 바이트 수신 시 offset 검사 종류를 함께 등록하고 명령 레지스터의 소유권/갱신 허용을 분리하는 구조, 로더 terminal 판정을 동일 클록의 next-remaining과 일치하도록 유지하는 구조를 우선 검토한다. 단순한 사전 샘플링으로 live length·ready·fault를 늦추거나 WRITE/HOLD·STOP/리셋 시점을 바꾸지 않는다. 새 보조 레지스터는 실제 SPI 및 쓰기 시퀀스에서 불변식을 확인하고, 직접 상태 주입 시험에서도 관련 값을 일치시킨다. 변경 경계 검증 후 한 번 전체 배치하고 세 실패 경로와 state→error_code를 모두 확인한다. 같은 소스 refit/seed·속성 탐색이나 최악 경로 하나만 바꾸는 반복은 생략한다. ID74/C0C1C2/valid-only payload/SS high·setup2µs 계약을 유지한다. 내부 조건이 갖춰지면 필요한 외부IO·영상CDC/reset와 MCU E6/version2 상태73·E5 관측70·E0/F6 수신·변환·ACK, 사운드·입력·STOP·시간 및 full-link/stack을 연결하고 최소 SMB3(J) 첫 레벨 실기로 간다. 설치164/GBC/세이브 SRAM 보존; 새SD 없음; 전체ROM·A/B·044 반복 생략.
+
+완료 archive/finalizer/public pins 불변. 설치164/GBC/saveSRAM 보존; 새SD 없음.
+
+---
+
+# NES 현재 인계 — 명령별 실행 허용
+
+PR108 OPEN. [계약](../../docs/nes-commandpulse165-contract.ko.md) · [검증](../../analysis/commandpulse165-verification.json).
+
+165 영상 경로 진척: BEGIN·DATA·END·START·STOP·CHECK READ 허용을 앞 단계에서 등록하고, STOP 처리를 상태별로 판정하는 로더와 결합했습니다. 6개 실행 허용 레지스터를 실제 배치에서 확인했다. 15055LE/963LAB/35M9K, 실제 최악 setup-0.136ns; load_begin → state.WRITE. 응답→BEGIN +0.831ns, 오류→DATA +1.592ns, 명령→사전 허용 +1.936ns. 선택 phaseguard165/map01/reproduce01, 내부 실제클록 통과=False. 전체IO/CDC·MCU 연결·실기는 미완료, 새SD 없음.
+
+6pulse approvals registered C1, live fault gated C2; no additional latency over commandstage. Experimental74/valid-only payload/SS2us contract retained.393741result+120boundary includes immediate fault-edge pulse assertion;219wire/100read/7ACK/19bad/72cancel/2priority;3wrongRTL rejected. Same-edge equivalence to phaseguard NOTclaimed. map01 60unchanged/map02 59unchanged/independent reproduce/6routedFF/localrelease4/12PASS. map02 SPI393741/120/3negatives reuse map01;guardloader294912/1056 reuse RETIRECE02;NEW combined219wire1125909edgesPASS. MCUgap prior evidence reused;no new game/fullMCU/IOCDC approval. SELECT phaseguard165/map01/reproduce01;adopted=False;nominalpass=False.
+
+NEXT 기준 phaseguard165/map01/reproduce01을 유지한다. 이번 map02는 후속 구조 검토용이며 채택한 배포 기준이 아니다. 잔여 load_begin → state.WRITE (-0.136ns)은7단 LUT이며 data delay6.013ns 중 배선4.030ns(67%)다. 응답 주소→실행 허용과 STOP은 통과했으므로 다시 손대지 않는다. 다음은 로더의 공통 다음 상태 선택망을 WRITE/RECEIVE 등 목적 상태별 전이식으로 분리하는 한 후보를 검토한다. WRITE/HOLD drain·STOP·같은클록 오류·미사용4비트 상태의 기존 결과를 보존하고 변경 경계 비교 및 결합SPI 시험을 통과한 뒤 한 번 배치한다. 자동 상태 인코딩이나 속성만 바꿔 우연히 좋아지기를 기대하는 무변경 refit는 하지 않는다. 실험ID74/C0캡처-C1판정-C2실행/valid=0 payload 비관찰/SS high·setup2µs 계약과 같은클록 fault 우선순위를 보존한다. 후속 MCU는 정확한 식별자를 검사하고 E6/version2 상태73·E5 관측70·E0/F6 수신/변환/ACK, 사운드·입력·STOP·경과시간과 full-link/stack을 연결한다. 최소 조건을 갖추면 SMB3(J) 첫 레벨 실기로 진행한다. 설치164·GBC·세이브 SRAM 보존; 전체 ROM 쓰기·A/B·044 반복 생략.
+
+완료 archive/finalizer/public pins는 불변이다. 설치164/GBC/saveSRAM 보존.
+
+---
+
+# NES 현재 인계 — 명령3단계와 데이터 선준비
+
+PR108 OPEN. [계약](../../docs/nes-commandstage165-contract.ko.md) · [검증](../../analysis/commandstage165-verification.json).
+
+165 영상 경로 진척: 실제164 MCU의 SPI 전송 간격을 확인하고 명령 캡처·판정·실행을3단계로 분리했습니다. FPGA1클록 추가, 두 후보의 기능·실제SPI 상태 응답 검증 통과. map01은 길이→원인 +0.672ns/원인→오류 +2.970ns/원인→카운터 자격 +2.628ns를 확보했지만 응답 주소→load_data -0.332ns가 남았다. map02는 데이터 선준비로 쓰기 허용 경로와 분리했다. 마지막 결과 15009LE/962LAB/35M9K, 전체 최악 -0.204ns; check_request_tag[6] → load_begin. 선택 phaseguard165/map01/reproduce01, 내부 실제클록 통과=False. 전체IO/CDC·MCU 연결·실기는 미완료, 새SD 없음.
+
+SPI1클록 지연 변경/응답 실험ID74. map01 test03, map02 test04;각393741 거래결과+120취소+219wire/100READ/7ACK/19bad/72cancel/2priority. 같은edge 동등성 아님. map02는 valid=0 payload 관찰 금지;actual loader consumes accepted_valid only. 60입력 불변, 독립재현/지역release4/12PASS. test01 negative fixture 결함과 test02 수정 소스·로그 보존. 기존 loader/counter 근거 재사용, 전체 게임/MCU/IOCDC 승인 아님. SELECT phaseguard165/map01/reproduce01;adopted=False;nominalpass=False.
+
+NEXT 선택 phaseguard165/map01은 유지한다. 명령3단계의 외부 지연 허용 가능성은 확인됐으므로 같은 MCU 간격 조사를 반복하지 않는다. 다음은 실제 잔여 경로 check_request_tag[6] → load_begin (-0.204ns)의7단 LUT 경로를 기준으로 C1에서 명령별 실행 허용 비트를 각각 등록하고 C2의 공통 오류 차단 뒤 최종 명령 재디코딩3단을 제거하는 후보 한 개를 검증한다. 오류 우선순위를 다음 클록으로 미루거나 응답 검사를 생략하지 않는다. 같은 두 후보의 무변경 배치나 작은 조합식 탐색은 반복하지 않는다. 실험 SPI 식별자74는 아직 설치용으로 승인하지 않았다. 후속 MCU는 기존6b를 묵인하지 말고 정확한 후보 식별자를 확인하고 SS high/setup 2µs 계약을 유지해야 한다. E6/version2 상태73·E5 관측70·E0/F6 수신/변환/ACK, 사운드·입력·STOP·경과시간, full-link/stack을 연결한 뒤 SMB3(J) 첫 레벨 실기로 간다. 설치164·GBC·세이브 SRAM 보존; 새SD 없음; 전체 ROM 쓰기·A/B·044 반복 생략.
+
+완료 archive/finalizer/public pins는 불변이다. 설치164/GBC/saveSRAM 보존.
+
+---
+
+# NES 현재 인계 — CHECK 갱신 허용 입력
+
+PR108 OPEN. [계약](../../docs/nes-retirece165-contract.ko.md) · [검증](../../analysis/retirece165-verification.json).
+
+165 영상 경로 진척: CHECK 카운터의 오류 차단을 전용 갱신 허용 입력으로 분리하고 로더 상태별 명령 판정과 결합했습니다. 전체 타이밍 개선이 없어 기존 개발 기준을 유지합니다. 선택 phaseguard165/map01/reproduce01; 마지막 후보 15048LE/962LAB/35M9K, 실제 클록 최악 setup-1.974ns. 전체IO·CDC·MCU·실기는 미완료, 설치164와 세이브 SRAM 보존, 새SD 없음.
+
+map01은 오류→카운터+1.364ns와 길이 비교+0.209ns를 달성했지만 load_valid→상태−0.336ns가 남았다. map02는 오류→카운터+0.922ns, 길이+0.467ns, STOP→상태+0.723ns로 세 경로를 통과했고14999LE/960LAB을 사용했으나 상태→오류 코드−0.265ns가 최악이었다. map03은 그 오류 코드 경로도+0.665ns로 개선했지만 SPI fault→pending_causes[2]가−1.974ns로 악화됐고15048LE/962LAB을 썼다. 세 후보 모두 기존 전체 최악−0.083ns보다 좋지 않아 미채택이다. 기능 비교와 세 번의 결합 SPI 시험은 통과했지만 전체 타이밍 개선은 달성하지 못했다. map03 추가 경로 보고서의 최초 호출은 작업 디렉터리가 잘못되어 스크립트를 찾지 못했다. 실패 로그를 보존하고 올바른 경로로 STA 보고서만 실행했으며 RTL·배치를 재실행하거나 바꾸지 않았다.
+
+SELECT phaseguard165/map01/reproduce01;adopted=False;nominalpass=False. SPI786432counter+393741capture/faultnegative;three candidates actualSPI100reads7ACK19bad72cancel2overlap. map02loader exactreuse294912/1056;map03error-code owner NEW294912/1056+STOP/code negatives;newcombinedSPI confirmed. Counter19ON/19routedena;explicit IMPLEMENT hint absentMAP, don't claim applied. Original60unchanged map01/59map02-03;local4release12pathsPASS. Preserve164/GBC/saveSRAM;no newSD/fullIOCDCreset/MCU approval. Completed archives/finalizers/publicpins immutable.
+
+NEXT 선택 phaseguard165/map01/reproduce01을 유지한다. 개별 조합식 수정→전체 재배치만 반복하는 방식은 중단한다. 다음에는 실제 MCU SPI 프레임 간격과 SS/SCK 겹침·응답·ACK·STOP/reset 계약을 먼저 확인해, 명령 캡처와 실행 자격 판정을 명시적인 여러 클록 단계로 나눌 수 있는지 검토한다. 이것은 기존 같은 클록 처리 계약을 바꾸는 설계이므로 단순한 동등성 주장이나 false path로 넘기지 않는다. 외부 응답 지연 한도, queued 명령 중 오류·STOP 우선순위, 새 프레임의 fail-closed 처리와 식별 버전/MCU 호환성을 정의하고 변경 경계 시험을 통과한 구조만 한 번 배치한다. 추가 지연을 허용할 수 없다는 근거가 나오면 그 결과를 남기고 공통 오류 신호의 지역화 대안을 선택한다. 이번3후보·이전 length165/STOP 분리·무변경 fit/전체ROM 쓰기는 반복하지 않는다. 내부 타이밍 이후 필요한 외부IO/영상CDC/reset와 MCU E6/version2 상태73·E5 관측70·E0/F6 수신/변환/ACK·사운드·입력·STOP·경과시간을 연결해 SMB3 첫 레벨 실기로 진행한다. 설치164/GBC와 세이브 SRAM은 보존한다.
+
+---
+
+# NES 현재 인계 — 적재 길이 비교 구조 개선
+
+PR108 OPEN. [계약](../../docs/nes-length165-contract.ko.md) · [검증](../../analysis/length165-verification.json).
+
+165 영상 경로 진척: 적재 길이 비교와 STOP 상태 판정을 개선하는 세 후보를 검증했습니다. 전체 타이밍 개선을 확인하지 못해 채택하지 않았습니다. 선택 구현 phaseguard165/map01/reproduce01의 기존 최악 setup−0.083ns를 유지합니다. 마지막 후보 15042LE/960LAB/35M9K, 실제 클록 setup-0.410ns. 외부IO·CDC·MCU와 실기는 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.
+
+map01(15039LE/960LAB)은 기존과 같은−0.083ns였다. map02(15029LE/963LAB)는 numeric keep 적용으로 길이 비교가5단/+0.258ns가 됐지만 STOP→state가−1.010ns로 악화됐다. map03(15042LE/960LAB)은 상태별 명령 판정으로 STOP→state를−0.115ns로 회복했고 길이 비교는+0.444ns였으나 check_failed→check_next[17]가−0.410ns로 최악이 됐다. 세 후보 모두 기존 전체 최악−0.083ns보다 좋지 않아 채택하지 않았다. 숫자 keep의 적용과 특정 경로 개선은 확인했지만 전체 타이밍 해결이나 프레임 속도 개선을 달성했다는 뜻은 아니다. map03 검사기의 설명문만 잘못 상속된 것을 수정하고 같은 결과를 재검증했으며, 수정 전 검사기·결과도 별도 보존했다. 기능 및 배치 재실행은 하지 않았다.
+
+SELECT phaseguard165/map01/reproduce01; adopted=False;candidate_nominal_same_clock_pass=False. Live combinational equality/no added latency;393741capture-retirement+actualSPI100reads7ACK19bad72cancel2overlap PASS/uppergroupnegative. map03 state-only command factoring NEW294912+1056/wrongSTOPnegativePASS;SPI component evidence reused by exact attribute normalization. NO new combined map03 replay.60otherinputs exact perstep/59vsoriginal/local4release12pathsPASS. Quartus keep uses numeric1: verify all14nodes inMAP settings and routednames;stringtrue map01 had no such assignments, do not assume sourceattribute honored. All3candidates NOTadopted; baseline-.083 retained. No full-ROM/game/MCU/SD/fullIOCDCreset approval. Preserve164/GBC/saveSRAM and completedarchives/finalizers/publicpins.
+
+NEXT 선택 phaseguard165/map01을 기준으로 진행한다. 이번 numeric keep의 비교 경계 효과와 map03의 상태별 판정은 실험 근거로만 재사용한다. 다음에는 check_failed의 CHECK 카운터·상태·오류 처리 팬아웃과 START/STOP 우선순위를 함께 읽고, 명령 완료 시점과 오류 대응을 바꾸지 않는 공통 자격 신호/다음 상태 구조를 설계한 뒤 변경 경계 동등성 시험과 한 번의 배치로 평가한다. 같은 세 후보의 무변경 재배치, 이전 STOP 저장 레지스터 분리, 클록 완화·false path 추가는 반복하지 않는다. 내부 타이밍 통과 후 필요한 외부IO/CDC와 E6/version2 상태73·E5 관측70, E0/F6 수신·변환 ACK 및 사운드·입력·STOP·경과시간 MCU 연결을 마무리해 SMB3 첫 레벨 실기로 간다. 불필요한 전체 ROM 쓰기와044 복원 반복은 생략한다.
+
+---
+
+# NES 현재 인계 — 타이머 상태의 명령 조건 단순화
+
+PR108 OPEN. [계약](../../docs/nes-phaseguard165-contract.ko.md) · [검증](../../analysis/phaseguard165-verification.json).
+
+165 영상 경로 진척: 로더 SETUP·RELEASE의 중복 명령 충돌 조건을 제거하고 동작을 비교했습니다. 새 개발 기준으로 채택했습니다. 선택 구현 phaseguard165/map01/reproduce01. 후보 15039LE/960LAB/35M9K, 실제 클록 setup-0.083ns. 외부IO·CDC·MCU와 실기는 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.
+
+첫 후보 map01은 START→상태 최소 setup을 -0.092에서 +0.805ns로 개선했다. 전체 최악 setup은 -0.083ns, 최소 hold는 +0.130ns이며 15039LE/960LAB/35M9K다. 메모리 이외 host/NES/board setup은 +1.139/+8.144/+121.793ns다. 종전 state165의 -0.092ns/963LAB보다 좋아 map01을 채택한다. 남은 최악 경로는 loaded_bytes[6]→pending_counter_clear이며 equality4단과 자격 결합2단, 데이터 지연5.956ns다. SPI STOP 조건을 별도 저장한 map02는 기능 비교·연결 시험과 FIT를 통과하고15001LE/960LAB을 썼지만, 요청 태그→CHECK 카운터 경로가 -0.449ns로 악화되어 채택하지 않는다. 실기 배포나 전체 타이밍 통과는 아니다.
+
+SELECT phaseguard165/map01/reproduce01; adopted=True; nominal_same_clock_pass=False. Timed-state redundant conflict removal only; fault/error/data/timer and WRITE/HOLD drain unchanged. All16state codes/294912conditions/1056one-byte sequences+STOPnegative PASS.60other inputs exact state165map01. Local4release registers/12setup-hold paths PASS. No full-ROM/game/MCU/SD/fullIOCDCreset approval. Preserve164/GBC/saveSRAM and completed archives/finalizers/publicpins.
+
+NEXT SELECT phaseguard165/map01/reproduce01, not rejectedmap02. Reuse294912loader conditions/1056sequences and exact unchangedSPI/reader evidence. Remaining nominal -0.083ns loaded_bytes[6] -> pending_counter_clear: inspect offset=={5'd0,loaded_bytes} equality depth/partition and static clear eligibility on SAME capture edge. Do not pre-sample loaded_bytes: loader may advance while SPI frame is arriving. Do not repeat rejected STOP operand split map02 (-0.449 tag->check_next), compare165 response-mask/phase/drain variants, unchanged fits/fullwrites/OAM/A-B/044. Preserve state single owner/error priorities/WRITE-HOLD drain, local4release QSF, exact clocks/SDC. After same-clock closure, check necessary native-video held-data/control/reset/externalIO on selected hierarchy; connect MCU E6/version2 status73, E5 observer70, E0/F6 receive-convert-ACK/audio/input/STOP/elapsed-time/full-link/stack then minimal SMB3(J) first-level hardware. Save SRAM remains reserved; no broad debug expansion. Both candidate builds/FLOAT finished. SPI01 connected elaboration failed because old test force targeted a now-wire predicate; SPI02 targets equivalent captured operands and passes, not a hardware/license fault. Preserve failedSPI01 and completedarchives/finalizers/publicpins.
+
+---
+
+# NES 현재 인계 — 로더 상태 전환 분리
+
+PR108 OPEN. [계약](../../docs/nes-state165-contract.ko.md) · [검증](../../analysis/state165-verification.json).
+
+165 영상 경로 진척: 로더 상태 전환을 오류·데이터 처리에서 분리하고 294912조건·1056쓰기/중단 시나리오를 비교했습니다. 새 후보를 다음 구현 기준으로 채택했습니다. 선택 구현 state165/map01/reproduce01. 15077LE/963LAB/35M9K, 실제 클록 setup-0.092ns. 외부IO·CDC·MCU와 실기는 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.
+
+SELECT state165/map01/reproduce01;adopted=True;nominal_same_clock_pass=False. Single state-owner always;original fault/error/data priority and timer preserved. Empty original state-only branches/tasks intentional. WRITE/HOLD bad command holds current edge then existing fault drains;no pulse shortening. State165test01 all16codes/294912conditions/1056actual single-byte sequences+wrongSTOP negative PASS.60other inputs exact release165map01. Existing4hostrelease QSF assignments/newchain topology PASS. No full-ROM/newgame/MCU/SD or fullIOCDCreset approval. Preserve164/GBC/saveSRAM and completed archives/finalizers/publicpins.
+
+NEXT SELECT state165/map01/reproduce01;state165map01 nominal -0.092ns, worst nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|start -> nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|state.SETUP. Actual path start->fault~3->phase_step~0->Selector9~0->state~60/61->SETUP:5levels,68percent routing. Also READY->WRITE/RECEIVE -.001ns. Preserve new single-state-owner contract; inspect shared command/timed-phase guard for SETUP hold/entry and those near-zero paths, without assuming START is a legal SETUP entry. No unchanged fit or old compare165 drain/phase/counter repeats, no clock/SDC relaxation. Preserve fault/STOP/write drain and four local release QSF assignments with fresh hierarchy checks. Then minimum IO/CDC/reset+MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack and SMB3(J) hardware;no unchanged fullwrites/OAM/A-B/044/saveSRAM.
+
+---
+
+# NES 현재 인계 — 영상 mailbox 리셋 해제 분리
+
+PR108 OPEN. [계약](../../docs/nes-release165-contract.ko.md) · [검증](../../analysis/release165-verification.json).
+
+165 영상 경로 진척: 영상 mailbox 리셋 해제 레지스터4개의 병합을 방지해 지역별 분리를 확인했습니다. 이번 후보는 기존 기준보다 전체 타이밍이 나빠 채택하지 않았습니다. 선택 구현 predecode165/map03/reproduce03final. 후보 15073LE/963LAB/35M9K, 실제 클록 setup-0.583ns. RTL·클록·SDC는 이전 후보와 같으며 기능 시험은 재사용했습니다. 외부IO·CDC·MCU와 실기는 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.
+
+Only four DONT_MERGE_REGISTER ON assignments to native_records.dr[0:1]/native_prepared.sr[0:1]. All60 other files exact eligibility165map02. QSF readback ON/local4regs/firstfanout1/stage12setuphold PASS. Reuse prior RTL functional evidence;no newFLOAT/game/MCU/SD. Selected predecode165/map03/reproduce03final;adopted=False;whole IO/CDC/reset/MTBF approval still OPEN. Completed archives/finalizers/publicpins immutable. Preserve164/audio/input/saveSRAM.
+
+NEXT SELECT predecode165/map03/reproduce03final;retain release165map01 as isolated-host experiment, not installable. QSF four-release-register isolation verified; nominal -0.583ns worst nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|load_begin -> nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|state.WRITE. This is a 7-level same-clock load_begin->fault~2->state~43/44/45/52/53/73->WRITE/HOLD path, not the old reader predicate or host release. Inspect independent state-transition equations versus shared fault/error task, preserving exact WRITE/HOLD pulse drain and command conflict/STOP priority. Do not repeat compare165.drain (already rejected), old phase/counter variants, blind refits or global dont_merge/preserve. Reuse four local-release assignments only with new hierarchy timing evidence. Then necessary native-video IO/CDC/reset and MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack, minimum SMB3(J) hardware. No unchanged CHECK/OAM/full writes/A-B/044;saveSRAM reserved.
+
+---
+
+# NES 현재 인계 — 로더 READY 직접 판정
+
+PR108 OPEN. [계약](../../docs/nes-eligibility165-contract.ko.md) · [검증](../../analysis/eligibility165-verification.json).
+
+165 영상 경로 진척: 로더 READY 판정을 단순화하고 reader 마지막 사이클 판정을 미리 계산해 실제 SPI/boot/reader 동등성을 검증했습니다. 전체 타이밍 이득이 없어 새 후보를 채택하지 않았습니다. 선택 구현 predecode165/map03/reproduce03final. 후보 15017LE/963LAB/35M9K, 실제 클록 setup-1.994ns. 외부IO·CDC·MCU 연결과 실기 확인은 남아 있으며 설치164·세이브 SRAM을 보존합니다. 새SD 없음.
+
+SELECT predecode165/map03/reproduce03final;adopted=False. map01 fault path+.919 but reader remaining->data_hold-.856 rejected. map02 adds read_last==(remaining==1) during ACTIVE, prior remaining==2 predicts terminal;sample/CE/OE/ACK/HOLD/RELEASE unchanged. Reader old-register/pin equivalence120reads/126cancel/5stoppedreset at counts1/2/3/16 and two board-count phases;wrongterminal rejected. Loader direct !active_reset&&!fault&&READY equals loaded&&!loader_run&&!boot_fault, used by check_active/check_failed. No new latency or changed write state machine. SPI tag02 executable text reused (one stale comment corrected). New connected sequential PASS TAG165 edges=1271681 reads=124 acks=7 corruptions=19 cancels=72 overlaps=2;1024eligibility combinations +26loader fault points;negative missingfault rejected. Prior conditional1409024/393216 reused,NOTformal/unconditionalproof.57inputs unchanged. No newSD/MCU/game/SNES/IOCDC approval;completedarchivesimmutable.
+
+NEXT SELECT predecode165/map03/reproduce03final. Rejected eligibility165 map02 nominal -1.994ns, worst nes_dac162:audio|dac_release[1] -> nes_live_joint:core|nes_native_spi165:native_spi|held[13]. Mapping explicitly merges native_records.dr[1],native_prepared.sr[1],pad.host_release[1] into audio.dac_release[1]; this is shared reset-release fanout, NOT an audio sample defect. Inspect split/local preserved release and SPI held enable fanout with same-edge handshake/reset/cancel semantics, then check all clocks including memory -.203ns. Reuse READY/reader-terminal/CHECK tests; do not repeat compare165 equations/SPEED, tag165 guarded capture, or unmodified fits. Then necessary native-video IO/CDC/reset + MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack and minimum SMB3(J) hardware. No unchanged CHECK/OAM/full writes/A-B/044 or cartridge save SRAM.
+
+User merges; Korean4sections; personalGitHub only. No unchanged CHECK/OAM/fullwrites/A-B/044;saveSRAM reserved.
+
+---
+
+# NES 현재 인계 — CHECK 요청 주소 계약과 배치 결과
+
+PR108 OPEN. [계약](../../docs/nes-tag165-contract.ko.md) · [검증](../../analysis/tag165-verification.json).
+
+165 영상 경로 진척: CHECK 요청 주소를 별도 저장하는 구조와 실제 SPI/reader 중단 경계를 검증했습니다. 전체 타이밍이 기존보다 나빠 새 후보를 채택하지 않았다. 선택 구현 predecode165/map03/reproduce03final. 새 후보 15068LE/962LAB/35M9K, 실제 클록 setup-0.616ns. 외부IO·CDC·MCU 실행 연결은 미완료이며 설치164·세이브 SRAM 보존, 새SD 없음.
+
+map01 guarded tag capture REJECT -0.678ns overall/-0.335 tag feedback. map02 independent capture -0.616ns;adopted=False. SELECT predecode165/map03/reproduce03final. Tag invariant only whilebusy; rejected READ may refresh inactive tag, never launches. Same response-edge address comparison, no early-address stability assumption. Actual SPI/boot/READ16 100reads/7ACK/19corrupt/72cancel/2priority,1026691edges;wrongcapture+missingbit negatives PASS. Conditional1409024state+393216capture are NOTunconditional all-state equivalence/formal proof.60other inputs unchanged. No SD/newgame/ARM/MCU/IOCDC approval. Completed archives/public pins immutable.
+
+NEXT SELECT predecode165/map03/reproduce03final. Tag trial map02 nominal -0.616ns: nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|fault -> nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|pending_causes[2]. Preserve the established CHECK request-tag invariant and same-edge response rejection. Inspect this actual worst path and all-clock minima before another structural change; do not repeat compare165 local equations/SPEED or tag165 map01 guarded capture. Keep request-tag capture separate from dynamic response errors. Existing129/130/131 rejected phase-counter variants are not a new rationale. Only changed-boundary tests and justified fit, then minimum native-video IO/CDC + MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack and SMB3(J). No repeated CHECK/OAM/full writes/A-B/044 or save SRAM.
+
+User merges; Korean4PRsections; personalGitHub only. Keep164/audio/input/saveSRAM. No unchangedfullwrites/OAM/A-B/044.
+
+---
+
+# NES 현재 인계 — 타이밍 후보 미채택, 기존 기준 유지
+
+PR108 OPEN. [후보 비교](../../docs/nes-compare165-contract.ko.md) · [검증](../../analysis/compare165-verification.json).
+
+165 영상 경로 진척: 추가 회로 후보4개와 모듈별 SPEED 설정을 검증했지만 전체 타이밍 개선은 없어 모두 미채택했습니다. 기존 predecode165/map03의15,040LE/963LAB/35M9K, 실제 클록 setup−0.153ns 기준을 유지합니다. 외부IO·CDC·MCU 실행 연결은 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.
+
+SELECT remains predecode165 map03/reproduce03final, NOT any compare165 candidate. REJECT map01guardedcompare nominal-.222, map02+drain-.300, map03+splitcauses-.367, map04+parallelfault-.560. All functional/fullfit PASS but overall timing worse. map06 baselineRTL+two SPEED assignments readback accepted/noignored, same15040LE963LAB/nominal-.153;no benefit,notadopted. map05 braces were literal invalidnode warnings;excluded. Do NOT confuse targeted counter+.453 with overall PASS. All clocks/SDC unchanged; no newSD/MCU/ARM or gameboot.
+
+Experiments:1409024counterstates+438272capture AND retirement/Boolean1048576;loader3342336all128timers;actualSPI98/8writes6reads6negative. Negativecontrols wrongaddressbit/missingREADcause/wrongSTOPtransition/missingSTOPfault. Newcause2regs belong rejectedmap03/04 only. Completedfrozen/publicpins immutable; oldbaseline retained exactly.
+
+NEXT Retain predecode165 map03/reproduce03final (-0.153ns); no new RTL/SD selected. Do not repeat compare165 map01-04 or per-instance SPEED map06 (same result), and reject map05 invalid braced-node assignments. Before another full fit, derive a sequential ownership contract for CHECK request tag/counter/response: exactly which registers are stable from request acceptance through response and ACK. Use that contract to remove the response-address comparison from the counter feedback path, or precompute ownership validity where the tag is already stable. Preserve wrong-address, STOP/reset, fault and command retirement edges; do not simply waive arbitrary-state failures without proving reachability. Test only the changed boundary, then one full fit with counter/capture/loader and all-clock minima. Once safe, connect necessary native-video IO/CDC/reset and MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack to minimum SMB3(J) hardware. Keep installed164/GBC/save SRAM; no repeated full writes/OAM/A-B/044.
+
+사용자머지/개인GitHub/한국어4PR절. 다음턴PR상태확인. 국소식변경/무변경fit/일반진단확장반복금지.
+
+---
+
+# NES 현재 인계 — 명령 사전 판별과 적재 완료 상태
+
+PR108 OPEN. [계약](../../docs/nes-predecode165-contract.ko.md) · [검증](../../analysis/predecode165-verification.json).
+
+165 영상 경로 진척: CHECK 명령 사전 판별·로더 완료 플래그로 제어 경로를 개선했습니다. 전체 배치15,040LE/963LAB/35M9K, 명령·카운터1179648사례/로더628736사례/SPI98검사 통과. 실제 같은 클록 setup 미달이 남음(-0.153ns). 외부IO·CDC·MCU 연결은 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.
+
+SELECT predecode165 map03/reproduce03final; retire165map02기준2RTL SPI/loader만변경59입력불변. pending counter clear/inc를기존SS상승캡처edge에저장, 명령별조건전개;동적하드fault/응답/충돌은원래retirementedge검사. loader count_complete는loaded_bytes와동일edge갱신. clocklatency/6B/audio/pad/saveSRAM불변. SPI786432+capture393216/negative2 PASS,loader628736/negative1 PASS,actualSPI98/8writes6reads6negative PASS. lengthfixture refdut치환오류/oldcountseed불일치 path02/03 보존;어댑터2주입만보정.새fullboot아님.
+
+FIT15040LE/963LAB35M9K/8332reg122physical0virtual1PLL. unchangedbudget-0.605 vs exact155nominal-0.153;sameclocknominalpass=False;hold+0.155. rawmixed-15.504/IO54in57outOPEN. targetedcounter/capture/address각각은검증JSON참조. 최악행만보고하위미달누락금지. noSD/ARM/새MCU완료/전체timing승인.
+
+NEXT Reuse selected map03: fix measured nominal -0.153ns path nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|check_next[0] -> nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|check_next[17] without moving retirement/fault edges or relaxing clocks. Routed path crosses response-address comparison -> counter_retire_ok -> final counter mux, not the carry increment itself; inspect comparator factoring/fanout or stable-tag capture contract before another fit. Inspect counter/capture/loader groups together, not only first worst row. Then necessary IO/video CDC and MCU RUN receive-convert-ACK/audio/input/STOP/time/full-link/stack, minimum SMB3(J) hardware. Keep save SRAM reserved/installed164/GBC. Do not repeat unchanged OAM/full writes/A-B/044 or rejected generic-body predecode/masked-XOR map04; preserve failed fixtures and completed archives.
+
+이전frozen/publicpins/record/audit불변. 사용자머지/한국어4PR절/개인GitHub. 다음턴PR상태먼저확인.
+
+---
+
+# NES 현재 인계 — SPI 응답 개선, 실제 CHECK 타이밍은 미완료
+
+PR108 OPEN. [계약](../../docs/nes-retire165-contract.ko.md) · [검증](../../analysis/retire165-verification.json).
+
+165 영상 경로 진척: 로더 명령 차단과 SPI 응답 직렬화를 개선했습니다. 전체 배치15,053LE/963LAB/35M9K, 로더52,224상태·SPI15,680비트·실제 경로98검사 통과. 실제 클록 기준 CHECK setup−0.217ns는 아직 미달이며 host여유+0.021ns입니다. 외부IO·CDC·MCU 연결 미완료, 설치164·세이브 SRAM 보존, 새SD 없음.
+
+SELECT retire165 map02/reproduce02 variant=serial. baseline check165map03대비 loader/boot/SPI3입력변경,58입력byteexact. loader공통inhibit factoring+SPI56bit snapshot shift. completionedge/STOP/오류우선순위/6B 식별불변. loader52224state/wrong-inhibit, serial256frame15680bit1347840edge/wrongbit, actualSPI98checks8writes6reads6negative PASS. no새전체boot/MCU/SD. generator후속variant추가는실행RTLbyteexact로재사용;옛실행generator보존.
+
+기존SDC동일:3corner198행 memory−.426(5.5target),host+.021,NES+5.344,holdmin+.159. Exact155 clock-only별도STA nominal−.217(check_failed->check_next15),367소스/설정/routed파일불변. falsepath/clock완화없고둘다FAIL. rawmixed−15.982/IO54in57outOPEN. FIT15053LE963LAB35M9K8329reg122physical0virtual1PLL. LAB여유0/host여유작음. 이전baseline−.488는그대로보존.
+
+REJECT retiremap03 explicit counter_clear/inc XOR식:786432states+wrongfaultgate+actualSPI PASS지만memorybudget−1.454/nominal−1.002로악화. check_next3->check_next18 feedback. 15049LE961LAB. 선택candidate로오해하지말것. 첫STA cwd/path실패와미실행선언위치초안보존;license문제아님.
+
+NEXT Selected retire165 map02/reproduce02: fix boot check_failed -> control check_next nominal -0.217ns (5.952ns period) using measured cone, preserve hard-fault precedence and retirement edge. Host margin +0.021ns and963/963LAB require whole-fit checks after any RTL change. Rejected parallel counter-clear/XOR map03 worsened feedback to nominal -1.002ns; do not repeat. Investigate predecoding stable pending command/header/body predicates at their existing capture edge before dynamic hard-fault gating; this is a proposal, not implemented. Keep stricter5.5/5.3ns budget misses separate; no clock/falsepath relaxation. Then necessary external IO/video CDC, MCU receive-convert-ACK/audio/input/STOP/time and full-link/stack, minimum SMB3 first-level hardware. Preserve save SRAM and installed164; no unchanged OAM/fullboot/A-B/044 repeats.
+
+완료archive/record/audit 및 이전pins불변. 사용자머지/개인GitHub/한국어4PR절. 다음턴PR상태먼저확인. 실기목표SMB3(J),설치164/GBC/세이브SRAM보존.
+
+---
+
+# NES 현재 인계 — CHECK 경로 수정
+
+같은 PR108 OPEN. [계약](../../docs/nes-check165-contract.ko.md) · [검증](../../analysis/check165-verification.json).
+
+165 영상 경로 진척: CHECK 카운터·레지스터 제어를 개선해 최악 setup을−1.218ns에서-0.488ns로 바꿨고 같은 클록 setup 부족이 남았습니다. 전체 배치15,015LE/961LAB/35M9K,786432상태 비교·SPI98검사 통과. 외부IO·CDC와 MCU 연결은 아직 미완료입니다. 설치164·세이브 SRAM 보존, 새SD 없음.
+
+SELECTcheck map03/reproduce03: secondarymap03대비nes_rom_spi.sv만변경,나머지60입력byteexact. low8/high11증가를bitXOR/prefix로,load_data8bit AUTO_CE OFF,check_next19bit ALLOW_SYNCH_CTRL OFF. 다음값/오류우선순위/SPI식별6B/CE/retirementedge불변;OAM/audio/pad/saveSRAM불변. test01 524288counter+262144priority=786432상태/모든reg 비교+wrongcarry negative PASS. path02 master상승edge98checks8writes6reads6negative/ACK롤오버/finish/START PASS. map03두속성만제거하면test01/path02실행RTL과byteexact. 증거재사용은속성한정이며새배치는새STA. 전체코어는실제FIT,새게임boot아님.
+
+map01mem-.552/load_dataENA;map02mem-.536/check_nextSCLR;map03mem-0.488. sameclock_pass=False;최악 nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|check_failed -> nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|state.RECEIVE. rawmixed-12.665/IO54in57outOPEN. nominal-only재분석/SDC완화없음. 전체timing승인아님.
+
+path01와unmodifiedbaseline path-base01은둘다78번째옛5F기대에서실패. current6B맞춘별도path02 PASS;원래149pinned파일불변. no새license문제. 완료archive/record/audit/pins수정금지.
+
+NEXT Use selected CHECK map03: repair measured boot check_failed -> loader state.RECEIVE (-0.488ns at nominal5.952ns), byte_count -> miso_hold (-0.332ns at5.3ns target), and check_next -> check_busy (-0.174ns at5.5ns target); no uncontrolled latency/SDC relaxation or repeated attribute-only fits. Then necessary external IO/video CDC and MCU RUN receive/convert/ACK with existing audio/input/STOP/elapsed time, whole firmware link/stack, SMB3 first-level hardware. Preserve save SRAM and164; no unchanged OAM/boot/A-B/044 repeat.
+
+사용자머지/개인GitHub/한국어4PR절. 설치164와SMB3(J)우선. no새SD/MCU완성/60fps주장. 다음턴PR상태부터확인.
+
+---
+
+# NES 현재 인계 — 전체 FPGA 배치 성공, CHECK 타이밍 수정이 다음
+
+같은 PR108 OPEN. [계약](../../docs/nes-oam-secondary165-contract.ko.md) · [검증](../../analysis/oam-secondary165-verification.json). 설치164/원본GBC/세이브 SRAM 보존. 새SD없음.
+
+SELECT secondary map03/reproduce: board03+AREA+range4address+secondary valid-mask. 무효 바이트는FF; reset/clear는valid만0, fresh write와valid1이같은edge; copy는masked값. 내부raw저장만다르고외부CE/latency/우선순위불변. primary변화없고extra기능보존; RAM블록변환아님. 기타59입력byteexact. MAP19421estimatedLE13998comb8316reg197104bits122physical0virtual1PLL. 실제FIT/ROUTE15052LE963/963LAB35/56M9K PASS. 이전13928comb8284reg/964LAB보다논리70·reg32증가하지만reset/control구성으로배치가능. LAB여유0. Fitter내부첫net실패후자동재시도성공원시로그보존.
+
+test03 everyedge216362/2426copy3111CPU10473SS2012collisions, primary256/secondary64/state/native/output PASS. valid01 row0..15/1024byte/stale37주입/wrong-valid row0byte32검출 PASS. functional시나리오이지formal/새SMB3boot아님;기존board/SPIstub범위그대로. 전체core는실제MAP/FIT. 재생성모든입력byteexact. REJECT map01factored13939comb, map02/test02상수주소함수의전역mem sensitivity로36ns비교실패;최종map03모든읽기explicitternary통과. 실패보존,license문제아님.
+
+STA3corners198sameclockrows: setupNES8.479/host1.937/board119.620/mem-1.218ns;holdmin+.155. 메모리최악reader check_response_address15->SPIcontrol check_next7,7logic levels,5.500nsmaxdelay. 기존SDC그대로이며nominal-only재분석안함. mixedraw-12.396/입력54출력57미제약OPEN. FIT성공은timing/IO/CDC/실기승인아님.
+
+NEXT 실제routed CHECK비교->다음주소/데이터갱신경로를줄이고 valid/address/error/command완료순서보존. 추가논리가LAB초과를재발시키지않게변경경계검증+FIT/STA. 이어필요외부IO/CDC, MCU RUN수신변환ACK+기존audio/input/STOP/실제시간/full-link/중첩stack,SMB3첫레벨. 임의SDC완화/세이브SRAM사용/오디오입력삭제금지. 이전실패OAM옵션/무변경MAP/FIT/boot/A-B/044반복금지. E6/2status/E5observer/F6sink/RAMidle동일. 완료record/audit/archives/pins불변. 다음턴PR108상태확인,개인GitHub,한국어4PR절,사용자가머지.
+
+---
+
+# NES 현재 인계 — OAM 주소 명시로1719개 절감, LAB1개 초과
+
+같은 PR108 OPEN. [계약](../../docs/nes-oam-port165-contract.ko.md) · [검증](../../analysis/oam-port165-verification.json). 설치164/원본GBC/세이브 SRAM 보존. 새SD없음.
+
+SELECT map02/reproduce: board03 + AREA + secondary extra OAM 주소4곳만수정. row_ex<8 guard아래 {row_ex,low2}+32 -> {1'b1,row_ex[2:0],low2}. 기존주소도32..63이지만명시후사용하지않는extra하류를더제거. 기능/CE/latency/쓰기priority변화없음,기능삭제/RAM사전읽기아님.59기타입력byteexact. 전체19351estimatedLE/13928comb/8284reg/197104bits/122physical0virtual1PLL;OAM5663->3939. 실제FIT14983LE/35M9K,964/963LAB error170012/171000. 실패중간자원일뿐배치완료아님;STA없음. AREA대비1719/board03대비2513comb절감.
+
+test02 actual banked reference 216362edges/2426copy/3111CPU/10473SS/2012collisions PASS;native+allprimary256/secondary64/state/output. range01 row0..15 accepted8/reject8/all1024byte PASS,wrong-bank대조row0byte0검출.32guardedindex계산전수대조.전체formalproof/새SMB3boot아님.소비시점불변이라기존fullgame/board/SPI결과범위재사용.최종generator재생성입력과선택map02byteexact.후속생성옵션수정은실행모듈본문별도비교.
+
+REJECT map01 shared-read15665comb(기능PASS),fit03physical-areaON/fit04MinimizeArea설정실제적용확인했지만둘다964LAB,동일MAP DB재사용;map05bankCErecognitionOFF15761comb초과.이설정들은선택map02에없음.기존onehot/rowwriter실패도반복금지.초기checker가옛board03Balanced까지Area요구한검사오류보존/수정;RTL실패아님.
+
+NEXT remaining primary OAM rowcopy/storage/LAB control grouping축소.비동기RAM변환이필요하면PPUCE사이사전읽기/CPU즉시주소/rowcopy/SS동시쓰기소비edge먼저정의;추가지연무조건삽입/CE속도변경금지.변경부분필수검증->전체fit->같은배치setuphold/PSRAM/SPI/SNES최소타이밍->realMCURUN수신변환ACK+실제경과시간audioinputSTOP/full-link중첩stack->SMB3첫레벨실기.1LAB여유만으로timing보장아님.세이브SRAM/오디오입력삭제/SDC완화금지.E6/2status/E5observer/F6sink/RAMidle동일.실기우선,unchangedboot/A-B/044반복금지.
+
+새 probes/nes-oam-port165 record/audit와기존archives/pins완료후불변.다음턴PR상태갱신/사용자머지/개인GitHub/한국어4PR절.
+
+---
+
+# NES 현재 인계 — AREA794 감소, 실제 OAM 저장·읽기 구조 축소 필요
+
+같은 PR108 OPEN. [계약](../../docs/nes-oam-select165-contract.ko.md) · [검증](../../analysis/oam-select165-verification.json). 설치164/원본GBC/세이브 SRAM 보존. 새SD없음.
+
+선택 map07/reproduce: nes_oam_select165.py 기본area는board03 RTL/SDC/ROM 등60파일byteexact, QSF CYCLONEII_OPTIMIZATION_TECHNIQUE AREA만추가. 실제report Area확인. 글로벌 OPTIMIZATION_TECHNIQUE는이장치에적용안돼map06Balanced;재시도금지. 현재공개generator재생성자료reproduce와map07입력전체일치. 21070estimatedLE/15647comb/8294reg/197104bits/122physical0virtual1PLL. 기존21442/16441에서794comb절감. 실제FIT170011/171000:15647>15408. 239개감소만으로최종fit보장아님/STA없음.
+
+REJECT map02 onehotread16440comb/OAM5664;map04 rowwriter16441/OAM5664. test01/02 각각216362edges/2426copies/3111CPUwrites/10473SSwrites/2012collisions동일. Nativeobserver/primary256+secondary64/state/output매edge비교. 두변형의기능성공은자원개선아님;활성RTL에는채택하지않음. map01자동탐색CIRAM누락/map03explicitgenerate/prepare05줄바꿈검사실패/map06잘못된설정이름 보존. 원본testTB불변. activeareaRTL동일로이전boardtest04와SMB3자료재사용,전체부팅추가안함.
+
+NEXT OAM5663의실제memory/readports/rowcopy비용축소. 단순onehot/행쓰기/동일AREA재배치반복금지. 내부RAM사전읽기검토시CPU/PPUCE와소비edge계약먼저정의;읽기1clock추가를무작정dropin금지/CE속도변경금지. 원래rowcopy/CPU/SSwrite priority보존. changedboundaries+시점바뀌면actualSMB3비교->전체fit/타이밍->realMCURUNguard/time/audio/input/sinkACK/full-link/stack->SMB3실기. 외부세이브SRAM/오디오삭제/SDC완화금지. 기존E6/2status,E5observer,F6sink/RAMidle동일. min안전후실기우선/generic진단·boot/A-B/044반복금지.
+
+완료 probes/nes-oam-select165 record/audit와기존archives/pins불변. 다음턴PR상태갱신;사용자머지/개인GitHub/한국어4PR절.
+
+---
+
+# NES 현재 인계 — 실제 보드 연결 완료, 논리 자원 축소 필요
+
+기존 PR108 열린 상태에서 후속 작업. [계약](../../docs/nes-sink-board165-contract.ko.md) · [검증](../../analysis/sink-board165-verification.json). 설치164/원본GBC/사용자세이브 보존. 새SD없음.
+
+선택 board03/test04. actual164 top + native producer + sink bridge, 기존38M9K/frame150/bus151 제거. 공통reset/active,ROMfault2FF/nativeSPIfault STOP,패드CDC,4그룹MISO배타 연결. 실제122핀/SDC동일. audio/pad/observer원본동일. RAM_ADDR0/OE1/WE1/DATAZ. status73 E6/version2,observer70 E5(옛D4주석틀림),sinkE0 F6. 구형E5/version1 MCU실행금지. boot/native 내부중재유지. realMCUguard/시간/오디오입력/오류로그와전체링크아직미완료.
+
+새materializer tools/nes_sink_board165.py + nes_native_ram_board165.py 사용. 기존공개RTL직접수정하지않음. board01 uninferred13/registeroverflow;동기읽기/출력mux분리로large8배열RAM추론(6M9K/2rasterAUTO). compact4/raster2/requiredtile1/SPIbuffer1,latency보존. board02/03 map21442estimatedLE/16441comb/8294reg/197104memorybits/PLL1. board03 actualFIT170011/171000:16441comb >15408. 배치실패/STA미실행. 164map16362->fit14711이었으므로estimatedLE와최종fit혼동금지. 1033comb줄여도전체fit보장아님.
+
+최대localcomb OAMEval5664(164도5662),compact1359/raster637/nativeSPI494/sink489. 새관측만으로OAM이커진것아님. 다음은실제비용기반OAM비동기읽기·행복사·쓰기선택/compact구조축소. 기존OAM일괄삭제/CE변경/오디오제거/세이브SRAM차용/무근거SDC완화금지. 구조변경경계와짧은SMB3실자료확인후전체fit;무변경배치반복금지. 자원해결후realMCURUN→전체링크/스택/최소타이밍→SMB3실기. generic진단증설/boot/A-B/044반복금지.
+
+test04 FRAMELEASE1740checks9scenes7rejects;실제SMB3기록3(frame12/15mode0+12mode2)dump/events/old exact;SPI1717records/47blocks191requests두위상0/3.5기존전송exact. actualtopperipherals13checks/DAC5593edges,CPU/loaderlifecycle만stub. 새게임부팅/소리품질/물리타이밍시험아님. test01stub생성빈포트/test02선언순서/test03D4기대값오류보존. 최종observer250kHz/E5,기타SPI2.625MHz. checker초기rasterAUTO를M9K라단정한오류수정. board03/test04최종sources해시일치.
+
+완료 probes/nes-sink-board165 및 이전 record/audit/finalizer 재실행금지. 기존pins/archives불변. 개인GitHub/한국어4PR절/사용자머지. 새RTL은이PR108후속커밋이며별도PR생성하지않음.
+
+---
+
+# NES 현재 인계 — FPGA 패킷·SNES 응답 접속부
+
+PR107 머지019a92ef 이후 새 브랜치 codex/nes-sink-fpga-165. [계약](../../docs/nes-sink-bridge165-contract.ko.md) · [검증](../../analysis/sink-bridge165-verification.json). 설치164/사운드·입력·STOP·메뉴/원본GBC 그대로,카트리지 SRAM·세이브·복구 영역 사용금지. 새SD없음.
+
+선택 bridge03 + map02. SPI E0/F6 status16/CRC8, E1 command+packet16..256+CRC16BE(max259). 단일256B RAM,길이/CRC완료후게시·소유중덮어쓰기차단,12B ACK전부쓰기+601C=A5때원자retire. snapshot중ACK게시안찢어짐,불완전전송/ACK는공통reset까지fault. SNES6000ready/6001STOP-or-fault/6004..5length/400000..FFpacket/6010..1BACK/6002..3pad. 4KiBROM해석 body8000..8FBF/vectorFFC0..FFFF/holesFF. rawRD/reset/active는버스구동취소. 이전sink클라이언트2651B/4096ROM재사용;카트리지 SRAM포트없음.
+
+이전실제C/SNES sink01 normal137+stop90의227packet/ACK를RTL SPI+SNES버스로재생. 두위상0/3.5ns각35741bytechecks/42766wireB/908transactions,actualC adapter도동일TX/RX와17오류검사PASS. ACK는이번TB버스쓰기재생이며동시65816/실기/FPS시험아님. ROM4KiB전부/늦은쓰기/연속RD/소유권/reset/STOP확인. bridge01한글경로QuestaDB실패보존;02PASS+map01무시async_reg/폭경고발견->Quartus속성+명시8bit선택의03최종. FLOAT sandbox호스트식별불일치후기존허가host래퍼성공,새라이선스문제아님.
+
+ARM adaptercontext16/text426/directstack544+status12,상위packet304+callback/IRQ중첩별도. Cguard필수/poll1..65536은시간아님;첫E0F6확인후E1,유한E0poll;legacyD6/E5허용금지. 부모sender가ACKop/seq/serial/gen/65/9A검사하며모호오류는FAULT공통reset,재시도금지. actualMCURUN service/time/STOP아직콜백미연결.
+
+map02 EP4CE15F17C8 단독synthesis1082LE/581reg/34816bits,4096x8ROM+256x8dualport M9K추론;ROMMIF4096bytes일치. ROM쓰지않는write입력0의10030경고3. Fitter/전체자원/물리핀/IO/CDC/MTBF미승인,새속성도승인대체아님.
+
+NEXT 실제최상위에서기존framebuffer버스/38M9K를새bridge로교체. 기존boot/native/sink SPI MISO배타,commonreset/active/STOP/fault/pad연결+164audio보존. 현재모듈은부모미인스턴스화,구버스와동시활성금지. MCU실제RUN에수신→변환→sink/guard시간·오류·STOP·오디오입력서비스연결;긴poll로서비스막지않기. 전체SRAM/중첩stack·client공간·fit·변경IO최소확인뒤SMB3첫레벨실기. SPI39.59ms/비교29.7ms/60fps열림. 같은boot/A-B/044나generic진단증설금지. 사용가능화면후60초제한/오류·본체reset로그/DOWN유지순서.
+
+기존pins/archives불변. 완료 probes/nes-sink-bridge165 record/audit 및이전finalizer재실행금지. 개인GitHub/한국어4PR절/사용자머지.
+
+---
+
 # NES 현재 인계 — C와 SNES 수신·표시 응답 왕복
 
 PR107 같은 브랜치. [계약](../../docs/nes-native-sink165-contract.ko.md) · [검증](../../analysis/native-sink165-verification.json). 설치164 유지. 카트리지 SRAM/세이브/복구 영역 사용금지, 기존 GBC/164 사운드·입력·STOP 코드 무변경. 새SD없음.
