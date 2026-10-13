@@ -1,3 +1,13 @@
+# NES167 C2/C3 — CHECK 개선, 전체 타이밍 미달
+
+NES167 CHECK의 오류 판정(C2)과 카운터 반영(C3)을 분리해 카운터 경로+1.011ns·판정+0.699ns를 확보했다. 기능·SPI 응답은 통과했으나 전체 setup은 로더 fault→명령 자격-0.190ns, 적재 카운터-0.041ns여서 후보는 미채택이다. 새 실기 ZIP은 없고 승인 FPGA는boundary165/map02를 유지한다.
+
+CHECK 카운터는 더 작은 식으로 반복 배치하지 않는다. commitstage167/map01은 후속 구조 연구용이며 승인/최선 전체 타이밍 기준은 아니다. 남은 fault→run_enable→check_active→body_causes→pending_causes의5단계(배선70%)를 대상으로, SS 캡처 C0에서 원시 자격을 저장하고 이후 단계에서 명령 원인·오류를 판정하는 명시적 파이프라인을 설계한다. C0 관측 값, live fault 차단, STOP/write drain, 단계별 SS 겹침/reset, 실제2us 간격 및 응답 snapshot 호환성을 먼저 검증한다. 기존 loadcount167의 적재 산술 분리 결과는 재사용하되 새 SPI와 결합 경계는 검증한다. 그 구조 변경 뒤 한 번 FIT하고 실제 클록·조건부 IO/reset이 통과하면 기존167 MCU/영상 근거를 재사용해 패키지와 SMB3 실기로 간다.166·044·무변경 부팅·seed 순회는 반복하지 않는다.
+
+[계약](../../docs/nes-commitstage167-contract.ko.md) · [검증](../../analysis/commitstage167-verification.json). PR109 OPEN. C2 acceptance/C3 counter NOT same-edge; latefault preserves accepted metadata/reset cancels. 1048576+24+219SPI14016bits/3negativePASS. Initial inconsistent-carry fixture preserved; use test02. 60inputs unchanged; oneFIT; no newIO/ASM/SD. Completed record/audit/archives immutable.
+
+---
+
 # NES167 후속 — 기능 통과, 두 배치 미채택
 
 NES167 정상 대기 수정은 기능 검증을 통과했으나 실기 ZIP은 여전히 보류다. CHECK 갱신 펄스화는 해당 경로를+0.581ns로 개선했지만 적재 카운터가-0.349ns였다. 적재 카운터 갱신·산술 분리 후 해당 경로는+0.338ns, CHECK는-0.144ns여서 두 후보 모두 미채택이다. 승인 FPGA는boundary165/map02, 다음 분석 기준은pacing167/map04(-0.003ns)를 유지한다.

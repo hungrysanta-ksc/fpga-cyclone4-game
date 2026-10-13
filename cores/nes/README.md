@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-NES167 정상 대기 수정은 기능 검증을 통과했으나 실기 ZIP은 여전히 보류다. CHECK 갱신 펄스화는 해당 경로를+0.581ns로 개선했지만 적재 카운터가-0.349ns였다. 적재 카운터 갱신·산술 분리 후 해당 경로는+0.338ns, CHECK는-0.144ns여서 두 후보 모두 미채택이다. 승인 FPGA는boundary165/map02, 다음 분석 기준은pacing167/map04(-0.003ns)를 유지한다. [167 후속 결과](../../docs/nes-counterpulse167-contract.ko.md).
+NES167 CHECK의 오류 판정(C2)과 카운터 반영(C3)을 분리해 카운터 경로+1.011ns·판정+0.699ns를 확보했다. 기능·SPI 응답은 통과했으나 전체 setup은 로더 fault→명령 자격-0.190ns, 적재 카운터-0.041ns여서 후보는 미채택이다. 새 실기 ZIP은 없고 승인 FPGA는boundary165/map02를 유지한다. [167 단계 분리 결과](../../docs/nes-commitstage167-contract.ko.md).
 
 현재164 실기: **검정 구간 제거 통과·사운드 정상으로 보임, 심한 갱신 지연으로 정상 플레이 미달성**. 다음은 영상 전송량·갱신 지연 개선이며, DOWN 유지는 이번 미시험입니다. [164 실기 결과](../../analysis/GAME164-HARDWARE-RESULT.ko.md).
 
