@@ -1,3 +1,13 @@
+# NES168 — 최초 SNES 실패 응답 실기 확인
+
+NES168은167의 첫 화면 이후 종료 원인을 구분하는 MCU 시험판이다. 처음 실패한 요청16바이트·응답12바이트와 불일치 항목을32바이트 상태에 보존한다. FPGA·SNES·갱신 상한은167과 같고, 영상 오류 수정 완료는 아니다. 실제 SNES의 E2/E3 거절 구분과 기존 정상 화면·안전 종료 검사를 통과해 실기 패키지를 준비했다.
+
+NES GAME 168.nh1로 실행 후 두 TXT를 받는다. 먼저 버튼을 누르지 않아도 되고 같은 짧은 화면이면 영상은 불필요하다. ack_valid1/mismatch01이면 ACK status E0~E4를 해석하고 실제 실패 op·길이·순번·세대로 경로를 한정한다. E2/E3라면 해당 장면의 변경 범위/명령 수·전송 예산을 재현하고 한도를 해제하지 않은 유한 분할·표시 완료 처리로 수정한다. token/signature 불일치면 패킷/ACK 소유권·snapshot을 먼저 고친다. ack_valid0이면 하위 통신/guard 종료를 분석한다. 수정 후 곧바로 SMB3 실기, 이후 AV→장기 플레이/오류·리셋 로그→입력 유지 순서. 같은167/044·무변경 FPGA FIT는 반복하지 않는다.
+
+[설치](../../docs/nes-game168-ready.ko.md) · [계약](../../docs/nes-sink168-contract.ko.md) · [검증](../../analysis/sink168-verification.json). SELECT arm02/armcheck01/test02/report01/release01. FW111a28c4/ZIP77de2a08/FPGA d1e82782 unchanged167.32B/169reportB/3966maxreport/1044stackmargin. No newFIT/Questa. Completed archives immutable.
+
+---
+
 # NES167 실기 — 첫 화면 확인, 8번째 영상의 ACK 검사 실패
 
 NES167 실기에서 첫 화면이 약1~2초 보인 뒤 메뉴로 복귀했다. BEGIN/END/COMMIT 각8회·ABORT0회, SNES 표시 ACK 완료7회로 새 영상 경로의 첫 출력은 확인했다. 이후 sink 응답 내용 검사 오류3으로 조기 종료했다. ROM 검증·STOP·메뉴 복귀는 통과했고, 연속 영상·실제 사운드는 미확인이다.
