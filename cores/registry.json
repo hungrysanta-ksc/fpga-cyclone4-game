@@ -46,7 +46,7 @@
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-164",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "새 NES165-SMB3-NATIVE-VIDEO 시험판으로 제목→월드맵→첫 레벨 이동·점프·사운드·화면 속도와 메뉴 복귀를 확인한다. nes-progress-165.txt/nes-game-last-165.txt 및20~30초 영상을 받기 전에는 또 다른 범용 진단이나 무변경 FPGA FIT/전체 부팅을 반복하지 않는다. 실패하면 최초native_result/receiver/sink/video/ROM 오류에 따라 실제 경로만 수정한다. AV가 확인되면 장기 플레이와 오류/물리 리셋 로그, 입력 유지 품질 순서로 진행한다. 044 복원 시험은 반복하지 않고 필요시 동봉164로 복원한다.",
+      "next_gate": "같은165 재시험 대신, vblank만 허용하는 CHR fill의 WAIT131072와 MCU backpressure를 재현한다. BEGIN/END/ABORT/COMMIT 횟수·첫 취소 이유를 보존해 수신 단계와 취소 원인을 구분한 뒤 필요한 경로만 고치고 SMB3 실기로 확인한다. 상한 무조건 확대·CPU/PPU 우선순위 해제·044 반복은 하지 않는다. 영상 복구 후 AV 품질→장기 플레이/물리 리셋 로그→입력 유지 순서를 유지한다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -638,6 +638,15 @@
         "hardware_package": true,
         "physical": false,
         "run_stack_margin": 1124
+      },
+      "hardware165": {
+        "status": "audio_and_return_pass_video_fail",
+        "verification": "analysis/game165-hardware01-verification.json",
+        "contract": "docs/nes-game165-hardware01.ko.md",
+        "video": false,
+        "audio": true,
+        "menu_return": true,
+        "root_cause_confirmed": false
       }
     },
     {

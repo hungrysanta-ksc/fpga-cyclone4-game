@@ -1,3 +1,13 @@
+# NES165 실기01 — 영상 미출력 분석
+
+NES165 첫 실기에서 사운드·60초 종료·메뉴 복귀는 통과했으나 영상은 출력되지 않았다. 표시 완료0, ROM 오류0, native_result=1이다. 수신 오류21은 시간 만료의 부수 결과일 수 있다. 긴 정상 대기가 fill/export 취소로 이어지는지와 취소 이유 누락을 우선 조사한다.
+
+[실기 결과](../../docs/nes-game165-hardware01.ko.md) · [근거](../../analysis/game165-hardware01-verification.json). PR109 OPEN, same branch. RUN60020ms/tick, ROM393216checked, STOP/base/menu pass. Finalflags1 is postSTOP, not RUNstall. Receiver21 is false-transfer/status wrapper and runtime first cause deadline1. ABORT reason currently discarded; not yet proven why no COMMIT. Primary hypothesis WAIT131072 (~6.1ms) includes legal outside-vblank/host stalls. No newfirmware/FIT/SD this result turn; preserve previous evidence.
+
+같은165 재시험 대신, vblank만 허용하는 CHR fill의 WAIT131072와 MCU backpressure를 재현한다. BEGIN/END/ABORT/COMMIT 횟수·첫 취소 이유를 보존해 수신 단계와 취소 원인을 구분한 뒤 필요한 경로만 고치고 SMB3 실기로 확인한다. 상한 무조건 확대·CPU/PPU 우선순위 해제·044 반복은 하지 않는다. 영상 복구 후 AV 품질→장기 플레이/물리 리셋 로그→입력 유지 순서를 유지한다.
+
+---
+
 # NES 현재 인계 — 새 영상 경로 실기 시험 대기
 
 PR109 OPEN / codex/nes-native-runtime-165. [계약](../../docs/nes-coupled165-contract.ko.md) · [실기 안내](../../docs/nes-game165-instructions.ko.md) · [결과](../../analysis/coupled165-verification.json).
