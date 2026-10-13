@@ -40,13 +40,13 @@
       "verification": "analysis/GAME164-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "predecode_timing_improved_still_open",
+      "investigation": "counterpulse167_both_timing_candidates_rejected",
       "hardware_baseline": "NES-H1-SAMPLING-044",
       "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
       "development_evidence": "analysis/game164-verification.json",
       "hardware_candidate": "NES-GAME-164",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "실기 ZIP은 보류한다. 기능 수정은 유지하고 map04(Standard Fit, placement multiplier1.0)의 실제168MHz ROM CHECK 경로 check_response_address[8]→check_next[13] 경로(-0.003ns)를 직접 분석한다. 기존 compare165의 기각된 비교식/설정과 map01~05를 반복하지 않는다. 해당 제어 영역의 배치 보존·국소 제어/팬아웃 개선을 먼저 검토하고 필요한 경계만 검증한다. 클록/false-path 완화·seed 순회 금지. 실제 클록 setup/hold와 새 배치의 조건부 IO/reset이 통과하면 기존167 MCU·미변경 SNES 결과를 재사용해 ASM/ZIP 후 SMB3 실기로 간다. 같은166·044·무변경 부팅은 요청하지 않는다.",
+      "next_gate": "같은 클록 카운터 식·seed·설정으로 전체 FIT를 다시 반복하지 않는다. MCU의 기존2us SS 간격 안에서 오류 판정(C2)과 CHECK 카운터 반영(C3)을 분리할 수 있는지 먼저 계약을 정한다. fault/STOP/reset 우선순위, 응답과 명령 겹침, 주소·상태 snapshot이 관측 가능한 edge, SPI ID/MCU 호환성을 명시한다. 같은 edge 등가로 주장하거나 false path로 완화하지 않는다. 가능하면 변경 경계만 검증한 뒤 한 번 배치한다. 불가하면 근거와 함께 영역 배치 보존을 검토한다. 내부 타이밍과 조건부 IO/reset 통과 후167 MCU·미변경 SNES 근거를 재사용해 패키지와 SMB3 실기로 간다.166·044 재시험은 요청하지 않는다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "164 MCU+FPGA strict6B/E5; A9 SPC success, identifiers not unique164",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -674,7 +674,8 @@
         "hardware_package": false,
         "adopted": false,
         "best_candidate": "map04"
-      }
+      },
+      "investigation_evidence": "analysis/counterpulse167-verification.json"
     },
     {
       "id": "pce",

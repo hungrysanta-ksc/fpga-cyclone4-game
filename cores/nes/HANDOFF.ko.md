@@ -1,3 +1,13 @@
+# NES167 후속 — 기능 통과, 두 배치 미채택
+
+NES167 정상 대기 수정은 기능 검증을 통과했으나 실기 ZIP은 여전히 보류다. CHECK 갱신 펄스화는 해당 경로를+0.581ns로 개선했지만 적재 카운터가-0.349ns였다. 적재 카운터 갱신·산술 분리 후 해당 경로는+0.338ns, CHECK는-0.144ns여서 두 후보 모두 미채택이다. 승인 FPGA는boundary165/map02, 다음 분석 기준은pacing167/map04(-0.003ns)를 유지한다.
+
+같은 클록 카운터 식·seed·설정으로 전체 FIT를 다시 반복하지 않는다. MCU의 기존2us SS 간격 안에서 오류 판정(C2)과 CHECK 카운터 반영(C3)을 분리할 수 있는지 먼저 계약을 정한다. fault/STOP/reset 우선순위, 응답과 명령 겹침, 주소·상태 snapshot이 관측 가능한 edge, SPI ID/MCU 호환성을 명시한다. 같은 edge 등가로 주장하거나 false path로 완화하지 않는다. 가능하면 변경 경계만 검증한 뒤 한 번 배치한다. 불가하면 근거와 함께 영역 배치 보존을 검토한다. 내부 타이밍과 조건부 IO/reset 통과 후167 MCU·미변경 SNES 근거를 재사용해 패키지와 SMB3 실기로 간다.166·044 재시험은 요청하지 않는다.
+
+[계약](../../docs/nes-counterpulse167-contract.ko.md) · [검증](../../analysis/counterpulse167-verification.json). SamePR109 OPEN. Two fits only; archives immutable. Do not rerun completed record/audit. Next define explicit C2/C3 response-fault/counter commitment, not same-edge claim. No SD.
+
+---
+
 # NES167 — 기능 수정 통과, 타이밍 미달로 배포 보류
 
 NES167 정상 대기 분리·취소 세부 이유 수정은 기능 검증을 통과했다. 그러나 FPGA 실제 클록 setup은 최선map04도-0.003ns로 미달이어서 실기 ZIP을 보류했다. 기존 승인 FPGA는 유지하며 ROM CHECK 경로를 직접 개선한 뒤 실기로 진행한다.
