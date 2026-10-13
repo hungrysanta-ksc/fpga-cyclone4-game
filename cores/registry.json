@@ -40,15 +40,15 @@
       "verification": "analysis/GAME164-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "rawstage167_paired_hardware_trial_ready",
+      "investigation": "167_first_picture_then_sink_ack_validation_failure",
       "hardware_baseline": "NES-H1-SAMPLING-044",
       "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
       "development_evidence": "analysis/rawstage167-verification.json",
       "hardware_candidate": "NES-GAME-167",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "NES167-SMB3-FILL-WAIT.zip의01-GAME167-SD-ROOT 내용을 SD 루트에 적용하고 NES GAME 167.nh1로 SMB3(J) 첫 레벨의 화면·사운드·약60초 메뉴 복귀를 확인한다. nes-progress-167.txt/nes-game-last-167.txt와 화면이 나오면20~30초 영상을 받는다. 검정이면 촬영 불필요. 결과 전에는 새 범용 진단·무변경 FIT/부팅·166/044 반복 시험을 추가하지 않는다. 실패하면 최초 fill 세부 사유와 BEGIN/END/ABORT/COMMIT/native_frames에 따라 실제 경로만 고친다. 이후 연속 AV 품질→장기 플레이/오류·본체 리셋 로그→입력 유지 순서를 지킨다.",
+      "next_gate": "실패한8번째 영상의 SNES 패킷 응답 검사를 우선 조사한다. 기존 성공7회/마지막세대22·수신세대24를 기준으로 연속 프레임의 변경량·32개 DMA 명령 상한·5000 전송 예산·길이/순번/세대 소유권을 최소 재현한다. sink 오류3만으로 SNES 거절(E0~E4)과 응답 토큰/서명 불일치를 구분할 수 없으므로 실패 패킷의 op/section/offset/length, 기대 토큰 및 실제12바이트 ACK를 안전 정지 후 기존 TXT에 기록하는 최소 보강을 우선한다. 응답 검사를 끄거나 상한을 무조건 늘리지 않는다. 필요한 수정 뒤 SMB3 실기로 복귀하며 같은167·044·무변경 FIT를 반복하지 않는다. 이후 연속 AV→장기 플레이/오류·본체 리셋 로그→입력 유지 순서를 유지한다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
-      "paired_candidate": "167 MCU+rawstage167 FPGA strict74/E6v2/E5/D6/F6; A9 SPC retained; new hardware trial pending",
+      "paired_candidate": "167 MCU+rawstage167 FPGA; user first picture,7display ACKs,8th display failure; audio unconfirmed",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
       "observation_reader": "NES-CLOCK-READER-088",
       "observation_configuration": "NES-CLOCK-CONFIG-089",
@@ -675,7 +675,7 @@
         "adopted": false,
         "best_candidate": "map04"
       },
-      "investigation_evidence": "analysis/rawstage167-verification.json"
+      "investigation_evidence": "analysis/game167-hardware01-verification.json"
     },
     {
       "id": "pce",

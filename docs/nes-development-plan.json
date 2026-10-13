@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-13",
-  "technical_candidate": "NES-GAME-167-HARDWARE-READY",
+  "technical_candidate": "NES-GAME-167-HARDWARE-PARTIAL-ACK-FAIL",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "NES167 실기 시험판을 준비했다. 원시 자격 캡처와 명령 판정을 분리하고 적재 카운터 산술 분리를 결합해 내부 setup+0.245ns/hold+0.126ns,14944LE/956LAB/35M9K를 통과했다. 조건부 외부 연결·영상 리셋 검사를 통과해167 MCU와 새 FPGA를 패키징했다. 화면 복구·속도·사운드는 새 실기 결과로 확인해야 한다.",
-  "next_action": "NES167-SMB3-FILL-WAIT.zip의01-GAME167-SD-ROOT 내용을 SD 루트에 적용하고 NES GAME 167.nh1로 SMB3(J) 첫 레벨의 화면·사운드·약60초 메뉴 복귀를 확인한다. nes-progress-167.txt/nes-game-last-167.txt와 화면이 나오면20~30초 영상을 받는다. 검정이면 촬영 불필요. 결과 전에는 새 범용 진단·무변경 FIT/부팅·166/044 반복 시험을 추가하지 않는다. 실패하면 최초 fill 세부 사유와 BEGIN/END/ABORT/COMMIT/native_frames에 따라 실제 경로만 고친다. 이후 연속 AV 품질→장기 플레이/오류·본체 리셋 로그→입력 유지 순서를 지킨다.",
+  "assessment": "NES167 실기에서 첫 화면이 약1~2초 보인 뒤 메뉴로 복귀했다. BEGIN/END/COMMIT 각8회·ABORT0회, SNES 표시 ACK 완료7회로 새 영상 경로의 첫 출력은 확인했다. 이후 sink 응답 내용 검사 오류3으로 조기 종료했다. ROM 검증·STOP·메뉴 복귀는 통과했고, 연속 영상·실제 사운드는 미확인이다.",
+  "next_action": "실패한8번째 영상의 SNES 패킷 응답 검사를 우선 조사한다. 기존 성공7회/마지막세대22·수신세대24를 기준으로 연속 프레임의 변경량·32개 DMA 명령 상한·5000 전송 예산·길이/순번/세대 소유권을 최소 재현한다. sink 오류3만으로 SNES 거절(E0~E4)과 응답 토큰/서명 불일치를 구분할 수 없으므로 실패 패킷의 op/section/offset/length, 기대 토큰 및 실제12바이트 ACK를 안전 정지 후 기존 TXT에 기록하는 최소 보강을 우선한다. 응답 검사를 끄거나 상한을 무조건 늘리지 않는다. 필요한 수정 뒤 SMB3 실기로 복귀하며 같은167·044·무변경 FIT를 반복하지 않는다. 이후 연속 AV→장기 플레이/오류·본체 리셋 로그→입력 유지 순서를 유지한다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·연속 화면 구현과 실기 확인",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -3003,5 +3003,5 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES167 실기 시험판을 준비했다. 원시 자격 캡처와 명령 판정을 분리하고 적재 카운터 산술 분리를 결합해 내부 setup+0.245ns/hold+0.126ns,14944LE/956LAB/35M9K를 통과했다. 조건부 외부 연결·영상 리셋 검사를 통과해167 MCU와 새 FPGA를 패키징했다. 화면 복구·속도·사운드는 새 실기 결과로 확인해야 한다."
+  "summary": "NES167 실기에서 첫 화면이 약1~2초 보인 뒤 메뉴로 복귀했다. BEGIN/END/COMMIT 각8회·ABORT0회, SNES 표시 ACK 완료7회로 새 영상 경로의 첫 출력은 확인했다. 이후 sink 응답 내용 검사 오류3으로 조기 종료했다. ROM 검증·STOP·메뉴 복귀는 통과했고, 연속 영상·실제 사운드는 미확인이다."
 }
