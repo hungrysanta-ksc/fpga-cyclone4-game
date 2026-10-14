@@ -1,3 +1,19 @@
+# NES174 실기 결과 — 화면 정지 지속, 새 후보 경계 우선
+
+NES174 실기:12회 표시 완료·마지막generation23/RUN3.81초 이후 영상만 정지했다. 사운드·조작은 정상으로 보인다는 보고이며 로그상60초 종료·메뉴 준비는 정상이다. 변환·전송/표시 확인 평균167.5ms, 연속 화면·60fps 미달성. 다음은 새 후보의 허용·해제·전달 경계다.
+
+BEGIN/END/COMMIT/displayACK12 allmatched,ABORT0,lastgen23,lastdisplay381ticks(3.81s),deadline1/DISPLAY60050ms;no latercompletion for~56.19s of60s. ROM0/sink0/video0;receiver21 secondary when deadline guard rejects transfer. FullROM393216 verified,bootstage3/SPCA9/unmute1. Inputchanged152/latest16 B/LEFT/release. STOP/base/menuPREPARED elapsed295490ms PASS; visiblemenu return NOTexplicitly reported. No newvideo; audio/controls fromuser, not log-quality proof.
+
+Receive55240ms includespostfreeze polling, not12images transfer time. Build460/12=38.333ms,seal1550/12=129.167ms,sum167.5ms vs173203.125ms. Differentframes/input: smaller observedaverage not controlled17.5%gain/FPS. Firststutter remains farfrom16.7ms. No count/60sFPS claim. Source runtime incrementsnative_frames only aftermatching displayACK; repeatedframes not excluded.
+
+No received13thBEGIN/ABORT narrows toward producer/admission/release/DRAIN/fill/host before newcandidate, NOTproven exactrootcause. Exporter IDLE invalidgeometry/count silently releases toDRAIN(error2), soABORT0 != norejection. Prior model12..26pass notphysicalgen23/24correlation or sustainedMCUbackpressure proof. Cross-plane correction didnot suffice forphysicalfreeze; preserve correctimplementation rather than claimfix.
+
+NEXT inspect existing actual post-COMMIT lease release/drain/fill/newframe/host tests against realistic slowconsumer gaps; reproduce ONLY uncoveredboundary. Ifphysical distinction necessary, capture minimal producer/admission/release state at termination in nextchangedtrial, no broaddebug expansion. Inparallel executiondesign consider remaining fulltable/perpacketACK costs, existingSNESdeltaDMA alreadyimplemented; no tableomission withoutinactivebank base-generation inheritance. No unchanged174/044/bootA-B/FIT repeats; no newpackage this result-onlyturn. AV60fps->longplay/error-resetlogs->heldinput. KeepGBC164/saveSRAM/noRUN-SD. Read analysis sourcepins.174implementationmanifest c1b89e43997199f0ae13b659c9bc6a92ce1f4d1827239d0d35b65ff3434827f8 unchanged; prior completedarchives/finalizers immutable. PR110 existingOPEN, refresh before publication.
+
+[결과·다음 작업](../../docs/nes-game174-hardware01.ko.md) · [로그 해시·계산](../../analysis/game174-hardware01-verification.json)
+
+---
+
 # NES174 실기 시험판 — 내부 타이밍·조건부 IO 통과
 
 NES174 실기 시험판 준비 완료: 실제 클록 setup +0.246ns / hold +0.156ns와 기존 외부 인터페이스 조건을 통과했다. 타일 간 비트평면 수정·묶음 전송을 새 FPGA/MCU에 함께 적용한다. 화면 정지 해결·60fps는 실기에서 확인할 차례다.
