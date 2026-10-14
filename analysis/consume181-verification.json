@@ -1,0 +1,132 @@
+{
+  "candidate": "NES181 MCU raw-row converter and sink payload",
+  "pr": 113,
+  "branch": "codex/nes-render-resume-181",
+  "verification": {
+    "passed": true,
+    "cases": [
+      {
+        "patches": 0,
+        "phase": 0,
+        "checks": 7
+      },
+      {
+        "patches": 1,
+        "phase": 0,
+        "checks": 10
+      },
+      {
+        "patches": 7,
+        "phase": 0,
+        "checks": 10
+      },
+      {
+        "patches": 7,
+        "phase": 1,
+        "checks": 10
+      },
+      {
+        "patches": 7,
+        "phase": 2,
+        "checks": 10
+      }
+    ],
+    "arm_sizes": [
+      {
+        "video_size": 15888,
+        "receiver_size": 18064
+      },
+      {
+        "video_size": 15888,
+        "receiver_size": 18064
+      }
+    ],
+    "full_images": 2,
+    "visible_pixels": 114688,
+    "rom": {
+      "code_bytes": 1321,
+      "payload_bytes": 13608,
+      "hdma_bytes": [
+        [
+          41,
+          41,
+          36
+        ],
+        [
+          41,
+          41,
+          36
+        ]
+      ]
+    },
+    "sources": {
+      "baseline/nes_native_sink165.h": "92e0d98a213714dd96d764bfb164d98ed5a724083eb874f654abcf7aa64732f2",
+      "baseline/nes_trace166.h": "76923567ede1a152fc056c482e27eb3a81e97fe19d04ff84a789a26cc9d319e5",
+      "baseline/nes_trace166.c": "eb400234d88399773a671233eef4d15e13f20bb750de834cfbf2b53e21dc316c",
+      "baseline/nes_sink_trace168.h": "806eb4349a3afef2008dd02f92a1523e3dd7f1521ebc94a7429e94d42c85aacb",
+      "baseline/nes_sink_trace168.c": "e6c1fab8b7782d768bcfc1672fbe62015f3bbbe07148cb8222bb93f6d637521f",
+      "src/nes/firmware/nes_native181.h": "a88be63e2aee3f1226caba1dcacf5449720efddcec9a8bef9dbebfee5bdad2bd",
+      "src/nes/firmware/nes_native181.c": "46aeb20ad3f36f94b9678d53ffa0ae0b197ae0aded2bd6568daa573040958dd7",
+      "src/nes/firmware/nes_native_video181.h": "bb90b61d146db5269134d3a69780a737bc13142187e554f8e343d3e78f9aa979",
+      "src/nes/firmware/nes_native_video181.c": "f80cd1a990ad386cd8975b8e7c05a7d9267cfb2889ac51070d2119aece6126b5",
+      "src/nes/firmware/nes_native_sink181.c": "03419201e0497fdd0f9c611443191472e8492efeff24854e6147738959540c85",
+      "tests/nes-functional/consume181_host.c": "4ba785f91cdd68beebd9da76a6a103506404e92d696ab2f3f26257a1ab4dcb2b",
+      "baseline/nes_native165.h": "2e097209652e4c184766211d4284f9cc717fb917fe91cb1be8d7842cbf27378e",
+      "baseline/nes_native_video165.h": "82c03d1386bb4afb03070f30177c5d268ef533ade2279439b21b38a6a618880c",
+      "baseline/nes_native_video165.c": "4d33a3803aa610942a74dc1bff5c8d5fba1d9e3a4d0004c70c637d1bd4a49f51",
+      "tools/nes_patch181.py": "09b24e57d0b42e5a476d119065870a89f53fb4d3ef6de67b0c919c55829ef3d7",
+      "tools/test_nes_patch181_snes.py": "c132fcd4ed02cc93940dbb1ba1f909029a225f0cff8f48e583f85878d42c7269",
+      "tools/build_nes_game164.py": "8580f21faf4682e2a27c5185613083b01d5546843d22fcee2c0a24407775c40e",
+      "tools/build_nes_trace_replay.py": "1b9e25b9af887c6b4329f1f883f61b98f3b320360ed3853144d09f60a292161a",
+      "snes/video_probe/capture_native_commands165.lua": "c9df5aec17b9216a4f733a6bc662c04f068954fd20cdc8ed1a4cab46b0a6fd8a"
+    },
+    "runner_sha256": "ee7ea1482b3e8b837d8bb502fb5e10ec697f83cb466946586f30b09080bfabc2",
+    "mesen_sha256": "f5d9a9c69f436b4dfaa74969527852a0dd8db52e4ea9fb15e5b6393dd984b796",
+    "production_snes_client": false,
+    "full_arm_link": false,
+    "new_fit": false,
+    "hardware": false,
+    "scope": "Actual181 receiver->converter->sink packets; mock ACKs. Actual65816/DMA/PPU direct test upload of C-produced bytes, both banks, raw/object crossing and normal clipping. No production SNES mailbox/ACK/STOP integration or actual game."
+  },
+  "public_sources": {
+    "src/nes/firmware/nes_native_video181.h": "bb90b61d146db5269134d3a69780a737bc13142187e554f8e343d3e78f9aa979",
+    "src/nes/firmware/nes_native_video181.c": "f80cd1a990ad386cd8975b8e7c05a7d9267cfb2889ac51070d2119aece6126b5",
+    "src/nes/firmware/nes_native_sink181.c": "03419201e0497fdd0f9c611443191472e8492efeff24854e6147738959540c85",
+    "tests/nes-functional/consume181_host.c": "4ba785f91cdd68beebd9da76a6a103506404e92d696ab2f3f26257a1ab4dcb2b",
+    "tools/test_nes_consume181.py": "ee7ea1482b3e8b837d8bb502fb5e10ec697f83cb466946586f30b09080bfabc2"
+  },
+  "prior_evidence_preserved": {
+    "render181": {
+      "analysis_sha256": "2534a9bbd1fdfeebbd37f0de9f0b419f0637562fc8d94424c850b99905148ea3",
+      "source_pins": 8
+    },
+    "collect181": {
+      "analysis_sha256": "05ca5bc9dc08c21d1ad33f4b874cf51f2367c419b4e97be3dc99473fd882a2d9",
+      "source_pins": 9
+    },
+    "wire181": {
+      "analysis_sha256": "10c94bc24ae0aa32515b4cfaaf5d3e321ba88ff4762554e710e1865721abde04",
+      "source_pins": 8
+    }
+  },
+  "evidence_files": 362,
+  "manifest_sha256": "00b9abbff38f9a73c4067a248f60a140c9ca3ba142e76a90f3b0df15327d6e11",
+  "existing_package_sha256": "8eede14b49701530529d737815685f4f92f3d41f784c93a7abdfa03dd279cb3a",
+  "production_snes_client": false,
+  "full_arm_link": false,
+  "new_fit": false,
+  "new_package": false,
+  "hardware_test_ready": false,
+  "video_freeze_fixed": false,
+  "fps60": false,
+  "additional_evidence": {
+    "max_mode_hdma_bytes": 81,
+    "read_only_padding_symbol": "zero.0 r size0xf0",
+    "padding_symbol_report_sha256": "d62f084469acbaa9637203ad62bacb2a41910fdd28d9430e2c089b25b8f93826",
+    "video_stack_old": 688,
+    "video_stack_new": 696,
+    "sink_seal_stack": 136
+  },
+  "failure_history": "test01 sandbox GCC DLL623;test02 unused test helper Werror;test03/04 normal comparison exposed shifted fields despite unchanged sizeof; moved patch_count to tail padding;test05 passed;test06 flash padding240 optimization passed. All retained.",
+  "next": "배포 SNES client에 section5 raw bundle3418/SEAL24 version1812와 길이·슬롯·HDMA 검사를 연결한다. blank boot에서raw map A7000/Bb000 준비, 비표시뱅크 raw CHR A5000/B9000과 기존영역을 안전하게 갱신한 뒤 최종vblank에서palette/OAM/3HDMA/window/뱅크를 전환하고 실제 완료ACK를 준다. raw→normal 복귀와STOP/서비스를 실제packet으로 검증한다. 이어color/emphasis/frame181/export181 보드배선·전체ARM/4096BROM/FIT 승인 후 SMB3 숫자1→A. rawpacking/table-delta/60fps 과제 유지;같은180/044/긴부팅/독립PPU 반복금지."
+}

@@ -1,3 +1,23 @@
+# NES181 — MCU 표시 변환·전송 데이터 통과, 배포 SNES client 연결 대기
+
+NES181의 COMMITTED 부분 행을 실제 MCU 코드로 SNES 패턴·팔레트·3HDMA와 새 sink payload로 변환했다.5장면47확인과 C출력→실제65816/DMA/PPU 양쪽뱅크114,688픽셀 비교 통과. video15,888/receiver18,064바이트 유지. 배포 SNES decoder·뱅크/ACK/STOP 연결과 보드·전체 ARM/FIT·실기는 미완료다.
+
+- Latest181 CONSUME: PR113 OPEN samebranch. Actualreceiver->MCUvideo/sink candidate5scenes47checks; Cbytes->direct65816/DMA/PPU2banks114688pixelsPASS. Rawmode3/CGRAM64..127/OBJrowmask/windowoff; nextnormalrecovers. ReuseBGkeys afterallocation; video15888/receiver18064 unchanged; patch_count tailpadding preservesoffsets. Normalfixture entireplan15888+BGOBJ exact180. HDMA81 max includes127split. SEAL24/version1812,section5bundle3418 at6500..7259. ACKsmocked/directtestuploader NOTproductiondecoder/ACK/STOP. ARMbuild696vs688/seal136;fullruntimeNOTapproved. Paddingflash240r reduces7rowcallbacks76->47. NEXT productionSNESbundle validation/staticrawmaps/inactivebank3HDMA/ACK/STOP thenboard+ARM/FIT+SMB3tile1+A; rawpacking/delta60fpsstillopen. NoFW/FIT/ZIP/physical;180/GBC164/saveSRAM/priorarchivesunchanged. ReadCONSUME181contract/HANDOFF/probes/nes-consume181/progress.json;completedarchivesimmutable.
+
+배포 SNES client에 section5 raw bundle3418/SEAL24 version1812와 길이·슬롯·HDMA 검사를 연결한다. blank boot에서raw map A7000/Bb000 준비, 비표시뱅크 raw CHR A5000/B9000과 기존영역을 안전하게 갱신한 뒤 최종vblank에서palette/OAM/3HDMA/window/뱅크를 전환하고 실제 완료ACK를 준다. raw→normal 복귀와STOP/서비스를 실제packet으로 검증한다. 이어color/emphasis/frame181/export181 보드배선·전체ARM/4096BROM/FIT 승인 후 SMB3 숫자1→A. rawpacking/table-delta/60fps 과제 유지;같은180/044/긴부팅/독립PPU 반복금지.
+
+이번 후보는 src/nes/firmware의 video181.[ch]/sink181.c이며 격리된 빌드에서165 파일명/API로 배치한다. COMMITTED receiver181과 짝지어야 한다. 원본180에 덮어쓰지 않았다. raw 행은 일반map/mask 검사를 앞질러 분기하며 해당OBJ 행과 SNES window 중복적용을 막는다. group32/7rows/512CHR 한도 유지;BGkeys를 마지막tile할당 뒤 raw CHR·3HDMA로 재사용한다. patch_count는 구조체 끝패딩에 두어 기존필드 위치까지 유지한다.
+
+중요: host ACK는 합성이고 실제65816 시험은 direct uploader다. productionSNES decode/local compare/banked upload/ACK/STOP까지 통과했다고 쓰지 않는다. 기존SNES는SEAL20/section5<=1121이므로 새SEAL24/version1812/3418bundle을 거부한다. 새MCU만 패키징하지 않는다. bundle상세와 정적rawmap값은CONSUMEcontract를 따른다. scroll1121+CHR2048+modeA81+modeB81+enable81+length6=3418, WRAM6500..7259/두번째e500..f259. 세HDMA 표의길이·종료와source가활성표시중변하지않는지 확인한다.
+
+기존15,888+18,064 메모리 크기는 유지하지만 build 함수stack688→696이고 seal136이므로 전체RUN/IRQ여유1040B를 새후보승인으로 재사용하지 않는다.4096B ROM/기존962of963LAB도 다음통합에서검증한다. 원시색 전송의53ms 모델과table재전송은~60fps미완료다. 먼저실제packet의표시원자성/STOP연결,필요최소검증후SMB3;완료된수집기·PPU·긴부팅을반복하지않는다.
+
+[구현 계약](../../docs/nes-consume181-contract.ko.md) · [검증](../../analysis/consume181-verification.json)
+
+이하 과거 기록.
+
+---
+
 # NES181 — 부분 행 전송·MCU 수신 통과
 
 NES181의 부분 행 전송과 MCU 수신 후보를 연결했다. 실제 fill·SPI RTL→C 수신기로0/1/7행,2,048픽셀과95경우를 검증했고 raw 중단7경우도 통과했다. ARM 수신 구조체18,064바이트는 기존과 같다. 배포 SNES 소비·보드 연결·전체 ARM/FIT·실기는 미완료이며180 배포본을 유지한다.

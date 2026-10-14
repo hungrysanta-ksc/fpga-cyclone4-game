@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-15",
-  "technical_candidate": "NES181 versioned exporter and MCU receiver; deployed180 unchanged",
+  "technical_candidate": "NES181 MCU video/sink payload; deployed180 unchanged",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "NES181의 부분 행 전송과 MCU 수신 후보를 연결했다. 실제 fill·SPI RTL→C 수신기로0/1/7행,2,048픽셀과95경우를 검증했고 raw 중단7경우도 통과했다. ARM 수신 구조체18,064바이트는 기존과 같다. 배포 SNES 소비·보드 연결·전체 ARM/FIT·실기는 미완료이며180 배포본을 유지한다.",
-  "next_action": "다음은 COMMITTED raw 픽셀을 배포 MCU/SNES 변환·staging·3HDMA·뱅크·최종ACK·STOP에 연결한다. raw 행은 일반 mask/map 검사 전 분기하고 OBJ 중복표시를 막는다. 실제 color/emphasis/frame181/export181 배선 후 최소 결합·전체 ARM stack·FPGA 자원/타이밍·조건부 IO 승인 뒤 SMB3 숫자1→A로 간다. 최대7행 모델53ms와픽셀당6wireB는60fps 미달이므로 table-delta/base-generation/ACK 및raw묶음 전송 개선을 남긴다. 동일180/044/긴 부팅/완료된 PPU 시험을 반복하지 않는다.",
+  "assessment": "NES181의 COMMITTED 부분 행을 실제 MCU 코드로 SNES 패턴·팔레트·3HDMA와 새 sink payload로 변환했다.5장면47확인과 C출력→실제65816/DMA/PPU 양쪽뱅크114,688픽셀 비교 통과. video15,888/receiver18,064바이트 유지. 배포 SNES decoder·뱅크/ACK/STOP 연결과 보드·전체 ARM/FIT·실기는 미완료다.",
+  "next_action": "배포 SNES client에 section5 raw bundle3418/SEAL24 version1812와 길이·슬롯·HDMA 검사를 연결한다. blank boot에서raw map A7000/Bb000 준비, 비표시뱅크 raw CHR A5000/B9000과 기존영역을 안전하게 갱신한 뒤 최종vblank에서palette/OAM/3HDMA/window/뱅크를 전환하고 실제 완료ACK를 준다. raw→normal 복귀와STOP/서비스를 실제packet으로 검증한다. 이어color/emphasis/frame181/export181 보드배선·전체ARM/4096BROM/FIT 승인 후 SMB3 숫자1→A. rawpacking/table-delta/60fps 과제 유지;같은180/044/긴부팅/독립PPU 반복금지.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -3003,7 +3003,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES181의 부분 행 전송과 MCU 수신 후보를 연결했다. 실제 fill·SPI RTL→C 수신기로0/1/7행,2,048픽셀과95경우를 검증했고 raw 중단7경우도 통과했다. ARM 수신 구조체18,064바이트는 기존과 같다. 배포 SNES 소비·보드 연결·전체 ARM/FIT·실기는 미완료이며180 배포본을 유지한다.",
+  "summary": "NES181의 COMMITTED 부분 행을 실제 MCU 코드로 SNES 패턴·팔레트·3HDMA와 새 sink payload로 변환했다.5장면47확인과 C출력→실제65816/DMA/PPU 양쪽뱅크114,688픽셀 비교 통과. video15,888/receiver18,064바이트 유지. 배포 SNES decoder·뱅크/ACK/STOP 연결과 보드·전체 ARM/FIT·실기는 미완료다.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3046,7 +3046,7 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-wire181-contract.ko.md",
-  "latest_development_evidence": "analysis/wire181-verification.json",
+  "latest_review": "docs/nes-consume181-contract.ko.md",
+  "latest_development_evidence": "analysis/consume181-verification.json",
   "latest_hardware_evidence": "analysis/game180-hardware01-verification.json"
 }
