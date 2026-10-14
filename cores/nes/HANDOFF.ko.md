@@ -1,3 +1,23 @@
+# NES178 실기 — 레벨 정지와 월드맵 회복의 장면 의존성
+
+NES178 실기: 월드맵 진입과 게임 오버 뒤 영상 회복을 확인했지만 첫 레벨에서는 영상이 정지했다. 표시 완료69회·마지막59.65초로 영구 정지보다 장면별 수집/표현 제약을 우선 조사한다. 레벨의 최초 거부 이유는 로그에 없어 아직 미확정이며, 지속 영상·60fps는 미완료다.
+
+PR111 OPEN/samebranch. Result-only addition; selected178 package and completed evidence immutable. No new FW/RTL/ZIP/FIT. User report distinguishes gameworldmap return from SNESmenu: only former visuallyconfirmed; audio notexplicitlyreportedthismessage.
+
+70BEGIN/END/producerCOMMIT,69matchingSNESdisplayACK,lastgen1793 at59.65s. Next1794/serial70 request02021000460000000207a005f0000000=DATA MAP offset1440 len240. native_result1 DEADLINE,DISPLAY60050ms;native_sink2/io09=POLL_TRANSFER attempt1/noACK/mismatch00; runtimeguard before/aftertransfer canreturnfalse atlimit, so finalsecondaryerror notlevelcause/CRC/badACK proof. ROM/receiver/video/ABORT0;STOP/base/menuPREP295530ms PASS. screen_error169=SPCA9,screen_frames0 untrustedlegacy.
+
+All16samples line6dot251..254 VALUE,owned1/rawgeom1/init1/active0,txhostvalid1ready0,fillbusy0/abort0/arbiterfault0. Newcandidatewaiting while MCU deliverspriorframe is legal;STOPsnapshot isnot firstlevelfailure andnotpermanentdeadlockproof. Displayrecovery comesfromuserobservation pluslateACKactivity; no per-scene displaytimeline. Logged mask/error/capacity of rejectedlevelcandidate absent. Multipleconstraints possible,notconfirmed. Existing1e/18fix haspartialsceneprogress,notcontinuousgameplayPASS.
+
+Totalsreceive43890/build4140/seal10550ms. Last70thbuild succeeded butsealDATA interrupted; don'tdividecombinedcostby69asexactframeaverage or69/60asTVFPS. Next needscurrent178raster notold177; prior100frameJ replay onlyplayerselection dueintroinputtiming,notworldmap/level. Do not loosenmask/limits or assertMMC3IRQ/overload withoutfirstfailuredata.
+
+현재178 수집기와 실제 ROM·직렬 입력으로 월드맵→첫 레벨의 최초 거부를 재현하고 mask/행간 변경·fetch/compact/raster 오류·묶음/객체/예외/팔레트 개수를 함께 대조한다. 모델 재현이 부족할 때만 최초 거부의 최소 정보를 기존 종료 로그에 보완한다. 같은178/044·무입력 도입부 반복·추측에 따른 허용 조건 확대는 생략한다. 앞단 차분/base-generation/최종ACK 성능 개선은 별도 유지한다.
+
+Rawlogs andexactdeployedsource pins preserved in probes/nes-game178-hardware01/raw+sources; publicanalysis/game178-hardware01-verification.json. KeepGBC164/saveSRAM, noRUNSD. No repeateduser178/video/044 required for this analysis.
+
+[실기 분석과 다음 재현 범위](../../docs/nes-game178-hardware01.ko.md)
+
+---
+
 # NES178 — 클리핑 지원 시험판과 공통 PPU 호환성 계획
 
 NES178 실기 시험판 준비 완료: START 이후 mask18 거부를 수정한 FPGA·MCU·SNES 조합이 패킷 경계·전체 ARM·단일 FIT·조건부 IO 검사를 통과했다. 실제 게임 전환 후 영상 지속 여부는 사용자 실기로 확인하며 초기 끊김·60fps는 아직 미완료다.

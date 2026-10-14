@@ -5,8 +5,8 @@
   "technical_candidate": "NES-GAME-178-CLIP",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "NES178 실기 시험판 준비 완료: START 이후 mask18 거부를 수정한 FPGA·MCU·SNES 조합이 패킷 경계·전체 ARM·단일 FIT·조건부 IO 검사를 통과했다. 실제 게임 전환 후 영상 지속 여부는 사용자 실기로 확인하며 초기 끊김·60fps는 아직 미완료다.",
-  "next_action": "NES178-SMB3-CLIP.zip으로 SMB3 선택→월드맵→첫 레벨의 영상 지속·사운드·메뉴 복귀와 두TXT를 확인한다. 기능별 호환성 표에 따라 게임명 우회 없이 대응하고, 이후 앞단 테이블 차분/base-generation/최종ACK로 전송 비용을 줄인다. 동일177/044·긴 무입력 재현은 생략하며 AV→장기 실행/오류·리셋 로그→입력 유지 순서를 유지한다.",
+  "assessment": "NES178 실기: 월드맵 진입과 게임 오버 뒤 영상 회복을 확인했지만 첫 레벨에서는 영상이 정지했다. 표시 완료69회·마지막59.65초로 영구 정지보다 장면별 수집/표현 제약을 우선 조사한다. 레벨의 최초 거부 이유는 로그에 없어 아직 미확정이며, 지속 영상·60fps는 미완료다.",
+  "next_action": "현재178 수집기와 실제 ROM·직렬 입력으로 월드맵→첫 레벨의 최초 거부를 재현하고 mask/행간 변경·fetch/compact/raster 오류·묶음/객체/예외/팔레트 개수를 함께 대조한다. 모델 재현이 부족할 때만 최초 거부의 최소 정보를 기존 종료 로그에 보완한다. 같은178/044·무입력 도입부 반복·추측에 따른 허용 조건 확대는 생략한다. 앞단 차분/base-generation/최종ACK 성능 개선은 별도 유지한다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -3046,7 +3046,7 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-video-compatibility178.ko.md",
-  "latest_development_evidence": "analysis/clip178-pair-verification.json",
+  "latest_review": "docs/nes-game178-hardware01.ko.md",
+  "latest_development_evidence": "analysis/game178-hardware01-verification.json",
   "latest_hardware_evidence": "analysis/game177-hardware01-verification.json"
 }
