@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-15",
-  "technical_candidate": "NES181 candidate collector join; deployed180 unchanged",
+  "technical_candidate": "NES181 versioned exporter and MCU receiver; deployed180 unchanged",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "NES181 수집기 후보의 행별 대체·다음 정상 행 복구를 구현했다. 결합14경우, 정상180 대비9,624단어, 보존3,328픽셀과 정상복구43,923셀 비교가 통과했다. 별도 실제 PPU RTL에서1,792픽셀 정렬도 통과했다. 배포 보드·전송·MCU·SNES 클라이언트와 전체 배치·실기는 미완료이며 새 ZIP 없이180을 유지한다.",
-  "next_action": "후보 수집기 경계를 반복하지 말고 새 버전 exporter/MCU에 슬롯과 픽셀을 연결한다. CHR 완결 후 required2048 재사용과 이후 CHR 금지, 배포 SNES staging/3HDMA/뱅크 전환/최종ACK/STOP을 구현한다. 실제 보드 color/emphasis 배선, 최소 결합 검증·ARM stack·전체 FPGA 승인 뒤 SMB3 숫자1→A 실기로 간다. 같은180/044/긴 부팅은 반복하지 않으며 정지 해소와60fps·차분 갱신 지연 개선을 함께 유지한다.",
+  "assessment": "NES181의 부분 행 전송과 MCU 수신 후보를 연결했다. 실제 fill·SPI RTL→C 수신기로0/1/7행,2,048픽셀과95경우를 검증했고 raw 중단7경우도 통과했다. ARM 수신 구조체18,064바이트는 기존과 같다. 배포 SNES 소비·보드 연결·전체 ARM/FIT·실기는 미완료이며180 배포본을 유지한다.",
+  "next_action": "다음은 COMMITTED raw 픽셀을 배포 MCU/SNES 변환·staging·3HDMA·뱅크·최종ACK·STOP에 연결한다. raw 행은 일반 mask/map 검사 전 분기하고 OBJ 중복표시를 막는다. 실제 color/emphasis/frame181/export181 배선 후 최소 결합·전체 ARM stack·FPGA 자원/타이밍·조건부 IO 승인 뒤 SMB3 숫자1→A로 간다. 최대7행 모델53ms와픽셀당6wireB는60fps 미달이므로 table-delta/base-generation/ACK 및raw묶음 전송 개선을 남긴다. 동일180/044/긴 부팅/완료된 PPU 시험을 반복하지 않는다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -3003,7 +3003,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES181 수집기 후보의 행별 대체·다음 정상 행 복구를 구현했다. 결합14경우, 정상180 대비9,624단어, 보존3,328픽셀과 정상복구43,923셀 비교가 통과했다. 별도 실제 PPU RTL에서1,792픽셀 정렬도 통과했다. 배포 보드·전송·MCU·SNES 클라이언트와 전체 배치·실기는 미완료이며 새 ZIP 없이180을 유지한다.",
+  "summary": "NES181의 부분 행 전송과 MCU 수신 후보를 연결했다. 실제 fill·SPI RTL→C 수신기로0/1/7행,2,048픽셀과95경우를 검증했고 raw 중단7경우도 통과했다. ARM 수신 구조체18,064바이트는 기존과 같다. 배포 SNES 소비·보드 연결·전체 ARM/FIT·실기는 미완료이며180 배포본을 유지한다.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3046,7 +3046,7 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-collect181-contract.ko.md",
-  "latest_development_evidence": "analysis/collect181-verification.json",
+  "latest_review": "docs/nes-wire181-contract.ko.md",
+  "latest_development_evidence": "analysis/wire181-verification.json",
   "latest_hardware_evidence": "analysis/game180-hardware01-verification.json"
 }

@@ -1,3 +1,23 @@
+# NES181 — 부분 행 전송·MCU 수신 통과
+
+NES181의 부분 행 전송과 MCU 수신 후보를 연결했다. 실제 fill·SPI RTL→C 수신기로0/1/7행,2,048픽셀과95경우를 검증했고 raw 중단7경우도 통과했다. ARM 수신 구조체18,064바이트는 기존과 같다. 배포 SNES 소비·보드 연결·전체 ARM/FIT·실기는 미완료이며180 배포본을 유지한다.
+
+- Latest181 WIRE: PR113 OPEN samebranch. Candidate1811 exporter + CHR_END control7/4 + rawkind6 sequentialcolor6; actual180fill/SPI -> Cpoll/prepare 0/1/7rows2048pixels95casesPASS, rawabort/reset/stall7PASS. required2048 reused ONLY geometrycomplete/missing0/lane0/counts+slots exact then noCHR. COMMITTED-only getter; ARMstruct18064 unchanged/functionstacksame, NOTfullruntimeapproval. 7rowwire16774B/model53.16ms NOT60fps; pixelrecord6B overhead unresolved. NEXT productionMCU/SNES rawbranch/OBJmask/staging3HDMA/bank/ACK/STOP, boardcolor/emphasis/frame181/export181, fullARM+FITthenSMB3tile1+A; tabledelta/rawpacking remains. NoFW/FIT/ZIP/physical;180/GBC164/saveSRAM/priorarchivesunchanged. ReadWIRE181contract/HANDOFF/probes/nes-wire181/progress.json;completedarchivesimmutable.
+
+다음은 COMMITTED raw 픽셀을 배포 MCU/SNES 변환·staging·3HDMA·뱅크·최종ACK·STOP에 연결한다. raw 행은 일반 mask/map 검사 전 분기하고 OBJ 중복표시를 막는다. 실제 color/emphasis/frame181/export181 배선 후 최소 결합·전체 ARM stack·FPGA 자원/타이밍·조건부 IO 승인 뒤 SMB3 숫자1→A로 간다. 최대7행 모델53ms와픽셀당6wireB는60fps 미달이므로 table-delta/base-generation/ACK 및raw묶음 전송 개선을 남긴다. 동일180/044/긴 부팅/완료된 PPU 시험을 반복하지 않는다.
+
+후보 firmware 파일은 `src/nes/firmware/nes_native181.[ch]`이며 기존 API/type165를 유지한다. 격리된 통합 빌드에서 두 파일을 `nes_native165.[ch]`로 짝지어 배치해야 한다. 원본180에 덮어쓰지 않는다. version1811/CHR_END 뒤만 required2048 재사용, 이후 raw7×256색 수신, COMMITTED 이후 getter 사용과 consumed 이전 수명을 지킨다. 수신 구조체·함수별 stack은 기존과 같지만 전체 RUN/IRQ 여유는 소비 코드 연결 후 다시 승인한다.
+
+전송 시험은 실제 fill+exporter+SPI와 실제 C 수신 코드를 잇지만 geometry/PSRAM은 fixture다. 이전 실제 PPU→RAM·수집기·독립 SNES 시험과 합쳐 전체 SMB3 동작 통과라고 하지 않는다. raw7행은 기존2byte kind6 packing에서픽셀마다6wireB이므로53ms 모델 비용이 있다. 영상 정지 제거와~60fps 목표를 분리해 기록하고 단순히 성공 frame수/60초를 FPS로 쓰지 않는다.
+
+다음 실기판 전까지 실제 보드 color/emphasis/query mux, 소비 코드 일반/원시 행 분기, SNES VRAM/CGRAM/HDMA 및4096B ROM 크기와 WRAM 충돌, STOP/최종ACK를 확인한다. 기존962/963LAB와 ARM여유1040B는 기존180 기준일 뿐 새 후보 승인값이 아니다. GBC·164 복구판·세이브 SRAM은 유지한다.
+
+[구현 계약](../../docs/nes-wire181-contract.ko.md) · [검증](../../analysis/wire181-verification.json)
+
+이하 과거 기록.
+
+---
+
 # NES181 — 수집기 후보와 실제 PPU 픽셀 정렬 통과
 
 NES181 수집기 후보의 행별 대체·다음 정상 행 복구를 구현했다. 결합14경우, 정상180 대비9,624단어, 보존3,328픽셀과 정상복구43,923셀 비교가 통과했다. 별도 실제 PPU RTL에서1,792픽셀 정렬도 통과했다. 배포 보드·전송·MCU·SNES 클라이언트와 전체 배치·실기는 미완료이며 새 ZIP 없이180을 유지한다.

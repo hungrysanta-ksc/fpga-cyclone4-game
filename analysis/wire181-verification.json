@@ -1,0 +1,115 @@
+{
+  "candidate": "NES181 versioned raw-row exporter and MCU receiver",
+  "pr": 113,
+  "branch": "codex/nes-render-resume-181",
+  "wire": {
+    "passed": true,
+    "cases": [
+      {
+        "patches": 0,
+        "records": 567,
+        "blocks": 20,
+        "wire_bytes": 4861,
+        "modeled_cycles": 1300275,
+        "pixels": 0,
+        "checks": 27,
+        "host_size": 18064,
+        "transactions_sha256": "4e168b2b85367da9caadf9892c02a99d345f6c37e67d9a440d66e93d4b2dbbf1",
+        "records_sha256": "5bff651defdb34040c94256fb6e75407a7663b6fdfcd1da1dd84e445fb586ffe"
+      },
+      {
+        "patches": 1,
+        "records": 823,
+        "blocks": 26,
+        "wire_bytes": 6559,
+        "modeled_cycles": 1751119,
+        "pixels": 256,
+        "checks": 34,
+        "host_size": 18064,
+        "transactions_sha256": "a0f12ce3a574ea3cadc72740ee1e56f9c0d045be1901da7a9c39d03ff6c04d42",
+        "records_sha256": "a639ac7e90d167e516b1a69393e5069c569d975a5076fd98c271be1bb0147732"
+      },
+      {
+        "patches": 7,
+        "records": 2359,
+        "blocks": 63,
+        "wire_bytes": 16774,
+        "modeled_cycles": 4465787,
+        "pixels": 1792,
+        "checks": 34,
+        "host_size": 18064,
+        "transactions_sha256": "0f869b704bb1cc2e0ffae4718cbfb313c01ffd6f3b385feede87df3e4b61ec7f",
+        "records_sha256": "9cf59d36f97cf9adb1c2b00eea368c1ee200feae7b36110d3ed3babd63734a64"
+      }
+    ],
+    "arm_old_bytes": 18064,
+    "arm_new_bytes": 18064,
+    "sources": {
+      "baseline/nes_native_fill165.sv": "1268727679314a07714d869d95613c52ebc86c2c80b359ec4bdaaad9c4feb5de",
+      "baseline/nes_native_spi165.sv": "3e97d0ea5ab44b031222ed63314de2a9a75af43cf55d0b8140dca2c76587d02f",
+      "mcu/nes_trace166.h": "76923567ede1a152fc056c482e27eb3a81e97fe19d04ff84a789a26cc9d319e5",
+      "mcu/nes_trace166.c": "eb400234d88399773a671233eef4d15e13f20bb750de834cfbf2b53e21dc316c",
+      "src/nes/video/nes_native_export181.sv": "135dd2e936d1dec93195c3ac44c641fa1b2ccb07abcd2d6ee9a0a679b98c9112",
+      "src/nes/firmware/nes_native181.h": "a88be63e2aee3f1226caba1dcacf5449720efddcec9a8bef9dbebfee5bdad2bd",
+      "src/nes/firmware/nes_native181.c": "46aeb20ad3f36f94b9678d53ffa0ae0b197ae0aded2bd6568daa573040958dd7",
+      "tests/nes-functional/native_spi165_tb.sv": "f2f5dc2d2888c202db5f55c8f0fb640d6abd6f57d0b326ca0c7e62c4c1eef278",
+      "tests/nes-functional/wire181_source.svh": "e677765e34e394dde389923a9e59761474a3925783369a25226278b3335af7db",
+      "tests/nes-functional/wire181_host.c": "eaa1a2c8f2e13e69bc99097851bd5db96c7952b306f64b1dd78c813f16eadb7c"
+    },
+    "runner_sha256": "d83f07e46c9673ef5a52ce229264bdfe02812cc20e936ee0d88b35b16c30fab6",
+    "generated_bench_sha256": "c3df8832c2d0efc88d76247422fafa536e3c4b177b5cf0163d7e6334ef69b33a",
+    "hardware": false,
+    "full_arm_link": false,
+    "fit": false,
+    "scope": "Deterministic sealed query + PSRAM fixture; actual selected180 fill/SPI and candidate exporter; exact records then actual C poll/prepare replay. No collector/PPU/SNES integration or physical FPS."
+  },
+  "faults": {
+    "passed": true,
+    "cases": 7,
+    "sources": {
+      "src/nes/video/nes_native_export181.sv": "135dd2e936d1dec93195c3ac44c641fa1b2ccb07abcd2d6ee9a0a679b98c9112",
+      "tests/nes-functional/wire181_faults_tb.sv": "0dfff00e67161375e68e351fb1de7205130fdbd321a2de7f540b99d928fca318"
+    },
+    "runner_sha256": "701dec1cc35b6945a3192bb7e7de25a4cb6da64a046e0c9736b025e0649e6f4c",
+    "scope": "Raw phase backpressure, query miss, invalid color, lease loss, disable, stalled deadline, reset. Stub fill; no SPI or physical timing."
+  },
+  "public_sources": {
+    "src/nes/firmware/nes_native181.h": "a88be63e2aee3f1226caba1dcacf5449720efddcec9a8bef9dbebfee5bdad2bd",
+    "src/nes/firmware/nes_native181.c": "46aeb20ad3f36f94b9678d53ffa0ae0b197ae0aded2bd6568daa573040958dd7",
+    "src/nes/video/nes_native_export181.sv": "135dd2e936d1dec93195c3ac44c641fa1b2ccb07abcd2d6ee9a0a679b98c9112",
+    "tests/nes-functional/wire181_source.svh": "e677765e34e394dde389923a9e59761474a3925783369a25226278b3335af7db",
+    "tests/nes-functional/wire181_host.c": "eaa1a2c8f2e13e69bc99097851bd5db96c7952b306f64b1dd78c813f16eadb7c",
+    "tests/nes-functional/wire181_faults_tb.sv": "0dfff00e67161375e68e351fb1de7205130fdbd321a2de7f540b99d928fca318",
+    "tools/test_nes_wire181.py": "d83f07e46c9673ef5a52ce229264bdfe02812cc20e936ee0d88b35b16c30fab6",
+    "tools/test_nes_wire181_faults.py": "701dec1cc35b6945a3192bb7e7de25a4cb6da64a046e0c9736b025e0649e6f4c"
+  },
+  "prior_evidence_preserved": {
+    "render181": {
+      "analysis_sha256": "2534a9bbd1fdfeebbd37f0de9f0b419f0637562fc8d94424c850b99905148ea3",
+      "source_pins": 8
+    },
+    "collect181": {
+      "analysis_sha256": "05ca5bc9dc08c21d1ad33f4b874cf51f2367c419b4e97be3dc99473fd882a2d9",
+      "source_pins": 9
+    }
+  },
+  "evidence_files": 231,
+  "manifest_sha256": "2847f0bb79b1aadb2be9d21f6f6aeead630cc39ae5ad14c825f8a0f6fcc25e06",
+  "existing_package_sha256": "8eede14b49701530529d737815685f4f92f3d41f784c93a7abdfa03dd279cb3a",
+  "adopted_game_implementation": false,
+  "new_mcu_candidate": true,
+  "full_arm_link": false,
+  "new_fit": false,
+  "new_package": false,
+  "hardware_test_ready": false,
+  "video_freeze_fixed": false,
+  "fps60": false,
+  "next": "다음은 COMMITTED raw 픽셀을 배포 MCU/SNES 변환·staging·3HDMA·뱅크·최종ACK·STOP에 연결한다. raw 행은 일반 mask/map 검사 전 분기하고 OBJ 중복표시를 막는다. 실제 color/emphasis/frame181/export181 배선 후 최소 결합·전체 ARM stack·FPGA 자원/타이밍·조건부 IO 승인 뒤 SMB3 숫자1→A로 간다. 최대7행 모델53ms와픽셀당6wireB는60fps 미달이므로 table-delta/base-generation/ACK 및raw묶음 전송 개선을 남긴다. 동일180/044/긴 부팅/완료된 PPU 시험을 반복하지 않는다.",
+  "failure_history": "test01 invalid Windows physical -lib path; no RTL/license failure. test02 per-case work copy passed. fault01 passed. Earlier source/result archives unchanged.",
+  "limitations": [
+    "Sealed geometry and PSRAM response fixtures, not live PPU/collector/game/SNES coupling",
+    "0/1/7 row modeled15.48/20.85/53.16ms is not physical FPS;7rows exceeds16.7ms",
+    "MCU/SNES consumer not wired; original video165 does not understand new raster fields",
+    "ARM compile/struct/function stack only; no runtime IRQ or full link approval"
+  ]
+}
