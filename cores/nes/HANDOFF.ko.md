@@ -1,3 +1,19 @@
+# NES175 연결 회복 검증 — 관측 후보 미채택, 새 ZIP 없음
+
+NES175는 느린 소비 후5회 전달·거부3회 후 회복을 연결 시험으로 확인했다. 실기 정지는 아직 미해결이며, 관측 후보 A4(-0.178ns)·A5(-1.114ns)는 타이밍 실패로 미채택이다. 새 ZIP 없이 검증된174를 보존한다.
+
+PR110 existingOPEN/unmerged; refresh nextturn. SELECT remains deployed174 errorzero174-map01 + batch174/arm01; no175 installation.174ZIP/source/evidence unchanged. Synthetic deployed174 collectors/fill/exporter/dualclockmailboxes:31 nominalframes,23 owned skips,BEGIN/END/COMMIT5 each,release8,reject3,gen1/2/3 then7/8;170ms then40ms postCOMMIT hold +1ms PREPARED. No ROM/physicalSPI/SNES/FPS claim. DROP_RELEASE mutation detects firstcommit owned1/gen1/DRAIN11. test01 forwarddecl failure;test02 hostobservedCOMMIT made mutation blocksecondrelease,not first;test03 correctedPASS. These do not reproduce actual174 freeze.
+
+A4 events-map01:existing16x96history event-enable+oneownedreg,38 sparse/wrap/STOP/fault tests+wrongalwayswrite mutationPASS; FIT15060LE961LAB36M9K,nominal-.178/hold+.130,loaderfault->reject_state2. A5 snapshot-map01: ONLY3 files/addobserveroutputs+96-bit rewiring,historyRAM/control/sampling byteexact174. FIT15083LE963LAB36M9K,nominal-1.114/hold+.154,loaderrelease_reset1->active_reset->load_ready->SPI snapshot40. 75%routing,firstIC2.679ns,active_resetfanout40. This is actualREADY dependency, NOTmerged reset-chain proof. Do not blindly repeat165hostDONT_MERGE fixes, seeds, attributes or tinyrefits.
+
+Both175 MCU full-linked static26564/foreground37312/IRQ508/margin1040. A4 arm01/version2/A4 label FWf2461f53/report3927; A5 arm02/version1/A5 label FW71b32e46/report3923. Bothundeployed. armcheck01 checker lacked explicitv2 normalization; correctedarmcheck02 passes. A5 armcheck03 passes unchanged reader. arm-build02 mini path typo correctedbuild03; notsource/licensebug. Source reproduction/evidence frozen; no newIO/CDC because actualtimingfails. Alljobsfinished/FLOATstopped.
+
+NEXT FIRST verify whether supported Quartus preservation can keep deployed174 placement for minimumobservable change (NOT yetresearched/proven); ifinfeasible, review exactREADY/reset/snapshot andfault/reject_state structure against SPI accept/snapshotedge contract before ONEjustifiedcandidate. Avoid another observationbit/refitloop. Neededphysical distinction remains recurrentadmissionreject vsstalledproducer/export/partialSPI. OldABORT0 doesnotexclude preBEGINreject. No unchanged174/044/boot-A-B or longROMreplay bydefault. Oncequalifiedminimumsnapshot, actualSMB3 immediately. ContinuousAV60fps thenlongplay/error-resetlog thenheldinput;174mean167.5ms remains separate throughputgap;no duplicateSNESdeltaDMA/no tableomission withoutWRAMbasegeninheritance. KeepGBC164/saveSRAM/noRUN-SD/no secondMCUfullframe.
+
+[계약·원인 범위](../../docs/nes-lifecycle175-contract.ko.md) · [검증·해시](../../analysis/lifecycle175-verification.json)
+
+---
+
 # NES174 실기 결과 — 화면 정지 지속, 새 후보 경계 우선
 
 NES174 실기:12회 표시 완료·마지막generation23/RUN3.81초 이후 영상만 정지했다. 사운드·조작은 정상으로 보인다는 보고이며 로그상60초 종료·메뉴 준비는 정상이다. 변환·전송/표시 확인 평균167.5ms, 연속 화면·60fps 미달성. 다음은 새 후보의 허용·해제·전달 경계다.
