@@ -1,3 +1,21 @@
+# NES174 후보 — 타일 간 비트평면 검증 완료, 타이밍 미달
+
+NES174 후보는 SMB3의 서로 다른 타일 비트평면을 보존하도록 수정했다. 모델frame24 수집과 frame24·25의114,688픽셀 비교, SPI·C 및 ARM 여유1024바이트 검증을 통과했다. FPGA 배치는 성공했지만 memory setup-0.807ns로 미채택이며 새 실기 ZIP은 없다. 실제 정지 해결·60fps는 미확인이고 반복 전송 비용도 남았다.
+
+SELECT 없음/미배포. probes/nes-cross174 map01/unit02/replay01/c01/pixels01/spi01/arm01/armcheck03. 26frame model12..26valid, old24reject185rows→224rows. Pixels24/25 match114688; SPI phases0/3.5 each1733records47blocks12587wireB/C191calls. No physical FPS claim. Model24 != physical173generation30. C context18064/plan15888 unchanged; linked26564static/37328foreground/508IRQ/1024margin. Fit15076LE963LAB36M9K; nominalmemory-.807FAIL/host+1.483/NES+6.370/holdmin+.146. No ZIP/IOCDC174 signoff. Existing173 remains last distributed package; do not install standalone174 firmware.
+
+New ABI: BEGIN1741,kind3 width4. Exception lowtile13/cell13(row*33+col)/highY3/lowY3;128entry limit unchanged. Both physical sources required; cross-cell unique64bit key avoids collisions. The legacy module comments about same-tile rejection do not describe174 logic: use the174 contract and generated expressions. Collector2+Creceiver/converter changed; SPIwidth/exportmagic; SNES172 bytes retained. General malformed geometry and OBJ checks remain strict.
+
+NEXT review actual control.load_valid→loader.fault and check_failed→fault/loaded_bytes routing/fanout before a targeted structural candidate. Four logic levels,5.372ns data interconnect; not new NES collector critical path. Compare prior165 fault/counter failures first; no unchanged refit/seed/clockrelax/falsepaths. Once timing recovered, pair with changed-boundary/ARM checks then minimal actualSMB3. Do not redo passed24/25pixel/SPI tests unless their inputs change.
+
+Throughput remainsOPEN:173build+seal203.125ms/update. Existing SNES-local deltaDMA is already present; upstream seal still sends5152B+HDMA withperpacketACK. Plan pattern batching within240B and avoid unchanged/fulltable wire traffic. Reuse candidate fields only with an explicit lifetime contract; no secondfullMCUframe or cartridge saveSRAM. This optimization is not implemented in174. AV60fps→longplay/error-resetlogs→heldinput; no same173/044/bootA-B/genericobserver expansion.
+
+Manifest3d36ea4df09a47dfb05c5f19a89a22538e4bf6c3d513902b46ef0a45741a3303,2087 private evidencefiles frozen. record01/audit finalizers must not be rerun. unit01 wrongsandboxTEMP and armcheck01 DLLload errors are setup failures, not RTL/license failures; unit02/hostarmcheck03 selected. Original173 evidence unchanged. Tests/FLOAT/Quartus finished. PR110 existingOPEN; refresh before next publication.
+
+[계약](../../docs/nes-cross174-contract.ko.md) · [검증](../../analysis/cross174-verification.json)
+
+---
+
 # NES173 실기 — 정지와 초기 처리량을 분리
 
 NES173 실기: RUN 시작 후5.79초까지 표시 ACK16회 뒤 추가 완료가 멈췄다. 변환/패턴 전송910ms와 테이블·SEAL/ACK2340ms, 합계 회당 약203ms로 초기 처리량도60fps 목표에 크게 못 미친다. 정상60초 종료·STOP/메뉴 준비 확인. 정지 원인 미확정, 같은173 재시험 없이 타일 간 plane 표현과 반복 전송/왕복 개선으로 진행한다.
