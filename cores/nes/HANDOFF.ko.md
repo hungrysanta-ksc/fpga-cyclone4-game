@@ -1,3 +1,25 @@
+# NES180 — RAM/문맥 공유 모두 미채택, 관측 항목 축소로 전환
+
+NES180 기록 저장 공간 재사용 두 후보는 기능 검증을 통과했지만 채택되지 않았다. RAM 재사용은15,024 LE/962 LAB에서 실제 클록 setup −0.227ns, 오류 문맥 공유는967/963 LAB으로 실패했다. 새 ZIP 없이 배포178을 유지한다. 다음은 최초 거부·회복으로 관측 범위를 줄이며 실기 영상 정지·60fps는 미완료다.
+
+PR112 OPEN / codex/nes-level-admission-179, same PR until user merges. Deployed178 retained. This turn has TWO structural FIT attempts, no seed/loader tweak. No IO/ASM/CPF/ZIP. No user178/044 rerun requested.
+
+RAM candidate: probes/nes-rejectram180/evidence/nes-rejectram180-map01, finaltest02. Previous25-bit error comparison uses existing history RAM output; 1-bit feedback pending masks stale reads. Unknown feedback emits conservatively. ActualSPI/ring/STOP/fault + consecutive20writes/RUN32indices/unavailablefeedback PASS. 15024LE962LAB36M9K;nominalsetup-.227/hold+.157,NES+6.017;strictbudget-.475. Unchanged oldloader requesttag10->check_enable placement path; not an identified ROM functional defect. NOTadopted.
+
+Storage candidate: evidence/nes-rejectstorage180-map01/test01. Remove witness instance; reuse original first_ppu154 only while context_valid=0. Existing full first fault snapshot has priority over scratch/STOP, then remains frozen. Valid context bytes preserved; invalid context payload deliberately unspecified. No added observer reg declaration, source-reproduced. ActualSPI/firstfault takeover/postfault protection/earlyfault/STOPfault PASS. Synthesis8407regs vsprior8458, but967LAB/963FAIL; NO valid timing result. Notadopted; do not treat fewer registers as fit success. Failed PowerShell5 native-stderr launch preserved; corrected PS7 sameinput, oneFIT.
+
+RAM synthesis8438regs andstorage8407;memory205568bits unchanged. Game/control files,4096B SNESMIF unchanged. MCU180 ARM02/check02/host02/report01 exactreuse1413files/FWc9e97fce198012B/RUN37312IRQ508margin1040/TXT3920. NotnewARM/Ctests, never ship with178FPGA.
+
+관측 범위를 유효 geometry 뒤 첫 거부와 다음 정상 회복으로 축소한다. 오류 벡터·수집 개수는 기존 history RAM에 직접 기록하고 직전 오류 비교25비트·최초 위치26비트를 제거하는 최소 상태 계약을 먼저 검토한다. 위치/중간 오류 변화 미관측을 명시하고 MCU/descriptor/디코더를 함께 정한다. 최소 검증·단일 정당화된 배치 승인 뒤 숫자1→A 실기로 진행한다. ROM 로더·seed·동일 FIT 반복 금지. 공통 렌더링 중단/재개와 차분/base-generation/최종ACK 기반 약60fps 목표를 유지한다.
+
+Proposed reduced witness is NOT implemented. Need explicit schema/version and reduced visibility contract before test/fit: first rejection after valid geometry, recovery; no firstline/dot and no error-vector changes during continuous rejection. Keep full final errors/counts in RAM if feasible. Reuse179 real-level mask trace for unobserved timing; do not pretend sentinel location is observed. Minimal real SMB3 tile1+A follows approval; no more full coldboot model. SaveSRAM/GBC/164 preserved. ContinuousAV~60fps -> longplay/error-resetlogs -> heldinput.
+
+Evidence1336files manifest915770d92038275e04c3773edaf606fd6ee63ed47ab3da075269f203ed4f3ccd. See probes/nes-rejectram180/progress.json and analysis/rejectram180-verification.json. Prior180/179/178 completed archives immutable. Current candidates/functions and --io checker paths are reusable but IO paths NOT executed/approved in this failed-fit turn.
+
+[구체적 결과와 축소 계약](../../docs/nes-rejectstorage180-contract.ko.md)
+
+---
+
 # NES180 — 거부·회복 기록 기능 통과, 배치 타이밍 미달
 
 NES180 거부·회복 기록 후보는 실제 SPI·수집기 해제·MCU 판독/로그 검증을 통과했다. 첫 배치는964/963 LAB으로 실패했고, 축소 후보는15,043 LE/963 LAB에 배치됐지만 실제 클록 setup −0.092ns로 미채택이다. 새 ZIP 없이 배포178을 유지하며 실기 화면 정지·60fps는 미해결이다.
