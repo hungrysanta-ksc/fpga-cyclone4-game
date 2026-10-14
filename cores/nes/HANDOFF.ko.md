@@ -1,3 +1,21 @@
+# NES174 명령 허용 상태 — 개발 기준 map01, 배포 보류
+
+NES174 로더의 명령 허용 상태를 분리해 전체 실제 클록 setup을 -0.807ns에서 -0.098ns로 개선했다. 기능·실제 SPI 연결은 통과했으나 타이밍은 여전히 실패다. 후속 속성 변경(-1.344ns)은 미채택이며 새 실기 ZIP은 없다.
+
+SELECT FPGA Temp/nes-legality174-map01, reproduced probes/nes-legality174/reproduce01. Only loader changed from cross174. Four preserved reject_state bits use SAME next-state predicates as phase, not one-cycle-late phase; current RECEIVE length remains live. Fault has own sticky owner, error priority/state/counter/write-drain/accept edge unchanged. Loader SHA3598512dc8373c386b4cedc349e094ebbb1a454164acc24fe5803bb89785f5ed. No extra command cycles.
+
+294912 states/1056 command-reset sequences plus delayed-legality/blocked/STOP negative mutations PASS. Actual connected SPI→boot→READ16:1126009edges,100reads,7ACK,19bad,72cancel,2overlap;219wireframes/SCK2.625MHz/SSgap2us. READY/count are seeded; not full ROM writes or new SMB3 boot. map02 attribute-only functional reuse, not new simulation.
+
+map01 FIT15056LE961LAB36M9K; actual setup-.098/hold+.148; stricter budget-.438 stillFAIL. load_valid→fault+1.968/check_failed→fault+2.420/new reject_state input+.113. Remaining check_busy→SPIerror_code enable5levels. map02 disables CE+synccontrol only on SPIerror_code: target+2.005 but loaderphase8→loaded_bytes-1.344 and legality-.113; REJECT, not selected. Do not repeat this attribute refit/seed sweep/165 combinational flattening. Next inspect shared live response error/update-hold eligibility from map01; preserve error edge/priority, or explicitly change contract and MCU gaps.
+
+No newIO/CDC/ARM/pixel/boot tests because internal timing stillfails and other sources exactcross174. After timingpasses, required external boundary/reset checks then pair with probes/nes-batch174/arm01 firmware89c98add72ed3a6d983f9961c96b7ac2d7da6a889ba0fc5d5595da25dacfaa87, margin1040; never mix174MCU with173FPGA. Existing batch tests and172SNES code retained. Cross-tile ABI1741+32bit exception retained. Last distributed173 unchanged. All new build/FLOAT jobs finished; no SD or hardware package.
+
+AV60fps stillOPEN; this is deployment timing work, not measured frame throughput. Batch18→3 pattern packets remains candidate only. Fullmap/CGRAM/OAM/HDMA and perpacketACK costs remain; inactive WRAM generation inheritance required before table omission. KeepGBC164/saveSRAM/noRUN-SD/no secondframe; no unchanged173/044/A-B repeats. Raw evidence and completed finalizers immutable. PR110 remains existingOPEN; refresh before publishing next work.
+
+[계약](../../docs/nes-legality174-contract.ko.md) · [검증](../../analysis/legality174-verification.json)
+
+---
+
 # NES174 묶음 전송 — 검증 완료, FPGA 타이밍 미해결
 
 NES174에 타일 묶음 전송을 추가했다. SMB3 모델 장면의 패턴 요청18회→3회, 전체 요청45회→30회이며 실제 SNES 수신·229,376픽셀과 ARM 여유1040바이트를 확인했다. 실기 속도·60fps는 미확인이다. FPGA 타이밍-0.807ns와 전체 테이블 전송 비용이 남아 새 ZIP은 없다.
