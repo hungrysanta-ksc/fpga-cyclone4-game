@@ -4,6 +4,7 @@
 
 ## 현재 개발·운영
 
+- [NES176 영상 회고·검증 결과·수정 계획](nes-video-review176.ko.md)
 - [현재 상태](PROJECT-STATUS.ko.md)
 - [GBC 이식 회고와 재사용 경계](development/GBC-PORTING-LESSONS.ko.md)
 - [NES 착수 인계](../cores/nes/HANDOFF.ko.md)

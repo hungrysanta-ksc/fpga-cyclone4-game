@@ -1,3 +1,23 @@
+# NES176 회고 반영 — 장면 검증 완료, 정지·속도 개선은 진행 중
+
+NES176 회고 반영: 실제 SMB3 모델360프레임에서 즉시 해제349개·10프레임 보유35개 정상 후보와 기존 픽셀 일치를 확인했다. 두 장면의 전체5,493바이트 중 차이20바이트를 확인해 앞단 변경 전송의 근거를 마련했다. 공유 메모리 오류 연결6경우도 검증했지만 실기 정지 원인은 확정하지 않았다. 배포174 유지·새 ZIP 없음·60fps 미달성이며, 무관한 로더 미세FIT 반복을 멈춘다.
+
+PR110 OPEN samebranch; refresh before publication. SELECT deployed174 errorzero174-map01 + batch174/arm01. No newFW/FPGA/FIT/ZIP. This NEXT supersedes175 READY/TIMER counter micro-optimization. Existing failed candidates and archives remain immutable.
+
+Actual CPU/PPU/MMC3+exact174collectors, idealROM/no controller:360frames/5.989s, immediate349valid(12..360), held10=35valid(12..352), same11startuprejects only. First26 states and24/25pixels EXACT prior70ns model. Last held lease still owned at test end; not teardown proof. NOactual sharedPSRAM/fill/export/SPI/SNES/level/60fps claim. Do not repeat this long intro replay without a changed scene-dependent cause.
+
+Exact174 arbiter/exporter6faultcases37checks:timeout/backend/address beforeBEGIN orafterBEGIN. Stickyfault blocks finalgeometry andfuturefill whilecore canread afterdrain; pre-existingfault causesnoBEGIN/ABORT. BUTactivefault emitsABORT1 first.174ABORT0 therefore is counterevidence, not confirmation. No watchdog removal/increase. Actualfill/COMMIT sequence not modeled.175A5 lacksnative_arbiter_fault; do not blindly repeat it.
+
+Offline oldmodeledframe24->25:full5493B,20changed(BG19/map1),3ranges,exact inheritedbase reconstruction. This ignoresalignment/commands/ACK/producerbytes/CPU andisnotdelta implementation or representativegameplay. Fulltable5152B alone15.701ms at2.625MHz vs16.7ms target. ExistingSNESdeltaDMA retained; build38.3ms includespatternstaging,NOTpureCPUtime.
+
+NEXT minimum actual lastCOMMIT->newlease collector/fill/arbiter/export/mailbox ownership distinction:rawgeometry vsrom/arbiter maskedeligibility,release,DRAIN,fillbusy/idle/abort. Prefer smallestnecessary observation integrated withnextvideochange,notwideA5/loaderFITloop. Inparallel earlydelta persistentstablekeys/base_generation/target_generation/ACKcommit/failure-rebase andtotalbytes/timebudget; nosecondMCUframe/saveSRAM. IfSPI stillcannotmeetbudget,compareFPGA->SNEScartDMA withexplicitnon-save memoryownership. ThenminimalSMB3 AV/scroll. Continuous~60fps ->longplay/error-resetlogs ->heldinput.
+
+New evidence56files manifest0620084b73c90feef3726b4347b9b49f85d740ae43edcdb03baeea6788fd2101 atprobes/nes-admission176/evidence. Replay01syntaxfailure preserved;replay02complete.0errors44warnings retained,notwholecoresignoff. Testtools/bench hashes inanalysis/admission176-verification.json. Allsimjobsfinished;FLOATwrapperfinallyshutdown. Keep174/GBC164/saveSRAM/oldarchives;no174/044/A-B repeats.
+
+[결과·계획](../../docs/nes-video-review176.ko.md) · [검증·해시](../../analysis/admission176-verification.json)
+
+---
+
 # NES175 READY·카운터 후보 — 미채택,174 유지
 
 NES175 READY·카운터 후보의 기능/SPI 검증은 통과했다. READY 경로 제거와 쓰기 대기 경로 +1.573ns 개선에도 전체 setup은 각각−0.048/−0.218ns로 실패해 두 후보 모두 미채택이며 새 ZIP은 없다. 배포174를 유지한다.
