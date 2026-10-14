@@ -1,3 +1,21 @@
+# NES173 — MCU 측정판 실기 대기, 새 FPGA 관측 후보 미채택
+
+173은 172 FPGA·SNES ROM을 바이트 그대로 유지하며 초기 화면부터 느린 비용을 수신/대기·변환/staging·SEAL/ACK로 나눠 기록한다. 마지막 표시 ACK 시각은 RUN 시작 기준이다. 시간 분해능10ms, 누적값은 실패한 미완료 단계를 제외하며 수신값에는 정지 후 대기가 들어간다. 14회 ACK나 전체 SPI 바이트를 FPS로 환산하지 않는다. 화면 정지 수정판이나60fps 달성판은 아니다.
+
+SELECT probes/nes-admission173 arm04/profile04/armcheck03/report02/release01. 실제 C10경우·tick wrap PASS, ARM static26564/foreground37328/IRQ508/margin1024, TXT3934/4096. FPGA SHA6e9f7fc0 exact172; MCU9b137807; ZIP633b8c46. 패키지는 NES173-SMB3-VIDEO-PROFILE.zip. NES GAME 173.nh1 한 번 실행 후 두173 TXT를 받는다. 동일 증상이면 영상/044/동일 부팅 시험은 불필요하다. 실행 중 SD 쓰기·세이브 SRAM 사용 없음.
+
+실제 ROM 확장 재현은 frame24에서 fetch pair error2 + compact error1, rows185로 전송 전 거부를 재현했다. replay02와 상세 관측 replay04의 결과·소스 해시는 analysis/profile173-verification.json을 읽는다. CPU/PPU/MMC3+70ns 모델과 배포 collector4개를 연결했지만 매 프레임 즉시 release하며 실제 MCU/fill/export/SNES 소비 속도는 없다. 모델24와 실기generation27을 동일 원인으로 단정하지 않는다. 다음은 불일치한 plane 주소/description을 근거로 필요한 표현만 수정하는 것과173의 실제 단계 비용 대조다. 일반 조건 완화나 malformed frame 허용은 금지한다.
+
+실험 tools/nes_admission173.py의 A3 history 관측은 map03 fullFIT 후 nominal memory setup -0.077ns여서 미채택·미배포다. 기능 signoff도 아니다. 기존 FPGA 전체 재사용으로 측정을 먼저 실기로 보낸다. A3 코드를173 패키지와 혼동하거나 미달 후보를 반복FIT/clock 완화하지 않는다. 초기48B trace는 margin1016 실패,40B 최종본으로1024 회복. 해당 실패·경로 누락 replay03 등은 보존했다.
+
+replay04 상세: frame24,line193,dot232,low_phys21e150/high21e1ff,logical0150/01ff,pending1/address_ok1/BG. 기존 같은 타일 fineY 예외로는 physical tile1e15→1e1f와fineY0→7을 표현할 수 없어 ordinary/split 모두0. ROM 데이터 비교 오류 없음. 다음 구현은 두 타일의 해당 plane/행을 보존하는 제한된 합성 패턴 또는 동등한 표현이며 high 주소만 사용/조건만 완화 금지. 정확한 $2006 트리거 및 실기 원인은 별도 미확정. 173 단계 비용 로그와 함께 다룬다.
+
+PR110 기존 브랜치에 정리한다. 연속 AV→장기 플레이/오류·본체 리셋 로그→입력 유지 순서와 GBC·164·세이브 보호를 유지한다. 기존172 증거와 완료 archive는 불변이다. 새 결과 기록/패키지 생성기를 같은 경로에 다시 실행하지 않는다.
+
+[실기 안내](../../docs/nes-game173-ready.ko.md) · [계약](../../docs/nes-profile173-contract.ko.md) · [검증](../../analysis/profile173-verification.json)
+
+---
+
 # NES172 실기 — 초기 표시 통과, 다음 영상 후보 미수신
 
 사용자 추가 확인: 처음 표시된 구간도 뚝뚝 끊겼다. 14회 ACK는 원활한 화면의 증거가 아니다. 목표는 실제 SMB3에서 약60fps의 연속 표시이며, 정지 해소만으로 완료 처리하지 않는다. 프레임 생성·전송·SNES 반영별 진행 시간과 화면 완료 간격을 구분해 병목을 줄인다. 60fps의 프레임 간격 약16.7ms를 목표 예산으로 삼되 현재 측정치로 주장하지 않는다. 전체 SPI 바이트에는 상태 폴링이 포함되므로 영상 전송량이나 유효 FPS로 바로 환산하지 않는다.

@@ -1,0 +1,463 @@
+{
+  "schema": 173,
+  "purpose": "MCU-only stage cost measurement; exact172 FPGA; continuous60fps not achieved",
+  "selected": {
+    "arm": "arm04",
+    "runtime": "profile04",
+    "arm_check": "armcheck03",
+    "report": "report02",
+    "release": "release01"
+  },
+  "runtime": {
+    "passed": true,
+    "cases": 10,
+    "timing_split_and_tick_wrap_verified": true,
+    "trace_bytes": 40,
+    "source_sha256": {
+      "nes_native165.c": "c65fa1066e7de64cb960c7785eeb2fb5d23bbe925709e8057b4e2ff7e94ec04e",
+      "nes_native165.h": "2e097209652e4c184766211d4284f9cc717fb917fe91cb1be8d7842cbf27378e",
+      "nes_native_video165.c": "7b358138b7a892ff27670a11889a1a14963a879adc5b5313da5b9fee5c3e8b66",
+      "nes_native_video165.h": "750a25ff3efaaf9a7231f9cdd2314d1a61f9fa41441f2e4d44a29e1b68ed5ce4",
+      "nes_native_sink165.c": "ef1c409c21150ac0ffb4138656fb8b604ccb1e4d1e70165afa647c320e303401",
+      "nes_native_sink165.h": "92e0d98a213714dd96d764bfb164d98ed5a724083eb874f654abcf7aa64732f2",
+      "nes_sink_spi165.c": "6d553b84c90f8528d83ca9d9452218d73aae66803ef132cbe58de83e95f7ad5a",
+      "nes_sink_spi165.h": "226df22d3a36a62ee1a50a0af23f8c9f1c56d505071fa186b83c51259e32b6a3",
+      "nes_native_runtime165.c": "dcc67e8476a3f194e100e8487b604f46c8964701c758c354bc0b00fab49f1eb2",
+      "nes_native_runtime165.h": "265cd429759728b6cb348bede3db63efa4c01bb36d264d704b594b43ee84ed0e",
+      "nes_trace166.c": "eb400234d88399773a671233eef4d15e13f20bb750de834cfbf2b53e21dc316c",
+      "nes_trace166.h": "76923567ede1a152fc056c482e27eb3a81e97fe19d04ff84a789a26cc9d319e5",
+      "nes_sink_trace168.c": "e6c1fab8b7782d768bcfc1672fbe62015f3bbbe07148cb8222bb93f6d637521f",
+      "nes_sink_trace168.h": "806eb4349a3afef2008dd02f92a1523e3dd7f1521ebc94a7429e94d42c85aacb",
+      "nes_sink_io170.c": "24f6c0b64848f801bef81c37391242af0683d388d1191c8c9c810d3c3d9a9f9e",
+      "nes_sink_io170.h": "8a4e3d16b43b86f3d2b38ce41a98b6fcccd57685b239b7881e698355a7e8592e"
+    },
+    "captured_trace_sha256": "7fde5f8009f21ae0a829c3aac032d0dff812ca30eccddfa00781b44fcb490e87",
+    "public_sources": {
+      "tools/test_nes_profile173.py": "f5792e9ed685d0806e427babed3ae5390b99f9305598e827341bad101c03519f"
+    },
+    "scope": "actual C receiver/runtime/converter with captured producer bytes and synthetic sink ACK; no hardware FPS claim"
+  },
+  "arm": {
+    "passed": true,
+    "firmware_sha256": "9b137807a07ffb2ebcb41e8bcddcbe585aa3e60bb8aa89cb7ee7534a031008d6",
+    "firmware_bytes": 197668,
+    "elf_sha256": "557d2a8d00df2461ceca9caf6ccb4537457f829869276b826e93ea5a428bf28a",
+    "ram_static": 26564,
+    "ram_free_outside_run": 38860,
+    "foreground_bound": 37328,
+    "irq_reserve": 508,
+    "remaining_margin": 1024,
+    "paths": {
+      "native_session165": [
+        36000,
+        [
+          [
+            "native_session165",
+            33992
+          ],
+          [
+            "nes_runtime165_step",
+            40
+          ],
+          [
+            "nes_native_video165_build",
+            712
+          ],
+          [
+            "nes_sink165_pattern",
+            24
+          ],
+          [
+            "packet",
+            304
+          ],
+          [
+            "nes_sink_spi165_exchange",
+            544
+          ],
+          [
+            "transfer",
+            24
+          ],
+          [
+            "guard",
+            8
+          ],
+          [
+            "native_service165",
+            48
+          ],
+          [
+            "screen146",
+            32
+          ],
+          [
+            "nes_rom_spi_transfer",
+            0
+          ],
+          [
+            "nes_game149_transfer",
+            32
+          ],
+          [
+            "wait_us",
+            0
+          ],
+          [
+            "delay_us",
+            8
+          ],
+          [
+            "nes_return_delay",
+            40
+          ],
+          [
+            "nes_return_fail",
+            0
+          ],
+          [
+            "nes_diag_fail",
+            0
+          ],
+          [
+            "nes_diag_observe",
+            40
+          ],
+          [
+            "printf",
+            16
+          ],
+          [
+            "internal_nprintf",
+            48
+          ],
+          [
+            "outchar",
+            8
+          ],
+          [
+            "uart_putc",
+            64
+          ],
+          [
+            "nes_diag_wait_start",
+            16
+          ],
+          [
+            "nes_diag_ticks",
+            0
+          ]
+        ]
+      ],
+      "SysTick_Handler": [
+        176,
+        [
+          [
+            "SysTick_Handler",
+            16
+          ],
+          [
+            "sdn_changed",
+            8
+          ],
+          [
+            "printf",
+            16
+          ],
+          [
+            "internal_nprintf",
+            48
+          ],
+          [
+            "outchar",
+            8
+          ],
+          [
+            "uart_putc",
+            64
+          ],
+          [
+            "nes_diag_wait_start",
+            16
+          ],
+          [
+            "nes_diag_ticks",
+            0
+          ]
+        ]
+      ],
+      "TIM2_IRQHandler": [
+        0,
+        [
+          [
+            "TIM2_IRQHandler",
+            0
+          ]
+        ]
+      ],
+      "NMI_Handler": [
+        8,
+        [
+          [
+            "NMI_Handler",
+            8
+          ],
+          [
+            "stop108",
+            0
+          ]
+        ]
+      ]
+    },
+    "callers": [
+      [
+        "main",
+        304
+      ],
+      [
+        "nes_menu_diagnostic_run",
+        16
+      ],
+      [
+        "nes_menu_sd_probe",
+        1008
+      ]
+    ],
+    "reachable": 91,
+    "stack_files": {
+      "ccsbcs.su": "8dae08cffd098b52acc2969801e3dbab08e5ef16960417d74cb8e77a57820d94",
+      "cdcuser.su": "03d7f848b776d61594bcb5ff62a73cdac429a1a4b3ac1a9c4b573ea564aa14c0",
+      "cfg.su": "6bf1955529020798fc81224bf9e1960ae5da6376117d6430ae667fa9a13f434d",
+      "cheat.su": "26e0609387eb86ed321bfb687cef7a94ead5ef96751aeea828c21191e87a15f6",
+      "cic.su": "4167ae09040c6c6398eb2988a16db9612e2dbdaf2e7c3dba8cd4d13ac5c905c7",
+      "cli.su": "9f5516e20c1e802612e1d882320d3c93626db8956b716945b0041cc4ec9076d2",
+      "crc16.su": "da804a4eb77a42227d2cb23914cd6e288c859fa04a12f43905944ceae8326217",
+      "crc32.su": "5136b6e89e025148bbe6ce3ac0327d731dd658bcc7e495adfc5f802f1028607a",
+      "faulthandler.su": "e87b32fa32d825c5933c30adb6d90849378cc4d24b2dfe3091c6e773848be794",
+      "ff.su": "8a18a84ce44a9a5e05e4361cb532de57aee3e729beb8e5078a753b582546b4af",
+      "fileops.su": "6ec49cf7d1ee110c3557f15efe5c2a53fa1fe0ac696ff56487e70c4c307c3a05",
+      "filetypes.su": "dbaa9ccbba523a48360c730b14d3f6c538ae08f41f46d53302598e6702798e5d",
+      "fpga.su": "715b86f8d5c87392c10a5c12027244d458c690f98d7a7e3009d80549806d5a79",
+      "fpga_spi.su": "4a47e8ef203cb6f6a656898aa7394326ceda3c22cd02d311940884c6607aff7b",
+      "gbc_dump.su": "ea8d6e2d0f0604ba1cd8c5e95757721953005a59d326d4c6f6f49f3c639a62f4",
+      "gbc_memio.su": "136f4d3ee37c8a7f60752c3d0129525fd401303e9e9244a2a6823f502f670cef",
+      "gbc_menu.su": "efda8eb040d7dd66b51ce66648df6590a3590762fdd0919b78cdff3e24a72dff",
+      "gbc_save.su": "e5cee58a418bd53f4058090d89447c8617bd4c637d1d2660c2b924800e9f2001",
+      "gbc_state_format.su": "64ac90087d43ec64f20a6d58d1990fc8c967e9f6bfe80fa1aed5011f83addfe8",
+      "gbc_state_report.su": "0212b3c7a05afcd89fb79f87366b0ef78a3654c20aeed9016269aba7675f0e7f",
+      "gbc_state_slots.su": "43dbd83990eb06166a018dffbae1eb137ad210a6104ae5ae14f426f8abe64324",
+      "gbc_state_transfer.su": "33897b33fe9e5d886446a046bd01ca962fbaa8b6bfe84e58ce7073be4a2c3fc8",
+      "hwinfo.su": "737f5110f0b618fed8982fe78abc38b6e6d5b5dfb5f89ba4056c12ec36d22f80",
+      "main.su": "422916a9acddd830c349b6750ba459ae07daafde9db91ac4f94b3b58bd33d50a",
+      "memory.su": "407709ce312b21efee65c9c89d02a7a34738461a49973159abb962c422233b43",
+      "msu1.su": "1facedb1661e72007f1c086eacf0f5ecdcbf5c86533782a4ef55eae75c783a58",
+      "nes_cf86_session094.su": "5161bf74b436dda471121f84ab073041877393381045594c0279cddaec7cad23",
+      "nes_checkpoint112.su": "1a835bf30b00056a3b309ce82774c80f953ccc7d44b400bedc6b2f1f022f8c59",
+      "nes_css108.su": "7bd863f7a0077fe22499fb3efb677605b3738c7127cbda98a630bbc85ac35f0e",
+      "nes_diag_platform.su": "a6a7408313fa6731e673ee43a15cf890bb8b9d98bd0cb21ad67c9f161031135a",
+      "nes_diag_runtime.su": "072d192ce2ff81c59985c34162e49e17045acace46680f6769566f376de6b55e",
+      "nes_h1_session.su": "45d9c7c32d48cb0de762ee7bfe889c3e00d8b4db39f68a750a999c51d4c08de8",
+      "nes_h1_stm32.su": "731edeb7320ae8a7153ed0685f5efd43c31b2a6a50af790dc71e3d3e17aaa07b",
+      "nes_menu076.su": "0539bf9b9355a85244ead522b308a30d4aa98414e3b2e3020f00c15557e6b63e",
+      "nes_menu_diagnostic.su": "58c2657844ee148d52681f7bb072126bce557b8691251b1cfb5c91bc4f6b3c76",
+      "nes_menu_return.su": "8a8158218660681c1d636cd1d3d8ff7cadaf02d3f465f1e872fa54c3f8e9cbbc",
+      "nes_native165.su": "9c25976e1dbe582bfb182e621230928f95b1378a9a4e07147d1310e521fbcf68",
+      "nes_native_runtime165.su": "e051ae0b448042de2ecd9378d3872b8b82570252906520f042f5f3c3be7a88ea",
+      "nes_native_sink165.su": "42c63296ac0bbc5247a1fe5930884ac8c7e5b62e1c78a4d44a8c00c513ffa032",
+      "nes_native_video165.su": "641bd91ac8f193825c87ab486b3b9518d53ae79a5c16efc4e712ae3956eed5cb",
+      "nes_rom_spi.su": "41ff4216d7cdd06e79a95496bb590e756902b5c20dd189f501122d8eef5d6100",
+      "nes_rom_verify.su": "872aa2df1e801019756341b957b3b5909df1cee77ae19067d73a4eabb8b44b29",
+      "nes_sink_io170.su": "1a56580b04f42a62d805ba110a5fd06bd51650312b87fd62280b770d5d5510cf",
+      "nes_sink_spi165.su": "c2c985bdeca2f71c21dfa3d53ca64cfb5aa1dc7d436a84017e55306aa2cf0c14",
+      "nes_sink_trace168.su": "d465266b9917ce5db56c77402aa9fa3c91f9f552c69014eafd8147fcff5ebc24",
+      "nes_trace166.su": "cc76a59219091a5fcc6a8794805f831330ad1494ee30a23268241f70502946d5",
+      "printf.su": "3f3445fba3206420024b29a05c629ad147331b861ebd8d1df8b6734ff1ea6032",
+      "rle.su": "00f02838ef6cb1784cc91d552d95023a1577ce4e5239b9f005a3881cfb7df23e",
+      "savestate.su": "88deb37c2e6e88c13f1536b71fc115b475049e2de362850e45f0630db9845646",
+      "sgb.su": "3df969a6d08428d5175994c8cc54afbfae342a46ccacd7e925715fe53f237c74",
+      "smc.su": "3924b0ae9d24b418d0156c07c585db194528005f1069ffc465e615460f3d874b",
+      "snes.su": "740ce39a9bd3461f9a7b261a8166e5bda6b0c4f7d7bf62b15046f76e66797b5d",
+      "sort.su": "3c973ebdbe00165675187d181f2a97fec945babd53b4cc09b0852555132a0de7",
+      "sysinfo.su": "2e071807dfe26e854972f4ec8b9ba83a42cc7fd1e6c6b8219aa8b6350ddac56f",
+      "usbcore.su": "2427583f050b49c2b5e76bee3ef51f718cbceb092e6ccdc483aabef3653ac269",
+      "usbdesc.su": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "usbinterface.su": "396b8219c8460adb4fb229fd7983a4ff48a1ed1210a9e659af42d13a2d7263b3",
+      "usbuser.su": "ed7382a048e6c0e4e3805c27d2f092f0b5cb34fe098151ac01a820c5e66026eb",
+      "yaml.su": "2b0e4cd7c6efdc67bb3d1f5e49a00a2abe8d8b109b44f6d9272fdcadf70e7f79",
+      "ymodem.su": "422465ebd43af3f63a184060876d8ed4427b08d21ce2473787bac2f778c2b545",
+      "stm32f4xx/clock.su": "918879319891fca679b05ca5a9343417046b600cd348d7cf7a9b076b69d02c6a",
+      "stm32f4xx/led.su": "3d3dee9a92679d43c363c1f13bc8f36d8b88786ed7b0b79c39e692175f33efaf",
+      "stm32f4xx/power.su": "f322a4fb907e239305649cd0559ae70089468b3cbe8c65166c6e7b18068a2221",
+      "stm32f4xx/rtc.su": "6885296f62221a28833556f2bafd6d221e6a31609c11a6705ecd9075b46607f1",
+      "stm32f4xx/sdnative.su": "f6bab2a801f25e8c6f37c9fe9adf355c2b22a05e7e9ae80be286adc1eeb97f8f",
+      "stm32f4xx/spi.su": "9437fe409ab53b4b1fbf6bb39a287a02066fa87e3f0e47ce423d7846dddd4316",
+      "stm32f4xx/timer.su": "4c1304241a9066783ca17c603c159ba69540ac72de83ab52caa6027622526dc9",
+      "stm32f4xx/uart.su": "627a9a2ce2d6e622cdf5e6471a5ea2335d97f5b5716bb390ad4d2293d5d6a163",
+      "stm32f4xx/usbhw.su": "a7bd9ed6e08fda63daab6defb16048608db011dff59321523dc4dd6249e12d21"
+    },
+    "review_sha256": "55c0bb78282387f873fb266b0efaba0fc86761fc3e6a88288fc661edfee22301",
+    "public_sources": {
+      "tools/check_nes_runlease165.py": "548b0c7ffe1a2f7fd333736e2a84564e9a8fe8a0b0d3ff29a2c5ccc181e6d43b",
+      "tools/nes_runlease165.py": "8c96323e3e5a89696e135573347a7e8bcf43264157cf35c61fec09f49333688b",
+      "src/nes/firmware/nes_runlease165.inc": "cc4c453d9a7916e870a4e70faab2c944390829f54aab83ea94b5d1ec02c4ead8",
+      "tools/check_nes_profile173_arm.py": "ebaedd66891b115e20112b54d5614b79cfbd9a2fba11a79d8776d02f7d5c1c22",
+      "tools/nes_profile173.py": "f499b50daa405156ae4bd79854ae40d3b76e098f3269691bb60951347d49d646",
+      "src/nes/firmware/nes_boot172.inc": "3b867adecb63ab10fb3c5ed225d8de1d6db6f8bcd879b322f8dad3194a67c2b6",
+      "tools/check_nes_startup170_arm.py": "73ca0f5e1fdb6cee6e6a1b8beeda622f281b61905c346a113fb06b3f0a9158ea",
+      "src/nes/firmware/nes_sink_spi170.c": "6d553b84c90f8528d83ca9d9452218d73aae66803ef132cbe58de83e95f7ad5a",
+      "src/nes/firmware/nes_sink_io170.c": "24f6c0b64848f801bef81c37391242af0683d388d1191c8c9c810d3c3d9a9f9e",
+      "src/nes/firmware/nes_sink_io170.h": "8a4e3d16b43b86f3d2b38ce41a98b6fcccd57685b239b7881e698355a7e8592e",
+      "src/nes/firmware/nes_sink_trace168.c": "e6c1fab8b7782d768bcfc1672fbe62015f3bbbe07148cb8222bb93f6d637521f",
+      "src/nes/firmware/nes_sink_trace168.h": "806eb4349a3afef2008dd02f92a1523e3dd7f1521ebc94a7429e94d42c85aacb"
+    },
+    "hardware_package": false,
+    "physical": false,
+    "scope": "Conservative linked RUN graph including callbacks and fault helpers; reviewed enabled SysTick/TIM2/NMI plus extended hardware frames. No exhaustive proof of unchanged menu/GBC call graphs; their permanent33952B allocation is removed. Not measured high-water or real hardware. 172 readiness gate included in RUN stack;171 FIFO unchanged, ROM-only update assessed separately.",
+    "profile_trace_bytes": 40,
+    "io_trace_bytes": 20,
+    "trace_bytes": 32,
+    "reviewed_relocated_bodies": 13
+  },
+  "report": {
+    "passed": true,
+    "output": "PASS actual_report_max_width_bytes=3934 capacity=4096 full_pad16_history16=1 trace169=1\n",
+    "generated_sha256": "861bf7353d70d6f5f2aee9b401900fcf257a3ae4fa6b5af715fe0732004f9da1",
+    "source_sha256": "bd7d2b81c0e31abc3650485ff9e5fdbd429492a7f3aed61f56d7bdcbc02dcb5b",
+    "scope": "Actual formatter extracted through post-STOP text completion; uint32/uint16/uint8 maxima,16 all-buttons entries and16 history entries, longest menu label. No SD IO."
+  },
+  "release": {
+    "passed": true,
+    "zip_sha256": "633b8c46237e50043c492a52d692d552a21bbfc77b51e0dd5cc10fe57d288e99",
+    "zip_bytes": 1414770,
+    "firmware_sha256": "9b137807a07ffb2ebcb41e8bcddcbe585aa3e60bb8aa89cb7ee7534a031008d6",
+    "fpga_sha256": "6e9f7fc0577d9e070476444ab04b9fe4fd05f811c0bbb81818168bcac8288b74",
+    "preserved": {
+      "02-RESTORE164-SD-ROOT/sd2snes/fpga_base.bi3": "eff3f675c93a0209caf4987d72e0f277492c3dddc2b4c2aff334a667b4dbfbc7",
+      "01-GAME173-SD-ROOT/sd2snes/fpga_base.bi3": "eff3f675c93a0209caf4987d72e0f277492c3dddc2b4c2aff334a667b4dbfbc7",
+      "02-RESTORE164-SD-ROOT/sd2snes/m3nu.bin": "f53b777a0bbe37668cd88cf8c80c5e5a0a60f861f58d1d4d3d9b082e9d1b4325",
+      "01-GAME173-SD-ROOT/sd2snes/m3nu.bin": "f53b777a0bbe37668cd88cf8c80c5e5a0a60f861f58d1d4d3d9b082e9d1b4325",
+      "02-RESTORE164-SD-ROOT/sd2snes/firmware.stm": "502205c3dcdeaf9cd1278dd24ddba5c2d0428287f9689faa620076df303c87ee",
+      "02-RESTORE164-SD-ROOT/sd2snes/fpga_n164.bi3": "31cabda3f5ff06cee0aacdf8d18ef60c4d78d3d3bbff8f892ee9aee443005262",
+      "01-GAME173-SD-ROOT/sd2snes/fpga_n173.bi3": "6e9f7fc0577d9e070476444ab04b9fe4fd05f811c0bbb81818168bcac8288b74",
+      "02-RESTORE164-SD-ROOT/sd2snes/nes/game164.nes": "dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49",
+      "01-GAME173-SD-ROOT/sd2snes/nes/game173.nes": "dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49",
+      "02-RESTORE164-SD-ROOT/NES GAME 164.nh1": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "01-GAME173-SD-ROOT/NES GAME 173.nh1": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "decision": {
+      "trial_ready": true,
+      "physical": false,
+      "root_cause_fixed": false,
+      "continuous_video_proven": false,
+      "fpga": "byte-exact172",
+      "trace_schema": 173,
+      "ppu_history_schema": 157,
+      "profile_tick_ms": 10,
+      "run_ticks_after_ready": 6000,
+      "run_sd_writes": false,
+      "save_sram_used": false,
+      "remaining_margin": 1024
+    },
+    "public_sources": {
+      "tools/release_nes_profile173.py": "bfe42339bf362b99c38b76ec034ad910c27ede6bf35d9c5eadc4bbb04451a3a1"
+    }
+  },
+  "replay": {
+    "raw_directory": "nes-admission173-replay04",
+    "core_log_sha256": "157e05b00d8c183a4ed32c811d6724bc2c935417c08fcc08bbb38cc8caebd2b3",
+    "states_sha256": "15722377775b49d45d8b49294a4bd1a545064f8d9af85f75637a9ff2132428b3",
+    "inputs": {
+      "rtl/bus_savestates.vhd": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9",
+      "rtl/t65/T65_Pack.vhd": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb",
+      "rtl/t65/T65_ALU.vhd": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b",
+      "rtl/t65/T65_MCode.vhd": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5",
+      "rtl/t65/T65.vhd": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692",
+      "rtl/statemanager.vhd": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6",
+      "rtl/savestates.vhd": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0",
+      "rtl/regs_savestates.sv": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95",
+      "rtl/cheatcodes.sv": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918",
+      "rtl/ppu.sv": "8334a458aac9bd943149d1fbbd0d4089b77951da6e8ad6ee6e7fcec1007e16cb",
+      "rtl/apu.sv": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586",
+      "rtl/nes.v": "685a8896e3d52478e61c1724349d57609252f5da0dfe7185641887acb73362a2",
+      "rtl/composite_board.sv": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895",
+      "rtl/compat.v": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731",
+      "sys/iir_filter.v": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8",
+      "cart_nrom.sv": "e3f26834ea8f6272fd4d8310db3bd1dc44f609fafb2b4b68f90960f6ef742ee4",
+      "nes_probe.sv": "8f3fcdeaddd7cb3b16d10f3c90a8a89af07a0e3a66195b6b5802fd55ed142c92",
+      "nes_local_memory.sv": "75bb892cb796ede222de2c8bd9409d8685cf5705c653ca676b0faa7f767c1c46",
+      "nes_rom_service.sv": "7f076fdc8734f957e788770bec031e35587d7f823a2713e471125bc7682f4539",
+      "nes_rom_physical.sv": "79e9d1b4e5cdc0d59e42cb2769080b5d71b4cbcb2849beb568e6a1a0d857c298",
+      "nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+      "nes_native_planes165.sv": "d2f93ebff21ae5ca7258f74259e347bf5602a08ea3bacfdd9a3752a3788253f3",
+      "nes_native_compact_planes165.sv": "803c158287e23ac821638581a0ca762c98953eb134001441d497bce8f55de07c",
+      "nes_native_raster_frame165.sv": "8cc045be929d11ef63734e6f5dfa68f9b215c71a2b8be95b47b0fafe5c403be8",
+      "nes_native_frame165.sv": "cf966a7b4374b4fc10e58bd9b706a1154c7d25641f10fe1e7d80720beba94250",
+      "nes_native_ciram165.sv": "3be50efaff24aaab9b77fe9ccd6a70928479f677040c67019de76476b1a5974a",
+      "prg.hex": "0ba0da1259058607110eee7e8beb77530e5679877ef50bb228744766c6fe4727",
+      "chr.hex": "b8e3dd87af2bb1b7076209d35cad09a3b5748ed348cece503712002a5d3bd842",
+      "native_frame165_tb.sv": "07da260cbe07d3b9eb8abaef31e823cab3b0c685f3d2fbddb75a6e531333562e",
+      "run.py": "2b15f41abbc9b0fdd75e458397f950ae3cd7b3c758ae0087028c2c365f80b395"
+    },
+    "first_rejection_after20": "frame24 / errors0000204 / rows185 / groups24 / objects2 / exceptions1 / palettes1",
+    "pairs": [
+      "PAIR173 frame=24 line=193 dot=232 pending=1 addr_ok=1 obj=0 low_phys=21e150 high_phys=21e1ff low_log=0150 high_log=01ff low_desc=0000003d72151e15 high_desc=0000003d721ffe1f ordinary=0 split=0"
+    ],
+    "reproduced_preparation_byte_exact": true,
+    "scope": "Actual CPU/PPU/MMC3+70ns model with exact171/172 four collectors; immediate every-frame release, no input, no physical fill/export/MCU/SNES schedule. Not a confirmed172 physical cause."
+  },
+  "rejected_fpga": {
+    "adopted": false,
+    "hardware_package": false,
+    "scope": "A3 pre-BEGIN observer only; MAP/FIT/STA performed, not functional signoff",
+    "nominal": {
+      "rows": 198,
+      "minima_ns": {
+        "board8": {
+          "setup": 123.346,
+          "hold": 0.267
+        },
+        "core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+          "setup": 1.436,
+          "hold": 0.176
+        },
+        "core|pll|altpll_component|auto_generated|pll1|clk[1]": {
+          "setup": -0.077,
+          "hold": 0.187
+        },
+        "nes": {
+          "setup": 7.796,
+          "hold": 0.142
+        }
+      },
+      "passed": false,
+      "worst_setup": {
+        "corner": "8_slow_1200mv_85c",
+        "clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+        "kind": "setup",
+        "from": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|phase[4]",
+        "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|error_code[0]",
+        "slack": "-0.077"
+      },
+      "sdc_sha256": "59dbe2401cc57a7646271fc222b69cd0c27dfb0bfb0c9514641213c39b9cd1ac",
+      "preserved_files": 372,
+      "scope": "Exact pinned155 clocks only. Original stricter budgets and reports retained. No fit, clock-period, falsepath or multicycle change. Not IO/CDC signoff."
+    },
+    "preparation_sha256": "e3e8844160846b5e6fe7323f4931b7bd54e7039a75cdf964c905143a907b765f",
+    "generator_sha256": "4f2aed55e9c31f676e67b3de56c52ca2e746a61c689bc279c12891e254a248c1"
+  },
+  "failures_preserved": [
+    "48B trace ARM margin1016 rejected;40B selected",
+    "map01 duplicate freeze anchor;map02 wrong ROM pin and interrupted build;map03 valid but timing fail",
+    "replay03 missing rtl subdirectory;replay04 corrected",
+    "sandbox GCC623/lmhostid and SUBST failures retried on host; no new license"
+  ],
+  "public_sources": {
+    "tools/nes_profile173.py": "f499b50daa405156ae4bd79854ae40d3b76e098f3269691bb60951347d49d646",
+    "tools/test_nes_profile173.py": "f5792e9ed685d0806e427babed3ae5390b99f9305598e827341bad101c03519f",
+    "tools/check_nes_profile173_arm.py": "ebaedd66891b115e20112b54d5614b79cfbd9a2fba11a79d8776d02f7d5c1c22",
+    "tools/release_nes_profile173.py": "bfe42339bf362b99c38b76ec034ad910c27ede6bf35d9c5eadc4bbb04451a3a1",
+    "tools/probe_nes_admission173.py": "17d41a9fb996a6181d4fd64b0dd0b846bac6142b26fc9506d8aba3e139e50a7f",
+    "tools/nes_admission173.py": "4f2aed55e9c31f676e67b3de56c52ca2e746a61c689bc279c12891e254a248c1",
+    "tests/nes-functional/admission173_tb.sv": "07da260cbe07d3b9eb8abaef31e823cab3b0c685f3d2fbddb75a6e531333562e"
+  }
+}
