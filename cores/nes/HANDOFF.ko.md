@@ -1,3 +1,25 @@
+# NES181 — 배포 SNES 수신·부분 행 표시·완료 ACK 연결 완료
+
+NES181의 배포용 SNES 수신·부분 행 표시·완료 ACK 후보를 연결했다. 실제 C sink→65816/DMA/HDMA/PPU에서 정상11장면630,784픽셀, 오류8종·STOP2종의 기존 화면 보존을 통과했다. 본문3,768/3,776바이트로4KB ROM에 들어간다. 보드 연결·전체 ARM/FIT·실기와60fps는 미완료다.
+
+- Latest181 CLIENT: PR113 OPEN samebranch. Production candidate SNES SEAL24/version1812/section5bundle3418 -> validate/banked upload/3HDMA/finalACK/STOP implemented; actualC sink+actual65816 viaheld filebus. SELECTtest05(12cases)+test06(rawfirst);body identical3768/3776,compact4096. Normal11scenes630784pixels,8E0+2E4 oldscreen held,1359realACK;max7chunks/7heldframes. Normaldelta retained;raw/exitraw forceinactive rebuild. Fixedfirstscene reveal afterfullcopy: freshservicedvblank, finaltests no uninitializedHDMA read. Earlierbuild01/02sizefail/test01hooktimeout/test02/03exploratory/read01/02 preserved;test03harnesschangedmidrun NOTselected. NoFW/FIT/ZIP/physical/FPSclaim. NEXT actualboard color/emphasis/frame181/export181+pairedARM fullstack/FIT thenSMB3tile1+A;rawpacking/delta/cadenceopen(max7vblank+final),notrepeatboot/models.180/GBC164/saveSRAM/priorarchivesunchanged. ReadCLIENT181contract/HANDOFF/probes/nes-client181/progress.json;completedarchivesimmutable.
+
+실제 보드 PPU color/emphasis→frame181→export181 배선을 연결하고 MCU181/SNES client181을 격리 통합한다. 전체 ARM RUN/IRQ/stack·4096B ROM·FPGA 자원/타이밍·조건부 IO 승인 뒤 최소 SMB3 숫자1→A 실기로 간다. raw full-bank 경로는최대7fresh-vblank+final로60fps미달; 생산/전송/표시완료 간격과raw packing·bank별 기준세대 차분을 남긴다. 완료된독립PPU/수집기/긴부팅/동일180/044 반복금지. AV→longplay/resetlogs→heldinput;GBC164/saveSRAM/180/완료archive 보존.
+
+새 후보 tools/nes_client181.py를 기존 boot/clip 생성기 대신 통합 빌드에 사용한다. paired sink181/video181/receiver181과 짝지어165 이름/API로 격리 배치하며 원본180은 수정하지 않는다. SEAL24 version1812와 FPGA→MCU version1811을 혼동하지 않는다. 본문3768B, 허용3776B로8B만 남아 있다. 전체 ARM 여유1040B와962/963LAB는 기존180 값이므로 새후보 승인에 재사용하지 않는다.
+
+정적rawmap A7000/Bb000,rawCHR A5000/B9000. WRAM candidate0/8000의section5 6500..7259/e500..f259. 정상→정상은기존diff;raw또는직전raw는inactive BG/OBJ/map+rawCHR(max7x4096),마지막vblank palette/OAM/bank/3HDMA/window전환후실제ACK. raw→normal상태복구/첫화면raw/STOPcopy/finalwait검증완료. 새scratchDP70..7f,metadata1240pendingcount/1242visiblecount. 세이브SRAM불사용.
+
+선택test05 12경우+test06 raw-first1경우. 생산본문바이트동일;test06시험하네스만확장. 정상11장면630784픽셀과8E0+2E4/이전전체화면보존,1359실제ACK. filebus·이전Cfixture이며실제SPI/SMB3/실기아님. 초기test02/03화면일치는채택근거아님:첫공개scanline2/미초기화HDMA주소읽기발견후freshvblank복원;최종경고없음. 완료rawarchive/record/audit수정금지.
+
+60fps는열려있다. rawfullbank는최대7freshvblank+final이므로정지복구경로이지매프레임60fps경로가아니다. rawwire53ms모델과반복table비용도남는다. board/ARM/FIT를마친뒤실기에서지속영상과실제완료간격을확인하고bank별base-generation차분/raw묶음개선으로이어간다. 완료된경계시험을다시도는대신다음통합으로진행한다.
+
+[구현 계약](../../docs/nes-client181-contract.ko.md) · [검증](../../analysis/client181-verification.json)
+
+이하 과거 기록.
+
+---
+
 # NES181 — MCU 표시 변환·전송 데이터 통과, 배포 SNES client 연결 대기
 
 NES181의 COMMITTED 부분 행을 실제 MCU 코드로 SNES 패턴·팔레트·3HDMA와 새 sink payload로 변환했다.5장면47확인과 C출력→실제65816/DMA/PPU 양쪽뱅크114,688픽셀 비교 통과. video15,888/receiver18,064바이트 유지. 배포 SNES decoder·뱅크/ACK/STOP 연결과 보드·전체 ARM/FIT·실기는 미완료다.

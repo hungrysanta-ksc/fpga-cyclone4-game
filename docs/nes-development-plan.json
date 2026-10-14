@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-15",
-  "technical_candidate": "NES181 MCU video/sink payload; deployed180 unchanged",
+  "technical_candidate": "NES181 paired production SNES client; deployed180 unchanged",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "NES181의 COMMITTED 부분 행을 실제 MCU 코드로 SNES 패턴·팔레트·3HDMA와 새 sink payload로 변환했다.5장면47확인과 C출력→실제65816/DMA/PPU 양쪽뱅크114,688픽셀 비교 통과. video15,888/receiver18,064바이트 유지. 배포 SNES decoder·뱅크/ACK/STOP 연결과 보드·전체 ARM/FIT·실기는 미완료다.",
-  "next_action": "배포 SNES client에 section5 raw bundle3418/SEAL24 version1812와 길이·슬롯·HDMA 검사를 연결한다. blank boot에서raw map A7000/Bb000 준비, 비표시뱅크 raw CHR A5000/B9000과 기존영역을 안전하게 갱신한 뒤 최종vblank에서palette/OAM/3HDMA/window/뱅크를 전환하고 실제 완료ACK를 준다. raw→normal 복귀와STOP/서비스를 실제packet으로 검증한다. 이어color/emphasis/frame181/export181 보드배선·전체ARM/4096BROM/FIT 승인 후 SMB3 숫자1→A. rawpacking/table-delta/60fps 과제 유지;같은180/044/긴부팅/독립PPU 반복금지.",
+  "assessment": "NES181의 배포용 SNES 수신·부분 행 표시·완료 ACK 후보를 연결했다. 실제 C sink→65816/DMA/HDMA/PPU에서 정상11장면630,784픽셀, 오류8종·STOP2종의 기존 화면 보존을 통과했다. 본문3,768/3,776바이트로4KB ROM에 들어간다. 보드 연결·전체 ARM/FIT·실기와60fps는 미완료다.",
+  "next_action": "실제 보드 PPU color/emphasis→frame181→export181 배선을 연결하고 MCU181/SNES client181을 격리 통합한다. 전체 ARM RUN/IRQ/stack·4096B ROM·FPGA 자원/타이밍·조건부 IO 승인 뒤 최소 SMB3 숫자1→A 실기로 간다. raw full-bank 경로는최대7fresh-vblank+final로60fps미달; 생산/전송/표시완료 간격과raw packing·bank별 기준세대 차분을 남긴다. 완료된독립PPU/수집기/긴부팅/동일180/044 반복금지. AV→longplay/resetlogs→heldinput;GBC164/saveSRAM/180/완료archive 보존.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -3003,7 +3003,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES181의 COMMITTED 부분 행을 실제 MCU 코드로 SNES 패턴·팔레트·3HDMA와 새 sink payload로 변환했다.5장면47확인과 C출력→실제65816/DMA/PPU 양쪽뱅크114,688픽셀 비교 통과. video15,888/receiver18,064바이트 유지. 배포 SNES decoder·뱅크/ACK/STOP 연결과 보드·전체 ARM/FIT·실기는 미완료다.",
+  "summary": "NES181의 배포용 SNES 수신·부분 행 표시·완료 ACK 후보를 연결했다. 실제 C sink→65816/DMA/HDMA/PPU에서 정상11장면630,784픽셀, 오류8종·STOP2종의 기존 화면 보존을 통과했다. 본문3,768/3,776바이트로4KB ROM에 들어간다. 보드 연결·전체 ARM/FIT·실기와60fps는 미완료다.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3046,7 +3046,7 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-consume181-contract.ko.md",
-  "latest_development_evidence": "analysis/consume181-verification.json",
+  "latest_review": "docs/nes-client181-contract.ko.md",
+  "latest_development_evidence": "analysis/client181-verification.json",
   "latest_hardware_evidence": "analysis/game180-hardware01-verification.json"
 }
