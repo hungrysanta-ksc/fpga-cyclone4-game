@@ -1,3 +1,277 @@
+# NES176 회고 반영 — 장면 검증 완료, 정지·속도 개선은 진행 중
+
+NES176 회고 반영: 실제 SMB3 모델360프레임에서 즉시 해제349개·10프레임 보유35개 정상 후보와 기존 픽셀 일치를 확인했다. 두 장면의 전체5,493바이트 중 차이20바이트를 확인해 앞단 변경 전송의 근거를 마련했다. 공유 메모리 오류 연결6경우도 검증했지만 실기 정지 원인은 확정하지 않았다. 배포174 유지·새 ZIP 없음·60fps 미달성이며, 무관한 로더 미세FIT 반복을 멈춘다.
+
+PR110 OPEN samebranch; refresh before publication. SELECT deployed174 errorzero174-map01 + batch174/arm01. No newFW/FPGA/FIT/ZIP. This NEXT supersedes175 READY/TIMER counter micro-optimization. Existing failed candidates and archives remain immutable.
+
+Actual CPU/PPU/MMC3+exact174collectors, idealROM/no controller:360frames/5.989s, immediate349valid(12..360), held10=35valid(12..352), same11startuprejects only. First26 states and24/25pixels EXACT prior70ns model. Last held lease still owned at test end; not teardown proof. NOactual sharedPSRAM/fill/export/SPI/SNES/level/60fps claim. Do not repeat this long intro replay without a changed scene-dependent cause.
+
+Exact174 arbiter/exporter6faultcases37checks:timeout/backend/address beforeBEGIN orafterBEGIN. Stickyfault blocks finalgeometry andfuturefill whilecore canread afterdrain; pre-existingfault causesnoBEGIN/ABORT. BUTactivefault emitsABORT1 first.174ABORT0 therefore is counterevidence, not confirmation. No watchdog removal/increase. Actualfill/COMMIT sequence not modeled.175A5 lacksnative_arbiter_fault; do not blindly repeat it.
+
+Offline oldmodeledframe24->25:full5493B,20changed(BG19/map1),3ranges,exact inheritedbase reconstruction. This ignoresalignment/commands/ACK/producerbytes/CPU andisnotdelta implementation or representativegameplay. Fulltable5152B alone15.701ms at2.625MHz vs16.7ms target. ExistingSNESdeltaDMA retained; build38.3ms includespatternstaging,NOTpureCPUtime.
+
+NEXT minimum actual lastCOMMIT->newlease collector/fill/arbiter/export/mailbox ownership distinction:rawgeometry vsrom/arbiter maskedeligibility,release,DRAIN,fillbusy/idle/abort. Prefer smallestnecessary observation integrated withnextvideochange,notwideA5/loaderFITloop. Inparallel earlydelta persistentstablekeys/base_generation/target_generation/ACKcommit/failure-rebase andtotalbytes/timebudget; nosecondMCUframe/saveSRAM. IfSPI stillcannotmeetbudget,compareFPGA->SNEScartDMA withexplicitnon-save memoryownership. ThenminimalSMB3 AV/scroll. Continuous~60fps ->longplay/error-resetlogs ->heldinput.
+
+New evidence56files manifest0620084b73c90feef3726b4347b9b49f85d740ae43edcdb03baeea6788fd2101 atprobes/nes-admission176/evidence. Replay01syntaxfailure preserved;replay02complete.0errors44warnings retained,notwholecoresignoff. Testtools/bench hashes inanalysis/admission176-verification.json. Allsimjobsfinished;FLOATwrapperfinallyshutdown. Keep174/GBC164/saveSRAM/oldarchives;no174/044/A-B repeats.
+
+[결과·계획](../../docs/nes-video-review176.ko.md) · [검증·해시](../../analysis/admission176-verification.json)
+
+---
+
+# NES175 READY·카운터 후보 — 미채택,174 유지
+
+NES175 READY·카운터 후보의 기능/SPI 검증은 통과했다. READY 경로 제거와 쓰기 대기 경로 +1.573ns 개선에도 전체 setup은 각각−0.048/−0.218ns로 실패해 두 후보 모두 미채택이며 새 ZIP은 없다. 배포174를 유지한다.
+
+PR110 OPEN samebranch; refresh nextturn. SELECT deployed174 errorzero174-map01 + batch174/arm01; no175 ZIP. New probes/nes-ready175/evidence/ and record02 completed immutable. record01 failed only on generator shared-list mutation; corrected list copy reproduces both RTL byte-exact in one process. Old generator/test pins preserved; top public pins normalize the documented one-line fix. ready175-map01 output-only A5 + load_ready !active_reset -> !reset, RECEIVE implies release_reset0 after reset. External reset clamp and phase release synchronizer unchanged. timer175-map01 additionally removes timed_phase from phase_step, ONLY consumed after !timed_phase branch. Same command/snapshot/write pulse edges, not arbitrary-corrupted-state equivalence.
+
+Each candidate loader294912 states/1056 singlebyte-command-reset sequences/19 subclock reset offsets +wrongREADY/wrongrelease negatives PASS. Each actualSPI1126009edges/100reads7ACK19bad72cancel2overlap; READY/count seeded,not fullROM/newgame. Existing175 lifecycle/model/A5 output review reused with scope; no new MCU/IO/CDC/ASM/package. Source copies may have Windows line endings; text equality and raw manifest retained, not byte-identical simulation copy claim.
+
+READY15073LE963LAB36M9K nominal-.048/hold+.148; oldrelease_reset1->snapshot40 path absent all3corners. Worstload_begin->remaining1/2/4. TIMER14929LE959LAB36M9K nominal-.218/hold+.147; same target+1.573ns, counter check_failed->count_begin1/2->count_complete0->count_update0->loaded_bytes5 ena4levels fails-.218 (READY counterpart+.287).144LE/4LAB less vsREADY, NOTselected or60fps. No seed/attributes/clockexceptions changed. Prior A4-.178/A5-1.114 remainrejected.
+
+Preservation research: deployed174 onlyroot partition. Source changed partition needsresynthesis; ignoringchanges isnot newlogic. Official SignalTap incrementalroute list lacksCycloneIV, but doNOTclaim allECOunsupported: SignalProbe ECO supportsIV and localmake_ape_connection exists. RAM96inputrewire support NOTverified, no ECOexperiment. Remote SD/TXT workflow cannot directlyuseSignalProbe. No extra partition/ECO research required before targetedcountercontract work.
+
+NEXT review accepted loader counter effects and live fault/commands_blocked boundary; document BEGIN/STOP/RELEASE count/address consume edges and compare prior165-167 failedcounter/CE/fault trials. If stagingneeded, explicitly reconcile SPI C0-C4/SS2us and payload/READY/STOP,not false sameedge equivalence. Avoid thirdblindsmalllogic/attribute/seed refit; READY-.048 isnotrelease. Then minimal requiredtiming/boundaries andactualSMB3. Physical174 freeze3.81s/12ACK and167.5ms percompletion remainOPEN. AV60fps->longplay/error-resetlogs->heldinput. KeepGBC164/saveSRAM/noRUN-SD/no secondframe/no174-044repeat. Alljobsfinished/FLOATstopped.
+
+[계약·결과](../../docs/nes-ready175-contract.ko.md) · [검증·해시](../../analysis/ready175-verification.json)
+
+---
+
+# NES175 연결 회복 검증 — 관측 후보 미채택, 새 ZIP 없음
+
+NES175는 느린 소비 후5회 전달·거부3회 후 회복을 연결 시험으로 확인했다. 실기 정지는 아직 미해결이며, 관측 후보 A4(-0.178ns)·A5(-1.114ns)는 타이밍 실패로 미채택이다. 새 ZIP 없이 검증된174를 보존한다.
+
+PR110 existingOPEN/unmerged; refresh nextturn. SELECT remains deployed174 errorzero174-map01 + batch174/arm01; no175 installation.174ZIP/source/evidence unchanged. Synthetic deployed174 collectors/fill/exporter/dualclockmailboxes:31 nominalframes,23 owned skips,BEGIN/END/COMMIT5 each,release8,reject3,gen1/2/3 then7/8;170ms then40ms postCOMMIT hold +1ms PREPARED. No ROM/physicalSPI/SNES/FPS claim. DROP_RELEASE mutation detects firstcommit owned1/gen1/DRAIN11. test01 forwarddecl failure;test02 hostobservedCOMMIT made mutation blocksecondrelease,not first;test03 correctedPASS. These do not reproduce actual174 freeze.
+
+A4 events-map01:existing16x96history event-enable+oneownedreg,38 sparse/wrap/STOP/fault tests+wrongalwayswrite mutationPASS; FIT15060LE961LAB36M9K,nominal-.178/hold+.130,loaderfault->reject_state2. A5 snapshot-map01: ONLY3 files/addobserveroutputs+96-bit rewiring,historyRAM/control/sampling byteexact174. FIT15083LE963LAB36M9K,nominal-1.114/hold+.154,loaderrelease_reset1->active_reset->load_ready->SPI snapshot40. 75%routing,firstIC2.679ns,active_resetfanout40. This is actualREADY dependency, NOTmerged reset-chain proof. Do not blindly repeat165hostDONT_MERGE fixes, seeds, attributes or tinyrefits.
+
+Both175 MCU full-linked static26564/foreground37312/IRQ508/margin1040. A4 arm01/version2/A4 label FWf2461f53/report3927; A5 arm02/version1/A5 label FW71b32e46/report3923. Bothundeployed. armcheck01 checker lacked explicitv2 normalization; correctedarmcheck02 passes. A5 armcheck03 passes unchanged reader. arm-build02 mini path typo correctedbuild03; notsource/licensebug. Source reproduction/evidence frozen; no newIO/CDC because actualtimingfails. Alljobsfinished/FLOATstopped.
+
+NEXT FIRST verify whether supported Quartus preservation can keep deployed174 placement for minimumobservable change (NOT yetresearched/proven); ifinfeasible, review exactREADY/reset/snapshot andfault/reject_state structure against SPI accept/snapshotedge contract before ONEjustifiedcandidate. Avoid another observationbit/refitloop. Neededphysical distinction remains recurrentadmissionreject vsstalledproducer/export/partialSPI. OldABORT0 doesnotexclude preBEGINreject. No unchanged174/044/boot-A-B or longROMreplay bydefault. Oncequalifiedminimumsnapshot, actualSMB3 immediately. ContinuousAV60fps thenlongplay/error-resetlog thenheldinput;174mean167.5ms remains separate throughputgap;no duplicateSNESdeltaDMA/no tableomission withoutWRAMbasegeninheritance. KeepGBC164/saveSRAM/noRUN-SD/no secondMCUfullframe.
+
+[계약·원인 범위](../../docs/nes-lifecycle175-contract.ko.md) · [검증·해시](../../analysis/lifecycle175-verification.json)
+
+---
+
+# NES174 실기 결과 — 화면 정지 지속, 새 후보 경계 우선
+
+NES174 실기:12회 표시 완료·마지막generation23/RUN3.81초 이후 영상만 정지했다. 사운드·조작은 정상으로 보인다는 보고이며 로그상60초 종료·메뉴 준비는 정상이다. 변환·전송/표시 확인 평균167.5ms, 연속 화면·60fps 미달성. 다음은 새 후보의 허용·해제·전달 경계다.
+
+BEGIN/END/COMMIT/displayACK12 allmatched,ABORT0,lastgen23,lastdisplay381ticks(3.81s),deadline1/DISPLAY60050ms;no latercompletion for~56.19s of60s. ROM0/sink0/video0;receiver21 secondary when deadline guard rejects transfer. FullROM393216 verified,bootstage3/SPCA9/unmute1. Inputchanged152/latest16 B/LEFT/release. STOP/base/menuPREPARED elapsed295490ms PASS; visiblemenu return NOTexplicitly reported. No newvideo; audio/controls fromuser, not log-quality proof.
+
+Receive55240ms includespostfreeze polling, not12images transfer time. Build460/12=38.333ms,seal1550/12=129.167ms,sum167.5ms vs173203.125ms. Differentframes/input: smaller observedaverage not controlled17.5%gain/FPS. Firststutter remains farfrom16.7ms. No count/60sFPS claim. Source runtime incrementsnative_frames only aftermatching displayACK; repeatedframes not excluded.
+
+No received13thBEGIN/ABORT narrows toward producer/admission/release/DRAIN/fill/host before newcandidate, NOTproven exactrootcause. Exporter IDLE invalidgeometry/count silently releases toDRAIN(error2), soABORT0 != norejection. Prior model12..26pass notphysicalgen23/24correlation or sustainedMCUbackpressure proof. Cross-plane correction didnot suffice forphysicalfreeze; preserve correctimplementation rather than claimfix.
+
+NEXT inspect existing actual post-COMMIT lease release/drain/fill/newframe/host tests against realistic slowconsumer gaps; reproduce ONLY uncoveredboundary. Ifphysical distinction necessary, capture minimal producer/admission/release state at termination in nextchangedtrial, no broaddebug expansion. Inparallel executiondesign consider remaining fulltable/perpacketACK costs, existingSNESdeltaDMA alreadyimplemented; no tableomission withoutinactivebank base-generation inheritance. No unchanged174/044/bootA-B/FIT repeats; no newpackage this result-onlyturn. AV60fps->longplay/error-resetlogs->heldinput. KeepGBC164/saveSRAM/noRUN-SD. Read analysis sourcepins.174implementationmanifest c1b89e43997199f0ae13b659c9bc6a92ce1f4d1827239d0d35b65ff3434827f8 unchanged; prior completedarchives/finalizers immutable. PR110 existingOPEN, refresh before publication.
+
+[결과·다음 작업](../../docs/nes-game174-hardware01.ko.md) · [로그 해시·계산](../../analysis/game174-hardware01-verification.json)
+
+---
+
+# NES174 실기 시험판 — 내부 타이밍·조건부 IO 통과
+
+NES174 실기 시험판 준비 완료: 실제 클록 setup +0.246ns / hold +0.156ns와 기존 외부 인터페이스 조건을 통과했다. 타일 간 비트평면 수정·묶음 전송을 새 FPGA/MCU에 함께 적용한다. 화면 정지 해결·60fps는 실기에서 확인할 차례다.
+
+SELECT FPGA Temp/nes-errorzero174-map01, reproduced probes/nes-errorzero174/reproduce01; MCU probes/nes-batch174/arm01. ZIP probes/nes-errorzero174/release01/NES174-SMB3-VIDEO-BATCH.zip SHA6624455010e05fe425ec1b81fd105e2eaddf21ef795470aa047da03c77940468. FW89c98add72ed3a6d983f9961c96b7ac2d7da6a889ba0fc5d5595da25dacfaa87; FPGA23e71b323e617d4bb23e3703d7107e0b65f7e9f2d2974b3805d8dd8d6e8ef9aa. New package, no physical result yet. Keep MCU/FPGA paired: ABI1741/exception32. Same172SNES4096 mappedMIF exact; packed RBF roundtrip verified; game/base/164restore bytes preserved from173.
+
+SPI-only change from legality174map01: reset-reachable !fault=>error_code0, explicitly write zero beforefault and hold afterfault. Same-edge priority9>7>1>decoded, no newcycle/attribute/clock. 557056 differential cases inclhold/reset/2negative mutations; connected1126009edges/100reads7ACK19bad72cancel2overlap PASS. SPI sourcee7368006176a0e21b6771057e3681c4abc3125fbc648e4b9cd55444b5c575d3c. Loader3598512d unchanged, old294912/1056 proof reused. Not impossible-state equivalence/fullROMwrites/newgameboot.
+
+FIT15061LE963LAB36M9K; actual setup+.246/hold+.156, targetcheck_busy->error_code+.828. Stricter implementationbudget-.052 retained, not hidden. Same actualclockSDC/no falsepaths or multicycle changes. IO on routedcopy:PSRAM70ns+PCB4 margin3.899, SNES78.805<270, SPI162.819<190.476, bundlespositive/11firststagefanout1/nativepayloadreset0. Legacy reset negatives24 remain; conditionaldigital bounds NOT fullIOCDC/MTBF/electrical approval.
+
+ARM priorfull-link static26564/foreground37312/IRQ508/margin1040 reused; sourcepins exact. New maximum log3934/4096 PASS. All compile/FLOAT/ASM jobs finished, noRUN-SD. Model cross174 and batch174 pixel/receiver/realSNES229376 proof reused; no repeated unrelatedboot/A-B/044. Existing173 timing trace fields remain. Loading verification stillminutes; ready->RUN~60s unchanged.
+
+NEXT actualSMB3 once, video fromfirstgamepicture tomenu ifpossible, nes-progress-174.txt + nes-game-last-174.txt. Check sustainedvideo AND stutter, audio/pad/menu. Model18->3patternpackets is NOTFPS; fulltable+ACK costs remain. Base-generation inheritance required before omitting WRAMtable packets. AV60fps->longplay/error-resetlog->heldinput. SaveSRAM/GBC164 protected. Prior failedlegalitymap02 staysrejected. Completed record/audit/evidence immutable. PR110 existingOPEN; refresh before next publication.
+
+[실기 안내](../../docs/nes-game174-ready.ko.md) · [계약](../../docs/nes-errorzero174-contract.ko.md) · [검증](../../analysis/errorzero174-verification.json)
+
+---
+
+# NES174 명령 허용 상태 — 개발 기준 map01, 배포 보류
+
+NES174 로더의 명령 허용 상태를 분리해 전체 실제 클록 setup을 -0.807ns에서 -0.098ns로 개선했다. 기능·실제 SPI 연결은 통과했으나 타이밍은 여전히 실패다. 후속 속성 변경(-1.344ns)은 미채택이며 새 실기 ZIP은 없다.
+
+SELECT FPGA Temp/nes-legality174-map01, reproduced probes/nes-legality174/reproduce01. Only loader changed from cross174. Four preserved reject_state bits use SAME next-state predicates as phase, not one-cycle-late phase; current RECEIVE length remains live. Fault has own sticky owner, error priority/state/counter/write-drain/accept edge unchanged. Loader SHA3598512dc8373c386b4cedc349e094ebbb1a454164acc24fe5803bb89785f5ed. No extra command cycles.
+
+294912 states/1056 command-reset sequences plus delayed-legality/blocked/STOP negative mutations PASS. Actual connected SPI→boot→READ16:1126009edges,100reads,7ACK,19bad,72cancel,2overlap;219wireframes/SCK2.625MHz/SSgap2us. READY/count are seeded; not full ROM writes or new SMB3 boot. map02 attribute-only functional reuse, not new simulation.
+
+map01 FIT15056LE961LAB36M9K; actual setup-.098/hold+.148; stricter budget-.438 stillFAIL. load_valid→fault+1.968/check_failed→fault+2.420/new reject_state input+.113. Remaining check_busy→SPIerror_code enable5levels. map02 disables CE+synccontrol only on SPIerror_code: target+2.005 but loaderphase8→loaded_bytes-1.344 and legality-.113; REJECT, not selected. Do not repeat this attribute refit/seed sweep/165 combinational flattening. Next inspect shared live response error/update-hold eligibility from map01; preserve error edge/priority, or explicitly change contract and MCU gaps.
+
+No newIO/CDC/ARM/pixel/boot tests because internal timing stillfails and other sources exactcross174. After timingpasses, required external boundary/reset checks then pair with probes/nes-batch174/arm01 firmware89c98add72ed3a6d983f9961c96b7ac2d7da6a889ba0fc5d5595da25dacfaa87, margin1040; never mix174MCU with173FPGA. Existing batch tests and172SNES code retained. Cross-tile ABI1741+32bit exception retained. Last distributed173 unchanged. All new build/FLOAT jobs finished; no SD or hardware package.
+
+AV60fps stillOPEN; this is deployment timing work, not measured frame throughput. Batch18→3 pattern packets remains candidate only. Fullmap/CGRAM/OAM/HDMA and perpacketACK costs remain; inactive WRAM generation inheritance required before table omission. KeepGBC164/saveSRAM/noRUN-SD/no secondframe; no unchanged173/044/A-B repeats. Raw evidence and completed finalizers immutable. PR110 remains existingOPEN; refresh before publishing next work.
+
+[계약](../../docs/nes-legality174-contract.ko.md) · [검증](../../analysis/legality174-verification.json)
+
+---
+
+# NES174 묶음 전송 — 검증 완료, FPGA 타이밍 미해결
+
+NES174에 타일 묶음 전송을 추가했다. SMB3 모델 장면의 패턴 요청18회→3회, 전체 요청45회→30회이며 실제 SNES 수신·229,376픽셀과 ARM 여유1040바이트를 확인했다. 실기 속도·60fps는 미확인이다. FPGA 타이밍-0.807ns와 전체 테이블 전송 비용이 남아 새 ZIP은 없다.
+
+SELECT MCU candidate probes/nes-batch174/arm01; not installable. C c03:9 cases/62 negatives,342 pattern calls→45 total; exact plan/pattern bytes vs cross174. Per SMB3 model24/25: BG16+OBJ2→3 batches(240/16/64B), pattern320B unchanged, allrequests45→30, header+ACK420B saved/frame. This is not measured speed/FPS. Actual existing172 SNES:normal3 commits92ACK,STOP1 commit60ACK;229376pixels. C converter tests use modeledACK; separate real65816 packet producer reuses byte-identical outputs. No new emulator boot suite/Questa/FIT.
+
+Scratch lifetime: OAM[0:239] BG15tile packets→ACK final partial→clear all544→OBJ; CGRAM[0:223] OBJ7tile packets→ACK final partial→clear all512→palette. No retained callback pointer, no secondframe/saveSRAM, no retry/SEAL onfailure. Base174 ABI1741 and exception32 unchanged, actual172 SNES bytes unchanged. Header callback contract now accepts contiguous multiples16/32 up to240; code using old single-tile callback assumptions must adapt explicitly.
+
+ARMcheck01:static26564/foreground37312/IRQ508/margin1040; receiver18064/plan15888 unchanged. Firmware89c98add72ed3a6d983f9961c96b7ac2d7da6a889ba0fc5d5595da25dacfaa87,197988B. Keep paired candidate private until FPGA passes. Source reproduction matches. c01 sandbox DLL load error,c02 test copy missing trace header preserved;c03 passed.
+
+FPGA174 map01 remains nominal-.807, no newFIT/RTL/timing claim. Reviewed actual path load_valid→fault:4levels,5.372ns IC vs1.052cell; X19→shared error_code gate X29→X19. Prior165 parallel fault / error single-owner trials rejected, don't blindly repeat. Next target shared fault/error physical reconvergence using current167 C0raw/C1causes/C2decode/C3accept/C4counter; preserve accept edge/error precedence/WRITE-HOLD drain or document any contract change and MCU latency. Then minimal timing/changed-boundary/IO/ARM and actualSMB3.
+
+Fullmap4096+CGRAM512+OAM544+HDMA and perpacketACK still dominate; SNES localdeltaDMA already exists. Skipping packets requires explicit inactive-WRAM base-generation inheritance; otherwise two-generations-old bytes can leak. AV60fps→longplay/error-resetlog→heldinput, keepGBC164/saveSRAM/noRUN-SD. Same173/044/bootA-B/passed174pixel-SPI replay unnecessary unless changed. Record/audit/evidence immutable; PR110 existingOPEN, refresh before publication.
+
+[계약](../../docs/nes-batch174-contract.ko.md) · [검증](../../analysis/batch174-verification.json)
+
+---
+
+# NES174 후보 — 타일 간 비트평면 검증 완료, 타이밍 미달
+
+NES174 후보는 SMB3의 서로 다른 타일 비트평면을 보존하도록 수정했다. 모델frame24 수집과 frame24·25의114,688픽셀 비교, SPI·C 및 ARM 여유1024바이트 검증을 통과했다. FPGA 배치는 성공했지만 memory setup-0.807ns로 미채택이며 새 실기 ZIP은 없다. 실제 정지 해결·60fps는 미확인이고 반복 전송 비용도 남았다.
+
+SELECT 없음/미배포. probes/nes-cross174 map01/unit02/replay01/c01/pixels01/spi01/arm01/armcheck03. 26frame model12..26valid, old24reject185rows→224rows. Pixels24/25 match114688; SPI phases0/3.5 each1733records47blocks12587wireB/C191calls. No physical FPS claim. Model24 != physical173generation30. C context18064/plan15888 unchanged; linked26564static/37328foreground/508IRQ/1024margin. Fit15076LE963LAB36M9K; nominalmemory-.807FAIL/host+1.483/NES+6.370/holdmin+.146. No ZIP/IOCDC174 signoff. Existing173 remains last distributed package; do not install standalone174 firmware.
+
+New ABI: BEGIN1741,kind3 width4. Exception lowtile13/cell13(row*33+col)/highY3/lowY3;128entry limit unchanged. Both physical sources required; cross-cell unique64bit key avoids collisions. The legacy module comments about same-tile rejection do not describe174 logic: use the174 contract and generated expressions. Collector2+Creceiver/converter changed; SPIwidth/exportmagic; SNES172 bytes retained. General malformed geometry and OBJ checks remain strict.
+
+NEXT review actual control.load_valid→loader.fault and check_failed→fault/loaded_bytes routing/fanout before a targeted structural candidate. Four logic levels,5.372ns data interconnect; not new NES collector critical path. Compare prior165 fault/counter failures first; no unchanged refit/seed/clockrelax/falsepaths. Once timing recovered, pair with changed-boundary/ARM checks then minimal actualSMB3. Do not redo passed24/25pixel/SPI tests unless their inputs change.
+
+Throughput remainsOPEN:173build+seal203.125ms/update. Existing SNES-local deltaDMA is already present; upstream seal still sends5152B+HDMA withperpacketACK. Plan pattern batching within240B and avoid unchanged/fulltable wire traffic. Reuse candidate fields only with an explicit lifetime contract; no secondfullMCUframe or cartridge saveSRAM. This optimization is not implemented in174. AV60fps→longplay/error-resetlogs→heldinput; no same173/044/bootA-B/genericobserver expansion.
+
+Manifest3d36ea4df09a47dfb05c5f19a89a22538e4bf6c3d513902b46ef0a45741a3303,2087 private evidencefiles frozen. record01/audit finalizers must not be rerun. unit01 wrongsandboxTEMP and armcheck01 DLLload errors are setup failures, not RTL/license failures; unit02/hostarmcheck03 selected. Original173 evidence unchanged. Tests/FLOAT/Quartus finished. PR110 existingOPEN; refresh before next publication.
+
+[계약](../../docs/nes-cross174-contract.ko.md) · [검증](../../analysis/cross174-verification.json)
+
+---
+
+# NES173 실기 — 정지와 초기 처리량을 분리
+
+NES173 실기: RUN 시작 후5.79초까지 표시 ACK16회 뒤 추가 완료가 멈췄다. 변환/패턴 전송910ms와 테이블·SEAL/ACK2340ms, 합계 회당 약203ms로 초기 처리량도60fps 목표에 크게 못 미친다. 정상60초 종료·STOP/메뉴 준비 확인. 정지 원인 미확정, 같은173 재시험 없이 타일 간 plane 표현과 반복 전송/왕복 개선으로 진행한다.
+
+BEGIN/END/COMMIT/ACK16,ABORT0,lastgen30,ROM/sink/video0,deadline1. profile receive54170ms includes idle after freeze; build910ms/seal2340ms,lastACK5790ms relativeRUN. Means56.875/146.25/203.125ms;16/5.79=2.76 ACK/s interval average NOTTVfps. Counter sum57420 vs60000 leaves2580 outside/incomplete/quantization;do not attribute or subtract54210 idle to infer active receive. DISPLAY60060ms,menu-prepared295750ms;user same172 symptoms/no newvideo.
+
+다음 작업: cross-tile plane/row representation preserving both sources; minimal boundary test thenSMB3. Also remove unnecessary fulltable retransmission/perpacket roundtrips: seal sends5152B map/CGRAM/OAM+HDMA,minimum26packets inclseal; pattern transfers extra. Seal2340ms NOTpureSNES DMA; existingSNESlocalcompare/deltaDMA should not be reimplemented. No fullsecondMCUframe/saveSRAM, preserveACKownership/STOP/audio/pad. Generation30 means do not fixate on27 or equate model24. NewBEGINnotreceived is not a live FPGA state observation.
+
+No newfirmware/FPGA/ZIP, same173/044/redundantFIT/generictrace unnecessary. AV60fps→longplay/error-resetlogs→heldinput. PR110 existingOPEN. Preserve173 implementation archive. [실기 결과](../../docs/nes-game173-hardware01.ko.md) · [근거](../../analysis/game173-hardware01-verification.json).
+
+---
+
+# NES173 — MCU 측정판 실기 대기, 새 FPGA 관측 후보 미채택
+
+173은 172 FPGA·SNES ROM을 바이트 그대로 유지하며 초기 화면부터 느린 비용을 수신/대기·변환/staging·SEAL/ACK로 나눠 기록한다. 마지막 표시 ACK 시각은 RUN 시작 기준이다. 시간 분해능10ms, 누적값은 실패한 미완료 단계를 제외하며 수신값에는 정지 후 대기가 들어간다. 14회 ACK나 전체 SPI 바이트를 FPS로 환산하지 않는다. 화면 정지 수정판이나60fps 달성판은 아니다.
+
+SELECT probes/nes-admission173 arm04/profile04/armcheck03/report02/release01. 실제 C10경우·tick wrap PASS, ARM static26564/foreground37328/IRQ508/margin1024, TXT3934/4096. FPGA SHA6e9f7fc0 exact172; MCU9b137807; ZIP633b8c46. 패키지는 NES173-SMB3-VIDEO-PROFILE.zip. NES GAME 173.nh1 한 번 실행 후 두173 TXT를 받는다. 동일 증상이면 영상/044/동일 부팅 시험은 불필요하다. 실행 중 SD 쓰기·세이브 SRAM 사용 없음.
+
+실제 ROM 확장 재현은 frame24에서 fetch pair error2 + compact error1, rows185로 전송 전 거부를 재현했다. replay02와 상세 관측 replay04의 결과·소스 해시는 analysis/profile173-verification.json을 읽는다. CPU/PPU/MMC3+70ns 모델과 배포 collector4개를 연결했지만 매 프레임 즉시 release하며 실제 MCU/fill/export/SNES 소비 속도는 없다. 모델24와 실기generation27을 동일 원인으로 단정하지 않는다. 다음은 불일치한 plane 주소/description을 근거로 필요한 표현만 수정하는 것과173의 실제 단계 비용 대조다. 일반 조건 완화나 malformed frame 허용은 금지한다.
+
+실험 tools/nes_admission173.py의 A3 history 관측은 map03 fullFIT 후 nominal memory setup -0.077ns여서 미채택·미배포다. 기능 signoff도 아니다. 기존 FPGA 전체 재사용으로 측정을 먼저 실기로 보낸다. A3 코드를173 패키지와 혼동하거나 미달 후보를 반복FIT/clock 완화하지 않는다. 초기48B trace는 margin1016 실패,40B 최종본으로1024 회복. 해당 실패·경로 누락 replay03 등은 보존했다.
+
+replay04 상세: frame24,line193,dot232,low_phys21e150/high21e1ff,logical0150/01ff,pending1/address_ok1/BG. 기존 같은 타일 fineY 예외로는 physical tile1e15→1e1f와fineY0→7을 표현할 수 없어 ordinary/split 모두0. ROM 데이터 비교 오류 없음. 다음 구현은 두 타일의 해당 plane/행을 보존하는 제한된 합성 패턴 또는 동등한 표현이며 high 주소만 사용/조건만 완화 금지. 정확한 $2006 트리거 및 실기 원인은 별도 미확정. 173 단계 비용 로그와 함께 다룬다.
+
+PR110 기존 브랜치에 정리한다. 연속 AV→장기 플레이/오류·본체 리셋 로그→입력 유지 순서와 GBC·164·세이브 보호를 유지한다. 기존172 증거와 완료 archive는 불변이다. 새 결과 기록/패키지 생성기를 같은 경로에 다시 실행하지 않는다.
+
+[실기 안내](../../docs/nes-game173-ready.ko.md) · [계약](../../docs/nes-profile173-contract.ko.md) · [검증](../../analysis/profile173-verification.json)
+
+---
+
+# NES172 실기 — 초기 표시 통과, 다음 영상 후보 미수신
+
+사용자 추가 확인: 처음 표시된 구간도 뚝뚝 끊겼다. 14회 ACK는 원활한 화면의 증거가 아니다. 목표는 실제 SMB3에서 약60fps의 연속 표시이며, 정지 해소만으로 완료 처리하지 않는다. 프레임 생성·전송·SNES 반영별 진행 시간과 화면 완료 간격을 구분해 병목을 줄인다. 60fps의 프레임 간격 약16.7ms를 목표 예산으로 삼되 현재 측정치로 주장하지 않는다. 전체 SPI 바이트에는 상태 폴링이 포함되므로 영상 전송량이나 유효 FPS로 바로 환산하지 않는다.
+
+NES172 실기에서 표시 준비와 14회 표시 완료 응답을 통과했지만 이후 화면이 멈췄다. 버튼·스테이지 음악은 계속 반응했고 정상 약60초 한도로 메뉴에 복귀했다. BEGIN/END/COMMIT 각14, ABORT0, 마지막 generation27이다.170의 수집 시간 초과와 달리 다음 BEGIN이 수신되지 않은 경계이며, 연속 화면 목표는 미달성이다.
+
+마지막 generation27 뒤 fetch/compact/raster 결합·전송 전 허용 조건과 공통 release·exporter DRAIN/fill_busy를 우선 확인한다. 전송 전 반복 거부와 해제/수집 미진행을 구분하고, 필요할 때 해당 경계의 최소 상태만 종료 로그에 남긴다. 변경 경계 검증 후 실제 SMB3로 복귀하며 같은172/044·부팅/A-B·무변경FIT·근거 없는 시간 제한 증가는 반복하지 않는다. 연속 AV→장기 실행/오류·본체 리셋 로그→입력 유지 순서와 세이브 SRAM/GBC/164 보호를 유지한다.
+
+[결과](../../docs/nes-game172-hardware01.ko.md) · [필드·소스 해시](../../analysis/game172-hardware01-verification.json). PR110 OPEN; no new firmware/FPGA/ZIP. DISPLAY60050ms includes boot; runtime6000ticks starts afterready. receiver21 is secondary to deadline1; trace_state4 is lastvalidatedCOMMIT snapshot, NOTliveFPGA/receiver state. ABORT0 does not cover pre-BEGIN invalidgeometry release. User AV/menu report + video samples; no independent audio/FPS claim. Keep172 build/evidence archives immutable.
+
+---
+
+# NES172 — 준비 확인 후 첫 표시 요청, 실기 대기
+
+NES172는 ROM 진입·WRAM 복사 검증·표시 준비 완료를 구분하고 준비 완료 후에만 첫 화면 데이터를 전송한다.171 FIFO와 FPGA 배선은 유지하고 SNES ROM·MCU 시작 순서를 바꿨다. 실제65816 부팅4경우, C 대기9경우,6회 표시·270ACK 및 ARM 여유1024바이트·로그4020바이트 검증을 통과했다. 실기 원인 해결과 연속 화면 성공은 아직 미확인이다.
+
+NES172-SMB3-BOOT-READY.zip을 함께 적용하고 NES GAME 172.nh1을 실행한다. 준비 실패 시 기존 로그의 stage0/1/E1/2/3으로 reset/ROM/복사/초기화/패킷 경계를 좁힌다. 첫 화면이 나오면 지속 갱신·음악·메뉴 복귀와 두 TXT를 받고 가능하면 짧은 영상을 확인한다. 같은 무화면이면 영상·171/044 재시험은 불필요하다. 준비 후60초 실행하며 총6분 관찰 상한을 둔다. 연속 AV→장기 실행/오류·리셋 로그→입력 유지 순서와 세이브 SRAM/GBC/164 보호를 유지한다.
+
+[계약](../../docs/nes-boot172-contract.ko.md) · [검증](../../analysis/boot172-verification.json). PR110 OPEN. SELECT client01/test03/gate02/display01/arm02/armcheck03/asm01/report02/release01. No new FIT;65 routing/source files unchanged171;3163B copied/verified in4096B ROM. Boot mismatch stageE1 differs from SPC errorE1. Failure run_first_error6/native SERVICE2; preserve earlier errors. Initial inlining failed stack margin1008; noinline final1024. Ready gate before runtime begin, so60s starts after ready. No SD during RUN, no blind retry. Do not rerun completed record or alter archives.
+
+---
+
+# NES171 실기 — 첫 BEGIN 응답 미완료
+
+NES171 실기에서 첫 화면 표시 전에 종료됐다. ROM393216바이트 적재·비교와 첫 영상 후보 COMMIT1은 성공했지만, 첫 BEGIN 요청이 FPGA에 보관된 채 SNES 완료 ACK 없이65536회 대기 한도에 도달했다. 표시 구간13410ms, 표시 완료0회, ROM 오류0이며 STOP·기본 FPGA·메뉴 준비는 정상이다.170의0x34 수집 시간 초과와 다르고169의 초기 응답 실패와 같은 경계다. FIFO의 연속 화면 개선 효과는 아직 실기에서 확인하지 못했다.
+
+다음은 SNES 표시 프로그램의 실제 reset 해제→ROM 부팅→WRAM 복사→첫 패킷 읽기→ACK 게시 경계를 좁혀 수정한다. sealed1/ACK0만으로 부팅 실패나 FIFO 회귀를 확정하지 않는다. 기존 프로그램 바이트 일치·모델 부팅·무변경 FIT를 반복하거나 대기 한도만 늘리지 않는다. 변경 경계의 최소 검증 후 실제 SMB3로 돌아간다. 같은171·044 재시험이나 추가 영상은 필요하지 않다. 연속 AV→장기 실행/오류·본체 리셋 로그→입력 유지 순서와 세이브 SRAM/GBC/164 보호를 유지한다.
+
+[결과](../../docs/nes-game171-hardware01.ko.md) · [필드·소스 해시](../../analysis/game171-hardware01-verification.json). PR110 OPEN; no new firmware/ZIP. Completed archives immutable.
+
+---
+
+# NES171 — CHR 선행 읽기 FIFO 실기 대기
+
+NES171 실기 시험판을 준비했다.170의 화면 정지 원인인 그래픽 수집 전체 시간 초과를 줄이도록 FPGA에256×27비트 FIFO(M9K1개)를 추가해 읽기와 MCU 소비 대기를 분리했다. 같은 모델 조건에서 기존654바이트 중단→2048바이트 완료, 최대8192바이트도 통과했다.15014LE/959LAB/36M9K 배치와 실제 클록 기준 setup+0.024ns·hold+0.127ns, 조건부 IO·ARM 여유1024바이트를 확인했다. 시간 제한·사운드·입력·SNES169 표시는 유지하며 연속 AV 실기는 아직 대기다.
+
+NES171-SMB3-CHR-FIFO.zip의01-GAME171-SD-ROOT를 적용하고 NES GAME 171.nh1로 SMB3 첫 레벨을 실행한다. 첫 화면 이후 지속 갱신·사운드·입력·약60초 메뉴 복귀와 두 TXT를 확인한다. 가능하면20~30초 영상, 동일 정지/무화면이면 TXT·설명만 받는다.0x34가 남으면 실제 생산/소비 진행량에 따라 경계를 좁힌다. 같은170/044·무변경FIT·범용 진단 반복 없이 연속 AV→장기 실행/오류·본체 리셋 로그→입력 유지 순서를 지킨다. 세이브 SRAM/GBC/164 보호와 CPU/PPU 우선·7에지 감시를 유지한다.
+
+[실기 안내](../../docs/nes-game171-ready.ko.md) · [변경·검증 계약](../../docs/nes-prefetch171-contract.ko.md) · [검증 근거](../../analysis/prefetch171-verification.json). PR110 OPEN/samebranch. SELECT map02/test02/cancel02/arm01/armcheck01/report01/release01.28 RTL cases incl512tile two phases/full FIFO clear-generation-reset. 60 other FPGA inputs exact169; only fill changed, same limits. FIFO synchronous head avoids read-during-write stale data; all bytes tentative until unchanged COMMIT/display ACK. Firmware2e7dc90c / FPGAd67ad0a2 / ZIP4782ef2f. Model is not measured hardware pacing/FPS. No full IO/CDC/MTBF claim;24 legacy negative reset paths remain separately recorded. Declaration-order test01 and no-pending cancel01 fixture failures retained. Sandbox host/binutils failures are not license entitlement or RTL failures. No active jobs; completed archive/finalizers immutable.
+
+---
+
+# NES170 실기 — 표시 완료 후 CHR 수집 시간 초과
+
+NES170 실기에서13회 표시 완료 ACK·음악·스타트 반응을 확인했지만 이후 화면이 멈췄다. 영상 후보21회 중13회 완료,8회 중단이며 최초·마지막 중단0x34는 CHR 수집의 전체 시간 예산 초과다. 정상60초 제한으로 종료했고 ROM/표시 통신 오류는0이다. 연속 AV 목표는 미달성이다.
+
+다음은 CHR 수집·전송의 전체 예산 초과를 수정한다. 실제 vblank/CPU 우선 메모리 승인과 SPI 소비자 대기를 포함해 최초 중단1892바이트·0x34를 재현하고 병목을 구분한다.167에서 이미 전체 예산을8배 늘렸으므로 단순 재증가를 반복하지 않는다. 승인 기회·전송 오버헤드를 줄이거나 측정 근거로 유한한 진행/전체 예산 계약을 정하고 변경 경계만 검증한 뒤 SMB3 실기로 간다.169 첫 BEGIN 실패는 이번 미재현이며 해결 확정은 아니다. 같은170/044·무변경FIT·추가 영상은 요청하지 않는다. 연속 AV→장기 플레이/오류·리셋 로그→입력 유지 순서와 코어 우선권·PSRAM 타이밍·세이브 SRAM/GBC/164 보호를 유지한다.
+
+[실기 결과](../../docs/nes-game170-hardware01.ko.md) · [필드·해시·대조](../../analysis/game170-hardware01-verification.json). PR110 OPEN. No new firmware/FPGA/ZIP. receiver21 is secondary to deadline; middle6 abort reasons unknown; menu visible return unreported. Completed archives immutable.
+
+---
+
+# NES170 — 첫 표시 통신 실패 구분판, 실기 대기
+
+NES170 실기 시험판을 준비했다.169의 첫 BEGIN 실패를 구분하도록 MCU에 최초 통신 실패 위치·폴링 횟수·상태 응답20바이트를 추가했다. 통신 동작267개 비교와 TXT4020/4096바이트·RUN/IRQ 후1024바이트 여유를 확인했다.169의 FPGA/SNES·리셋·대기 제한은 유지하며 화면 수정 완료판은 아니다. 사용자가169 종료 시간을 약13~14초, 총 약4분으로 정정했다.
+
+NES GAME 170.nh1을 한 번 실행하고 nes-progress-170.txt/nes-game-last-170.txt 및 화면·메뉴 복귀 여부를 받는다. 동일한 로딩 화면이면 영상·버튼 입력은 불필요하다. sink_io170 사유/수신 상태로 초기busy·상태 오류·65536회 소진을 구분한다. pending 소진과 기동 표식0이면 리셋/실제 부트 경계를 우선한다. 확인한 원인의 최소 수정 후 SMB3 실기로 간다. 같은169/044·무변경FIT를 반복하지 않고 연속 AV→장기 플레이/오류·리셋 로그→입력 유지 순서를 지킨다.
+
+[실기 안내](../../docs/nes-game170-ready.ko.md) · [변경·검증·분기](../../docs/nes-startup170-contract.ko.md) · [근거](../../analysis/startup170-verification.json). PR110 OPEN, samebranch. SELECT arm02/armcheck02/test02/report01/romcheck01/release01. FPGA6ba98335 exact169, no newFIT/ASM. Postfit4netlists/4M9K atoms4096B exact169; NOT physicalreadback. MCU trace20B/firmware197652/static26572/RUN37320/IRQ508/margin1024;report4020. RR bit7=status received NOTCRCvalid, RX1..15, polls32. No retry/limit/reset changes, no RUN SD writes. arm01 wrong Makefile .o anchor corrected .c; sandbox subst/GCC623 retried host; failed artifacts retained. User169 timing correction supersedes ~60s; no newclock issue. Keep164/GBC/saveSRAM. Completed archives immutable.
+
+---
+
+# NES169 실기 — 첫 BEGIN 응답 실패, 표시 기동 경계 조사
+
+NES169 실기는 로딩 화면 유지 후 메뉴로 복귀했다. ROM393216바이트 검증·첫 영상 COMMIT은 성공했지만 첫 BEGIN(세션1/세대12)에 유효한 ACK가 없어 표시0회로 종료했다. DISPLAY5/sink2이며 정상60초 만료나168의 E3 재발이 아니다. STOP·기본 FPGA·메뉴 복구는 정상이다. 분할 갱신과 연속 AV의 실기 목표는 미달성이다.
+
+SNES 리셋 해제→물리 부트 ROM/WRAM 복사→초기화→첫 BEGIN ACK 경계를 우선 확인한다.169 ROM 갱신 이미지와 실제 실행 연결을 대조하고, 필요할 때만 exchange 최초 실패 위치·마지막 F6 상태를 종료 TXT에 최소 추가한다. 원인이 확인된 수정과 최소 검증 후 SMB3 실기로 복귀한다. 같은169/044·무변경FIT·추가 영상은 요청하지 않는다. 연속 AV→장기 플레이/오류·본체 리셋 로그→입력 유지 순서와 세이브 SRAM/GBC/164 보호를 유지한다.
+
+[실기 결과](../../docs/nes-game169-hardware01.ko.md) · [원문·해시·대조](../../analysis/game169-hardware01-verification.json). PR110 OPEN. ACKvalid0 means no actual ACK, zero fields are placeholders. Request BEGIN seq0/serial1/gen12, native_frames0; stage0/flags0/SPCinvalid auxiliary, NOT definitive reset failure. Firmware DISPLAY interval13490ms versus user ~60s kept separately. Compact4096/MIF/logical32768SFC match; RBF packed decode only, NOT RBF ROM-bit readback. MCU6 critical files exact168. Next physical startup/F6 subcause, NOT more E3 budget edits. Existing169 local tests retained; no new FW/FIT/ZIP or same169 test. Completed archives immutable.
+
+---
+
+# NES169 — E3 큰 갱신을 비표시 VRAM에 준비, 실기 대기
+
+NES169은168 실기의 E3 종료를 처리한다. 작은 변경은 기존 경로, 큰 변경은 비표시 SNES VRAM에 최대6청크로 준비한 뒤 최종 vblank에서 BG/OBJ/맵·색상·OAM·HDMA를 전환한다. 실제65816 검사에서21개 완료 화면1284864픽셀·이전 화면 유지·최대 크기·전송 중 STOP을 확인했다. MCU 실행과 FPGA 배치는 유지하고 SNES ROM만 갱신한 실기 시험판을 준비했다. 실기 연속 AV·FPS는 아직 미확인이다.
+
+NES169-SMB3-BANKED-VIDEO.zip의01-GAME169-SD-ROOT를 적용하고 NES GAME 169.nh1에서 SMB3 플레이어 선택→월드맵→첫 레벨을 진행한다. 첫 화면 이후 조기 종료가 없어졌는지, 큰 갱신 중 검정/혼합 화면이 있는지, 사운드·약60초 메뉴 복귀를 확인하고 두 TXT와 가능하면 영상을 받는다. 기존 약4분 적재·검증은 유지한다. 실패하면 sink_trace 원문·native_frames·STOP 결과를 우선 분석한다. 반복168/044·무변경FIT·추가 범용진단은 하지 않는다. 연속 AV 다음 장기 플레이/오류·리셋 로그, 그다음 입력 유지를 검증한다.
+
+[안내](../../docs/nes-game169-ready.ko.md) · [구현·경계](../../docs/nes-banked169-contract.ko.md) · [근거](../../analysis/banked169-verification.json). SELECT client01/arm01/armcheck02/verify01/asm01/release01;body3154/4096;SNES14+2metadata bytes, MCU unchanged32trace/1044margin/report3966. E2/E3 only fallback; rawstage167 routed65 files unchanged/MIF+CDB+ASM only. Maximum6x4096 then CGRAM/OAM1248+registers/HDMA;no post-reveal blank;STOP mid-copyE4. Completed archives immutable. PR110 existing open branch unless refreshed merge.
+
+---
+
+# NES168 실기 — E3 전송 예산 초과 확정, 다음은 큰 변경 처리
+
+NES168 실기에서 첫 화면 후 종료 증상은 같았지만 원인은 확인됐다. 표시 완료7회 뒤8번째 영상(세대20)의 SEAL에 SNES가 E3(변경분 전송 예산 초과)를 반환했다. 순번46·세션8·세대20·서명은 모두 일치하고 불일치는 상태 코드뿐이다. ROM 오류0·STOP·기본 FPGA 복구·메뉴 준비는 통과했다. 진단 목적은 달성했으며 연속 플레이는 아직 실패다.
+
+다음 구현은 E3를 일으키는 합법적인 큰 화면 변경을 게임 종료 없이 완료하는 경로다. 현재 변경 구간 합계+명령당96 비용과5000 상한,32명령 제한을 기준으로 최소 재현하고 유한 분할/표시 전환 방식을 결정한다. 여러 vblank로 나눌 경우 이전 표시와 갱신 중 VRAM·CGRAM·OAM·HDMA의 일관성, 변경 후보 소유권, 마지막 완료 뒤에만 ACK/세대 갱신, STOP·시간 제한·사운드/입력 서비스를 함께 보장한다. 무조건 상한 증대·검사 제거·성공 ACK 위조·무한 재시도·영구 프레임 폐기는 금지한다. 필요하면 명시적 대체 표시 정책의 시각적 영향을 문서화한다. 해당 경계의 최소 검증 후 바로 SMB3 실기로 간다.168 재시험·추가 영상·044 복원·무변경 FPGA FIT는 불필요하다. 연속 AV→장기 플레이/오류·본체 리셋 로그→입력 유지 순서와 세이브 SRAM/GBC/164 보호를 유지한다.
+
+[실기 결과](../../docs/nes-game168-hardware01.ko.md) · [원문 해석](../../analysis/game168-hardware01-verification.json). PR110 OPEN. SEAL seq46/serial8/gen20, ACKe3/status-only01. Configured5000=sum DMA bytes+96/command; actual charge/count unknown.7display ACK/8received;3560ms NOTFPS. Existing arm02/FPGA/SNES unchanged; no new FW/FIT/ZIP. Completed archives immutable.
+
+---
+
+# NES168 — 최초 SNES 실패 응답 실기 확인
+
+NES168은167의 첫 화면 이후 종료 원인을 구분하는 MCU 시험판이다. 처음 실패한 요청16바이트·응답12바이트와 불일치 항목을32바이트 상태에 보존한다. FPGA·SNES·갱신 상한은167과 같고, 영상 오류 수정 완료는 아니다. 실제 SNES의 E2/E3 거절 구분과 기존 정상 화면·안전 종료 검사를 통과해 실기 패키지를 준비했다.
+
+NES GAME 168.nh1로 실행 후 두 TXT를 받는다. 먼저 버튼을 누르지 않아도 되고 같은 짧은 화면이면 영상은 불필요하다. ack_valid1/mismatch01이면 ACK status E0~E4를 해석하고 실제 실패 op·길이·순번·세대로 경로를 한정한다. E2/E3라면 해당 장면의 변경 범위/명령 수·전송 예산을 재현하고 한도를 해제하지 않은 유한 분할·표시 완료 처리로 수정한다. token/signature 불일치면 패킷/ACK 소유권·snapshot을 먼저 고친다. ack_valid0이면 하위 통신/guard 종료를 분석한다. 수정 후 곧바로 SMB3 실기, 이후 AV→장기 플레이/오류·리셋 로그→입력 유지 순서. 같은167/044·무변경 FPGA FIT는 반복하지 않는다.
+
+[설치](../../docs/nes-game168-ready.ko.md) · [계약](../../docs/nes-sink168-contract.ko.md) · [검증](../../analysis/sink168-verification.json). SELECT arm02/armcheck01/test02/report01/release01. FW111a28c4/ZIP77de2a08/FPGA d1e82782 unchanged167.32B/169reportB/3966maxreport/1044stackmargin. No newFIT/Questa. Completed archives immutable.
+
+---
+
 # NES167 실기 — 첫 화면 확인, 8번째 영상의 ACK 검사 실패
 
 NES167 실기에서 첫 화면이 약1~2초 보인 뒤 메뉴로 복귀했다. BEGIN/END/COMMIT 각8회·ABORT0회, SNES 표시 ACK 완료7회로 새 영상 경로의 첫 출력은 확인했다. 이후 sink 응답 내용 검사 오류3으로 조기 종료했다. ROM 검증·STOP·메뉴 복귀는 통과했고, 연속 영상·실제 사운드는 미확인이다.

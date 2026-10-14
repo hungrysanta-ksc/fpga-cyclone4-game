@@ -1,0 +1,93 @@
+{
+  "callbacks": {
+    "nes_game149_transfer": [
+      "load_select",
+      "wait_us"
+    ],
+    "nes_native165_bulk": [
+      "load_select",
+      "wait_us"
+    ],
+    "nes_native165_poll": [
+      "transfer"
+    ],
+    "nes_native165_prepare": [
+      "transfer"
+    ],
+    "guard": [
+      "native_ticks165",
+      "native_service165"
+    ],
+    "transfer": [
+      "native_transfer165"
+    ],
+    "nes_runtime165_begin": [
+      "native_ticks165"
+    ],
+    "packet": [
+      "nes_sink_spi165_exchange"
+    ],
+    "nes_native_video165_build": [
+      "nes_sink165_pattern"
+    ],
+    "nes_sink_spi165_exchange": [
+      "guard",
+      "transfer"
+    ],
+    "internal_nprintf": [
+      "outchar",
+      "outstr"
+    ]
+  },
+  "library_stack_bytes": {
+    "__aeabi_uldivmod": 16,
+    "__aeabi_idiv0": 0,
+    "memcpy": 0,
+    "strlen": 8,
+    "crc8.constprop.0": 12,
+    "__udivmoddi4": 32,
+    "memcmp": 0,
+    "memset": 0
+  },
+  "library_bodies": {
+    "__aeabi_uldivmod": "326d1157dfb12c07b41c4835ffd0e9f2653bcc934d8b023a6ec58d1d2065d97e",
+    "__aeabi_idiv0": "4e381509a1f63568ba1eafef3b6a7bfc50af0d8e76e96d5b2aee3584e9029aa6",
+    "memcpy": "43853f2e814c10c48e5348aee1224fe83728a1cd846d8c577708b7de6ba6df2a",
+    "strlen": "16ec4a28411a9a93dee80b70a7e231d713797066b1b8d80d377164256dceccaf",
+    "crc8.constprop.0": "d0f738e08b92087f1a3dfe52939e86e03967cbe418458c8fd96fd2409316356e",
+    "__udivmoddi4": "f4d97e0e810304b13077736bceb4e83909421ecc39d8d3a2fec79a7ca6324220",
+    "memcmp": "88fa3cb1e7714adb65b4baf5f6a7a99bae05af624d43bb7f23246242c314ae3b",
+    "memset": "3b015b2a4edbf6169fbd50a71bae167646c974e12144c5be18b0872069bf940b"
+  },
+  "platform_bodies": {
+    "SysTick_Hook": "035c04acd76a6047ceb77bda653856b4d96557065de5157467bf282deba34de6",
+    "TIM2_IRQHandler": "014373bc42159bc0dd6eb7870f0aad96e5c75128227c73fae4f8798b88c764c0",
+    "NMI_Handler": "a1791e03750a6e6cdc9c1b7b71166ac52d92cbe0911e89d09b843fa599368579",
+    "stop108": "03a75973188dc3cfde1976a4692fb348ee334d019e1bd56ce3e69a6d9c9a8d42",
+    "uart_putc": "977c04b971626edbb6ab8b38063b336fe642b1e96de5c080245bacb659113349"
+  },
+  "platform_sources": {
+    "stm32f4xx/timer.c": "1ef987e14dad3a341070417e8c8167bab9122370ce5248f3c43a8f3dd6fda8c0",
+    "stm32f4xx/uart.c": "5b50ad260cd4f5d66eb9411350b6b1c7835712cd6869b45961a496735c75e6c7",
+    "stm32f4xx/usbhw.c": "d19ccac42067e4c9355649de296a665437a9d80f435389411dd9822bdcd98192",
+    "nes_menu_diagnostic.c": "e988ca0506e93e762e5d3bb7489a01ca4463d217ab7c062f7e2c15b08332834d",
+    "nes_runtime_board165.inc": "e16d347c7b53488034583dd45752117c13ffbf1e47f6ac8cf274a5cc2acde248",
+    "nes_run136.inc": "a5ff97f13e06cb64d1287594fa2ecbc45e81c412dd3aec9e275d41f83b351e47",
+    "printf.c": "d4d601ba78d5564d22947bfc28d56a1c09a64c757dc1b15954e1907656aeb16c"
+  },
+  "review_notes": [
+    "UART newline recurses once with carriage return; allow two32B frames.",
+    "SysTick includes sdn_changed printf. Hook is empty. TIM2 allowed even though RUN polling does not enable it.",
+    "NVIC OTG disabled before diagnostic entry, restored only after recovery. STM32 UART polling; SD IRQ commented.",
+    "NMI strong handler uses8B and calls stop108 with0B/no further call; terminal HardFault not recoverable execution path.",
+    "Budget108B per exception (104B extended FP frame plus4B alignment) for SysTick,TIM2,NMI, even if nesting/FP state not exercised.",
+    "Library fingerprints pin exact reviewed prologues: udiv wrapper16/helper32,strlen8,crc8 constprop12; memcpy/memcmp/memset0.",
+    "No live malloc/sbrk symbols; static RAM determined from heap_start through stack, including ahbram.",
+    "No exhaustive unchanged menu/GBC proof; outside RUN permanent33952B workspace removed.",
+    "166:48B independent trace; original receiver validation and RUN workspace unchanged. Trace record has20B compiler-reported stack; final graph is recomputed.",
+    "All8 library and5 platform instruction/operand sequences match165 after relocation. TIM2 wokefromtimer20005804->20005834 and UART nes_diag_uart_dropped2000580c->2000583c verified by nm; other stack-affecting instructions identical.",
+    "Only diagnostic formatting/paths/reset and native_ticks trace timestamp change in platform source pins; original CF86/IRQ/STOP sources byte-exact."
+  ],
+  "review167": "Only167 paths/version over166; reviewed library/platform instruction fingerprints unchanged, fresh checker must confirm linked stack.",
+  "review168": "8library/5platform normalized instruction operands identical; relocation matched by exact symbol+offset.32B trace added; diagnostic format/reset/paths only. Full RUN/IRQ graph recomputed."
+}
