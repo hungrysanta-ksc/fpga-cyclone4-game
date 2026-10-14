@@ -1,0 +1,103 @@
+{
+  "candidate": "NES181 bounded row-pixel path prototype",
+  "branch": "codex/nes-render-resume-181",
+  "base_pr": 112,
+  "base_merge": "6ce5f2a7a585df353b701cd77ee2189c2a029350",
+  "rtl": {
+    "passed": true,
+    "cases": 9,
+    "exact_pixels": 2560,
+    "sources": {
+      "src/nes/video/nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+      "tests/nes-functional/patch_rows181_tb.sv": "2e845d30c163bed360c51aee10c6ed660d1541f9f41f42fb18a27c8c2cad9152"
+    },
+    "raw_rows_sha256": "f3049ad313f409669098de20c2e31689ae09a622c7998425f1c1c6a9741b5df4",
+    "public_sources": {
+      "tools/test_nes_patch181.py": "d095f07ce6d3adfe4bdb90e839a84e3b07311513f80a354b7b0fc578b457aae0"
+    },
+    "integrated_with_live_game": false,
+    "fit": false,
+    "hardware": false
+  },
+  "snes": {
+    "code_bytes": 1301,
+    "payload_bytes": 13676,
+    "hdma_bytes": [
+      [
+        41,
+        41,
+        36
+      ],
+      [
+        41,
+        41,
+        36
+      ]
+    ],
+    "passed": true,
+    "full_images": 2,
+    "visible_pixels": 114688,
+    "patch_rows_per_image": 7,
+    "rejected_inputs": 6,
+    "mesen_sha256": "f5d9a9c69f436b4dfaa74969527852a0dd8db52e4ea9fb15e5b6393dd984b796",
+    "integrated_client": false,
+    "hardware": false,
+    "rtl_capture_input_sha256": "f3049ad313f409669098de20c2e31689ae09a622c7998425f1c1c6a9741b5df4",
+    "public_sources": {
+      "tools/nes_patch181.py": "09b24e57d0b42e5a476d119065870a89f53fb4d3ef6de67b0c919c55829ef3d7",
+      "tools/test_nes_patch181_snes.py": "c132fcd4ed02cc93940dbb1ba1f909029a225f0cff8f48e583f85878d42c7269",
+      "snes/video_probe/capture_native_commands165.lua": "c9df5aec17b9216a4f733a6bc662c04f068954fd20cdc8ed1a4cab46b0a6fd8a",
+      "tools/build_nes_game164.py": "8580f21faf4682e2a27c5185613083b01d5546843d22fcee2c0a24407775c40e",
+      "tools/build_nes_trace_replay.py": "1b9e25b9af887c6b4329f1f883f61b98f3b320360ed3853144d09f60a292161a"
+    }
+  },
+  "public_sources": {
+    "src/nes/video/nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+    "tests/nes-functional/patch_rows181_tb.sv": "2e845d30c163bed360c51aee10c6ed660d1541f9f41f42fb18a27c8c2cad9152",
+    "tools/test_nes_patch181.py": "d095f07ce6d3adfe4bdb90e839a84e3b07311513f80a354b7b0fc578b457aae0",
+    "tools/nes_patch181.py": "09b24e57d0b42e5a476d119065870a89f53fb4d3ef6de67b0c919c55829ef3d7",
+    "tools/test_nes_patch181_snes.py": "c132fcd4ed02cc93940dbb1ba1f909029a225f0cff8f48e583f85878d42c7269",
+    "snes/video_probe/capture_native_commands165.lua": "c9df5aec17b9216a4f733a6bc662c04f068954fd20cdc8ed1a4cab46b0a6fd8a",
+    "tools/build_nes_game164.py": "8580f21faf4682e2a27c5185613083b01d5546843d22fcee2c0a24407775c40e",
+    "tools/build_nes_trace_replay.py": "1b9e25b9af887c6b4329f1f883f61b98f3b320360ed3853144d09f60a292161a"
+  },
+  "evidence_files": 37,
+  "evidence_manifest_sha256": "f07bf39b5dc48309155b55229dda1ce68495897bb1f2a031423be004da06e089",
+  "adopted_game_implementation": false,
+  "new_fit": false,
+  "new_mcu": false,
+  "new_package": false,
+  "hardware_test_ready": false,
+  "video_freeze_fixed": false,
+  "fps60": false,
+  "prototype": {
+    "retained_rows": 7,
+    "scratch_rows": 1,
+    "logical_pixel_ram_bits": 12288,
+    "bram_hint": "M9K, not synthesized/fitted",
+    "ppu_color_bits": 6,
+    "nes_emphasis_supported": false,
+    "snes_patch_chr_bytes": 2048,
+    "snes_patch_map_bytes": 2048,
+    "cgram_indices": [
+      64,
+      127
+    ],
+    "hdma_channels": 3
+  },
+  "existing_package_preserved": "8eede14b49701530529d737815685f4f92f3d41f784c93a7abdfa03dd279cb3a",
+  "scope": "Synthetic aligned pixels from RTL RAM through Python prototype packing to actual65816/DMA/HDMA/SNES PPU model. Not live game capture, original SPI protocol, deployed client, resource fit, or physical hardware. Both full images compared independently including normal rows, crossing OBJ and patch bank wrap.",
+  "missing": [
+    "PPU final pixel clock/coordinate alignment",
+    "per-row raster/compact verdict and next-row absolute resync",
+    "versioned packet and ownership",
+    "required2048 lifetime reuse (proposal only)",
+    "production SNES staging/HDMA/ACK/STOP",
+    "ARM RAM/stack and full FPGA timing/resources",
+    "SMB3 first level and60fps"
+  ],
+  "next": "보존 행 경로를 실제 PPU 출력 시점과 행별 raster/compact 판정·행 재동기화에 연결한다. CHR 완료 뒤 required2048 수명을 픽셀/설정HDMA로 전환하는 새 전송 규격과 배포 SNES staging/ACK를 구현한다. 최소 결합 시험·ARM/stack·전체FPGA 승인 뒤 실제 SMB3 숫자1→A로 진행한다. 단독 모듈/시험ROM 통과는 실기 수정이나60fps 완료가 아니다. 같은180/044/긴 부팅 재시험은 하지 않는다.",
+  "prior_evidence_manifest_sha256": "957ab7dd5312ece20e3d9d1fa20bae5d2e362bd4c5e1439652fac09287d83563",
+  "prior_evidence_files": 93,
+  "final_addendum": "patch03 also rejects source_fault simultaneous with begin_frame. Earlier patch01/02 and snes01/02 evidence preserved. snes02 reused by byte-identical RTL captured rows, same encoder/test source and input hash; not rerun."
+}

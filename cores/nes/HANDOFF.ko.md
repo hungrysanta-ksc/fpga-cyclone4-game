@@ -1,3 +1,19 @@
+# NES181 — 부분 행 픽셀 경로 검증 통과
+
+NES181: 영향을 받은 최대7행만 실제 PPU 픽셀로 보존하는 RTL과 SNES 부분 행 표시 방식을 구현했다. RTL9경우/2,560픽셀, RTL 덤프→SNES 양쪽 버퍼114,688픽셀 전체 비교가 통과했다. 합성 입력 기반 독립 경로이며 실제 수집기·전송·MCU·배포 클라이언트 연결과 전체 배치·실기는 아직 미완료다. 새 ZIP 없이180을 유지한다.
+
+- Latest181 ROWPATH: PR112 merged6ce5f2a; new codex/nes-render-resume-181. Standalone rowRAM7retained+1scratch2048x6=12288bits(noFIT), exactRTL9cases/2560pixels; RTLdump->actual65816/DMA/HDMA/SNES2banks114688pixelsPASS. Mode0BG1+OBJ normal/mode3BG1-only raw,CGRAM64..127,CHR A5000/B9000,map A7000/Bb000;7rows packed8fine lines,2048BCHR+2048Bmap. Synthetic colors NOTSMB3/productionclient. Latefaultinvalidates;generation/overflow/missingpixel/release checked. No gamecollector integration/MCU/FIT/SD/60fps. NEXT actualPPU postCE cycle2..257 alignment + per-row raster/compact fallback/resync; new versioned transfer; reuse required2048 only AFTER CHR complete/missing0/lane0 then forbidCHR (NOTimplemented); production staging3HDMA/bank/ACK/STOP, ARMstack/fullFIT thenSMB3tile1+A. Keep180ZIP/GBC164/saveSRAM;no same180/044/longboot. ReadRENDER181contract/HANDOFF/probes/nes-render181/progress.json;completedarchivesimmutable.
+
+보존 행 경로를 실제 PPU 출력 시점과 행별 raster/compact 판정·행 재동기화에 연결한다. CHR 완료 뒤 required2048 수명을 픽셀/설정HDMA로 전환하는 새 전송 규격과 배포 SNES staging/ACK를 구현한다. 최소 결합 시험·ARM/stack·전체FPGA 승인 뒤 실제 SMB3 숫자1→A로 진행한다. 단독 모듈/시험ROM 통과는 실기 수정이나60fps 완료가 아니다. 같은180/044/긴 부팅 재시험은 하지 않는다.
+
+현재 구현은 생산 경로에 연결되지 않았다. 단독 소스 추가만으로 기존 오류08/82를 허용하거나 실기 시험을 요청하지 않는다. 전체 모델의 긴 부팅 대신 기존179 경계/180 오류와 새 소수 행 경로를 결합한다. 강조색은 여전히 미지원이다. RAM payload reset/카트리지 SRAM 사용/ROM별 우회는 추가하지 않는다.
+
+[구현 계약·남은 연결](../../docs/nes-render181-contract.ko.md) · [검증 데이터](../../analysis/render181-verification.json)
+
+이하 과거 기록.
+
+---
+
 # NES180 실기 — 거부 오류08/82와185행 확인
 
 NES180 실기에서 raster08·compact82·185/224행의 거부2회와 오류0·224행 회복2회를 확인했다. 첫 레벨 영상 정지·월드맵 회복 관찰과 부합하며 진단 목적은 달성했다. 영상 정지 해결·약60fps는 미완료다. 최초 오류 위치와 변경된 단일 PPU 필드는 미측정이며, 다음은 공통 렌더링 중단·재개 및 fetch 행 완결성 구현이다.
