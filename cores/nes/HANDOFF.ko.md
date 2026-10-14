@@ -1,3 +1,23 @@
+# NES177 — 최소 경계 관측 시험판, 실기 결과 대기
+
+NES177 실기 시험판 준비: 기존 history 하위22비트로 마지막 COMMIT 뒤 수집·소유권·전송·중재기 경계를 구분한다. 해제14위치 검증, 실제 클록 setup +0.055ns/hold +0.152ns, 조건부 IO, ARM 여유1040B, 최대TXT3925B 검사를 통과했다. 화면 정지 해결·60fps는 아직 미완료다. 무관한 로더 수정 없이 한 번의 FIT로 패키지를 만들었다.
+
+PR110 merged86e0195a22c7b376b7c2f9d9b2999ab9473c1646. New branch codex/nes-frame-release-177. SELECT boundary177/map01/test01/verification01, arm01/armcheck02/report01/release01. Single FIT; no loader/control/SDC changes. 15062LE/962LAB/36M9K; actual setup+.055 hold+.152, stricter implementation budget-.061 retained, full IO/CDC NOTapproved. ConditionalPSRAM+2.952/SNES76.812/SPI165.408, native payload negative reset0/legacy24 rows retained.
+
+LOW22=tag6/state4/flags14: owned,rawgeometry,initialized,active,fillbusy,done,idle,abort,arbiterfault,txvalid,txready,hostvalid,hostready,release. Upper74/RAM/sampling/STOP retention exact174. Last16 NES clocks at stop/fault, NOTfirststall or16frames. Decode tools/decode_nes_boundary177.py with kind LAST16_BOUNDARY177_LOW22. 174 decoder unsuitable. Cross-check legacy ROM fault and actual lifecycle before cause claim.
+
+14 release phases/42checks at full341dot262line PASS; syntheticBG with exact174 four collectors, notactualCPU/PSRAM/fill/export/SPI/SNES proof. No need to repeat long176 intro or old wideA4/A5 FIT. MCU only3 name/label source changes; runtime wire1/audio/input60s unchanged. ARM26564static/37312foreground/508IRQ/1040margin; report3925/4096. Mapped4096SNES bytes exact172/174; packedRBF roundtrip checked. ROM/menu/164restore byte-exact; noRUNSD/saveSRAM.
+
+ZIP probes/nes-boundary177/release01/NES177-SMB3-BOUNDARY.zip SHA a2c68142f905fb3fc486b746d44ca94000830ab4897c3d5297160b9dcf440902. Firmware a8b5159e184e47c8c7a54b8c94287f35c433fced23cdbf2f907cf547d941aea8. Evidence/progress in probes/nes-boundary177, public analysis/boundary177-verification.json. Failed legacy builder checker and sandbox Win623 preserved; final build/check PASS. No repeated license smoke.
+
+177 두TXT와 화면·사운드·입력·메뉴 복귀를 확인한다. 같은 증상이면 영상/174/044 재시험은 생략한다. raw geometry·owned·release·fill·exporter·arbiter_fault를 기존 세대/ACK와 함께 해석해 정지 경계를 수정한다. 동시에 앞단 table delta의 기준세대·ACK 확정·실패 재동기화를 구현할 준비를 한다. 추가 전체 MCU 화면/세이브 SRAM 없이 기존 수신required 공간의 COMMITTED 수명 재사용은 설계 단계다. 연속 AV 약60fps→장기 실행/오류·리셋 로그→입력 유지 순서를 유지한다.
+
+Speed implementation contract: current OAM240/CGRAM224 are pattern scratch, so preserving plan by removing memset is wrong. AfterCOMMIT required[2048] can potentially hold oldOAM544+CGRAM512 plus992 metadata; explicit API/lifetime tests stillneeded. SNES alternating WRAM maybe2generationsold: inherit committed base with base_generation/target_generation and matching finalACK; unknown/failure invalidatesbase/fullrebase. Patterncache remainsseparate; initially retainpattern uploads. Include SNEScopy/compare andCPU/transfer/polling costs;20B twointro delta NOT60fps. KeepGBC/164/saveSRAM/archives.
+
+[실기 안내](../../docs/nes-game177-ready.ko.md) · [계약·검증·다음 구현](../../docs/nes-boundary177-contract.ko.md)
+
+---
+
 # NES176 회고 반영 — 장면 검증 완료, 정지·속도 개선은 진행 중
 
 NES176 회고 반영: 실제 SMB3 모델360프레임에서 즉시 해제349개·10프레임 보유35개 정상 후보와 기존 픽셀 일치를 확인했다. 두 장면의 전체5,493바이트 중 차이20바이트를 확인해 앞단 변경 전송의 근거를 마련했다. 공유 메모리 오류 연결6경우도 검증했지만 실기 정지 원인은 확정하지 않았다. 배포174 유지·새 ZIP 없음·60fps 미달성이며, 무관한 로더 미세FIT 반복을 멈춘다.

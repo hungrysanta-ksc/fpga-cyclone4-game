@@ -4,6 +4,8 @@
 
 ## 현재 개발·운영
 
+- [NES177 실기 안내](nes-game177-ready.ko.md) · [최소 관측·다음 전송 개선](nes-boundary177-contract.ko.md)
+
 - [NES176 영상 회고·검증 결과·수정 계획](nes-video-review176.ko.md)
 - [현재 상태](PROJECT-STATUS.ko.md)
 - [GBC 이식 회고와 재사용 경계](development/GBC-PORTING-LESSONS.ko.md)

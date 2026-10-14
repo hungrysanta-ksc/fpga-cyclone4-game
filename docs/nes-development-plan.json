@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-14",
-  "technical_candidate": "NES-GAME-174-HW01-VIDEO-STALL",
+  "technical_candidate": "NES-GAME-177-BOUNDARY-READY",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "NES176 회고 반영: 실제 SMB3 모델360프레임에서 즉시 해제349개·10프레임 보유35개 정상 후보와 기존 픽셀 일치를 확인했다. 두 장면의 전체5,493바이트 중 차이20바이트를 확인해 앞단 변경 전송의 근거를 마련했다. 공유 메모리 오류 연결6경우도 검증했지만 실기 정지 원인은 확정하지 않았다. 배포174 유지·새 ZIP 없음·60fps 미달성이며, 무관한 로더 미세FIT 반복을 멈춘다.",
-  "next_action": "마지막 COMMIT 뒤 실제 수집·fill·중재·export·호스트 소유권 경계를 최소 관측으로 구분한다. 수집 원본 geometry와 ROM/중재기 오류를 적용한 최종 허용 조건을 구별한다. 관계없는 로더 미세FIT·같은 장시간 도입부 재생은 반복하지 않는다. 앞단 변경 전송의 지속 슬롯/base_generation/target_generation/ACK 확정/실패 재동기화와 전체 바이트·시간 예산을 함께 정한다. 기존 SNES 변경분 DMA는 재구현하지 않는다. 필수 경계 확인 뒤 SMB3 실기로 돌아가며 연속 약60fps AV→장기 실행·오류/리셋 로그→입력 유지 순서를 유지한다.",
+  "assessment": "NES177 실기 시험판 준비: 기존 history 하위22비트로 마지막 COMMIT 뒤 수집·소유권·전송·중재기 경계를 구분한다. 해제14위치 검증, 실제 클록 setup +0.055ns/hold +0.152ns, 조건부 IO, ARM 여유1040B, 최대TXT3925B 검사를 통과했다. 화면 정지 해결·60fps는 아직 미완료다. 무관한 로더 수정 없이 한 번의 FIT로 패키지를 만들었다.",
+  "next_action": "177 두TXT와 화면·사운드·입력·메뉴 복귀를 확인한다. 같은 증상이면 영상/174/044 재시험은 생략한다. raw geometry·owned·release·fill·exporter·arbiter_fault를 기존 세대/ACK와 함께 해석해 정지 경계를 수정한다. 동시에 앞단 table delta의 기준세대·ACK 확정·실패 재동기화를 구현할 준비를 한다. 추가 전체 MCU 화면/세이브 SRAM 없이 기존 수신required 공간의 COMMITTED 수명 재사용은 설계 단계다. 연속 AV 약60fps→장기 실행/오류·리셋 로그→입력 유지 순서를 유지한다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -3046,7 +3046,7 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-video-review176.ko.md",
-  "latest_development_evidence": "analysis/admission176-verification.json",
+  "latest_review": "docs/nes-boundary177-contract.ko.md",
+  "latest_development_evidence": "analysis/boundary177-verification.json",
   "latest_hardware_evidence": "analysis/game174-hardware01-verification.json"
 }
