@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-14",
-  "technical_candidate": "NES-GAME-178-CLIP-FUNCTIONAL",
+  "technical_candidate": "NES-GAME-178-CLIP",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "NES178: 목표 SMB3 일본판의 START 전환 후 mask18을 기존 수집기가 계속 거부하는 문제를 재현했다. 왼쪽8픽셀 클리핑을 보존하는 FPGA·MCU·SNES 후보와 경계/픽셀 검증을 완료했다. 전체 ARM 링크·FIT·실기 전이라 배포177 유지·새 ZIP 없음이며, 초기 끊김과60fps는 아직 미완료다.",
-  "next_action": "20바이트 SEAL의 잘못된 mask/구형 길이 거부, 실제177 MCU 전체 ARM 링크/RUN·IRQ 여유, 변경 raster 단일 FIT/기존 조건 IO와 새 SNES 이미지 조립을 확인한 뒤 SMB3 실기로 간다. 동일177/044·긴 무입력 재현을 반복하지 않는다. 정지 수정과 별도로 앞단 테이블 차분/base-generation/ACK로 초기 끊김을 줄이며 AV60fps→장기 실행/오류·리셋 로그→입력 유지 순서를 유지한다.",
+  "assessment": "NES178 실기 시험판 준비 완료: START 이후 mask18 거부를 수정한 FPGA·MCU·SNES 조합이 패킷 경계·전체 ARM·단일 FIT·조건부 IO 검사를 통과했다. 실제 게임 전환 후 영상 지속 여부는 사용자 실기로 확인하며 초기 끊김·60fps는 아직 미완료다.",
+  "next_action": "NES178-SMB3-CLIP.zip으로 SMB3 선택→월드맵→첫 레벨의 영상 지속·사운드·메뉴 복귀와 두TXT를 확인한다. 기능별 호환성 표에 따라 게임명 우회 없이 대응하고, 이후 앞단 테이블 차분/base-generation/최종ACK로 전송 비용을 줄인다. 동일177/044·긴 무입력 재현은 생략하며 AV→장기 실행/오류·리셋 로그→입력 유지 순서를 유지한다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -3046,7 +3046,7 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-clip178-contract.ko.md",
-  "latest_development_evidence": "analysis/clip178-verification.json",
+  "latest_review": "docs/nes-video-compatibility178.ko.md",
+  "latest_development_evidence": "analysis/clip178-pair-verification.json",
   "latest_hardware_evidence": "analysis/game177-hardware01-verification.json"
 }

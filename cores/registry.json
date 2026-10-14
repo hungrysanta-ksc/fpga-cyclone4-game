@@ -40,15 +40,15 @@
       "verification": "analysis/GAME164-RESULT.ko.md",
       "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "178_start_transition_mask18_rejection_reproduced_clip_candidate_functional",
+      "investigation": "178_clip_hardware_ready_common_ppu_compatibility_plan",
       "hardware_baseline": "NES-H1-SAMPLING-044",
       "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
-      "development_evidence": "analysis/clip178-verification.json",
+      "development_evidence": "analysis/clip178-pair-verification.json",
       "hardware_candidate": "NES-GAME-177",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "next_gate": "20바이트 SEAL의 잘못된 mask/구형 길이 거부, 실제177 MCU 전체 ARM 링크/RUN·IRQ 여유, 변경 raster 단일 FIT/기존 조건 IO와 새 SNES 이미지 조립을 확인한 뒤 SMB3 실기로 간다. 동일177/044·긴 무입력 재현을 반복하지 않는다. 정지 수정과 별도로 앞단 테이블 차분/base-generation/ACK로 초기 끊김을 줄이며 AV60fps→장기 실행/오류·리셋 로그→입력 유지 순서를 유지한다.",
+      "next_gate": "NES178-SMB3-CLIP.zip으로 SMB3 선택→월드맵→첫 레벨의 영상 지속·사운드·메뉴 복귀와 두TXT를 확인한다. 기능별 호환성 표에 따라 게임명 우회 없이 대응하고, 이후 앞단 테이블 차분/base-generation/최종ACK로 전송 비용을 줄인다. 동일177/044·긴 무입력 재현은 생략하며 AV→장기 실행/오류·리셋 로그→입력 유지 순서를 유지한다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
-      "paired_candidate": "178 uniform clipping functional candidate only; fullARM/FIT/hardware pending, deployed177 unchanged",
+      "paired_candidate": "178 uniform1e/18 paired hardware trial ready; physical/60fps pending",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
       "observation_reader": "NES-CLOCK-READER-088",
       "observation_configuration": "NES-CLOCK-CONFIG-089",
@@ -681,7 +681,7 @@
         "document": "docs/nes-game172-hardware01.ko.md",
         "scope": "NES172 실기에서 표시 준비와 14회 표시 완료 응답을 통과했지만 이후 화면이 멈췄다. 버튼·스테이지 음악은 계속 반응했고 정상 약60초 한도로 메뉴에 복귀했다. BEGIN/END/COMMIT 각14, ABORT0, 마지막 generation27이다.170의 수집 시간 초과와 달리 다음 BEGIN이 수신되지 않은 경계이며, 연속 화면 목표는 미달성이다. 사용자 추가 확인: 처음 표시된 구간도 뚝뚝 끊겼다. 14회 ACK는 원활한 화면의 증거가 아니다. 목표는 실제 SMB3에서 약60fps의 연속 표시이며, 정지 해소만으로 완료 처리하지 않는다. 프레임 생성·전송·SNES 반영별 진행 시간과 화면 완료 간격을 구분해 병목을 줄인다. 60fps의 프레임 간격 약16.7ms를 목표 예산으로 삼되 현재 측정치로 주장하지 않는다. 전체 SPI 바이트에는 상태 폴링이 포함되므로 영상 전송량이나 유효 FPS로 바로 환산하지 않는다."
       },
-      "current_review": "docs/nes-clip178-contract.ko.md",
+      "current_review": "docs/nes-video-compatibility178.ko.md",
       "latest_hardware_evidence": "analysis/game177-hardware01-verification.json"
     },
     {

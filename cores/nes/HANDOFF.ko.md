@@ -1,3 +1,27 @@
+# NES178 — 클리핑 지원 시험판과 공통 PPU 호환성 계획
+
+NES178 실기 시험판 준비 완료: START 이후 mask18 거부를 수정한 FPGA·MCU·SNES 조합이 패킷 경계·전체 ARM·단일 FIT·조건부 IO 검사를 통과했다. 실제 게임 전환 후 영상 지속 여부는 사용자 실기로 확인하며 초기 끊김·60fps는 아직 미완료다.
+
+PR111 OPEN / codex/nes-frame-release-177. SELECT clip178/map01 + io01/verification02, paired arm01/armcheck02, packets01/report01/release01. Prior177 package and completed178 functional evidence unchanged. This is hardware READY, not physicalPASS or60fps.
+
+Research: left8 clipping belongs to commonPPUMASK, notMMC3 only. Games choose when/how; mapper/submapper CHR/IRQ + PPU timing + renderer capacity need separate evidence. No game-name/hash allowlist hacks. Current uniform1e/18 only;1a/1c, layer-only, sustainedblank, grayscale/emphasis, row/midline mask remain unsupported. 1a/1c negative PASS is rejection, NOTsupport. Next adjacent semantic expansion is independentBG/OBJ fourcombinations with overlapping-layer oracle, AFTER minimumSMB3hardware, not allPPUfeatures upfront. See compatibility178 doc. Persistent preBEGIN rejection firstcause logging policy DESIGNONLY, no new logging in178.
+
+NEW seven real65816 packet negatives: legacy18B,1a,1c,0118,00,3e,1f each44valid stagingACK thenE0, no firstdisplay. Reused exact178 client3229B/4096 and prior9views550656pixel evidence. New pairedMCU applies maskheader+batchedconverter+20B sink together to pinned177. Onlysix source changes includingthree names; runtime/audio/input/timers unchanged. FullARM198016B/static26564/RUN37312/IRQ508/margin1040. Formatter3925/4096. Host-only size is not substituted forARMcheck. Sandboxarmcheck01 Win623 preserved;host02PASS.
+
+OneFIT: only raster admission andSNES ROM changed,59otherinputs exact177,15093LE962LAB36M9K. Actualsetup+.201/hold+.147 PASS. Stricterimplementation-.017 remainsFAIL; noclockrelax/seedloops. ConditionalPSRAM+2.817/SNES76.518/SPI167.857ns; nativepayload reset negatives0, legacy24resetrows/fullIOCDCstillOPEN. SameDB IOcopy preserved, sourcebyte reproduction and mapped4096ROM match testedclient. ASM/CPF+RLEroundtrip PASS. Verification01 was noIO preliminary, final02 gatePASS.
+
+ZIP probes/nes-clip178-pair/release01/NES178-SMB3-CLIP.zip SHA360e4faa516ec14752a0c10247a1ac1d15e1d993912e98d8311bb73b082d0ea4; FW69441af67e909e0a32b687f421aacb9193a942de8afededb7993c3cc0ca4ebc1; FPGA36cd4ba0adeb39a2976de3dedb0fddc0650d92140ac1a65fff6f46ed898fb260. OldROM/menu/164restore byte-exact; noRUNSD/saveSRAM. History remainsLAST16_BOUNDARY177_LOW22 with candidate178; tools/decode_nes_clip178.py explicitly validates178 identity and reuses177 sample semantics without editing userlogs.
+
+NES178-SMB3-CLIP.zip으로 SMB3 선택→월드맵→첫 레벨의 영상 지속·사운드·메뉴 복귀와 두TXT를 확인한다. 기능별 호환성 표에 따라 게임명 우회 없이 대응하고, 이후 앞단 테이블 차분/base-generation/최종ACK로 전송 비용을 줄인다. 동일177/044·긴 무입력 재현은 생략하며 AV→장기 실행/오류·리셋 로그→입력 유지 순서를 유지한다.
+
+No wholecandidate100frame replay: earlier actualJ replay covered selection only, notworldmap/level. Physicalfirststall notdirectlycaptured. Keep originalstagefacts and don't claim every game's freezes fixed. Table-delta stillDESIGN; initialstutter notaccepted even if178 no longerfreezes. GBC/saveSRAM/164 unchanged. AllQuartus/Mesen/ARM jobsfinished; noFLOAT usedthisstage.
+
+Private newevidence943files manifest7d866d737c8e355a81f2bd49dcd291c1d966aaf0c03bd92a25c4e9173066129c; prior1781598files and177ZIP checkedunchanged. record01/evidence/audit oncecomplete immutable. Publicanalysis/clip178-pair-verification.json. Files withgameROM/firmware remainprivate.
+
+[실기 안내](../../docs/nes-game178-ready.ko.md) · [게임·매퍼·PPU별 대응](../../docs/nes-video-compatibility178.ko.md)
+
+---
+
 # NES178 — START 뒤 mask18 거부 재현, 클리핑 지원 후보 기능 통과
 
 NES178: 목표 SMB3 일본판의 START 전환 후 mask18을 기존 수집기가 계속 거부하는 문제를 재현했다. 왼쪽8픽셀 클리핑을 보존하는 FPGA·MCU·SNES 후보와 경계/픽셀 검증을 완료했다. 전체 ARM 링크·FIT·실기 전이라 배포177 유지·새 ZIP 없음이며, 초기 끊김과60fps는 아직 미완료다.

@@ -1,0 +1,1872 @@
+{
+  "candidate": "NES-GAME-178-CLIP",
+  "hardware_package": true,
+  "physical": false,
+  "video_fix_proven": false,
+  "fps60_proven": false,
+  "verification": {
+    "passed": true,
+    "fit": {
+      "synthesis_pass": true,
+      "fit_pass": true,
+      "resources": {
+        "estimated_le": 19454,
+        "combinational": 14055,
+        "registers": 8386,
+        "memory_bits": 205536,
+        "pins": 122,
+        "virtual_pins": 0
+      },
+      "fit_le": 15093,
+      "used_labs": 962,
+      "m9k_blocks": 36,
+      "same_clock_pass": false,
+      "timing": {
+        "rows": 198,
+        "corners": [
+          "8_slow_1200mv_0c",
+          "8_slow_1200mv_85c",
+          "MIN_fast_1200mv_0c"
+        ],
+        "minima_ns": {
+          "board8": {
+            "setup": 123.37,
+            "hold": 0.269
+          },
+          "core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+            "setup": 1.715,
+            "hold": 0.179
+          },
+          "core|pll|altpll_component|auto_generated|pll1|clk[1]": {
+            "setup": -0.017,
+            "hold": 0.18
+          },
+          "nes": {
+            "setup": 3.799,
+            "hold": 0.147
+          }
+        },
+        "worst_setup": {
+          "corner": "8_slow_1200mv_85c",
+          "clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+          "kind": "setup",
+          "from": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|check_response_address[9]",
+          "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|verified",
+          "slack": "-0.017"
+        },
+        "raw_mixed_setup_min_ns": -15.894,
+        "unconstrained": {
+          "Unconstrained Clocks": 0,
+          "Unconstrained Input Ports": 54,
+          "Unconstrained Output Ports": 57
+        }
+      },
+      "timing_approved": false
+    },
+    "nominal": {
+      "rows": 198,
+      "minima_ns": {
+        "board8": {
+          "setup": 123.37,
+          "hold": 0.269
+        },
+        "core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+          "setup": 1.715,
+          "hold": 0.179
+        },
+        "core|pll|altpll_component|auto_generated|pll1|clk[1]": {
+          "setup": 0.201,
+          "hold": 0.18
+        },
+        "nes": {
+          "setup": 3.799,
+          "hold": 0.147
+        }
+      },
+      "passed": true,
+      "worst_setup": {
+        "corner": "8_slow_1200mv_85c",
+        "clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+        "kind": "setup",
+        "from": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|loaded_bytes[10]",
+        "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|raw_causes[4]",
+        "slack": "0.201"
+      },
+      "sdc_sha256": "59dbe2401cc57a7646271fc222b69cd0c27dfb0bfb0c9514641213c39b9cd1ac",
+      "preserved_files": 372,
+      "scope": "Exact pinned155 clocks only. Original stricter budgets and reports retained. No fit, clock-period, falsepath or multicycle change. Not IO/CDC signoff."
+    },
+    "io": {
+      "path_rows": 22134,
+      "groups": {
+        "combinational": {
+          "rows": 7212,
+          "max_delay_ns": 23.546,
+          "min_raw_slack_ns": 976.454
+        },
+        "input": {
+          "rows": 273,
+          "max_delay_ns": 10.868,
+          "min_raw_slack_ns": 989.135
+        },
+        "mixed:core|pll|altpll_component|auto_generated|pll1|clk[0]:nes": {
+          "rows": 96,
+          "max_delay_ns": 7.348,
+          "min_raw_slack_ns": -4.88
+        },
+        "mixed:core|pll|altpll_component|auto_generated|pll1|clk[1]:core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+          "rows": 300,
+          "max_delay_ns": 6.328,
+          "min_raw_slack_ns": -0.084
+        },
+        "mixed:core|pll|altpll_component|auto_generated|pll1|clk[1]:nes": {
+          "rows": 300,
+          "max_delay_ns": 18.018,
+          "min_raw_slack_ns": -15.894
+        },
+        "mixed:nes:core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+          "rows": 300,
+          "max_delay_ns": 5.862,
+          "min_raw_slack_ns": -8.245
+        },
+        "mixed:nes:core|pll|altpll_component|auto_generated|pll1|clk[1]": {
+          "rows": 69,
+          "max_delay_ns": 1.699,
+          "min_raw_slack_ns": -4.573
+        },
+        "output": {
+          "rows": 6222,
+          "max_delay_ns": 23.938,
+          "min_raw_slack_ns": 973.831
+        },
+        "pad": {
+          "rows": 24,
+          "max_delay_ns": 6.603,
+          "min_raw_slack_ns": -4.512
+        },
+        "prepared": {
+          "rows": 51,
+          "max_delay_ns": 6.599,
+          "min_raw_slack_ns": -4.507
+        },
+        "prepared_req": {
+          "rows": 3,
+          "max_delay_ns": 6.532,
+          "min_raw_slack_ns": -4.412
+        },
+        "psram_active": {
+          "rows": 9,
+          "max_delay_ns": 11.69,
+          "min_raw_slack_ns": 987.847
+        },
+        "psram_address": {
+          "rows": 66,
+          "max_delay_ns": 13.142,
+          "min_raw_slack_ns": 986.408
+        },
+        "psram_input": {
+          "rows": 48,
+          "max_delay_ns": 6.725,
+          "min_raw_slack_ns": 993.264
+        },
+        "records": {
+          "rows": 246,
+          "max_delay_ns": 2.314,
+          "min_raw_slack_ns": -5.176
+        },
+        "records_req": {
+          "rows": 3,
+          "max_delay_ns": 2.022,
+          "min_raw_slack_ns": -4.885
+        },
+        "recovery": {
+          "rows": 3456,
+          "max_delay_ns": 7.1,
+          "min_raw_slack_ns": -6.753
+        },
+        "removal": {
+          "rows": 3456,
+          "max_delay_ns": 6.439,
+          "min_raw_slack_ns": 0.693
+        }
+      },
+      "ports": [
+        {
+          "name": "CLKIN",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SPI_SS",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_SYSCLK",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SPI_SCK",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SPI_MOSI",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_DATA[3]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[8]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[0]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[4]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[12]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[13]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[5]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[14]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[6]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[9]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[1]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[15]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[7]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[2]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[10]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_ADDR_IN[2]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[4]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[1]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[3]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[0]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[14]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[12]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[15]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[13]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[11]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[8]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[10]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[9]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[17]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[16]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[19]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[18]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[21]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[20]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[23]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[22]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_WRITE_IN",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[6]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[7]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_READ_IN",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[5]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_DATA[7]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_DATA[5]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_DATA[3]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_DATA[2]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_DATA[1]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_DATA[0]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_DATA[4]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[11]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_DATA[6]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_ROMSEL_IN",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SPI_MISO",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "RAM_DATA[0]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "RAM_DATA[1]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "RAM_DATA[2]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "RAM_DATA[3]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "RAM_DATA[4]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "RAM_DATA[5]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "RAM_DATA[6]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "RAM_DATA[7]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "MCU_RDY",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_IRQ",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_DATABUS_OE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_DATABUS_DIR",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[0]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[1]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[2]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[3]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[4]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[5]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[6]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[7]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[8]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[9]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[10]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[11]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[12]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[13]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[14]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[15]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[16]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[17]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[18]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[19]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[20]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[21]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_1CE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_2CE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ZZ",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_OE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_WE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_BHE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_BLE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[0]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[1]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[2]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[3]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[4]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[5]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[6]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[7]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[8]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[9]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[10]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[11]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[12]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[13]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[14]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[15]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[16]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[17]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[18]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_OE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_WE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "DAC_MCLK",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "DAC_LRCK",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "DAC_SDOUT",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        }
+      ],
+      "psram_address_margin_ns": 7.317,
+      "psram_active_margin_ns": 2.817,
+      "psram_conditional_margin_ns": 2.817,
+      "psram_access_ns": 70,
+      "pcb_round_trip_allowance_ns": 4,
+      "snes_read_envelope_ns": 76.518,
+      "snes_model_sample_ns": 270,
+      "snes_extra_allowance_ns": 6,
+      "spi_reply_envelope_ns": 167.857,
+      "spi_half_period_ns": 190.476,
+      "spi_extra_allowance_ns": 4,
+      "bundle": {
+        "records": {
+          "delay_ns": 2.314,
+          "one_rx_period_ns": 11.904,
+          "margin_after_2ns_allowance": 7.59
+        },
+        "prepared": {
+          "delay_ns": 6.599,
+          "one_rx_period_ns": 45.454,
+          "margin_after_2ns_allowance": 36.855
+        },
+        "pad": {
+          "delay_ns": 6.603,
+          "one_rx_period_ns": 45.454,
+          "margin_after_2ns_allowance": 36.851
+        }
+      },
+      "first_stage_fanout_one": 11,
+      "negative_reset_path_count": 24,
+      "negative_reset_worst_paths": [
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[1]",
+          "delay": "3.893",
+          "slack": "-6.753"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[1]",
+          "delay": "3.876",
+          "slack": "-6.736"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[0]",
+          "delay": "3.876",
+          "slack": "-6.736"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_domain_reset124:native_spi_release|release_reset[1]",
+          "delay": "3.867",
+          "slack": "-6.727"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_domain_reset124:native_spi_release|release_reset[0]",
+          "delay": "3.867",
+          "slack": "-6.727"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "sink_rom_fault[1]",
+          "delay": "3.862",
+          "slack": "-6.272"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "sink_rom_fault[0]",
+          "delay": "3.862",
+          "slack": "-6.272"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[0]",
+          "delay": "3.866",
+          "slack": "-6.250"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[1]",
+          "delay": "3.557",
+          "slack": "-6.033"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[1]",
+          "delay": "3.539",
+          "slack": "-6.019"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[0]",
+          "delay": "3.539",
+          "slack": "-6.019"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_domain_reset124:native_spi_release|release_reset[1]",
+          "delay": "3.533",
+          "slack": "-6.013"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_domain_reset124:native_spi_release|release_reset[0]",
+          "delay": "3.533",
+          "slack": "-6.013"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "sink_rom_fault[1]",
+          "delay": "3.527",
+          "slack": "-5.583"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "sink_rom_fault[0]",
+          "delay": "3.527",
+          "slack": "-5.583"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[0]",
+          "delay": "3.534",
+          "slack": "-5.562"
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[1]",
+          "delay": "1.802",
+          "slack": "-3.258"
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[1]",
+          "delay": "1.785",
+          "slack": "-3.247"
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[0]",
+          "delay": "1.785",
+          "slack": "-3.247"
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_domain_reset124:native_spi_release|release_reset[1]",
+          "delay": "1.782",
+          "slack": "-3.244"
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_domain_reset124:native_spi_release|release_reset[0]",
+          "delay": "1.782",
+          "slack": "-3.244"
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "sink_rom_fault[1]",
+          "delay": "1.781",
+          "slack": "-3.060"
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "sink_rom_fault[0]",
+          "delay": "1.781",
+          "slack": "-3.060"
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[0]",
+          "delay": "1.786",
+          "slack": "-3.050"
+        }
+      ],
+      "native_payload_negative_reset_path_count": 0,
+      "native_payload_negative_reset_paths": [],
+      "conditional_data_bounds_pass": true,
+      "native_payload_reset_pass": true,
+      "mtbf_calculated": false,
+      "full_io_signoff": false,
+      "scope": "1000ns IO exceptions expose data delay only; their slack is not a pass criterion. Mixed-clock groups are top100 samples per pair/corner, not complete CDC coverage. Digital conditional envelopes exclude unmeasured electrical behaviour, metastability and stopped-clock response deadlines."
+    },
+    "public_sources": {
+      "tools/nes_clip178.py": "78ec863a4a61c96d99cd9017eb72c7f358a1743e9b732539730757f4ad9640d4",
+      "tools/nes_clip178_fpga.py": "b85967ec4ac7002e88d26e35fe3f18523cb5418399d601761e3274f3259bd814",
+      "tests/nes-functional/native_clip178_tb.sv": "92fa85e4f9acde28c4f8ce337ca8d127972470134c8da7f9c39a47f9763f5125",
+      "tools/test_nes_clip178_raster.py": "8401dde234f907daa8728b301668262129c8f7678ef5eb7535b251b60a285782",
+      "tools/test_nes_clip178_display.py": "7e9dd0ef4eea138f567e49f1f90b55f63fd7c60072723d138d3b8c902f9acf31",
+      "tools/nes_banked169.py": "8feb653998eaac90f10a1ab4508018ca19bcad4355d3537ab7b7647259e4967b",
+      "tools/test_nes_banked169.py": "6e35437afe25b5bbf452f30c96ccc9b91b03fed7d000808d3c85bc8b0ecec54a",
+      "tools/build_nes_sink165.py": "342f0ae6129bc0496a3bf6f786843746678f3e9ef58ce211c40b20e58ecceb08",
+      "tools/nes_native_local165.py": "91cb290947b2522cca1f61f4d97e0cd92b43dce47798b1ce54d5e74e91e33e6a",
+      "snes/video_probe/capture_native_sink165.lua": "016e8b2c3fa292f556775267fb27440544c69b7ed94b5026fb54cadc7f3a8f6a",
+      "tests/nes-functional/native_sink165_host.c": "8082ef5af935137f5700db00a3e6b52800272a65ece75e36eff1289dfef636f7",
+      "src/nes/firmware/nes_native_sink165.c": "07f4b369bb2dc3da375c0c84a6f457025c44def3336f70f32fed9e3acf43b938",
+      "src/nes/firmware/nes_native_sink165.h": "92e0d98a213714dd96d764bfb164d98ed5a724083eb874f654abcf7aa64732f2",
+      "src/nes/firmware/nes_native_video165.h": "750a25ff3efaaf9a7231f9cdd2314d1a61f9fa41441f2e4d44a29e1b68ed5ce4",
+      "src/nes/firmware/nes_native165.h": "2e097209652e4c184766211d4284f9cc717fb917fe91cb1be8d7842cbf27378e",
+      "src/nes/firmware/nes_sink_trace168.c": "e6c1fab8b7782d768bcfc1672fbe62015f3bbbe07148cb8222bb93f6d637521f",
+      "src/nes/firmware/nes_sink_trace168.h": "806eb4349a3afef2008dd02f92a1523e3dd7f1521ebc94a7429e94d42c85aacb",
+      "tools/test_nes_clip178_packets.py": "be25a82bdde6a8ae713dd733db5bc2bc08b8f1f8aaeae7ba969f61f1fd763c51",
+      "tools/check_nes_clip178_fpga.py": "c62cf7d8826ab449dddac8b37247be6c797bfc56e6e36e922b8757e97852009d",
+      "tools/check_nes_check165.py": "fc6072220ae0c4cf9c71baa3ba8d0d12ce044143d4705684aa1d008231c071dc",
+      "tools/check_nes_retire165.py": "a0d664100f777adedd89a1b2c71d14eeafc97063f0977c52d7e4a978f361df99",
+      "tools/check_nes_boundary165.py": "e505d75598885f5bd780c653f51f0bb2d51bd494c812dcac4f12c2ecbd5b7732",
+      "tools/nes_boundary165_paths.tcl": "a362f09119c023dd32658519e9104afd93e48f9aeca2b8166cab379f11446ee5"
+    },
+    "sources": {
+      "board.qpf": "8242ee5e59a70da6149cb823d27ca626c19cecce70342b4e21184bb2adb3d6c3",
+      "board.qsf": "457ebd28588860dc1e733a3e4518f260170e212fd12e1e1e6c64983bd9577c1b",
+      "board.sdc": "ca2e86fdf7559dc8aeddf55562f17c398a698c058f21f79d984c0c3d782b83e7",
+      "cart_nrom.sv": "e3f26834ea8f6272fd4d8310db3bd1dc44f609fafb2b4b68f90960f6ef742ee4",
+      "fxpak_nes_screen137_top.sv": "6dfb3db2e528b567dfe31f318045085f4d348135d77132d50d5b2adefb98949a",
+      "nes_clock_pll123.v": "bcc55cf38d516acbdaa0b0402ce2320d32f67df52d1a8549379a48b0d995c8bc",
+      "nes_dac162.sv": "51257d720a3a00aedcad9b8eeab10e22015930208e2929250869a41396666064",
+      "nes_diag_clock_guard127.sv": "f1936729ba7505b4d3030a86d9c8b4d88ce4490500bffb7d38ea26cace64b6e3",
+      "nes_diag_startup_guard.sv": "80e7e13ba034b0a1a706945cd8015f3789110363a300e39c21e62086a29460a2",
+      "nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+      "nes_game_bus151.sv": "82f6c9ce7cb491b6decbb3d82d7125a2bb301436782039b42ba41d14261d274a",
+      "nes_game_frame150.sv": "acb8eff9c17143f69dd3c49c83c667e893025554b98aee8f45e89b8d8fc65174",
+      "nes_game_pad150.sv": "68a7fc00658bc4256bd83e318814c6add9d6d1d49d2c631743c1eb9839eb5640",
+      "nes_live_joint.sv": "8663055f1b4ffd0b4d3406e55f25678d4c33894ad0088cf0e525487e3f744b86",
+      "nes_local_memory.sv": "75bb892cb796ede222de2c8bd9409d8685cf5705c653ca676b0faa7f767c1c46",
+      "nes_native_arbiter165.sv": "cd4818bc2e7a02d84b101f55c2fb2f564d59588561237002bb2ecde6d6035e23",
+      "nes_native_chr165.sv": "c22bbc9cfab03e08ddd6eb84b1e02d795e6c717731bf165ee8abab66f55104c7",
+      "nes_native_ciram165.sv": "3be50efaff24aaab9b77fe9ccd6a70928479f677040c67019de76476b1a5974a",
+      "nes_native_compact_planes165.sv": "759ee24865e5d4269ed99f1a184e004bd66fa386ebfb58d7b03df62fd619e95b",
+      "nes_native_export165.sv": "294ce3abf8a38e61ef152d28d80a1144940f68850ee631d028b312da8ed82cfa",
+      "nes_native_fetch165.sv": "85c21641a325ec6188c82014980e3d4aadf51cadb4be27b70f80e2fd8b726e1f",
+      "nes_native_fill165.sv": "1268727679314a07714d869d95613c52ebc86c2c80b359ec4bdaaad9c4feb5de",
+      "nes_native_frame165.sv": "cf966a7b4374b4fc10e58bd9b706a1154c7d25641f10fe1e7d80720beba94250",
+      "nes_native_mailbox165.sv": "9ffb9571f80f89c288f829a28d0d19eb6a46f9ce3acf7eb0f218c5f8c38126e1",
+      "nes_native_planes165.sv": "5ffb80c410948eff320e94ed2676a73c04780a46cbfb53e3acda181d316a999a",
+      "nes_native_raster165.sv": "fb76bbc168b1f51f5ad91f275f85730852765bc4cce3b673f46abfce57f3229f",
+      "nes_native_raster_frame165.sv": "6287564bbe133bcf79daf80bfaa661ee009194043fc9d4553f7b92e920b3acfd",
+      "nes_native_scene165.sv": "fe480dc1012653445538016bd30bbfaccd830aab87a5fd434e6f60eb0b049294",
+      "nes_native_scene_fetch165.sv": "9776931a348cc9722ecda04a1815ad146177c7e04a5ba96b78167f02db0bfe43",
+      "nes_native_spi165.sv": "3e97d0ea5ab44b031222ed63314de2a9a75af43cf55d0b8140dca2c76587d02f",
+      "nes_native_tap165.sv": "a3ab7431336fb5c8c71891ef58aac1ffc446a41c3ceb8ec17adbcf2193440170",
+      "nes_pad_trace156.sv": "ef422ffae1304a861e38af603c7e8884ce2fc6fc711b79dc036a12744b2ad58b",
+      "nes_ppu_history157.sv": "ab64f557c5f7602ad0cf4db7f092b92d30cc5d9045184dc870359bcbd79ae5cb",
+      "nes_probe.sv": "dd6e97f186be2d18afba8fd19d9da8c73d1fda71ae8f11dfbc67ee5ae3145cd2",
+      "nes_rom_boot.sv": "543f4c84f64f8744da987a1fec5618ed983302cb96f4eafd16a742fcfd9f760d",
+      "nes_rom_loader.sv": "3598512dc8373c386b4cedc349e094ebbb1a454164acc24fe5803bb89785f5ed",
+      "nes_rom_physical.sv": "9b66c32071c7176eec55081c9e73737db1d97615ee0cedb88fcef6932aeffe12",
+      "nes_rom_service.sv": "5c784344c82d7d4769e31eabaec2282f2ef06566fe5f2234b727a9d73c0c432b",
+      "nes_rom_spi.sv": "e7368006176a0e21b6771057e3681c4abc3125fbc648e4b9cd55444b5c575d3c",
+      "nes_run_observer134.sv": "dc91bc130df91e524078bc7172274f2b6f9c91d1b9966722509d8a102024020d",
+      "nes_screen_status151.sv": "0db273451fccb63dabaecdccb55531c77864d257181eab510b3299a6be539552",
+      "nes_sink_bridge165.sv": "57340012492fa7eb43a3d7f95ba1739dd137e8a941d0644e3f75b51b33e52d57",
+      "nes_sink_bus165.sv": "b7f53f8639391409e8f02b6e4cdb506698bb31781f1ae2ce6c4d51557bd8bc3f",
+      "nes_sink_spi165.sv": "03908db4491460585d5a5e601d7e9068a796c960c7f0d3ecb570f4cb8781e0d3",
+      "nes_spi_boot.sv": "3e55dd0a4fdf50021113f50641ecd89b18e07f25986a33a5dbd462a794751d9f",
+      "rtl/apu.sv": "0c320265a7756225d276318f173bf03ba7d32c563637e471691ea17d4a121586",
+      "rtl/bus_savestates.vhd": "56bb3936de8e5f1a2c42dbbcbce1685456e8c9da231bab4ae0c5a2002125b3b9",
+      "rtl/cheatcodes.sv": "442b6b89ff86a8a4198d737332b1248d30c24fdf12aef9c5a39095b95974d918",
+      "rtl/compat.v": "60d5a28c1a86c0f86e37e6cf92d3ba592e1664bfa014509e35b706e0f5c43731",
+      "rtl/composite_board.sv": "29bb38456d7b714a43d17642a13795c30a16b135ae2caafe6ba736ae1c18e895",
+      "rtl/nes.v": "fd90fd4001b02022c1bf299fb3afa057df2574bbf1069e3c0e8a4b0895efed7d",
+      "rtl/ppu.sv": "72f5527d3ddf28f7173ea06babde0007f790d187ea8ab287dc58f5c0c392a0d1",
+      "rtl/regs_savestates.sv": "c473bcea2d9b9ccc51132a06f5885ee4a3be276a836cd9c497bcca6b84097a95",
+      "rtl/savestates.vhd": "f21c63951b772169cfc546328f89c33637b28e67b3affca2290757dca8eacfa0",
+      "rtl/statemanager.vhd": "736b23f43d1f6662ce6f57702952c96c1ac5af47e5239f30f101864565654aa6",
+      "rtl/t65/T65.vhd": "884a7c84128a9936690f1a73a14036b7742aed646a78209471a769071edfa692",
+      "rtl/t65/T65_ALU.vhd": "1304187f21eb8ae25c577c91196e2140687a375420d6a589518d57e888931b3b",
+      "rtl/t65/T65_MCode.vhd": "f33dcdbcc9dfa99ab7b3b523ea57054d3a15c900b5b6305092a68089fc0e51f5",
+      "rtl/t65/T65_Pack.vhd": "717e1c2e09466495c15309e1d37d6386c8ec7f7f3757cf3e6837562a6467bdfb",
+      "sink-program.hex": "89cdb0cffcac826e87d9cb9ea1c6da26ac2560e8e6ddf2602962d184c7bb1164",
+      "sys/iir_filter.v": "08573ba255ca4f22a2f3556a086085c94e654d37a25637bfeaca867e408566e8"
+    },
+    "changed": [
+      "nes_native_raster_frame165.sv",
+      "sink-program.hex"
+    ],
+    "unchanged_files": 59,
+    "source_byte_reproduction": true,
+    "snes_mif_4096_equal": true,
+    "preserved_routed_db_files": 312,
+    "raster": {
+      "passed": true,
+      "frames": 262,
+      "checks": 1050,
+      "baseline_sha256": "8cc045be929d11ef63734e6f5dfa68f9b215c71a2b8be95b47b0fafe5c403be8",
+      "candidate_sha256": "6287564bbe133bcf79daf80bfaa661ee009194043fc9d4553f7b92e920b3acfd",
+      "public_sources": {
+        "tests/nes-functional/native_clip178_tb.sv": "92fa85e4f9acde28c4f8ce337ca8d127972470134c8da7f9c39a47f9763f5125",
+        "tools/nes_clip178.py": "78ec863a4a61c96d99cd9017eb72c7f358a1743e9b732539730757f4ad9640d4",
+        "tools/test_nes_clip178_raster.py": "8401dde234f907daa8728b301668262129c8f7678ef5eb7535b251b60a285782"
+      },
+      "scope": "256 uniform masks, inter-row/midline changes, invalid-to-valid recovery and fault retirement. Synthetic rows; not whole-game/shared-memory/export/SNES timing."
+    },
+    "display": {
+      "passed": true,
+      "client": {
+        "body_bytes": 3229,
+        "program_bytes": 4096,
+        "spc": {
+          "payload_bytes": 89,
+          "payload_address": 8265919,
+          "scratch_dp": 16,
+          "status_address": 28673,
+          "success": 169,
+          "expected_dsp_flg": 32,
+          "failures": {
+            "IPL": 225,
+            "START": 226,
+            "BYTE": 227,
+            "READY": 228,
+            "FLG": 229
+          },
+          "wait_iterations": 65535
+        },
+        "local": {
+          "entry": "local165_entry",
+          "code_bytes": 938,
+          "scratch": [
+            64,
+            111
+          ],
+          "command_bytes": 256,
+          "wrambank": 127
+        },
+        "upload": {
+          "entry": "upload165_entry",
+          "code_bytes": 317,
+          "large_update": "inactive VRAM, max6 chunks4096 plus final palette/OAM flip",
+          "active_slot": 4146
+        },
+        "mailbox_bytes": 256,
+        "scope": "Paired candidate: uniform NES left clipping, explicit20-byte SEAL, SNES window.\n\nAccept only1e (unclipped) or18 (BG+OBJ left8 clipped). Other rendering modes\nand within-frame changes remain rejected. No memory/capacity/timeout increase.\nNot selected for hardware until functional, link, fit and packaging checks pass.\n",
+        "stages": {
+          "ROM_COPY": 1,
+          "COPY_MISMATCH": 225,
+          "WRAM_SPC": 2,
+          "READY": 3
+        },
+        "copy_verified_bytes": 3229,
+        "seal_bytes": 20,
+        "mask_address": 4666,
+        "clipping": "Final vblank only; window1 x0..7 BG1+OBJ. Candidate mask never changes visible window before commit."
+      },
+      "cases": [
+        {
+          "passed": true,
+          "commits": 6,
+          "acks": 270,
+          "pads": 315,
+          "spc": 169,
+          "fallback_chunks": 6,
+          "old_frames_held": 6,
+          "mode": "budget",
+          "reference": false
+        },
+        {
+          "passed": true,
+          "commits": 3,
+          "acks": 180,
+          "pads": 201,
+          "spc": 169,
+          "fallback_chunks": 1,
+          "old_frames_held": 1,
+          "mode": "stop",
+          "reference": false
+        }
+      ],
+      "public_sources": {
+        "tools/nes_clip178.py": "78ec863a4a61c96d99cd9017eb72c7f358a1743e9b732539730757f4ad9640d4",
+        "tools/test_nes_clip178_display.py": "7e9dd0ef4eea138f567e49f1f90b55f63fd7c60072723d138d3b8c902f9acf31",
+        "tools/nes_banked169.py": "8feb653998eaac90f10a1ab4508018ca19bcad4355d3537ab7b7647259e4967b",
+        "tools/test_nes_banked169.py": "6e35437afe25b5bbf452f30c96ccc9b91b03fed7d000808d3c85bc8b0ecec54a",
+        "tools/build_nes_sink165.py": "342f0ae6129bc0496a3bf6f786843746678f3e9ef58ce211c40b20e58ecceb08",
+        "tools/nes_native_local165.py": "91cb290947b2522cca1f61f4d97e0cd92b43dce47798b1ce54d5e74e91e33e6a",
+        "snes/video_probe/capture_native_sink165.lua": "016e8b2c3fa292f556775267fb27440544c69b7ed94b5026fb54cadc7f3a8f6a",
+        "tests/nes-functional/native_sink165_host.c": "8082ef5af935137f5700db00a3e6b52800272a65ece75e36eff1289dfef636f7",
+        "src/nes/firmware/nes_native_sink165.c": "07f4b369bb2dc3da375c0c84a6f457025c44def3336f70f32fed9e3acf43b938",
+        "src/nes/firmware/nes_native_sink165.h": "92e0d98a213714dd96d764bfb164d98ed5a724083eb874f654abcf7aa64732f2",
+        "src/nes/firmware/nes_native_video165.h": "750a25ff3efaaf9a7231f9cdd2314d1a61f9fa41441f2e4d44a29e1b68ed5ce4",
+        "src/nes/firmware/nes_native165.h": "2e097209652e4c184766211d4284f9cc717fb917fe91cb1be8d7842cbf27378e",
+        "src/nes/firmware/nes_sink_trace168.c": "e6c1fab8b7782d768bcfc1672fbe62015f3bbbe07148cb8222bb93f6d637521f",
+        "src/nes/firmware/nes_sink_trace168.h": "806eb4349a3afef2008dd02f92a1523e3dd7f1521ebc94a7429e94d42c85aacb"
+      },
+      "scope": "Actual65816/C file mailbox;6 alternating1e/18 pixel-exact commits, E3 banked fallback/noop and3 commits before mid-copy STOP. No physical timing, full MCU link or FPS proof.",
+      "inputs": {
+        "video": {
+          "arm-size.log": "0e202f4a259c39d963b91d17119aff2107352fdc77d2e5a065bec6034bd5fd58",
+          "arm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture.lua": "9fd89725fc54865ed00b6e4d94391f0f50acf29ebe5bce05a7c29a62e4161d60",
+          "expected-1.rgb": "6e45cfbad2773ff5978ba5ba9f79fcb002cb0e1e64372c88f8f634fb8e547891",
+          "expected-2.rgb": "caaed5c1fac77b3fbdca0e690f455ba883374479a3bb5476da646dd6f13e0631",
+          "frame-1.rgb": "6e45cfbad2773ff5978ba5ba9f79fcb002cb0e1e64372c88f8f634fb8e547891",
+          "frame-2.rgb": "caaed5c1fac77b3fbdca0e690f455ba883374479a3bb5476da646dd6f13e0631",
+          "gcc.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "mesen.log": "8143c2e53ffa6b021e5f80317d6df307192cd7a151b4487e1f6233341ba4c5c9",
+          "native.sfc": "89f8ac7dc2efbe4c39590343ed7739b94f73a61a4a08d8f7c5027faa0eb21edf",
+          "result.json": "e67e8e1ba22cb731dfe0bc514dc2ddb41f374c756d72f5c107d2d52ccc22a33f",
+          "trace.tsv": "4ae194293fcfec62b287730b0d07fa2b43bccf3eafeece5aebb63b6a5b35bd27",
+          "video.exe": "64a750cc1fa3101a603d98a431fa885e6a6a0a31868f2452781a2d4c95254c2a",
+          "video.o": "ed64941eda616b0ed4d786435f02178048ea2d78145b1278e7b96b41eb1b4ac9",
+          "video.su": "2f7cf7d53483497f71787c4362e2ce2539a9dbddd98a393b05af42cf37705d64",
+          "frame12/bg.bin": "21194e026a78f83de2b7492ee92c14cbdc0ac3cf91f42d90c8ee0bef44471ef6",
+          "frame12/cgram.bin": "10c314998951244251f4b30b9a34149a373339f6049093f4cfb15f3f25b39ebe",
+          "frame12/hdma.bin": "f1bc4f229b2da04e15c030b2bcfa46740b31afb834f455e6bdcc2c0411379d78",
+          "frame12/map.bin": "f9c0dc0711c43b4e4878fffc76d53afde7b1b7d352bb83c78d4b1d3dd8b1885f",
+          "frame12/oam.bin": "d0d6a01e1cb90ed3436c7230b12a8e82709ca998db5fe6e04392ded5440b58c6",
+          "frame12/obj.bin": "0373c5edc1cf935c9ae8f8ddb4b7088a4352d00ff444571cbc2bd258ab2cdd1f",
+          "frame12/palette.bin": "4d6d7daec233c1fd251d1fad0855815acc1785d89f59a88e59af50f609ce37be",
+          "frame12/receiver-video.log": "d071975082e952caba068f6d8ccf2d9801cc4ed4c9f990810fc69fd869a367f4",
+          "frame12/records.hex": "034580e7557c7fdbe30c325368117d53cf7099e89eab0a607067b3db0587cf96",
+          "frame12/summary.txt": "fe28e5f1daaa7fde773ea487e9ebcd7dc7ad4923a39f9aedfc59445bb1b3f659",
+          "frame15/bg.bin": "768b9570aed9110df24d3353c2eb051028dad3300d73f4db3daaed1011408532",
+          "frame15/cgram.bin": "10c314998951244251f4b30b9a34149a373339f6049093f4cfb15f3f25b39ebe",
+          "frame15/hdma.bin": "f1bc4f229b2da04e15c030b2bcfa46740b31afb834f455e6bdcc2c0411379d78",
+          "frame15/map.bin": "d9c0fc02f01af0b63d6aa0cf2abc873693c9488201fa8b58ca5525be1ee2f080",
+          "frame15/oam.bin": "d0d6a01e1cb90ed3436c7230b12a8e82709ca998db5fe6e04392ded5440b58c6",
+          "frame15/obj.bin": "0373c5edc1cf935c9ae8f8ddb4b7088a4352d00ff444571cbc2bd258ab2cdd1f",
+          "frame15/palette.bin": "4d6d7daec233c1fd251d1fad0855815acc1785d89f59a88e59af50f609ce37be",
+          "frame15/receiver-video.log": "5252f8aa8f008a55c28a208b87b1e6b262bc545ea6146c4d42e1b61312d215a8",
+          "frame15/records.hex": "009a2c9eb096d63335d779bc4433d8943e5e72fd94b0fb9d881bd843e6bdbce2",
+          "frame15/summary.txt": "fe28e5f1daaa7fde773ea487e9ebcd7dc7ad4923a39f9aedfc59445bb1b3f659"
+        }
+      }
+    },
+    "packets": {
+      "passed": true,
+      "cases": [
+        {
+          "case": "legacy18",
+          "passed": true,
+          "status": 224,
+          "prior_acks": 44,
+          "commits": 0
+        },
+        {
+          "case": "independent_left_1a",
+          "passed": true,
+          "status": 224,
+          "prior_acks": 44,
+          "commits": 0
+        },
+        {
+          "case": "independent_left_1c",
+          "passed": true,
+          "status": 224,
+          "prior_acks": 44,
+          "commits": 0
+        },
+        {
+          "case": "upper_byte_0118",
+          "passed": true,
+          "status": 224,
+          "prior_acks": 44,
+          "commits": 0
+        },
+        {
+          "case": "blank00",
+          "passed": true,
+          "status": 224,
+          "prior_acks": 44,
+          "commits": 0
+        },
+        {
+          "case": "emphasis3e",
+          "passed": true,
+          "status": 224,
+          "prior_acks": 44,
+          "commits": 0
+        },
+        {
+          "case": "grayscale1f",
+          "passed": true,
+          "status": 224,
+          "prior_acks": 44,
+          "commits": 0
+        }
+      ],
+      "client_sha256": "5e62098ae5d65f07be2d0e9c81cd5be6575e34226f76dbcf98eafd8a7c752ebb",
+      "prior_result_sha256": "4a7cea6ffb5b5bd11be81bb5ef094a5ec369928945f1c6abafeee567f7ea2142",
+      "public_sources": {
+        "tools/test_nes_clip178_packets.py": "be25a82bdde6a8ae713dd733db5bc2bc08b8f1f8aaeae7ba969f61f1fd763c51",
+        "snes/video_probe/capture_native_sink165.lua": "016e8b2c3fa292f556775267fb27440544c69b7ed94b5026fb54cadc7f3a8f6a"
+      },
+      "scope": "Replay valid staging packets; real65816 must reject malformed final SEAL.\n\nNo injected ACK or WRAM state. Reuse the exact functionally tested178 client.\nThis checks compatibility boundaries, not physical SPI or frame throughput.\n"
+    },
+    "physical": false,
+    "fps60_proven": false,
+    "full_io_signoff": false
+  },
+  "arm": {
+    "passed": true,
+    "firmware_sha256": "69441af67e909e0a32b687f421aacb9193a942de8afededb7993c3cc0ca4ebc1",
+    "firmware_bytes": 198016,
+    "elf_sha256": "2db4c12b1eaba1b0c4e31a33ca4bf01d54555c4bb9f03431105f4b2687d1d368",
+    "ram_static": 26564,
+    "ram_free_outside_run": 38860,
+    "foreground_bound": 37312,
+    "irq_reserve": 508,
+    "remaining_margin": 1040,
+    "paths": {
+      "native_session165": [
+        35984,
+        [
+          [
+            "native_session165",
+            33992
+          ],
+          [
+            "nes_runtime165_step",
+            40
+          ],
+          [
+            "nes_native_video165_build",
+            688
+          ],
+          [
+            "nes_sink165_pattern",
+            32
+          ],
+          [
+            "packet",
+            304
+          ],
+          [
+            "nes_sink_spi165_exchange",
+            544
+          ],
+          [
+            "transfer",
+            24
+          ],
+          [
+            "guard",
+            8
+          ],
+          [
+            "native_service165",
+            48
+          ],
+          [
+            "screen146",
+            32
+          ],
+          [
+            "nes_rom_spi_transfer",
+            0
+          ],
+          [
+            "nes_game149_transfer",
+            32
+          ],
+          [
+            "wait_us",
+            0
+          ],
+          [
+            "delay_us",
+            8
+          ],
+          [
+            "nes_return_delay",
+            40
+          ],
+          [
+            "nes_return_fail",
+            0
+          ],
+          [
+            "nes_diag_fail",
+            0
+          ],
+          [
+            "nes_diag_observe",
+            40
+          ],
+          [
+            "printf",
+            16
+          ],
+          [
+            "internal_nprintf",
+            48
+          ],
+          [
+            "outchar",
+            8
+          ],
+          [
+            "uart_putc",
+            64
+          ],
+          [
+            "nes_diag_wait_start",
+            16
+          ],
+          [
+            "nes_diag_ticks",
+            0
+          ]
+        ]
+      ],
+      "SysTick_Handler": [
+        176,
+        [
+          [
+            "SysTick_Handler",
+            16
+          ],
+          [
+            "sdn_changed",
+            8
+          ],
+          [
+            "printf",
+            16
+          ],
+          [
+            "internal_nprintf",
+            48
+          ],
+          [
+            "outchar",
+            8
+          ],
+          [
+            "uart_putc",
+            64
+          ],
+          [
+            "nes_diag_wait_start",
+            16
+          ],
+          [
+            "nes_diag_ticks",
+            0
+          ]
+        ]
+      ],
+      "TIM2_IRQHandler": [
+        0,
+        [
+          [
+            "TIM2_IRQHandler",
+            0
+          ]
+        ]
+      ],
+      "NMI_Handler": [
+        8,
+        [
+          [
+            "NMI_Handler",
+            8
+          ],
+          [
+            "stop108",
+            0
+          ]
+        ]
+      ]
+    },
+    "callers": [
+      [
+        "main",
+        304
+      ],
+      [
+        "nes_menu_diagnostic_run",
+        16
+      ],
+      [
+        "nes_menu_sd_probe",
+        1008
+      ]
+    ],
+    "reachable": 92,
+    "stack_files": {
+      "ccsbcs.su": "8dae08cffd098b52acc2969801e3dbab08e5ef16960417d74cb8e77a57820d94",
+      "cdcuser.su": "03d7f848b776d61594bcb5ff62a73cdac429a1a4b3ac1a9c4b573ea564aa14c0",
+      "cfg.su": "6bf1955529020798fc81224bf9e1960ae5da6376117d6430ae667fa9a13f434d",
+      "cheat.su": "26e0609387eb86ed321bfb687cef7a94ead5ef96751aeea828c21191e87a15f6",
+      "cic.su": "4167ae09040c6c6398eb2988a16db9612e2dbdaf2e7c3dba8cd4d13ac5c905c7",
+      "cli.su": "9f5516e20c1e802612e1d882320d3c93626db8956b716945b0041cc4ec9076d2",
+      "crc16.su": "da804a4eb77a42227d2cb23914cd6e288c859fa04a12f43905944ceae8326217",
+      "crc32.su": "5136b6e89e025148bbe6ce3ac0327d731dd658bcc7e495adfc5f802f1028607a",
+      "faulthandler.su": "e87b32fa32d825c5933c30adb6d90849378cc4d24b2dfe3091c6e773848be794",
+      "ff.su": "8a18a84ce44a9a5e05e4361cb532de57aee3e729beb8e5078a753b582546b4af",
+      "fileops.su": "6ec49cf7d1ee110c3557f15efe5c2a53fa1fe0ac696ff56487e70c4c307c3a05",
+      "filetypes.su": "dbaa9ccbba523a48360c730b14d3f6c538ae08f41f46d53302598e6702798e5d",
+      "fpga.su": "715b86f8d5c87392c10a5c12027244d458c690f98d7a7e3009d80549806d5a79",
+      "fpga_spi.su": "4a47e8ef203cb6f6a656898aa7394326ceda3c22cd02d311940884c6607aff7b",
+      "gbc_dump.su": "ea8d6e2d0f0604ba1cd8c5e95757721953005a59d326d4c6f6f49f3c639a62f4",
+      "gbc_memio.su": "136f4d3ee37c8a7f60752c3d0129525fd401303e9e9244a2a6823f502f670cef",
+      "gbc_menu.su": "efda8eb040d7dd66b51ce66648df6590a3590762fdd0919b78cdff3e24a72dff",
+      "gbc_save.su": "e5cee58a418bd53f4058090d89447c8617bd4c637d1d2660c2b924800e9f2001",
+      "gbc_state_format.su": "64ac90087d43ec64f20a6d58d1990fc8c967e9f6bfe80fa1aed5011f83addfe8",
+      "gbc_state_report.su": "0212b3c7a05afcd89fb79f87366b0ef78a3654c20aeed9016269aba7675f0e7f",
+      "gbc_state_slots.su": "43dbd83990eb06166a018dffbae1eb137ad210a6104ae5ae14f426f8abe64324",
+      "gbc_state_transfer.su": "33897b33fe9e5d886446a046bd01ca962fbaa8b6bfe84e58ce7073be4a2c3fc8",
+      "hwinfo.su": "737f5110f0b618fed8982fe78abc38b6e6d5b5dfb5f89ba4056c12ec36d22f80",
+      "main.su": "422916a9acddd830c349b6750ba459ae07daafde9db91ac4f94b3b58bd33d50a",
+      "memory.su": "407709ce312b21efee65c9c89d02a7a34738461a49973159abb962c422233b43",
+      "msu1.su": "1facedb1661e72007f1c086eacf0f5ecdcbf5c86533782a4ef55eae75c783a58",
+      "nes_cf86_session094.su": "5161bf74b436dda471121f84ab073041877393381045594c0279cddaec7cad23",
+      "nes_checkpoint112.su": "1a835bf30b00056a3b309ce82774c80f953ccc7d44b400bedc6b2f1f022f8c59",
+      "nes_css108.su": "7bd863f7a0077fe22499fb3efb677605b3738c7127cbda98a630bbc85ac35f0e",
+      "nes_diag_platform.su": "a6a7408313fa6731e673ee43a15cf890bb8b9d98bd0cb21ad67c9f161031135a",
+      "nes_diag_runtime.su": "072d192ce2ff81c59985c34162e49e17045acace46680f6769566f376de6b55e",
+      "nes_h1_session.su": "45d9c7c32d48cb0de762ee7bfe889c3e00d8b4db39f68a750a999c51d4c08de8",
+      "nes_h1_stm32.su": "731edeb7320ae8a7153ed0685f5efd43c31b2a6a50af790dc71e3d3e17aaa07b",
+      "nes_menu076.su": "0539bf9b9355a85244ead522b308a30d4aa98414e3b2e3020f00c15557e6b63e",
+      "nes_menu_diagnostic.su": "58c2657844ee148d52681f7bb072126bce557b8691251b1cfb5c91bc4f6b3c76",
+      "nes_menu_return.su": "8a8158218660681c1d636cd1d3d8ff7cadaf02d3f465f1e872fa54c3f8e9cbbc",
+      "nes_native165.su": "9c25976e1dbe582bfb182e621230928f95b1378a9a4e07147d1310e521fbcf68",
+      "nes_native_runtime165.su": "e051ae0b448042de2ecd9378d3872b8b82570252906520f042f5f3c3be7a88ea",
+      "nes_native_sink165.su": "3a436c155446c23a0fe073b08ff683938edd6c77485644b6194e2ba97460dd5d",
+      "nes_native_video165.su": "da68233b6d33fa42a5b3b9f3cdba783193b71245fb1627a3d22e08550df1fb12",
+      "nes_rom_spi.su": "41ff4216d7cdd06e79a95496bb590e756902b5c20dd189f501122d8eef5d6100",
+      "nes_rom_verify.su": "872aa2df1e801019756341b957b3b5909df1cee77ae19067d73a4eabb8b44b29",
+      "nes_sink_io170.su": "1a56580b04f42a62d805ba110a5fd06bd51650312b87fd62280b770d5d5510cf",
+      "nes_sink_spi165.su": "c2c985bdeca2f71c21dfa3d53ca64cfb5aa1dc7d436a84017e55306aa2cf0c14",
+      "nes_sink_trace168.su": "d465266b9917ce5db56c77402aa9fa3c91f9f552c69014eafd8147fcff5ebc24",
+      "nes_trace166.su": "cc76a59219091a5fcc6a8794805f831330ad1494ee30a23268241f70502946d5",
+      "printf.su": "3f3445fba3206420024b29a05c629ad147331b861ebd8d1df8b6734ff1ea6032",
+      "rle.su": "00f02838ef6cb1784cc91d552d95023a1577ce4e5239b9f005a3881cfb7df23e",
+      "savestate.su": "88deb37c2e6e88c13f1536b71fc115b475049e2de362850e45f0630db9845646",
+      "sgb.su": "3df969a6d08428d5175994c8cc54afbfae342a46ccacd7e925715fe53f237c74",
+      "smc.su": "3924b0ae9d24b418d0156c07c585db194528005f1069ffc465e615460f3d874b",
+      "snes.su": "740ce39a9bd3461f9a7b261a8166e5bda6b0c4f7d7bf62b15046f76e66797b5d",
+      "sort.su": "3c973ebdbe00165675187d181f2a97fec945babd53b4cc09b0852555132a0de7",
+      "sysinfo.su": "2e071807dfe26e854972f4ec8b9ba83a42cc7fd1e6c6b8219aa8b6350ddac56f",
+      "usbcore.su": "2427583f050b49c2b5e76bee3ef51f718cbceb092e6ccdc483aabef3653ac269",
+      "usbdesc.su": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "usbinterface.su": "396b8219c8460adb4fb229fd7983a4ff48a1ed1210a9e659af42d13a2d7263b3",
+      "usbuser.su": "ed7382a048e6c0e4e3805c27d2f092f0b5cb34fe098151ac01a820c5e66026eb",
+      "yaml.su": "2b0e4cd7c6efdc67bb3d1f5e49a00a2abe8d8b109b44f6d9272fdcadf70e7f79",
+      "ymodem.su": "422465ebd43af3f63a184060876d8ed4427b08d21ce2473787bac2f778c2b545",
+      "stm32f4xx/clock.su": "918879319891fca679b05ca5a9343417046b600cd348d7cf7a9b076b69d02c6a",
+      "stm32f4xx/led.su": "3d3dee9a92679d43c363c1f13bc8f36d8b88786ed7b0b79c39e692175f33efaf",
+      "stm32f4xx/power.su": "f322a4fb907e239305649cd0559ae70089468b3cbe8c65166c6e7b18068a2221",
+      "stm32f4xx/rtc.su": "6885296f62221a28833556f2bafd6d221e6a31609c11a6705ecd9075b46607f1",
+      "stm32f4xx/sdnative.su": "f6bab2a801f25e8c6f37c9fe9adf355c2b22a05e7e9ae80be286adc1eeb97f8f",
+      "stm32f4xx/spi.su": "9437fe409ab53b4b1fbf6bb39a287a02066fa87e3f0e47ce423d7846dddd4316",
+      "stm32f4xx/timer.su": "4c1304241a9066783ca17c603c159ba69540ac72de83ab52caa6027622526dc9",
+      "stm32f4xx/uart.su": "627a9a2ce2d6e622cdf5e6471a5ea2335d97f5b5716bb390ad4d2293d5d6a163",
+      "stm32f4xx/usbhw.su": "a7bd9ed6e08fda63daab6defb16048608db011dff59321523dc4dd6249e12d21"
+    },
+    "review_sha256": "247217921ba00a264ed0487519673f30738ac01adcebd7076e7a919ec07576a2",
+    "public_sources": {
+      "tools/check_nes_runlease165.py": "548b0c7ffe1a2f7fd333736e2a84564e9a8fe8a0b0d3ff29a2c5ccc181e6d43b",
+      "tools/nes_runlease165.py": "8c96323e3e5a89696e135573347a7e8bcf43264157cf35c61fec09f49333688b",
+      "src/nes/firmware/nes_runlease165.inc": "cc4c453d9a7916e870a4e70faab2c944390829f54aab83ea94b5d1ec02c4ead8",
+      "tools/check_nes_clip178_arm.py": "286d0fa9250271ef56be2f6cc29348610ba115e729efa48b38a6ebc454982ae7",
+      "tools/nes_clip178_mcu.py": "a9a72c4fd860b72f6a816a78c363946eb909420543414457afe0a95ad2ab006b",
+      "tools/nes_clip178.py": "78ec863a4a61c96d99cd9017eb72c7f358a1743e9b732539730757f4ad9640d4",
+      "src/nes/firmware/nes_boot172.inc": "3b867adecb63ab10fb3c5ed225d8de1d6db6f8bcd879b322f8dad3194a67c2b6",
+      "tools/check_nes_startup170_arm.py": "73ca0f5e1fdb6cee6e6a1b8beeda622f281b61905c346a113fb06b3f0a9158ea",
+      "src/nes/firmware/nes_sink_spi170.c": "6d553b84c90f8528d83ca9d9452218d73aae66803ef132cbe58de83e95f7ad5a",
+      "src/nes/firmware/nes_sink_io170.c": "24f6c0b64848f801bef81c37391242af0683d388d1191c8c9c810d3c3d9a9f9e",
+      "src/nes/firmware/nes_sink_io170.h": "8a4e3d16b43b86f3d2b38ce41a98b6fcccd57685b239b7881e698355a7e8592e",
+      "src/nes/firmware/nes_sink_trace168.c": "e6c1fab8b7782d768bcfc1672fbe62015f3bbbe07148cb8222bb93f6d637521f",
+      "src/nes/firmware/nes_sink_trace168.h": "806eb4349a3afef2008dd02f92a1523e3dd7f1521ebc94a7429e94d42c85aacb"
+    },
+    "hardware_package": false,
+    "physical": false,
+    "scope": "Conservative linked RUN graph including callbacks and fault helpers; reviewed enabled SysTick/TIM2/NMI plus extended hardware frames. No exhaustive proof of unchanged menu/GBC call graphs; their permanent33952B allocation is removed. Not measured high-water or real hardware. 178 paired mask converter/header/20-byte sink included in linked RUN stack;177 runtime and platform retained. No FPGA fit or hardware approval.",
+    "profile_trace_bytes": 40,
+    "io_trace_bytes": 20,
+    "trace_bytes": 32,
+    "reviewed_relocated_bodies": 13
+  },
+  "report": {
+    "passed": true,
+    "output": "PASS actual_report_max_width_bytes=3925 capacity=4096 full_pad16_history16=1 trace169=1\n",
+    "generated_sha256": "f48f0c00e4bcf50d4872ccea22515c099582ebe3daa497e01409a7aea9d928ca",
+    "source_sha256": "0fa725ee06a5c560f0c46f1b173dc778c017e544426e080d9ab425a81c2c06cc",
+    "scope": "Actual formatter extracted through post-STOP text completion; uint32/uint16/uint8 maxima,16 all-buttons entries and16 history entries, longest menu label. No SD IO."
+  },
+  "release": {
+    "passed": true,
+    "zip_sha256": "360e4faa516ec14752a0c10247a1ac1d15e1d993912e98d8311bb73b082d0ea4",
+    "zip_bytes": 1417042,
+    "firmware_sha256": "69441af67e909e0a32b687f421aacb9193a942de8afededb7993c3cc0ca4ebc1",
+    "fpga_sha256": "36cd4ba0adeb39a2976de3dedb0fddc0650d92140ac1a65fff6f46ed898fb260",
+    "rbf_sha256": "92350a03443c4df9a1bdd047db6284dca2cdc24663bbc55fe80add9f15a46ed7",
+    "snes_mif_matches_4096_bytes": true,
+    "snes_program_sha256": "89cdb0cffcac826e87d9cb9ea1c6da26ac2560e8e6ddf2602962d184c7bb1164",
+    "preserved": {
+      "02-RESTORE164-SD-ROOT/sd2snes/fpga_base.bi3": "eff3f675c93a0209caf4987d72e0f277492c3dddc2b4c2aff334a667b4dbfbc7",
+      "01-GAME178-SD-ROOT/sd2snes/fpga_base.bi3": "eff3f675c93a0209caf4987d72e0f277492c3dddc2b4c2aff334a667b4dbfbc7",
+      "02-RESTORE164-SD-ROOT/sd2snes/m3nu.bin": "f53b777a0bbe37668cd88cf8c80c5e5a0a60f861f58d1d4d3d9b082e9d1b4325",
+      "01-GAME178-SD-ROOT/sd2snes/m3nu.bin": "f53b777a0bbe37668cd88cf8c80c5e5a0a60f861f58d1d4d3d9b082e9d1b4325",
+      "02-RESTORE164-SD-ROOT/sd2snes/firmware.stm": "502205c3dcdeaf9cd1278dd24ddba5c2d0428287f9689faa620076df303c87ee",
+      "02-RESTORE164-SD-ROOT/sd2snes/fpga_n164.bi3": "31cabda3f5ff06cee0aacdf8d18ef60c4d78d3d3bbff8f892ee9aee443005262",
+      "02-RESTORE164-SD-ROOT/sd2snes/nes/game164.nes": "dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49",
+      "01-GAME178-SD-ROOT/sd2snes/nes/game178.nes": "dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49",
+      "02-RESTORE164-SD-ROOT/NES GAME 164.nh1": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "01-GAME178-SD-ROOT/NES GAME 178.nh1": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "decision": {
+      "trial_ready": true,
+      "physical": false,
+      "video_fix_proven": false,
+      "fps60_proven": false,
+      "run_ticks_after_ready": 6000,
+      "run_sd_writes": false,
+      "save_sram_used": false,
+      "remaining_margin": 1040,
+      "nominal_setup_ns": 0.201,
+      "full_io_signoff": false,
+      "history_wire_version": 1,
+      "history_kind": "LAST16_BOUNDARY177_LOW22",
+      "seal_bytes": 20,
+      "uniform_masks": [
+        24,
+        30
+      ],
+      "other_ppu_modes_supported": false
+    },
+    "gates": {
+      "fit_check_sha256": "f1e6ec6377459beb280a2c7713fbf64f2df53961a2766f08a4b38f5fa6b8f318",
+      "arm_check_sha256": "6cb5dbe07b0c04633dd52c9b9fe9f98e052b2dd3886b8a5a58ab5ace4fb0f7a6",
+      "report_sha256": "db70f89054c38d186c651a8834e325d8ed11a11ae99b502437e24bdfa9930bd1"
+    },
+    "public_sources": {
+      "tools/release_nes_clip178.py": "a8592020573cddc1b61414585f636c46be9cd6da246aee1b618704e42fca5ea7",
+      "docs/nes-game178-ready.ko.md": "9f476b754801eda2478433d656c5f6c1a8815dd4d6e051304357d1bc7ad49b69",
+      "tools/nes_cf68_pair_preflight.py": "f6243111bf63479f2d0836a86db6837a248f33d60924db0101318ac18214a4f6",
+      "tools/test_nes_startup170_report.py": "c1f468badff04e75b5c5bc13db7a771f49f18388db58f3da2797c23af550befa",
+      "tools/test_nes_sink168_report.py": "22a96687bf0ad72a69bd693dd87816121140ca126c7fdc7781c2a70b890eb950"
+    }
+  },
+  "public_sources": {
+    "tools/nes_clip178.py": "78ec863a4a61c96d99cd9017eb72c7f358a1743e9b732539730757f4ad9640d4",
+    "tools/nes_clip178_fpga.py": "b85967ec4ac7002e88d26e35fe3f18523cb5418399d601761e3274f3259bd814",
+    "tests/nes-functional/native_clip178_tb.sv": "92fa85e4f9acde28c4f8ce337ca8d127972470134c8da7f9c39a47f9763f5125",
+    "tools/test_nes_clip178_raster.py": "8401dde234f907daa8728b301668262129c8f7678ef5eb7535b251b60a285782",
+    "tools/test_nes_clip178_display.py": "7e9dd0ef4eea138f567e49f1f90b55f63fd7c60072723d138d3b8c902f9acf31",
+    "tools/nes_banked169.py": "8feb653998eaac90f10a1ab4508018ca19bcad4355d3537ab7b7647259e4967b",
+    "tools/test_nes_banked169.py": "6e35437afe25b5bbf452f30c96ccc9b91b03fed7d000808d3c85bc8b0ecec54a",
+    "tools/build_nes_sink165.py": "342f0ae6129bc0496a3bf6f786843746678f3e9ef58ce211c40b20e58ecceb08",
+    "tools/nes_native_local165.py": "91cb290947b2522cca1f61f4d97e0cd92b43dce47798b1ce54d5e74e91e33e6a",
+    "snes/video_probe/capture_native_sink165.lua": "016e8b2c3fa292f556775267fb27440544c69b7ed94b5026fb54cadc7f3a8f6a",
+    "tests/nes-functional/native_sink165_host.c": "8082ef5af935137f5700db00a3e6b52800272a65ece75e36eff1289dfef636f7",
+    "src/nes/firmware/nes_native_sink165.c": "07f4b369bb2dc3da375c0c84a6f457025c44def3336f70f32fed9e3acf43b938",
+    "src/nes/firmware/nes_native_sink165.h": "92e0d98a213714dd96d764bfb164d98ed5a724083eb874f654abcf7aa64732f2",
+    "src/nes/firmware/nes_native_video165.h": "750a25ff3efaaf9a7231f9cdd2314d1a61f9fa41441f2e4d44a29e1b68ed5ce4",
+    "src/nes/firmware/nes_native165.h": "2e097209652e4c184766211d4284f9cc717fb917fe91cb1be8d7842cbf27378e",
+    "src/nes/firmware/nes_sink_trace168.c": "e6c1fab8b7782d768bcfc1672fbe62015f3bbbe07148cb8222bb93f6d637521f",
+    "src/nes/firmware/nes_sink_trace168.h": "806eb4349a3afef2008dd02f92a1523e3dd7f1521ebc94a7429e94d42c85aacb",
+    "tools/test_nes_clip178_packets.py": "be25a82bdde6a8ae713dd733db5bc2bc08b8f1f8aaeae7ba969f61f1fd763c51",
+    "tools/check_nes_clip178_fpga.py": "c62cf7d8826ab449dddac8b37247be6c797bfc56e6e36e922b8757e97852009d",
+    "tools/check_nes_check165.py": "fc6072220ae0c4cf9c71baa3ba8d0d12ce044143d4705684aa1d008231c071dc",
+    "tools/check_nes_retire165.py": "a0d664100f777adedd89a1b2c71d14eeafc97063f0977c52d7e4a978f361df99",
+    "tools/check_nes_boundary165.py": "e505d75598885f5bd780c653f51f0bb2d51bd494c812dcac4f12c2ecbd5b7732",
+    "tools/nes_boundary165_paths.tcl": "a362f09119c023dd32658519e9104afd93e48f9aeca2b8166cab379f11446ee5",
+    "tools/check_nes_runlease165.py": "548b0c7ffe1a2f7fd333736e2a84564e9a8fe8a0b0d3ff29a2c5ccc181e6d43b",
+    "tools/nes_runlease165.py": "8c96323e3e5a89696e135573347a7e8bcf43264157cf35c61fec09f49333688b",
+    "src/nes/firmware/nes_runlease165.inc": "cc4c453d9a7916e870a4e70faab2c944390829f54aab83ea94b5d1ec02c4ead8",
+    "tools/check_nes_clip178_arm.py": "286d0fa9250271ef56be2f6cc29348610ba115e729efa48b38a6ebc454982ae7",
+    "tools/nes_clip178_mcu.py": "a9a72c4fd860b72f6a816a78c363946eb909420543414457afe0a95ad2ab006b",
+    "src/nes/firmware/nes_boot172.inc": "3b867adecb63ab10fb3c5ed225d8de1d6db6f8bcd879b322f8dad3194a67c2b6",
+    "tools/check_nes_startup170_arm.py": "73ca0f5e1fdb6cee6e6a1b8beeda622f281b61905c346a113fb06b3f0a9158ea",
+    "src/nes/firmware/nes_sink_spi170.c": "6d553b84c90f8528d83ca9d9452218d73aae66803ef132cbe58de83e95f7ad5a",
+    "src/nes/firmware/nes_sink_io170.c": "24f6c0b64848f801bef81c37391242af0683d388d1191c8c9c810d3c3d9a9f9e",
+    "src/nes/firmware/nes_sink_io170.h": "8a4e3d16b43b86f3d2b38ce41a98b6fcccd57685b239b7881e698355a7e8592e",
+    "tools/release_nes_clip178.py": "a8592020573cddc1b61414585f636c46be9cd6da246aee1b618704e42fca5ea7",
+    "docs/nes-game178-ready.ko.md": "9f476b754801eda2478433d656c5f6c1a8815dd4d6e051304357d1bc7ad49b69",
+    "tools/nes_cf68_pair_preflight.py": "f6243111bf63479f2d0836a86db6837a248f33d60924db0101318ac18214a4f6",
+    "tools/test_nes_startup170_report.py": "c1f468badff04e75b5c5bc13db7a771f49f18388db58f3da2797c23af550befa",
+    "tools/test_nes_sink168_report.py": "22a96687bf0ad72a69bd693dd87816121140ca126c7fdc7781c2a70b890eb950",
+    "docs/nes-video-compatibility178.ko.md": "e56d9dc267996c45cb675698ec2380ea929b5ef30b7ef5ef8c0d1e0fa9394058"
+  },
+  "evidence_files": 943,
+  "evidence_manifest_sha256": "7d866d737c8e355a81f2bd49dcd291c1d966aaf0c03bd92a25c4e9173066129c",
+  "selected": {
+    "fpga": "nes-clip178-map01",
+    "io": "nes-clip178-io01",
+    "arm": "arm01",
+    "arm_check": "armcheck02",
+    "packet_test": "nes-clip178-packets01",
+    "report": "report01",
+    "release": "release01"
+  },
+  "old178_evidence_preserved": 1598,
+  "old177_zip_preserved": true,
+  "limitations": [
+    "Uniform1e/18 only;1a/1c and other display modes remain unsupported",
+    "ActualJ reproduction covered selection only; no whole-game candidate replay or physical pass",
+    "Actual-clock setup+.201/hold+.147; stricter implementation target-.017 and24legacy reset rows remain disclosed; fullIO/CDC not approved",
+    "Initial stutter and60fps remain unresolved"
+  ],
+  "failures_preserved": [
+    "armcheck01 sandbox WinError623; authorized host armcheck02 passed",
+    "verification01 is an intentionally incomplete no-IO gate, not a timing failure"
+  ],
+  "next": "User178 SMB3 selection->worldmap->firstlevel continuous picture/audio/menu andtwoTXT. Then early table delta/basegeneration/ACK throughput; no repeat177/044/longintro or genericdebug expansion."
+}
