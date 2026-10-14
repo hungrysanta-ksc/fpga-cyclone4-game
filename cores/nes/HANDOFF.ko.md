@@ -1,3 +1,23 @@
+# NES180 — 거부·회복 기록 기능 통과, 배치 타이밍 미달
+
+NES180 거부·회복 기록 후보는 실제 SPI·수집기 해제·MCU 판독/로그 검증을 통과했다. 첫 배치는964/963 LAB으로 실패했고, 축소 후보는15,043 LE/963 LAB에 배치됐지만 실제 클록 setup −0.092ns로 미채택이다. 새 ZIP 없이 배포178을 유지하며 실기 화면 정지·60fps는 미해결이다.
+
+PR112 OPEN, codex/nes-level-admission-179. Continue same PR until user merge; no new PR automatically. Both FPGA candidates NOTadopted. No new SD ZIP, no ASM/CPF/conditionalIO. Deployed178 remains the only selected pair.
+
+Schema2 uses existing16x96 history RAM. Valid geometry (not displayACK) arms it. On first owned invalid frame record error-vector change or first failure after valid; record first valid recovery once. Same errors suppress even changed position/counts. First observed live error line/dot/mask, final error/counts at seal; early fetch retirement may omit later member errors. gen low8, palette saturates31. Recovery position ignored; structural rejection/no live error sentinel511/511/0. STOP/fault retained, no event on fault does not invent one. Existing ROM fault/pad tracing retained. OriginalLAST16_BOUNDARY177 is no longer decoder-compatible; version2 MCU paired only.
+
+map01: prior signature included line/mask; functional test03 PASS but964 LAB capacityFAIL. map02: errors25 comparison only + remove recovery position mux. test04 fixture wrongly counted same error as new; corrected05 PASS. test01 nestedcopy error,02 missing mfcu compile failure. These are preserved, not license failures. ARM01 generator matched2 version sites and stopped; ARM02 exacthistory match only. Sandbox FLOAT host-ID/ARM-GCC623 failures recovered using existing authorized host wrapper; no license change.
+
+map02 actual nominal setup-.092 chip->check_enable (old loader placement), hold+.127, strictbudget-.092; NESclock+6.654. 15043LE963LAB36M9K. Do NOT relax timing or claim new ROM functional bug. No third tiny/seed refit. Functional entireSV compilation + real observerSPI event/ring/STOP/fault and existing collector release14/42. ARM02/check02 RUN37312 IRQ508 static26564 margin1040,FW198012,c9e97fce; C reader15+decoder4 PASS,TXT3920/4096. No physical fix/60fps approval.
+
+기존 history RAM을 활용해 first-position/previous-error 중복 상태를 줄이는 설계를 먼저 검토한다. 실제 프레임 간격·RAM 읽기 지연·STOP/fault를 작은 경계 시험으로 검증한 후 필요한 배치만 진행한다. ROM 로더 미세 조정·seed/동일 FIT 반복은 금지한다. 승인 뒤 숫자1→A 실기로 거부 사유를 확인하고 공통 렌더링 중단·재개/누락 fetch 지원, 차분 전송과 최종ACK 기반 약60fps로 이어간다. 지금은178/044 재시험을 요청하지 않는다.
+
+Use probes/nes-reject180/progress.json and analysis/reject180-verification.json for executed hashes/archive. New generated MCU is compile-only; never pair it with178 board for user testing. Source generators/checkers are reusable; --io path of new FPGA checker not executed in this failed timing candidate. Immutable prior179/178 evidence andGBC/164/saveSRAM remain.
+
+[규격·검증](../../docs/nes-reject180-contract.ko.md)
+
+---
+
 # NES179 — 첫 레벨 행중 렌더링 중단·재개 경계 확인
 
 NES179 조사: 실제 SMB3 기준 실행에서 숫자1→A→첫 레벨에 도달했다. 레벨100프레임의 행중 렌더링 중단·재개를 확인하고 배포178 raster의 거부/회복16경우와 합성 타일 누락/회복5경우를 검증했다. 실기 전체 오류·유일 원인·수정 완료는 미확정이며 배포178 유지, 새 ZIP 없음이다.
