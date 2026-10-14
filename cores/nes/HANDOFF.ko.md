@@ -1,3 +1,21 @@
+# NES181 — 수집기 후보와 실제 PPU 픽셀 정렬 통과
+
+NES181 수집기 후보의 행별 대체·다음 정상 행 복구를 구현했다. 결합14경우, 정상180 대비9,624단어, 보존3,328픽셀과 정상복구43,923셀 비교가 통과했다. 별도 실제 PPU RTL에서1,792픽셀 정렬도 통과했다. 배포 보드·전송·MCU·SNES 클라이언트와 전체 배치·실기는 미완료이며 새 ZIP 없이180을 유지한다.
+
+- Latest181 COLLECT: PR113 OPEN samebranch. Candidate frame181 joins unchanged180fetch + row-end compact/raster + patchRAM; query7 raw, raster49flag/52:50slot NEWversion required NOTold1741. test04 14cases/3328pixels/9624oldwords/43923normalcells PASS; partialrow poisonedtiles discarded/next absolute row+column0 forcesnewgroup. ActualunchangedPPU ppu02 57344observed/1792retained/1028transitions with actualmaskoff/on PASS, syntheticVRAM NOTSMB3/fulljoin. Max7/ROM/CHRpair/objects/palette2/group32/errors/lease guards kept. NEXT versionedexporter+MCU CHR-complete->required2048reuse->noCHR, productionSNESstaging3HDMA/bank/ACK/STOP, boardcolor/emphasis+ARMstack/fullFITthenSMB3tile1+A. NoFIT/FW/ZIP/physical/60fps;180/GBC164/saveSRAMunchanged. ReadCOLLECT181contract/HANDOFF/probes/nes-render181-collect/progress.json; completedarchivesimmutable.
+
+후보 수집기 경계를 반복하지 말고 새 버전 exporter/MCU에 슬롯과 픽셀을 연결한다. CHR 완결 후 required2048 재사용과 이후 CHR 금지, 배포 SNES staging/3HDMA/뱅크 전환/최종ACK/STOP을 구현한다. 실제 보드 color/emphasis 배선, 최소 결합 검증·ARM stack·전체 FPGA 승인 뒤 SMB3 숫자1→A 실기로 간다. 같은180/044/긴 부팅은 반복하지 않으며 정지 해소와60fps·차분 갱신 지연 개선을 함께 유지한다.
+
+현재 공개 소스는 src/nes/video의181 후보다. 기존180 수집기/보드에 자동 적용되지 않는다. raster bit49/52:50과 query7은 새 wire 버전 없이 기존 MCU로 보내지 않는다. patched 행의 일반 map/마스크 검사 및 OBJ 중복표시는 소비 경로에서 처리해야 한다. 아직 손대지 않은 required2048 수명·ARM 여유1040B·전체 FPGA962/963LAB·4096B 부트ROM을 다음 구현의 제약으로 유지한다. 추가 영구 픽셀 배열이나 세이브 SRAM을 쓰지 않는다.
+
+검증은 두 경계다: 합성 PPU 인터페이스+실제 수집기14경우와 별도 실제 PPU+픽셀 RAM이다. 전체 SMB3/매퍼/수집기 결합 통과로 합산하지 않는다. 기존 SNES114688픽셀 근거는 변경 없이 재사용하며 새 실행으로 계산하지 않는다.
+
+[구현 계약](../../docs/nes-collect181-contract.ko.md) · [검증](../../analysis/collect181-verification.json)
+
+이하 과거 기록.
+
+---
+
 # NES181 — 부분 행 픽셀 경로 검증 통과
 
 NES181: 영향을 받은 최대7행만 실제 PPU 픽셀로 보존하는 RTL과 SNES 부분 행 표시 방식을 구현했다. RTL9경우/2,560픽셀, RTL 덤프→SNES 양쪽 버퍼114,688픽셀 전체 비교가 통과했다. 합성 입력 기반 독립 경로이며 실제 수집기·전송·MCU·배포 클라이언트 연결과 전체 배치·실기는 아직 미완료다. 새 ZIP 없이180을 유지한다.

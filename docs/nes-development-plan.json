@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-15",
-  "technical_candidate": "NES181 row-pixel path prototype (not integrated; deployed180 unchanged)",
+  "technical_candidate": "NES181 candidate collector join; deployed180 unchanged",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "NES181: 영향을 받은 최대7행만 실제 PPU 픽셀로 보존하는 RTL과 SNES 부분 행 표시 방식을 구현했다. RTL9경우/2,560픽셀, RTL 덤프→SNES 양쪽 버퍼114,688픽셀 전체 비교가 통과했다. 합성 입력 기반 독립 경로이며 실제 수집기·전송·MCU·배포 클라이언트 연결과 전체 배치·실기는 아직 미완료다. 새 ZIP 없이180을 유지한다.",
-  "next_action": "보존 행 경로를 실제 PPU 출력 시점과 행별 raster/compact 판정·행 재동기화에 연결한다. CHR 완료 뒤 required2048 수명을 픽셀/설정HDMA로 전환하는 새 전송 규격과 배포 SNES staging/ACK를 구현한다. 최소 결합 시험·ARM/stack·전체FPGA 승인 뒤 실제 SMB3 숫자1→A로 진행한다. 단독 모듈/시험ROM 통과는 실기 수정이나60fps 완료가 아니다. 같은180/044/긴 부팅 재시험은 하지 않는다.",
+  "assessment": "NES181 수집기 후보의 행별 대체·다음 정상 행 복구를 구현했다. 결합14경우, 정상180 대비9,624단어, 보존3,328픽셀과 정상복구43,923셀 비교가 통과했다. 별도 실제 PPU RTL에서1,792픽셀 정렬도 통과했다. 배포 보드·전송·MCU·SNES 클라이언트와 전체 배치·실기는 미완료이며 새 ZIP 없이180을 유지한다.",
+  "next_action": "후보 수집기 경계를 반복하지 말고 새 버전 exporter/MCU에 슬롯과 픽셀을 연결한다. CHR 완결 후 required2048 재사용과 이후 CHR 금지, 배포 SNES staging/3HDMA/뱅크 전환/최종ACK/STOP을 구현한다. 실제 보드 color/emphasis 배선, 최소 결합 검증·ARM stack·전체 FPGA 승인 뒤 SMB3 숫자1→A 실기로 간다. 같은180/044/긴 부팅은 반복하지 않으며 정지 해소와60fps·차분 갱신 지연 개선을 함께 유지한다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -3003,7 +3003,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES172 실기에서 표시 준비와 14회 표시 완료 응답을 통과했지만 이후 화면이 멈췄다. 버튼·스테이지 음악은 계속 반응했고 정상 약60초 한도로 메뉴에 복귀했다. BEGIN/END/COMMIT 각14, ABORT0, 마지막 generation27이다.170의 수집 시간 초과와 달리 다음 BEGIN이 수신되지 않은 경계이며, 연속 화면 목표는 미달성이다. 초반부터 끊겼으며 정지 해소와 약60fps 갱신 속도를 함께 개선한다.",
+  "summary": "NES181 수집기 후보의 행별 대체·다음 정상 행 복구를 구현했다. 결합14경우, 정상180 대비9,624단어, 보존3,328픽셀과 정상복구43,923셀 비교가 통과했다. 별도 실제 PPU RTL에서1,792픽셀 정렬도 통과했다. 배포 보드·전송·MCU·SNES 클라이언트와 전체 배치·실기는 미완료이며 새 ZIP 없이180을 유지한다.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3046,7 +3046,7 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-level179-investigation.ko.md",
-  "latest_development_evidence": "analysis/level179-verification.json",
-  "latest_hardware_evidence": "analysis/game177-hardware01-verification.json"
+  "latest_review": "docs/nes-collect181-contract.ko.md",
+  "latest_development_evidence": "analysis/collect181-verification.json",
+  "latest_hardware_evidence": "analysis/game180-hardware01-verification.json"
 }
