@@ -1,3 +1,21 @@
+# NES175 READY·카운터 후보 — 미채택,174 유지
+
+NES175 READY·카운터 후보의 기능/SPI 검증은 통과했다. READY 경로 제거와 쓰기 대기 경로 +1.573ns 개선에도 전체 setup은 각각−0.048/−0.218ns로 실패해 두 후보 모두 미채택이며 새 ZIP은 없다. 배포174를 유지한다.
+
+PR110 OPEN samebranch; refresh nextturn. SELECT deployed174 errorzero174-map01 + batch174/arm01; no175 ZIP. New probes/nes-ready175/evidence/ and record02 completed immutable. record01 failed only on generator shared-list mutation; corrected list copy reproduces both RTL byte-exact in one process. Old generator/test pins preserved; top public pins normalize the documented one-line fix. ready175-map01 output-only A5 + load_ready !active_reset -> !reset, RECEIVE implies release_reset0 after reset. External reset clamp and phase release synchronizer unchanged. timer175-map01 additionally removes timed_phase from phase_step, ONLY consumed after !timed_phase branch. Same command/snapshot/write pulse edges, not arbitrary-corrupted-state equivalence.
+
+Each candidate loader294912 states/1056 singlebyte-command-reset sequences/19 subclock reset offsets +wrongREADY/wrongrelease negatives PASS. Each actualSPI1126009edges/100reads7ACK19bad72cancel2overlap; READY/count seeded,not fullROM/newgame. Existing175 lifecycle/model/A5 output review reused with scope; no new MCU/IO/CDC/ASM/package. Source copies may have Windows line endings; text equality and raw manifest retained, not byte-identical simulation copy claim.
+
+READY15073LE963LAB36M9K nominal-.048/hold+.148; oldrelease_reset1->snapshot40 path absent all3corners. Worstload_begin->remaining1/2/4. TIMER14929LE959LAB36M9K nominal-.218/hold+.147; same target+1.573ns, counter check_failed->count_begin1/2->count_complete0->count_update0->loaded_bytes5 ena4levels fails-.218 (READY counterpart+.287).144LE/4LAB less vsREADY, NOTselected or60fps. No seed/attributes/clockexceptions changed. Prior A4-.178/A5-1.114 remainrejected.
+
+Preservation research: deployed174 onlyroot partition. Source changed partition needsresynthesis; ignoringchanges isnot newlogic. Official SignalTap incrementalroute list lacksCycloneIV, but doNOTclaim allECOunsupported: SignalProbe ECO supportsIV and localmake_ape_connection exists. RAM96inputrewire support NOTverified, no ECOexperiment. Remote SD/TXT workflow cannot directlyuseSignalProbe. No extra partition/ECO research required before targetedcountercontract work.
+
+NEXT review accepted loader counter effects and live fault/commands_blocked boundary; document BEGIN/STOP/RELEASE count/address consume edges and compare prior165-167 failedcounter/CE/fault trials. If stagingneeded, explicitly reconcile SPI C0-C4/SS2us and payload/READY/STOP,not false sameedge equivalence. Avoid thirdblindsmalllogic/attribute/seed refit; READY-.048 isnotrelease. Then minimal requiredtiming/boundaries andactualSMB3. Physical174 freeze3.81s/12ACK and167.5ms percompletion remainOPEN. AV60fps->longplay/error-resetlogs->heldinput. KeepGBC164/saveSRAM/noRUN-SD/no secondframe/no174-044repeat. Alljobsfinished/FLOATstopped.
+
+[계약·결과](../../docs/nes-ready175-contract.ko.md) · [검증·해시](../../analysis/ready175-verification.json)
+
+---
+
 # NES175 연결 회복 검증 — 관측 후보 미채택, 새 ZIP 없음
 
 NES175는 느린 소비 후5회 전달·거부3회 후 회복을 연결 시험으로 확인했다. 실기 정지는 아직 미해결이며, 관측 후보 A4(-0.178ns)·A5(-1.114ns)는 타이밍 실패로 미채택이다. 새 ZIP 없이 검증된174를 보존한다.
