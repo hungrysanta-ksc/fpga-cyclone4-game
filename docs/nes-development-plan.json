@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-14",
-  "technical_candidate": "NES-GAME-174-HW01-VIDEO-STALL",
+  "technical_candidate": "NES-GAME-178-CLIP",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "NES176 회고 반영: 실제 SMB3 모델360프레임에서 즉시 해제349개·10프레임 보유35개 정상 후보와 기존 픽셀 일치를 확인했다. 두 장면의 전체5,493바이트 중 차이20바이트를 확인해 앞단 변경 전송의 근거를 마련했다. 공유 메모리 오류 연결6경우도 검증했지만 실기 정지 원인은 확정하지 않았다. 배포174 유지·새 ZIP 없음·60fps 미달성이며, 무관한 로더 미세FIT 반복을 멈춘다.",
-  "next_action": "마지막 COMMIT 뒤 실제 수집·fill·중재·export·호스트 소유권 경계를 최소 관측으로 구분한다. 수집 원본 geometry와 ROM/중재기 오류를 적용한 최종 허용 조건을 구별한다. 관계없는 로더 미세FIT·같은 장시간 도입부 재생은 반복하지 않는다. 앞단 변경 전송의 지속 슬롯/base_generation/target_generation/ACK 확정/실패 재동기화와 전체 바이트·시간 예산을 함께 정한다. 기존 SNES 변경분 DMA는 재구현하지 않는다. 필수 경계 확인 뒤 SMB3 실기로 돌아가며 연속 약60fps AV→장기 실행·오류/리셋 로그→입력 유지 순서를 유지한다.",
+  "assessment": "NES178 실기: 월드맵 진입과 게임 오버 뒤 영상 회복을 확인했지만 첫 레벨에서는 영상이 정지했다. 표시 완료69회·마지막59.65초로 영구 정지보다 장면별 수집/표현 제약을 우선 조사한다. 레벨의 최초 거부 이유는 로그에 없어 아직 미확정이며, 지속 영상·60fps는 미완료다.",
+  "next_action": "현재178 수집기와 실제 ROM·직렬 입력으로 월드맵→첫 레벨의 최초 거부를 재현하고 mask/행간 변경·fetch/compact/raster 오류·묶음/객체/예외/팔레트 개수를 함께 대조한다. 모델 재현이 부족할 때만 최초 거부의 최소 정보를 기존 종료 로그에 보완한다. 같은178/044·무입력 도입부 반복·추측에 따른 허용 조건 확대는 생략한다. 앞단 차분/base-generation/최종ACK 성능 개선은 별도 유지한다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -3046,7 +3046,7 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-video-review176.ko.md",
-  "latest_development_evidence": "analysis/admission176-verification.json",
-  "latest_hardware_evidence": "analysis/game174-hardware01-verification.json"
+  "latest_review": "docs/nes-game178-hardware01.ko.md",
+  "latest_development_evidence": "analysis/game178-hardware01-verification.json",
+  "latest_hardware_evidence": "analysis/game177-hardware01-verification.json"
 }

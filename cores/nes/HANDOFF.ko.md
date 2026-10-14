@@ -1,3 +1,113 @@
+# NES178 실기 — 레벨 정지와 월드맵 회복의 장면 의존성
+
+NES178 실기: 월드맵 진입과 게임 오버 뒤 영상 회복을 확인했지만 첫 레벨에서는 영상이 정지했다. 표시 완료69회·마지막59.65초로 영구 정지보다 장면별 수집/표현 제약을 우선 조사한다. 레벨의 최초 거부 이유는 로그에 없어 아직 미확정이며, 지속 영상·60fps는 미완료다.
+
+PR111 OPEN/samebranch. Result-only addition; selected178 package and completed evidence immutable. No new FW/RTL/ZIP/FIT. User report distinguishes gameworldmap return from SNESmenu: only former visuallyconfirmed; audio notexplicitlyreportedthismessage.
+
+70BEGIN/END/producerCOMMIT,69matchingSNESdisplayACK,lastgen1793 at59.65s. Next1794/serial70 request02021000460000000207a005f0000000=DATA MAP offset1440 len240. native_result1 DEADLINE,DISPLAY60050ms;native_sink2/io09=POLL_TRANSFER attempt1/noACK/mismatch00; runtimeguard before/aftertransfer canreturnfalse atlimit, so finalsecondaryerror notlevelcause/CRC/badACK proof. ROM/receiver/video/ABORT0;STOP/base/menuPREP295530ms PASS. screen_error169=SPCA9,screen_frames0 untrustedlegacy.
+
+All16samples line6dot251..254 VALUE,owned1/rawgeom1/init1/active0,txhostvalid1ready0,fillbusy0/abort0/arbiterfault0. Newcandidatewaiting while MCU deliverspriorframe is legal;STOPsnapshot isnot firstlevelfailure andnotpermanentdeadlockproof. Displayrecovery comesfromuserobservation pluslateACKactivity; no per-scene displaytimeline. Logged mask/error/capacity of rejectedlevelcandidate absent. Multipleconstraints possible,notconfirmed. Existing1e/18fix haspartialsceneprogress,notcontinuousgameplayPASS.
+
+Totalsreceive43890/build4140/seal10550ms. Last70thbuild succeeded butsealDATA interrupted; don'tdividecombinedcostby69asexactframeaverage or69/60asTVFPS. Next needscurrent178raster notold177; prior100frameJ replay onlyplayerselection dueintroinputtiming,notworldmap/level. Do not loosenmask/limits or assertMMC3IRQ/overload withoutfirstfailuredata.
+
+현재178 수집기와 실제 ROM·직렬 입력으로 월드맵→첫 레벨의 최초 거부를 재현하고 mask/행간 변경·fetch/compact/raster 오류·묶음/객체/예외/팔레트 개수를 함께 대조한다. 모델 재현이 부족할 때만 최초 거부의 최소 정보를 기존 종료 로그에 보완한다. 같은178/044·무입력 도입부 반복·추측에 따른 허용 조건 확대는 생략한다. 앞단 차분/base-generation/최종ACK 성능 개선은 별도 유지한다.
+
+Rawlogs andexactdeployedsource pins preserved in probes/nes-game178-hardware01/raw+sources; publicanalysis/game178-hardware01-verification.json. KeepGBC164/saveSRAM, noRUNSD. No repeateduser178/video/044 required for this analysis.
+
+[실기 분석과 다음 재현 범위](../../docs/nes-game178-hardware01.ko.md)
+
+---
+
+# NES178 — 클리핑 지원 시험판과 공통 PPU 호환성 계획
+
+NES178 실기 시험판 준비 완료: START 이후 mask18 거부를 수정한 FPGA·MCU·SNES 조합이 패킷 경계·전체 ARM·단일 FIT·조건부 IO 검사를 통과했다. 실제 게임 전환 후 영상 지속 여부는 사용자 실기로 확인하며 초기 끊김·60fps는 아직 미완료다.
+
+PR111 OPEN / codex/nes-frame-release-177. SELECT clip178/map01 + io01/verification02, paired arm01/armcheck02, packets01/report01/release01. Prior177 package and completed178 functional evidence unchanged. This is hardware READY, not physicalPASS or60fps.
+
+Research: left8 clipping belongs to commonPPUMASK, notMMC3 only. Games choose when/how; mapper/submapper CHR/IRQ + PPU timing + renderer capacity need separate evidence. No game-name/hash allowlist hacks. Current uniform1e/18 only;1a/1c, layer-only, sustainedblank, grayscale/emphasis, row/midline mask remain unsupported. 1a/1c negative PASS is rejection, NOTsupport. Next adjacent semantic expansion is independentBG/OBJ fourcombinations with overlapping-layer oracle, AFTER minimumSMB3hardware, not allPPUfeatures upfront. See compatibility178 doc. Persistent preBEGIN rejection firstcause logging policy DESIGNONLY, no new logging in178.
+
+NEW seven real65816 packet negatives: legacy18B,1a,1c,0118,00,3e,1f each44valid stagingACK thenE0, no firstdisplay. Reused exact178 client3229B/4096 and prior9views550656pixel evidence. New pairedMCU applies maskheader+batchedconverter+20B sink together to pinned177. Onlysix source changes includingthree names; runtime/audio/input/timers unchanged. FullARM198016B/static26564/RUN37312/IRQ508/margin1040. Formatter3925/4096. Host-only size is not substituted forARMcheck. Sandboxarmcheck01 Win623 preserved;host02PASS.
+
+OneFIT: only raster admission andSNES ROM changed,59otherinputs exact177,15093LE962LAB36M9K. Actualsetup+.201/hold+.147 PASS. Stricterimplementation-.017 remainsFAIL; noclockrelax/seedloops. ConditionalPSRAM+2.817/SNES76.518/SPI167.857ns; nativepayload reset negatives0, legacy24resetrows/fullIOCDCstillOPEN. SameDB IOcopy preserved, sourcebyte reproduction and mapped4096ROM match testedclient. ASM/CPF+RLEroundtrip PASS. Verification01 was noIO preliminary, final02 gatePASS.
+
+ZIP probes/nes-clip178-pair/release01/NES178-SMB3-CLIP.zip SHA360e4faa516ec14752a0c10247a1ac1d15e1d993912e98d8311bb73b082d0ea4; FW69441af67e909e0a32b687f421aacb9193a942de8afededb7993c3cc0ca4ebc1; FPGA36cd4ba0adeb39a2976de3dedb0fddc0650d92140ac1a65fff6f46ed898fb260. OldROM/menu/164restore byte-exact; noRUNSD/saveSRAM. History remainsLAST16_BOUNDARY177_LOW22 with candidate178; tools/decode_nes_clip178.py explicitly validates178 identity and reuses177 sample semantics without editing userlogs.
+
+NES178-SMB3-CLIP.zip으로 SMB3 선택→월드맵→첫 레벨의 영상 지속·사운드·메뉴 복귀와 두TXT를 확인한다. 기능별 호환성 표에 따라 게임명 우회 없이 대응하고, 이후 앞단 테이블 차분/base-generation/최종ACK로 전송 비용을 줄인다. 동일177/044·긴 무입력 재현은 생략하며 AV→장기 실행/오류·리셋 로그→입력 유지 순서를 유지한다.
+
+No wholecandidate100frame replay: earlier actualJ replay covered selection only, notworldmap/level. Physicalfirststall notdirectlycaptured. Keep originalstagefacts and don't claim every game's freezes fixed. Table-delta stillDESIGN; initialstutter notaccepted even if178 no longerfreezes. GBC/saveSRAM/164 unchanged. AllQuartus/Mesen/ARM jobsfinished; noFLOAT usedthisstage.
+
+Private newevidence943files manifest7d866d737c8e355a81f2bd49dcd291c1d966aaf0c03bd92a25c4e9173066129c; prior1781598files and177ZIP checkedunchanged. record01/evidence/audit oncecomplete immutable. Publicanalysis/clip178-pair-verification.json. Files withgameROM/firmware remainprivate.
+
+[실기 안내](../../docs/nes-game178-ready.ko.md) · [게임·매퍼·PPU별 대응](../../docs/nes-video-compatibility178.ko.md)
+
+---
+
+# NES178 — START 뒤 mask18 거부 재현, 클리핑 지원 후보 기능 통과
+
+NES178: 목표 SMB3 일본판의 START 전환 후 mask18을 기존 수집기가 계속 거부하는 문제를 재현했다. 왼쪽8픽셀 클리핑을 보존하는 FPGA·MCU·SNES 후보와 경계/픽셀 검증을 완료했다. 전체 ARM 링크·FIT·실기 전이라 배포177 유지·새 ZIP 없음이며, 초기 끊김과60fps는 아직 미완료다.
+
+PR111 OPEN / codex/nes-frame-release-177. No new selected FPGA/FW/ZIP; selected177 map01/arm01/release01 and all completed archives unchanged. Candidate generators only; do not deploy half-paired mask acceptance.
+
+ActualJ ROM CPU/PPU/MMC3 + deployed pad/collectors, idealROM100frames: first26states +24/25pixels exact174; serialSTART30..33/55..58, A80..83. Intro initial delay means bothSTART before skip: pictures79/95 show player selection, NOTworldmap/level coverage. Mask1e frames12..65 normal54; blank66 rejected0cc8000; mask18 frames67..100 all34 rejected0400000=rasterbit6 only. fetch/compact0,224rows30groups2objects2..3exceptions1palette. Held10:6valid at12..62 then29mask-only rejects72..100. Evidence supports pre-BEGIN admission rejection, not transferoverload; physicalfirststall not directlycaptured. NoFPSclaim; idealROM/noPSRAM/fill/export/SPI/SNES.
+
+tools/nes_clip178.py candidate: raster supports UNIFORM1e/18; mixedrow/midline/blank/emphasis/grayscale stillreject. MCU retains mask in existing padding beforehofs (hostplan15888 unchanged); actual177 batched converter preserved. Sink SEAL18->20 with16bit001e/0018 at+18; SNES validates toWRAM123a, window1x0..7 BG1+OBJ(2123=2/2125=2/2126=0/2127=7), applies212e=11 or0 onlyfinalvblank. NewSNESbody3229/ROM4096, boot172 verify+banked169 retained. Old/new client mixing forbidden, no hiddenmetadata/extraSAVE-SRAM. ActualARMmargin stillunverified.
+
+Tests: raster01 262frames1050checks (256masks/mixed/midline/recovery/fault). converter02 actual177 sources+174pixels24/25,512masks/mixed-beforestage,7payloadfiles exact,plan15888. display02 actual65816/PPU+C filemailbox,6alternate commits270ACK/6fallbackchunks+STOP3commits180ACK/1chunk;9x61184=550656viewportpixels equal independent169reference withleft8backdrop,oldframesheld andwindowonlyfinalSEALvblank. This displaytest uses older scene plans; not candidateactualJ gameplay or physicalSPI/FPS. Candidatefullgame notrerun; oldgame replay showsothercollectors valid, syntheticnewboundary tests changedpredicate.
+
+Failed evidence retained: replay01 declaration-before-use; replay02 finished100frames but postcheckrelativebaselinepath failed afterwrappercwdchange; verify-only ROOT resolution succeeded, no30minrerun. Executedprobe archived/pin documented, currentgenerator verifies samebench. display01 sandboxGCC623 ->authorizedhostdisplay02; converter01 missingtrace ->converter02 trace+deployedwidth4/174records. AllQuesta/C/Mesen jobsfinished, FLOATportstopped. Don'trepeatlicensesmoke.
+
+20바이트 SEAL의 잘못된 mask/구형 길이 거부, 실제177 MCU 전체 ARM 링크/RUN·IRQ 여유, 변경 raster 단일 FIT/기존 조건 IO와 새 SNES 이미지 조립을 확인한 뒤 SMB3 실기로 간다. 동일177/044·긴 무입력 재현을 반복하지 않는다. 정지 수정과 별도로 앞단 테이블 차분/base-generation/ACK로 초기 끊김을 줄이며 AV60fps→장기 실행/오류·리셋 로그→입력 유지 순서를 유지한다.
+
+Nextprepare must use actual177 source manifest and apply converter/header/sink together; tests usedcanonical sink+trace forSNES andactualbatchedconverter separately, so pair fullMCU and20byteSEAL negatives before packaging. Keep strictmask/midline checks; do not simply accept18 withoutSNESclipping. No broadloop onloader/clockrelax. Current speed step tabledelta/ACKbase remainsDESIGNONLY; no60fpsclaim from clipping.
+
+Evidence probes/nes-transition178/evidence (manifest01.json); publicanalysis/clip178-verification.json. Completedrecord01/audit/evidence immutable. Toolpaths: GCC C:/altera_standard/25.1std/questa_fse/gcc-7.4.0-mingw64vc16/bin/gcc.exe; Mesen T/nes-coupled165-mesen/Mesen.exe; oldvideo T/nes165-video03; currentCfixtures T/nes-cross174-pixels01; independentRGB T/nes-banked169-test03/budget-reference. Currentcandidate T/nes-clip178-display02/client; replay T/nes-transition178-replay02; raster01/converter02. KeepGBC164/saveSRAM.
+
+[계약·검증·다음 작업](../../docs/nes-clip178-contract.ko.md)
+
+---
+
+# NES177 실기 — START 화면 전환을 포함한 수집 실패 재현 우선
+
+NES177 실기: START 화면 전환 때 영상만 정지한다는 사용자 관찰을 확인했다. 로그는27회 표시 완료·마지막12.48초 뒤 추가 BEGIN 없음, ABORT0이다. 종료 직전16클록에서 exporter IDLE/owned0/rawgeometry0/active1/fillbusy0/arbiterfault0이며 전송 적체 증거는 없다. 정상 수집 중간에도 가능한 표본이므로 반복 거부·결합 실패는 아직 구분하지 못했다. 연속 영상·60fps 미달성이며 새 패키지는 없다.
+
+PR111 OPEN samebranch codex/nes-frame-release-177; result-only addition. Implementation177/map01/arm01/release01 and completed evidence immutable. No newFW/FPGA/ZIP/FIT/simulation this turn.
+
+27 BEGIN/END/COMMIT/displayACK, ABORT0,lastgen38,lastdisplay12.48s; DISPLAY60050ms/deadline1/ROM0/sink0/video0. STOP/base/menuPREPARED295710ms PASS; visible menu not explicitly reported. User sound continues and first-level entry seems possible, not visually confirmed. Pad441 changed reads; last16 A/B/RIGHT/release, noSTART timestamp retained. Do not invent exact input/stall correlation from this ring.
+
+All16 samples line40/dot107..111: initialized1/active1, owned0/rawgeometry0, exporterIDLE, fillbusy/done/abort0, arbiterfault0, txvalid0/ready1, hostvalid0/ready1, release0. fillidle0/1 depends on shared core reader readiness, not fill stall. LAST16 CLOCKS only: this is also normal mid-capture, not proof of continuous rejection or first stall. Rules out observed persistent DRAIN/WAIT_ACK/fillbusy/stickyarbiterfault at stop; does not rule out every timing/transient fault.
+
+Priority hypotheses: scene-dependent representation/collector admission or join/retirement. Existing32groups/128objects/128exceptions/2palette epochs, fixedmask1e/midline rejection; exporter invalid-beforeBEGIN silently releases witherror2, noABORT. Need distinguish exact reason and why futureframes fail; one transitionblank alone cannot explain remaining47.52s. No blind limits increase/fault disable or assumed transport overload.
+
+Build1790ms+seal4180ms /27=221.111ms serialstage average NOTTV FPS; receive51700ms includes idlepolling. Different scene/input from174167.5ms, not comparable performance regression. Firststutter also stillopen.
+
+실제 CPU/PPU/MMC3 모델에 START 누름/해제의 정상 직렬 입력을 추가해 플레이어 선택과 다음 화면 전환을 재현한다. 수집 generation·fetch/compact/raster 오류와 group/object/exception/palette 수·mask를 비교하고 전환 후 지속 거부/재수집 회복을 확인한다. 무입력 도입부 반복·동일177/044/FIT 재시험은 생략한다. 원인 경계 수정 후 필수 회귀와 SMB3 실기로 진행하며 초기 끊김은 앞단 차분 전송/base-generation 계약으로 별도 개선한다.
+
+Prior176 replay input joypad1_data=0:360intro frames didNOTtest START transition. New scene-focused replay only; retain ideal-ROM/noPSRAM/export/SPI/SNES caveat and compare realistic slow consumer. No generic telemetry or unrelated loader FIT loop. AV~60fps ->longplay/error-resetlogs ->heldinput. KeepGBC164/saveSRAM/noRUNSD.
+
+[실기 분석](../../docs/nes-game177-hardware01.ko.md) · [로그·해석·소스](../../analysis/game177-hardware01-verification.json)
+
+---
+
+# NES177 — 최소 경계 관측 시험판, 실기 결과 대기
+
+NES177 실기 시험판 준비: 기존 history 하위22비트로 마지막 COMMIT 뒤 수집·소유권·전송·중재기 경계를 구분한다. 해제14위치 검증, 실제 클록 setup +0.055ns/hold +0.152ns, 조건부 IO, ARM 여유1040B, 최대TXT3925B 검사를 통과했다. 화면 정지 해결·60fps는 아직 미완료다. 무관한 로더 수정 없이 한 번의 FIT로 패키지를 만들었다.
+
+PR110 merged86e0195a22c7b376b7c2f9d9b2999ab9473c1646. New branch codex/nes-frame-release-177. SELECT boundary177/map01/test01/verification01, arm01/armcheck02/report01/release01. Single FIT; no loader/control/SDC changes. 15062LE/962LAB/36M9K; actual setup+.055 hold+.152, stricter implementation budget-.061 retained, full IO/CDC NOTapproved. ConditionalPSRAM+2.952/SNES76.812/SPI165.408, native payload negative reset0/legacy24 rows retained.
+
+LOW22=tag6/state4/flags14: owned,rawgeometry,initialized,active,fillbusy,done,idle,abort,arbiterfault,txvalid,txready,hostvalid,hostready,release. Upper74/RAM/sampling/STOP retention exact174. Last16 NES clocks at stop/fault, NOTfirststall or16frames. Decode tools/decode_nes_boundary177.py with kind LAST16_BOUNDARY177_LOW22. 174 decoder unsuitable. Cross-check legacy ROM fault and actual lifecycle before cause claim.
+
+14 release phases/42checks at full341dot262line PASS; syntheticBG with exact174 four collectors, notactualCPU/PSRAM/fill/export/SPI/SNES proof. No need to repeat long176 intro or old wideA4/A5 FIT. MCU only3 name/label source changes; runtime wire1/audio/input60s unchanged. ARM26564static/37312foreground/508IRQ/1040margin; report3925/4096. Mapped4096SNES bytes exact172/174; packedRBF roundtrip checked. ROM/menu/164restore byte-exact; noRUNSD/saveSRAM.
+
+ZIP probes/nes-boundary177/release01/NES177-SMB3-BOUNDARY.zip SHA a2c68142f905fb3fc486b746d44ca94000830ab4897c3d5297160b9dcf440902. Firmware a8b5159e184e47c8c7a54b8c94287f35c433fced23cdbf2f907cf547d941aea8. Evidence/progress in probes/nes-boundary177, public analysis/boundary177-verification.json. Failed legacy builder checker and sandbox Win623 preserved; final build/check PASS. No repeated license smoke.
+
+177 두TXT와 화면·사운드·입력·메뉴 복귀를 확인한다. 같은 증상이면 영상/174/044 재시험은 생략한다. raw geometry·owned·release·fill·exporter·arbiter_fault를 기존 세대/ACK와 함께 해석해 정지 경계를 수정한다. 동시에 앞단 table delta의 기준세대·ACK 확정·실패 재동기화를 구현할 준비를 한다. 추가 전체 MCU 화면/세이브 SRAM 없이 기존 수신required 공간의 COMMITTED 수명 재사용은 설계 단계다. 연속 AV 약60fps→장기 실행/오류·리셋 로그→입력 유지 순서를 유지한다.
+
+Speed implementation contract: current OAM240/CGRAM224 are pattern scratch, so preserving plan by removing memset is wrong. AfterCOMMIT required[2048] can potentially hold oldOAM544+CGRAM512 plus992 metadata; explicit API/lifetime tests stillneeded. SNES alternating WRAM maybe2generationsold: inherit committed base with base_generation/target_generation and matching finalACK; unknown/failure invalidatesbase/fullrebase. Patterncache remainsseparate; initially retainpattern uploads. Include SNEScopy/compare andCPU/transfer/polling costs;20B twointro delta NOT60fps. KeepGBC/164/saveSRAM/archives.
+
+[실기 안내](../../docs/nes-game177-ready.ko.md) · [계약·검증·다음 구현](../../docs/nes-boundary177-contract.ko.md)
+
+---
+
 # NES176 회고 반영 — 장면 검증 완료, 정지·속도 개선은 진행 중
 
 NES176 회고 반영: 실제 SMB3 모델360프레임에서 즉시 해제349개·10프레임 보유35개 정상 후보와 기존 픽셀 일치를 확인했다. 두 장면의 전체5,493바이트 중 차이20바이트를 확인해 앞단 변경 전송의 근거를 마련했다. 공유 메모리 오류 연결6경우도 검증했지만 실기 정지 원인은 확정하지 않았다. 배포174 유지·새 ZIP 없음·60fps 미달성이며, 무관한 로더 미세FIT 반복을 멈춘다.
