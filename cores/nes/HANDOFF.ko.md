@@ -1,3 +1,19 @@
+# NES180 실기 — 거부 오류08/82와185행 확인
+
+NES180 실기에서 raster08·compact82·185/224행의 거부2회와 오류0·224행 회복2회를 확인했다. 첫 레벨 영상 정지·월드맵 회복 관찰과 부합하며 진단 목적은 달성했다. 영상 정지 해결·약60fps는 미완료다. 최초 오류 위치와 변경된 단일 PPU 필드는 미측정이며, 다음은 공통 렌더링 중단·재개 및 fetch 행 완결성 구현이다.
+
+- Latest180 HW01: PR112 OPEN samebranch. Schema3 fiveepisodes: reject gen44 mask00 raster40/compact80 rows0; recover49 rows224; reject68 raster08/compact82 mask18 rows185/groups24/objects0; recover41 rows224; reject65 same08/82/185. Fetch/ROM0,exceptions0,palette1. Sentinel511/511 NOTmeasuredposition; candidate mask NOTfaultmask; generation modulo256/no scene timestamps. Actual raster08 includes palette/fine_x/pattern_mode/display_mask, compact02 includes BGsequence/acceptance and80 incomplete. 8+185=193 agrees179reference NOTphysicalpositionproof. BEGIN/END/COMMIT/displayACK75,ABORT0; preBEGIN invalidgeometry releases so noABORT. Deadline1/DISPLAY60050ms/receiver21secondary/sink0/ROM0/lastACK47.9s;STOP/base/menu-preparedPASS,userworldmaprecovery NOTexplicitfilemenu. NEXT commonrender-off/restart spans+fetchcoverage/resync jointly; preservebackdrop/scroll/BGOBJ;minimal179boundary+180errorcoupling thenSMB3 tile1+A. No guardremoval/line193-ROMhack/capacityblindraise/newobserver/longcoldboot/180-044repeat/FIT/FW/ZIP thisresult. 75ACK NOTFPS, AV60fps->longplay->heldinput;GBC164/saveSRAM/archivespreserved. Readgame180-hardware01/HANDOFF/probes/nes-game180-hardware01/progress.json.
+
+공통 렌더링 중단·재개 구간의 표현과 배경 fetch 행 완결성·재동기화를 함께 구현한다. 179 기준 실행과 180의 raster08/compact82·185행 증거를 이용한 최소 결합 검증 후 숫자1→A 실기로 진행한다. 193행 고정/ROM별 우회/검사 제거/단순 한도 확대 금지. 차분/base-generation/최종ACK와 전송 지연 개선을 유지하며 AV 약60fps→장시간·오류/리셋 로그→입력 유지 순서다.
+
+이번 작업은 실기 결과 기록만 수행했다. 원본 두TXT와 배포 소스7개를 별도 보존하고, 배포180 ZIP과 기존 근거는 변경하지 않는다. 오류 검사를 삭제하지 말 것: raster08을 해제해도 compact82가 남는다. 정확한 최초 필드/조건은 미관측이므로 하나로 단정하지 않는다. 같은 실기 시험을 다시 요청할 필요는 없다.
+
+[실기 분석](../../docs/nes-game180-hardware01.ko.md) · [검증 데이터](../../analysis/game180-hardware01-verification.json)
+
+이하 과거 기록은 해당 시점 기준이다.
+
+---
+
 # NES180 — 규격3 최소 기록 실기 시험판 준비 완료
 
 NES180 최소 기록 실기 시험판 준비 완료. 상태3비트로 첫 거부·정상 회복만 남기는 규격3이 실제 SPI·MCU·ARM 링크·단일 FIT·조건부 IO를 통과했다.15,061 LE/962 LAB, 실제 클록 setup +0.096ns, ARM 여유1,040바이트다. 숫자1→A 실기 로그를 기다리며 영상 정지 해결·60fps는 아직 미완료다.
