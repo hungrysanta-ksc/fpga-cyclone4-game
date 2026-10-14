@@ -1,3 +1,27 @@
+# NES178 — START 뒤 mask18 거부 재현, 클리핑 지원 후보 기능 통과
+
+NES178: 목표 SMB3 일본판의 START 전환 후 mask18을 기존 수집기가 계속 거부하는 문제를 재현했다. 왼쪽8픽셀 클리핑을 보존하는 FPGA·MCU·SNES 후보와 경계/픽셀 검증을 완료했다. 전체 ARM 링크·FIT·실기 전이라 배포177 유지·새 ZIP 없음이며, 초기 끊김과60fps는 아직 미완료다.
+
+PR111 OPEN / codex/nes-frame-release-177. No new selected FPGA/FW/ZIP; selected177 map01/arm01/release01 and all completed archives unchanged. Candidate generators only; do not deploy half-paired mask acceptance.
+
+ActualJ ROM CPU/PPU/MMC3 + deployed pad/collectors, idealROM100frames: first26states +24/25pixels exact174; serialSTART30..33/55..58, A80..83. Intro initial delay means bothSTART before skip: pictures79/95 show player selection, NOTworldmap/level coverage. Mask1e frames12..65 normal54; blank66 rejected0cc8000; mask18 frames67..100 all34 rejected0400000=rasterbit6 only. fetch/compact0,224rows30groups2objects2..3exceptions1palette. Held10:6valid at12..62 then29mask-only rejects72..100. Evidence supports pre-BEGIN admission rejection, not transferoverload; physicalfirststall not directlycaptured. NoFPSclaim; idealROM/noPSRAM/fill/export/SPI/SNES.
+
+tools/nes_clip178.py candidate: raster supports UNIFORM1e/18; mixedrow/midline/blank/emphasis/grayscale stillreject. MCU retains mask in existing padding beforehofs (hostplan15888 unchanged); actual177 batched converter preserved. Sink SEAL18->20 with16bit001e/0018 at+18; SNES validates toWRAM123a, window1x0..7 BG1+OBJ(2123=2/2125=2/2126=0/2127=7), applies212e=11 or0 onlyfinalvblank. NewSNESbody3229/ROM4096, boot172 verify+banked169 retained. Old/new client mixing forbidden, no hiddenmetadata/extraSAVE-SRAM. ActualARMmargin stillunverified.
+
+Tests: raster01 262frames1050checks (256masks/mixed/midline/recovery/fault). converter02 actual177 sources+174pixels24/25,512masks/mixed-beforestage,7payloadfiles exact,plan15888. display02 actual65816/PPU+C filemailbox,6alternate commits270ACK/6fallbackchunks+STOP3commits180ACK/1chunk;9x61184=550656viewportpixels equal independent169reference withleft8backdrop,oldframesheld andwindowonlyfinalSEALvblank. This displaytest uses older scene plans; not candidateactualJ gameplay or physicalSPI/FPS. Candidatefullgame notrerun; oldgame replay showsothercollectors valid, syntheticnewboundary tests changedpredicate.
+
+Failed evidence retained: replay01 declaration-before-use; replay02 finished100frames but postcheckrelativebaselinepath failed afterwrappercwdchange; verify-only ROOT resolution succeeded, no30minrerun. Executedprobe archived/pin documented, currentgenerator verifies samebench. display01 sandboxGCC623 ->authorizedhostdisplay02; converter01 missingtrace ->converter02 trace+deployedwidth4/174records. AllQuesta/C/Mesen jobsfinished, FLOATportstopped. Don'trepeatlicensesmoke.
+
+20바이트 SEAL의 잘못된 mask/구형 길이 거부, 실제177 MCU 전체 ARM 링크/RUN·IRQ 여유, 변경 raster 단일 FIT/기존 조건 IO와 새 SNES 이미지 조립을 확인한 뒤 SMB3 실기로 간다. 동일177/044·긴 무입력 재현을 반복하지 않는다. 정지 수정과 별도로 앞단 테이블 차분/base-generation/ACK로 초기 끊김을 줄이며 AV60fps→장기 실행/오류·리셋 로그→입력 유지 순서를 유지한다.
+
+Nextprepare must use actual177 source manifest and apply converter/header/sink together; tests usedcanonical sink+trace forSNES andactualbatchedconverter separately, so pair fullMCU and20byteSEAL negatives before packaging. Keep strictmask/midline checks; do not simply accept18 withoutSNESclipping. No broadloop onloader/clockrelax. Current speed step tabledelta/ACKbase remainsDESIGNONLY; no60fpsclaim from clipping.
+
+Evidence probes/nes-transition178/evidence (manifest01.json); publicanalysis/clip178-verification.json. Completedrecord01/audit/evidence immutable. Toolpaths: GCC C:/altera_standard/25.1std/questa_fse/gcc-7.4.0-mingw64vc16/bin/gcc.exe; Mesen T/nes-coupled165-mesen/Mesen.exe; oldvideo T/nes165-video03; currentCfixtures T/nes-cross174-pixels01; independentRGB T/nes-banked169-test03/budget-reference. Currentcandidate T/nes-clip178-display02/client; replay T/nes-transition178-replay02; raster01/converter02. KeepGBC164/saveSRAM.
+
+[계약·검증·다음 작업](../../docs/nes-clip178-contract.ko.md)
+
+---
+
 # NES177 실기 — START 화면 전환을 포함한 수집 실패 재현 우선
 
 NES177 실기: START 화면 전환 때 영상만 정지한다는 사용자 관찰을 확인했다. 로그는27회 표시 완료·마지막12.48초 뒤 추가 BEGIN 없음, ABORT0이다. 종료 직전16클록에서 exporter IDLE/owned0/rawgeometry0/active1/fillbusy0/arbiterfault0이며 전송 적체 증거는 없다. 정상 수집 중간에도 가능한 표본이므로 반복 거부·결합 실패는 아직 구분하지 못했다. 연속 영상·60fps 미달성이며 새 패키지는 없다.
