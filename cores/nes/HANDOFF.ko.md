@@ -1,3 +1,25 @@
+# NES177 실기 — START 화면 전환을 포함한 수집 실패 재현 우선
+
+NES177 실기: START 화면 전환 때 영상만 정지한다는 사용자 관찰을 확인했다. 로그는27회 표시 완료·마지막12.48초 뒤 추가 BEGIN 없음, ABORT0이다. 종료 직전16클록에서 exporter IDLE/owned0/rawgeometry0/active1/fillbusy0/arbiterfault0이며 전송 적체 증거는 없다. 정상 수집 중간에도 가능한 표본이므로 반복 거부·결합 실패는 아직 구분하지 못했다. 연속 영상·60fps 미달성이며 새 패키지는 없다.
+
+PR111 OPEN samebranch codex/nes-frame-release-177; result-only addition. Implementation177/map01/arm01/release01 and completed evidence immutable. No newFW/FPGA/ZIP/FIT/simulation this turn.
+
+27 BEGIN/END/COMMIT/displayACK, ABORT0,lastgen38,lastdisplay12.48s; DISPLAY60050ms/deadline1/ROM0/sink0/video0. STOP/base/menuPREPARED295710ms PASS; visible menu not explicitly reported. User sound continues and first-level entry seems possible, not visually confirmed. Pad441 changed reads; last16 A/B/RIGHT/release, noSTART timestamp retained. Do not invent exact input/stall correlation from this ring.
+
+All16 samples line40/dot107..111: initialized1/active1, owned0/rawgeometry0, exporterIDLE, fillbusy/done/abort0, arbiterfault0, txvalid0/ready1, hostvalid0/ready1, release0. fillidle0/1 depends on shared core reader readiness, not fill stall. LAST16 CLOCKS only: this is also normal mid-capture, not proof of continuous rejection or first stall. Rules out observed persistent DRAIN/WAIT_ACK/fillbusy/stickyarbiterfault at stop; does not rule out every timing/transient fault.
+
+Priority hypotheses: scene-dependent representation/collector admission or join/retirement. Existing32groups/128objects/128exceptions/2palette epochs, fixedmask1e/midline rejection; exporter invalid-beforeBEGIN silently releases witherror2, noABORT. Need distinguish exact reason and why futureframes fail; one transitionblank alone cannot explain remaining47.52s. No blind limits increase/fault disable or assumed transport overload.
+
+Build1790ms+seal4180ms /27=221.111ms serialstage average NOTTV FPS; receive51700ms includes idlepolling. Different scene/input from174167.5ms, not comparable performance regression. Firststutter also stillopen.
+
+실제 CPU/PPU/MMC3 모델에 START 누름/해제의 정상 직렬 입력을 추가해 플레이어 선택과 다음 화면 전환을 재현한다. 수집 generation·fetch/compact/raster 오류와 group/object/exception/palette 수·mask를 비교하고 전환 후 지속 거부/재수집 회복을 확인한다. 무입력 도입부 반복·동일177/044/FIT 재시험은 생략한다. 원인 경계 수정 후 필수 회귀와 SMB3 실기로 진행하며 초기 끊김은 앞단 차분 전송/base-generation 계약으로 별도 개선한다.
+
+Prior176 replay input joypad1_data=0:360intro frames didNOTtest START transition. New scene-focused replay only; retain ideal-ROM/noPSRAM/export/SPI/SNES caveat and compare realistic slow consumer. No generic telemetry or unrelated loader FIT loop. AV~60fps ->longplay/error-resetlogs ->heldinput. KeepGBC164/saveSRAM/noRUNSD.
+
+[실기 분석](../../docs/nes-game177-hardware01.ko.md) · [로그·해석·소스](../../analysis/game177-hardware01-verification.json)
+
+---
+
 # NES177 — 최소 경계 관측 시험판, 실기 결과 대기
 
 NES177 실기 시험판 준비: 기존 history 하위22비트로 마지막 COMMIT 뒤 수집·소유권·전송·중재기 경계를 구분한다. 해제14위치 검증, 실제 클록 setup +0.055ns/hold +0.152ns, 조건부 IO, ARM 여유1040B, 최대TXT3925B 검사를 통과했다. 화면 정지 해결·60fps는 아직 미완료다. 무관한 로더 수정 없이 한 번의 FIT로 패키지를 만들었다.
