@@ -1,3 +1,21 @@
+# NES174 실기 시험판 — 내부 타이밍·조건부 IO 통과
+
+NES174 실기 시험판 준비 완료: 실제 클록 setup +0.246ns / hold +0.156ns와 기존 외부 인터페이스 조건을 통과했다. 타일 간 비트평면 수정·묶음 전송을 새 FPGA/MCU에 함께 적용한다. 화면 정지 해결·60fps는 실기에서 확인할 차례다.
+
+SELECT FPGA Temp/nes-errorzero174-map01, reproduced probes/nes-errorzero174/reproduce01; MCU probes/nes-batch174/arm01. ZIP probes/nes-errorzero174/release01/NES174-SMB3-VIDEO-BATCH.zip SHA6624455010e05fe425ec1b81fd105e2eaddf21ef795470aa047da03c77940468. FW89c98add72ed3a6d983f9961c96b7ac2d7da6a889ba0fc5d5595da25dacfaa87; FPGA23e71b323e617d4bb23e3703d7107e0b65f7e9f2d2974b3805d8dd8d6e8ef9aa. New package, no physical result yet. Keep MCU/FPGA paired: ABI1741/exception32. Same172SNES4096 mappedMIF exact; packed RBF roundtrip verified; game/base/164restore bytes preserved from173.
+
+SPI-only change from legality174map01: reset-reachable !fault=>error_code0, explicitly write zero beforefault and hold afterfault. Same-edge priority9>7>1>decoded, no newcycle/attribute/clock. 557056 differential cases inclhold/reset/2negative mutations; connected1126009edges/100reads7ACK19bad72cancel2overlap PASS. SPI sourcee7368006176a0e21b6771057e3681c4abc3125fbc648e4b9cd55444b5c575d3c. Loader3598512d unchanged, old294912/1056 proof reused. Not impossible-state equivalence/fullROMwrites/newgameboot.
+
+FIT15061LE963LAB36M9K; actual setup+.246/hold+.156, targetcheck_busy->error_code+.828. Stricter implementationbudget-.052 retained, not hidden. Same actualclockSDC/no falsepaths or multicycle changes. IO on routedcopy:PSRAM70ns+PCB4 margin3.899, SNES78.805<270, SPI162.819<190.476, bundlespositive/11firststagefanout1/nativepayloadreset0. Legacy reset negatives24 remain; conditionaldigital bounds NOT fullIOCDC/MTBF/electrical approval.
+
+ARM priorfull-link static26564/foreground37312/IRQ508/margin1040 reused; sourcepins exact. New maximum log3934/4096 PASS. All compile/FLOAT/ASM jobs finished, noRUN-SD. Model cross174 and batch174 pixel/receiver/realSNES229376 proof reused; no repeated unrelatedboot/A-B/044. Existing173 timing trace fields remain. Loading verification stillminutes; ready->RUN~60s unchanged.
+
+NEXT actualSMB3 once, video fromfirstgamepicture tomenu ifpossible, nes-progress-174.txt + nes-game-last-174.txt. Check sustainedvideo AND stutter, audio/pad/menu. Model18->3patternpackets is NOTFPS; fulltable+ACK costs remain. Base-generation inheritance required before omitting WRAMtable packets. AV60fps->longplay/error-resetlog->heldinput. SaveSRAM/GBC164 protected. Prior failedlegalitymap02 staysrejected. Completed record/audit/evidence immutable. PR110 existingOPEN; refresh before next publication.
+
+[실기 안내](../../docs/nes-game174-ready.ko.md) · [계약](../../docs/nes-errorzero174-contract.ko.md) · [검증](../../analysis/errorzero174-verification.json)
+
+---
+
 # NES174 명령 허용 상태 — 개발 기준 map01, 배포 보류
 
 NES174 로더의 명령 허용 상태를 분리해 전체 실제 클록 setup을 -0.807ns에서 -0.098ns로 개선했다. 기능·실제 SPI 연결은 통과했으나 타이밍은 여전히 실패다. 후속 속성 변경(-1.344ns)은 미채택이며 새 실기 ZIP은 없다.
