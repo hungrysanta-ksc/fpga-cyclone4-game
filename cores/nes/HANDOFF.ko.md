@@ -1,3 +1,23 @@
+# NES179 — 첫 레벨 행중 렌더링 중단·재개 경계 확인
+
+NES179 조사: 실제 SMB3 기준 실행에서 숫자1→A→첫 레벨에 도달했다. 레벨100프레임의 행중 렌더링 중단·재개를 확인하고 배포178 raster의 거부/회복16경우와 합성 타일 누락/회복5경우를 검증했다. 실기 전체 오류·유일 원인·수정 완료는 미확정이며 배포178 유지, 새 ZIP 없음이다.
+
+PR111 merged3669027133d4cb7d58480a370601f601d245fe12. Branch codex/nes-level-admission-179. No implementation/package adoption; deployed178 remains. New source files are probes and tests only.
+
+User clarified tile1 then A. Reference05 Mesen700 actual unchangedJROM+pad START30/90,RIGHT400,UP450,A500; screenshot480 tile1,650/700 actual firstlevel. 100frames600..699 maskoff line193 dot7..18, restore94same line/6next194dot1. Also$2006 writes. Exact178 raster + MASK-ONLY replay:16cases0/1/3dot offsets rejects08 or48 and recoversclean18. Allother rasterstate heldconstant; not exactFPGA register timing/fullcause. Synthetic compact missingonecell/fullrow=>82/row185; complete+release recovery=>0/224,5cases. Do NOT claim observed real-game compact82 or physicalfixed.
+
+Fullcore probe_nes_level179.py prepared650: replay01 declarationbeforeuse compilefail;replay02 compiles but stopped6startupstates forcost. No result.json/level/baseline26state-pixelPASS. Do NOT rerun lengthy unmodifiedcoldboot merely to fillcoverage. Earlyreference01..03 missedworldmaptiming/path;reference04 reacheslevel;05finaltrace. Failed record01 incorrectlyassumedallrestoreline193;record02 preserves6nextline cases. boundaries01 13PASS extended02 16PASS fordiscoverednextline variation. Do notoverwritecompletedarchives/finalizers.
+
+독립 클리핑 확대보다 화면 중간 렌더링 중단·재개와 누락 fetch의 안전한 표현을 우선한다. 실제 보드의 미확인 fetch/compact 원인은 유효 프레임 이후 첫 의미 있는 거부·이유 변경·회복의 최소 관측으로 보완한다. 같은 긴 부팅 모델·178/044 반복 대신 작은 경계 검증 뒤 숫자1→A 실기로 진행한다. 차분 전송/base-generation/최종ACK의60fps 작업은 유지한다.
+
+Concrete next scope: current raster rejects maskchanges; compact requires33orderedBGcells per224rows. Gate removal alone unsafe. Represent visible/off spans and missingfetch coverage/restart; preserve backdrop (notalwaysblack), scroll/palette and BG/OBJ priority, noROMhash/fixed193 exception. Before fullpipeline implementation gather only unobserved actualcore owner errors with existing postSTOP observation space: firstmeaningfulreject aftervalid, signaturechanges/recovery, mask/line/dot/counts. Transientblank mustnotconsumeonlywitness. Consider existing SNES perrow/window first; boundedpixelpatch onlyifneeded afterbudget/exactoracle. No SRAM/fullframe/RUNSD. Thisis plan, notimplemented.
+
+Keep60fps separately: earlydelta/base/target/ACK remainsOPEN; noFPS fromACKcount. AV->longplay/error-resetlogs->heldinput. No user178/video/044 repeat now. Original178ZIP/GBC/164 immutable. Evidence probes/nes-level179/evidence manifest286files aef5110bb3f3c76fa508ee828b2c2831a8f6c06e25eba3a7623bdcbc8141fa4b. Publicanalysis/level179-verification.json. Alljobsfinished; FLOATportsstopped.
+
+[원인 범위·검증·다음 구현](../../docs/nes-level179-investigation.ko.md)
+
+---
+
 # NES178 실기 — 레벨 정지와 월드맵 회복의 장면 의존성
 
 NES178 실기: 월드맵 진입과 게임 오버 뒤 영상 회복을 확인했지만 첫 레벨에서는 영상이 정지했다. 표시 완료69회·마지막59.65초로 영구 정지보다 장면별 수집/표현 제약을 우선 조사한다. 레벨의 최초 거부 이유는 로그에 없어 아직 미확정이며, 지속 영상·60fps는 미완료다.
