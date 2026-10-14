@@ -1,3 +1,25 @@
+# NES181 — 보드·전체 ARM 통합 완료, FPGA 2 LAB 초과
+
+NES181의 실제 보드 color/emphasis·수집기·전송기와 paired MCU/SNES를 격리 통합했다. 전체 ARM RUN/IRQ 검사 여유1,032바이트와 보드 배선 결합을 통과했다. 공유 읽기로 FPGA 필요 LAB971→965(한도963), LE148개·M9K1개를 줄였지만 FIT는 실패했다. 실기 패키지·타이밍·60fps 승인은 아직 없다.
+
+- Latest181 BOARD: PR113 OPEN samebranch. Actualboard color/emphasis->frame181/query7/fillmux/export181 + pairedARM/SNES4096 integrated. SELECTmap03(sharedprevious)/test02/join01+arm02/check01;NOTFPGAapproved. Shared previous33x15 read copy/compare sameedge,3287929cycles allcompactoutputs equal;14cases3328pixels9624baselinewords43923recoveredcellsPASS. Exactboard instance/mux join raw512/CHR960/fill8192/stalls5753/COMMIT1+releasePASS(syntheticPPU/memory/host,notwholegame). FullARM199604B/static26564/RUN37320/IRQ508/margin1032PASS;FW105f819f compileonly. FITmap01needs971LAB;map03needs965/963,preplacement14972LE38M9K,148LE6LAB1M9Kreduced butFITFAIL/noSTAASMZIP. map02/test01declarationerror preserved;arm01labelprepfailed,exactexecutedprepare02 recovered. NEXT structural2LABreduction actualreport,thenFIT/IO+SMB3;notseed/tinyfitloop/oldindependenttests. patch_errors affectsvalid butnot25bitobserver. Keep180/GBC164/saveSRAM/rawarchives. ReadBOARD181contract/HANDOFF/probes/nes-board181/progress.json;completedrecordsimmutable.
+
+공유 읽기 map03을 자원 개선 기준으로 유지하고 남은2 LAB를 구조적으로 줄인다. raster 팔레트 조회/보관·compact rank 선택 회로의 공유 가능성을 실제 자원 보고서로 검토한다. 새 지연/RAM이 필요하면 수명·충돌·행 종료 계약부터 명시하고 바뀐 경계만 검사한다. 시드/작은 비트 반복 FIT 금지. 전체 FIT·실제 클록·조건부 IO/리셋 통과 후 현재 paired ARM/client 재사용해 SMB3 숫자1→A 실기. raw wire53ms/max7vblank+final·bank별 차분과60fps는 계속 미완료. AV→longplay/resetlogs→heldinput.180/GBC164/saveSRAM/완료archive 보존.
+
+최신 공개 생성기는 tools/nes_board181.py --shared-previous. map03의 source pins와 test02/join01이 맞는다. 기존src/nes/video 후보·완료test는 수정하지 않았으며 shared 변환은 tools/nes_board181_area.py에 별도 보관한다. 합성통과와 배치통과를 혼동하지 않는다. map03은배치준비965LAB로실패했고14,972LE/38M9K는미완료배치수치다. 클록/시드/한도는그대로다.
+
+MCU arm02 fw105f819fc0b57a8bfcf67abaec15b2c34e98069e54e08cd060613062a15c9555;199604B/static26564/free38860/foreground37320/IRQ508/margin1032,93reachable. 새 호출그래프/라이브러리·플랫폼재배치비교PASS. receiver18064/video15888은유지. compile-only 결과이며 SD 설치 불가. header1811 vsSNES1812/SEAL24를함께사용. clientbody3768/3776·ROM4096동일.
+
+join01은실제보드source에서frame/fill/export/mux를그대로추출한부분결합이다. 2rawrows512pixels,CHR960,8192fillqueries,5753backpressurecycles,1COMMIT후공유해제. PPU인터페이스/PSRAM응답/hostACK는모델,실제전체PPU/mapper/SPI/실기아님. test02는3,287,929클록동안old181compact모든출력비교(형식증명아님);원래14경우통과. 기존독립경계시험재실행하지않았다.
+
+patch_errors는geometry_valid에들어가지만25bitobserver에미포함. observer0을raw성공으로해석금지. 자원목표를위해검사삭제/세이브SRAM사용/원본180수정금지. 이전archive와이번완료record/audit동결;모든job/FLOAT종료.
+
+[구현·다음 단계](../../docs/nes-board181-contract.ko.md) · [검증](../../analysis/board181-verification.json)
+
+이하 과거 기록.
+
+---
+
 # NES181 — 배포 SNES 수신·부분 행 표시·완료 ACK 연결 완료
 
 NES181의 배포용 SNES 수신·부분 행 표시·완료 ACK 후보를 연결했다. 실제 C sink→65816/DMA/HDMA/PPU에서 정상11장면630,784픽셀, 오류8종·STOP2종의 기존 화면 보존을 통과했다. 본문3,768/3,776바이트로4KB ROM에 들어간다. 보드 연결·전체 ARM/FIT·실기와60fps는 미완료다.
