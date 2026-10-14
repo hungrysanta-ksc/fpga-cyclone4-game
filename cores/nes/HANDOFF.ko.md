@@ -1,3 +1,25 @@
+# NES180 — 규격3 최소 기록 실기 시험판 준비 완료
+
+NES180 최소 기록 실기 시험판 준비 완료. 상태3비트로 첫 거부·정상 회복만 남기는 규격3이 실제 SPI·MCU·ARM 링크·단일 FIT·조건부 IO를 통과했다.15,061 LE/962 LAB, 실제 클록 setup +0.096ns, ARM 여유1,040바이트다. 숫자1→A 실기 로그를 기다리며 영상 정지 해결·60fps는 아직 미완료다.
+
+PR112 OPEN / codex/nes-level-admission-179; continue same PR until user merge. SELECT minreject180/map01+test01+io01+verification02;ARM01/check01/host01/report01/release01. Firmware f9a6d342/FPGA77f806a1/ZIP8eede14b49701530529d737815685f4f92f3d41f784c93a7abdfa03dd279cb3a. User package probes/nes-minreject180/release01/NES180-SMB3-EPISODE.zip. TrialREADY, notphysical/video-fix/60fpsPASS. Original178 and164restore immutable.
+
+Scope reduced deliberately: threeFF armed/owned_seen/previous_bad. After first valid OWNED geometry, first invalid owned emitsREJECT; continued invalid emitsnothing evenerrorchanges; firstvalid emitsRECOVERY. No previouserror25 orfirstposition26 FF. Fullfinalerrors25/counts go directly intoexisting16x96RAM. Position511/511 always; mask is candidate native_display_mask NOT first-error PPUMASK. Genmod256/pal31sat. Earlyretirement may omit later membererrors. Validgeometry notdisplayACK arms. Never call last16events FPS/allframes/firsteverfault. Oldschema2 interpretation invalid.
+
+Schema3 descriptor+LAST16_EPISODE180_V3, tools/decode_nes_minreject180.py. NewactualSPI ring/lifecycle/cancel/STOP/fault PASS. NewC16 rejects schema1+2;decoder5 also rejects measuredposition fields. WholeARM198012/static26564/RUN37312/IRQ508/margin1040/TXT3921/4096. Runtime/platform/GBC unchanged, onlydescriptor+label vs180 ARM02. SameSNES4096, game control unchanged viaold180 sourcechain. No RUNSD/saveSRAM video use.
+
+SingleFIT15061LE962LAB36M9K nominalsetup+.096/hold+.155,NES+7.762. Stricterunchangedimplementationbudget-.306 remainsFAIL; distinguishfromactualclockPASS, noSDC/seedchanges. ConditionalPSRAM70ns+2.132/SNES77.858<270/SPI166.488<190.476,payloadnegativeReset0. NotfullIOCDC/MTBF/physicalsignoff. CopiedroutedDB preserved,ASM/CPF decode exactRBF. Existing178packet/display andrelease14/42 evidence reused by identicalimplementation, NOTnewtests.
+
+NES180 실기에서 숫자1 타일→A로 첫 레벨에 들어가 nes-progress-180.txt와 nes-game-last-180.txt, 화면 정지/회복·메뉴 복귀 여부를 확인한다. 같은 증상이면 영상·044 복원 재시험 불필요. 새 원인 증거 전에는 동일 FIT·무입력 긴 모델을 반복하지 않는다. 오류 벡터에 따라 공통 렌더링 중단/재개·누락 fetch를 구현하고 차분/base-generation/최종ACK 기반 약60fps를 함께 개선한다.
+
+Firstlevel can stillfreeze: diagnostic observer only. User should notreset immediately; wait60s automaticmenu for postSTOPTXT. If >6min afterlaunch no menu, poweroff andreturnavailablelogs. Same symptoms do notneedvideo/044. Commonrender-disable/restart/missingfetch implementation follows observed errors; doNOT removevalidation orhardcodeROM/line193. AV~60fps -> longplay/error-resetlogs -> heldinput.
+
+Evidence2949files manifest4d0514913595cf09a5ded87aba503a4580cb5b0812500427d074875ea35f94cb. Read analysis/minreject180-verification.json and probes/nes-minreject180/progress.json. checker01/02 differonlycomments+newlineencoding; final02 sourcepins. record01 reconstruction failedmixedtrailingnewline; record02 hash-reconstructsexactoldchecker andfreezesonce. Earlier RAM/storage failedcandidates remainNOTadopted; no reinterpretation. Completedarchives/finalizersimmutable; alljobsfinished/FLOATstopped.
+
+[실기 안내](../../docs/nes-game180-ready.ko.md) · [규격·검증 범위](../../docs/nes-minreject180-contract.ko.md)
+
+---
+
 # NES180 — RAM/문맥 공유 모두 미채택, 관측 항목 축소로 전환
 
 NES180 기록 저장 공간 재사용 두 후보는 기능 검증을 통과했지만 채택되지 않았다. RAM 재사용은15,024 LE/962 LAB에서 실제 클록 setup −0.227ns, 오류 문맥 공유는967/963 LAB으로 실패했다. 새 ZIP 없이 배포178을 유지한다. 다음은 최초 거부·회복으로 관측 범위를 줄이며 실기 영상 정지·60fps는 미완료다.
