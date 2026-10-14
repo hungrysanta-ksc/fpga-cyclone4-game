@@ -1,3 +1,21 @@
+# NES174 묶음 전송 — 검증 완료, FPGA 타이밍 미해결
+
+NES174에 타일 묶음 전송을 추가했다. SMB3 모델 장면의 패턴 요청18회→3회, 전체 요청45회→30회이며 실제 SNES 수신·229,376픽셀과 ARM 여유1040바이트를 확인했다. 실기 속도·60fps는 미확인이다. FPGA 타이밍-0.807ns와 전체 테이블 전송 비용이 남아 새 ZIP은 없다.
+
+SELECT MCU candidate probes/nes-batch174/arm01; not installable. C c03:9 cases/62 negatives,342 pattern calls→45 total; exact plan/pattern bytes vs cross174. Per SMB3 model24/25: BG16+OBJ2→3 batches(240/16/64B), pattern320B unchanged, allrequests45→30, header+ACK420B saved/frame. This is not measured speed/FPS. Actual existing172 SNES:normal3 commits92ACK,STOP1 commit60ACK;229376pixels. C converter tests use modeledACK; separate real65816 packet producer reuses byte-identical outputs. No new emulator boot suite/Questa/FIT.
+
+Scratch lifetime: OAM[0:239] BG15tile packets→ACK final partial→clear all544→OBJ; CGRAM[0:223] OBJ7tile packets→ACK final partial→clear all512→palette. No retained callback pointer, no secondframe/saveSRAM, no retry/SEAL onfailure. Base174 ABI1741 and exception32 unchanged, actual172 SNES bytes unchanged. Header callback contract now accepts contiguous multiples16/32 up to240; code using old single-tile callback assumptions must adapt explicitly.
+
+ARMcheck01:static26564/foreground37312/IRQ508/margin1040; receiver18064/plan15888 unchanged. Firmware89c98add72ed3a6d983f9961c96b7ac2d7da6a889ba0fc5d5595da25dacfaa87,197988B. Keep paired candidate private until FPGA passes. Source reproduction matches. c01 sandbox DLL load error,c02 test copy missing trace header preserved;c03 passed.
+
+FPGA174 map01 remains nominal-.807, no newFIT/RTL/timing claim. Reviewed actual path load_valid→fault:4levels,5.372ns IC vs1.052cell; X19→shared error_code gate X29→X19. Prior165 parallel fault / error single-owner trials rejected, don't blindly repeat. Next target shared fault/error physical reconvergence using current167 C0raw/C1causes/C2decode/C3accept/C4counter; preserve accept edge/error precedence/WRITE-HOLD drain or document any contract change and MCU latency. Then minimal timing/changed-boundary/IO/ARM and actualSMB3.
+
+Fullmap4096+CGRAM512+OAM544+HDMA and perpacketACK still dominate; SNES localdeltaDMA already exists. Skipping packets requires explicit inactive-WRAM base-generation inheritance; otherwise two-generations-old bytes can leak. AV60fps→longplay/error-resetlog→heldinput, keepGBC164/saveSRAM/noRUN-SD. Same173/044/bootA-B/passed174pixel-SPI replay unnecessary unless changed. Record/audit/evidence immutable; PR110 existingOPEN, refresh before publication.
+
+[계약](../../docs/nes-batch174-contract.ko.md) · [검증](../../analysis/batch174-verification.json)
+
+---
+
 # NES174 후보 — 타일 간 비트평면 검증 완료, 타이밍 미달
 
 NES174 후보는 SMB3의 서로 다른 타일 비트평면을 보존하도록 수정했다. 모델frame24 수집과 frame24·25의114,688픽셀 비교, SPI·C 및 ARM 여유1024바이트 검증을 통과했다. FPGA 배치는 성공했지만 memory setup-0.807ns로 미채택이며 새 실기 ZIP은 없다. 실제 정지 해결·60fps는 미확인이고 반복 전송 비용도 남았다.
