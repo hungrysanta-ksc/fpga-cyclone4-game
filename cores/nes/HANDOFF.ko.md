@@ -1,3 +1,15 @@
+# NES173 실기 — 정지와 초기 처리량을 분리
+
+NES173 실기: RUN 시작 후5.79초까지 표시 ACK16회 뒤 추가 완료가 멈췄다. 변환/패턴 전송910ms와 테이블·SEAL/ACK2340ms, 합계 회당 약203ms로 초기 처리량도60fps 목표에 크게 못 미친다. 정상60초 종료·STOP/메뉴 준비 확인. 정지 원인 미확정, 같은173 재시험 없이 타일 간 plane 표현과 반복 전송/왕복 개선으로 진행한다.
+
+BEGIN/END/COMMIT/ACK16,ABORT0,lastgen30,ROM/sink/video0,deadline1. profile receive54170ms includes idle after freeze; build910ms/seal2340ms,lastACK5790ms relativeRUN. Means56.875/146.25/203.125ms;16/5.79=2.76 ACK/s interval average NOTTVfps. Counter sum57420 vs60000 leaves2580 outside/incomplete/quantization;do not attribute or subtract54210 idle to infer active receive. DISPLAY60060ms,menu-prepared295750ms;user same172 symptoms/no newvideo.
+
+다음 작업: cross-tile plane/row representation preserving both sources; minimal boundary test thenSMB3. Also remove unnecessary fulltable retransmission/perpacket roundtrips: seal sends5152B map/CGRAM/OAM+HDMA,minimum26packets inclseal; pattern transfers extra. Seal2340ms NOTpureSNES DMA; existingSNESlocalcompare/deltaDMA should not be reimplemented. No fullsecondMCUframe/saveSRAM, preserveACKownership/STOP/audio/pad. Generation30 means do not fixate on27 or equate model24. NewBEGINnotreceived is not a live FPGA state observation.
+
+No newfirmware/FPGA/ZIP, same173/044/redundantFIT/generictrace unnecessary. AV60fps→longplay/error-resetlogs→heldinput. PR110 existingOPEN. Preserve173 implementation archive. [실기 결과](../../docs/nes-game173-hardware01.ko.md) · [근거](../../analysis/game173-hardware01-verification.json).
+
+---
+
 # NES173 — MCU 측정판 실기 대기, 새 FPGA 관측 후보 미채택
 
 173은 172 FPGA·SNES ROM을 바이트 그대로 유지하며 초기 화면부터 느린 비용을 수신/대기·변환/staging·SEAL/ACK로 나눠 기록한다. 마지막 표시 ACK 시각은 RUN 시작 기준이다. 시간 분해능10ms, 누적값은 실패한 미완료 단계를 제외하며 수신값에는 정지 후 대기가 들어간다. 14회 ACK나 전체 SPI 바이트를 FPS로 환산하지 않는다. 화면 정지 수정판이나60fps 달성판은 아니다.
