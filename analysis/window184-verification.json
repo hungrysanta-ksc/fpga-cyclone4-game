@@ -1,0 +1,246 @@
+{
+  "status": "implemented_not_deployable",
+  "selected": {
+    "test": "test03",
+    "arm": "arm01",
+    "check": "check02",
+    "map": "map01",
+    "budget": "budget01.json"
+  },
+  "branch": "codex/nes-stream-window-184",
+  "base_merge": "91b0bf79cb8cc128a8ad83fefaf66f76c070ff57",
+  "tests": {
+    "passed": true,
+    "cases": [
+      {
+        "name": "normal",
+        "calls": 51,
+        "wire_bytes": 3691,
+        "checks": 3904,
+        "host": "PASS WINDOW184 C calls=51 guards=51 failures=107 wrap=0",
+        "trace_sha256": "7b490adc459797850dc40b00e91b24fa490935bb6a5998fc62c065c1b23ac3b0"
+      },
+      {
+        "name": "phase",
+        "calls": 51,
+        "wire_bytes": 3691,
+        "checks": 3904,
+        "host": "PASS WINDOW184 C calls=51 guards=51 failures=107 wrap=0",
+        "trace_sha256": "7b490adc459797850dc40b00e91b24fa490935bb6a5998fc62c065c1b23ac3b0"
+      },
+      {
+        "name": "wrap",
+        "calls": 51,
+        "wire_bytes": 3691,
+        "checks": 3904,
+        "host": "PASS WINDOW184 C calls=51 guards=51 failures=107 wrap=1",
+        "trace_sha256": "3638733b167852b9592a4962e6d46ea8038d24a2078e4d6a47955fd0678c0999"
+      }
+    ],
+    "inputs": {
+      "nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+      "nes_sink_bridge165.sv": "69d7ed6a9601cc2f9cf70d6883060af24127bd51523f43812296b9164c45001a",
+      "nes_sink_bus165.sv": "b7f53f8639391409e8f02b6e4cdb506698bb31781f1ae2ce6c4d51557bd8bc3f",
+      "sink-program.hex": "f9c0063998329c984485ef609621024df0679b05caf32b30093932a9252f5b60"
+    },
+    "public_sources": {
+      "src/nes/diagnostic/nes_sink_queue184.sv": "317c57f756b00d64498ed3cb4368f5f7deb2d69fb4abf3cfa795c79d5c90af8c",
+      "src/nes/firmware/nes_sink_window184.c": "f3352f2ad6985897fe9da3da048e271f3e16d67f8c1813c45f89c05856c54d42",
+      "src/nes/firmware/nes_sink_window184.h": "4abcdd435535bba13d897fd54a719c74d9289258895e8a953b7df18876c63d79",
+      "tests/nes-functional/sink_window184_tb.sv": "229f20070c7b898060283ef3313df68f72c4196141a0b346fc3bc09b366db52f",
+      "tests/nes-functional/sink_window184_host.c": "31db637f0a9d4db07015ce8bc69dce18fd06d3c7417bdfc55941f0bdddb726fb",
+      "tools/test_nes_window184.py": "a48b0b0c2a732017e7eb9dfd1f4dda5882b2a9c9d91a23a74f8ed0254f6b4f97"
+    },
+    "stack": "nes_sink_window184.c:4:13:fail\t0\tstatic\nnes_sink_window184.c:7:13:io\t24\tstatic\nnes_sink_window184.c:13:13:status\t72\tstatic\nnes_sink_window184.c:46:13:send\t544\tstatic\nnes_sink_window184.c:32:13:valid\t8\tstatic\nnes_sink_window184.c:25:6:nes_window184_init\t40\tstatic\nnes_sink_window184.c:54:6:nes_window184_enqueue\t16\tstatic\nnes_sink_window184.c:59:6:nes_window184_drain\t16\tstatic\nnes_sink_window184.c:70:6:nes_window184_barrier\t24\tstatic\n",
+    "arm_size": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n    944\t      0\t      0\t    944\t    3b0\twindow.o\n",
+    "scope": "Actual queued SPI + unchanged SNES bus, then C replay. Not CPU/game/FIT proof.",
+    "new_firmware": false,
+    "new_fit": false,
+    "new_package": false
+  },
+  "arm": {
+    "passed": true,
+    "firmware_sha256": "f5e6e042a24c40159d23bbe8b4128ca8bf51027354158e90e0e9ca7d81545e54",
+    "firmware_bytes": 201396,
+    "elf_sha256": "8b94072f3f460c383821fc201c18fad20e700813a558e4b18ee3094733623db3",
+    "ram_static": 26588,
+    "foreground_bound": 37096,
+    "irq_reserve": 508,
+    "remaining_margin": 1232,
+    "reachable": 106
+  },
+  "arm_source_pins": 1416,
+  "board_source_pins": 69,
+  "board_changed": [
+    "nes_sink_spi165.sv"
+  ],
+  "qsf_post_sta": {
+    "original": "5206da30a14fd38263d87283e39abdc29c7ee7388d6352753d3a4598dfb20ea0",
+    "actual": "9684181be494b88d1ee1dcd272a572546171facae4dcd5ed384aaa6b8577d520",
+    "difference": "LAST_QUARTUS_VERSION Standard to Lite and CRLF serialization only; normalized exact replacement checked"
+  },
+  "fit": {
+    "logic_elements": 13587,
+    "labs": 939,
+    "m9k": 42,
+    "remaining_labs": 24,
+    "remaining_m9k": 14
+  },
+  "timing": {
+    "nominal": {
+      "setup": 0.194,
+      "hold": 0.144
+    },
+    "implementation": {
+      "setup": -0.258,
+      "hold": 0.144
+    }
+  },
+  "budget": {
+    "passed": true,
+    "frames": [
+      {
+        "generation": 12,
+        "packets": 23,
+        "request_bytes": 2885,
+        "queue_status": 9,
+        "displayed": true,
+        "old_calls": 69,
+        "queue_calls": 32,
+        "old_clocked": 3690,
+        "queue_clocked": 3134,
+        "old_floor_ms": 11.797714285714285,
+        "queue_floor_ms": 9.807238095238095
+      },
+      {
+        "generation": 13,
+        "packets": 38,
+        "request_bytes": 5640,
+        "queue_status": 12,
+        "displayed": true,
+        "old_calls": 114,
+        "queue_calls": 50,
+        "old_clocked": 6970,
+        "queue_clocked": 5994,
+        "old_floor_ms": 22.15390476190476,
+        "queue_floor_ms": 18.66742857142857
+      },
+      {
+        "generation": 14,
+        "packets": 38,
+        "request_bytes": 5640,
+        "queue_status": 12,
+        "displayed": true,
+        "old_calls": 114,
+        "queue_calls": 50,
+        "old_clocked": 6970,
+        "queue_clocked": 5994,
+        "old_floor_ms": 22.15390476190476,
+        "queue_floor_ms": 18.66742857142857
+      },
+      {
+        "generation": 15,
+        "packets": 23,
+        "request_bytes": 2885,
+        "queue_status": 9,
+        "displayed": true,
+        "old_calls": 69,
+        "queue_calls": 32,
+        "old_clocked": 3690,
+        "queue_clocked": 3134,
+        "old_floor_ms": 11.797714285714285,
+        "queue_floor_ms": 9.807238095238095
+      },
+      {
+        "generation": 16,
+        "packets": 23,
+        "request_bytes": 2885,
+        "queue_status": 9,
+        "displayed": true,
+        "old_calls": 69,
+        "queue_calls": 32,
+        "old_clocked": 3690,
+        "queue_clocked": 3134,
+        "old_floor_ms": 11.797714285714285,
+        "queue_floor_ms": 9.807238095238095
+      },
+      {
+        "generation": 17,
+        "packets": 37,
+        "request_bytes": 5534,
+        "queue_status": 12,
+        "displayed": true,
+        "old_calls": 111,
+        "queue_calls": 49,
+        "old_clocked": 6829,
+        "queue_clocked": 5885,
+        "old_floor_ms": 21.70019047619048,
+        "queue_floor_ms": 18.327238095238094
+      },
+      {
+        "generation": 18,
+        "packets": 37,
+        "request_bytes": 5604,
+        "queue_status": 12,
+        "displayed": true,
+        "old_calls": 111,
+        "queue_calls": 49,
+        "old_clocked": 6899,
+        "queue_clocked": 5955,
+        "old_floor_ms": 21.913523809523813,
+        "queue_floor_ms": 18.540571428571425
+      }
+    ],
+    "excluded_error_packets": 0,
+    "assumptions": "Producer can reclaim all four slots on each credit poll; one ACK query per barrier. Same recorded packet segmentation. CS spacing8us/transaction; no extra polls or C/SNES work, FPGA->MCU, service, or capture wait. C cost model still uses old packet overhead; future retuning pending.",
+    "scope": "Optimistic SPI floor from archived actual-C/65816 packets; NOT a FPS model.",
+    "script_sha256": "f552e5ef882320428dfc9b8b32ddbbc65312793b836690c977cae9b5e1e46e74"
+  },
+  "source_pins": {
+    "src/nes/diagnostic/nes_sink_queue184.sv": "317c57f756b00d64498ed3cb4368f5f7deb2d69fb4abf3cfa795c79d5c90af8c",
+    "src/nes/firmware/nes_sink_window184.c": "f3352f2ad6985897fe9da3da048e271f3e16d67f8c1813c45f89c05856c54d42",
+    "src/nes/firmware/nes_sink_window184.h": "4abcdd435535bba13d897fd54a719c74d9289258895e8a953b7df18876c63d79",
+    "tests/nes-functional/sink_window184_tb.sv": "229f20070c7b898060283ef3313df68f72c4196141a0b346fc3bc09b366db52f",
+    "tests/nes-functional/sink_window184_host.c": "31db637f0a9d4db07015ce8bc69dce18fd06d3c7417bdfc55941f0bdddb726fb",
+    "tools/test_nes_window184.py": "a48b0b0c2a732017e7eb9dfd1f4dda5882b2a9c9d91a23a74f8ed0254f6b4f97",
+    "tools/nes_window184.py": "63b60d20c39eb605d06ff14257fa214689f2bfe92452c815d28eba6ee9c3d582",
+    "tools/check_nes_window184_arm.py": "c1bb0274299b1c67794ff1b8ffce0d09e23649df7a7b1029ad83ab60e3ec2b57",
+    "tools/budget_nes_window184.py": "f552e5ef882320428dfc9b8b32ddbbc65312793b836690c977cae9b5e1e46e74"
+  },
+  "previous_archives": {
+    "nes-status183": {
+      "files": 1808,
+      "manifest_sha256": "d43b71a258e3ad42cc656b2d6b113ee5b3859eacfc66f459111f1e007685adb2",
+      "unchanged": true
+    },
+    "nes-game183-hardware01": {
+      "files": 12,
+      "manifest_sha256": "c56a2571902cc6a1d1b004621ce691ba1cdc1e8bc92bfebc345f7f3c6f102ed6",
+      "unchanged": true
+    },
+    "nes-checkstate181": {
+      "files": 1542,
+      "manifest_sha256": "277e8044ae994c0fee3a71b1af190ec53fce11192eac67c2d8fc5f9c75cca123",
+      "unchanged": true
+    }
+  },
+  "open_gates": [
+    "actual production C + queue + actual 65816 minimum normal/raw/STOP coupling",
+    "changed-placement conditional IO/CDC/reset/OAM/reply checks",
+    "window error/cumulative-count TXT and paired184 identity/package",
+    "payload/delta/capture overlap within16.7ms"
+  ],
+  "hardware_package": false,
+  "physical_pass": false,
+  "fps60": false,
+  "cautions": [
+    "test03 synthetic SNES bus; real C replays recorded RTL bytes, not new live full-stack CPU execution",
+    "ARM still183 identity compile-only; never install this candidate",
+    "nominal clock timing passes; stricter budget and complete IO/CDC signoff do not",
+    "global runtime context static+24B, RUN stack+120B",
+    "99 to51 synthetic transactions, not measured FPS",
+    "raw optimistic SPI-only floor18.667ms already exceeds16.7ms",
+    "check01 sandbox WinError623 failed before checker output; check02 selected",
+    "record01 source pin audit caught post-STA QSF tool version rewrite; record02 verifies exact normalized version-only replacement and records both hashes"
+  ]
+}

@@ -1,3 +1,17 @@
+# NES184 — 연속 전송 큐 구현, 결합·배포 검증은 다음 단계 (최신)
+
+[계약](../../docs/nes-window184-contract.ko.md) · [검증](../../analysis/window184-verification.json). PR114 merged91b0bf7에서 새 branch `codex/nes-stream-window-184`. SELECT private probes/nes-window184 test03/arm01/check02/map01/budget01. 완료 evidence/record/manifest는 수정하지 않는다.
+
+4×256B 큐로 DATA enqueue와 표시 완료를 분리했다. F7 status20 accepted/retired16+완료ACK12+CRC, 실제 SNES head ACK 전체 검증 후 credit 반환. BEGIN/SEAL barrier 유지, 합성 ACK 없음. 기존 SNES1815/버스 유지. 33패킷 합성조건 최소99→51거래, 실제RTL바이트 C재생과 normal/phase/wrap 경계 통과. **새 production C→queue→actual65816 결합은 아직 아니다.**
+
+한 번의 전체 FIT13587LE/939LAB/42M9K, nominal setup+.194/hold+.144. stricter budget−.258이며 변경배치 conditional IO/CDC/reset/OAM/reply 미검증. ARM201396B/static26588/RUN37096/IRQ508/여유1232; static+24B, RUN+120B. RUN소유context지만global static 증가를 숨기지 않는다. identity183 compile-only, 설치 금지. 새 ASM/RBF/ZIP 없음.
+
+NEXT 실제 C/새큐/actual65816 최소 normal/raw/STOP 결합→변경배치 IO·CDC 등→기존TXT 최소 window오류·카운터→184 짝패키지→SMB3 숫자1타일+A. 옛io170 로그를 새큐 진단처럼 해석하지 않는다. 현재실기183 유지,같은183/044·불변boot·FIT 반복불필요.
+
+실제기존C/65816 219요청쌍으로 계산한 낙관적wire하한 normal9.807ms/raw7 18.667ms. CPU/대기/FPGA→MCU 제외에도 raw16.7ms초과: queue만으로60fps불가능. 목적bank기준세대 차등·payload감소·capture/전송/표시겹침이 후속 핵심. ingress singlelease는 그대로다. microstatus/작은seedFIT루프로복귀금지. GBC164/saveSRAM/완료archives보존; AV60fps→장기플레이·오류/reset로그→입력유지 및 MMC4/5/state/mute/frameskip계획 유지.
+
+---
+
 # NES183 실기 — 차이는 미미, 연속 전송 구조 우선 (최신)
 
 [결과](../../docs/nes-game183-hardware01.ko.md) · [검증](../../analysis/game183-hardware01-verification.json). PR114 같은 branch에 결과만 기록. private probes/nes-game183-hardware01. 새 FW/FIT/ZIP 없음.
