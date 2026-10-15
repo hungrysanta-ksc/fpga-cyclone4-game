@@ -1,3 +1,19 @@
+# NES190 CHR 묶음 전송과 변환 위치 결정 (최신)
+
+[계약/예산/다음 구현](../../docs/nes-chr190-contract.ko.md) · [검증](../../analysis/chr190-verification.json). PR117 OPEN 같은 branch. **배포186 유지/새 실기판 없음.**
+
+새source_bulk190는host도메인에서16CHRbyte레코드를22B타일로묶고version1901을쓴다. kind6 header tag/gen4B+kind/layout2B+nativeNESplanes16B. 1813의96B/tile→22B로CHR부분77.08%감소. 실제exporter/fill/mailbox는그대로,189/188파일도그대로. 같은tag/gen/kind/lane0..15/reserved0인완성타일만공개.16Bscratch reset없어도완성전노출없음;partialABORT는scratch폐기후ABORT전달,잘못된byte는stickyfault(향후controller STOP필요). token/consume/PREPARED/COMMIT/displayACK구분보존. production1901decoder/boardmux/SNES DMA미연결.
+
+SELECTtest02/evidence01.4합성경로541/2910/702/11739B,2/3/1/7chunks;old763/3132/924/49627B. CHR512 -76.35%/26→7chunks,raw위주7.09%감소라장면전체76%FPS개선주장금지. 모든source96bitrecords=189,readbytes=독립encoder. 정상2사례는배포186actualCreceiver 전체18072B hostABI동일. Host검사기는1901→1813복원+COMPLETE후PREPARED직접설정;productionACK/ARM메모리/decoder승인아님.512pressure는큰fill부하시험이며Creceiver게임geometry승인아님. 부정8+partialABORT+STOPrestart=10PASS. fullbuffer대기261311hostcycles시험부하,실기시간아님. test01%zu호스트컴파일실패보존,test02cast수정PASS.
+
+결정:실제video185_build는BG행별low/highmapping/cross-tile/slot/OBJmask+paletteepoch/raw/OAM/HDMA가있다. 단순plane변환이나전체65816이식으로해결하지않는다. NEXT 실제변환기에서metadata→slot/row계획을분리하고FPGA의작은tilematerializer로동일BG/OBJ출력을만드는최소경계. sourcekind/tag/generation과fetch-time행mapping보존,복잡한geometry검증은현재MCU쪽유지후비용측정. CHR대량bytes를MCU가SPI로재공급하는것을bypass라하지말것. 계획크기/포트/원본lease/중간snapshot캐시/CHR재사용/mapper여유가성립하지않으면후보채택금지.
+
+189대비scratch16B추가,기존4096Baperture공유.128bit와제어FF비용미합성/현재24LAB여유fit보장없음. 원본CHRbyte별96bitmailbox횟수는그대로다.187의8mastercycle/cartbyte모델11739B=4.37ms는payload-only가정(소스·fill·변환·control·VRAM/VBlank·service·displayACK제외),16.67ms완료증거아님. 변환시간에stage callback대기도포함되어순수CPU시간단정금지.
+
+실제scroll동일generation자료미확보:숫자1타일+A→레벨확인→RIGHT+B유지+Apress/release반복,이번미실행. 최종section/descriptor/SNESbulk/STOP/표시ACK 연결과자원예산성립후최소FIT/IO+짝패키지실기. 불변boot/FIT/186-044/일반FIFO확대금지.186/GBC164/saveSRAM/이전완료archives불변;MMC4/5·CHR-RAM/state/mute/frameskip요구보존. 약60fps+사운드→장기play/오류·reset로그→입력품질.
+
+---
+
 # NES189 실제 출력기→CDC→읽기창 연결 후보 (최신)
 
 [계약과 다음 구현](../../docs/nes-source189-contract.ko.md) · [검증](../../analysis/source189-verification.json). PR117 OPEN 같은 branch. **186 배포 유지/새 실기판 없음.**
