@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-15",
-  "technical_candidate": "NES181 palette selector partial placement pass but final routing/FIT fail; CDC audit next",
+  "technical_candidate": "NES181 CDC scoped constraints: FIT pass, nominal/related timing fail",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "NES181 팔레트 선택 회로를 줄여 초기 배치는 통과했지만, 배선/자동 재시도에서965 LAB가 필요해 최종 FIT는 실패했다. 실패 보고는14,961 LE·38 M9K·배선 불가79신호(67 OAM)·공유 충돌75개다. 클록 간 hold 보정 합계605.4ns는 여러 신호의 지연 합이며 slack이 아니다. 타이밍·새 설치 패키지는 승인하지 않았다.",
-  "next_action": "팔레트 후보는 분석 기준으로 보존하되 채택하지 않는다. 우선 CLKIN→PLL 두 클록과 SNES_SYSCLK의 관계, 각 CDC의 request/ACK·held payload·첫 동기화 FF·리셋 경계를 실제 소스/보고서로 전수 분류한다. Standard25.1에서 동기화 제어와 held bus의 최소/최대 지연·데이터 안정/ACK 계약을 명시하고 예외 우선순위/적용 개수/누락을 검사한다. blanket clock cut/hold-off/클록완화/seed반복 금지; 같은 PLL·같은클록 검사를 유지한다. 필요시 OAM 집중 혼잡을 줄이는 저장/조회 구조를 검토하되 기존165 OAM 결과를 먼저 재사용한다. 바뀐 경계만 테스트 후 한 번의 정당화된 FIT, 실제클록/조건부IO를 통과하면 paired ARM/client로 SMB3 숫자1→A. raw53ms/max7vblank+final·60fps는별도미완료. AV→longplay/resetlogs→heldinput;180/GBC164/saveSRAM/archive보존.",
+  "assessment": "NES181은 CDC 제약을 실제 전달 계약에 맞춰 수정해 전체 배치·배선에 성공했다(15,072LE/963LAB/38M9K). 하지만 실제 클록 setup −3.379ns, 같은 PLL memory→host −0.740ns로 타이밍은 실패했다. 새 데이터 경로·조건부 IO/리셋 검사는 통과했으나 설치 후보로 채택하지 않았고 새 ZIP은 없다.",
+  "next_action": "현재 분석 기준은 cdc181 map02/route01, 배포 기준은180이다. ROM 주소21쌍·응답1257쌍의 reader→arbiter→service→CPU/PPU/fill 실제 수신·ACK·취소 계약을 확인한 뒤 좁게 제약한다. 같은 PLL memory→host check_failed→ack_work도 함께 검토하고 related timing을 유지한다. shift[0]→offset[9]은논리0단계/배선92%이므로 계산식 미세변경·seed/refit 반복 금지. 바뀐 경계만 검사 후 정당한 FIT, 전체 실제클록·조건부IO/reset통과 뒤 pairedARM/client로SMB3 숫자1→A. raw53ms/max7vblank+final/60fps와longplay/heldinput미완료;180/GBC164/saveSRAM/archive보존.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -3003,7 +3003,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES181 팔레트 선택 회로를 줄여 초기 배치는 통과했지만, 배선/자동 재시도에서965 LAB가 필요해 최종 FIT는 실패했다. 실패 보고는14,961 LE·38 M9K·배선 불가79신호(67 OAM)·공유 충돌75개다. 클록 간 hold 보정 합계605.4ns는 여러 신호의 지연 합이며 slack이 아니다. 타이밍·새 설치 패키지는 승인하지 않았다.",
+  "summary": "NES181은 CDC 제약을 실제 전달 계약에 맞춰 수정해 전체 배치·배선에 성공했다(15,072LE/963LAB/38M9K). 하지만 실제 클록 setup −3.379ns, 같은 PLL memory→host −0.740ns로 타이밍은 실패했다. 새 데이터 경로·조건부 IO/리셋 검사는 통과했으나 설치 후보로 채택하지 않았고 새 ZIP은 없다.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3046,7 +3046,7 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-rank181-contract.ko.md",
-  "latest_development_evidence": "analysis/rank181-verification.json",
+  "latest_review": "docs/nes-cdc181-contract.ko.md",
+  "latest_development_evidence": "analysis/cdc181-verification.json",
   "latest_hardware_evidence": "analysis/game180-hardware01-verification.json"
 }

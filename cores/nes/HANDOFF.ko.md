@@ -1,3 +1,25 @@
+# NES181 — 전체 배선 성공, 실제 타이밍은 실패
+
+NES181은 CDC 제약을 실제 전달 계약에 맞춰 수정해 전체 배치·배선에 성공했다(15,072LE/963LAB/38M9K). 하지만 실제 클록 setup −3.379ns, 같은 PLL memory→host −0.740ns로 타이밍은 실패했다. 새 데이터 경로·조건부 IO/리셋 검사는 통과했으나 설치 후보로 채택하지 않았고 새 ZIP은 없다.
+
+- Latest181 CDC: PR113 OPEN samebranch. SELECT analysis cdc181/map02+route01/scope02/test01/io02;FIT PASS15072LE963LAB38M9K but nominalsetup-3.379/relatedPLL-0.740 FAIL,hold+.146;NOTadopted/noASMZIP. RTL67unchanged;exact128payload maxdelay+hold-only cut/17firstFF cuts;6980->6818unique checks,162expected only/reset+samePLL retained. Routed486rows/data3.707records3.075prepared3.198pad2.014audio/chain+.189 PASS;450delayedtransfers72reset12halt+late/broad-cutnegativesPASS. Hold-added605.4->455.5nsSUMnotSlack. Worstshift0->offset9 0LUT/92%routing;relatedcheck_failed->ack_work31 4LUT/71%. ConditionalPSRAM+2.082/SNES74.630/SPI164.264/nativepayloadreset0PASS. NEXT readeraddress21/reply1257 actualqualification/ACK/reset+relatedRUNSTOP locality,notloaderlogic/seed/refitloop;keeprelatedPLLtiming. FailedFITinventorybit60missing caught;freshinventory02 required. IO01missingfalsepathquery preserved;IO02correct+4emittedfilesreproduced. ReuseARM1032/client4096. Keep180/GBC164/saveSRAM;ReadCDC181contract/HANDOFF/probes/nes-cdc181/progress.json;archivesimmutable.
+
+현재 분석 기준은 cdc181 map02/route01, 배포 기준은180이다. ROM 주소21쌍·응답1257쌍의 reader→arbiter→service→CPU/PPU/fill 실제 수신·ACK·취소 계약을 확인한 뒤 좁게 제약한다. 같은 PLL memory→host check_failed→ack_work도 함께 검토하고 related timing을 유지한다. shift[0]→offset[9]은논리0단계/배선92%이므로 계산식 미세변경·seed/refit 반복 금지. 바뀐 경계만 검사 후 정당한 FIT, 전체 실제클록·조건부IO/reset통과 뒤 pairedARM/client로SMB3 숫자1→A. raw53ms/max7vblank+final/60fps와longplay/heldinput미완료;180/GBC164/saveSRAM/archive보존.
+
+단일FIT만실행(map02). map01은초안제약의사전검사이며FIT없음. 이전실패FIT의post-map이record bit60을제거해4추가경로검출; fresh map01의합성DB를원래SDC로열거한inventory02로정정. SELECT생성기tools/nes_cdc181.py는실제87record+17prepared+8pad+16audio및17첫FF,145쌍. RTL/핀/주파수/기존예산불변;프로토콜데이터만max_delay와hold-only cut,첫FF만setup/hold cut. ROM데이터/주소·reset·lifecycle은미제외. 같은PLL clock0/clock1은related검사필수.
+
+새CDC/조건부IO는통과했으나전체타이밍실패. shift0->offset9는9.254ns중8.526ns배선(26routing elements),logic0. relatedcheck_failed->ack_work31은6.990ns/4LUT/배선71%;메모리load_end->loaded_bytes도-.379. 남은hold는memory->NES398.0ns누적/ROMbyte5ns대. 단독원인확정아님. 다음은남은ROM CDC의실제조건증명및relatedRUNSTOP경로,오류검사제거/클록완화금지. 기존OAM165실패공정재사용.
+
+tools/nes_cdc181_timing.py는nominal에도source cdc181.sdc를유지한다. oldclocks-only helper사용금지. 원본FIT DB보존,STAcopy에서5timing/report/cache파일변경;전체copy불변이라고말하지말것. IO01기존records_req조회실패;수정IO02에서첫FF만-false_path조회. 공개generator와실행4파일exact재현. loader|state*기존필터경고는phase개명후남아있으며적용됐다고간주금지.
+
+현재새설치패키지없음/ASM안함. pairedARMfw105f819f/199604B/RUN37320/IRQ508/margin1032및client4096변경없어해시재사용. 기존46핀/14122raw/180MCU1413·FPGA62·ZIP/GBC보존PASS. mailbox지연시험6cases450전달72reset12halt는digital조건시험,MTBF/전체pad-audio파형/실기아님. 모든작업종료;완료archive/record/audit다시실행금지.
+
+[구현·결과·다음 단계](../../docs/nes-cdc181-contract.ko.md) · [검증](../../analysis/cdc181-verification.json)
+
+이하 과거 기록.
+
+---
+
 # NES181 — 팔레트 논리 감소, 최종 배선 실패; 다음은 CDC 계약 점검
 
 NES181 팔레트 선택 회로를 줄여 초기 배치는 통과했지만, 배선/자동 재시도에서965 LAB가 필요해 최종 FIT는 실패했다. 실패 보고는14,961 LE·38 M9K·배선 불가79신호(67 OAM)·공유 충돌75개다. 클록 간 hold 보정 합계605.4ns는 여러 신호의 지연 합이며 slack이 아니다. 타이밍·새 설치 패키지는 승인하지 않았다.
