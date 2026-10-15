@@ -44,6 +44,7 @@ def main():
  p=argparse.ArgumentParser()
  for n in ['coupled','out','questa-bin']:p.add_argument('--'+n,type=Path,required=True)
  p.add_argument('--rtl-dir',type=Path)
+ p.add_argument('--modes',nargs='+',default=['normal','stop_copy','stop_long'])
  a=p.parse_args();a.out.mkdir(parents=True,exist_ok=False)
  assert os.environ.get('SALT_LICENSE_SERVER')=='18000@localhost'
  baseline=a.rtl_dir or ROOT.parent/'probes/nes-window184/evidence/test03';pins={}
@@ -61,11 +62,11 @@ def main():
  run([a.questa_bin/'vlib.exe','work'],'vlib')
  run([a.questa_bin/'vlog.exe','-sv','nes_domain_reset124.sv','nes_sink_queue184.sv','nes_sink_bus165.sv','nes_sink_bridge165.sv','coupled_tb.sv'],'vlog')
  cases=[]
- for mode in ['normal','stop_copy','stop_long']:
+ for mode in a.modes:
   src=a.coupled/mode/'events.txt';shutil.copyfile(src,a.out/'events.txt')
   s=run([a.questa_bin/'vsim.exe','-c','work.coupled_tb','-do','onerror {quit -code 1}; run -all; quit -f'],mode)
   m=re.search(r'PASS WINDOW184 COUPLED events=(\d+) packets=(\d+) checks=(\d+) fault=(\d+)',s);assert m,s[-2000:]
-  assert int(m[4])==(mode!='normal')
+  assert int(m[4])==(mode not in ['normal','reference','inherit'])
   cases.append(dict(mode=mode,events=int(m[1]),packets=int(m[2]),checks=int(m[3]),fault=int(m[4]),events_sha256=sha(src)))
   print(json.dumps(cases[-1]),flush=True)
  result=dict(passed=True,cases=cases,inputs=pins,coupled_result_sha256=sha(a.coupled/'result.json'),public_sources={n:sha(ROOT/n) for n in ['tools/replay_nes_window184.py','tests/nes-functional/sink_window184_tb.sv']},scope='Actual C/65816 event order replay through actual RTL/SNES bus. File scheduling is not cycle-accurate concurrent CPU/MCU execution or FPS.',physical=False)
