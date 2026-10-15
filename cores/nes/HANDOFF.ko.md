@@ -1,3 +1,19 @@
+# NES181 — 실기 첫 레벨 표시 복구 확인, 약60fps는 미달 (최신)
+
+[결과](../../docs/nes-game181-hardware01.ko.md) · [기계판독](../../analysis/game181-hardware01-verification.json), private probes/nes-game181-hardware01/progress.json. 이전완료archive수정금지. 이번에는결과만기록/새FW·FIT·ZIP없음.
+
+사용자 첫레벨표시지속/사운드/60초뒤메뉴 정상. 영상65.90초를2fps로추출,4초overview와65초파일메뉴확인.16~20초와40~44초레벨위치변화/사이월드맵복귀. 오디오실청은사용자보고,카메라CRT색띠무시. 부드러운플레이/60fpsFAIL,타게임/모든장면승인아님.
+
+137BEGIN/END/COMMIT,136최종표시ACK,ABORT0,last206/59.71초. DISPLAY60060ms,ROM/verify/runfirst/STOP0,native_result1기한종료. 다음208세대DATA(section2 offset764 len240)진행중기한,io09poll3/ACKvalid0/zeroACK/sink2는부차실패이며CRC증거아님. 메뉴준비295760ms+영상육안확인. screen_error169는SPC A9/unmute1,영상오류아님.
+
+136/60.06=2.264표시완료/s(~441.6ms),전체평균이며정확한FPS/p95/unique사진수아님. receive28.38초/build+CHR7.74초/seal+section+ACK23.71초(합59.83초,10ms계측). 두방향공유SPI137469transaction/4811300clockB,2.625MHz순수bit하한14.66초;poll/ACK포함,observer직접SPI제외,TX/RX2배아님. CPU병목비율/필수payload확정금지. raw7하한22.154ms모델과전체실기442ms는다른범위.
+
+최근16사건8reject/8recover,모두224행/rastercompact0. fetch01x6(새low앞이전pairpending),04x1(highpair주소/설명불일치),errors0/mask00x1. patchvalid도geometrygate지만patcherrors는25bitobserver에없어오류0거부가능. 전체누락률/장면시각없음,guard무시금지. 패드237변화는클릭수/유지품질증명아님.
+
+NEXT 이미완성한raw차등/1813·1815압축재구현금지. actual sharedSPI의payload/status/poll/ACK/callback비용을분리해작은packet집계·변경section전송과capture/MCU/bank수명겹침을우선한다. FPGAlease는exportCOMMITrelease,MCU는displayACK까지다음수신안함:혼동금지.16.7ms처리량·basegeneration·CRC/STOP·RAM/IRQ조건을동시에지키고fetch01/04재동기화도검토. 최소의미있는검사후실제SMB3,같은181/180/044재시험·무변경FIT/긴모델부팅없음.181배포는유효기준으로보존,AV60fps→longplay/errorreset→heldinput. saveSRAM/GBC164/완료archives보존.
+
+---
+
 # NES181 — 통합 실기 시험판 준비 완료 (최신)
 
 SELECT checkstate181 map01/test02/route01/check01/report02/asm01/release01/reproduce01. [계약](../../docs/nes-checkstate181-contract.ko.md), [실기 안내](../../docs/nes-game181-ready.ko.md), [검증 색인](../../analysis/checkstate181-verification.json). private probes/nes-checkstate181/progress.json. 완료archive/record/audit 수정금지.
