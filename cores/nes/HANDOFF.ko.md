@@ -1,3 +1,19 @@
+# NES195 4KiB ROM 복귀 + 실제 C 직접 DMA 명령 (최신)
+
+[계약](../../docs/nes-bulk195-contract.ko.md) · [검증](../../analysis/bulk195-verification.json). PR117 같은 branch, 배포186 유지. 새 실기판 없음.
+
+194의 body3999B/8KiB 후보를 **body3935B/4KiB**로 줄였다. 89B boot의 예약을96B로 줄이고 ROM본문을8060으로 이동, MVN과 copy readback 주소 모두 수정. WRAM7E2000/검사/SEAL1941/op7 의미 유지. token·reply·begin loop와 dead A/flags의 STZ 공유.3936B 수용 중 여유1B이므로 다음 변경도 크기 검사 필수.8KiB 확대는 더 이상 다음 작업이 아님. 기본4KiB bus RTL 재사용;193 부분47M9K는 전체FIT 결과가 아님.
+
+실제 C의 nes_sink195_bulk는 descriptor12 ready/kind/gen/length/alignment/slot/token exhaustion을 검사하고 token4만 전송한다. window184_barrier에 op7을 연결해 앞선packet drain→op7→실제ACK 완료 후 BG/OBJ next를 증가시킨다. 실패/불명확/STOP은 terminal, 재전송하지 않는다. payload는 MCU를 통과하지 않는다. descriptor 취득·실제runtime호출·plan CDC/epoch/controller는 아직 연결 안 됨. SNESconsume가 먼저 성공하고 ACK가 유실될 수도 있으므로 commoncancel/freshtoken 의미를 지킬 것. 표시 완료는 기존SEAL/finalACK1만 담당한다.
+
+SELECT build02, snes01, coupled03/candidate+test, objects03, evidence01. 축소ROM 실제65816 7합성장면428288pixels 및11오류/STOP 통과. 실제C+window+65816 7장면/260ACK/15chunks4512B와 token오류/STOP2개 통과, packet bytes도194 preparedstream과 동일. C경계225개 통과. 최대DMA2048/첫BG4096은 사용하지 않는zero tile확장 시험으로 실측스크롤자료가 아니다. 실제RTL+SNES 동시실행아님. ARM video15912/sink32 및기존stack불변, 신규bulk자체40/packet320, text+268/dataBSS추가0. 전체RUN+IRQ는adapter연결후다시계산.
+
+실패보존: build01 3937B(1B초과), coupled01 시험도우미경고, coupled02 실제window op7미허용(첫BEGIN후거부)을수정한03선택. objects01경로/02sandboxDLL623/03호스트PASS. 원본186–194의10개archives불변. 기존raw/map/pad/SPC/saveSRAM/GBC164변경없음.
+
+NEXT: 191plan/192source/193chunk의 production descriptor취득·epoch·frame-start·planCDC·boardmux/commonSTOP/fresh token을연결. 최소actualproducer→C명령/barrier→SNESconsume/SEAL/ACK수명과전체ARM/FIT/IO/16.67ms예산을확인후짝패키지실기. 이번에해결한ROM크기나독립boot/FIT를반복하지말것. 사용자요구필수: SMB3 tile1+A→첫레벨확인→RIGHT+B유지/Apress-release반복의연속스크롤측정. collected_runs비어있음. 동일generation source/변환/전송/고유표시간격을연결;정지·오프닝·반복타일과ACK수/60초로효과대체금지. AV약60fps→장기play/오류reset로그→입력유지순서.
+
+---
+
 # NES194 타일 직접 DMA→기존 표시 경로 (최신)
 
 [계약·주소·검증 범위](../../docs/nes-bulk194-contract.ko.md) · [결과](../../analysis/bulk194-verification.json). PR117 같은branch. **배포186 유지, 새 실기판 없음.**
