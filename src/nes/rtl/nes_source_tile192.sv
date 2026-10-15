@@ -5,7 +5,8 @@
 // Common reset also resets the physical reader. STOP drains it, never resets it.
 module nes_source_tile192 #(
  parameter integer MAX_CYCLES=1048576,
- parameter integer USE_CACHE=1
+ parameter integer USE_CACHE=1,
+ parameter integer EXTERNAL_PLAN=0
 )(
  input wire clk,reset,stop,frame_owned,geometry_valid,
  input wire [15:0] frame_generation,
@@ -59,7 +60,7 @@ module nes_source_tile192 #(
   assign tile_ready=arb_ready;assign tile_idle=arb_idle;assign tile_response=arb_response;assign tile_error=arb_error;
   assign reply_address=arb_reply_address;assign reply_generation=arb_reply_generation;assign reply_data=arb_data;
  end endgenerate
- nes_tile191 #(.MAX_CYCLES(MAX_CYCLES)) tile(
+ nes_tile191 #(.MAX_CYCLES(MAX_CYCLES),.EXTERNAL_PLAN(EXTERNAL_PLAN)) tile(
   .clk(clk),.reset(reset),.stop(stop),.lease_valid(lease&&!fault),.lease_generation(frame_generation),
   .plan_valid(plan_valid&&!fault),.plan_ready(ready_internal),.plan_kind(plan_kind),
   .plan_generation(plan_generation),.plan_slot(plan_slot),.plan_tag(plan_tag),.plan_rows(plan_rows),

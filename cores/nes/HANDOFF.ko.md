@@ -1,3 +1,17 @@
+# NES196 작은 plan RAM과 production 연결 준비（최신）
+
+[계약](../../docs/nes-plan196-contract.ko.md) · [검증](../../analysis/plan196-verification.json). PR117 동일 branch, 배포186 유지. 새 실기판 없음.
+
+C version1 계획16..32B/CRC16 →32B dual-clock RAM →NES held209bit plan →실제192 READ16/193 aperture까지 통과했다. 6bit 길이만 mailbox로 넘기고, decoder가 복사한 뒤 RAM을 다음 계획에 반환한다. EXTERNAL_PLAN=1은 현재 타일이 끝날 때까지 decoder 필드를 유지하여191의 내부 복사 필요를 없앤다. 기본0 경로도 검사. 실제 자원 절약은 MAP/FIT 미측정이며 작은 RAM이 M9K를 요청한다. 전체 board/LAB 수용 가능성은 아직 모른다.
+
+SELECT test02/evidence01. test01은 byte15=0 중간 형식 PASS로 보존, 최종 byte15=1 선택. 과거 actual C191의97계획을 새 C encoder로1580payloadB로 인코딩(CRC/END 별도);8합성장면1840B가186 결과와 동일. C268/RTL273 경계와 default EXTERNAL_PLAN0 scene7 통과. 실제 SPI/production controller/livegame planner/실제 SNES CPU까지 동시 연결한 결과는 아니다.195 C issuer와4KiB SNES 및11개 이전 archives 불변. 새 전체ARM/FIT/STA/FW/ZIP 없음.
+
+NEXT: production SPI framing/descriptor 취득/C service/controller와 captured_epoch/frame 시작·종료·common STOP 연결. **plan credit를 기다리는 중에도 준비된 chunk op7/barrier를 서비스**할 것. 모든 계획을 먼저 보낸 뒤 소비하면2KiB 버퍼와 plan credit가 교착한다. source_fault는 common controller에서 유지하고 단순 fault→자기reset 조합 되먹임으로 지우지 말 것. 양 endpoint 공통 취소/fresh token, bounded deadline 유지. END는 표시ACK가 아니다:193 end_sealed/모든consume/sections/SEAL/finalACK까지 구분한다. 이후 실제producer→C→SNES 최소 수명 시험/전체ARM/FIT/IO 후 짝패키지 실기.
+
+스크롤 collected_runs는 비어 있다. SMB3 숫자1+A→첫레벨 확인→RIGHT+B 유지/A press-release 반복의 연속 스크롤에서 동일generation 생산/전송/고유표시간격과16.67ms 목표를 비교한다. 정지/오프닝/합성/ACK수로 FPS나 부하 감소를 주장하지 않는다. AV약60fps→장기play/오류reset로그→입력유지 순서. GBC164/saveSRAM/배포186/완료archives 유지.
+
+---
+
 # NES195 4KiB ROM 복귀 + 실제 C 직접 DMA 명령 (최신)
 
 [계약](../../docs/nes-bulk195-contract.ko.md) · [검증](../../analysis/bulk195-verification.json). PR117 같은 branch, 배포186 유지. 새 실기판 없음.

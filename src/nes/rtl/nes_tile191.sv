@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // One metadata plan -> immutable SNES planar tile. Source must be sealed.
 // Backend must flush old responses before mem_idle permits a new command.
-module nes_tile191 #(parameter integer MAX_CYCLES=4096)(
+module nes_tile191 #(parameter integer MAX_CYCLES=4096,parameter integer EXTERNAL_PLAN=0)(
  input wire clk,reset,stop,lease_valid,input wire [15:0] lease_generation,
  input wire plan_valid,output wire plan_ready,input wire [1:0] plan_kind,
  input wire [15:0] plan_generation,input wire [9:0] plan_slot,
@@ -17,8 +17,17 @@ module nes_tile191 #(parameter integer MAX_CYCLES=4096)(
  output wire busy,output reg fault,output reg done
 );
  localparam IDLE=0,FETCH=1,WAIT=2,EMIT=3;
- reg [1:0] state,kind;reg [15:0] generation;reg [9:0] slot;
- reg [12:0] tag;reg [47:0] rows;reg [7:0] mask,alt_mask;reg [103:0] alt_tags;
+ reg [1:0] state,kind_q;reg [15:0] generation_q;reg [9:0] slot_q;
+ reg [12:0] tag_q;reg [47:0] rows_q;reg [7:0] mask_q,alt_mask_q;reg [103:0] alt_tags_q;
+ // External decoder owns these fields from handshake THROUGH done/cancel.
+ // Constant parameter prunes the unused internal copy; default is unchanged.
+ wire [1:0] kind=EXTERNAL_PLAN?plan_kind:kind_q;
+ wire [15:0] generation=EXTERNAL_PLAN?plan_generation:generation_q;
+ wire [9:0] slot=EXTERNAL_PLAN?plan_slot:slot_q;
+ wire [12:0] tag=EXTERNAL_PLAN?plan_tag:tag_q;
+ wire [47:0] rows=EXTERNAL_PLAN?plan_rows:rows_q;
+ wire [7:0] mask=EXTERNAL_PLAN?plan_mask:mask_q,alt_mask=EXTERNAL_PLAN?plan_alt_mask:alt_mask_q;
+ wire [103:0] alt_tags=EXTERNAL_PLAN?plan_alt_tags:alt_tags_q;
  reg [4:0] index;reg [31:0] cycles;
  reg [7:0] bytes[0:31]; // No reset; EMIT starts only after every byte is written.
  wire lease_ok=lease_valid&&lease_generation==generation;
@@ -43,8 +52,8 @@ module nes_tile191 #(parameter integer MAX_CYCLES=4096)(
  endtask
  always @(posedge clk)begin
   if(reset||stop)begin
-   state<=IDLE;kind<=0;generation<=0;slot<=0;tag<=0;rows<=0;mask<=0;
-   alt_mask<=0;alt_tags<=0;index<=0;cycles<=0;fault<=0;done<=0;
+   state<=IDLE;kind_q<=0;generation_q<=0;slot_q<=0;tag_q<=0;rows_q<=0;mask_q<=0;
+   alt_mask_q<=0;alt_tags_q<=0;index<=0;cycles<=0;fault<=0;done<=0;
   end else begin
    done<=0;
    if(busy)cycles<=cycles+1'b1;
@@ -56,8 +65,8 @@ module nes_tile191 #(parameter integer MAX_CYCLES=4096)(
         (plan_kind==1&&(plan_slot>=128||plan_mask==0||plan_alt_mask!=0))||
         (plan_kind==2&&(plan_slot!=0||plan_tag!=0||plan_rows!=0||plan_mask!=0||plan_alt_mask!=0)))fault<=1;
      else begin
-      kind<=plan_kind;generation<=plan_generation;slot<=plan_slot;tag<=plan_tag;
-      rows<=plan_rows;mask<=plan_mask;alt_mask<=plan_alt_mask;alt_tags<=plan_alt_tags;
+      kind_q<=plan_kind;generation_q<=plan_generation;slot_q<=plan_slot;tag_q<=plan_tag;
+      rows_q<=plan_rows;mask_q<=plan_mask;alt_mask_q<=plan_alt_mask;alt_tags_q<=plan_alt_tags;
       index<=0;cycles<=0;state<=FETCH;
      end
     end
