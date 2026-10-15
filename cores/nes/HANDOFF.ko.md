@@ -1,3 +1,17 @@
+# NES1814 — C/SNES 표 전송 압축 및 향후 사용자 기능 (최신)
+
+MCU→SNES 반복word(DATA4)/SEAL1814 실제 C+65816 구현·검증. FPGA→MCU1813과 다른 버전 경계다. SELECT sinkpack181 test02(15경우)/test03(실제 WRAM 전byte)/check01. 같은7frame50,217logical DATA bytes 동일, 실제ACK1,485·encoder961. normal 최소wire6,730→4,782B(21.206→15.270ms), raw7 gen13 11,055→8,389B(34.819→26.694ms). 모델이며 실제FPS아님;packet수275불변. 추가frameRAM0, SNES본문3,774/3,776B/ROM4096, ARM packet stack304→312B(+8), 전체link/IRQ미승인.
+
+중복공정 제거: 현재video181은 이미BG15tile/OBJ7tile callback 묶음을 쓴다. 다음은 새 묶음 구현이 아니라 target-bank 기준 section/CHR 차분,raw steady 공개,capture/export겹침. 추가16KB ARM plan/BGkey영구cache 가정 금지. ingress/sink두후보를 전체ARM/FIT/IO에 통합한 뒤 SMB3숫자1+A. 매퍼확장예산·sourceidentity·generation/dirty수명과같이진행. 현재body2B여유도다음decoder설계의제약이다.
+
+추가기능 검토: frameskip은 표시만생략,CPU/PPU/APU/mapper/pad시계유지;60fps실패은폐금지. 강제save/load는현재mapper SaveStateBus미연결/has_savestate0으로별도구현필요. 비파괴pause(종료STOP과구분),전상태/RAM/SD,ROM·format검증,로드후transport새세대/기존ACK·delta폐기/완전갱신. mute는최종혼합출력만차단하고DMC/IRQ/확장음원·DAC/CDC유지. 설정과게임snapshot분리. 이기능들은아직미구현이며현재출력수명계약에반영한다.
+
+새FIT/Questa/FW/ZIP/실기/60fps승인없음. 배포180/GBC164/saveSRAM보존. test01sandboxGCC623/build01초기메타데이터오류포함원시3,206파일보존;완료archive/manifest재실행금지. 영상약60fps+음성→longplay/resetlogs→heldinput→사용자편의기능.
+
+[구현·검증](../../docs/nes-sinkpack181-contract.ko.md) · [추가 기능 경계](../../docs/nes-runtime-features181.ko.md) · [검증 데이터](../../analysis/sinkpack181-verification.json)
+
+---
+
 # NES181 — 60fps 유지와 MMC4·MMC5 확장 예산 (최신 설계 조건)
 
 MMC4/5 자동호환 주장은 금지한다. 현재 코어는 mapper4, fetch/fill은128KiB CHR/13bit tile 범위다. 1MiB를 같은2bit bitmap으로 늘리면2→16KiB(+14KiB)여서 ARM에 단순 추가할 수 없다. 실제 fetch source/데이터 세대/유효 속성을 보존하고 ROM 주소 범위와 제한된 화면 working set을 분리한다. 폭 변경 시 프로토콜도 명시적으로 version한다.
