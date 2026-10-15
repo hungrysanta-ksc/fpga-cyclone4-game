@@ -1,3 +1,17 @@
+# NES191 실제 변환기의 계획 분리와 FPGA 타일 생성 (최신)
+
+[계약·비용·다음 구현](../../docs/nes-plan191-contract.ko.md) · [검증](../../analysis/plan191-verification.json). PR117 OPEN 같은 branch. **배포186 유지/새 실기판 없음.**
+
+실제186 C의 geometry/slot/row/palette 검증은 유지하고 새 슬롯마다40B host 계획을 callback으로 출력한다. BG/OBJ pixel 접근·staging을 제거하되 tag/kind 목록 조회와 raw C 경로는 남는다. FPGA191은 한 계획+32B 타일만 갖고 sealed source에서 행별 low/high/cross-tile/OBJ mask를 적용한다. payload reset 없이 모든 byte 작성 뒤 공개. 원본은 완료까지 불변이어야 하며 응답 address/gen/error 확인, STOP/lease취소/유한timeout을 적용한다. backend는 stale reply를 flush한 후 mem_idle을 선언해야 한다. liveCHR-RAM/PSRAM/arbiter/CDC/읽기창은 미연결이다.
+
+SELECTtest03/faults01/evidence01.8합성장면97계획1840B 출력이 변경 없는 실제186 변환기와 동일, 전체15912B host metadata도 동일. CHR 전부A5로 바꿔도 같은 계획/metadata.1304fixture reads/간헐ready/1..5cycle응답.9generation/address/error/timeout/lease/STOPflush검사PASS. raw0/1/7행은 기존C경로 동일성이지 새rawRTL 검증 아님. test01/prepare01 치환오류/test02 C경고 실패 보존. ARM전체stack/실기/게임/FPS승인 없음.
+
+계획 wire 추정16B+alternate tag당2B(실제codec없음).8장면1580B 대출력1840B. 일반BG는16대16,예외는20대16이라계획전송만으로해결되지않음.2.625MHz SPI의60Hz당이상payload5468.75B에비해새BG512계획8192B: 안정된pattern/내용generation delta와captureoverlap 필수. 현재24LAB14M9K여유에계획레지스터/32Bbuffer/가변mux/watchdog와188aperture/원본snapshot이fit된다는보장없음. host시험전체plan배열은MCURAM제안아님.
+
+NEXT qualifiedsource reader의fetch-time content/lease와191을연결하고생성타일을188aperture/SNES-readysection으로직접공급. liveCHR-RAM재읽기를안전하다고가정금지;MCUSPIpayload재공급은bypass아님. codec/descriptor/ACK/STOP/finaldisplayACK 실제경계와16.67ms전체예산/자원조건을충족한뒤최소FIT/IO+짝패키지. 일반FIFO확대/불변boot/FIT/186-044반복금지. 실제scroll동일generation자료없음;사용자tile1+A→RIGHT+B유지+Apress/release절차이번미실행.186/GBC164/saveSRAM/완료archives/MMC4/5·CHR-RAM·state/mute/frameskip보존. AV약60fps→장기play/reset로그→입력품질.
+
+---
+
 # NES190 CHR 묶음 전송과 변환 위치 결정 (최신)
 
 [계약/예산/다음 구현](../../docs/nes-chr190-contract.ko.md) · [검증](../../analysis/chr190-verification.json). PR117 OPEN 같은 branch. **배포186 유지/새 실기판 없음.**
