@@ -1,3 +1,19 @@
+# NES188 카트리지 읽기창 후보 — 다음 구현 인계 (최신)
+
+[계약/한계/다음 작업](../../docs/nes-bulk188-contract.ko.md) · [검증](../../analysis/bulk188-verification.json). PR116 머지7439179 이후 codex/nes-bulk-aperture-188. **새 실기판 없음/186 배포 유지.**
+
+2KiB×2 immutable buffer를 host-clock local producer가 채우고 SNES raw pin read로 읽는 후보. begin1..2048/token32→byte→후속seal,읽는버퍼불변/다음작성허용/full backpressure,토큰일치consume만해제. bank40:0800..0fff 후보;기존packet400000/control6000/ROM보존을unchanged sinkbus와함께검증. 정상/3.5ns 2위상각28049B읽기,합성7화면259Crequest의28039B를16묶음으로재생.196590검사수는반복owner검사포함,독립case수아님. test01단독PASS/test02기존bus추가PASS;SELECTtest02/evidence01. 원본Questa로그보존/FLOAT종료. 초기sandbox실행은sim생성전실패해host실행. 새hostproducer source/CDC/실제65816 DMA/mapper/표시연결은아직없다.
+
+STOP/reset/active loss 즉시출력차단+124로2edge release,stoppedclock cancel/re-enable에서도옛chunk노출금지. payloadRAM reset없음/길이밖차단/연속RD주소변화검증. token은발행자가session/restart전후새값사용,임의랩안전성없음. consume는전송수명해제이며최종화면ACK아님. 4096B→4M9K회계추정/current42+4=46여유10;LAB/packing/STA미승인. 새FW/FIT/ZIP/60fps주장금지.
+
+정정:187의기존실제SMB3연속스크롤자료는확인되지않음.현재선택된실제자료165frame12/15는intro만:BG16중same-slot14/prior-content15,OBJ2/2,map64중63동일. 옛165 ingress20604B와현186합성egress를동일프레임성능으로합치지말것. level179Mesen700frame은장면/PPUwrite참조지현재compact/raw/CHR생산stream아님. 첫레벨같은generation 양방향자료미측정.
+
+사용자확정스크롤절차:월드맵숫자1타일+A로첫레벨진입→RIGHT+B계속유지+Apress/release반복. 실행타이밍은실제화면상태확인;이번턴미실행/새캡처없음. 이절차를다음대표연속스크롤자료에사용한다.
+
+NEXT 일반FIFO테스트를더늘리지말고production sourcecompact/CHR view를immutablegeneration으로host쪽에인계하는소유권/CDC를연결. 안정된pattern identity+CHR-RAM내용세대/행mapping 설계와actualSNESdescriptor/bulkWRAMread/기존section최종displayACK경계가다음. MCU가SPI로같은bytes를채우는것은왕복제거가아님. 그최소경로와실제스크롤자료를같은generation으로비교해16.67ms서비스처리량/수집겹침/자원표를만든후FIT·실기짝패키지. 표준SPI는fallback후보유지,초기keyframe과지속스크롤구분. 추가일반관측기/긴무변경coreboot/FIT/186-044/별도pad반복금지. 현ARM1204여유/body3776,24LAB/14M9K와미래MMC4/5/state/mute/frameskip/저장SRAM보존. AV60fps→장기play+reset로그→입력품질.
+
+---
+
 # NES187 구조 회고와 다음 구현 방향 (최신)
 
 [회고와 실행 계획](../../docs/nes-video-architecture187.ko.md) · [수치 검증](../../analysis/video-arch187-verification.json). PR116 같은 branch. **새187 실기판 없음.186 기준 배포 유지.** 아래 과거 HW186의 cache-only 다음 계획은 이 회고로 보완한다.
