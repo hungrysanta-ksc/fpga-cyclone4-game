@@ -1,3 +1,19 @@
+# NES181 — 호스트 RUN/ACK 수명 구현, 통합 FIT 자원 부족 (최신)
+
+SELECT hostlease181 map01/test01. 기존 관련PLL run_enable→sink ACK enable 직접 경계를 host_ready로 바꿨다. raw_reset||!active는 공통 session reset과 외부버스 즉시취소, local reset+2FF SPI_SS/WR 유휴 관측 후 새 수명 승인. graceful stop/fault는 SNES가 읽을 수 있게 기존 $6001 요청으로 유지한다. 모든 fault가 raw취소로 바뀐 것은 아니다.
+
+실제 SPI endpoint+SNES bus 16시작오프셋/128정상ACK/128취소/912확인 PASS. pending ACK byte/publish와 status중취소, stopped-host-clock reset, 재시작시빈상태/partialACK거부. CPU/SPI master는모델,전체게임/물리reset/CDC보장아님.
+
+packed1813 exporter/SPI와stream1815ROM까지통합,기존검증파일동일/QSF·SDC·클럭불변. MAP추정19895LE, FIT준비15079LE/38M9K이나977LAB필요/963한도로실패. 이LE는최종배선값아님. STA/IO/ASM/ZIP없고타이밍개선여부미측정. 옛replyjoin−1.408은여전히미채택. 압축+host공동변경이므로초과14LAB를host하나에귀속금지.
+
+NEXT ACK work96/held96 보관수명공유: valid일때만work를E0snapshot으로복사,invalidpayload0, coherent snapshot/CRC유지. 실제C는valid일때만ACK소비. 아직미구현. E0시작/publish동시edge,새E1/부분ACK/STOP/reset경계부터검사하고MAP실제자원확인후통합FIT.96FF제거=14LAB해결이라고주장금지. 부족하면큰OAM메모리/포트구조검토. 작은gate/seed반복FIT·압축제거·relatedPLL예외금지.
+
+paired181ARM여유1384/SNES1815기능증거유지. FIT/IO통과후SMB3숫자1→A 실기. raw7송신하한22ms/단일capturelease/실제60fps미완료.180/GBC164/saveSRAM/완료archive보존. AV→longplay/resetlogs→heldinput 순서유지.
+
+[계약·결과·다음 저장 구조](../../docs/nes-hostlease181-contract.ko.md) · [검증](../../analysis/hostlease181-verification.json)
+
+---
+
 # NES181 — 압축 송수신 전체 ARM 통합 (최신)
 
 packed1813 수신기와 stream1815 송신기를 전체 ARM에 결합했다. 첫 후보는 RUN/IRQ 여유944바이트로 기준1024 실패. 마지막 BG 동기 콜백 후 수명이 끝나는 bg_keys의 앞448바이트를 OBJ 검증에 재사용해 converter 스택696→256, 전체 여유1384바이트로 통과했다. static26564/free38860/RUN36968/IRQ508,FW200412B/cf16e9c1은 컴파일 검증용이며 새 설치 ZIP은 없다. 추가 SRAM/힙/캐시0. 일반 plan의 만료된 키448바이트는 다음 프레임 기준이나 save state로 사용하지 않는다.
