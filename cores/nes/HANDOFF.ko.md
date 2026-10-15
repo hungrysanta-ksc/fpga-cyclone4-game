@@ -1,3 +1,17 @@
+# NES185 실기 시험 준비 완료 (최신)
+
+[계약](../../docs/nes-paired185-contract.ko.md) · [설치·시험](../../docs/nes-game185-ready.ko.md) · [검증](../../analysis/paired185-verification.json). PR116 OPEN, 같은 `codex/nes-map-inherit-185`. 후보 단계는 아래 기록이며 이 항목이 full ARM/배포 상태를 갱신한다.
+
+선택 private probes/nes-paired185 arm01/check02/report02/evidence/asm01/evidence/rom01/romcheck01/release02. ZIP `release02/NES185-SMB3-MAP-INHERIT.zip`, SHA b4f060f4b0edc96571e363f6648d44aa85510d235e06a6f18230d2d651f25075. FW9a256f0c/FPGA13c4d496 함께 사용.1851프로토콜이므로184와 혼합금지. 입력pad185도 포함. 설치용 packageREADY이며 아직 실기/60fps승인은 없다.
+
+전체ARM202068B/static26592/RUN37120/IRQ508/여유1204. actual full graph converter callback185로 변경, platform/library13 normalized bodies 보존. 로그최대4003/4096. 기존184RTL/route73파일 동일, SNES ROM만CDB/ASM/CPF. 별도복사EDA4netlists 각4096bytes 일치; Mesen32768의 앞4032+마지막64 header/vector가 compact4096. RBF직접비트/실물readback아님. 새FIT/STA하지 않았으며 기존setup+.315/hold+.116/조건부IO·CDC 재사용. Candidate37checks/실제C+65816/RTLreplay/autopoll은 완료증거 해시연결로 재사용.
+
+NEXT 사용자가185를 실행해 SMB3 숫자1타일+A 첫레벨의 오프닝대비 끊김·음악·가능하면길게누름·약60초메뉴복귀 및두TXT를 확인.184/044/별도pad-only/불변FIT/boot 재시험은 하지 않는다. 실기결과전 추가micro최적화보다 이package결과를 우선한다. map3952→1214는map만의수치, 작은COPY64패킷 증가/CPU비용 미측정이므로FPS비례개선 주장금지. 결과의receive/build/seal+ACK진행을 보고 연속복사묶음/CHR차등/capture전송표시겹침을 결정. 목표16.7ms 및 MMC4/5/state/mute/frameskip 확장 유지. body3776/3776 여유0. consumed는MCU상태만바꾸며 FPGA capture시작명령아님.
+
+AV60fps→장기플레이/오류·reset로그→입력품질 순서 보존. GBC164/세이브SRAM/기존184/복원164/완료archives 불변. build01 subst·check01/report01 DLL623은 sandbox실패이며 host재실행통과. release01은4096/32768검증기 가정오류(설치package없음), release02실제projection일치. 새record/manifest도완료후수정금지.
+
+---
+
 # NES185 — 타일맵 재사용 후보 결합 검증 완료
 
 [계약과 다음 절차](../../docs/nes-map185-contract.ko.md) · [검증 JSON](../../analysis/map185-verification.json). PR115 merged `fef83c7`, 새 branch `codex/nes-map-inherit-185`. private `probes/nes-map185`, 선택 build04/test07/objects03/selected-coupled/evidence/replay02/evidence/pad01. 5585파일 manifest01 SHA `512b0e8b39b786972e366c9bacc7930ad70604fe6b0134d97ea89df32082807f`. 완료 파일/record/manifest는 수정하지 않는다.
