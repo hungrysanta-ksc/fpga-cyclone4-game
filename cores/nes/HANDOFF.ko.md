@@ -1,3 +1,17 @@
+# NES183 실기 — 차이는 미미, 연속 전송 구조 우선 (최신)
+
+[결과](../../docs/nes-game183-hardware01.ko.md) · [검증](../../analysis/game183-hardware01-verification.json). PR114 같은 branch에 결과만 기록. private probes/nes-game183-hardware01. 새 FW/FIT/ZIP 없음.
+
+사용자 미세한 개선 같으나 큰 차이 없음. 173표시ACK/60060ms,182는171/60070ms. 평균2.880 vs2.847완료/s,약1.19% 차이; 장면/입력이 다른 단회 시험이라 인과적 속도 향상 확정 금지. 평균347.2ms/완료,60fps 미달. receive25.66/build8.10/seal25.76초;182는28.52/9.25/21.81초. 수신만 감소했다고 캐시 효과를 정량화하지 않는다. 최종 실패 구간 일부는profile에 누적되지 않는다.
+
+BEGIN/END/COMMIT174,표시173,ABORT0,lastgen265/59.73s. pending266의REPEAT4/section3/seq33/serial174/offset32/2B→226B에서 sink2/io02 PRE_GUARD. E0도 보내기 전 guard가 기한1을 기록,polls0/ACK미수신. 전송/CRC/ACK불일치 새 고장 아님. ROM/receiver/video0. STOP/base/menu준비295920ms; 육안메뉴/음질은 이번 별도확인 없음. SPC A9/unmute는기록만확인.
+
+최근16episode8거부8회복,224행/rastercompact0. fetch01×7,오류0/mask00×1. 회복237mod256에objects66/exception1. 전체빈도/원인위치/시각없고중간변화기록도없다. fetch조건을무조건해제하지않는다. pad마지막16변화는입력유지합격판정아님.
+
+NEXT 더빠른상태조회미세수정반복중단. 실제양쪽endpoint의boundedFIFO/credit와소비범위묶음확인,완성프레임공개/재사용소유권부터정의. 목적bank기준세대차등·payload축소·capture/전송/표시겹침을16.7ms예산으로함께설계. ACK단순삭제·유실된차등누락·세이브SRAM사용금지. 최소통합검사후실제SMB3. 같은183/044·무변경FIT불필요. AV60fps→장기플레이·오류리셋로그→입력유지,MMC4/5/state/mute/frameskip여유계획유지.
+
+---
+
 # NES183 — 중복 상태 조회 절감, 연속 전송 구조 우선 (최신)
 
 [계약](../../docs/nes-status183-contract.ko.md) · [실기 안내](../../docs/nes-game183-ready.ko.md) · [검증](../../analysis/status183-verification.json). PR114 같은 branch. SELECT private probes/nes-status183 arm01/test02/check01/report01/release01. 새 시험 ZIP은 NES183-SMB3-STATUS-VIDEO.zip, SHA256 a0d154f1b600c6ec9718a68b03f377212eb3bf8d3c1a1a2de75ab9e6f3cb5147. FW8f5ca30e. 실기/60fps 미확인.
