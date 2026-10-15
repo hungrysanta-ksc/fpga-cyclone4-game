@@ -1,3 +1,17 @@
+# NES181 — 60fps 유지와 MMC4·MMC5 확장 예산 (최신 설계 조건)
+
+MMC4/5 자동호환 주장은 금지한다. 현재 코어는 mapper4, fetch/fill은128KiB CHR/13bit tile 범위다. 1MiB를 같은2bit bitmap으로 늘리면2→16KiB(+14KiB)여서 ARM에 단순 추가할 수 없다. 실제 fetch source/데이터 세대/유효 속성을 보존하고 ROM 주소 범위와 제한된 화면 working set을 분리한다. 폭 변경 시 프로토콜도 명시적으로 version한다.
+
+확장용 잠정 목표: 전체 활성 profile 뒤97LAB 이상·8M9K 이상·최악 ARM4KiB 여유, 정상 플레이의 공유SPI 점유80% 이하. 이는 실측 MMC5 요구량이나 달성 결과가 아니다. ExRAM/PRG RAM/영상 workspace/세이브는 분리. 매퍼별 bitstream은 후보이며 아직 채택하지 않았다.
+
+NEXT 기존 packed1813 다음의 sink section/CHR 묶음·bank 차분·raw steady 갱신·capture/export 겹침을 자원/포트/수명표와 함께 진행한다. 최소 변경 검증→전체FIT/ARM/IO→SMB3 숫자1+A. 확장 여유 목표만을 이유로 최소 실기 시험을 미루거나 모든 매퍼를 먼저 구현하지 않는다. 여유 미달은 확장 준비 미완료로 표시. 실제 표시 약60fps+음성→장기플레이/오류·리셋로그→입력유지. 새FW/FIT/ZIP없음;배포180/GBC164/saveSRAM/완료archives보존.
+
+[호환성 경계·자원 목표·진행 순서](../../docs/nes-mapper-headroom181.ko.md) · [소스 대조](../../analysis/mapper-headroom181-review.json)
+
+아래 packed1813 구현·검증 결과는 유지하며, 다음 설계에 위 조건을 함께 적용한다.
+
+---
+
 # NES1813 — 실제 FPGA 묶음 전송·C 복원 완료 (최신)
 
 실제 FPGA exporter/SPI와 C receiver에1813묶음 전송을 구현했다. 같은0/1/7raw행 fixture wire4861/6559/16774→922/1311/3486B, 모델2.994/4.244/11.097ms. 전체receiver byte일치·최대256run/1056map·취소8경우PASS. receiver18064B유지,추가상태소스9bit/ARM국소stack+40B. 새FIT/전체ARM/실기/60fps승인없음.
