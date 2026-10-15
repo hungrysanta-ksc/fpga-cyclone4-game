@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-15",
-  "technical_candidate": "NES181 cadence-first packing/delta/overlap contract; current routing candidate still timing-failed",
+  "technical_candidate": "NES1813 packed ingress actual RTL/SPI/C verified; sink bandwidth/capture overlap and board timing open",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "배선 개선은 동작 신뢰성 기반이며60fps 전송 개선은 아니다. 기존전송 재검사: SPI2.625MHz/60Hz 총5468.75B, SNES normal 최소21.206ms/raw34.819ms, 동일section도전체전송. raw7행 오프라인packing10752→2160B이나전체record6457B로여전히부족. 생산packing·bank별delta·capture/export겹침을지금계약에포함한다. 새FIT/펌웨어/실기/60fps승인없음.",
-  "next_action": "NEXT cadence181계약에따라 raw+geometry묶음/CHR집계와bank기준section차분의공유SPI예산·RAM/포트/세대수명을먼저확정;실제짝지은endpoint최소검사와capture/export겹침구현. hostRUNSTOP local화도같은소유권계약에결합;relatedPLLcut금지. 그후정당한통합FIT/ARM/IO와SMB3 숫자1+A 실기. 복구판을실기에먼저낼수있되느린전체복사경로를최종구조로고정하지말것. 분석replyjoinmap02 setup-1.408미채택/배포180유지. ACK횟수는FPS아님;AV약60fps→longplay→heldinput;saveSRAM/GBC164/archives보존.",
+  "assessment": "실제 FPGA exporter/SPI와 C receiver에1813묶음 전송을 구현했다. 같은0/1/7raw행 fixture wire4861/6559/16774→922/1311/3486B, 모델2.994/4.244/11.097ms. 전체receiver byte일치·최대256run/1056map·취소8경우PASS. receiver18064B유지,추가상태소스9bit/ARM국소stack+40B. 새FIT/전체ARM/실기/60fps승인없음.",
+  "next_action": "NEXT MCU→SNES section/CHR전송 축소와 raw steady-state fullbank rebuild 제거를 실제C/65816로 연결. ARM에이전plan전체추가금지;BGkey는raw가덮어쓰므로cache아님. bank기준generation/dirty저장위치·포트·수명먼저명시,필요시이전복사본없는losslesssection묶음(차분과구분). capture/export겹침도공동계약;ingress11.097ms/normal2.994ms만으로60fps아님. hostRUNSTOP도같은계약;이후통합FIT/ARM/IO와SMB3숫자1+A. 분석replyjoinmap02(-1.408)미채택/배포180유지;AV→longplay→heldinput/saveSRAM/GBC164/archives보존.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -3046,8 +3046,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-cadence181-contract.ko.md",
-  "latest_development_evidence": "analysis/cadence181-verification.json",
+  "latest_review": "docs/nes-packed181-contract.ko.md",
+  "latest_development_evidence": "analysis/packed181-verification.json",
   "latest_hardware_evidence": "analysis/game180-hardware01-verification.json",
   "current_181_delivery_gates": [
     {
@@ -3057,7 +3057,7 @@
     },
     {
       "id": "C2",
-      "status": "open",
+      "status": "packed_ingress_verified_sink_delta_capture_overlap_open",
       "exit": "Paired packed producer/receiver and bank-aware delta sink/client with exact output, stale-base/STOP safety and continuous capture."
     },
     {

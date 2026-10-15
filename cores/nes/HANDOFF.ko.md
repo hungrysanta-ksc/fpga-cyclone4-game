@@ -1,3 +1,15 @@
+# NES1813 — 실제 FPGA 묶음 전송·C 복원 완료 (최신)
+
+실제 FPGA exporter/SPI와 C receiver에1813묶음 전송을 구현했다. 같은0/1/7raw행 fixture wire4861/6559/16774→922/1311/3486B, 모델2.994/4.244/11.097ms. 전체receiver byte일치·최대256run/1056map·취소8경우PASS. receiver18064B유지,추가상태소스9bit/ARM국소stack+40B. 새FIT/전체ARM/실기/60fps승인없음.
+
+NEXT MCU→SNES section/CHR전송 축소와 raw steady-state fullbank rebuild 제거를 실제C/65816로 연결. ARM에이전plan전체추가금지;BGkey는raw가덮어쓰므로cache아님. bank기준generation/dirty저장위치·포트·수명먼저명시,필요시이전복사본없는losslesssection묶음(차분과구분). capture/export겹침도공동계약;ingress11.097ms/normal2.994ms만으로60fps아님. hostRUNSTOP도같은계약;이후통합FIT/ARM/IO와SMB3숫자1+A. 분석replyjoinmap02(-1.408)미채택/배포180유지;AV→longplay→heldinput/saveSRAM/GBC164/archives보존.
+
+[구현·검증·다음 경계](../../docs/nes-packed181-contract.ko.md) · [분석](../../analysis/packed181-verification.json)
+
+아래는 과거 기록이며 NEXT는 위 계약을 우선한다.
+
+---
+
 # NES181 — 화면 복구와60fps 공동 설계（최신）
 
 배선 개선은 동작 신뢰성 기반이며60fps 전송 개선은 아니다. 기존전송 재검사: SPI2.625MHz/60Hz 총5468.75B, SNES normal 최소21.206ms/raw34.819ms, 동일section도전체전송. raw7행 오프라인packing10752→2160B이나전체record6457B로여전히부족. 생산packing·bank별delta·capture/export겹침을지금계약에포함한다. 새FIT/펌웨어/실기/60fps승인없음.
