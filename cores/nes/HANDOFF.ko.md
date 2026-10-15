@@ -1,3 +1,19 @@
+# NES184 — 결합·타이밍 검사 완료, 실기 시험 대기 (최신)
+
+[계약](../../docs/nes-window184-coupled-contract.ko.md) · [실기 안내](../../docs/nes-game184-ready.ko.md) · [검증](../../analysis/window184-coupled-verification.json). PR115 같은 branch. SELECT private probes/nes-window184-coupled compact-map01/route02/compact-test01/test03/replay02/status01/arm01/check02/report01/asm01/release01. 완료archive/record 수정 금지.
+
+실기ZIP NES184-SMB3-WINDOW-VIDEO.zip sha68a4310f9c67e27e944d2da9fe9e1f46fad4506ecb8d04f14c35e1eded16f9bc. FWda4c776a/FPGA6e86b54c를 함께 설치. 초기183이름compile-only는 설치금지. 기존183 원본/복원164는 보존했다.
+
+ACKwork 수명 재사용으로96FF제거: 다음부분ACK동안 valid만 내리고 retired 유지, E0스냅샷은불변. 완료drain에는유효한최종ACK필수. 원본큐보다121LE·96FF감소,13466LE939LAB42M9K. 한 번의 구조변경FIT에서 nominal/strict setup+.315/hold+.116. CDC486/reply24/OAM2220/조건부IO·payloadreset 통과. full전기/MTBF승인아님.
+
+실제C/window+실제65816 heldfilequeue 정상7화면219ACK,STOPcopy61/long27ACK,550656픽셀PASS. 실제SPI+소비ACK 사건을 compact RTL/bus에서재생84161+23316+10805검사PASS. 동시cycle정확CPU/MCU성능모델아님. PCpoll수차이를FPS개선으로해석금지. 기존독립동시SPI/ACK경계는compact-test01각4182검사로확인.
+
+ARM201392B/static26588/RUN37096/IRQ508/여유1232. 진단2바이트는padding사용/static추가없음. TXT4003/4096. sink_window_schema184/error/sent/retired/flags/ack. counts는MCU관측16bit,flags/ack는마지막CRC/F7검증상태이며첫고장순간보장없음. 옛io170 출력제거. test01 sandbox623,check01옛io문자열조건실패는보존;check02최종선택.
+
+NEXT user184SMB3 숫자1타일+A에서 끊김변화/화면정지/사운드/약60초메뉴복귀/두TXT확인. 준비로딩과게임구간을분리. 같은183/044/불변boot/FIT반복금지. 실기결과전추가seedFIT하지않는다. 성능다음은raw7낙관wire18.667ms>16.7이므로목적bank기준세대차등·map/CHRpayload축소·capture/전송/표시겹침. AV60fps→장기플레이/오류reset로그→입력유지. GBC164/saveSRAM/완료archives 및 MMC4/5/state/mute/frameskip요구보존.
+
+---
+
 # NES184 — 연속 전송 큐 구현, 결합·배포 검증은 다음 단계 (최신)
 
 [계약](../../docs/nes-window184-contract.ko.md) · [검증](../../analysis/window184-verification.json). PR114 merged91b0bf7에서 새 branch `codex/nes-stream-window-184`. SELECT private probes/nes-window184 test03/arm01/check02/map01/budget01. 완료 evidence/record/manifest는 수정하지 않는다.

@@ -13,7 +13,9 @@ static bool io(struct nes_sink_window184 *s,const uint8_t *tx,uint8_t *rx,unsign
 static bool status(struct nes_sink_window184 *s,uint8_t ack[12]){
  uint8_t tx[20]={0xe0},rx[20];if(!io(s,tx,rx,20))return false;
  uint8_t c=0;for(unsigned i=1;i<19;i++)c=crc8(c,rx[i]);
- if(rx[1]!=0xf7||rx[19]!=c||(rx[2]&0xf8))return fail(s,4);
+ if(rx[1]!=0xf7||rx[19]!=c)return fail(s,4);
+ s->status_flags=rx[2];s->ack_status=(rx[2]&2)?rx[7]:0;
+ if(rx[2]&0xf8)return fail(s,4);
  uint16_t a=(uint16_t)((rx[3]<<8)|rx[4]),r=(uint16_t)((rx[5]<<8)|rx[6]);
  unsigned pending=(uint16_t)(s->sent-s->retired),delta=(uint16_t)(r-s->retired),used=(uint16_t)(a-r);
  if(a!=s->sent||pending>4||delta>pending||used>4||!!(rx[2]&1)!=(used!=0)||!!(rx[2]&4)!=(used==4))return fail(s,5);

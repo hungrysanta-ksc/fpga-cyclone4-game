@@ -24,7 +24,11 @@ static bool transfer(void *ctx,const uint8_t *tx,uint8_t *rx,unsigned n){
 static bool guard(void *ctx){struct replay *r=ctx;return ++r->guards!=r->fail_guard;}
 static bool run(struct replay *r,unsigned wrap){
  struct nes_sink_window184 s;uint8_t ack[12],p[256];
- if(!nes_window184_init(&s,transfer,guard,r,32))return false;
+ if(!nes_window184_init(&s,transfer,guard,r,32)){
+  if(r->mode==2)assert(s.status_flags==128&&s.ack_status==0);
+  if(r->mode==1||r->mode==5)assert(s.status_flags==0&&s.ack_status==0);
+  return false;
+ }
  if(wrap)s.sent=s.retired=0xfffc;
  for(unsigned i=0;i<33;i++){
   unsigned n=i==0?16:i==32?40:i%3==1?256:18;
@@ -36,6 +40,7 @@ static bool run(struct replay *r,unsigned wrap){
   if(!ok){unsigned before=r->calls;assert(!nes_window184_enqueue(&s,p,n)&&r->calls==before);return false;}
  }
  assert(s.sent==(wrap?29:33)&&s.retired==s.sent&&ack[0]==1&&ack[1]==3&&ack[2]==32);
+ assert(s.status_flags==2&&s.ack_status==1);
  unsigned extra;assert(fscanf(r->f,"%u",&extra)==EOF);return true;
 }
 int main(int argc,char **argv){

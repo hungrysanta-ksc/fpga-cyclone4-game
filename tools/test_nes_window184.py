@@ -7,6 +7,7 @@ def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
  p=argparse.ArgumentParser()
  for n in ['out','questa-bin','gcc','arm-bin']:p.add_argument('--'+n,type=Path,required=True)
+ p.add_argument('--compact',action='store_true')
  a=p.parse_args();assert os.environ.get('SALT_LICENSE_SERVER')=='18000@localhost'
  a.out.mkdir(parents=True,exist_ok=False)
  baseline=ROOT.parent/'probes/nes-checkstate181/evidence/map01'
@@ -18,6 +19,22 @@ def main():
   (a.out/n).write_bytes(b)
  sources=['src/nes/diagnostic/nes_sink_queue184.sv','src/nes/firmware/nes_sink_window184.c','src/nes/firmware/nes_sink_window184.h','tests/nes-functional/sink_window184_tb.sv','tests/nes-functional/sink_window184_host.c','tools/test_nes_window184.py']
  for n in sources:shutil.copyfile(ROOT/n,a.out/Path(n).name)
+ if a.compact:
+  from nes_window184_compact import compact
+  q=a.out/'nes_sink_queue184.sv';q.write_text(compact(q.read_text()),encoding='utf8',newline='\n')
+  sources.append('tools/nes_window184_compact.py')
+  tb=a.out/'sink_window184_tb.sv';s=tb.read_text();anchor='  // STOP holds queue; COMMON reset clears ownership without RAM reset.'
+  assert s.count(anchor)==1
+  s=s.replace(anchor,'''  // Partial next ACK invalidates only bytes, not retired credit.
+  send_packet(2);write_byte(24'h006010,acks[2][0]);status;
+  if(rx[2]!=1||{rx[5],rx[6]}!=2)$fatal(1,"partial ACK valid/credit");
+  for(j=7;j<19;j++)if(rx[j])$fatal(1,"partial ACK exposed");
+  for(j=1;j<12;j++)write_byte(24'h006010+j,acks[2][j]);
+  write_byte(24'h00601c,8'ha5);#500;status;
+  if(rx[2]!=2||{rx[5],rx[6]}!=3)$fatal(1,"ACK not restored after drain");
+  common_reset;send_packet(0);consume(0);send_packet(1);consume(1);
+'''+anchor)
+  tb.write_text(s,encoding='utf8',newline='\n')
  env=os.environ.copy();env['PATH']=str(a.gcc.parent)+os.pathsep+env.get('PATH','')
  def run(cmd,name,folder=a.out):
   with (folder/(name+'.log')).open('wb') as f:
@@ -39,6 +56,6 @@ def main():
   cases.append(dict(name=tag,calls=int(m[1]),wire_bytes=int(m[2]),checks=int(m[3]),host=h.strip(),trace_sha256=sha(d/'transactions.txt')))
  run([a.arm_bin/'arm-none-eabi-gcc.exe','-std=c11','-mcpu=cortex-m4','-mthumb','-Os','-Wall','-Wextra','-Werror','-fstack-usage','-c','nes_sink_window184.c','-o','window.o'],'arm')
  size=run([a.arm_bin/'arm-none-eabi-size.exe','window.o'],'arm-size')
- result=dict(passed=True,cases=cases,inputs=inputs,public_sources={n:sha(ROOT/n) for n in sources},stack=(a.out/'window.su').read_text(),arm_size=size,scope=__doc__,new_firmware=False,new_fit=False,new_package=False)
+ result=dict(passed=True,cases=cases,inputs=inputs,public_sources={n:sha(ROOT/n) for n in sources},compact_ack=a.compact,rtl_sha256=sha(a.out/'nes_sink_queue184.sv'),testbench_sha256=sha(a.out/'sink_window184_tb.sv'),stack=(a.out/'window.su').read_text(),arm_size=size,scope=__doc__,new_firmware=False,new_fit=False,new_package=False)
  (a.out/'result.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf8');print(json.dumps(result))
 if __name__=='__main__':main()

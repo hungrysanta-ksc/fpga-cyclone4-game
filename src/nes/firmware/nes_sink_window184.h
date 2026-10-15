@@ -12,6 +12,8 @@ struct nes_sink_window184 {
  nes_window184_transfer transfer;bool (*guard)(void *);void *ctx;
  unsigned poll_limit;uint16_t sent,retired;uint8_t last[10],error;
  bool initialized,ever_sent;
+ /* Last CRC/identity-valid status only; counters above are MCU observations. */
+ uint8_t status_flags,ack_status;
 };
 bool nes_window184_init(struct nes_sink_window184 *,nes_window184_transfer,bool (*)(void *),void *,unsigned);
 bool nes_window184_enqueue(void *,const uint8_t *,unsigned);
