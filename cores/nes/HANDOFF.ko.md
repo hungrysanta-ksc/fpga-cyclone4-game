@@ -1,3 +1,19 @@
+# NES187 구조 회고와 다음 구현 방향 (최신)
+
+[회고와 실행 계획](../../docs/nes-video-architecture187.ko.md) · [수치 검증](../../analysis/video-arch187-verification.json). PR116 같은 branch. **새187 실기판 없음.186 기준 배포 유지.** 아래 과거 HW186의 cache-only 다음 계획은 이 회고로 보완한다.
+
+164도 SNES PPU 출력이었다. 예전은 FPGA finalpixel→bank40/DMA, 현재는 graphics→SPI→MCU변환→SPI큐→SNES다. 타일/스크롤/OBJ 방향은 유지하지만 전체화면 직렬 MCU왕복을 최종60fps 구조로 고정하지 않는다. 과거보다 빠르다는 주장 철회: 구164 counter신뢰0,11VBlank로이론상<=5.45완성화면/s일뿐 동일장면 실측 없음. 사용자 예전이빠른듯하다는 체감은 가능하다.
+
+FIT13466LE/939LAB/42M9K,여유1942LE/24LAB/14M9K(물리16128B). 구16414711/960/56. 비중복 native22M9K 제거후oldframe38+bus2=60은회계추정,합성아님. fullframe doublebuffer는여유만으로불가,관측RAM 재배치등으로달라질수있음. 작은snapshot/streaming+패턴identity에우선배정;saveSRAM사용금지.
+
+실제C→65816 보관합성7장259request/ACK토큰일치.5357B30req normal egress SPI최소16.60ms,기존준비cart→WRAM가정1.995ms는후보하한이지구현/8배FPS증거아님. Sourcepins privateaudit01/result.json;public요약참조. 전체ingress와다른장면의egress를합쳐실측이라하지말것. 공유SPI총5469B/16.67ms이론상한,VRAMVBlank예산별도. Capture끝→nextstart참조2.401ms+8192scrub; exportertransportCOMMIT release와MCUworkspace/displayACK소유권구분.
+
+NEXT: 기존실제SMB3 연속스크롤의같은generation ingress/egress/CHR변경/표시자료를매칭;미측정은미측정. 안정된CHR슬롯+내용generation/행mapping와작은snapshot/부분streaming을한설계로평가. 현재SPI유지vs소스준비카트리지bulk aperture로실제왕복제거 비교,수명/포트/자원표→작은읽기창+세대소유권프로토타입→실제SNES읽기/STOP/CHR변경/raw전환 최소검증→FIT조건성립시짝패키지SMB3숫자1+A/스크롤. 같은데이터를MCU가SPI로다시채우는것은병목제거가아님. COPY만확대/ACK삭제/추가일반진단/전체긴boot반복금지. HDMA/RLE/window/VRAMdiff는이미있음;bg_keys는OBJ/raw와수명공유해영구cache로바꾸기전재설계필요. ARM여유1204/body3776도반영.
+
+다중매퍼현재지원아님: mapperflags4/MMC5=0/8192CHRtags128KiB. MMC4fetchlatch/MMC5CHR반환·ExRAM·속성·IRQ·확장음성·state를공통adapter에서보존,물리주소만cachekey금지. 매퍼계열별bitstream 후보로여유확보,모두동시합성약속금지. raw7행/팔레트/OBJ제한을범용호환이라하지말것. AV60fps→장기플레이/오류·reset로그→입력품질 유지.186/GBC164/세이브/과거완료archive불변,이번새FW/FIT/ZIP/실기요청없음.
+
+---
+
 # NES186 실기 결과 반영 (최신)
 
 [결과와 다음 계획](../../docs/nes-game186-hardware01.ko.md) · [원본 분석](../../analysis/game186-hardware01-verification.json). PR116 같은 branch. 사용자 사운드·조작 정상/정적 장면 개선/스크롤 심한 끊김. 실제 표시182/60.06초,185의180과 비슷함. 큐14333→8147(-43.16%)이나 수신27.71/변환CHR7.90/나머지전송표시23.95초;전체 평균330ms/완료,60fps미달. 장면별 비용·적중률 없음.
