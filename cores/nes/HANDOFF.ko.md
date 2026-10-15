@@ -1,3 +1,19 @@
+# NES181 — ACK 저장 공유 검증, FIT 10 LAB 초과 (최신)
+
+SELECT acklease181 map01/test01/reproduce01. work96/held96을 work96으로 공유하고 120비트 coherent status snapshot을 유지했다. valid=0 payload는 0, valid ACK는 기준 endpoint와 byte 일치. publish/snapshot 같은 edge는 이전 flags와 이전 valid로 캡처. 실제 SNES bus의 write/publish는 배타적이며 직접 동시 입력도 이전 완성 work 발행으로 방어한다.
+
+실제 endpoint 비교 48 전송/322 확인, 실제170 C의 RTL trace 48개 재생 통과. CRC 변형48/guard거부48은 별도 음성 fixture. 변경 endpoint로 hostlease 16오프셋/128완료/128취소/912확인도 통과. 실시간 C/RTL 공동 실행이나 전체게임/실기 증거는 아니다. 기존1815 실제65816·paired181 ARM여유1384 결과 재사용이며 새실행으로 집계하지 않는다.
+
+69개 보드 입력 중 endpoint만 변경, 재생성 전부 일치. MAP FF8643→8547, sink578→482, 추정LE19895→19819. 전체FIT 한 번: 필요LAB977→973/한도963, 준비LE15155/M9K38이며 여전히 실패. 중간LE는 오히려 늘었고 최종 배선 수치가 아니다. STA/IO/ASM/ZIP 없음, 관련PLL−1.408 해결 미측정. 압축1813·1815ROM·클럭·SDC·핀 유지.
+
+NEXT 큰 OAM 저장/읽기 포트 구조. 현재 OAMEval MAP조합4015/FF2366/M9K0. 실제 primary8lane/CPU 즉시주소·CE·freeze·8byte행복사·sameaddress·상태저장 동시쓰기 우선순위 시간표를 먼저 확정한다. native OAM 주소는 live_joint에서0고정/collector는 evaluatedgeometry 사용: 옛 snapshot을 현재 필수 읽기포트로 가정하지 않는다. extra sprite와 미래savestate 기능을 조용히 삭제하지 않는다. 기존onehot-read/row-writer/enableOFF/AREA 재배치 실패 반복금지. CE 사이 주소안정성이 증명된 읽기만 RAM 사전읽기/우회로 전환하고 짧은 실제SMB3 소비경계 검증 후 큰 MAP 절감 후보만 FIT한다. 새 OAM RTL은 아직 없다.
+
+raw7 하한22ms 모델/단일capturelease/실제60fps 계속 미완료. 자원과타이밍·조건부IO 통과후 SMB3숫자1타일→A. 게임/PPU 감속·압축제거·세이브SRAM 사용금지. 배포180/GBC164/완료archive 보존, AV→longplay/resetlogs→heldinput 순서 유지.
+
+[변경·검증·다음 접근 조건](../../docs/nes-acklease181-contract.ko.md) · [검증 기록](../../analysis/acklease181-verification.json)
+
+---
+
 # NES181 — 호스트 RUN/ACK 수명 구현, 통합 FIT 자원 부족 (최신)
 
 SELECT hostlease181 map01/test01. 기존 관련PLL run_enable→sink ACK enable 직접 경계를 host_ready로 바꿨다. raw_reset||!active는 공통 session reset과 외부버스 즉시취소, local reset+2FF SPI_SS/WR 유휴 관측 후 새 수명 승인. graceful stop/fault는 SNES가 읽을 수 있게 기존 $6001 요청으로 유지한다. 모든 fault가 raw취소로 바뀐 것은 아니다.
