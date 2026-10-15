@@ -1,3 +1,17 @@
+# NES185 실기 결과 반영 (최신)
+
+[결과](../../docs/nes-game185-hardware01.ko.md) · [검증 JSON](../../analysis/game185-hardware01-verification.json). PR116 OPEN 같은 branch. private probes/nes-game185-hardware01. 기존185 ZIP/완료archives 수정 없음.
+
+사용자 사운드정상·길게누르기고쳐진듯·프레임소폭향상. 전체180표시ACK/60.06초 vs184183회(-1.64%); 다른장면/입력이라인과적퇴행이나체감개선부정아님. 평균약2.997완료/s,333.7ms/완료로60fps미달. receive28.19/build7.76/seal23.53초; wire7514384(-4.49%),SPI269524(+8.70%),표시큐14333(+58.36%). COPY64명령비용상쇄는가설이며per-op/scene통계없음. map3952→1214가전체개선율이아님.
+
+BEGIN181/END180/COMMIT180/ABORT0,lastgen306/59.93초;next307중deadline1뒤receiver21. ROM/sink/video/window0,큐sent=retired14333/flags2/ACK1. STOP/base/menuPREP295680ms까지,실제파일메뉴는사용자명시없음. SPC A9/unmute와사용자청취정상. 마지막변경입력16중DOWN마지막,물리버튼timestamp없어유지기간/모든버튼승인은아님. 입력만재시험하지않는다.
+
+NEXT 먼저연속COPY범위묶음으로패킷처리비용축소를검토하고bounded STOP/시간/패드service를보존. SNES body3776/3776,ARMmargin1204. 구현한RLE/4큐/로컬VRAM차등재작업금지. receive28.19초도크므로CHRpayload·capture/수신/표시소유권겹침을함께60fps/16.7ms기준으로진행. consumed()는MCU상태만바꿈/FPGA시작명령아님. 새로운진단정리/동일185·044/불변FIT/별도pad시험보다다음실기성능구현우선. 이번턴새FW/FIT/ZIP없음.
+
+AV60fps→장기플레이/오류·reset로그→입력품질,MMC4/5/state/mute/frameskip확장,GBC164/saveSRAM/기존배포/완료archives보존. 실기와후보의성공범위를혼동하지않는다.
+
+---
+
 # NES185 실기 시험 준비 완료 (최신)
 
 [계약](../../docs/nes-paired185-contract.ko.md) · [설치·시험](../../docs/nes-game185-ready.ko.md) · [검증](../../analysis/paired185-verification.json). PR116 OPEN, 같은 `codex/nes-map-inherit-185`. 후보 단계는 아래 기록이며 이 항목이 full ARM/배포 상태를 갱신한다.
