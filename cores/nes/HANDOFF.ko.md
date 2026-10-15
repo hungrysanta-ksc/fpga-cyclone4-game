@@ -1,3 +1,17 @@
+# NES193 타일 직접 읽기창 전송 / 스크롤 측정 필수 (최신)
+
+[계약과 다음 연결](../../docs/nes-bulk193-contract.ko.md) · [검증](../../analysis/bulk193-verification.json) · [실제 스크롤 측정 계획](../../analysis/scroll193-measurement-plan.json). PR117 OPEN 같은 branch. 배포186 유지/새 실기판 없음.
+
+사용자최신기준: 부하감소는첫레벨연속스크롤에서판정. 오프닝/정지/같은타일반복비율로대체금지. tile1+A로레벨확인→RIGHT+B유지+Apress/release. 동일run source/변환/전송/표시를generation으로연결하고baseline/candidate는비교가능한입력·게임상태·스크롤거리사용. cold/warm/static/transition/raw구분,실제고유표시간격과읽기/전송량함께측정. ACK총수/전체60s를FPS로쓰지말고perframeSD쓰기금지. 로컬ROMsha256 dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49 확인;실제scroll collectedruns비어있음.
+
+192actualarbiter/READ16→191tile→193immutable32BdualclockRAM/34bitmetadata mailbox→1882x2048aperture. source는host가타일전체copy하고ACK돌아올때까지RAM덮어쓰기금지. payloadreset없음. 같은kind/gen/연속slot을묶고kind/불연속/full/END에서seal. rawread에는SNES-planar tilebytes만있음;descriptor27bit(gen/kind/startslot)는token/length와같은buffer수명,아직hostports/controldecode미구현. ENDsealed는hostpulse/모든tile게시,전체frameCOMMIT나displayACK아님.
+
+SELECTtest04/faults02/evidence01.8actual186C합성장면97plans1840B byte/descriptor동일.8192B512same-source/연속slot압력4chunks;full148065hostcycles/sourcewait27273NEScycles후동일재개.9결합사례wrongconsume거부,8malformed/gen/partialSTOP/stoppedhostSTOP/sourcefault/restart/tokenexhaustionPASS.21.477/84/168MHz/phase3.5ns/70nspinfixture/rawbus32hostclocksperbyte;실제게임/65816DMA/물리CDC/FPS아님. test01include순서/test02harnesscounter+stall실패보존. test03/faults01큰290bitmailbox초기안PASS이나미채택;최종32BRAM+34bitmailbox(held/received580→68bit)로줄임. M9K추론/실제LE절감미승인.
+
+NEXT hostdescriptor를실제controldecoder+SNESclientbulkWRAM/inactiveVRAM/sectionvalidation/finalACK에연결. plan입력codec/CDC·productionepoch/frame-startlatch·raw/palette/OAM/HDMA/음성입력STOP통합남음. tilepayload에는MCUSPI없지만전체geometry왕복제거아님. source2046B/frame제한·stablecontentkey/delta/captureoverlap·16.67ms전체예산유지.42+4+1=47/56M9K는부분회계추정/24LAB여유미승인;교체할옛payload경로와전체자원검토후최소FIT/IO·짝패키지실기SCROLL. 일반FIFO관측기/긴불변boot/FIT/186-044반복금지.186/GBC164/saveSRAM/완료archives/MMC4/5·CHR-RAM·state/mute/frameskip보존. AV60fps→장기play/resetlogs→입력품질.
+
+---
+
 # NES192 qualified CHR-ROM 원본 연결과16B 캐시 (최신)
 
 [계약·처리량·다음 연결](../../docs/nes-source192-contract.ko.md) · [검증](../../analysis/source192-verification.json). PR117 OPEN 같은 branch. 배포186 유지/새 실기판 없음.

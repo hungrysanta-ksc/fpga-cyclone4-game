@@ -1,0 +1,28 @@
+{
+  "status": "required_not_yet_measured",
+  "workload": "SMB3(J) first level continuous camera scrolling",
+  "rom_sha256": "dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49",
+  "user_recipe": [
+    "world map: move to tile1 and press A",
+    "verify first-level scene",
+    "hold RIGHT+B and repeatedly press/release A"
+  ],
+  "acceptance": [
+    "measure continuous camera-scroll interval, not intro or stationary scene",
+    "match source/conversion/transfer/display evidence by generation within each run",
+    "compare baseline and candidate over comparable game state, scrolling distance and input sequence",
+    "separate initial cold load, warm scrolling, static scene, transition and raw-fallback rows",
+    "use unique completed display generations and actual display intervals; do not divide all ACKs by total60s",
+    "preserve sound/input/core priority; no improvement accepted by skipping gameplay work",
+    "avoid per-frame SD writes; reuse bounded counters/captures and write after STOP/reset/error"
+  ],
+  "metrics": [
+    "source physical reads and cache hits/misses",
+    "new/reused tile/plan counts",
+    "BG/OBJ/raw/control bytes",
+    "capture/prepare/transfer/VRAM-display latency",
+    "display interval median/p95/max and distinct display cadence"
+  ],
+  "collected_runs": [],
+  "notes": "193 proves transport correctness only. Intro/repeated-tile percentages are not actual load reduction."
+}
