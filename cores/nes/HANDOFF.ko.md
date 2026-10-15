@@ -1,3 +1,19 @@
+# NES181 — 통합 실기 시험판 준비 완료 (최신)
+
+SELECT checkstate181 map01/test02/route01/check01/report02/asm01/release01/reproduce01. [계약](../../docs/nes-checkstate181-contract.ko.md), [실기 안내](../../docs/nes-game181-ready.ko.md), [검증 색인](../../analysis/checkstate181-verification.json). private probes/nes-checkstate181/progress.json. 완료archive/record/audit 수정금지.
+
+이전 OAM32bit RAM/1813 ingress/1815 SNES/클럭핀SDC 그대로,69입력중SPI만 변경. CHECK state 병렬식은 payload쓰기enable과분리했지만 같은C3edge이며 추가지연없음. hard9>response7>SS1>decoded 우선순위/주소tag live비교/RUN차단/STOPreset/status/2usSPI 유지. 정상응답+명령오류는data저장하고stateclear, END는done별도clear안함.1056768edge+1024후속시퀀스/219실제SPI14016bits/100read7ACK19bad72cancel2overlap/3잘못된회로검출PASS. test01sandboxTEMP누락은실행안됨, 고정경로test02선택;report01DLL623→hostreport02동일코드PASS.
+
+전체FIT1회13281LE923LAB42M9K6504FF, M9K14/LAB40free. nominal+.373/hold+.153/strict+.221/relatedPLL+1.284;CHECK+.673,6LUT그대로data6.111→5.204ns,전체최악start→loaded_bytes. OAM2220경로/3corner/CDC486/reply24PASS. 조건부PSRAM70ns여유4.508/SNES70.026/270/SPI161.472/190.476/nativepayload음수reset0. 전체asyncreset/CDC/MTBF/전기적IO/postfitSDF승인아님. 원본FIT보존,STA와ASM은별도DB사본.
+
+paired181 arm02/check03 정확재사용1413소스핀,FWcf16e9c124a20ab0e25e9f0d0646d8dfd33f706300b8df600318e3020bcc5d1c(200412B),static26564/free38860/RUN36968/IRQ508/margin1384. SNES1815body3643/program4096재생성현재MIF동일. 실제formatter최대3921/4096. 기존OAM제조사모델/CPU-PPU자체ROM/pairedC-65816증거는해시재사용,새wholegame주장금지. M9K미사용genericextra/state포트와8baselineunknown색한계유지.
+
+패키지: probes/nes-checkstate181/release01/NES181-SMB3-ROW-VIDEO.zip, SHA274489a0106c2a82457e8a157883f60e545f0691737ad1a1452139b0b9e27f71. FPGA6cb2235de30a12f8dbae084beb56c3d1f58efb14ed7039ef6a298b39504c5d50. ASM/CPF압축복호화/ZIP전파일검증. ROM/메뉴/164복원은180원본그대로. 로그nes-progress-181.txt+nes-game-last-181.txt,history이름180_V3는의도적기존schema. 런처NES GAME 181.nh1,수분로딩유지,ready뒤6000ticks약60초자동복귀/STOP후SD쓰기.
+
+NEXT 사용자실기SMB3 숫자1타일→A, 첫레벨화면지속/소리/메뉴와두TXT,가능하면20~30초영상. 아직실기PASS/60fps아님. 성공해도raw7egress22.154ms최소모델과singlecapturelease는별도남음;실측표시주기·wire유효전송비율로후속계획. 실패시admission/BEGIN/ABORT/COMMIT/SNESACK연결,게임음성입력계속되면display-only실패로분리. 추가동일FIT/longmodelboot/180/044복원반복금지. AV60fps→longplay/error-resetlogs→heldinput,MMC4/5/frameskip/state/mute계획유지. saveSRAM/GBC164/180/기존archives보존.
+
+---
+
 # NES181 — 렌더링 대조 통과, OAM M9K16→4, CHECK 타이밍 남음 (최신)
 
 SELECT oamports181 map02/primitive01/render02/route01/check01/reproduce01. [계약](../../docs/nes-oamports181-contract.ko.md), [검증 색인](../../analysis/oamports181-verification.json), private probes/nes-oamports181/progress.json. 완료archive/record/audit 수정금지.
