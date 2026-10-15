@@ -1,3 +1,17 @@
+# NES1814 — raw 지속 갱신 완료 (최신)
+
+raw 행 수가 같으면 마지막 표시 WRAM과 실제 표시 VRAM 뱅크 기준으로 기존6section+raw CHR를 비교한다. 작은 변경은fresh VBlank에서부분갱신, count전환/큰변경/명령초과는기존전체복사 유지. 실제A/B raw변경 2048B DMA+2명령/setup2240,기존4largechunks→0;noop0DMA. 위치가바뀐7행도2598charge로통과. HDMA bundle3418B는WRAM에있어복사하지않으므로setup96만charge,rawCHR는별도계산. 5000/32한도유지.
+
+SELECT rawsteady181 test02/normal·test03/steady·test04/large_steady·test05(16경우)·check01. 실패suite의완료case만선택,전체PASS아님. 같은최종C/ROM으로19경우/실제ACK2764/45장면2753280픽셀PASS,DATA전byte WRAM대조·기준PPU·STOP·오류거부포함. C는1814그대로/추가RAM0. wire불변(normal최소15.270ms/raw26.694ms모델),실기FPS아님. 104명시jump만relax해3822→3560B/3776본문/4096ROM;중간oversizepass00선택금지.
+
+NEXT 모든section송신을줄이는wire개선과capture/export겹침·hostRUNSTOP소유권. 기존BG15/OBJ7batch와이번rawsteady를다시구현하지말것. 실제targetbank기준delta는저장위치/세대/취소수명확정후;추가ARM16KiB plan금지/frameskip으로60fps미달은폐금지. ingress1813/sink1814전체ARM·IRQ+통합FIT/IO통과후SMB3숫자1+A. 마지막전체FIT−1.408은미채택;SNES개선으로해결됐다고주장하지않는다.
+
+새FW/ZIP/FIT/실기/60fps승인없음. 배포180/GBC164/saveSRAM/완료archives보존. rawsteady의build01/02오류,test01GCC623,test03largefixture50초초과,test04STOP주입지점오류는그대로보존. test05는64B동일raw비교STOP과변경rawfinalSTOP. 영상약60fps+음성→longplay/resetlogs→heldinput→사용자기능.
+
+[계약·실패이력·재현](../../docs/nes-rawsteady181-contract.ko.md) · [검증](../../analysis/rawsteady181-verification.json)
+
+---
+
 # NES1814 — C/SNES 표 전송 압축 및 향후 사용자 기능 (최신)
 
 MCU→SNES 반복word(DATA4)/SEAL1814 실제 C+65816 구현·검증. FPGA→MCU1813과 다른 버전 경계다. SELECT sinkpack181 test02(15경우)/test03(실제 WRAM 전byte)/check01. 같은7frame50,217logical DATA bytes 동일, 실제ACK1,485·encoder961. normal 최소wire6,730→4,782B(21.206→15.270ms), raw7 gen13 11,055→8,389B(34.819→26.694ms). 모델이며 실제FPS아님;packet수275불변. 추가frameRAM0, SNES본문3,774/3,776B/ROM4096, ARM packet stack304→312B(+8), 전체link/IRQ미승인.
