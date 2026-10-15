@@ -1,3 +1,17 @@
+# NES192 qualified CHR-ROM 원본 연결과16B 캐시 (최신)
+
+[계약·처리량·다음 연결](../../docs/nes-source192-contract.ko.md) · [검증](../../analysis/source192-verification.json). PR117 OPEN 같은 branch. 배포186 유지/새 실기판 없음.
+
+191 타일 생성기를 변경 없는 배포arbiter165/physicalREAD16에 연결. NES clock에서physical0x200000..21ffff를읽는다. sourceROM/ready/write/captureepoch-liveepoch/framegeometry-generation 확인.16B한타일cache는physicaltag/16lanevalid/자체contentepoch로관리;frame이바뀌어도불변ROM내용재사용가능. STOP/쓰기/epoch/취소에서폐기하고공유reader는drain,reset은공통. captured/live둘다새값으로바뀌어도cache자체epoch비교로옛바이트폐기. CHR-RAM은snapshot없어명시거부;MMC4/5호환승인아님. epochproducer/frame-startlatch는board미구현;contentepochwrap전flush/reset필요.
+
+SELECTtest03/evidence01. test01no-cachebaseline/test02중간cachePASS보존.8합성C기준97계획1840B동일;원본reads1304→1262(약3.22%). SAME BGplan512회재생은8192→16reads,6→1readwindows,83.837→1.895ms.512unique/실제converter중복/스크롤FPS아님.9lifetime조건(mutable/epoch/write/inflightSTOP+drain/restart/warm/write-reload/equal-newepochs)PASS. 실제arbiter+READ16/70ns핀메모리fixture/21.477·168MHz/0·3.5ns위상. core_safe=1/10%core경쟁;실제CPU/PPU/APUgrant미연결.
+
+핵심:현재242..259라인/12mastercycle-slot의낙관적상한2046Breads/frame. cold8192B를매번읽는구조는SPI왕복제거만으로60fps불가. core우선권을풀지말고stablephysicalcontent/plan-key재사용·delta·captureoverlap을동시에진행. 현재cache1entry효과정상장면3.22%뿐이므로과장/무조건cache확대금지. 타일timeout1048576NEScycles는합법적귀선대기를포함한48.8ms보호한도이지성능목표완화아님.
+
+NEXT 생성tile→188읽기창/SNES-readysection 직접공급+계획codec/CDC/epochproducer/descriptor/STOP/finaldisplayACK. geometry/raw/palette/OBJ/OAM/HDMA 의미보존;framegen/contentepoch/token/displayACK혼동금지.48Bpayload외tag/mask/epoch/응답reg/mux비용미FIT,24LAB14M9Kspare승인아님.16.67ms전체source·계획·cart·VRAM예산후최소FIT/IO+짝SMB3. 실제pairedscroll자료없음/tile1+A→RIGHT+B유지+Apress-release이번미실행.186/GBC164/saveSRAM/완료archives·state/mute/frameskip보존. AV60fps→장기play/resetlogs→입력품질.
+
+---
+
 # NES191 실제 변환기의 계획 분리와 FPGA 타일 생성 (최신)
 
 [계약·비용·다음 구현](../../docs/nes-plan191-contract.ko.md) · [검증](../../analysis/plan191-verification.json). PR117 OPEN 같은 branch. **배포186 유지/새 실기판 없음.**
