@@ -1,3 +1,17 @@
+# NES181 — 압축 송수신 전체 ARM 통합 (최신)
+
+packed1813 수신기와 stream1815 송신기를 전체 ARM에 결합했다. 첫 후보는 RUN/IRQ 여유944바이트로 기준1024 실패. 마지막 BG 동기 콜백 후 수명이 끝나는 bg_keys의 앞448바이트를 OBJ 검증에 재사용해 converter 스택696→256, 전체 여유1384바이트로 통과했다. static26564/free38860/RUN36968/IRQ508,FW200412B/cf16e9c1은 컴파일 검증용이며 새 설치 ZIP은 없다. 추가 SRAM/힙/캐시0. 일반 plan의 만료된 키448바이트는 다음 프레임 기준이나 save state로 사용하지 않는다.
+
+SELECT paired181 arm02/check03/test02. 실제1813 C수신→변환→1815송신5장면61검사, 모든 송신 출력 동일. 일반 plan만 만료448바이트 제외, raw plan 전체 동일. 중복/rank7 마지막 부근 행 충돌/잘못된 상태/전송 거부/복구 확인. ACK는 이번 native 시험에서 mock이다. 기존1815 실제65816 검사는 sender/client 동일성으로 재사용하며 새 실행으로 집계하지 않는다. check01 도구623,check02 실제944부족,test01 하네스 Werror 기록 보존.
+
+다음은 FPGA의 related-PLL RUN/STOP 활성화·ACK 소유권 구조다. 즉시 버스 취소/미완료ACK무효화 유지, 같은PLL false path 금지. 최소 변경 경계 검사 후 packed1813 exporter/SPI를 함께 넣어 통합FIT/IO, paired181 ARM+stream1815 ROM으로 SMB3 숫자1→A 실기. 변경 없는codec/BOOT시험 반복하지 않는다. 마지막 replyjoin FIT setup−1.408 미채택이며 아직 새codec과 합친 결과가 아니다. 1811 FPGA와1813 MCU를 섞지 않는다.
+
+60fps는 미완료: raw7 송신 하한모델만22.15ms, 수집단일lease와직렬MCU도미해결. FIFO/targetbankdelta는 실제저장/세대/포트/취소수명부터 설계. 추가ARM16KiBplan/세이브SRAM스크래치 금지. 여유4KiB는 미달 계획목표. 실기 영상복구와표시주기를 별도 판정;AV약60fps→longplay/resetlogs→heldinput.180/GBC164/saveSRAM/완료archive보존.
+
+[계약·재현·제한](../../docs/nes-paired181-contract.ko.md) · [검증](../../analysis/paired181-verification.json)
+
+---
+
 # NES1815 — 긴 반복 전송·상수 메모리 분할 (최신)
 
 DATA5는physical2B로242..4096짝수bytes를복원한다. DATA4<=240유지/SEAL1815;ingress1813과별도경계. 실제SNES section/token/offset/bounds검사후매64B+끝에서STOP/pad서비스. 기존rawsteady의현재표시bank부분갱신/큰변경fallback유지. 추가frameRAM0,이전plan/hashcache없음.
