@@ -1,3 +1,63 @@
+# NES183 실기 — 차이는 미미, 연속 전송 구조 우선 (최신)
+
+[결과](../../docs/nes-game183-hardware01.ko.md) · [검증](../../analysis/game183-hardware01-verification.json). PR114 같은 branch에 결과만 기록. private probes/nes-game183-hardware01. 새 FW/FIT/ZIP 없음.
+
+사용자 미세한 개선 같으나 큰 차이 없음. 173표시ACK/60060ms,182는171/60070ms. 평균2.880 vs2.847완료/s,약1.19% 차이; 장면/입력이 다른 단회 시험이라 인과적 속도 향상 확정 금지. 평균347.2ms/완료,60fps 미달. receive25.66/build8.10/seal25.76초;182는28.52/9.25/21.81초. 수신만 감소했다고 캐시 효과를 정량화하지 않는다. 최종 실패 구간 일부는profile에 누적되지 않는다.
+
+BEGIN/END/COMMIT174,표시173,ABORT0,lastgen265/59.73s. pending266의REPEAT4/section3/seq33/serial174/offset32/2B→226B에서 sink2/io02 PRE_GUARD. E0도 보내기 전 guard가 기한1을 기록,polls0/ACK미수신. 전송/CRC/ACK불일치 새 고장 아님. ROM/receiver/video0. STOP/base/menu준비295920ms; 육안메뉴/음질은 이번 별도확인 없음. SPC A9/unmute는기록만확인.
+
+최근16episode8거부8회복,224행/rastercompact0. fetch01×7,오류0/mask00×1. 회복237mod256에objects66/exception1. 전체빈도/원인위치/시각없고중간변화기록도없다. fetch조건을무조건해제하지않는다. pad마지막16변화는입력유지합격판정아님.
+
+NEXT 더빠른상태조회미세수정반복중단. 실제양쪽endpoint의boundedFIFO/credit와소비범위묶음확인,완성프레임공개/재사용소유권부터정의. 목적bank기준세대차등·payload축소·capture/전송/표시겹침을16.7ms예산으로함께설계. ACK단순삭제·유실된차등누락·세이브SRAM사용금지. 최소통합검사후실제SMB3. 같은183/044·무변경FIT불필요. AV60fps→장기플레이·오류리셋로그→입력유지,MMC4/5/state/mute/frameskip여유계획유지.
+
+---
+
+# NES183 — 중복 상태 조회 절감, 연속 전송 구조 우선 (최신)
+
+[계약](../../docs/nes-status183-contract.ko.md) · [실기 안내](../../docs/nes-game183-ready.ko.md) · [검증](../../analysis/status183-verification.json). PR114 같은 branch. SELECT private probes/nes-status183 arm01/test02/check01/report01/release01. 새 시험 ZIP은 NES183-SMB3-STATUS-VIDEO.zip, SHA256 a0d154f1b600c6ec9718a68b03f377212eb3bf8d3c1a1a2de75ab9e6f3cb5147. FW8f5ca30e. 실기/60fps 미확인.
+
+POP 확인 D0가 다음 블록의 준비 완료를 알려주면 RUN receiver에 8바이트를 보존해 다음 poll의 중복 D0를 생략한다. 빈 상태는 저장하지 않는다. 다음 D1 전에 CRC/flags 재검사, READ CRC/토큰/D2/즉시 D0 소비 확인 유지. 준비 단계/reset/새 BEGIN에서 폐기. sealed 블록은 POP 또는 reset까지 불변인 현재 endpoint만 대상이다. 미래 FIFO/비동기 reset에는 계약 재검토가 필요하다.
+
+실제 기존 RTL SPI 바이트 재생 4조건/685검사, 원본 논리 수신18060B 일치. 23→21,31→27,59→47,60→48calls. 캐시 사용 뒤 CRC/전송실패,COMMIT확인실패,prepare실패,캐시CRC/토큰 오류 통과. 새 RTL timing/실기 producer scheduling 증명은 아니다. ARM200924B/static26564/RUN36976+IRQ508/여유1376B,1414소스핀,로그3921. FPGA181·SNES1815·converter/sink·DMA182 그대로. 새FIT/중복 화면 회귀검사 없음. 사용자 NES GAME 183.nh1,첫 레벨 tile1+A,두183TXT와20~30초 움직임 영상/소리/메뉴 확인.
+
+중요한 정정: 이번 턴 처음 만든 batch183은 채택하지 않았다. 기존 production converter가 이미 BG240/OBJ224를 scratch로 묶는다. 단일타일 합성입력1158→99는 실제 경로 개선이 아니며 추가228B상시RAM도 불필요했다. probes/nes-batch183의 전체실패/검증/ZIP은 폐기기록과 함께 보존하고 절대 설치하지 않는다. 그 후보의 검사 결과를 선택 STATUS 후보 증거로 쓰지 않는다. 최적화 전에 배포 converter callback 크기까지 확인할 것.
+
+사용자 TCP/UDP 질문: 매조각 ACK는 필수가 아니다. 현재 ACK는 버퍼 재사용 허가이므로 단순 삭제 금지. 다음 개발은 bounded FIFO/credit로 여러 조각 연속 전송, 소비 범위 묶음 확인, CRC/순번/세대, 완성 프레임 공개/최종 표시 완료와 소유권 반환을 우선한다. 빈 공간·STOP/reset·ACK지연·버퍼 재사용을 함께 설계한다. 차등 업데이트는 목적 bank 기준 세대가 일치해야 하며 중간 세대를 버리면 전체 재구축 또는 누적 차등이 필요하다. 순수 payload도16.7ms 이내여야 하므로 ACK 제거만으로60fps 약속 금지. raw7 egress22.154ms 하한/단일capture lease/MCU RAM을 함께 검토한다. 미세 상태 조회 개선만 반복하지 않는다.
+
+기존182 실기171ACK/60.07초는181136 대비25.7% 개선이나 정확한FPS나 통제시험이 아니다. 이번183의 실기 개선치는 아직 없다. AV60fps→장기플레이·오류/실기리셋로그→입력유지 순서. GBC164/세이브SRAM/완료archive/MMC4·5/state/mute/frameskip 계획 보존. 실제SMB3 우선,동일044/무변경FIT 반복 금지.
+
+---
+
+# NES182 — DMA 실기 개선 확인, 약60fps 미달 (최신)
+
+[결과](../../docs/nes-game182-hardware01.ko.md) · [검증](../../analysis/game182-hardware01-verification.json). PR114 같은 branch에 결과만 기록. private probes/nes-game182-hardware01/progress.json; 완료자료 수정 금지. 새FW/FIT/ZIP 없음.
+
+사용자 약간 개선됐으나 여전히 끊김. 영상/이번음성/육안메뉴 확인은 미제공. 로그 DISPLAY60070ms,171표시ACK(181136),평균2.847완료/s·351.3ms(+25.7%). 정확한game/CRT FPS 또는 동일장면 통제DMA효과가 아님. BEGIN172/END171/COMMIT171/ABORT0,last236/59.97s. ROM/verify/first/STOP/sink/video0,deadline1. 다음237 수신의POP에서receiver24; 원인1이먼저보존돼 종료부차실패로판단, rawPOP응답없어 CRC/DMA고장단정금지. STOP/base/menu준비296230ms완료.
+
+receive28.52/build+CHR9.25/seal+section21.81초,완료당166.8/54.1/127.5ms. 181누적28.38/7.74/23.71와완료수달라단순비교주의. 280177transactions/7351325clockedB(181137469/4811300),약43.0KB/완료는poll포함,필수payload아님. 순수wire하한22.404초,observer직접SPI별도. DMA가빈poll도빨라지게했을가능성있으나 분류카운터없어 확정불가. 16.7ms에여전히약21배차이인전체평균; 한단계최적화로60fps보장불가.
+
+마지막16episode는8reject8recover,모두224rows/rastercompact0. fetch04x3/01x2/07x1/20x1/오류0mask00x1;07은01|02|04,20은endframe시pair_pending. 전체빈도/장면시각/위치없고patcherrors는observer범위밖. 보호조건제거금지.
+
+NEXT DMA를후속기준으로유지하고 실제경로에서유효payload/status/ACKpoll을분리한뒤 작은packet집계·목적bank기준세대가검증된차등전송·capture/MCU/bank수명겹침을16.7ms예산으로설계. 기존1813/1815압축중복구현금지. 더빠른poll/무근거SPI증속/동일182-044재시험/무변경FIT 불필요. AV60fps→장기플레이·오류리셋로그→입력유지. saveSRAM/GBC164/181기준판/완료archives/MMC4·5/state/mute/frameskip계획유지.
+
+---
+
+# NES182 — RUN 화면 전송 DMA 시험판 준비 (최신)
+
+PR113 merged3453c05, 새 branch codex/nes-video-throughput-182. [계약](../../docs/nes-dma182-contract.ko.md) · [실기 안내](../../docs/nes-game182-ready.ko.md) · [검증](../../analysis/dma182-verification.json). private probes/nes-dma182/progress.json. 완료 archive/record/audit 수정 금지.
+
+SELECT test03/arm02/check03/report01/release02. MCU의 RUN bulk만 DMA2 stream0/RX+stream3/TX channel3으로 전환, 최대259B. 같은2.625MHz·2us·1813/1815·CRC/ACK·FPGA181 유지, 새FIT 없음. CPU guard는 전송 중 계속 실행하지만 IRQ 중에도 현재 packet은 자율 진행 가능: 이전 byte별 authorization과 동일하지 않음. EN 해제 후만 주소/버퍼 반환, 해제 불능은 CS/SPI/reset 안전정지·비반환. 실제 bus경합/WCET 미검증.
+
+정상/경계794 + guard907 + byte오류2590 register-model 통과. 초기 test02/arm01/check02/release01 뒤 pre-DMA guard 보완, 최종 test03/arm02/check03/release02 선택. report01은 동일 formatter 해시 재사용. DLL623 실패와 이전 결과 보존. 전체 ARM200844B/static26564/RUN36968/IRQ508/margin1384/1414sourcepins, TXT3921/4096. 추가 정적RAM/saveSRAM 없음.
+
+패키지 probes/nes-dma182/release02/NES182-SMB3-DMA-VIDEO.zip SHA beedfca4fb0033b8f973f6128499525a2c463e37c9dee2cc3579d434682c928e. FW5c6e70ea05a1e1969b6eb7715109abc1073d4da27cda619c04b6feaa6eb6b59d. FPGA6cb2235de30a12f8dbae084beb56c3d1f58efb14ed7039ef6a298b39504c5d50(181동일). ROM/메뉴/164복원 exact. ROM loader/observer/STOP은 이전8B경로라 수분 로딩 단축판 아님.
+
+NEXT 실기 NES GAME 182.nh1 → SMB3 숫자1타일+A →20~30초 영상/소리/메뉴/nes-progress-182.txt+nes-game-last-182.txt. ready 뒤6000ticks 자동복귀 유지; 90초 지나도 복귀없으면 전원끄고 남은로그 확인. 동일181/044복원 재시험 불필요. 아직 실기/FPS 승인 없음. 181136ACK/60.06s 및 receive28.38/build7.74/seal23.71초와 비교하되 ACK율을 정확한FPS라 부르지 않는다.
+
+DMA가 개선되더라도 raw7egress모델22.154ms >16.7ms는 별도 해결 필요. 다음 실제병목에 따라 유효payload/ACKpoll, 목적bank 기준세대가 확인된 section/CHR차등, capture/MCU/bank수명 중첩 순서. 1813/1815압축 재구현/새버퍼saveSRAM/guard제거 금지. FPGA lease는exportCOMMIT, MCU workspace는displayACK까지 유지하는 차이 보존. fetch01/04재동기화 OPEN. AV60fps→longplay/error-resetlogs→heldinput, MMC4/5/state/mute/frameskip 계획 유지.
+
+---
+
 # NES181 — 실기 첫 레벨 표시 복구 확인, 약60fps는 미달 (최신)
 
 [결과](../../docs/nes-game181-hardware01.ko.md) · [기계판독](../../analysis/game181-hardware01-verification.json), private probes/nes-game181-hardware01/progress.json. 이전완료archive수정금지. 이번에는결과만기록/새FW·FIT·ZIP없음.
