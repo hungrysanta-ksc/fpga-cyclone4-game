@@ -1,3 +1,23 @@
+# NES181 — 팔레트 논리 감소, 최종 배선 실패; 다음은 CDC 계약 점검
+
+NES181 팔레트 선택 회로를 줄여 초기 배치는 통과했지만, 배선/자동 재시도에서965 LAB가 필요해 최종 FIT는 실패했다. 실패 보고는14,961 LE·38 M9K·배선 불가79신호(67 OAM)·공유 충돌75개다. 클록 간 hold 보정 합계605.4ns는 여러 신호의 지연 합이며 slack이 아니다. 타이밍·새 설치 패키지는 승인하지 않았다.
+
+- Latest181 PALETTE: PR113 OPEN samebranch. Palette181map01/test01/join01/bits01 functionalPASS; initialplacementPASS but routing/automaticretryFAIL965/963LAB,partial14961LE38M9K;NO STA/IO/ASM/ZIP/adoption. Fixed6x32selectors: raster587->503combinational,3287929cycles allrasteroutputs/384copies equal;14cases3328pixels9624baselinewords43923cells+actualboardjoin512pixels/CHR960/fill8192/5753stalls/1COMMIT PASS. Walking192bits+0/1:194patterns18624checks/2banks/thirdrejectPASS. Rankcompare candidateFAIL967LAB;doNOTcombine. Unrouted79signals/67OAM,75resourceconflicts;holdadded605.4ns SUM notslack,chieflyPLL->nes. NEXT rootclock/CDC protocol+boundedpayload/reset constraint audit Standard25.1 BEFOREmoretinyFIT;no blanketcut/hold-off/clockrelax. SamePLL/sameclockchecks remain. ReuseARM1032margin/client4096 unchanged. Keep180/GBC164/saveSRAM;ReadRANK181contract/HANDOFF/probes/nes-rank181/progress.json;archivesimmutable.
+
+팔레트 후보는 분석 기준으로 보존하되 채택하지 않는다. 우선 CLKIN→PLL 두 클록과 SNES_SYSCLK의 관계, 각 CDC의 request/ACK·held payload·첫 동기화 FF·리셋 경계를 실제 소스/보고서로 전수 분류한다. Standard25.1에서 동기화 제어와 held bus의 최소/최대 지연·데이터 안정/ACK 계약을 명시하고 예외 우선순위/적용 개수/누락을 검사한다. blanket clock cut/hold-off/클록완화/seed반복 금지; 같은 PLL·같은클록 검사를 유지한다. 필요시 OAM 집중 혼잡을 줄이는 저장/조회 구조를 검토하되 기존165 OAM 결과를 먼저 재사용한다. 바뀐 경계만 테스트 후 한 번의 정당화된 FIT, 실제클록/조건부IO를 통과하면 paired ARM/client로 SMB3 숫자1→A. raw53ms/max7vblank+final·60fps는별도미완료. AV→longplay/resetlogs→heldinput;180/GBC164/saveSRAM/archive보존.
+
+최신 분석 후보 생성기는 tools/nes_palette181.py. baseline은동결된nes-board181/evidence/map03;rank181변경을포함하지않는다.68입력중raster181만변경. 최초placementPASS를FITPASS로오인하지말것. 최종FIT965/963/79신호배선불가이고 STA/IO/ASM은실행하지않았다. 표준보고서의hold지연398.9+151.3+37.8+17.4=605.4ns는누적삽입량이며최악slack이나실기지연이아니다.
+
+SDC는board8/nes외부root와derive_pll만정의하며비동기관계/최소지연선언이없다. 실제회로PLL입력은CLKIN,nes는SNES_SYSCLK이다. native_prepared held->received,firstsync,ROMreply,pad,audio,reset이hold목록에있다. 이는제약감사를정당화하지만모든경로가안전하다는증거는아니다. 클록간통째falsepath/hold최적화끄기로FIT통과를만들지말것. Standard문서/설치된도움말에서명령지원/우선순위를확인하고안정데이터기간과요청/ACK/취소/리셋증명을묶을것. OAM67/79는혼잡위치이며유일원인확정아님.
+
+paired ARM fw105f819f/199604B/static26564/RUN37320/IRQ508/margin1032와client3768/3776·ROM4096은해시재사용,새빌드아님. 기존39소스핀/13054raw/180MCU1413·FPGA62/ZIP/GBC보존PASS. 원시근거probes/nes-rank181/evidence;record02만실행,record01/timing01은실행하지않은초안이다. 모든FIT/FLOAT종료.
+
+[구현·판정·출처](../../docs/nes-rank181-contract.ko.md) · [검증](../../analysis/rank181-verification.json)
+
+이하 과거 기록.
+
+---
+
 # NES181 — 보드·전체 ARM 통합 완료, FPGA 2 LAB 초과
 
 NES181의 실제 보드 color/emphasis·수집기·전송기와 paired MCU/SNES를 격리 통합했다. 전체 ARM RUN/IRQ 검사 여유1,032바이트와 보드 배선 결합을 통과했다. 공유 읽기로 FPGA 필요 LAB971→965(한도963), LE148개·M9K1개를 줄였지만 FIT는 실패했다. 실기 패키지·타이밍·60fps 승인은 아직 없다.
