@@ -1,3 +1,17 @@
+# NES182 — DMA 실기 개선 확인, 약60fps 미달 (최신)
+
+[결과](../../docs/nes-game182-hardware01.ko.md) · [검증](../../analysis/game182-hardware01-verification.json). PR114 같은 branch에 결과만 기록. private probes/nes-game182-hardware01/progress.json; 완료자료 수정 금지. 새FW/FIT/ZIP 없음.
+
+사용자 약간 개선됐으나 여전히 끊김. 영상/이번음성/육안메뉴 확인은 미제공. 로그 DISPLAY60070ms,171표시ACK(181136),평균2.847완료/s·351.3ms(+25.7%). 정확한game/CRT FPS 또는 동일장면 통제DMA효과가 아님. BEGIN172/END171/COMMIT171/ABORT0,last236/59.97s. ROM/verify/first/STOP/sink/video0,deadline1. 다음237 수신의POP에서receiver24; 원인1이먼저보존돼 종료부차실패로판단, rawPOP응답없어 CRC/DMA고장단정금지. STOP/base/menu준비296230ms완료.
+
+receive28.52/build+CHR9.25/seal+section21.81초,완료당166.8/54.1/127.5ms. 181누적28.38/7.74/23.71와완료수달라단순비교주의. 280177transactions/7351325clockedB(181137469/4811300),약43.0KB/완료는poll포함,필수payload아님. 순수wire하한22.404초,observer직접SPI별도. DMA가빈poll도빨라지게했을가능성있으나 분류카운터없어 확정불가. 16.7ms에여전히약21배차이인전체평균; 한단계최적화로60fps보장불가.
+
+마지막16episode는8reject8recover,모두224rows/rastercompact0. fetch04x3/01x2/07x1/20x1/오류0mask00x1;07은01|02|04,20은endframe시pair_pending. 전체빈도/장면시각/위치없고patcherrors는observer범위밖. 보호조건제거금지.
+
+NEXT DMA를후속기준으로유지하고 실제경로에서유효payload/status/ACKpoll을분리한뒤 작은packet집계·목적bank기준세대가검증된차등전송·capture/MCU/bank수명겹침을16.7ms예산으로설계. 기존1813/1815압축중복구현금지. 더빠른poll/무근거SPI증속/동일182-044재시험/무변경FIT 불필요. AV60fps→장기플레이·오류리셋로그→입력유지. saveSRAM/GBC164/181기준판/완료archives/MMC4·5/state/mute/frameskip계획유지.
+
+---
+
 # NES182 — RUN 화면 전송 DMA 시험판 준비 (최신)
 
 PR113 merged3453c05, 새 branch codex/nes-video-throughput-182. [계약](../../docs/nes-dma182-contract.ko.md) · [실기 안내](../../docs/nes-game182-ready.ko.md) · [검증](../../analysis/dma182-verification.json). private probes/nes-dma182/progress.json. 완료 archive/record/audit 수정 금지.
