@@ -1,3 +1,19 @@
+# NES194 타일 직접 DMA→기존 표시 경로 (최신)
+
+[계약·주소·검증 범위](../../docs/nes-bulk194-contract.ko.md) · [결과](../../analysis/bulk194-verification.json). PR117 같은branch. **배포186 유지, 새 실기판 없음.**
+
+실제65816 opcode7은20B 제어packet(token4,expanded<=2048)을 받아 ready/kind/generation/offset/token/length+기존section/순서/직렬번호를 검사한다.400800의immutabletile을후보WRAM7F로DMA한후STOP/padservice,consume604c..6050,stagingACK. 모든section을완료한SEAL1941만기존VRAM/CGRAM/OAM/HDMA/최종displayACK로간다. consume/ENDsealed/최종표시를혼동하지말것. palette/raw/지도는기존경로다.193→194controlRTL과실제65816fixture는별도시험이며직접cosim/productioncontroller/livegame은아님.
+
+SELECTbuild03(ROM=02)/rtl03/snes05+06+07/evidence02. Carchived7합성장면428288pixels=186reference,15chunks4512B/최대DMA2048. unusedBGzero추가로4096Bsection2chunks를시험했을뿐스크롤부하자료아님.11개잘못된descriptor/명령/STOP거부에서이전화면/소유권보존. 실제193생산기+194control+188aperture+8KiBROM버스2134checks,3consume/4reject;4KiB기본bus33024주소배포동일. STOPpausedhost/freshtoken/부분write/oldtoken경계. SNESclient는WRAM/PPU/ACK를직접실행,fixture가대신쓰지않음. 기존SPCinit/pad/최대64byteRLEservice유지.2048B DMA동안service없고직후호출,wholedeadline/audio실기승인아님.
+
+body3999B가3776보다223B크므로8KiB후보를명시선택해기능확인. build01실패보존;build03은metadataend1246정정만으로ROMbytes02와동일. PROGRAM_BYTES기본4096그대로/8192명시후보. 기존4KiB보드에새image배포금지.193부분회계47+ROM4=51/56M9K는미합성/추가cache/제어LAB전체미승인. 다음엔초기화/공통수신코드재사용vs8KiB전체비용을검토하고결정해야함. tinyFIT/seedloop로해결하려하지말것.
+
+NEXT productionplancodec/CDC와epoch생성/frame-startlatch,MCU의op7발행/section장벽,boardmux/commonSTOP/최종ACK수명통합. 이번op7은시험도구가과거C출력을재포장했고productionC가발행하지않는다. 생성tile→실제SNES연속최소경계+전체16.67ms/자원/IO성립후짝패키지실기SCROLL. Usercriterion필수:tile1+A→level확인→RIGHT+B유지/Apress-release반복. 같은generation원본/변환/전송/고유표시간격측정;collectedruns비어있음/실측FPS·감소율없음. 정지/반복fixture나ACK합계로대체금지.186/GBC164/saveSRAM/기존9archives불변. AV60fps→장기play/resetlog→입력유지순서.
+
+실행실패보존:snes01권한/snes02개발번들DLL/snes03상대ROM경로/snes04UnicodeLua경로/rtl01UnicodeDB;ASCII임시경로+기존Mesen번들로완료. rtl02중간제어통과;rtl03기본4K비교추가최종. evidence01sandbox TEMP경로불일치/빈폴더,02최종. 완료기록수정금지.
+
+---
+
 # NES193 타일 직접 읽기창 전송 / 스크롤 측정 필수 (최신)
 
 [계약과 다음 연결](../../docs/nes-bulk193-contract.ko.md) · [검증](../../analysis/bulk193-verification.json) · [실제 스크롤 측정 계획](../../analysis/scroll193-measurement-plan.json). PR117 OPEN 같은 branch. 배포186 유지/새 실기판 없음.
