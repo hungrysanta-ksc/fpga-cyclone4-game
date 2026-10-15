@@ -9,8 +9,10 @@ from test_nes_client181 import expected
 def main():
  p=argparse.ArgumentParser()
  for n in ['out','arm','fixtures','prior','gcc','mesen']:p.add_argument('--'+n,type=Path,required=True)
+ p.add_argument('--client',type=Path,help='Explicit candidate SNES client; defaults to the archived prior client')
  a=p.parse_args()
- for n in vars(a):setattr(a,n,getattr(a,n).resolve())
+ for n in vars(a):
+  if getattr(a,n) is not None:setattr(a,n,getattr(a,n).resolve())
  a.out.mkdir(parents=True,exist_ok=False);pins={}
  for n in ['nes_native_sink165.c','nes_native_sink165.h','nes_native_video165.h','nes_native165.h','nes_sink_trace168.c','nes_sink_trace168.h','nes_sink_window184.c','nes_sink_window184.h']:
   shutil.copyfile(a.arm/n,a.out/n);pins[n]=sha(a.arm/n)
@@ -34,7 +36,7 @@ def main():
  with (a.out/'gcc.log').open('wb') as f:
   q=subprocess.run([str(a.gcc),'-std=c11','-Wall','-Wextra','-Werror','-O2','host.c','nes_native_sink165.c','nes_sink_trace168.c','nes_sink_window184.c','-o','host.exe'],cwd=a.out,env=env,stdout=f,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW)
  assert q.returncode==0,(a.out/'gcc.log').read_text(errors='replace')
- shutil.copytree(a.prior/'client',a.out/'client');cases=[]
+ shutil.copytree(a.client or a.prior/'client',a.out/'client');cases=[]
  lua=(a.prior/'normal/capture.lua').read_text().split('\n',2)[2]
  for mode in ['normal','stop_copy','stop_long']:
   d=a.out/mode;d.mkdir();script=lua

@@ -1,3 +1,17 @@
+# NES184 실기와 입력 수정 후보 (최신)
+
+[실기 결과](../../docs/nes-game184-hardware01.ko.md) · [입력 후보](../../docs/nes-pad185-contract.ko.md) · [실기 JSON](../../analysis/game184-hardware01-verification.json) · [후보 검증](../../analysis/pad185-verification.json). PR115 OPEN 같은 branch. private probes/nes-game184-hardware01 및 nes-pad185. 기존184 배포판/완료archive 수정 없음.
+
+183표시ACK/60.06초,183시험173 대비 평균+5.78%이나 다른 장면/입력의 단회 비교. 약3.047완료/s이며60fps아님. 사용자 확실한 개선, 첫레벨은 오프닝보다 느림. 영상 장면 진행과64초 파일메뉴 확인. receive26.87/build7.22/seal25.53초. BEGIN184/END-COMMIT183/ABORT0,lastgen278/59.93초. 큐9051sent=retired/error0/flags2/ACK1. 기한1 뒤 receiver21은 부차실패, ROM/sink/video0,menuPREP296130ms.
+
+입력 사용자 의심을 기록한 뒤 코드에서 VBlank진입과auto-read시작 사이 race를 찾음. 실제184 SNES 코드/실제Mesen autopoll,240fields 네 입력 조합 유지: 안정186표본 중78오류. pad185 후보는186/186정상. 활성구간·nonbusy에서16bit스냅샷→상태재검사→6002/3게시; 이전level유지,debounce/edge억제없음. body3643→3659B(3776한도),static추가0/stack+2B. local/upload 구간바이트동일,프로토콜1815. actualC/window+65816 normal7화면219ACK,STOPcopy61/long27ACK,550656픽셀PASS. 이 결합은 JOY값mock; 실제autopoll검사는 별도idle mailbox이며 FPGApadCDC/실기 승인아님.
+
+old01sandbox실패/old02한글Lua출력경로실패/old03controller미설정allzero fixture는 제외. 선택old04/new01/coupled01,초기실패도보존. 모든 완료manifest immutable. 새FW/FIT/ASM/ZIP 없음. 184ZIP에 입력수정이 있다고 안내금지.
+
+NEXT 60fps우선: 목적bank 세대와 미변경byte상속을보장하는payload차등·직렬수명겹침. existingRLE/CHR240·224batch/localdiff/staticrawmap 중복구현금지. raw7낙관wire18.667ms>16.7ms, MCU RUN여유1232B라전체oldframe추가불가. consumed()는MCU상태만바꿈/FPGA시작명령아님. 기준불일치/reset/raw전환재구축·완성프레임SEAL유지. pad후보는다음성능시험판에결합/별도pad-only·동일184/044/불변FIT테스트요청금지. AV60fps→longplay/error-resetlogs→실기heldinput;GBC164/saveSRAM/MMC4/5/state/mute/frameskip유지.
+
+---
+
 # NES184 — 결합·타이밍 검사 완료, 실기 시험 대기 (최신)
 
 [계약](../../docs/nes-window184-coupled-contract.ko.md) · [실기 안내](../../docs/nes-game184-ready.ko.md) · [검증](../../analysis/window184-coupled-verification.json). PR115 같은 branch. SELECT private probes/nes-window184-coupled compact-map01/route02/compact-test01/test03/replay02/status01/arm01/check02/report01/asm01/release01. 완료archive/record 수정 금지.
