@@ -1,3 +1,19 @@
+# NES189 실제 출력기→CDC→읽기창 연결 후보 (최신)
+
+[계약과 다음 구현](../../docs/nes-source189-contract.ko.md) · [검증](../../analysis/source189-verification.json). PR117 OPEN 같은 branch. **186 배포 유지/새 실기판 없음.**
+
+실제 배포 exporter181/fill165/양방향 mailbox165를 새 host serializer189와188 aperture에 연결. source에서 직접 공급하며 MCU SPI 재채움 없음. 내용은1813 compact/CHR 레코드이며 SNES-ready section은 아님. synthetic sealed query/PSRAM 응답 + raw SNES bus 소비자 시험으로, 실제 PPU/ROM/CPU-DMA/board mux/물리 CDC가 연결된 것이 아님.
+
+SELECT test02/regression01/evidence01. 4사례 patch0 763B/2chunks, maxgroups+7raw3132B/3, rawfault924B/1 ABORT, CHR512 49627B/26 COMMIT. 정상 두 사례 과거actualSPI payload/records와 일치. 512타일에서 두 슬롯 full host대기157143/source대기64761클록 발생 후 byteexact 재개. 잘못된consume/잘못된PREPAREDgen에서 수명 유지. END 뒤 올바른PREPARED만COMMIT 허용. consume는buffer해제,PREPARED는원본소유권,displayACK는화면완료: 혼동금지. ABORT앞부분은미완성세대로폐기해야 하며 새실제소비기는아직없음.
+
+188기본exactseal유지,189만1..2048실제작성길이shortseal. 공통reset/STOP/active취소 연결,tokenFFFFFFFF에서fault/무한랩없음;freshsessionseed발행기는미연결. 이번결합에서STOP모든위상전수시험아님. 기존188회귀2위상각28049B/196590검사PASS(반복owner포함),ROM/control/packet보존. 4096BRAM재사용/추가payloadRAM없음;serializer/mailbox FF/LAB미합성,42+4M9K회계추정뿐. 새FW/FIT/STA/ASM/ZIP없음. test01초기3사례도보존. 이전1862799/실기11/1878/188142파일해시불변.
+
+NEXT 중요: CHR1byte가kind6에서6B로부풀어512tiles=49152B(총49627B). 이 형식을65816에단순이식해직접읽기만구현하면60fps의변환/전송비용이남음. batchedCHR/안정된패턴내용세대/SNES-ready변환위치를작은snapshot/streaming과함께자원·포트·16.67ms전체예산으로결정. 그런다음actualSNES bulkWRAM/descriptor/sectionvalidation/VRAMbank/finaldisplayACK/음성입력STOP 연결. 현재창400800..400fff는후보. MCU가SPI로같은bytes재공급하는것을bypass라하지말것.
+
+대표스크롤자료는현재없음: 사용자절차월드맵숫자1+A→레벨상태확인→RIGHT+B유지+Apress/release반복. 이번미실행. 같은generation source/변환결과로측정한후최소실기,일반FIFO/긴불변boot/FIT/186-044반복금지. MMC4/5·CHR-RAM/state/mute/frameskip/세이브SRAM/GBC164보존. AV약60fps→장기play/오류·reset로그→입력품질. 아래188/187의미연결상태는당시기록이며현재완료범위는이절과계약참조.
+
+---
+
 # NES188 카트리지 읽기창 후보 — 다음 구현 인계 (최신)
 
 [계약/한계/다음 작업](../../docs/nes-bulk188-contract.ko.md) · [검증](../../analysis/bulk188-verification.json). PR116 머지7439179 이후 codex/nes-bulk-aperture-188. **새 실기판 없음/186 배포 유지.**

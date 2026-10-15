@@ -2,7 +2,7 @@
 // Candidate, NOT wired into the deployed board. Two immutable 2KiB chunks.
 // All producer/control ports are in clk domain; the raw SNES read bus is sampled.
 // Producer must use a fresh token across STOP/restart; this is not a display ACK.
-module nes_bulk_aperture188(
+module nes_bulk_aperture188 #(parameter ALLOW_SHORT_SEAL=0)(
  input wire clk, reset, active, stop,
  input wire begin_valid, input wire [11:0] begin_length,
  input wire [31:0] begin_token, output wire begin_ready,
@@ -54,8 +54,8 @@ module nes_bulk_aperture188(
    end
    if(cancel)begin filling<=0;count<=0;end
    else if(seal)begin
-    if(filling&&count==wanted)begin
-     lengths[writer]<=wanted;tokens[writer]<=pending_token;
+    if(filling&&count!=0&&(count==wanted||(ALLOW_SHORT_SEAL&&count<wanted)))begin
+     lengths[writer]<=count;tokens[writer]<=pending_token;
      sealed[writer]<=1;writer<=!writer;filling<=0;count<=0;
     end else begin producer_error<=1;filling<=0;count<=0;end
    end else if(begin_valid&&begin_ready)begin
