@@ -1,3 +1,19 @@
+# NES181 — 렌더링 대조 통과, OAM M9K16→4, CHECK 타이밍 남음 (최신)
+
+SELECT oamports181 map02/primitive01/render02/route01/check01/reproduce01. [계약](../../docs/nes-oamports181-contract.ko.md), [검증 색인](../../analysis/oamports181-verification.json), private probes/nes-oamports181/progress.json. 완료archive/record/audit 수정금지.
+
+실제 CPU/PPU/MMC3 자체ROM으로 PPUMASK off/on/OAMADDR/CPU쓰기/행복사를 수행했다. render01은 이전 OAMREAD를 기준과 대조; render02는 primitive32bit와 같은기준(소스/bench/ROM/trace해시확인 재사용)을 대조. 920545반주기입력/180740render/153copy/512CPUwrite/513maskwrite, CPU/PPU/최종OAM byteexact. 230136PPU표본262scanline, known30colors/같은8unknown(line40dot39..46) 있으므로 전체픽셀정확성 주장은 금지. idealmemory/NTSC자체ROM이고SMB3실기아님. Altera모델실제OAMEval216362cycles/2426copy/3111CPU/10473SS/2012충돌+wrongclocknegativePASS. vendor모델은private에만 보존한다.
+
+map01 packed배열선언만으로는16byteRAM/14997LE6499FF그대로, FIT안함. map02 명시CycloneIV simpledualport32x32 byteena4/byte8/posedge쓰기/negedge주소캡처/unregistered출력. 기존byteowner/runtime우선·다른주소양쓰기보존, 내부5readport모두실제RAM. 비동기관찰backing과미사용SS/extra/state현재보드에서prune;미래기능시자원은별도. M9K16→4/전체54→42(14free), 전체FIT13247LE924LAB6499FF. 8M9K목표달성하지만LAB39free/ARM1384여유로다른계획치미달;목표치만으로MMC3실기막지말것.
+
+단일FIT후원본426파일보존하고route01사본에서STA. OAM2220경로3corner:입력+3.864/출력+11.048/hold+.188,반주기22.727ns. 전체동기/관련PLLnominalsetup-.240/hold+.132,강화-.692로FAIL/NOTadopted. 관련PLL+1.051. 기존CDC486/reply24/조건부IO PASS(PSRAM70ns+6.047,SNES69.792,SPI159.893,nativepayloadnegative reset0). 전체asyncreset/CDC/MTBF/전기적IO승인아님,postfitSDF검사아님.
+
+NEXT loader CHECK response_address7→error_response→checked_data~0→check_enable/verified6LUT/배선59%/data6.111ns/clock5.952ns 해결. 실제nes_rom_spi.sv command_retire_ok/error_response/fail우선순위와 이전counterpulse/commitstage/rawstage 계약을읽고,응답주소/tag/data/valid 묶음을미리검증하거나승인단계를나눌때 hardfault/wrongtag/STOP/reset/같은edgecommand/status/MCU2us를먼저증명한다. RUN/verified가오류보다먼저승인되는변경금지. 해결된OAM을재작업하거나tiny식/seedFIT반복금지. 큰계약변경에boundedloader+실제SPI공동검사후FIT. nominal/관련PLL/OAM반주기/기존CDC/IO 승인후 pairedARM1384+SNES1815→SMB3숫자1타일A. 압축1813/1815·클럭·핀·SDC unchanged/69입력중68유지.
+
+raw7최소22.154ms모델/단일capturelease/실제60fps미완료. 이번FW/ASM/ZIP없음.180/GBC164/saveSRAM/완료archive보존,AV→longplay/resetlogs→heldinput유지.
+
+---
+
 # NES181 — OAM RAM 전환으로 전체 FIT 통과, 실기 승인 전 (최신)
 
 SELECT oamread181 map03/test04/core01/check01/reproduce01. [계약과 다음 조건](../../docs/nes-oamread181-contract.ko.md), [원시 결과 색인](../../analysis/oamread181-verification.json), private probes/nes-oamread181/progress.json을 읽는다. 완료 evidence/manifest/record는 수정하지 않는다.
