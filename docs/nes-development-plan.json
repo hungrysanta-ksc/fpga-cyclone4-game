@@ -2,11 +2,11 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-15",
-  "technical_candidate": "NES181 experimental local reply capture; reader boundary passed, board/FIT pending",
+  "technical_candidate": "NES181 local ROM reply joined and routed; congestion reduced, related PLL activation timing still fails",
   "implementation_candidate": "NES-P2-RDY-014",
   "authoritative_document": "cores/nes/HANDOFF.ko.md",
-  "assessment": "공식 배선 최적화 자료와 현재 보고서를 대조해 ROM 응답을 수신 클록에서 받는 RTL 후보를 추가했다. reader 경계19경우(456읽기/714중단·리셋/19클록정지),9.904ns지연 및 잘못된 캡처 대조군을 확인했다. 응답 추가클록0은 단독 비교 범위이며 보드 결합·새FIT·실기 승인은 아직 없다.",
-  "next_action": "공식 배선 지침과 실제68.8%평균/91.2%수직peak를 반영. routing181 reply02/test04는ACK와 병렬 NES8bit캡처로 응답 추가클록0의 reader경계만PASS. NEXT 실제arbiter→service→CPU/PPU/fill 결합(동시다음요청/abort/reset/7edge)과8bit CDC물리지연·예외범위;같은PLL RUN/STOP/ACKenable local화도검토. 그후정당한FIT/전체실제timing/IO. 분석baseline cdc181map02(-3.379/-0.740),배포180유지. 혼잡지속시OAM M9K포트/CE시간표 재설계(기존onehot/rowwriter반복금지). raw전송/60fps는별도;saveSRAM/GBC164/archive보존.",
+  "assessment": "ROM 응답 로컬8비트를 실제 service/arbiter/FIFO/reader에 결합했다. 70ns 모델16위상과9.904ns 데이터 지연에서 기존 응답/샘플과 같았으며, 새8개 경계만 제한했다. FIT15048LE/963LAB/38M9K, 배선 평균68.8→61.4%·수직peak91.2→75.8%로 개선됐다. 실제setup−1.408ns/hold+0.147ns로 전체타이밍은 아직 실패이며 새SD패키지는 없다.",
+  "next_action": "NEXT host-domain RUN/STOP/active→sink ACK enable 구조 개선. 최악loader.release_reset1→ack_work42 같은PLL168→84MHz −1.408ns(data7.177),같은클럭CHECK−.088도남음. 같은PLL falsepath 금지;host활성 준비와raw STOP/reset/error즉시출력해제·pendingpacket/ACK폐기·재시작 세대소유권 계약 먼저,실제SPIendpoint+SNESbus bounded결합 후정당한FIT/전체timing/IO. 기존replyjoin181/map02를 분석기준으로 유지하되NOTadopted/배포180유지. seed/loader미세refit/180·044반복금지. 여유부족시OAM M9K포트시간표 구조검토. 실제SMB3 숫자1+A,화면지속/60fps→longplay→heldinput;saveSRAM/GBC164/archives보존.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -3003,7 +3003,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "공식 배선 최적화 자료와 현재 보고서를 대조해 ROM 응답을 수신 클록에서 받는 RTL 후보를 추가했다. reader 경계19경우(456읽기/714중단·리셋/19클록정지),9.904ns지연 및 잘못된 캡처 대조군을 확인했다. 응답 추가클록0은 단독 비교 범위이며 보드 결합·새FIT·실기 승인은 아직 없다.",
+  "summary": "ROM 응답 로컬8비트를 실제 service/arbiter/FIFO/reader에 결합했다. 70ns 모델16위상과9.904ns 데이터 지연에서 기존 응답/샘플과 같았으며, 새8개 경계만 제한했다. FIT15048LE/963LAB/38M9K, 배선 평균68.8→61.4%·수직peak91.2→75.8%로 개선됐다. 실제setup−1.408ns/hold+0.147ns로 전체타이밍은 아직 실패이며 새SD패키지는 없다.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3046,7 +3046,7 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-routing181-design.ko.md",
-  "latest_development_evidence": "analysis/routing181-verification.json",
+  "latest_review": "docs/nes-replyjoin181-contract.ko.md",
+  "latest_development_evidence": "analysis/replyjoin181-verification.json",
   "latest_hardware_evidence": "analysis/game180-hardware01-verification.json"
 }

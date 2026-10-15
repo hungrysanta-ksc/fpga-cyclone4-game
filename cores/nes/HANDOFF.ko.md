@@ -1,3 +1,11 @@
+# NES181 로컬 ROM 응답 보드 결합 — 최신
+
+ROM 응답 로컬8비트를 실제 service/arbiter/FIFO/reader에 결합했다. 70ns 모델16위상과9.904ns 데이터 지연에서 기존 응답/샘플과 같았으며, 새8개 경계만 제한했다. FIT15048LE/963LAB/38M9K, 배선 평균68.8→61.4%·수직peak91.2→75.8%로 개선됐다. 실제setup−1.408ns/hold+0.147ns로 전체타이밍은 아직 실패이며 새SD패키지는 없다.
+
+NEXT host-domain RUN/STOP/active→sink ACK enable 구조 개선. 최악loader.release_reset1→ack_work42 같은PLL168→84MHz −1.408ns(data7.177),같은클럭CHECK−.088도남음. 같은PLL falsepath 금지;host활성 준비와raw STOP/reset/error즉시출력해제·pendingpacket/ACK폐기·재시작 세대소유권 계약 먼저,실제SPIendpoint+SNESbus bounded결합 후정당한FIT/전체timing/IO. 기존replyjoin181/map02를 분석기준으로 유지하되NOTadopted/배포180유지. seed/loader미세refit/180·044반복금지. 여유부족시OAM M9K포트시간표 구조검토. 실제SMB3 숫자1+A,화면지속/60fps→longplay→heldinput;saveSRAM/GBC164/archives보존.
+
+[계약·실측 결과](../../docs/nes-replyjoin181-contract.ko.md) · [검증 데이터](../../analysis/replyjoin181-verification.json)
+
 # NES181 배선 연구와 수신 캡처 후보 — 최신
 
 공식 배선 최적화 자료와 현재 보고서를 대조해 ROM 응답을 수신 클록에서 받는 RTL 후보를 추가했다. reader 경계19경우(456읽기/714중단·리셋/19클록정지),9.904ns지연 및 잘못된 캡처 대조군을 확인했다. 응답 추가클록0은 단독 비교 범위이며 보드 결합·새FIT·실기 승인은 아직 없다.
