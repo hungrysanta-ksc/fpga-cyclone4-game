@@ -1,0 +1,200 @@
+{
+  "kind": "NES181 routing research and experimental local reply capture",
+  "pr": 113,
+  "baseline": {
+    "evidence": "analysis/cdc181-verification.json",
+    "sha256": "eca5369c511a491099b99670cffbe748e538a2a6d252c14ce70d60d4adabe9a9",
+    "fit_pass": true,
+    "actual_timing_pass": false,
+    "setup_ns": -3.379,
+    "related_pll_setup_ns": -0.74,
+    "le": 15072,
+    "labs": 963,
+    "m9k_used": 38,
+    "m9k_available": 56
+  },
+  "routing": {
+    "average_total_h_v": [
+      68.8,
+      67.8,
+      70.2
+    ],
+    "peak_total_h_v": [
+      86.2,
+      87.2,
+      91.2
+    ],
+    "non_global_fanout": 703,
+    "oam_le": 4315,
+    "oam_registers": 1942,
+    "oam_m9k": 0,
+    "worst_source_location": "FF_X22_Y27_N9",
+    "worst_destination_location": "FF_X21_Y26_N29",
+    "data_route_bbox": {
+      "x": [
+        6,
+        23
+      ],
+      "y": [
+        17,
+        28
+      ]
+    },
+    "route_elements": 26,
+    "routing_delay_ns": 8.526,
+    "routing_percent": 92,
+    "logic_levels": 0,
+    "direct_fanout": 15,
+    "scope": "Existing cdc181 FIT, not new candidate placement. Coordinates are not physical length. Aggregate utilization, not a per-cell congestion map."
+  },
+  "neighbors": {
+    "rows": 306,
+    "summary": {
+      "ack-from/setup": {
+        "rows": 1,
+        "negative": 0,
+        "minimum_slack": 10.141
+      },
+      "ack-from/hold": {
+        "rows": 1,
+        "negative": 0,
+        "minimum_slack": 1.301
+      },
+      "ack-to/setup": {
+        "rows": 17,
+        "negative": 7,
+        "minimum_slack": -8.389
+      },
+      "ack-to/hold": {
+        "rows": 17,
+        "negative": 0,
+        "minimum_slack": 3.185
+      },
+      "failed-from/setup": {
+        "rows": 50,
+        "negative": 50,
+        "minimum_slack": -6.134
+      },
+      "failed-from/hold": {
+        "rows": 50,
+        "negative": 0,
+        "minimum_slack": 0.456
+      },
+      "failed-to/setup": {
+        "rows": 20,
+        "negative": 0,
+        "minimum_slack": 0.856
+      },
+      "failed-to/hold": {
+        "rows": 20,
+        "negative": 0,
+        "minimum_slack": 0.456
+      },
+      "offset-from/setup": {
+        "rows": 5,
+        "negative": 0,
+        "minimum_slack": 0.985
+      },
+      "offset-from/hold": {
+        "rows": 5,
+        "negative": 0,
+        "minimum_slack": 3.422
+      },
+      "offset-to/setup": {
+        "rows": 11,
+        "negative": 1,
+        "minimum_slack": -3.379
+      },
+      "offset-to/hold": {
+        "rows": 11,
+        "negative": 0,
+        "minimum_slack": 3.427
+      },
+      "shift-from/setup": {
+        "rows": 45,
+        "negative": 1,
+        "minimum_slack": -3.379
+      },
+      "shift-from/hold": {
+        "rows": 45,
+        "negative": 0,
+        "minimum_slack": 0.733
+      },
+      "shift-to/setup": {
+        "rows": 4,
+        "negative": 0,
+        "minimum_slack": 2.473
+      },
+      "shift-to/hold": {
+        "rows": 4,
+        "negative": 0,
+        "minimum_slack": 0.869
+      }
+    },
+    "scope": "One slow corner; up to50 setup/hold paths per endpoint/direction. Includes unresolved asynchronous lifecycle paths; NOT comparable to related-clock approval."
+  },
+  "selected_candidate": "reply02",
+  "selected_test": "test04",
+  "reader_test": {
+    "passed": true,
+    "baseline_sha256": "9b66c32071c7176eec55081c9e73737db1d97615ee0cedb88fcef6932aeffe12",
+    "candidate_sha256": "6870eb15955c7e1f7bc3510e7654a45c6f42c8723779a382496c0cb437be47c9",
+    "runs": {
+      "exact": {
+        "cases": 19,
+        "reads": 456,
+        "cancels": 714,
+        "stopped_resets": 19,
+        "checks": 48241
+      },
+      "delay9": {
+        "cases": 19,
+        "reads": 456,
+        "cancels": 714,
+        "stopped_resets": 19,
+        "checks": 48241
+      },
+      "late136": {
+        "rejected": true
+      },
+      "wrong_response_capture": {
+        "rejected": true
+      }
+    },
+    "extra_visible_response_cycles": 0,
+    "fit": false,
+    "whole_game": false,
+    "scope": "Actual reader regs/pins/ready/ACK cycle comparison; data compared only on qualified RUN replies. CHECK remains exact. Constant PSRAM model with lane changes; no metastability, physical IO, downstream arbiter/service/full game approval.",
+    "sources": {
+      "nes_reply181.py": "86a01ad7d59bb0a4a289f5d92f8603d033da5773e89875e93e30c6b03efb89d0",
+      "test_nes_reply181.py": "fd4a55b89945ab444434416df1f38be6126236b247f9b979d781bc230d1c375c",
+      "test_nes_directreader165.py": "4225322eaa5dca80a2d2192f68c8d91d0eace2fe62f566ed1acf6611ca397c52"
+    }
+  },
+  "public_sources": {
+    "tools/nes_routing181_neighbors.tcl": "78a8093903f32f41453b3d7d8d5cae4fd3d35a28967a7afecd52834a5e0b8b13",
+    "tools/nes_reply181.py": "86a01ad7d59bb0a4a289f5d92f8603d033da5773e89875e93e30c6b03efb89d0",
+    "tools/test_nes_reply181.py": "fd4a55b89945ab444434416df1f38be6126236b247f9b979d781bc230d1c375c"
+  },
+  "new_fit": false,
+  "board_integrated": false,
+  "cdc_constraints_integrated": false,
+  "adopted": false,
+  "new_package": false,
+  "hardware": false,
+  "fps60": false,
+  "failed_attempts": {
+    "reply01/test01": "CRLF expansion; source identity rejected before simulation",
+    "test02": "exact reader passed; delay wire declared after use, compile failed",
+    "test03": "exact reader passed; delayed simulation missing timescale, load failed"
+  },
+  "design_decision": "NES-domain byte capture parallel to ACK synchronizer; qualified reply edge unchanged. Integrate actual arbiter/service/CPU/PPU/fill and8-bit capture constraints before FIT; preserve7edge bound. Related PLL lifecycle/ACK enable remains timed. OAM synchronous-memory scheduling is next structural fallback, not old syntax variants.",
+  "preservation": {
+    "cdc181_source_pins_unchanged": true,
+    "prior_audit": "probes/nes-cdc181/audit01.json",
+    "prior_audit_sha256": "0d626933792f5c8d8e3df48a4d188640e341656e8163c301962236a1584ce000",
+    "deployed180_unchanged": true
+  },
+  "evidence_files": 168,
+  "manifest_sha256": "6ffb015597bc42e6f72fff8caeb44bcb6d1f70c463b74ea36ed6a8458667f341"
+}

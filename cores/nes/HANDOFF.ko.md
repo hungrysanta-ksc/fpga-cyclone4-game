@@ -1,3 +1,11 @@
+# NES181 배선 연구와 수신 캡처 후보 — 최신
+
+공식 배선 최적화 자료와 현재 보고서를 대조해 ROM 응답을 수신 클록에서 받는 RTL 후보를 추가했다. reader 경계19경우(456읽기/714중단·리셋/19클록정지),9.904ns지연 및 잘못된 캡처 대조군을 확인했다. 응답 추가클록0은 단독 비교 범위이며 보드 결합·새FIT·실기 승인은 아직 없다.
+
+공식 배선 지침과 실제68.8%평균/91.2%수직peak를 반영. routing181 reply02/test04는ACK와 병렬 NES8bit캡처로 응답 추가클록0의 reader경계만PASS. NEXT 실제arbiter→service→CPU/PPU/fill 결합(동시다음요청/abort/reset/7edge)과8bit CDC물리지연·예외범위;같은PLL RUN/STOP/ACKenable local화도검토. 그후정당한FIT/전체실제timing/IO. 분석baseline cdc181map02(-3.379/-0.740),배포180유지. 혼잡지속시OAM M9K포트/CE시간표 재설계(기존onehot/rowwriter반복금지). raw전송/60fps는별도;saveSRAM/GBC164/archive보존.
+
+[설계 근거·적용 범위](../../docs/nes-routing181-design.ko.md) · [검증](../../analysis/routing181-verification.json)
+
 # NES181 — 전체 배선 성공, 실제 타이밍은 실패
 
 NES181은 CDC 제약을 실제 전달 계약에 맞춰 수정해 전체 배치·배선에 성공했다(15,072LE/963LAB/38M9K). 하지만 실제 클록 setup −3.379ns, 같은 PLL memory→host −0.740ns로 타이밍은 실패했다. 새 데이터 경로·조건부 IO/리셋 검사는 통과했으나 설치 후보로 채택하지 않았고 새 ZIP은 없다.
