@@ -1,3 +1,21 @@
+# NES185 — 타일맵 재사용 후보 결합 검증 완료
+
+[계약과 다음 절차](../../docs/nes-map185-contract.ko.md) · [검증 JSON](../../analysis/map185-verification.json). PR115 merged `fef83c7`, 새 branch `codex/nes-map-inherit-185`. private `probes/nes-map185`, 선택 build04/test07/objects03/selected-coupled/evidence/replay02/evidence/pad01. 5585파일 manifest01 SHA `512b0e8b39b786972e366c9bacc7930ad70604fe6b0134d97ea89df32082807f`. 완료 파일/record/manifest는 수정하지 않는다.
+
+기존 MCU map을 제자리 비교하고 미변경64B는 마지막 표시 WRAM bank에서 복사한다. COPY6 base generation과 기존 serial/sequence/범위 검증, SEAL1851, 완성 이미지 최종ACK를 유지했다. 기존 CHR/VRAM 비교와 raw전환 upload는 생략하지 않는다. 전체 oldframe/FPGA RAM/save SRAM 추가 없음. pad185 활성 구간 스냅샷 수정 포함.
+
+실제C37검사(30계획 differential), actual65816 reference7/268ACK 대 inherit7/498ACK 화면 동일. badbase/alignment/size/section/expanded/token6종과 COPY 후 upload STOP에서 이전 화면 유지. 실제 C SPI·65816 ACK의 기존 compact RTL/버스 재생: 정상89492/STOP26912검사. actual autopoll 안정186표본 오입력0. 전체 게임/실기/60fps 승인이 아니다. 초기 STOP은 기존 quiet/noACK이며 이를 E4 ACK 보장으로 해석하지 않는다.
+
+보관 SMB3 frame12→15 map dirty1/64, 같은 frame15 전체3952B/22packet→재사용1214B/64packet. 합성7화면 map30688→14590B, 패킷126→356; 낙관 SPI 하한157.569→116.450ms/7화면이며 CPU/추가poll/FPGA→MCU/capture 제외. 패킷 수 증가를 숨기지 않는다. ARM 객체 video15888→15912/sink28→32, build256→248/seal144→152/step40. 전체 linked RUN·IRQ 검사는 아직 없다. SNES body3776/3776, compact4096이며 body 여유0.
+
+**다음 작업은 설치 가능한 짝패키지로 연결한다.** selected184 full ARM source에 build04를 결합하고185 identity, 전체 링크/RUN 콜백·IRQ·정적 RAM 검사를 한다. 기존184 배치/RTL은 그대로 두고 SNES MIF만 바꾸어 CDB/ASM·ROM/패키지 확인 후 SMB3 숫자1타일+A. RTL 동일하므로 새로운 FIT/seed 탐색은 필요하지 않다. 이번 후보를184ZIP에 포함된 것으로 안내하거나 객체만으로 설치 승인하지 않는다. 새FW/ASM/ZIP 없음. 별도pad-only/동일184/044 시험 불필요.
+
+build01 크기초과, test01 sandbox623, test02 warning, test03 badbase fixture 우연 일치, test05 실패후 fixture초기화 누락, objects01 경로/02 배열선언, coupled01 마지막 earlySTOP 대기, replay01 경로 실패는 보존. build03→04는 배열 인자 선언만 바뀌어 SNES·sink·window byte 동일; 결합 실행은 build03, 최종 C는 test07/build04. 완료 검사를 반복하는 대신 전체 runtime와 ROM-only 짝패키지에 집중한다. 이후 실제 성능에 따라 연속 재사용 묶음/CHR 차등/capture·전송·표시 겹침을 진행한다.
+
+GBC164/saveSRAM/기존184/완료archives 및 AV60fps→장기플레이/오류·reset로그→입력유지 우선순위, MMC4/5/state/mute/frameskip 확장 요구 보존.
+
+---
+
 # NES184 실기와 입력 수정 후보 (최신)
 
 [실기 결과](../../docs/nes-game184-hardware01.ko.md) · [입력 후보](../../docs/nes-pad185-contract.ko.md) · [실기 JSON](../../analysis/game184-hardware01-verification.json) · [후보 검증](../../analysis/pad185-verification.json). PR115 OPEN 같은 branch. private probes/nes-game184-hardware01 및 nes-pad185. 기존184 배포판/완료archive 수정 없음.

@@ -1,0 +1,704 @@
+{
+  "passed": true,
+  "scope": "Candidate checked map inheritance, not paired firmware/physical/60fps approval",
+  "baseline_merge": "fef83c723df7bf51b857add1bf96b9f8a3abf66b",
+  "selected": [
+    "build04",
+    "test07",
+    "objects03",
+    "selected-coupled",
+    "evidence/replay02",
+    "evidence/pad01"
+  ],
+  "client": {
+    "body_bytes": 3776,
+    "program_bytes": 4096,
+    "spc": {
+      "payload_bytes": 89,
+      "payload_address": 8265916,
+      "scratch_dp": 16,
+      "status_address": 28673,
+      "success": 169,
+      "expected_dsp_flg": 32,
+      "failures": {
+        "IPL": 225,
+        "START": 226,
+        "BYTE": 227,
+        "READY": 228,
+        "FLG": 229
+      },
+      "wait_iterations": 65535
+    },
+    "local": {
+      "entry": "local165_entry",
+      "code_bytes": 847,
+      "scratch": [
+        64,
+        111
+      ],
+      "command_bytes": 256,
+      "wrambank": 127
+    },
+    "upload": {
+      "entry": "upload165_entry",
+      "code_bytes": 257,
+      "large_update": "inactive VRAM, up to7 chunks then final palette/OAM/HDMA flip",
+      "active_slot": 4146,
+      "raw_chr_bytes": 2048,
+      "serviced_final_wait": true
+    },
+    "mailbox_bytes": 256,
+    "scope": "Exact in-place map comparison and checked previous-display inheritance.\n\nCOPY6 copies one aligned64-byte map block from the last displayed WRAM image.\nIts payload names the base generation. Strict monotonic session serial and\nthe terminal-on-error receiver make that base the preceding successful SEAL.\nNo second MCU frame, hash decision, VRAM skip or new FPGA allocation.\n",
+    "stages": {
+      "ROM_COPY": 1,
+      "COPY_MISMATCH": 225,
+      "WRAM_SPC": 2,
+      "READY": 3
+    },
+    "copy_verified_bytes": 3776,
+    "seal_bytes": 24,
+    "sink_version": "1851",
+    "bundle_bytes": 3418,
+    "metadata_end": 4678,
+    "raw_map_bytes": 4096,
+    "save_sram": false,
+    "seal_version": "1851",
+    "additional_frame_ram": 0,
+    "raw_steady": true,
+    "relaxation_passes": [
+      {
+        "body_bytes": 4045,
+        "short_jumps": 0
+      },
+      {
+        "body_bytes": 3790,
+        "short_jumps": 101
+      },
+      {
+        "body_bytes": 3776,
+        "short_jumps": 107
+      }
+    ],
+    "repeat_limit": 4096,
+    "service_bytes": 64,
+    "candidate": "map185",
+    "extra_persistent_ram": 2,
+    "extra_stack_bytes": 2,
+    "physical": false,
+    "hardware_package": false
+  },
+  "native": {
+    "passed": true,
+    "result": "PASS MAP185 checks=37 copies=191 map_packets=750 map_wire=123602 video=15912 sink=48\nMAPFILE index=1 dirty=64 copies=0 packets=22 wire=3954\nMAPFILE index=2 dirty=1 copies=63 packets=64 wire=1214\nMAPFILE index=3 dirty=0 copies=64 packets=64 wire=1152\n",
+    "pins": {
+      "nes_cf86_session094.h": "de31c213a2a555f6de50349fc1c2110d473d06beb06956bb23da3d0b15395cad",
+      "nes_checkpoint112.h": "f88f93012e6daed9eccd27ee2d003e4f9a21d5e3aac5174736fc1c1137ecf5c1",
+      "nes_css108.h": "ece5b45d6cd5868d87b55dae4556f10ef29ed2fa439a6a6b04f4d1e388de17e4",
+      "nes_diag_runtime.h": "b4a671e5406763853a8cab01c7b3a29f7aecafb35767027b70096f0e56a6382e",
+      "nes_h1_session.h": "9fe0e6388ff33df2645d00b1e0263f9fa6c3cfa2b087afd0fef0103fc77e48cc",
+      "nes_h1_stm32.h": "a85c56338f8389bb4215ea261fbb3dcf5084813dfaadeefc19395b3ffd6e03ac",
+      "nes_mcu_loader.h": "92b787182fef9df12294b68f889dc8db5a3856e71e32db68c3d6de7c0e454ab8",
+      "nes_menu076.h": "cdf50a7ba8bbc5c048f4beb109d9c9c62c258a5b6d74ff255f8bfe57a67123e2",
+      "nes_menu_diagnostic.h": "32ae4fd3cbc8414e093616672c7cd1dd86d09a0297fc1917a978fa3b3838f812",
+      "nes_menu_probe.h": "16936047d5a9bfb174386a006d5fe77f0a6bff0a1d0366504d43b242a79e5047",
+      "nes_menu_return.h": "4c3cc8054b30ca0e7ee3973b79713a9c12ba7fe3d29d4a87da4f19c2f2d09daf",
+      "nes_native165.c": "9d6e20367b88e82d857e9623ba98c145e61f234fdfc63e683274c2bd33998082",
+      "nes_native165.h": "e150dacd7de42e83f665f939ed046c48e8b72d010fe379f4aa6bd53b6c07f95a",
+      "nes_native_runtime165.c": "7f35d8a0651e6d693c7f976cd698cf546f6d47cdbf56b71197f374aec177a62e",
+      "nes_native_runtime165.h": "9f6f3a2a683dfb4f120cab45bfe3015b55a259189fb567b09867b5e0148151b2",
+      "nes_native_sink165.c": "78a8ba4b0883561dcf6d5dd42507f3b0a6fb57374603998cc9f62a96df955526",
+      "nes_native_sink165.h": "22a76476ae6bdee57280cf1583c6202499c08c4c4b510aefdf16103cffd2fd5c",
+      "nes_native_video165.c": "3865ef8b9d2cdf72cbd6c2692e6539d2f1f9cf326e358f299437a19a9295ee13",
+      "nes_native_video165.h": "a3b66043f463631bba7d4d2197a1396933887ad95f6c035ed448396ab21a5768",
+      "nes_rom_spi.h": "1fcafe5af22a4ae7ac192ba099cbc85248e7aa546244a7dc6b0d9e3e9227461b",
+      "nes_rom_verify.h": "dc98fe0b2bebe7579df835921e5ce0f9af559864c92014a3d576d40ee0393002",
+      "nes_run136.h": "1680ea87729b10054a622737cb346979f27a180df97f25f7668f1126c4f4c5f9",
+      "nes_sd_readback.h": "137f530888888a95b97d551506754d08f6e9969277bb13a1e5eb0f525dd9a606",
+      "nes_sink_io170.h": "8a4e3d16b43b86f3d2b38ce41a98b6fcccd57685b239b7881e698355a7e8592e",
+      "nes_sink_spi165.h": "226df22d3a36a62ee1a50a0af23f8c9f1c56d505071fa186b83c51259e32b6a3",
+      "nes_sink_trace168.c": "e6c1fab8b7782d768bcfc1672fbe62015f3bbbe07148cb8222bb93f6d637521f",
+      "nes_sink_trace168.h": "806eb4349a3afef2008dd02f92a1523e3dd7f1521ebc94a7429e94d42c85aacb",
+      "nes_sink_window184.c": "ade9942cb1035789512958af040cbf2b55dd38b8e09e227398b02ac671a214f6",
+      "nes_sink_window184.h": "595312fd6ad296789f4746c15e33c90d0917e075cb5113c45726558124820832",
+      "nes_trace166.c": "eb400234d88399773a671233eef4d15e13f20bb750de834cfbf2b53e21dc316c",
+      "nes_trace166.h": "76923567ede1a152fc056c482e27eb3a81e97fe19d04ff84a789a26cc9d319e5",
+      "legacy.c": "95b015176de8063d0b37d76ca052a0bc74eb36f279ffa3af745e4d95c4bee100",
+      "host.c": "543b5f5ba4f18a49b5d333ba38a3f7001db40084c8d45899b64c95e864b6e34e",
+      "map_input0": "f9c0dc0711c43b4e4878fffc76d53afde7b1b7d352bb83c78d4b1d3dd8b1885f",
+      "map_input1": "d9c0fc02f01af0b63d6aa0cf2abc873693c9488201fa8b58ca5525be1ee2f080",
+      "map_input2": "d9c0fc02f01af0b63d6aa0cf2abc873693c9488201fa8b58ca5525be1ee2f080"
+    },
+    "scope": "Differential converter and exact map packet reconstruction. Mock ACKs only."
+  },
+  "coupled": {
+    "passed": true,
+    "cases": [
+      {
+        "passed": true,
+        "commits": 7,
+        "acks": 268,
+        "pads": 405,
+        "chunks": 15,
+        "held_frames": 15,
+        "max_repeat_service_bytes": 64,
+        "mode": "reference",
+        "request_count": 268,
+        "copies": 0,
+        "map_packets": 126,
+        "map_wire": 30688,
+        "optimistic_spi_floor_ms": 157.56876190476189,
+        "clocked_floor_bytes": 50773,
+        "status_floor": 86
+      },
+      {
+        "passed": true,
+        "commits": 7,
+        "acks": 498,
+        "pads": 633,
+        "chunks": 15,
+        "held_frames": 15,
+        "max_repeat_service_bytes": 64,
+        "mode": "inherit",
+        "request_count": 498,
+        "copies": 319,
+        "map_packets": 356,
+        "map_wire": 14590,
+        "optimistic_spi_floor_ms": 116.45028571428571,
+        "clocked_floor_bytes": 36525,
+        "status_floor": 144
+      },
+      {
+        "passed": true,
+        "commits": 1,
+        "acks": 34,
+        "pads": 70,
+        "chunks": 0,
+        "held_frames": 0,
+        "max_repeat_service_bytes": 0,
+        "mode": "badbase",
+        "request_count": 37,
+        "copies": 4,
+        "map_packets": 22,
+        "map_wire": 4456
+      },
+      {
+        "passed": true,
+        "commits": 1,
+        "acks": 34,
+        "pads": 66,
+        "chunks": 0,
+        "held_frames": 0,
+        "max_repeat_service_bytes": 0,
+        "mode": "badalign",
+        "request_count": 37,
+        "copies": 4,
+        "map_packets": 22,
+        "map_wire": 4456
+      },
+      {
+        "passed": true,
+        "commits": 1,
+        "acks": 34,
+        "pads": 75,
+        "chunks": 0,
+        "held_frames": 0,
+        "max_repeat_service_bytes": 0,
+        "mode": "badsize",
+        "request_count": 37,
+        "copies": 4,
+        "map_packets": 22,
+        "map_wire": 4456
+      },
+      {
+        "passed": true,
+        "commits": 1,
+        "acks": 34,
+        "pads": 76,
+        "chunks": 0,
+        "held_frames": 0,
+        "max_repeat_service_bytes": 0,
+        "mode": "badsection",
+        "request_count": 37,
+        "copies": 4,
+        "map_packets": 22,
+        "map_wire": 4456
+      },
+      {
+        "passed": true,
+        "commits": 1,
+        "acks": 34,
+        "pads": 76,
+        "chunks": 0,
+        "held_frames": 0,
+        "max_repeat_service_bytes": 0,
+        "mode": "badexpanded",
+        "request_count": 37,
+        "copies": 4,
+        "map_packets": 22,
+        "map_wire": 4456
+      },
+      {
+        "passed": true,
+        "commits": 1,
+        "acks": 34,
+        "pads": 77,
+        "chunks": 0,
+        "held_frames": 0,
+        "max_repeat_service_bytes": 0,
+        "mode": "badtoken",
+        "request_count": 37,
+        "copies": 4,
+        "map_packets": 22,
+        "map_wire": 4456
+      },
+      {
+        "passed": true,
+        "commits": 1,
+        "acks": 121,
+        "pads": 172,
+        "chunks": 1,
+        "held_frames": 1,
+        "max_repeat_service_bytes": 64,
+        "mode": "stop_inherit",
+        "request_count": 121,
+        "copies": 64,
+        "map_packets": 82,
+        "map_wire": 5536
+      }
+    ],
+    "selected": "coupled01 first8 cases + coupled02 STOP; early STOP quiet/noACK case not selected",
+    "scope": "Actual C/window + actual65816, synthetic complex maps, file scheduling not FPS"
+  },
+  "rtl": {
+    "passed": true,
+    "cases": [
+      {
+        "mode": "inherit",
+        "events": 2131,
+        "packets": 498,
+        "checks": 89492,
+        "fault": 0,
+        "events_sha256": "5b09df6ac6af5030c5f168fa5261d320cf5df7848e16099b3f0f3434fab4403c"
+      },
+      {
+        "mode": "stop_inherit",
+        "events": 540,
+        "packets": 121,
+        "checks": 26912,
+        "fault": 1,
+        "events_sha256": "fb6cb5805163648ad8a24ee1a7c65bcb98e95f5c2b77bb6d65b8ea648ac63467"
+      }
+    ],
+    "inputs": {
+      "nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+      "nes_sink_queue184.sv": "94e9ff239d82a0e64e1e1a1ddbc71d7fab60be109b7b54c1cde9362784945db2",
+      "nes_sink_bus165.sv": "b7f53f8639391409e8f02b6e4cdb506698bb31781f1ae2ce6c4d51557bd8bc3f",
+      "nes_sink_bridge165.sv": "b81de51e63e98408fe2dd8f8493f7e4c18ddead38a8943ffa6410272c16146d1",
+      "sink-program.hex": "f9c0063998329c984485ef609621024df0679b05caf32b30093932a9252f5b60"
+    },
+    "coupled_result_sha256": "02ceb546ef25e0d5efe08c816aecab8048bdfab4872b78277bb35af8f59cd282",
+    "public_sources": {
+      "tools/replay_nes_window184.py": "e66f4bc6b49a6556597e0907d0799e25320eb2b015aed9e4c9b903dfacb6e480",
+      "tests/nes-functional/sink_window184_tb.sv": "229f20070c7b898060283ef3313df68f72c4196141a0b346fc3bc09b366db52f"
+    },
+    "scope": "Actual C/65816 event order replay through actual RTL/SNES bus. File scheduling is not cycle-accurate concurrent CPU/MCU execution or FPS.",
+    "physical": false
+  },
+  "arm_objects": {
+    "passed": true,
+    "results": {
+      "prior": {
+        "layout": {
+          "video_size": 15888,
+          "sink_size": 28
+        },
+        "stacks": {
+          "fail": {
+            "bytes": 0,
+            "kind": "static"
+          },
+          "guard": {
+            "bytes": 8,
+            "kind": "static"
+          },
+          "transfer": {
+            "bytes": 24,
+            "kind": "static"
+          },
+          "nes_runtime165_begin": {
+            "bytes": 56,
+            "kind": "static"
+          },
+          "nes_runtime165_step": {
+            "bytes": 40,
+            "kind": "static"
+          },
+          "repeat_bytes": {
+            "bytes": 16,
+            "kind": "static"
+          },
+          "data_cost": {
+            "bytes": 8,
+            "kind": "static"
+          },
+          "packet_wire": {
+            "bytes": 320,
+            "kind": "static"
+          },
+          "span_piece": {
+            "bytes": 24,
+            "kind": "static"
+          },
+          "span": {
+            "bytes": 72,
+            "kind": "static"
+          },
+          "nes_sink165_reset": {
+            "bytes": 16,
+            "kind": "static"
+          },
+          "nes_sink165_begin": {
+            "bytes": 24,
+            "kind": "static"
+          },
+          "nes_sink165_pattern": {
+            "bytes": 32,
+            "kind": "static"
+          },
+          "nes_sink165_seal": {
+            "bytes": 144,
+            "kind": "static"
+          },
+          "tile": {
+            "bytes": 16,
+            "kind": "static"
+          },
+          "fine": {
+            "bytes": 20,
+            "kind": "static"
+          },
+          "nes_native_video165_build": {
+            "bytes": 256,
+            "kind": "static"
+          },
+          "io": {
+            "bytes": 24,
+            "kind": "static"
+          },
+          "status": {
+            "bytes": 72,
+            "kind": "static"
+          },
+          "send": {
+            "bytes": 544,
+            "kind": "static"
+          },
+          "valid": {
+            "bytes": 8,
+            "kind": "static"
+          },
+          "nes_window184_init": {
+            "bytes": 40,
+            "kind": "static"
+          },
+          "nes_window184_enqueue": {
+            "bytes": 16,
+            "kind": "static"
+          },
+          "nes_window184_drain": {
+            "bytes": 16,
+            "kind": "static"
+          },
+          "nes_window184_barrier": {
+            "bytes": 24,
+            "kind": "static"
+          }
+        },
+        "input_pins": {
+          "nes_cf86_session094.c": "66869649865ad733fd8a5603e51f43686d3a128328627432f51ddb38a903c2f3",
+          "nes_cf86_session094.h": "de31c213a2a555f6de50349fc1c2110d473d06beb06956bb23da3d0b15395cad",
+          "nes_checkpoint112.c": "f7e975ab8a169562bd39ef3220193484664832039357dd31b28f501f9a034a9d",
+          "nes_checkpoint112.h": "f88f93012e6daed9eccd27ee2d003e4f9a21d5e3aac5174736fc1c1137ecf5c1",
+          "nes_css108.c": "7c48e7e588c688a979f4bbfac2ddd8ef151f7ee5f34fd703c8080f48cf69af96",
+          "nes_css108.h": "ece5b45d6cd5868d87b55dae4556f10ef29ed2fa439a6a6b04f4d1e388de17e4",
+          "nes_diag_platform.c": "4b5d03c5e14f73c2bbeb1b5949df46adfa147e2471480899a7fdcf57570d9619",
+          "nes_diag_runtime.c": "756aae44617b47e0dcb76f9cf2879a9eba4f35b3b477be6b53b2d1262cdebcbc",
+          "nes_diag_runtime.h": "b4a671e5406763853a8cab01c7b3a29f7aecafb35767027b70096f0e56a6382e",
+          "nes_h1_session.c": "96e0c01c71f349f3c39e9d258128887c5caec6b39f6c6e0d624dae31818da488",
+          "nes_h1_session.h": "9fe0e6388ff33df2645d00b1e0263f9fa6c3cfa2b087afd0fef0103fc77e48cc",
+          "nes_h1_stm32.c": "c367f98b136272162e693daefaea37fcb059b7bc4e878298aabbc0da8a52dc6a",
+          "nes_h1_stm32.h": "a85c56338f8389bb4215ea261fbb3dcf5084813dfaadeefc19395b3ffd6e03ac",
+          "nes_mcu_loader.h": "92b787182fef9df12294b68f889dc8db5a3856e71e32db68c3d6de7c0e454ab8",
+          "nes_menu076.c": "24c267409f2843651a5176e7a5881a813c96bd133b70caaf4d488e8d53d64af2",
+          "nes_menu076.h": "cdf50a7ba8bbc5c048f4beb109d9c9c62c258a5b6d74ff255f8bfe57a67123e2",
+          "nes_menu_diagnostic.c": "251ed15ca74d0c171c9e4801206cf48c9531214c348c5ee7f5b01ef69e9534f0",
+          "nes_menu_diagnostic.h": "32ae4fd3cbc8414e093616672c7cd1dd86d09a0297fc1917a978fa3b3838f812",
+          "nes_menu_probe.h": "16936047d5a9bfb174386a006d5fe77f0a6bff0a1d0366504d43b242a79e5047",
+          "nes_menu_return.c": "0b398a26b5bc48bb993905e8d83fda35c8417e5674cd836315914e2865d9787f",
+          "nes_menu_return.h": "4c3cc8054b30ca0e7ee3973b79713a9c12ba7fe3d29d4a87da4f19c2f2d09daf",
+          "nes_native165.c": "9d6e20367b88e82d857e9623ba98c145e61f234fdfc63e683274c2bd33998082",
+          "nes_native165.h": "e150dacd7de42e83f665f939ed046c48e8b72d010fe379f4aa6bd53b6c07f95a",
+          "nes_native_runtime165.c": "204b27c7f239660cf3234fb4f478889e1ebd9f3a65c58b2517c15b6d318020ba",
+          "nes_native_runtime165.h": "9f6f3a2a683dfb4f120cab45bfe3015b55a259189fb567b09867b5e0148151b2",
+          "nes_native_sink165.c": "3e4748f71c2e6994d3cd527bb747b1b3b8f685db34ea99e6bf621d75690d018d",
+          "nes_native_sink165.h": "a8052cc8bcdd1620c6b41b71617692fc08c464b9e246065dbc38c96d5ce93662",
+          "nes_native_video165.c": "95b015176de8063d0b37d76ca052a0bc74eb36f279ffa3af745e4d95c4bee100",
+          "nes_native_video165.h": "bb90b61d146db5269134d3a69780a737bc13142187e554f8e343d3e78f9aa979",
+          "nes_rom_spi.c": "f7fb845c71975b73d47969880c05a55d379a68aa89f6a6d32aa49761d9ae2cfb",
+          "nes_rom_spi.h": "1fcafe5af22a4ae7ac192ba099cbc85248e7aa546244a7dc6b0d9e3e9227461b",
+          "nes_rom_verify.c": "6e708430bb3898c637fbafaadf7b7ea03a0913d7d52d5df5d9d0e2de7cc58a23",
+          "nes_rom_verify.h": "dc98fe0b2bebe7579df835921e5ce0f9af559864c92014a3d576d40ee0393002",
+          "nes_run136.h": "1680ea87729b10054a622737cb346979f27a180df97f25f7668f1126c4f4c5f9",
+          "nes_sd_readback.h": "137f530888888a95b97d551506754d08f6e9969277bb13a1e5eb0f525dd9a606",
+          "nes_sink_io170.c": "24f6c0b64848f801bef81c37391242af0683d388d1191c8c9c810d3c3d9a9f9e",
+          "nes_sink_io170.h": "8a4e3d16b43b86f3d2b38ce41a98b6fcccd57685b239b7881e698355a7e8592e",
+          "nes_sink_spi165.c": "6d553b84c90f8528d83ca9d9452218d73aae66803ef132cbe58de83e95f7ad5a",
+          "nes_sink_spi165.h": "226df22d3a36a62ee1a50a0af23f8c9f1c56d505071fa186b83c51259e32b6a3",
+          "nes_sink_trace168.c": "e6c1fab8b7782d768bcfc1672fbe62015f3bbbe07148cb8222bb93f6d637521f",
+          "nes_sink_trace168.h": "806eb4349a3afef2008dd02f92a1523e3dd7f1521ebc94a7429e94d42c85aacb",
+          "nes_sink_window184.c": "b53038420fb502b7438e5ef8e9893f8c8d0d79a24236996161dfff1ff01a4c76",
+          "nes_sink_window184.h": "595312fd6ad296789f4746c15e33c90d0917e075cb5113c45726558124820832",
+          "nes_trace166.c": "eb400234d88399773a671233eef4d15e13f20bb750de834cfbf2b53e21dc316c",
+          "nes_trace166.h": "76923567ede1a152fc056c482e27eb3a81e97fe19d04ff84a789a26cc9d319e5"
+        }
+      },
+      "candidate": {
+        "layout": {
+          "video_size": 15912,
+          "sink_size": 32
+        },
+        "stacks": {
+          "fail": {
+            "bytes": 0,
+            "kind": "static"
+          },
+          "guard": {
+            "bytes": 8,
+            "kind": "static"
+          },
+          "transfer": {
+            "bytes": 24,
+            "kind": "static"
+          },
+          "nes_runtime165_begin": {
+            "bytes": 56,
+            "kind": "static"
+          },
+          "nes_runtime165_step": {
+            "bytes": 40,
+            "kind": "static"
+          },
+          "repeat_bytes": {
+            "bytes": 16,
+            "kind": "static"
+          },
+          "data_cost": {
+            "bytes": 8,
+            "kind": "static"
+          },
+          "packet_wire": {
+            "bytes": 320,
+            "kind": "static"
+          },
+          "span_piece": {
+            "bytes": 24,
+            "kind": "static"
+          },
+          "span_cost185": {
+            "bytes": 32,
+            "kind": "static"
+          },
+          "span": {
+            "bytes": 72,
+            "kind": "static"
+          },
+          "nes_sink165_reset": {
+            "bytes": 16,
+            "kind": "static"
+          },
+          "nes_sink165_begin": {
+            "bytes": 24,
+            "kind": "static"
+          },
+          "nes_sink165_pattern": {
+            "bytes": 32,
+            "kind": "static"
+          },
+          "nes_sink165_seal": {
+            "bytes": 152,
+            "kind": "static"
+          },
+          "map_word185": {
+            "bytes": 20,
+            "kind": "static"
+          },
+          "tile": {
+            "bytes": 16,
+            "kind": "static"
+          },
+          "fine": {
+            "bytes": 20,
+            "kind": "static"
+          },
+          "nes_native_video185_build": {
+            "bytes": 248,
+            "kind": "static"
+          },
+          "nes_native_video165_build": {
+            "bytes": 16,
+            "kind": "static"
+          },
+          "io": {
+            "bytes": 24,
+            "kind": "static"
+          },
+          "status": {
+            "bytes": 72,
+            "kind": "static"
+          },
+          "send": {
+            "bytes": 544,
+            "kind": "static"
+          },
+          "valid": {
+            "bytes": 8,
+            "kind": "static"
+          },
+          "nes_window184_init": {
+            "bytes": 40,
+            "kind": "static"
+          },
+          "nes_window184_enqueue": {
+            "bytes": 16,
+            "kind": "static"
+          },
+          "nes_window184_drain": {
+            "bytes": 16,
+            "kind": "static"
+          },
+          "nes_window184_barrier": {
+            "bytes": 24,
+            "kind": "static"
+          }
+        },
+        "input_pins": {
+          "nes_cf86_session094.h": "de31c213a2a555f6de50349fc1c2110d473d06beb06956bb23da3d0b15395cad",
+          "nes_checkpoint112.h": "f88f93012e6daed9eccd27ee2d003e4f9a21d5e3aac5174736fc1c1137ecf5c1",
+          "nes_css108.h": "ece5b45d6cd5868d87b55dae4556f10ef29ed2fa439a6a6b04f4d1e388de17e4",
+          "nes_diag_runtime.h": "b4a671e5406763853a8cab01c7b3a29f7aecafb35767027b70096f0e56a6382e",
+          "nes_h1_session.h": "9fe0e6388ff33df2645d00b1e0263f9fa6c3cfa2b087afd0fef0103fc77e48cc",
+          "nes_h1_stm32.h": "a85c56338f8389bb4215ea261fbb3dcf5084813dfaadeefc19395b3ffd6e03ac",
+          "nes_mcu_loader.h": "92b787182fef9df12294b68f889dc8db5a3856e71e32db68c3d6de7c0e454ab8",
+          "nes_menu076.h": "cdf50a7ba8bbc5c048f4beb109d9c9c62c258a5b6d74ff255f8bfe57a67123e2",
+          "nes_menu_diagnostic.h": "32ae4fd3cbc8414e093616672c7cd1dd86d09a0297fc1917a978fa3b3838f812",
+          "nes_menu_probe.h": "16936047d5a9bfb174386a006d5fe77f0a6bff0a1d0366504d43b242a79e5047",
+          "nes_menu_return.h": "4c3cc8054b30ca0e7ee3973b79713a9c12ba7fe3d29d4a87da4f19c2f2d09daf",
+          "nes_native165.c": "9d6e20367b88e82d857e9623ba98c145e61f234fdfc63e683274c2bd33998082",
+          "nes_native165.h": "e150dacd7de42e83f665f939ed046c48e8b72d010fe379f4aa6bd53b6c07f95a",
+          "nes_native_runtime165.c": "7f35d8a0651e6d693c7f976cd698cf546f6d47cdbf56b71197f374aec177a62e",
+          "nes_native_runtime165.h": "9f6f3a2a683dfb4f120cab45bfe3015b55a259189fb567b09867b5e0148151b2",
+          "nes_native_sink165.c": "78a8ba4b0883561dcf6d5dd42507f3b0a6fb57374603998cc9f62a96df955526",
+          "nes_native_sink165.h": "22a76476ae6bdee57280cf1583c6202499c08c4c4b510aefdf16103cffd2fd5c",
+          "nes_native_video165.c": "3865ef8b9d2cdf72cbd6c2692e6539d2f1f9cf326e358f299437a19a9295ee13",
+          "nes_native_video165.h": "a3b66043f463631bba7d4d2197a1396933887ad95f6c035ed448396ab21a5768",
+          "nes_rom_spi.h": "1fcafe5af22a4ae7ac192ba099cbc85248e7aa546244a7dc6b0d9e3e9227461b",
+          "nes_rom_verify.h": "dc98fe0b2bebe7579df835921e5ce0f9af559864c92014a3d576d40ee0393002",
+          "nes_run136.h": "1680ea87729b10054a622737cb346979f27a180df97f25f7668f1126c4f4c5f9",
+          "nes_sd_readback.h": "137f530888888a95b97d551506754d08f6e9969277bb13a1e5eb0f525dd9a606",
+          "nes_sink_io170.h": "8a4e3d16b43b86f3d2b38ce41a98b6fcccd57685b239b7881e698355a7e8592e",
+          "nes_sink_spi165.h": "226df22d3a36a62ee1a50a0af23f8c9f1c56d505071fa186b83c51259e32b6a3",
+          "nes_sink_trace168.c": "e6c1fab8b7782d768bcfc1672fbe62015f3bbbe07148cb8222bb93f6d637521f",
+          "nes_sink_trace168.h": "806eb4349a3afef2008dd02f92a1523e3dd7f1521ebc94a7429e94d42c85aacb",
+          "nes_sink_window184.c": "ade9942cb1035789512958af040cbf2b55dd38b8e09e227398b02ac671a214f6",
+          "nes_sink_window184.h": "595312fd6ad296789f4746c15e33c90d0917e075cb5113c45726558124820832",
+          "nes_trace166.c": "eb400234d88399773a671233eef4d15e13f20bb750de834cfbf2b53e21dc316c",
+          "nes_trace166.h": "76923567ede1a152fc056c482e27eb3a81e97fe19d04ff84a789a26cc9d319e5"
+        }
+      }
+    },
+    "scope": "Compare ARM object/layout deltas; NOT a linked RUN/IRQ stack approval.",
+    "full_runtime_approved": false,
+    "script_sha256": "a99469c9ad74ea6b8dbd5c208feae2fe693c72a93e16c2ff95b35a6d896e3b7a"
+  },
+  "pad": {
+    "scope": "Run actual SNES client with real Mesen auto-poll, no injected JOY registers.\n\nIdle mailbox isolates controller service from video transport. This is not\nthe FPGA pad CDC or a physical controller test. Preserve all raw commits.\n",
+    "rom_sha256": "5625332d228b6658a7bf07caaaade7030002a03be9324d0e760c06076a6a55e1",
+    "mesen_sha256": "f5d9a9c69f436b4dfaa74969527852a0dd8db52e4ea9fb15e5b6393dd984b796",
+    "core_sha256": "1ba99d2c848e007c60cbd7fceca058440758eb44837a93a6724d29d72723c994",
+    "script_sha256": "0d5e3f4f90733c46aa390b777e92b46efa45c0c3c8b9bdb7ae551b6b2edf0150",
+    "commits": 237,
+    "stable_samples": 186,
+    "bad_samples": [],
+    "passed": true,
+    "physical": false
+  },
+  "real_smb3_map": {
+    "source": "Archived native-video165/video03 frame12 and15; not level cadence",
+    "full_frame15_request_bytes": 3952,
+    "inherited_frame15_request_bytes": 1214,
+    "identical_repeat_request_bytes": 1152,
+    "changed_blocks": 1,
+    "total_blocks": 64,
+    "full_packets": 22,
+    "inherited_packets": 64
+  },
+  "reused_baseline_pins": {
+    "nes_cf86_session094.h": "de31c213a2a555f6de50349fc1c2110d473d06beb06956bb23da3d0b15395cad",
+    "nes_checkpoint112.h": "f88f93012e6daed9eccd27ee2d003e4f9a21d5e3aac5174736fc1c1137ecf5c1",
+    "nes_css108.h": "ece5b45d6cd5868d87b55dae4556f10ef29ed2fa439a6a6b04f4d1e388de17e4",
+    "nes_diag_runtime.h": "b4a671e5406763853a8cab01c7b3a29f7aecafb35767027b70096f0e56a6382e",
+    "nes_h1_session.h": "9fe0e6388ff33df2645d00b1e0263f9fa6c3cfa2b087afd0fef0103fc77e48cc",
+    "nes_h1_stm32.h": "a85c56338f8389bb4215ea261fbb3dcf5084813dfaadeefc19395b3ffd6e03ac",
+    "nes_mcu_loader.h": "92b787182fef9df12294b68f889dc8db5a3856e71e32db68c3d6de7c0e454ab8",
+    "nes_menu076.h": "cdf50a7ba8bbc5c048f4beb109d9c9c62c258a5b6d74ff255f8bfe57a67123e2",
+    "nes_menu_diagnostic.h": "32ae4fd3cbc8414e093616672c7cd1dd86d09a0297fc1917a978fa3b3838f812",
+    "nes_menu_probe.h": "16936047d5a9bfb174386a006d5fe77f0a6bff0a1d0366504d43b242a79e5047",
+    "nes_menu_return.h": "4c3cc8054b30ca0e7ee3973b79713a9c12ba7fe3d29d4a87da4f19c2f2d09daf",
+    "nes_native165.h": "e150dacd7de42e83f665f939ed046c48e8b72d010fe379f4aa6bd53b6c07f95a",
+    "nes_native_runtime165.h": "9f6f3a2a683dfb4f120cab45bfe3015b55a259189fb567b09867b5e0148151b2",
+    "nes_native_sink165.h": "a8052cc8bcdd1620c6b41b71617692fc08c464b9e246065dbc38c96d5ce93662",
+    "nes_native_video165.h": "bb90b61d146db5269134d3a69780a737bc13142187e554f8e343d3e78f9aa979",
+    "nes_rom_spi.h": "1fcafe5af22a4ae7ac192ba099cbc85248e7aa546244a7dc6b0d9e3e9227461b",
+    "nes_rom_verify.h": "dc98fe0b2bebe7579df835921e5ce0f9af559864c92014a3d576d40ee0393002",
+    "nes_run136.h": "1680ea87729b10054a622737cb346979f27a180df97f25f7668f1126c4f4c5f9",
+    "nes_sd_readback.h": "137f530888888a95b97d551506754d08f6e9969277bb13a1e5eb0f525dd9a606",
+    "nes_sink_io170.h": "8a4e3d16b43b86f3d2b38ce41a98b6fcccd57685b239b7881e698355a7e8592e",
+    "nes_sink_spi165.h": "226df22d3a36a62ee1a50a0af23f8c9f1c56d505071fa186b83c51259e32b6a3",
+    "nes_sink_trace168.h": "806eb4349a3afef2008dd02f92a1523e3dd7f1521ebc94a7429e94d42c85aacb",
+    "nes_sink_window184.h": "595312fd6ad296789f4746c15e33c90d0917e075cb5113c45726558124820832",
+    "nes_trace166.h": "76923567ede1a152fc056c482e27eb3a81e97fe19d04ff84a789a26cc9d319e5",
+    "nes_native165.c": "9d6e20367b88e82d857e9623ba98c145e61f234fdfc63e683274c2bd33998082",
+    "nes_trace166.c": "eb400234d88399773a671233eef4d15e13f20bb750de834cfbf2b53e21dc316c",
+    "nes_sink_trace168.c": "e6c1fab8b7782d768bcfc1672fbe62015f3bbbe07148cb8222bb93f6d637521f",
+    "nes_sink_window184.c": "b53038420fb502b7438e5ef8e9893f8c8d0d79a24236996161dfff1ff01a4c76",
+    "nes_native_runtime165.c": "204b27c7f239660cf3234fb4f478889e1ebd9f3a65c58b2517c15b6d318020ba",
+    "nes_native_video165.c": "95b015176de8063d0b37d76ca052a0bc74eb36f279ffa3af745e4d95c4bee100",
+    "nes_native_sink165.c": "3e4748f71c2e6994d3cd527bb747b1b3b8f685db34ea99e6bf621d75690d018d"
+  },
+  "public_sources": {
+    "tools/nes_map185.py": "aa79062067ec5d9aacc7fbd3447c9afbc35295417b1509410923ae7db223fc61",
+    "tools/test_nes_map185.py": "de8de750568424eb917f63210ef3ada444cf8f2da7c83ec1e9e8cab82eeacfa1",
+    "tools/test_nes_map185_coupled.py": "94e69a05177b8b075dcf561c8b7819b359124f1ea8d6dddb920c45e671521dbf",
+    "tools/check_nes_map185_objects.py": "a99469c9ad74ea6b8dbd5c208feae2fe693c72a93e16c2ff95b35a6d896e3b7a",
+    "tools/replay_nes_window184.py": "e66f4bc6b49a6556597e0907d0799e25320eb2b015aed9e4c9b903dfacb6e480",
+    "tests/nes-functional/map185_host.c": "543b5f5ba4f18a49b5d333ba38a3f7001db40084c8d45899b64c95e864b6e34e",
+    "docs/nes-map185-contract.ko.md": "6e33c6dce4846d8a289392b33e590b5030637cb7c52f0a73250ecb6b4986f5f6"
+  },
+  "hardware_package": false,
+  "full_arm_runtime_approved": false,
+  "new_fit": false,
+  "physical": false,
+  "fps60": false,
+  "next": "Full ARM link/RUN+IRQ with185 identity, reuse184 fitted RTL and replace SNES ROM only then CDB/ASM/paired package. ActualSMB3 level AV/menu and pad. Packet count/CPU overhead/capture overlap remain open; do not claim60fps or repeat184/044/FIT.",
+  "excluded_attempts": {
+    "build01": "body+9B",
+    "test01": "sandbox623",
+    "test02": "indentation warning",
+    "test03": "bad-base fixture accidentally valid",
+    "test05": "failed-plan fixture not reset",
+    "objects01": "compiler path",
+    "objects02": "array parameter warning",
+    "coupled01/stop_inherit": "early STOP enters existing quiet/noACK; not an E4 case",
+    "evidence/replay01": "wrong source directory"
+  }
+}
