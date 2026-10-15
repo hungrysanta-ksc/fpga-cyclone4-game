@@ -1,3 +1,19 @@
+# NES186 복사 요청 묶음 실기 준비 완료 (최신)
+
+[구현](../../docs/nes-copy186-contract.ko.md) · [전체 검증](../../docs/nes-paired186-contract.ko.md) · [설치](../../docs/nes-game186-ready.ko.md) · [JSON](../../analysis/paired186-verification.json). PR116 OPEN 같은 codex/nes-map-inherit-185.185결과 다음 단계이며 기존배포/완료증거 수정 없음.
+
+COPY6 고정64→256바이트/정렬256/SEAL1861. dirty64bit중인접4bit모두0인경우만복사,dirty256그룹은기존literal/RLE,비싸면전체span. 추가RAM/FPGA/saveSRAM없음. 모든64dirty위치/30변환차등 등C101검사,실제C+65816 7화면185전체reference일치,6개badheader+STOP,추가64정렬/old64길이거부. Synthetic 전체498→259/map356→117/14590→10478B;보관SMB3map64요청1214B→17요청558B,동일반복16요청288B. 실기FPS로비례해석금지.
+
+SNESbody3776/3776,모든label동일/상수7byte만변경;padservice/SPC/upload그대로. COPY1회최대256바이트복사후service,기존repeat64와구분. 무한/가변긴복사없음,실기최대service지연측정아님. 기존실제autopoll검증은service바이트동일성으로재사용. 큐RTL/CRC/18B패킷/버스는동일하여불변RTLreplay/FIT반복안함.
+
+FullARM202064B/static26592/RUN37120/IRQ508/여유1204,TXT4003. SELECT copy186 build01/test01/evidence/coupled03+04;paired186 arm01/check01/report01/evidence/asm01+rom01/romcheck01/release01. 이전184route73pins동일,CDB/ASM/CPF만실행,4postfit netlists4096byte검증. ZIP NES186-SMB3-COPY-GROUP.zip sha1c8c4e01c75fc44551e3a975c7f1a87f024dbb309a54d826ee6d29aab7c401ee. FW0a2241d4/FPGA97eb2b58 함께설치,185와혼합금지. 새로운실기/60fps승인아님.
+
+NEXT user186SMB3 숫자1타일+A,185대비끊김/소리/조작/실제파일메뉴/두TXT. 같은185/044/별도pad-only/불변FIT요청금지. 수신28.19초문제도남았으므로결과후CHRpayload/수신비용/capture·전송·표시겹침을16.7ms목표로계속. consumed는MCU상태만바꾸며FPGA시작명령아님. AV60fps→장기플레이/오류·reset로그→입력품질,MMC4/5/state/mute/frameskip확장,GBC164/saveSRAM/기존archives보존.
+
+coupled01은oldliteral fixture,02는normal사례없는경로로실행전실패;03선택+04경계추가. 모든완료record/manifest불변.
+
+---
+
 # NES185 실기 결과 반영 (최신)
 
 [결과](../../docs/nes-game185-hardware01.ko.md) · [검증 JSON](../../analysis/game185-hardware01-verification.json). PR116 OPEN 같은 branch. private probes/nes-game185-hardware01. 기존185 ZIP/완료archives 수정 없음.
