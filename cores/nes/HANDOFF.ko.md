@@ -1,3 +1,15 @@
+# NES181 — 화면 복구와60fps 공동 설계（최신）
+
+배선 개선은 동작 신뢰성 기반이며60fps 전송 개선은 아니다. 기존전송 재검사: SPI2.625MHz/60Hz 총5468.75B, SNES normal 최소21.206ms/raw34.819ms, 동일section도전체전송. raw7행 오프라인packing10752→2160B이나전체record6457B로여전히부족. 생산packing·bank별delta·capture/export겹침을지금계약에포함한다. 새FIT/펌웨어/실기/60fps승인없음.
+
+NEXT cadence181계약에따라 raw+geometry묶음/CHR집계와bank기준section차분의공유SPI예산·RAM/포트/세대수명을먼저확정;실제짝지은endpoint최소검사와capture/export겹침구현. hostRUNSTOP local화도같은소유권계약에결합;relatedPLLcut금지. 그후정당한통합FIT/ARM/IO와SMB3 숫자1+A 실기. 복구판을실기에먼저낼수있되느린전체복사경로를최종구조로고정하지말것. 분석replyjoinmap02 setup-1.408미채택/배포180유지. ACK횟수는FPS아님;AV약60fps→longplay→heldinput;saveSRAM/GBC164/archives보존.
+
+[전송 예산·재사용 경계·다음 구현](../../docs/nes-cadence181-contract.ko.md) · [분석/codec 검증](../../analysis/cadence181-verification.json)
+
+아래는 과거 기록이며 NEXT는 위 계약을 우선한다.
+
+---
+
 # NES181 로컬 ROM 응답 보드 결합 — 최신
 
 ROM 응답 로컬8비트를 실제 service/arbiter/FIFO/reader에 결합했다. 70ns 모델16위상과9.904ns 데이터 지연에서 기존 응답/샘플과 같았으며, 새8개 경계만 제한했다. FIT15048LE/963LAB/38M9K, 배선 평균68.8→61.4%·수직peak91.2→75.8%로 개선됐다. 실제setup−1.408ns/hold+0.147ns로 전체타이밍은 아직 실패이며 새SD패키지는 없다.
