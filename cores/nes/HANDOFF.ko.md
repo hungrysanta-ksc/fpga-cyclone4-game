@@ -1,3 +1,19 @@
+# NES183 — 중복 상태 조회 절감, 연속 전송 구조 우선 (최신)
+
+[계약](../../docs/nes-status183-contract.ko.md) · [실기 안내](../../docs/nes-game183-ready.ko.md) · [검증](../../analysis/status183-verification.json). PR114 같은 branch. SELECT private probes/nes-status183 arm01/test02/check01/report01/release01. 새 시험 ZIP은 NES183-SMB3-STATUS-VIDEO.zip, SHA256 a0d154f1b600c6ec9718a68b03f377212eb3bf8d3c1a1a2de75ab9e6f3cb5147. FW8f5ca30e. 실기/60fps 미확인.
+
+POP 확인 D0가 다음 블록의 준비 완료를 알려주면 RUN receiver에 8바이트를 보존해 다음 poll의 중복 D0를 생략한다. 빈 상태는 저장하지 않는다. 다음 D1 전에 CRC/flags 재검사, READ CRC/토큰/D2/즉시 D0 소비 확인 유지. 준비 단계/reset/새 BEGIN에서 폐기. sealed 블록은 POP 또는 reset까지 불변인 현재 endpoint만 대상이다. 미래 FIFO/비동기 reset에는 계약 재검토가 필요하다.
+
+실제 기존 RTL SPI 바이트 재생 4조건/685검사, 원본 논리 수신18060B 일치. 23→21,31→27,59→47,60→48calls. 캐시 사용 뒤 CRC/전송실패,COMMIT확인실패,prepare실패,캐시CRC/토큰 오류 통과. 새 RTL timing/실기 producer scheduling 증명은 아니다. ARM200924B/static26564/RUN36976+IRQ508/여유1376B,1414소스핀,로그3921. FPGA181·SNES1815·converter/sink·DMA182 그대로. 새FIT/중복 화면 회귀검사 없음. 사용자 NES GAME 183.nh1,첫 레벨 tile1+A,두183TXT와20~30초 움직임 영상/소리/메뉴 확인.
+
+중요한 정정: 이번 턴 처음 만든 batch183은 채택하지 않았다. 기존 production converter가 이미 BG240/OBJ224를 scratch로 묶는다. 단일타일 합성입력1158→99는 실제 경로 개선이 아니며 추가228B상시RAM도 불필요했다. probes/nes-batch183의 전체실패/검증/ZIP은 폐기기록과 함께 보존하고 절대 설치하지 않는다. 그 후보의 검사 결과를 선택 STATUS 후보 증거로 쓰지 않는다. 최적화 전에 배포 converter callback 크기까지 확인할 것.
+
+사용자 TCP/UDP 질문: 매조각 ACK는 필수가 아니다. 현재 ACK는 버퍼 재사용 허가이므로 단순 삭제 금지. 다음 개발은 bounded FIFO/credit로 여러 조각 연속 전송, 소비 범위 묶음 확인, CRC/순번/세대, 완성 프레임 공개/최종 표시 완료와 소유권 반환을 우선한다. 빈 공간·STOP/reset·ACK지연·버퍼 재사용을 함께 설계한다. 차등 업데이트는 목적 bank 기준 세대가 일치해야 하며 중간 세대를 버리면 전체 재구축 또는 누적 차등이 필요하다. 순수 payload도16.7ms 이내여야 하므로 ACK 제거만으로60fps 약속 금지. raw7 egress22.154ms 하한/단일capture lease/MCU RAM을 함께 검토한다. 미세 상태 조회 개선만 반복하지 않는다.
+
+기존182 실기171ACK/60.07초는181136 대비25.7% 개선이나 정확한FPS나 통제시험이 아니다. 이번183의 실기 개선치는 아직 없다. AV60fps→장기플레이·오류/실기리셋로그→입력유지 순서. GBC164/세이브SRAM/완료archive/MMC4·5/state/mute/frameskip 계획 보존. 실제SMB3 우선,동일044/무변경FIT 반복 금지.
+
+---
+
 # NES182 — DMA 실기 개선 확인, 약60fps 미달 (최신)
 
 [결과](../../docs/nes-game182-hardware01.ko.md) · [검증](../../analysis/game182-hardware01-verification.json). PR114 같은 branch에 결과만 기록. private probes/nes-game182-hardware01/progress.json; 완료자료 수정 금지. 새FW/FIT/ZIP 없음.
