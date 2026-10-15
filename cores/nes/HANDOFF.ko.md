@@ -1,3 +1,15 @@
+# NES186 실기 결과 반영 (최신)
+
+[결과와 다음 계획](../../docs/nes-game186-hardware01.ko.md) · [원본 분석](../../analysis/game186-hardware01-verification.json). PR116 같은 branch. 사용자 사운드·조작 정상/정적 장면 개선/스크롤 심한 끊김. 실제 표시182/60.06초,185의180과 비슷함. 큐14333→8147(-43.16%)이나 수신27.71/변환CHR7.90/나머지전송표시23.95초;전체 평균330ms/완료,60fps미달. 장면별 비용·적중률 없음.
+
+BEGIN/END/COMMIT183 ABORT0,lastACKgen256/59.74s,nextSEALgen257serial183seq39. deadline1(primary),sink2/window3은transfer callback 전후 guard에서 secondary로 생기는 경로;CRC고장 단정금지/window3을guard2와혼동금지. sent8147/retired8146,zeroACKinvalid,flags3lastsample. STOP/base/menuPREP298490ms,실제파일메뉴 사용자명시없음. 수집 last16reject8/recover8 fetch01x4/04x3/06x1,224행29그룹/compact-raster0;시각없어스크롤원인·손실수계산금지.
+
+다음 우선순위는 기존 실제SMB3 연속스크롤 캡처로 map 같은위치 비교의 변화량/매화면 슬롯재배정/CHR재전송과 수집거부·수신대기를 구분하고, 화면간 안정된 패턴슬롯·정확한내용재사용/이동map 재사용 비용을 평가하는 것. HDMA fine-scroll, RLE,4큐,로컬VRAM차등은 이미구현됨. upstream전송과finaldisplay까지16.7ms목표. 같은tag라도mapperbank/CHRRAM/행mapping내용변화 반영,raw전환/비활성bank/basegen/ACK소유권보존. bg_keys는OBJscratch/rawpatch와수명공유: 단순캐시보존금지. 메모리1204B여유/body3776 제약과 세이브SRAM미사용 유지. COPY추가확대·새일반관측기·불변FIT보다 실제스크롤병목 개선후최소검증→실기.
+
+이번턴 결과기록만: 새FW/FPGA/ZIP없음. 동일186/044/별도pad-only반복불필요.186코드·배포·완료증거 불변. AV60fps→장기play/오류·reset로그→입력품질,MMC4/5/state/mute/frameskip 확장요구 보존.
+
+---
+
 # NES186 복사 요청 묶음 실기 준비 완료 (최신)
 
 [구현](../../docs/nes-copy186-contract.ko.md) · [전체 검증](../../docs/nes-paired186-contract.ko.md) · [설치](../../docs/nes-game186-ready.ko.md) · [JSON](../../analysis/paired186-verification.json). PR116 OPEN 같은 codex/nes-map-inherit-185.185결과 다음 단계이며 기존배포/완료증거 수정 없음.
