@@ -4,6 +4,10 @@
 
 ## 현재 개발·운영
 
+- [NES1813 FPGA 묶음 전송·실제 C 복원](nes-packed181-contract.ko.md)
+
+- [NES181 화면 복구·60fps 공동 설계와 실제 전송 예산](nes-cadence181-contract.ko.md)
+
 - [NES177 실기 안내](nes-game177-ready.ko.md) · [최소 관측·다음 전송 개선](nes-boundary177-contract.ko.md)
 
 - [NES176 영상 회고·검증 결과·수정 계획](nes-video-review176.ko.md)
