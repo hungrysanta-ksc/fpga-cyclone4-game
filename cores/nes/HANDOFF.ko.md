@@ -1,3 +1,19 @@
+# NES182 — RUN 화면 전송 DMA 시험판 준비 (최신)
+
+PR113 merged3453c05, 새 branch codex/nes-video-throughput-182. [계약](../../docs/nes-dma182-contract.ko.md) · [실기 안내](../../docs/nes-game182-ready.ko.md) · [검증](../../analysis/dma182-verification.json). private probes/nes-dma182/progress.json. 완료 archive/record/audit 수정 금지.
+
+SELECT test03/arm02/check03/report01/release02. MCU의 RUN bulk만 DMA2 stream0/RX+stream3/TX channel3으로 전환, 최대259B. 같은2.625MHz·2us·1813/1815·CRC/ACK·FPGA181 유지, 새FIT 없음. CPU guard는 전송 중 계속 실행하지만 IRQ 중에도 현재 packet은 자율 진행 가능: 이전 byte별 authorization과 동일하지 않음. EN 해제 후만 주소/버퍼 반환, 해제 불능은 CS/SPI/reset 안전정지·비반환. 실제 bus경합/WCET 미검증.
+
+정상/경계794 + guard907 + byte오류2590 register-model 통과. 초기 test02/arm01/check02/release01 뒤 pre-DMA guard 보완, 최종 test03/arm02/check03/release02 선택. report01은 동일 formatter 해시 재사용. DLL623 실패와 이전 결과 보존. 전체 ARM200844B/static26564/RUN36968/IRQ508/margin1384/1414sourcepins, TXT3921/4096. 추가 정적RAM/saveSRAM 없음.
+
+패키지 probes/nes-dma182/release02/NES182-SMB3-DMA-VIDEO.zip SHA beedfca4fb0033b8f973f6128499525a2c463e37c9dee2cc3579d434682c928e. FW5c6e70ea05a1e1969b6eb7715109abc1073d4da27cda619c04b6feaa6eb6b59d. FPGA6cb2235de30a12f8dbae084beb56c3d1f58efb14ed7039ef6a298b39504c5d50(181동일). ROM/메뉴/164복원 exact. ROM loader/observer/STOP은 이전8B경로라 수분 로딩 단축판 아님.
+
+NEXT 실기 NES GAME 182.nh1 → SMB3 숫자1타일+A →20~30초 영상/소리/메뉴/nes-progress-182.txt+nes-game-last-182.txt. ready 뒤6000ticks 자동복귀 유지; 90초 지나도 복귀없으면 전원끄고 남은로그 확인. 동일181/044복원 재시험 불필요. 아직 실기/FPS 승인 없음. 181136ACK/60.06s 및 receive28.38/build7.74/seal23.71초와 비교하되 ACK율을 정확한FPS라 부르지 않는다.
+
+DMA가 개선되더라도 raw7egress모델22.154ms >16.7ms는 별도 해결 필요. 다음 실제병목에 따라 유효payload/ACKpoll, 목적bank 기준세대가 확인된 section/CHR차등, capture/MCU/bank수명 중첩 순서. 1813/1815압축 재구현/새버퍼saveSRAM/guard제거 금지. FPGA lease는exportCOMMIT, MCU workspace는displayACK까지 유지하는 차이 보존. fetch01/04재동기화 OPEN. AV60fps→longplay/error-resetlogs→heldinput, MMC4/5/state/mute/frameskip 계획 유지.
+
+---
+
 # NES181 — 실기 첫 레벨 표시 복구 확인, 약60fps는 미달 (최신)
 
 [결과](../../docs/nes-game181-hardware01.ko.md) · [기계판독](../../analysis/game181-hardware01-verification.json), private probes/nes-game181-hardware01/progress.json. 이전완료archive수정금지. 이번에는결과만기록/새FW·FIT·ZIP없음.
