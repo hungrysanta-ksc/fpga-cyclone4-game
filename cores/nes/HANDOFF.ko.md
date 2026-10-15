@@ -1,3 +1,19 @@
+# NES1815 — 긴 반복 전송·상수 메모리 분할 (최신)
+
+DATA5는physical2B로242..4096짝수bytes를복원한다. DATA4<=240유지/SEAL1815;ingress1813과별도경계. 실제SNES section/token/offset/bounds검사후매64B+끝에서STOP/pad서비스. 기존rawsteady의현재표시bank부분갱신/큰변경fallback유지. 추가frameRAM0,이전plan/hashcache없음.
+
+SELECT stream181 test01/normal·steady(부분suite만선택),test02(19경우),check01. 실제C/65816/WRAM/PPU21경우1651ACK42장면2569728픽셀PASS. 4096staging확인후의도적다음offset거부이며새4096화면공개시험아님. Native20491경우98303mockACK: bytes동일/관측wire비용<=기존/ACK·IO실패후무재시도. 같은7frame50217logicalB,requests275→219/requestB37575→31073. normal최소SPI4782→3690B/15.270→11.798ms;raw7 8389→6970B/26.694→22.154ms. CPU계획재탐색/복원/추가poll/ingress제외모델이며실제FPS아님. 다른데이터의packet수는늘수있으나총모델비용이줄때만분할.
+
+SNES본문3643/3776B/program4096. ARM object packet_wire320/span72/seal144,해당경로536vs448(+88),pattern경로+80;전체RUN/IRQ승인아님. 다음fullcallgraph는옛packet callback간선을packet_wire로연결하고span·ingress1813의poll+40도포함해야한다. 단순히과거margin에서빼서승인금지.
+
+NEXT 남은section/rawpayload와capture/export단일lease·hostRUNSTOP를공동개선;작은codec반복만으로60fps주장금지. 정확한targetbankdelta는기준세대/저장위치/포트/취소수명필요,추가ARM16KiB plan금지. 최소검사→paired전체ARM/FIT/IO→SMB3숫자1+A. 마지막전체FIT−1.408미채택/이번새FIT·FW·ZIP없음. 실기raw복구와60fps를별도판정하되합성시험과잉으로실기미루지말것.
+
+test01large_steady는held-file replay의host50초한도로실패,완료normal/steady만재사용. test02/max의7chunk로큰DMA확인,제품timeout불변. 배포180/GBC164/saveSRAM/이전archives보존. AV약60fps→longplay/resetlogs→heldinput→사용자기능.
+
+[구현·자원·검증](../../docs/nes-stream181-contract.ko.md) · [검증 데이터](../../analysis/stream181-verification.json)
+
+---
+
 # NES1814 — raw 지속 갱신 완료 (최신)
 
 raw 행 수가 같으면 마지막 표시 WRAM과 실제 표시 VRAM 뱅크 기준으로 기존6section+raw CHR를 비교한다. 작은 변경은fresh VBlank에서부분갱신, count전환/큰변경/명령초과는기존전체복사 유지. 실제A/B raw변경 2048B DMA+2명령/setup2240,기존4largechunks→0;noop0DMA. 위치가바뀐7행도2598charge로통과. HDMA bundle3418B는WRAM에있어복사하지않으므로setup96만charge,rawCHR는별도계산. 5000/32한도유지.
