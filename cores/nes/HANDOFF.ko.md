@@ -1,3 +1,19 @@
+# NES181 — OAM RAM 전환으로 전체 FIT 통과, 실기 승인 전 (최신)
+
+SELECT oamread181 map03/test04/core01/check01/reproduce01. [계약과 다음 조건](../../docs/nes-oamread181-contract.ko.md), [원시 결과 색인](../../analysis/oamread181-verification.json), private probes/nes-oamread181/progress.json을 읽는다. 완료 evidence/manifest/record는 수정하지 않는다.
+
+OAM에 음의 edge 행 사전읽기, 양의 edge 원래 소비/쓰기. runtime·savestate 별도 writer 저장과 byte owner로 동시주소 우선순위를 보존했다. 일반 5포트/관찰·extra·state 코드 유지, 현 보드에서 미사용 포트는 합성 제거된다. 실제 OAMEval 216362cycle(2426복사/3111CPU/10473상태/2012충돌)+잘못된 edge 음성검사 통과. 실제 CPU/PPU/MMC3 자체 DMA16회/4096byte/175379반주기 입력 검사, baseline bus/OAM 완전 일치. 이 ROM은 rendering OFF: SMB3/실제 rendering-on 증거로 확대 금지.
+
+MAP OAM4015→1112comb/2366→318FF/4096bitsRAM. 전체FIT13311LE/928LAB/54M9K, 이전973/963LAB실패 해소. main/copy 각8byte RAM으로16M9K 사용, 잔여2개라 미래매퍼 여유 미달. 현재savestate 기능 자체도 배선 미완성; 이 수치로 미래기능 자원 승인 금지. 일반 RTL검사의 상태복원 의미는 반주기 입력안정 계약 하에서만 증명했다.
+
+OAM 배선후2820경로/3corner: 반주기22.727ns, RAM입력+3.184/출력+12.238/전체OAMhold+.187. 전체 동기/관련PLL nominal setup0.000(반올림 정밀도)/hold+.150, 강화setup-.162(loader CHECK). 전체rawreport에는 asyncreset NES→PLL setup-6.270도 남음. 제한CDC486/reply24/조건부IO 통과(PSRAM+4.988/SNES69.455/SPI165.490/nativepayload 음수reset0), 전체signoff아님. QSF/SDC/클럭/핀/압축1813/1815ROM/69입력중68불변. STA후 DB 보존이며 pre-STA DB 원본 byte비교를 수행했다고 주장하지 않는다.
+
+NEXT 짧은 rendering-on 실제 CPU/PPU의 전환·행복사와 합성RAM primitive 반주기 동일주소 검증. 그후16개 소형RAM을 넓은byteenable 포트로 묶는 MAP근거 확보: 같은우선순위/시점 유지, 미래MMC/SS 여유 별도. 큰구조변경에만FIT하며 loaderCHECK/관련PLL/OAM반주기/CDC/IO 동시에 확인. nominal0.000을 충분한 여유라고 하지말고 clockrelax/seed/tinyFIT루프금지. 최소승인후 기존pairedARM1384+SNES1815와 SMB3숫자1타일→A. raw7최소22.154ms모델/단일capturelease/실제60fps는 여전히미완료. 자원계획97LAB/8M9K는 목표치로만 유지, 이것만으로MMC3실기를막지않는다.
+
+map01/test02(prefetch만) 기능PASS지만MAP악화/OAMRAM0으로FIT안함;test01줄바꿈오류/map02test03선언순서오류 보존. 이번ASM/FW/ZIP/실기 없음. NES180/GBC164/saveSRAM/완료archive 유지. AV→longplay/resetlogs→heldinput 순서 유지.
+
+---
+
 # NES181 — ACK 저장 공유 검증, FIT 10 LAB 초과 (최신)
 
 SELECT acklease181 map01/test01/reproduce01. work96/held96을 work96으로 공유하고 120비트 coherent status snapshot을 유지했다. valid=0 payload는 0, valid ACK는 기준 endpoint와 byte 일치. publish/snapshot 같은 edge는 이전 flags와 이전 valid로 캡처. 실제 SNES bus의 write/publish는 배타적이며 직접 동시 입력도 이전 완성 work 발행으로 방어한다.
