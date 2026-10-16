@@ -1,3 +1,19 @@
+# NES205 ROM 경계 수정·중복 타일 저장 제거 (최신)
+
+[계약](../../docs/nes-board205-contract.ko.md) · [검증](../../analysis/board205-verification.json). PR117 같은 branch. SELECT source01/epoch01/test01/test01/atomic/mapfit01/timing01/inventory02/paths02/evidence01. **기능·FIT 통과, 타이밍 미승인. 배포186 유지, 새 실기 ZIP 없음.**
+
+raw loader 상태는 기존 비동기 assert/동기 release 경계까지만 연결하고 NES 데이터 허용은 held/admitted로 결정한다. 이전 release_reset→export.pack_count 우회는3corner 모두 사라졌다. Gray epoch와 정지 clock 중 write/STOP 무효화는 유지한다.191의32B register 배열 대신205의1B holding register를193 unpublished RAM에 연결했다. **205 out_valid는 부분 byte이지 완성 타일 승인이 아니다.**193 마지막 byte seal과 source fault 취소가 반드시 함께 있어야 한다. 기존191은 변경하지 않았다.
+
+epoch20검사, 실제SPI/READ16/consume9프레임1968B exact186, 부분1/7/15byte×7오류+대기·복구22검사 PASS.204와 합성 fixture의 사이클 수가 동일하다. 실제 게임 CPU+ARM+65816 결합/스크롤 FPS가 아니며 sourcefault2edge 지연과 부분타일 비공개를 별도 확인했다. 새 ARM 없이203 compile-only 여유9260B를 재사용한다.
+
+한 번의 전체 MAP/FIT:15182LE/8337FF/961LAB/47M9K.204보다128LE/249FF/2LAB 감소,226LE/2LAB 여유.3corner 관련클록 setup−0.739ns/hold+0.148ns로 타이밍 실패다. 이전 CHECK 경로는+0.240ns지만 현재 loaded_bytes[2]→count_complete가9논리단/6.586ns/배선67%로 최저다. **자원 절약과 일부 경로 개선이 전체 타이밍 통과를 뜻하지 않는다.**
+
+새CDC 첫 단계44개는 각각 대응 두 번째 단계 하나만 구동한다.18582 cross-clock행을 분류했으며 content_lifetime setup/hold64행은 Gray32비트뿐이다. inventory 기본corner 수치는 전체corner bounds 승인이 아니다. 새 held-data/cancel/reset와 외부IO 검증이 남았다. inherited SDC loader state* 조건은 실제 onehot 이름과 맞지 않아 무시된 경고가 있으며 이번에 constraints/clock/seed를 바꾸지 않았다. inventory01의 fanout0행은 API 전달형 오류로 보존하고 inventory02에서 수정·검사했다. FLOAT 종료 직후 port busy로 다음 시작이 한 번 거부됐고 종료 후 재실행했다. 라이선스/전역 설정 변경 없음.
+
+**NEXT**:205 구조를 유지하며 새 held-data/cancel/reset/Gray의 프로토콜과 전체corner bounds를 먼저 닫는다. 완료 판정9단과 source-count fanout/기존 terminal predicate 재사용, 작은 캐시·상태 RAM화의 추가cycle/포트/자원 비용을 함께 검토한다. 기존 loader만 반복 microFIT하거나 seed/clock을 바꾸지 않는다. 구조 근거와 최소 결합 검증 후 전체FIT/STA/IO 및 board→C→SNES 짝을 확인한다. 그 뒤에만 SMB3 숫자1+A→RIGHT+B 유지/A press-release 연속스크롤 실기판으로16.67ms 목표를 측정한다. 이전20개 archive/186/GBC164/세이브SRAM 보존. MMC4/5·CHR-RAM·delta·장기play/reset 로그와 향후기능 예산은 여전히 미완료다.
+
+---
+
 # NES204 실제 보드 결합 — 배선 성공, 타이밍 미승인 (최신)
 
 [계약](../../docs/nes-board204-contract.ko.md) · [검증](../../analysis/board204-verification.json). PR117 같은 branch. SELECT source01/test01/epoch01/map01/fit01/timing01/paths01/report01/evidence03. 배포186 유지, 새 실기 ZIP 없음.
