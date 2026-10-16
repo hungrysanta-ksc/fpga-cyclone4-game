@@ -1,3 +1,21 @@
+# NES206 관련 클록 타이밍 통과·취소 경계 정리 (최신)
+
+[계약](../../docs/nes-board206-contract.ko.md) · [검증](../../analysis/board206-verification.json). PR117 같은 branch. SELECT source03/test01/cancel01/mapfit01/timing01/io02/evidence01. **기능/FIT/관련클록 setup·hold 통과, epoch reset 경계 미완료. 배포186 유지. 새 ARM/ASM/ZIP/실기 결과 없음.**
+
+direct/batch/bulk206은 raw reset/fault를 로컬 release에서 끝내고 데이터 허용에 다시 쓰지 않는다. mailbox206도 raw reset ready/valid 우회를 제거했다. 내부 sticky fault는 취소와 별도인 base reset으로만 지워 자기 원인을 지우는 루프를 막는다. 기존 geometry/ACK mailbox165는 보존한다.205 byte stream/부분 타일 비공개/코어 우선 READ16/최종 SEAL ACK-retire는 유지한다. loader count_complete는 기존 loaded_bytes의 count_update/count_clear를 공유한다.
+
+실제SPI/READ16/consume9프레임1968B와205 fixture사이클 동일. 부분타일22/클록정지 취소·오류·복구21검사 PASS. loader16상태·명령294912/실제쓰기1056/19bit count524288 비교 및 잘못된 terminal 후보 거부 PASS. 실제NES CPU+ARM+65816 동시 게임 시험은 아니며 실기 FPS로 해석하지 않는다.
+
+한 번의 전체FIT15179LE/8360FF/959LAB/47M9K,229LE/4LAB 여유. 관련클록3corner nominal setup+0.293/implementation+0.193/hold+0.121ns. 이전 완료 판정 경로는−0.739→+0.641ns. 이 통과를 유지하고 기존 loader/seed를 더 미세 조정하지 않는다. 기존 state* 이름 미일치 경고는 그대로 명시한다.
+
+3corner crossclock4968행, 첫 단계45개 단일 fanout. 새 미분류 데이터 우회0행, held payload최대6.598ns/Gray6.693ns. **source_epoch205의 epoch_meta/epoch_sync/previous96개에288negative recovery 행이 남는다.** raw memory-domain cold reset 해제를 NES 로컬 release에서 끝내야 하며 broad false_path는 금지한다. reset synchronizer 자체의 async 경로/held-data protocol/MTBF까지 승인한 것은 아니다.
+
+조건부IO는PSRAM70ns+PCB4ns 가정 여유3.221ns, SNES86.231<270ns, SPI166.008<190.476ns, 기존 native payload reset PASS. measurement IO01은 inheritedCDC 예외가 records_req를 숨겨 실패, IO02 clock-only measurement view로 raw지연 추출; production SDC/배치불변. source01 디렉터리준비실패, source02 테스트후 QSF에165+206 보존한 source03선택; RTL source02==03. 실패원본 보존.
+
+**NEXT**: epoch96개 cold-reset release를 로컬화하고 정지clock 무효화/안정화 후 admission을 최소검증한다. 정확한 reset/held-data bounds와 최소 actualboard→C→SNES 짝을 확인한 뒤 SMB3 숫자1+A→RIGHT+B유지/A press-release 연속스크롤 실기판으로 간다. 오프닝/정지화면/ACK평균이 아닌16.67ms 고유표시간격을 측정한다. ARM203 여유9260B는재사용이며 새ARM증거아님.21개이전archive/186/GBC164/saveSRAM 보존. MMC4/5/CHR-RAM/delta와AV60fps→장기play/reset로그→입력유지 순서유지.
+
+---
+
 # NES205 ROM 경계 수정·중복 타일 저장 제거 (최신)
 
 [계약](../../docs/nes-board205-contract.ko.md) · [검증](../../analysis/board205-verification.json). PR117 같은 branch. SELECT source01/epoch01/test01/test01/atomic/mapfit01/timing01/inventory02/paths02/evidence01. **기능·FIT 통과, 타이밍 미승인. 배포186 유지, 새 실기 ZIP 없음.**
