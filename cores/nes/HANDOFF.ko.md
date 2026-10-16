@@ -1,3 +1,21 @@
+# NES199 공통 타일 명령 (최신)
+
+[계약](../../docs/nes-short199-contract.ko.md) · [검증](../../analysis/short199-verification.json). PR117 같은 branch, 배포186 유지.
+
+계획의 기본row/mask/alt를 짧게 표현했다. E8version3, BG7B/OBJ8B/zero·END3B, 비identity행/cross-tile은16..32B full196.198두bankRAM/248BCbuffer/15계획한도/대기중195op7/guard/commoncancel/무재전송은 유지한다. generation/tag/slot/CRC와semantic검사 유지, short/full혼용 가능. persistent frame cache나 타일생략이 아니다.
+
+중요한 결정:191planner는 매frame슬롯을 다시배정하고 bg_keys는 OBJ검사/raw scratch로 소멸한다.195sink는연속slot을 요구한다. tag만 같다고 emit을 생략하면 안 된다. 큰이전계획배열을새로두기전에 전체ARM메모리를 확인해야한다. 그래서 기본필드압축을 먼저 적용했고, 실제staging순서/출력내용은 그대로다.
+
+SELECT test01/faults01/c01/evidence01 모두 첫실행통과. 실제SPI2.625MHz/4×2us wait→199RAM→192qualifiedREAD16→193aperture의8합성장면97계획1840B=186reference.512BG+END35묶음8192출력B/4chunk 동일, 계획payload8208→3587B. 같은pressure모델시간32.096399→17.944424ms. 실제게임FPS/스크롤감소율아님, 16.67ms초과이고 준비/최종표시비용도추가된다. fullwait/sourcewait0,포화시험아님.
+
+SPI/decoder37검사(기존23+short4복원/10거부),실제C199+19524검사,codec283검사.43C frames=독립Python/RTL입력byte동일. C의SPI/SNESACK는mock이고C+RTL동시실행아님.198실제DMA in-place744/248증거와이전14archives불변재사용. 전체ARM/새FIT/STA/IO/FW/ZIP/실기결과없음. hostgccstack을ARM근거로사용하지않는다.
+
+**다음은 작은codec추가보다 여러frame의실제수명연결 우선.** frame lease/content epoch·END재무장·fresh token·producer/board mux/C runtime/finalSNESACK·STOP을최소결합한다. 프레임마다NES전체reset금지. 전체ARM/FIT/IO이후짝패키지로첫레벨스크롤측정. persistentdelta는displayACK basegeneration/WRAM-VRAMbank/slotownership/contentepoch·CHR-RAMwrite/row-alt-mask 및memorybudget을함께검증하며후속구현,현재승인아님.
+
+collected_runs는여전히비어있다. 숫자1+A→첫레벨확인→RIGHT+B유지/Apress-release반복으로 원본/신규·재사용계획/전송량/고유표시간격 median-p95-max를 비교한다. 오프닝/정지/합성/ACK수대체금지. 약60fps+사운드→장기play/오류reset로그→입력유지.186/GBC164/saveSRAM/완료archive보존.
+
+---
+
 # NES198 묶음 전송과 실기 SPI 예산 (최신)
 
 [계약](../../docs/nes-batch198-contract.ko.md) · [검증](../../analysis/batch198-verification.json). PR117 같은 branch, 배포186 유지.
