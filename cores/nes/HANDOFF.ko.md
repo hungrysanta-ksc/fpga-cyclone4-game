@@ -1,3 +1,21 @@
+# NES201 캡처 중첩과 표시 원본 수명 분리 (최신)
+
+[계약](../../docs/nes-capture201-contract.ko.md) · [검증](../../analysis/capture201-verification.json). PR117 같은 branch. 배포186 유지, 새 실기판 없음.
+
+성공한 exporter COMMIT은 geometry/raw를 MCU로 복사한 경계다.201은 이때 원본 ROM의 generation/epoch를 표시 lease로 보존하고 기존 수집기를 해제해 다음 프레임을 모은다. 다음 exporter는 export_permitted=0으로 막아 MCU의 현재 프레임을 덮지 않는다. 이전 최종 SEAL ACK 뒤 C200 EA→batch201 기존 mailbox→retire_commit으로 표시 lease만 해제한다. **정상 retire는 다음 수집기를 해제하지 않는다.** reader_drained가 false면 ACK를 보류한다. guard timeout은 common STOP으로 처리해야 한다.
+
+192 source와201 decoder에는 lease_valid/captured_generation/captured_epoch를 연결한다. 현재 수집기의 owned/generation은 다음 프레임일 수 있으므로 사용하면 안 된다. controller는 capture/표시 epoch를 분리하고 capture 시작의 실제 edge를181과 동일한201 output에서 받는다. ready/ROM/write/epoch 변화, 잘못된 세대·release는 terminal. invalid geometry/export rejection은 버린 뒤 정상 캡처를 재개한다. source는 immutable CHR-ROM만 승인하며 CHR-RAM snapshot은 미구현이다.
+
+SELECT test12/faults03/evidence01. 실제 선택184 collector/fill/export 인스턴스와 query mux + wrapper201 + SPI200/batch201/tile191/bulk193를 결합했다.3정상 export, packedraw512값 비교, 이전 lease 중 다음224행 캡처/geometry33값 확인,3zero tile×16B/token1000→1001→1002, invalid geometry1개 폐기·복구, epochfault1개 처리:558검사. source lifetime/겹침/세대wrap/STOP23검사도 통과. capture알고리즘181 및 plan decode200 정규화 동일, 이전16archive hash불변.
+
+PPU/PSRAM/PREPARED/최종표시는 fixture다. zero tile만 직접 경로에 연결했고 실제 geometry→BG/OBJ 계획은 미연결이다. actualC+RTL+65816/게임CPU/물리 SPI mux 승인 아님. 기존 fullCHR fill도 아직 남아 있어 중복 전송 제거를 주장하지 않는다. wrapper는99상태bit, 별도 frameRAM 없음, 실제LE/LAB/IO는미측정. 중간test09/faults01은수집기전체를표시까지보존하는직렬구조로PASS했지만60fps관점에서폐기했다. test01..08/10..11/faults02는계약의하네스실패설명참조;원시기록보존.
+
+NEXT loader/ROM contentepoch/ready/write 연결→boardSPI/descriptor mux와192표시lease 연결→실제191planner/C200emit-finish/195seal-finalACK/retire 순서 productionRUN 통합. geometry/raw를COMMIT한뒤옛CHR중복payload를제거하려면actualgeometry/tiles joint증거필수. 작은codec/독립FIFO반복금지. 이후전체ARM/RUN/IRQ/FIT/IO,짝패키지첫레벨스크롤. 기존200의source-retire 계약은표시lease에적용하고**collector전체를다시직렬화하지말것**.
+
+collected_runsEMPTY. 숫자1+A→첫레벨확인→RIGHT+B유지/Apress-release반복으로동일generation 전체지연·고유표시간격 측정.199합성17.944ms는16.67ms초과, 이번겹침도실측FPS아님. persistentdelta/base/bank/slot/CHR-RAM/메모리예산남음. 새FW/FIT/STA/전체ARM/ZIP/실기승인없음. AV약60fps→장기play/오류reset로그→입력유지.186/GBC164/saveSRAM/완료archive보존.
+
+---
+
 # NES200 표시 완료 후 다중프레임 재무장 (최신)
 
 [계약](../../docs/nes-frame200-contract.ko.md) · [검증](../../analysis/frame200-verification.json). PR117 같은 branch, 배포186 유지.
