@@ -1,3 +1,19 @@
+# NES197 실제 SPI와 C 소비 서비스, 60fps 예산 제약 (최신)
+
+[계약](../../docs/nes-spi197-contract.ko.md) · [검증](../../analysis/spi197-verification.json). PR117 같은 branch, 배포186 유지.
+
+E8 status20과 E9 length+6 계획 송신을 추가했다. payload CRC16과 framing CRC8, exact byte/bit length/credit/tail을 검사한다. 상태는 descriptor snapshot/accepted/credit/sticky fault/END를 제공한다. endpoint·196 host RAM·193 descriptor는 같은 host clock. 소비는 SPI가 아닌 SNES194 token consume으로만 한다. C197 planner callback은 credit 대기 중195 op7/실제ACK 검사를 서비스하고 status를 다시 읽는다. false면 caller가 공통 취소하고 재전송하지 않는다. END finish는 chunk가 모두 비워졌다는 뜻이며 표시ACK가 아니다.
+
+SELECT test03/faults01/c03/evidence01. 실제 SPI8MHz→196→192 qualified70ns READ16→193 aperture8합성장면97계획1840B=186reference.512반복8192B/4chunk도 완료했으나 saturation시험은 아니고 fullwait/sourcewait0. SPI17오류/STOP/snapshot 검사. 실제C197+195 sink21검사/97chunk소비/105E9 frames=196wire;SPI와SNES ACK는C시험에서mock, 실제C와RTL동시실행아님.195실제C+65816 증거재사용.12개 이전archive불변. test01sandbox출력전종료/test02forwarddeclaration/c01DLL623/c02도우미warning 보존.
+
+**60fps 조건 미달을 확인했다.** 타일마다 status20B+E9최소22B+2회gap4us는8MHz에서최소46us,512계획23.552ms로 다른비용전부터16.67ms초과. 합성512전체39.293ms도게임FPS아님. 따라서 바로실기판으로승인하거나무변경FIT하지말고, 다음은같은planM9K여유공간을활용한batch/credit와stablephysicalpattern재사용으로per-tile status왕복제거. pixel을MCU로되가져오지않고chunk service/commoncancel 유지.
+
+현재 한frame/commonreset session 계약이다. batch뒤에는generation별frame lease/epoch·ENDclear/rearm·fresh token·boardmux/descriptor취득·productionruntime 호출을결합. 프레임마다NES전체reset으로연결금지. 실제sourcefault sticky/commonSTOP, guard deadline/audio/input, 최소jointlifecycle와전체ARM/FIT/IO필요. 새FW/ZIP/전체ARM/FIT/STA/실기결과없음. 호스트gccstack은ARM승인아님.
+
+스크롤collected_runs는여전히비어있다. tile1+A→첫레벨확인→RIGHT+B유지/Apress-release반복의연속스크롤에서동일generation원본/계획/전송/고유표시간격을16.67ms와비교한다. 정지/오프닝/합성/ACK수대체금지. AV약60fps→장기play/오류reset로그→입력유지;186/GBC164/saveSRAM/완료archives유지.
+
+---
+
 # NES196 작은 plan RAM과 production 연결 준비（최신）
 
 [계약](../../docs/nes-plan196-contract.ko.md) · [검증](../../analysis/plan196-verification.json). PR117 동일 branch, 배포186 유지. 새 실기판 없음.
