@@ -1,3 +1,17 @@
+# NES209 직접 타일 전송 실기판 준비 완료 (최신)
+
+[계약](../../docs/nes-binding209-contract.ko.md) · [실기 안내](../../docs/nes-game209-ready.ko.md) · [검증](../../analysis/binding209-verification.json). PR117 같은 branch. SELECT **test02/arm01/check02/report02/asm01/romcheck02/release01**. 첫 직접 타일 경로 실기판 준비 완료이며 실제 게임/FPS 결과는 아직 없다.
+
+208의 실제C packet117개와 실제65816 ACK를 선택된207 queue/reset/bus에서 재생했다. 정상86/부분31개,4credit 최대queue26회,33229checks PASS.208의SPI status 타이밍을 기록한 것은 아니며 새 grouping으로 backpressure를 검증한다. 부분E9 중단 자체는208 증거를 재사용한다. 최상위 assign7개를 원문 추출한320truthcase와 실제 sink의descriptor6040..6050/aperture400800..fff/save700000 비점유를 확인했다. peer 신호는fixture이고 fullboard cycle/gameCPU/physical/FPS 시험은 아니다. 변경 없는184 queue를 다시 구현하지 않았다.
+
+203 소스1424개에서메뉴/checkpoint/VERSION3개만 변경해209 실행명·FPGA/ROM/로그명을 부여했다. postSTOP plan_error/plan_sent/plan_end3개를 로그에 추가하며 RUN/사운드/입력/SD/복원 코드는 그대로다. 실제전체ARM203744B/static26872/RUN28784/IRQ508/여유9260B,최대로그4047/4096. checker는209identity+추가formatter만 역변환해203과 비교하고1024B gate 유지. runtime203와208 시험 C의 동일성도 release에서확인했다.
+
+207 mapfit02를 복제하여ASM/CPF만실행,새MAP/FIT/STA/MIF변경없음. source/routing은ASM시byte동일,EDA후QSF는정확한줄바꿈/edition메타데이터/출력설정3개만허용. EDA default/slow85/fast0의3×4096BROM이195/208client와일치한다. 이전4filechecker의개수거부를3출력의명시적목록으로수정했으며새3corner timing측정은아니다.207 strict+.041ns/148LE1LAB/조건부IO를재사용,fullCDC/MTBF/electricalsignoff아님.
+
+패키지 `probes/nes-binding209/release01/NES209-SMB3-DIRECT-TILES.zip` 및 `releases/NES209-SMB3-DIRECT-TILES.zip`. ZIP SHA256 dd3aff6454bf8701675a20dcabd079113c1f85feee4a211a5fe0751324997c12, firmware6d3ecb23c702636f21b00358b85eff22623dc25abb0740072710472309eaf3d6, FPGA5ff7401c9ba7ce24ea795674dc8cd18a8f91364b44e6eed00769d0adebc5405c. 제공SMB3 ROM dbb1cb5e/menu/base/restore164바이트동일. 원본24archives/186/GBC164/saveSRAM보존.
+
+**다음은 사용자209실기 결과다.** 숫자1+A→RIGHT+B 유지/A press-release로 첫 레벨 카메라 스크롤을20~30초 촬영하고 progress209/game-last209,음악·조작·메뉴복귀를 받는다. 초기로드와플레이시간을분리한다. 기존60초제한유지;동일044복원/입력전용반복시험요구금지. collected_runsEMPTY,60fps미달성. aggregateACK는scene별FPS가아니고새3plan항목은마지막전송상태다. 이번실기로다음병목을좁히고필요한계측만추가한다. 증거없이또다른FIT/codec/wholegamecosim루프로돌아가지않는다. MMC4/5/CHR-RAM/state/mute/frameskip예산과AV60fps→장기play/error-reset로그→heldinput순서유지.
+
 # NES208 실제 C·RTL·65816 표시 완료 결합 (최신)
 
 [계약](../../docs/nes-join208-contract.ko.md) · [검증](../../analysis/join208-verification.json). PR117 같은 branch, SELECT **test08/evidence01**. C203 RUN이 실제207 epoch/lease/direct206/READ16 및 실제65816 client195와 동시에 동작했다. SNES가 작성한 최종 표시 ACK를 C가 받은 뒤 FPGA retire/다음 frame으로 이어진다. 생산 코드·배포186은 그대로이며 새 실기판/FPS 결과는 없다.
