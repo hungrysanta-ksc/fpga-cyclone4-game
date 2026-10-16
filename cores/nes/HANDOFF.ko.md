@@ -1,3 +1,21 @@
+# NES202 실제 RUN에 직접 타일 계획 연결 (최신)
+
+[계약](../../docs/nes-runtime202-contract.ko.md) · [검증](../../analysis/runtime202-verification.json). PR117 같은 branch. 선택test05/dma02/arm04/check03/evidence01. 배포186 유지, 새 실기 ZIP 없음.
+
+실제 수신/PREPARED/COMMIT→sink BEGIN→191 planner/200 emit/finish→195 op7와 metadata/raw SEAL→최종 표시 ACK→200 retire→receiver consumed를 기존 호출부에 통합했다. 표시 후 retire 실패는 frames에 성공 표시를 남기되 receiver COMMITTED를 유지하고 terminal/commonSTOP으로 간다. 다음 BEGIN/재시도/프레임별reset은 금지한다. guard는 거래 사이에서 audio/input/deadline을 서비스한다.
+
+기존 MCU→SNES BG/OBJ DATA 업로드는 RUN에서 제거했다. **FPGA→MCU CHR payload와 old fill은 남아 있다.** 현재 planner의 tag/kind 검증은 checked receiver를 사용한다. 실제 loader의 epoch/ready/write, board SPI/descriptor mux,192 source에201 EXPORTED 표시 lease를 연결한 뒤 metadata-only 수신을 함께 구현해야 한다. 다음 collector generation으로 바꾸지 않는다.
+
+test05는 실제 C RUN/receiver/planner/service/sink/window 전부, 하드웨어만모델.9연속합성장면 normal/BGOBJ/alt/raw1·7/normal복귀 및gen65535→0/tickwrap,100타일과전체video구조 exact186. 잘못된SEAL/descriptor/CRC,deadline/service,retire미응답6경로terminal/no retry. **새 actual65816/RTL 동시실행·게임·FPS 증거는 아니다.**
+
+FullARM203848B/static26872/RUN36976/IRQ508/여유1068B. arm03/check02의812B는1024기준미달로미채택. 기준은유지하고 E1의사용하지않는RX259B배열을TX와공유해 compiler send스택544→288B로줄였다. 배포DMA실제C register모델 1..259B×3=777정상+259byte오류통과. 기존13library/platform body는재배치외동일,116도달함수/콜백포함. 기준위44B뿐이므로새진단버퍼추가금지;최종보드/입력변경뒤재계산필수. FW e7d857d4 compileonly/186FPGA와혼용금지.
+
+다음은 actualboard epoch/mux/192 lease 연결+oldCHR 중복제거를 한 흐름으로 완성하고, 최소 BG/OBJ board→C→SNES 결합과 전체FIT/IO 뒤 짝패키지 FIRSTLEVELSCROLL이다. 또독립codec/boot/seed FIT만반복하지않는다. 숫자1+A→첫레벨확인→RIGHT+B유지/A press-release로16.67ms전체와표시간격측정. collected_runs=[];199합성17.944ms도예산초과. persistentdelta/base/bank/slot/epoch/CHR-RAM/MMC4·5메모리목표열림. AV약60fps→장기플레이/reset로그→입력유지순서.186/GBC164/saveSRAM/완료증거보존.
+
+실패기록: test01 DLL623, test02 하네스경고, arm01 GCC13 배열길이선언, arm02 version문자열길이, arm03/check02 메모리기준미달. 후보선언64원소/식별자NES-RUN202-DEV로수정. test03/04/dma01은중간결과,원본보존.
+
+---
+
 # NES201 캡처 중첩과 표시 원본 수명 분리 (최신)
 
 [계약](../../docs/nes-capture201-contract.ko.md) · [검증](../../analysis/capture201-verification.json). PR117 같은 branch. 배포186 유지, 새 실기판 없음.
