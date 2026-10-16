@@ -1,3 +1,363 @@
+# NES209 실기 결과 기록 (최신)
+
+[결과](../../docs/nes-game209-hardware01.ko.md) · [원본 분석](../../analysis/game209-hardware01-verification.json). PR117 같은 branch. 사용자: 프레임 개선 체감, 스크롤 미흡, 사운드·조작 정상. 직접 타일 경로의 실제 표시 완료205회/60.06초를 확인했지만60fps는 미달이다. 영상/실제 메뉴 화면 확인은 이번 보고에 없다.
+
+186의182회 대비205회(+12.64%)는 다른 장면·입력의 전체 누적 비교이며 스크롤 FPS나 통제된 개선율이 아니다. receive27.71→12.36초, build7.90→20.88초, seal23.95→26.48초. 새 build는 계획 SPI/credit/소스·chunk 대기를 포함하므로 CPU 계산 악화로 해석하지 않는다. SPI278289회/7340541clockB는 direct aperture payload를 제외하며 poll 분포도 없다.
+
+BEGIN206/END205/COMMIT205/displayACK205/ABORT0, 마지막59.95초/gen310. primarydeadline1/60.06초이며 receiver23은 다음 D1의 callback 또는 CRC 공용 오류로 deadline 부수 결과와 부합한다. 독립 CRC 장애 증거는 없다. ROM/plan/sink/video/window 오류0,7911sent=retired/ACK1; plan_sent/end0은 성공 retire 후 초기화다. STOP/base/safe/MENU_PREPARED295760ms 확인, 사용자 가시 메뉴 확인과 구분한다. 마지막8reject/8recovery에는 장면별 시각이 없다.
+
+**다음은 실제 스크롤 부하의 계획/소스/chunk 대기와 window/SEAL 및 map/raw·slot 변경 비용 분리다.** 기존 자료를 먼저 재사용하고 필요한 정보가 없으면 다음 성능 변경에 제한된 명령/단계 카운터를 함께 넣는다. 로그4047/4096B 예산을 먼저 확인한다. 별도 관측기/FIT/codec 반복으로 되돌아가지 않는다. 과거 collected_runsEMPTY 문서는 당시 불변 기록이며209 사용자 스크롤 관찰은 이번 문서에 있다. 장면을 맞춘 ingress/egress·시간 측정은 여전히 없다.
+
+새FW/FIT/ZIP 없음.209/044 반복·입력전용 시험 요구 없음. 최종 표시ACK/불변lease/코어우선/CHR-RAMcontent 보호,207148LE/1LAB와ARM9260B 및MMC4/5/state/mute/frameskip 예산 유지. AV약60fps→장기play/error-reset로그→heldinput 순서와186/GBC164/saveSRAM/모든 기존archive를 보존한다.
+
+# NES209 직접 타일 전송 실기판 준비 완료 (최신)
+
+[계약](../../docs/nes-binding209-contract.ko.md) · [실기 안내](../../docs/nes-game209-ready.ko.md) · [검증](../../analysis/binding209-verification.json). PR117 같은 branch. SELECT **test02/arm01/check02/report02/asm01/romcheck02/release01**. 첫 직접 타일 경로 실기판 준비 완료이며 실제 게임/FPS 결과는 아직 없다.
+
+208의 실제C packet117개와 실제65816 ACK를 선택된207 queue/reset/bus에서 재생했다. 정상86/부분31개,4credit 최대queue26회,33229checks PASS.208의SPI status 타이밍을 기록한 것은 아니며 새 grouping으로 backpressure를 검증한다. 부분E9 중단 자체는208 증거를 재사용한다. 최상위 assign7개를 원문 추출한320truthcase와 실제 sink의descriptor6040..6050/aperture400800..fff/save700000 비점유를 확인했다. peer 신호는fixture이고 fullboard cycle/gameCPU/physical/FPS 시험은 아니다. 변경 없는184 queue를 다시 구현하지 않았다.
+
+203 소스1424개에서메뉴/checkpoint/VERSION3개만 변경해209 실행명·FPGA/ROM/로그명을 부여했다. postSTOP plan_error/plan_sent/plan_end3개를 로그에 추가하며 RUN/사운드/입력/SD/복원 코드는 그대로다. 실제전체ARM203744B/static26872/RUN28784/IRQ508/여유9260B,최대로그4047/4096. checker는209identity+추가formatter만 역변환해203과 비교하고1024B gate 유지. runtime203와208 시험 C의 동일성도 release에서확인했다.
+
+207 mapfit02를 복제하여ASM/CPF만실행,새MAP/FIT/STA/MIF변경없음. source/routing은ASM시byte동일,EDA후QSF는정확한줄바꿈/edition메타데이터/출력설정3개만허용. EDA default/slow85/fast0의3×4096BROM이195/208client와일치한다. 이전4filechecker의개수거부를3출력의명시적목록으로수정했으며새3corner timing측정은아니다.207 strict+.041ns/148LE1LAB/조건부IO를재사용,fullCDC/MTBF/electricalsignoff아님.
+
+패키지 `probes/nes-binding209/release01/NES209-SMB3-DIRECT-TILES.zip` 및 `releases/NES209-SMB3-DIRECT-TILES.zip`. ZIP SHA256 dd3aff6454bf8701675a20dcabd079113c1f85feee4a211a5fe0751324997c12, firmware6d3ecb23c702636f21b00358b85eff22623dc25abb0740072710472309eaf3d6, FPGA5ff7401c9ba7ce24ea795674dc8cd18a8f91364b44e6eed00769d0adebc5405c. 제공SMB3 ROM dbb1cb5e/menu/base/restore164바이트동일. 원본24archives/186/GBC164/saveSRAM보존.
+
+**다음은 사용자209실기 결과다.** 숫자1+A→RIGHT+B 유지/A press-release로 첫 레벨 카메라 스크롤을20~30초 촬영하고 progress209/game-last209,음악·조작·메뉴복귀를 받는다. 초기로드와플레이시간을분리한다. 기존60초제한유지;동일044복원/입력전용반복시험요구금지. collected_runsEMPTY,60fps미달성. aggregateACK는scene별FPS가아니고새3plan항목은마지막전송상태다. 이번실기로다음병목을좁히고필요한계측만추가한다. 증거없이또다른FIT/codec/wholegamecosim루프로돌아가지않는다. MMC4/5/CHR-RAM/state/mute/frameskip예산과AV60fps→장기play/error-reset로그→heldinput순서유지.
+
+# NES208 실제 C·RTL·65816 표시 완료 결합 (최신)
+
+[계약](../../docs/nes-join208-contract.ko.md) · [검증](../../analysis/join208-verification.json). PR117 같은 branch, SELECT **test08/evidence01**. C203 RUN이 실제207 epoch/lease/direct206/READ16 및 실제65816 client195와 동시에 동작했다. SNES가 작성한 최종 표시 ACK를 C가 받은 뒤 FPGA retire/다음 frame으로 이어진다. 생산 코드·배포186은 그대로이며 새 실기판/FPS 결과는 없다.
+
+정상3프레임65534→65535→0에서86packet/6chunk672B/실제displayACK3/retire3, reference186 타일과 RGB 화면이 일치한다. 두 번째 E9를 부분 전송한 취소 시험은 첫IO 오류를 유지하며 commonSTOP으로 끝나고 기존 화면을 보존한다. 취소 시31packet/2chunk224B/표시ACK1/retire1이며 두 번째 SEAL은 없다. 요청·응답 파일로 실제 descriptor/consume token/ACK/EA 세대를 교차 검증했다. 이전23개 archive 불변.
+
+**남은 모델 경계:** E0/E1 held queue와 archived203 ingress, capture/loader/RAM-ready fixture. qualified_slot=1/core_request=0. aperture의 불변 payload는 실제 RTL에서 미리 읽어 actual65816의 순차 read에 반환한다. 파일RPC는 트랜잭션 결합이지 공통 클록/전체 보드/실제게임CPU·경쟁·FPS 모델이 아니다. 사운드·입력 검증도 아니다. 기존195ROM compact4096B는207 sink-program.hex와 정확히 같다.207 FIT/IO와203 ARM을 재사용하고 변경 없는 RTL을 다시 FIT하지 않는다.
+
+중간test01~07은 header/Windows simulator path/실제 C frame count 순서/작은scene 조건/첫IO 오류/reset 중drained 조건의 harness 수정 과정이다. 생산코드는 수정하지 않았고 모든 원본을 보존한다.08이 최종선택이다. `probes/nes-join208/run-join.ps1`이 승인된 FLOAT wrapper를 사용하며 라이선스 로그는 private temp에만 있다. 새 smoke/licensing 절차 금지.
+
+**다음:** 변경 없는 E0/E1queue/최상위mux 연결을 기존 증거 재사용 또는 제한된 trace replay로 닫고 paired ARM identity/ROM/package→FIRSTLEVELSCROLL로 간다. 전체게임cosim·독립codec·loader·FIT 반복으로 범위를 늘리지 않는다. 숫자1+A→RIGHT+B 유지/A press-release에서 실제16.67ms 부하를 측정한다. collected_runsEMPTY/60fps미달성.207의148LE/1LAB 및 strict+.041ns는 mapper 확장 여유 충분을 뜻하지 않는다. MMC4/5·CHR-RAM/state/mute/frameskip 예산, AV약60fps→장기play/error-reset로그→heldinput 우선순위와186/GBC164/saveSRAM을 보존한다.
+
+# NES207 epoch reset 경계·전체 타이밍 통과 (최신)
+
+[계약](../../docs/nes-board207-contract.ko.md) · [검증](../../analysis/board207-verification.json). PR117 같은 branch. SELECT source02/epoch02/mapfit02/timing02/io02/evidence01. **기능/FIT/관련클록/96개 reset 경로·조건부IO 통과. 배포186 유지, 새 ARM/ASM/ZIP·실기/FPS 결과 없음.**
+
+기존 보드 core_release의 NES 로컬 reset을 loader_boot→source_epoch207에 전달한다. memory serial/Gray는 STOP에서 유지하며96개 sampling register만 로컬 reset을 받는다. admission은 이 reset이 끝난 후 기존 release_ready+stable 비교를 기다려 stale0 epoch 공개를 막는다. core_release의 memory_ready는 RAM init_done이며 source_ready와 feedback이 없다.206파일89개 중86개 byte동일; board.qsf/nes_spi_boot/nes_live_joint 변경+새source_epoch207. direct/batch/bulk/mailbox/loader/SDC/clock/seed는 그대로다.
+
+epoch baseline20+cold/stopped×phase32 및 잘못된 admission 변형 거부 PASS.96레지스터×recovery/removal×3corner576경로는 모두 로컬 core_release stage2에서 출발하며 min+40.182/+1.612ns. 이전288negative recovery가 단지 inventory에서 빠진 것이 아니라 같은클록 reset 경로를 따로 측정했다. reset firststage2개/기존CDC45개 각각 단일fanout 확인.
+
+FIT15260LE/8360FF/962LAB/47M9K, 여유148LE/1LAB/9M9K. 관련nominal setup+.173/기존엄격제약+.041/hold+.156ns. 이전206보다 placement 여유가 작아 mapper예산 충분 주장 금지. allcornerCDC4392행/newother0,held6.552ns/Gray6.723ns. 조건부IOPSRAM+3.828ns/SNES82.199ns/SPI165.227ns/nativepayloadreset PASS. raw reset release체인/기존경로/MTBF·전기signoff는 별도이며 새로운 timing exception 없음. 기존 loader state* 경고 유지.
+
+첫source01 별도coldchain은 기능/reset경로 통과 후 전체setup-.073/strict-.162ns로 실패해 미채택. 공유source02로 구조변경, 각후보1FIT. 원본보존, seed/loader미세FIT루프/clock완화 없음.206직접SPI/READ16/consume9frames1968B/partial22/cancel21/loader결과는 RTL동일성으로 재사용하며207게임검사로 세지 않는다. 이전22archive불변.
+
+**다음: 최소 실제 board→C203 RUN→SNES195 표시 결합.** exported201lease/epoch→SPI계획→192READ16→bulk/aperture→실제65816DMA→실제displayACK→retire/다음frame을 일반BG/OBJ+부분취소로 확인한다. fixture 최종ACK/consume를 실제C·65816으로 대체하고 독립codec/loader 반복으로 우회하지 않는다. 이어 정확한ARM/ROM짝검증→FIRSTLEVELSCROLL 실기. 숫자1+A, RIGHT+B 유지/A press-release에서16.67ms 측정; collected_runsEMPTY/199합성17.944ms는60fps아님. 미측정 성능 추정이나 기존186/044 반복시험 요구 금지. MMC4/5/CHR-RAM/state/mute/frameskip 예산과AV60fps→장기play/error-reset로그→heldinput 순서를 유지한다.
+
+# NES206 관련 클록 타이밍 통과·취소 경계 정리 (최신)
+
+[계약](../../docs/nes-board206-contract.ko.md) · [검증](../../analysis/board206-verification.json). PR117 같은 branch. SELECT source03/test01/cancel01/mapfit01/timing01/io02/evidence01. **기능/FIT/관련클록 setup·hold 통과, epoch reset 경계 미완료. 배포186 유지. 새 ARM/ASM/ZIP/실기 결과 없음.**
+
+direct/batch/bulk206은 raw reset/fault를 로컬 release에서 끝내고 데이터 허용에 다시 쓰지 않는다. mailbox206도 raw reset ready/valid 우회를 제거했다. 내부 sticky fault는 취소와 별도인 base reset으로만 지워 자기 원인을 지우는 루프를 막는다. 기존 geometry/ACK mailbox165는 보존한다.205 byte stream/부분 타일 비공개/코어 우선 READ16/최종 SEAL ACK-retire는 유지한다. loader count_complete는 기존 loaded_bytes의 count_update/count_clear를 공유한다.
+
+실제SPI/READ16/consume9프레임1968B와205 fixture사이클 동일. 부분타일22/클록정지 취소·오류·복구21검사 PASS. loader16상태·명령294912/실제쓰기1056/19bit count524288 비교 및 잘못된 terminal 후보 거부 PASS. 실제NES CPU+ARM+65816 동시 게임 시험은 아니며 실기 FPS로 해석하지 않는다.
+
+한 번의 전체FIT15179LE/8360FF/959LAB/47M9K,229LE/4LAB 여유. 관련클록3corner nominal setup+0.293/implementation+0.193/hold+0.121ns. 이전 완료 판정 경로는−0.739→+0.641ns. 이 통과를 유지하고 기존 loader/seed를 더 미세 조정하지 않는다. 기존 state* 이름 미일치 경고는 그대로 명시한다.
+
+3corner crossclock4968행, 첫 단계45개 단일 fanout. 새 미분류 데이터 우회0행, held payload최대6.598ns/Gray6.693ns. **source_epoch205의 epoch_meta/epoch_sync/previous96개에288negative recovery 행이 남는다.** raw memory-domain cold reset 해제를 NES 로컬 release에서 끝내야 하며 broad false_path는 금지한다. reset synchronizer 자체의 async 경로/held-data protocol/MTBF까지 승인한 것은 아니다.
+
+조건부IO는PSRAM70ns+PCB4ns 가정 여유3.221ns, SNES86.231<270ns, SPI166.008<190.476ns, 기존 native payload reset PASS. measurement IO01은 inheritedCDC 예외가 records_req를 숨겨 실패, IO02 clock-only measurement view로 raw지연 추출; production SDC/배치불변. source01 디렉터리준비실패, source02 테스트후 QSF에165+206 보존한 source03선택; RTL source02==03. 실패원본 보존.
+
+**NEXT**: epoch96개 cold-reset release를 로컬화하고 정지clock 무효화/안정화 후 admission을 최소검증한다. 정확한 reset/held-data bounds와 최소 actualboard→C→SNES 짝을 확인한 뒤 SMB3 숫자1+A→RIGHT+B유지/A press-release 연속스크롤 실기판으로 간다. 오프닝/정지화면/ACK평균이 아닌16.67ms 고유표시간격을 측정한다. ARM203 여유9260B는재사용이며 새ARM증거아님.21개이전archive/186/GBC164/saveSRAM 보존. MMC4/5/CHR-RAM/delta와AV60fps→장기play/reset로그→입력유지 순서유지.
+
+---
+
+# NES205 ROM 경계 수정·중복 타일 저장 제거 (최신)
+
+[계약](../../docs/nes-board205-contract.ko.md) · [검증](../../analysis/board205-verification.json). PR117 같은 branch. SELECT source01/epoch01/test01/test01/atomic/mapfit01/timing01/inventory02/paths02/evidence01. **기능·FIT 통과, 타이밍 미승인. 배포186 유지, 새 실기 ZIP 없음.**
+
+raw loader 상태는 기존 비동기 assert/동기 release 경계까지만 연결하고 NES 데이터 허용은 held/admitted로 결정한다. 이전 release_reset→export.pack_count 우회는3corner 모두 사라졌다. Gray epoch와 정지 clock 중 write/STOP 무효화는 유지한다.191의32B register 배열 대신205의1B holding register를193 unpublished RAM에 연결했다. **205 out_valid는 부분 byte이지 완성 타일 승인이 아니다.**193 마지막 byte seal과 source fault 취소가 반드시 함께 있어야 한다. 기존191은 변경하지 않았다.
+
+epoch20검사, 실제SPI/READ16/consume9프레임1968B exact186, 부분1/7/15byte×7오류+대기·복구22검사 PASS.204와 합성 fixture의 사이클 수가 동일하다. 실제 게임 CPU+ARM+65816 결합/스크롤 FPS가 아니며 sourcefault2edge 지연과 부분타일 비공개를 별도 확인했다. 새 ARM 없이203 compile-only 여유9260B를 재사용한다.
+
+한 번의 전체 MAP/FIT:15182LE/8337FF/961LAB/47M9K.204보다128LE/249FF/2LAB 감소,226LE/2LAB 여유.3corner 관련클록 setup−0.739ns/hold+0.148ns로 타이밍 실패다. 이전 CHECK 경로는+0.240ns지만 현재 loaded_bytes[2]→count_complete가9논리단/6.586ns/배선67%로 최저다. **자원 절약과 일부 경로 개선이 전체 타이밍 통과를 뜻하지 않는다.**
+
+새CDC 첫 단계44개는 각각 대응 두 번째 단계 하나만 구동한다.18582 cross-clock행을 분류했으며 content_lifetime setup/hold64행은 Gray32비트뿐이다. inventory 기본corner 수치는 전체corner bounds 승인이 아니다. 새 held-data/cancel/reset와 외부IO 검증이 남았다. inherited SDC loader state* 조건은 실제 onehot 이름과 맞지 않아 무시된 경고가 있으며 이번에 constraints/clock/seed를 바꾸지 않았다. inventory01의 fanout0행은 API 전달형 오류로 보존하고 inventory02에서 수정·검사했다. FLOAT 종료 직후 port busy로 다음 시작이 한 번 거부됐고 종료 후 재실행했다. 라이선스/전역 설정 변경 없음.
+
+**NEXT**:205 구조를 유지하며 새 held-data/cancel/reset/Gray의 프로토콜과 전체corner bounds를 먼저 닫는다. 완료 판정9단과 source-count fanout/기존 terminal predicate 재사용, 작은 캐시·상태 RAM화의 추가cycle/포트/자원 비용을 함께 검토한다. 기존 loader만 반복 microFIT하거나 seed/clock을 바꾸지 않는다. 구조 근거와 최소 결합 검증 후 전체FIT/STA/IO 및 board→C→SNES 짝을 확인한다. 그 뒤에만 SMB3 숫자1+A→RIGHT+B 유지/A press-release 연속스크롤 실기판으로16.67ms 목표를 측정한다. 이전20개 archive/186/GBC164/세이브SRAM 보존. MMC4/5·CHR-RAM·delta·장기play/reset 로그와 향후기능 예산은 여전히 미완료다.
+
+---
+
+# NES204 실제 보드 결합 — 배선 성공, 타이밍 미승인 (최신)
+
+[계약](../../docs/nes-board204-contract.ko.md) · [검증](../../analysis/board204-verification.json). PR117 같은 branch. SELECT source01/test01/epoch01/map01/fit01/timing01/paths01/report01/evidence03. 배포186 유지, 새 실기 ZIP 없음.
+
+실제 loader의 BEGIN/write/완료크기/RUN/fault에서 epoch/status를 만들고201 **exported** generation/epoch→192 source에 연결했다. old fill와 중복 arbiter는 제거했다. 실제 core 우선 READ16, SPI200/batch201, bulk193, SNES194 descriptor/consume/aperture와195 ROM까지 보드 생성기에 통합했다. capture/display overlap과최종 ACK/EA 수명은 유지한다.
+
+새 production direct204 모듈의 실제 SPI/READ16/604c..6050 consume 버스가3장면×3프레임1968B exact186 PASS. epoch 경계20검사PASS. 계획/CPU·PSRAM/lease/최종 ACK는fixture이며 실제 NES게임CPU+65816+ARM 동시 결합은 아니다. 이전203 ARM 여유9260B를 재사용하고 새 ARM/실기 FPS 증거를 주장하지 않는다.
+
+전체FIT는15310LE/963LAB/47M9K로성공했지만98LE/0LAB밖에남지않았다. 같은DB3corner STA에서 관련클록setup−0.638ns/hold+0.150ns. 실패는control.check_next[17]→reader.check_response_address[21],3단/배선74%다. **배치 성공과STA 실행exit0는타이밍승인이아니다.** 새source raw invalid가 NES lease/capture/export에 조합우회해19단/15.001ns 경로를만든다. 도구−12.865ns는비동기관계이므로동기부족량과합산하지않지만전체false_path로덮지도않는다. 정확한newCDC/Gray skew/mailbox held-data/요청ACK/reset/RAM·외부IO는미승인이다.
+
+**NEXT**: 먼저 source_ready의 !invalid와source_writing=invalid가NES데이터로우회하는경로를없애고비동기무효화/동기재허용을로컬경계에서끝낸다. 정지NESclock중write/STOP/다음epoch원자성·boundeddrain을유지한다. 이후tile191의32B registerbuffer와bulk193의32B sealedRAM 중복/row-tag선택/descriptor복사를함께줄여배치여유확보. 부분tile공개금지·backpressure·처리량을같이검증한다. 바로기존loader만다시미세최적화하거나seed/FIT반복으로돌아가지않는다. 구조변경근거가생긴뒤한번FIT/STA/IO,최소board-C-SNES결합후짝패키지FIRSTLEVELSCROLL.
+
+199의17.944ms도합성모델일뿐이며실기collected_runs=[] 유지. 숫자1+A→RIGHT+B유지/A press-release에서전체16.67ms/고유표시간격을측정한다. MMC4/5·CHR-RAM·persistentdelta·장기play/reset로그미완료. 세이브SRAM/GBC164/배포186과이전19archive보존. evidence01/02는STA의QSF개행+LAST_QUARTUS_VERSION 메타데이터변경을예상하지못한검사실패이고 evidence03에서두변경만정확히허용했다. RTL/SDC는단1byte도다르지않게확인했다.
+
+---
+
+# NES203 CHR 중복 수신 제거 (최신)
+
+[계약](../../docs/nes-metadata203-contract.ko.md) · [검증](../../analysis/metadata203-verification.json). PR117 같은 branch. SELECT test04/capture02/arm01/check01/evidence01. 배포186 유지, 새 실기 ZIP 없음.
+
+paired2031 exporter는 geometry→META_END→raw→END/PREPARED/COMMIT만 보낸다. old fill 포트/상태/CHR byte 경로를 제거했다. receiver는 검사된 map/object/exception에서 필요한 tag/kind를 도출하고 geometry count/phase/raw slot/논리 record 및 byte0를 확인한 뒤512개 이하 목록을 만든다. 그 뒤에만 bitmap을 raw scratch로 재사용한다. 이전1813·pre-META_END CHR·early raw·중복종료·513tag는거부한다.191 planner는 픽셀 포인터 대신 metadata항목을 조회한다. 픽셀 내용 검증은 **실제 보드에 아직 연결하지 않은201 immutable ROM epoch/192 source lease**의 책임이다. 구형FPGA와 이 ARM을 혼용하면 안 된다.
+
+실제 exporter trace를 실제 C RUN/receiver/planner/service/sink/window에 재생해9장면/100타일/전체video metadata가186과 일치했다.11export/3export오류/9수신경계(512허용513거부)/6RUN오류PASS. capture02는 실제 collector201+203 exporter에서fill과querymux를없애고직접조회한다.558검사/3export/raw512/다음224행중첩/33geometry/readerdrain후retire/거부복구/epochfaultPASS. sourceepoch/PPU/최종표시는fixture,bulk는zero3개뿐이다. **실제BGOBJ source192/전체boardSPI/C+RTL+65816동시/게임/FPS증거아님.**
+
+FullARM203648B/static26872/RUN28784/IRQ508/여유9260B.202의1068B보다8192B늘었으며1024기준유지. hostreceiver9880B/tile4B,oldpixelless;RUN workspace만줄고static/saveSRAM불변.116도달함수/13library-platformbody확인;기존pixelconverter는명시적실패stub이며링크에서호출없음. FW5b65b786 compileonly. 이전18archive불변. 실패test01줄바꿈+printf/test02printf/capture01wire선언보존;test03크기상수오류의중간결과는미선택,test04실행값사용.
+
+**NEXT**: actual loader contentepoch/ready/write →201 표시lease→192source와보드SPI/descriptor/consume mux/SNES195연결. 반드시EXPORTED captured_generation/epoch를쓰고다음수집generation을쓰지않는다. boardtop oldfill/arbiter를source192의코어우선reader로교체;oldfill을남겨성능판을내지말것. 최소실제BGOBJ board→C RUN→SNES와전체FIT/IO/최종ARM확인후짝패키지 FIRSTLEVELSCROLL. 추가독립codec/unchangedboot/seed FIT반복금지. 수집기전체를표시완료까지다시직렬화하지말것.
+
+숫자1+A→첫레벨확인→RIGHT+B유지/A press-release에서16.67ms전체/고유표시간격측정. collected_runs=[];199합성17.944ms는여전히예산초과.8192B여유는전체framebuffer/MMC4·5승인아님;CHR-RAM snapshot/persistentdelta base/bank/slot/content/row-alt-mask 메모리목표열림. AV약60fps→장기play/오류reset로그→입력유지.186/GBC164/saveSRAM/완료archive보존.
+
+---
+
+# NES202 실제 RUN에 직접 타일 계획 연결 (최신)
+
+[계약](../../docs/nes-runtime202-contract.ko.md) · [검증](../../analysis/runtime202-verification.json). PR117 같은 branch. 선택test05/dma02/arm04/check03/evidence01. 배포186 유지, 새 실기 ZIP 없음.
+
+실제 수신/PREPARED/COMMIT→sink BEGIN→191 planner/200 emit/finish→195 op7와 metadata/raw SEAL→최종 표시 ACK→200 retire→receiver consumed를 기존 호출부에 통합했다. 표시 후 retire 실패는 frames에 성공 표시를 남기되 receiver COMMITTED를 유지하고 terminal/commonSTOP으로 간다. 다음 BEGIN/재시도/프레임별reset은 금지한다. guard는 거래 사이에서 audio/input/deadline을 서비스한다.
+
+기존 MCU→SNES BG/OBJ DATA 업로드는 RUN에서 제거했다. **FPGA→MCU CHR payload와 old fill은 남아 있다.** 현재 planner의 tag/kind 검증은 checked receiver를 사용한다. 실제 loader의 epoch/ready/write, board SPI/descriptor mux,192 source에201 EXPORTED 표시 lease를 연결한 뒤 metadata-only 수신을 함께 구현해야 한다. 다음 collector generation으로 바꾸지 않는다.
+
+test05는 실제 C RUN/receiver/planner/service/sink/window 전부, 하드웨어만모델.9연속합성장면 normal/BGOBJ/alt/raw1·7/normal복귀 및gen65535→0/tickwrap,100타일과전체video구조 exact186. 잘못된SEAL/descriptor/CRC,deadline/service,retire미응답6경로terminal/no retry. **새 actual65816/RTL 동시실행·게임·FPS 증거는 아니다.**
+
+FullARM203848B/static26872/RUN36976/IRQ508/여유1068B. arm03/check02의812B는1024기준미달로미채택. 기준은유지하고 E1의사용하지않는RX259B배열을TX와공유해 compiler send스택544→288B로줄였다. 배포DMA실제C register모델 1..259B×3=777정상+259byte오류통과. 기존13library/platform body는재배치외동일,116도달함수/콜백포함. 기준위44B뿐이므로새진단버퍼추가금지;최종보드/입력변경뒤재계산필수. FW e7d857d4 compileonly/186FPGA와혼용금지.
+
+다음은 actualboard epoch/mux/192 lease 연결+oldCHR 중복제거를 한 흐름으로 완성하고, 최소 BG/OBJ board→C→SNES 결합과 전체FIT/IO 뒤 짝패키지 FIRSTLEVELSCROLL이다. 또독립codec/boot/seed FIT만반복하지않는다. 숫자1+A→첫레벨확인→RIGHT+B유지/A press-release로16.67ms전체와표시간격측정. collected_runs=[];199합성17.944ms도예산초과. persistentdelta/base/bank/slot/epoch/CHR-RAM/MMC4·5메모리목표열림. AV약60fps→장기플레이/reset로그→입력유지순서.186/GBC164/saveSRAM/완료증거보존.
+
+실패기록: test01 DLL623, test02 하네스경고, arm01 GCC13 배열길이선언, arm02 version문자열길이, arm03/check02 메모리기준미달. 후보선언64원소/식별자NES-RUN202-DEV로수정. test03/04/dma01은중간결과,원본보존.
+
+---
+
+# NES201 캡처 중첩과 표시 원본 수명 분리 (최신)
+
+[계약](../../docs/nes-capture201-contract.ko.md) · [검증](../../analysis/capture201-verification.json). PR117 같은 branch. 배포186 유지, 새 실기판 없음.
+
+성공한 exporter COMMIT은 geometry/raw를 MCU로 복사한 경계다.201은 이때 원본 ROM의 generation/epoch를 표시 lease로 보존하고 기존 수집기를 해제해 다음 프레임을 모은다. 다음 exporter는 export_permitted=0으로 막아 MCU의 현재 프레임을 덮지 않는다. 이전 최종 SEAL ACK 뒤 C200 EA→batch201 기존 mailbox→retire_commit으로 표시 lease만 해제한다. **정상 retire는 다음 수집기를 해제하지 않는다.** reader_drained가 false면 ACK를 보류한다. guard timeout은 common STOP으로 처리해야 한다.
+
+192 source와201 decoder에는 lease_valid/captured_generation/captured_epoch를 연결한다. 현재 수집기의 owned/generation은 다음 프레임일 수 있으므로 사용하면 안 된다. controller는 capture/표시 epoch를 분리하고 capture 시작의 실제 edge를181과 동일한201 output에서 받는다. ready/ROM/write/epoch 변화, 잘못된 세대·release는 terminal. invalid geometry/export rejection은 버린 뒤 정상 캡처를 재개한다. source는 immutable CHR-ROM만 승인하며 CHR-RAM snapshot은 미구현이다.
+
+SELECT test12/faults03/evidence01. 실제 선택184 collector/fill/export 인스턴스와 query mux + wrapper201 + SPI200/batch201/tile191/bulk193를 결합했다.3정상 export, packedraw512값 비교, 이전 lease 중 다음224행 캡처/geometry33값 확인,3zero tile×16B/token1000→1001→1002, invalid geometry1개 폐기·복구, epochfault1개 처리:558검사. source lifetime/겹침/세대wrap/STOP23검사도 통과. capture알고리즘181 및 plan decode200 정규화 동일, 이전16archive hash불변.
+
+PPU/PSRAM/PREPARED/최종표시는 fixture다. zero tile만 직접 경로에 연결했고 실제 geometry→BG/OBJ 계획은 미연결이다. actualC+RTL+65816/게임CPU/물리 SPI mux 승인 아님. 기존 fullCHR fill도 아직 남아 있어 중복 전송 제거를 주장하지 않는다. wrapper는99상태bit, 별도 frameRAM 없음, 실제LE/LAB/IO는미측정. 중간test09/faults01은수집기전체를표시까지보존하는직렬구조로PASS했지만60fps관점에서폐기했다. test01..08/10..11/faults02는계약의하네스실패설명참조;원시기록보존.
+
+NEXT loader/ROM contentepoch/ready/write 연결→boardSPI/descriptor mux와192표시lease 연결→실제191planner/C200emit-finish/195seal-finalACK/retire 순서 productionRUN 통합. geometry/raw를COMMIT한뒤옛CHR중복payload를제거하려면actualgeometry/tiles joint증거필수. 작은codec/독립FIFO반복금지. 이후전체ARM/RUN/IRQ/FIT/IO,짝패키지첫레벨스크롤. 기존200의source-retire 계약은표시lease에적용하고**collector전체를다시직렬화하지말것**.
+
+collected_runsEMPTY. 숫자1+A→첫레벨확인→RIGHT+B유지/Apress-release반복으로동일generation 전체지연·고유표시간격 측정.199합성17.944ms는16.67ms초과, 이번겹침도실측FPS아님. persistentdelta/base/bank/slot/CHR-RAM/메모리예산남음. 새FW/FIT/STA/전체ARM/ZIP/실기승인없음. AV약60fps→장기play/오류reset로그→입력유지.186/GBC164/saveSRAM/완료archive보존.
+
+---
+
+# NES200 표시 완료 후 다중프레임 재무장 (최신)
+
+[계약](../../docs/nes-frame200-contract.ko.md) · [검증](../../analysis/frame200-verification.json). PR117 같은 branch, 배포186 유지.
+
+E8version4, EA7B generationLE16/acceptedBE16/CRC8/A5. END+빈chunk+빈planhost와맞는세대/묶음수를요구한다. host→NES 1bit165mailbox가closed/WAIT/no pendingplan을확인한ACK를돌려준후에만 END/count를지우고credit을연다. NES closed가host END통지전의추가계획도거부한다. C200retire는finish완료뿐아니라 실제195sink의IDLE/displayed/current·lastgeneration 일치를요구한다. 실패는terminal/no retry.
+
+정상순서 sinkbegin→191plan/200emit→200finish→기존sinkseal(finalACK)→200retire→sourcelease반환/새capture승인. 이productionRUN호출전체와producer grant는아직미연결이다. SPI자체가PPU최종표시를검사하는것은아니며C의ACK검증경계가담당한다. retire는normal경로이며STOP재시작/freshtokenseed와구분한다. 프레임retire때core/physicalreader/bulkbank/token을reset하지않는다.
+
+SELECT test03/faults02/c01/evidence01. actualSPI2.625MHz→200planRAM→192qualified70nsREAD16→193aperture:3합성장면각3frame/1968B exact186;gen65534→65535→0,token1000에서계속증가. 합성corePORT요청응답도계속검사,실제NESCPU실행아님. lease/ROMepoch는fixture제공이다. raw장면normaltile부분포함,새raw최종표시시험아님.
+
+SPI/decoder50경계,실제C200+실제195sink10검사(정상3frame/최종ACK누락·오류·wronggen/retiretimeout·응답·전송·guard오류)통과. C의SPI/SNESexchange는mock,RTL의display완료는fixture이며actualC+RTL+65816동시실행아님.195actualC+65816증거와이전15archive불변재사용. test01선언충돌/test02변수치환task이름오류/faults01END8clockfixture를1clock으로맞춘기록보존. 생산RTL/C수정없이통과.
+
+다음은실제capture generation/contentepoch의원자적grant-release,board SPI/descriptor mux,productionRUN호출순서를결합한다. retire완료전source풀기/새capture로대체금지. 최소joint검증/전체ARM-RUN-IRQ/FIT-IO뒤짝패키지첫레벨스크롤. 작은codec반복/frame전체reset금지. persistentdelta는base/bank/slot/content/CHR-RAM/메모리예산후속.199의17.944ms합성모델은여전히60fps미달이며이번50검사를속도개선으로표현하지않는다.
+
+collected_runsEMPTY. 숫자1+A→첫레벨확인→RIGHT+B유지/Apress-release반복으로실제부하측정. 오프닝/정지/합성/ACK수대체금지. 새FW/FIT/STA/전체ARM/ZIP/실기승인없음. AV약60fps→장기play/오류reset로그→입력유지.186/GBC164/saveSRAM/완료archive보존.
+
+---
+
+# NES199 공통 타일 명령 (최신)
+
+[계약](../../docs/nes-short199-contract.ko.md) · [검증](../../analysis/short199-verification.json). PR117 같은 branch, 배포186 유지.
+
+계획의 기본row/mask/alt를 짧게 표현했다. E8version3, BG7B/OBJ8B/zero·END3B, 비identity행/cross-tile은16..32B full196.198두bankRAM/248BCbuffer/15계획한도/대기중195op7/guard/commoncancel/무재전송은 유지한다. generation/tag/slot/CRC와semantic검사 유지, short/full혼용 가능. persistent frame cache나 타일생략이 아니다.
+
+중요한 결정:191planner는 매frame슬롯을 다시배정하고 bg_keys는 OBJ검사/raw scratch로 소멸한다.195sink는연속slot을 요구한다. tag만 같다고 emit을 생략하면 안 된다. 큰이전계획배열을새로두기전에 전체ARM메모리를 확인해야한다. 그래서 기본필드압축을 먼저 적용했고, 실제staging순서/출력내용은 그대로다.
+
+SELECT test01/faults01/c01/evidence01 모두 첫실행통과. 실제SPI2.625MHz/4×2us wait→199RAM→192qualifiedREAD16→193aperture의8합성장면97계획1840B=186reference.512BG+END35묶음8192출력B/4chunk 동일, 계획payload8208→3587B. 같은pressure모델시간32.096399→17.944424ms. 실제게임FPS/스크롤감소율아님, 16.67ms초과이고 준비/최종표시비용도추가된다. fullwait/sourcewait0,포화시험아님.
+
+SPI/decoder37검사(기존23+short4복원/10거부),실제C199+19524검사,codec283검사.43C frames=독립Python/RTL입력byte동일. C의SPI/SNESACK는mock이고C+RTL동시실행아님.198실제DMA in-place744/248증거와이전14archives불변재사용. 전체ARM/새FIT/STA/IO/FW/ZIP/실기결과없음. hostgccstack을ARM근거로사용하지않는다.
+
+**다음은 작은codec추가보다 여러frame의실제수명연결 우선.** frame lease/content epoch·END재무장·fresh token·producer/board mux/C runtime/finalSNESACK·STOP을최소결합한다. 프레임마다NES전체reset금지. 전체ARM/FIT/IO이후짝패키지로첫레벨스크롤측정. persistentdelta는displayACK basegeneration/WRAM-VRAMbank/slotownership/contentepoch·CHR-RAMwrite/row-alt-mask 및memorybudget을함께검증하며후속구현,현재승인아님.
+
+collected_runs는여전히비어있다. 숫자1+A→첫레벨확인→RIGHT+B유지/Apress-release반복으로 원본/신규·재사용계획/전송량/고유표시간격 median-p95-max를 비교한다. 오프닝/정지/합성/ACK수대체금지. 약60fps+사운드→장기play/오류reset로그→입력유지.186/GBC164/saveSRAM/완료archive보존.
+
+---
+
+# NES198 묶음 전송과 실기 SPI 예산 (최신)
+
+[계약](../../docs/nes-batch198-contract.ko.md) · [검증](../../analysis/batch198-verification.json). PR117 같은 branch, 배포186 유지.
+
+계획마다 status+write를 하던197을 두512B bank/1024x8 RAM으로 묶었다. 기존mailbox의 bank/count/plans handoff와 마지막decode 후 반환, tile_done까지 필드유지를 사용한다. status version2, E9 lengthLE16/plans/CRC16/CRC8/tail, exactlength/credit/semantic 검사를 유지한다. 이 RAM은 용량상 한M9K지만 합성 확인 전이다.
+
+실제186 DMA는259B 한도다. C198은 payload240B/최대15계획/총248B만 보내며 buffer 하나를 TX==RX로 사용한다. emit 성공은 local queue일 수 있고 finish는 END 및 chunk drain 완료이지 displayACK가 아니다. 기다리는 중195 sink/op7을 서비스하며 guard·terminal error·common cancel·무재전송을 유지한다. 현재 한frame/commonreset session이다.
+
+SELECT test02/faults02/c03/dma01/evidence01.8합성장면97계획1840B/11묶음 exact186,512계획+END35묶음8192B/4chunk. SPI23/C24검사, C46frames와 독립RTL 입력byte동일. 실제배포DMA C의in-place744정상/248bytefault 통과. SPI/SNES ACK는C시험에서mock이며 실제C와RTL동시실행 아님. DMA는register model, STM32bus/WCET 아님.13개 이전archive불변. test01/faults01/c01중간조건은비선택, c02 batch 기대값8오류→11인c03통과(생산C변경없음).
+
+**197의8MHz는 모델이었다. 실제186은2.625MHz이고 변경하지 않았다.** 512계획 payload8192B만24.966ms, 실제속도와4×2us wait를 모델링한시험32.096ms다. batch만으로60fps충족불가. 이 값은게임FPS나실기측정이아니다. 새FW/FIT/STA/ZIP/전체ARM승인없음.
+
+다음은 stable physical pattern/변경분계획 재사용이다. 물리tag뿐 아니라 content epoch/CHR-RAM 변경/row-alt-mask/destination slot/표시bank·basegeneration을 함께 검사하고 불확실하면 bounded rebuild. 속도만 올리거나 게임/audio/input처리를 생략하지 않는다. 이어 frame lease/epoch·END 재무장·fresh token·board mux·productionruntime 결합 및 최소jointlifecycle, 전체ARM/FIT/IO. 프레임마다NES전체reset 금지.
+
+실제스크롤 collected_runs는 비어 있다. 숫자1+A→첫레벨확인→RIGHT+B유지/Apress-release반복에서 원본읽기·신규/재사용계획·전송량·고유표시간격을16.67ms와 비교한다. 오프닝/정지/합성/ACK수 대체 금지. AV약60fps→장기play/오류reset로그→입력유지.186/GBC164/saveSRAM/완료archive보존.
+
+---
+
+# NES197 실제 SPI와 C 소비 서비스, 60fps 예산 제약 (최신)
+
+[계약](../../docs/nes-spi197-contract.ko.md) · [검증](../../analysis/spi197-verification.json). PR117 같은 branch, 배포186 유지.
+
+E8 status20과 E9 length+6 계획 송신을 추가했다. payload CRC16과 framing CRC8, exact byte/bit length/credit/tail을 검사한다. 상태는 descriptor snapshot/accepted/credit/sticky fault/END를 제공한다. endpoint·196 host RAM·193 descriptor는 같은 host clock. 소비는 SPI가 아닌 SNES194 token consume으로만 한다. C197 planner callback은 credit 대기 중195 op7/실제ACK 검사를 서비스하고 status를 다시 읽는다. false면 caller가 공통 취소하고 재전송하지 않는다. END finish는 chunk가 모두 비워졌다는 뜻이며 표시ACK가 아니다.
+
+SELECT test03/faults01/c03/evidence01. 실제 SPI8MHz→196→192 qualified70ns READ16→193 aperture8합성장면97계획1840B=186reference.512반복8192B/4chunk도 완료했으나 saturation시험은 아니고 fullwait/sourcewait0. SPI17오류/STOP/snapshot 검사. 실제C197+195 sink21검사/97chunk소비/105E9 frames=196wire;SPI와SNES ACK는C시험에서mock, 실제C와RTL동시실행아님.195실제C+65816 증거재사용.12개 이전archive불변. test01sandbox출력전종료/test02forwarddeclaration/c01DLL623/c02도우미warning 보존.
+
+**60fps 조건 미달을 확인했다.** 타일마다 status20B+E9최소22B+2회gap4us는8MHz에서최소46us,512계획23.552ms로 다른비용전부터16.67ms초과. 합성512전체39.293ms도게임FPS아님. 따라서 바로실기판으로승인하거나무변경FIT하지말고, 다음은같은planM9K여유공간을활용한batch/credit와stablephysicalpattern재사용으로per-tile status왕복제거. pixel을MCU로되가져오지않고chunk service/commoncancel 유지.
+
+현재 한frame/commonreset session 계약이다. batch뒤에는generation별frame lease/epoch·ENDclear/rearm·fresh token·boardmux/descriptor취득·productionruntime 호출을결합. 프레임마다NES전체reset으로연결금지. 실제sourcefault sticky/commonSTOP, guard deadline/audio/input, 최소jointlifecycle와전체ARM/FIT/IO필요. 새FW/ZIP/전체ARM/FIT/STA/실기결과없음. 호스트gccstack은ARM승인아님.
+
+스크롤collected_runs는여전히비어있다. tile1+A→첫레벨확인→RIGHT+B유지/Apress-release반복의연속스크롤에서동일generation원본/계획/전송/고유표시간격을16.67ms와비교한다. 정지/오프닝/합성/ACK수대체금지. AV약60fps→장기play/오류reset로그→입력유지;186/GBC164/saveSRAM/완료archives유지.
+
+---
+
+# NES196 작은 plan RAM과 production 연결 준비（최신）
+
+[계약](../../docs/nes-plan196-contract.ko.md) · [검증](../../analysis/plan196-verification.json). PR117 동일 branch, 배포186 유지. 새 실기판 없음.
+
+C version1 계획16..32B/CRC16 →32B dual-clock RAM →NES held209bit plan →실제192 READ16/193 aperture까지 통과했다. 6bit 길이만 mailbox로 넘기고, decoder가 복사한 뒤 RAM을 다음 계획에 반환한다. EXTERNAL_PLAN=1은 현재 타일이 끝날 때까지 decoder 필드를 유지하여191의 내부 복사 필요를 없앤다. 기본0 경로도 검사. 실제 자원 절약은 MAP/FIT 미측정이며 작은 RAM이 M9K를 요청한다. 전체 board/LAB 수용 가능성은 아직 모른다.
+
+SELECT test02/evidence01. test01은 byte15=0 중간 형식 PASS로 보존, 최종 byte15=1 선택. 과거 actual C191의97계획을 새 C encoder로1580payloadB로 인코딩(CRC/END 별도);8합성장면1840B가186 결과와 동일. C268/RTL273 경계와 default EXTERNAL_PLAN0 scene7 통과. 실제 SPI/production controller/livegame planner/실제 SNES CPU까지 동시 연결한 결과는 아니다.195 C issuer와4KiB SNES 및11개 이전 archives 불변. 새 전체ARM/FIT/STA/FW/ZIP 없음.
+
+NEXT: production SPI framing/descriptor 취득/C service/controller와 captured_epoch/frame 시작·종료·common STOP 연결. **plan credit를 기다리는 중에도 준비된 chunk op7/barrier를 서비스**할 것. 모든 계획을 먼저 보낸 뒤 소비하면2KiB 버퍼와 plan credit가 교착한다. source_fault는 common controller에서 유지하고 단순 fault→자기reset 조합 되먹임으로 지우지 말 것. 양 endpoint 공통 취소/fresh token, bounded deadline 유지. END는 표시ACK가 아니다:193 end_sealed/모든consume/sections/SEAL/finalACK까지 구분한다. 이후 실제producer→C→SNES 최소 수명 시험/전체ARM/FIT/IO 후 짝패키지 실기.
+
+스크롤 collected_runs는 비어 있다. SMB3 숫자1+A→첫레벨 확인→RIGHT+B 유지/A press-release 반복의 연속 스크롤에서 동일generation 생산/전송/고유표시간격과16.67ms 목표를 비교한다. 정지/오프닝/합성/ACK수로 FPS나 부하 감소를 주장하지 않는다. AV약60fps→장기play/오류reset로그→입력유지 순서. GBC164/saveSRAM/배포186/완료archives 유지.
+
+---
+
+# NES195 4KiB ROM 복귀 + 실제 C 직접 DMA 명령 (최신)
+
+[계약](../../docs/nes-bulk195-contract.ko.md) · [검증](../../analysis/bulk195-verification.json). PR117 같은 branch, 배포186 유지. 새 실기판 없음.
+
+194의 body3999B/8KiB 후보를 **body3935B/4KiB**로 줄였다. 89B boot의 예약을96B로 줄이고 ROM본문을8060으로 이동, MVN과 copy readback 주소 모두 수정. WRAM7E2000/검사/SEAL1941/op7 의미 유지. token·reply·begin loop와 dead A/flags의 STZ 공유.3936B 수용 중 여유1B이므로 다음 변경도 크기 검사 필수.8KiB 확대는 더 이상 다음 작업이 아님. 기본4KiB bus RTL 재사용;193 부분47M9K는 전체FIT 결과가 아님.
+
+실제 C의 nes_sink195_bulk는 descriptor12 ready/kind/gen/length/alignment/slot/token exhaustion을 검사하고 token4만 전송한다. window184_barrier에 op7을 연결해 앞선packet drain→op7→실제ACK 완료 후 BG/OBJ next를 증가시킨다. 실패/불명확/STOP은 terminal, 재전송하지 않는다. payload는 MCU를 통과하지 않는다. descriptor 취득·실제runtime호출·plan CDC/epoch/controller는 아직 연결 안 됨. SNESconsume가 먼저 성공하고 ACK가 유실될 수도 있으므로 commoncancel/freshtoken 의미를 지킬 것. 표시 완료는 기존SEAL/finalACK1만 담당한다.
+
+SELECT build02, snes01, coupled03/candidate+test, objects03, evidence01. 축소ROM 실제65816 7합성장면428288pixels 및11오류/STOP 통과. 실제C+window+65816 7장면/260ACK/15chunks4512B와 token오류/STOP2개 통과, packet bytes도194 preparedstream과 동일. C경계225개 통과. 최대DMA2048/첫BG4096은 사용하지 않는zero tile확장 시험으로 실측스크롤자료가 아니다. 실제RTL+SNES 동시실행아님. ARM video15912/sink32 및기존stack불변, 신규bulk자체40/packet320, text+268/dataBSS추가0. 전체RUN+IRQ는adapter연결후다시계산.
+
+실패보존: build01 3937B(1B초과), coupled01 시험도우미경고, coupled02 실제window op7미허용(첫BEGIN후거부)을수정한03선택. objects01경로/02sandboxDLL623/03호스트PASS. 원본186–194의10개archives불변. 기존raw/map/pad/SPC/saveSRAM/GBC164변경없음.
+
+NEXT: 191plan/192source/193chunk의 production descriptor취득·epoch·frame-start·planCDC·boardmux/commonSTOP/fresh token을연결. 최소actualproducer→C명령/barrier→SNESconsume/SEAL/ACK수명과전체ARM/FIT/IO/16.67ms예산을확인후짝패키지실기. 이번에해결한ROM크기나독립boot/FIT를반복하지말것. 사용자요구필수: SMB3 tile1+A→첫레벨확인→RIGHT+B유지/Apress-release반복의연속스크롤측정. collected_runs비어있음. 동일generation source/변환/전송/고유표시간격을연결;정지·오프닝·반복타일과ACK수/60초로효과대체금지. AV약60fps→장기play/오류reset로그→입력유지순서.
+
+---
+
+# NES194 타일 직접 DMA→기존 표시 경로 (최신)
+
+[계약·주소·검증 범위](../../docs/nes-bulk194-contract.ko.md) · [결과](../../analysis/bulk194-verification.json). PR117 같은branch. **배포186 유지, 새 실기판 없음.**
+
+실제65816 opcode7은20B 제어packet(token4,expanded<=2048)을 받아 ready/kind/generation/offset/token/length+기존section/순서/직렬번호를 검사한다.400800의immutabletile을후보WRAM7F로DMA한후STOP/padservice,consume604c..6050,stagingACK. 모든section을완료한SEAL1941만기존VRAM/CGRAM/OAM/HDMA/최종displayACK로간다. consume/ENDsealed/최종표시를혼동하지말것. palette/raw/지도는기존경로다.193→194controlRTL과실제65816fixture는별도시험이며직접cosim/productioncontroller/livegame은아님.
+
+SELECTbuild03(ROM=02)/rtl03/snes05+06+07/evidence02. Carchived7합성장면428288pixels=186reference,15chunks4512B/최대DMA2048. unusedBGzero추가로4096Bsection2chunks를시험했을뿐스크롤부하자료아님.11개잘못된descriptor/명령/STOP거부에서이전화면/소유권보존. 실제193생산기+194control+188aperture+8KiBROM버스2134checks,3consume/4reject;4KiB기본bus33024주소배포동일. STOPpausedhost/freshtoken/부분write/oldtoken경계. SNESclient는WRAM/PPU/ACK를직접실행,fixture가대신쓰지않음. 기존SPCinit/pad/최대64byteRLEservice유지.2048B DMA동안service없고직후호출,wholedeadline/audio실기승인아님.
+
+body3999B가3776보다223B크므로8KiB후보를명시선택해기능확인. build01실패보존;build03은metadataend1246정정만으로ROMbytes02와동일. PROGRAM_BYTES기본4096그대로/8192명시후보. 기존4KiB보드에새image배포금지.193부분회계47+ROM4=51/56M9K는미합성/추가cache/제어LAB전체미승인. 다음엔초기화/공통수신코드재사용vs8KiB전체비용을검토하고결정해야함. tinyFIT/seedloop로해결하려하지말것.
+
+NEXT productionplancodec/CDC와epoch생성/frame-startlatch,MCU의op7발행/section장벽,boardmux/commonSTOP/최종ACK수명통합. 이번op7은시험도구가과거C출력을재포장했고productionC가발행하지않는다. 생성tile→실제SNES연속최소경계+전체16.67ms/자원/IO성립후짝패키지실기SCROLL. Usercriterion필수:tile1+A→level확인→RIGHT+B유지/Apress-release반복. 같은generation원본/변환/전송/고유표시간격측정;collectedruns비어있음/실측FPS·감소율없음. 정지/반복fixture나ACK합계로대체금지.186/GBC164/saveSRAM/기존9archives불변. AV60fps→장기play/resetlog→입력유지순서.
+
+실행실패보존:snes01권한/snes02개발번들DLL/snes03상대ROM경로/snes04UnicodeLua경로/rtl01UnicodeDB;ASCII임시경로+기존Mesen번들로완료. rtl02중간제어통과;rtl03기본4K비교추가최종. evidence01sandbox TEMP경로불일치/빈폴더,02최종. 완료기록수정금지.
+
+---
+
+# NES193 타일 직접 읽기창 전송 / 스크롤 측정 필수 (최신)
+
+[계약과 다음 연결](../../docs/nes-bulk193-contract.ko.md) · [검증](../../analysis/bulk193-verification.json) · [실제 스크롤 측정 계획](../../analysis/scroll193-measurement-plan.json). PR117 OPEN 같은 branch. 배포186 유지/새 실기판 없음.
+
+사용자최신기준: 부하감소는첫레벨연속스크롤에서판정. 오프닝/정지/같은타일반복비율로대체금지. tile1+A로레벨확인→RIGHT+B유지+Apress/release. 동일run source/변환/전송/표시를generation으로연결하고baseline/candidate는비교가능한입력·게임상태·스크롤거리사용. cold/warm/static/transition/raw구분,실제고유표시간격과읽기/전송량함께측정. ACK총수/전체60s를FPS로쓰지말고perframeSD쓰기금지. 로컬ROMsha256 dbb1cb5e18b091ca9101b1c2f5a5d6bdbeaa4a30ae1a504251310f6765cabb49 확인;실제scroll collectedruns비어있음.
+
+192actualarbiter/READ16→191tile→193immutable32BdualclockRAM/34bitmetadata mailbox→1882x2048aperture. source는host가타일전체copy하고ACK돌아올때까지RAM덮어쓰기금지. payloadreset없음. 같은kind/gen/연속slot을묶고kind/불연속/full/END에서seal. rawread에는SNES-planar tilebytes만있음;descriptor27bit(gen/kind/startslot)는token/length와같은buffer수명,아직hostports/controldecode미구현. ENDsealed는hostpulse/모든tile게시,전체frameCOMMIT나displayACK아님.
+
+SELECTtest04/faults02/evidence01.8actual186C합성장면97plans1840B byte/descriptor동일.8192B512same-source/연속slot압력4chunks;full148065hostcycles/sourcewait27273NEScycles후동일재개.9결합사례wrongconsume거부,8malformed/gen/partialSTOP/stoppedhostSTOP/sourcefault/restart/tokenexhaustionPASS.21.477/84/168MHz/phase3.5ns/70nspinfixture/rawbus32hostclocksperbyte;실제게임/65816DMA/물리CDC/FPS아님. test01include순서/test02harnesscounter+stall실패보존. test03/faults01큰290bitmailbox초기안PASS이나미채택;최종32BRAM+34bitmailbox(held/received580→68bit)로줄임. M9K추론/실제LE절감미승인.
+
+NEXT hostdescriptor를실제controldecoder+SNESclientbulkWRAM/inactiveVRAM/sectionvalidation/finalACK에연결. plan입력codec/CDC·productionepoch/frame-startlatch·raw/palette/OAM/HDMA/음성입력STOP통합남음. tilepayload에는MCUSPI없지만전체geometry왕복제거아님. source2046B/frame제한·stablecontentkey/delta/captureoverlap·16.67ms전체예산유지.42+4+1=47/56M9K는부분회계추정/24LAB여유미승인;교체할옛payload경로와전체자원검토후최소FIT/IO·짝패키지실기SCROLL. 일반FIFO관측기/긴불변boot/FIT/186-044반복금지.186/GBC164/saveSRAM/완료archives/MMC4/5·CHR-RAM·state/mute/frameskip보존. AV60fps→장기play/resetlogs→입력품질.
+
+---
+
+# NES192 qualified CHR-ROM 원본 연결과16B 캐시 (최신)
+
+[계약·처리량·다음 연결](../../docs/nes-source192-contract.ko.md) · [검증](../../analysis/source192-verification.json). PR117 OPEN 같은 branch. 배포186 유지/새 실기판 없음.
+
+191 타일 생성기를 변경 없는 배포arbiter165/physicalREAD16에 연결. NES clock에서physical0x200000..21ffff를읽는다. sourceROM/ready/write/captureepoch-liveepoch/framegeometry-generation 확인.16B한타일cache는physicaltag/16lanevalid/자체contentepoch로관리;frame이바뀌어도불변ROM내용재사용가능. STOP/쓰기/epoch/취소에서폐기하고공유reader는drain,reset은공통. captured/live둘다새값으로바뀌어도cache자체epoch비교로옛바이트폐기. CHR-RAM은snapshot없어명시거부;MMC4/5호환승인아님. epochproducer/frame-startlatch는board미구현;contentepochwrap전flush/reset필요.
+
+SELECTtest03/evidence01. test01no-cachebaseline/test02중간cachePASS보존.8합성C기준97계획1840B동일;원본reads1304→1262(약3.22%). SAME BGplan512회재생은8192→16reads,6→1readwindows,83.837→1.895ms.512unique/실제converter중복/스크롤FPS아님.9lifetime조건(mutable/epoch/write/inflightSTOP+drain/restart/warm/write-reload/equal-newepochs)PASS. 실제arbiter+READ16/70ns핀메모리fixture/21.477·168MHz/0·3.5ns위상. core_safe=1/10%core경쟁;실제CPU/PPU/APUgrant미연결.
+
+핵심:현재242..259라인/12mastercycle-slot의낙관적상한2046Breads/frame. cold8192B를매번읽는구조는SPI왕복제거만으로60fps불가. core우선권을풀지말고stablephysicalcontent/plan-key재사용·delta·captureoverlap을동시에진행. 현재cache1entry효과정상장면3.22%뿐이므로과장/무조건cache확대금지. 타일timeout1048576NEScycles는합법적귀선대기를포함한48.8ms보호한도이지성능목표완화아님.
+
+NEXT 생성tile→188읽기창/SNES-readysection 직접공급+계획codec/CDC/epochproducer/descriptor/STOP/finaldisplayACK. geometry/raw/palette/OBJ/OAM/HDMA 의미보존;framegen/contentepoch/token/displayACK혼동금지.48Bpayload외tag/mask/epoch/응답reg/mux비용미FIT,24LAB14M9Kspare승인아님.16.67ms전체source·계획·cart·VRAM예산후최소FIT/IO+짝SMB3. 실제pairedscroll자료없음/tile1+A→RIGHT+B유지+Apress-release이번미실행.186/GBC164/saveSRAM/완료archives·state/mute/frameskip보존. AV60fps→장기play/resetlogs→입력품질.
+
+---
+
+# NES191 실제 변환기의 계획 분리와 FPGA 타일 생성 (최신)
+
+[계약·비용·다음 구현](../../docs/nes-plan191-contract.ko.md) · [검증](../../analysis/plan191-verification.json). PR117 OPEN 같은 branch. **배포186 유지/새 실기판 없음.**
+
+실제186 C의 geometry/slot/row/palette 검증은 유지하고 새 슬롯마다40B host 계획을 callback으로 출력한다. BG/OBJ pixel 접근·staging을 제거하되 tag/kind 목록 조회와 raw C 경로는 남는다. FPGA191은 한 계획+32B 타일만 갖고 sealed source에서 행별 low/high/cross-tile/OBJ mask를 적용한다. payload reset 없이 모든 byte 작성 뒤 공개. 원본은 완료까지 불변이어야 하며 응답 address/gen/error 확인, STOP/lease취소/유한timeout을 적용한다. backend는 stale reply를 flush한 후 mem_idle을 선언해야 한다. liveCHR-RAM/PSRAM/arbiter/CDC/읽기창은 미연결이다.
+
+SELECTtest03/faults01/evidence01.8합성장면97계획1840B 출력이 변경 없는 실제186 변환기와 동일, 전체15912B host metadata도 동일. CHR 전부A5로 바꿔도 같은 계획/metadata.1304fixture reads/간헐ready/1..5cycle응답.9generation/address/error/timeout/lease/STOPflush검사PASS. raw0/1/7행은 기존C경로 동일성이지 새rawRTL 검증 아님. test01/prepare01 치환오류/test02 C경고 실패 보존. ARM전체stack/실기/게임/FPS승인 없음.
+
+계획 wire 추정16B+alternate tag당2B(실제codec없음).8장면1580B 대출력1840B. 일반BG는16대16,예외는20대16이라계획전송만으로해결되지않음.2.625MHz SPI의60Hz당이상payload5468.75B에비해새BG512계획8192B: 안정된pattern/내용generation delta와captureoverlap 필수. 현재24LAB14M9K여유에계획레지스터/32Bbuffer/가변mux/watchdog와188aperture/원본snapshot이fit된다는보장없음. host시험전체plan배열은MCURAM제안아님.
+
+NEXT qualifiedsource reader의fetch-time content/lease와191을연결하고생성타일을188aperture/SNES-readysection으로직접공급. liveCHR-RAM재읽기를안전하다고가정금지;MCUSPIpayload재공급은bypass아님. codec/descriptor/ACK/STOP/finaldisplayACK 실제경계와16.67ms전체예산/자원조건을충족한뒤최소FIT/IO+짝패키지. 일반FIFO확대/불변boot/FIT/186-044반복금지. 실제scroll동일generation자료없음;사용자tile1+A→RIGHT+B유지+Apress/release절차이번미실행.186/GBC164/saveSRAM/완료archives/MMC4/5·CHR-RAM·state/mute/frameskip보존. AV약60fps→장기play/reset로그→입력품질.
+
+---
+
+# NES190 CHR 묶음 전송과 변환 위치 결정 (최신)
+
+[계약/예산/다음 구현](../../docs/nes-chr190-contract.ko.md) · [검증](../../analysis/chr190-verification.json). PR117 OPEN 같은 branch. **배포186 유지/새 실기판 없음.**
+
+새source_bulk190는host도메인에서16CHRbyte레코드를22B타일로묶고version1901을쓴다. kind6 header tag/gen4B+kind/layout2B+nativeNESplanes16B. 1813의96B/tile→22B로CHR부분77.08%감소. 실제exporter/fill/mailbox는그대로,189/188파일도그대로. 같은tag/gen/kind/lane0..15/reserved0인완성타일만공개.16Bscratch reset없어도완성전노출없음;partialABORT는scratch폐기후ABORT전달,잘못된byte는stickyfault(향후controller STOP필요). token/consume/PREPARED/COMMIT/displayACK구분보존. production1901decoder/boardmux/SNES DMA미연결.
+
+SELECTtest02/evidence01.4합성경로541/2910/702/11739B,2/3/1/7chunks;old763/3132/924/49627B. CHR512 -76.35%/26→7chunks,raw위주7.09%감소라장면전체76%FPS개선주장금지. 모든source96bitrecords=189,readbytes=독립encoder. 정상2사례는배포186actualCreceiver 전체18072B hostABI동일. Host검사기는1901→1813복원+COMPLETE후PREPARED직접설정;productionACK/ARM메모리/decoder승인아님.512pressure는큰fill부하시험이며Creceiver게임geometry승인아님. 부정8+partialABORT+STOPrestart=10PASS. fullbuffer대기261311hostcycles시험부하,실기시간아님. test01%zu호스트컴파일실패보존,test02cast수정PASS.
+
+결정:실제video185_build는BG행별low/highmapping/cross-tile/slot/OBJmask+paletteepoch/raw/OAM/HDMA가있다. 단순plane변환이나전체65816이식으로해결하지않는다. NEXT 실제변환기에서metadata→slot/row계획을분리하고FPGA의작은tilematerializer로동일BG/OBJ출력을만드는최소경계. sourcekind/tag/generation과fetch-time행mapping보존,복잡한geometry검증은현재MCU쪽유지후비용측정. CHR대량bytes를MCU가SPI로재공급하는것을bypass라하지말것. 계획크기/포트/원본lease/중간snapshot캐시/CHR재사용/mapper여유가성립하지않으면후보채택금지.
+
+189대비scratch16B추가,기존4096Baperture공유.128bit와제어FF비용미합성/현재24LAB여유fit보장없음. 원본CHRbyte별96bitmailbox횟수는그대로다.187의8mastercycle/cartbyte모델11739B=4.37ms는payload-only가정(소스·fill·변환·control·VRAM/VBlank·service·displayACK제외),16.67ms완료증거아님. 변환시간에stage callback대기도포함되어순수CPU시간단정금지.
+
+실제scroll동일generation자료미확보:숫자1타일+A→레벨확인→RIGHT+B유지+Apress/release반복,이번미실행. 최종section/descriptor/SNESbulk/STOP/표시ACK 연결과자원예산성립후최소FIT/IO+짝패키지실기. 불변boot/FIT/186-044/일반FIFO확대금지.186/GBC164/saveSRAM/이전완료archives불변;MMC4/5·CHR-RAM/state/mute/frameskip요구보존. 약60fps+사운드→장기play/오류·reset로그→입력품질.
+
+---
+
+# NES189 실제 출력기→CDC→읽기창 연결 후보 (최신)
+
+[계약과 다음 구현](../../docs/nes-source189-contract.ko.md) · [검증](../../analysis/source189-verification.json). PR117 OPEN 같은 branch. **186 배포 유지/새 실기판 없음.**
+
+실제 배포 exporter181/fill165/양방향 mailbox165를 새 host serializer189와188 aperture에 연결. source에서 직접 공급하며 MCU SPI 재채움 없음. 내용은1813 compact/CHR 레코드이며 SNES-ready section은 아님. synthetic sealed query/PSRAM 응답 + raw SNES bus 소비자 시험으로, 실제 PPU/ROM/CPU-DMA/board mux/물리 CDC가 연결된 것이 아님.
+
+SELECT test02/regression01/evidence01. 4사례 patch0 763B/2chunks, maxgroups+7raw3132B/3, rawfault924B/1 ABORT, CHR512 49627B/26 COMMIT. 정상 두 사례 과거actualSPI payload/records와 일치. 512타일에서 두 슬롯 full host대기157143/source대기64761클록 발생 후 byteexact 재개. 잘못된consume/잘못된PREPAREDgen에서 수명 유지. END 뒤 올바른PREPARED만COMMIT 허용. consume는buffer해제,PREPARED는원본소유권,displayACK는화면완료: 혼동금지. ABORT앞부분은미완성세대로폐기해야 하며 새실제소비기는아직없음.
+
+188기본exactseal유지,189만1..2048실제작성길이shortseal. 공통reset/STOP/active취소 연결,tokenFFFFFFFF에서fault/무한랩없음;freshsessionseed발행기는미연결. 이번결합에서STOP모든위상전수시험아님. 기존188회귀2위상각28049B/196590검사PASS(반복owner포함),ROM/control/packet보존. 4096BRAM재사용/추가payloadRAM없음;serializer/mailbox FF/LAB미합성,42+4M9K회계추정뿐. 새FW/FIT/STA/ASM/ZIP없음. test01초기3사례도보존. 이전1862799/실기11/1878/188142파일해시불변.
+
+NEXT 중요: CHR1byte가kind6에서6B로부풀어512tiles=49152B(총49627B). 이 형식을65816에단순이식해직접읽기만구현하면60fps의변환/전송비용이남음. batchedCHR/안정된패턴내용세대/SNES-ready변환위치를작은snapshot/streaming과함께자원·포트·16.67ms전체예산으로결정. 그런다음actualSNES bulkWRAM/descriptor/sectionvalidation/VRAMbank/finaldisplayACK/음성입력STOP 연결. 현재창400800..400fff는후보. MCU가SPI로같은bytes재공급하는것을bypass라하지말것.
+
+대표스크롤자료는현재없음: 사용자절차월드맵숫자1+A→레벨상태확인→RIGHT+B유지+Apress/release반복. 이번미실행. 같은generation source/변환결과로측정한후최소실기,일반FIFO/긴불변boot/FIT/186-044반복금지. MMC4/5·CHR-RAM/state/mute/frameskip/세이브SRAM/GBC164보존. AV약60fps→장기play/오류·reset로그→입력품질. 아래188/187의미연결상태는당시기록이며현재완료범위는이절과계약참조.
+
+---
+
+# NES188 카트리지 읽기창 후보 — 다음 구현 인계 (최신)
+
+[계약/한계/다음 작업](../../docs/nes-bulk188-contract.ko.md) · [검증](../../analysis/bulk188-verification.json). PR116 머지7439179 이후 codex/nes-bulk-aperture-188. **새 실기판 없음/186 배포 유지.**
+
+2KiB×2 immutable buffer를 host-clock local producer가 채우고 SNES raw pin read로 읽는 후보. begin1..2048/token32→byte→후속seal,읽는버퍼불변/다음작성허용/full backpressure,토큰일치consume만해제. bank40:0800..0fff 후보;기존packet400000/control6000/ROM보존을unchanged sinkbus와함께검증. 정상/3.5ns 2위상각28049B읽기,합성7화면259Crequest의28039B를16묶음으로재생.196590검사수는반복owner검사포함,독립case수아님. test01단독PASS/test02기존bus추가PASS;SELECTtest02/evidence01. 원본Questa로그보존/FLOAT종료. 초기sandbox실행은sim생성전실패해host실행. 새hostproducer source/CDC/실제65816 DMA/mapper/표시연결은아직없다.
+
+STOP/reset/active loss 즉시출력차단+124로2edge release,stoppedclock cancel/re-enable에서도옛chunk노출금지. payloadRAM reset없음/길이밖차단/연속RD주소변화검증. token은발행자가session/restart전후새값사용,임의랩안전성없음. consume는전송수명해제이며최종화면ACK아님. 4096B→4M9K회계추정/current42+4=46여유10;LAB/packing/STA미승인. 새FW/FIT/ZIP/60fps주장금지.
+
+정정:187의기존실제SMB3연속스크롤자료는확인되지않음.현재선택된실제자료165frame12/15는intro만:BG16중same-slot14/prior-content15,OBJ2/2,map64중63동일. 옛165 ingress20604B와현186합성egress를동일프레임성능으로합치지말것. level179Mesen700frame은장면/PPUwrite참조지현재compact/raw/CHR생산stream아님. 첫레벨같은generation 양방향자료미측정.
+
+사용자확정스크롤절차:월드맵숫자1타일+A로첫레벨진입→RIGHT+B계속유지+Apress/release반복. 실행타이밍은실제화면상태확인;이번턴미실행/새캡처없음. 이절차를다음대표연속스크롤자료에사용한다.
+
+NEXT 일반FIFO테스트를더늘리지말고production sourcecompact/CHR view를immutablegeneration으로host쪽에인계하는소유권/CDC를연결. 안정된pattern identity+CHR-RAM내용세대/행mapping 설계와actualSNESdescriptor/bulkWRAMread/기존section최종displayACK경계가다음. MCU가SPI로같은bytes를채우는것은왕복제거가아님. 그최소경로와실제스크롤자료를같은generation으로비교해16.67ms서비스처리량/수집겹침/자원표를만든후FIT·실기짝패키지. 표준SPI는fallback후보유지,초기keyframe과지속스크롤구분. 추가일반관측기/긴무변경coreboot/FIT/186-044/별도pad반복금지. 현ARM1204여유/body3776,24LAB/14M9K와미래MMC4/5/state/mute/frameskip/저장SRAM보존. AV60fps→장기play+reset로그→입력품질.
+
+---
+
 # NES187 구조 회고와 다음 구현 방향 (최신)
 
 [회고와 실행 계획](../../docs/nes-video-architecture187.ko.md) · [수치 검증](../../analysis/video-arch187-verification.json). PR116 같은 branch. **새187 실기판 없음.186 기준 배포 유지.** 아래 과거 HW186의 cache-only 다음 계획은 이 회고로 보완한다.
