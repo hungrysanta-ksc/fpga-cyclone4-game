@@ -1,3 +1,15 @@
+# NES208 실제 C·RTL·65816 표시 완료 결합 (최신)
+
+[계약](../../docs/nes-join208-contract.ko.md) · [검증](../../analysis/join208-verification.json). PR117 같은 branch, SELECT **test08/evidence01**. C203 RUN이 실제207 epoch/lease/direct206/READ16 및 실제65816 client195와 동시에 동작했다. SNES가 작성한 최종 표시 ACK를 C가 받은 뒤 FPGA retire/다음 frame으로 이어진다. 생산 코드·배포186은 그대로이며 새 실기판/FPS 결과는 없다.
+
+정상3프레임65534→65535→0에서86packet/6chunk672B/실제displayACK3/retire3, reference186 타일과 RGB 화면이 일치한다. 두 번째 E9를 부분 전송한 취소 시험은 첫IO 오류를 유지하며 commonSTOP으로 끝나고 기존 화면을 보존한다. 취소 시31packet/2chunk224B/표시ACK1/retire1이며 두 번째 SEAL은 없다. 요청·응답 파일로 실제 descriptor/consume token/ACK/EA 세대를 교차 검증했다. 이전23개 archive 불변.
+
+**남은 모델 경계:** E0/E1 held queue와 archived203 ingress, capture/loader/RAM-ready fixture. qualified_slot=1/core_request=0. aperture의 불변 payload는 실제 RTL에서 미리 읽어 actual65816의 순차 read에 반환한다. 파일RPC는 트랜잭션 결합이지 공통 클록/전체 보드/실제게임CPU·경쟁·FPS 모델이 아니다. 사운드·입력 검증도 아니다. 기존195ROM compact4096B는207 sink-program.hex와 정확히 같다.207 FIT/IO와203 ARM을 재사용하고 변경 없는 RTL을 다시 FIT하지 않는다.
+
+중간test01~07은 header/Windows simulator path/실제 C frame count 순서/작은scene 조건/첫IO 오류/reset 중drained 조건의 harness 수정 과정이다. 생산코드는 수정하지 않았고 모든 원본을 보존한다.08이 최종선택이다. `probes/nes-join208/run-join.ps1`이 승인된 FLOAT wrapper를 사용하며 라이선스 로그는 private temp에만 있다. 새 smoke/licensing 절차 금지.
+
+**다음:** 변경 없는 E0/E1queue/최상위mux 연결을 기존 증거 재사용 또는 제한된 trace replay로 닫고 paired ARM identity/ROM/package→FIRSTLEVELSCROLL로 간다. 전체게임cosim·독립codec·loader·FIT 반복으로 범위를 늘리지 않는다. 숫자1+A→RIGHT+B 유지/A press-release에서 실제16.67ms 부하를 측정한다. collected_runsEMPTY/60fps미달성.207의148LE/1LAB 및 strict+.041ns는 mapper 확장 여유 충분을 뜻하지 않는다. MMC4/5·CHR-RAM/state/mute/frameskip 예산, AV약60fps→장기play/error-reset로그→heldinput 우선순위와186/GBC164/saveSRAM을 보존한다.
+
 # NES207 epoch reset 경계·전체 타이밍 통과 (최신)
 
 [계약](../../docs/nes-board207-contract.ko.md) · [검증](../../analysis/board207-verification.json). PR117 같은 branch. SELECT source02/epoch02/mapfit02/timing02/io02/evidence01. **기능/FIT/관련클록/96개 reset 경로·조건부IO 통과. 배포186 유지, 새 ARM/ASM/ZIP·실기/FPS 결과 없음.**
