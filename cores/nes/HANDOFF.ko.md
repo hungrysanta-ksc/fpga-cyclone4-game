@@ -1,3 +1,17 @@
+# NES207 epoch reset 경계·전체 타이밍 통과 (최신)
+
+[계약](../../docs/nes-board207-contract.ko.md) · [검증](../../analysis/board207-verification.json). PR117 같은 branch. SELECT source02/epoch02/mapfit02/timing02/io02/evidence01. **기능/FIT/관련클록/96개 reset 경로·조건부IO 통과. 배포186 유지, 새 ARM/ASM/ZIP·실기/FPS 결과 없음.**
+
+기존 보드 core_release의 NES 로컬 reset을 loader_boot→source_epoch207에 전달한다. memory serial/Gray는 STOP에서 유지하며96개 sampling register만 로컬 reset을 받는다. admission은 이 reset이 끝난 후 기존 release_ready+stable 비교를 기다려 stale0 epoch 공개를 막는다. core_release의 memory_ready는 RAM init_done이며 source_ready와 feedback이 없다.206파일89개 중86개 byte동일; board.qsf/nes_spi_boot/nes_live_joint 변경+새source_epoch207. direct/batch/bulk/mailbox/loader/SDC/clock/seed는 그대로다.
+
+epoch baseline20+cold/stopped×phase32 및 잘못된 admission 변형 거부 PASS.96레지스터×recovery/removal×3corner576경로는 모두 로컬 core_release stage2에서 출발하며 min+40.182/+1.612ns. 이전288negative recovery가 단지 inventory에서 빠진 것이 아니라 같은클록 reset 경로를 따로 측정했다. reset firststage2개/기존CDC45개 각각 단일fanout 확인.
+
+FIT15260LE/8360FF/962LAB/47M9K, 여유148LE/1LAB/9M9K. 관련nominal setup+.173/기존엄격제약+.041/hold+.156ns. 이전206보다 placement 여유가 작아 mapper예산 충분 주장 금지. allcornerCDC4392행/newother0,held6.552ns/Gray6.723ns. 조건부IOPSRAM+3.828ns/SNES82.199ns/SPI165.227ns/nativepayloadreset PASS. raw reset release체인/기존경로/MTBF·전기signoff는 별도이며 새로운 timing exception 없음. 기존 loader state* 경고 유지.
+
+첫source01 별도coldchain은 기능/reset경로 통과 후 전체setup-.073/strict-.162ns로 실패해 미채택. 공유source02로 구조변경, 각후보1FIT. 원본보존, seed/loader미세FIT루프/clock완화 없음.206직접SPI/READ16/consume9frames1968B/partial22/cancel21/loader결과는 RTL동일성으로 재사용하며207게임검사로 세지 않는다. 이전22archive불변.
+
+**다음: 최소 실제 board→C203 RUN→SNES195 표시 결합.** exported201lease/epoch→SPI계획→192READ16→bulk/aperture→실제65816DMA→실제displayACK→retire/다음frame을 일반BG/OBJ+부분취소로 확인한다. fixture 최종ACK/consume를 실제C·65816으로 대체하고 독립codec/loader 반복으로 우회하지 않는다. 이어 정확한ARM/ROM짝검증→FIRSTLEVELSCROLL 실기. 숫자1+A, RIGHT+B 유지/A press-release에서16.67ms 측정; collected_runsEMPTY/199합성17.944ms는60fps아님. 미측정 성능 추정이나 기존186/044 반복시험 요구 금지. MMC4/5/CHR-RAM/state/mute/frameskip 예산과AV60fps→장기play/error-reset로그→heldinput 순서를 유지한다.
+
 # NES206 관련 클록 타이밍 통과·취소 경계 정리 (최신)
 
 [계약](../../docs/nes-board206-contract.ko.md) · [검증](../../analysis/board206-verification.json). PR117 같은 branch. SELECT source03/test01/cancel01/mapfit01/timing01/io02/evidence01. **기능/FIT/관련클록 setup·hold 통과, epoch reset 경계 미완료. 배포186 유지. 새 ARM/ASM/ZIP/실기 결과 없음.**
