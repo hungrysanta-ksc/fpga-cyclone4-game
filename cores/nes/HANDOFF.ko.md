@@ -1,3 +1,15 @@
+# NES209 실기 결과 기록 (최신)
+
+[결과](../../docs/nes-game209-hardware01.ko.md) · [원본 분석](../../analysis/game209-hardware01-verification.json). PR117 같은 branch. 사용자: 프레임 개선 체감, 스크롤 미흡, 사운드·조작 정상. 직접 타일 경로의 실제 표시 완료205회/60.06초를 확인했지만60fps는 미달이다. 영상/실제 메뉴 화면 확인은 이번 보고에 없다.
+
+186의182회 대비205회(+12.64%)는 다른 장면·입력의 전체 누적 비교이며 스크롤 FPS나 통제된 개선율이 아니다. receive27.71→12.36초, build7.90→20.88초, seal23.95→26.48초. 새 build는 계획 SPI/credit/소스·chunk 대기를 포함하므로 CPU 계산 악화로 해석하지 않는다. SPI278289회/7340541clockB는 direct aperture payload를 제외하며 poll 분포도 없다.
+
+BEGIN206/END205/COMMIT205/displayACK205/ABORT0, 마지막59.95초/gen310. primarydeadline1/60.06초이며 receiver23은 다음 D1의 callback 또는 CRC 공용 오류로 deadline 부수 결과와 부합한다. 독립 CRC 장애 증거는 없다. ROM/plan/sink/video/window 오류0,7911sent=retired/ACK1; plan_sent/end0은 성공 retire 후 초기화다. STOP/base/safe/MENU_PREPARED295760ms 확인, 사용자 가시 메뉴 확인과 구분한다. 마지막8reject/8recovery에는 장면별 시각이 없다.
+
+**다음은 실제 스크롤 부하의 계획/소스/chunk 대기와 window/SEAL 및 map/raw·slot 변경 비용 분리다.** 기존 자료를 먼저 재사용하고 필요한 정보가 없으면 다음 성능 변경에 제한된 명령/단계 카운터를 함께 넣는다. 로그4047/4096B 예산을 먼저 확인한다. 별도 관측기/FIT/codec 반복으로 되돌아가지 않는다. 과거 collected_runsEMPTY 문서는 당시 불변 기록이며209 사용자 스크롤 관찰은 이번 문서에 있다. 장면을 맞춘 ingress/egress·시간 측정은 여전히 없다.
+
+새FW/FIT/ZIP 없음.209/044 반복·입력전용 시험 요구 없음. 최종 표시ACK/불변lease/코어우선/CHR-RAMcontent 보호,207148LE/1LAB와ARM9260B 및MMC4/5/state/mute/frameskip 예산 유지. AV약60fps→장기play/error-reset로그→heldinput 순서와186/GBC164/saveSRAM/모든 기존archive를 보존한다.
+
 # NES209 직접 타일 전송 실기판 준비 완료 (최신)
 
 [계약](../../docs/nes-binding209-contract.ko.md) · [실기 안내](../../docs/nes-game209-ready.ko.md) · [검증](../../analysis/binding209-verification.json). PR117 같은 branch. SELECT **test02/arm01/check02/report02/asm01/romcheck02/release01**. 첫 직접 타일 경로 실기판 준비 완료이며 실제 게임/FPS 결과는 아직 없다.
