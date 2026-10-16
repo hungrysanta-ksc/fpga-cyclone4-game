@@ -1,3 +1,21 @@
+# NES200 표시 완료 후 다중프레임 재무장 (최신)
+
+[계약](../../docs/nes-frame200-contract.ko.md) · [검증](../../analysis/frame200-verification.json). PR117 같은 branch, 배포186 유지.
+
+E8version4, EA7B generationLE16/acceptedBE16/CRC8/A5. END+빈chunk+빈planhost와맞는세대/묶음수를요구한다. host→NES 1bit165mailbox가closed/WAIT/no pendingplan을확인한ACK를돌려준후에만 END/count를지우고credit을연다. NES closed가host END통지전의추가계획도거부한다. C200retire는finish완료뿐아니라 실제195sink의IDLE/displayed/current·lastgeneration 일치를요구한다. 실패는terminal/no retry.
+
+정상순서 sinkbegin→191plan/200emit→200finish→기존sinkseal(finalACK)→200retire→sourcelease반환/새capture승인. 이productionRUN호출전체와producer grant는아직미연결이다. SPI자체가PPU최종표시를검사하는것은아니며C의ACK검증경계가담당한다. retire는normal경로이며STOP재시작/freshtokenseed와구분한다. 프레임retire때core/physicalreader/bulkbank/token을reset하지않는다.
+
+SELECT test03/faults02/c01/evidence01. actualSPI2.625MHz→200planRAM→192qualified70nsREAD16→193aperture:3합성장면각3frame/1968B exact186;gen65534→65535→0,token1000에서계속증가. 합성corePORT요청응답도계속검사,실제NESCPU실행아님. lease/ROMepoch는fixture제공이다. raw장면normaltile부분포함,새raw최종표시시험아님.
+
+SPI/decoder50경계,실제C200+실제195sink10검사(정상3frame/최종ACK누락·오류·wronggen/retiretimeout·응답·전송·guard오류)통과. C의SPI/SNESexchange는mock,RTL의display완료는fixture이며actualC+RTL+65816동시실행아님.195actualC+65816증거와이전15archive불변재사용. test01선언충돌/test02변수치환task이름오류/faults01END8clockfixture를1clock으로맞춘기록보존. 생산RTL/C수정없이통과.
+
+다음은실제capture generation/contentepoch의원자적grant-release,board SPI/descriptor mux,productionRUN호출순서를결합한다. retire완료전source풀기/새capture로대체금지. 최소joint검증/전체ARM-RUN-IRQ/FIT-IO뒤짝패키지첫레벨스크롤. 작은codec반복/frame전체reset금지. persistentdelta는base/bank/slot/content/CHR-RAM/메모리예산후속.199의17.944ms합성모델은여전히60fps미달이며이번50검사를속도개선으로표현하지않는다.
+
+collected_runsEMPTY. 숫자1+A→첫레벨확인→RIGHT+B유지/Apress-release반복으로실제부하측정. 오프닝/정지/합성/ACK수대체금지. 새FW/FIT/STA/전체ARM/ZIP/실기승인없음. AV약60fps→장기play/오류reset로그→입력유지.186/GBC164/saveSRAM/완료archive보존.
+
+---
+
 # NES199 공통 타일 명령 (최신)
 
 [계약](../../docs/nes-short199-contract.ko.md) · [검증](../../analysis/short199-verification.json). PR117 같은 branch, 배포186 유지.
