@@ -1,0 +1,148 @@
+{
+  "kind": "architecture_retrospective_not_firmware",
+  "hardware_input_sha256": "307227211dd0222542cfd7bb3801d68fdfe7babe8348e06b8e085f8a98fa4614",
+  "source_pins": {
+    "probes/nes-binding209/arm01/src/nes_native_runtime165.c": {
+      "sha256": "880d38d3bbaa1c2025578fd93ea8d574b60d8098f0d49ed1cb87ea3ceac64f3d",
+      "anchors": [
+        "nes_native_video191_plan",
+        "nes_sink165_seal",
+        "nes_plan200_retire",
+        "nes_native165_consumed"
+      ]
+    },
+    "probes/nes-binding209/arm01/src/nes_plan191.c": {
+      "sha256": "3f35e1ea06c08c71d77769755dd5a038551bf1ed7f04871710a1dfdadcd40d5e",
+      "anchors": [
+        "memset(p,0,offsetof",
+        "p->bg_count=1",
+        "p->bg_keys[p->bg_count]=key",
+        "Borrow448"
+      ]
+    },
+    "probes/nes-binding209/arm01/src/nes_native_video165.h": {
+      "sha256": "a3b66043f463631bba7d4d2197a1396933887ad95f6c035ed448396ab21a5768",
+      "anchors": [
+        "uint64_t bg_keys[1024]",
+        "uint8_t map[4096]"
+      ]
+    },
+    "probes/nes-binding209/arm01/src/nes_native165.c": {
+      "sha256": "86d0e37df692c9f35d2222d4482e8b0766185bd6eb08483f427b9672b3fbd6ce",
+      "anchors": [
+        "0x2031",
+        "s->counts[0]=(uint16_t)(g*33)",
+        "const unsigned widths[8]={2,1,7,4,7,1,2,8}"
+      ]
+    },
+    "probes/nes-binding209/arm01/src/nes_plan_wire199.h": {
+      "sha256": "518c0c885b180ae14a58f644f089130a9bbabe0ba6bfb21eb30dae084f7d6707",
+      "anchors": [
+        "NOT a cross-frame cache",
+        "return 7"
+      ]
+    },
+    "probes/nes-binding209/arm01/src/nes_sink_bulk195.inc": {
+      "sha256": "f0fc16072a60bd857a8c195d45fa51b92b5a0afeadb78e2f21475e8c036d8217",
+      "anchors": [
+        "packet_wire deliberately keeps op7 off the async enqueue path"
+      ]
+    },
+    "probes/nes-binding209/arm01/src/nes_native_sink165.c": {
+      "sha256": "7f5e0a99ef7837f8c5730cd0c9ad5b33471074199957dcf5f4e21eff0762b69b",
+      "anchors": [
+        "if(!map185(s,p))return false",
+        "for(unsigned k=3;k<6;k++)",
+        "0x1941"
+      ]
+    },
+    "probes/nes-board207/source02/rtl/nes.v": {
+      "sha256": "fd90fd4001b02022c1bf299fb3afa057df2574bbf1069e3c0e8a4b0895efed7d",
+      "anchors": [
+        "native_fill_slot=div_cpu==3 && scanline_ppu>=242 && scanline_ppu<260"
+      ]
+    },
+    "probes/nes-board207/source02/nes_chr_cache192.sv": {
+      "sha256": "ca3e5e4fc596ee8662646276386571c6487ce142d98cb318666e288c7dd76a9f",
+      "anchors": [
+        "reg [7:0] bytes[0:15]"
+      ]
+    },
+    "repository-nes-milestone/tools/nes_native_local165.py": {
+      "sha256": "91cb290947b2522cca1f61f4d97e0cd92b43dce47798b1ce54d5e74e91e33e6a",
+      "anchors": [
+        "label('word_loop')",
+        "label('fast_words')",
+        "c.emit(0xc9,32,0)",
+        "0x69,96,0"
+      ]
+    },
+    "repository-nes-milestone/tools/nes_banked169.py": {
+      "sha256": "8feb653998eaac90f10a1ab4508018ca19bcad4355d3537ab7b7647259e4967b",
+      "anchors": [
+        "imm(4096)",
+        "call('wait169')"
+      ]
+    },
+    "repository-nes-milestone/tools/nes_rawsteady181.py": {
+      "sha256": "dc0ec64513e44d6093bb49a459c323e14fbc818001e796f11578bbfa0c8292b5",
+      "anchors": [
+        "all sections and raw CHR are compared below"
+      ]
+    },
+    "repository-nes-milestone/tools/nes_bulk195.py": {
+      "sha256": "0c320b9d7d2fefe0a03ee2e0deebc77d56c99e50fd2c9886f1e08516ba2d3f14",
+      "anchors": [
+        "import nes_rawsteady181 as steady",
+        "import nes_client181 as client"
+      ]
+    }
+  },
+  "budget": {
+    "target_fps_approx": 60,
+    "target_frame_ms": 16.666666666666668,
+    "spi_hz": 2625000,
+    "spi_clocked_bytes_per_frame_ideal": 5468.75,
+    "snes_ntsc224_vblank_payload_upper_B": 6123,
+    "current_snes_charged_dma_budget": 5000,
+    "current_snes_command_capacity": 32,
+    "current_snes_setup_charge_B_per_command": 96,
+    "qualified_cold_source_reads_per_frame_optimistic": 2046,
+    "full8bpp_bytes": 57344,
+    "full8bpp_dma_ms_without_refresh": 21.359881481481484,
+    "full512BG_plan_plus_END_B": 3587,
+    "full512BG_plan_plus_END_spi_ms": 10.931809523809525,
+    "full4096map_spi_ms": 12.48304761904762,
+    "full512BG_plan_and_fullmap_spi_ms": 23.414857142857144,
+    "full512BG_source_B": 8192,
+    "full512BG_source_min_windows": 5,
+    "full512BG_map_palette_OAM_upload_B": 13344,
+    "full512BG_map_palette_OAM_min_vblanks": 3,
+    "nonrepeat29group_map_ingress_B": 5742,
+    "nonrepeat29group_map_ingress_spi_ms": 17.499428571428574,
+    "current_average_completion_ms": 292.9756097560976,
+    "current_average_rate_to_target_factor": 17.578536585365853,
+    "counterfactual_remove_entire_receive_ms": 232.6829268292683,
+    "counterfactual_remove_entire_receive_rate": 4.29769392033543,
+    "ARM_remaining_B": 9260,
+    "ARM_minimum_margin_B": 1024,
+    "naive1024_BG_keys_B": 8192,
+    "naive_BG_keys_margin_B": 1068,
+    "naive_BG_keys_room_above_gate_B": 44,
+    "fitted_free_LE": 148,
+    "fitted_free_LAB": 1,
+    "fitted_free_M9K": 9,
+    "SNES_client_body_free_B": 1
+  },
+  "limits": [
+    "SPI is clocked bytes, not TX+RX counted twice; all commands share this budget.",
+    "Full-map/512-tile/nonrepeat cases are conditional examples, NOT measured209 scroll distributions.",
+    "6123B is theoreticalNTSC224 cap excluding software/setup; do not raise5000 without timing proof.",
+    "2046 source reads is optimistic existing qualified-slot bound; real core priority lowers it.",
+    "Subtracting receive is an Amdahl thought experiment with other work fixed, not a forecast.",
+    "Complete-frame latency may exceed16.67ms in a pipeline; each shared resource and buffer turnover must sustain60/s.",
+    "No source changes/build/FIT/newhardware/wholegame FPS claims."
+  ],
+  "decision": "SMB3/MMC3 near60fps remains a conditional target worth a bounded feasibility gate. Current209 all-frame rebuild/serialized transport is not an approved60fps architecture. General MMC4/MMC5/CHR-RAM worstcase60fps unproven.",
+  "next": "One actual sustained first-level scroll window: phase costs, command bytes, source misses, dirty/output slots, SNES diff/fallback/VBlank counts. Replay current vs persistent physical-pattern slots+scroll-aware map+end-to-end dirty lists. Require all resource budgets including residual ingress/SPI/PSRAM/SNESCPU to fit before another fullFIT or broad implementation."
+}
