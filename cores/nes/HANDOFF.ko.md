@@ -1,3 +1,19 @@
+# NES204 실제 보드 결합 — 배선 성공, 타이밍 미승인 (최신)
+
+[계약](../../docs/nes-board204-contract.ko.md) · [검증](../../analysis/board204-verification.json). PR117 같은 branch. SELECT source01/test01/epoch01/map01/fit01/timing01/paths01/report01/evidence03. 배포186 유지, 새 실기 ZIP 없음.
+
+실제 loader의 BEGIN/write/완료크기/RUN/fault에서 epoch/status를 만들고201 **exported** generation/epoch→192 source에 연결했다. old fill와 중복 arbiter는 제거했다. 실제 core 우선 READ16, SPI200/batch201, bulk193, SNES194 descriptor/consume/aperture와195 ROM까지 보드 생성기에 통합했다. capture/display overlap과최종 ACK/EA 수명은 유지한다.
+
+새 production direct204 모듈의 실제 SPI/READ16/604c..6050 consume 버스가3장면×3프레임1968B exact186 PASS. epoch 경계20검사PASS. 계획/CPU·PSRAM/lease/최종 ACK는fixture이며 실제 NES게임CPU+65816+ARM 동시 결합은 아니다. 이전203 ARM 여유9260B를 재사용하고 새 ARM/실기 FPS 증거를 주장하지 않는다.
+
+전체FIT는15310LE/963LAB/47M9K로성공했지만98LE/0LAB밖에남지않았다. 같은DB3corner STA에서 관련클록setup−0.638ns/hold+0.150ns. 실패는control.check_next[17]→reader.check_response_address[21],3단/배선74%다. **배치 성공과STA 실행exit0는타이밍승인이아니다.** 새source raw invalid가 NES lease/capture/export에 조합우회해19단/15.001ns 경로를만든다. 도구−12.865ns는비동기관계이므로동기부족량과합산하지않지만전체false_path로덮지도않는다. 정확한newCDC/Gray skew/mailbox held-data/요청ACK/reset/RAM·외부IO는미승인이다.
+
+**NEXT**: 먼저 source_ready의 !invalid와source_writing=invalid가NES데이터로우회하는경로를없애고비동기무효화/동기재허용을로컬경계에서끝낸다. 정지NESclock중write/STOP/다음epoch원자성·boundeddrain을유지한다. 이후tile191의32B registerbuffer와bulk193의32B sealedRAM 중복/row-tag선택/descriptor복사를함께줄여배치여유확보. 부분tile공개금지·backpressure·처리량을같이검증한다. 바로기존loader만다시미세최적화하거나seed/FIT반복으로돌아가지않는다. 구조변경근거가생긴뒤한번FIT/STA/IO,최소board-C-SNES결합후짝패키지FIRSTLEVELSCROLL.
+
+199의17.944ms도합성모델일뿐이며실기collected_runs=[] 유지. 숫자1+A→RIGHT+B유지/A press-release에서전체16.67ms/고유표시간격을측정한다. MMC4/5·CHR-RAM·persistentdelta·장기play/reset로그미완료. 세이브SRAM/GBC164/배포186과이전19archive보존. evidence01/02는STA의QSF개행+LAST_QUARTUS_VERSION 메타데이터변경을예상하지못한검사실패이고 evidence03에서두변경만정확히허용했다. RTL/SDC는단1byte도다르지않게확인했다.
+
+---
+
 # NES203 CHR 중복 수신 제거 (최신)
 
 [계약](../../docs/nes-metadata203-contract.ko.md) · [검증](../../analysis/metadata203-verification.json). PR117 같은 branch. SELECT test04/capture02/arm01/check01/evidence01. 배포186 유지, 새 실기 ZIP 없음.
