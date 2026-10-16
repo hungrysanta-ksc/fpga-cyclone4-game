@@ -1,3 +1,19 @@
+# NES203 CHR 중복 수신 제거 (최신)
+
+[계약](../../docs/nes-metadata203-contract.ko.md) · [검증](../../analysis/metadata203-verification.json). PR117 같은 branch. SELECT test04/capture02/arm01/check01/evidence01. 배포186 유지, 새 실기 ZIP 없음.
+
+paired2031 exporter는 geometry→META_END→raw→END/PREPARED/COMMIT만 보낸다. old fill 포트/상태/CHR byte 경로를 제거했다. receiver는 검사된 map/object/exception에서 필요한 tag/kind를 도출하고 geometry count/phase/raw slot/논리 record 및 byte0를 확인한 뒤512개 이하 목록을 만든다. 그 뒤에만 bitmap을 raw scratch로 재사용한다. 이전1813·pre-META_END CHR·early raw·중복종료·513tag는거부한다.191 planner는 픽셀 포인터 대신 metadata항목을 조회한다. 픽셀 내용 검증은 **실제 보드에 아직 연결하지 않은201 immutable ROM epoch/192 source lease**의 책임이다. 구형FPGA와 이 ARM을 혼용하면 안 된다.
+
+실제 exporter trace를 실제 C RUN/receiver/planner/service/sink/window에 재생해9장면/100타일/전체video metadata가186과 일치했다.11export/3export오류/9수신경계(512허용513거부)/6RUN오류PASS. capture02는 실제 collector201+203 exporter에서fill과querymux를없애고직접조회한다.558검사/3export/raw512/다음224행중첩/33geometry/readerdrain후retire/거부복구/epochfaultPASS. sourceepoch/PPU/최종표시는fixture,bulk는zero3개뿐이다. **실제BGOBJ source192/전체boardSPI/C+RTL+65816동시/게임/FPS증거아님.**
+
+FullARM203648B/static26872/RUN28784/IRQ508/여유9260B.202의1068B보다8192B늘었으며1024기준유지. hostreceiver9880B/tile4B,oldpixelless;RUN workspace만줄고static/saveSRAM불변.116도달함수/13library-platformbody확인;기존pixelconverter는명시적실패stub이며링크에서호출없음. FW5b65b786 compileonly. 이전18archive불변. 실패test01줄바꿈+printf/test02printf/capture01wire선언보존;test03크기상수오류의중간결과는미선택,test04실행값사용.
+
+**NEXT**: actual loader contentepoch/ready/write →201 표시lease→192source와보드SPI/descriptor/consume mux/SNES195연결. 반드시EXPORTED captured_generation/epoch를쓰고다음수집generation을쓰지않는다. boardtop oldfill/arbiter를source192의코어우선reader로교체;oldfill을남겨성능판을내지말것. 최소실제BGOBJ board→C RUN→SNES와전체FIT/IO/최종ARM확인후짝패키지 FIRSTLEVELSCROLL. 추가독립codec/unchangedboot/seed FIT반복금지. 수집기전체를표시완료까지다시직렬화하지말것.
+
+숫자1+A→첫레벨확인→RIGHT+B유지/A press-release에서16.67ms전체/고유표시간격측정. collected_runs=[];199합성17.944ms는여전히예산초과.8192B여유는전체framebuffer/MMC4·5승인아님;CHR-RAM snapshot/persistentdelta base/bank/slot/content/row-alt-mask 메모리목표열림. AV약60fps→장기play/오류reset로그→입력유지.186/GBC164/saveSRAM/완료archive보존.
+
+---
+
 # NES202 실제 RUN에 직접 타일 계획 연결 (최신)
 
 [계약](../../docs/nes-runtime202-contract.ko.md) · [검증](../../analysis/runtime202-verification.json). PR117 같은 branch. 선택test05/dma02/arm04/check03/evidence01. 배포186 유지, 새 실기 ZIP 없음.
