@@ -1,3 +1,21 @@
+# NES198 묶음 전송과 실기 SPI 예산 (최신)
+
+[계약](../../docs/nes-batch198-contract.ko.md) · [검증](../../analysis/batch198-verification.json). PR117 같은 branch, 배포186 유지.
+
+계획마다 status+write를 하던197을 두512B bank/1024x8 RAM으로 묶었다. 기존mailbox의 bank/count/plans handoff와 마지막decode 후 반환, tile_done까지 필드유지를 사용한다. status version2, E9 lengthLE16/plans/CRC16/CRC8/tail, exactlength/credit/semantic 검사를 유지한다. 이 RAM은 용량상 한M9K지만 합성 확인 전이다.
+
+실제186 DMA는259B 한도다. C198은 payload240B/최대15계획/총248B만 보내며 buffer 하나를 TX==RX로 사용한다. emit 성공은 local queue일 수 있고 finish는 END 및 chunk drain 완료이지 displayACK가 아니다. 기다리는 중195 sink/op7을 서비스하며 guard·terminal error·common cancel·무재전송을 유지한다. 현재 한frame/commonreset session이다.
+
+SELECT test02/faults02/c03/dma01/evidence01.8합성장면97계획1840B/11묶음 exact186,512계획+END35묶음8192B/4chunk. SPI23/C24검사, C46frames와 독립RTL 입력byte동일. 실제배포DMA C의in-place744정상/248bytefault 통과. SPI/SNES ACK는C시험에서mock이며 실제C와RTL동시실행 아님. DMA는register model, STM32bus/WCET 아님.13개 이전archive불변. test01/faults01/c01중간조건은비선택, c02 batch 기대값8오류→11인c03통과(생산C변경없음).
+
+**197의8MHz는 모델이었다. 실제186은2.625MHz이고 변경하지 않았다.** 512계획 payload8192B만24.966ms, 실제속도와4×2us wait를 모델링한시험32.096ms다. batch만으로60fps충족불가. 이 값은게임FPS나실기측정이아니다. 새FW/FIT/STA/ZIP/전체ARM승인없음.
+
+다음은 stable physical pattern/변경분계획 재사용이다. 물리tag뿐 아니라 content epoch/CHR-RAM 변경/row-alt-mask/destination slot/표시bank·basegeneration을 함께 검사하고 불확실하면 bounded rebuild. 속도만 올리거나 게임/audio/input처리를 생략하지 않는다. 이어 frame lease/epoch·END 재무장·fresh token·board mux·productionruntime 결합 및 최소jointlifecycle, 전체ARM/FIT/IO. 프레임마다NES전체reset 금지.
+
+실제스크롤 collected_runs는 비어 있다. 숫자1+A→첫레벨확인→RIGHT+B유지/Apress-release반복에서 원본읽기·신규/재사용계획·전송량·고유표시간격을16.67ms와 비교한다. 오프닝/정지/합성/ACK수 대체 금지. AV약60fps→장기play/오류reset로그→입력유지.186/GBC164/saveSRAM/완료archive보존.
+
+---
+
 # NES197 실제 SPI와 C 소비 서비스, 60fps 예산 제약 (최신)
 
 [계약](../../docs/nes-spi197-contract.ko.md) · [검증](../../analysis/spi197-verification.json). PR117 같은 branch, 배포186 유지.
