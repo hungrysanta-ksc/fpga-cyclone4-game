@@ -1,3 +1,17 @@
+# NES209 이후 60fps 회고와 수정 계획 (최신)
+
+PR117은 ef75c54로 머지됨. 별도 `codex/nes-60fps-review-209`는 조사·계산·문서만 변경했다. [회고 전체](../../docs/nes-60fps-retrospective209.ko.md), [소스/계산 근거](../../analysis/nes-60fps-retrospective209.json).
+
+**결론: SMB3/MMC3 약60fps는 조건부 목표로 유지하되 현재209의 전수 재구성·직렬 경로를 최종 구조로 승인하지 않는다.** 모든매퍼/CHR-RAM/효과의60fps는 미입증. 초기 가능성 판단은 원본패턴의 지속재사용을 전제로 했으며 이 부분이 아직 생산구현되지 않았다. 직접DMA/lease/epoch/ACK는 유지할 기반이다.
+
+누락된 핵심: 프레임 간 physical-pattern slot 지속성, 스크롤을 고려한 맵 재사용, dirty정보를 최종SNES까지 전달해 전수비교 줄이기.201다음캡처는 구현됐지만 C는receive→plan/finish→SEAL→retire직렬이다.16B원본캐시는VRAM패턴캐시가 아니다. 새캐시만으로metadata ingress가 자동해결되지 않는다.
+
+예산:2.625MHz SPI의60Hz당5468.75clockB는ingress/plan/map/poll모두공유.현재qualifiedCHR읽기2046B/frame낙관상한,실제core경쟁추가. SNES 전수비교CPU와VRAM갱신을분리한다. NTSC224줄VBlank이론6123B이나현5000charged/32명령/설정96유지.512BGplan+fullmap23.415ms,비반복29group ingressmap만17.499ms는조건예시이지실기분포아님. full8bpp복귀는DMA만21.36ms라해법아님. ARM9260B에8192B BG키추가시1068B만남고gate위44B;FPGA148LE/1LAB,SNES본문1B여유라메모리/코드재배치필수.
+
+외부:공식ED64변경이력3.07에서Neon→FPGA NES교체확인.검색한공식NES64배포/ed64-x-pub에서NESRTL소스못찾음(전세계비공개단정금지).공개Neon64는이전소프트웨어/N64 RSP/RDP/VI사례이며SNES처리량증거아님. PocketNES원본dirtycache/ProjectNested SNES명령큐를우선참고;CPU/JIT교체불필요.
+
+**다음 구현 전 제한된 실제 스크롤 판정:** 숫자1+A→RIGHT+B유지/A반복의같은자료로현209와persistent-slot/scroll-map/dirty후보를비교한다. 기존자료부족시다음성능판에작은명령별bytes/phase/source-miss/차분fallback·VBlank·표시간격표본을포함,실행중SD쓰기금지/4047B로그예산검토. SPI/PSRAM/ARM/SNESCPU/VBlank/자원모두16.67ms처리량에맞는설계만큰RTL/FIT로진행. 실패시경로/형식수정이지poll/seed/microFIT루프아님. 기능검증후빨리실기;같은209/044/pad-only/wholegamecosim확대금지. 최종ACK·활성slot보호·base/bank/content/row-alt-mask/CHR-RAMsnapshot·MMC4/5/state/mute/frameskip예산유지. 새FW/FIT/ZIP없음.
+
 # NES209 실기 결과 기록 (최신)
 
 [결과](../../docs/nes-game209-hardware01.ko.md) · [원본 분석](../../analysis/game209-hardware01-verification.json). PR117 같은 branch. 사용자: 프레임 개선 체감, 스크롤 미흡, 사운드·조작 정상. 직접 타일 경로의 실제 표시 완료205회/60.06초를 확인했지만60fps는 미달이다. 영상/실제 메뉴 화면 확인은 이번 보고에 없다.
