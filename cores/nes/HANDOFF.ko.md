@@ -1,3 +1,15 @@
+# NES210 실기 결과와 다음 구현 방향 (최신)
+
+PR119 같은 branch에 결과를 추가했다. [실기 분석](../../docs/nes-game210-hardware01.ko.md) · [검증 JSON](../../analysis/game210-hardware01-verification.json). 사용자 소리·실제 메뉴 복귀 정상, 프레임 개선은 미확인. 60.06초/196표시(평균306.4ms),209205회와 장면이 달라 회귀율/FPS 비교 금지. receive11.20/plan22.10/seal26.42초; plan/seal은 전송·소스·소비 대기 포함이다.
+
+12bin 합계7543494clockB/196회가 game 로그와 일치한다. E8+E0 4805360B=63.70%는 바이트 비율이지 시간/병목 원인 비율이 아니다. 이 두 조회만 없앤 가정에서도 마지막 부분 프레임을 제외한 bin들의 나머지 프로토콜 wire 비용은31.03–52.23ms/완료다. D0–D3 제어도 남으므로 불변 payload 하한으로 해석하지 않는다. 256 정확키 모델의216880/367136B=59.07%는 잠재적 패턴 재사용이며 실제 cache/scroll 적중률은 아니다. 절약 가능한 계획 bytes만1.20%지만 소스 생성/출력 작업까지 줄이는 효과는 별도로 남아 있어 최종 개선 상한도 아니다.
+
+종료 primarydeadline1, 마지막59.87초/gen262,197COMMIT/196display. plan3/video14는 callback deadline 전파와 부합, 하위 transfer failure0이며 별도CRC장애 증거 없음.7608sent=retired/error0; 마지막ACK0은 처리 중 표본이다. b11미완료/5초FRAMESTART/장면시각미제공을 유지한다. 수신 bin11.22초 vs 기존11.20초는 별도10ms tick 양자화. 추가 사용자 설명은 [hardware02](../../analysis/game210-hardware02-context.json) 및 별도probes/nes-game210-hardware02에 보존: 화면 시작6–7초 후 첫레벨 진입, 끊김으로 정상조작/연속주행 불가하여 사망·스테이지선택 반복, **마지막약5초 첫레벨내부**(사용자최종정정 [hardware03](../../analysis/game210-hardware03-context.json), hardware02의마지막장면만대체;지속스크롤여부미확인). 정확한host시각/사망시각없어 모든 bin UNCLASSIFIED 유지. 지속스크롤측정으로 주장 금지, 개선 전 동일210/044 주행 재시험 요청 금지. hardware01 원본분석의질문대기표현은 이추가관찰로보완하며 원본은불변.
+
+**다음:** persistent physical-pattern slot + scroll-aware map + 최종SNES까지 dirty소비를 하나의 설계로 진행. 조회 간격만 바꾸거나 다른 진단판/FIT 루프를 만들지 않는다. 기존 실제자료로 ingress/E1/qualified source/SNES비교·VRAM 예산을 함께 계산하고 부족한 슬롯/좌표·장면 자료만 다음 성능 변경에 포함한다. 활성/pending bank·slot 보호, 최종ACK base확정,epoch/CHR-RAM/row-alt-mask/MMC4·5 조건 명시.210모델 메모리를 생산캐시와 중복할당하지 말고 ARM5744B/FPGA148LE1LAB/SNES본문1B를 각각 관리한다. 최소검증→첫레벨 실기스크롤.60fps→긴플레이/오류·리셋로그→조작품질 순서 유지.
+
+새FW/FIT/ZIP 없음; 기존210배포/207FPGA/186/GBC164/saveSRAM/완료archive 불변. 모델의source miss/SNESfallback/VBlank 미측정 한계를 인계한다.
+
 # NES210 스크롤 예산 실기판 (최신)
 
 PR118 머지 c263d63 기준, branch `codex/nes-scroll-budget-210`. [계약](../../docs/nes-budget210-contract.ko.md), [시험 안내](../../docs/nes-game210-ready.ko.md), [선택 증거](../../analysis/budget210-verification.json). ZIP은 workspace `releases/NES210-SMB3-SCROLL-BUDGET.zip`.
