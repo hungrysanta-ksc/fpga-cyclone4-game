@@ -1,3 +1,53 @@
+# NES222 실기: 시작·60초·긴 첫 레벨 스크롤 통과 (최신)
+
+[PR121](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/121) OPEN 같은 branch. [실기 결과와 다음 계획](../../docs/nes-game222-hardware01.ko.md), [재현 수치](../../analysis/game222-hardware01-verification.json). 이 결과가 아래222 실기 미수집/221 실패 NEXT보다 우선한다. 사용자 체감 개선과 실제 긴 첫 레벨 스크롤 확인, 정상 플레이/60fps는 미완료다. 새FW/FIT/ZIP 없음.
+
+pre6/allzero→post1/emptyF7CRC→READY431poll/50ms. 실제 deferred 경로 사용 확인. /WR은 계측하지 않았고 RESET/DONE/RDY는 표본이다. 큰stack의 READY 이후 확보와 시작 handshake 모두 바뀌었으므로221 물리 원인/개별 기여도는 미확정. 동일 시작 진단 반복을 중단하고 성능으로 복귀한다.
+
+DISPLAY60.09초/365완료/last59.97초gen575,다음gen576 BEGIN만 남고deadline1. receiver23은callback실패OR CRC 조건이며독립CRC오류증거아님. ROM/sink/video/window/plan/STOP오류0,failedtransfer0,11082송신=회수. SPC unmute1(별도청음아님),입력109변화,영상65초메뉴. MOV66.63초 중15–45와52–61초첫레벨,18–24/29–40초여러위치스크롤;62–64초종료처리마지막화면유지는게임정지로오인하지않음. CRT간섭제외/정확host시각없음/표본FPS계산금지.
+
+220265→365완료(+37.74%),평균4.41→6.07완료/s,최대gap440→370ms. 장면/입력달라통제FPS개선율아님. plan34.68→19.41초,receive21.89초,seal18.39초. planner inclusive11.99초-callback.58초=약11.41초(순CPUcycle아님). receive bin21.93초는별도tick표본40ms차;raw둘다보존. wire7481069B=12bin합계,ingress45.25/E8 10.73/E9 .38/E0 22.15/E1 21.46%. D1encoded2851105B만23.81ms/완료(내부header/partial/압축가능),ingress28.27ms. D0 status396496B는1.21초wire/session:poll만줄여60fps불가. source/SNESVBlank미측정,byte비중=시간비중아님.
+
+NEXT: compact/incremental geometry ingress와scroll-awaremap을공유16.67ms예산으로함께진행. 반복원본정보전송/전체geometry재계산/맵작업량을줄이고221index유지. 기존실기분포를비용기준으로쓰되현재전체scrollgeometry덤프는없음;필요한경계증거만추가. row-alt/mask/physicalCHR/epoch/basebank/finalACK정합성/미래MMC4·5 fetch-time의미유지. ARM1912B여유이므로무작정cache추가금지,saveSRAM/GBC164/봉인archive유지. 최소검증뒤첫레벨실기;같은222/044/추가영상/시작진단/FIT반복불필요. 새원본은probes/nes-game222-hardware01,선택222archive는불변.
+
+# NES222 시작 순서 보강 시험판 (최신)
+
+[PR121](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/121) 같은 branch. [계약](../../docs/nes-startup222-contract.ko.md), [실기 안내](../../docs/nes-game222-ready.ko.md), [검증](../../analysis/startup222-verification.json). 선택 arm02/test03/rtl01/check03/release01. **시험판 준비 완료이며 221의 실제 원인·해결 여부는 아직 미확정이다.** 다음은 추가 로컬 시험이 아니라 사용자222 실기다.
+
+221은 ROM load/compare/START 뒤 SNES READY 시간초과였다.222는 RESET 유지 상태에서 E0 빈 F7/CRC를 한 번 확인한다. /WR-low 때문에 RESET 중 bridge admission이 막힐 수 있음을 실제 RTL 조건시험에서 확인했다. 따라서00/FF 무응답형태만 기존1회RESET해제 후1ms정착/한 번의추가E0확인으로넘긴다. 유효빈응답만READY gate로진행하며손상/dirty/IO는차단. 이조건시험은221물리원인재현이아니다. START재전송/반복reset/시간제한확대없음.
+
+preflight실패error7,postflight실패8,기존READY실패6. RESET미해제실패는leave없이STOP;해제실패는RESET확보후STOP. CF86/CSS 소유권실패는fail-stop유지. 큰work는READY뒤noinline native_frames222(31848B)에만예약;시작native_session165는32B. postSTOP포인터해제/저장tail과게임60초유지. startup reason/postreason/raw20+20/signals/ticks56B,TXT최대3280/4096. 추가SPI20B또는40B는시작때만,게임중계측아님.
+
+실제C handoff/boot/STOP19경계+실제RTL응답5재생24PASS;실제220bridge idleSS/WR/reset/RUN와현재212ROM벡터·명령10검사PASS. 플랫폼/runtime fixture로전체ARM-RTL-65816물리결합은아님. fullARM208952/static28020/RUN34984/IRQ508/여유1912PASS. check01은SU .isra와ELF .isra.0 이름불일치로중단,유일함수와실제prologue8+31744+96=31848을대조해대응시켰다. check02는미채택arm01,최종check03은arm02. arm01필수pre-only안은WR순환의존때문에미채택으로보존.
+
+FW7b6d93f9/ZIP050fea96/FPGA31908516(220/221바이트동일). 새FIT/ASM없음.221 runtime/planner/resident/sink/입력/소리바이트동일이라기존243645요청·RUN9프레임검증재사용,반복하지않음. saveSRAM/GBC164/ROM/base/menu/164복원/221봉인자료유지. 원인미확정이므로단순히222를fix완료로분류하지않는다.
+
+NEXT: NES GAME 222.nh1,게임이뜨면월드맵숫자1+A 첫레벨 RIGHT+B/A반복스크롤.3TXT(progress/game-last/budget222),성공시소리·조작·메뉴/스크롤체감. 추가영상필수아님. pre1 또는pre6/post1 뒤READY3인지판정. pre1+boot5/stage0이면admission후SNESreset/vector/bus/status,pre6/post6이면리셋후에도정상통신부응답없음;원인확정·CPU비활성단정금지. 같은221/044반복/추가FIT·독립ROM시험금지. 성공하면221성능을평가하고ingress/scroll-map16.67ms계획재개.
+
+# NES221 실기 시작 실패 (최신)
+
+[PR121](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/121) OPEN, 같은 `codex/nes-planner-index-221`. [결과](../../docs/nes-game221-hardware01.ko.md), [원본 대조 분석](../../analysis/game221-hardware01-verification.json). 이전 시험판 준비 기록보다 이 실기 결과가 우선한다. **로딩 뒤 메뉴 복귀, SNES READY TIMEOUT이며 성능은 미측정**이다.
+
+393216B ROM load/compare와START 성공, NES observer2398→14227968/ROM0. boot_reason5/44820poll/500tick, DISPLAY5.02초; first=last01000000(valid/stage0/error0/flags0),signals0606(진입·종료 RESET 비활성,DONE/RDY 활성). READY3 전에종료,인덱스초기화/검색미진입,12×21bin·plan·전송·display모두0. 서비스/SPI오류와60초게임제한이아니다. STOP/base/menuPREP통과,사용자가실제메뉴복귀확인. flags0은qualified프로그램읽기미관측이며CPU접근없음/전기적원인증명아님. 정상220flags4였으므로flags7필수검사추가금지.
+
+220/221패키지FPGA전체31908516동일,실제ARM8시작파일동일,linked함수에서도boot앞에index호출없음. 다만큰RUNstack은boot전에이미예약;static1992B여유는실기highwater아님. board74도설치전체이미지동일증명아님.213stage0/flags0와비슷하지만원인동일주장금지.220은431poll/4tickREADY였다.
+
+NEXT: 실제ARM START/리셋해제→hostbridge SPIidle/write admission→compactROM벡터/읽기응답→상태기록을최소경계로점검.213/214독립ROM부팅·고정트래픽재생반복은공백을닫지못함. 물리상대시점/스택수명/이미지식별을함께분리. 재현원인수정후같은index와수신·scrollmap16.67ms계획으로첫레벨실기복귀. 무조건retry/timeout확대/index철회/FIT루프/같은221·044/추가영상요청금지. 현재원인미확정/수정미완료,새FW/FIT/ZIP없음.221봉인1930파일불변,실기원본은새archive로보존. saveSRAM/GBC164/과거archive유지.
+
+# NES221 검색 인덱스·최소 성능 분리 계측 실기판 (최신)
+
+[PR121](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/121) OPEN. PR120 머지 b8de96e 이후 `codex/nes-planner-index-221`. [계약](../../docs/nes-index221-contract.ko.md), [시험 안내](../../docs/nes-game221-ready.ko.md), [검증](../../analysis/index221-verification.json). 선택test03/runtime01/arm01/check01/budget01/release01. ZIP 준비완료, 실기 결과 미수집/60fps 미확인.
+
+작업 의미: 반복적인 전체slot 검색을 실제로 줄이는 ARM 구현이다. 별도진단판만추가한것이아니다.256heads+1152next16bit=2816B단일index에서 unusedretained와currentexact를구분하며BEGIN재구성/선택시이동. fullkey/kind/used/범위/최소slot비교로기존배정·plan·활성bank·epoch·실제displayACKcommit보존. rank검사로BGscratch수명이끝나도OBJ조회는kind필터후키접근,다음BEGIN은retained만읽는다. CHR-RAM/추가mapper를새로지원하는변경아님.
+
+243645요청187frame 차등검사 동일state/video/slot/callbackplan;256hashcollision/64bit/fullcapacity/epoch/genwrap/실패검사PASS. 합성180frame242100요청 기존128588472probe->24314933+191818rebuild visits 약80.94%감소,hash연산/초기화전체CPU시간이나FPS아님. actualplanner129frames4234944참조B/11guards, actualRUN9frames361152B/6faultsPASS. 실제RTL/65816전체재실행아님:220FPGA+212client byteexact재사용.
+
+budget221 planner_ticks는계획함수inclusive,callback_ticks는그안의emit callback. 완료프레임에서차감근사,10ms양자화/마지막실패partial차감주의. D1payload는attempted encoded records(내부header포함),D0clock은상태query 전체bytes;실제PSRAM/SNESVBlank지표아님. 추가SPI/게임중파일쓰기없음. reserved2필드활용+신규2필드96B;최대TXT2980/4096,postSTOPsave-tail동일.
+
+fullARM208068B/static27964/RUN34960/IRQ508/margin1992PASS(기존1024gate);새tick간접호출포함graph와플랫폼명령검증. FW64f23d72,ZIPdf668946,FPGA31908516기존220동일(파일명n221별칭). 신규FIT/ASM없음. 60초/오디오/입력/ROM/base/menu/164복원/saveSRAM불변. test01 sandboxDLL623 시작실패/test02 printf64 및baseline typedef치환하네스컴파일실패를보존,test03통과.
+
+NEXT는221 실기:숫자1+A firstlevel RIGHT+B/repeatA 스크롤과3TXT/menu/audio/input,가능하면영상. 이전220반복/044복원불필요. 인덱싱으로수신/맵문제까지해결했다주장금지. 전체geometry수신·계획·map좌표는그대로;후속D1형식/dirtyingress,D0조회,원본좌표scroll-map을합친16.67ms예산필수. 새지표로CPU-vs-wait를구분하며작은cache/loader/FIT루프로회귀하지않는다. ARM여유1992는미래MMC4/5/save기능여유보장아님;추가배열은scratch수명과fullIRQ다시계산. 새실기데이터까지메모리추가/진단반복금지.
+
 # NES220 실기60초 통과·스크롤 성능 분석 (최신)
 
 PR120 같은 branch. [실기 결과](../../docs/nes-game220-hardware01.ko.md), [재현 분석](../../analysis/game220-hardware01-verification.json). 사용자60초 플레이/메뉴/소리/조작 정상, 오프닝 개선·첫레벨 끊김 유지. 이번 실행에서215 조기종료가 재현되지 않았으며60fps/장기 안정성은 미완료다.
