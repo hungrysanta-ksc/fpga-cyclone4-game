@@ -1,6 +1,6 @@
 # NES221 검색 인덱스·최소 성능 분리 계측 실기판 (최신)
 
-PR120 머지 b8de96e 이후 `codex/nes-planner-index-221`. [계약](../../docs/nes-index221-contract.ko.md), [시험 안내](../../docs/nes-game221-ready.ko.md), [검증](../../analysis/index221-verification.json). 선택test03/runtime01/arm01/check01/budget01/release01. ZIP 준비완료, 실기 결과 미수집/60fps 미확인.
+[PR121](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/121) OPEN. PR120 머지 b8de96e 이후 `codex/nes-planner-index-221`. [계약](../../docs/nes-index221-contract.ko.md), [시험 안내](../../docs/nes-game221-ready.ko.md), [검증](../../analysis/index221-verification.json). 선택test03/runtime01/arm01/check01/budget01/release01. ZIP 준비완료, 실기 결과 미수집/60fps 미확인.
 
 작업 의미: 반복적인 전체slot 검색을 실제로 줄이는 ARM 구현이다. 별도진단판만추가한것이아니다.256heads+1152next16bit=2816B단일index에서 unusedretained와currentexact를구분하며BEGIN재구성/선택시이동. fullkey/kind/used/범위/최소slot비교로기존배정·plan·활성bank·epoch·실제displayACKcommit보존. rank검사로BGscratch수명이끝나도OBJ조회는kind필터후키접근,다음BEGIN은retained만읽는다. CHR-RAM/추가mapper를새로지원하는변경아님.
 
