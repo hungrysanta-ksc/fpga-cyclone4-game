@@ -1,3 +1,11 @@
+# NES226 시험판 준비: 일반 배경 계산량 감소 (최신)
+
+- Latest226 FAST READY: newPR pending codex/nes-planner-fast-226; PR123 mergeddb37aa3. SELECTarm01/test02/runtime01/check02/evidence01/release01. Percompactgroup33bitexceptionmask;column0broadcast keepsallaffectedcolumns onoldrow/altpath;ordinaryidentityrow/key reconstruction skipped,exactplans/slots/order unchanged. Actual225vs2261939frames138355352Bstate/plan/banktrace identical+11guards/2wrongoptimizationnegativesPASS;finecalls43850959->880612/inside-fine scans50657951->1174142 syntheticNOTtime/FPS/newmaskscanexcluded. ActualRUN9frames6faults+9receiverboundsPASS;225C+6581630frames1835520pixels reusedNOT rerun. BEGIN/finish2fields+96B/schema226/max3521TXT. ARM209476/static28116/RUN35008/IRQ508/margin1792/FWaee94f48. FPGA7cb1d61a exact225/noFITASM;ZIPb7114831. NEXT USER226FIRSTLEVELSCROLL+3TXT/video/menu/audio/input;judgewhole16.67ms,notstaticgain/E8countalone. No same225044/FITloop;ingress/source/finish/SEALstillopen. test01Windowsprintf/check01metadatafinalfailure preserved,selected02only. SaveSRAM/GBC164/archives preserved. Readfast226contract/game226-ready/HANDOFF/probes/nes-fast226/progress.json.
+
+[구현·검증](../../docs/nes-fast226-contract.ko.md), [시험 안내](../../docs/nes-game226-ready.ko.md), [배포 gate](../../analysis/release226-verification.json). 새 PR에서 관리하며 다음은 실제 첫 레벨 스크롤이다. 합성 계산 횟수를 실기FPS로 해석하지 않는다. BEGIN/finish는 성공한 subphase만 누적하고 마지막 미완료 프레임과10ms 계측차를 고려한다.
+
+선택 증거2008파일 봉인 SHA256 `28a0495ea28a2f3717504f77111350b07fb8858722931abb4602cff504a074df`. 이전225 구현7091파일·225실기148파일 전부 해시 대조. 패키지 `probes/nes-fast226/release01/NES226-SMB3-PLANNERFAST.zip`, SHA256 `b7114831e9f9ab7c7a0324d91079f24202be9add70d81a4d297cff516811cce6`.
+
 # NES225 실기: 실행 정상, 스크롤 성능 미달 (최신)
 
 새 실기 증거148파일 봉인: `995c5c43334d87c4cfa1fd9d195e27c41d754c4f662aa96ef7e69adcf797a15b`. 이전223 실기143파일 전부와 기존223/224/225 manifest 해시를 확인했다. runtime/receiver/plan service/sink/resident 소스5개가223과 동일함도 확인했다.
