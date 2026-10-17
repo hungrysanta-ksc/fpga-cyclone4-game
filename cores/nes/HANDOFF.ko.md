@@ -1,3 +1,17 @@
+# NES221 검색 인덱스·최소 성능 분리 계측 실기판 (최신)
+
+PR120 머지 b8de96e 이후 `codex/nes-planner-index-221`. [계약](../../docs/nes-index221-contract.ko.md), [시험 안내](../../docs/nes-game221-ready.ko.md), [검증](../../analysis/index221-verification.json). 선택test03/runtime01/arm01/check01/budget01/release01. ZIP 준비완료, 실기 결과 미수집/60fps 미확인.
+
+작업 의미: 반복적인 전체slot 검색을 실제로 줄이는 ARM 구현이다. 별도진단판만추가한것이아니다.256heads+1152next16bit=2816B단일index에서 unusedretained와currentexact를구분하며BEGIN재구성/선택시이동. fullkey/kind/used/범위/최소slot비교로기존배정·plan·활성bank·epoch·실제displayACKcommit보존. rank검사로BGscratch수명이끝나도OBJ조회는kind필터후키접근,다음BEGIN은retained만읽는다. CHR-RAM/추가mapper를새로지원하는변경아님.
+
+243645요청187frame 차등검사 동일state/video/slot/callbackplan;256hashcollision/64bit/fullcapacity/epoch/genwrap/실패검사PASS. 합성180frame242100요청 기존128588472probe->24314933+191818rebuild visits 약80.94%감소,hash연산/초기화전체CPU시간이나FPS아님. actualplanner129frames4234944참조B/11guards, actualRUN9frames361152B/6faultsPASS. 실제RTL/65816전체재실행아님:220FPGA+212client byteexact재사용.
+
+budget221 planner_ticks는계획함수inclusive,callback_ticks는그안의emit callback. 완료프레임에서차감근사,10ms양자화/마지막실패partial차감주의. D1payload는attempted encoded records(내부header포함),D0clock은상태query 전체bytes;실제PSRAM/SNESVBlank지표아님. 추가SPI/게임중파일쓰기없음. reserved2필드활용+신규2필드96B;최대TXT2980/4096,postSTOPsave-tail동일.
+
+fullARM208068B/static27964/RUN34960/IRQ508/margin1992PASS(기존1024gate);새tick간접호출포함graph와플랫폼명령검증. FW64f23d72,ZIPdf668946,FPGA31908516기존220동일(파일명n221별칭). 신규FIT/ASM없음. 60초/오디오/입력/ROM/base/menu/164복원/saveSRAM불변. test01 sandboxDLL623 시작실패/test02 printf64 및baseline typedef치환하네스컴파일실패를보존,test03통과.
+
+NEXT는221 실기:숫자1+A firstlevel RIGHT+B/repeatA 스크롤과3TXT/menu/audio/input,가능하면영상. 이전220반복/044복원불필요. 인덱싱으로수신/맵문제까지해결했다주장금지. 전체geometry수신·계획·map좌표는그대로;후속D1형식/dirtyingress,D0조회,원본좌표scroll-map을합친16.67ms예산필수. 새지표로CPU-vs-wait를구분하며작은cache/loader/FIT루프로회귀하지않는다. ARM여유1992는미래MMC4/5/save기능여유보장아님;추가배열은scratch수명과fullIRQ다시계산. 새실기데이터까지메모리추가/진단반복금지.
+
 # NES220 실기60초 통과·스크롤 성능 분석 (최신)
 
 PR120 같은 branch. [실기 결과](../../docs/nes-game220-hardware01.ko.md), [재현 분석](../../analysis/game220-hardware01-verification.json). 사용자60초 플레이/메뉴/소리/조작 정상, 오프닝 개선·첫레벨 끊김 유지. 이번 실행에서215 조기종료가 재현되지 않았으며60fps/장기 안정성은 미완료다.
