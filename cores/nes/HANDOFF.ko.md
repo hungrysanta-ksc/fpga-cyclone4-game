@@ -1,3 +1,17 @@
+# NES210 스크롤 예산 실기판 (최신)
+
+PR118 머지 c263d63 기준, branch `codex/nes-scroll-budget-210`. [계약](../../docs/nes-budget210-contract.ko.md), [시험 안내](../../docs/nes-game210-ready.ko.md), [선택 증거](../../analysis/budget210-verification.json). ZIP은 workspace `releases/NES210-SMB3-SCROLL-BUDGET.zip`.
+
+**작업 의미:** 수정 계획의 실제 스크롤 전송량/재사용 가능성 판정 단계.2031 정렬목록을 이용한 이진검색을 함께 적용했다. 아직 영속적인 출력slot/scroll-map/dirty목록을 생산구현하지 않았고60fps 개선을 주장하지 않는다. 모델은 실제계획을 모두 보내며256entry 정확키(물리태그/변환행/OBJmask)를 관찰한다. 충돌은미스,동일프레임은재사용제외,alt는미지원,ROM-session전용. 활성slot/bank/base/CHR-RAM내용을 지키는 캐시의 증거로 사용하지 않는다.
+
+선택: arm03/test05/check02/report02/release01.9연속실제C프레임/6오류종료/기존참조화면/4152SPI동일;163840이진검색대조,충돌tag250/serialwrap/부분로그/IRQ복원검사PASS.ARM205380B/static27804/RUN31368/IRQ508/여유5744B.키/seen2560B는RUN stack에만두고반환전에포인터철회;932B집계만남는다.전체GBC/메뉴호출그래프의새로운전수검증은아니며기존GBC코어/저장SRAM은변경없다.기존게임TXT최대4047B,새budgetTXT2420B;같은4096B문자버퍼재사용,안전STOP/base복원뒤에만저장.최종209FPGA/SNES ROM바이트재사용,새FIT/ASM없음.기존209 archive2389파일hash검증.ROM은사용자제공SMB3(J)sha dbb1cb5e.
+
+집계는5초*12의 **프레임시작시각 기준**,NES실제장면이자동분류되지않는다.실행중wrapper가센D0–D3/E8/E9/E0/E1/기타clockB는TX/RX이중합산아님.별도service/audioSPI는제외되어전체버스의하한이다.수신/계획/SEAL시간은성공한호출의10ms tick;표시최대간격은초기지연도포함.실패한마지막프레임bytes/아직flush되지않은plan도남을수있어그bin에서reuseplan을빼서정밀예측하면안된다.실제physicalread/cachemiss,SNES비교/fallback/VBlank,median/p95와60Hzjitter는미측정.분석기는adopt_reuse=false/fps60_proven=false를유지한다.
+
+**다음:** 사용자210을실행,숫자1+A후RIGHT+B유지/A반복으로첫레벨카메라스크롤20–30초;게임화면부터영상또는첫레벨진입시각과지속스크롤구간을받는다.세파일 `nes-progress-210.txt`, `nes-game-last-210.txt`, `nes-budget-210.txt`.소리/입력/메뉴복귀확인.실제스크롤bin을식별한뒤현재SPI와조건부plan재사용하한을분리하고,geometry/map/dirty방식까지16.67ms예산을만족하는지판정한다.실제캐시실행전active/pending slot보호/퇴거/epoch/base및원래좌표scroll-map계약필수.256모델충돌때문에큰cache의가능성까지부정하지않는다.이판의같은실행에서현재/모델비교는가능하지만candidate화면동등성/실측성능은아직아니다.
+
+불필요한209/044재시험·pad-only·새FIT/코덱루프를하지않는다. arm01/02는중간프로토타입이며배포금지;test01은harness문자열선택실패,test02는sandboxDLL623,최종test05선택.다음일은이측정결과분석이며무작정더큰FPGA캐시를추가하지않는다.60fps→긴플레이/오류·리셋로그→조작품질우선순위유지.
+
 # NES209 이후 60fps 회고와 수정 계획 (최신)
 
 PR117은 ef75c54로 머지됨. 별도 `codex/nes-60fps-review-209`는 조사·계산·문서만 변경했다. [회고 전체](../../docs/nes-60fps-retrospective209.ko.md), [소스/계산 근거](../../analysis/nes-60fps-retrospective209.json).
