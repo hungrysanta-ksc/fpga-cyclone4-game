@@ -1,3 +1,17 @@
+# NES222 시작 순서 보강 시험판 (최신)
+
+[PR121](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/121) 같은 branch. [계약](../../docs/nes-startup222-contract.ko.md), [실기 안내](../../docs/nes-game222-ready.ko.md), [검증](../../analysis/startup222-verification.json). 선택 arm02/test03/rtl01/check03/release01. **시험판 준비 완료이며 221의 실제 원인·해결 여부는 아직 미확정이다.** 다음은 추가 로컬 시험이 아니라 사용자222 실기다.
+
+221은 ROM load/compare/START 뒤 SNES READY 시간초과였다.222는 RESET 유지 상태에서 E0 빈 F7/CRC를 한 번 확인한다. /WR-low 때문에 RESET 중 bridge admission이 막힐 수 있음을 실제 RTL 조건시험에서 확인했다. 따라서00/FF 무응답형태만 기존1회RESET해제 후1ms정착/한 번의추가E0확인으로넘긴다. 유효빈응답만READY gate로진행하며손상/dirty/IO는차단. 이조건시험은221물리원인재현이아니다. START재전송/반복reset/시간제한확대없음.
+
+preflight실패error7,postflight실패8,기존READY실패6. RESET미해제실패는leave없이STOP;해제실패는RESET확보후STOP. CF86/CSS 소유권실패는fail-stop유지. 큰work는READY뒤noinline native_frames222(31848B)에만예약;시작native_session165는32B. postSTOP포인터해제/저장tail과게임60초유지. startup reason/postreason/raw20+20/signals/ticks56B,TXT최대3280/4096. 추가SPI20B또는40B는시작때만,게임중계측아님.
+
+실제C handoff/boot/STOP19경계+실제RTL응답5재생24PASS;실제220bridge idleSS/WR/reset/RUN와현재212ROM벡터·명령10검사PASS. 플랫폼/runtime fixture로전체ARM-RTL-65816물리결합은아님. fullARM208952/static28020/RUN34984/IRQ508/여유1912PASS. check01은SU .isra와ELF .isra.0 이름불일치로중단,유일함수와실제prologue8+31744+96=31848을대조해대응시켰다. check02는미채택arm01,최종check03은arm02. arm01필수pre-only안은WR순환의존때문에미채택으로보존.
+
+FW7b6d93f9/ZIP050fea96/FPGA31908516(220/221바이트동일). 새FIT/ASM없음.221 runtime/planner/resident/sink/입력/소리바이트동일이라기존243645요청·RUN9프레임검증재사용,반복하지않음. saveSRAM/GBC164/ROM/base/menu/164복원/221봉인자료유지. 원인미확정이므로단순히222를fix완료로분류하지않는다.
+
+NEXT: NES GAME 222.nh1,게임이뜨면월드맵숫자1+A 첫레벨 RIGHT+B/A반복스크롤.3TXT(progress/game-last/budget222),성공시소리·조작·메뉴/스크롤체감. 추가영상필수아님. pre1 또는pre6/post1 뒤READY3인지판정. pre1+boot5/stage0이면admission후SNESreset/vector/bus/status,pre6/post6이면리셋후에도정상통신부응답없음;원인확정·CPU비활성단정금지. 같은221/044반복/추가FIT·독립ROM시험금지. 성공하면221성능을평가하고ingress/scroll-map16.67ms계획재개.
+
 # NES221 실기 시작 실패 (최신)
 
 [PR121](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/121) OPEN, 같은 `codex/nes-planner-index-221`. [결과](../../docs/nes-game221-hardware01.ko.md), [원본 대조 분석](../../analysis/game221-hardware01-verification.json). 이전 시험판 준비 기록보다 이 실기 결과가 우선한다. **로딩 뒤 메뉴 복귀, SNES READY TIMEOUT이며 성능은 미측정**이다.
