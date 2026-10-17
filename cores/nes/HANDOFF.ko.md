@@ -1,3 +1,21 @@
+# NES211 출력 버퍼별 타일 유지 후보 (최신)
+
+PR119는 `e0a9247`로 머지됐다. 새 `codex/nes-resident-slots-211`. [계약과 다음 연결 조건](../../docs/nes-resident211-contract.ko.md), [선택 증거](../../analysis/resident211-verification.json). **실제 C 후보 검증 완료, 생산 SPI/65816 미연결, 실기용211 ZIP 없음.** 이전210패키지를 이 후보로 오인하지 않는다.
+
+작업 의미: 매 프레임 타일을 재배정/재생성하던 비용을 줄이는 구현이다. 실제210 geometry planner에 stable BG/OBJ slot과 버퍼별 유효성을 연결했다. BG identity physical tag/OBJ tag+mask 정확키만 유지하고 행변환/alt는 재생성한다. 기존video15912B 임시키/raw union 유지. 최종 표시ACK(serial32/generation16/target bank) 전에는 대상 residency를 확정하지 않는다. 실패는 세션fault/COMMON STOP 후 재설정. 현재 표시bank에는 쓰지 않는다.
+
+맵은 기존64B group dirty를 두 대상별로 누적하여 한 프레임 전 변화가 반대편 버퍼에서 누락되지 않게 한다. 아직 NES원래좌표 기반 순환 scroll-map은 아니다.193 collector는 불연속slot에서 chunk를끊을수있지만 빈END는거절하므로 매frame slot0 zero16B를먼저보낸다. 이 조건으로 불필요한 새FPGA FIT를피한다. 실제sparseSPI/RTL결합시험은아직없다.
+
+선택test04/arm03/evidence01. 실제186reference와129프레임/4234944참조planar바이트 및palette/OAM/HDMA/raw정확일치.11fault/경계:잘못된ACK4종,중간쓰기실패,CHR-RAM거절,serial소진,prepare전commit,중복BEGIN,현재슬롯포화,뒤처진map대상. 합성96scroll 패턴182784→5664B,맵393216→87040B. **실제SMB3/60fps/소비CPU시간증거아님.** 210의59.07%모델에는행변환도있으므로211hit로쓰지않는다.
+
+ARM상태3200B(210의2560RUN-only모델을교체하면+640),video15912동일. 기존여유5744에서상태만차감5104는fullRUN승인아님. plannerstack240→248+slot64+실제콜백/IRQ체인재검증필요. 새global캐시와기존모델을중복할당하지않는다. ARMobject resident1536/planner3288 vs기존3296,생산link없음. 기존FPGA148LE1LAB/SNES본문1B예산유지.
+
+**바로 다음:** sparse C transport와실제65816 dirty소비연결.195의연속offset/전체count검사를그냥삭제하지말고base/대상bank/slotcoverage/epoch/token검증으로대체한다. 항상비활성WRAM+VRAM동일대상을쓰고최종VBlank flip후실제ACK를받아야하며169의활성bank부분갱신과혼용금지. 기존전수비교/전체fallback을대체해4KiBROM코드공간확보. palette/OAM/HDMA/raw 유지. 실제C+65816정상/STOP/ACK/부분오류최소검사→fullARM+필요한board검사→실기영상. 같은cache microtest/조회관측기/FIT루프를다음작업으로삼지않는다. ingress비용도16.67ms전체예산에계속포함한다.
+
+사용자는다음개선판에서로딩종료직전부터메뉴복귀까지영상촬영예정.210은약6–7초첫레벨진입/사망과스테이지선택반복/**마지막약5초첫레벨내부**가최종정정. 끊김때문에지속주행불가했으므로동일210/044재시험금지. 실기미검증수치를프레임개선이라고보고하지않는다. saveSRAM/GBC164/기존배포와archive불변,MMC4/5·CHR-RAM·state load/frameskip의내용epoch·실제표시base조건보존.
+
+중간test01Windowsprintf/trace누락실패,test02전체검색,test03anchor전;arm01상대도구경로cc1실패,arm02anchor전. 최종만선택,이전기록보존. 새FW/FIT/ASM/ZIP없음.
+
 # NES210 실기 결과와 다음 구현 방향 (최신)
 
 PR119 같은 branch에 결과를 추가했다. [실기 분석](../../docs/nes-game210-hardware01.ko.md) · [검증 JSON](../../analysis/game210-hardware01-verification.json). 사용자 소리·실제 메뉴 복귀 정상, 프레임 개선은 미확인. 60.06초/196표시(평균306.4ms),209205회와 장면이 달라 회귀율/FPS 비교 금지. receive11.20/plan22.10/seal26.42초; plan/seal은 전송·소스·소비 대기 포함이다.

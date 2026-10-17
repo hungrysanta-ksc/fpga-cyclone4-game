@@ -1,0 +1,134 @@
+{
+  "passed": true,
+  "selected": [
+    "test04",
+    "arm03"
+  ],
+  "merged_pr119": "e0a924793dfc5f750543ccb84c65fc891fdbf41a",
+  "branch": "codex/nes-resident-slots-211",
+  "gates": {
+    "test04/verification.json": "95b025432984fe93780bf93d6db4a3a337e6c62bdfde5486d40aaafc81707a71",
+    "arm03/result.json": "02882ae1361ee78e79a87eba4e4efeaacd51d02ddd1ec088ac19d5aa48062596"
+  },
+  "host": {
+    "candidate": 211,
+    "preparation_sha256": "da284a71af77168802b2958e52c90e6f485fbc09c795147cd82cb5457bc3ec46",
+    "output": "SCROLL synthetic_frames=96 pattern_old=182784 pattern_new=5664 map_new=87040 not_physical_fps=1\nFAULTS boundaries=11 active_preserved=1 mutable_refused=1\nPASS RESIDENT211 frames=129 referenced_bytes=4234944 state_host_bytes=3208 video_bytes=15912 pattern_old=189600 pattern_new=9120 map_old=528384 map_new=142272\n",
+    "logs": {
+      "build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "host.log": "a074a7a8565014b0c5b7ce894cc1e9d7a3dcf205b5182be965218bcfb6239ec7"
+    },
+    "scope": "Actual210 geometry planner and actual186 reference converter; arbitrary-slot writes and dual-bank consumer modeled in C. Synthetic scrolling only, no gameplay/FPS/SPI/65816/FIT proof.",
+    "sources": {
+      "tools\\test_nes_resident211.py": "a31ab9db3d807273e1846b0d108b0f70bdcd91fbf82b487029721913ee53072b",
+      "tools\\nes_resident211.py": "d80eb3871065484b21a0b214b4ad74fb9eba532cb029b7eaff45e7c9bcaf8484"
+    },
+    "deployable": false
+  },
+  "arm": {
+    "passed": true,
+    "input_pins": {
+      "nes_native165.c": "86d0e37df692c9f35d2222d4482e8b0766185bd6eb08483f427b9672b3fbd6ce",
+      "nes_native165.h": "1bf512a8d92dcf493c364ccb513d768f4edb468fcdc67d3e3eedc553b736627d",
+      "nes_native_video165.h": "a3b66043f463631bba7d4d2197a1396933887ad95f6c035ed448396ab21a5768",
+      "nes_plan191.c": "dd8330726316cc08a92eef1a5eb6dfc6874867e2a54d7c02d9a9f906dc86dd3a",
+      "nes_plan191.h": "8792dec36d2166bb3c06e3b7fab2ae4ab823b025ff007af73ba248520951f7cf",
+      "nes_planner211.c": "b14eea4f86546a8f322fada2eefc7c81832019f53178fb748be5a2ec9ae83c46",
+      "nes_resident211.c": "4cc02ed438debad395306a8e51ad5c66979b710c5e04420ed5308eb48834dec1",
+      "nes_resident211.h": "0e0edc44a26361dc32570c66815a2f74b9505fef4c6b3eaff6370dbf8e98cf04",
+      "nes_trace166.c": "eb400234d88399773a671233eef4d15e13f20bb750de834cfbf2b53e21dc316c",
+      "nes_trace166.h": "76923567ede1a152fc056c482e27eb3a81e97fe19d04ff84a789a26cc9d319e5"
+    },
+    "layout": {
+      "resident_bytes": 3200,
+      "video_bytes": 15912
+    },
+    "sizes": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n   1536\t      0\t      0\t   1536\t    600\tnes_resident211.o\n   3288\t      0\t      0\t   3288\t    cd8\tnes_planner211.o\n   3296\t      0\t      0\t   3296\t    ce0\tnes_plan191.o\n",
+    "stacks": {
+      "map_word185": {
+        "bytes": 20,
+        "kind": "static"
+      },
+      "tile": {
+        "bytes": 20,
+        "kind": "static"
+      },
+      "fine": {
+        "bytes": 20,
+        "kind": "static"
+      },
+      "nes_native_video191_plan": {
+        "bytes": 240,
+        "kind": "static"
+      },
+      "nes_native_video211_plan": {
+        "bytes": 248,
+        "kind": "static"
+      },
+      "nes_resident211_reset": {
+        "bytes": 8,
+        "kind": "static"
+      },
+      "nes_resident211_abort": {
+        "bytes": 8,
+        "kind": "static"
+      },
+      "nes_resident211_begin": {
+        "bytes": 32,
+        "kind": "static"
+      },
+      "nes_resident211_slot": {
+        "bytes": 64,
+        "kind": "static"
+      },
+      "nes_resident211_prepare": {
+        "bytes": 16,
+        "kind": "static"
+      },
+      "nes_resident211_commit": {
+        "bytes": 24,
+        "kind": "static"
+      }
+    },
+    "replaces_passive_model_bytes": 2560,
+    "retained_state_delta": 640,
+    "old_margin210": 5744,
+    "arithmetic_margin_before_callchain_and_protocol": 5104,
+    "full_runtime_approved": false,
+    "spi_snes_consumer_integrated": false,
+    "scope": "Measure candidate objects/ARM ABI only; no linked RUN/consumer approval.",
+    "script_sha256": "1485d614935fa92980d86dcf39dc408dd0ee3b73c0f944f122df4408403415b6"
+  },
+  "public_sources": {
+    "src/nes/firmware/nes_resident211.c": "4cc02ed438debad395306a8e51ad5c66979b710c5e04420ed5308eb48834dec1",
+    "src/nes/firmware/nes_resident211.h": "0e0edc44a26361dc32570c66815a2f74b9505fef4c6b3eaff6370dbf8e98cf04",
+    "tests/nes-functional/resident211_host.c": "09bbdf7273275bbd554a428efedefaf17d0e910557b9584d08fa94d4c36288e9",
+    "tools/nes_resident211.py": "d80eb3871065484b21a0b214b4ad74fb9eba532cb029b7eaff45e7c9bcaf8484",
+    "tools/test_nes_resident211.py": "a31ab9db3d807273e1846b0d108b0f70bdcd91fbf82b487029721913ee53072b",
+    "tools/check_nes_resident211_arm.py": "1485d614935fa92980d86dcf39dc408dd0ee3b73c0f944f122df4408403415b6",
+    "tools/nes_resident211_evidence.py": "3ca1a34d4911f400816e74abb0dad7b6f0dbd108d18da36f96a987a8a884cf82",
+    "docs/nes-resident211-contract.ko.md": "2a93a3fd4ae0affa7ba84c49f3fc4ca59c18870e7bdc9df75bf2a55f1159f602"
+  },
+  "synthetic_scroll": {
+    "frames": 96,
+    "pattern_before": 182784,
+    "pattern_after": 5664,
+    "pattern_reduction_percent": 96.90126050420169,
+    "map_before": 393216,
+    "map_after": 87040,
+    "map_reduction_percent": 77.86458333333334,
+    "actual_game": false,
+    "physical_fps": false
+  },
+  "decision": {
+    "deployable": false,
+    "full_arm": false,
+    "new_fit": false,
+    "new_package": false,
+    "sparse_snes_consumer": false,
+    "source_ingress_unchanged": true,
+    "circular_scroll_map": false,
+    "next": "Bind sparse C transport and actual65816 destination-bank dirty consumer; replace full compare/fallback within existing4KiB ROM, preserve base/epoch/coverage/token/STOP/finalACK. Then fullARM and minimal board proof -> paired physical video trial. No isolated cache/FIT/poll loop."
+  },
+  "user_next_trial": "Video from just before loading ends through menu return; no repeat210 required. Last~5s of210 was first level, per correction."
+}
