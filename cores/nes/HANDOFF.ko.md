@@ -1,3 +1,18 @@
+# NES219 응답·카운터 및 CHECK 중복 조건 정리 (최신, 배포 보류)
+
+PR120 같은 branch. [계약](../../docs/nes-retire219-contract.ko.md), [검증](../../analysis/retire219-verification.json). 선택 source02/counter01/spi01/enable02/mapfit02/timing02/io02/paths03+04/evidence03. **기능 검증용 후속 후보이며 미채택, 새 ARM/ASM/ZIP 없음. 전체 타이밍은 오히려 악화되었으므로 개선 완료로 쓰지 않는다.**
+
+작업 의미:216 정상 대기 수정과211~212 변경 범위 출력을 실기로 보내기 위한 FPGA 타이밍 정리.60fps 처리량을 직접 개선하거나 검증한 작업이 아니다.218/source02 기준 첫 후보는 SPI 응답 주소를9+10bit로 분할한 명령별 허용식과 count_update 내부 데이터 선택을 변경한다. 카운터 one-hot 상태·STOP·기존 갱신 enable은 유지한다. 두 번째 후보는 실제RTL에서 fault→!check_enable을 증명하여 boot 연결의 중복 !spi_fault 마스크만 제거한다. read_reset fault 취소와 외부RUN/loader WRITE-HOLD drain은 그대로다.
+
+기능:SPI1056768에지/1024후속조건/327680응답주소경계+상하위 비교 negative;로더294912상태1056실제쓰기524288counts131072이전코드+RECEIVE/STOP negative;실제SPI219거래14016MISO비트100READ7ACK19손상72취소2겹침. CHECK 불변식1211304조건부 전이+disable누락 negativePASS. fault1/enable1을 임의주입한 비도달 상태까지 동등하다는 주장은 아니다. 실제nes_spi_boot 전체게임cosim도 아니다.216wait/217epoch는 해시와기존증거재사용,218봉인5057파일검증.
+
+source01:15152LE8352FF956LAB47M9K,nominal/strict-.323/hold+.138. source02:15131LE8352FF955LAB47M9K,277LE8LAB9M9K여유;nominal/strict-.611FAIL/hold+.154. source02에서 기존fault→check_failed 경로는 제거되었고counter+.312ns/response-command nominal+.329ns이나,strict response→error-.153ns가 남는다. source02가source01보다전체타이밍이좋다는뜻으로선택한것이아니다.
+
+정확한다음대상: diagnostic_release.release_reset1→boot.run_enable→control.snapshot42,3LUT6.493ns중배선4.880ns75%,두주요배선1.917/1.835ns. 같은168MHz 데이터경로이므로 reset exception으로지우지않는다. load_valid→loader.phase4도-.392ns/6LUT6.267ns65%배선. paths04/snapshot219-implementation-0-status.rpt와receive.rpt, paths03/fault219-implementation-0-response.rpt를동시에확인. 상태snapshot 첫바이트capture/후속shift와bootflags 공유범위/RECEIVE 자격식을함께단순화하되원래에지의flags/reset/fault 우선순위와응답주소차단을유지한다. 상태샘플시점변경은동등취급금지. 단순seed/CE속성반복/clockSDC완화/epoch수식재작성금지.
+
+CDC4392행45solefanout/newother0/held6.587Gray6.737,96reg576reset최소39.721/1.740PASS.조건부PSRAM+.943/SNES86.854/SPI167.754/nativepayloadresetPASS;전체전기/MTBF signoff아님.전체boardgates통과후새ARM과현재212ROM4096B를새FIT DB에ROM-onlyCDB/ASM/짝검사후첫레벨스크롤.동일215/044/추가영상요청없음.GBC164/저장SRAM/완료archive불변.
+
+---
 # NES218 SPI 경계·로더 데이터 저장 정리 (최신, 실기 배포 보류)
 
 PR120 같은 branch. [계약](../../docs/nes-boundary218-contract.ko.md), [검증](../../analysis/boundary218-verification.json). 선택 source02/test01/payload02/joint02/mapfit02/timing02/io02/paths02+03/evidence03. **기능 증거용 후보이며 아직 미채택. 새 ARM/ASM/ZIP 없음.** 엄격 최악-0.437ns로217(-0.155ns)보다 나빠졌으므로 국소 개선을 전체 통과로 표현하지 않는다.

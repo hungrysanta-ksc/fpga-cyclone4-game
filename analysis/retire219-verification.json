@@ -1,0 +1,4462 @@
+{
+  "evidence_consistent": true,
+  "functional_pass": true,
+  "hardware_trial_ready": false,
+  "adopted": false,
+  "new_package": false,
+  "new_arm": false,
+  "new_asm": false,
+  "selected": [
+    "source02",
+    "counter01",
+    "spi01",
+    "enable02",
+    "mapfit02",
+    "timing02",
+    "io02",
+    "paths03",
+    "paths04"
+  ],
+  "candidates": {
+    "1": {
+      "fitted_le": 15152,
+      "registers": 8352,
+      "lab": 956,
+      "m9k": 47,
+      "le_spare": 256,
+      "lab_spare": 7,
+      "delta_from206": {
+        "le": -27,
+        "registers": -8,
+        "lab": -3,
+        "m9k": 0
+      },
+      "timing": {
+        "nominal": {
+          "setup": {
+            "corner": "8_slow_1200mv_85c",
+            "from_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+            "to_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+            "kind": "setup",
+            "from": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|fault",
+            "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|check_failed",
+            "slack": "-0.323",
+            "delay": "6.179"
+          },
+          "hold": {
+            "corner": "MIN_fast_1200mv_0c",
+            "from_clock": "nes",
+            "to_clock": "nes",
+            "kind": "hold",
+            "from": "nes_live_joint:core|nes_native_capture201:native_frame|nes_native_frame201:frame|errors[11]",
+            "to": "nes_run_observer134:observer|nes_ppu_history157:history|altsyncram:entries_rtl_0|altsyncram_loi1:auto_generated|ram_block1a0~porta_datain_reg0",
+            "slack": "0.138",
+            "delay": "0.465"
+          }
+        },
+        "implementation": {
+          "setup": {
+            "corner": "8_slow_1200mv_85c",
+            "from_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+            "to_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+            "kind": "setup",
+            "from": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|fault",
+            "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|check_failed",
+            "slack": "-0.323",
+            "delay": "6.179"
+          },
+          "hold": {
+            "corner": "MIN_fast_1200mv_0c",
+            "from_clock": "nes",
+            "to_clock": "nes",
+            "kind": "hold",
+            "from": "nes_live_joint:core|nes_native_capture201:native_frame|nes_native_frame201:frame|errors[11]",
+            "to": "nes_run_observer134:observer|nes_ppu_history157:history|altsyncram:entries_rtl_0|altsyncram_loi1:auto_generated|ram_block1a0~porta_datain_reg0",
+            "slack": "0.138",
+            "delay": "0.465"
+          }
+        }
+      },
+      "related_timing_passed": false,
+      "reset": {
+        "registers": 96,
+        "all_corner_paths": 576,
+        "min_recovery_ns": 40.617,
+        "min_removal_ns": 1.417,
+        "crossclock_payload_paths": 0,
+        "first_stage_single_fanouts": 2
+      },
+      "cdc": {
+        "rows": 4404,
+        "first_stage_single_fanouts": 45,
+        "held_payload_max_ns": 6.643,
+        "held_margin_after_2ns": 3.261,
+        "gray_max_ns": 6.561,
+        "gray_settle_margin_after_2ns": 36.893,
+        "new_other_data_paths": 0,
+        "classifications": [
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "hold",
+            "group": "control_first_stage",
+            "count": 15
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "hold",
+            "group": "gray_first_stage",
+            "count": 32
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "hold",
+            "group": "held_payload_protocol",
+            "count": 46
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "hold",
+            "group": "inherited_unmodified",
+            "count": 272
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "hold",
+            "group": "related_pll",
+            "count": 6
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "recovery",
+            "group": "async_release_first_stages_or_inherited_review",
+            "count": 220
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "recovery",
+            "group": "related_pll",
+            "count": 75
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "removal",
+            "group": "async_release_first_stages_or_inherited_review",
+            "count": 220
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "removal",
+            "group": "related_pll",
+            "count": 75
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "setup",
+            "group": "control_first_stage",
+            "count": 15
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "setup",
+            "group": "gray_first_stage",
+            "count": 32
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "setup",
+            "group": "held_payload_protocol",
+            "count": 46
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "setup",
+            "group": "inherited_unmodified",
+            "count": 408
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "setup",
+            "group": "related_pll",
+            "count": 6
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "hold",
+            "group": "control_first_stage",
+            "count": 15
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "hold",
+            "group": "gray_first_stage",
+            "count": 32
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "hold",
+            "group": "held_payload_protocol",
+            "count": 46
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "hold",
+            "group": "inherited_unmodified",
+            "count": 272
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "hold",
+            "group": "related_pll",
+            "count": 6
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "recovery",
+            "group": "async_release_first_stages_or_inherited_review",
+            "count": 220
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "recovery",
+            "group": "related_pll",
+            "count": 75
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "removal",
+            "group": "async_release_first_stages_or_inherited_review",
+            "count": 220
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "removal",
+            "group": "related_pll",
+            "count": 75
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "setup",
+            "group": "control_first_stage",
+            "count": 15
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "setup",
+            "group": "gray_first_stage",
+            "count": 32
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "setup",
+            "group": "held_payload_protocol",
+            "count": 46
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "setup",
+            "group": "inherited_unmodified",
+            "count": 408
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "setup",
+            "group": "related_pll",
+            "count": 6
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "hold",
+            "group": "control_first_stage",
+            "count": 15
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "hold",
+            "group": "gray_first_stage",
+            "count": 32
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "hold",
+            "group": "held_payload_protocol",
+            "count": 46
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "hold",
+            "group": "inherited_unmodified",
+            "count": 272
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "hold",
+            "group": "related_pll",
+            "count": 6
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "recovery",
+            "group": "async_release_first_stages_or_inherited_review",
+            "count": 220
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "recovery",
+            "group": "related_pll",
+            "count": 75
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "removal",
+            "group": "async_release_first_stages_or_inherited_review",
+            "count": 220
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "removal",
+            "group": "related_pll",
+            "count": 75
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "setup",
+            "group": "control_first_stage",
+            "count": 15
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "setup",
+            "group": "gray_first_stage",
+            "count": 32
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "setup",
+            "group": "held_payload_protocol",
+            "count": 46
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "setup",
+            "group": "inherited_unmodified",
+            "count": 408
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "setup",
+            "group": "related_pll",
+            "count": 6
+          }
+        ]
+      },
+      "io": {
+        "path_rows": 65058,
+        "groups": {
+          "combinational": {
+            "rows": 25389,
+            "max_delay_ns": 38.069,
+            "min_raw_slack_ns": 961.931
+          },
+          "input": {
+            "rows": 471,
+            "max_delay_ns": 14.471,
+            "min_raw_slack_ns": 985.529
+          },
+          "mixed:core|pll|altpll_component|auto_generated|pll1|clk[0]:nes": {
+            "rows": 162,
+            "max_delay_ns": 6.643,
+            "min_raw_slack_ns": -4.569
+          },
+          "mixed:core|pll|altpll_component|auto_generated|pll1|clk[1]:core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+            "rows": 3,
+            "max_delay_ns": 3.752,
+            "min_raw_slack_ns": 2.028
+          },
+          "mixed:core|pll|altpll_component|auto_generated|pll1|clk[1]:nes": {
+            "rows": 195,
+            "max_delay_ns": 6.953,
+            "min_raw_slack_ns": -4.879
+          },
+          "mixed:nes:core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+            "rows": 300,
+            "max_delay_ns": 4.644,
+            "min_raw_slack_ns": -7.491
+          },
+          "mixed:nes:core|pll|altpll_component|auto_generated|pll1|clk[1]": {
+            "rows": 69,
+            "max_delay_ns": 1.827,
+            "min_raw_slack_ns": -4.707
+          },
+          "output": {
+            "rows": 30771,
+            "max_delay_ns": 31.755,
+            "min_raw_slack_ns": 967.757
+          },
+          "pad": {
+            "rows": 24,
+            "max_delay_ns": 1.601,
+            "min_raw_slack_ns": 0.297
+          },
+          "prepared": {
+            "rows": 51,
+            "max_delay_ns": 2.562,
+            "min_raw_slack_ns": -0.626
+          },
+          "prepared_req": {
+            "rows": 3,
+            "max_delay_ns": 3.683,
+            "min_raw_slack_ns": -1.685
+          },
+          "psram_active": {
+            "rows": 9,
+            "max_delay_ns": 10.677,
+            "min_raw_slack_ns": 988.872
+          },
+          "psram_address": {
+            "rows": 66,
+            "max_delay_ns": 10.728,
+            "min_raw_slack_ns": 988.826
+          },
+          "psram_input": {
+            "rows": 48,
+            "max_delay_ns": 7.02,
+            "min_raw_slack_ns": 992.958
+          },
+          "records": {
+            "rows": 288,
+            "max_delay_ns": 2.889,
+            "min_raw_slack_ns": -5.765
+          },
+          "records_req": {
+            "rows": 3,
+            "max_delay_ns": 3.209,
+            "min_raw_slack_ns": -6.087
+          },
+          "recovery": {
+            "rows": 3603,
+            "max_delay_ns": 6.188,
+            "min_raw_slack_ns": -8.171
+          },
+          "removal": {
+            "rows": 3603,
+            "max_delay_ns": 5.746,
+            "min_raw_slack_ns": 0.86
+          }
+        },
+        "ports": [
+          {
+            "name": "CLKIN",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SPI_SS",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_SYSCLK",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SPI_SCK",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SPI_MOSI",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_DATA[11]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[14]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[6]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[2]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[10]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[13]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[5]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[0]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[8]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[15]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[7]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_ADDR_IN[1]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_WRITE_IN",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_READ_IN",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[0]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[21]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[23]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[20]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[22]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[10]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[8]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[9]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[11]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[13]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[12]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[14]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[15]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[19]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[16]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[18]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[17]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[5]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[7]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[6]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[2]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[4]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[3]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_DATA[0]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_DATA[1]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_DATA[2]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_DATA[3]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_DATA[4]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_DATA[5]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_DATA[7]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_DATA[6]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[3]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[4]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[12]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[1]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[9]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_ROMSEL_IN",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SPI_MISO",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "RAM_DATA[0]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "RAM_DATA[1]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "RAM_DATA[2]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "RAM_DATA[3]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "RAM_DATA[4]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "RAM_DATA[5]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "RAM_DATA[6]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "RAM_DATA[7]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "MCU_RDY",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_IRQ",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_DATABUS_OE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_DATABUS_DIR",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[0]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[1]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[2]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[3]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[4]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[5]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[6]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[7]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[8]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[9]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[10]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[11]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[12]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[13]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[14]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[15]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[16]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[17]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[18]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[19]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[20]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[21]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_1CE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_2CE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ZZ",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_OE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_WE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_BHE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_BLE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[0]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[1]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[2]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[3]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[4]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[5]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[6]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[7]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[8]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[9]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[10]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[11]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[12]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[13]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[14]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[15]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[16]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[17]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[18]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_OE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_WE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "DAC_MCLK",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "DAC_LRCK",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "DAC_SDOUT",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          }
+        ],
+        "psram_address_margin_ns": 9.436,
+        "psram_active_margin_ns": 3.535,
+        "psram_conditional_margin_ns": 3.535,
+        "psram_access_ns": 70,
+        "pcb_round_trip_allowance_ns": 4,
+        "snes_read_envelope_ns": 87.938,
+        "snes_model_sample_ns": 270,
+        "snes_extra_allowance_ns": 6,
+        "spi_reply_envelope_ns": 164.892,
+        "spi_half_period_ns": 190.476,
+        "spi_extra_allowance_ns": 4,
+        "bundle": {
+          "records": {
+            "delay_ns": 2.889,
+            "one_rx_period_ns": 11.904,
+            "margin_after_2ns_allowance": 7.015
+          },
+          "prepared": {
+            "delay_ns": 2.562,
+            "one_rx_period_ns": 45.454,
+            "margin_after_2ns_allowance": 40.892
+          },
+          "pad": {
+            "delay_ns": 1.601,
+            "one_rx_period_ns": 45.454,
+            "margin_after_2ns_allowance": 41.853
+          }
+        },
+        "first_stage_fanout_one": 10,
+        "negative_reset_path_count": 39,
+        "negative_reset_worst_paths": [
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|nes_domain_reset124:release_local|release_reset[1]",
+            "delay": "5.298",
+            "slack": "-8.171"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|nes_domain_reset124:release_local|release_reset[0]",
+            "delay": "5.298",
+            "slack": "-8.171"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|host_ready",
+            "delay": "5.298",
+            "slack": "-8.171"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|idle_ss[1]",
+            "delay": "5.298",
+            "slack": "-8.171"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|idle_ss[0]",
+            "delay": "5.298",
+            "slack": "-8.171"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|idle_write[1]",
+            "delay": "5.298",
+            "slack": "-8.171"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|idle_write[0]",
+            "delay": "5.298",
+            "slack": "-8.171"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|nes_domain_reset124:release_local|release_reset[1]",
+            "delay": "5.031",
+            "slack": "-7.521"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|nes_domain_reset124:release_local|release_reset[0]",
+            "delay": "5.031",
+            "slack": "-7.521"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|host_ready",
+            "delay": "5.031",
+            "slack": "-7.521"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|idle_ss[1]",
+            "delay": "5.031",
+            "slack": "-7.521"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|idle_ss[0]",
+            "delay": "5.031",
+            "slack": "-7.521"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|idle_write[1]",
+            "delay": "5.031",
+            "slack": "-7.521"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|idle_write[0]",
+            "delay": "5.031",
+            "slack": "-7.521"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "sink_rom_fault[1]",
+            "delay": "4.214",
+            "slack": "-7.081"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "sink_rom_fault[0]",
+            "delay": "4.214",
+            "slack": "-7.081"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[1]",
+            "delay": "4.196",
+            "slack": "-7.080"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[0]",
+            "delay": "4.196",
+            "slack": "-7.080"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[1]",
+            "delay": "4.210",
+            "slack": "-7.080"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[0]",
+            "delay": "4.210",
+            "slack": "-7.080"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[1]",
+            "delay": "3.878",
+            "slack": "-6.380"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[0]",
+            "delay": "3.879",
+            "slack": "-6.380"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[1]",
+            "delay": "3.891",
+            "slack": "-6.380"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[0]",
+            "delay": "3.891",
+            "slack": "-6.380"
+          }
+        ],
+        "native_payload_negative_reset_path_count": 0,
+        "native_payload_negative_reset_paths": [],
+        "conditional_data_bounds_pass": true,
+        "native_payload_reset_pass": true,
+        "mtbf_calculated": false,
+        "full_io_signoff": false,
+        "scope": "1000ns IO exceptions expose data delay only; their slack is not a pass criterion. Mixed-clock groups are top100 samples per pair/corner, not complete CDC coverage. Digital conditional envelopes exclude unmeasured electrical behaviour, metastability and stopped-clock response deadlines."
+      },
+      "inherited207_reference_test": {
+        "passed": true,
+        "baseline_checks": 20,
+        "cold_cases": 32,
+        "wrong_admission_rejected": true,
+        "source_pins": {
+          "probes/nes-board207/source02/nes_source_epoch207.sv": "64056da207093cb8e56be7f5b93128cddd569bb98d6d50e05c77627e55470ecf",
+          "probes/nes-board207/source02/nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+          "repository-nes-milestone/tests/nes-functional/source_epoch205_tb.sv": "e32e1f0bc4a518ff13d5b2d9153a3924e071c184f193f596e40a25bb9a2ac532",
+          "repository-nes-milestone/tools/test_nes_epoch207.py": "42f0b088af47295ec995551e2fc6852273e51eee39a1e61ec78c82cd5381c0a2"
+        },
+        "physical": false,
+        "scope": "Run epoch207 tests with the board's shared NES reset release contract.\nUses real reset124; RAM initialization/loader status are fixtures, not full board.\n",
+        "runner_sha256": "65fa0328c662a23dc34bfae4511b9ea81c81feea92c538be76e740b2a1102c9d",
+        "script_sha256": "6d392fb43c200ab2014fa9e7037793178d159597ad41198ffb90af009b089451"
+      }
+    },
+    "2": {
+      "fitted_le": 15131,
+      "registers": 8352,
+      "lab": 955,
+      "m9k": 47,
+      "le_spare": 277,
+      "lab_spare": 8,
+      "delta_from206": {
+        "le": -48,
+        "registers": -8,
+        "lab": -4,
+        "m9k": 0
+      },
+      "timing": {
+        "nominal": {
+          "setup": {
+            "corner": "8_slow_1200mv_85c",
+            "from_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+            "to_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+            "kind": "setup",
+            "from": "nes_live_joint:core|nes_domain_reset124:diagnostic_release|release_reset[1]",
+            "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|snapshot[42]",
+            "slack": "-0.611",
+            "delay": "6.493"
+          },
+          "hold": {
+            "corner": "MIN_fast_1200mv_0c",
+            "from_clock": "nes",
+            "to_clock": "nes",
+            "kind": "hold",
+            "from": "nes_live_joint:core|nes_native_capture201:native_frame|nes_native_frame201:frame|errors[0]",
+            "to": "nes_run_observer134:observer|nes_ppu_history157:history|altsyncram:entries_rtl_0|altsyncram_loi1:auto_generated|ram_block1a0~porta_datain_reg0",
+            "slack": "0.154",
+            "delay": "0.474"
+          }
+        },
+        "implementation": {
+          "setup": {
+            "corner": "8_slow_1200mv_85c",
+            "from_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+            "to_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+            "kind": "setup",
+            "from": "nes_live_joint:core|nes_domain_reset124:diagnostic_release|release_reset[1]",
+            "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|snapshot[42]",
+            "slack": "-0.611",
+            "delay": "6.493"
+          },
+          "hold": {
+            "corner": "MIN_fast_1200mv_0c",
+            "from_clock": "nes",
+            "to_clock": "nes",
+            "kind": "hold",
+            "from": "nes_live_joint:core|nes_native_capture201:native_frame|nes_native_frame201:frame|errors[0]",
+            "to": "nes_run_observer134:observer|nes_ppu_history157:history|altsyncram:entries_rtl_0|altsyncram_loi1:auto_generated|ram_block1a0~porta_datain_reg0",
+            "slack": "0.154",
+            "delay": "0.474"
+          }
+        }
+      },
+      "related_timing_passed": false,
+      "reset": {
+        "registers": 96,
+        "all_corner_paths": 576,
+        "min_recovery_ns": 39.721,
+        "min_removal_ns": 1.74,
+        "crossclock_payload_paths": 0,
+        "first_stage_single_fanouts": 2
+      },
+      "cdc": {
+        "rows": 4392,
+        "first_stage_single_fanouts": 45,
+        "held_payload_max_ns": 6.587,
+        "held_margin_after_2ns": 3.317,
+        "gray_max_ns": 6.737,
+        "gray_settle_margin_after_2ns": 36.717,
+        "new_other_data_paths": 0,
+        "classifications": [
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "hold",
+            "group": "control_first_stage",
+            "count": 15
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "hold",
+            "group": "gray_first_stage",
+            "count": 32
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "hold",
+            "group": "held_payload_protocol",
+            "count": 46
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "hold",
+            "group": "inherited_unmodified",
+            "count": 272
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "hold",
+            "group": "related_pll",
+            "count": 6
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "recovery",
+            "group": "async_release_first_stages_or_inherited_review",
+            "count": 218
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "recovery",
+            "group": "related_pll",
+            "count": 75
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "removal",
+            "group": "async_release_first_stages_or_inherited_review",
+            "count": 218
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "removal",
+            "group": "related_pll",
+            "count": 75
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "setup",
+            "group": "control_first_stage",
+            "count": 15
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "setup",
+            "group": "gray_first_stage",
+            "count": 32
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "setup",
+            "group": "held_payload_protocol",
+            "count": 46
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "setup",
+            "group": "inherited_unmodified",
+            "count": 408
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "kind": "setup",
+            "group": "related_pll",
+            "count": 6
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "hold",
+            "group": "control_first_stage",
+            "count": 15
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "hold",
+            "group": "gray_first_stage",
+            "count": 32
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "hold",
+            "group": "held_payload_protocol",
+            "count": 46
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "hold",
+            "group": "inherited_unmodified",
+            "count": 272
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "hold",
+            "group": "related_pll",
+            "count": 6
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "recovery",
+            "group": "async_release_first_stages_or_inherited_review",
+            "count": 218
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "recovery",
+            "group": "related_pll",
+            "count": 75
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "removal",
+            "group": "async_release_first_stages_or_inherited_review",
+            "count": 218
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "removal",
+            "group": "related_pll",
+            "count": 75
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "setup",
+            "group": "control_first_stage",
+            "count": 15
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "setup",
+            "group": "gray_first_stage",
+            "count": 32
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "setup",
+            "group": "held_payload_protocol",
+            "count": 46
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "setup",
+            "group": "inherited_unmodified",
+            "count": 408
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "kind": "setup",
+            "group": "related_pll",
+            "count": 6
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "hold",
+            "group": "control_first_stage",
+            "count": 15
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "hold",
+            "group": "gray_first_stage",
+            "count": 32
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "hold",
+            "group": "held_payload_protocol",
+            "count": 46
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "hold",
+            "group": "inherited_unmodified",
+            "count": 272
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "hold",
+            "group": "related_pll",
+            "count": 6
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "recovery",
+            "group": "async_release_first_stages_or_inherited_review",
+            "count": 218
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "recovery",
+            "group": "related_pll",
+            "count": 75
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "removal",
+            "group": "async_release_first_stages_or_inherited_review",
+            "count": 218
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "removal",
+            "group": "related_pll",
+            "count": 75
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "setup",
+            "group": "control_first_stage",
+            "count": 15
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "setup",
+            "group": "gray_first_stage",
+            "count": 32
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "setup",
+            "group": "held_payload_protocol",
+            "count": 46
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "setup",
+            "group": "inherited_unmodified",
+            "count": 408
+          },
+          {
+            "corner": "MIN_fast_1200mv_0c",
+            "kind": "setup",
+            "group": "related_pll",
+            "count": 6
+          }
+        ]
+      },
+      "io": {
+        "path_rows": 64920,
+        "groups": {
+          "combinational": {
+            "rows": 25389,
+            "max_delay_ns": 32.53,
+            "min_raw_slack_ns": 967.47
+          },
+          "input": {
+            "rows": 471,
+            "max_delay_ns": 14.658,
+            "min_raw_slack_ns": 985.347
+          },
+          "mixed:core|pll|altpll_component|auto_generated|pll1|clk[0]:nes": {
+            "rows": 162,
+            "max_delay_ns": 6.626,
+            "min_raw_slack_ns": -4.529
+          },
+          "mixed:core|pll|altpll_component|auto_generated|pll1|clk[1]:core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+            "rows": 3,
+            "max_delay_ns": 4.011,
+            "min_raw_slack_ns": 1.745
+          },
+          "mixed:core|pll|altpll_component|auto_generated|pll1|clk[1]:nes": {
+            "rows": 195,
+            "max_delay_ns": 6.793,
+            "min_raw_slack_ns": -4.722
+          },
+          "mixed:nes:core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+            "rows": 300,
+            "max_delay_ns": 6.361,
+            "min_raw_slack_ns": -8.793
+          },
+          "mixed:nes:core|pll|altpll_component|auto_generated|pll1|clk[1]": {
+            "rows": 69,
+            "max_delay_ns": 1.83,
+            "min_raw_slack_ns": -4.709
+          },
+          "output": {
+            "rows": 30633,
+            "max_delay_ns": 30.484,
+            "min_raw_slack_ns": 968.604
+          },
+          "pad": {
+            "rows": 24,
+            "max_delay_ns": 2.576,
+            "min_raw_slack_ns": -0.659
+          },
+          "prepared": {
+            "rows": 51,
+            "max_delay_ns": 4.957,
+            "min_raw_slack_ns": -2.984
+          },
+          "prepared_req": {
+            "rows": 3,
+            "max_delay_ns": 4.781,
+            "min_raw_slack_ns": -2.801
+          },
+          "psram_active": {
+            "rows": 9,
+            "max_delay_ns": 12.75,
+            "min_raw_slack_ns": 986.775
+          },
+          "psram_address": {
+            "rows": 66,
+            "max_delay_ns": 14.597,
+            "min_raw_slack_ns": 984.932
+          },
+          "psram_input": {
+            "rows": 48,
+            "max_delay_ns": 7.539,
+            "min_raw_slack_ns": 992.474
+          },
+          "records": {
+            "rows": 288,
+            "max_delay_ns": 3.65,
+            "min_raw_slack_ns": -6.536
+          },
+          "records_req": {
+            "rows": 3,
+            "max_delay_ns": 3.011,
+            "min_raw_slack_ns": -5.456
+          },
+          "recovery": {
+            "rows": 3603,
+            "max_delay_ns": 5.88,
+            "min_raw_slack_ns": -7.975
+          },
+          "removal": {
+            "rows": 3603,
+            "max_delay_ns": 5.383,
+            "min_raw_slack_ns": 0.697
+          }
+        },
+        "ports": [
+          {
+            "name": "CLKIN",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SPI_SCK",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SPI_SS",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_SYSCLK",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SPI_MOSI",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_DATA[15]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[10]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[2]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[1]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[9]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[0]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[8]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_WRITE_IN",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_READ_IN",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[0]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[7]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[5]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[6]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[22]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[23]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[21]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[20]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[10]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[8]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[9]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[11]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[14]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[12]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[13]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[15]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[19]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[16]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[18]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[17]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[3]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[2]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[4]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_ADDR_IN[1]",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_DATA[6]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_DATA[7]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_DATA[5]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_DATA[4]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_DATA[3]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_DATA[2]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_DATA[1]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_DATA[0]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[7]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[11]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[3]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[14]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[6]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[13]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[5]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[12]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "ROM_DATA[4]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "SNES_ROMSEL_IN",
+            "input": "1",
+            "output": "0",
+            "inout": "0"
+          },
+          {
+            "name": "SPI_MISO",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "RAM_DATA[0]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "RAM_DATA[1]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "RAM_DATA[2]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "RAM_DATA[3]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "RAM_DATA[4]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "RAM_DATA[5]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "RAM_DATA[6]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "RAM_DATA[7]",
+            "input": "1",
+            "output": "1",
+            "inout": "1"
+          },
+          {
+            "name": "MCU_RDY",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_IRQ",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_DATABUS_OE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "SNES_DATABUS_DIR",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[0]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[1]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[2]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[3]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[4]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[5]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[6]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[7]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[8]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[9]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[10]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[11]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[12]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[13]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[14]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[15]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[16]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[17]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[18]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[19]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[20]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ADDR[21]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_1CE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_2CE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_ZZ",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_OE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_WE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_BHE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "ROM_BLE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[0]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[1]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[2]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[3]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[4]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[5]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[6]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[7]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[8]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[9]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[10]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[11]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[12]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[13]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[14]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[15]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[16]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[17]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_ADDR[18]",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_OE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "RAM_WE",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "DAC_MCLK",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "DAC_LRCK",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          },
+          {
+            "name": "DAC_SDOUT",
+            "input": "0",
+            "output": "1",
+            "inout": "0"
+          }
+        ],
+        "psram_address_margin_ns": 5.048,
+        "psram_active_margin_ns": 0.943,
+        "psram_conditional_margin_ns": 0.943,
+        "psram_access_ns": 70,
+        "pcb_round_trip_allowance_ns": 4,
+        "snes_read_envelope_ns": 86.854,
+        "snes_model_sample_ns": 270,
+        "snes_extra_allowance_ns": 6,
+        "spi_reply_envelope_ns": 167.754,
+        "spi_half_period_ns": 190.476,
+        "spi_extra_allowance_ns": 4,
+        "bundle": {
+          "records": {
+            "delay_ns": 3.65,
+            "one_rx_period_ns": 11.904,
+            "margin_after_2ns_allowance": 6.254
+          },
+          "prepared": {
+            "delay_ns": 4.957,
+            "one_rx_period_ns": 45.454,
+            "margin_after_2ns_allowance": 38.497
+          },
+          "pad": {
+            "delay_ns": 2.576,
+            "one_rx_period_ns": 45.454,
+            "margin_after_2ns_allowance": 40.878
+          }
+        },
+        "first_stage_fanout_one": 10,
+        "negative_reset_path_count": 39,
+        "negative_reset_worst_paths": [
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "sink_rom_fault[1]",
+            "delay": "5.103",
+            "slack": "-7.975"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[0]",
+            "delay": "5.091",
+            "slack": "-7.962"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|nes_domain_reset124:release_local|release_reset[1]",
+            "delay": "4.807",
+            "slack": "-7.684"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|nes_domain_reset124:release_local|release_reset[0]",
+            "delay": "4.807",
+            "slack": "-7.684"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|host_ready",
+            "delay": "4.807",
+            "slack": "-7.684"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|idle_ss[1]",
+            "delay": "4.807",
+            "slack": "-7.684"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|idle_ss[0]",
+            "delay": "4.807",
+            "slack": "-7.684"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|idle_write[1]",
+            "delay": "4.807",
+            "slack": "-7.684"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|idle_write[0]",
+            "delay": "4.807",
+            "slack": "-7.684"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[1]",
+            "delay": "5.076",
+            "slack": "-7.520"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[0]",
+            "delay": "5.076",
+            "slack": "-7.520"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[1]",
+            "delay": "5.103",
+            "slack": "-7.505"
+          },
+          {
+            "corner": "8_slow_1200mv_85c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "sink_rom_fault[0]",
+            "delay": "5.103",
+            "slack": "-7.505"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "sink_rom_fault[1]",
+            "delay": "4.737",
+            "slack": "-7.226"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[0]",
+            "delay": "4.724",
+            "slack": "-7.213"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|nes_domain_reset124:release_local|release_reset[1]",
+            "delay": "4.561",
+            "slack": "-7.056"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|nes_domain_reset124:release_local|release_reset[0]",
+            "delay": "4.561",
+            "slack": "-7.056"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|host_ready",
+            "delay": "4.561",
+            "slack": "-7.056"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|idle_ss[1]",
+            "delay": "4.561",
+            "slack": "-7.056"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|idle_ss[0]",
+            "delay": "4.561",
+            "slack": "-7.056"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|idle_write[1]",
+            "delay": "4.561",
+            "slack": "-7.056"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_sink_bridge165:sink|idle_write[0]",
+            "delay": "4.561",
+            "slack": "-7.056"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[1]",
+            "delay": "4.711",
+            "slack": "-6.801"
+          },
+          {
+            "corner": "8_slow_1200mv_0c",
+            "group": "recovery",
+            "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+            "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[0]",
+            "delay": "4.711",
+            "slack": "-6.801"
+          }
+        ],
+        "native_payload_negative_reset_path_count": 0,
+        "native_payload_negative_reset_paths": [],
+        "conditional_data_bounds_pass": true,
+        "native_payload_reset_pass": true,
+        "mtbf_calculated": false,
+        "full_io_signoff": false,
+        "scope": "1000ns IO exceptions expose data delay only; their slack is not a pass criterion. Mixed-clock groups are top100 samples per pair/corner, not complete CDC coverage. Digital conditional envelopes exclude unmeasured electrical behaviour, metastability and stopped-clock response deadlines."
+      },
+      "inherited207_reference_test": {
+        "passed": true,
+        "baseline_checks": 20,
+        "cold_cases": 32,
+        "wrong_admission_rejected": true,
+        "source_pins": {
+          "probes/nes-board207/source02/nes_source_epoch207.sv": "64056da207093cb8e56be7f5b93128cddd569bb98d6d50e05c77627e55470ecf",
+          "probes/nes-board207/source02/nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+          "repository-nes-milestone/tests/nes-functional/source_epoch205_tb.sv": "e32e1f0bc4a518ff13d5b2d9153a3924e071c184f193f596e40a25bb9a2ac532",
+          "repository-nes-milestone/tools/test_nes_epoch207.py": "42f0b088af47295ec995551e2fc6852273e51eee39a1e61ec78c82cd5381c0a2"
+        },
+        "physical": false,
+        "scope": "Run epoch207 tests with the board's shared NES reset release contract.\nUses real reset124; RAM initialization/loader status are fixtures, not full board.\n",
+        "runner_sha256": "65fa0328c662a23dc34bfae4511b9ea81c81feea92c538be76e740b2a1102c9d",
+        "script_sha256": "6d392fb43c200ab2014fa9e7037793178d159597ad41198ffb90af009b089451"
+      }
+    }
+  },
+  "board": {
+    "fitted_le": 15131,
+    "registers": 8352,
+    "lab": 955,
+    "m9k": 47,
+    "le_spare": 277,
+    "lab_spare": 8,
+    "delta_from206": {
+      "le": -48,
+      "registers": -8,
+      "lab": -4,
+      "m9k": 0
+    },
+    "timing": {
+      "nominal": {
+        "setup": {
+          "corner": "8_slow_1200mv_85c",
+          "from_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+          "to_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+          "kind": "setup",
+          "from": "nes_live_joint:core|nes_domain_reset124:diagnostic_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|snapshot[42]",
+          "slack": "-0.611",
+          "delay": "6.493"
+        },
+        "hold": {
+          "corner": "MIN_fast_1200mv_0c",
+          "from_clock": "nes",
+          "to_clock": "nes",
+          "kind": "hold",
+          "from": "nes_live_joint:core|nes_native_capture201:native_frame|nes_native_frame201:frame|errors[0]",
+          "to": "nes_run_observer134:observer|nes_ppu_history157:history|altsyncram:entries_rtl_0|altsyncram_loi1:auto_generated|ram_block1a0~porta_datain_reg0",
+          "slack": "0.154",
+          "delay": "0.474"
+        }
+      },
+      "implementation": {
+        "setup": {
+          "corner": "8_slow_1200mv_85c",
+          "from_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+          "to_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+          "kind": "setup",
+          "from": "nes_live_joint:core|nes_domain_reset124:diagnostic_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|snapshot[42]",
+          "slack": "-0.611",
+          "delay": "6.493"
+        },
+        "hold": {
+          "corner": "MIN_fast_1200mv_0c",
+          "from_clock": "nes",
+          "to_clock": "nes",
+          "kind": "hold",
+          "from": "nes_live_joint:core|nes_native_capture201:native_frame|nes_native_frame201:frame|errors[0]",
+          "to": "nes_run_observer134:observer|nes_ppu_history157:history|altsyncram:entries_rtl_0|altsyncram_loi1:auto_generated|ram_block1a0~porta_datain_reg0",
+          "slack": "0.154",
+          "delay": "0.474"
+        }
+      }
+    },
+    "related_timing_passed": false,
+    "reset": {
+      "registers": 96,
+      "all_corner_paths": 576,
+      "min_recovery_ns": 39.721,
+      "min_removal_ns": 1.74,
+      "crossclock_payload_paths": 0,
+      "first_stage_single_fanouts": 2
+    },
+    "cdc": {
+      "rows": 4392,
+      "first_stage_single_fanouts": 45,
+      "held_payload_max_ns": 6.587,
+      "held_margin_after_2ns": 3.317,
+      "gray_max_ns": 6.737,
+      "gray_settle_margin_after_2ns": 36.717,
+      "new_other_data_paths": 0,
+      "classifications": [
+        {
+          "corner": "8_slow_1200mv_0c",
+          "kind": "hold",
+          "group": "control_first_stage",
+          "count": 15
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "kind": "hold",
+          "group": "gray_first_stage",
+          "count": 32
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "kind": "hold",
+          "group": "held_payload_protocol",
+          "count": 46
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "kind": "hold",
+          "group": "inherited_unmodified",
+          "count": 272
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "kind": "hold",
+          "group": "related_pll",
+          "count": 6
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "kind": "recovery",
+          "group": "async_release_first_stages_or_inherited_review",
+          "count": 218
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "kind": "recovery",
+          "group": "related_pll",
+          "count": 75
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "kind": "removal",
+          "group": "async_release_first_stages_or_inherited_review",
+          "count": 218
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "kind": "removal",
+          "group": "related_pll",
+          "count": 75
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "kind": "setup",
+          "group": "control_first_stage",
+          "count": 15
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "kind": "setup",
+          "group": "gray_first_stage",
+          "count": 32
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "kind": "setup",
+          "group": "held_payload_protocol",
+          "count": 46
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "kind": "setup",
+          "group": "inherited_unmodified",
+          "count": 408
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "kind": "setup",
+          "group": "related_pll",
+          "count": 6
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "kind": "hold",
+          "group": "control_first_stage",
+          "count": 15
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "kind": "hold",
+          "group": "gray_first_stage",
+          "count": 32
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "kind": "hold",
+          "group": "held_payload_protocol",
+          "count": 46
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "kind": "hold",
+          "group": "inherited_unmodified",
+          "count": 272
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "kind": "hold",
+          "group": "related_pll",
+          "count": 6
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "kind": "recovery",
+          "group": "async_release_first_stages_or_inherited_review",
+          "count": 218
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "kind": "recovery",
+          "group": "related_pll",
+          "count": 75
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "kind": "removal",
+          "group": "async_release_first_stages_or_inherited_review",
+          "count": 218
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "kind": "removal",
+          "group": "related_pll",
+          "count": 75
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "kind": "setup",
+          "group": "control_first_stage",
+          "count": 15
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "kind": "setup",
+          "group": "gray_first_stage",
+          "count": 32
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "kind": "setup",
+          "group": "held_payload_protocol",
+          "count": 46
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "kind": "setup",
+          "group": "inherited_unmodified",
+          "count": 408
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "kind": "setup",
+          "group": "related_pll",
+          "count": 6
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "kind": "hold",
+          "group": "control_first_stage",
+          "count": 15
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "kind": "hold",
+          "group": "gray_first_stage",
+          "count": 32
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "kind": "hold",
+          "group": "held_payload_protocol",
+          "count": 46
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "kind": "hold",
+          "group": "inherited_unmodified",
+          "count": 272
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "kind": "hold",
+          "group": "related_pll",
+          "count": 6
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "kind": "recovery",
+          "group": "async_release_first_stages_or_inherited_review",
+          "count": 218
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "kind": "recovery",
+          "group": "related_pll",
+          "count": 75
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "kind": "removal",
+          "group": "async_release_first_stages_or_inherited_review",
+          "count": 218
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "kind": "removal",
+          "group": "related_pll",
+          "count": 75
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "kind": "setup",
+          "group": "control_first_stage",
+          "count": 15
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "kind": "setup",
+          "group": "gray_first_stage",
+          "count": 32
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "kind": "setup",
+          "group": "held_payload_protocol",
+          "count": 46
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "kind": "setup",
+          "group": "inherited_unmodified",
+          "count": 408
+        },
+        {
+          "corner": "MIN_fast_1200mv_0c",
+          "kind": "setup",
+          "group": "related_pll",
+          "count": 6
+        }
+      ]
+    },
+    "io": {
+      "path_rows": 64920,
+      "groups": {
+        "combinational": {
+          "rows": 25389,
+          "max_delay_ns": 32.53,
+          "min_raw_slack_ns": 967.47
+        },
+        "input": {
+          "rows": 471,
+          "max_delay_ns": 14.658,
+          "min_raw_slack_ns": 985.347
+        },
+        "mixed:core|pll|altpll_component|auto_generated|pll1|clk[0]:nes": {
+          "rows": 162,
+          "max_delay_ns": 6.626,
+          "min_raw_slack_ns": -4.529
+        },
+        "mixed:core|pll|altpll_component|auto_generated|pll1|clk[1]:core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+          "rows": 3,
+          "max_delay_ns": 4.011,
+          "min_raw_slack_ns": 1.745
+        },
+        "mixed:core|pll|altpll_component|auto_generated|pll1|clk[1]:nes": {
+          "rows": 195,
+          "max_delay_ns": 6.793,
+          "min_raw_slack_ns": -4.722
+        },
+        "mixed:nes:core|pll|altpll_component|auto_generated|pll1|clk[0]": {
+          "rows": 300,
+          "max_delay_ns": 6.361,
+          "min_raw_slack_ns": -8.793
+        },
+        "mixed:nes:core|pll|altpll_component|auto_generated|pll1|clk[1]": {
+          "rows": 69,
+          "max_delay_ns": 1.83,
+          "min_raw_slack_ns": -4.709
+        },
+        "output": {
+          "rows": 30633,
+          "max_delay_ns": 30.484,
+          "min_raw_slack_ns": 968.604
+        },
+        "pad": {
+          "rows": 24,
+          "max_delay_ns": 2.576,
+          "min_raw_slack_ns": -0.659
+        },
+        "prepared": {
+          "rows": 51,
+          "max_delay_ns": 4.957,
+          "min_raw_slack_ns": -2.984
+        },
+        "prepared_req": {
+          "rows": 3,
+          "max_delay_ns": 4.781,
+          "min_raw_slack_ns": -2.801
+        },
+        "psram_active": {
+          "rows": 9,
+          "max_delay_ns": 12.75,
+          "min_raw_slack_ns": 986.775
+        },
+        "psram_address": {
+          "rows": 66,
+          "max_delay_ns": 14.597,
+          "min_raw_slack_ns": 984.932
+        },
+        "psram_input": {
+          "rows": 48,
+          "max_delay_ns": 7.539,
+          "min_raw_slack_ns": 992.474
+        },
+        "records": {
+          "rows": 288,
+          "max_delay_ns": 3.65,
+          "min_raw_slack_ns": -6.536
+        },
+        "records_req": {
+          "rows": 3,
+          "max_delay_ns": 3.011,
+          "min_raw_slack_ns": -5.456
+        },
+        "recovery": {
+          "rows": 3603,
+          "max_delay_ns": 5.88,
+          "min_raw_slack_ns": -7.975
+        },
+        "removal": {
+          "rows": 3603,
+          "max_delay_ns": 5.383,
+          "min_raw_slack_ns": 0.697
+        }
+      },
+      "ports": [
+        {
+          "name": "CLKIN",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SPI_SCK",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SPI_SS",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_SYSCLK",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SPI_MOSI",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_DATA[15]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[10]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[2]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[1]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[9]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[0]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[8]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_WRITE_IN",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_READ_IN",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[0]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[7]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[5]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[6]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[22]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[23]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[21]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[20]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[10]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[8]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[9]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[11]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[14]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[12]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[13]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[15]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[19]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[16]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[18]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[17]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[3]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[2]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[4]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_ADDR_IN[1]",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_DATA[6]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_DATA[7]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_DATA[5]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_DATA[4]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_DATA[3]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_DATA[2]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_DATA[1]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_DATA[0]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[7]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[11]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[3]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[14]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[6]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[13]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[5]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[12]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "ROM_DATA[4]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "SNES_ROMSEL_IN",
+          "input": "1",
+          "output": "0",
+          "inout": "0"
+        },
+        {
+          "name": "SPI_MISO",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "RAM_DATA[0]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "RAM_DATA[1]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "RAM_DATA[2]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "RAM_DATA[3]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "RAM_DATA[4]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "RAM_DATA[5]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "RAM_DATA[6]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "RAM_DATA[7]",
+          "input": "1",
+          "output": "1",
+          "inout": "1"
+        },
+        {
+          "name": "MCU_RDY",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_IRQ",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_DATABUS_OE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "SNES_DATABUS_DIR",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[0]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[1]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[2]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[3]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[4]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[5]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[6]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[7]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[8]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[9]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[10]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[11]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[12]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[13]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[14]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[15]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[16]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[17]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[18]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[19]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[20]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ADDR[21]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_1CE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_2CE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_ZZ",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_OE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_WE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_BHE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "ROM_BLE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[0]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[1]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[2]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[3]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[4]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[5]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[6]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[7]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[8]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[9]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[10]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[11]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[12]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[13]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[14]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[15]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[16]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[17]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_ADDR[18]",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_OE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "RAM_WE",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "DAC_MCLK",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "DAC_LRCK",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        },
+        {
+          "name": "DAC_SDOUT",
+          "input": "0",
+          "output": "1",
+          "inout": "0"
+        }
+      ],
+      "psram_address_margin_ns": 5.048,
+      "psram_active_margin_ns": 0.943,
+      "psram_conditional_margin_ns": 0.943,
+      "psram_access_ns": 70,
+      "pcb_round_trip_allowance_ns": 4,
+      "snes_read_envelope_ns": 86.854,
+      "snes_model_sample_ns": 270,
+      "snes_extra_allowance_ns": 6,
+      "spi_reply_envelope_ns": 167.754,
+      "spi_half_period_ns": 190.476,
+      "spi_extra_allowance_ns": 4,
+      "bundle": {
+        "records": {
+          "delay_ns": 3.65,
+          "one_rx_period_ns": 11.904,
+          "margin_after_2ns_allowance": 6.254
+        },
+        "prepared": {
+          "delay_ns": 4.957,
+          "one_rx_period_ns": 45.454,
+          "margin_after_2ns_allowance": 38.497
+        },
+        "pad": {
+          "delay_ns": 2.576,
+          "one_rx_period_ns": 45.454,
+          "margin_after_2ns_allowance": 40.878
+        }
+      },
+      "first_stage_fanout_one": 10,
+      "negative_reset_path_count": 39,
+      "negative_reset_worst_paths": [
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "sink_rom_fault[1]",
+          "delay": "5.103",
+          "slack": "-7.975"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[0]",
+          "delay": "5.091",
+          "slack": "-7.962"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_sink_bridge165:sink|nes_domain_reset124:release_local|release_reset[1]",
+          "delay": "4.807",
+          "slack": "-7.684"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_sink_bridge165:sink|nes_domain_reset124:release_local|release_reset[0]",
+          "delay": "4.807",
+          "slack": "-7.684"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_sink_bridge165:sink|host_ready",
+          "delay": "4.807",
+          "slack": "-7.684"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_sink_bridge165:sink|idle_ss[1]",
+          "delay": "4.807",
+          "slack": "-7.684"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_sink_bridge165:sink|idle_ss[0]",
+          "delay": "4.807",
+          "slack": "-7.684"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_sink_bridge165:sink|idle_write[1]",
+          "delay": "4.807",
+          "slack": "-7.684"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_sink_bridge165:sink|idle_write[0]",
+          "delay": "4.807",
+          "slack": "-7.684"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[1]",
+          "delay": "5.076",
+          "slack": "-7.520"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[0]",
+          "delay": "5.076",
+          "slack": "-7.520"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[1]",
+          "delay": "5.103",
+          "slack": "-7.505"
+        },
+        {
+          "corner": "8_slow_1200mv_85c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "sink_rom_fault[0]",
+          "delay": "5.103",
+          "slack": "-7.505"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "sink_rom_fault[1]",
+          "delay": "4.737",
+          "slack": "-7.226"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[0]",
+          "delay": "4.724",
+          "slack": "-7.213"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_sink_bridge165:sink|nes_domain_reset124:release_local|release_reset[1]",
+          "delay": "4.561",
+          "slack": "-7.056"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_sink_bridge165:sink|nes_domain_reset124:release_local|release_reset[0]",
+          "delay": "4.561",
+          "slack": "-7.056"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_sink_bridge165:sink|host_ready",
+          "delay": "4.561",
+          "slack": "-7.056"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_sink_bridge165:sink|idle_ss[1]",
+          "delay": "4.561",
+          "slack": "-7.056"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_sink_bridge165:sink|idle_ss[0]",
+          "delay": "4.561",
+          "slack": "-7.056"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_sink_bridge165:sink|idle_write[1]",
+          "delay": "4.561",
+          "slack": "-7.056"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_sink_bridge165:sink|idle_write[0]",
+          "delay": "4.561",
+          "slack": "-7.056"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[1]",
+          "delay": "4.711",
+          "slack": "-6.801"
+        },
+        {
+          "corner": "8_slow_1200mv_0c",
+          "group": "recovery",
+          "from": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[1]",
+          "to": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[0]",
+          "delay": "4.711",
+          "slack": "-6.801"
+        }
+      ],
+      "native_payload_negative_reset_path_count": 0,
+      "native_payload_negative_reset_paths": [],
+      "conditional_data_bounds_pass": true,
+      "native_payload_reset_pass": true,
+      "mtbf_calculated": false,
+      "full_io_signoff": false,
+      "scope": "1000ns IO exceptions expose data delay only; their slack is not a pass criterion. Mixed-clock groups are top100 samples per pair/corner, not complete CDC coverage. Digital conditional envelopes exclude unmeasured electrical behaviour, metastability and stopped-clock response deadlines."
+    },
+    "inherited207_reference_test": {
+      "passed": true,
+      "baseline_checks": 20,
+      "cold_cases": 32,
+      "wrong_admission_rejected": true,
+      "source_pins": {
+        "probes/nes-board207/source02/nes_source_epoch207.sv": "64056da207093cb8e56be7f5b93128cddd569bb98d6d50e05c77627e55470ecf",
+        "probes/nes-board207/source02/nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+        "repository-nes-milestone/tests/nes-functional/source_epoch205_tb.sv": "e32e1f0bc4a518ff13d5b2d9153a3924e071c184f193f596e40a25bb9a2ac532",
+        "repository-nes-milestone/tools/test_nes_epoch207.py": "42f0b088af47295ec995551e2fc6852273e51eee39a1e61ec78c82cd5381c0a2"
+      },
+      "physical": false,
+      "scope": "Run epoch207 tests with the board's shared NES reset release contract.\nUses real reset124; RAM initialization/loader status are fixtures, not full board.\n",
+      "runner_sha256": "65fa0328c662a23dc34bfae4511b9ea81c81feea92c538be76e740b2a1102c9d",
+      "script_sha256": "6d392fb43c200ab2014fa9e7037793178d159597ad41198ffb90af009b089451"
+    }
+  },
+  "spi": {
+    "passed": true,
+    "same_edge": true,
+    "edges": 1056768,
+    "followup_sequences": 1024,
+    "retire_checks": 327680,
+    "wire_bits": 14016,
+    "negative_cases": [
+      "upper mismatch ignored",
+      "lower mismatch ignored"
+    ],
+    "sequential_summary": "PASS TAG165 edges=1126009 reads=100 acks=7 corruptions=19 cancels=72 overlaps=2",
+    "source_sha256": "11211ed55e6a4439cc94b6d45a3d6cf2cd9fe8412d31ae472620ac9c7d177928",
+    "reference_sha256": "3017b0fa128102e4e290cc8aec42f1360d96c5488f87cf1b5b379a3a07ca4726",
+    "sources": {
+      "reference.sv": "2d0ba65694a6303d4c17d38dd1d727bcf5a84e82c9a1bacf10e70b7f8e8a846c",
+      "candidate.sv": "d01389562d2df720f3b937d3da905a9b28df33fee8de9c82fc83f90b2ca08a86",
+      "nes_rom_boot.sv": "543f4c84f64f8744da987a1fec5618ed983302cb96f4eafd16a742fcfd9f760d",
+      "nes_rom_loader.sv": "1134ab8ef33aa0b6e8e35215a80c3739ef1e8ba182d8c8b234dcb4b3ef4893e8",
+      "nes_rom_physical.sv": "6870eb15955c7e1f7bc3510e7654a45c6f42c8723779a382496c0cb437be47c9",
+      "state_tb.sv": "e0856261d3a645ef3418d525f2fe7083e646acaac5aeda1a5b44e2ed10c0bc4e",
+      "connected_tb.sv": "77611e0b81ce010d700cf6b0ea665df97cbfdcae9ee486202ced76e5fc5678c4"
+    },
+    "public_sources": {
+      "tools/nes_retire219.py": "e215478ff02caa51cfe2bdb73926ed30d167162b93b3200e335c2d8decb87117",
+      "tools/test_nes_retire219.py": "23890ddf954abdf2b50645c0802b42363cccc1aa9890351f294ae8fa4fd43477",
+      "tools/test_nes_checkstate181.py": "02adbe23a24b3f59570197793889d1abdcf49403953855a13d362d731c15a0bd",
+      "tools/test_nes_rawstage167.py": "e2bb51589353bff6514c76e38de416205f04c6a9aa48e9ac51b9ce381c99304c",
+      "tools/test_nes_commitstage167.py": "e79d0869dee095d380eeab98788119da009176dfd4ca7a987aa2699f934dea80",
+      "tools/test_nes_commandpulse165.py": "f4ad4085683a54fc62ba86bc00faf90481fff6e25f5de33fdefe77b64adc1a50",
+      "tools/test_nes_commandstage165.py": "a072b56a41a9cea29188d64010ceeb65505a65ead152eca7dbc0231357819585",
+      "tools/test_nes_check165.py": "776ae44261b0ee17a777da5a227d493b296761b400436cd74634e2229a7fa4a4",
+      "tools/test_nes_counterpulse167.py": "419a7d338cddad499c666f835e538510a52082007d77239066aa5f5dad6cc340",
+      "tests/nes-functional/tag165_tb.sv": "bd040f247a8ff05a1fa161bc5d8f0cb3c9af3212a61787516b22532f0afb3934"
+    }
+  },
+  "counter": {
+    "passed": true,
+    "states": 294912,
+    "sequences": 1056,
+    "counts": 524288,
+    "prior_code_cases": 131072,
+    "negative_wrong_state": true,
+    "negative_stop": true,
+    "source_pins": {
+      "probes\\nes-boundary218\\source02\\nes_rom_loader.sv": "c1bc6f48f1dde669155062ac7d1e25e5638c89760bc7ca24f65d3189494d708f",
+      "probes\\nes-retire219\\source01\\nes_rom_loader.sv": "1134ab8ef33aa0b6e8e35215a80c3739ef1e8ba182d8c8b234dcb4b3ef4893e8",
+      "probes\\nes-board206\\test01\\loader\\bench.sv": "728c972608816d38754991d92696ece08af0235eab4443afba2639fec56850ed"
+    },
+    "script_sha256": "9a3b9db75b16be6cdb5ec25a862c629f6fbd392d7f136063adc383204044cfaf",
+    "physical": false
+  },
+  "enable": {
+    "passed": true,
+    "induction_checks": 1211304,
+    "wire_summary": "PASS TAG165 edges=1126009 reads=100 acks=7 corruptions=19 cancels=72 overlaps=2",
+    "negative_missing_disable": true,
+    "scope": "Reset and conditional invariant preservation over actual RTL transitions; arbitrary seeded fault=1/enable=1 is excluded. Real SPI fixture uses the same raw CHECK enable as new top. Read reset and RUN fault gates unchanged.",
+    "binding_source_pins": {
+      "probes\\nes-retire219\\source01\\nes_spi_boot.sv": "312b8cc337b43b4c204baf53ef63ec87cd308c4b21d31d16ffd8e76fdeb7efd2",
+      "probes\\nes-retire219\\source02\\nes_spi_boot.sv": "618571601739c5a74a92cc822885956679a0bf6edc2a92b97453c8fdf2cde3fa",
+      "probes\\nes-retire219\\source02\\nes_rom_spi.sv": "11211ed55e6a4439cc94b6d45a3d6cf2cd9fe8412d31ae472620ac9c7d177928"
+    },
+    "sources": {
+      "candidate.sv": "d01389562d2df720f3b937d3da905a9b28df33fee8de9c82fc83f90b2ca08a86",
+      "connected_tb.sv": "152c05042484252cc781eea4455cab6e95331df13b0cdc8f08e1819647846516",
+      "nes_rom_boot.sv": "543f4c84f64f8744da987a1fec5618ed983302cb96f4eafd16a742fcfd9f760d",
+      "nes_rom_loader.sv": "1134ab8ef33aa0b6e8e35215a80c3739ef1e8ba182d8c8b234dcb4b3ef4893e8",
+      "nes_rom_physical.sv": "6870eb15955c7e1f7bc3510e7654a45c6f42c8723779a382496c0cb437be47c9",
+      "reference.sv": "c3e465b1ea98c7dde7c65a590c4b5be50d9061e70b7c30893f020c49ef950a01",
+      "state_tb.sv": "4bd014cbc838f7d3fe5accea0bcfc8eea8b6aee6631acb6a428924ea4033ecc9",
+      "wrong.sv": "dc8de00b66227e593361679fba9b3bf2ceec5d5b4bf24d6b160febbb14d0b8f3"
+    },
+    "public_sources": {
+      "tools/nes_enable219.py": "079927841a1cd9d34d09b9b259a9ed3c6c08785277bb0b2c274c00a2276a403d",
+      "tools/test_nes_enable219.py": "aa1ca010c8f2973a2c7a6cfaf8efcc5644db617adf488e6b1d9fdfbbc0f97c87",
+      "tools/test_nes_retire219.py": "23890ddf954abdf2b50645c0802b42363cccc1aa9890351f294ae8fa4fd43477"
+    }
+  },
+  "reused_not_rerun": {
+    "epoch217": {
+      "result_sha256": "5b1797ab5b7cebae95b0ab40c94c716745fd009711460d664138c6db582c4991",
+      "path": "probes\\nes-loader217\\epoch04\\result.json"
+    },
+    "wait216": {
+      "result_sha256": "c22ace5cd3a16aca602813f8281586c0ff4cdda78add574b667f1a74235f7e19",
+      "path": "probes\\nes-wait216\\fixed02\\result.json"
+    },
+    "slot216": {
+      "result_sha256": "12d962c6c4df7dec3ac0c83c1af34ea40c964477fb4760dd2c1823c54f5514ce",
+      "path": "probes\\nes-wait216\\slot-fixed02\\result.json"
+    },
+    "guards216": {
+      "result_sha256": "33d0ae35b619538855f36554e4eda5cdf06b84dc95071b84fc2c78daedb945d1",
+      "path": "probes\\nes-wait216\\guards03\\result.json"
+    }
+  },
+  "physical": false,
+  "fps": null,
+  "prior_archives": [
+    {
+      "name": "nes-boundary218",
+      "files": 5057,
+      "manifest_sha256": "c7cee0f1ea6b2a6e5dcf6469123b4819756427c91a83321bfe6de6679a6aaae8"
+    }
+  ],
+  "public_sources": {
+    "tools/nes_retire219.py": "e215478ff02caa51cfe2bdb73926ed30d167162b93b3200e335c2d8decb87117",
+    "tools/test_nes_retire219.py": "23890ddf954abdf2b50645c0802b42363cccc1aa9890351f294ae8fa4fd43477",
+    "tools/test_nes_counter219.py": "9a3b9db75b16be6cdb5ec25a862c629f6fbd392d7f136063adc383204044cfaf",
+    "tools/nes_enable219.py": "079927841a1cd9d34d09b9b259a9ed3c6c08785277bb0b2c274c00a2276a403d",
+    "tools/test_nes_enable219.py": "aa1ca010c8f2973a2c7a6cfaf8efcc5644db617adf488e6b1d9fdfbbc0f97c87",
+    "tools/nes_fault219_paths.tcl": "66d922c2c6fc34abe5a5e249ce5299f5ca557bae807b4d61eb874790c33c2bee",
+    "tools/nes_snapshot219_paths.tcl": "67fdd039be91aa954b6bc6359957d0ce21f1350f37954d03fe6b70c617bc487f",
+    "tools/nes_retire219_evidence.py": "af40e50cff71a7b81ce91ff13a4deb9e4127e8870a93770535ed2ff0dd70e296",
+    "docs/nes-retire219-contract.ko.md": "8367ddf2cbfd938e89ca162630acb47ece3f5e881cf99e8a2bbcb57e5c3c70bc"
+  },
+  "targeted_reports": {
+    "paths01\\control218-0-offset.rpt": "5afad55776c8cf1b9ebb0a7fb606fc85e1ed0907480509371a7533c445b9895e",
+    "paths01\\control218-1-offset.rpt": "36867d9936f6ab8abe8775890c5caa2a82cdab33e9d00343fa52b077d6cc2b93",
+    "paths01\\control218-2-offset.rpt": "2a518e0bc3d1104c91feb837ea33fb726e8e12888393047ea13e0bb6e671497a",
+    "paths01\\epoch217-0-gray.rpt": "776b61609d1da340ad626e80ad11f85514f21a65b009811c8368fcb7906480dd",
+    "paths01\\epoch217-1-gray.rpt": "5bc890298a743fd422c3a811959329b017d25ce9ddc7e0aca2396df65eaf6792",
+    "paths01\\epoch217-2-gray.rpt": "66069c1e5e0248230d631fa78511e4bc54be6144ae569d2bc916ab0007449bad",
+    "paths01\\finish218-0-count.rpt": "587122bf55aa192b061a3686bd79259ecaf92e290ee9e14644e871182162782c",
+    "paths01\\finish218-0-response.rpt": "33cf23a8af5842213bea8a1aa420b2d19762b67c87a576ca1eed4186767a6c7f",
+    "paths01\\finish218-1-count.rpt": "beb7e38fe45c68e99820adfcb731699797d7d251ea74995dab62bc89b6bd2b64",
+    "paths01\\finish218-1-response.rpt": "ae0ee374dd1188151b77ad7d11f3833bd540f092f5dad658bdb1a8bce50a6a80",
+    "paths01\\finish218-2-count.rpt": "ae45ed09bbc254d7f79fd27110856608daf7161a19ec613cb6f0b51d545665f9",
+    "paths01\\finish218-2-response.rpt": "12602fc0f2116277bd5281869c18643f29c51a58620bac55a72fec22f7a7e70d",
+    "paths01\\payload218-0-boot.rpt": "6471de8316de993910de237f0bc781c276a7eaeef877e80381b545b9e9806271",
+    "paths01\\payload218-0-capture.rpt": "b0cc647c358a0f16537adaba85a90d64908b1f26ed824c8e01cf9e1aabd19804",
+    "paths01\\payload218-1-boot.rpt": "385b96ac0d5768b03773c47e0ec46d9989cf12186572ed1c2ed6b2bec9fce558",
+    "paths01\\payload218-1-capture.rpt": "764997efb5d592b59ccce0984ec995a6a3aac786cdb6e2902beee84b50371629",
+    "paths01\\payload218-2-boot.rpt": "dec4a3735715b45c40b42f2026f5bfdbbd341a88b86a6a8aeec652560626c2d8",
+    "paths01\\payload218-2-capture.rpt": "a1c8e6d3d9ec8ceffecf5aa43cf7d8574c04d1d04816f4dd6c562de6483bad92",
+    "paths01\\wait216-0-counter.rpt": "becb5a2149ea22778afc9f69f27257574aa62d2b6540a30a6941aaf1d5413611",
+    "paths01\\wait216-0-loader.rpt": "bf114d3331c93cea625d64eb5c654584a2e7f9ae682c55f9579cd4ac9c0b8f01",
+    "paths01\\wait216-1-counter.rpt": "023e2e98065ffa6c8b771ec543b16978ed9c6ee93d17549ce84bda685f3de384",
+    "paths01\\wait216-1-loader.rpt": "58b70834d8f6d32548e78cf55b59468203746b9a41a4324062f3356bd2cc59ee",
+    "paths01\\wait216-2-counter.rpt": "08369e8230e9f2e46987547fe040936c43af5d434b095febb81d0398aa7ac978",
+    "paths01\\wait216-2-loader.rpt": "47f2ed6645d7b9026188137320aeb6295f1a17385051bb4dc1a258726a9fe1a8",
+    "paths02\\fault219-implementation-0-command.rpt": "ac6e8644d8b0a66b9f5bb439dd0dcea88822b1441d766d0805d00b2199bcaa51",
+    "paths02\\fault219-implementation-0-owner.rpt": "714ada20d3b5f85cdde4297397d1c0ae44029bdafe563b945444a944b77bd73b",
+    "paths02\\fault219-implementation-0-response.rpt": "0a3317d39c819fb11d36e343afe1d4625ff17cbd99d7dfe703accea23d3fccb5",
+    "paths02\\fault219-implementation-1-command.rpt": "7e2bde17445f0c3c97de2de3f0ddd516e10920e779de18a7ea63921e8c294db0",
+    "paths02\\fault219-implementation-1-owner.rpt": "905f4c2227e7c11e50d0be37070128b873ec791661fcd75a441f5a58872f68ca",
+    "paths02\\fault219-implementation-1-response.rpt": "847fec3d80b0eebe999ed1257b718b46231d2a8e918d92be5699272e913984f0",
+    "paths02\\fault219-implementation-2-command.rpt": "98d2e8f80ab8356345037164e76b2a21691ab492844db4bb63c96f9002b8ca71",
+    "paths02\\fault219-implementation-2-owner.rpt": "1b38375d8b33ab2195656639d0ff458f9752eac741498f37f9cadf81b80b1c41",
+    "paths02\\fault219-implementation-2-response.rpt": "e4d79eac3d8fe6ac029494203ab148a0439d28357f1633263fba788b82d1f22a",
+    "paths02\\fault219-nominal-0-command.rpt": "9edc0625e83387b4fd8f19deec61bfa1f58d2bb45b79f2bb5b85745d51de5e0f",
+    "paths02\\fault219-nominal-0-owner.rpt": "328333240dfb6285e71ebe0a6aa09dcecb094039efa40d8dd9d43e1604e983e9",
+    "paths02\\fault219-nominal-0-response.rpt": "0c65560e58ba1f321500051928b5d00f6b3253daa4a8b446928c940414fe264b",
+    "paths02\\fault219-nominal-1-command.rpt": "96d8f5296d01efee35c2ab169ec614d0b7d8d7452aa79d5d2e21fb26ba723d29",
+    "paths02\\fault219-nominal-1-owner.rpt": "2bf00d6aa35c7fe7771a0b8fac35947f5e734e7bb73960a1702c66f7691a8743",
+    "paths02\\fault219-nominal-1-response.rpt": "f9fbb776aa05bacee01d6379ce361c26485f5dd1a6a232050c6e033473ab7640",
+    "paths02\\fault219-nominal-2-command.rpt": "50773078e7a7096220be953fe8f4f1a6a16228ee4ffe4e888e6fc67b0dab2e92",
+    "paths02\\fault219-nominal-2-owner.rpt": "e1d1c3c235ca7c5639772217e2863d13180e3495549c657e6fbe374e26a86862",
+    "paths02\\fault219-nominal-2-response.rpt": "be95c59b5fea7142b6c2043dd04b043a0e7533a6829f7ccdbdab6f1a34325e40",
+    "paths03\\control218-0-offset.rpt": "98f980e7826c796fc0ec56d5e9b56c809d8f53427435eeae62b72ef48814a410",
+    "paths03\\control218-1-offset.rpt": "33ec437c9f90f1c5f19683ca8a4abccb819cc1fdce1d1fac936d4e47c70644db",
+    "paths03\\control218-2-offset.rpt": "2b5294191f010a9bb5c085066dc416ad2a33a9e70a3ea7887d70c95149d9cd81",
+    "paths03\\epoch217-0-gray.rpt": "818520a852c374f220c0d68ef0c41b3956eee089e79dfd88a351cab49fa538ff",
+    "paths03\\epoch217-1-gray.rpt": "f6e991c688efdc38cda59c8af84807a6bfa0a996572afde00fa92ee31bcc757e",
+    "paths03\\epoch217-2-gray.rpt": "76ce2c7d38b3020dff360cf526ce7eb18aa4680c9e166ba5f8ebd988350c8958",
+    "paths03\\fault219-implementation-0-command.rpt": "10855aff01e7a635bf7a89e0300c7e1d722d768ae99c79a26731dc059f98f8d6",
+    "paths03\\fault219-implementation-0-owner.rpt": "c7c68a2725cde97a8333c886efa3dbc87510e9d62f2d9d0dd1d195a8be00afa0",
+    "paths03\\fault219-implementation-0-response.rpt": "725f285b4674f2ccae79f531c182b9c5ad46b5fe1cd9049f9abdd11280f4417a",
+    "paths03\\fault219-implementation-1-command.rpt": "e913e1928a7475e8e74e1b4e66a195cc2b54586fdbd78592620857d197e57517",
+    "paths03\\fault219-implementation-1-owner.rpt": "c7c68a2725cde97a8333c886efa3dbc87510e9d62f2d9d0dd1d195a8be00afa0",
+    "paths03\\fault219-implementation-1-response.rpt": "371c25739c8c6030a21e2e08857698399ca4ae426e3757be2f6a8b7a20a3c219",
+    "paths03\\fault219-implementation-2-command.rpt": "b15d05fb75db77b0dd7bb520cfaa2f28fa60e4614a4b12324264fe527e07cc05",
+    "paths03\\fault219-implementation-2-owner.rpt": "c7c68a2725cde97a8333c886efa3dbc87510e9d62f2d9d0dd1d195a8be00afa0",
+    "paths03\\fault219-implementation-2-response.rpt": "19a8d3226906c0804c0377169568dce9f3500a51397b6453656fb629e2d37508",
+    "paths03\\fault219-nominal-0-command.rpt": "45ea0d04a74f305dacd5bbf1fff12fd97bf23cf475c10ec79196a30fc27ff0c9",
+    "paths03\\fault219-nominal-0-owner.rpt": "c7c68a2725cde97a8333c886efa3dbc87510e9d62f2d9d0dd1d195a8be00afa0",
+    "paths03\\fault219-nominal-0-response.rpt": "884122d119aa23e6aa1c3fbc9ed250d3ee2d84085486cacc605713d8b8d6c56d",
+    "paths03\\fault219-nominal-1-command.rpt": "f39d3e09d7fc7d497080100454863b73e71fc80c576751c2b821b6adae2f6e64",
+    "paths03\\fault219-nominal-1-owner.rpt": "c7c68a2725cde97a8333c886efa3dbc87510e9d62f2d9d0dd1d195a8be00afa0",
+    "paths03\\fault219-nominal-1-response.rpt": "69cb5448cb6f7a5fb98b525147f2d919f4197127df8075de8d686ae41a49a08c",
+    "paths03\\fault219-nominal-2-command.rpt": "e6870518b710338ebfbfbb181085b2e528530c3269c8f41d8e742146d1a73fc7",
+    "paths03\\fault219-nominal-2-owner.rpt": "c7c68a2725cde97a8333c886efa3dbc87510e9d62f2d9d0dd1d195a8be00afa0",
+    "paths03\\fault219-nominal-2-response.rpt": "c2bf7a3a7cdd7b2fd231a8b758756f13d668c03cb2bf96dad2a4d33862d4715e",
+    "paths03\\finish218-0-count.rpt": "df61520c5974aeb57e2e216cd7af5abfb0c93f3feed5f7ab4b81fa16fd65e2f1",
+    "paths03\\finish218-0-response.rpt": "2e98964de8d998f9d47db5231bacc79b6732df2640dbaf05c989e50342f01b0d",
+    "paths03\\finish218-1-count.rpt": "5d3ded3549e5cdac5fa7aa6125b484f2420a5fa37048259b8892dfa380c6d879",
+    "paths03\\finish218-1-response.rpt": "37a013b1ed06c366a1b6a806e57a5f897d3e00d5f25769440473f80e8c3556cd",
+    "paths03\\finish218-2-count.rpt": "76a0f69c8dec7854ca1441a18f128c232fec2900ba35fc66c5c300aa054b3ecc",
+    "paths03\\finish218-2-response.rpt": "aaad68eef1548175ce04fbb13b3383fd6b2ee27456929b3e45b872a7150bac4d",
+    "paths03\\payload218-0-boot.rpt": "d6e27687b96b0d8642bb6626b6de949578b6024795dbad1911b250642cd617fc",
+    "paths03\\payload218-0-capture.rpt": "bfc2741f9210d72e6ec4f17be47eeb2c3ad1f04606580987a38ed9cbb06fc193",
+    "paths03\\payload218-1-boot.rpt": "420211c0ec41e34fe511a2ffeeba05cc697ce9bff16c54e295f1629ac891a8c5",
+    "paths03\\payload218-1-capture.rpt": "469c8ef59d8ca2e36e2f2a5e35ef769de613d14ea1cdf8d1ff47cf82f9d33170",
+    "paths03\\payload218-2-boot.rpt": "3da0ff38d75a0a45f57ce79f650dde00e48f2fbf0c4f5dc40db9d4ad09d69023",
+    "paths03\\payload218-2-capture.rpt": "4b97906801e1cacc135bca34f2485616205f1544c3347e79ac8c4f87d86c7c88",
+    "paths03\\wait216-0-counter.rpt": "903c2a3e4f594242c139bca666349e8be2b7336781869037f479323b696e700c",
+    "paths03\\wait216-0-loader.rpt": "44f5e68a1e07ff98faad9dc72e5a6e6892e6b2582fedc6f1de25ae46980eec93",
+    "paths03\\wait216-1-counter.rpt": "ebbc4a5e27fa01870c97bd80c7d2036c6b823c5f39be569c59bacb3176c9d28b",
+    "paths03\\wait216-1-loader.rpt": "5eae36e1ae1b9f1fd7ee93cdfeca7e910fc851133b739be0d4f0918557027fa6",
+    "paths03\\wait216-2-counter.rpt": "5be9c3de2b7ac65f417dcef44d56ec2bda8d6dc2aed32f434cf74cde4fddba91",
+    "paths03\\wait216-2-loader.rpt": "60d10f18e9a9f52dd40baa5854d47b53db2db6d5334b927321a0e3052bf65a83",
+    "paths04\\snapshot219-implementation-0-receive.rpt": "031e58ae43ca55bf7f3b8d7d13a46ccdd963cbc5258048882468004aae560dbb",
+    "paths04\\snapshot219-implementation-0-status.rpt": "0ba38567c7a89fda49c8b6aee0ad37c984524ed4dd3449bf08c8cbde2aa690cc",
+    "paths04\\snapshot219-implementation-1-receive.rpt": "480fbd268a7579656bba261e5ce72ae5695f8d3777d57fad61eb2396e8187746",
+    "paths04\\snapshot219-implementation-1-status.rpt": "a9af2bf2006aca556ced9ab7fbee7be09734c378e2c8e76ef85be59e2e17960e",
+    "paths04\\snapshot219-implementation-2-receive.rpt": "9ae86bcfb151aac6f198d10d902098706d8b3242fbdfc442792454f7a67abdb3",
+    "paths04\\snapshot219-implementation-2-status.rpt": "8347c8f6a3c8925d9e01601d57f4a5af699e8878ce77dc42f38f10c39f85f592",
+    "paths04\\snapshot219-nominal-0-receive.rpt": "7458a4f224a4947987b68b380f7594fa420204e791d37eec97eab88d62ec0d0f",
+    "paths04\\snapshot219-nominal-0-status.rpt": "0d73703d49a15205152e07a3d6d18d6f0e664e5b6c41e772344f99d4aefae44b",
+    "paths04\\snapshot219-nominal-1-receive.rpt": "f9009f8958c74307596f7454af57f6bcbdf9c42eea6630fa0a41c126183969d3",
+    "paths04\\snapshot219-nominal-1-status.rpt": "34072c983b19766d631b5924c465b544eb062eac1ba998ae60796ed0bcd937e9",
+    "paths04\\snapshot219-nominal-2-receive.rpt": "a8ae8cec2bd77754462e7d35b2781b4c1c141bbd3ce43d325b1516c9737bd608",
+    "paths04\\snapshot219-nominal-2-status.rpt": "7420c139602d0fa74adc08ce7cbfe036b1141d51b3ff3c32ecd0d40dba7f2719"
+  },
+  "next": "Source02 is a functional continuation candidate, not a timing improvement/adoption. Inspect same-edge status snapshot flags/redundant boot masks and RECEIVE qualification jointly, preserving SPI capture/shift and reset/fault priority. Whole-board gates before ARM/current212 ROM paired ASM/ZIP; no clock/SDC relaxation or seed-only fits."
+}
