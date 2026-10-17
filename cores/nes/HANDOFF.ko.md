@@ -1,4 +1,14 @@
-# NES213 실기 시작 실패 (최신)
+# NES214 시작 실패 원인 보존판 (최신)
+
+PR120 같은 branch. [계약](../../docs/nes-startup214-contract.ko.md), [시험 안내](../../docs/nes-game214-ready.ko.md), [증거](../../analysis/startup214-verification.json). **NEXT 사용자214 한 번:3TXT/실제메뉴복귀. 원인미확정·수정완료아님.** `releases/NES214-SMB3-BOOT-CAUSE.zip`, SHA64f0fe1e/FWe183d7ca/FPGAaebe7fb8(213동일).
+
+실제207bridge/status/top6assign ROM응답32768B→Mesen65816→ROMread/statuswriteRTLreplay:210 reads7870/checks7879,213 reads7104/checks7113 둘다stage1/2/3+SPCA9. inactive/midSPI admission/STOPretention검사.100nsread/150nswrite fixture RUN/peerinactive,ARMreset핀/실물타이밍/전체보드/livecosim아님.213실기실패미재현. ROM매핑/byte-only원인근거없음;신호gate/실기handoff는미확정.
+
+선택bus01/arm02/gate01/check02/release01. 24Bscalar boot evidence만추가:READY1/SERVICE2/STATUS3/COPY4/TIMEOUT5/POLL_LIMIT6, polls/ticks/first-last(statusvalid/flags/error/stage)/signals(entry+exitRESET,DONE,RDY). budgetTXT2571/4096,기존gameTXT4047상한유지. 5초/65536poll/firsterror6보호/실행중SD없음/자동retry없음. runtimebegin budgetreset뒤에도boot기록보존.11actualCgate/formatter경계PASS. ARM207084/static27836/RUN32088/IRQ508/margin4992;실제runtime/renderer/sink/FPGA바이트동일(식별자만214). 새FIT/ASM없음. PREboot실패/CFhardfail은안전저장gate로TXT없을수있음.
+
+다음로그TIMEOUT+stage0/flags0은SNESreset/bus관찰경로,flags7+stage1은copy,stage2는WRAM/SPC,SERVICE/STATUS는통신/보호를우선조사하되원인확정금지. READY면213간헐실패가능성남기고FIRSTLEVELSCROLL재개. 같은213/044반복금지. 기존archive/210/GBC164/saveSRAM불변. arm01indentwarning/check01검사기출처hash오기보존,최종arm02/check02.24B관측기는전송부하개선아님;60fps→장시간play→입력품질순서유지.
+
+# NES213 실기 시작 실패 (이전)
 
 PR120 같은 branch. [실기 분석](../../docs/nes-game213-hardware01.ko.md), [증거](../../analysis/game213-hardware01-verification.json), 원본 `probes/nes-game213-hardware01`. **아래 READY는 패키지 준비 이력이며 실기 통과가 아니다. NEXT startup 경계 원인 확인·수정; 동일213 재시험을 요구하지 않는다.**
 
