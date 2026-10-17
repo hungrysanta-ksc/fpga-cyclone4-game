@@ -1,3 +1,17 @@
+# NES216 정상 대기 오판 재현·수정 후보 (최신, 배포 보류)
+
+PR120 같은 branch. [계약](../../docs/nes-wait216-contract.ko.md), [검증](../../analysis/wait216-verification.json). 선택 source02/fixed02/slot-fixed02/guards03/mapfit02/timing02/io02/paths01/arm01/check02/evidence02. 아래215의 “원인 미재현”은 이전 이력이다. 현재 동일 오류를 만드는 결함은 로컬에서 재현했지만 실기 원인 확정·해결 확인은 아직 아니다.
+
+실제215 C와207 SPI/lease/READ16/bulk에서 첫E9 뒤1200000 NES cycles 동안 소비 중지하면 tile EMIT(index0/out_ready0)가1048576 제한을 넘으며 최초fault. qualifiedROM 승인을 늦추면 FETCH(index0/mem_ready0)에서도 동일. 두 경우 arbiter/lease/SPI/batch/bulk/consume 선행오류0, 실제C 응답은 실기와 정확히 같은00d704800001000000000000000000000000007f. 500000cycles 소비대기는 기존판도 통과. fixture22MHz 약22.73/54.54ms이며, 실제제품1048576/21.477MHz 약48.82ms; 단독tile기본4096과혼동금지.
+
+수정은 타일 실행 counter에서 승인 전 FETCH 대기·EMIT backpressure만 제외한다. 승인된 읽기 WAIT는 계속 계수, 미응답/주소/세대/error/lease/STOP/reset/부분타일 공개차단 유지. 제한값·SPI/표시ACK/새RAM 불변, 기존60초 RUN/poll/step guard가상위정체종료소유. 향후무제한play시상위진행정체정책필요. source02는카운터32->21bit,11FF감소. 수정판각3frames57plans55chunks1072B exact/3retire;내부·외부계획모드9조건씩+기존partial22통과. 게임CPU/실제65816전체play시험이아니며,60fps증거아님.
+
+배포 미승인: source01 FIT통과/strict-.153ns;source02 FIT15168LE8349FF960LAB47M9K,240LE/3LAB/9M9K여유이나nominal/strict-.320ns,hold+.149. 정확한최악경로 control.load_valid->loader.error_code[1].ena,168MHz5.952ns/5LUT/6.179ns 중배선3.975ns64%. 변경tilecounter출발보고경로+36.322ns. 기존로더의공유command_conflict/오류코드enable경로가배치후실패하므로timeout수정자체와혼동금지. CDC4392행/45singlefanout/새미분류data0,held6.597/Gray6.812/reset96통과;조건부PSRAM+2.345/SNES85.802/SPI166.065/reset통과. 전체전기signoff아님.
+
+ARM은215에서216식별자3파일만변경,실행/planner/소리/입력/60초/로그schema215같음.207536B/static27868/RUN32096/IRQ508/margin4952/FW90877482. 새FPGA ASM/현재212ROM교체/짝패키지미완료,단독FW설치금지/새ZIP없음. guards01 reset의존성누락→02(32bit)→03(21bit),check01sandboxWin623→check02정상;중간기록보존. 원본2159742files/HW95files검증PASS.
+
+NEXT: exact loader error_code enable의공유/priority조합을짧게하되동일명령충돌/STOP드레인/코드보존증명. 필요하면기존loader exhaustive검증재사용하되단독microFIT/seed탐색금지,최종전체보드타이밍확인. 216타일대기수정유지→현재212ROM/ASM/paired검사→사용자216 stage→숫자1+A/RIGHT+B/A 첫레벨스크롤. 같은215/044/추가영상요청금지. 클록/SDC완화·검사삭제·timeout확대금지. 사운드/입력/세이브SRAM/GBC164/기존archive보존,60fps→장기play→입력품질순서유지.
+
 # NES215 실기2회: 동일한 CRC 정상 FPGA fault (최신)
 
 PR120 같은 branch. [분석](../../docs/nes-game215-hardware01.ko.md), [증거](../../analysis/game215-hardware01-verification.json). 사용자 정정: 두 번 모두 stage selection에서 실패, 성공할 때도 있다는 전제 폐기. 원본6TXT+2MOV SHA보존. 영상2fps전구간관찰: 둘다월드맵/시작안내까지그린뒤정지,카트리지메뉴복귀확인;첫레벨play없음. 영상자체worldmap/menu는run1약7/13초,run2약14.5/20.5초;MCUtick동기화아님/색상·오디오판정안함.

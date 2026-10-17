@@ -30,7 +30,9 @@ module nes_tile205 #(parameter integer MAX_CYCLES=4096,parameter integer EXTERNA
  wire [47:0] rows=EXTERNAL_PLAN?plan_rows:rows_q;
  wire [7:0] mask=EXTERNAL_PLAN?plan_mask:mask_q,alt_mask=EXTERNAL_PLAN?plan_alt_mask:alt_mask_q;
  wire [103:0] alt_tags=EXTERNAL_PLAN?plan_alt_tags:alt_tags_q;
- reg [4:0] index;reg [31:0] cycles;
+ // Include the terminal value; no legal tile executes past MAX_CYCLES.
+ localparam integer CYCLE_BITS=(MAX_CYCLES<2)?1:$clog2(MAX_CYCLES+1);
+ reg [4:0] index;reg [CYCLE_BITS-1:0] cycles;
  reg [7:0] held_byte; // Stable until downstream accepts; never exposed after timeout.
  wire lease_ok=lease_valid&&lease_generation==generation;
  wire enabled=!reset&&!stop&&!fault&&(!busy||cycles<MAX_CYCLES);
@@ -54,7 +56,12 @@ module nes_tile205 #(parameter integer MAX_CYCLES=4096,parameter integer EXTERNA
    alt_mask_q<=0;alt_tags_q<=0;index<=0;cycles<=0;fault<=0;done<=0;
   end else begin
    done<=0;
-   if(busy)cycles<=cycles+1'b1;
+   // 216: admission and immutable-output backpressure are owned by the
+   // surrounding frame/session lifecycle, not this execution watchdog.
+   // A granted read still ages in WAIT even if its response never arrives.
+   // Lease loss, STOP/reset and exhausted execution budget remain terminal.
+   if(busy&&!(state==FETCH&&!zero_byte&&!mem_ready)&&
+            !(state==EMIT&&!out_ready))cycles<=cycles+1'b1;
    if(busy&&(!lease_ok||cycles>=MAX_CYCLES))begin fault<=1;state<=IDLE;end
    else if(!fault)case(state)
     IDLE:if(plan_valid&&plan_ready)begin
