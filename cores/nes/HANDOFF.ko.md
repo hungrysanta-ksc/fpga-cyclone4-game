@@ -1,3 +1,11 @@
+# NES223 실기 결과: 화면 완료 증가·메뉴 복귀 통과 (최신)
+
+- Latest223 HW01: PR122 samebranch. User game/sound/menu normal+visible gain; video13-46/53-59 firstlevel,16-17/26-43 clear scroll,62-63 menu. 60.06s/416display vs222365(+13.97%,different scenes NOTcontrolledFPS);mean6.93/s/maxgap390ms. D1 2444910B/5877.19percompletion vs7811.25(-24.76%);17.91msD1/52.69mscountedSPI percompletion still>16.67. receive19.68/plan20.10/seal19.97s;E0E1 48.88%bytes NOTallmap/time. Primarydeadline1/secondaryD2receiver24(callbackORstatus),nextgen598partial;417BEGIN/416COMMIT/0ABORT,12242sent=retired,othererrors0;noindependentACKfaultproof. startup6->post1/READY428poll40ms;useraudio normal. SELECTanalyzer01/3TXThashes/video127samples;newFW/FITnone. NEXT scroll-aware map repeatedwork+E0E1 composition/bankcoverage and joint16.67ms budget,minimumtests thenFIRSTLEVELSCROLL. No unchanged223/044/startup/poll/FITloop;ARM1912/FPGA159LE2LAB9M9Kspare/saveSRAM/GBC164/archives preserved. Readgame223-hardware01/HANDOFF/probes/nes-game223-hardware01/progress.json.
+
+새 실기 증거143파일 봉인: `4a19a9baff3f238df635f650b2a26ef3b0a0e88f00cfeeb10f02e6e2153cc9a9`. 이전222 증거148파일과 선택223 소스6파일 해시 확인,223/224 manifest 보존 확인.
+
+[실기 분석](../../docs/nes-game223-hardware01.ko.md), [재현 JSON](../../analysis/game223-hardware01-verification.json). PR122에 결과만 기록했다. 60fps는 미완료이며 다음 구현은 스크롤 맵의 반복 처리·전송 감소다. 이전 시험판 준비 기록보다 이 결과가 우선한다.
+
 # NES223 실기 시험판 준비 완료 — counter224 통합 (최신)
 
 [PR122](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/122) 같은 branch. [시험 안내](../../docs/nes-game223-ready.ko.md), [수정·검증 계약](../../docs/nes-counter224-contract.ko.md), [최종 배포 gate](../../analysis/release223-verification.json). 아래223 타이밍 미달/배포 보류 기록을 대체한다. **이제 다음 작업은 사용자 실기이며, 새 FIT나 동일222/044 시험이 아니다.**
