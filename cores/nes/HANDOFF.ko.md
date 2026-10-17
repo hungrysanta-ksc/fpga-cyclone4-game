@@ -1,3 +1,19 @@
+# NES227 실기: 소폭 개선, 스크롤60fps 미달 (최신)
+
+- Latest227 HW01: PR125 samebranch. User game/sound/menu normal;framegain suspected/scrollgain small. Video15-54firstlevel/18-22,25-33,43-52scroll/63menu.60.06s465display vs226452(+2.88%count),mean7.74/s NOTcontrolledFPS. E1/ACK-15.13%,SEAL/ACK-5.28% butOBJ/ACK-46.63%;op8countNOTmeasured/noOAMcausalclaim. Tileout/ACK+22.08%,plans+17.50%,finish+9.68%. receive21.63(bin21.64)/build17.26/SEAL20.57s;BEGIN.93/planner7.36/finish8.97 exact12bins. D1only17.88/countSPI51.69ms/ACK;mid20-50s29..34completions/5s,D119.3..19.8+E0E131.7..35.8ms/ACK,NOTscenealigned. Primarydeadline1/receiver24D2 callbackORstatus;lastdisplay657@59.99s,next658BEGINonly. BEGIN466/COMMIT465/display465/window13158sent=retired/errorsink-video-plan0;noindependentCRCfaultproof. SELECTanalyzer01/4rawhashes/131samples,NOFWFIT. NEXT structuralgeometryingress+mapmetadataegress+finish/drain16.67ms;evaluateimmutable reuse/delta/existingparallelaperture,notOAMcodec/poll/FITloops or same227044. Preserveepoch/row-alt/mask/twobank/finalACK/ARM1800/saveSRAM/GBC164/archives. Readgame227-hardware01/HANDOFF/probes/nes-game227-hardware01/progress.json.
+
+[실기 분석](../../docs/nes-game227-hardware01.ko.md), [재현 JSON](../../analysis/game227-hardware01-verification.json). PR125에 결과만 추가하며 아래 시험 대기 기록보다 우선한다. 영상·로그 모두 메뉴 복귀를 확인했다. 전체465회 완료를 실제 스크롤FPS로 쓰지 않는다. receiver24는 최초 deadline 이후 D2 callback/status 공용 실패코드이며 별도CRC 손상은 입증되지 않았다. 신규 펌웨어 없이 다음 큰 수신·메타데이터·완료 경로의 성능 변경을 우선하도록 기록한다.
+
+새 실기 증거150파일 봉인 SHA256 `20940fb5056ca42723c1b762591d718c1080841d2fc28138dc42eac360da2f6e`. 이전227구현15501파일과226실기146파일을 전부 해시 대조했다. 최소 검증 뒤 실제 첫 레벨 스크롤로 돌아가며 같은227/044 반복이나 추가 OAM codec 변형만으로 진행하지 않는다.
+
+# NES227 시험판: 스프라이트 반복 메타데이터 전송 감소 (최신)
+
+- Latest227 REPEAT READY: PR124 merged f48017a; new codex/nes-metadata-repeat-227. SELECTarm01/snes04normal+snes03fault/runtime02/check02/asm02/romcheck01/evidence04/release01. OAM repeated4B suffix exactbytecompare/op8 section4 expands8..512 aligned4 withinfirst512; host uses>=64 onlyifcheaper,remaining32B oldspan. InactiveWRAM boundedMVN+STOPbeforeACK;2271BEGIN/SEAL rejectsoldpair. ActualC+65816 30frames1835520pixels+16320OAMbytes exact186,9faults;RUN9frames6faults+9receiverboundsPASS. Metadata104753->88733(-15.29%),scroll16frames58768->50288(-14.43%) syntheticNOTwholeSPI/FPS;tile5088B unchanged. ARM209828/static28116/RUN35000/IRQ508/margin1800/FWb8adf26e;ROM3712/free224. ROM-only224routeCDB/ASM/CPF93filespreserved/3EDA4096B exact;NOnewFITSTA/FPGAf26d7e6d/ZIPff115bcc. NEXT USER227FIRSTLEVELSCROLL+3TXT/video/sound/input/menu;MVNcostmeansnetgainunproven,whole16.67ms/ingress/finish/metadataOPEN. No same226044/codec-or-FITloop;saveSRAM/GBC164/archives preserved. Readrepeat227contract/game227-ready/HANDOFF/probes/nes-repeat227/progress.json.
+
+[구현·검증](../../docs/nes-repeat227-contract.ko.md), [시험 안내](../../docs/nes-game227-ready.ko.md), [배포 gate](../../analysis/release227-verification.json). PR124 이후 새 브랜치에서 진행한다. 모든 스프라이트 바이트를 보존하며 실제65816에서 숨겨진 영역까지544바이트 전체를 비교했다. 실제 스크롤 순효과는 아직 미확인이다. 증가한 SNES 복원 비용을 포함해 판단하며 개선이 없으면 압축 변형을 늘리지 않고 수신·타일 완료·메타데이터 경로를 우선한다.
+
+선택 증거15501파일 봉인 SHA256 `02cb37eac9fe81eee55f140a311ac5246fb990ad0dbde6cce9ea2c889410b293`. 이전226구현2008파일과226실기146파일 전부 해시 대조. 패키지 `probes/nes-repeat227/release01/NES227-SMB3-OAMREPEAT.zip`, SHA256 `ff115bcc57f6019e8b73fe824967f3a7bb5ec283117769fb18101f532a7ccd76`. 펌웨어와FPGA를 반드시227쌍으로 설치한다. 기존224배선의 ROM만 교체했고 새FIT/STA를 수행했다고 주장하지 않는다. 실기 시험은 숫자1+A로 첫 레벨, 오른쪽+B 유지/A 반복, 약60초 후 메뉴와227로그3개/영상이다. 같은226/044 반복은 불필요하다.
+
 # NES226 실기: 스크롤 개선, 수신·SNES 전송이 다음 과제 (최신)
 
 새 실기 증거146파일 봉인 SHA256 `a4b76d674e75a1941141655ed0e9b6864501bb923c6cf1c92ba7122811e86c02`. 이전225실기148파일 및226구현2008파일 전부 해시 대조 완료. 공개 분석 도구·문서의 끝 빈 줄만 봉인 후 정리했다. JSON의 소스 해시는 실제 실행한 봉인 사본을 가리키며 실행 내용은 같다.
