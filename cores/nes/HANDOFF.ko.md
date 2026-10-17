@@ -1,4 +1,16 @@
-# NES214 실기: 시작 성공, 계획 상태 오류로 조기 종료 (최신)
+# NES215 계획 상태 오류 확인판 (최신, 실기 시험 준비 완료)
+
+PR120 같은 branch. [계약](../../docs/nes-plan215-contract.ko.md), [시험 안내](../../docs/nes-game215-ready.ko.md). 214의51번째 프레임 plan_error4 원인은 미확정. 실제200 C+207 RTL short/sparse/배치/세대 전환을 집중 확인했고, 최초 실패E8+조건을 보존해 다음 실기에서 구분한다. 수정 완료·60fps 개선으로 표현하지 않는다.
+
+변경:30B first-error record(정렬 포함static+32), phase FLUSH1/FINISH2/RETIRE3/REARM4; reason1..10과reply20B/expected sent/gen/buffer bytes/count. 정상poll payload복사/추가SPI없음. 원래CRC/count/flags/lease/표시ACK/5초boot/60초RUN/STOP유지. ERROR4최초만보존,후속다른오류/budgetreset/cleanup으로덮지않고새boot에서만초기화. 실제reply없으면valid0을정상판정으로쓰지않는다. boot214정보유지/flags7필수화금지.
+
+선택 arm01/test03/boot01/check01/rtl02/release01. C 이전·새 판정1600조합+서로다른후속오류보존/format2782/4096,부팅11조건PASS. ARM207536B/static27868/RUN32096/IRQ508/margin4952. runtime/planner/resident/sink/board/STOP 원본214동일. FPGA aebe7fb8 그대로,새FIT/ASM없음. 이전214 archive3390파일SHA검증PASS. test01 sandbox GCC Win623실패; test02동일후속오류시험 후test03상이한후속오류보강. rtl01은15프레임통과뒤PC시험300s한도로중단(회로/라이선스실패아님),rtl02는시험한도600s;제품timeout은불변.
+
+실제 C+207 RTL20연속프레임/483plans/468chunks/8928B/641SPI/20retire PASS. SNES consume/display ACK·loader/core는fixture,물리/게임FPS아님. ZERO-only→희소/큰갱신→작은갱신 및세대65535→0통과;214실기오류미재현. ZIP4334cce6/FW44bb0fa1/FPGAaebe7fb8,패키지전체바이트검증PASS. [증거](../../analysis/plan215-verification.json).
+
+NEXT215실기: 기존처럼player→stage selection,가능하면숫자1+A 첫레벨스크롤. progress/game-last/budget215와실제메뉴복귀수집. 동일214/044반복불필요. 오류면phase/reason/raw E8에따라한경계수정,정상60초면실제FIRSTLEVELSCROLL16.67ms예산으로복귀. 내부faultbit만으로세부RTL원인확정금지. 구현시험을더늘리기보다실기결과우선. 저장SRAM/GBC164/기존배포/완료archive보존.
+
+# NES214 실기: 시작 성공, 계획 상태 오류로 조기 종료 (이전)
 
 PR120 같은 branch. [실기 분석](../../docs/nes-game214-hardware01.ko.md), [증거](../../analysis/game214-hardware01-verification.json). 사용자 스테이지 선택 진입 시 종료/실제 메뉴 복귀 정상. 아래214 READY/재시험 요청은 이전 이력이며 동일214/044 재시험을 요청하지 않는다.
 
