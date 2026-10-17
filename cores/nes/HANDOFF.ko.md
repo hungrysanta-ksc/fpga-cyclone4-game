@@ -1,4 +1,14 @@
-# NES214 시작 실패 원인 보존판 (최신)
+# NES214 실기: 시작 성공, 계획 상태 오류로 조기 종료 (최신)
+
+PR120 같은 branch. [실기 분석](../../docs/nes-game214-hardware01.ko.md), [증거](../../analysis/game214-hardware01-verification.json). 사용자 스테이지 선택 진입 시 종료/실제 메뉴 복귀 정상. 아래214 READY/재시험 요청은 이전 이력이며 동일214/044 재시험을 요청하지 않는다.
+
+boot READY 약50ms(430poll/5tick), stage3/SPCA9, flags4. 리셋벡터 감지 bits0/1 없는 실제 성공이므로 flags7 필수화 금지. 213 시작 실패 원인은 아직 미확정. DISPLAY_NEXT→STOPPED9090ms, 마지막 표시8.85s. gen68까지50표시, gen69까지51geometry COMMIT, plan_error4/sent1/end0/nativeDISPLAY5/run_first4: 51번째 계획 finish/flush/상태 검증 실패로 SEAL·표시·retire 이전이다. 60초 제한 아님. ROM/receiver/video/sink/window오류0, window912sent=retired. 최초 E8 응답과 분기 미기록이므로 CRC/fault/accepted수/END 등 원인 확정 금지. 콜백 실패0은 wire 무결성 증명이 아니며 plan_sent1은 로컬 송신 수다.
+
+recv2.55/plan4.83/seal1.49초,808805clockB,5594slot_hits는횟수. 미완료 프레임 바이트 포함/실패finish시간 제외/장면 미분류/짧은 다른 시험이므로210대비FPS개선 주장 금지. PPU거절49→복구56은 최종69보다 앞섬; 사운드/특정mapper/부하로 원인 확정 금지. START/SELECT/A와 해제는 기록됨; 실물 소리는 이번 보고로 확인되지 않음.
+
+NEXT 기존budget에 최초 실패E8 20B+판정조건+finish/flush단계 보존. 실제213C+선택207RTL의 짧은 한배치/희소 계획/generation-END-accepted전환을 집중검증하고 원인수정 또는 관측 보완 후 다음 실기. CRC/count/lease/display/STOP 유지,무조건재시도/timeout확대/cacheoff/새FIT반복 금지. 60fps→장시간play→입력품질 우선순위. 이번에는 분석/인계만,새FW/FIT/ZIP없음. startup214원본archive/210/GBC164/saveSRAM 보존.
+
+# NES214 시작 실패 원인 보존판 (이전)
 
 PR120 같은 branch. [계약](../../docs/nes-startup214-contract.ko.md), [시험 안내](../../docs/nes-game214-ready.ko.md), [증거](../../analysis/startup214-verification.json). **NEXT 사용자214 한 번:3TXT/실제메뉴복귀. 원인미확정·수정완료아님.** `releases/NES214-SMB3-BOOT-CAUSE.zip`, SHA64f0fe1e/FWe183d7ca/FPGAaebe7fb8(213동일).
 
