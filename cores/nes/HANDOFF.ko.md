@@ -1,3 +1,19 @@
+# NES218 SPI 경계·로더 데이터 저장 정리 (최신, 실기 배포 보류)
+
+PR120 같은 branch. [계약](../../docs/nes-boundary218-contract.ko.md), [검증](../../analysis/boundary218-verification.json). 선택 source02/test01/payload02/joint02/mapfit02/timing02/io02/paths02+03/evidence03. **기능 증거용 후보이며 아직 미채택. 새 ARM/ASM/ZIP 없음.** 엄격 최악-0.437ns로217(-0.155ns)보다 나빠졌으므로 국소 개선을 전체 통과로 표현하지 않는다.
+
+작업 의미:216 정상 대기 watchdog 수정판을 실기로 보내기 위한 배선 정리. 60fps 처리량 개선 자체는 아니다. byte_last 상태가 count7 판별을 미리 유지해 command_first_byte/offset/CRC가 같은 에지에 동작한다. 추가1FF/같은mem_clk, 기준90소스 중 SPI와로더2파일만 변경. 로더 payload_accept는 RECEIVE/VALID/미완료/정상 소유권과 모든 상위 명령 배제를 직접 계산한다. 같은 쓰기 에지·주소·데이터·PSRAM파형, STOP/blocked/error/drain 유지.
+
+검증: SPI1056768상태에지/1024연속조건/524288경계,219트랜잭션14016MISO비트100READ7ACK19손상72취소2겹침. 조기 경계와 SS-clear 오류2개 검출. 로더294912상태1056실제쓰기524288count131072이전코드 조건 동일,blocked/STOP데이터 저장 오류2개 검출. 최종새로더+SPI+boot+reader 조합219거래 재실행 통과. 실제게임/카트리지 시험 아님.216wait/217epoch는 소스 동일성 확인 후 기존 증거 재사용, 재실행했다고 쓰지 않는다.217봉인10726파일 확인.
+
+source01 SPI만:15105LE8352FF954LAB47M9K,setup-.338/hold+.132. SPI 대상+.724,새최악check_failed→payload. source02 최종:15129LE8352FF956LAB47M9K,279LE7LAB9M9K여유;nominal-.207/strict-.437/hold+.118. 기존 대상 SPI+1.311/payload+1.024/error+.906/serialGray+1.612ns. CDC4404행/45첫단계단일fanout/newother0,held6.809/Gray6.886;96reg576reset 최소40.070/1.658ns.조건부PSRAM+3.599/SNES83.995/SPI164.474/resetPASS,전기적/MTBF전체signoff아님.
+
+NEXT 두 남은 경로를 함께 정리한다.
+- reader.check_response_address8→control.load_end:strict5.5ns-.437(같은 nominal은+.015),4LUT5.861ns64%배선. comb5→comb9 1.566ns, error_response fanout10→concat2 1.519ns. 고정READtag/같은에지응답오류차단을 유지하면서 비교·명령출력 공유범위를 줄인다. 검사 지연·제거 금지.
+- loader.phase4→count_clear→loaded_bytes0:nominal/strict-.207,5LUT6.079ns58%배선,count_clear fanout20. STOP/BEGIN/정상완료 clear와WRITE/HOLDdrain 의미 보존. 단순CE속성/seed 반복 금지.
+
+정확한보고서 paths03/finish218-0-response.rpt는 nominal+.015, strict-.437은timing02/implementation-paths204.tsv에서확인. 둘을혼동하지말것. paths02/payload218-0-boot.rpt는넓은범위라기존비동기경로도포함,그-4.759를새related실패로오해하지말것. clocks/SDC/pins/저장SRAM/GBC164/완료archive불변. 전체boardgates 통과후218이후새ARM식별자와현재212ROM4096바이트를새FIT DB에ROM-onlyCDB/ASM하여pair검사후첫레벨스크롤. 동일215/044/추가영상요청없음. 이번실행실패나라이선스실패없음;RTK gain만sandbox DB읽기실패로native Git사용.
+
 # NES217 로더·세대 타이밍 정리 (최신, 실기 배포 보류)
 
 PR120 같은 branch. [계약](../../docs/nes-loader217-contract.ko.md), [검증](../../analysis/loader217-verification.json). 선택 source04/test01/epoch04/mapfit04/timing04/io04/paths04/arm01/check01/evidence02. **기능 시험 통과와 전체 타이밍 통과는 별개이며 아직 새 ZIP/ASM이 없다.** 아래216의 watchdog 수정은 유지한다. 동일215/044 재시험·추가영상 요청은 하지 않는다.
