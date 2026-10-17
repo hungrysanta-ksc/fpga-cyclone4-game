@@ -1,4 +1,22 @@
-# NES212 실제 C/65816 변경 범위 출력 연결 (최신)
+# NES213 실제 RUN 연결·실기판 준비 완료 (최신)
+
+PR120 OPEN 같은 `codex/nes-resident-slots-211`. [계약](../../docs/nes-runtime213-contract.ko.md), [실기 안내](../../docs/nes-game213-ready.ko.md), [검증](../../analysis/runtime213-verification.json). workspace `releases/NES213-SMB3-RESIDENT-DIRTY.zip`. **NEXT 사용자213 영상+3TXT 실기 스크롤 확인. 새 로컬 캐시/FIT 시험을 반복하지 않는다.**
+
+작업 의미:211 resident/212 변경범위 소비를 실제 RUN에 연결해 반복 타일 생성·전송·전수 화면 비교를 제거하는 성능 구현.210의 RUN-only passive2560B를 resident3200B로 교체. begin→actual200 plan/193 sparse chunks→finish/drain→212seal/실제displayACK/residentcommit→200retire→receiverconsume. 큐 callback true는 수락이며 DMA완료가 아니다. terminal에서residentfault/재사용무효화,기존COMMON STOP/base/menu;RUN반환전resident포인터까지철회.
+
+loader는실제SMB3헤더/길이/3CRC+FPGA전체비교/checkedSTART로진입한다. ARM content_epoch는검증CRC5a04eed7의불변ROM **세션 식별자**이며FPGA live_epoch값과동일하다는가정없음. FPGA207/201이실제lease검사. 매실행FPGA재구성/SNESboot/residentcold reset;같은ROM도이전bank미사용. RUN중reload/state-load/CHRRAM미지원,mutableAPI거절. 추후MMC4/5·CHRRAM·state-load내용수명조건을확장해야한다.
+
+선택arm01/test05/check01/report01/budget01/join02/binding02/asm01/romcheck01/release01. 실제RUN9frames/361152참조bytes/6terminal+mutable/coldrestartPASS. 실제C+200SPI+207RTL(epoch/lease/READ16/bulk)+21265816/PPU/ACK join3frames/183552pixels exact208,65534→65535→0/3display3retire/warm1VBlank. partialE9:1display1retire/residentfault/commoncancel. metadata/loader/core/E0E1은fixture,NOTwholegame/physical60fps. 동일실제요청115개184queue replay43179checks/4credit,topmux320;binding02는join01요청을사용했으나release가join02의모든req/ACK바이트일치를확인.
+
+FullARM206704/static27812/RUN32088/IRQ508/margin5016B,1024gate유지. 로그4047+budget2415/4096;안전postSTOP/samebuffer/IRQtail210과파일명외동일. schema213 `slot_hits`는실제대상bank재사용slot수(바이트나FPS아님),reserved2항목0,mapdirty는직전표시대비. phase/SPI bins는계속10ms FRAMESTART이며물리60Hz측정아님.21214frames/오류/pressure기존증거12477파일불변확인.
+
+207검증배선재사용,ROM4KiB만CDB/MIF/ASM/CPF. RTL/배선/timing불변,EDA후QSF메타데이터만허용,3netlist×4096B exact212.새FIT/STA없고fullCDC/전기signoff아님. body3552/free384,privateSNES WRAM522+9736B;saveSRAM/GBC164/이전배포/ROMbytes불변. ZIPd9a23280/FW677b7c97/FPGAaebe7fb8. release01검증에서모든기존파일중FW/FPGA만교체.
+
+실기:로딩종료직전부터메뉴복귀까지영상,숫자1+A첫레벨에서RIGHT+B/A반복,끊김으로죽으면그대로기록. `nes-progress-213.txt`/`nes-game-last-213.txt`/`nes-budget-213.txt`.60초후메뉴/AV/조작확인;같은210/044반복요구금지.210마지막5초첫레벨내부정정유지. 아직ingress/순환scroll-map/overlap16.67ms가남아있으며합성1VBlank를60fps로해석금지. AV60fps→긴플레이/오류·리셋로그→입력품질순서유지.
+
+test01sandboxDLL/test02fixtureRLE/test03잘못된map기대/test04printf실패보존,test05선택. join01출처key오기수정재현join02. binding01한글Questa경로실패→ASCII02. 모든원본archive보존.
+
+# NES212 실제 C/65816 변경 범위 출력 연결 (이전)
 
 PR120 **OPEN**, 같은 `codex/nes-resident-slots-211`에 추가. [계약](../../docs/nes-dirty212-contract.ko.md), [증거](../../analysis/dirty212-verification.json). 선택test09/arm03/evidence01, reference test05/reference-normal. **실제 C+65816 후보 연결 완료, 생산 RUN/SPI/RTL 및 실기 ZIP은 미완료.**
 
