@@ -1,3 +1,19 @@
+# NES226 실기: 스크롤 개선, 수신·SNES 전송이 다음 과제 (최신)
+
+새 실기 증거146파일 봉인 SHA256 `a4b76d674e75a1941141655ed0e9b6864501bb923c6cf1c92ba7122811e86c02`. 이전225실기148파일 및226구현2008파일 전부 해시 대조 완료. 공개 분석 도구·문서의 끝 빈 줄만 봉인 후 정리했다. JSON의 소스 해시는 실제 실행한 봉인 사본을 가리키며 실행 내용은 같다.
+
+- Latest226 HW01: PR124 samebranch. User scrollgain/sound/menu normal;video12-42/49-60 firstlevel,14-17/21-29/34-39/53-57scroll,63menu.60.06s/452display vs225401,mean7.53/s NOTcontrolledFPS/60fps. Planner12.80->7.17s;perdisplay31.92->15.86ms,wholeplan21.46->16.00s. BEGIN0.88/planner7.17/finish7.95 exact12bins;receive22.40(bin22.41)/SEAL21.11 stilldominant,finishNOTpureFPGA. D1 18.00/countSPI53.66ms perACK;currenttrafficNOTNESimpossibility. Deadline1/window2guard-denied duringfinalSEAL(gen747/serial453/seq35/168B);453COMMIT/452display,13035sent/13034retired,invalidzeroACKNOTcorruption,lastdisplay745@59.85s. ROM/run/receiver/video/plan0/menuPASS;SPC169=A9success. SELECTanalyzer01/4hashes/128samples;noFW/FIT. NEXT receive/metadata-SEAL+finish/source-drain structuralreduction/overlap withsame-scrollfixtures+whole16.67ms;notBEGIN-only/planner-only/poll/FITloops or same226044repeat. Preserveepoch/row-alt/mask/twobank/finalACK/ARM1792/saveSRAM/GBC164/archives. Readgame226-hardware01/HANDOFF/probes/nes-game226-hardware01/progress.json.
+
+[실기 분석](../../docs/nes-game226-hardware01.ko.md), [재현 JSON](../../analysis/game226-hardware01-verification.json). 이번 결과는 PR124에 추가하며 아래 배포 당시 시험 대기 기록보다 우선한다. 전체 평균7.53회/초를 스크롤 구간의 정확한 FPS나 TV 주사율로 해석하지 않는다. 새 펌웨어 없이 분석만 기록했다. 종료 deadline이 마지막 SEAL drain을 중단했으므로 미완료1패킷과 invalid ACK를 보존한다. 다음은 BEGIN 또는 계산만을 위한 최적화가 아니라 수신·메타데이터·SEAL과 finish를 함께 줄일 성능 변경이다.
+
+# NES226 시험판 준비: 일반 배경 계산량 감소 (최신)
+
+- Latest226 FAST READY: PR124 OPEN codex/nes-planner-fast-226; PR123 mergeddb37aa3. SELECTarm01/test02/runtime01/check02/evidence01/release01. Percompactgroup33bitexceptionmask;column0broadcast keepsallaffectedcolumns onoldrow/altpath;ordinaryidentityrow/key reconstruction skipped,exactplans/slots/order unchanged. Actual225vs2261939frames138355352Bstate/plan/banktrace identical+11guards/2wrongoptimizationnegativesPASS;finecalls43850959->880612/inside-fine scans50657951->1174142 syntheticNOTtime/FPS/newmaskscanexcluded. ActualRUN9frames6faults+9receiverboundsPASS;225C+6581630frames1835520pixels reusedNOT rerun. BEGIN/finish2fields+96B/schema226/max3521TXT. ARM209476/static28116/RUN35008/IRQ508/margin1792/FWaee94f48. FPGA7cb1d61a exact225/noFITASM;ZIPb7114831. NEXT USER226FIRSTLEVELSCROLL+3TXT/video/menu/audio/input;judgewhole16.67ms,notstaticgain/E8countalone. No same225044/FITloop;ingress/source/finish/SEALstillopen. test01Windowsprintf/check01metadatafinalfailure preserved,selected02only. SaveSRAM/GBC164/archives preserved. Readfast226contract/game226-ready/HANDOFF/probes/nes-fast226/progress.json.
+
+[구현·검증](../../docs/nes-fast226-contract.ko.md), [시험 안내](../../docs/nes-game226-ready.ko.md), [배포 gate](../../analysis/release226-verification.json). [PR124](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/124)에서 관리하며 다음은 실제 첫 레벨 스크롤이다. 합성 계산 횟수를 실기FPS로 해석하지 않는다. BEGIN/finish는 성공한 subphase만 누적하고 마지막 미완료 프레임과10ms 계측차를 고려한다.
+
+선택 증거2008파일 봉인 SHA256 `28a0495ea28a2f3717504f77111350b07fb8858722931abb4602cff504a074df`. 이전225 구현7091파일·225실기148파일 전부 해시 대조. 패키지 `probes/nes-fast226/release01/NES226-SMB3-PLANNERFAST.zip`, SHA256 `b7114831e9f9ab7c7a0324d91079f24202be9add70d81a4d297cff516811cce6`.
+
 # NES225 실기: 실행 정상, 스크롤 성능 미달 (최신)
 
 새 실기 증거148파일 봉인: `995c5c43334d87c4cfa1fd9d195e27c41d754c4f662aa96ef7e69adcf797a15b`. 이전223 실기143파일 전부와 기존223/224/225 manifest 해시를 확인했다. runtime/receiver/plan service/sink/resident 소스5개가223과 동일함도 확인했다.

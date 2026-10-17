@@ -1,0 +1,116 @@
+{
+  "passed": true,
+  "trial_gates_pass": true,
+  "physical": false,
+  "fps60": false,
+  "new_fit": false,
+  "new_snes_rom": false,
+  "selected": {
+    "arm": "arm01",
+    "test": "test02",
+    "runtime": "runtime01",
+    "check": "check02"
+  },
+  "equivalence": {
+    "frames": 1939,
+    "trace_bytes": 138355352,
+    "sha256": "bb72e0e898fb02229e0e6c3f7a2cfd54bcae9531be5d22a475114c653a70625a",
+    "scope": "Exact emitted plan structs, full video, pointer-neutralized resident state and both banks; unchanged plan order/slot keys. Profile counters are separate host-only copies.",
+    "fault_boundaries": 11,
+    "negative_controls": 2
+  },
+  "work_counts": {
+    "baseline": {
+      "fine_calls": 43850959,
+      "fine_exception_scans": 50657951
+    },
+    "candidate": {
+      "fine_calls": 880612,
+      "fine_exception_scans": 1174142
+    }
+  },
+  "work_scope": "Synthetic fine() calls and scans inside fine(), not all CPU operations. New per-group exception mask scan is not included. No elapsed time/FPS inference.",
+  "reused_snes": {
+    "source": "nes-scroll225/snes02",
+    "frames": 30,
+    "pixels": 1835520,
+    "reexecuted": false,
+    "reason": "Same downstream source/ROM and exact plan/video/cache output. New actualRUN separately executed.",
+    "result_sha256": "f0050287f6c0c3d86e2fd74e2339e404e30350efd308dc44f56da0555c501e62"
+  },
+  "runtime": {
+    "frames": 9,
+    "faults": 6,
+    "receiver_boundaries": 9,
+    "source_hashes": {
+      "host213.c": "2668930c20dfc764ce899bd0b3687c48f509d3cd4c958e55dd7e5d38fe41166a",
+      "reference203.c": "6f24aaf3a5a0f35aca8e5bf76fb98ff629b66f4b6d9678aaff1615083b8fc721",
+      "nes_native_runtime165.c": "b333f5e998231703f71b589807821ae5cfb6ab611443f5a796a81b30a3a31dbd",
+      "nes_native165.c": "f67e0f6108c5773215e24b0e687dbb79aa245bfcfdaf5a523649b82c0f1ea8d3",
+      "nes_trace166.c": "eb400234d88399773a671233eef4d15e13f20bb750de834cfbf2b53e21dc316c",
+      "nes_planner211.c": "335591bc30d9adea6a7878e0ab2450ec2cff3e6d8d4814ac505d6f52996b8770",
+      "nes_resident211.c": "ad217befb1d9059f6d4790810a1bb46e8a042e3cfe5597fd40cf29d71a22f3a0",
+      "nes_plan_service200.c": "d9d55d1db979ab75f8a9d43c5041bae2a5aff62663d0339f307a88b3a218e91d",
+      "nes_native_sink165.c": "cdb406c08a3f0b89144074aedfefa65d68cddb6e160e9464c537a2681e2924f5",
+      "nes_sink_trace168.c": "e6c1fab8b7782d768bcfc1672fbe62015f3bbbe07148cb8222bb93f6d637521f",
+      "nes_sink_window184.c": "09536019f52ce982b3086f841e087fee13e6b6fceb79e9c1aaae25a6c7498152",
+      "nes_budget210.c": "c734399c4f9f5823a970b6656b47fec2f92d0c882308f751c691fef981a28ddf"
+    }
+  },
+  "budget": {
+    "schema": 226,
+    "fields": 23,
+    "added_static_bytes": 96,
+    "maximum_text_bytes": 3521,
+    "buffer_bytes": 4096,
+    "begin": "guard + resident_begin + sink_begin",
+    "finish": "plan finish: final flush/bulk drain/END; includes service and waits",
+    "caveat": "10ms quantization; successful subphases may survive a later failed frame; no CPU-only/PSRAM-only or exact per-scene timing"
+  },
+  "arm": {
+    "firmware_bytes": 209476,
+    "ram_static": 28116,
+    "foreground_bound": 35008,
+    "irq_reserve": 508,
+    "remaining_margin": 1792,
+    "firmware_sha256": "aee94f48b19635e50ecb66389282dc893b50b92e79d36594af917aa4cb0e4f5d"
+  },
+  "baseline": {
+    "merge": "db37aa3f8ad2e9c94718cb388804ff7cd11838d7",
+    "fpga_sha256": "7cb1d61a9544f0d25e900147504ce7c3784c8893a96a82367cb51841840532d6"
+  },
+  "unchanged_sources": {
+    "nes_resident211.c": "ad217befb1d9059f6d4790810a1bb46e8a042e3cfe5597fd40cf29d71a22f3a0",
+    "nes_resident211.h": "01a3bdd5341b1a2488614117bf156c365ec0697d8bee434b1de9bcc186f1d7d1",
+    "nes_native165.c": "f67e0f6108c5773215e24b0e687dbb79aa245bfcfdaf5a523649b82c0f1ea8d3",
+    "nes_native165.h": "1bf512a8d92dcf493c364ccb513d768f4edb468fcdc67d3e3eedc553b736627d",
+    "nes_plan_service200.c": "d9d55d1db979ab75f8a9d43c5041bae2a5aff62663d0339f307a88b3a218e91d",
+    "nes_plan_service200.h": "790a853f6161d230ba606ddb3abbfa17bbe34b4c84cab23fbd612b2e5d3e1649",
+    "nes_native_sink165.c": "cdb406c08a3f0b89144074aedfefa65d68cddb6e160e9464c537a2681e2924f5",
+    "nes_native_sink165.h": "f8c53a82c721b3d7c96956abf856384d389990e20e0281d89ed137d36f0e9afb",
+    "nes_sink_bulk195.inc": "ec105d501010678b2b9d15e2cae45bbbd4602ba82fb39742ac69635e9a08f69c",
+    "nes_sink_window184.c": "09536019f52ce982b3086f841e087fee13e6b6fceb79e9c1aaae25a6c7498152",
+    "nes_runtime_board165.inc": "d746fffc117df5fc0a0d5eb12b83108e82ddd5fbb35f81acf723221dbc89f8d2",
+    "nes_run136.inc": "ac5a836864f0a2ae7d0779d0843711decbf2069b64fed80d5131d5e9cd7056b2"
+  },
+  "gates": {
+    "test02/result.json": "3b42fc055aa610e419d6d44bc400b1fbea4ce15e98cc4c2a780365126c75e404",
+    "runtime01/result.json": "c3ffc457416d541d68fd2db829da56e9c1e6398dc81b9a182d29db2c3dcf99ea",
+    "check02/result.json": "53c174012a69cc5ed5ffe9c108e8c2a596fb7b64a2cc062926f5a4733ed3feea",
+    "arm01/preparation-fast226.json": "0d6507ea704665135239a8591d7519a827bf05b6de7332c0a2b5ea46b8d62008"
+  },
+  "public_sources": {
+    "tools/nes_fast226.py": "69b4f15933a16fef7d837ff2f99bd95cb1c400ae24b591eb76f3d325f56f5c57",
+    "tools/test_nes_fast226.py": "1d8dec04b1892d57c0998c613b55f59131337fc814e243e510b73c17c039d071",
+    "tools/test_nes_fast226_runtime.py": "464690baa7bd879ef6afd16ae462da134691961a5f1dbc030802158644265e43",
+    "tools/check_nes_fast226_arm.py": "fbb09b7723f6772bb2693e44ef34f0ef50638c345ed903f9211a0469d0ad466e",
+    "tools/nes_fast226_evidence.py": "cd4c379724ec0c6d64e07a259d81de3ae2fa0c1c8641fa360268ab4ff231802a"
+  },
+  "limitations": [
+    "No real SMB3 scrolling capture replay or full board cosimulation.",
+    "Wire traffic/tile output unchanged for matched input. Faster planner may expose more E8 waiting; polling count alone is not acceptance.",
+    "General exception fallback and whole ingress/finish/SEAL costs remain. 60fps unproven.",
+    "ARM budget is conservative static call-graph bound, not measured high water. SaveSRAM/GBC164 unchanged."
+  ],
+  "next": "Package unchanged225FPGA+226ARM; actual first level numeric1+A thenRIGHT+B/A scrolling,3TXT/menu/audio/input/video. No newFIT/unchanged225044 repeat. Judge scroll presentation and receive/planner/begin/finish/seal together against16.67ms."
+}
