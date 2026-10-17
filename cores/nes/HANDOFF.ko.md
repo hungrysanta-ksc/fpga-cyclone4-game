@@ -1,4 +1,12 @@
-# NES215 계획 상태 오류 확인판 (최신, 실기 시험 준비 완료)
+# NES215 실기2회: 동일한 CRC 정상 FPGA fault (최신)
+
+PR120 같은 branch. [분석](../../docs/nes-game215-hardware01.ko.md), [증거](../../analysis/game215-hardware01-verification.json). 사용자 정정: 두 번 모두 stage selection에서 실패, 성공할 때도 있다는 전제 폐기. 원본6TXT+2MOV SHA보존. 영상2fps전구간관찰: 둘다월드맵/시작안내까지그린뒤정지,카트리지메뉴복귀확인;첫레벨play없음. 영상자체worldmap/menu는run1약7/13초,run2약14.5/20.5초;MCUtick동기화아님/색상·오디오판정안함.
+
+두응답정확히동일 00d704800001000000000000000000000000007f:CRC7F정상,FLAGS80 FPGA fault만1,accepted1=expected1/descriptor0/END0/retiring0. phase1FLUSH/reason4. 첫E9프레이밍수락뒤다음송신전fault;E8CRC정상≠이전E9payload무결성/타일실행완료. 시작429poll5tick/stage3A9flags4. run1 DISPLAY10120ms/60display gen78→실패79/buffer9plans76B/video0;run2 15660ms/97display gen115→실패116/buffer15plans111B/video13. 후자는OBJ emit실패→residentUINT16_MAX→video13전파가능,128slot고갈단정금지. ROM/receiver/sink/window/STOP0;window1055/1687 sent=retired. geometry61/98COMMIT,ABORT0. 60표시≠60초/FPS.
+
+NEXT 같은215/044/추가영상요청금지. 실제선택207C-SPI-lease-READ16-bulk에현실적인qualifiedROMslot/core경쟁/SNESconsume지연을넣고최초내부fault를포착. 정상backpressure/메모리대기까지tilebusytimeout에포함하는지우선가설;선택source192의MAX_CYCLES1048576(단독tile기본4096아님). 215fixture는core/consumer지연단순화,이제그공백집중. 아직원인확정아님;SPI/batch/lease/tile/arbiter/bulk/consume중세부최초모듈불명. 오류검사제거/제품timeout확대/cacheoff로우회하지말것. 원인수정뒤FIRSTLEVELSCROLL16.67ms로복귀. 새FW/FIT/ZIP없음/215archive9742파일·saveSRAM/GBC164보존.
+
+# NES215 계획 상태 오류 확인판 (이전 준비 이력)
 
 PR120 같은 branch. [계약](../../docs/nes-plan215-contract.ko.md), [시험 안내](../../docs/nes-game215-ready.ko.md). 214의51번째 프레임 plan_error4 원인은 미확정. 실제200 C+207 RTL short/sparse/배치/세대 전환을 집중 확인했고, 최초 실패E8+조건을 보존해 다음 실기에서 구분한다. 수정 완료·60fps 개선으로 표현하지 않는다.
 
