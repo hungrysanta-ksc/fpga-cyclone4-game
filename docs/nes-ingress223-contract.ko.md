@@ -1,5 +1,7 @@
 # NES223 배경 geometry 묶음 전송
 
+후속224 source02에서 전체 타이밍 기준을 통과했다. 아래 source01 배포 보류는 최초 후보의 이력이다. [후속 검증](nes-counter224-contract.ko.md)과 [시험 안내](nes-game223-ready.ko.md), `analysis/release223-verification.json`의 최종 배포 gate를 함께 확인한다.
+
 PR121 머지93351eb 이후 `codex/nes-geometry-ingress-223`. 기준은 실제222 시작·60초·스크롤 성공판이다. 기존 인덱스/시작 절차/60초 제한/오디오/입력은 유지한다.
 
 ## 작업 의미와 범위
