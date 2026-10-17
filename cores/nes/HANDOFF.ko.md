@@ -1,4 +1,12 @@
-# NES213 실제 RUN 연결·실기판 준비 완료 (최신)
+# NES213 실기 시작 실패 (최신)
+
+PR120 같은 branch. [실기 분석](../../docs/nes-game213-hardware01.ko.md), [증거](../../analysis/game213-hardware01-verification.json), 원본 `probes/nes-game213-hardware01`. **아래 READY는 패키지 준비 이력이며 실기 통과가 아니다. NEXT startup 경계 원인 확인·수정; 동일213 재시험을 요구하지 않는다.**
+
+393216B ROM 적재/비교 verified1/ROMerror0/START전송 뒤 약5020ms에 `native_boot172` 실패(first_error6/nativeSERVICE2). screen stage0/flags0, 모든BEGIN/plan/display/transaction0, 12budget bins0: runtime/resident 시작 전이다. 빈budget은 성능 측정이 아니며 cache/scroll 원인으로 해석 금지. STOP/base/menuPREP성공;실제메뉴확인 미제공. 5초 timeout과 일치하나service/SPI실패도오류6을쓰므로마지막분기미확정.
+
+상태flags0은리셋벡터2B/프로그램read 관찰없음;STOP지움아님. 실제CPU미동작 확정이 아니라resetrelease/ROMbus admission/response/statusqualification을우선확인. 기존210 boot172소스동일,207→213 ROM resetvector8000/첫stage1까지39B동일. 213의Mesen독립ROM+별도RTLqueue 시험은실제compactROM을통한리셋진입경로를포함하지않았다. ROMatom4096B일치≠물리boot. NEXT actualpackagedROM+boardgate/status+ARMrelease/READY 최소검증,필요시다음판최초boot원인보존. 대기시간확대/무조건재시도/cacherollback/새FIT반복금지. 시작복구후FIRSTLEVELSCROLL/60fps작업재개. 새FW/ZIP없음,oldarchives/210/GBC164/saveSRAM불변.
+
+# NES213 실제 RUN 연결·실기판 준비 완료 (이전)
 
 PR120 OPEN 같은 `codex/nes-resident-slots-211`. [계약](../../docs/nes-runtime213-contract.ko.md), [실기 안내](../../docs/nes-game213-ready.ko.md), [검증](../../analysis/runtime213-verification.json). workspace `releases/NES213-SMB3-RESIDENT-DIRTY.zip`. **NEXT 사용자213 영상+3TXT 실기 스크롤 확인. 새 로컬 캐시/FIT 시험을 반복하지 않는다.**
 
