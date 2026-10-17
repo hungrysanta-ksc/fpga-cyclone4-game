@@ -1,4 +1,20 @@
-# NES211 출력 버퍼별 타일 유지 후보 (최신)
+# NES212 실제 C/65816 변경 범위 출력 연결 (최신)
+
+PR120 **OPEN**, 같은 `codex/nes-resident-slots-211`에 추가. [계약](../../docs/nes-dirty212-contract.ko.md), [증거](../../analysis/dirty212-verification.json). 선택test09/arm03/evidence01, reference test05/reference-normal. **실제 C+65816 후보 연결 완료, 생산 RUN/SPI/RTL 및 실기 ZIP은 미완료.**
+
+211 maintained slots→212 sparse C packet→실제65816 inactive WRAM/VRAM dirty 명령으로 연결. BEGIN12/version2121/targetbank/base serial/immutable epoch. SEAL168/used bitmap144와 목적bank 초기화 상태+map64coverage. descriptor/token/gen/정렬/범위 유지, 중복tile/map 거절, 구형COPY6 거절. C는 final 표시ACK 후에만211commit. 소비자가map/OAM을 다시 파싱하는 것은 아니며 used manifest의 의미는 실제planner가 담당한다. 미완료 valid는 재시도에 쓰지 말고COMMON reset한다.
+
+전수비교/활성VRAM 부분수정/전체fallback 제거. 받은 범위만 기록하고 인접명령 합침. private SNES WRAM metadata+522B, 명령1217*8=9736B at7E4000..6607; code7E2000..2DDF/stack1FFF/source7F와 분리. 카트리지saveSRAM/FPGA/ARM추가할당 아님.4KiBROM body3552/free384 (기존1953935/free1). 이 공간을8KiBROM/FIT나안전검사삭제로 얻지 않았다.
+
+DMA charged4192/VBlank, palette/OAM+설정 여유1568이 남으면 같은VBlank에서finalflip. **최소2VBlank강제는30fps상한이므로 제거했다.** 실제14프레임 중10개한VBlank, warm gen3=1명시검사. 큰변경만분할. 정상856576pixels exact186reference, packet485→349/82877→45985B(-44.51%),directtile992B별도,VRAM26848B/45cmd. Synthetic이며실제전체SPI/SMB3/60fps아님.
+
+11개표시전오류(bank/base/epoch/coverage/oldversion/중복/token/STOP)는oldscreen유지. pressure3frames/80분산+2048bulk/max83cmd PASS. 최종ACK손상은SNES2회표시/C1회commit:물리화면이미바뀌었으므로oldscreen유지라고쓰지말고resident미확정+COMMONreset필요로인계. 후보시험bus는heldfile/CHRfixture이며생산FIFO/RTL/200retire는아직미연결.
+
+ARMresident3200/video15912, sinkobject2388/dataBSS0, SEALstack280(210144보다+136),packet320/bulk40/begin48. 상태교체+640단순여유5104는fullRUN/IRQ승인아님. **NEXT 생산RUN의210passivemodel교체/loader immutable epoch/211begin→212begin→actual200plan+193sparse+184window finish-drain→212seal/realdisplayACK→200retire/commonSTOP를연결.** queuedplan수락을실제DMA완료로취급금지;fixtureepoch1을생산에그냥복사금지. 이후fullARM+IRQ/로그4096/ROM-onlyASM·CDB/minboard검사→paired실기영상. FPGA변경없는FIT반복/캐시microtest/조회판추가 금지. 남은ingress/순환scroll-map/겹침은16.67ms전체예산에유지.
+
+사용자는다음개선판을로딩종료직전부터메뉴복귀까지촬영.210마지막약5초는**첫레벨내부**. 동일210/044재시험요구하지않는다. saveSRAM/GBC164/완료archive/기존210패키지불변. MMC4/5·CHR-RAM/state-load epoch와frameskip표시ACK기준,AV60fps→긴플레이/오류·리셋로그→조작품질순서유지. 중간실패와pre-oneVBlank08까지보존,최종09만선택. 새FW/FIT/ZIP없음.
+
+# NES211 출력 버퍼별 타일 유지 후보 (이전)
 
 PR119는 `e0a9247`로 머지됐다. 새 `codex/nes-resident-slots-211`. [계약과 다음 연결 조건](../../docs/nes-resident211-contract.ko.md), [선택 증거](../../analysis/resident211-verification.json). **실제 C 후보 검증 완료, 생산 SPI/65816 미연결, 실기용211 ZIP 없음.** 이전210패키지를 이 후보로 오인하지 않는다.
 
