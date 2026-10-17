@@ -1,3 +1,20 @@
+# NES217 로더·세대 타이밍 정리 (최신, 실기 배포 보류)
+
+PR120 같은 branch. [계약](../../docs/nes-loader217-contract.ko.md), [검증](../../analysis/loader217-verification.json). 선택 source04/test01/epoch04/mapfit04/timing04/io04/paths04/arm01/check01/evidence02. **기능 시험 통과와 전체 타이밍 통과는 별개이며 아직 새 ZIP/ASM이 없다.** 아래216의 watchdog 수정은 유지한다. 동일215/044 재시험·추가영상 요청은 하지 않는다.
+
+변경1: 로더 오류 코드를 배타적 오류 종류별로 병렬 set/clear/hold한다. 과거 errorce165의 공통 enable+priority 재시도가 아니다. command conflict/STOP+VALID/blocked commands/WRITE-HOLD drain/이전 오류코드 유지/미사용 상태까지216과 동일.294912상태/1056쓰기 시퀀스/524288count/131072이전 코드 조건 통과;충돌·STOP 오류를 없앤 negative는 검출.
+
+변경2: 최종 source04는 원래32bit serial을 유지하고 Gray 등록을1mem cycle 뒤로 분리한다. gray_pending이 invalid를 유지하므로 메모리 클록이 공개 전에 멈추어도 이전 세대로 재승인하지 않는다. source_ready의 기존 NES local release/동기화/안정성 비교 유지. **내부 Gray 같은 클록 계약은 바뀌었으며 동등하다고 숨기지 않는다.** serial/exhaust는같은클록,Gray는이전serial임을25067클록비교;20lifetime/32coldNES/16stoppedMEMpending및wrongGray/wrongpending negativePASS. ROM BEGIN 때만 영향을 주며 프레임 ACK/retire·60fps cadence에 새 지연을 넣지 않는다. 216 긴대기/guard는 byte-identical 재사용, 재실행 아님.
+
+실패 후보 기록: source01 오류비트만 변경→loader+.758지만serial->Gray-.719;source02직접Gray/prefix식→WideAnd6..29 직렬화/57fanoutCE11LUT -1.478;source03 nibble all_ones8FF→gray31(합성공유serialMSB)->all_ones7 -2.264. 모두기능PASS/타이밍FAIL 미채택. source04가이들의기능을누적한것은아니다: source01+별도Gray공개만, 직접prefix/8flags없음. 네 번 모두 실제 논리 변화와 전체보드FIT;seed/clock/SDC불변. 조합식/flag 배치 반복으로 되돌아가지 않는다.
+
+최종15160LE8351FF957LAB47M9K(248LE/6LAB/9M9K여유),loader+1.065/serialGray+2.126. nominal/strict setup-.155FAIL/hold+.147. 정확한남은경로 `nes_rom_spi.sv`의control.bit_count[2]->offset_zero_command/offset_length_command.ena,3LUT/6.006ns/배선4.207ns70%; Equal17~0 fanout39, 첫배선1.804ns; offset[10]에도-.057. paths04/control217-0-offset.rpt가근거.CDC4404/45singlefanout/newother0/held6.505/Gray6.661;96reg576reset통과. 조건부PSRAM+1.680/SNES85.832/SPI166.565/nativepayloadreset통과,전체전기/MTBF signoff아님.
+
+ARM217은215식별자3파일만변경,207536B/static27868/RUN32096/IRQ508/margin4952/FWd89956f4401e04432a2186a2f7d761bf3ed67e7765acad8825cbf929b76aa5d5. 사운드/입력/60초/plan-budget schema215/runtime/planner/sink 같음. 빌드·linked검사PASS지만현FPGA212ROM과짝검증전이며단독설치금지. 216 archive8553파일불변검증. test01/epoch02/03/04미연결output경고는hierarchical비교용이며입력누락없음. STA02 최초실행은기준SDC경로자동치환오타로시작전실패,경로수정후원래동일SDC로완료;타이밍실패와혼동금지.
+
+다음: 39fanout의공통SPI바이트종료/command_first_byte/offset갱신enable을지역화할수있는지확인. 명령capture C0~C4/ID74/SS-high>=2us,마지막비트/bytecount,CRC/offset/READresponse+ACK,SS겹침/STOP/reset을실제SPI경계시험으로보존. 임의CEOFF/seed반복보다기존부하·배선을줄이는근거있는변경하나를선택. 전체보드관련setup/hold와CDC/reset/조건부IO통과후에만현재212SNESROM을새FIT DB에CDB/ASM/CPF,postfitROM4096바이트검사,217ARM+FPGA paired ZIP. 이후실기스테이지선택→숫자1+A첫레벨→오른쪽+B/A반복/세TXT/메뉴복귀. 실패때마다새관측층추가/폭축소/timeout늘리기/clock완화로돌리지않는다.
+
+---
 # NES216 정상 대기 오판 재현·수정 후보 (최신, 배포 보류)
 
 PR120 같은 branch. [계약](../../docs/nes-wait216-contract.ko.md), [검증](../../analysis/wait216-verification.json). 선택 source02/fixed02/slot-fixed02/guards03/mapfit02/timing02/io02/paths01/arm01/check02/evidence02. 아래215의 “원인 미재현”은 이전 이력이다. 현재 동일 오류를 만드는 결함은 로컬에서 재현했지만 실기 원인 확정·해결 확인은 아직 아니다.
