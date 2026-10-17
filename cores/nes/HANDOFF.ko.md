@@ -1,3 +1,37 @@
+# NES223 실기 결과: 화면 완료 증가·메뉴 복귀 통과 (최신)
+
+- Latest223 HW01: PR122 samebranch. User game/sound/menu normal+visible gain; video13-46/53-59 firstlevel,16-17/26-43 clear scroll,62-63 menu. 60.06s/416display vs222365(+13.97%,different scenes NOTcontrolledFPS);mean6.93/s/maxgap390ms. D1 2444910B/5877.19percompletion vs7811.25(-24.76%);17.91msD1/52.69mscountedSPI percompletion still>16.67. receive19.68/plan20.10/seal19.97s;E0E1 48.88%bytes NOTallmap/time. Primarydeadline1/secondaryD2receiver24(callbackORstatus),nextgen598partial;417BEGIN/416COMMIT/0ABORT,12242sent=retired,othererrors0;noindependentACKfaultproof. startup6->post1/READY428poll40ms;useraudio normal. SELECTanalyzer01/3TXThashes/video127samples;newFW/FITnone. NEXT scroll-aware map repeatedwork+E0E1 composition/bankcoverage and joint16.67ms budget,minimumtests thenFIRSTLEVELSCROLL. No unchanged223/044/startup/poll/FITloop;ARM1912/FPGA159LE2LAB9M9Kspare/saveSRAM/GBC164/archives preserved. Readgame223-hardware01/HANDOFF/probes/nes-game223-hardware01/progress.json.
+
+새 실기 증거143파일 봉인: `4a19a9baff3f238df635f650b2a26ef3b0a0e88f00cfeeb10f02e6e2153cc9a9`. 이전222 증거148파일과 선택223 소스6파일 해시 확인,223/224 manifest 보존 확인.
+
+[실기 분석](../../docs/nes-game223-hardware01.ko.md), [재현 JSON](../../analysis/game223-hardware01-verification.json). PR122에 결과만 기록했다. 60fps는 미완료이며 다음 구현은 스크롤 맵의 반복 처리·전송 감소다. 이전 시험판 준비 기록보다 이 결과가 우선한다.
+
+# NES223 실기 시험판 준비 완료 — counter224 통합 (최신)
+
+[PR122](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/122) 같은 branch. [시험 안내](../../docs/nes-game223-ready.ko.md), [수정·검증 계약](../../docs/nes-counter224-contract.ko.md), [최종 배포 gate](../../analysis/release223-verification.json). 아래223 타이밍 미달/배포 보류 기록을 대체한다. **이제 다음 작업은 사용자 실기이며, 새 FIT나 동일222/044 시험이 아니다.**
+
+- Latest224/223 READY: PR122 samebranch. SELECTsource02/test04/mapfit02/timing02/io02/paths02/evidence03/asm01/romcheck01/release01; wire2231/ARM223/file223 retained. Counter local9+10bit sameedge qualification preserves491520cases983040edges+1056768state/1024followups;4privateeligibilitysamples everyedge consumedONLYoriginalC0->C1 with1024livechange cases+4negatives/realSPI14016bits100reads7ACK19corrupt72cancel2overlapPASS. source01counter+.878 butcommand->raw_run-.013FAIL;source02removescommandCE from4samples,notliveC1input. FIT15249LE8353FF961LAB47M9K/spare159LE2LAB9M9K;nominal/strict+.276/hold+.147PASS,counter+.641/command-raw+1.136. CDC3984/45solefanout/newother0/held6.799/Gray6.614/reset96x6PASS;conditionalPSRAM+2.883/SNES83.698/SPI165.006 NOTelectricalMTBFsignoff. ARM223byteexact209168/static28020/RUN34984/IRQ508/margin1912 reused. ROM-onlyCDB/ASM preservesroute93files;3EDA4096B exact212. ZIP3e729340/FWb7d51c92 trialREADY. NEXT USER NES GAME 223.nh1 numeric1+A thenRIGHT+B/A FIRSTLEVELSCROLL,3TXT223/menu/audio/input,videooptional;noextraFIT/cache/poll/222044repeat. actualFPSOPEN;packing synthetic46.73%NOTSMB3/FPS. test01oracleignoredregisteredcarry/test03negativeSTARTverifiedmask failurespreserved,selectedtest04. Keep222/GBC164/saveSRAM/archives. Readcounter224contract/game223-ready/HANDOFF/probes/nes-counter224/progress.json.
+
+새224 증거5691파일을 봉인했다. manifest SHA256 `f2990359adac2392616bf772928374101ad6108a4fbf4a3a5fb807aef4818683`. 기존223/222의7744파일은 해시가 모두 같다.
+
+파일 번호는223이고224는 후속 로더 수정·검증 단계 번호다. ARM은 봉인된223/arm01 firmware 그대로, FPGA는224/source02 route에 현재212 ROM을 갱신한 fpga_n223.bi3다. wire2231이므로 firmware와FPGA를 함께 설치한다. 패키지 `probes/nes-counter224/release01/NES223-SMB3-GEOMETRY.zip`, SHA256 `3e729340893c94b233f5affdc43a3a479611ae096c801c91c350cfc7b4570cf5`. release01/result.json과manifest.json으로 내부 파일을 대조했다. ROM/default·slow85·fast0 netlist4096B 각각 확인. 소스·배치보존은93파일, 새 FIT 없이 ROM만 조립했다.
+
+source01의counter 경로 개선 뒤 command→raw_run이-.013ns였다. source02는4개private sample을 매edge 저장하되 C1의sampled gate에서 쓰는 값은원래C0값이다. raw 값 자체는sampled=0에서달라도사용되지않으므로 그4개만publication시비교,소비state와출력은항상비교했다. test04의1024조건과liveC1음성대조로검증. test01은불가능한연속commit에서carry8기대값오류, test03은STARTverified=0이liveRUN음성대조를마스킹한harness문제;원본보존/미채택. RTL기능실패로혼동하거나검출실패를통과근거로쓰지않는다. evidence01은집계스크립트문자열치환오타, evidence02는source01실패판,최종evidence03이source02다.
+
+사용자는 첫 레벨에서 오른쪽+B와A반복으로스크롤하고 progress/game-last/budget223의3TXT를제공한다. 로그schema는222로유지(필드동일),파일번호223. 영상필수아님,메뉴복귀/소리/조작과스크롤체감확인. 222기준60.09s/365완료,receive21.89s/plan19.41s/seal18.39s,D1encoded2851105B. 입력·장면이다르면통제FPS개선율로해석하지않는다. 전체D1의map비율은미측정이며합성46.73%감소를전체전송·FPS로확대하지않는다.
+
+실기뒤에는D1/receive감소와plan/seal비용이동을판정하고scroll-aware map을전체16.67ms예산에서진행한다. ARM1912B·FPGA2LAB여유를지키고큰cache/saveSRAM사용금지. physical CHR tag/row-alt/mask/epoch/두VRAMbank/finaldisplayACK/미래mapper조건유지. 새로긴디버그·lookup·FIT반복부터시작하지않는다. 기존222/GBC164/저장SRAM/봉인223을보존했다.
+
+# NES223 배경 geometry 묶음 전송: 기능 통과, strict 타이밍 미달 (최신)
+
+[PR122 DRAFT](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/122). PR121은93351eb로 머지 완료. 새 `codex/nes-geometry-ingress-223`. [계약·검증 범위](../../docs/nes-ingress223-contract.ko.md), [재현 수치](../../analysis/ingress223-verification.json). 아래222 실기 성공 기록을 기준으로 실제 ingress payload를 줄였다. **아직 설치용 시험판은 없다.**
+
+- Latest223 INGRESS: PR122 DRAFT; PR121 merged93351eb; new codex/nes-geometry-ingress-223. SELECTtest01/source01/arm01/check01/mapfit01/timing01/io01/paths01. Wire2231 packs4 distinct15bitmapwords intoexisting64bitrecord; equalrun256 retained, pairedFPGA/ARM required.16fixturestates15COMMIT+1reject/fullC exact,4sourcefaults/14Cfaults/5realSPI-D0D3 tracesPASS;NOTwholeboard/actualSMB3. Unique32group payload6780->3612B(-46.73%),actualwire4095B=12.48ms excludesotherwork;pairpatternnoimprovement/NOTFPS. ARM209168/static28020/RUN34984/IRQ508/margin1912;startup222/index221 retained. SingleFIT15230LE8353FF961LAB47M9K spare178LE2LAB9M9K;nominal+.268/strict-.006FAIL/hold+.130. Exactreader.check_response_address5->control.commit_clear6LUT5.441ns/interconnect3.414ns;newexportstrict+24.358. CDC3984/45singlefanout/newother0,held6.532/Gray6.743/reset96x6PASS;conditionalIOPSRAM+4.385/SNES80.059/SPI165.972 notfullsignoff. NOASMZIP/physical/adoption. NEXT exactcounter_retire_ok responsequalification/commitclear-inc timing preservingedge/ownership/fault/STOP thenwholeboard+pairedSNES212+FIRSTLEVELSCROLL. No seed/clockwaiver/cache/poll loops;compactingress+scrollmapjoint16.67ms remains. Keep222/GBC164/saveSRAM/archives. Readingress223contract/HANDOFF/probes/nes-ingress223/progress.json.
+
+다음 작업자는 타이밍 -0.006ns를 통과로 해석하거나 후보 firmware.stm을 배포하지 않는다. 실제C/FPGA wire2231을 반드시 짝지어야 하며 SNES212 소비기는 아직 통합 재확인 전이다. source01 전체보드에는220의 qsf/sdc/핀/로더를 그대로 썼다. 미달 대상은 loader counter_retire_ok의19bit response 주소 일치→commit_clear 경로다. 이미220에서 CHECK fault 쪽을9+10bit로 나눈 것과 counter qualification은 서로 다른 소비 경로다. 정확한 counter clear/inc 효과와 response/STOP 경계 검증이 필요하며 기존 approved_pulse fixture만 재사용해 동치를 주장하지 않는다.
+
+60fps에는 geometry 감소뿐 아니라 scroll-aware source row/column/map 갱신과 서비스 중첩이 필요하다. unique fixture 순수SPI12.48ms는 전체프레임 예산이 아니다. 222의D1 중 map 비중도 미측정이다. ARM1912B/FPGA2LAB 여유를 지키고 큰cache나saveSRAM 사용을 피한다. 선택223의 검증/소스와 raw log는 probes/nes-ingress223의4128파일에 봉인했다(manifest SHA256 6ba8ab1bd4cdc8ee547b517e7e27238b78f6bc0a8b84acbc9f13b4f569acf9c0). 기존220/222/222실기10834파일 해시가 모두 같다. 같은222/044 재시험·추가 영상 요청 없음.
+
 # NES222 실기: 시작·60초·긴 첫 레벨 스크롤 통과 (최신)
 
 [PR121](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/121) OPEN 같은 branch. [실기 결과와 다음 계획](../../docs/nes-game222-hardware01.ko.md), [재현 수치](../../analysis/game222-hardware01-verification.json). 이 결과가 아래222 실기 미수집/221 실패 NEXT보다 우선한다. 사용자 체감 개선과 실제 긴 첫 레벨 스크롤 확인, 정상 플레이/60fps는 미완료다. 새FW/FIT/ZIP 없음.
