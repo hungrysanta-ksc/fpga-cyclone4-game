@@ -1,3 +1,194 @@
+# NES220 실기60초 통과·스크롤 성능 분석 (최신)
+
+PR120 같은 branch. [실기 결과](../../docs/nes-game220-hardware01.ko.md), [재현 분석](../../analysis/game220-hardware01-verification.json). 사용자60초 플레이/메뉴/소리/조작 정상, 오프닝 개선·첫레벨 끊김 유지. 이번 실행에서215 조기종료가 재현되지 않았으며60fps/장기 안정성은 미완료다.
+
+DISPLAY60.08초/265회 완료/평균4.41회/초/최대간격440ms, 마지막59.81초gen382. 다음gen383/266COMMIT에서 deadline1, plan2guard취소;215상태오류표본0/transfer실패0/ROM·sink·video·STOP0,6797sent=retired. screen_frames0/A9는구필드/SPC이며화면실패아님. 초기load231.68초는별도다.
+
+실제영속slot hit22984,1938plans/38320B.12bin합계4563094SPI B와시간모두일치. 수신14.46초/계획34.68초/SEAL10.43초;계획은CPU뿐아니라callback/source/drain/service를포함. ingress49.62%,E8 9.11%,E9 .39%,E0 19.86%,E1 20.98%. D0D3만평균26.04ms/완료, E8E0제거가정37.27ms/완료:조회/헤더/partial포함이므로유효payload불변하한아님.210과입력/장면이달라통제성능비교금지.
+
+MOV 영상시각 첫레벨14–19/26–34/40–46/52–60초,스크롤28–30/42–43/54–55초,61초메뉴. 촬영시작/종료마지막화면유지때문에MCU5초bin과정확동기화하지않음. 실제스크롤근거는있지만bin별FPS로주장하지않는다. 소리는사용자확인,별도청음아님.
+
+NEXT: fullgeometry수신·재계산+선형exact/retainedslot검색과scroll-map을함께줄일16.67ms설계/성능변경. 다음변경에만최소CPU계획vs콜백대기,ingress유효내용vs조회계측을동반. 검색상한bgextent가28.3에서326.7–504.1로커짐은후보근거이지CPU원인확정아님. mapdirty는직전표시대비64B변경이며inactive누적union전송수아님. 신규cache증설/FIT/loader미세루프/같은220·044재시험/진단판만반복하지않음. 정확physical key/row-alt/mask/epoch/activebank/실제displayACKcommit유지. ARM4952B여유와FPGA252LE6LAB9M9K를별도예산으로지키고saveSRAM/GBC164/봉인archive보존. 최소검증뒤실제SMB3 firstlevel스크롤과소리·조작·메뉴를평가. 이번커밋은결과기록이며새펌웨어없음.
+
+# NES220 전체 타이밍 통과·정상 대기 수정 실기판 (최신)
+
+PR120 같은 branch. [실기 안내](../../docs/nes-game220-ready.ko.md), [계약](../../docs/nes-status220-contract.ko.md), [보드 검증](../../analysis/status220-verification.json), [최종 패키지 검증](../../analysis/release220-verification.json). 선택 source02/test03/spi02/mapfit02/timing02/io02/paths02/evidence03/arm01/check01/asm01/romcheck01/release01. **실기 시험판 준비 완료.216 정상 대기 수정이 실제215 조기 종료를 해결했는지와60fps는 아직 미확인이다.**
+
+작업 의미:211~212 변경 범위 출력을 동작시키기 위한216 watchdog 수정판의 FPGA 배선·타이밍 배포 조건을 완료했다. 성능 향상 수치 또는 실기 근본 원인 확정으로 쓰지 않는다. NEXT는 추가국소FIT/같은215/044가 아니라 NES GAME 220.nh1 실기다. 플레이어→스테이지→숫자1+A 첫레벨,오른쪽+B 유지/A반복으로 스크롤한다.3TXT(progress/game-last/budget220)·메뉴복귀·소리·조작,가능하면게임화면시작부터영상을받는다.게임시작후약60초종료,로딩별도;90초뒤에도복귀없으면남은로그.반복복원시험요청없음.
+
+219/source02 기준 첫 후보는 loader1파일: async reset이phaseIDLE을즉시세우고localrelease동안유지하는불변식으로RUN의중복active_reset마스크제거,READY 전환 조건을출발상태별직접식으로변경. Stickyfault/PSRAMresetgate/WRITE-HOLDdrain/기존snapshot에지유지. 임의reset+RUN 강제손상이나전기적glitch까지동등주장금지. 상태294912/쓰기1056/count524288/이전코드131072,2048reset경우18432검사,실제SPI219거래14016비트/100READ/7ACK/19손상/72취소/2겹침+2negativePASS.
+
+source01 FIT15206LE8352FF960LAB47M9K,nominal-.234/strict-.485/hold+.135. snapshot+.286/READY+1.030으로기존대상은통과했으나response→fault7LUT6.372ns/69%배선/12fanout1.668ns가남음. source02는stickyfault 별도동등식과CHECKstate별9+10bit응답허용식을분리한SPI1파일추가.1056768에지/1024후속/327680주소경계,실제219거래,상하위fault검사누락negativePASS.검사에지/오류코드우선순위/checked_data/명령counter불변. 새FF/RAM/클록지연없음.
+
+최종 FIT15156LE8352FF957LAB47M9K(252LE6LAB9M9K여유),3corner nominal+.298/strict+.121/hold+.142PASS. snapshot+.594/READY+1.614/response-error+.121. CDC3984행/45첫단계단일fanout/newother0/held6.630Gray6.948,96reg576reset최소40.341/1.553PASS.조건부PSRAM+2.924/SNES83.559/SPI168.997/nativepayloadresetPASS;전기적전체signoff/MTBF아님.216wait/217epoch기존증거재사용,219봉인5670파일검증.실기전추가미세FIT루프금지.
+
+ARM은215의식별자3파일만220으로변경,207536B/static27868/RUN32096/IRQ508/margin4952.실행루프/입력/소리/60초/logschema215불변,linked platform/IRQ검사PASS.FW82f65136398cd947ca7a559b91448029e006bee2fdb5925fdbd046e30661dc57.선택220route에현재212SNES ROM4096B만CDB/ASM/CPF(재FIT없음);3EDA실제atom4096B일치.FPGA31908516ec18ea04760328245590eb72c969783e84d82619cf1f5b8be6f592e2. ZIP NES220-SMB3-WAIT-FIX.zip sha85b7c76ca9018f906a43a6260b8faa4a425458f51f39e176fcb829b4a648c8c2,probes/nes-status220/release01.215ZIP에서FW/FPGA만교체+220이름변경,게임ROM/launcher/base/menu/164복원바이트보존. 저장SRAM/GBC164불변.
+
+중간실패보존:test01wire비교SPI모듈누락;test02정상검증통과/STOPnegative가DIFF보다먼저onehot에서검출되어수집기거부;test03는SV동일성확인후02정상3로그재사용/negative재실행.음성오류허용범위를일반실패로넓힌것아님.패키지최초preflight는EDA가QSF에추가한3export설정을거부;원시diff확인후정확한version치환+3행만허용.소스/배선/핀/SDC완화없음.RTK status사용/gain은sandboxDB접근실패.
+
+---
+# NES219 응답·카운터 및 CHECK 중복 조건 정리 (최신, 배포 보류)
+
+PR120 같은 branch. [계약](../../docs/nes-retire219-contract.ko.md), [검증](../../analysis/retire219-verification.json). 선택 source02/counter01/spi01/enable02/mapfit02/timing02/io02/paths03+04/evidence03. **기능 검증용 후속 후보이며 미채택, 새 ARM/ASM/ZIP 없음. 전체 타이밍은 오히려 악화되었으므로 개선 완료로 쓰지 않는다.**
+
+작업 의미:216 정상 대기 수정과211~212 변경 범위 출력을 실기로 보내기 위한 FPGA 타이밍 정리.60fps 처리량을 직접 개선하거나 검증한 작업이 아니다.218/source02 기준 첫 후보는 SPI 응답 주소를9+10bit로 분할한 명령별 허용식과 count_update 내부 데이터 선택을 변경한다. 카운터 one-hot 상태·STOP·기존 갱신 enable은 유지한다. 두 번째 후보는 실제RTL에서 fault→!check_enable을 증명하여 boot 연결의 중복 !spi_fault 마스크만 제거한다. read_reset fault 취소와 외부RUN/loader WRITE-HOLD drain은 그대로다.
+
+기능:SPI1056768에지/1024후속조건/327680응답주소경계+상하위 비교 negative;로더294912상태1056실제쓰기524288counts131072이전코드+RECEIVE/STOP negative;실제SPI219거래14016MISO비트100READ7ACK19손상72취소2겹침. CHECK 불변식1211304조건부 전이+disable누락 negativePASS. fault1/enable1을 임의주입한 비도달 상태까지 동등하다는 주장은 아니다. 실제nes_spi_boot 전체게임cosim도 아니다.216wait/217epoch는 해시와기존증거재사용,218봉인5057파일검증.
+
+source01:15152LE8352FF956LAB47M9K,nominal/strict-.323/hold+.138. source02:15131LE8352FF955LAB47M9K,277LE8LAB9M9K여유;nominal/strict-.611FAIL/hold+.154. source02에서 기존fault→check_failed 경로는 제거되었고counter+.312ns/response-command nominal+.329ns이나,strict response→error-.153ns가 남는다. source02가source01보다전체타이밍이좋다는뜻으로선택한것이아니다.
+
+정확한다음대상: diagnostic_release.release_reset1→boot.run_enable→control.snapshot42,3LUT6.493ns중배선4.880ns75%,두주요배선1.917/1.835ns. 같은168MHz 데이터경로이므로 reset exception으로지우지않는다. load_valid→loader.phase4도-.392ns/6LUT6.267ns65%배선. paths04/snapshot219-implementation-0-status.rpt와receive.rpt, paths03/fault219-implementation-0-response.rpt를동시에확인. 상태snapshot 첫바이트capture/후속shift와bootflags 공유범위/RECEIVE 자격식을함께단순화하되원래에지의flags/reset/fault 우선순위와응답주소차단을유지한다. 상태샘플시점변경은동등취급금지. 단순seed/CE속성반복/clockSDC완화/epoch수식재작성금지.
+
+CDC4392행45solefanout/newother0/held6.587Gray6.737,96reg576reset최소39.721/1.740PASS.조건부PSRAM+.943/SNES86.854/SPI167.754/nativepayloadresetPASS;전체전기/MTBF signoff아님.전체boardgates통과후새ARM과현재212ROM4096B를새FIT DB에ROM-onlyCDB/ASM/짝검사후첫레벨스크롤.동일215/044/추가영상요청없음.GBC164/저장SRAM/완료archive불변.
+
+---
+# NES218 SPI 경계·로더 데이터 저장 정리 (최신, 실기 배포 보류)
+
+PR120 같은 branch. [계약](../../docs/nes-boundary218-contract.ko.md), [검증](../../analysis/boundary218-verification.json). 선택 source02/test01/payload02/joint02/mapfit02/timing02/io02/paths02+03/evidence03. **기능 증거용 후보이며 아직 미채택. 새 ARM/ASM/ZIP 없음.** 엄격 최악-0.437ns로217(-0.155ns)보다 나빠졌으므로 국소 개선을 전체 통과로 표현하지 않는다.
+
+작업 의미:216 정상 대기 watchdog 수정판을 실기로 보내기 위한 배선 정리. 60fps 처리량 개선 자체는 아니다. byte_last 상태가 count7 판별을 미리 유지해 command_first_byte/offset/CRC가 같은 에지에 동작한다. 추가1FF/같은mem_clk, 기준90소스 중 SPI와로더2파일만 변경. 로더 payload_accept는 RECEIVE/VALID/미완료/정상 소유권과 모든 상위 명령 배제를 직접 계산한다. 같은 쓰기 에지·주소·데이터·PSRAM파형, STOP/blocked/error/drain 유지.
+
+검증: SPI1056768상태에지/1024연속조건/524288경계,219트랜잭션14016MISO비트100READ7ACK19손상72취소2겹침. 조기 경계와 SS-clear 오류2개 검출. 로더294912상태1056실제쓰기524288count131072이전코드 조건 동일,blocked/STOP데이터 저장 오류2개 검출. 최종새로더+SPI+boot+reader 조합219거래 재실행 통과. 실제게임/카트리지 시험 아님.216wait/217epoch는 소스 동일성 확인 후 기존 증거 재사용, 재실행했다고 쓰지 않는다.217봉인10726파일 확인.
+
+source01 SPI만:15105LE8352FF954LAB47M9K,setup-.338/hold+.132. SPI 대상+.724,새최악check_failed→payload. source02 최종:15129LE8352FF956LAB47M9K,279LE7LAB9M9K여유;nominal-.207/strict-.437/hold+.118. 기존 대상 SPI+1.311/payload+1.024/error+.906/serialGray+1.612ns. CDC4404행/45첫단계단일fanout/newother0,held6.809/Gray6.886;96reg576reset 최소40.070/1.658ns.조건부PSRAM+3.599/SNES83.995/SPI164.474/resetPASS,전기적/MTBF전체signoff아님.
+
+NEXT 두 남은 경로를 함께 정리한다.
+- reader.check_response_address8→control.load_end:strict5.5ns-.437(같은 nominal은+.015),4LUT5.861ns64%배선. comb5→comb9 1.566ns, error_response fanout10→concat2 1.519ns. 고정READtag/같은에지응답오류차단을 유지하면서 비교·명령출력 공유범위를 줄인다. 검사 지연·제거 금지.
+- loader.phase4→count_clear→loaded_bytes0:nominal/strict-.207,5LUT6.079ns58%배선,count_clear fanout20. STOP/BEGIN/정상완료 clear와WRITE/HOLDdrain 의미 보존. 단순CE속성/seed 반복 금지.
+
+정확한보고서 paths03/finish218-0-response.rpt는 nominal+.015, strict-.437은timing02/implementation-paths204.tsv에서확인. 둘을혼동하지말것. paths02/payload218-0-boot.rpt는넓은범위라기존비동기경로도포함,그-4.759를새related실패로오해하지말것. clocks/SDC/pins/저장SRAM/GBC164/완료archive불변. 전체boardgates 통과후218이후새ARM식별자와현재212ROM4096바이트를새FIT DB에ROM-onlyCDB/ASM하여pair검사후첫레벨스크롤. 동일215/044/추가영상요청없음. 이번실행실패나라이선스실패없음;RTK gain만sandbox DB읽기실패로native Git사용.
+
+# NES217 로더·세대 타이밍 정리 (최신, 실기 배포 보류)
+
+PR120 같은 branch. [계약](../../docs/nes-loader217-contract.ko.md), [검증](../../analysis/loader217-verification.json). 선택 source04/test01/epoch04/mapfit04/timing04/io04/paths04/arm01/check01/evidence02. **기능 시험 통과와 전체 타이밍 통과는 별개이며 아직 새 ZIP/ASM이 없다.** 아래216의 watchdog 수정은 유지한다. 동일215/044 재시험·추가영상 요청은 하지 않는다.
+
+변경1: 로더 오류 코드를 배타적 오류 종류별로 병렬 set/clear/hold한다. 과거 errorce165의 공통 enable+priority 재시도가 아니다. command conflict/STOP+VALID/blocked commands/WRITE-HOLD drain/이전 오류코드 유지/미사용 상태까지216과 동일.294912상태/1056쓰기 시퀀스/524288count/131072이전 코드 조건 통과;충돌·STOP 오류를 없앤 negative는 검출.
+
+변경2: 최종 source04는 원래32bit serial을 유지하고 Gray 등록을1mem cycle 뒤로 분리한다. gray_pending이 invalid를 유지하므로 메모리 클록이 공개 전에 멈추어도 이전 세대로 재승인하지 않는다. source_ready의 기존 NES local release/동기화/안정성 비교 유지. **내부 Gray 같은 클록 계약은 바뀌었으며 동등하다고 숨기지 않는다.** serial/exhaust는같은클록,Gray는이전serial임을25067클록비교;20lifetime/32coldNES/16stoppedMEMpending및wrongGray/wrongpending negativePASS. ROM BEGIN 때만 영향을 주며 프레임 ACK/retire·60fps cadence에 새 지연을 넣지 않는다. 216 긴대기/guard는 byte-identical 재사용, 재실행 아님.
+
+실패 후보 기록: source01 오류비트만 변경→loader+.758지만serial->Gray-.719;source02직접Gray/prefix식→WideAnd6..29 직렬화/57fanoutCE11LUT -1.478;source03 nibble all_ones8FF→gray31(합성공유serialMSB)->all_ones7 -2.264. 모두기능PASS/타이밍FAIL 미채택. source04가이들의기능을누적한것은아니다: source01+별도Gray공개만, 직접prefix/8flags없음. 네 번 모두 실제 논리 변화와 전체보드FIT;seed/clock/SDC불변. 조합식/flag 배치 반복으로 되돌아가지 않는다.
+
+최종15160LE8351FF957LAB47M9K(248LE/6LAB/9M9K여유),loader+1.065/serialGray+2.126. nominal/strict setup-.155FAIL/hold+.147. 정확한남은경로 `nes_rom_spi.sv`의control.bit_count[2]->offset_zero_command/offset_length_command.ena,3LUT/6.006ns/배선4.207ns70%; Equal17~0 fanout39, 첫배선1.804ns; offset[10]에도-.057. paths04/control217-0-offset.rpt가근거.CDC4404/45singlefanout/newother0/held6.505/Gray6.661;96reg576reset통과. 조건부PSRAM+1.680/SNES85.832/SPI166.565/nativepayloadreset통과,전체전기/MTBF signoff아님.
+
+ARM217은215식별자3파일만변경,207536B/static27868/RUN32096/IRQ508/margin4952/FWd89956f4401e04432a2186a2f7d761bf3ed67e7765acad8825cbf929b76aa5d5. 사운드/입력/60초/plan-budget schema215/runtime/planner/sink 같음. 빌드·linked검사PASS지만현FPGA212ROM과짝검증전이며단독설치금지. 216 archive8553파일불변검증. test01/epoch02/03/04미연결output경고는hierarchical비교용이며입력누락없음. STA02 최초실행은기준SDC경로자동치환오타로시작전실패,경로수정후원래동일SDC로완료;타이밍실패와혼동금지.
+
+다음: 39fanout의공통SPI바이트종료/command_first_byte/offset갱신enable을지역화할수있는지확인. 명령capture C0~C4/ID74/SS-high>=2us,마지막비트/bytecount,CRC/offset/READresponse+ACK,SS겹침/STOP/reset을실제SPI경계시험으로보존. 임의CEOFF/seed반복보다기존부하·배선을줄이는근거있는변경하나를선택. 전체보드관련setup/hold와CDC/reset/조건부IO통과후에만현재212SNESROM을새FIT DB에CDB/ASM/CPF,postfitROM4096바이트검사,217ARM+FPGA paired ZIP. 이후실기스테이지선택→숫자1+A첫레벨→오른쪽+B/A반복/세TXT/메뉴복귀. 실패때마다새관측층추가/폭축소/timeout늘리기/clock완화로돌리지않는다.
+
+---
+# NES216 정상 대기 오판 재현·수정 후보 (최신, 배포 보류)
+
+PR120 같은 branch. [계약](../../docs/nes-wait216-contract.ko.md), [검증](../../analysis/wait216-verification.json). 선택 source02/fixed02/slot-fixed02/guards03/mapfit02/timing02/io02/paths01/arm01/check02/evidence02. 아래215의 “원인 미재현”은 이전 이력이다. 현재 동일 오류를 만드는 결함은 로컬에서 재현했지만 실기 원인 확정·해결 확인은 아직 아니다.
+
+실제215 C와207 SPI/lease/READ16/bulk에서 첫E9 뒤1200000 NES cycles 동안 소비 중지하면 tile EMIT(index0/out_ready0)가1048576 제한을 넘으며 최초fault. qualifiedROM 승인을 늦추면 FETCH(index0/mem_ready0)에서도 동일. 두 경우 arbiter/lease/SPI/batch/bulk/consume 선행오류0, 실제C 응답은 실기와 정확히 같은00d704800001000000000000000000000000007f. 500000cycles 소비대기는 기존판도 통과. fixture22MHz 약22.73/54.54ms이며, 실제제품1048576/21.477MHz 약48.82ms; 단독tile기본4096과혼동금지.
+
+수정은 타일 실행 counter에서 승인 전 FETCH 대기·EMIT backpressure만 제외한다. 승인된 읽기 WAIT는 계속 계수, 미응답/주소/세대/error/lease/STOP/reset/부분타일 공개차단 유지. 제한값·SPI/표시ACK/새RAM 불변, 기존60초 RUN/poll/step guard가상위정체종료소유. 향후무제한play시상위진행정체정책필요. source02는카운터32->21bit,11FF감소. 수정판각3frames57plans55chunks1072B exact/3retire;내부·외부계획모드9조건씩+기존partial22통과. 게임CPU/실제65816전체play시험이아니며,60fps증거아님.
+
+배포 미승인: source01 FIT통과/strict-.153ns;source02 FIT15168LE8349FF960LAB47M9K,240LE/3LAB/9M9K여유이나nominal/strict-.320ns,hold+.149. 정확한최악경로 control.load_valid->loader.error_code[1].ena,168MHz5.952ns/5LUT/6.179ns 중배선3.975ns64%. 변경tilecounter출발보고경로+36.322ns. 기존로더의공유command_conflict/오류코드enable경로가배치후실패하므로timeout수정자체와혼동금지. CDC4392행/45singlefanout/새미분류data0,held6.597/Gray6.812/reset96통과;조건부PSRAM+2.345/SNES85.802/SPI166.065/reset통과. 전체전기signoff아님.
+
+ARM은215에서216식별자3파일만변경,실행/planner/소리/입력/60초/로그schema215같음.207536B/static27868/RUN32096/IRQ508/margin4952/FW90877482. 새FPGA ASM/현재212ROM교체/짝패키지미완료,단독FW설치금지/새ZIP없음. guards01 reset의존성누락→02(32bit)→03(21bit),check01sandboxWin623→check02정상;중간기록보존. 원본2159742files/HW95files검증PASS.
+
+NEXT: exact loader error_code enable의공유/priority조합을짧게하되동일명령충돌/STOP드레인/코드보존증명. 필요하면기존loader exhaustive검증재사용하되단독microFIT/seed탐색금지,최종전체보드타이밍확인. 216타일대기수정유지→현재212ROM/ASM/paired검사→사용자216 stage→숫자1+A/RIGHT+B/A 첫레벨스크롤. 같은215/044/추가영상요청금지. 클록/SDC완화·검사삭제·timeout확대금지. 사운드/입력/세이브SRAM/GBC164/기존archive보존,60fps→장기play→입력품질순서유지.
+
+# NES215 실기2회: 동일한 CRC 정상 FPGA fault (최신)
+
+PR120 같은 branch. [분석](../../docs/nes-game215-hardware01.ko.md), [증거](../../analysis/game215-hardware01-verification.json). 사용자 정정: 두 번 모두 stage selection에서 실패, 성공할 때도 있다는 전제 폐기. 원본6TXT+2MOV SHA보존. 영상2fps전구간관찰: 둘다월드맵/시작안내까지그린뒤정지,카트리지메뉴복귀확인;첫레벨play없음. 영상자체worldmap/menu는run1약7/13초,run2약14.5/20.5초;MCUtick동기화아님/색상·오디오판정안함.
+
+두응답정확히동일 00d704800001000000000000000000000000007f:CRC7F정상,FLAGS80 FPGA fault만1,accepted1=expected1/descriptor0/END0/retiring0. phase1FLUSH/reason4. 첫E9프레이밍수락뒤다음송신전fault;E8CRC정상≠이전E9payload무결성/타일실행완료. 시작429poll5tick/stage3A9flags4. run1 DISPLAY10120ms/60display gen78→실패79/buffer9plans76B/video0;run2 15660ms/97display gen115→실패116/buffer15plans111B/video13. 후자는OBJ emit실패→residentUINT16_MAX→video13전파가능,128slot고갈단정금지. ROM/receiver/sink/window/STOP0;window1055/1687 sent=retired. geometry61/98COMMIT,ABORT0. 60표시≠60초/FPS.
+
+NEXT 같은215/044/추가영상요청금지. 실제선택207C-SPI-lease-READ16-bulk에현실적인qualifiedROMslot/core경쟁/SNESconsume지연을넣고최초내부fault를포착. 정상backpressure/메모리대기까지tilebusytimeout에포함하는지우선가설;선택source192의MAX_CYCLES1048576(단독tile기본4096아님). 215fixture는core/consumer지연단순화,이제그공백집중. 아직원인확정아님;SPI/batch/lease/tile/arbiter/bulk/consume중세부최초모듈불명. 오류검사제거/제품timeout확대/cacheoff로우회하지말것. 원인수정뒤FIRSTLEVELSCROLL16.67ms로복귀. 새FW/FIT/ZIP없음/215archive9742파일·saveSRAM/GBC164보존.
+
+# NES215 계획 상태 오류 확인판 (이전 준비 이력)
+
+PR120 같은 branch. [계약](../../docs/nes-plan215-contract.ko.md), [시험 안내](../../docs/nes-game215-ready.ko.md). 214의51번째 프레임 plan_error4 원인은 미확정. 실제200 C+207 RTL short/sparse/배치/세대 전환을 집중 확인했고, 최초 실패E8+조건을 보존해 다음 실기에서 구분한다. 수정 완료·60fps 개선으로 표현하지 않는다.
+
+변경:30B first-error record(정렬 포함static+32), phase FLUSH1/FINISH2/RETIRE3/REARM4; reason1..10과reply20B/expected sent/gen/buffer bytes/count. 정상poll payload복사/추가SPI없음. 원래CRC/count/flags/lease/표시ACK/5초boot/60초RUN/STOP유지. ERROR4최초만보존,후속다른오류/budgetreset/cleanup으로덮지않고새boot에서만초기화. 실제reply없으면valid0을정상판정으로쓰지않는다. boot214정보유지/flags7필수화금지.
+
+선택 arm01/test03/boot01/check01/rtl02/release01. C 이전·새 판정1600조합+서로다른후속오류보존/format2782/4096,부팅11조건PASS. ARM207536B/static27868/RUN32096/IRQ508/margin4952. runtime/planner/resident/sink/board/STOP 원본214동일. FPGA aebe7fb8 그대로,새FIT/ASM없음. 이전214 archive3390파일SHA검증PASS. test01 sandbox GCC Win623실패; test02동일후속오류시험 후test03상이한후속오류보강. rtl01은15프레임통과뒤PC시험300s한도로중단(회로/라이선스실패아님),rtl02는시험한도600s;제품timeout은불변.
+
+실제 C+207 RTL20연속프레임/483plans/468chunks/8928B/641SPI/20retire PASS. SNES consume/display ACK·loader/core는fixture,물리/게임FPS아님. ZERO-only→희소/큰갱신→작은갱신 및세대65535→0통과;214실기오류미재현. ZIP4334cce6/FW44bb0fa1/FPGAaebe7fb8,패키지전체바이트검증PASS. [증거](../../analysis/plan215-verification.json).
+
+NEXT215실기: 기존처럼player→stage selection,가능하면숫자1+A 첫레벨스크롤. progress/game-last/budget215와실제메뉴복귀수집. 동일214/044반복불필요. 오류면phase/reason/raw E8에따라한경계수정,정상60초면실제FIRSTLEVELSCROLL16.67ms예산으로복귀. 내부faultbit만으로세부RTL원인확정금지. 구현시험을더늘리기보다실기결과우선. 저장SRAM/GBC164/기존배포/완료archive보존.
+
+# NES214 실기: 시작 성공, 계획 상태 오류로 조기 종료 (이전)
+
+PR120 같은 branch. [실기 분석](../../docs/nes-game214-hardware01.ko.md), [증거](../../analysis/game214-hardware01-verification.json). 사용자 스테이지 선택 진입 시 종료/실제 메뉴 복귀 정상. 아래214 READY/재시험 요청은 이전 이력이며 동일214/044 재시험을 요청하지 않는다.
+
+boot READY 약50ms(430poll/5tick), stage3/SPCA9, flags4. 리셋벡터 감지 bits0/1 없는 실제 성공이므로 flags7 필수화 금지. 213 시작 실패 원인은 아직 미확정. DISPLAY_NEXT→STOPPED9090ms, 마지막 표시8.85s. gen68까지50표시, gen69까지51geometry COMMIT, plan_error4/sent1/end0/nativeDISPLAY5/run_first4: 51번째 계획 finish/flush/상태 검증 실패로 SEAL·표시·retire 이전이다. 60초 제한 아님. ROM/receiver/video/sink/window오류0, window912sent=retired. 최초 E8 응답과 분기 미기록이므로 CRC/fault/accepted수/END 등 원인 확정 금지. 콜백 실패0은 wire 무결성 증명이 아니며 plan_sent1은 로컬 송신 수다.
+
+recv2.55/plan4.83/seal1.49초,808805clockB,5594slot_hits는횟수. 미완료 프레임 바이트 포함/실패finish시간 제외/장면 미분류/짧은 다른 시험이므로210대비FPS개선 주장 금지. PPU거절49→복구56은 최종69보다 앞섬; 사운드/특정mapper/부하로 원인 확정 금지. START/SELECT/A와 해제는 기록됨; 실물 소리는 이번 보고로 확인되지 않음.
+
+NEXT 기존budget에 최초 실패E8 20B+판정조건+finish/flush단계 보존. 실제213C+선택207RTL의 짧은 한배치/희소 계획/generation-END-accepted전환을 집중검증하고 원인수정 또는 관측 보완 후 다음 실기. CRC/count/lease/display/STOP 유지,무조건재시도/timeout확대/cacheoff/새FIT반복 금지. 60fps→장시간play→입력품질 우선순위. 이번에는 분석/인계만,새FW/FIT/ZIP없음. startup214원본archive/210/GBC164/saveSRAM 보존.
+
+# NES214 시작 실패 원인 보존판 (이전)
+
+PR120 같은 branch. [계약](../../docs/nes-startup214-contract.ko.md), [시험 안내](../../docs/nes-game214-ready.ko.md), [증거](../../analysis/startup214-verification.json). **NEXT 사용자214 한 번:3TXT/실제메뉴복귀. 원인미확정·수정완료아님.** `releases/NES214-SMB3-BOOT-CAUSE.zip`, SHA64f0fe1e/FWe183d7ca/FPGAaebe7fb8(213동일).
+
+실제207bridge/status/top6assign ROM응답32768B→Mesen65816→ROMread/statuswriteRTLreplay:210 reads7870/checks7879,213 reads7104/checks7113 둘다stage1/2/3+SPCA9. inactive/midSPI admission/STOPretention검사.100nsread/150nswrite fixture RUN/peerinactive,ARMreset핀/실물타이밍/전체보드/livecosim아님.213실기실패미재현. ROM매핑/byte-only원인근거없음;신호gate/실기handoff는미확정.
+
+선택bus01/arm02/gate01/check02/release01. 24Bscalar boot evidence만추가:READY1/SERVICE2/STATUS3/COPY4/TIMEOUT5/POLL_LIMIT6, polls/ticks/first-last(statusvalid/flags/error/stage)/signals(entry+exitRESET,DONE,RDY). budgetTXT2571/4096,기존gameTXT4047상한유지. 5초/65536poll/firsterror6보호/실행중SD없음/자동retry없음. runtimebegin budgetreset뒤에도boot기록보존.11actualCgate/formatter경계PASS. ARM207084/static27836/RUN32088/IRQ508/margin4992;실제runtime/renderer/sink/FPGA바이트동일(식별자만214). 새FIT/ASM없음. PREboot실패/CFhardfail은안전저장gate로TXT없을수있음.
+
+다음로그TIMEOUT+stage0/flags0은SNESreset/bus관찰경로,flags7+stage1은copy,stage2는WRAM/SPC,SERVICE/STATUS는통신/보호를우선조사하되원인확정금지. READY면213간헐실패가능성남기고FIRSTLEVELSCROLL재개. 같은213/044반복금지. 기존archive/210/GBC164/saveSRAM불변. arm01indentwarning/check01검사기출처hash오기보존,최종arm02/check02.24B관측기는전송부하개선아님;60fps→장시간play→입력품질순서유지.
+
+# NES213 실기 시작 실패 (이전)
+
+PR120 같은 branch. [실기 분석](../../docs/nes-game213-hardware01.ko.md), [증거](../../analysis/game213-hardware01-verification.json), 원본 `probes/nes-game213-hardware01`. **아래 READY는 패키지 준비 이력이며 실기 통과가 아니다. NEXT startup 경계 원인 확인·수정; 동일213 재시험을 요구하지 않는다.**
+
+393216B ROM 적재/비교 verified1/ROMerror0/START전송 뒤 약5020ms에 `native_boot172` 실패(first_error6/nativeSERVICE2). screen stage0/flags0, 모든BEGIN/plan/display/transaction0, 12budget bins0: runtime/resident 시작 전이다. 빈budget은 성능 측정이 아니며 cache/scroll 원인으로 해석 금지. STOP/base/menuPREP성공;실제메뉴확인 미제공. 5초 timeout과 일치하나service/SPI실패도오류6을쓰므로마지막분기미확정.
+
+상태flags0은리셋벡터2B/프로그램read 관찰없음;STOP지움아님. 실제CPU미동작 확정이 아니라resetrelease/ROMbus admission/response/statusqualification을우선확인. 기존210 boot172소스동일,207→213 ROM resetvector8000/첫stage1까지39B동일. 213의Mesen독립ROM+별도RTLqueue 시험은실제compactROM을통한리셋진입경로를포함하지않았다. ROMatom4096B일치≠물리boot. NEXT actualpackagedROM+boardgate/status+ARMrelease/READY 최소검증,필요시다음판최초boot원인보존. 대기시간확대/무조건재시도/cacherollback/새FIT반복금지. 시작복구후FIRSTLEVELSCROLL/60fps작업재개. 새FW/ZIP없음,oldarchives/210/GBC164/saveSRAM불변.
+
+# NES213 실제 RUN 연결·실기판 준비 완료 (이전)
+
+PR120 OPEN 같은 `codex/nes-resident-slots-211`. [계약](../../docs/nes-runtime213-contract.ko.md), [실기 안내](../../docs/nes-game213-ready.ko.md), [검증](../../analysis/runtime213-verification.json). workspace `releases/NES213-SMB3-RESIDENT-DIRTY.zip`. **NEXT 사용자213 영상+3TXT 실기 스크롤 확인. 새 로컬 캐시/FIT 시험을 반복하지 않는다.**
+
+작업 의미:211 resident/212 변경범위 소비를 실제 RUN에 연결해 반복 타일 생성·전송·전수 화면 비교를 제거하는 성능 구현.210의 RUN-only passive2560B를 resident3200B로 교체. begin→actual200 plan/193 sparse chunks→finish/drain→212seal/실제displayACK/residentcommit→200retire→receiverconsume. 큐 callback true는 수락이며 DMA완료가 아니다. terminal에서residentfault/재사용무효화,기존COMMON STOP/base/menu;RUN반환전resident포인터까지철회.
+
+loader는실제SMB3헤더/길이/3CRC+FPGA전체비교/checkedSTART로진입한다. ARM content_epoch는검증CRC5a04eed7의불변ROM **세션 식별자**이며FPGA live_epoch값과동일하다는가정없음. FPGA207/201이실제lease검사. 매실행FPGA재구성/SNESboot/residentcold reset;같은ROM도이전bank미사용. RUN중reload/state-load/CHRRAM미지원,mutableAPI거절. 추후MMC4/5·CHRRAM·state-load내용수명조건을확장해야한다.
+
+선택arm01/test05/check01/report01/budget01/join02/binding02/asm01/romcheck01/release01. 실제RUN9frames/361152참조bytes/6terminal+mutable/coldrestartPASS. 실제C+200SPI+207RTL(epoch/lease/READ16/bulk)+21265816/PPU/ACK join3frames/183552pixels exact208,65534→65535→0/3display3retire/warm1VBlank. partialE9:1display1retire/residentfault/commoncancel. metadata/loader/core/E0E1은fixture,NOTwholegame/physical60fps. 동일실제요청115개184queue replay43179checks/4credit,topmux320;binding02는join01요청을사용했으나release가join02의모든req/ACK바이트일치를확인.
+
+FullARM206704/static27812/RUN32088/IRQ508/margin5016B,1024gate유지. 로그4047+budget2415/4096;안전postSTOP/samebuffer/IRQtail210과파일명외동일. schema213 `slot_hits`는실제대상bank재사용slot수(바이트나FPS아님),reserved2항목0,mapdirty는직전표시대비. phase/SPI bins는계속10ms FRAMESTART이며물리60Hz측정아님.21214frames/오류/pressure기존증거12477파일불변확인.
+
+207검증배선재사용,ROM4KiB만CDB/MIF/ASM/CPF. RTL/배선/timing불변,EDA후QSF메타데이터만허용,3netlist×4096B exact212.새FIT/STA없고fullCDC/전기signoff아님. body3552/free384,privateSNES WRAM522+9736B;saveSRAM/GBC164/이전배포/ROMbytes불변. ZIPd9a23280/FW677b7c97/FPGAaebe7fb8. release01검증에서모든기존파일중FW/FPGA만교체.
+
+실기:로딩종료직전부터메뉴복귀까지영상,숫자1+A첫레벨에서RIGHT+B/A반복,끊김으로죽으면그대로기록. `nes-progress-213.txt`/`nes-game-last-213.txt`/`nes-budget-213.txt`.60초후메뉴/AV/조작확인;같은210/044반복요구금지.210마지막5초첫레벨내부정정유지. 아직ingress/순환scroll-map/overlap16.67ms가남아있으며합성1VBlank를60fps로해석금지. AV60fps→긴플레이/오류·리셋로그→입력품질순서유지.
+
+test01sandboxDLL/test02fixtureRLE/test03잘못된map기대/test04printf실패보존,test05선택. join01출처key오기수정재현join02. binding01한글Questa경로실패→ASCII02. 모든원본archive보존.
+
+# NES212 실제 C/65816 변경 범위 출력 연결 (이전)
+
+PR120 **OPEN**, 같은 `codex/nes-resident-slots-211`에 추가. [계약](../../docs/nes-dirty212-contract.ko.md), [증거](../../analysis/dirty212-verification.json). 선택test09/arm03/evidence01, reference test05/reference-normal. **실제 C+65816 후보 연결 완료, 생산 RUN/SPI/RTL 및 실기 ZIP은 미완료.**
+
+211 maintained slots→212 sparse C packet→실제65816 inactive WRAM/VRAM dirty 명령으로 연결. BEGIN12/version2121/targetbank/base serial/immutable epoch. SEAL168/used bitmap144와 목적bank 초기화 상태+map64coverage. descriptor/token/gen/정렬/범위 유지, 중복tile/map 거절, 구형COPY6 거절. C는 final 표시ACK 후에만211commit. 소비자가map/OAM을 다시 파싱하는 것은 아니며 used manifest의 의미는 실제planner가 담당한다. 미완료 valid는 재시도에 쓰지 말고COMMON reset한다.
+
+전수비교/활성VRAM 부분수정/전체fallback 제거. 받은 범위만 기록하고 인접명령 합침. private SNES WRAM metadata+522B, 명령1217*8=9736B at7E4000..6607; code7E2000..2DDF/stack1FFF/source7F와 분리. 카트리지saveSRAM/FPGA/ARM추가할당 아님.4KiBROM body3552/free384 (기존1953935/free1). 이 공간을8KiBROM/FIT나안전검사삭제로 얻지 않았다.
+
+DMA charged4192/VBlank, palette/OAM+설정 여유1568이 남으면 같은VBlank에서finalflip. **최소2VBlank강제는30fps상한이므로 제거했다.** 실제14프레임 중10개한VBlank, warm gen3=1명시검사. 큰변경만분할. 정상856576pixels exact186reference, packet485→349/82877→45985B(-44.51%),directtile992B별도,VRAM26848B/45cmd. Synthetic이며실제전체SPI/SMB3/60fps아님.
+
+11개표시전오류(bank/base/epoch/coverage/oldversion/중복/token/STOP)는oldscreen유지. pressure3frames/80분산+2048bulk/max83cmd PASS. 최종ACK손상은SNES2회표시/C1회commit:물리화면이미바뀌었으므로oldscreen유지라고쓰지말고resident미확정+COMMONreset필요로인계. 후보시험bus는heldfile/CHRfixture이며생산FIFO/RTL/200retire는아직미연결.
+
+ARMresident3200/video15912, sinkobject2388/dataBSS0, SEALstack280(210144보다+136),packet320/bulk40/begin48. 상태교체+640단순여유5104는fullRUN/IRQ승인아님. **NEXT 생산RUN의210passivemodel교체/loader immutable epoch/211begin→212begin→actual200plan+193sparse+184window finish-drain→212seal/realdisplayACK→200retire/commonSTOP를연결.** queuedplan수락을실제DMA완료로취급금지;fixtureepoch1을생산에그냥복사금지. 이후fullARM+IRQ/로그4096/ROM-onlyASM·CDB/minboard검사→paired실기영상. FPGA변경없는FIT반복/캐시microtest/조회판추가 금지. 남은ingress/순환scroll-map/겹침은16.67ms전체예산에유지.
+
+사용자는다음개선판을로딩종료직전부터메뉴복귀까지촬영.210마지막약5초는**첫레벨내부**. 동일210/044재시험요구하지않는다. saveSRAM/GBC164/완료archive/기존210패키지불변. MMC4/5·CHR-RAM/state-load epoch와frameskip표시ACK기준,AV60fps→긴플레이/오류·리셋로그→조작품질순서유지. 중간실패와pre-oneVBlank08까지보존,최종09만선택. 새FW/FIT/ZIP없음.
+
+# NES211 출력 버퍼별 타일 유지 후보 (이전)
+
+PR119는 `e0a9247`로 머지됐다. 새 `codex/nes-resident-slots-211`. [계약과 다음 연결 조건](../../docs/nes-resident211-contract.ko.md), [선택 증거](../../analysis/resident211-verification.json). **실제 C 후보 검증 완료, 생산 SPI/65816 미연결, 실기용211 ZIP 없음.** 이전210패키지를 이 후보로 오인하지 않는다.
+
+작업 의미: 매 프레임 타일을 재배정/재생성하던 비용을 줄이는 구현이다. 실제210 geometry planner에 stable BG/OBJ slot과 버퍼별 유효성을 연결했다. BG identity physical tag/OBJ tag+mask 정확키만 유지하고 행변환/alt는 재생성한다. 기존video15912B 임시키/raw union 유지. 최종 표시ACK(serial32/generation16/target bank) 전에는 대상 residency를 확정하지 않는다. 실패는 세션fault/COMMON STOP 후 재설정. 현재 표시bank에는 쓰지 않는다.
+
+맵은 기존64B group dirty를 두 대상별로 누적하여 한 프레임 전 변화가 반대편 버퍼에서 누락되지 않게 한다. 아직 NES원래좌표 기반 순환 scroll-map은 아니다.193 collector는 불연속slot에서 chunk를끊을수있지만 빈END는거절하므로 매frame slot0 zero16B를먼저보낸다. 이 조건으로 불필요한 새FPGA FIT를피한다. 실제sparseSPI/RTL결합시험은아직없다.
+
+선택test04/arm03/evidence01. 실제186reference와129프레임/4234944참조planar바이트 및palette/OAM/HDMA/raw정확일치.11fault/경계:잘못된ACK4종,중간쓰기실패,CHR-RAM거절,serial소진,prepare전commit,중복BEGIN,현재슬롯포화,뒤처진map대상. 합성96scroll 패턴182784→5664B,맵393216→87040B. **실제SMB3/60fps/소비CPU시간증거아님.** 210의59.07%모델에는행변환도있으므로211hit로쓰지않는다.
+
+ARM상태3200B(210의2560RUN-only모델을교체하면+640),video15912동일. 기존여유5744에서상태만차감5104는fullRUN승인아님. plannerstack240→248+slot64+실제콜백/IRQ체인재검증필요. 새global캐시와기존모델을중복할당하지않는다. ARMobject resident1536/planner3288 vs기존3296,생산link없음. 기존FPGA148LE1LAB/SNES본문1B예산유지.
+
+**바로 다음:** sparse C transport와실제65816 dirty소비연결.195의연속offset/전체count검사를그냥삭제하지말고base/대상bank/slotcoverage/epoch/token검증으로대체한다. 항상비활성WRAM+VRAM동일대상을쓰고최종VBlank flip후실제ACK를받아야하며169의활성bank부분갱신과혼용금지. 기존전수비교/전체fallback을대체해4KiBROM코드공간확보. palette/OAM/HDMA/raw 유지. 실제C+65816정상/STOP/ACK/부분오류최소검사→fullARM+필요한board검사→실기영상. 같은cache microtest/조회관측기/FIT루프를다음작업으로삼지않는다. ingress비용도16.67ms전체예산에계속포함한다.
+
+사용자는다음개선판에서로딩종료직전부터메뉴복귀까지영상촬영예정.210은약6–7초첫레벨진입/사망과스테이지선택반복/**마지막약5초첫레벨내부**가최종정정. 끊김때문에지속주행불가했으므로동일210/044재시험금지. 실기미검증수치를프레임개선이라고보고하지않는다. saveSRAM/GBC164/기존배포와archive불변,MMC4/5·CHR-RAM·state load/frameskip의내용epoch·실제표시base조건보존.
+
+중간test01Windowsprintf/trace누락실패,test02전체검색,test03anchor전;arm01상대도구경로cc1실패,arm02anchor전. 최종만선택,이전기록보존. 새FW/FIT/ASM/ZIP없음.
+
 # NES210 실기 결과와 다음 구현 방향 (최신)
 
 PR119 같은 branch에 결과를 추가했다. [실기 분석](../../docs/nes-game210-hardware01.ko.md) · [검증 JSON](../../analysis/game210-hardware01-verification.json). 사용자 소리·실제 메뉴 복귀 정상, 프레임 개선은 미확인. 60.06초/196표시(평균306.4ms),209205회와 장면이 달라 회귀율/FPS 비교 금지. receive11.20/plan22.10/seal26.42초; plan/seal은 전송·소스·소비 대기 포함이다.
