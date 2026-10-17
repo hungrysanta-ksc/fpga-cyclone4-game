@@ -1,3 +1,13 @@
+# NES221 실기 시작 실패 (최신)
+
+[PR121](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/121) OPEN, 같은 `codex/nes-planner-index-221`. [결과](../../docs/nes-game221-hardware01.ko.md), [원본 대조 분석](../../analysis/game221-hardware01-verification.json). 이전 시험판 준비 기록보다 이 실기 결과가 우선한다. **로딩 뒤 메뉴 복귀, SNES READY TIMEOUT이며 성능은 미측정**이다.
+
+393216B ROM load/compare와START 성공, NES observer2398→14227968/ROM0. boot_reason5/44820poll/500tick, DISPLAY5.02초; first=last01000000(valid/stage0/error0/flags0),signals0606(진입·종료 RESET 비활성,DONE/RDY 활성). READY3 전에종료,인덱스초기화/검색미진입,12×21bin·plan·전송·display모두0. 서비스/SPI오류와60초게임제한이아니다. STOP/base/menuPREP통과,사용자가실제메뉴복귀확인. flags0은qualified프로그램읽기미관측이며CPU접근없음/전기적원인증명아님. 정상220flags4였으므로flags7필수검사추가금지.
+
+220/221패키지FPGA전체31908516동일,실제ARM8시작파일동일,linked함수에서도boot앞에index호출없음. 다만큰RUNstack은boot전에이미예약;static1992B여유는실기highwater아님. board74도설치전체이미지동일증명아님.213stage0/flags0와비슷하지만원인동일주장금지.220은431poll/4tickREADY였다.
+
+NEXT: 실제ARM START/리셋해제→hostbridge SPIidle/write admission→compactROM벡터/읽기응답→상태기록을최소경계로점검.213/214독립ROM부팅·고정트래픽재생반복은공백을닫지못함. 물리상대시점/스택수명/이미지식별을함께분리. 재현원인수정후같은index와수신·scrollmap16.67ms계획으로첫레벨실기복귀. 무조건retry/timeout확대/index철회/FIT루프/같은221·044/추가영상요청금지. 현재원인미확정/수정미완료,새FW/FIT/ZIP없음.221봉인1930파일불변,실기원본은새archive로보존. saveSRAM/GBC164/과거archive유지.
+
 # NES221 검색 인덱스·최소 성능 분리 계측 실기판 (최신)
 
 [PR121](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/121) OPEN. PR120 머지 b8de96e 이후 `codex/nes-planner-index-221`. [계약](../../docs/nes-index221-contract.ko.md), [시험 안내](../../docs/nes-game221-ready.ko.md), [검증](../../analysis/index221-verification.json). 선택test03/runtime01/arm01/check01/budget01/release01. ZIP 준비완료, 실기 결과 미수집/60fps 미확인.
