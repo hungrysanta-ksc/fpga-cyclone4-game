@@ -1,3 +1,15 @@
+# NES220 실기60초 통과·스크롤 성능 분석 (최신)
+
+PR120 같은 branch. [실기 결과](../../docs/nes-game220-hardware01.ko.md), [재현 분석](../../analysis/game220-hardware01-verification.json). 사용자60초 플레이/메뉴/소리/조작 정상, 오프닝 개선·첫레벨 끊김 유지. 이번 실행에서215 조기종료가 재현되지 않았으며60fps/장기 안정성은 미완료다.
+
+DISPLAY60.08초/265회 완료/평균4.41회/초/최대간격440ms, 마지막59.81초gen382. 다음gen383/266COMMIT에서 deadline1, plan2guard취소;215상태오류표본0/transfer실패0/ROM·sink·video·STOP0,6797sent=retired. screen_frames0/A9는구필드/SPC이며화면실패아님. 초기load231.68초는별도다.
+
+실제영속slot hit22984,1938plans/38320B.12bin합계4563094SPI B와시간모두일치. 수신14.46초/계획34.68초/SEAL10.43초;계획은CPU뿐아니라callback/source/drain/service를포함. ingress49.62%,E8 9.11%,E9 .39%,E0 19.86%,E1 20.98%. D0D3만평균26.04ms/완료, E8E0제거가정37.27ms/완료:조회/헤더/partial포함이므로유효payload불변하한아님.210과입력/장면이달라통제성능비교금지.
+
+MOV 영상시각 첫레벨14–19/26–34/40–46/52–60초,스크롤28–30/42–43/54–55초,61초메뉴. 촬영시작/종료마지막화면유지때문에MCU5초bin과정확동기화하지않음. 실제스크롤근거는있지만bin별FPS로주장하지않는다. 소리는사용자확인,별도청음아님.
+
+NEXT: fullgeometry수신·재계산+선형exact/retainedslot검색과scroll-map을함께줄일16.67ms설계/성능변경. 다음변경에만최소CPU계획vs콜백대기,ingress유효내용vs조회계측을동반. 검색상한bgextent가28.3에서326.7–504.1로커짐은후보근거이지CPU원인확정아님. mapdirty는직전표시대비64B변경이며inactive누적union전송수아님. 신규cache증설/FIT/loader미세루프/같은220·044재시험/진단판만반복하지않음. 정확physical key/row-alt/mask/epoch/activebank/실제displayACKcommit유지. ARM4952B여유와FPGA252LE6LAB9M9K를별도예산으로지키고saveSRAM/GBC164/봉인archive보존. 최소검증뒤실제SMB3 firstlevel스크롤과소리·조작·메뉴를평가. 이번커밋은결과기록이며새펌웨어없음.
+
 # NES220 전체 타이밍 통과·정상 대기 수정 실기판 (최신)
 
 PR120 같은 branch. [실기 안내](../../docs/nes-game220-ready.ko.md), [계약](../../docs/nes-status220-contract.ko.md), [보드 검증](../../analysis/status220-verification.json), [최종 패키지 검증](../../analysis/release220-verification.json). 선택 source02/test03/spi02/mapfit02/timing02/io02/paths02/evidence03/arm01/check01/asm01/romcheck01/release01. **실기 시험판 준비 완료.216 정상 대기 수정이 실제215 조기 종료를 해결했는지와60fps는 아직 미확인이다.**
