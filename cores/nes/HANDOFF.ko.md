@@ -1,3 +1,20 @@
+# NES220 전체 타이밍 통과·정상 대기 수정 실기판 (최신)
+
+PR120 같은 branch. [실기 안내](../../docs/nes-game220-ready.ko.md), [계약](../../docs/nes-status220-contract.ko.md), [보드 검증](../../analysis/status220-verification.json), [최종 패키지 검증](../../analysis/release220-verification.json). 선택 source02/test03/spi02/mapfit02/timing02/io02/paths02/evidence03/arm01/check01/asm01/romcheck01/release01. **실기 시험판 준비 완료.216 정상 대기 수정이 실제215 조기 종료를 해결했는지와60fps는 아직 미확인이다.**
+
+작업 의미:211~212 변경 범위 출력을 동작시키기 위한216 watchdog 수정판의 FPGA 배선·타이밍 배포 조건을 완료했다. 성능 향상 수치 또는 실기 근본 원인 확정으로 쓰지 않는다. NEXT는 추가국소FIT/같은215/044가 아니라 NES GAME 220.nh1 실기다. 플레이어→스테이지→숫자1+A 첫레벨,오른쪽+B 유지/A반복으로 스크롤한다.3TXT(progress/game-last/budget220)·메뉴복귀·소리·조작,가능하면게임화면시작부터영상을받는다.게임시작후약60초종료,로딩별도;90초뒤에도복귀없으면남은로그.반복복원시험요청없음.
+
+219/source02 기준 첫 후보는 loader1파일: async reset이phaseIDLE을즉시세우고localrelease동안유지하는불변식으로RUN의중복active_reset마스크제거,READY 전환 조건을출발상태별직접식으로변경. Stickyfault/PSRAMresetgate/WRITE-HOLDdrain/기존snapshot에지유지. 임의reset+RUN 강제손상이나전기적glitch까지동등주장금지. 상태294912/쓰기1056/count524288/이전코드131072,2048reset경우18432검사,실제SPI219거래14016비트/100READ/7ACK/19손상/72취소/2겹침+2negativePASS.
+
+source01 FIT15206LE8352FF960LAB47M9K,nominal-.234/strict-.485/hold+.135. snapshot+.286/READY+1.030으로기존대상은통과했으나response→fault7LUT6.372ns/69%배선/12fanout1.668ns가남음. source02는stickyfault 별도동등식과CHECKstate별9+10bit응답허용식을분리한SPI1파일추가.1056768에지/1024후속/327680주소경계,실제219거래,상하위fault검사누락negativePASS.검사에지/오류코드우선순위/checked_data/명령counter불변. 새FF/RAM/클록지연없음.
+
+최종 FIT15156LE8352FF957LAB47M9K(252LE6LAB9M9K여유),3corner nominal+.298/strict+.121/hold+.142PASS. snapshot+.594/READY+1.614/response-error+.121. CDC3984행/45첫단계단일fanout/newother0/held6.630Gray6.948,96reg576reset최소40.341/1.553PASS.조건부PSRAM+2.924/SNES83.559/SPI168.997/nativepayloadresetPASS;전기적전체signoff/MTBF아님.216wait/217epoch기존증거재사용,219봉인5670파일검증.실기전추가미세FIT루프금지.
+
+ARM은215의식별자3파일만220으로변경,207536B/static27868/RUN32096/IRQ508/margin4952.실행루프/입력/소리/60초/logschema215불변,linked platform/IRQ검사PASS.FW82f65136398cd947ca7a559b91448029e006bee2fdb5925fdbd046e30661dc57.선택220route에현재212SNES ROM4096B만CDB/ASM/CPF(재FIT없음);3EDA실제atom4096B일치.FPGA31908516ec18ea04760328245590eb72c969783e84d82619cf1f5b8be6f592e2. ZIP NES220-SMB3-WAIT-FIX.zip sha85b7c76ca9018f906a43a6260b8faa4a425458f51f39e176fcb829b4a648c8c2,probes/nes-status220/release01.215ZIP에서FW/FPGA만교체+220이름변경,게임ROM/launcher/base/menu/164복원바이트보존. 저장SRAM/GBC164불변.
+
+중간실패보존:test01wire비교SPI모듈누락;test02정상검증통과/STOPnegative가DIFF보다먼저onehot에서검출되어수집기거부;test03는SV동일성확인후02정상3로그재사용/negative재실행.음성오류허용범위를일반실패로넓힌것아님.패키지최초preflight는EDA가QSF에추가한3export설정을거부;원시diff확인후정확한version치환+3행만허용.소스/배선/핀/SDC완화없음.RTK status사용/gain은sandboxDB접근실패.
+
+---
 # NES219 응답·카운터 및 CHECK 중복 조건 정리 (최신, 배포 보류)
 
 PR120 같은 branch. [계약](../../docs/nes-retire219-contract.ko.md), [검증](../../analysis/retire219-verification.json). 선택 source02/counter01/spi01/enable02/mapfit02/timing02/io02/paths03+04/evidence03. **기능 검증용 후속 후보이며 미채택, 새 ARM/ASM/ZIP 없음. 전체 타이밍은 오히려 악화되었으므로 개선 완료로 쓰지 않는다.**
