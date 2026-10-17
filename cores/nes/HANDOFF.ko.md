@@ -1,3 +1,15 @@
+# NES222 실기: 시작·60초·긴 첫 레벨 스크롤 통과 (최신)
+
+[PR121](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/121) OPEN 같은 branch. [실기 결과와 다음 계획](../../docs/nes-game222-hardware01.ko.md), [재현 수치](../../analysis/game222-hardware01-verification.json). 이 결과가 아래222 실기 미수집/221 실패 NEXT보다 우선한다. 사용자 체감 개선과 실제 긴 첫 레벨 스크롤 확인, 정상 플레이/60fps는 미완료다. 새FW/FIT/ZIP 없음.
+
+pre6/allzero→post1/emptyF7CRC→READY431poll/50ms. 실제 deferred 경로 사용 확인. /WR은 계측하지 않았고 RESET/DONE/RDY는 표본이다. 큰stack의 READY 이후 확보와 시작 handshake 모두 바뀌었으므로221 물리 원인/개별 기여도는 미확정. 동일 시작 진단 반복을 중단하고 성능으로 복귀한다.
+
+DISPLAY60.09초/365완료/last59.97초gen575,다음gen576 BEGIN만 남고deadline1. receiver23은callback실패OR CRC 조건이며독립CRC오류증거아님. ROM/sink/video/window/plan/STOP오류0,failedtransfer0,11082송신=회수. SPC unmute1(별도청음아님),입력109변화,영상65초메뉴. MOV66.63초 중15–45와52–61초첫레벨,18–24/29–40초여러위치스크롤;62–64초종료처리마지막화면유지는게임정지로오인하지않음. CRT간섭제외/정확host시각없음/표본FPS계산금지.
+
+220265→365완료(+37.74%),평균4.41→6.07완료/s,최대gap440→370ms. 장면/입력달라통제FPS개선율아님. plan34.68→19.41초,receive21.89초,seal18.39초. planner inclusive11.99초-callback.58초=약11.41초(순CPUcycle아님). receive bin21.93초는별도tick표본40ms차;raw둘다보존. wire7481069B=12bin합계,ingress45.25/E8 10.73/E9 .38/E0 22.15/E1 21.46%. D1encoded2851105B만23.81ms/완료(내부header/partial/압축가능),ingress28.27ms. D0 status396496B는1.21초wire/session:poll만줄여60fps불가. source/SNESVBlank미측정,byte비중=시간비중아님.
+
+NEXT: compact/incremental geometry ingress와scroll-awaremap을공유16.67ms예산으로함께진행. 반복원본정보전송/전체geometry재계산/맵작업량을줄이고221index유지. 기존실기분포를비용기준으로쓰되현재전체scrollgeometry덤프는없음;필요한경계증거만추가. row-alt/mask/physicalCHR/epoch/basebank/finalACK정합성/미래MMC4·5 fetch-time의미유지. ARM1912B여유이므로무작정cache추가금지,saveSRAM/GBC164/봉인archive유지. 최소검증뒤첫레벨실기;같은222/044/추가영상/시작진단/FIT반복불필요. 새원본은probes/nes-game222-hardware01,선택222archive는불변.
+
 # NES222 시작 순서 보강 시험판 (최신)
 
 [PR121](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/121) 같은 branch. [계약](../../docs/nes-startup222-contract.ko.md), [실기 안내](../../docs/nes-game222-ready.ko.md), [검증](../../analysis/startup222-verification.json). 선택 arm02/test03/rtl01/check03/release01. **시험판 준비 완료이며 221의 실제 원인·해결 여부는 아직 미확정이다.** 다음은 추가 로컬 시험이 아니라 사용자222 실기다.
