@@ -5,7 +5,7 @@
   "status": "P0_complete_P1_partial_no_candidate_selected",
   "document": "docs/nes-wholepath247-contract.ko.md",
   "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128",
-  "scope": "P0/P1 whole-path diagnostics;user prioritizes60fps over4KiB. Expanded consumer executed;5/8KiB storage compared,throughput-oriented decoder boundary next. No product/full-board/new-input ARM/hardware change.",
+  "scope": "P0/P1 diagnostics: expanded5775B group receiver improves measured timing,36fault cases/all255masks and6KiB bus checked;no full60fps/product/wholeboard/new-input ARM approval.",
   "supersedes": "Current execution status after merged PR127; its goals and safeguards remain authoritative. Historical evidence unchanged.",
   "roles": {
     "production_hardware": "NES227",
@@ -80,7 +80,9 @@
         "docs/nes-maskboundary247-contract.ko.md",
         "analysis/maskboundary247-verification.json",
         "docs/nes-storage247-contract.ko.md",
-        "analysis/maskrun247-verification.json"
+        "analysis/maskrun247-verification.json",
+        "docs/nes-maskfast247-contract.ko.md",
+        "analysis/maskfast247-verification.json"
       ]
     },
     {
@@ -119,7 +121,7 @@
       "id": "SNES-BURSTS",
       "status": "open",
       "evidence": "docs/nes-runtime233-contract.ko.md",
-      "detail": "Actual mask71frames leaveswarm952/955 multiVB. Mask+manifest+coverage5.754..20.059ms;conditional wire+measured max33.731ms,58/69over.4KiB constraint removed;split5KiB inference/read guards pass but no wholeboard approval."
+      "detail": "Actual fastmask71 leaveswarm952/955 multiVB. Map+manifest+coverage3.579..13.286ms;conditional wire+measured max27.329ms,45/69over.6KiB inference/read guards pass,but24054/56→56/56 isonlycapacity arithmetic;wholeboard/source/mapper margin unresolved."
     },
     {
       "id": "FULL-RUNTIME",
@@ -156,7 +158,7 @@
     "mapper_compatibility",
     "frame_skip_state_save_mute"
   ],
-  "next_action": "P1:60프레임우선/4KiB강제금지. 허용된ROM확대를활용해mask bit별분기·word별append와manifest/coverage반복을group/span·블록비교·루프전개/조회표 등완전한경계로재설계;실제시간과code/M9K/LE/LAB를공동비교. 5KiB562B도절대한도아님;필요시6/8KiB또는외부적재의boot/소유권비용검토. 작은opcode/seed/무변경재시험금지.952순서/9554198>4192,source449/rowshift면적·mapper,새ARM RUN/IRQ,firstfault/CDCIO/displaylease-retire열린동안P2미선정.",
+  "next_action": "P1:mask 잔여비용을record준비/복사/append/입력STOP service로실제분해하고sparse/dense·packet경계와함께비교. 묶음처리의CPU+wire+RAM/ROM+최대service간격을공동평가;service무조건생략/검사삭제/opcode·seed·shrink루프금지.6KiB209B도절대한도아님;240기준56/56산술이므로source449/rowshift와ROM저장·mapper자원을함께재배분.952순서/9554198>4192/새ARM RUNIRQ/firstfault/CDCIO/displaylease-retire열린동안P2미선정.",
   "base_commit": "b6958f24fbe2173d0879da07ef56fe3b507b5420",
   "branch": "codex/nes-wholepath-247",
   "previous_plan": "docs/nes-pr127-next-plan.json",
@@ -395,6 +397,54 @@
       952,
       955
     ],
+    "wholeboard_fit": false,
+    "qualified_for_p2": false
+  },
+  "p1_maskfast_followup": {
+    "selected": [
+      "maskfast-build02",
+      "maskfast-test01",
+      "maskfast-fault01",
+      "maskfast-lanes01",
+      "maskfast-masks01",
+      "maskfast-analysis02",
+      "faststorage-map01",
+      "faststorage-rtl01"
+    ],
+    "document": "docs/nes-maskfast247-contract.ko.md",
+    "evidence": "analysis/maskfast247-verification.json",
+    "body_bytes": 5775,
+    "lookup_bytes": 1024,
+    "split6k_body_free": 209,
+    "actual_frames": 71,
+    "fault_cases": 36,
+    "all_masks": 255,
+    "exact_map_bytes": 290816,
+    "mask_regression_frames": [
+      908,
+      911,
+      927,
+      929,
+      933,
+      934,
+      935,
+      936,
+      951,
+      952,
+      953,
+      956,
+      959,
+      961
+    ],
+    "map_validation_max_ms": 13.28558052303668,
+    "map_validation_total_reduction_percent": 24.355278125423308,
+    "conditional_serial_over": 45,
+    "warm_multi_vblank": [
+      952,
+      955
+    ],
+    "storage_rtl_reads": 33029,
+    "storage_raw_guards": 4,
     "wholeboard_fit": false,
     "qualified_for_p2": false
   }
