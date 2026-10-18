@@ -1,12 +1,12 @@
 # NES247 인계: 전체 비용·갱신 원인 분석 완료, 구현 후보 미선정
 
-NES247 P1 wordwalk:model01/build01/test01/analysis01/budget01. 빈16bit word 건너뛰기,96word/실제set만 run계산;body3920/3936B/free16/persistent+0. 실제71frame3077ACK/418DMA135072B와71명령목록 exact PASS. Warm scanner53.08..53.84→5.40767..7.89784ms,cold16.99/17.51ms.4192 유지/952955963다중VBlank. 조건부 직렬 wire+scan 최대24.09/23.48/낙관raw21.30ms로24/21/8개초과. 단순범위삽입 역순이동상한4.58MB;현재분포만으로선정불가. 전체FPGA/새ARM/STOP OPEN,P2미선정.
+NES247 P1 batchorder:model01/build01/host01/append01/test01/analysis02. 기존15개240B 배치내 정렬+수신시pattern gap합치기,post-SEAL scan제거;body3903/3936/free33/persistent0. 실제71commit3077ACK426DMA134944B/71순서·명령목록exact,4 actualC append/CRC/END경계PASS. Warmmark3.75839..14.53052ms+coverage1.79306..1.79650ms 관측;598개individualbulk fixture이므로실물하한아님. 조건부semantic16 wire+mark+coverage최대31.9628ms/49초과,기존wire+scan과포함경계다름.4192유지/952955963다중VBlank. 전체FPGA/새ARM/STOP OPEN,P2미선정.
 
-[전체 비용](../../docs/nes-wholepath247-contract.ko.md) · [P1 결합·소유권](../../docs/nes-schedule247-contract.ko.md) · [의미 투영·병렬 경계](../../docs/nes-relocation247-contract.ko.md) · [unused gap·DMA 계측](../../docs/nes-gap247-contract.ko.md) · [전체순회 기각](../../docs/nes-scan247-contract.ko.md) · [최신 word 순회·직렬 비용](../../docs/nes-wordwalk247-contract.ko.md) · [현재 실행 상태](../../docs/nes-wholepath247-plan.json) · [71프레임 비용표](../../analysis/wholepath247-frames.csv)
+[전체 비용](../../docs/nes-wholepath247-contract.ko.md) · [P1 결합·소유권](../../docs/nes-schedule247-contract.ko.md) · [의미 투영·병렬 경계](../../docs/nes-relocation247-contract.ko.md) · [unused gap·DMA 계측](../../docs/nes-gap247-contract.ko.md) · [전체순회 기각](../../docs/nes-scan247-contract.ko.md) · [word 순회·직렬 비용](../../docs/nes-wordwalk247-contract.ko.md) · [최신 배치 정렬·수신 비용](../../docs/nes-batchorder247-contract.ko.md) · [현재 실행 상태](../../docs/nes-wholepath247-plan.json) · [71프레임 비용표](../../analysis/wholepath247-frames.csv)
 
-[PR128](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128) OPEN. P0 분석 커밋 `f80bd3bf26108fa6f34a5d766c75c84695bee9e6`; P1 후속 근거는 schedule04/relocation01/gap01/dma01/scan-build02·test01·analysis01 및 walk-model01·build01·test01·analysis01·budget01.
+[PR128](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128) OPEN. P0 분석 커밋 `f80bd3bf26108fa6f34a5d766c75c84695bee9e6`; P1 후속 근거는 schedule04/relocation01/gap01/dma01/scan-build02·test01·analysis01 및 walk-model01·build01·test01·analysis01·budget01 및 order-model01·build01·host01·append01·test01·analysis02.
 
-P1:post-SEAL5.4..7.9ms와warm3 VBlank burst를 함께 줄이는 명령생성 위치/transaction 일정 비교. 수신범위·생산자순서/descriptor 안은 삽입이동 상한·추가wire/ARM/코드 먼저;mailbox/target/base/lease의 실제 잠금·수신/준비 overlap 명시. 계산을 수신비용에서 숨기거나wordwalk service/opcode 미세튜닝 금지. 의미449B+rowshift 전체FPGA LE/LAB/mapper·새 입력ARM RUN/IRQ까지 한 후보의 여유가 있을 때만 P2.
+P1:실제 contiguous range의 시작/끝mask+중간word bitmap검증·갱신 구조를 기존 per-unit bit검사와 비교. 중복거부/target validity/partial failure/STOP·최종coverage 유지. FPGA2048B coalescing의 호출수 감소와 per-unit비용을 분리;새로운opcode/seed/정렬미세튜닝 금지.3 VBlank burst+의미449B/rowshift source 전체LE/LAB/mapper+새 ARM RUN/IRQ·finalACK/retire를 함께 충족한 후보만 P2.
 
 PR127 머지 `b6958f24` 확인 후 새 `codex/nes-wholepath-247`에서 진행했다. 아래 PR127 및246 이전 NEXT는 이력이며 현재 지시가 아니다. PR127의 전체 목표와 보호 조건은 유지한다. 새 설치물·FPS·회로 구현 성공을 뜻하지 않는다.
 

@@ -5,8 +5,8 @@
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
   "authoritative_document": "docs/nes-wholepath247-contract.ko.md",
-  "assessment": "NES247 P1 wordwalk:model01/build01/test01/analysis01/budget01. 빈16bit word 건너뛰기,96word/실제set만 run계산;body3920/3936B/free16/persistent+0. 실제71frame3077ACK/418DMA135072B와71명령목록 exact PASS. Warm scanner53.08..53.84→5.40767..7.89784ms,cold16.99/17.51ms.4192 유지/952955963다중VBlank. 조건부 직렬 wire+scan 최대24.09/23.48/낙관raw21.30ms로24/21/8개초과. 단순범위삽입 역순이동상한4.58MB;현재분포만으로선정불가. 전체FPGA/새ARM/STOP OPEN,P2미선정.",
-  "next_action": "P1:post-SEAL5.4..7.9ms와warm3 VBlank burst를 함께 줄이는 명령생성 위치/transaction 일정 비교. 수신범위·생산자순서/descriptor 안은 삽입이동 상한·추가wire/ARM/코드 먼저;mailbox/target/base/lease의 실제 잠금·수신/준비 overlap 명시. 계산을 수신비용에서 숨기거나wordwalk service/opcode 미세튜닝 금지. 의미449B+rowshift 전체FPGA LE/LAB/mapper·새 입력ARM RUN/IRQ까지 한 후보의 여유가 있을 때만 P2.",
+  "assessment": "NES247 P1 batchorder:model01/build01/host01/append01/test01/analysis02. 기존15개240B 배치내 정렬+수신시pattern gap합치기,post-SEAL scan제거;body3903/3936/free33/persistent0. 실제71commit3077ACK426DMA134944B/71순서·명령목록exact,4 actualC append/CRC/END경계PASS. Warmmark3.75839..14.53052ms+coverage1.79306..1.79650ms 관측;598개individualbulk fixture이므로실물하한아님. 조건부semantic16 wire+mark+coverage최대31.9628ms/49초과,기존wire+scan과포함경계다름.4192유지/952955963다중VBlank. 전체FPGA/새ARM/STOP OPEN,P2미선정.",
+  "next_action": "P1:실제 contiguous range의 시작/끝mask+중간word bitmap검증·갱신 구조를 기존 per-unit bit검사와 비교. 중복거부/target validity/partial failure/STOP·최종coverage 유지. FPGA2048B coalescing의 호출수 감소와 per-unit비용을 분리;새로운opcode/seed/정렬미세튜닝 금지.3 VBlank burst+의미449B/rowshift source 전체LE/LAB/mapper+새 ARM RUN/IRQ·finalACK/retire를 함께 충족한 후보만 P2.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -45,7 +45,10 @@
         "docs/nes-wordwalk247-contract.ko.md",
         "analysis/sparsewalk247-verification.json",
         "analysis/wordwalk247-verification.json",
-        "analysis/walkbudget247-verification.json"
+        "analysis/walkbudget247-verification.json",
+        "docs/nes-batchorder247-contract.ko.md",
+        "analysis/batchorder247-verification.json",
+        "analysis/order247-verification.json"
       ]
     },
     {
@@ -3005,7 +3008,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES247 P1 wordwalk:model01/build01/test01/analysis01/budget01. 빈16bit word 건너뛰기,96word/실제set만 run계산;body3920/3936B/free16/persistent+0. 실제71frame3077ACK/418DMA135072B와71명령목록 exact PASS. Warm scanner53.08..53.84→5.40767..7.89784ms,cold16.99/17.51ms.4192 유지/952955963다중VBlank. 조건부 직렬 wire+scan 최대24.09/23.48/낙관raw21.30ms로24/21/8개초과. 단순범위삽입 역순이동상한4.58MB;현재분포만으로선정불가. 전체FPGA/새ARM/STOP OPEN,P2미선정.",
+  "summary": "NES247 P1 batchorder:model01/build01/host01/append01/test01/analysis02. 기존15개240B 배치내 정렬+수신시pattern gap합치기,post-SEAL scan제거;body3903/3936/free33/persistent0. 실제71commit3077ACK426DMA134944B/71순서·명령목록exact,4 actualC append/CRC/END경계PASS. Warmmark3.75839..14.53052ms+coverage1.79306..1.79650ms 관측;598개individualbulk fixture이므로실물하한아님. 조건부semantic16 wire+mark+coverage최대31.9628ms/49초과,기존wire+scan과포함경계다름.4192유지/952955963다중VBlank. 전체FPGA/새ARM/STOP OPEN,P2미선정.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3048,8 +3051,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-wordwalk247-contract.ko.md",
-  "latest_development_evidence": "analysis/wordwalk247-verification.json",
+  "latest_review": "docs/nes-batchorder247-contract.ko.md",
+  "latest_development_evidence": "analysis/order247-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {

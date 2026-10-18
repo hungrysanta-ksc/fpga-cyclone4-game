@@ -5,7 +5,7 @@
   "status": "P0_complete_P1_partial_no_candidate_selected",
   "document": "docs/nes-wholepath247-contract.ko.md",
   "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128",
-  "scope": "P0 observer;P1 representation/relocation models and actual SNES full-scan/word-walk diagnostics with conditional whole-path costs. No production/FPGA/full ARM/hardware change.",
+  "scope": "P0 observer;P1 representation/relocation and actual SNES traversal/bounded batch-order diagnostics with receive/coverage timing. No production/full FPGA/new-input ARM/hardware change.",
   "supersedes": "Current execution status after merged PR127; its goals and safeguards remain authoritative. Historical evidence unchanged.",
   "roles": {
     "production_hardware": "NES227",
@@ -69,7 +69,10 @@
         "docs/nes-wordwalk247-contract.ko.md",
         "analysis/sparsewalk247-verification.json",
         "analysis/wordwalk247-verification.json",
-        "analysis/walkbudget247-verification.json"
+        "analysis/walkbudget247-verification.json",
+        "docs/nes-batchorder247-contract.ko.md",
+        "analysis/batchorder247-verification.json",
+        "analysis/order247-verification.json"
       ]
     },
     {
@@ -108,7 +111,7 @@
       "id": "SNES-BURSTS",
       "status": "open",
       "evidence": "docs/nes-runtime233-contract.ko.md",
-      "detail": "Word-walk diagnostic exact71,3920/3936B,warm scan5.41..7.90ms but retained serial wire+scan24/21/8over-frame scenarios. Actual warm952955963 still multiVBlank;4192 unchanged. Full timing/STOP open."
+      "detail": "Bounded batch-order/receive append exact71,3903/3936B,no postSEAL scan;warm mark3.76..14.53ms/coverage1.79ms in individual-bulk fixture.952955963 multiVBlank;4192 unchanged.Full timing/STOP and actual coalescing open."
     },
     {
       "id": "FULL-RUNTIME",
@@ -145,7 +148,7 @@
     "mapper_compatibility",
     "frame_skip_state_save_mute"
   ],
-  "next_action": "P1:post-SEAL5.4..7.9ms와warm3 VBlank burst를 함께 줄이는 명령생성 위치/transaction 일정 비교. 수신범위·생산자순서/descriptor 안은 삽입이동 상한·추가wire/ARM/코드 먼저;mailbox/target/base/lease의 실제 잠금·수신/준비 overlap 명시. 계산을 수신비용에서 숨기거나wordwalk service/opcode 미세튜닝 금지. 의미449B+rowshift 전체FPGA LE/LAB/mapper·새 입력ARM RUN/IRQ까지 한 후보의 여유가 있을 때만 P2.",
+  "next_action": "P1:실제 contiguous range의 시작/끝mask+중간word bitmap검증·갱신 구조를 기존 per-unit bit검사와 비교. 중복거부/target validity/partial failure/STOP·최종coverage 유지. FPGA2048B coalescing의 호출수 감소와 per-unit비용을 분리;새로운opcode/seed/정렬미세튜닝 금지.3 VBlank burst+의미449B/rowshift source 전체LE/LAB/mapper+새 ARM RUN/IRQ·finalACK/retire를 함께 충족한 후보만 P2.",
   "base_commit": "b6958f24fbe2173d0879da07ef56fe3b507b5420",
   "branch": "codex/nes-wholepath-247",
   "previous_plan": "docs/nes-pr127-next-plan.json",
@@ -263,6 +266,32 @@
       21,
       8
     ],
+    "qualified_for_p2": false
+  },
+  "p1_batchorder_followup": {
+    "selected": [
+      "order-model01",
+      "order-build01",
+      "order-host01",
+      "order-append01",
+      "order-test01",
+      "order-analysis02"
+    ],
+    "document": "docs/nes-batchorder247-contract.ko.md",
+    "evidence": "analysis/order247-verification.json",
+    "body_bytes": 3903,
+    "free_bytes": 33,
+    "exact_frames": 71,
+    "post_seal_scan": false,
+    "warm_mark_ms": [
+      3.7583920116476626,
+      14.530524596468732
+    ],
+    "warm_coverage_ms": [
+      1.7930584287481601,
+      1.796503931831187
+    ],
+    "conditional_serial_over_frames": 49,
     "qualified_for_p2": false
   }
 }
