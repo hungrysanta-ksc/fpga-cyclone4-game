@@ -5,7 +5,7 @@
   "status": "P0_complete_P1_partial_no_candidate_selected",
   "document": "docs/nes-wholepath247-contract.ko.md",
   "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128",
-  "scope": "P0 observer;P1 representation/relocation and actual SNES traversal/bounded batch-order diagnostics with receive/coverage timing. No production/full FPGA/new-input ARM/hardware change.",
+  "scope": "P0 observer;P1 representation/relocation, SNES traversal/batch ordering, range-mask size rejection and existing193 grouping receive timings. No product/full FPGA/new-input ARM/hardware change.",
   "supersedes": "Current execution status after merged PR127; its goals and safeguards remain authoritative. Historical evidence unchanged.",
   "roles": {
     "production_hardware": "NES227",
@@ -72,7 +72,9 @@
         "analysis/walkbudget247-verification.json",
         "docs/nes-batchorder247-contract.ko.md",
         "analysis/batchorder247-verification.json",
-        "analysis/order247-verification.json"
+        "analysis/order247-verification.json",
+        "docs/nes-coalesce247-contract.ko.md",
+        "analysis/coalesce247-verification.json"
       ]
     },
     {
@@ -111,7 +113,7 @@
       "id": "SNES-BURSTS",
       "status": "open",
       "evidence": "docs/nes-runtime233-contract.ko.md",
-      "detail": "Bounded batch-order/receive append exact71,3903/3936B,no postSEAL scan;warm mark3.76..14.53ms/coverage1.79ms in individual-bulk fixture.952955963 multiVBlank;4192 unchanged.Full timing/STOP and actual coalescing open."
+      "detail": "193 grouping fixture71 exact,178chunk,3903B unchanged consumer. Warmmark3.08..11.59ms/coverage1.79ms,map80.9% ofmark. Range16/8 mask3971/3950B exceed3936 before functional tests.952955963multiVBlank.Full runtime/STOP/FPGA open."
     },
     {
       "id": "FULL-RUNTIME",
@@ -148,7 +150,7 @@
     "mapper_compatibility",
     "frame_skip_state_save_mute"
   ],
-  "next_action": "P1:실제 contiguous range의 시작/끝mask+중간word bitmap검증·갱신 구조를 기존 per-unit bit검사와 비교. 중복거부/target validity/partial failure/STOP·최종coverage 유지. FPGA2048B coalescing의 호출수 감소와 per-unit비용을 분리;새로운opcode/seed/정렬미세튜닝 금지.3 VBlank burst+의미449B/rowshift source 전체LE/LAB/mapper+새 ARM RUN/IRQ·finalACK/retire를 함께 충족한 후보만 P2.",
+  "next_action": "P1:map 의미word/row 표현·전송·수신검증을 같은frame에서 공동비교. 실제 변경원인/16B과전송/SPI/ARM상태/SNES3936B·mark·3VBlankburst를 함께계산. 기존193타일묶음·dirty_span231인접15개240B합치기를새기능으로반복하지말것. 범위mask3971/3950B opcode·seed미세축소 금지. 중복/target validity/partial failure/STOP/coverage/finaldisplayACK 유지. 의미449B/rowshift 전체LE/LAB/mapper+새ARM RUN/IRQ·commit/lease/retire와공동여유가있는후보만P2.",
   "base_commit": "b6958f24fbe2173d0879da07ef56fe3b507b5420",
   "branch": "codex/nes-wholepath-247",
   "previous_plan": "docs/nes-pr127-next-plan.json",
@@ -292,6 +294,33 @@
       1.796503931831187
     ],
     "conditional_serial_over_frames": 49,
+    "qualified_for_p2": false
+  },
+  "p1_coalesce_followup": {
+    "selected": [
+      "range16-build01",
+      "range8-build01",
+      "coalesce-host01",
+      "coalesce-guards01",
+      "coalesce-test01",
+      "coalesce-analysis04"
+    ],
+    "document": "docs/nes-coalesce247-contract.ko.md",
+    "evidence": "analysis/coalesce247-verification.json",
+    "range_rejected_body_bytes": [
+      3971,
+      3950
+    ],
+    "consumer_body_bytes": 3903,
+    "exact_frames": 71,
+    "grouped_chunks": 178,
+    "payload_bytes": 12944,
+    "warm_mark_ms": [
+      3.081583460095254,
+      11.593093535630924
+    ],
+    "warm_map_mark_clocks": 9044730,
+    "warm_all_mark_clocks": 11180076,
     "qualified_for_p2": false
   }
 }
