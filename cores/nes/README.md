@@ -1,3 +1,15 @@
+# 현재 상태 — PR127 회고 반영 (2026-10-18)
+
+PR127 회고:231/232 증분 출력 개선은 유지,241/246 공유 압축 후보는 기각.240도490LE/40LAB 부족. 면적만 맞춰도60fps가 되지 않으며 SPI/5개SNES burst/전체ARM/확장 여유를 공동 판단한다.
+
+[현재 목표·인계](../../docs/nes-pr127-retrospective.ko.md) · [P0–P3 실행 계획](../../docs/nes-pr127-next-plan.json) · [PR127](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/127)
+
+PR127 머지 확인 후 최신 master에서 새 codex/ 브랜치·새 PR. 기존 스크롤 자료의 전체 예산/변경 원인(P0)과 표현·처리 위치 포함 후보 비교(P1)를 먼저 하고 근거 있는 한 후보만 구현한다. 단일 sequencer는 미선정. 생산227·GBC164·save SRAM 보존.
+
+아래 내용은 이전 개발 이력이다. 과거의 “최신”, 후보 번호와 NEXT를 현재 지침으로 사용하지 않는다.
+
+---
+
 > 최신 실제 묶음 전송: 실제 FPGA exporter/SPI와 C receiver에1813묶음 전송을 구현했다. 같은0/1/7raw행 fixture wire4861/6559/16774→922/1311/3486B, 모델2.994/4.244/11.097ms. 전체receiver byte일치·최대256run/1056map·취소8경우PASS. receiver18064B유지,추가상태소스9bit/ARM국소stack+40B. 새FIT/전체ARM/실기/60fps승인없음. [구현과 다음 단계](../../docs/nes-packed181-contract.ko.md)
 
 > 최신60fps 공동 설계: 배선 개선은 동작 신뢰성 기반이며60fps 전송 개선은 아니다. 기존전송 재검사: SPI2.625MHz/60Hz 총5468.75B, SNES normal 최소21.206ms/raw34.819ms, 동일section도전체전송. raw7행 오프라인packing10752→2160B이나전체record6457B로여전히부족. 생산packing·bank별delta·capture/export겹침을지금계약에포함한다. 새FIT/펌웨어/실기/60fps승인없음. [계약과 다음 순서](../../docs/nes-cadence181-contract.ko.md)

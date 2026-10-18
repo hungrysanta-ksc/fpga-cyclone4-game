@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "plan_id": "NES-PR127-REPLAN-20261018",
+  "date_kst": "2026-10-18",
+  "status": "approved_plan_implementation_deferred_until_pr127_merge",
+  "document": "docs/nes-pr127-retrospective.ko.md",
+  "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/127",
+  "reviewed_head": "201d777fc7c59336d462e81b8bd845108fc8d69d",
+  "scope": "Retrospective and handoff only; no new implementation, simulation, build, FIT, package or hardware run.",
+  "supersedes": "Next-work recommendations in historical236–246/HANDOFF; historical evidence remains unchanged.",
+  "roles": {
+    "production_hardware": "NES227",
+    "functional_reference": "NES240_unplaced",
+    "rejected": [
+      "NES241",
+      "NES246"
+    ],
+    "selected_next_implementation": null
+  },
+  "primary_goal": "SMB3(J) first-level sustained scrolling near60Hz at normal game speed, with sound, held/simultaneous input and menu return preserved.",
+  "acceptance": {
+    "reference_period_ms": 16.6666666667,
+    "actual_display_clock": "Measure NTSC cadence; do not assume exact60.000Hz.",
+    "metrics": [
+      "actual_display_intervals_distribution",
+      "maximum_display_gap",
+      "capture_to_display_age",
+      "sustained_scroll_separate_from_transition",
+      "sound_input_menu_regression"
+    ],
+    "not_acceptance": [
+      "CPU progress alone",
+      "transport ACK alone",
+      "intro/static average",
+      "frame discard or game slowdown",
+      "standalone FF reduction",
+      "same wire bytes required for every new encoding"
+    ]
+  },
+  "milestones": [
+    {
+      "id": "P0",
+      "status": "pending",
+      "deliverable": "Same-frame end-to-end ledger and residual map/slot/row change classification using existing scroll/heavy-scene evidence.",
+      "exit": "Source/SPI input-output-control/ARM/SNES costs, overlap/resource conflicts, model-vs-execution-vs-unknown and missing scenes explicitly identified."
+    },
+    {
+      "id": "P1",
+      "status": "pending",
+      "depends_on": [
+        "P0"
+      ],
+      "deliverable": "Compare limited240 dedicated logic, semantic field/row changes, and joint transfer/conversion relocation.",
+      "exit": "Select one candidate with defensible area/time/memory margin; reject or revisit assumptions if none qualifies. Unified sequencer remains optional."
+    },
+    {
+      "id": "P2",
+      "status": "pending",
+      "depends_on": [
+        "P1"
+      ],
+      "deliverable": "Selected minimal implementation and whole-board/runtime integration.",
+      "exit": "Changed-boundary reference/cancel checks, full-board fit/required STA/CDC/IO, full new-input ARM RUN/IRQ and final display ownership verified on matching sources."
+    },
+    {
+      "id": "P3",
+      "status": "pending",
+      "depends_on": [
+        "P2"
+      ],
+      "deliverable": "Paired hardware trial in SMB3 first-level sustained scroll.",
+      "exit": "Measured/display-correlated cadence, gaps and age plus usable scrolling/sound/input/menu evidence; transition reported separately. No all-mapper claim."
+    }
+  ],
+  "known_blockers": [
+    {
+      "id": "AREA",
+      "status": "open",
+      "evidence": "analysis/source246-verification.json",
+      "detail": "240 requires15898LE/1003LAB/54M9K;24616027/1011/55;device15408/963/56. Not placed."
+    },
+    {
+      "id": "SPI",
+      "status": "open",
+      "evidence": "docs/nes-path236-contract.ko.md",
+      "detail": "2.625MHz gives5468.75clockB/60Hz;ready4 max5341B(~97.7%) excludes unbounded gaps/stalls;ready1 max5941B."
+    },
+    {
+      "id": "SNES-BURSTS",
+      "status": "open",
+      "evidence": "docs/nes-runtime233-contract.ko.md",
+      "detail": "232 warm5/69 require2VBlank;map/OBJ bursts48..560charge over4192."
+    },
+    {
+      "id": "FULL-RUNTIME",
+      "status": "open",
+      "evidence": "docs/nes-runtime233-contract.ko.md",
+      "detail": "233 input remains227;1616B margin cannot approve full new-input RUN/IRQ."
+    },
+    {
+      "id": "SCENE-COVERAGE",
+      "status": "open",
+      "detail": "71observedframes are a narrow window, not sustained/all-mapper proof."
+    }
+  ],
+  "preserve": [
+    "production227",
+    "GBC164",
+    "save_SRAM_not_scratch",
+    "frozen_archives_and_failed_evidence",
+    "fetch_time_CHR_bank_latch_epoch",
+    "final_displayACK_commit_lease_retire",
+    "safe_partial_failure_and_common_reset"
+  ],
+  "do_not_repeat": [
+    "246micro_opcode_or_seed_loops",
+    "225horizontal_ringmap_as_new_feature",
+    "unmodified227_or044_hardware_trial",
+    "unmodified_FIT",
+    "full_private_archive_rehash_as_performance_progress"
+  ],
+  "later_priorities": [
+    "long_play_after_AV_cadence",
+    "safe_error_or_console_reset_logging",
+    "held_and_simultaneous_input_quality",
+    "mapper_compatibility",
+    "frame_skip_state_save_mute"
+  ],
+  "next_action": "PR127 머지 확인 후 최신 master에서 새 codex/ 브랜치·새 PR. 기존 스크롤 자료의 전체 예산/변경 원인(P0)과 표현·처리 위치 포함 후보 비교(P1)를 먼저 하고 근거 있는 한 후보만 구현한다. 단일 sequencer는 미선정. 생산227·GBC164·save SRAM 보존."
+}
