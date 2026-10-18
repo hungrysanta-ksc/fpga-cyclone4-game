@@ -5,8 +5,8 @@
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
   "authoritative_document": "docs/nes-wholepath247-contract.ko.md",
-  "assessment": "NES247:60프레임 우선,4/5/6KiB 고정 금지. 실제5818B maskbatch 기준 연속범위5종 비교:71frames×5=355재구성/1,454,080mapB·최종map DMA목록 일치,Python 음성27 PASS. exact packed는warm1941record(현재mask1915),gap16은1791record/+968B,넓은gap96은+95,120B. frame954는고정mark/manifest/coverage4.703ms로 새decoder0 가정도5종모두직렬예산초과. span단독 구현 보류;non-map bitmap/coverage+map manifest 공동개선으로 다음경계 갱신. 기존실제수신5818B/71commit/38fault·STOP/27of69조건부초과 보존. 새CPU·ARM·FIT·FPS근거없음/P2미선정.",
-  "next_action": "P1:현재5818B를기준으로 non-map received/valid bitmap 범위갱신·coverage와256B map manifest 전송/검증의 공동비용 비교. 기존8/16bit rangemark prototype은구배치/크기gate만의이력;166B validity/양bank/중복·section·partial failure·STOP·displayACK를지켜이식가능성검증. manifest축소도정확한쓰기집합·누락/중복/overlap/cold검사유지. 같은71frame에서남은decoder시간포함여유확인후형식선택;span단독/opcode/seed/shrink루프금지.4/5/6KiB고정금지. source449rowshift+ROM/mapper,952순서/9554198>4192,새ARM RUNIRQ/firstfault/CDCIO/displaylease-retireOPEN;P2미선정.",
+  "assessment": "NES247:기존16bit 범위bitmap을현재166B validity에이식、5818→5886B(+68)/영속상태+0B。 실제71commit1100ACK/4066624ref/290816mapB·71목록일치;387chunk×498bitmapB=192726검사/양bank·정렬0..15/오류STOP26 PASS. warmnonmap mark합계14.95%감소,12frame회귀최대.070772ms;조건부최대25.163→24.175ms/초과27→26. manifest단독모델은decoder0도14frame부족. range+exactpackedmap+정확manifest모델은두decoder잔여최소1.748512ms(실행미검증/나머지비용제외).6KiB산술여유98B도절대한도아님. P2미선정/생산보존.",
+  "next_action": "P1:exact packed map+정확한 compressed manifest 공동decoder의admission/범위/receipt/복사-DMA설정/service/검증전체를1.748512ms잔여상한과비교하고최소경계실측. source/ARM/dispatch/대기등미포함비용여유도필요;초과시작은bitmap/opcode반복대신전송·변환위치/겹침경계재비교. 기존DATA DMA/op7bulk와차이·mailbox불변/STOP수명명시.5886B결과보존/4·5·6KiB고정금지. source449rowshift+ROM/mapper,952순서/9554198>4192,새ARM RUNIRQ/firstfault/CDCIO/displaylease-retireOPEN;P2미선정.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -62,7 +62,9 @@
         "docs/nes-maskbatch247-contract.ko.md",
         "analysis/maskbatch247-verification.json",
         "docs/nes-spantrade247-contract.ko.md",
-        "analysis/spantrade247-verification.json"
+        "analysis/spantrade247-verification.json",
+        "docs/nes-validation247-contract.ko.md",
+        "analysis/validation247-verification.json"
       ]
     },
     {
@@ -3022,7 +3024,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES247:60프레임 우선,4/5/6KiB 고정 금지. 실제5818B maskbatch 기준 연속범위5종 비교:71frames×5=355재구성/1,454,080mapB·최종map DMA목록 일치,Python 음성27 PASS. exact packed는warm1941record(현재mask1915),gap16은1791record/+968B,넓은gap96은+95,120B. frame954는고정mark/manifest/coverage4.703ms로 새decoder0 가정도5종모두직렬예산초과. span단독 구현 보류;non-map bitmap/coverage+map manifest 공동개선으로 다음경계 갱신. 기존실제수신5818B/71commit/38fault·STOP/27of69조건부초과 보존. 새CPU·ARM·FIT·FPS근거없음/P2미선정.",
+  "summary": "NES247:기존16bit 범위bitmap을현재166B validity에이식、5818→5886B(+68)/영속상태+0B。 실제71commit1100ACK/4066624ref/290816mapB·71목록일치;387chunk×498bitmapB=192726검사/양bank·정렬0..15/오류STOP26 PASS. warmnonmap mark합계14.95%감소,12frame회귀최대.070772ms;조건부최대25.163→24.175ms/초과27→26. manifest단독모델은decoder0도14frame부족. range+exactpackedmap+정확manifest모델은두decoder잔여최소1.748512ms(실행미검증/나머지비용제외).6KiB산술여유98B도절대한도아님. P2미선정/생산보존.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3065,8 +3067,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-spantrade247-contract.ko.md",
-  "latest_development_evidence": "analysis/spantrade247-verification.json",
+  "latest_review": "docs/nes-validation247-contract.ko.md",
+  "latest_development_evidence": "analysis/validation247-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {

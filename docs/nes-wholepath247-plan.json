@@ -5,7 +5,7 @@
   "status": "P0_complete_P1_partial_no_candidate_selected",
   "document": "docs/nes-wholepath247-contract.ko.md",
   "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128",
-  "scope": "P0/P1 diagnostics:5818B actual pending-span receiver baseline retained;five linear-span wire/CPU scenarios lack joint margin;next non-map bitmap/coverage plus exact map manifest. No full60fps/product/FIT/new-input ARM approval.",
+  "scope": "P0/P1:actual5886B range validation plus exact manifest/span joint feasibility;two hypothetical decoders share minimum1.748512ms before unmeasured costs. No whole60fps/product/FIT/full new-input ARM approval.",
   "supersedes": "Current execution status after merged PR127; its goals and safeguards remain authoritative. Historical evidence unchanged.",
   "roles": {
     "production_hardware": "NES227",
@@ -86,7 +86,9 @@
         "docs/nes-maskbatch247-contract.ko.md",
         "analysis/maskbatch247-verification.json",
         "docs/nes-spantrade247-contract.ko.md",
-        "analysis/spantrade247-verification.json"
+        "analysis/spantrade247-verification.json",
+        "docs/nes-validation247-contract.ko.md",
+        "analysis/validation247-verification.json"
       ]
     },
     {
@@ -125,7 +127,7 @@
       "id": "SNES-BURSTS",
       "status": "open",
       "evidence": "docs/nes-runtime233-contract.ko.md",
-      "detail": "Actual pending-span71 leaveswarm952/955 multiVB;map+manifest+coverage3.513..10.826ms,conditionalwire+measured max25.163ms and27/69over. Per-recordservice retained.6KiB/24056of56onlycapacity arithmetic;source/mapper/wholeboard unresolved."
+      "detail": "Actual5886B range marker leaveswarm952/955multiVB;conditionalwire+measuredmax24.175ms/26of69over. Jointexactspan+compressedmanifest minimum1.748512ms for BOTH unmeasured decoders,excludingothercosts;not60fps. 240stillunplaced/ROM-mapper-fullARM unresolved."
     },
     {
       "id": "FULL-RUNTIME",
@@ -162,7 +164,7 @@
     "mapper_compatibility",
     "frame_skip_state_save_mute"
   ],
-  "next_action": "P1:현재5818B를기준으로 non-map received/valid bitmap 범위갱신·coverage와256B map manifest 전송/검증의 공동비용 비교. 기존8/16bit rangemark prototype은구배치/크기gate만의이력;166B validity/양bank/중복·section·partial failure·STOP·displayACK를지켜이식가능성검증. manifest축소도정확한쓰기집합·누락/중복/overlap/cold검사유지. 같은71frame에서남은decoder시간포함여유확인후형식선택;span단독/opcode/seed/shrink루프금지.4/5/6KiB고정금지. source449rowshift+ROM/mapper,952순서/9554198>4192,새ARM RUNIRQ/firstfault/CDCIO/displaylease-retireOPEN;P2미선정.",
+  "next_action": "P1:exact packed map+정확한 compressed manifest 공동decoder의admission/범위/receipt/복사-DMA설정/service/검증전체를1.748512ms잔여상한과비교하고최소경계실측. source/ARM/dispatch/대기등미포함비용여유도필요;초과시작은bitmap/opcode반복대신전송·변환위치/겹침경계재비교. 기존DATA DMA/op7bulk와차이·mailbox불변/STOP수명명시.5886B결과보존/4·5·6KiB고정금지. source449rowshift+ROM/mapper,952순서/9554198>4192,새ARM RUNIRQ/firstfault/CDCIO/displaylease-retireOPEN;P2미선정.",
   "base_commit": "b6958f24fbe2173d0879da07ef56fe3b507b5420",
   "branch": "codex/nes-wholepath-247",
   "previous_plan": "docs/nes-pr127-next-plan.json",
@@ -508,6 +510,47 @@
     "final_dma_lists_equal": true,
     "frame954_fixed_ms": 4.703018586626699,
     "decision": "DEFER_ISOLATED_SPAN_DECODER_COMPARE_JOINT_VALIDATION_AND_WIRE",
+    "qualified_for_p2": false
+  },
+  "p1_validation_followup": {
+    "selected": [
+      "validation-build02",
+      "validation-test02",
+      "validation-fault01",
+      "validation-coverage01",
+      "validation-analysis02",
+      "validation-protocol01"
+    ],
+    "document": "docs/nes-validation247-contract.ko.md",
+    "evidence": "analysis/validation247-verification.json",
+    "body_bytes": 5886,
+    "body_increase_bytes": 68,
+    "extra_persistent_bytes": 0,
+    "split6k_free_arithmetic": 98,
+    "actual_frames": 71,
+    "range_chunks": 387,
+    "bitmap_byte_checks": 192726,
+    "actual_fault_cases": 26,
+    "mark_total_reduction_percent": 14.954887211099399,
+    "mark_regression_frames": [
+      910,
+      911,
+      912,
+      916,
+      924,
+      931,
+      932,
+      940,
+      941,
+      942,
+      943,
+      972
+    ],
+    "conditional_serial_over": 26,
+    "manifest_only_negative_frames": 14,
+    "joint_exact_min_decoder_ms": 1.7485118136522955,
+    "joint_decoders_measured": false,
+    "wholeboard_fit": false,
     "qualified_for_p2": false
   }
 }
