@@ -1,0 +1,1053 @@
+{
+  "stage": 247,
+  "passed": true,
+  "scope": "Join recorded240/236/232 costs and observed231 decisions by frame, not FPS.\n\nAll inputs are read-only. Public output contains aggregate counts, never ROM,\ngraphics, physical CHR identities, raw observations or private absolute paths.\n",
+  "base_commit": "b6958f24fbe2173d0879da07ef56fe3b507b5420",
+  "frames": 71,
+  "warm_frames": 69,
+  "warm_totals": {
+    "map_word_causes": {
+      "physical_tag_change_at_address": 674,
+      "previously_unwritten_address": 504,
+      "palette_priority_only": 184
+    },
+    "slot_writes": {
+      "forced_zero": 69,
+      "alternate_bank_refill": 121,
+      "new_slot_key": 188,
+      "slot_key_replacement": 38
+    },
+    "slot_write_bytes": {
+      "forced_zero": 1104,
+      "alternate_bank_refill": 2560,
+      "new_slot_key": 4864,
+      "slot_key_replacement": 1216
+    },
+    "slot_kinds": {
+      "bg": 223,
+      "retained_hit": 6714,
+      "obj": 193
+    },
+    "source_changed_bytes": {
+      "map": 17890,
+      "row": 0,
+      "object": 2612,
+      "exception": 0,
+      "raster": 30340,
+      "palette_counts": 15
+    },
+    "map_changed_words": 1362,
+    "map_current_dirty_granules": 1079,
+    "map_sent_granules": 1915,
+    "map_destination_changed_granules": 1915,
+    "map_sent_without_current_dirty_granules": 836,
+    "map_sent_but_equal_destination_granules": 0,
+    "different_ordinal_matching_groups": 2,
+    "unique_different_ordinal_matching_groups": 2
+  },
+  "remaining_snes_frames": [
+    952,
+    954,
+    955,
+    963,
+    968
+  ],
+  "stats": {
+    "ready4_bytes": {
+      "mean": 3193.6666666666665,
+      "minimum": 2184,
+      "maximum": 5341
+    },
+    "ready1_bytes": {
+      "mean": 3678.8840579710145,
+      "minimum": 2425,
+      "maximum": 5941
+    },
+    "ready4_wire_ms": {
+      "mean": 9.733079365079366,
+      "minimum": 6.656,
+      "maximum": 16.277333333333335
+    },
+    "ready4_margin_bytes": {
+      "mean": 2275.0833333333335,
+      "minimum": 127.75,
+      "maximum": 3284.75
+    }
+  },
+  "p1_models": {
+    "batched16": {
+      "ready4_bytes": {
+        "mean": 2695.608695652174,
+        "minimum": 1884,
+        "maximum": 4759
+      },
+      "ready1_bytes": {
+        "mean": 2831.2608695652175,
+        "minimum": 2004,
+        "maximum": 4939
+      },
+      "charge_model": {
+        "mean": 3314.550724637681,
+        "minimum": 2192,
+        "maximum": 4752
+      },
+      "over_charge4192": [
+        952,
+        954,
+        955,
+        963,
+        968
+      ],
+      "over_ready1": [],
+      "additional_arm_retained_bytes": 0,
+      "new_input_arm_approved": false,
+      "snes_decoder_implemented": false,
+      "fpga_fit": false
+    },
+    "causal_words": {
+      "ready4_bytes": {
+        "mean": 2310.072463768116,
+        "minimum": 1613,
+        "maximum": 4219
+      },
+      "ready1_bytes": {
+        "mean": 2426.304347826087,
+        "minimum": 1713,
+        "maximum": 4359
+      },
+      "charge_model": {
+        "mean": 3275.7971014492755,
+        "minimum": 2152,
+        "maximum": 4724
+      },
+      "over_charge4192": [
+        952,
+        954,
+        955,
+        968
+      ],
+      "over_ready1": [],
+      "additional_arm_retained_bytes": 448,
+      "new_input_arm_approved": false,
+      "snes_decoder_implemented": false,
+      "fpga_fit": false
+    }
+  },
+  "analyzer_sha256": "6aae297c3111a63bbbf8a7cb1bee8b9f5089cc142fb58994a3b9a1c940762a6a",
+  "negative_counterexample": {
+    "frame": 955,
+    "last_display_only_map_update_words": 0,
+    "stale_target_bytes_if_skipped": 100
+  },
+  "evidence_levels": {
+    "source240": "reused RTL execution, recorded stimuli and isolated input SPI",
+    "output": "actual C packet/plan bytes; new observer replay exact355files and cost.csv",
+    "snes": "reused actual65816 execution with fileRPC; charge is a model",
+    "wire": "ready4/ready1 scheduling scenarios, not a shared-runtime upper bound",
+    "arm": "UNKNOWN runtime time and full new-input RUN/IRQ",
+    "physical": "not executed"
+  },
+  "physical_fps": false,
+  "full_pipeline_upper_bound_ms": null,
+  "selected_implementation": null,
+  "exclusions": [
+    "Do not sum source240 total and shared wire: source already includes overlapped input SPI.",
+    "Do not add232 one-tile bulk fixture wire to grouped236 model; different schedules.",
+    "seal_master_cycles includes fileRPC waits; not SNES CPU or runtime commit time.",
+    "different-ordinal matching is observational; duplicate rows and ownership need a separate decision.",
+    "physical_tag_change_at_address mixes actual content changes and row placement; not unique new tiles.",
+    "unused resident slots may lack an alternate-bank copy; refill is not slot replacement.",
+    "UNKNOWN values are null, never zero cost."
+  ],
+  "residual_frames": [
+    {
+      "frame": 952,
+      "generation": 48,
+      "bank": 1,
+      "phase": "warm",
+      "scene": "observed_first_level_scroll_window",
+      "transition_annotation": "UNKNOWN",
+      "source240": {
+        "cycles": {
+          "total": 93284,
+          "prepare": 34183,
+          "blocked": 34211,
+          "ackwait": 23270,
+          "transfer": 1620
+        },
+        "total_ms": 4.240130936,
+        "prepare_ms": 1.553754082,
+        "queries": {
+          "map": 957,
+          "row": 224,
+          "object": 28,
+          "exception": 0,
+          "raster": 224,
+          "palette": 32,
+          "raw": 512
+        },
+        "overlapped_payload_bytes": 550,
+        "input_only_executed_spi_bytes": 1237,
+        "prior234_minimal_schedule_cycles": 10145
+      },
+      "spi": {
+        "ready4_components": {
+          "source_payload": 790,
+          "source_block_framing": 15,
+          "source_control": 112,
+          "output_data_payload": 669,
+          "output_data_envelopes": 684,
+          "output_begin_seal": 272,
+          "plans": 667,
+          "plan_control": 60,
+          "pattern_control": 473,
+          "final_control": 67,
+          "ready4_scenario": 700
+        },
+        "ready4_bytes": 4509,
+        "ready1_bytes": 5049,
+        "ready4_wire_ms": 13.741714285714286,
+        "ready4_margin_bytes": 959.75,
+        "output_section_payload_bytes": {
+          "2": 480,
+          "4": 118,
+          "5": 71
+        },
+        "output_section_envelope_bytes": {
+          "2": 570,
+          "4": 57,
+          "5": 57
+        },
+        "runtime_gap_ms": null,
+        "full_shared_bus_upper_bound_ms": null
+      },
+      "arm": {
+        "transform_ms": null,
+        "full_new_input_run_irq_margin_bytes": null
+      },
+      "snes": {
+        "upload": {
+          "bg": {
+            "bytes": 64,
+            "commands": 2,
+            "charge": 256
+          },
+          "obj": {
+            "bytes": 512,
+            "commands": 9,
+            "charge": 1376
+          },
+          "map": {
+            "bytes": 1824,
+            "commands": 2,
+            "charge": 2016
+          },
+          "raw": {
+            "bytes": 48,
+            "commands": 1,
+            "charge": 144
+          }
+        },
+        "fixed_charge": 960,
+        "charge_model": 4752,
+        "charge_margin": -560,
+        "executed_vblanks": 2,
+        "file_rpc_seal_master_cycles": 48218252,
+        "runtime_commit_ms": null
+      },
+      "changes": {
+        "source_changed_bytes": {
+          "map": 24,
+          "row": 0,
+          "object": 56,
+          "exception": 0,
+          "raster": 370,
+          "palette_counts": 0
+        },
+        "map_word_causes": {
+          "physical_tag_change_at_address": 12
+        },
+        "map_changed_words": 12,
+        "map_semantic_changes_at_address": 12,
+        "map_current_dirty_granules": 12,
+        "map_sent_granules": 30,
+        "map_destination_changed_granules": 30,
+        "map_sent_without_current_dirty_granules": 18,
+        "map_sent_but_equal_destination_granules": 0,
+        "map_actual_destination_changed_bytes": 54,
+        "map_sent_bytes": 480,
+        "groups": 29,
+        "same_ordinal_matching_groups": 23,
+        "different_ordinal_matching_groups": 0,
+        "unique_different_ordinal_matching_groups": 0,
+        "ambiguous_different_ordinal_matches": 0,
+        "slot_writes": {
+          "forced_zero": 1,
+          "new_slot_key": 15,
+          "alternate_bank_refill": 4
+        },
+        "slot_write_bytes": {
+          "forced_zero": 16,
+          "new_slot_key": 432,
+          "alternate_bank_refill": 128
+        },
+        "slot_kinds": {
+          "bg": 4,
+          "retained_hit": 95,
+          "obj": 16
+        }
+      },
+      "capture_to_display_age_ms": null,
+      "p1_models": {
+        "batched16": {
+          "map_wire_bytes": 597,
+          "map_packets": 3,
+          "ready4_bytes": 3936,
+          "ready1_bytes": 4056,
+          "map_charge_model": 2016,
+          "total_charge_model": 4752,
+          "additional_arm_retained_bytes": 0,
+          "cold_policy": "warm",
+          "reconstructed_map_exact": true,
+          "implemented": false
+        },
+        "causal_words": {
+          "map_wire_bytes": 139,
+          "map_packets": 1,
+          "ready4_bytes": 3458,
+          "ready1_bytes": 3558,
+          "map_charge_model": 1988,
+          "total_charge_model": 4724,
+          "additional_arm_retained_bytes": 448,
+          "cold_policy": "warm",
+          "reconstructed_map_exact": true,
+          "implemented": false
+        },
+        "local_map_ceiling": {
+          "removable_map_wire_bytes": 1050,
+          "residual_ready4_bytes_without_added_control": 3459,
+          "current_map_evaluations": 957,
+          "new_compute_ms": null,
+          "fpga_area_delta": null,
+          "snes_code_bytes": null,
+          "implemented": false
+        }
+      }
+    },
+    {
+      "frame": 954,
+      "generation": 50,
+      "bank": 1,
+      "phase": "warm",
+      "scene": "observed_first_level_scroll_window",
+      "transition_annotation": "UNKNOWN",
+      "source240": {
+        "cycles": {
+          "total": 137200,
+          "prepare": 36917,
+          "blocked": 73693,
+          "ackwait": 23269,
+          "transfer": 3321
+        },
+        "total_ms": 6.2362888,
+        "prepare_ms": 1.678025318,
+        "queries": {
+          "map": 957,
+          "row": 224,
+          "object": 28,
+          "exception": 0,
+          "raster": 224,
+          "palette": 32,
+          "raw": 512
+        },
+        "overlapped_payload_bytes": 1437,
+        "input_only_executed_spi_bytes": 1934,
+        "prior234_minimal_schedule_cycles": 11378
+      },
+      "spi": {
+        "ready4_components": {
+          "source_payload": 1635,
+          "source_block_framing": 27,
+          "source_control": 176,
+          "output_data_payload": 941,
+          "output_data_envelopes": 760,
+          "output_begin_seal": 272,
+          "plans": 771,
+          "plan_control": 80,
+          "pattern_control": 172,
+          "final_control": 67,
+          "ready4_scenario": 440
+        },
+        "ready4_bytes": 5341,
+        "ready1_bytes": 5941,
+        "ready4_wire_ms": 16.277333333333335,
+        "ready4_margin_bytes": 127.75,
+        "output_section_payload_bytes": {
+          "2": 720,
+          "4": 118,
+          "5": 103
+        },
+        "output_section_envelope_bytes": {
+          "2": 608,
+          "4": 57,
+          "5": 95
+        },
+        "runtime_gap_ms": null,
+        "full_shared_bus_upper_bound_ms": null
+      },
+      "arm": {
+        "transform_ms": null,
+        "full_new_input_run_irq_margin_bytes": null
+      },
+      "snes": {
+        "upload": {
+          "bg": {
+            "bytes": 176,
+            "commands": 3,
+            "charge": 464
+          },
+          "obj": {
+            "bytes": 384,
+            "commands": 1,
+            "charge": 480
+          },
+          "map": {
+            "bytes": 1680,
+            "commands": 5,
+            "charge": 2160
+          },
+          "raw": {
+            "bytes": 112,
+            "commands": 1,
+            "charge": 208
+          }
+        },
+        "fixed_charge": 960,
+        "charge_model": 4272,
+        "charge_margin": -80,
+        "executed_vblanks": 2,
+        "file_rpc_seal_master_cycles": 55724824,
+        "runtime_commit_ms": null
+      },
+      "changes": {
+        "source_changed_bytes": {
+          "map": 871,
+          "row": 0,
+          "object": 72,
+          "exception": 0,
+          "raster": 740,
+          "palette_counts": 0
+        },
+        "map_word_causes": {
+          "previously_unwritten_address": 24,
+          "physical_tag_change_at_address": 52
+        },
+        "map_changed_words": 76,
+        "map_semantic_changes_at_address": 52,
+        "map_current_dirty_granules": 44,
+        "map_sent_granules": 45,
+        "map_destination_changed_granules": 45,
+        "map_sent_without_current_dirty_granules": 1,
+        "map_sent_but_equal_destination_granules": 0,
+        "map_actual_destination_changed_bytes": 101,
+        "map_sent_bytes": 720,
+        "groups": 29,
+        "same_ordinal_matching_groups": 17,
+        "different_ordinal_matching_groups": 0,
+        "unique_different_ordinal_matching_groups": 0,
+        "ambiguous_different_ordinal_matches": 0,
+        "slot_writes": {
+          "forced_zero": 1,
+          "new_slot_key": 21,
+          "alternate_bank_refill": 1
+        },
+        "slot_write_bytes": {
+          "forced_zero": 16,
+          "new_slot_key": 528,
+          "alternate_bank_refill": 16
+        },
+        "slot_kinds": {
+          "bg": 11,
+          "retained_hit": 93,
+          "obj": 12
+        }
+      },
+      "capture_to_display_age_ms": null,
+      "p1_models": {
+        "batched16": {
+          "map_wire_bytes": 886,
+          "map_packets": 4,
+          "ready4_bytes": 4759,
+          "ready1_bytes": 4939,
+          "map_charge_model": 2160,
+          "total_charge_model": 4272,
+          "additional_arm_retained_bytes": 0,
+          "cold_policy": "warm",
+          "reconstructed_map_exact": true,
+          "implemented": false
+        },
+        "causal_words": {
+          "map_wire_bytes": 346,
+          "map_packets": 2,
+          "ready4_bytes": 4219,
+          "ready1_bytes": 4359,
+          "map_charge_model": 2104,
+          "total_charge_model": 4216,
+          "additional_arm_retained_bytes": 448,
+          "cold_policy": "warm",
+          "reconstructed_map_exact": true,
+          "implemented": false
+        },
+        "local_map_ceiling": {
+          "removable_map_wire_bytes": 1328,
+          "residual_ready4_bytes_without_added_control": 4013,
+          "current_map_evaluations": 957,
+          "new_compute_ms": null,
+          "fpga_area_delta": null,
+          "snes_code_bytes": null,
+          "implemented": false
+        }
+      }
+    },
+    {
+      "frame": 955,
+      "generation": 51,
+      "bank": 0,
+      "phase": "warm",
+      "scene": "observed_first_level_scroll_window",
+      "transition_annotation": "UNKNOWN",
+      "source240": {
+        "cycles": {
+          "total": 87811,
+          "prepare": 32070,
+          "blocked": 31018,
+          "ackwait": 23270,
+          "transfer": 1453
+        },
+        "total_ms": 3.991361194,
+        "prepare_ms": 1.45770978,
+        "queries": {
+          "map": 957,
+          "row": 224,
+          "object": 28,
+          "exception": 0,
+          "raster": 224,
+          "palette": 32,
+          "raw": 512
+        },
+        "overlapped_payload_bytes": 527,
+        "input_only_executed_spi_bytes": 1158,
+        "prior234_minimal_schedule_cycles": 10123
+      },
+      "spi": {
+        "ready4_components": {
+          "source_payload": 714,
+          "source_block_framing": 12,
+          "source_control": 96,
+          "output_data_payload": 925,
+          "output_data_envelopes": 741,
+          "output_begin_seal": 272,
+          "plans": 803,
+          "plan_control": 80,
+          "pattern_control": 258,
+          "final_control": 67,
+          "ready4_scenario": 520
+        },
+        "ready4_bytes": 4488,
+        "ready1_bytes": 5068,
+        "ready4_wire_ms": 13.677714285714286,
+        "ready4_margin_bytes": 980.75,
+        "output_section_payload_bytes": {
+          "2": 704,
+          "4": 118,
+          "5": 103
+        },
+        "output_section_envelope_bytes": {
+          "2": 589,
+          "4": 57,
+          "5": 95
+        },
+        "runtime_gap_ms": null,
+        "full_shared_bus_upper_bound_ms": null
+      },
+      "arm": {
+        "transform_ms": null,
+        "full_new_input_run_irq_margin_bytes": null
+      },
+      "snes": {
+        "upload": {
+          "bg": {
+            "bytes": 160,
+            "commands": 2,
+            "charge": 352
+          },
+          "obj": {
+            "bytes": 448,
+            "commands": 4,
+            "charge": 832
+          },
+          "map": {
+            "bytes": 1664,
+            "commands": 4,
+            "charge": 2048
+          },
+          "raw": {
+            "bytes": 112,
+            "commands": 1,
+            "charge": 208
+          }
+        },
+        "fixed_charge": 960,
+        "charge_model": 4400,
+        "charge_margin": -208,
+        "executed_vblanks": 2,
+        "file_rpc_seal_master_cycles": 59679546,
+        "runtime_commit_ms": null
+      },
+      "changes": {
+        "source_changed_bytes": {
+          "map": 0,
+          "row": 0,
+          "object": 58,
+          "exception": 0,
+          "raster": 370,
+          "palette_counts": 0
+        },
+        "map_word_causes": {},
+        "map_changed_words": 0,
+        "map_semantic_changes_at_address": 0,
+        "map_current_dirty_granules": 0,
+        "map_sent_granules": 44,
+        "map_destination_changed_granules": 44,
+        "map_sent_without_current_dirty_granules": 44,
+        "map_sent_but_equal_destination_granules": 0,
+        "map_actual_destination_changed_bytes": 100,
+        "map_sent_bytes": 704,
+        "groups": 29,
+        "same_ordinal_matching_groups": 29,
+        "different_ordinal_matching_groups": 0,
+        "unique_different_ordinal_matching_groups": 0,
+        "ambiguous_different_ordinal_matches": 0,
+        "slot_writes": {
+          "forced_zero": 1,
+          "alternate_bank_refill": 13,
+          "new_slot_key": 10
+        },
+        "slot_write_bytes": {
+          "forced_zero": 16,
+          "alternate_bank_refill": 272,
+          "new_slot_key": 320
+        },
+        "slot_kinds": {
+          "bg": 10,
+          "retained_hit": 92,
+          "obj": 14
+        }
+      },
+      "capture_to_display_age_ms": null,
+      "p1_models": {
+        "batched16": {
+          "map_wire_bytes": 868,
+          "map_packets": 4,
+          "ready4_bytes": 3923,
+          "ready1_bytes": 4103,
+          "map_charge_model": 2048,
+          "total_charge_model": 4400,
+          "additional_arm_retained_bytes": 0,
+          "cold_policy": "warm",
+          "reconstructed_map_exact": true,
+          "implemented": false
+        },
+        "causal_words": {
+          "map_wire_bytes": 342,
+          "map_packets": 2,
+          "ready4_bytes": 3397,
+          "ready1_bytes": 3537,
+          "map_charge_model": 2006,
+          "total_charge_model": 4358,
+          "additional_arm_retained_bytes": 448,
+          "cold_policy": "warm",
+          "reconstructed_map_exact": true,
+          "implemented": false
+        },
+        "local_map_ceiling": {
+          "removable_map_wire_bytes": 1293,
+          "residual_ready4_bytes_without_added_control": 3195,
+          "current_map_evaluations": 957,
+          "new_compute_ms": null,
+          "fpga_area_delta": null,
+          "snes_code_bytes": null,
+          "implemented": false
+        }
+      }
+    },
+    {
+      "frame": 963,
+      "generation": 59,
+      "bank": 0,
+      "phase": "warm",
+      "scene": "observed_first_level_scroll_window",
+      "transition_annotation": "UNKNOWN",
+      "source240": {
+        "cycles": {
+          "total": 96142,
+          "prepare": 33707,
+          "blocked": 36795,
+          "ackwait": 23270,
+          "transfer": 2370
+        },
+        "total_ms": 4.370038468000001,
+        "prepare_ms": 1.532117978,
+        "queries": {
+          "map": 957,
+          "row": 224,
+          "object": 22,
+          "exception": 0,
+          "raster": 224,
+          "palette": 32,
+          "raw": 512
+        },
+        "overlapped_payload_bytes": 968,
+        "input_only_executed_spi_bytes": 1361,
+        "prior234_minimal_schedule_cycles": 11567
+      },
+      "spi": {
+        "ready4_components": {
+          "source_payload": 1167,
+          "source_block_framing": 18,
+          "source_control": 128,
+          "output_data_payload": 1013,
+          "output_data_envelopes": 836,
+          "output_begin_seal": 272,
+          "plans": 539,
+          "plan_control": 60,
+          "pattern_control": 129,
+          "final_control": 67,
+          "ready4_scenario": 420
+        },
+        "ready4_bytes": 4649,
+        "ready1_bytes": 5309,
+        "ready4_wire_ms": 14.168380952380952,
+        "ready4_margin_bytes": 819.75,
+        "output_section_payload_bytes": {
+          "2": 800,
+          "4": 94,
+          "5": 119
+        },
+        "output_section_envelope_bytes": {
+          "2": 703,
+          "4": 57,
+          "5": 76
+        },
+        "runtime_gap_ms": null,
+        "full_shared_bus_upper_bound_ms": null
+      },
+      "arm": {
+        "transform_ms": null,
+        "full_new_input_run_irq_margin_bytes": null
+      },
+      "snes": {
+        "upload": {
+          "bg": {
+            "bytes": 208,
+            "commands": 2,
+            "charge": 400
+          },
+          "obj": {
+            "bytes": 96,
+            "commands": 1,
+            "charge": 192
+          },
+          "map": {
+            "bytes": 2000,
+            "commands": 5,
+            "charge": 2480
+          },
+          "raw": {
+            "bytes": 112,
+            "commands": 1,
+            "charge": 208
+          }
+        },
+        "fixed_charge": 960,
+        "charge_model": 4240,
+        "charge_margin": -48,
+        "executed_vblanks": 2,
+        "file_rpc_seal_master_cycles": 54999750,
+        "runtime_commit_ms": null
+      },
+      "changes": {
+        "source_changed_bytes": {
+          "map": 843,
+          "row": 0,
+          "object": 115,
+          "exception": 0,
+          "raster": 925,
+          "palette_counts": 1
+        },
+        "map_word_causes": {
+          "previously_unwritten_address": 24,
+          "palette_priority_only": 8
+        },
+        "map_changed_words": 32,
+        "map_semantic_changes_at_address": 0,
+        "map_current_dirty_granules": 24,
+        "map_sent_granules": 50,
+        "map_destination_changed_granules": 50,
+        "map_sent_without_current_dirty_granules": 26,
+        "map_sent_but_equal_destination_granules": 0,
+        "map_actual_destination_changed_bytes": 126,
+        "map_sent_bytes": 800,
+        "groups": 29,
+        "same_ordinal_matching_groups": 25,
+        "different_ordinal_matching_groups": 0,
+        "unique_different_ordinal_matching_groups": 0,
+        "ambiguous_different_ordinal_matches": 0,
+        "slot_writes": {
+          "forced_zero": 1,
+          "alternate_bank_refill": 12,
+          "new_slot_key": 3
+        },
+        "slot_write_bytes": {
+          "forced_zero": 16,
+          "alternate_bank_refill": 192,
+          "new_slot_key": 96
+        },
+        "slot_kinds": {
+          "bg": 13,
+          "retained_hit": 92,
+          "obj": 3
+        }
+      },
+      "capture_to_display_age_ms": null,
+      "p1_models": {
+        "batched16": {
+          "map_wire_bytes": 976,
+          "map_packets": 4,
+          "ready4_bytes": 3962,
+          "ready1_bytes": 4122,
+          "map_charge_model": 2480,
+          "total_charge_model": 4240,
+          "additional_arm_retained_bytes": 0,
+          "cold_policy": "warm",
+          "reconstructed_map_exact": true,
+          "implemented": false
+        },
+        "causal_words": {
+          "map_wire_bytes": 434,
+          "map_packets": 2,
+          "ready4_bytes": 3420,
+          "ready1_bytes": 3540,
+          "map_charge_model": 2418,
+          "total_charge_model": 4178,
+          "additional_arm_retained_bytes": 448,
+          "cold_policy": "warm",
+          "reconstructed_map_exact": true,
+          "implemented": false
+        },
+        "local_map_ceiling": {
+          "removable_map_wire_bytes": 1503,
+          "residual_ready4_bytes_without_added_control": 3146,
+          "current_map_evaluations": 957,
+          "new_compute_ms": null,
+          "fpga_area_delta": null,
+          "snes_code_bytes": null,
+          "implemented": false
+        }
+      }
+    },
+    {
+      "frame": 968,
+      "generation": 64,
+      "bank": 1,
+      "phase": "warm",
+      "scene": "observed_first_level_scroll_window",
+      "transition_annotation": "UNKNOWN",
+      "source240": {
+        "cycles": {
+          "total": 95178,
+          "prepare": 35184,
+          "blocked": 35089,
+          "ackwait": 23270,
+          "transfer": 1635
+        },
+        "total_ms": 4.326220812,
+        "prepare_ms": 1.599253536,
+        "queries": {
+          "map": 957,
+          "row": 224,
+          "object": 22,
+          "exception": 0,
+          "raster": 224,
+          "palette": 32,
+          "raw": 512
+        },
+        "overlapped_payload_bytes": 554,
+        "input_only_executed_spi_bytes": 1260,
+        "prior234_minimal_schedule_cycles": 10134
+      },
+      "spi": {
+        "ready4_components": {
+          "source_payload": 797,
+          "source_block_framing": 15,
+          "source_control": 112,
+          "output_data_payload": 789,
+          "output_data_envelopes": 779,
+          "output_begin_seal": 272,
+          "plans": 403,
+          "plan_control": 40,
+          "pattern_control": 387,
+          "final_control": 67,
+          "ready4_scenario": 660
+        },
+        "ready4_bytes": 4321,
+        "ready1_bytes": 4921,
+        "ready4_wire_ms": 13.168761904761904,
+        "ready4_margin_bytes": 1147.75,
+        "output_section_payload_bytes": {
+          "2": 528,
+          "4": 94,
+          "5": 167
+        },
+        "output_section_envelope_bytes": {
+          "2": 627,
+          "4": 57,
+          "5": 95
+        },
+        "runtime_gap_ms": null,
+        "full_shared_bus_upper_bound_ms": null
+      },
+      "arm": {
+        "transform_ms": null,
+        "full_new_input_run_irq_margin_bytes": null
+      },
+      "snes": {
+        "upload": {
+          "bg": {
+            "bytes": 16,
+            "commands": 1,
+            "charge": 112
+          },
+          "obj": {
+            "bytes": 352,
+            "commands": 8,
+            "charge": 1120
+          },
+          "map": {
+            "bytes": 1968,
+            "commands": 3,
+            "charge": 2256
+          },
+          "raw": {
+            "bytes": 176,
+            "commands": 1,
+            "charge": 272
+          }
+        },
+        "fixed_charge": 960,
+        "charge_model": 4720,
+        "charge_margin": -528,
+        "executed_vblanks": 2,
+        "file_rpc_seal_master_cycles": 52149870,
+        "runtime_commit_ms": null
+      },
+      "changes": {
+        "source_changed_bytes": {
+          "map": 20,
+          "row": 0,
+          "object": 60,
+          "exception": 0,
+          "raster": 370,
+          "palette_counts": 1
+        },
+        "map_word_causes": {
+          "physical_tag_change_at_address": 18
+        },
+        "map_changed_words": 18,
+        "map_semantic_changes_at_address": 18,
+        "map_current_dirty_granules": 18,
+        "map_sent_granules": 33,
+        "map_destination_changed_granules": 33,
+        "map_sent_without_current_dirty_granules": 15,
+        "map_sent_but_equal_destination_granules": 0,
+        "map_actual_destination_changed_bytes": 57,
+        "map_sent_bytes": 528,
+        "groups": 29,
+        "same_ordinal_matching_groups": 20,
+        "different_ordinal_matching_groups": 0,
+        "unique_different_ordinal_matching_groups": 0,
+        "ambiguous_different_ordinal_matches": 0,
+        "slot_writes": {
+          "forced_zero": 1,
+          "slot_key_replacement": 6,
+          "alternate_bank_refill": 5
+        },
+        "slot_write_bytes": {
+          "forced_zero": 16,
+          "slot_key_replacement": 192,
+          "alternate_bank_refill": 160
+        },
+        "slot_kinds": {
+          "bg": 1,
+          "retained_hit": 96,
+          "obj": 11
+        }
+      },
+      "capture_to_display_age_ms": null,
+      "p1_models": {
+        "batched16": {
+          "map_wire_bytes": 651,
+          "map_packets": 3,
+          "ready4_bytes": 3657,
+          "ready1_bytes": 3817,
+          "map_charge_model": 2256,
+          "total_charge_model": 4720,
+          "additional_arm_retained_bytes": 0,
+          "cold_policy": "warm",
+          "reconstructed_map_exact": true,
+          "implemented": false
+        },
+        "causal_words": {
+          "map_wire_bytes": 151,
+          "map_packets": 1,
+          "ready4_bytes": 3157,
+          "ready1_bytes": 3277,
+          "map_charge_model": 2214,
+          "total_charge_model": 4678,
+          "additional_arm_retained_bytes": 448,
+          "cold_policy": "warm",
+          "reconstructed_map_exact": true,
+          "implemented": false
+        },
+        "local_map_ceiling": {
+          "removable_map_wire_bytes": 1155,
+          "residual_ready4_bytes_without_added_control": 3166,
+          "current_map_evaluations": 957,
+          "new_compute_ms": null,
+          "fpga_area_delta": null,
+          "snes_code_bytes": null,
+          "implemented": false
+        }
+      }
+    }
+  ],
+  "consumed_inputs": 372,
+  "private_result_sha256": "7d87e406479ca96154419a646135a0f67a7a745f4711d62359b6ece948007e4d",
+  "input_hashes": {
+    "probes/nes-delta231/manifest.json": "cd7ce0e29324f69710e2dcf7f1fe34ed296e52988e542920f15386adbe48796f",
+    "probes/nes-source240/manifest.json": "69f79190a775c6a3a1b812ac7dc7620853ffba119961cddafca41baa1dba622c",
+    "probes/nes-path236/manifest.json": "08ad2a199840e7618a323c86c40c331e6432f5948bbb3123ab4cbb4f9f09b028",
+    "probes/nes-sparse232/manifest.json": "29c889b5342e356c80d91e7f8e17b9c359f3f72e6c6039ebf9139f689c9475a9",
+    "probes/nes-wholepath247/observer03/cost.csv": "27d94519749eb4aa18b28888a02753461e5cc2e525961f48529c74cfb28dadb2",
+    "probes/nes-wholepath247/observer03/map247.csv": "6d515ad70eece6f6432407484dd6d726cc1b258332d48c7c6114cfebd5009f98",
+    "probes/nes-wholepath247/observer03/slot247.csv": "eda47b6d9e23a70a889a3360c753ccb7de7dc73e5eb734d011db422502f9344d",
+    "probes/nes-wholepath247/observer03/result.json": "52595621f7741bf76e8f4253692b4e0993d2437f42fb0cb97ed68e727af43511",
+    "probes/nes-source240/test01/result.json": "5052b26125837dc5281a0b1737d22c11bbfa4591dbf2ef974c05626eda493f38",
+    "probes/nes-source240/test01/cycles.csv": "1d2422d2c29e47a9c945859a011dcdaf54cfbc1ebca31ab65481f4eb541aac2a",
+    "probes/nes-path236/analysis02/result.json": "4331c22b84eb8b4ea25a4624764ddc073c540e18308105d342fbff7b8868cd04",
+    "probes/nes-delta231/analysis03/result.json": "3c311e02758d87e5f6b6d0215c33af3d9385646b1bb93d986b56b594adbdf43e",
+    "probes/nes-sparse232/analysis02/result.json": "1f96736c050cd744d7cb7b09a1db8eebd96a1100370063d235ef69006159709c",
+    "probes/nes-sparse232/scroll02/result.json": "25d784c7097324c25cfca43062959ef6a6358c9fbefbf052569f8a4f8c02957d"
+  },
+  "ledger_sha256": "5f8164a32729465aa56555c32628b6ae7a853de67463295791166fb73ff0e282"
+}
