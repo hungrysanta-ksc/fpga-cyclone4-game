@@ -5,7 +5,7 @@
   "status": "P0_complete_P1_partial_no_candidate_selected",
   "document": "docs/nes-wholepath247-contract.ko.md",
   "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128",
-  "scope": "P0 observer;P1 representation/relocation, SNES traversal/batch ordering, range-mask size rejection and existing193 grouping receive timings. No product/full FPGA/new-input ARM/hardware change.",
+  "scope": "P0 observer;P1 representation/relocation and SNES diagnostics, now joint map wire/receipt/initialization/DMA budgets. No product/full FPGA/new-input ARM/hardware change.",
   "supersedes": "Current execution status after merged PR127; its goals and safeguards remain authoritative. Historical evidence unchanged.",
   "roles": {
     "production_hardware": "NES227",
@@ -74,7 +74,9 @@
         "analysis/batchorder247-verification.json",
         "analysis/order247-verification.json",
         "docs/nes-coalesce247-contract.ko.md",
-        "analysis/coalesce247-verification.json"
+        "analysis/coalesce247-verification.json",
+        "docs/nes-mapjoint247-contract.ko.md",
+        "analysis/mapjoint247-verification.json"
       ]
     },
     {
@@ -113,7 +115,7 @@
       "id": "SNES-BURSTS",
       "status": "open",
       "evidence": "docs/nes-runtime233-contract.ko.md",
-      "detail": "193 grouping fixture71 exact,178chunk,3903B unchanged consumer. Warmmark3.08..11.59ms/coverage1.79ms,map80.9% ofmark. Range16/8 mask3971/3950B exceed3936 before functional tests.952955963multiVBlank.Full runtime/STOP/FPGA open."
+      "detail": "Word map models leave9524308/9554198>4192;pattern order relaxation gives9524180 but955still4198. Mask8 newdecode+coverage optimistic minimum1.47114ms,oldcoverage sensitivity954 already0.32443ms over.3936B and full time unverified."
     },
     {
       "id": "FULL-RUNTIME",
@@ -150,7 +152,7 @@
     "mapper_compatibility",
     "frame_skip_state_save_mute"
   ],
-  "next_action": "P1:map 의미word/row 표현·전송·수신검증을 같은frame에서 공동비교. 실제 변경원인/16B과전송/SPI/ARM상태/SNES3936B·mark·3VBlankburst를 함께계산. 기존193타일묶음·dirty_span231인접15개240B합치기를새기능으로반복하지말것. 범위mask3971/3950B opcode·seed미세축소 금지. 중복/target validity/partial failure/STOP/coverage/finaldisplayACK 유지. 의미449B/rowshift 전체LE/LAB/mapper+새ARM RUN/IRQ·commit/lease/retire와공동여유가있는후보만P2.",
+  "next_action": "P1:mask8의완전한map수신 경계(record+manifest완료+초기화flags+기존pattern/raw coverage+STOP/finalACK)를하나로설계하고3936B/전체decode+coverage시간 gate를확인. 단독mask opcode/seed/3971·3950B미세축소 금지. 동시에952순서비용과955잔여전송을표시소유권·전체일정에서해결할근거필요. Whole449B/rowshift LE/LAB/mapper+새ARM RUN/IRQ+firstfault/CDC/IO/commit·lease·retire 여유없이P2/FIT/실기승인금지.",
   "base_commit": "b6958f24fbe2173d0879da07ef56fe3b507b5420",
   "branch": "codex/nes-wholepath-247",
   "previous_plan": "docs/nes-pr127-next-plan.json",
@@ -321,6 +323,29 @@
     ],
     "warm_map_mark_clocks": 9044730,
     "warm_all_mark_clocks": 11180076,
+    "qualified_for_p2": false
+  },
+  "p1_mapjoint_followup": {
+    "selected": "mapjoint03",
+    "document": "docs/nes-mapjoint247-contract.ko.md",
+    "evidence": "analysis/mapjoint247-verification.json",
+    "word_formats": 3,
+    "exact_map_bytes": 872448,
+    "policy_negatives": 34,
+    "warm_needed_words": 2607,
+    "warm_old_sent_words": 15320,
+    "preferred_wire_model": "mask8",
+    "mask8_ready4_max": 4095,
+    "mask8_ready1_max": 4275,
+    "extra_manifest_wire": 262,
+    "arm_extra_retained": 448,
+    "snes_naive_bitmap_extra": 672,
+    "snes_initialization_flags_extra_logical": 161,
+    "new_decoder_and_coverage_budget_min_ms": 1.4711446287167789,
+    "remaining_charge_over": [
+      952,
+      955
+    ],
     "qualified_for_p2": false
   }
 }

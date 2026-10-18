@@ -1,0 +1,737 @@
+{
+  "passed": true,
+  "stage": 247,
+  "scope": "Joint map representation, receipt coverage and wire/DMA feasibility models.\n\nIndependent Python decoding of private observed maps; no C/65816/RTL change.\nNew decoder timing and code size remain unknown, not borrowed from old loops.\n",
+  "frames": 71,
+  "word_formats": 3,
+  "exact_map_bytes": 872448,
+  "policy_negative_cases": 34,
+  "warm": {
+    "current_changed_words": {
+      "minimum": 0,
+      "maximum": 79,
+      "total": 1362
+    },
+    "causal_target_words": {
+      "minimum": 12,
+      "maximum": 99,
+      "total": 2607
+    },
+    "actual_target_different_words": {
+      "minimum": 12,
+      "maximum": 99,
+      "total": 2607
+    },
+    "causal_equal_target_words": {
+      "minimum": 0,
+      "maximum": 0,
+      "total": 0
+    },
+    "catchup_words": {
+      "minimum": 0,
+      "maximum": 79,
+      "total": 1245
+    },
+    "sent_granules": {
+      "minimum": 7,
+      "maximum": 50,
+      "total": 1915
+    },
+    "old_sent_word_capacity": {
+      "minimum": 56,
+      "maximum": 400,
+      "total": 15320
+    },
+    "changed_rows": {
+      "minimum": 7,
+      "maximum": 40,
+      "total": 1763
+    },
+    "map_calls_measured": {
+      "minimum": 7,
+      "maximum": 42,
+      "total": 1779
+    },
+    "map_master_clocks": {
+      "minimum": 35880,
+      "maximum": 217830,
+      "total": 9044730
+    },
+    "plan_wire_old": {
+      "minimum": 63,
+      "maximum": 883,
+      "total": 16347
+    },
+    "plan_wire_new": {
+      "minimum": 34,
+      "maximum": 237,
+      "total": 5192
+    },
+    "pattern_chunks_old": {
+      "minimum": 1,
+      "maximum": 11,
+      "total": 187
+    },
+    "pattern_chunks_new": {
+      "minimum": 1,
+      "maximum": 8,
+      "total": 166
+    },
+    "original_map_wire": {
+      "minimum": 245,
+      "maximum": 1582,
+      "total": 64357
+    },
+    "word_min_map_charge": {
+      "minimum": 600,
+      "maximum": 2718,
+      "total": 120110
+    },
+    "pattern_batch_charge": {
+      "minimum": 112,
+      "maximum": 1216,
+      "total": 24288
+    },
+    "pattern_global_order_minimum": {
+      "minimum": 112,
+      "maximum": 1088,
+      "total": 23968
+    },
+    "raw_charge": {
+      "minimum": 144,
+      "maximum": 272,
+      "total": 11984
+    },
+    "fixed_charge": {
+      "minimum": 960,
+      "maximum": 960,
+      "total": 66240
+    },
+    "corrected_current_wire_plus_mark_coverage_ms": {
+      "minimum": 12.241041889269113,
+      "maximum": 28.067878871277134,
+      "total": 1360.5039971738893
+    },
+    "word_charge_with_pattern_order_relaxed": {
+      "minimum": 2152,
+      "maximum": 4198,
+      "total": 222302
+    }
+  },
+  "models": {
+    "current16": {
+      "map_data_wire_bytes": {
+        "minimum": 245,
+        "maximum": 1582,
+        "total": 64357
+      },
+      "map_manifest_extra_wire": {
+        "minimum": 0,
+        "maximum": 0,
+        "total": 0
+      },
+      "map_packets": {
+        "minimum": 7,
+        "maximum": 42,
+        "total": 1779
+      },
+      "manifest_packets": {
+        "minimum": 0,
+        "maximum": 0,
+        "total": 0
+      },
+      "records": {
+        "minimum": 7,
+        "maximum": 50,
+        "total": 1915
+      },
+      "value_words": {
+        "minimum": 56,
+        "maximum": 400,
+        "total": 15320
+      },
+      "bitmap_mask_bytes": {
+        "minimum": 0,
+        "maximum": 0,
+        "total": 0
+      },
+      "ready4": {
+        "minimum": 2416,
+        "maximum": 5017,
+        "total": 234968
+      },
+      "ready1": {
+        "minimum": 2596,
+        "maximum": 5617,
+        "total": 268448
+      },
+      "charge": {
+        "minimum": 2192,
+        "maximum": 4336,
+        "total": 225296
+      },
+      "dma_commands": {
+        "minimum": 3,
+        "maximum": 13,
+        "total": 414
+      },
+      "dma_bytes": {
+        "minimum": 464,
+        "maximum": 2544,
+        "total": 119312
+      },
+      "optimistic_map_decode_and_coverage_budget_ms": {
+        "minimum": -1.3387601331879821,
+        "maximum": 8.06265388265295,
+        "total": 334.48351753352006
+      },
+      "budget_if_old_coverage_time_retained_ms": {
+        "minimum": -3.1343328479697026,
+        "maximum": 6.266894924461337,
+        "total": 210.626342017265
+      },
+      "over_ready4": [],
+      "over_ready1": [
+        938,
+        954,
+        970
+      ],
+      "over_charge": [
+        952,
+        955,
+        963
+      ],
+      "negative_decoder_budget": [
+        954,
+        970
+      ],
+      "negative_if_old_coverage_retained": [
+        938,
+        952,
+        954,
+        955,
+        962,
+        963,
+        970
+      ],
+      "qualified_for_p2": false
+    },
+    "batched16": {
+      "map_data_wire_bytes": {
+        "minimum": 145,
+        "maximum": 976,
+        "total": 37871
+      },
+      "map_manifest_extra_wire": {
+        "minimum": 0,
+        "maximum": 0,
+        "total": 0
+      },
+      "map_packets": {
+        "minimum": 1,
+        "maximum": 4,
+        "total": 179
+      },
+      "manifest_packets": {
+        "minimum": 0,
+        "maximum": 0,
+        "total": 0
+      },
+      "records": {
+        "minimum": 7,
+        "maximum": 50,
+        "total": 1915
+      },
+      "value_words": {
+        "minimum": 56,
+        "maximum": 400,
+        "total": 15320
+      },
+      "bitmap_mask_bytes": {
+        "minimum": 0,
+        "maximum": 0,
+        "total": 0
+      },
+      "ready4": {
+        "minimum": 2254,
+        "maximum": 4435,
+        "total": 200602
+      },
+      "ready1": {
+        "minimum": 2374,
+        "maximum": 4615,
+        "total": 209962
+      },
+      "charge": {
+        "minimum": 2192,
+        "maximum": 4336,
+        "total": 225296
+      },
+      "dma_commands": {
+        "minimum": 3,
+        "maximum": 13,
+        "total": 414
+      },
+      "dma_bytes": {
+        "minimum": 464,
+        "maximum": 2544,
+        "total": 119312
+      },
+      "optimistic_map_decode_and_coverage_budget_ms": {
+        "minimum": 0.43495415252630387,
+        "maximum": 9.12322531122438,
+        "total": 439.21799372399624
+      },
+      "budget_if_old_coverage_time_retained_ms": {
+        "minimum": -1.3606185622554166,
+        "maximum": 7.327466353032765,
+        "total": 315.3608182077412
+      },
+      "over_ready4": [],
+      "over_ready1": [],
+      "over_charge": [
+        952,
+        955,
+        963
+      ],
+      "negative_decoder_budget": [],
+      "negative_if_old_coverage_retained": [
+        954,
+        970
+      ],
+      "qualified_for_p2": false
+    },
+    "row64": {
+      "map_data_wire_bytes": {
+        "minimum": 524,
+        "maximum": 2807,
+        "total": 123703
+      },
+      "map_manifest_extra_wire": {
+        "minimum": 0,
+        "maximum": 0,
+        "total": 0
+      },
+      "map_packets": {
+        "minimum": 4,
+        "maximum": 13,
+        "total": 579
+      },
+      "manifest_packets": {
+        "minimum": 0,
+        "maximum": 0,
+        "total": 0
+      },
+      "records": {
+        "minimum": 7,
+        "maximum": 40,
+        "total": 1763
+      },
+      "value_words": {
+        "minimum": 224,
+        "maximum": 1280,
+        "total": 56416
+      },
+      "bitmap_mask_bytes": {
+        "minimum": 0,
+        "maximum": 0,
+        "total": 0
+      },
+      "ready4": {
+        "minimum": 2675,
+        "maximum": 5851,
+        "total": 288334
+      },
+      "ready1": {
+        "minimum": 2815,
+        "maximum": 6151,
+        "total": 303794
+      },
+      "charge": {
+        "minimum": 2288,
+        "maximum": 4448,
+        "total": 235120
+      },
+      "dma_commands": {
+        "minimum": 3,
+        "maximum": 12,
+        "total": 412
+      },
+      "dma_bytes": {
+        "minimum": 656,
+        "maximum": 2720,
+        "total": 129328
+      },
+      "optimistic_map_decode_and_coverage_budget_ms": {
+        "minimum": -3.4751410855689358,
+        "maximum": 7.103305640933749,
+        "total": 171.84427943828197
+      },
+      "budget_if_old_coverage_time_retained_ms": {
+        "minimum": -5.270713800350656,
+        "maximum": 5.306894830807509,
+        "total": 47.9871039220269
+      },
+      "over_ready4": [
+        931,
+        938,
+        954,
+        970
+      ],
+      "over_ready1": [
+        931,
+        938,
+        954,
+        963,
+        970
+      ],
+      "over_charge": [
+        938,
+        952,
+        954,
+        955,
+        962,
+        963,
+        968
+      ],
+      "negative_decoder_budget": [
+        931,
+        938,
+        952,
+        954,
+        955,
+        957,
+        962,
+        963,
+        968,
+        970
+      ],
+      "negative_if_old_coverage_retained": [
+        909,
+        915,
+        919,
+        922,
+        925,
+        931,
+        938,
+        941,
+        947,
+        951,
+        952,
+        954,
+        955,
+        957,
+        960,
+        962,
+        963,
+        964,
+        967,
+        968,
+        970,
+        971,
+        973
+      ],
+      "qualified_for_p2": false
+    },
+    "pairs": {
+      "map_data_wire_bytes": {
+        "minimum": 68,
+        "maximum": 436,
+        "total": 12008
+      },
+      "map_manifest_extra_wire": {
+        "minimum": 262,
+        "maximum": 262,
+        "total": 18078
+      },
+      "map_packets": {
+        "minimum": 1,
+        "maximum": 2,
+        "total": 79
+      },
+      "manifest_packets": {
+        "minimum": 2,
+        "maximum": 2,
+        "total": 138
+      },
+      "records": {
+        "minimum": 12,
+        "maximum": 99,
+        "total": 2607
+      },
+      "value_words": {
+        "minimum": 12,
+        "maximum": 99,
+        "total": 2607
+      },
+      "bitmap_mask_bytes": {
+        "minimum": 0,
+        "maximum": 0,
+        "total": 0
+      },
+      "ready4": {
+        "minimum": 2266,
+        "maximum": 4159,
+        "total": 193017
+      },
+      "ready1": {
+        "minimum": 2386,
+        "maximum": 4339,
+        "total": 202937
+      },
+      "charge": {
+        "minimum": 2152,
+        "maximum": 4308,
+        "total": 222622
+      },
+      "dma_commands": {
+        "minimum": 3,
+        "maximum": 13,
+        "total": 414
+      },
+      "dma_bytes": {
+        "minimum": 424,
+        "maximum": 2502,
+        "total": 116638
+      },
+      "optimistic_map_decode_and_coverage_budget_ms": {
+        "minimum": 1.2760970096691597,
+        "maximum": 9.086653882652952,
+        "total": 462.33418420018677
+      },
+      "budget_if_old_coverage_time_retained_ms": {
+        "minimum": -0.5194757051125607,
+        "maximum": 7.2908949244613375,
+        "total": 338.4770086839317
+      },
+      "over_ready4": [],
+      "over_ready1": [],
+      "over_charge": [
+        952,
+        955
+      ],
+      "negative_decoder_budget": [],
+      "negative_if_old_coverage_retained": [
+        954
+      ],
+      "qualified_for_p2": false
+    },
+    "mask8": {
+      "map_data_wire_bytes": {
+        "minimum": 68,
+        "maximum": 338,
+        "total": 10564
+      },
+      "map_manifest_extra_wire": {
+        "minimum": 262,
+        "maximum": 262,
+        "total": 18078
+      },
+      "map_packets": {
+        "minimum": 1,
+        "maximum": 2,
+        "total": 76
+      },
+      "manifest_packets": {
+        "minimum": 2,
+        "maximum": 2,
+        "total": 138
+      },
+      "records": {
+        "minimum": 7,
+        "maximum": 50,
+        "total": 1915
+      },
+      "value_words": {
+        "minimum": 12,
+        "maximum": 99,
+        "total": 2607
+      },
+      "bitmap_mask_bytes": {
+        "minimum": 7,
+        "maximum": 50,
+        "total": 1915
+      },
+      "ready4": {
+        "minimum": 2266,
+        "maximum": 4095,
+        "total": 191573
+      },
+      "ready1": {
+        "minimum": 2386,
+        "maximum": 4275,
+        "total": 201433
+      },
+      "charge": {
+        "minimum": 2152,
+        "maximum": 4308,
+        "total": 222622
+      },
+      "dma_commands": {
+        "minimum": 3,
+        "maximum": 13,
+        "total": 414
+      },
+      "dma_bytes": {
+        "minimum": 424,
+        "maximum": 2502,
+        "total": 116638
+      },
+      "optimistic_map_decode_and_coverage_budget_ms": {
+        "minimum": 1.4711446287167789,
+        "maximum": 9.086653882652952,
+        "total": 466.7349461049486
+      },
+      "budget_if_old_coverage_time_retained_ms": {
+        "minimum": -0.32442808606494156,
+        "maximum": 7.2908949244613375,
+        "total": 342.8777705886936
+      },
+      "over_ready4": [],
+      "over_ready1": [],
+      "over_charge": [
+        952,
+        955
+      ],
+      "negative_decoder_budget": [],
+      "negative_if_old_coverage_retained": [
+        954
+      ],
+      "qualified_for_p2": false
+    },
+    "mask32": {
+      "map_data_wire_bytes": {
+        "minimum": 95,
+        "maximum": 420,
+        "total": 15829
+      },
+      "map_manifest_extra_wire": {
+        "minimum": 262,
+        "maximum": 262,
+        "total": 18078
+      },
+      "map_packets": {
+        "minimum": 1,
+        "maximum": 2,
+        "total": 90
+      },
+      "manifest_packets": {
+        "minimum": 2,
+        "maximum": 2,
+        "total": 138
+      },
+      "records": {
+        "minimum": 7,
+        "maximum": 40,
+        "total": 1763
+      },
+      "value_words": {
+        "minimum": 12,
+        "maximum": 99,
+        "total": 2607
+      },
+      "bitmap_mask_bytes": {
+        "minimum": 28,
+        "maximum": 160,
+        "total": 7052
+      },
+      "ready4": {
+        "minimum": 2320,
+        "maximum": 4155,
+        "total": 196838
+      },
+      "ready1": {
+        "minimum": 2440,
+        "maximum": 4335,
+        "total": 206978
+      },
+      "charge": {
+        "minimum": 2152,
+        "maximum": 4308,
+        "total": 222622
+      },
+      "dma_commands": {
+        "minimum": 3,
+        "maximum": 13,
+        "total": 414
+      },
+      "dma_bytes": {
+        "minimum": 424,
+        "maximum": 2502,
+        "total": 116638
+      },
+      "optimistic_map_decode_and_coverage_budget_ms": {
+        "minimum": 1.2882874858596356,
+        "maximum": 8.922082454081522,
+        "total": 450.68923181923435
+      },
+      "budget_if_old_coverage_time_retained_ms": {
+        "minimum": -0.5072852289220848,
+        "maximum": 7.126323495889908,
+        "total": 326.83205630297925
+      },
+      "over_ready4": [],
+      "over_ready1": [],
+      "over_charge": [
+        952,
+        955
+      ],
+      "negative_decoder_budget": [],
+      "negative_if_old_coverage_retained": [
+        954
+      ],
+      "qualified_for_p2": false
+    }
+  },
+  "resources": {
+    "word_arm_retained_extra": 448,
+    "old233_margin": 1616,
+    "arithmetic_margin_after_word_bits": 1168,
+    "arithmetic_above1024_gate": 144,
+    "full_new_input_arm_approved": false,
+    "word_snes_bitmap_extra_naive": 672,
+    "word_snes_received_plus_full_bank_flags_extra_logical": 161,
+    "committed_map_validity_full_or_empty_proof": true,
+    "committed_bank_checks": 213,
+    "initialization_flags_only_after_final_display_ack": true,
+    "stop_discards_both_bank_flags": true,
+    "manifest_expected_copy_extra": 0,
+    "manifest_cursor_and_completion_minimum": 3,
+    "decoder_order_state_minimum": 2,
+    "word_seal_unsplit_bytes": 446,
+    "existing_payload_limit": 240,
+    "proposed_seal_bytes": 190,
+    "manifest_bytes": 256,
+    "manifest_packets": 2,
+    "extra_manifest_wire": 262,
+    "snes_body_limit": 3936,
+    "existing_body": 3903,
+    "new_body": null,
+    "new_map_cycles": null
+  },
+  "preferred_wire_model": "mask8",
+  "candidate_for_minimal_diagnostic": null,
+  "selected_implementation": null,
+  "negative_counterexamples": {
+    "last_display_only_frame955_missing_words": 76,
+    "last_display_only_frame955_wrong_bytes": 100,
+    "coarse_validity_all256_granules_marked_but_uninitialized_words": 1792
+  },
+  "limitations": [
+    "Python reconstruction/policy models only;no new C/65816/RTL or whole runtime.",
+    "Word receipt stays256B.Two target-valid maps may become two initialization flags ONLY because accepted map coverage always requires all4096B.",
+    "Initialization is published only at final displayACK;partial failure/commonSTOP invalidates both bases.Received==manifest still required on every warm frame.",
+    "Two ordered256B-total manifest packets must complete before SEAL/DMA;no extra expected256B copy is proposed.",
+    "Outer serial/epoch/sequence/CRC,STOP and displayACK integration remains required,not exercised by this decoder.",
+    "No target-shadow4096B retained on ARM:causal stale words use448B extra;oracle equality is comparison only.",
+    "New mask decoders need sparse stores,range/mask checks and bounded STOP service;old mark timings are NOT reused.",
+    "Positive decoder budget is optimistic:excludes source/ARM/copy/decode/gaps/DMA/display and unknown coverage time.",
+    "Old-coverage timing sensitivity is a conditional scenario,not a lower bound for a rewritten coverage path.",
+    "SPI ready scenarios use observed plan lengths and grouped chunks,not shared-runtime upper bounds.",
+    "Whole FPGA/mapper/new-input ARM and warm VBlank bursts remain jointly open."
+  ],
+  "product_changed": false,
+  "analyzer_sha256": "908c20410ae46124e871f018e70794e7e50d576e5a0a2b1be3b0ab3bb6da0934",
+  "input_count": 150,
+  "private_result_sha256": "a12510fb3e350257ca5ad470fa3aa28d57483c33505aa28579d37f8ffe079f6d"
+}
