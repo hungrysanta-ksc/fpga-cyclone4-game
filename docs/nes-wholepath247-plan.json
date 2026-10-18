@@ -5,7 +5,7 @@
   "status": "P0_complete_P1_partial_no_candidate_selected",
   "document": "docs/nes-wholepath247-contract.ko.md",
   "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128",
-  "scope": "P0 observer;P1 whole-path models and SNES diagnostics. Integrated mask8 rejected for current4KiB storage; storage/boot boundary comparison next. No product/full FPGA/new-input ARM/hardware change.",
+  "scope": "P0/P1 whole-path diagnostics;user prioritizes60fps over4KiB. Expanded consumer executed;5/8KiB storage compared,throughput-oriented decoder boundary next. No product/full-board/new-input ARM/hardware change.",
   "supersedes": "Current execution status after merged PR127; its goals and safeguards remain authoritative. Historical evidence unchanged.",
   "roles": {
     "production_hardware": "NES227",
@@ -78,7 +78,9 @@
         "docs/nes-mapjoint247-contract.ko.md",
         "analysis/mapjoint247-verification.json",
         "docs/nes-maskboundary247-contract.ko.md",
-        "analysis/maskboundary247-verification.json"
+        "analysis/maskboundary247-verification.json",
+        "docs/nes-storage247-contract.ko.md",
+        "analysis/maskrun247-verification.json"
       ]
     },
     {
@@ -117,7 +119,7 @@
       "id": "SNES-BURSTS",
       "status": "open",
       "evidence": "docs/nes-runtime233-contract.ko.md",
-      "detail": "Word map9524308/9554198>4192;pattern order relaxation9524180 but955still4198. Mask8 optimistic newdecode+coverage1.47114ms unverified. Integrated body4398 exceeds current4KiB body3936 by462;storage/boot alternatives must be costed,not a general SNES limit."
+      "detail": "Actual mask71frames leaveswarm952/955 multiVB. Mask+manifest+coverage5.754..20.059ms;conditional wire+measured max33.731ms,58/69over.4KiB constraint removed;split5KiB inference/read guards pass but no wholeboard approval."
     },
     {
       "id": "FULL-RUNTIME",
@@ -154,7 +156,7 @@
     "mapper_compatibility",
     "frame_skip_state_save_mute"
   ],
-  "next_action": "P1:SNES수신프로그램의4KiB는현재FPGA저장설계값이며SMB3/SNES일반ROM한도가아님. 현재4KiB유지 vs8KiB확대 vs기존외부저장/WRAM적재 재사용의주소·boot·소유권·전체M9K/LE/LAB/시간을먼저비교;1948KiB기능근거와24054/56M9K미배치조건을구분. 근거없이새decoder/4398B미세축소/3971·3950B재조정금지.952순서·955최소4198/4192 표시비용,source449/rowshift면적,새ARM RUN/IRQ,firstfault/CDCIO/finalACK·lease·retire 공동여유전P2미선정.",
+  "next_action": "P1:60프레임우선/4KiB강제금지. 허용된ROM확대를활용해mask bit별분기·word별append와manifest/coverage반복을group/span·블록비교·루프전개/조회표 등완전한경계로재설계;실제시간과code/M9K/LE/LAB를공동비교. 5KiB562B도절대한도아님;필요시6/8KiB또는외부적재의boot/소유권비용검토. 작은opcode/seed/무변경재시험금지.952순서/9554198>4192,source449/rowshift면적·mapper,새ARM RUN/IRQ,firstfault/CDCIO/displaylease-retire열린동안P2미선정.",
   "base_commit": "b6958f24fbe2173d0879da07ef56fe3b507b5420",
   "branch": "codex/nes-wholepath-247",
   "previous_plan": "docs/nes-pr127-next-plan.json",
@@ -362,5 +364,38 @@
     "runtime_verified": false,
     "qualified_for_p2": false,
     "capacity_is_current_design_not_console_limit": true
+  },
+  "user_capacity_policy": "60fps is the goal;4KiB is not mandatory. Accept code expansion when it improves efficiency,subject to whole-system resource/time feasibility.",
+  "p1_storage_maskrun_followup": {
+    "selected": [
+      "maskrun-host01",
+      "maskrun-test01",
+      "maskrun-fault01",
+      "maskrun-analysis01",
+      "storage-map01",
+      "storage-rtl01"
+    ],
+    "document": "docs/nes-storage247-contract.ko.md",
+    "evidence": "analysis/maskrun247-verification.json",
+    "capacity4k_required": false,
+    "body_bytes": 4398,
+    "split5k_body_free": 562,
+    "actual_frames": 71,
+    "reference_checks": 4066624,
+    "exact_map_bytes": 290816,
+    "fault_cases": 12,
+    "storage_rtl_reads": 33029,
+    "storage_raw_guards": 4,
+    "mask_ms": [
+      2.426379144090473,
+      16.73238730993278
+    ],
+    "conditional_serial_over": 58,
+    "warm_multi_vblank": [
+      952,
+      955
+    ],
+    "wholeboard_fit": false,
+    "qualified_for_p2": false
   }
 }
