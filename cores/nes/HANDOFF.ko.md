@@ -1,3 +1,17 @@
+# PR127 최종 인계: 목표 재설정, 구현은 머지 후 새 PR
+
+현재 지침은 [회고·인계](../../docs/nes-pr127-retrospective.ko.md)와 [실행 계획](../../docs/nes-pr127-next-plan.json)다. 아래246 이하 NEXT는 역사 기록이며 현재 구현 순서로 적용하지 않는다.
+
+PR127 회고:231/232 증분 출력 개선은 유지,241/246 공유 압축 후보는 기각.240도490LE/40LAB 부족. 면적만 맞춰도60fps가 되지 않으며 SPI/5개SNES burst/전체ARM/확장 여유를 공동 판단한다.
+
+PR127 머지 확인 후 최신 master에서 새 codex/ 브랜치·새 PR. 기존 스크롤 자료의 전체 예산/변경 원인(P0)과 표현·처리 위치 포함 후보 비교(P1)를 먼저 하고 근거 있는 한 후보만 구현한다. 단일 sequencer는 미선정. 생산227·GBC164·save SRAM 보존.
+
+- 즉시 시작할 구현은 아직 선정하지 않았다. P0 전체 예산/변경 원인 → P1 후보 비교 → P2 선정 후보 최소 구현/전체 검증 → P3 실기 스크롤 순서다.
+- 231/232 개선은 재사용한다. 240 기능 통과는 배치 성공이 아니며 241/246 기각은 유지한다. 새 설치물·60fps 성공은 없다.
+- 사용자 후속 우선순위는 화면/사운드 안정화 → 장시간 플레이·오류/본체 리셋 로그 → 입력 품질/기능 확장이다. save SRAM/GBC164 보존.
+
+---
+
 # NES246 인계: 전체 공유 인코더 기능 통과, 자원 gate 기각
 
 - Latest246 FULL SHARED REJECTED: PR127 OPEN samebranch;baseline240/production227. SELECTguards04/board01/source01. Actualframe/base/headerCRC/RAW/ACK+245RFengine replaceswidecodecfields;408/512words (453-81+36),fuseddirect/rowliteral,raw_appendreturnslen. O/N/RFsame512scratch;admission32/independentcursor13/CRC held;inputrow7+scanrow7 costexplicit. Prefixlengthheldwholepacket;RECORD waitspriorlastOUT before nextheader. 25normal+17guards42/all7views/independentlastbyte256stall PASS fullbytesCRC/base5741;NOTcollectorSPI/71scroll/game. SingleMAP19884LE15027comb8535FF321120bits;singleFIT16027LE1011LAB55M9K FAIL619LE48LAB,vs240+129LE8LAB1M9K. Encoder1424comb367FF=external827/222+engine597/145;source2125/932. FF-42 doesNOTsavearea;LUTonly7492/registeronly1000/paired7535. RAMcorrect512x8+512x18M9K NOTFFfallback;oneM9Kleft. Syntheticfullcycles130097..1043674(~5.91..47.44ms@22MHz),NOTscrollFPS. guards01compileforwarddecl/02-03intermediatePASS preserved. Archive1052fullrehash0a48c370/public11/prior135+245869rehash. Same216retiredSDC exact240/noSTA. NEXT reject246microtuning/independentopcodes;compare WHOLEcontrol+datapath consolidation(one sequencer vs externalcontinuation+enginePC) against240crosspathdedup witharea/512words/1M9K/cyclebudget BEFOREimplementation;no savingguarantee. Minimumcodec->singleboardgate->71scrollONLYiffit. Keep240490LE40LABdeficit,fullARMIRQ/hostNESfirstfault/displaylease-retire/CDCIOSTA/232fivebursts/mappermarginOPEN. NoFWZIP/physicalFPS/227-044repeat/GBC164/saveSRAMchange. Read docs/nes-source246-contract.ko.md,analysis/source246-verification.json,probes/nes-source246/progress.json.
