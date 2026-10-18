@@ -1,12 +1,12 @@
 # NES247 인계: 전체 비용·갱신 원인 분석 완료, 구현 후보 미선정
 
-NES247 P1 scan-build02/test01/analysis01:수신 명령생성을 post-SEAL1536bit 전체순회로 교체,3930/3936B/free6. 실제71frame/3077ACK/418DMA/135072B 및71명령목록 exact PASS,미초기화경고880개 모두 허용unused gap. 그러나 warm69 scanner만53.08449..53.83859ms로 전부16.67ms 초과:이 구현 기각.4192 유지/952955963다중VBlank. 생산227/240미배치·전체FPGA/ARM 여유OPEN, P2 미선정.
+NES247 P1 wordwalk:model01/build01/test01/analysis01/budget01. 빈16bit word 건너뛰기,96word/실제set만 run계산;body3920/3936B/free16/persistent+0. 실제71frame3077ACK/418DMA135072B와71명령목록 exact PASS. Warm scanner53.08..53.84→5.40767..7.89784ms,cold16.99/17.51ms.4192 유지/952955963다중VBlank. 조건부 직렬 wire+scan 최대24.09/23.48/낙관raw21.30ms로24/21/8개초과. 단순범위삽입 역순이동상한4.58MB;현재분포만으로선정불가. 전체FPGA/새ARM/STOP OPEN,P2미선정.
 
-[전체 비용](../../docs/nes-wholepath247-contract.ko.md) · [P1 결합·소유권](../../docs/nes-schedule247-contract.ko.md) · [의미 투영·병렬 경계](../../docs/nes-relocation247-contract.ko.md) · [unused gap·DMA 계측](../../docs/nes-gap247-contract.ko.md) · [최신 전체순회 기각](../../docs/nes-scan247-contract.ko.md) · [현재 실행 상태](../../docs/nes-wholepath247-plan.json) · [71프레임 비용표](../../analysis/wholepath247-frames.csv)
+[전체 비용](../../docs/nes-wholepath247-contract.ko.md) · [P1 결합·소유권](../../docs/nes-schedule247-contract.ko.md) · [의미 투영·병렬 경계](../../docs/nes-relocation247-contract.ko.md) · [unused gap·DMA 계측](../../docs/nes-gap247-contract.ko.md) · [전체순회 기각](../../docs/nes-scan247-contract.ko.md) · [최신 word 순회·직렬 비용](../../docs/nes-wordwalk247-contract.ko.md) · [현재 실행 상태](../../docs/nes-wholepath247-plan.json) · [71프레임 비용표](../../analysis/wholepath247-frames.csv)
 
-[PR128](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128) OPEN. P0 분석 커밋 `f80bd3bf26108fa6f34a5d766c75c84695bee9e6`; P1 후속 근거는 schedule04/relocation01/gap01/dma01/scan-build02·test01·analysis01.
+[PR128](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128) OPEN. P0 분석 커밋 `f80bd3bf26108fa6f34a5d766c75c84695bee9e6`; P1 후속 근거는 schedule04/relocation01/gap01/dma01/scan-build02·test01·analysis01 및 walk-model01·build01·test01·analysis01·budget01.
 
-P1:1536bit fullscan 기각·미세opcode/counter 재시험 금지. Nonzero word/block 중심 순회 또는 수신 범위 기반 bounded 정렬목록의 최악방문수·교체코드량·service 간격을 실제분포로 먼저 비교. SEAL/target/STOP 수명과4192 유지. 의미449B raster+rowshift source 전체LE/LAB/mapper 여유·새 입력 ARM RUN/IRQ를 결합한 한 후보만 P2;현재 미선정.
+P1:post-SEAL5.4..7.9ms와warm3 VBlank burst를 함께 줄이는 명령생성 위치/transaction 일정 비교. 수신범위·생산자순서/descriptor 안은 삽입이동 상한·추가wire/ARM/코드 먼저;mailbox/target/base/lease의 실제 잠금·수신/준비 overlap 명시. 계산을 수신비용에서 숨기거나wordwalk service/opcode 미세튜닝 금지. 의미449B+rowshift 전체FPGA LE/LAB/mapper·새 입력ARM RUN/IRQ까지 한 후보의 여유가 있을 때만 P2.
 
 PR127 머지 `b6958f24` 확인 후 새 `codex/nes-wholepath-247`에서 진행했다. 아래 PR127 및246 이전 NEXT는 이력이며 현재 지시가 아니다. PR127의 전체 목표와 보호 조건은 유지한다. 새 설치물·FPS·회로 구현 성공을 뜻하지 않는다.
 

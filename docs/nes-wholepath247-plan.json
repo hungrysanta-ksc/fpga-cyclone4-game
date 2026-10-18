@@ -5,7 +5,7 @@
   "status": "P0_complete_P1_partial_no_candidate_selected",
   "document": "docs/nes-wholepath247-contract.ko.md",
   "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128",
-  "scope": "P0 observer;P1 representation/relocation models,actual232 timing and rejected full-bitmap scanner diagnostic. No production/FPGA/full ARM/hardware change.",
+  "scope": "P0 observer;P1 representation/relocation models and actual SNES full-scan/word-walk diagnostics with conditional whole-path costs. No production/FPGA/full ARM/hardware change.",
   "supersedes": "Current execution status after merged PR127; its goals and safeguards remain authoritative. Historical evidence unchanged.",
   "roles": {
     "production_hardware": "NES227",
@@ -65,7 +65,11 @@
         "analysis/gap247-verification.json",
         "analysis/dma247-verification.json",
         "docs/nes-scan247-contract.ko.md",
-        "analysis/scan247-verification.json"
+        "analysis/scan247-verification.json",
+        "docs/nes-wordwalk247-contract.ko.md",
+        "analysis/sparsewalk247-verification.json",
+        "analysis/wordwalk247-verification.json",
+        "analysis/walkbudget247-verification.json"
       ]
     },
     {
@@ -104,7 +108,7 @@
       "id": "SNES-BURSTS",
       "status": "open",
       "evidence": "docs/nes-runtime233-contract.ko.md",
-      "detail": "Diagnostic full scanner preserves71 outputs and reduces actual warm multiVBlank5->3, but scanner alone53.08..53.84ms REJECT.3930/3936B.4192 unchanged;new efficient scheduler/full timing open."
+      "detail": "Word-walk diagnostic exact71,3920/3936B,warm scan5.41..7.90ms but retained serial wire+scan24/21/8over-frame scenarios. Actual warm952955963 still multiVBlank;4192 unchanged. Full timing/STOP open."
     },
     {
       "id": "FULL-RUNTIME",
@@ -141,7 +145,7 @@
     "mapper_compatibility",
     "frame_skip_state_save_mute"
   ],
-  "next_action": "P1:1536bit fullscan 기각·미세opcode/counter 재시험 금지. Nonzero word/block 중심 순회 또는 수신 범위 기반 bounded 정렬목록의 최악방문수·교체코드량·service 간격을 실제분포로 먼저 비교. SEAL/target/STOP 수명과4192 유지. 의미449B raster+rowshift source 전체LE/LAB/mapper 여유·새 입력 ARM RUN/IRQ를 결합한 한 후보만 P2;현재 미선정.",
+  "next_action": "P1:post-SEAL5.4..7.9ms와warm3 VBlank burst를 함께 줄이는 명령생성 위치/transaction 일정 비교. 수신범위·생산자순서/descriptor 안은 삽입이동 상한·추가wire/ARM/코드 먼저;mailbox/target/base/lease의 실제 잠금·수신/준비 overlap 명시. 계산을 수신비용에서 숨기거나wordwalk service/opcode 미세튜닝 금지. 의미449B+rowshift 전체FPGA LE/LAB/mapper·새 입력ARM RUN/IRQ까지 한 후보의 여유가 있을 때만 P2.",
   "base_commit": "b6958f24fbe2173d0879da07ef56fe3b507b5420",
   "branch": "codex/nes-wholepath-247",
   "previous_plan": "docs/nes-pr127-next-plan.json",
@@ -235,6 +239,30 @@
     "exact_command_frames": 71,
     "warm_scan_ms_min": 53.08449351337484,
     "warm_scan_ms_max": 53.838593080032986,
+    "qualified_for_p2": false
+  },
+  "p1_wordwalk_followup": {
+    "selected": [
+      "walk-model01",
+      "walk-build01",
+      "walk-test01",
+      "walk-analysis01",
+      "walk-budget01"
+    ],
+    "document": "docs/nes-wordwalk247-contract.ko.md",
+    "evidence": "analysis/wordwalk247-verification.json",
+    "body_bytes": 3920,
+    "free_bytes": 16,
+    "exact_frames": 71,
+    "warm_scan_ms": [
+      5.407670527958162,
+      7.897838039937105
+    ],
+    "serial_scenario_over_frames": [
+      24,
+      21,
+      8
+    ],
     "qualified_for_p2": false
   }
 }

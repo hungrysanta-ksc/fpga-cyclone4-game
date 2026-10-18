@@ -1,0 +1,121 @@
+{
+  "stage": 247,
+  "passed": true,
+  "scope": "Structural work model, not65816 cycles or code-size proof",
+  "frames": 71,
+  "exact_existing_command_frames": 71,
+  "word_loads_per_frame": 96,
+  "warm": {
+    "full_bit_visits": {
+      "minimum": 1536,
+      "maximum": 1536,
+      "sum": 105984,
+      "mean": 1536.0
+    },
+    "word_loads": {
+      "minimum": 96,
+      "maximum": 96,
+      "sum": 6624,
+      "mean": 96.0
+    },
+    "units": {
+      "minimum": 16,
+      "maximum": 73,
+      "sum": 2594,
+      "mean": 37.594202898550726
+    },
+    "nonzero_bytes": {
+      "minimum": 8,
+      "maximum": 25,
+      "sum": 1178,
+      "mean": 17.07246376811594
+    },
+    "nonzero_words": {
+      "minimum": 7,
+      "maximum": 17,
+      "sum": 759,
+      "mean": 11.0
+    },
+    "word_shift_steps": {
+      "minimum": 55,
+      "maximum": 192,
+      "sum": 8092,
+      "mean": 117.27536231884058
+    },
+    "range_records": {
+      "minimum": 16,
+      "maximum": 58,
+      "sum": 2336,
+      "mean": 33.85507246376812
+    },
+    "insertion_comparisons": {
+      "minimum": 12,
+      "maximum": 67,
+      "sum": 2190,
+      "mean": 31.73913043478261
+    },
+    "moved_descriptors": {
+      "minimum": 0,
+      "maximum": 21,
+      "sum": 93,
+      "mean": 1.3478260869565217
+    },
+    "byte_expanded_bits": {
+      "minimum": 64,
+      "maximum": 200,
+      "sum": 9424,
+      "mean": 136.57971014492753
+    },
+    "word_expanded_bits": {
+      "minimum": 112,
+      "maximum": 272,
+      "sum": 12144,
+      "mean": 176.0
+    },
+    "moved_descriptor_bytes": {
+      "minimum": 0,
+      "maximum": 168,
+      "sum": 744,
+      "mean": 10.782608695652174
+    },
+    "final_commands": {
+      "minimum": 3,
+      "maximum": 11,
+      "sum": 410,
+      "mean": 5.942028985507246
+    }
+  },
+  "full_density": {
+    "units": 1536,
+    "nonzero_words": 96,
+    "word_shift_steps": 1536
+  },
+  "worst_unmerged_insertion": {
+    "per_section_descriptor_moves": {
+      "0": 523776,
+      "1": 8128,
+      "2": 32640,
+      "5": 8128
+    },
+    "total_descriptor_moves": 572672,
+    "descriptor_write_bytes": 4581376,
+    "extra_read_bytes_same": true
+  },
+  "decision": "Prefer bounded word traversal for a code-size/runtime diagnostic; range insertion has no justified worst-case advantage.",
+  "code_size_limit": 3936,
+  "old_body_after_removal_and_scan_call": 3647,
+  "maximum_new_scanner_and_table_bytes": 289,
+  "service_contract": "At most16 shifts/set-bit handling per word,96 service opportunities; actual maximum gap and STOP still need execution.",
+  "limitations": [
+    "No ms estimate: full-bit53ms cannot be scaled by visit counts.",
+    "Insertion counts model unmerged lists within each section in original plan/packet order; not an implemented receiver.",
+    "At most1536 entries share existing12KiB list; command union equivalence does not prove cancellation or ownership.",
+    "Word traversal cold/full-density still needs1536 shifts; no unconditional60Hz assertion.",
+    "No production/FPGA/ARM/FIT/charge-policy change or P2 selection."
+  ],
+  "product_changed": false,
+  "selected_implementation": null,
+  "analyzer_sha256": "70d91b83a9422cc4e2c68f6c3859a99c58a677c964e516b9138bd8e15ca1703b",
+  "input_count": 216,
+  "private_result_sha256": "718e3a6f9f95348df44c9b61acad91e36a8e8324b034725afb8e4d3ec52b1e90"
+}
