@@ -1,3 +1,15 @@
+# 현재 상태 — NES249 공동 시간·회로 검토
+
+NES249 고정블록+rowshift source와 FPGA 통합 receipt/validity 후보를 공동 검토했다. Source RTL 기록71+합성3프레임 PASS;단독 MAP1079LE/1062comb/307FF. Python754B RAM정책192726byte/155반례와3726조건부 일정 PASS. setup/service500인 gap16 최대15.472ms,잔여1.195ms는 query/ARM/실제parser/SNES layout검사/DMA/대기 전체 공동예산이다. Whole240490LE40LAB부족+새logic/mapper여유 회수 미입증, RAM56/56 유지. 시간 우선 조사 후보B만 남기며 P2/60fps 승인 없음.
+
+B 고정블록 source의 semantic query/projector+encoder+통합 range/validity validator+FIFO read-port 소유권을 같은 교체 경계로 묶어 실제 제거 회로와 추가 비용을 비교한다. 유지되는 SNES 명령작성·validate181 layout/HDMA 비용도 실행해1.195ms 공동잔여와 대조한다. 490LE40LAB+새logic+mapper여유 회수 근거 없으면 후보 기각/경계 재검토. 근거가 생긴 뒤 최소경계/wholeboard FIT·STA·CDC·IO/fullARM RUN·IRQ/최종display ownership,그 다음FIRSTLEVELSCROLL. 국소opcode·seed·자동FIT루프/227044재시험 금지.
+
+[공동 검토](../../docs/nes-joint249-contract.ko.md) · [현재 계획](../../docs/nes-joint249-plan.json) · [검증 집계](../../analysis/joint249-verification.json)
+
+아래248 및 이전 NEXT는 당시 기록이다. 현재 지시는 위249 계획을 따른다.
+
+---
+
 # 현재 상태 — NES248 분담 일정·회로 검토 완료, P2 미선정
 
 NES248 실제 C 패킷 순서·bulk drain·4credit·SEAL tail을 반영한 조건부 일정 검토. Warm69,1104일정;새 RTL/CPU 실행 아님. exact64 queued 설정500클록 최대17.199ms/3초과, gap16 queued17.086ms/2초과. 설정0 exact의 표시표본 범위16.527..16.689ms는 미지 비용을 제외하므로60fps 승인이 아님. 순차쓰기 aperture는 interleaved descriptor/value+32B trailer로 정책 재구성284회/1163264B,15반례 PASS. SPI head 해제는 현재 SNES ACK 전용이라 FPGA parser 중재·소유권 변경 필요. 240 FIT 부족490LE/40LAB, RAM시나리오56/56이며 새logic 미측정. 역할 분담은 유지하되 P2 미선정.
