@@ -1,5 +1,7 @@
 # NES248 — ARM 계획·FPGA map 검증·SNES DMA의 일정과 회로 예산
 
+[PR129](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/129): 일정·포트 검토 및 재현 자료. 제품 구현 채택 PR은 아니다.
+
 PR128 머지 `64640645e3e37adb697d0293a509d0329e4eae4e`와 원격 master 일치를 확인하고 새 `codex/nes-typed-schedule-248`에서 검토했다. 사용자 요청은 이 분담의 실제 처리 순서와 회로 여유를 함께 평가하는 것이다. **분담은 조사 대상으로 유지하지만, 현재 일정·회로 예산으로는 60fps 구현 후보를 승인할 수 없다.** 새 RTL/65816 실행이나 FIT 결과가 아니라, 실제 C 패킷 순서·기존 계측·실제 회로 포트를 결합한 조건부 일정이다.
 
 ## 무엇을 추가로 반영했는가

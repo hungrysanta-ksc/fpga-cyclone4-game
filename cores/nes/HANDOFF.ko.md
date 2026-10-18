@@ -1,5 +1,7 @@
 # 현재 상태 — NES248 분담 일정·회로 검토 완료, P2 미선정
 
+[PR129](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/129) OPEN. PR128의 병합 master에서 시작한 일정·포트 검토이며 새 제품 회로는 없다.
+
 NES248 실제 C 패킷 순서·bulk drain·4credit·SEAL tail을 반영한 조건부 일정 검토. Warm69,1104일정;새 RTL/CPU 실행 아님. exact64 queued 설정500클록 최대17.199ms/3초과, gap16 queued17.086ms/2초과. 설정0 exact의 표시표본 범위16.527..16.689ms는 미지 비용을 제외하므로60fps 승인이 아님. 순차쓰기 aperture는 interleaved descriptor/value+32B trailer로 정책 재구성284회/1163264B,15반례 PASS. SPI head 해제는 현재 SNES ACK 전용이라 FPGA parser 중재·소유권 변경 필요. 240 FIT 부족490LE/40LAB, RAM시나리오56/56이며 새logic 미측정. 역할 분담은 유지하되 P2 미선정.
 
 같은954/970·952/955에서 잔존 tile/SEAL coverage 장벽의 구조적 절감과 semantic source 회로 대체를 한 후보로 결합한다. gap16 queued 설정500의 부족0.419ms에 source/ARM/parser/SNES 고정비용/대기까지 더한 공동예산과490LE/40LAB+새logic+mapper여유 회수 근거가 선행한다. 근거가 생기면 실제 typed consumer/parser 최소 경계 실행 및 전체보드 FIT/STA/CDC/IO,새입력 fullARM RUN/IRQ,최종display ownership을 검증한다. 단순gap병합·opcode/seed루프·자동FIT·227/044재시험은 다음 해법이 아니다.
