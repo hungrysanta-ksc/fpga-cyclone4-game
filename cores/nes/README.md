@@ -1,10 +1,10 @@
 # 현재 상태 — NES247 P0 완료 / P1 비교 중
 
-NES247 P1 relocation01:의미 raster449B/geometry4398B를 독립 C로 복원, 원래 raster 참조와71frames/355파일+cost/map/slot 동일/4066624checks/10decoder+5sourceguards PASS. 의미+shift+16B map wire모델 최대5141/5321B, SNES3bursts 남음. 전체allocator 그대로는18752B/최소17M9K>낙관12개;full raw2048은67/69 초과. sparse raw 이동은 추가비용 UNKNOWN. P2 후보 미선정, 생산227/240미배치 유지.
+NES247 P1 gap01/dma01:SEAL coverage 이후 unused gap은 validity 승격 없이 안전,3초기값/391776B 비교/30invalid slot 중10후속실제쓰기·사용 PASS. Pattern 동일쓰기 최소charge 증명에도 word-map955=4198>4192. 기존232 실제71frame/478DMA/133600B 재생 PASS;403무대기명령 잔여1218..1586master clocks,64warm final9284..9442. Charge는 시간상한 아님. 코드26B 여유/새 scheduler WCET/FPGA·ARM 공동여유 OPEN, P2 미선정.
 
-[전체 비용](../../docs/nes-wholepath247-contract.ko.md) · [P1 결합·소유권](../../docs/nes-schedule247-contract.ko.md) · [최신 의미 투영·병렬 경계](../../docs/nes-relocation247-contract.ko.md) · [현재 실행 상태](../../docs/nes-wholepath247-plan.json) · [71프레임 비용표](../../analysis/wholepath247-frames.csv)
+[전체 비용](../../docs/nes-wholepath247-contract.ko.md) · [P1 결합·소유권](../../docs/nes-schedule247-contract.ko.md) · [의미 투영·병렬 경계](../../docs/nes-relocation247-contract.ko.md) · [최신 unused gap·DMA 계측](../../docs/nes-gap247-contract.ko.md) · [현재 실행 상태](../../docs/nes-wholepath247-plan.json) · [71프레임 비용표](../../analysis/wholepath247-frames.csv)
 
-P1:잔여952/955의 gap을 target-valid 대신 SEAL-unused 증명으로 안전하게 합칠 수 있는지 검증. 이후 사용 시 실제 write 필수·epoch/STOP·coverage를 지키고 초기화/코드 비용 포함. command-list/DMA 교체 범위·보수적 실행시간과 의미 raster+rowshift source의 전체 LE/LAB/RAM·새 입력 ARM RUN/IRQ를 함께 평가. 4192 gate 임의 완화나 validbit 위조 금지. 공동 여유를 갖춘 한 후보만 P2;아직 미선정.
+P1:gap/동일pattern 분할 탐색은 종료. 기존 DMA 경계의 가용 VBlank master-clock 예산과 최악 CPU/DMA·pad/service 경로를 연결하고, post-SEAL received-bitmap scanner/shared command 생성 교체의 코드크기·서비스 지연을 산정. 현4192 정책 유지. 의미 raster+rowshift source 전체LE/LAB/mapper 여유·새 입력 ARM RUN/IRQ와 결합한 한 후보만 P2;현재 미선정.
 
 PR127 머지 `b6958f24` 확인 후 새 `codex/nes-wholepath-247`에서 진행했다. 아래 PR127 및246 이전 NEXT는 이력이며 현재 지시가 아니다. PR127의 전체 목표와 보호 조건은 유지한다. 새 설치물·FPS·회로 구현 성공을 뜻하지 않는다.
 

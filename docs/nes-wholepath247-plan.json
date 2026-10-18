@@ -5,7 +5,7 @@
   "status": "P0_complete_P1_partial_no_candidate_selected",
   "document": "docs/nes-wholepath247-contract.ko.md",
   "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128",
-  "scope": "P0 observer;P1 joint schedule,actual C semantic raster projection and bounded parallel relocation models. No product/FIT/new ARM/SNES/hardware.",
+  "scope": "P0 observer;P1 joint schedule,semantic raster C equivalence,relocation/unused-gap models and unchanged232 instruction timing. No product/new FPGA/full ARM/hardware.",
   "supersedes": "Current execution status after merged PR127; its goals and safeguards remain authoritative. Historical evidence unchanged.",
   "roles": {
     "production_hardware": "NES227",
@@ -60,7 +60,10 @@
         "docs/nes-schedule247-contract.ko.md",
         "analysis/schedule247-verification.json",
         "docs/nes-relocation247-contract.ko.md",
-        "analysis/relocation247-verification.json"
+        "analysis/relocation247-verification.json",
+        "docs/nes-gap247-contract.ko.md",
+        "analysis/gap247-verification.json",
+        "analysis/dma247-verification.json"
       ]
     },
     {
@@ -99,7 +102,7 @@
       "id": "SNES-BURSTS",
       "status": "open",
       "evidence": "docs/nes-runtime233-contract.ko.md",
-      "detail": "Actual232 warm5/69 remain baseline;post-SEAL address-order/valid-gap models leave3 with16B map or2 withword map. Not implemented;no timing approval."
+      "detail": "Actual232 warm5/69 baseline. Post-SEAL unused-gap model leaves3 with16B map or1 withword map(955,4198). Same pattern partition minimum verified. Charge is not independent time bound;new scheduler code/WCET open."
     },
     {
       "id": "FULL-RUNTIME",
@@ -136,7 +139,7 @@
     "mapper_compatibility",
     "frame_skip_state_save_mute"
   ],
-  "next_action": "P1:잔여952/955의 gap을 target-valid 대신 SEAL-unused 증명으로 안전하게 합칠 수 있는지 검증. 이후 사용 시 실제 write 필수·epoch/STOP·coverage를 지키고 초기화/코드 비용 포함. command-list/DMA 교체 범위·보수적 실행시간과 의미 raster+rowshift source의 전체 LE/LAB/RAM·새 입력 ARM RUN/IRQ를 함께 평가. 4192 gate 임의 완화나 validbit 위조 금지. 공동 여유를 갖춘 한 후보만 P2;아직 미선정.",
+  "next_action": "P1:gap/동일pattern 분할 탐색은 종료. 기존 DMA 경계의 가용 VBlank master-clock 예산과 최악 CPU/DMA·pad/service 경로를 연결하고, post-SEAL received-bitmap scanner/shared command 생성 교체의 코드크기·서비스 지연을 산정. 현4192 정책 유지. 의미 raster+rowshift source 전체LE/LAB/mapper 여유·새 입력 ARM RUN/IRQ와 결합한 한 후보만 P2;현재 미선정.",
   "base_commit": "b6958f24fbe2173d0879da07ef56fe3b507b5420",
   "branch": "codex/nes-wholepath-247",
   "previous_plan": "docs/nes-pr127-next-plan.json",
@@ -190,6 +193,29 @@
     "semantic_shift_batched16_ready1_max": 5321,
     "full_planner_unchanged_array_bytes": 18752,
     "full_raw_2048_over_snes": 67,
+    "qualified_for_p2": false
+  },
+  "p1_gap_dma_followup": {
+    "selected": [
+      "gap01",
+      "dma01",
+      "dma-analysis01"
+    ],
+    "document": "docs/nes-gap247-contract.ko.md",
+    "evidence": [
+      "analysis/gap247-verification.json",
+      "analysis/dma247-verification.json"
+    ],
+    "poison_initializations": 3,
+    "used_pattern_byte_checks": 391776,
+    "initially_invalid_gap_slots": 30,
+    "later_written_and_used": 10,
+    "word_map_over_frames": [
+      955
+    ],
+    "word_map_max_charge": 4198,
+    "actual_unchanged232_frames": 71,
+    "measured_dma_commands": 478,
     "qualified_for_p2": false
   }
 }

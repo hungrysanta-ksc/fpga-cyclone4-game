@@ -1,5 +1,7 @@
 # NES247 P1: 실제 병렬 경계와 raster 의미 투영
 
+최신 후속은 [unused gap 수명과 실제 DMA 실행 경계](nes-gap247-contract.ko.md)다. 아래 결과와 기존 판정은 해당 단계의 근거로 보존한다.
+
 2026-10-18, PR128. [schedule247](nes-schedule247-contract.ko.md) 다음 비교다. **전체 변환기를 그대로 FPGA로 옮기는 안은 기존 배열 배치만으로 RAM 여유를 넘는다. 반면 현재 planner가 사용하는 raster 필드만 전달하는 표현은 실제 C 출력 동일성을 통과했다.** 아직 FPGA 면적·SNES burst·새 입력 ARM 시간 여유가 결합되지 않아 P2 구현 후보를 선정하지 않았다.
 
 [재현 도구](../tools/analyze_nes_relocation247.py) · [검증 요약](../analysis/relocation247-verification.json) · [71행 비용표](../analysis/relocation247-frames.csv). SELECT private `relocation01`; 기존 observer03/analysis06/schedule04는 보존한다.
