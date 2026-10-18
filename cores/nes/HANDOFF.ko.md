@@ -1,3 +1,17 @@
+# NES247 인계: 전체 비용·갱신 원인 분석 완료, 구현 후보 미선정
+
+NES247 처리위치비교:같은71map290816B typed재구성/14Python반례 PASS,새RTL·CPU실행아님. 입력COMMITTED장벽+출력낙관겹침+기존표시표본 최대5886 20.420ms/9초과,2472 27.153/39,ARMliteral18.545/5,FPGA좁은검증15.525/0,ARMlayout+FPGA16.028/0. FPGA954직렬17.334ms;45범위 setup/source/ARM/parser/대기미포함,60fps승인아님. ARM planner+FPGA map범위/receipt+SNES typedDMA/표시를다음조사대상으로정함;M9K54+2-1+1=56/56,logic490LE40LAB부족/새비용UNKNOWN. 비교기준5886B·생산227/P2미선정.
+
+[전체 비용](../../docs/nes-wholepath247-contract.ko.md) · [P1 결합·소유권](../../docs/nes-schedule247-contract.ko.md) · [의미 투영·병렬 경계](../../docs/nes-relocation247-contract.ko.md) · [unused gap·DMA 계측](../../docs/nes-gap247-contract.ko.md) · [전체순회 기각](../../docs/nes-scan247-contract.ko.md) · [word 순회·직렬 비용](../../docs/nes-wordwalk247-contract.ko.md) · [배치 정렬·수신 비용](../../docs/nes-batchorder247-contract.ko.md) · [범위 크기·묶음 수신](../../docs/nes-coalesce247-contract.ko.md) · [map 공동 비용](../../docs/nes-mapjoint247-contract.ko.md) · [통합 수신 크기 이력](../../docs/nes-maskboundary247-contract.ko.md) · [4398B 확대·실행 이력](../../docs/nes-storage247-contract.ko.md) · [그룹 수신 개선](../../docs/nes-maskfast247-contract.ko.md) · [비용 분해·범위 누적](../../docs/nes-maskbatch247-contract.ko.md) · [연속범위 공동 비교](../../docs/nes-spantrade247-contract.ko.md) · [범위검증 실행·공동예산](../../docs/nes-validation247-contract.ko.md) · [공동decoder 기각](../../docs/nes-jointdecode247-contract.ko.md) · [현재 실행 상태](../../docs/nes-wholepath247-plan.json) · [71프레임 비용표](../../analysis/wholepath247-frames.csv) · [최신 처리위치 비교](../../docs/nes-placement247-contract.ko.md)
+
+[PR128](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128) OPEN. P0 분석 커밋 `f80bd3bf26108fa6f34a5d766c75c84695bee9e6`; P1 후속 근거는 schedule04/relocation01/gap01/dma01/scan-build02·test01·analysis01 및 walk-model01·build01·test01·analysis01·budget01 및 order-model01·build01·host01·append01·test01·analysis02 및 range16/8-build01·coalesce-host01·guards01·test01·analysis04 및 mapjoint03·maskboundary-build01, maskrun-host01·test01·fault01·analysis01, storage-map01·rtl01; maskfast-build02·test01·fault01·lanes01·masks01·analysis02/faststorage-map01·rtl01; 최신maskprofile-build01·test01·analysis01 및maskbatch-build01·test01·fault01·lanes01·masks01·bounds01·stop01·analysis01/batchstorage-map01·rtl01; spantrade02(01중간보존); validation-build02/test02/fault01/protocol01/coverage01/analysis02; 최신jointdecode-build02/host01/test02/fault02/analysis03(초기overread/fixture STOP충돌/조기analysis 실패보존),시간gate기각.
+
+NEXT placement 경계설계:ARM planner·의미검증/FPGA map범위·receipt/SNES boundedDMA·표시의담당과certificate/STOP/epoch/token수명명시. 같은954/970·952/955에서tile drain→typedmap→manifest→SEAL의실제일정+source/ARM/parser/새SNES setup-service+전체LE/LAB/M9K예산결합. 기존4packet window를새겹침기능으로세지말고입력COMMITTED장벽유지. 15.525ms는낙관모델,17.334ms직렬도미측정비용제외. 56/56산술/490LE40LAB부족은승인아님;새RTL/FIT/토큰opcode미세루프자동진행금지. 5886/227/GBC164/saveSRAM보존,4/5/6KiB고정금지.
+
+PR127 머지 `b6958f24` 확인 후 새 `codex/nes-wholepath-247`에서 진행했다. 아래 PR127 및246 이전 NEXT는 이력이며 현재 지시가 아니다. PR127의 전체 목표와 보호 조건은 유지한다. 새 설치물·FPS·회로 구현 성공을 뜻하지 않는다.
+
+---
+
 # PR127 최종 인계: 목표 재설정, 구현은 머지 후 새 PR
 
 현재 지침은 [회고·인계](../../docs/nes-pr127-retrospective.ko.md)와 [실행 계획](../../docs/nes-pr127-next-plan.json)다. 아래246 이하 NEXT는 역사 기록이며 현재 구현 순서로 적용하지 않는다.

@@ -1,0 +1,649 @@
+{
+  "stage": 247,
+  "passed": true,
+  "scope": "Join source representation and post-SEAL DMA models on the same71 frames.\n\nRead-only, Python models: no new RTL, ARM,65816 execution or timing claim.\nPrivate input geometry/pattern bytes never appear in the public summary.\n",
+  "frames": 71,
+  "warm_frames": 69,
+  "combinations": {
+    "full_batched16": {
+      "ready4_max": 4759,
+      "ready1_max": 4939,
+      "over_ready4": [],
+      "over_ready1": [],
+      "snes_charge_max": 4368,
+      "over_snes": [
+        952,
+        955,
+        963
+      ],
+      "extra_arm_state": 0,
+      "qualified_for_p2": false
+    },
+    "full_causal_words": {
+      "ready4_max": 4219,
+      "ready1_max": 4359,
+      "over_ready4": [],
+      "over_ready1": [],
+      "snes_charge_max": 4340,
+      "over_snes": [
+        952,
+        955
+      ],
+      "extra_arm_state": 448,
+      "qualified_for_p2": false
+    },
+    "literal_batched16": {
+      "ready4_max": 7034,
+      "ready1_max": 7214,
+      "over_ready4": [
+        909,
+        912,
+        915,
+        919,
+        922,
+        925,
+        928,
+        931,
+        938,
+        941,
+        944,
+        947,
+        951,
+        954,
+        957,
+        960,
+        963,
+        967,
+        970,
+        973
+      ],
+      "over_ready1": [
+        909,
+        912,
+        915,
+        919,
+        922,
+        925,
+        928,
+        931,
+        938,
+        941,
+        944,
+        947,
+        951,
+        954,
+        957,
+        960,
+        963,
+        967,
+        970,
+        973
+      ],
+      "snes_charge_max": 4368,
+      "over_snes": [
+        952,
+        955,
+        963
+      ],
+      "extra_arm_state": 0,
+      "qualified_for_p2": false
+    },
+    "literal_causal_words": {
+      "ready4_max": 6494,
+      "ready1_max": 6634,
+      "over_ready4": [
+        951,
+        954,
+        957,
+        960,
+        963,
+        967,
+        970
+      ],
+      "over_ready1": [
+        938,
+        947,
+        951,
+        954,
+        957,
+        960,
+        963,
+        967,
+        970
+      ],
+      "snes_charge_max": 4340,
+      "over_snes": [
+        952,
+        955
+      ],
+      "extra_arm_state": 448,
+      "qualified_for_p2": false
+    },
+    "shift_batched16": {
+      "ready4_max": 6340,
+      "ready1_max": 6520,
+      "over_ready4": [
+        954,
+        963,
+        970
+      ],
+      "over_ready1": [
+        954,
+        963,
+        970
+      ],
+      "snes_charge_max": 4368,
+      "over_snes": [
+        952,
+        955,
+        963
+      ],
+      "extra_arm_state": 0,
+      "qualified_for_p2": false
+    },
+    "shift_causal_words": {
+      "ready4_max": 5800,
+      "ready1_max": 5940,
+      "over_ready4": [
+        954
+      ],
+      "over_ready1": [
+        954,
+        970
+      ],
+      "snes_charge_max": 4340,
+      "over_snes": [
+        952,
+        955
+      ],
+      "extra_arm_state": 448,
+      "qualified_for_p2": false
+    },
+    "mask16_batched16": {
+      "ready4_max": 6271,
+      "ready1_max": 6451,
+      "over_ready4": [
+        951,
+        954,
+        957,
+        963,
+        967,
+        970
+      ],
+      "over_ready1": [
+        938,
+        951,
+        954,
+        957,
+        963,
+        967,
+        970
+      ],
+      "snes_charge_max": 4368,
+      "over_snes": [
+        952,
+        955,
+        963
+      ],
+      "extra_arm_state": 0,
+      "qualified_for_p2": false
+    },
+    "mask16_causal_words": {
+      "ready4_max": 5731,
+      "ready1_max": 5871,
+      "over_ready4": [
+        954,
+        963,
+        970
+      ],
+      "over_ready1": [
+        954,
+        963,
+        970
+      ],
+      "snes_charge_max": 4340,
+      "over_snes": [
+        952,
+        955
+      ],
+      "extra_arm_state": 448,
+      "qualified_for_p2": false
+    }
+  },
+  "compared_used_pattern_bytes": 130592,
+  "valid_gap_bytes": 592,
+  "valid_gap_spans": 11,
+  "masked_geometry_exact_frames": 71,
+  "prerequisites": [
+    "All current writes complete and SEAL coverage passes before sorted DMA.",
+    "Only target bank; every gap slot valid in that bank and epoch.",
+    "Plan generation/bulk/token order is unchanged; only final DMA descriptions reorder.",
+    "STOP invalidates candidate ownership; no commit before final display ACK and retire."
+  ],
+  "caveats": [
+    "Models only; no assembled decoder/scheduler, cycle bound or FPGA area saving.",
+    "Gap copies use initialized target shadow, not active or last-displayed bytes.",
+    "Existing source240 cycles cannot be assigned to simplified source representations.",
+    "New source decoder/version/CRC/admission/ACK binding not implemented.",
+    "4192 is existing conservative charge gate, not measured master-clock duration.",
+    "Early VRAM transfer still consumes VBlank; double buffering does not add bandwidth."
+  ],
+  "selected_implementation": null,
+  "full_new_input_arm": false,
+  "new_fit": false,
+  "physical_fps": false,
+  "analyzer_sha256": "11bb54ab94f6437a609364a577396ced401dbeb40b0bdd4a0153ddcf8c621b49",
+  "residual_rows": [
+    {
+      "frame": 952,
+      "phase": "warm",
+      "original_charge": 4752,
+      "pattern": {
+        "received_order": {
+          "charge": 1632,
+          "delta": 0
+        },
+        "address_order": {
+          "charge": 1248,
+          "delta": -384
+        },
+        "address_order_valid_gap96": {
+          "charge": 1248,
+          "delta": -384
+        }
+      },
+      "gap_bytes": 0,
+      "gap_spans": 0,
+      "rejected_invalid_gaps": [
+        {
+          "kind": 1,
+          "bytes": 32,
+          "uninitialized_slots": 1
+        },
+        {
+          "kind": 1,
+          "bytes": 32,
+          "uninitialized_slots": 1
+        },
+        {
+          "kind": 1,
+          "bytes": 64,
+          "uninitialized_slots": 2
+        }
+      ],
+      "mask16_payload": 1463,
+      "mask16_blocks": 7,
+      "models": {
+        "full_batched16": {
+          "ready4_bytes": 3936,
+          "ready1_bytes": 4056,
+          "snes_charge": 4368,
+          "extra_arm_state": 0
+        },
+        "full_causal_words": {
+          "ready4_bytes": 3458,
+          "ready1_bytes": 3558,
+          "snes_charge": 4340,
+          "extra_arm_state": 448
+        },
+        "literal_batched16": {
+          "ready4_bytes": 4890,
+          "ready1_bytes": 5010,
+          "snes_charge": 4368,
+          "extra_arm_state": 0
+        },
+        "literal_causal_words": {
+          "ready4_bytes": 4412,
+          "ready1_bytes": 4512,
+          "snes_charge": 4340,
+          "extra_arm_state": 448
+        },
+        "shift_batched16": {
+          "ready4_bytes": 4905,
+          "ready1_bytes": 5025,
+          "snes_charge": 4368,
+          "extra_arm_state": 0
+        },
+        "shift_causal_words": {
+          "ready4_bytes": 4427,
+          "ready1_bytes": 4527,
+          "snes_charge": 4340,
+          "extra_arm_state": 448
+        },
+        "mask16_batched16": {
+          "ready4_bytes": 4647,
+          "ready1_bytes": 4767,
+          "snes_charge": 4368,
+          "extra_arm_state": 0
+        },
+        "mask16_causal_words": {
+          "ready4_bytes": 4169,
+          "ready1_bytes": 4269,
+          "snes_charge": 4340,
+          "extra_arm_state": 448
+        }
+      }
+    },
+    {
+      "frame": 954,
+      "phase": "warm",
+      "original_charge": 4272,
+      "pattern": {
+        "received_order": {
+          "charge": 944,
+          "delta": 0
+        },
+        "address_order": {
+          "charge": 848,
+          "delta": -96
+        },
+        "address_order_valid_gap96": {
+          "charge": 848,
+          "delta": -96
+        }
+      },
+      "gap_bytes": 0,
+      "gap_spans": 0,
+      "rejected_invalid_gaps": [],
+      "mask16_payload": 3052,
+      "mask16_blocks": 14,
+      "models": {
+        "full_batched16": {
+          "ready4_bytes": 4759,
+          "ready1_bytes": 4939,
+          "snes_charge": 4176,
+          "extra_arm_state": 0
+        },
+        "full_causal_words": {
+          "ready4_bytes": 4219,
+          "ready1_bytes": 4359,
+          "snes_charge": 4120,
+          "extra_arm_state": 448
+        },
+        "literal_batched16": {
+          "ready4_bytes": 7034,
+          "ready1_bytes": 7214,
+          "snes_charge": 4176,
+          "extra_arm_state": 0
+        },
+        "literal_causal_words": {
+          "ready4_bytes": 6494,
+          "ready1_bytes": 6634,
+          "snes_charge": 4120,
+          "extra_arm_state": 448
+        },
+        "shift_batched16": {
+          "ready4_bytes": 6340,
+          "ready1_bytes": 6520,
+          "snes_charge": 4176,
+          "extra_arm_state": 0
+        },
+        "shift_causal_words": {
+          "ready4_bytes": 5800,
+          "ready1_bytes": 5940,
+          "snes_charge": 4120,
+          "extra_arm_state": 448
+        },
+        "mask16_batched16": {
+          "ready4_bytes": 6271,
+          "ready1_bytes": 6451,
+          "snes_charge": 4176,
+          "extra_arm_state": 0
+        },
+        "mask16_causal_words": {
+          "ready4_bytes": 5731,
+          "ready1_bytes": 5871,
+          "snes_charge": 4120,
+          "extra_arm_state": 448
+        }
+      }
+    },
+    {
+      "frame": 955,
+      "phase": "warm",
+      "original_charge": 4400,
+      "pattern": {
+        "received_order": {
+          "charge": 1184,
+          "delta": 0
+        },
+        "address_order": {
+          "charge": 1088,
+          "delta": -96
+        },
+        "address_order_valid_gap96": {
+          "charge": 1088,
+          "delta": -96
+        }
+      },
+      "gap_bytes": 0,
+      "gap_spans": 0,
+      "rejected_invalid_gaps": [
+        {
+          "kind": 1,
+          "bytes": 32,
+          "uninitialized_slots": 1
+        }
+      ],
+      "mask16_payload": 1405,
+      "mask16_blocks": 7,
+      "models": {
+        "full_batched16": {
+          "ready4_bytes": 3923,
+          "ready1_bytes": 4103,
+          "snes_charge": 4304,
+          "extra_arm_state": 0
+        },
+        "full_causal_words": {
+          "ready4_bytes": 3397,
+          "ready1_bytes": 3537,
+          "snes_charge": 4262,
+          "extra_arm_state": 448
+        },
+        "literal_batched16": {
+          "ready4_bytes": 4911,
+          "ready1_bytes": 5091,
+          "snes_charge": 4304,
+          "extra_arm_state": 0
+        },
+        "literal_causal_words": {
+          "ready4_bytes": 4385,
+          "ready1_bytes": 4525,
+          "snes_charge": 4262,
+          "extra_arm_state": 448
+        },
+        "shift_batched16": {
+          "ready4_bytes": 4911,
+          "ready1_bytes": 5091,
+          "snes_charge": 4304,
+          "extra_arm_state": 0
+        },
+        "shift_causal_words": {
+          "ready4_bytes": 4385,
+          "ready1_bytes": 4525,
+          "snes_charge": 4262,
+          "extra_arm_state": 448
+        },
+        "mask16_batched16": {
+          "ready4_bytes": 4671,
+          "ready1_bytes": 4851,
+          "snes_charge": 4304,
+          "extra_arm_state": 0
+        },
+        "mask16_causal_words": {
+          "ready4_bytes": 4145,
+          "ready1_bytes": 4285,
+          "snes_charge": 4262,
+          "extra_arm_state": 448
+        }
+      }
+    },
+    {
+      "frame": 963,
+      "phase": "warm",
+      "original_charge": 4240,
+      "pattern": {
+        "received_order": {
+          "charge": 592,
+          "delta": 0
+        },
+        "address_order": {
+          "charge": 592,
+          "delta": 0
+        },
+        "address_order_valid_gap96": {
+          "charge": 592,
+          "delta": 0
+        }
+      },
+      "gap_bytes": 0,
+      "gap_spans": 0,
+      "rejected_invalid_gaps": [],
+      "mask16_payload": 3249,
+      "mask16_blocks": 15,
+      "models": {
+        "full_batched16": {
+          "ready4_bytes": 3962,
+          "ready1_bytes": 4122,
+          "snes_charge": 4240,
+          "extra_arm_state": 0
+        },
+        "full_causal_words": {
+          "ready4_bytes": 3420,
+          "ready1_bytes": 3540,
+          "snes_charge": 4178,
+          "extra_arm_state": 448
+        },
+        "literal_batched16": {
+          "ready4_bytes": 6805,
+          "ready1_bytes": 6965,
+          "snes_charge": 4240,
+          "extra_arm_state": 0
+        },
+        "literal_causal_words": {
+          "ready4_bytes": 6263,
+          "ready1_bytes": 6383,
+          "snes_charge": 4178,
+          "extra_arm_state": 448
+        },
+        "shift_batched16": {
+          "ready4_bytes": 5562,
+          "ready1_bytes": 5722,
+          "snes_charge": 4240,
+          "extra_arm_state": 0
+        },
+        "shift_causal_words": {
+          "ready4_bytes": 5020,
+          "ready1_bytes": 5140,
+          "snes_charge": 4178,
+          "extra_arm_state": 448
+        },
+        "mask16_batched16": {
+          "ready4_bytes": 6215,
+          "ready1_bytes": 6375,
+          "snes_charge": 4240,
+          "extra_arm_state": 0
+        },
+        "mask16_causal_words": {
+          "ready4_bytes": 5673,
+          "ready1_bytes": 5793,
+          "snes_charge": 4178,
+          "extra_arm_state": 448
+        }
+      }
+    },
+    {
+      "frame": 968,
+      "phase": "warm",
+      "original_charge": 4720,
+      "pattern": {
+        "received_order": {
+          "charge": 1232,
+          "delta": 0
+        },
+        "address_order": {
+          "charge": 752,
+          "delta": -480
+        },
+        "address_order_valid_gap96": {
+          "charge": 688,
+          "delta": -544
+        }
+      },
+      "gap_bytes": 32,
+      "gap_spans": 1,
+      "rejected_invalid_gaps": [],
+      "mask16_payload": 1476,
+      "mask16_blocks": 7,
+      "models": {
+        "full_batched16": {
+          "ready4_bytes": 3657,
+          "ready1_bytes": 3817,
+          "snes_charge": 4176,
+          "extra_arm_state": 0
+        },
+        "full_causal_words": {
+          "ready4_bytes": 3157,
+          "ready1_bytes": 3277,
+          "snes_charge": 4134,
+          "extra_arm_state": 448
+        },
+        "literal_batched16": {
+          "ready4_bytes": 4611,
+          "ready1_bytes": 4771,
+          "snes_charge": 4176,
+          "extra_arm_state": 0
+        },
+        "literal_causal_words": {
+          "ready4_bytes": 4111,
+          "ready1_bytes": 4231,
+          "snes_charge": 4134,
+          "extra_arm_state": 448
+        },
+        "shift_batched16": {
+          "ready4_bytes": 4626,
+          "ready1_bytes": 4786,
+          "snes_charge": 4176,
+          "extra_arm_state": 0
+        },
+        "shift_causal_words": {
+          "ready4_bytes": 4126,
+          "ready1_bytes": 4246,
+          "snes_charge": 4134,
+          "extra_arm_state": 448
+        },
+        "mask16_batched16": {
+          "ready4_bytes": 4374,
+          "ready1_bytes": 4534,
+          "snes_charge": 4176,
+          "extra_arm_state": 0
+        },
+        "mask16_causal_words": {
+          "ready4_bytes": 3874,
+          "ready1_bytes": 3994,
+          "snes_charge": 4134,
+          "extra_arm_state": 448
+        }
+      }
+    }
+  ],
+  "input_count": 457,
+  "private_result_sha256": "8fe4e2798cc2bc22ea33bfc0891ece27096864a8a64d36a2b771ef528ab3b6dc",
+  "evidence_sha256": {
+    "probes/nes-wholepath247/analysis06/result.json": "7d87e406479ca96154419a646135a0f67a7a745f4711d62359b6ece948007e4d",
+    "probes/nes-delta231/manifest.json": "cd7ce0e29324f69710e2dcf7f1fe34ed296e52988e542920f15386adbe48796f",
+    "probes/nes-source240/manifest.json": "69f79190a775c6a3a1b812ac7dc7620853ffba119961cddafca41baa1dba622c",
+    "probes/nes-path236/manifest.json": "08ad2a199840e7618a323c86c40c331e6432f5948bbb3123ab4cbb4f9f09b028",
+    "probes/nes-sparse232/manifest.json": "29c889b5342e356c80d91e7f8e17b9c359f3f72e6c6039ebf9139f689c9475a9",
+    "probes/nes-wholepath247/observer03/result.json": "52595621f7741bf76e8f4253692b4e0993d2437f42fb0cb97ed68e727af43511",
+    "probes/nes-source240/test01/result.json": "5052b26125837dc5281a0b1737d22c11bbfa4591dbf2ef974c05626eda493f38",
+    "probes/nes-path236/analysis02/result.json": "4331c22b84eb8b4ea25a4624764ddc073c540e18308105d342fbff7b8868cd04",
+    "probes/nes-delta231/analysis03/result.json": "3c311e02758d87e5f6b6d0215c33af3d9385646b1bb93d986b56b594adbdf43e",
+    "probes/nes-sparse232/analysis02/result.json": "1f96736c050cd744d7cb7b09a1db8eebd96a1100370063d235ef69006159709c",
+    "probes/nes-sparse232/scroll02/result.json": "25d784c7097324c25cfca43062959ef6a6358c9fbefbf052569f8a4f8c02957d",
+    "repository-nes-milestone/tools/nes_sparse232.py": "3756216572c73f844a427f48ef63431704bcd3e6d73bf67620a2f1227fdece5c",
+    "repository-nes-milestone/tools/nes_dirty212.py": "9b8e4b7f86b79c3aae2588c2b6a2c26085b68193798edb13e57e126e048c3b2b",
+    "repository-nes-milestone/tools/nes_banked169.py": "8feb653998eaac90f10a1ab4508018ca19bcad4355d3537ab7b7647259e4967b",
+    "probes/nes-runtime233/arm01/src/nes_native_runtime165.c": "c08ce86c9641e784fa93afdc3b63083f9d964f224ea96e0869063da1290d7e50"
+  }
+}

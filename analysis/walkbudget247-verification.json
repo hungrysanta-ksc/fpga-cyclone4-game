@@ -1,0 +1,94 @@
+{
+  "stage": 247,
+  "passed": true,
+  "scope": "Conditional same-frame serial wire+post-SEAL walk scenarios, not FPS/WCET.",
+  "frames": 71,
+  "models": {
+    "full_codec_original16": {
+      "minimum_ms": 12.063670527958163,
+      "maximum_ms": 24.093224272917368,
+      "over_16_67_frames": [
+        909,
+        915,
+        922,
+        925,
+        930,
+        931,
+        938,
+        941,
+        947,
+        951,
+        952,
+        954,
+        955,
+        956,
+        957,
+        958,
+        960,
+        962,
+        963,
+        967,
+        968,
+        970,
+        971,
+        973
+      ]
+    },
+    "semantic_shift_batched16": {
+      "minimum_ms": 12.539099099386734,
+      "maximum_ms": 23.48370046339356,
+      "over_16_67_frames": [
+        922,
+        925,
+        931,
+        938,
+        947,
+        951,
+        952,
+        953,
+        954,
+        955,
+        956,
+        957,
+        958,
+        960,
+        962,
+        963,
+        967,
+        968,
+        970,
+        971,
+        973
+      ]
+    },
+    "semantic_shift_sparse_raw_ceiling_batched16": {
+      "minimum_ms": 10.56424195652959,
+      "maximum_ms": 21.304652844345938,
+      "over_16_67_frames": [
+        938,
+        952,
+        954,
+        955,
+        962,
+        963,
+        968,
+        970
+      ]
+    }
+  },
+  "assumptions": [
+    "Ready4 modeled wire at2.625MHz and measured post-SEAL walk are serialized for a single-frame transaction.",
+    "No new cross-frame SPI/target ownership overlap is assumed. Such overlap needs an explicit schedule and lifetime proof.",
+    "Semantic input/raw relocation are unimplemented models; current walk measurements are only a conditional retained-consumer cost."
+  ],
+  "exclusions": [
+    "Source prepare/ARM execution and gaps",
+    "SNES coverage,packet processing,VBlank wait,DMA/final ACK",
+    "New parallel raw control/compute costs"
+  ],
+  "decision": "None of these serialized retained-consumer scenarios provides a joint60Hz bound. Not an impossibility proof for pipelined or relocated designs.",
+  "product_changed": false,
+  "selected_implementation": null,
+  "analyzer_sha256": "5681d635c213624a7def7e3263b6737525f83b00972eb4b3e96454fe934a27bc",
+  "private_result_sha256": "d9551cf81d938b63e2b71ff772755e9b076d542c86b0681a9abd4929b7c93577"
+}

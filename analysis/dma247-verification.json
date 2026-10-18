@@ -1,0 +1,58 @@
+{
+  "stage": 247,
+  "passed": true,
+  "frames": 71,
+  "actual_65816_unchanged232": true,
+  "observed_commands": 478,
+  "observed_dma_bytes": 133600,
+  "no_wait_command_clocks": {
+    "samples": 403,
+    "minimum": 1346,
+    "maximum": 13490
+  },
+  "no_wait_command_residual_after_8x_payload": {
+    "samples": 403,
+    "minimum": 1218,
+    "maximum": 1586
+  },
+  "no_wait_warm_final_master_clocks": {
+    "samples": 64,
+    "minimum": 9284,
+    "maximum": 9442
+  },
+  "display_ack_scanline": {
+    "samples": 71,
+    "minimum": 232,
+    "maximum": 257
+  },
+  "body": {
+    "bytes": 3910,
+    "capacity": 3936,
+    "free": 26,
+    "shared_append_bytes": 132,
+    "list_loop_bytes": 112,
+    "note": "Shared append remains needed by metadata. These byte spans are not all reclaimable."
+  },
+  "retained_checks": "71 commits; complete metadata, used VRAM, map/raw and all visible PPU writes inside VBlank checked by existing Lua.",
+  "limitations": [
+    "Waiting commands excluded from setup sample, not subtracted approximately.",
+    "Final interval starts at final212 and ends before its final routine RTS; ACK/retire follows.",
+    "Charge96/960 are scheduling units, not measured CPU cycles or independent time bounds.",
+    "Observed maxima are not WCET; different alignment/IRQ/pad/raw/mode paths remain unbounded.",
+    "No new scheduler/map decoder, no changed4192 gate, no physical or full-pipeline FPS proof.",
+    "ACK scanline is observed remaining position only; no new safe deadline derived."
+  ],
+  "new_scheduler_code_bytes": null,
+  "new_scheduler_cycle_bound": null,
+  "physical_fps": false,
+  "selected_implementation": null,
+  "input_hashes": {
+    "probes\\nes-wholepath247\\dma01\\result.json": "d0d7a19a75eb5b3f863ab43ccb8dc4e1a29dca5ba258eb322272cee89af89e2c",
+    "probes\\nes-wholepath247\\dma01\\run\\dma247.csv": "a885d57de88111dcf2135b71a85c897691bda79dfca3023a94172329a453971d",
+    "probes\\nes-wholepath247\\dma01\\run\\bus.tsv": "d3318645cf7f993637900007bf431a3b72ee48a06eb9eb8a965c2113306e1806",
+    "probes\\nes-wholepath247\\dma01\\run\\capture.lua": "159d3e6ca3b2437150a95271d0054129d92829173132cc5a7ab9382c16fc6096",
+    "probes\\nes-sparse232\\scroll02\\client\\labels.json": "4fff9e97949f246c82ddf236e55d80f288f36ee8c9b8e521afb355d915a8fb61"
+  },
+  "measurement_script_sha256": "c88c294e68fc3bee52b81f818dbd7f9e3d8e97df57a85dc9be9a612bec03ac44",
+  "analyzer_sha256": "4e6277cce2f1acf1dd74ad3a01696c441db80ddedb352c152d572cc5042a30d9"
+}

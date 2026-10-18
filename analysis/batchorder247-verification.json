@@ -1,0 +1,145 @@
+{
+  "stage": 247,
+  "passed": true,
+  "frames": 71,
+  "scope": "Bounded existing plan-batch reorder and receive-time DMA append model.\n\nNo producer/SNES implementation or timing claim. Preserve allocation and bytes.\n",
+  "warm": {
+    "plan_records": {
+      "minimum": 1,
+      "maximum": 24,
+      "total": 416
+    },
+    "batches": {
+      "minimum": 1,
+      "maximum": 2,
+      "total": 77
+    },
+    "largest_batch": {
+      "minimum": 2,
+      "maximum": 15,
+      "total": 448
+    },
+    "encoded_plan_bytes": {
+      "minimum": 6,
+      "maximum": 181,
+      "total": 3036
+    },
+    "insertion_comparisons": {
+      "minimum": 1,
+      "maximum": 32,
+      "total": 490
+    },
+    "insertion_moved_records": {
+      "minimum": 0,
+      "maximum": 17,
+      "total": 82
+    },
+    "insertion_moved_bytes": {
+      "minimum": 0,
+      "maximum": 136,
+      "total": 642
+    },
+    "global_sorted_charge": {
+      "minimum": 2192,
+      "maximum": 4240,
+      "total": 224976
+    },
+    "global_sorted_commands": {
+      "minimum": 3,
+      "maximum": 11,
+      "total": 410
+    },
+    "arrival_gap_commands": {
+      "minimum": 3,
+      "maximum": 14,
+      "total": 444
+    },
+    "arrival_gap_bytes": {
+      "minimum": 464,
+      "maximum": 2576,
+      "total": 119120
+    },
+    "arrival_gap_charge": {
+      "minimum": 2192,
+      "maximum": 4752,
+      "total": 227984
+    },
+    "batch_sorted_gap_commands": {
+      "minimum": 3,
+      "maximum": 13,
+      "total": 414
+    },
+    "batch_sorted_gap_bytes": {
+      "minimum": 464,
+      "maximum": 2544,
+      "total": 119312
+    },
+    "batch_sorted_gap_charge": {
+      "minimum": 2192,
+      "maximum": 4336,
+      "total": 225296
+    },
+    "semantic16_ready4_wire_bytes": {
+      "minimum": 2283,
+      "maximum": 5141,
+      "total": 213500
+    },
+    "original_pattern_runs": {
+      "minimum": 1,
+      "maximum": 11,
+      "total": 187
+    },
+    "batch_sorted_pattern_runs": {
+      "minimum": 1,
+      "maximum": 8,
+      "total": 166
+    }
+  },
+  "charge_over_4192": {
+    "arrival_gap_charge": [
+      952,
+      954,
+      955,
+      963,
+      968
+    ],
+    "batch_sorted_gap_charge": [
+      952,
+      955,
+      963
+    ],
+    "global_sorted_charge": [
+      952,
+      955,
+      963
+    ]
+  },
+  "per_batch_bounds": {
+    "max_records": 15,
+    "max_payload_bytes": 240,
+    "max_pair_comparisons": 105,
+    "conservative_shift_write_bytes": 3360,
+    "extra_reads_same": true,
+    "one_record_scratch_bytes": 32,
+    "existing_append_scratch_bytes": 32,
+    "proposed_additional_persistent_bytes": 0
+  },
+  "ordering_guards": [
+    "Do not reorder across original batch boundaries.",
+    "END remains last and zero tile remains first; allocator output and arbitrary row/alt record bytes are immutable.",
+    "CRC must be calculated after reordering;sent count,token and physical bank ownership are unchanged.",
+    "Full196 nonordinary records must be parsed with their alt_mask lengths; observed71 alone does not test them."
+  ],
+  "limitations": [
+    "Model only: no C sorter,FPGA converter or actual65816 new receive-time path was run.",
+    "No post-SEAL scan is required by append-only descriptors, but receive-time work and ARM sorting are not free or timed.",
+    "Gap allowance for patterns requires the existing SEAL used-subset-valid contract;never early DMA.",
+    "Actual aperture2048B/token boundaries can split a pattern run;run counts are not measured wire savings.",
+    "No new FPGA area,full ARM RUN/IRQ,STOP or complete display schedule approval."
+  ],
+  "selected_implementation": null,
+  "product_changed": false,
+  "analyzer_sha256": "d68f16b051bff42826309e0fda86f3145b1fc8165c0910d00e5d32ea177f1a73",
+  "private_result_sha256": "2f20fb5bbfea0b7c855b449db46946ea08a78733c3fa6d506af9b4144081f815",
+  "input_count": 146
+}

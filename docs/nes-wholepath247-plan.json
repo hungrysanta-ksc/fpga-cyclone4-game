@@ -1,0 +1,601 @@
+{
+  "schema_version": 1,
+  "plan_id": "NES-WHOLEPATH247-20261018",
+  "date_kst": "2026-10-18",
+  "status": "P0_complete_P1_partial_no_candidate_selected",
+  "document": "docs/nes-wholepath247-contract.ko.md",
+  "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128",
+  "scope": "P0/P1 placement comparison on same71;prioritize narrow FPGA validation with bounded output overlap;no P2 approval or new implementation.",
+  "supersedes": "Current execution status after merged PR127; its goals and safeguards remain authoritative. Historical evidence unchanged.",
+  "roles": {
+    "production_hardware": "NES227",
+    "functional_reference": "NES240_unplaced",
+    "rejected": [
+      "NES241",
+      "NES246",
+      "NES247_2472_joint_CPU_decoder"
+    ],
+    "selected_next_implementation": null
+  },
+  "primary_goal": "SMB3(J) first-level sustained scrolling near60Hz at normal game speed, with sound, held/simultaneous input and menu return preserved.",
+  "acceptance": {
+    "reference_period_ms": 16.6666666667,
+    "actual_display_clock": "Measure NTSC cadence; do not assume exact60.000Hz.",
+    "metrics": [
+      "actual_display_intervals_distribution",
+      "maximum_display_gap",
+      "capture_to_display_age",
+      "sustained_scroll_separate_from_transition",
+      "sound_input_menu_regression"
+    ],
+    "not_acceptance": [
+      "CPU progress alone",
+      "transport ACK alone",
+      "intro/static average",
+      "frame discard or game slowdown",
+      "standalone FF reduction",
+      "same wire bytes required for every new encoding"
+    ]
+  },
+  "milestones": [
+    {
+      "id": "P0",
+      "status": "complete_with_explicit_unknowns",
+      "deliverable": "Same-frame end-to-end ledger and residual map/slot/row change classification using existing scroll/heavy-scene evidence.",
+      "exit": "Source/SPI input-output-control/ARM/SNES costs, overlap/resource conflicts, model-vs-execution-vs-unknown and missing scenes explicitly identified.",
+      "evidence": [
+        "analysis/wholepath247-frames.csv",
+        "analysis/wholepath247-verification.json"
+      ]
+    },
+    {
+      "id": "P1",
+      "status": "partial_no_candidate_with_joint_margin",
+      "depends_on": [
+        "P0"
+      ],
+      "deliverable": "Compare limited240 dedicated logic, semantic field/row changes, and joint transfer/conversion relocation.",
+      "exit": "Select one candidate with defensible area/time/memory margin; reject or revisit assumptions if none qualifies. Unified sequencer remains optional.",
+      "evidence": [
+        "docs/nes-wholepath247-contract.ko.md",
+        "docs/nes-schedule247-contract.ko.md",
+        "analysis/schedule247-verification.json",
+        "docs/nes-relocation247-contract.ko.md",
+        "analysis/relocation247-verification.json",
+        "docs/nes-gap247-contract.ko.md",
+        "analysis/gap247-verification.json",
+        "analysis/dma247-verification.json",
+        "docs/nes-scan247-contract.ko.md",
+        "analysis/scan247-verification.json",
+        "docs/nes-wordwalk247-contract.ko.md",
+        "analysis/sparsewalk247-verification.json",
+        "analysis/wordwalk247-verification.json",
+        "analysis/walkbudget247-verification.json",
+        "docs/nes-batchorder247-contract.ko.md",
+        "analysis/batchorder247-verification.json",
+        "analysis/order247-verification.json",
+        "docs/nes-coalesce247-contract.ko.md",
+        "analysis/coalesce247-verification.json",
+        "docs/nes-mapjoint247-contract.ko.md",
+        "analysis/mapjoint247-verification.json",
+        "docs/nes-maskboundary247-contract.ko.md",
+        "analysis/maskboundary247-verification.json",
+        "docs/nes-storage247-contract.ko.md",
+        "analysis/maskrun247-verification.json",
+        "docs/nes-maskfast247-contract.ko.md",
+        "analysis/maskfast247-verification.json",
+        "docs/nes-maskbatch247-contract.ko.md",
+        "analysis/maskbatch247-verification.json",
+        "docs/nes-spantrade247-contract.ko.md",
+        "analysis/spantrade247-verification.json",
+        "docs/nes-validation247-contract.ko.md",
+        "analysis/validation247-verification.json",
+        "docs/nes-jointdecode247-contract.ko.md",
+        "analysis/jointdecode247-verification.json",
+        "docs/nes-placement247-contract.ko.md",
+        "analysis/placement247-verification.json"
+      ]
+    },
+    {
+      "id": "P2",
+      "status": "pending",
+      "depends_on": [
+        "P1"
+      ],
+      "deliverable": "Selected minimal implementation and whole-board/runtime integration.",
+      "exit": "Changed-boundary reference/cancel checks, full-board fit/required STA/CDC/IO, full new-input ARM RUN/IRQ and final display ownership verified on matching sources."
+    },
+    {
+      "id": "P3",
+      "status": "pending",
+      "depends_on": [
+        "P2"
+      ],
+      "deliverable": "Paired hardware trial in SMB3 first-level sustained scroll.",
+      "exit": "Measured/display-correlated cadence, gaps and age plus usable scrolling/sound/input/menu evidence; transition reported separately. No all-mapper claim."
+    }
+  ],
+  "known_blockers": [
+    {
+      "id": "AREA",
+      "status": "open",
+      "evidence": "analysis/source246-verification.json",
+      "detail": "240 requires15898LE/1003LAB/54M9K;24616027/1011/55;device15408/963/56. Not placed."
+    },
+    {
+      "id": "SPI",
+      "status": "open",
+      "evidence": "docs/nes-path236-contract.ko.md",
+      "detail": "2.625MHz gives5468.75clockB/60Hz;ready4 max5341B(~97.7%) excludes unbounded gaps/stalls;ready1 max5941B."
+    },
+    {
+      "id": "SNES-BURSTS",
+      "status": "open",
+      "evidence": "docs/nes-runtime233-contract.ko.md",
+      "detail": "Placement05:unchanged952/955 bursts. FPGAtyped ideal input-barrier overlap15.525ms vsserial17.334ms with old display samples;new setup/ARM/source/FPGA/gaps excluded. No60fps or area approval."
+    },
+    {
+      "id": "FULL-RUNTIME",
+      "status": "open",
+      "evidence": "docs/nes-runtime233-contract.ko.md",
+      "detail": "233 input remains227;1616B margin cannot approve full new-input RUN/IRQ."
+    },
+    {
+      "id": "SCENE-COVERAGE",
+      "status": "open",
+      "detail": "71observedframes are a narrow window, not sustained/all-mapper proof."
+    }
+  ],
+  "preserve": [
+    "production227",
+    "GBC164",
+    "save_SRAM_not_scratch",
+    "frozen_archives_and_failed_evidence",
+    "fetch_time_CHR_bank_latch_epoch",
+    "final_displayACK_commit_lease_retire",
+    "safe_partial_failure_and_common_reset"
+  ],
+  "do_not_repeat": [
+    "246micro_opcode_or_seed_loops",
+    "225horizontal_ringmap_as_new_feature",
+    "unmodified227_or044_hardware_trial",
+    "unmodified_FIT",
+    "full_private_archive_rehash_as_performance_progress"
+  ],
+  "later_priorities": [
+    "long_play_after_AV_cadence",
+    "safe_error_or_console_reset_logging",
+    "held_and_simultaneous_input_quality",
+    "mapper_compatibility",
+    "frame_skip_state_save_mute"
+  ],
+  "next_action": "NEXT placement 경계설계:ARM planner·의미검증/FPGA map범위·receipt/SNES boundedDMA·표시의담당과certificate/STOP/epoch/token수명명시. 같은954/970·952/955에서tile drain→typedmap→manifest→SEAL의실제일정+source/ARM/parser/새SNES setup-service+전체LE/LAB/M9K예산결합. 기존4packet window를새겹침기능으로세지말고입력COMMITTED장벽유지. 15.525ms는낙관모델,17.334ms직렬도미측정비용제외. 56/56산술/490LE40LAB부족은승인아님;새RTL/FIT/토큰opcode미세루프자동진행금지. 5886/227/GBC164/saveSRAM보존,4/5/6KiB고정금지.",
+  "base_commit": "b6958f24fbe2173d0879da07ef56fe3b507b5420",
+  "branch": "codex/nes-wholepath-247",
+  "previous_plan": "docs/nes-pr127-next-plan.json",
+  "previous_pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/127",
+  "p1_observations": {
+    "batched16": {
+      "ready4_max": 4759,
+      "ready1_max": 4939,
+      "snes_charge_over_frames": 5,
+      "extra_arm_retained_bytes": 0
+    },
+    "causal_words": {
+      "ready4_max": 4219,
+      "ready1_max": 4359,
+      "snes_charge_over_frames": 4,
+      "extra_arm_retained_bytes": 448
+    },
+    "selected": null,
+    "note": "Models only; both leave SNES burst/FPGA/new-input ARM gates open."
+  },
+  "analysis_commit": "f80bd3bf26108fa6f34a5d766c75c84695bee9e6",
+  "p1_schedule_followup": {
+    "document": "docs/nes-schedule247-contract.ko.md",
+    "evidence": "analysis/schedule247-verification.json",
+    "selected": "schedule04",
+    "combinations": 8,
+    "qualified": 0,
+    "used_pattern_bytes_exact": 130592,
+    "valid_gap_bytes": 592,
+    "valid_gap_spans": 11,
+    "full_batched16_over_snes": [
+      952,
+      955,
+      963
+    ],
+    "full_causal_words_over_snes": [
+      952,
+      955
+    ],
+    "next_implementation": null
+  },
+  "p1_relocation_followup": {
+    "selected": "relocation01",
+    "document": "docs/nes-relocation247-contract.ko.md",
+    "evidence": "analysis/relocation247-verification.json",
+    "semantic_raster_bytes": 449,
+    "semantic_geometry_bytes": 4398,
+    "c_exact_files": 355,
+    "reference_checks": 4066624,
+    "semantic_shift_batched16_ready4_max": 5141,
+    "semantic_shift_batched16_ready1_max": 5321,
+    "full_planner_unchanged_array_bytes": 18752,
+    "full_raw_2048_over_snes": 67,
+    "qualified_for_p2": false
+  },
+  "p1_gap_dma_followup": {
+    "selected": [
+      "gap01",
+      "dma01",
+      "dma-analysis01"
+    ],
+    "document": "docs/nes-gap247-contract.ko.md",
+    "evidence": [
+      "analysis/gap247-verification.json",
+      "analysis/dma247-verification.json"
+    ],
+    "poison_initializations": 3,
+    "used_pattern_byte_checks": 391776,
+    "initially_invalid_gap_slots": 30,
+    "later_written_and_used": 10,
+    "word_map_over_frames": [
+      955
+    ],
+    "word_map_max_charge": 4198,
+    "actual_unchanged232_frames": 71,
+    "measured_dma_commands": 478,
+    "qualified_for_p2": false
+  },
+  "p1_scan_followup": {
+    "selected": [
+      "scan-build02",
+      "scan-test01",
+      "scan-analysis01"
+    ],
+    "decision": "REJECT_per_bit_full_scan_latency",
+    "document": "docs/nes-scan247-contract.ko.md",
+    "evidence": "analysis/scan247-verification.json",
+    "body_bytes": 3930,
+    "free_bytes": 6,
+    "actual_frames": 71,
+    "exact_command_frames": 71,
+    "warm_scan_ms_min": 53.08449351337484,
+    "warm_scan_ms_max": 53.838593080032986,
+    "qualified_for_p2": false
+  },
+  "p1_wordwalk_followup": {
+    "selected": [
+      "walk-model01",
+      "walk-build01",
+      "walk-test01",
+      "walk-analysis01",
+      "walk-budget01"
+    ],
+    "document": "docs/nes-wordwalk247-contract.ko.md",
+    "evidence": "analysis/wordwalk247-verification.json",
+    "body_bytes": 3920,
+    "free_bytes": 16,
+    "exact_frames": 71,
+    "warm_scan_ms": [
+      5.407670527958162,
+      7.897838039937105
+    ],
+    "serial_scenario_over_frames": [
+      24,
+      21,
+      8
+    ],
+    "qualified_for_p2": false
+  },
+  "p1_batchorder_followup": {
+    "selected": [
+      "order-model01",
+      "order-build01",
+      "order-host01",
+      "order-append01",
+      "order-test01",
+      "order-analysis02"
+    ],
+    "document": "docs/nes-batchorder247-contract.ko.md",
+    "evidence": "analysis/order247-verification.json",
+    "body_bytes": 3903,
+    "free_bytes": 33,
+    "exact_frames": 71,
+    "post_seal_scan": false,
+    "warm_mark_ms": [
+      3.7583920116476626,
+      14.530524596468732
+    ],
+    "warm_coverage_ms": [
+      1.7930584287481601,
+      1.796503931831187
+    ],
+    "conditional_serial_over_frames": 49,
+    "qualified_for_p2": false
+  },
+  "p1_coalesce_followup": {
+    "selected": [
+      "range16-build01",
+      "range8-build01",
+      "coalesce-host01",
+      "coalesce-guards01",
+      "coalesce-test01",
+      "coalesce-analysis04"
+    ],
+    "document": "docs/nes-coalesce247-contract.ko.md",
+    "evidence": "analysis/coalesce247-verification.json",
+    "range_rejected_body_bytes": [
+      3971,
+      3950
+    ],
+    "consumer_body_bytes": 3903,
+    "exact_frames": 71,
+    "grouped_chunks": 178,
+    "payload_bytes": 12944,
+    "warm_mark_ms": [
+      3.081583460095254,
+      11.593093535630924
+    ],
+    "warm_map_mark_clocks": 9044730,
+    "warm_all_mark_clocks": 11180076,
+    "qualified_for_p2": false
+  },
+  "p1_mapjoint_followup": {
+    "selected": "mapjoint03",
+    "document": "docs/nes-mapjoint247-contract.ko.md",
+    "evidence": "analysis/mapjoint247-verification.json",
+    "word_formats": 3,
+    "exact_map_bytes": 872448,
+    "policy_negatives": 34,
+    "warm_needed_words": 2607,
+    "warm_old_sent_words": 15320,
+    "preferred_wire_model": "mask8",
+    "mask8_ready4_max": 4095,
+    "mask8_ready1_max": 4275,
+    "extra_manifest_wire": 262,
+    "arm_extra_retained": 448,
+    "snes_naive_bitmap_extra": 672,
+    "snes_initialization_flags_extra_logical": 161,
+    "new_decoder_and_coverage_budget_min_ms": 1.4711446287167789,
+    "remaining_charge_over": [
+      952,
+      955
+    ],
+    "qualified_for_p2": false
+  },
+  "p1_maskboundary_followup": {
+    "selected": "maskboundary-build01",
+    "document": "docs/nes-maskboundary247-contract.ko.md",
+    "evidence": "analysis/maskboundary247-verification.json",
+    "decision": "REJECT_CURRENT_4KIB_CONFIGURATION",
+    "body_bytes": 4398,
+    "body_capacity": 3936,
+    "over_capacity_bytes": 462,
+    "state_extra_bytes": 166,
+    "runtime_verified": false,
+    "qualified_for_p2": false,
+    "capacity_is_current_design_not_console_limit": true
+  },
+  "user_capacity_policy": "60fps is the goal;4KiB is not mandatory. Accept code expansion when it improves efficiency,subject to whole-system resource/time feasibility.",
+  "p1_storage_maskrun_followup": {
+    "selected": [
+      "maskrun-host01",
+      "maskrun-test01",
+      "maskrun-fault01",
+      "maskrun-analysis01",
+      "storage-map01",
+      "storage-rtl01"
+    ],
+    "document": "docs/nes-storage247-contract.ko.md",
+    "evidence": "analysis/maskrun247-verification.json",
+    "capacity4k_required": false,
+    "body_bytes": 4398,
+    "split5k_body_free": 562,
+    "actual_frames": 71,
+    "reference_checks": 4066624,
+    "exact_map_bytes": 290816,
+    "fault_cases": 12,
+    "storage_rtl_reads": 33029,
+    "storage_raw_guards": 4,
+    "mask_ms": [
+      2.426379144090473,
+      16.73238730993278
+    ],
+    "conditional_serial_over": 58,
+    "warm_multi_vblank": [
+      952,
+      955
+    ],
+    "wholeboard_fit": false,
+    "qualified_for_p2": false
+  },
+  "p1_maskfast_followup": {
+    "selected": [
+      "maskfast-build02",
+      "maskfast-test01",
+      "maskfast-fault01",
+      "maskfast-lanes01",
+      "maskfast-masks01",
+      "maskfast-analysis02",
+      "faststorage-map01",
+      "faststorage-rtl01"
+    ],
+    "document": "docs/nes-maskfast247-contract.ko.md",
+    "evidence": "analysis/maskfast247-verification.json",
+    "body_bytes": 5775,
+    "lookup_bytes": 1024,
+    "split6k_body_free": 209,
+    "actual_frames": 71,
+    "fault_cases": 36,
+    "all_masks": 255,
+    "exact_map_bytes": 290816,
+    "mask_regression_frames": [
+      908,
+      911,
+      927,
+      929,
+      933,
+      934,
+      935,
+      936,
+      951,
+      952,
+      953,
+      956,
+      959,
+      961
+    ],
+    "map_validation_max_ms": 13.28558052303668,
+    "map_validation_total_reduction_percent": 24.355278125423308,
+    "conditional_serial_over": 45,
+    "warm_multi_vblank": [
+      952,
+      955
+    ],
+    "storage_rtl_reads": 33029,
+    "storage_raw_guards": 4,
+    "wholeboard_fit": false,
+    "qualified_for_p2": false
+  },
+  "p1_maskbatch_followup": {
+    "selected": [
+      "maskprofile-build01",
+      "maskprofile-test01",
+      "maskprofile-analysis01",
+      "maskbatch-build01",
+      "maskbatch-test01",
+      "maskbatch-fault01",
+      "maskbatch-lanes01",
+      "maskbatch-masks01",
+      "maskbatch-bounds01",
+      "maskbatch-stop01",
+      "maskbatch-analysis01",
+      "batchstorage-map01",
+      "batchstorage-rtl01"
+    ],
+    "document": "docs/nes-maskbatch247-contract.ko.md",
+    "evidence": "analysis/maskbatch247-verification.json",
+    "body_bytes": 5818,
+    "extra_scratch_bytes": 6,
+    "split6k_body_free": 166,
+    "actual_frames": 71,
+    "fault_cases": 38,
+    "all_masks": 255,
+    "span_gap_bounds": [
+      96,
+      98
+    ],
+    "map_endpoint": 4096,
+    "warm_service_calls": 1915,
+    "warm_span_flushes": 213,
+    "map_validation_max_ms": 10.826050051985192,
+    "map_validation_total_reduction_percent": 17.231894862344397,
+    "mask_regression_frames": [],
+    "conditional_serial_over": 27,
+    "warm_multi_vblank": [
+      952,
+      955
+    ],
+    "wholeboard_fit": false,
+    "qualified_for_p2": false
+  },
+  "p1_spantrade_followup": {
+    "selected": "spantrade02",
+    "intermediate_preserved": "spantrade01",
+    "document": "docs/nes-spantrade247-contract.ko.md",
+    "evidence": "analysis/spantrade247-verification.json",
+    "frames": 71,
+    "modes": 5,
+    "python_reconstructions": 355,
+    "exact_map_bytes": 1454080,
+    "python_negatives": 27,
+    "actual_new_decoder": false,
+    "final_dma_lists_equal": true,
+    "frame954_fixed_ms": 4.703018586626699,
+    "decision": "DEFER_ISOLATED_SPAN_DECODER_COMPARE_JOINT_VALIDATION_AND_WIRE",
+    "qualified_for_p2": false
+  },
+  "p1_validation_followup": {
+    "selected": [
+      "validation-build02",
+      "validation-test02",
+      "validation-fault01",
+      "validation-coverage01",
+      "validation-analysis02",
+      "validation-protocol01"
+    ],
+    "document": "docs/nes-validation247-contract.ko.md",
+    "evidence": "analysis/validation247-verification.json",
+    "body_bytes": 5886,
+    "body_increase_bytes": 68,
+    "extra_persistent_bytes": 0,
+    "split6k_free_arithmetic": 98,
+    "actual_frames": 71,
+    "range_chunks": 387,
+    "bitmap_byte_checks": 192726,
+    "actual_fault_cases": 26,
+    "mark_total_reduction_percent": 14.954887211099399,
+    "mark_regression_frames": [
+      910,
+      911,
+      912,
+      916,
+      924,
+      931,
+      932,
+      940,
+      941,
+      942,
+      943,
+      972
+    ],
+    "conditional_serial_over": 26,
+    "manifest_only_negative_frames": 14,
+    "joint_exact_min_decoder_ms": 1.7485118136522955,
+    "joint_decoders_measured": false,
+    "wholeboard_fit": false,
+    "qualified_for_p2": false
+  },
+  "p1_jointdecode_followup": {
+    "selected": [
+      "jointdecode-build02",
+      "jointdecode-host01",
+      "jointdecode-test02",
+      "jointdecode-fault02",
+      "jointdecode-analysis03"
+    ],
+    "document": "docs/nes-jointdecode247-contract.ko.md",
+    "evidence": "analysis/jointdecode247-verification.json",
+    "decision": "REJECT_THIS_JOINT_CPU_DECODER_BEFORE_FIT",
+    "retained_diagnostic_baseline": "validation247_5886B",
+    "body_bytes": 5066,
+    "body_change": -820,
+    "extra_persistent_bytes": 2,
+    "actual_frames": 71,
+    "acks": 1039,
+    "fault_cases": 23,
+    "span_records": 2069,
+    "rle_runs": 3636,
+    "frame954_decoder_ms": 14.456865327855915,
+    "frame954_allowance_ms": 1.7466493795533617,
+    "conditional_serial_over": 57,
+    "wholeboard_fit": false,
+    "qualified_for_p2": false
+  },
+  "p1_placement_followup": {
+    "selected": "placement05",
+    "document": "docs/nes-placement247-contract.ko.md",
+    "evidence": "analysis/placement247-verification.json",
+    "decision": "PRIORITIZE_NARROW_FPGA_VALIDATION_WITH_BOUNDED_OUTPUT_OVERLAP_NOT_P2",
+    "exact_map_bytes": 290816,
+    "python_negatives": 14,
+    "input_pins": 215,
+    "fpga_typed_input_barrier_sample_ms": 15.524681863463758,
+    "fpga_typed_serial_sample_ms": 17.334222833987482,
+    "m9k_capacity_arithmetic": 56,
+    "new_logic_cost": null,
+    "qualified_for_p2": false
+  }
+}
