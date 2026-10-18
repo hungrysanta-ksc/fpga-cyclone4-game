@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "plan_id": "NES-SCHEDULE248-20261018",
+  "date_kst": "2026-10-18",
+  "status": "P1_packet_order_and_ports_reviewed_joint_margin_not_demonstrated",
+  "document": "docs/nes-schedule248-contract.ko.md",
+  "merged_pr128_base": "64640645e3e37adb697d0293a509d0329e4eae4e",
+  "branch": "codex/nes-typed-schedule-248",
+  "selected": "analysis04",
+  "supersedes": "Current execution status only;247 placement05 remains a historical optimistic comparison.",
+  "primary_goal": "SMB3(J) first-level sustained scrolling near60Hz at normal game speed, with sound, held/simultaneous input and menu return preserved.",
+  "acceptance": {
+    "reference_period_ms": 16.6666666667,
+    "actual_display_clock": "Measure NTSC cadence; do not assume exact60.000Hz.",
+    "metrics": [
+      "actual_display_intervals_distribution",
+      "maximum_display_gap",
+      "capture_to_display_age",
+      "sustained_scroll_separate_from_transition",
+      "sound_input_menu_regression"
+    ],
+    "not_acceptance": [
+      "CPU progress alone",
+      "transport ACK alone",
+      "intro/static average",
+      "frame discard or game slowdown",
+      "standalone FF reduction",
+      "same wire bytes required for every new encoding"
+    ]
+  },
+  "roles": {
+    "production_hardware": "NES227",
+    "functional_reference": "NES240_unplaced",
+    "rejected": [
+      "NES241",
+      "NES246",
+      "NES247_2472_joint_CPU_decoder"
+    ],
+    "selected_next_implementation": null
+  },
+  "assessment": "NES248 실제 C 패킷 순서·bulk drain·4credit·SEAL tail을 반영한 조건부 일정 검토. Warm69,1104일정;새 RTL/CPU 실행 아님. exact64 queued 설정500클록 최대17.199ms/3초과, gap16 queued17.086ms/2초과. 설정0 exact의 표시표본 범위16.527..16.689ms는 미지 비용을 제외하므로60fps 승인이 아님. 순차쓰기 aperture는 interleaved descriptor/value+32B trailer로 정책 재구성284회/1163264B,15반례 PASS. SPI head 해제는 현재 SNES ACK 전용이라 FPGA parser 중재·소유권 변경 필요. 240 FIT 부족490LE/40LAB, RAM시나리오56/56이며 새logic 미측정. 역할 분담은 유지하되 P2 미선정.",
+  "next_action": "같은954/970·952/955에서 잔존 tile/SEAL coverage 장벽의 구조적 절감과 semantic source 회로 대체를 한 후보로 결합한다. gap16 queued 설정500의 부족0.419ms에 source/ARM/parser/SNES 고정비용/대기까지 더한 공동예산과490LE/40LAB+새logic+mapper여유 회수 근거가 선행한다. 근거가 생기면 실제 typed consumer/parser 최소 경계 실행 및 전체보드 FIT/STA/CDC/IO,새입력 fullARM RUN/IRQ,최종display ownership을 검증한다. 단순gap병합·opcode/seed루프·자동FIT·227/044재시험은 다음 해법이 아니다.",
+  "responsibilities": {
+    "ARM": "admitted geometry/game semantics,screen planning,dirty/resident commit after display ACK",
+    "FPGA": "sealed FIFO head CRC/sequence/range/order/exact receipt and manifest;bounded immutable typed publication",
+    "SNES": "bounded typed descriptors,WRAM DMA,full final coverage,VRAM/display ACK"
+  },
+  "decision": {
+    "role_split": "retain_for_investigation",
+    "production_implementation_selected": false,
+    "direct_prefix_buffer_layout": "rejected_without_extra_pass_buffer_or_random_write",
+    "append_only_trailer": "Python policy pass;binding/RTL/CPU unimplemented",
+    "gap16_only": "insufficient_for_whole_path_60fps",
+    "new_fit_authorized_by_evidence": false
+  },
+  "unknowns": [
+    "source_prepare_and_capture_overlap",
+    "full_new_input_ARM_RUN_IRQ",
+    "actual_new_parser_and_SNES_setup_fixed_cost",
+    "ordinary_packet_copy_dispatch_DMA",
+    "extra_polls_SPI_gaps_VBlank_wait",
+    "exact32B_certificate_binding",
+    "FIFO_head_parser_ACK_read_port_ownership",
+    "host_NES_firstfault_CDC_IO_STA",
+    "wholeboard_reclaim_minus_new_logic_and_mapper_margin",
+    "cold_multichunk_schedule",
+    "952_955_VBlank_bursts",
+    "actual_display_ACK_capture_lease_retire"
+  ],
+  "minimum_next_joint_checks": [
+    "same_heavy_frames_structural_schedule_reclaim_plus_all_unknowns",
+    "source_semantic_replacement_plus_parser_control_receipt_program_whole_area",
+    "only_then_minimal_changed_boundary_execution_and_wholeboard_fullARM_gates"
+  ]
+}

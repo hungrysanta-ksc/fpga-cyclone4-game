@@ -1,3 +1,5 @@
+NES248: ARM 계획·FPGA map 검증·SNES DMA 분담의 실제 패킷 순서와 회로 포트를 검토했다. 조건부 queued/500클록 모델은 최대17.199ms, 범위 병합도17.086ms이며 미계측 비용이 남는다. 기존240은490LE/40LAB 부족, RAM시나리오는56/56이라60fps·P2 구현 승인은 없다. [최신 검토](docs/nes-schedule248-contract.ko.md) · [현재 계획](docs/nes-schedule248-plan.json). 아래는 이전 기록이다.
+
 > 최신 ROM 응답 결합: ROM 응답 로컬8비트를 실제 service/arbiter/FIFO/reader에 결합했다. 70ns 모델16위상과9.904ns 데이터 지연에서 기존 응답/샘플과 같았으며, 새8개 경계만 제한했다. FIT15048LE/963LAB/38M9K, 배선 평균68.8→61.4%·수직peak91.2→75.8%로 개선됐다. 실제setup−1.408ns/hold+0.147ns로 전체타이밍은 아직 실패이며 새SD패키지는 없다. [검증·다음 단계](docs/nes-replyjoin181-contract.ko.md)
 
 > 최신 배선 연구: 공식 배선 최적화 자료와 현재 보고서를 대조해 ROM 응답을 수신 클록에서 받는 RTL 후보를 추가했다. reader 경계19경우(456읽기/714중단·리셋/19클록정지),9.904ns지연 및 잘못된 캡처 대조군을 확인했다. 응답 추가클록0은 단독 비교 범위이며 보드 결합·새FIT·실기 승인은 아직 없다. [설계 반영](docs/nes-routing181-design.ko.md)

@@ -4,9 +4,9 @@
   "date_kst": "2026-10-18",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-wholepath247-contract.ko.md",
-  "assessment": "NES247 처리위치비교:같은71map290816B typed재구성/14Python반례 PASS,새RTL·CPU실행아님. 입력COMMITTED장벽+출력낙관겹침+기존표시표본 최대5886 20.420ms/9초과,2472 27.153/39,ARMliteral18.545/5,FPGA좁은검증15.525/0,ARMlayout+FPGA16.028/0. FPGA954직렬17.334ms;45범위 setup/source/ARM/parser/대기미포함,60fps승인아님. ARM planner+FPGA map범위/receipt+SNES typedDMA/표시를다음조사대상으로정함;M9K54+2-1+1=56/56,logic490LE40LAB부족/새비용UNKNOWN. 비교기준5886B·생산227/P2미선정.",
-  "next_action": "NEXT placement 경계설계:ARM planner·의미검증/FPGA map범위·receipt/SNES boundedDMA·표시의담당과certificate/STOP/epoch/token수명명시. 같은954/970·952/955에서tile drain→typedmap→manifest→SEAL의실제일정+source/ARM/parser/새SNES setup-service+전체LE/LAB/M9K예산결합. 기존4packet window를새겹침기능으로세지말고입력COMMITTED장벽유지. 15.525ms는낙관모델,17.334ms직렬도미측정비용제외. 56/56산술/490LE40LAB부족은승인아님;새RTL/FIT/토큰opcode미세루프자동진행금지. 5886/227/GBC164/saveSRAM보존,4/5/6KiB고정금지.",
+  "authoritative_document": "docs/nes-schedule248-contract.ko.md",
+  "assessment": "NES248 실제 C 패킷 순서·bulk drain·4credit·SEAL tail을 반영한 조건부 일정 검토. Warm69,1104일정;새 RTL/CPU 실행 아님. exact64 queued 설정500클록 최대17.199ms/3초과, gap16 queued17.086ms/2초과. 설정0 exact의 표시표본 범위16.527..16.689ms는 미지 비용을 제외하므로60fps 승인이 아님. 순차쓰기 aperture는 interleaved descriptor/value+32B trailer로 정책 재구성284회/1163264B,15반례 PASS. SPI head 해제는 현재 SNES ACK 전용이라 FPGA parser 중재·소유권 변경 필요. 240 FIT 부족490LE/40LAB, RAM시나리오56/56이며 새logic 미측정. 역할 분담은 유지하되 P2 미선정.",
+  "next_action": "같은954/970·952/955에서 잔존 tile/SEAL coverage 장벽의 구조적 절감과 semantic source 회로 대체를 한 후보로 결합한다. gap16 queued 설정500의 부족0.419ms에 source/ARM/parser/SNES 고정비용/대기까지 더한 공동예산과490LE/40LAB+새logic+mapper여유 회수 근거가 선행한다. 근거가 생기면 실제 typed consumer/parser 최소 경계 실행 및 전체보드 FIT/STA/CDC/IO,새입력 fullARM RUN/IRQ,최종display ownership을 검증한다. 단순gap병합·opcode/seed루프·자동FIT·227/044재시험은 다음 해법이 아니다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "partial_no_candidate_with_joint_margin",
+      "status": "partial_schedule_ports_reviewed_no_joint_margin",
       "depends_on": [
         "P0"
       ],
@@ -66,7 +66,9 @@
         "docs/nes-validation247-contract.ko.md",
         "analysis/validation247-verification.json",
         "docs/nes-jointdecode247-contract.ko.md",
-        "analysis/jointdecode247-verification.json"
+        "analysis/jointdecode247-verification.json",
+        "docs/nes-schedule248-contract.ko.md",
+        "analysis/schedule248-verification.json"
       ]
     },
     {
@@ -3026,7 +3028,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES247 처리위치비교:같은71map290816B typed재구성/14Python반례 PASS,새RTL·CPU실행아님. 입력COMMITTED장벽+출력낙관겹침+기존표시표본 최대5886 20.420ms/9초과,2472 27.153/39,ARMliteral18.545/5,FPGA좁은검증15.525/0,ARMlayout+FPGA16.028/0. FPGA954직렬17.334ms;45범위 setup/source/ARM/parser/대기미포함,60fps승인아님. ARM planner+FPGA map범위/receipt+SNES typedDMA/표시를다음조사대상으로정함;M9K54+2-1+1=56/56,logic490LE40LAB부족/새비용UNKNOWN. 비교기준5886B·생산227/P2미선정.",
+  "summary": "NES248 실제 C 패킷 순서·bulk drain·4credit·SEAL tail을 반영한 조건부 일정 검토. Warm69,1104일정;새 RTL/CPU 실행 아님. exact64 queued 설정500클록 최대17.199ms/3초과, gap16 queued17.086ms/2초과. 설정0 exact의 표시표본 범위16.527..16.689ms는 미지 비용을 제외하므로60fps 승인이 아님. 순차쓰기 aperture는 interleaved descriptor/value+32B trailer로 정책 재구성284회/1163264B,15반례 PASS. SPI head 해제는 현재 SNES ACK 전용이라 FPGA parser 중재·소유권 변경 필요. 240 FIT 부족490LE/40LAB, RAM시나리오56/56이며 새logic 미측정. 역할 분담은 유지하되 P2 미선정.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3069,8 +3071,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-placement247-contract.ko.md",
-  "latest_development_evidence": "analysis/placement247-verification.json",
+  "latest_review": "docs/nes-schedule248-contract.ko.md",
+  "latest_development_evidence": "analysis/schedule248-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {
@@ -3157,7 +3159,7 @@
       }
     ]
   },
-  "active_plan": "docs/nes-wholepath247-plan.json",
+  "active_plan": "docs/nes-schedule248-plan.json",
   "current_status_scope": "Top-level active_plan/gates supersede historical fields; legacy versioned records and old open_issues remain historical, not current acceptance.",
   "p1_placement_followup": {
     "selected": "placement05",
@@ -3172,5 +3174,16 @@
     "m9k_capacity_arithmetic": 56,
     "new_logic_cost": null,
     "qualified_for_p2": false
+  },
+  "p1_schedule248_followup": {
+    "selected": "analysis04",
+    "document": "docs/nes-schedule248-contract.ko.md",
+    "evidence": "analysis/schedule248-verification.json",
+    "qualified_for_p2": false,
+    "conditional_schedules": 1104,
+    "python_reconstructions": 284,
+    "python_negatives": 15,
+    "new_logic_measured": false,
+    "actual_new_CPU_execution": false
   }
 }
