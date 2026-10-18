@@ -5,7 +5,7 @@
   "status": "P0_complete_P1_partial_no_candidate_selected",
   "document": "docs/nes-wholepath247-contract.ko.md",
   "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128",
-  "scope": "Same-frame ledger and causal map/slot observer; P1 representation models. No product implementation/FIT/new ARM/SNES/hardware.",
+  "scope": "P0 same-frame observer and P1 joint source/output/DMA lifetime models. No product implementation/FIT/new ARM/SNES/hardware.",
   "supersedes": "Current execution status after merged PR127; its goals and safeguards remain authoritative. Historical evidence unchanged.",
   "roles": {
     "production_hardware": "NES227",
@@ -55,7 +55,11 @@
       ],
       "deliverable": "Compare limited240 dedicated logic, semantic field/row changes, and joint transfer/conversion relocation.",
       "exit": "Select one candidate with defensible area/time/memory margin; reject or revisit assumptions if none qualifies. Unified sequencer remains optional.",
-      "evidence": "docs/nes-wholepath247-contract.ko.md"
+      "evidence": [
+        "docs/nes-wholepath247-contract.ko.md",
+        "docs/nes-schedule247-contract.ko.md",
+        "analysis/schedule247-verification.json"
+      ]
     },
     {
       "id": "P2",
@@ -93,7 +97,7 @@
       "id": "SNES-BURSTS",
       "status": "open",
       "evidence": "docs/nes-runtime233-contract.ko.md",
-      "detail": "232 warm5/69 require2VBlank;map/OBJ bursts48..560charge over4192."
+      "detail": "Actual232 warm5/69 remain baseline;post-SEAL address-order/valid-gap models leave3 with16B map or2 withword map. Not implemented;no timing approval."
     },
     {
       "id": "FULL-RUNTIME",
@@ -130,7 +134,7 @@
     "mapper_compatibility",
     "frame_skip_state_save_mute"
   ],
-  "next_action": "P1 지속: 16B map 묶음의 wire 여유, inactive pattern/map 선행 가능 구간의 bank/token/유효성/STOP 수명, source 표현·변환 위치를 한 스케줄로 비교한다. FPGA 전체 여유·새 입력 ARM RUN/IRQ·SNES3910/3936B 교체 범위와 잔여952/954/955/963/968 burst 해소 근거를 갖춘 한 후보만 P2 선정. 아직 구현 후보 없음.",
+  "next_action": "P1 지속: 실제 병렬 aperture의 생산자·소비자 경계에서 geometry/raster 변환과 전송을 함께 재배치하는 경우를 full240과 비교. 제거/추가 logic·RAM·ARM·SNES 작업 및 같은952/954/955 비용·token/bank/STOP 수명을 명시. source 압축 기능·전체 FPGA 여유·새 입력 RUN/IRQ·SNES3910/3936B 교체와 잔여 burst 해소를 함께 입증한 한 후보만 P2. 선행DMA를 무료 VBlank로 간주하지 않음;아직 후보 없음.",
   "base_commit": "b6958f24fbe2173d0879da07ef56fe3b507b5420",
   "branch": "codex/nes-wholepath-247",
   "previous_plan": "docs/nes-pr127-next-plan.json",
@@ -151,5 +155,25 @@
     "selected": null,
     "note": "Models only; both leave SNES burst/FPGA/new-input ARM gates open."
   },
-  "analysis_commit": "f80bd3bf26108fa6f34a5d766c75c84695bee9e6"
+  "analysis_commit": "f80bd3bf26108fa6f34a5d766c75c84695bee9e6",
+  "p1_schedule_followup": {
+    "document": "docs/nes-schedule247-contract.ko.md",
+    "evidence": "analysis/schedule247-verification.json",
+    "selected": "schedule04",
+    "combinations": 8,
+    "qualified": 0,
+    "used_pattern_bytes_exact": 130592,
+    "valid_gap_bytes": 592,
+    "valid_gap_spans": 11,
+    "full_batched16_over_snes": [
+      952,
+      955,
+      963
+    ],
+    "full_causal_words_over_snes": [
+      952,
+      955
+    ],
+    "next_implementation": null
+  }
 }

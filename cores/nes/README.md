@@ -1,10 +1,10 @@
 # 현재 상태 — NES247 P0 완료 / P1 비교 중
 
-NES247 P0:71행 전체 비용표와 실제231 C 관측355파일/cost 동일. map1915granules 중836은 반대bank 추격;955 새map0이나100B stale. P1 map묶음 ready4최대4759B/word4219B는 모델이며 SNES5/4bursts·FPGA·새입력ARM 미해소. 후보 미선정, 생산227/기능240(미배치)/기각241+246 유지.
+NES247 P0 완료/P1 지속. schedule04:71프레임130592 used-pattern bytes 일치, 유효gap11개592B. 정렬+유효gap+map묶음은 SNES3개(952/955/963), word는2개(952/955) 초과. 입력4종×출력2종 모두 전체 여유 미충족;shift+16B SPI최대6340B/mask16+16B6271B. 후보 미선정, 생산227/기능240(미배치)/기각241+246 유지.
 
-[분석·검증·다음 작업](../../docs/nes-wholepath247-contract.ko.md) · [현재 실행 상태](../../docs/nes-wholepath247-plan.json) · [71프레임 비용표](../../analysis/wholepath247-frames.csv)
+[전체 비용](../../docs/nes-wholepath247-contract.ko.md) · [P1 결합·소유권 검토](../../docs/nes-schedule247-contract.ko.md) · [현재 실행 상태](../../docs/nes-wholepath247-plan.json) · [71프레임 비용표](../../analysis/wholepath247-frames.csv)
 
-P1 지속: 16B map 묶음의 wire 여유, inactive pattern/map 선행 가능 구간의 bank/token/유효성/STOP 수명, source 표현·변환 위치를 한 스케줄로 비교한다. FPGA 전체 여유·새 입력 ARM RUN/IRQ·SNES3910/3936B 교체 범위와 잔여952/954/955/963/968 burst 해소 근거를 갖춘 한 후보만 P2 선정. 아직 구현 후보 없음.
+P1 지속: 실제 병렬 aperture의 생산자·소비자 경계에서 geometry/raster 변환과 전송을 함께 재배치하는 경우를 full240과 비교. 제거/추가 logic·RAM·ARM·SNES 작업 및 같은952/954/955 비용·token/bank/STOP 수명을 명시. source 압축 기능·전체 FPGA 여유·새 입력 RUN/IRQ·SNES3910/3936B 교체와 잔여 burst 해소를 함께 입증한 한 후보만 P2. 선행DMA를 무료 VBlank로 간주하지 않음;아직 후보 없음.
 
 PR127 머지 `b6958f24` 확인 후 새 `codex/nes-wholepath-247`에서 진행했다. 아래 PR127 및246 이전 NEXT는 이력이며 현재 지시가 아니다. PR127의 전체 목표와 보호 조건은 유지한다. 새 설치물·FPS·회로 구현 성공을 뜻하지 않는다.
 

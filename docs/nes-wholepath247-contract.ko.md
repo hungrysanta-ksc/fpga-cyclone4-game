@@ -4,6 +4,8 @@
 
 **P0의 프레임별 비용표·갱신 원인 분석을 완료했다. P1 비교는 진행했지만 전체 여유가 입증된 구현 후보는 아직 없다.** 생산227, 미배치 기능 기준240, 기각241/246은 그대로다. 새로운 RTL/FIT/ARM/SNES 실행이나 설치물이 아니라, 기존 증거를 연결하고 기존 C의 결정을 관측한 결과다. 전체 목표와 P2/P3 진입 조건은 [PR127 회고](nes-pr127-retrospective.ko.md)를 유지한다. 현재 순서는 [247 실행 상태](nes-wholepath247-plan.json)가 갱신한다.
 
+후속 P1의 최신 결과는 [입력·DMA 결합과 bank 수명 검토](nes-schedule247-contract.ko.md)에 있다. 아래 초기 map 모델의5/4burst 결과를 보존하며, 후속 정렬·유효gap 모델은3/2개를 남긴다. 다음 실행 순서는247 계획의 `next_action`을 따른다.
+
 ## 산출물과 증거 수준
 
 - [71프레임 비용표 CSV](../analysis/wholepath247-frames.csv): 905..975의 각 행에 phase, generation, 목적 bank, source 조회/생성/대기, SPI 입력·출력·제어, SNES upload/commit과 갱신 원인을 연결했다. `UNKNOWN`은 미측정이며 0이 아니다. 희소 count 열의 빈칸은 해당 분류의 관측 0건이다.
