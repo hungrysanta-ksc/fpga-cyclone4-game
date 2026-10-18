@@ -5,8 +5,8 @@
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
   "authoritative_document": "docs/nes-wholepath247-contract.ko.md",
-  "assessment": "NES247 P1 gap01/dma01:SEAL coverage 이후 unused gap은 validity 승격 없이 안전,3초기값/391776B 비교/30invalid slot 중10후속실제쓰기·사용 PASS. Pattern 동일쓰기 최소charge 증명에도 word-map955=4198>4192. 기존232 실제71frame/478DMA/133600B 재생 PASS;403무대기명령 잔여1218..1586master clocks,64warm final9284..9442. Charge는 시간상한 아님. 코드26B 여유/새 scheduler WCET/FPGA·ARM 공동여유 OPEN, P2 미선정.",
-  "next_action": "P1:gap/동일pattern 분할 탐색은 종료. 기존 DMA 경계의 가용 VBlank master-clock 예산과 최악 CPU/DMA·pad/service 경로를 연결하고, post-SEAL received-bitmap scanner/shared command 생성 교체의 코드크기·서비스 지연을 산정. 현4192 정책 유지. 의미 raster+rowshift source 전체LE/LAB/mapper 여유·새 입력 ARM RUN/IRQ와 결합한 한 후보만 P2;현재 미선정.",
+  "assessment": "NES247 P1 scan-build02/test01/analysis01:수신 명령생성을 post-SEAL1536bit 전체순회로 교체,3930/3936B/free6. 실제71frame/3077ACK/418DMA/135072B 및71명령목록 exact PASS,미초기화경고880개 모두 허용unused gap. 그러나 warm69 scanner만53.08449..53.83859ms로 전부16.67ms 초과:이 구현 기각.4192 유지/952955963다중VBlank. 생산227/240미배치·전체FPGA/ARM 여유OPEN, P2 미선정.",
+  "next_action": "P1:1536bit fullscan 기각·미세opcode/counter 재시험 금지. Nonzero word/block 중심 순회 또는 수신 범위 기반 bounded 정렬목록의 최악방문수·교체코드량·service 간격을 실제분포로 먼저 비교. SEAL/target/STOP 수명과4192 유지. 의미449B raster+rowshift source 전체LE/LAB/mapper 여유·새 입력 ARM RUN/IRQ를 결합한 한 후보만 P2;현재 미선정.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -39,7 +39,9 @@
         "analysis/relocation247-verification.json",
         "docs/nes-gap247-contract.ko.md",
         "analysis/gap247-verification.json",
-        "analysis/dma247-verification.json"
+        "analysis/dma247-verification.json",
+        "docs/nes-scan247-contract.ko.md",
+        "analysis/scan247-verification.json"
       ]
     },
     {
@@ -2999,7 +3001,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES247 P1 gap01/dma01:SEAL coverage 이후 unused gap은 validity 승격 없이 안전,3초기값/391776B 비교/30invalid slot 중10후속실제쓰기·사용 PASS. Pattern 동일쓰기 최소charge 증명에도 word-map955=4198>4192. 기존232 실제71frame/478DMA/133600B 재생 PASS;403무대기명령 잔여1218..1586master clocks,64warm final9284..9442. Charge는 시간상한 아님. 코드26B 여유/새 scheduler WCET/FPGA·ARM 공동여유 OPEN, P2 미선정.",
+  "summary": "NES247 P1 scan-build02/test01/analysis01:수신 명령생성을 post-SEAL1536bit 전체순회로 교체,3930/3936B/free6. 실제71frame/3077ACK/418DMA/135072B 및71명령목록 exact PASS,미초기화경고880개 모두 허용unused gap. 그러나 warm69 scanner만53.08449..53.83859ms로 전부16.67ms 초과:이 구현 기각.4192 유지/952955963다중VBlank. 생산227/240미배치·전체FPGA/ARM 여유OPEN, P2 미선정.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3042,8 +3044,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-gap247-contract.ko.md",
-  "latest_development_evidence": "analysis/gap247-verification.json",
+  "latest_review": "docs/nes-scan247-contract.ko.md",
+  "latest_development_evidence": "analysis/scan247-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {

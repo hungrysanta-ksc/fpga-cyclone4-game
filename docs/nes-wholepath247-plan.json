@@ -5,7 +5,7 @@
   "status": "P0_complete_P1_partial_no_candidate_selected",
   "document": "docs/nes-wholepath247-contract.ko.md",
   "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128",
-  "scope": "P0 observer;P1 joint schedule,semantic raster C equivalence,relocation/unused-gap models and unchanged232 instruction timing. No product/new FPGA/full ARM/hardware.",
+  "scope": "P0 observer;P1 representation/relocation models,actual232 timing and rejected full-bitmap scanner diagnostic. No production/FPGA/full ARM/hardware change.",
   "supersedes": "Current execution status after merged PR127; its goals and safeguards remain authoritative. Historical evidence unchanged.",
   "roles": {
     "production_hardware": "NES227",
@@ -63,7 +63,9 @@
         "analysis/relocation247-verification.json",
         "docs/nes-gap247-contract.ko.md",
         "analysis/gap247-verification.json",
-        "analysis/dma247-verification.json"
+        "analysis/dma247-verification.json",
+        "docs/nes-scan247-contract.ko.md",
+        "analysis/scan247-verification.json"
       ]
     },
     {
@@ -102,7 +104,7 @@
       "id": "SNES-BURSTS",
       "status": "open",
       "evidence": "docs/nes-runtime233-contract.ko.md",
-      "detail": "Actual232 warm5/69 baseline. Post-SEAL unused-gap model leaves3 with16B map or1 withword map(955,4198). Same pattern partition minimum verified. Charge is not independent time bound;new scheduler code/WCET open."
+      "detail": "Diagnostic full scanner preserves71 outputs and reduces actual warm multiVBlank5->3, but scanner alone53.08..53.84ms REJECT.3930/3936B.4192 unchanged;new efficient scheduler/full timing open."
     },
     {
       "id": "FULL-RUNTIME",
@@ -139,7 +141,7 @@
     "mapper_compatibility",
     "frame_skip_state_save_mute"
   ],
-  "next_action": "P1:gap/동일pattern 분할 탐색은 종료. 기존 DMA 경계의 가용 VBlank master-clock 예산과 최악 CPU/DMA·pad/service 경로를 연결하고, post-SEAL received-bitmap scanner/shared command 생성 교체의 코드크기·서비스 지연을 산정. 현4192 정책 유지. 의미 raster+rowshift source 전체LE/LAB/mapper 여유·새 입력 ARM RUN/IRQ와 결합한 한 후보만 P2;현재 미선정.",
+  "next_action": "P1:1536bit fullscan 기각·미세opcode/counter 재시험 금지. Nonzero word/block 중심 순회 또는 수신 범위 기반 bounded 정렬목록의 최악방문수·교체코드량·service 간격을 실제분포로 먼저 비교. SEAL/target/STOP 수명과4192 유지. 의미449B raster+rowshift source 전체LE/LAB/mapper 여유·새 입력 ARM RUN/IRQ를 결합한 한 후보만 P2;현재 미선정.",
   "base_commit": "b6958f24fbe2173d0879da07ef56fe3b507b5420",
   "branch": "codex/nes-wholepath-247",
   "previous_plan": "docs/nes-pr127-next-plan.json",
@@ -216,6 +218,23 @@
     "word_map_max_charge": 4198,
     "actual_unchanged232_frames": 71,
     "measured_dma_commands": 478,
+    "qualified_for_p2": false
+  },
+  "p1_scan_followup": {
+    "selected": [
+      "scan-build02",
+      "scan-test01",
+      "scan-analysis01"
+    ],
+    "decision": "REJECT_per_bit_full_scan_latency",
+    "document": "docs/nes-scan247-contract.ko.md",
+    "evidence": "analysis/scan247-verification.json",
+    "body_bytes": 3930,
+    "free_bytes": 6,
+    "actual_frames": 71,
+    "exact_command_frames": 71,
+    "warm_scan_ms_min": 53.08449351337484,
+    "warm_scan_ms_max": 53.838593080032986,
     "qualified_for_p2": false
   }
 }

@@ -1,5 +1,7 @@
 # NES247 P1: unused tile 간격의 수명과 실제 DMA 실행 경계
 
+최신 후속은 [전체 bitmap 순회 스캐너의 크기·실행시간 판정](nes-scan247-contract.ko.md)이다. 아래 gap 안전성·기존232 계측은 해당 단계의 근거로 보존한다.
+
 2026-10-18, PR128. [의미 raster·재배치 검토](nes-relocation247-contract.ko.md) 후속이다. **SEAL coverage 뒤라면 초기화되지 않은 unused tile 간격을 복사해도 현재 화면을 보존한다. 다만 DMA가 validity를 올려서는 안 된다.** 같은 쓰기 집합의 pattern 명령 비용을 최소화해도 word-map 조합의 frame955는 기존4192 charge를6 초과한다. 별도 실제65816 계측은 charge가 master clock의 직접 환산값이 아님을 확인했다. 새 구현·예산 변경·P2 후보 선정은 아직 없다.
 
 [gap 검증](../analysis/gap247-verification.json) · [71행 gap 비용](../analysis/gap247-frames.csv) · [실행 계측](../analysis/dma247-verification.json) · [71행 실행 경계](../analysis/dma247-frames.csv). SELECT private `gap01/dma01/dma-analysis01`; 이전 observer03/analysis06/schedule04/relocation01 보존.
