@@ -5,8 +5,8 @@
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
   "authoritative_document": "docs/nes-wholepath247-contract.ko.md",
-  "assessment": "NES247:60프레임우선/4KiB고정금지. byte-exact5775B계측:mask준비34.23%/복사18.60%/주소10.50%/append24.12%/service8.00%. 매record service유지+packet내span누적,본문5818B(+43)/실사용scratch+6B. 실제71commit1100ACK/4066624ref/290816mapB·71command exact,426DMA132270B/178chunks12944B. 오류STOP38+전체255mask+gap96/98/end4096 PASS. warmservice1915유지/append1915→213;수신검사합계-17.23%,최대13.286→10.826ms,mask회귀0. 조건부wire+routine45→27/69초과,max25.163ms/FPS아님.6KiB249LE97comb158FF49152bits/bodyfree166,RTL33029+4PASS;240기준56/56용량산술·LE/LAB미배치/wholeFIT·STA없음. 생산보존/P2미선정.",
-  "next_action": "P1:남은record준비·선택복사CPU와추가wire비용공동비교. sparse/dense mask와packet연속범위수신(DMA가능경계포함)을같은map/은행/manifest로비교하고기존range/bulk와중복아닌차이먼저명시;mailbox불변/범위/취소/display소유권·code/M9K·ARM근거있을때만새형식구현. service유지/검사삭제·opcode/seed/shrink루프금지.6KiB166B도절대한도아님;source449rowshift+ROM저장+mapper재배분,952순서/9554198>4192/새ARM RUNIRQ/firstfault/CDCIO/displaylease-retireOPEN/P2미선정.",
+  "assessment": "NES247:60프레임 우선,4/5/6KiB 고정 금지. 실제5818B maskbatch 기준 연속범위5종 비교:71frames×5=355재구성/1,454,080mapB·최종map DMA목록 일치,Python 음성27 PASS. exact packed는warm1941record(현재mask1915),gap16은1791record/+968B,넓은gap96은+95,120B. frame954는고정mark/manifest/coverage4.703ms로 새decoder0 가정도5종모두직렬예산초과. span단독 구현 보류;non-map bitmap/coverage+map manifest 공동개선으로 다음경계 갱신. 기존실제수신5818B/71commit/38fault·STOP/27of69조건부초과 보존. 새CPU·ARM·FIT·FPS근거없음/P2미선정.",
+  "next_action": "P1:현재5818B를기준으로 non-map received/valid bitmap 범위갱신·coverage와256B map manifest 전송/검증의 공동비용 비교. 기존8/16bit rangemark prototype은구배치/크기gate만의이력;166B validity/양bank/중복·section·partial failure·STOP·displayACK를지켜이식가능성검증. manifest축소도정확한쓰기집합·누락/중복/overlap/cold검사유지. 같은71frame에서남은decoder시간포함여유확인후형식선택;span단독/opcode/seed/shrink루프금지.4/5/6KiB고정금지. source449rowshift+ROM/mapper,952순서/9554198>4192,새ARM RUNIRQ/firstfault/CDCIO/displaylease-retireOPEN;P2미선정.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -60,7 +60,9 @@
         "docs/nes-maskfast247-contract.ko.md",
         "analysis/maskfast247-verification.json",
         "docs/nes-maskbatch247-contract.ko.md",
-        "analysis/maskbatch247-verification.json"
+        "analysis/maskbatch247-verification.json",
+        "docs/nes-spantrade247-contract.ko.md",
+        "analysis/spantrade247-verification.json"
       ]
     },
     {
@@ -3020,7 +3022,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES247:60프레임우선/4KiB고정금지. byte-exact5775B계측:mask준비34.23%/복사18.60%/주소10.50%/append24.12%/service8.00%. 매record service유지+packet내span누적,본문5818B(+43)/실사용scratch+6B. 실제71commit1100ACK/4066624ref/290816mapB·71command exact,426DMA132270B/178chunks12944B. 오류STOP38+전체255mask+gap96/98/end4096 PASS. warmservice1915유지/append1915→213;수신검사합계-17.23%,최대13.286→10.826ms,mask회귀0. 조건부wire+routine45→27/69초과,max25.163ms/FPS아님.6KiB249LE97comb158FF49152bits/bodyfree166,RTL33029+4PASS;240기준56/56용량산술·LE/LAB미배치/wholeFIT·STA없음. 생산보존/P2미선정.",
+  "summary": "NES247:60프레임 우선,4/5/6KiB 고정 금지. 실제5818B maskbatch 기준 연속범위5종 비교:71frames×5=355재구성/1,454,080mapB·최종map DMA목록 일치,Python 음성27 PASS. exact packed는warm1941record(현재mask1915),gap16은1791record/+968B,넓은gap96은+95,120B. frame954는고정mark/manifest/coverage4.703ms로 새decoder0 가정도5종모두직렬예산초과. span단독 구현 보류;non-map bitmap/coverage+map manifest 공동개선으로 다음경계 갱신. 기존실제수신5818B/71commit/38fault·STOP/27of69조건부초과 보존. 새CPU·ARM·FIT·FPS근거없음/P2미선정.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3063,8 +3065,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-maskbatch247-contract.ko.md",
-  "latest_development_evidence": "analysis/maskbatch247-verification.json",
+  "latest_review": "docs/nes-spantrade247-contract.ko.md",
+  "latest_development_evidence": "analysis/spantrade247-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {
