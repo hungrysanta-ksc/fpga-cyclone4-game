@@ -5,7 +5,7 @@
   "status": "P0_complete_P1_partial_no_candidate_selected",
   "document": "docs/nes-wholepath247-contract.ko.md",
   "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128",
-  "scope": "P0 observer;P1 representation/relocation and SNES diagnostics, now joint map wire/receipt/initialization/DMA budgets. No product/full FPGA/new-input ARM/hardware change.",
+  "scope": "P0 observer;P1 whole-path models and SNES diagnostics. Integrated mask8 rejected for current4KiB storage; storage/boot boundary comparison next. No product/full FPGA/new-input ARM/hardware change.",
   "supersedes": "Current execution status after merged PR127; its goals and safeguards remain authoritative. Historical evidence unchanged.",
   "roles": {
     "production_hardware": "NES227",
@@ -76,7 +76,9 @@
         "docs/nes-coalesce247-contract.ko.md",
         "analysis/coalesce247-verification.json",
         "docs/nes-mapjoint247-contract.ko.md",
-        "analysis/mapjoint247-verification.json"
+        "analysis/mapjoint247-verification.json",
+        "docs/nes-maskboundary247-contract.ko.md",
+        "analysis/maskboundary247-verification.json"
       ]
     },
     {
@@ -115,7 +117,7 @@
       "id": "SNES-BURSTS",
       "status": "open",
       "evidence": "docs/nes-runtime233-contract.ko.md",
-      "detail": "Word map models leave9524308/9554198>4192;pattern order relaxation gives9524180 but955still4198. Mask8 newdecode+coverage optimistic minimum1.47114ms,oldcoverage sensitivity954 already0.32443ms over.3936B and full time unverified."
+      "detail": "Word map9524308/9554198>4192;pattern order relaxation9524180 but955still4198. Mask8 optimistic newdecode+coverage1.47114ms unverified. Integrated body4398 exceeds current4KiB body3936 by462;storage/boot alternatives must be costed,not a general SNES limit."
     },
     {
       "id": "FULL-RUNTIME",
@@ -152,7 +154,7 @@
     "mapper_compatibility",
     "frame_skip_state_save_mute"
   ],
-  "next_action": "P1:mask8의완전한map수신 경계(record+manifest완료+초기화flags+기존pattern/raw coverage+STOP/finalACK)를하나로설계하고3936B/전체decode+coverage시간 gate를확인. 단독mask opcode/seed/3971·3950B미세축소 금지. 동시에952순서비용과955잔여전송을표시소유권·전체일정에서해결할근거필요. Whole449B/rowshift LE/LAB/mapper+새ARM RUN/IRQ+firstfault/CDC/IO/commit·lease·retire 여유없이P2/FIT/실기승인금지.",
+  "next_action": "P1:SNES수신프로그램의4KiB는현재FPGA저장설계값이며SMB3/SNES일반ROM한도가아님. 현재4KiB유지 vs8KiB확대 vs기존외부저장/WRAM적재 재사용의주소·boot·소유권·전체M9K/LE/LAB/시간을먼저비교;1948KiB기능근거와24054/56M9K미배치조건을구분. 근거없이새decoder/4398B미세축소/3971·3950B재조정금지.952순서·955최소4198/4192 표시비용,source449/rowshift면적,새ARM RUN/IRQ,firstfault/CDCIO/finalACK·lease·retire 공동여유전P2미선정.",
   "base_commit": "b6958f24fbe2173d0879da07ef56fe3b507b5420",
   "branch": "codex/nes-wholepath-247",
   "previous_plan": "docs/nes-pr127-next-plan.json",
@@ -347,5 +349,18 @@
       955
     ],
     "qualified_for_p2": false
+  },
+  "p1_maskboundary_followup": {
+    "selected": "maskboundary-build01",
+    "document": "docs/nes-maskboundary247-contract.ko.md",
+    "evidence": "analysis/maskboundary247-verification.json",
+    "decision": "REJECT_CURRENT_4KIB_CONFIGURATION",
+    "body_bytes": 4398,
+    "body_capacity": 3936,
+    "over_capacity_bytes": 462,
+    "state_extra_bytes": 166,
+    "runtime_verified": false,
+    "qualified_for_p2": false,
+    "capacity_is_current_design_not_console_limit": true
   }
 }

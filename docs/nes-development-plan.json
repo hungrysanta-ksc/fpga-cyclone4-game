@@ -5,8 +5,8 @@
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
   "authoritative_document": "docs/nes-wholepath247-contract.ko.md",
-  "assessment": "NES247 P1 mapjoint03:3 word형식 Python213maps/872448B exact+34정책반례. Warm필요2607words vs16B전송15320word분량,catchup1245. 실제plan길이·batch·193chunk를반영한mask8 wire4095/4275B최대(ready4/1),wordmanifest2packet/순증262B포함. ARM+448B→233기준산술1168(여유144),SNES단순+672B/전체map초기화불변식사용시논리+161B+상태최소5B,실제allocation/ROM미검증. 최악새map+coverage낙관시간1.47114ms,oldcoverage유지시954 -0.32443ms. WordDMA9524308/9554198>4192,pattern순서완화해도955남음. Wire우선mask8/P2미선정,생산코드변경없음.",
-  "next_action": "P1:mask8의완전한map수신 경계(record+manifest완료+초기화flags+기존pattern/raw coverage+STOP/finalACK)를하나로설계하고3936B/전체decode+coverage시간 gate를확인. 단독mask opcode/seed/3971·3950B미세축소 금지. 동시에952순서비용과955잔여전송을표시소유권·전체일정에서해결할근거필요. Whole449B/rowshift LE/LAB/mapper+새ARM RUN/IRQ+firstfault/CDC/IO/commit·lease·retire 여유없이P2/FIT/실기승인금지.",
+  "assessment": "NES247 P1 maskboundary-build01:mask8+manifest240/16+SEAL190+은행별초기화/기존coverage+STOP/finalACK 통합진단본문4398B,현재3936B보다462B초과(기존3903보다495B증가). Private상태760B/기존대비+166B. 조립·본문projection·주소비중첩 확인,새기능/오류/시간 재생미실행. 현재4KiB구성 유지후보로기각;SMB3개조나SNES일반ROM한도가아님. FPGA수신프로그램 저장크기는변경가능하며과거194 8KiB진단기록있음. 다음은저장/부팅경계와전체자원비교. 기존mask8 wire4095/4275모델·952/955 DMA초과·sourcearea·ARM미해결,P2미선정/생산227보존.",
+  "next_action": "P1:SNES수신프로그램의4KiB는현재FPGA저장설계값이며SMB3/SNES일반ROM한도가아님. 현재4KiB유지 vs8KiB확대 vs기존외부저장/WRAM적재 재사용의주소·boot·소유권·전체M9K/LE/LAB/시간을먼저비교;1948KiB기능근거와24054/56M9K미배치조건을구분. 근거없이새decoder/4398B미세축소/3971·3950B재조정금지.952순서·955최소4198/4192 표시비용,source449/rowshift면적,새ARM RUN/IRQ,firstfault/CDCIO/finalACK·lease·retire 공동여유전P2미선정.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -52,7 +52,9 @@
         "docs/nes-coalesce247-contract.ko.md",
         "analysis/coalesce247-verification.json",
         "docs/nes-mapjoint247-contract.ko.md",
-        "analysis/mapjoint247-verification.json"
+        "analysis/mapjoint247-verification.json",
+        "docs/nes-maskboundary247-contract.ko.md",
+        "analysis/maskboundary247-verification.json"
       ]
     },
     {
@@ -3012,7 +3014,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES247 P1 mapjoint03:3 word형식 Python213maps/872448B exact+34정책반례. Warm필요2607words vs16B전송15320word분량,catchup1245. 실제plan길이·batch·193chunk를반영한mask8 wire4095/4275B최대(ready4/1),wordmanifest2packet/순증262B포함. ARM+448B→233기준산술1168(여유144),SNES단순+672B/전체map초기화불변식사용시논리+161B+상태최소5B,실제allocation/ROM미검증. 최악새map+coverage낙관시간1.47114ms,oldcoverage유지시954 -0.32443ms. WordDMA9524308/9554198>4192,pattern순서완화해도955남음. Wire우선mask8/P2미선정,생산코드변경없음.",
+  "summary": "NES247 P1 maskboundary-build01:mask8+manifest240/16+SEAL190+은행별초기화/기존coverage+STOP/finalACK 통합진단본문4398B,현재3936B보다462B초과(기존3903보다495B증가). Private상태760B/기존대비+166B. 조립·본문projection·주소비중첩 확인,새기능/오류/시간 재생미실행. 현재4KiB구성 유지후보로기각;SMB3개조나SNES일반ROM한도가아님. FPGA수신프로그램 저장크기는변경가능하며과거194 8KiB진단기록있음. 다음은저장/부팅경계와전체자원비교. 기존mask8 wire4095/4275모델·952/955 DMA초과·sourcearea·ARM미해결,P2미선정/생산227보존.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3055,8 +3057,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-mapjoint247-contract.ko.md",
-  "latest_development_evidence": "analysis/mapjoint247-verification.json",
+  "latest_review": "docs/nes-maskboundary247-contract.ko.md",
+  "latest_development_evidence": "analysis/maskboundary247-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {
