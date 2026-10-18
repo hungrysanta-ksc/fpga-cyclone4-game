@@ -4,6 +4,8 @@ NES247 P0:71행 전체 비용표와 실제231 C 관측355파일/cost 동일. map
 
 [분석·검증·다음 작업](../../docs/nes-wholepath247-contract.ko.md) · [현재 실행 상태](../../docs/nes-wholepath247-plan.json) · [71프레임 비용표](../../analysis/wholepath247-frames.csv)
 
+[PR128](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128) OPEN. 분석 커밋 `f80bd3bf26108fa6f34a5d766c75c84695bee9e6`.
+
 P1 지속: 16B map 묶음의 wire 여유, inactive pattern/map 선행 가능 구간의 bank/token/유효성/STOP 수명, source 표현·변환 위치를 한 스케줄로 비교한다. FPGA 전체 여유·새 입력 ARM RUN/IRQ·SNES3910/3936B 교체 범위와 잔여952/954/955/963/968 burst 해소 근거를 갖춘 한 후보만 P2 선정. 아직 구현 후보 없음.
 
 PR127 머지 `b6958f24` 확인 후 새 `codex/nes-wholepath-247`에서 진행했다. 아래 PR127 및246 이전 NEXT는 이력이며 현재 지시가 아니다. PR127의 전체 목표와 보호 조건은 유지한다. 새 설치물·FPS·회로 구현 성공을 뜻하지 않는다.
