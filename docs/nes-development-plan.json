@@ -5,8 +5,8 @@
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
   "authoritative_document": "docs/nes-wholepath247-contract.ko.md",
-  "assessment": "NES247:60프레임우선/4KiB고정해제. 수신본문4398→5775B,1024B조회표·group append·manifest/coverage8word전개. 실제C/65816 71commit1100ACK/4066624ref/290816mapB·71command동일,426DMA132270B/178chunks12944B. 오류STOP12+전개위치24,255mask전체/1024word·비선택포함4096B PASS. warm69수신검사합계-24.36%,최대20.059→13.286ms;mask만14frame회귀명시. 조건부wire+routine58→45/69초과,max27.329ms/FPS아님.6KiB4096+2048ROM MAP249LE97comb158FF49152bits/bodyfree209,RTL33029+4guardsPASS.24054/56→56/56은용량산술,LE/LAB미배치·mapper여유없음/wholeFIT·STA미실행.4/5/6KiB절대한도없음. 전체60fps/P2미선정/생산보존.",
-  "next_action": "P1:mask 잔여비용을record준비/복사/append/입력STOP service로실제분해하고sparse/dense·packet경계와함께비교. 묶음처리의CPU+wire+RAM/ROM+최대service간격을공동평가;service무조건생략/검사삭제/opcode·seed·shrink루프금지.6KiB209B도절대한도아님;240기준56/56산술이므로source449/rowshift와ROM저장·mapper자원을함께재배분.952순서/9554198>4192/새ARM RUNIRQ/firstfault/CDCIO/displaylease-retire열린동안P2미선정.",
+  "assessment": "NES247:60프레임우선/4KiB고정금지. byte-exact5775B계측:mask준비34.23%/복사18.60%/주소10.50%/append24.12%/service8.00%. 매record service유지+packet내span누적,본문5818B(+43)/실사용scratch+6B. 실제71commit1100ACK/4066624ref/290816mapB·71command exact,426DMA132270B/178chunks12944B. 오류STOP38+전체255mask+gap96/98/end4096 PASS. warmservice1915유지/append1915→213;수신검사합계-17.23%,최대13.286→10.826ms,mask회귀0. 조건부wire+routine45→27/69초과,max25.163ms/FPS아님.6KiB249LE97comb158FF49152bits/bodyfree166,RTL33029+4PASS;240기준56/56용량산술·LE/LAB미배치/wholeFIT·STA없음. 생산보존/P2미선정.",
+  "next_action": "P1:남은record준비·선택복사CPU와추가wire비용공동비교. sparse/dense mask와packet연속범위수신(DMA가능경계포함)을같은map/은행/manifest로비교하고기존range/bulk와중복아닌차이먼저명시;mailbox불변/범위/취소/display소유권·code/M9K·ARM근거있을때만새형식구현. service유지/검사삭제·opcode/seed/shrink루프금지.6KiB166B도절대한도아님;source449rowshift+ROM저장+mapper재배분,952순서/9554198>4192/새ARM RUNIRQ/firstfault/CDCIO/displaylease-retireOPEN/P2미선정.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -58,7 +58,9 @@
         "docs/nes-storage247-contract.ko.md",
         "analysis/maskrun247-verification.json",
         "docs/nes-maskfast247-contract.ko.md",
-        "analysis/maskfast247-verification.json"
+        "analysis/maskfast247-verification.json",
+        "docs/nes-maskbatch247-contract.ko.md",
+        "analysis/maskbatch247-verification.json"
       ]
     },
     {
@@ -3018,7 +3020,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES247:60프레임우선/4KiB고정해제. 수신본문4398→5775B,1024B조회표·group append·manifest/coverage8word전개. 실제C/65816 71commit1100ACK/4066624ref/290816mapB·71command동일,426DMA132270B/178chunks12944B. 오류STOP12+전개위치24,255mask전체/1024word·비선택포함4096B PASS. warm69수신검사합계-24.36%,최대20.059→13.286ms;mask만14frame회귀명시. 조건부wire+routine58→45/69초과,max27.329ms/FPS아님.6KiB4096+2048ROM MAP249LE97comb158FF49152bits/bodyfree209,RTL33029+4guardsPASS.24054/56→56/56은용량산술,LE/LAB미배치·mapper여유없음/wholeFIT·STA미실행.4/5/6KiB절대한도없음. 전체60fps/P2미선정/생산보존.",
+  "summary": "NES247:60프레임우선/4KiB고정금지. byte-exact5775B계측:mask준비34.23%/복사18.60%/주소10.50%/append24.12%/service8.00%. 매record service유지+packet내span누적,본문5818B(+43)/실사용scratch+6B. 실제71commit1100ACK/4066624ref/290816mapB·71command exact,426DMA132270B/178chunks12944B. 오류STOP38+전체255mask+gap96/98/end4096 PASS. warmservice1915유지/append1915→213;수신검사합계-17.23%,최대13.286→10.826ms,mask회귀0. 조건부wire+routine45→27/69초과,max25.163ms/FPS아님.6KiB249LE97comb158FF49152bits/bodyfree166,RTL33029+4PASS;240기준56/56용량산술·LE/LAB미배치/wholeFIT·STA없음. 생산보존/P2미선정.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3061,8 +3063,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-maskfast247-contract.ko.md",
-  "latest_development_evidence": "analysis/maskfast247-verification.json",
+  "latest_review": "docs/nes-maskbatch247-contract.ko.md",
+  "latest_development_evidence": "analysis/maskbatch247-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {

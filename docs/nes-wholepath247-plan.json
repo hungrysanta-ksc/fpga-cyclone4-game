@@ -5,7 +5,7 @@
   "status": "P0_complete_P1_partial_no_candidate_selected",
   "document": "docs/nes-wholepath247-contract.ko.md",
   "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128",
-  "scope": "P0/P1 diagnostics: expanded5775B group receiver improves measured timing,36fault cases/all255masks and6KiB bus checked;no full60fps/product/wholeboard/new-input ARM approval.",
+  "scope": "P0/P1 diagnostics:byte-exact profiling identifies address/append cost;5818B pending-span receiver improves time while retaining per-record service;no whole60fps/product/FIT/new-input ARM approval.",
   "supersedes": "Current execution status after merged PR127; its goals and safeguards remain authoritative. Historical evidence unchanged.",
   "roles": {
     "production_hardware": "NES227",
@@ -82,7 +82,9 @@
         "docs/nes-storage247-contract.ko.md",
         "analysis/maskrun247-verification.json",
         "docs/nes-maskfast247-contract.ko.md",
-        "analysis/maskfast247-verification.json"
+        "analysis/maskfast247-verification.json",
+        "docs/nes-maskbatch247-contract.ko.md",
+        "analysis/maskbatch247-verification.json"
       ]
     },
     {
@@ -121,7 +123,7 @@
       "id": "SNES-BURSTS",
       "status": "open",
       "evidence": "docs/nes-runtime233-contract.ko.md",
-      "detail": "Actual fastmask71 leaveswarm952/955 multiVB. Map+manifest+coverage3.579..13.286ms;conditional wire+measured max27.329ms,45/69over.6KiB inference/read guards pass,but24054/56→56/56 isonlycapacity arithmetic;wholeboard/source/mapper margin unresolved."
+      "detail": "Actual pending-span71 leaveswarm952/955 multiVB;map+manifest+coverage3.513..10.826ms,conditionalwire+measured max25.163ms and27/69over. Per-recordservice retained.6KiB/24056of56onlycapacity arithmetic;source/mapper/wholeboard unresolved."
     },
     {
       "id": "FULL-RUNTIME",
@@ -158,7 +160,7 @@
     "mapper_compatibility",
     "frame_skip_state_save_mute"
   ],
-  "next_action": "P1:mask 잔여비용을record준비/복사/append/입력STOP service로실제분해하고sparse/dense·packet경계와함께비교. 묶음처리의CPU+wire+RAM/ROM+최대service간격을공동평가;service무조건생략/검사삭제/opcode·seed·shrink루프금지.6KiB209B도절대한도아님;240기준56/56산술이므로source449/rowshift와ROM저장·mapper자원을함께재배분.952순서/9554198>4192/새ARM RUNIRQ/firstfault/CDCIO/displaylease-retire열린동안P2미선정.",
+  "next_action": "P1:남은record준비·선택복사CPU와추가wire비용공동비교. sparse/dense mask와packet연속범위수신(DMA가능경계포함)을같은map/은행/manifest로비교하고기존range/bulk와중복아닌차이먼저명시;mailbox불변/범위/취소/display소유권·code/M9K·ARM근거있을때만새형식구현. service유지/검사삭제·opcode/seed/shrink루프금지.6KiB166B도절대한도아님;source449rowshift+ROM저장+mapper재배분,952순서/9554198>4192/새ARM RUNIRQ/firstfault/CDCIO/displaylease-retireOPEN/P2미선정.",
   "base_commit": "b6958f24fbe2173d0879da07ef56fe3b507b5420",
   "branch": "codex/nes-wholepath-247",
   "previous_plan": "docs/nes-pr127-next-plan.json",
@@ -445,6 +447,48 @@
     ],
     "storage_rtl_reads": 33029,
     "storage_raw_guards": 4,
+    "wholeboard_fit": false,
+    "qualified_for_p2": false
+  },
+  "p1_maskbatch_followup": {
+    "selected": [
+      "maskprofile-build01",
+      "maskprofile-test01",
+      "maskprofile-analysis01",
+      "maskbatch-build01",
+      "maskbatch-test01",
+      "maskbatch-fault01",
+      "maskbatch-lanes01",
+      "maskbatch-masks01",
+      "maskbatch-bounds01",
+      "maskbatch-stop01",
+      "maskbatch-analysis01",
+      "batchstorage-map01",
+      "batchstorage-rtl01"
+    ],
+    "document": "docs/nes-maskbatch247-contract.ko.md",
+    "evidence": "analysis/maskbatch247-verification.json",
+    "body_bytes": 5818,
+    "extra_scratch_bytes": 6,
+    "split6k_body_free": 166,
+    "actual_frames": 71,
+    "fault_cases": 38,
+    "all_masks": 255,
+    "span_gap_bounds": [
+      96,
+      98
+    ],
+    "map_endpoint": 4096,
+    "warm_service_calls": 1915,
+    "warm_span_flushes": 213,
+    "map_validation_max_ms": 10.826050051985192,
+    "map_validation_total_reduction_percent": 17.231894862344397,
+    "mask_regression_frames": [],
+    "conditional_serial_over": 27,
+    "warm_multi_vblank": [
+      952,
+      955
+    ],
     "wholeboard_fit": false,
     "qualified_for_p2": false
   }
