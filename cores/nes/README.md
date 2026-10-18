@@ -1,3 +1,15 @@
+# 현재 상태 — NES251 단계 공유·ARM HDMA
+
+NES251 공유 RAM은 71프레임과 2회 STOP 재생을 통과했다. M9K instance 하나를 줄였지만 MAP1506→1539LE(+33),1522comb/410FF/45056bits로 논리는 늘었다. source prepare/receipt 사이클은 동일. ARM HDMA97779사례 PASS,코드300B/정적데이터0B/함수스택36B이며 MCU시간·전체RUN은 미측정. ARM32000cycles+추가32B 배정,빠른500setup 명령tail 조건에서 최대16.181169ms/잔여0.485498ms. 1000setup은 초과하므로 P2 미선정.
+
+실제 source/query/SPI/receipt 경계에서 기존 제어를 제거하는 최소 통합 후보의 논리·RAM·직렬화 비용과 ARM 검사 호출/내용 봉인/최종 소비 증명을 함께 검토한다. 공유 RAM만으로 논리 이득이 없으므로 작은 counter/ROM/seed/FIT 반복 금지. ARM실행·digest/certificate·fullRUNIRQ·최종displayACK/lease-retire·CDCIOSTA·mapper·952955를 포함한 공동 여유 근거 전 fullFIT/설치FW/실기 진행 금지. 332B영속validity·32bit admission/serial/epoch 보존.
+
+[검토](../../docs/nes-joint251-contract.ko.md) · [현재 계획](../../docs/nes-joint251-plan.json) · [집계](../../analysis/joint251-verification.json)
+
+아래250 및 이전 NEXT는 당시 기록이다.
+
+---
+
 # 현재 상태 — NES250 공동 회로·SNES 잔존 작업
 
 NES250 실제 SNES 잔존700구간·71프레임 계측과 receipt RTL53534B/12검사 PASS. Layout/HDMA0.651945..0.653807ms. Block source+receipt 공동MAP1506LE/1489comb/408FF;receipt423comb이며 query/parser/CDC 제외. Gap16 조건부276일정:setup500 명령경로만 유지 최대16.354547ms/잔여0.312120ms;비트맵만 제거16.735415ms/970초과. 기존490LE40LAB부족/56M9K 시나리오 미해결. 독립source+독립receipt 구성 P2 미선정,wire 자체 불가능성은 아님.

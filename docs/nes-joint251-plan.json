@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "plan_id": "NES-JOINT251-20261019",
+  "date_kst": "2026-10-19",
+  "status": "P1_phase_RAM_verified_ARM_semantics_candidate_not_selected",
+  "document": "docs/nes-joint251-contract.ko.md",
+  "branch": "codex/nes-typed-schedule-248",
+  "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/129",
+  "merged_pr128_base": "64640645e3e37adb697d0293a509d0329e4eae4e",
+  "selected": {
+    "phase": "phase03",
+    "map": "map02",
+    "arm": "arm03",
+    "analysis": "analysis02"
+  },
+  "assessment": "NES251 공유 RAM은 71프레임과 2회 STOP 재생을 통과했다. M9K instance 하나를 줄였지만 MAP1506→1539LE(+33),1522comb/410FF/45056bits로 논리는 늘었다. source prepare/receipt 사이클은 동일. ARM HDMA97779사례 PASS,코드300B/정적데이터0B/함수스택36B이며 MCU시간·전체RUN은 미측정. ARM32000cycles+추가32B 배정,빠른500setup 명령tail 조건에서 최대16.181169ms/잔여0.485498ms. 1000setup은 초과하므로 P2 미선정.",
+  "next_action": "실제 source/query/SPI/receipt 경계에서 기존 제어를 제거하는 최소 통합 후보의 논리·RAM·직렬화 비용과 ARM 검사 호출/내용 봉인/최종 소비 증명을 함께 검토한다. 공유 RAM만으로 논리 이득이 없으므로 작은 counter/ROM/seed/FIT 반복 금지. ARM실행·digest/certificate·fullRUNIRQ·최종displayACK/lease-retire·CDCIOSTA·mapper·952955를 포함한 공동 여유 근거 전 fullFIT/설치FW/실기 진행 금지. 332B영속validity·32bit admission/serial/epoch 보존.",
+  "production": "NES227",
+  "functional_reference": "NES240_unplaced",
+  "production_implementation_selected": false,
+  "area": {
+    "LE": 1539,
+    "comb": 1522,
+    "FF": 410,
+    "bits": 45056
+  },
+  "area_delta": {
+    "LE": 33,
+    "comb": 33,
+    "FF": 2,
+    "bits": -4096
+  },
+  "inferred_scratch_RAM_reduction": 1,
+  "wholeboard_placed_recovery": false,
+  "wholeboard_scenario_M9K": 55,
+  "baseline_deficit_LE": 490,
+  "baseline_deficit_LAB": 40,
+  "arm": {
+    "text_bytes": 300,
+    "static_bytes": 0,
+    "function_stack_bytes": 36,
+    "hardware_time_measured": false,
+    "full_RUN_linked": false,
+    "certificate_binding": false
+  },
+  "conditional_max_ms": 16.181168823861203,
+  "all_unknown_work_residual_ms": 0.48549784280546504,
+  "conditional_allocations": {
+    "ARM_cycles": 32000,
+    "extra_wire_bytes": 32,
+    "map_setup_master_clocks": 500,
+    "phase_handoff_FPGA_cycles": 2
+  },
+  "remaining": [
+    "source/query/transport replacement and phase ownership",
+    "packet parser CRC/epoch/token/certificate",
+    "full ARM RUN/IRQ and HDMA validation relocation cost",
+    "new SNES consumer and ordinary DMA/dispatch",
+    "SPI polls/gaps/VBlank",
+    "952/955 VRAM bursts",
+    "wholeboard FIT/STA/CDC/IO/mapper margin",
+    "actual final display ACK and capture lease retire",
+    "physical sustained scroll/audio/input/menu"
+  ]
+}

@@ -4,9 +4,9 @@
   "date_kst": "2026-10-19",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint250-contract.ko.md",
-  "assessment": "NES250 실제 SNES 잔존700구간·71프레임 계측과 receipt RTL53534B/12검사 PASS. Layout/HDMA0.651945..0.653807ms. Block source+receipt 공동MAP1506LE/1489comb/408FF;receipt423comb이며 query/parser/CDC 제외. Gap16 조건부276일정:setup500 명령경로만 유지 최대16.354547ms/잔여0.312120ms;비트맵만 제거16.735415ms/970초과. 기존490LE40LAB부족/56M9K 시나리오 미해결. 독립source+독립receipt 구성 P2 미선정,wire 자체 불가능성은 아님.",
-  "next_action": "독립 코어 추가 대신 source 입력/output 검사 단계의 비중첩 수명·clock/STOP 소유권을 입증한 임시RAM/주소/CRC/제어 공유와,ARM 계획 단계 HDMA 생성·의미검사 봉인의 전체비용을 함께 비교한다. Persistent validity332B를 보존하며 공유전 회수량0;실제 query/SPI/parser와 fullARM/정확한certificate·최종display ownership 비용 포함. 490LE40LAB+새logic/mapper여유 및0.312ms 공동잔여 근거 없이 FIT/새FW/실기 진행 금지. control-onlyROM/opcode-seed/작은단독튜닝 재개 금지.",
+  "authoritative_document": "docs/nes-joint251-contract.ko.md",
+  "assessment": "NES251 공유 RAM은 71프레임과 2회 STOP 재생을 통과했다. M9K instance 하나를 줄였지만 MAP1506→1539LE(+33),1522comb/410FF/45056bits로 논리는 늘었다. source prepare/receipt 사이클은 동일. ARM HDMA97779사례 PASS,코드300B/정적데이터0B/함수스택36B이며 MCU시간·전체RUN은 미측정. ARM32000cycles+추가32B 배정,빠른500setup 명령tail 조건에서 최대16.181169ms/잔여0.485498ms. 1000setup은 초과하므로 P2 미선정.",
+  "next_action": "실제 source/query/SPI/receipt 경계에서 기존 제어를 제거하는 최소 통합 후보의 논리·RAM·직렬화 비용과 ARM 검사 호출/내용 봉인/최종 소비 증명을 함께 검토한다. 공유 RAM만으로 논리 이득이 없으므로 작은 counter/ROM/seed/FIT 반복 금지. ARM실행·digest/certificate·fullRUNIRQ·최종displayACK/lease-retire·CDCIOSTA·mapper·952955를 포함한 공동 여유 근거 전 fullFIT/설치FW/실기 진행 금지. 332B영속validity·32bit admission/serial/epoch 보존.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "P1_independent_source_plus_receipt_not_selected",
+      "status": "P1_phase_RAM_verified_ARM_semantics_candidate_not_selected",
       "depends_on": [
         "P0"
       ],
@@ -72,7 +72,9 @@
         "docs/nes-joint249-contract.ko.md",
         "analysis/joint249-verification.json",
         "docs/nes-joint250-contract.ko.md",
-        "analysis/joint250-verification.json"
+        "analysis/joint250-verification.json",
+        "docs/nes-joint251-contract.ko.md",
+        "analysis/joint251-verification.json"
       ]
     },
     {
@@ -3032,7 +3034,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES250 실제 SNES 잔존700구간·71프레임 계측과 receipt RTL53534B/12검사 PASS. Layout/HDMA0.651945..0.653807ms. Block source+receipt 공동MAP1506LE/1489comb/408FF;receipt423comb이며 query/parser/CDC 제외. Gap16 조건부276일정:setup500 명령경로만 유지 최대16.354547ms/잔여0.312120ms;비트맵만 제거16.735415ms/970초과. 기존490LE40LAB부족/56M9K 시나리오 미해결. 독립source+독립receipt 구성 P2 미선정,wire 자체 불가능성은 아님.",
+  "summary": "NES251 공유 RAM은 71프레임과 2회 STOP 재생을 통과했다. M9K instance 하나를 줄였지만 MAP1506→1539LE(+33),1522comb/410FF/45056bits로 논리는 늘었다. source prepare/receipt 사이클은 동일. ARM HDMA97779사례 PASS,코드300B/정적데이터0B/함수스택36B이며 MCU시간·전체RUN은 미측정. ARM32000cycles+추가32B 배정,빠른500setup 명령tail 조건에서 최대16.181169ms/잔여0.485498ms. 1000setup은 초과하므로 P2 미선정.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3075,8 +3077,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-joint250-contract.ko.md",
-  "latest_development_evidence": "analysis/joint250-verification.json",
+  "latest_review": "docs/nes-joint251-contract.ko.md",
+  "latest_development_evidence": "analysis/joint251-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {
@@ -3163,7 +3165,7 @@
       }
     ]
   },
-  "active_plan": "docs/nes-joint250-plan.json",
+  "active_plan": "docs/nes-joint251-plan.json",
   "current_status_scope": "Top-level active_plan/gates supersede historical fields; legacy versioned records and old open_issues remain historical, not current acceptance.",
   "p1_placement_followup": {
     "selected": "placement05",
@@ -3245,6 +3247,39 @@
       "receipt_RAM_bits": 8192,
       "receipt_used_bytes": 754,
       "phase_reuse_proven": false
+    }
+  },
+  "p1_joint251_followup": {
+    "status": "P1_phase_RAM_verified_ARM_semantics_candidate_not_selected",
+    "document": "docs/nes-joint251-contract.ko.md",
+    "selected": {
+      "phase": "phase03",
+      "map": "map02",
+      "arm": "arm03",
+      "analysis": "analysis02"
+    },
+    "production_implementation_selected": false,
+    "conditional_max_ms": 16.181168823861203,
+    "all_unknown_work_residual_ms": 0.48549784280546504,
+    "area": {
+      "LE": 1539,
+      "comb": 1522,
+      "FF": 410,
+      "bits": 45056
+    },
+    "area_delta": {
+      "LE": 33,
+      "comb": 33,
+      "FF": 2,
+      "bits": -4096
+    },
+    "arm": {
+      "text_bytes": 300,
+      "static_bytes": 0,
+      "function_stack_bytes": 36,
+      "hardware_time_measured": false,
+      "full_RUN_linked": false,
+      "certificate_binding": false
     }
   }
 }
