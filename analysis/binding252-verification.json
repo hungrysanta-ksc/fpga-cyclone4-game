@@ -1,0 +1,188 @@
+{
+  "passed": true,
+  "stage": 252,
+  "scope": "Recorded sparse HDMA inheritance audit and fresh-certificate policy model.\n\nC planner certificate is executed. Receiver, refreshed packets and schedules\nare Python policies, not an FPGA/SNES implementation or full ARM RUN.\n",
+  "frames": 71,
+  "frames_with_inherited_active_HDMA": 69,
+  "first_fresh_only_counterexample": {
+    "frame": 907,
+    "retained_offset": 3169,
+    "fresh_digest_unchanged": true,
+    "active_digest_rejects": true
+  },
+  "receiver_policy_negative_cases": 9372,
+  "shadow_policy_negative_cases": 2769,
+  "shadow_update_and_invalidation_checks": 10,
+  "arm_size": "   text\t   data\t    bss\t    dec\t    hex\tfilename\r\n    300\t      0\t      0\t    300\t    12c\tnes_hdma251.o\r\n    608\t      0\t      0\t    608\t    260\tnes_hdmabind252.o\r\n",
+  "stack_usage": {
+    "nes_hdma251": "nes_hdma251.c:6:6:nes_hdma251_validate\t36\tstatic\n",
+    "nes_hdmabind252": "nes_hdmabind252.c:6:13:put32\t0\tstatic\nnes_hdmabind252.c:7:17:crc\t12\tstatic\nnes_hdmabind252.c:11:6:nes_hdmabind252_prepare\t48\tstatic\nnes_hdmabind252.c:27:6:nes_hdmabind252_shadow\t48\tstatic\n"
+  },
+  "summaries": [
+    {
+      "setup": 500,
+      "retained_policy": "command_tail",
+      "binding_policy": "dense",
+      "max_ms": 16.73278787148025,
+      "residual_ms": -0.06612120481358374,
+      "over": [
+        970
+      ]
+    },
+    {
+      "setup": 500,
+      "retained_policy": "command_tail",
+      "binding_policy": "compact",
+      "max_ms": 16.485930728623106,
+      "residual_ms": 0.18073593804356136,
+      "over": []
+    },
+    {
+      "setup": 500,
+      "retained_policy": "command_tail",
+      "binding_policy": "shadow",
+      "max_ms": 16.212805187497565,
+      "residual_ms": 0.45386147916910247,
+      "over": []
+    },
+    {
+      "setup": 500,
+      "retained_policy": "only_bitmap_removed",
+      "binding_policy": "dense",
+      "max_ms": 17.113655644712132,
+      "residual_ms": -0.44698897804546434,
+      "over": [
+        954,
+        962,
+        970
+      ]
+    },
+    {
+      "setup": 500,
+      "retained_policy": "only_bitmap_removed",
+      "binding_policy": "compact",
+      "max_ms": 16.866798501854987,
+      "residual_ms": -0.20013183518831923,
+      "over": [
+        970
+      ]
+    },
+    {
+      "setup": 500,
+      "retained_policy": "only_bitmap_removed",
+      "binding_policy": "shadow",
+      "max_ms": 16.593672960729446,
+      "residual_ms": 0.07299370593722188,
+      "over": []
+    },
+    {
+      "setup": 1000,
+      "retained_policy": "command_tail",
+      "binding_policy": "dense",
+      "max_ms": 17.594163642236957,
+      "residual_ms": -0.9274969755702891,
+      "over": [
+        954,
+        962,
+        970
+      ]
+    },
+    {
+      "setup": 1000,
+      "retained_policy": "command_tail",
+      "binding_policy": "compact",
+      "max_ms": 17.347306499379812,
+      "residual_ms": -0.680639832713144,
+      "over": [
+        954,
+        970
+      ]
+    },
+    {
+      "setup": 1000,
+      "retained_policy": "command_tail",
+      "binding_policy": "shadow",
+      "max_ms": 17.07418095825427,
+      "residual_ms": -0.4075142915876029,
+      "over": [
+        954,
+        970
+      ]
+    },
+    {
+      "setup": 1000,
+      "retained_policy": "only_bitmap_removed",
+      "binding_policy": "dense",
+      "max_ms": 17.97503141546884,
+      "residual_ms": -1.3083647488021732,
+      "over": [
+        954,
+        962,
+        963,
+        970
+      ]
+    },
+    {
+      "setup": 1000,
+      "retained_policy": "only_bitmap_removed",
+      "binding_policy": "compact",
+      "max_ms": 17.728174272611696,
+      "residual_ms": -1.0615076059450281,
+      "over": [
+        954,
+        962,
+        970
+      ]
+    },
+    {
+      "setup": 1000,
+      "retained_policy": "only_bitmap_removed",
+      "binding_policy": "shadow",
+      "max_ms": 17.455048731486155,
+      "residual_ms": -0.788382064819487,
+      "over": [
+        954,
+        962,
+        970
+      ]
+    }
+  ],
+  "warm_inherited_bytes": [
+    69,
+    69
+  ],
+  "warm_dense_added_bytes": [
+    181,
+    181
+  ],
+  "shadow_ram_scenario": {
+    "granule": 16,
+    "crc_bits": 16,
+    "per_bank_entries": 16,
+    "both_banks_bytes": 64,
+    "validity_plus_receipt_bytes": 754,
+    "sum_bytes": 818,
+    "persistent_bytes": 396,
+    "temp_bytes": 422,
+    "source_start": 512,
+    "not_implemented": true,
+    "scroll_shadow_needed": false
+  },
+  "no_FPGA_implementation": true,
+  "no_SNES_execution": true,
+  "no_full_ARM_RUN": true,
+  "no_MCU_timing": true,
+  "no_MAP_FIT": true,
+  "limitations": [
+    "CRC16 is accidental-corruption checking,not cryptographic authentication or collision-free equality.",
+    "Fresh-only digest counterexample is a model of a bad proposal,not a demonstrated production corruption.",
+    "Dense refresh needs an updated expected receipt manifest;new packet service/CRC/retire latency is not charged.",
+    "Compact refresh requires a new typed owner/overwrite policy;no implementation area or timing measured.",
+    "Added wire serialized as conservative placement within old conditional schedule;not a re-executed packet scheduler.",
+    "32-byte certificate and32000ARMcycle allocations retained;MCU time and full planner cost still unknown.",
+    "Shadow table64B stores only249B raw-tail hashes;scroll is already fresh every frame. New RAM offsets/CRC arbitration are unimplemented.",
+    "Shadow operation bound is an explicit serial cycle allocation,not executed RTL or reclaimed area."
+  ],
+  "input_count": 1123,
+  "private_result_sha256": "f86099527e4fee59236a84a1f6ab7c50fed009630aaa31a83e60d8e54eb9303f"
+}

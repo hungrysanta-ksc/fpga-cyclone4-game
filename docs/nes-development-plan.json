@@ -4,9 +4,9 @@
   "date_kst": "2026-10-19",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint251-contract.ko.md",
-  "assessment": "NES251 공유 RAM은 71프레임과 2회 STOP 재생을 통과했다. M9K instance 하나를 줄였지만 MAP1506→1539LE(+33),1522comb/410FF/45056bits로 논리는 늘었다. source prepare/receipt 사이클은 동일. ARM HDMA97779사례 PASS,코드300B/정적데이터0B/함수스택36B이며 MCU시간·전체RUN은 미측정. ARM32000cycles+추가32B 배정,빠른500setup 명령tail 조건에서 최대16.181169ms/잔여0.485498ms. 1000setup은 초과하므로 P2 미선정.",
-  "next_action": "실제 source/query/SPI/receipt 경계에서 기존 제어를 제거하는 최소 통합 후보의 논리·RAM·직렬화 비용과 ARM 검사 호출/내용 봉인/최종 소비 증명을 함께 검토한다. 공유 RAM만으로 논리 이득이 없으므로 작은 counter/ROM/seed/FIT 반복 금지. ARM실행·digest/certificate·fullRUNIRQ·최종displayACK/lease-retire·CDCIOSTA·mapper·952955를 포함한 공동 여유 근거 전 fullFIT/설치FW/실기 진행 금지. 332B영속validity·32bit admission/serial/epoch 보존.",
+  "authoritative_document": "docs/nes-binding252-contract.ko.md",
+  "assessment": "NES252 실제71프레임에서warm69 모두HDMA90B 중69B를상속했다. 새수신분CRC만으로는부족. 기존16B재전송은181B추가/조건부16.732788ms초과,compact100B는16.485931ms. Raw-tail16granule CRC를양bank64B에보존하면추가표전송0B,공유RAM배치818B후보로16.212805ms/잔여0.453861ms(추가CRC처리배정). C certificate와Python수신모델71frames,9372+2769거부/10갱신무효화검사PASS. ARMtext총908B/함수별48·48·36·12B,fullRUN·MCU시간·RTL·논리회수미입증/P2미선정.",
+  "next_action": "64B raw-tail CRC를기존validity와결합한공유RAM배치(영속396/임시422/source512..1023)를후보로,실제query/projector→source→SPI와outputconsume→CRC→certificate의기존제어를제거하는최소통합경계를검증한다. CRC source/block누산상태와clock/SS/token/CDC/최종displayACK는자동공유하지않는다. 단독CRC/작은counter/ROM/seed/FIT반복금지. 전체ARMIRQ·SNES남은DMA·poll/VBlank·952955·mapper·CDCIOSTA 공동여유 전 fullFIT/설치FW/실기금지.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "P1_phase_RAM_verified_ARM_semantics_candidate_not_selected",
+      "status": "P1_64B_HDMA_shadow_candidate_not_selected_for_P2",
       "depends_on": [
         "P0"
       ],
@@ -74,7 +74,9 @@
         "docs/nes-joint250-contract.ko.md",
         "analysis/joint250-verification.json",
         "docs/nes-joint251-contract.ko.md",
-        "analysis/joint251-verification.json"
+        "analysis/joint251-verification.json",
+        "docs/nes-binding252-contract.ko.md",
+        "analysis/binding252-verification.json"
       ]
     },
     {
@@ -3034,7 +3036,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES251 공유 RAM은 71프레임과 2회 STOP 재생을 통과했다. M9K instance 하나를 줄였지만 MAP1506→1539LE(+33),1522comb/410FF/45056bits로 논리는 늘었다. source prepare/receipt 사이클은 동일. ARM HDMA97779사례 PASS,코드300B/정적데이터0B/함수스택36B이며 MCU시간·전체RUN은 미측정. ARM32000cycles+추가32B 배정,빠른500setup 명령tail 조건에서 최대16.181169ms/잔여0.485498ms. 1000setup은 초과하므로 P2 미선정.",
+  "summary": "NES252 실제71프레임에서warm69 모두HDMA90B 중69B를상속했다. 새수신분CRC만으로는부족. 기존16B재전송은181B추가/조건부16.732788ms초과,compact100B는16.485931ms. Raw-tail16granule CRC를양bank64B에보존하면추가표전송0B,공유RAM배치818B후보로16.212805ms/잔여0.453861ms(추가CRC처리배정). C certificate와Python수신모델71frames,9372+2769거부/10갱신무효화검사PASS. ARMtext총908B/함수별48·48·36·12B,fullRUN·MCU시간·RTL·논리회수미입증/P2미선정.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3077,8 +3079,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-joint251-contract.ko.md",
-  "latest_development_evidence": "analysis/joint251-verification.json",
+  "latest_review": "docs/nes-binding252-contract.ko.md",
+  "latest_development_evidence": "analysis/binding252-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {
@@ -3165,7 +3167,7 @@
       }
     ]
   },
-  "active_plan": "docs/nes-joint251-plan.json",
+  "active_plan": "docs/nes-binding252-plan.json",
   "current_status_scope": "Top-level active_plan/gates supersede historical fields; legacy versioned records and old open_issues remain historical, not current acceptance.",
   "p1_placement_followup": {
     "selected": "placement05",
@@ -3281,5 +3283,30 @@
       "full_RUN_linked": false,
       "certificate_binding": false
     }
+  },
+  "p1_binding252_followup": {
+    "status": "P1_64B_HDMA_shadow_candidate_not_selected_for_P2",
+    "document": "docs/nes-binding252-contract.ko.md",
+    "selected": {
+      "test": "test03",
+      "control_audit": "control-audit.json"
+    },
+    "production_implementation_selected": false,
+    "conditional_max_ms": 16.212805187497565,
+    "all_unknown_work_residual_ms": 0.45386147916910247,
+    "shadow_RAM": {
+      "granule": 16,
+      "crc_bits": 16,
+      "per_bank_entries": 16,
+      "both_banks_bytes": 64,
+      "validity_plus_receipt_bytes": 754,
+      "sum_bytes": 818,
+      "persistent_bytes": 396,
+      "temp_bytes": 422,
+      "source_start": 512,
+      "not_implemented": true,
+      "scroll_shadow_needed": false
+    },
+    "new_logic_saving_proven": 0
   }
 }

@@ -1,3 +1,5 @@
+NES252: HDMA의상속내용까지봉인하려면새수신분CRC만으로는부족하다. 양bank의raw-tail CRC64B를보관하는후보는단순재전송보다유리하며조건부잔여0.454ms다. 실제RTL·논리회수·MCU시간은아직미입증이다. [최신 검토](docs/nes-binding252-contract.ko.md) · [현재 계획](docs/nes-binding252-plan.json). 아래는 이전 기록이다.
+
 NES251: 단계별 공유 RAM으로 M9K instance 하나를 줄였지만 논리는33LE 늘었다. ARM HDMA 검사는97779사례를 통과했으며,실행·봉인 비용을 배정한 조건부 잔여는0.485ms다. 전체 논리·시간 여유가 미확보라 P2로 선택하지 않았다. [최신 검토](docs/nes-joint251-contract.ko.md) · [현재 계획](docs/nes-joint251-plan.json).
 
 NES250: source+receipt 공동MAP1506LE,남은 SNES layout/HDMA 검사 약0.654ms. 실측 반영 조건부 최대16.355ms/공동잔여0.312ms이며 회로·시간 여유가 미입증이라 독립 코어 추가 구성은 P2 후보로 채택하지 않았다. [최신 검토](docs/nes-joint250-contract.ko.md) · [현재 계획](docs/nes-joint250-plan.json). 아래는 이전 기록이다.

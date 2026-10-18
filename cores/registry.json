@@ -24,7 +24,7 @@
     },
     {
       "id": "nes",
-      "status": "NES227_hardware_baseline_251_phase_ARM_P1_partial",
+      "status": "NES227_hardware_baseline_252_HDMA_binding_P1_partial",
       "candidate": "NES227",
       "planned_product_version": null,
       "released": false,
@@ -38,15 +38,15 @@
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
       "verification": "analysis/game227-hardware01-verification.json",
-      "plan": "docs/nes-joint251-contract.ko.md",
+      "plan": "docs/nes-binding252-contract.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "NES251_phase_RAM_and_ARM_HDMA_semantics",
+      "investigation": "NES252_sparse_HDMA_inheritance_and_64B_CRC_candidate",
       "hardware_baseline": "NES227",
-      "hardware_verified_scope": "227 hardware unchanged;251 parsed phase RAM simulation/MAP and host C/ARM object only;no connected whole pipeline or MCU timing.",
-      "development_evidence": "analysis/joint251-verification.json",
+      "hardware_verified_scope": "227 hardware unchanged;252 host C certificate/ARM objects and Python packet/shadow policies only;no RTL/MAP/MCU timing.",
+      "development_evidence": "analysis/binding252-verification.json",
       "hardware_candidate": "NES227",
-      "reproduction_document": "docs/nes-joint251-contract.ko.md",
-      "next_gate": "실제 source/query/SPI/receipt 경계에서 기존 제어를 제거하는 최소 통합 후보의 논리·RAM·직렬화 비용과 ARM 검사 호출/내용 봉인/최종 소비 증명을 함께 검토한다. 공유 RAM만으로 논리 이득이 없으므로 작은 counter/ROM/seed/FIT 반복 금지. ARM실행·digest/certificate·fullRUNIRQ·최종displayACK/lease-retire·CDCIOSTA·mapper·952955를 포함한 공동 여유 근거 전 fullFIT/설치FW/실기 진행 금지. 332B영속validity·32bit admission/serial/epoch 보존.",
+      "reproduction_document": "docs/nes-binding252-contract.ko.md",
+      "next_gate": "64B raw-tail CRC를기존validity와결합한공유RAM배치(영속396/임시422/source512..1023)를후보로,실제query/projector→source→SPI와outputconsume→CRC→certificate의기존제어를제거하는최소통합경계를검증한다. CRC source/block누산상태와clock/SS/token/CDC/최종displayACK는자동공유하지않는다. 단독CRC/작은counter/ROM/seed/FIT반복금지. 전체ARMIRQ·SNES남은DMA·poll/VBlank·952955·mapper·CDCIOSTA 공동여유 전 fullFIT/설치FW/실기금지.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "Production227 retained;240 functional-only/unplaced;241+246 rejected;no new installable pair.",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -706,8 +706,8 @@
         "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
         "paired_candidate": "deployed180 unchanged;1813 exporter/SPI/receiver candidate only; no new full ARM/FIT/installable pair"
       },
-      "active_plan": "docs/nes-joint251-plan.json",
-      "current_status_scope": "251 pointers supersede historical NEXT;RAM benefit confirmed,conditional timing and logic shortage do not select P2;production227 unchanged."
+      "active_plan": "docs/nes-binding252-plan.json",
+      "current_status_scope": "252 pointers supersede historical NEXT;64B shadow is a candidate,not selected P2;production227 unchanged."
     },
     {
       "id": "pce",
