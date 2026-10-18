@@ -5,7 +5,7 @@
   "status": "P0_complete_P1_partial_no_candidate_selected",
   "document": "docs/nes-wholepath247-contract.ko.md",
   "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/128",
-  "scope": "P0 same-frame observer and P1 joint source/output/DMA lifetime models. No product implementation/FIT/new ARM/SNES/hardware.",
+  "scope": "P0 observer;P1 joint schedule,actual C semantic raster projection and bounded parallel relocation models. No product/FIT/new ARM/SNES/hardware.",
   "supersedes": "Current execution status after merged PR127; its goals and safeguards remain authoritative. Historical evidence unchanged.",
   "roles": {
     "production_hardware": "NES227",
@@ -58,7 +58,9 @@
       "evidence": [
         "docs/nes-wholepath247-contract.ko.md",
         "docs/nes-schedule247-contract.ko.md",
-        "analysis/schedule247-verification.json"
+        "analysis/schedule247-verification.json",
+        "docs/nes-relocation247-contract.ko.md",
+        "analysis/relocation247-verification.json"
       ]
     },
     {
@@ -134,7 +136,7 @@
     "mapper_compatibility",
     "frame_skip_state_save_mute"
   ],
-  "next_action": "P1 지속: 실제 병렬 aperture의 생산자·소비자 경계에서 geometry/raster 변환과 전송을 함께 재배치하는 경우를 full240과 비교. 제거/추가 logic·RAM·ARM·SNES 작업 및 같은952/954/955 비용·token/bank/STOP 수명을 명시. source 압축 기능·전체 FPGA 여유·새 입력 RUN/IRQ·SNES3910/3936B 교체와 잔여 burst 해소를 함께 입증한 한 후보만 P2. 선행DMA를 무료 VBlank로 간주하지 않음;아직 후보 없음.",
+  "next_action": "P1:잔여952/955의 gap을 target-valid 대신 SEAL-unused 증명으로 안전하게 합칠 수 있는지 검증. 이후 사용 시 실제 write 필수·epoch/STOP·coverage를 지키고 초기화/코드 비용 포함. command-list/DMA 교체 범위·보수적 실행시간과 의미 raster+rowshift source의 전체 LE/LAB/RAM·새 입력 ARM RUN/IRQ를 함께 평가. 4192 gate 임의 완화나 validbit 위조 금지. 공동 여유를 갖춘 한 후보만 P2;아직 미선정.",
   "base_commit": "b6958f24fbe2173d0879da07ef56fe3b507b5420",
   "branch": "codex/nes-wholepath-247",
   "previous_plan": "docs/nes-pr127-next-plan.json",
@@ -175,5 +177,19 @@
       955
     ],
     "next_implementation": null
+  },
+  "p1_relocation_followup": {
+    "selected": "relocation01",
+    "document": "docs/nes-relocation247-contract.ko.md",
+    "evidence": "analysis/relocation247-verification.json",
+    "semantic_raster_bytes": 449,
+    "semantic_geometry_bytes": 4398,
+    "c_exact_files": 355,
+    "reference_checks": 4066624,
+    "semantic_shift_batched16_ready4_max": 5141,
+    "semantic_shift_batched16_ready1_max": 5321,
+    "full_planner_unchanged_array_bytes": 18752,
+    "full_raw_2048_over_snes": 67,
+    "qualified_for_p2": false
   }
 }

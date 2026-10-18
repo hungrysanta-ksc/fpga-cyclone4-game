@@ -1,10 +1,10 @@
 # 현재 상태 — NES247 P0 완료 / P1 비교 중
 
-NES247 P0 완료/P1 지속. schedule04:71프레임130592 used-pattern bytes 일치, 유효gap11개592B. 정렬+유효gap+map묶음은 SNES3개(952/955/963), word는2개(952/955) 초과. 입력4종×출력2종 모두 전체 여유 미충족;shift+16B SPI최대6340B/mask16+16B6271B. 후보 미선정, 생산227/기능240(미배치)/기각241+246 유지.
+NES247 P1 relocation01:의미 raster449B/geometry4398B를 독립 C로 복원, 원래 raster 참조와71frames/355파일+cost/map/slot 동일/4066624checks/10decoder+5sourceguards PASS. 의미+shift+16B map wire모델 최대5141/5321B, SNES3bursts 남음. 전체allocator 그대로는18752B/최소17M9K>낙관12개;full raw2048은67/69 초과. sparse raw 이동은 추가비용 UNKNOWN. P2 후보 미선정, 생산227/240미배치 유지.
 
-[전체 비용](../../docs/nes-wholepath247-contract.ko.md) · [P1 결합·소유권 검토](../../docs/nes-schedule247-contract.ko.md) · [현재 실행 상태](../../docs/nes-wholepath247-plan.json) · [71프레임 비용표](../../analysis/wholepath247-frames.csv)
+[전체 비용](../../docs/nes-wholepath247-contract.ko.md) · [P1 결합·소유권](../../docs/nes-schedule247-contract.ko.md) · [최신 의미 투영·병렬 경계](../../docs/nes-relocation247-contract.ko.md) · [현재 실행 상태](../../docs/nes-wholepath247-plan.json) · [71프레임 비용표](../../analysis/wholepath247-frames.csv)
 
-P1 지속: 실제 병렬 aperture의 생산자·소비자 경계에서 geometry/raster 변환과 전송을 함께 재배치하는 경우를 full240과 비교. 제거/추가 logic·RAM·ARM·SNES 작업 및 같은952/954/955 비용·token/bank/STOP 수명을 명시. source 압축 기능·전체 FPGA 여유·새 입력 RUN/IRQ·SNES3910/3936B 교체와 잔여 burst 해소를 함께 입증한 한 후보만 P2. 선행DMA를 무료 VBlank로 간주하지 않음;아직 후보 없음.
+P1:잔여952/955의 gap을 target-valid 대신 SEAL-unused 증명으로 안전하게 합칠 수 있는지 검증. 이후 사용 시 실제 write 필수·epoch/STOP·coverage를 지키고 초기화/코드 비용 포함. command-list/DMA 교체 범위·보수적 실행시간과 의미 raster+rowshift source의 전체 LE/LAB/RAM·새 입력 ARM RUN/IRQ를 함께 평가. 4192 gate 임의 완화나 validbit 위조 금지. 공동 여유를 갖춘 한 후보만 P2;아직 미선정.
 
 PR127 머지 `b6958f24` 확인 후 새 `codex/nes-wholepath-247`에서 진행했다. 아래 PR127 및246 이전 NEXT는 이력이며 현재 지시가 아니다. PR127의 전체 목표와 보호 조건은 유지한다. 새 설치물·FPS·회로 구현 성공을 뜻하지 않는다.
 

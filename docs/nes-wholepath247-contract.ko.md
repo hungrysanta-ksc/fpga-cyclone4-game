@@ -1,5 +1,7 @@
 # NES247: 같은 스크롤의 전체 비용과 map/slot 갱신 원인
 
+최신 P1 후속은 [raster 의미 투영과 병렬 재배치 경계](nes-relocation247-contract.ko.md)다. 아래 결과는 해당 단계의 근거로 보존하며 다음 순서는 [247 계획](nes-wholepath247-plan.json)을 따른다.
+
 2026-10-18. PR127의 merge `b6958f24fbe2173d0879da07ef56fe3b507b5420`를 fetch한 `origin/master`와 대조했고, 깨끗한 checkout에서 `codex/nes-wholepath-247`을 만들었다. PR127에는 추가하지 않는다.
 
 **P0의 프레임별 비용표·갱신 원인 분석을 완료했다. P1 비교는 진행했지만 전체 여유가 입증된 구현 후보는 아직 없다.** 생산227, 미배치 기능 기준240, 기각241/246은 그대로다. 새로운 RTL/FIT/ARM/SNES 실행이나 설치물이 아니라, 기존 증거를 연결하고 기존 C의 결정을 관측한 결과다. 전체 목표와 P2/P3 진입 조건은 [PR127 회고](nes-pr127-retrospective.ko.md)를 유지한다. 현재 순서는 [247 실행 상태](nes-wholepath247-plan.json)가 갱신한다.
