@@ -1,0 +1,141 @@
+{
+  "stage": 235,
+  "passed": true,
+  "scope": "Seal235 endpoint evidence; local traces/netlists are never public Git inputs.",
+  "selected": {
+    "test": "test02",
+    "guards": "guards01",
+    "map": "map01",
+    "source": "source01"
+  },
+  "spi": [
+    {
+      "phase": 3.5,
+      "records": 2229,
+      "blocks": 350,
+      "payload": 62967,
+      "summary": [
+        "# NORMAL235 frames=71 blocks=350 wirebytes=75318 overlapwrites=50493 fullwait=3383191 rereads=21",
+        "# FAULT235 case=0 retained",
+        "# FAULT235 case=1 retained",
+        "# FAULT235 case=2 retained",
+        "# FAULT235 case=3 retained",
+        "# FAULT235 case=4 retained",
+        "# FAULT235 case=5 retained",
+        "# FAULT235 case=6 retained",
+        "# PASS SPI235 checks=37 phase=3.500000"
+      ]
+    },
+    {
+      "phase": 17.0,
+      "records": 2229,
+      "blocks": 350,
+      "payload": 62967,
+      "summary": [
+        "# NORMAL235 frames=71 blocks=350 wirebytes=75318 overlapwrites=50490 fullwait=3383187 rereads=21",
+        "# FAULT235 case=0 retained",
+        "# FAULT235 case=1 retained",
+        "# FAULT235 case=2 retained",
+        "# FAULT235 case=3 retained",
+        "# FAULT235 case=4 retained",
+        "# FAULT235 case=5 retained",
+        "# FAULT235 case=6 retained",
+        "# PASS SPI235 checks=37 phase=17.000000"
+      ]
+    }
+  ],
+  "query71": true,
+  "exact_c_files": 355,
+  "c_output": "SOURCE234 faults_and_restart=1459 source_bytes=32 PASS\nSTATE234 source=32 dirty=124 video=15912 input=9880\nPASS SOURCE234 C frames=71 reference_checks=4066624 metadata_spi=118148 tile_bytes=12944\n",
+  "guard_checks": {
+    "spi": 19,
+    "query": 21
+  },
+  "standalone_map": {
+    "spi_le": 766,
+    "spi_ff": 430,
+    "query_le": 356,
+    "query_ff": 151,
+    "spi_ram": "one inferred M9K simple dual port512x8",
+    "additive_estimate_le": 1122,
+    "replacement_arithmetic_le": 1282,
+    "residual_arithmetic_le": 160,
+    "whole_board_approval": false
+  },
+  "warnings": [
+    "Quartus ignores async_reg (including reused206); board synchronizer constraints/CDC/STA still required",
+    "dual-clock read-during-write undefined; valid D1 ownership excludes writes to that bank",
+    "8bit CRC polynomial07 and palette32/64 intentional width truncation; bounded query_index/fault stuck low"
+  ],
+  "encoder_rtl": false,
+  "actual_input_run_bound": false,
+  "full_arm_irq": false,
+  "new_fit": false,
+  "new_sta": false,
+  "new_package": false,
+  "physical": false,
+  "fps_proven": false,
+  "decision": "Do not approve full A encoder from160LE arithmetic. Next share existing SPI control/query plumbing and bound encoder/base/raw resources vs parallel metadata B on SAME scroll; no small FIT loop. Then actual input RUN/IRQ, whole-board CDC/IO/STA and paired FIRSTLEVELSCROLL.232five VBlank bursts remain.",
+  "public235_pins": {
+    "src/nes/rtl/nes_source_spi235.sv": "0c57fd62fb3037296a9be14273639fc761c2e0ab0f257379f7344f58376d6d09",
+    "src/nes/rtl/nes_source_query235.sv": "70143f032b110b76744cd507d296ed84f0a2b6ebae00961056318a98b8306438",
+    "tests/nes-functional/source_spi235_tb.sv": "55a556b2393c394d74857ef7ae24c402d5689f03e712d7e269f8a061ea001104",
+    "tests/nes-functional/source_query235_guards_tb.sv": "e0fcff50acff07f31d52ee612bf8765c839b3ad3d0e8db34613c5f3352075fc1",
+    "tools/test_nes_source235.py": "098772de3948b5f06b12d4d4eb090a2b6d0b7183b70eeedc7d0d8933ee7203f3",
+    "tools/test_nes_source235_guards.py": "fc5dce4fc23d6a93b0ff12f7f4c5424cc6d661b68ce8926c66cf8706438096f8",
+    "tools/run_nes_source235.ps1": "76e83418c5f72482dcf206b5691d26cb5717418c2fda1904c1161764221d4b72",
+    "tools/map_nes_source235.py": "b8506c29921bd9e0e6481f45db88134bcbc39444a711f871f9b58df2212fdb4d",
+    "tools/seal_nes_source235.py": "3f767cb03a9d6f5f7397fc19eb965a6bce5eb43603eb05d6cbefbd4fd8798672",
+    "docs/nes-source235-contract.ko.md": "91b9e135432f4f8a9674a593045e277933d4c906d7d902f21626bee4054750d8"
+  },
+  "verified_prior_pins": {
+    "probes/nes-repeat227/arm01/src/nes_native_runtime165.c": "b333f5e998231703f71b589807821ae5cfb6ab611443f5a796a81b30a3a31dbd",
+    "probes/nes-repeat227/arm01/src/nes_native_runtime165.h": "1fce6d53d14e90159a435a8576a3a633ab0e697a735ee4db15879410a196e7ff",
+    "probes/nes-repeat227/arm01/src/nes_native165.c": "f67e0f6108c5773215e24b0e687dbb79aa245bfcfdaf5a523649b82c0f1ea8d3",
+    "probes/nes-repeat227/arm01/src/nes_budget210.c": "c734399c4f9f5823a970b6656b47fec2f92d0c882308f751c691fef981a28ddf",
+    "probes/nes-repeat227/arm01/src/nes_budget210.h": "fe631ab772ce0041d0e6adf7f738a824affb9d616ce6d638a9e52d6d97193e92",
+    "probes/nes-repeat227/arm01/src/nes_plan_service200.c": "d9d55d1db979ab75f8a9d43c5041bae2a5aff62663d0339f307a88b3a218e91d",
+    "probes/nes-repeat227/arm01/src/nes_planner211.c": "335591bc30d9adea6a7878e0ab2450ec2cff3e6d8d4814ac505d6f52996b8770",
+    "probes/nes-repeat227/arm01/src/nes_native_sink165.c": "982bc2c52738db425490875fc6a2f39ce290761a824cf5a577b94d911f9bc973",
+    "probes/nes-repeat227/arm01/src/nes_resident211.c": "ad217befb1d9059f6d4790810a1bb46e8a042e3cfe5597fd40cf29d71a22f3a0",
+    "probes/nes-repeat227/arm01/src/nes_sink_window184.c": "97d324886d1185a21cb63ae97a786c0393e4d1611148dcb545843eabfad845ee",
+    "probes/nes-counter224/mapfit02/nes_capture_lease201.sv": "c3f95b8e7b56afbe65e3484e1006d4fc2c54b6e47407bf32124d8ae461fb7f61",
+    "probes/nes-counter224/mapfit02/nes_native_export203.sv": "8380841f9a9b9b0e30fe59bd569c57547658cbf10b8e848c8076c54ed6171bf9",
+    "probes/nes-counter224/mapfit02/rtl/nes.v": "fd90fd4001b02022c1bf299fb3afa057df2574bbf1069e3c0e8a4b0895efed7d",
+    "cores/nes/candidate/nes_delta231.c": "a7e8ed7ca20c3441981e57de5892912fddfc4782f7ac6a62b68be36e63d410d1",
+    "cores/nes/candidate/nes_delta231.h": "8d3b4a52f8460d14280b854f003e755a9f707a266c7d412660ca2d1dcdb6b98f",
+    "cores/nes/candidate/nes_delta231_receiver.inc": "93bee8d2422efaf256f06915fdadd2079f59d9b9c8e031c89bd7062fcac657c7",
+    "tools/nes_delta231.py": "ef3b44709007370ee9fb6284de30fb44799ae1b02d8564af6f131feb2d590367",
+    "tools/test_nes_delta231.py": "9fa8d5785f9e104820ddf6c896768892747d18753e076ffc64623dd898a5c48a",
+    "tools/test_nes_delta231_boundaries.py": "ccf68bce181481e3fef51d1fe3e43df5b06d0a369d704edfd867ad489f27711e",
+    "tools/check_nes_delta231_arm.py": "5e86f40aaff3c51d1a242f7699b0b96036c76431ac39b43c2a9e1a0402c387f1",
+    "tools/analyze_nes_delta231.py": "6f31340244fd479a1c0db81e8b960455d939454f8a274ee43abb5525ed123279",
+    "docs/nes-delta231-contract.ko.md": "c5b017a2f6c3e58a45150f7849c8ee55e1de05738050c07b9b91431d6a6b6754",
+    "tools/nes_sparse232.py": "3756216572c73f844a427f48ef63431704bcd3e6d73bf67620a2f1227fdece5c",
+    "tools/test_nes_sparse232.py": "58ca1c124c55bfe9da4a2e7e31a2fdced2752ada373992f5aebfcdbe1ab42093",
+    "tools/test_nes_sparse232_scroll.py": "a55dbaf51c1d650485d6848c506a0a7adcbe9bdbf260b0a850fb7ce867825062",
+    "tools/analyze_nes_sparse232.py": "b8f87603164704d20444adf7831cc2e6f1a405f26bfaba24a6d051edd0dd88ce",
+    "docs/nes-sparse232-contract.ko.md": "ac3d0d165ef9cd4d4f15c033a05d298ad21d5069144db26e910bd87735ac4e8f",
+    "tools/nes_runtime233.py": "5260a568ea40a5cf918d6f73af170f9e53672b37679bbf8c985d60399855298f",
+    "tools/test_nes_runtime233.py": "f4ca1880f6b06484c1d433794a5f24b6ea405f1da41827ff44f0ca5f6f74e26a",
+    "tools/check_nes_runtime233_arm.py": "ac47df74919bc39f5f439c774cb8f90596071cb35b3463a7a8c5ba5306c9a8ed",
+    "tools/analyze_nes_runtime233.py": "497e5d55f40c249b65bf4ece22909657748f77eb6e39f9e889cd5195839f6dbb",
+    "docs/nes-runtime233-contract.ko.md": "9c6f04cf0f593ac2d732073d4ccd72b55291d91eaf0614421afa2bfd1512f4f1",
+    "cores/nes/candidate/nes_source234.h": "7c6d4d91b5650b02df1c1be02c5149f538dc736015287dc2e61b69e199c54bcc",
+    "docs/nes-source234-contract.ko.md": "24c9f3bc805e799b93553eca3e36334a925acfce82916f2040b6da2f9e51f46b",
+    "tools/nes_stream234.py": "fb3e413b9871df9c38199bef64cb62d202691b06ffe00db38fa7cc83af0b2bd9",
+    "tools/nes_source234.py": "271806d4c2470fecbe164926b37d77be2c4921e5b8d86be41fd515572729ba5e",
+    "tools/test_nes_source234.py": "3f043e502c397132bce1f3f65ec3d55ef9b5cdf15f7ae84d70c394f282f16e8e",
+    "tools/check_nes_source234_arm.py": "707471f0286d8d23d8be1da98e7f1f7439b828c3f58487550cb81291bab301b4",
+    "tools/analyze_nes_source234.py": "b5d174afd8b488947a0e352f0fabf0588a9b437cc16f120289fb479d5a1a72b9"
+  },
+  "prior234_manifest_sha256": "0e18261a9e773fe72fbe2eb64e335674f56877e1d13ceb34181d5d3f338543db",
+  "prior234_full_rehash": false,
+  "evidence_files": 1051,
+  "manifest_sha256": "dd26a08374f6d1a20a2ca2977ec8a8ab2a2f489f940978bc6b7cb18e8aba886f",
+  "evidence_result_hashes": {
+    "test02": "8dbf3520f792770054e7de537d0a8f056f9234a2df4816764ec81fe7929329b7",
+    "guards01": "d9bb773738bb8533d426f709bd9c44f9e291351f5180387c917e95042252ba33",
+    "map01": "7c05d16d21d3ff6af9de56183848b60b16e0a7002b9cd9f4fa1c5bba72c100a1"
+  }
+}
