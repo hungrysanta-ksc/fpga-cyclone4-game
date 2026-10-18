@@ -1,4 +1,4 @@
-NES249: 고정 블록 source + FPGA 통합 검증을 시간 우선 후보로 정리했다. Source RTL 71+3프레임 통과, 단독1079LE. 조건부 최대15.472ms/공동잔여1.195ms지만 기존490LE/40LAB 부족과 새 검증기 비용 회수는 미입증이다. P2·60fps 승인은 없다. [최신 검토](docs/nes-joint249-contract.ko.md) · [현재 계획](docs/nes-joint249-plan.json). 아래는 이전 기록이다.
+NES250: source+receipt 공동MAP1506LE,남은 SNES layout/HDMA 검사 약0.654ms. 실측 반영 조건부 최대16.355ms/공동잔여0.312ms이며 회로·시간 여유가 미입증이라 독립 코어 추가 구성은 P2 후보로 채택하지 않았다. [최신 검토](docs/nes-joint250-contract.ko.md) · [현재 계획](docs/nes-joint250-plan.json). 아래는 이전 기록이다.
 
 > 최신 ROM 응답 결합: ROM 응답 로컬8비트를 실제 service/arbiter/FIFO/reader에 결합했다. 70ns 모델16위상과9.904ns 데이터 지연에서 기존 응답/샘플과 같았으며, 새8개 경계만 제한했다. FIT15048LE/963LAB/38M9K, 배선 평균68.8→61.4%·수직peak91.2→75.8%로 개선됐다. 실제setup−1.408ns/hold+0.147ns로 전체타이밍은 아직 실패이며 새SD패키지는 없다. [검증·다음 단계](docs/nes-replyjoin181-contract.ko.md)
 

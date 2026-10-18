@@ -1,3 +1,15 @@
+# 현재 상태 — NES250 공동 회로·SNES 잔존 작업
+
+NES250 실제 SNES 잔존700구간·71프레임 계측과 receipt RTL53534B/12검사 PASS. Layout/HDMA0.651945..0.653807ms. Block source+receipt 공동MAP1506LE/1489comb/408FF;receipt423comb이며 query/parser/CDC 제외. Gap16 조건부276일정:setup500 명령경로만 유지 최대16.354547ms/잔여0.312120ms;비트맵만 제거16.735415ms/970초과. 기존490LE40LAB부족/56M9K 시나리오 미해결. 독립source+독립receipt 구성 P2 미선정,wire 자체 불가능성은 아님.
+
+독립 코어 추가 대신 source 입력/output 검사 단계의 비중첩 수명·clock/STOP 소유권을 입증한 임시RAM/주소/CRC/제어 공유와,ARM 계획 단계 HDMA 생성·의미검사 봉인의 전체비용을 함께 비교한다. Persistent validity332B를 보존하며 공유전 회수량0;실제 query/SPI/parser와 fullARM/정확한certificate·최종display ownership 비용 포함. 490LE40LAB+새logic/mapper여유 및0.312ms 공동잔여 근거 없이 FIT/새FW/실기 진행 금지. control-onlyROM/opcode-seed/작은단독튜닝 재개 금지.
+
+[공동 검토](../../docs/nes-joint250-contract.ko.md) · [현재 계획](../../docs/nes-joint250-plan.json) · [검증 집계](../../analysis/joint250-verification.json)
+
+아래249 및 이전 NEXT는 당시 기록이다.
+
+---
+
 # 현재 상태 — NES249 공동 시간·회로 검토
 
 NES249 고정블록+rowshift source와 FPGA 통합 receipt/validity 후보를 공동 검토했다. Source RTL 기록71+합성3프레임 PASS;단독 MAP1079LE/1062comb/307FF. Python754B RAM정책192726byte/155반례와3726조건부 일정 PASS. setup/service500인 gap16 최대15.472ms,잔여1.195ms는 query/ARM/실제parser/SNES layout검사/DMA/대기 전체 공동예산이다. Whole240490LE40LAB부족+새logic/mapper여유 회수 미입증, RAM56/56 유지. 시간 우선 조사 후보B만 남기며 P2/60fps 승인 없음.
