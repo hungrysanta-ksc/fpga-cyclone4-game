@@ -5,8 +5,8 @@
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
   "authoritative_document": "docs/nes-wholepath247-contract.ko.md",
-  "assessment": "NES247:공동2472 CPU decoder기각. exactpacked map+정확zeroRLE manifest를실제C→65816연결,5066B(-820)/영속사용+2B.71commit1039ACK/4066624ref/290816mapB·71목록/23faultSTOP PASS,2069span+3636RLErun service유지.954두decoder14.456865ms vs실측고정비반영잔여1.746649ms;조건부최대24.175→30.575ms/초과26→57. bytewire절감과본문축소가CPU비용증가를상쇄못함. 초기token16bit overread는실패보존,8bit수정+Lua오류엄격판정후선택. 비교기준5886B/생산227보존;새MAPFITARM실기없음/P2미선정.",
-  "next_action": "P1구조재비교:SNES record해석·검증의처리위치/전달경계를같은71frame에서비교. 제한typed metadata/bulk의범위·중복·receipt·CRC/token·STOP·display검사소유자/상태수명명시,ARM→FPGA refill SPI+descriptor/ACK+RAM/LE/LAB/M9K/전체CPU모두계상.449의미raster+rowshift A와출력경계재배치,변환까지옮기는B구분;227입력그대로출력만병렬화236실패/전체planner배열/fullraw기각근거유지. 새ARM병렬연결/공유RAM공짜가정금지. 2472 token/bitmap/opcode/seed미세루프·새FIT자동진행금지.5886B비교기준/227생산/4·5·6KiB고정금지.240미배치·mapper/952순서/9554198>4192/새ARM RUNIRQ/firstfault/CDCIO/displaylease-retireOPEN.",
+  "assessment": "NES247 처리위치비교:같은71map290816B typed재구성/14Python반례 PASS,새RTL·CPU실행아님. 입력COMMITTED장벽+출력낙관겹침+기존표시표본 최대5886 20.420ms/9초과,2472 27.153/39,ARMliteral18.545/5,FPGA좁은검증15.525/0,ARMlayout+FPGA16.028/0. FPGA954직렬17.334ms;45범위 setup/source/ARM/parser/대기미포함,60fps승인아님. ARM planner+FPGA map범위/receipt+SNES typedDMA/표시를다음조사대상으로정함;M9K54+2-1+1=56/56,logic490LE40LAB부족/새비용UNKNOWN. 비교기준5886B·생산227/P2미선정.",
+  "next_action": "NEXT placement 경계설계:ARM planner·의미검증/FPGA map범위·receipt/SNES boundedDMA·표시의담당과certificate/STOP/epoch/token수명명시. 같은954/970·952/955에서tile drain→typedmap→manifest→SEAL의실제일정+source/ARM/parser/새SNES setup-service+전체LE/LAB/M9K예산결합. 기존4packet window를새겹침기능으로세지말고입력COMMITTED장벽유지. 15.525ms는낙관모델,17.334ms직렬도미측정비용제외. 56/56산술/490LE40LAB부족은승인아님;새RTL/FIT/토큰opcode미세루프자동진행금지. 5886/227/GBC164/saveSRAM보존,4/5/6KiB고정금지.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -3026,7 +3026,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES247:공동2472 CPU decoder기각. exactpacked map+정확zeroRLE manifest를실제C→65816연결,5066B(-820)/영속사용+2B.71commit1039ACK/4066624ref/290816mapB·71목록/23faultSTOP PASS,2069span+3636RLErun service유지.954두decoder14.456865ms vs실측고정비반영잔여1.746649ms;조건부최대24.175→30.575ms/초과26→57. bytewire절감과본문축소가CPU비용증가를상쇄못함. 초기token16bit overread는실패보존,8bit수정+Lua오류엄격판정후선택. 비교기준5886B/생산227보존;새MAPFITARM실기없음/P2미선정.",
+  "summary": "NES247 처리위치비교:같은71map290816B typed재구성/14Python반례 PASS,새RTL·CPU실행아님. 입력COMMITTED장벽+출력낙관겹침+기존표시표본 최대5886 20.420ms/9초과,2472 27.153/39,ARMliteral18.545/5,FPGA좁은검증15.525/0,ARMlayout+FPGA16.028/0. FPGA954직렬17.334ms;45범위 setup/source/ARM/parser/대기미포함,60fps승인아님. ARM planner+FPGA map범위/receipt+SNES typedDMA/표시를다음조사대상으로정함;M9K54+2-1+1=56/56,logic490LE40LAB부족/새비용UNKNOWN. 비교기준5886B·생산227/P2미선정.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3069,8 +3069,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-jointdecode247-contract.ko.md",
-  "latest_development_evidence": "analysis/jointdecode247-verification.json",
+  "latest_review": "docs/nes-placement247-contract.ko.md",
+  "latest_development_evidence": "analysis/placement247-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {
@@ -3158,5 +3158,19 @@
     ]
   },
   "active_plan": "docs/nes-wholepath247-plan.json",
-  "current_status_scope": "Top-level active_plan/gates supersede historical fields; legacy versioned records and old open_issues remain historical, not current acceptance."
+  "current_status_scope": "Top-level active_plan/gates supersede historical fields; legacy versioned records and old open_issues remain historical, not current acceptance.",
+  "p1_placement_followup": {
+    "selected": "placement05",
+    "document": "docs/nes-placement247-contract.ko.md",
+    "evidence": "analysis/placement247-verification.json",
+    "decision": "PRIORITIZE_NARROW_FPGA_VALIDATION_WITH_BOUNDED_OUTPUT_OVERLAP_NOT_P2",
+    "exact_map_bytes": 290816,
+    "python_negatives": 14,
+    "input_pins": 215,
+    "fpga_typed_input_barrier_sample_ms": 15.524681863463758,
+    "fpga_typed_serial_sample_ms": 17.334222833987482,
+    "m9k_capacity_arithmetic": 56,
+    "new_logic_cost": null,
+    "qualified_for_p2": false
+  }
 }
