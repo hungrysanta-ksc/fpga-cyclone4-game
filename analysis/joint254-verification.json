@@ -1,0 +1,324 @@
+{
+  "passed": true,
+  "stage": 254,
+  "scope": "Same-boundary FSM diagnosis, fused query/context cost, conditional schedule.",
+  "test": {
+    "passed": true,
+    "frames": 71,
+    "blocks": 451,
+    "payload": 83240,
+    "receipt_bytes": 53534,
+    "shadow_bytes": 4544,
+    "guards": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "incremental_shadow_granules": 0,
+    "variant": "joint",
+    "scope": "Collector/query/projector -> N5 -> physical SPI pins; consumed-output fixture.\n\nActual C252 certificates are checked in RTL. Output bytes/ranges and display\nACK are fixtures; no new ARM RUN, output transport parser or SNES execution.\n",
+    "rtl_hashes": {
+      "nes_core254.sv": "1d52357c0d0449a9da317de8b02ab0d70c3f0d9a029b27d6dc0b4db3c874feda",
+      "nes_transport254.sv": "73fb462d95c683ed4e4cedd4bf63451aa064b75e704d6b2c7d7cbc4fcb500e45",
+      "nes_joint254.sv": "799728f4b1e47cbae6d685931c708dfa5ffc5fce0bebadb29bd7f562f3fc47fd",
+      "nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983"
+    },
+    "full_arm": false,
+    "SNES": false,
+    "output_parser": false,
+    "physical": false
+  },
+  "incremental": {
+    "passed": true,
+    "frames": 4,
+    "blocks": 42,
+    "payload": 8509,
+    "receipt_bytes": 3016,
+    "shadow_bytes": 256,
+    "guards": [],
+    "incremental_shadow_granules": 8,
+    "variant": "joint",
+    "scope": "Collector/query/projector -> N5 -> physical SPI pins; consumed-output fixture.\n\nActual C252 certificates are checked in RTL. Output bytes/ranges and display\nACK are fixtures; no new ARM RUN, output transport parser or SNES execution.\n",
+    "rtl_hashes": {
+      "nes_core254.sv": "1d52357c0d0449a9da317de8b02ab0d70c3f0d9a029b27d6dc0b4db3c874feda",
+      "nes_transport254.sv": "73fb462d95c683ed4e4cedd4bf63451aa064b75e704d6b2c7d7cbc4fcb500e45",
+      "nes_joint254.sv": "799728f4b1e47cbae6d685931c708dfa5ffc5fce0bebadb29bd7f562f3fc47fd",
+      "nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983"
+    },
+    "full_arm": false,
+    "SNES": false,
+    "output_parser": false,
+    "physical": false
+  },
+  "area_240": {
+    "LE": 2646,
+    "comb": 2336,
+    "FF": 989,
+    "bits": 57344
+  },
+  "area_253": {
+    "LE": 3404,
+    "comb": 3078,
+    "FF": 1100,
+    "bits": 49152
+  },
+  "area_fsm": {
+    "LE": 3296,
+    "comb": 2970,
+    "FF": 1130,
+    "bits": 49152
+  },
+  "area_joint": {
+    "LE": 3239,
+    "comb": 2932,
+    "FF": 1006,
+    "bits": 49152
+  },
+  "delta_fsm": {
+    "LE": -108,
+    "comb": -108,
+    "FF": 30,
+    "bits": 0
+  },
+  "delta_joint_from_fsm": {
+    "LE": -57,
+    "comb": -38,
+    "FF": -124,
+    "bits": 0
+  },
+  "delta_joint_from_253": {
+    "LE": -165,
+    "comb": -146,
+    "FF": -94,
+    "bits": 0
+  },
+  "fsm_tables": {
+    "prior": [
+      "|nes_joint253|nes_query253:reader|state"
+    ],
+    "diagnostic": [
+      "|nes_joint254|nes_core254:encoder|state",
+      "|nes_joint254|nes_query254:reader|state"
+    ],
+    "joint": [
+      "|nes_joint254|nes_core254:encoder|state"
+    ]
+  },
+  "fsm_diagnostic": {
+    "only_phase_expression_changed": true,
+    "three_frame_cycles_and_bytes_exact": true,
+    "conclusion": "Replacing the numeric state ordering predicate with explicit state equality membership restores core FSM extraction under the same Quartus settings."
+  },
+  "hierarchy_fsm": {
+    "|nes_joint254": {
+      "comb": 2970,
+      "own_comb": 74,
+      "FF": 1130,
+      "own_FF": 4
+    },
+    "|nes_core254:encoder|": {
+      "comb": 2088,
+      "own_comb": 2088,
+      "FF": 524,
+      "own_FF": 524
+    },
+    "|nes_query254:reader|": {
+      "comb": 341,
+      "own_comb": 341,
+      "FF": 163,
+      "own_FF": 163
+    },
+    "|nes_transport254:transport|": {
+      "comb": 467,
+      "own_comb": 442,
+      "FF": 439,
+      "own_FF": 281
+    },
+    "|nes_native_mailbox206:desc0|": {
+      "comb": 8,
+      "own_comb": 8,
+      "FF": 60,
+      "own_FF": 60
+    },
+    "|nes_native_mailbox206:desc1|": {
+      "comb": 7,
+      "own_comb": 7,
+      "FF": 56,
+      "own_FF": 56
+    },
+    "|nes_native_mailbox206:prepared|": {
+      "comb": 10,
+      "own_comb": 10,
+      "FF": 42,
+      "own_FF": 42
+    }
+  },
+  "hierarchy_joint": {
+    "|nes_joint254": {
+      "comb": 2932,
+      "own_comb": 49,
+      "FF": 1006,
+      "own_FF": 4
+    },
+    "|nes_core254:encoder|": {
+      "comb": 2418,
+      "own_comb": 2418,
+      "FF": 563,
+      "own_FF": 563
+    },
+    "|nes_transport254:transport|": {
+      "comb": 465,
+      "own_comb": 439,
+      "FF": 439,
+      "own_FF": 281
+    },
+    "|nes_native_mailbox206:desc0|": {
+      "comb": 8,
+      "own_comb": 8,
+      "FF": 60,
+      "own_FF": 60
+    },
+    "|nes_native_mailbox206:desc1|": {
+      "comb": 7,
+      "own_comb": 7,
+      "FF": 56,
+      "own_FF": 56
+    },
+    "|nes_native_mailbox206:prepared|": {
+      "comb": 11,
+      "own_comb": 11,
+      "FF": 42,
+      "own_FF": 42
+    }
+  },
+  "memory_rows": [
+    "; altsyncram:memory_rtl_0|altsyncram_u152:auto_generated|ALTSYNCRAM                            ; M9K  ; True Dual Port   ; 1024         ; 8            ; 1024         ; 8            ; 8192  ; None ;",
+    "; nes_core254:encoder|altsyncram:base_hi_rtl_0|altsyncram_78a1:auto_generated|ALTSYNCRAM       ; M9K  ; Single Port      ; 512          ; 8            ; --           ; --           ; 4096  ; None ;",
+    "; nes_core254:encoder|altsyncram:base_lo_rtl_0|altsyncram_cba1:auto_generated|ALTSYNCRAM       ; M9K  ; Single Port      ; 4096         ; 8            ; --           ; --           ; 32768 ; None ;",
+    "; nes_transport254:transport|altsyncram:memory_rtl_0|altsyncram_5se1:auto_generated|ALTSYNCRAM ; M9K  ; Simple Dual Port ; 512          ; 8            ; 512          ; 8            ; 4096  ; None ;"
+  ],
+  "context_RAM": [
+    832,
+    863
+  ],
+  "extra_certificate_wire_bytes": 0,
+  "warm_bounds": {
+    "source_total_cycles": [
+      76639,
+      138793
+    ],
+    "source_prepare_cycles": [
+      13702,
+      13722
+    ],
+    "source_delta_cycles": [
+      0,
+      2138
+    ],
+    "prepare_delta_cycles": [
+      1866,
+      1868
+    ],
+    "output_cycles": [
+      2015,
+      2147
+    ],
+    "output_delta_cycles": [
+      66,
+      66
+    ],
+    "hash_state_cycles": [
+      173,
+      173
+    ],
+    "source_ms": [
+      3.483590909090909,
+      6.308772727272728
+    ],
+    "output_ms": [
+      0.0915909090909091,
+      0.09759090909090909
+    ],
+    "combined_ms": [
+      3.5762272727272726,
+      6.4058636363636365
+    ]
+  },
+  "mean_source_delta_ms": 0.060067852437417656,
+  "source_faster_frames": 0,
+  "source_slower_frames": 65,
+  "final_source_wire_delta_bytes": 1040,
+  "payload_and_blocks_exact_253": true,
+  "summaries": [
+    {
+      "setup": 500,
+      "retained_policy": "command_tail",
+      "max_ms": 16.028909083601462,
+      "min_residual_ms": 0.6377575830652056,
+      "worst_frame": 970,
+      "over": []
+    },
+    {
+      "setup": 500,
+      "retained_policy": "only_bitmap_removed",
+      "max_ms": 16.409776856833343,
+      "min_residual_ms": 0.256889809833325,
+      "worst_frame": 970,
+      "over": []
+    },
+    {
+      "setup": 1000,
+      "retained_policy": "command_tail",
+      "max_ms": 16.890284854358168,
+      "min_residual_ms": -0.22361818769149977,
+      "worst_frame": 970,
+      "over": [
+        970
+      ]
+    },
+    {
+      "setup": 1000,
+      "retained_policy": "only_bitmap_removed",
+      "max_ms": 17.27115262759005,
+      "min_residual_ms": -0.6044859609233839,
+      "worst_frame": 970,
+      "over": [
+        954,
+        962,
+        970
+      ]
+    }
+  ],
+  "limitations": [
+    "Standalone MAP, no wholeboard FIT, placement or STA. The old 490LE/40LAB deficit is not reduced by this boundary subtraction.",
+    "FSM-only extraction diagnosis is isolated; subsequent query fusion and context RAM are compared jointly, not individually attributed.",
+    "One source cursor now controls queries. Removal of independent query prefetch increases preparation/service time; SPI status polling can also change.",
+    "Certificate wire bytes are staged once before output begin, then reread internally. New packet framing/adapter/control and actual ARM scheduling costs remain unknown.",
+    "Context display-base is validated against current serial, not actual per-bank SNES display retirement history.",
+    "Output bytes/ranges/display ACK remain fixtures. No new ARM N5 restoration/planner RUN, SNES execution, MCU hardware cycles or physical60fps.",
+    "All71 actual frames have raw2. No new integrated raw0 transition run; earlier250 coverage is preserved.",
+    "Conditional schedules replace only measured253 boundary terms and retain ARM32000cycles,32 certificate bytes, parser allocations and conditional SNES validate181 removal.",
+    "Capture readiness precedes measured source time. NES frame execution/capture and actual final-display lease overlap remain outside the timing experiment.",
+    "CRC16 detects corruption but provides neither authentication nor collision-free equivalence."
+  ],
+  "input_count": 1539,
+  "private_result_sha256": "66a01018c6c4e4ae29e82391b8c5c8e812aa39a2e6e2b1f87f7994d949a5bb97"
+}

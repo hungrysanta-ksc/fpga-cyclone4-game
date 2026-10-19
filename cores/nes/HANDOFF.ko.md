@@ -1,3 +1,15 @@
+# 현재 상태 — NES254 query/source·인증서 RAM
+
+NES254는 query/source 제어 중복과 인증서 문맥 레지스터를 실제로 제거했다. 상태 대소 비교만 동등 비교로 바꾸면 core FSM이 추출되며 3404→3296LE가 된다. query 통합·인증서32B RAM까지 적용하면 3239LE/2932comb/1006FF/49152bits다. 253 대비165LE·94FF 감소지만 준비 시간 증가와 출력66cycles 추가가 발생한다. 71프레임·21오류 검사·별도8granule 갱신 PASS. 조건부500setup 최대16.028909ms/잔여0.637758ms. 전체490LE/40LAB 부족 해결이나60fps는 입증하지 못했으며 P2 미선정이다.
+
+FSM 추출 수정의 효과는 보존하되 현재 query 통합을 제품 구현으로 채택하지 않는다. 다음 후보는 query 선행 읽기의 시간 이득과 cursor 기반 주소 해독 비용, receipt의 범위·manifest 제어 및 실제 출력 소비 어댑터를 같은 경계에서 함께 설계해야 한다. 별도 query FSM을 단순 복원하거나 레지스터만 줄였다고 전체 이득으로 계산하지 않는다. ARM N5 복원·계획·H2 전치·출력 전송·fullRUN/IRQ, 실제 SNES 소비/표시 이력·DMA/poll/VBlank 및 캡처 lease 중첩 비용을 포함해야 한다. 근거 없는 fullFIT/ROM/opcode/seed 반복은 하지 않는다.
+
+[검토](../../docs/nes-joint254-contract.ko.md) · [현재 계획](../../docs/nes-joint254-plan.json) · [집계](../../analysis/joint254-verification.json)
+
+아래253 및 이전 NEXT는 당시 기록이다.
+
+---
+
 # 현재 상태 — NES253 공유 CRC 통합 경계
 
 NES253은 실제 frame201 query→4398B 투영→N5 source→SPI 핀과, 기록된 C 출력 소비 바이트→64B CRC RAM→H2 인증서를 검증했다. 71프레임·14오류 검사 PASS. 동일 독립 경계 MAP은 기존240 2646LE/2336comb/989FF/57344bits에서 새 검증을 포함한253 3404LE/3078comb/1100FF/49152bits로 변했다(LE +758). Warm 출력 검증 1949..2081cycles, 해시 상태 170..170cycles. 조건부500setup 최대15.993545ms/잔여0.673121ms. RAM 이득은 확인했으나 논리 증가로 이 구성은 회로 여유 확보 후보로 채택하지 않는다. 전체 회로·ARM·SNES 여유는 미입증이며 P2 미선정.

@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "plan_id": "NES-JOINT254-20261019",
+  "date_kst": "2026-10-19",
+  "status": "P1_local_logic_reduction_latency_tradeoff_P2_not_selected",
+  "document": "docs/nes-joint254-contract.ko.md",
+  "branch": "codex/nes-typed-schedule-248",
+  "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/129",
+  "selected": {
+    "fsm_test": "fsm01",
+    "fsm_map": "fsmmap01",
+    "test": "test03",
+    "incremental": "test04",
+    "map": "map01",
+    "analysis": "analysis01"
+  },
+  "assessment": "NES254는 query/source 제어 중복과 인증서 문맥 레지스터를 실제로 제거했다. 상태 대소 비교만 동등 비교로 바꾸면 core FSM이 추출되며 3404→3296LE가 된다. query 통합·인증서32B RAM까지 적용하면 3239LE/2932comb/1006FF/49152bits다. 253 대비165LE·94FF 감소지만 준비 시간 증가와 출력66cycles 추가가 발생한다. 71프레임·21오류 검사·별도8granule 갱신 PASS. 조건부500setup 최대16.028909ms/잔여0.637758ms. 전체490LE/40LAB 부족 해결이나60fps는 입증하지 못했으며 P2 미선정이다.",
+  "next_action": "FSM 추출 수정의 효과는 보존하되 현재 query 통합을 제품 구현으로 채택하지 않는다. 다음 후보는 query 선행 읽기의 시간 이득과 cursor 기반 주소 해독 비용, receipt의 범위·manifest 제어 및 실제 출력 소비 어댑터를 같은 경계에서 함께 설계해야 한다. 별도 query FSM을 단순 복원하거나 레지스터만 줄였다고 전체 이득으로 계산하지 않는다. ARM N5 복원·계획·H2 전치·출력 전송·fullRUN/IRQ, 실제 SNES 소비/표시 이력·DMA/poll/VBlank 및 캡처 lease 중첩 비용을 포함해야 한다. 근거 없는 fullFIT/ROM/opcode/seed 반복은 하지 않는다.",
+  "production": "NES227",
+  "functional_reference": "NES240_unplaced",
+  "production_implementation_selected": false,
+  "area_240": {
+    "LE": 2646,
+    "comb": 2336,
+    "FF": 989,
+    "bits": 57344
+  },
+  "area_253": {
+    "LE": 3404,
+    "comb": 3078,
+    "FF": 1100,
+    "bits": 49152
+  },
+  "area_fsm": {
+    "LE": 3296,
+    "comb": 2970,
+    "FF": 1130,
+    "bits": 49152
+  },
+  "area_joint": {
+    "LE": 3239,
+    "comb": 2932,
+    "FF": 1006,
+    "bits": 49152
+  },
+  "wholeboard_reclaim_proven": false,
+  "memory": {
+    "validity": [
+      0,
+      331
+    ],
+    "shadow": [
+      332,
+      395
+    ],
+    "received": [
+      396,
+      561
+    ],
+    "map_receipt": [
+      562,
+      817
+    ],
+    "certificate_context": [
+      832,
+      863
+    ],
+    "source_scratch": [
+      512,
+      1023
+    ],
+    "persistent_bytes": 396
+  },
+  "warm_bounds": {
+    "source_total_cycles": [
+      76639,
+      138793
+    ],
+    "source_prepare_cycles": [
+      13702,
+      13722
+    ],
+    "source_delta_cycles": [
+      0,
+      2138
+    ],
+    "prepare_delta_cycles": [
+      1866,
+      1868
+    ],
+    "output_cycles": [
+      2015,
+      2147
+    ],
+    "output_delta_cycles": [
+      66,
+      66
+    ],
+    "hash_state_cycles": [
+      173,
+      173
+    ],
+    "source_ms": [
+      3.483590909090909,
+      6.308772727272728
+    ],
+    "output_ms": [
+      0.0915909090909091,
+      0.09759090909090909
+    ],
+    "combined_ms": [
+      3.5762272727272726,
+      6.4058636363636365
+    ]
+  },
+  "conditional_summaries": [
+    {
+      "setup": 500,
+      "retained_policy": "command_tail",
+      "max_ms": 16.028909083601462,
+      "min_residual_ms": 0.6377575830652056,
+      "worst_frame": 970,
+      "over": []
+    },
+    {
+      "setup": 500,
+      "retained_policy": "only_bitmap_removed",
+      "max_ms": 16.409776856833343,
+      "min_residual_ms": 0.256889809833325,
+      "worst_frame": 970,
+      "over": []
+    },
+    {
+      "setup": 1000,
+      "retained_policy": "command_tail",
+      "max_ms": 16.890284854358168,
+      "min_residual_ms": -0.22361818769149977,
+      "worst_frame": 970,
+      "over": [
+        970
+      ]
+    },
+    {
+      "setup": 1000,
+      "retained_policy": "only_bitmap_removed",
+      "max_ms": 17.27115262759005,
+      "min_residual_ms": -0.6044859609233839,
+      "worst_frame": 970,
+      "over": [
+        954,
+        962,
+        970
+      ]
+    }
+  ],
+  "conditional_allocations": {
+    "ARM_cycles": 32000,
+    "certificate_bytes": 32,
+    "additional_certificate_wire_bytes": 0,
+    "parser": "prior eight cycles per output byte; new adapter not measured"
+  },
+  "new_RTL": true,
+  "new_MAP": true,
+  "new_FIT": false,
+  "new_STA": false,
+  "ARM_hardware_time_measured": false,
+  "full_RUN_linked": false,
+  "new_SNES_execution": false,
+  "baseline_deficit_LE": 490,
+  "baseline_deficit_LAB": 40,
+  "remaining": [
+    "source prefetch/cursor decode and receipt total control cost",
+    "real packet parser/context and consume adapter",
+    "actual ARM N5-to-plan and H2 RUN/IRQ cost",
+    "final display ACK and per-bank history",
+    "SNES DMA/dispatch/poll/VBlank",
+    "952/955 bursts",
+    "raw0 integrated transition",
+    "wholeboard FIT/STA/CDC/IO/mapper margin",
+    "physical sustained audio/input/scroll"
+  ]
+}
