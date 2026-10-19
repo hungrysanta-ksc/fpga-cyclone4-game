@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "stage": "NES262",
+  "status": "R1_H2_BEGIN_shared_CDC_verified_whole_cost_open",
+  "date_kst": "2026-10-19",
+  "pr": 130,
+  "branch": "codex/nes-wholepath-boundary-256",
+  "parent": "docs/nes-joint261-plan.json",
+  "contract": "docs/nes-joint262-contract.ko.md",
+  "evidence": "analysis/joint262-verification.json",
+  "selected": {
+    "ARM": "arm01",
+    "ARM_guards": "arm-guards02",
+    "separate_normal": "test03",
+    "shared": "test05",
+    "separate_MAP": "map01",
+    "shared_MAP": "map02",
+    "analysis": "analysis01",
+    "partial_STOP": "partial01"
+  },
+  "next_action": "일반 명령·manifest 생산을 기존 header/ACK/receipt 제어와 함께 실제로 대체하고, SNES가 묶음의 bank/generation/tokenbase를 범위 간 재사용하는 소비 경계를 실제65816에서 비교한다. full ARM N5/planner/RUN/IRQ·tile192 ROM 경쟁 및 전체 회로 게이트를 닫기 전 whole FIT/STA나60fps를 승인하지 않는다.",
+  "open": [
+    "BEGIN full semantic executor is a checked bus model, not actual65816 execution",
+    "nonmap stream/rawtail/freshscroll/422Bmanifest producer still fixtures",
+    "ARM262 bytes replayed; map sequence/token rebound, no full ARM N5/planner/RUN/IRQ",
+    "900-clock service is cold CPU-derived sensitivity, not warm WCET; token writes additionally charged",
+    "tile192/ROM arbitration, whole board FIT/STA/CDC/IO, physical60fps"
+  ],
+  "P2_selected": false,
+  "full_path_ms": null,
+  "production": "227/GBC164/saveSRAM unchanged",
+  "quartus_policy": "Lite only; existing Questa FLOAT workflow",
+  "preserved_experiments": {
+    "test01": "forward declarations rejected at compile",
+    "test02": "separate mailbox cold pass, map01 source binding",
+    "test03": "71 normal and11guards pass; PRENEG6 disabled bus service in harness, explicitly stopped, no RTL capacity conclusion",
+    "test04": "shared mailbox cold pass, map02 source binding",
+    "arm-guards01": "original12 guards pass, superseded by02 adding6 preflight guards"
+  },
+  "frames": 71,
+  "MAP": {
+    "separate": {
+      "LE": 7266,
+      "comb": 5773,
+      "FF": 2830,
+      "RAM_bits": 90368
+    },
+    "shared": {
+      "LE": 7216,
+      "comb": 5755,
+      "FF": 2806,
+      "RAM_bits": 90368
+    },
+    "delta_shared_separate": {
+      "LE": -50,
+      "comb": -18,
+      "FF": -24,
+      "RAM_bits": 0
+    },
+    "prior261": {
+      "LE": 7141,
+      "comb": 5665,
+      "FF": 2788,
+      "RAM_bits": 90368
+    },
+    "whole_board": false,
+    "FIT": false,
+    "STA": false
+  },
+  "same_service_delta_ms": [
+    0.0,
+    0.0
+  ],
+  "ARM": {
+    "text": 2320,
+    "bss": 312,
+    "observed_stack": 136,
+    "delta_text260": 76,
+    "delta_bss260": 0,
+    "instruction_delta_range": [
+      -380,
+      1587
+    ],
+    "total_wire_delta260": 0,
+    "preflight_guards": [
+      {
+        "case": "missing_seal",
+        "no_SPI": true,
+        "no_H2": true
+      },
+      {
+        "case": "short_seal",
+        "no_SPI": true,
+        "no_H2": true
+      },
+      {
+        "case": "trailing_packet",
+        "no_SPI": true,
+        "no_H2": true
+      },
+      {
+        "case": "wrong_seal_serial",
+        "no_SPI": true,
+        "no_H2": true
+      },
+      {
+        "case": "truncated_prefix",
+        "no_SPI": true,
+        "no_H2": true
+      },
+      {
+        "case": "truncated_tail",
+        "no_SPI": true,
+        "no_H2": true
+      }
+    ],
+    "counter_wrap": {
+      "start": 65530,
+      "final": 41,
+      "packets": 47,
+      "max_credit": 4
+    },
+    "full_RUN": false
+  },
+  "partial_context_STOP": {
+    "accepted_bytes": 8,
+    "BEGIN_count": 0,
+    "RAM_frozen_bytes": 1024
+  }
+}
