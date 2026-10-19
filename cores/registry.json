@@ -24,7 +24,7 @@
     },
     {
       "id": "nes",
-      "status": "NES227_hardware_baseline_268_HDMA_improved_whole_gates_failed",
+      "status": "NES227_hardware_baseline_269_STOP_bound_whole_gates_failed",
       "candidate": "NES227",
       "planned_product_version": null,
       "released": false,
@@ -38,15 +38,15 @@
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
       "verification": "analysis/game227-hardware01-verification.json",
-      "plan": "docs/nes-joint268-contract.ko.md",
+      "plan": "docs/nes-joint269-contract.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "NES268_HDMA_reuse_joint_control_gate",
+      "investigation": "NES269_STOP_and_source_receipt_boundary",
       "hardware_baseline": "NES227",
-      "hardware_verified_scope": "227 unchanged;268 ordinary65816 and liveARM/RTL trace, no physical60fps/fullRUN.",
-      "development_evidence": "analysis/joint268-verification.json",
+      "hardware_verified_scope": "227 unchanged;269 CPU STOP model and RTL separately verified, liveARM/RTL trace, no physical60fps/fullRUN.",
+      "development_evidence": "analysis/joint269-verification.json",
       "hardware_candidate": "NES227",
-      "reproduction_document": "docs/nes-joint268-contract.ko.md",
-      "next_gate": "268의 HDMA DMA/유효 bank 재사용 시간 이득을 보존하되 전체 WRAM writer와 STOP에 유효성을 결합한다. 남은 OAM 반복·active VBlank·full ARM 입력/planner/IRQ를 같은 일정으로 검증한다. 회로는 공통 queue/plan frontend만으로 부족하므로 source/core와 출력 CRC·문맥·receipt까지 교체 경계를 넓혀2271comb 및 배치 여유 회수 계획을 먼저 제시한다. 계획 batch는 기존 RAM에 복사 후 head를 해제하며 plan credit 예약과 final display/capture lease retire를 분리한다. head-held zero-copy는 교착 반례로 배제한다. 제어3블록을 비용0으로 둬도 밖에서844comb가 더 필요하므로 작은 FSM/opcode/seed/FIT 반복으로 진행하지 않는다.",
+      "reproduction_document": "docs/nes-joint269-contract.ko.md",
+      "next_gate": "269의 STOP/ROM 유지·bank 무효화 계약을 보존한다. short9 credit/phase 상태+필요시full24 문맥을 공통 source/plan/output admission·CRC·RAM transaction 제어 교체와 함께 구현 후보로 검증한다. query 선행 읽기/N5 압축/receipt coverage와 실제 소비 증명을 유지하고 src-host CDC·plan copy credit·final display/capture retire를 생략하지 않는다. 현재6512comb 교체 경계는 새 비용4228 이하가 필요한 장부이며 배치 여유는 별도다. 실제 ARM polling/refill·ROM 창·STOP 재시작을 다시 실행하고 전체 Lite MAP으로 순절감을 확인한 뒤에만 P2를 검토한다. source-only literal/isolated FSM/opcode/seed/FIT 반복은 하지 않는다. fullRUN/active VBlank/모든 WRAM writer/전체65816/CDCIOSTA는 남는다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "Production227 retained;240 functional-only/unplaced;241+246 rejected;no new installable pair.",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -706,8 +706,8 @@
         "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
         "paired_candidate": "deployed180 unchanged;1813 exporter/SPI/receiver candidate only; no new full ARM/FIT/installable pair"
       },
-      "active_plan": "docs/nes-joint268-plan.json",
-      "current_status_scope": "268 supersedes historical NEXT; whole resource/time gates failed; P2 not selected; production227 unchanged."
+      "active_plan": "docs/nes-joint269-plan.json",
+      "current_status_scope": "269 supersedes historical NEXT; source/receipt replacement unproven, both gates failed; P2 not selected; production227 unchanged."
     },
     {
       "id": "pce",
