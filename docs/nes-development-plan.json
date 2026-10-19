@@ -4,9 +4,9 @@
   "date_kst": "2026-10-19",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint263-contract.ko.md",
-  "assessment": "NES263: 실제 일반 SPI 패킷→native C 소비기→SNES 버스/공유CDC→core manifest/CRC/receipt를71프레임에서 검증했다. 실제65816 문맥 재사용은cold64DMA에서1148clocks 느리지만 warm7DMA에서566clocks 줄었고,조회 MAP7216LE는 같다. 일반byte-event bridge는7287LE(+71)/RAM동일,출력모델warm최대7.441ms로60fps 구현에 선택하지 않았다. 일반65816/full ARM/ROM경쟁/wholeFIT/실기60fps는 미완료다.",
-  "next_action": "바이트별 소비 결과 재전송 bridge는 P2로 선택하지 않는다. 기존 SPI queue의 header/ACK/parser와 manifest 발행 순서를 함께 정리해, 이미 수신한 ordinary payload에서 직접 CRC/receipt를 만들고 두 번째 바이트 전송을 없애는 경계를 검토한다. 독립 manifest 대조·DMA 후 receipt·STOP·최종 표시 ACK를 유지하며 full ARM refill/IRQ·ROM 경쟁과 같은 전체 시간/회로 표에서 판정한다.",
+  "authoritative_document": "docs/nes-joint264-contract.ko.md",
+  "assessment": "NES264: ACK 후 queue head를 유지해 수신 payload에서 직접 CRC·receipt를 만들고 manifest를 요구166B→map256B→fence 순서로 바꿨다. ARM/RTL71프레임,RTL19오류/ARM18오류 PASS;byte echo55237→0. warm출력최대5.912ms,동일 Lite MAP8230LE(+943)/90368bits. full ARM/일반65816/ROM/VBlank/FIT/실기60fps는 미완료다.",
+  "next_action": "직접 payload CRC/receipt와 ACK 이후 queue 소유권을 유지한다. 다음은 admission/header/ACK의 중복 identity 검사·상태를 같은 경계에서 줄이고, 검사용 manifest의 SNES 재읽기·ACK까지 없앨 수 있는지 비교한다. 최종 fence의 실제65816 표시 문맥 보관/소비, ARM E0 refill/IRQ와 실제 tile ROM 중재를 함께 연결해 시간·회로 표를 갱신한 뒤 P2를 판단한다. 개별 FSM/opcode/FIT 반복으로 회수량을 추정하지 않는다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "R1_native_consumer_bridge_verified_byte_echo_not_selected",
+      "status": "R1_direct_payload_verified_whole_cost_gate_open",
       "depends_on": [
         "P0"
       ],
@@ -99,7 +99,9 @@
         "docs/nes-joint262-contract.ko.md",
         "analysis/joint262-verification.json",
         "docs/nes-joint263-contract.ko.md",
-        "analysis/joint263-verification.json"
+        "analysis/joint263-verification.json",
+        "docs/nes-joint264-contract.ko.md",
+        "analysis/joint264-verification.json"
       ]
     },
     {
@@ -3190,7 +3192,7 @@
       }
     ]
   },
-  "active_plan": "docs/nes-joint263-plan.json",
+  "active_plan": "docs/nes-joint264-plan.json",
   "current_status_scope": "Top-level active_plan/gates supersede historical fields; legacy versioned records and old open_issues remain historical, not current acceptance.",
   "p1_placement_followup": {
     "selected": "placement05",
@@ -3826,5 +3828,72 @@
     "CPU_saved_service_clocks": -1148,
     "whole_board_FIT": false,
     "remaining": "native general executor not target65816; full ARM/ROM competition absent"
+  },
+  "joint264": {
+    "evidence": "analysis/joint264-verification.json",
+    "full_path_verified": false,
+    "P2_selected": false,
+    "frames": 71,
+    "MAP": {
+      "prior263": {
+        "LE": 7287,
+        "comb": 5791,
+        "FF": 2842,
+        "RAM_bits": 90368
+      },
+      "direct264": {
+        "LE": 8230,
+        "comb": 6745,
+        "FF": 2884,
+        "RAM_bits": 90368
+      },
+      "FSM": {
+        "core_extracted": true,
+        "output_state_extracted": false,
+        "prior263_output_state_extracted": true,
+        "structural_observation": "state <= after_event is a register-derived next-state assignment; possible extraction obstacle, not isolated attribution of943LE",
+        "extractor_diagnostic_reason": null
+      },
+      "delta": {
+        "LE": 943,
+        "comb": 954,
+        "FF": 42,
+        "RAM_bits": 0
+      },
+      "hierarchy": {
+        "|nes_joint257:core|": {
+          "comb": 3052,
+          "FF": 987,
+          "RAM_bits": 49152
+        },
+        "|nes_output260:flow|": {
+          "comb": 3489,
+          "FF": 1797,
+          "RAM_bits": 41216
+        }
+      }
+    },
+    "ARM": {
+      "text": 2472,
+      "static_BSS": 312,
+      "observed_stack": 144,
+      "text_delta": 152,
+      "stack_delta": 8,
+      "extra_SPI_bytes": 43,
+      "instruction_delta_min": 2182,
+      "instruction_delta_max": 3043
+    },
+    "whole_board_FIT": false,
+    "remaining": [
+      "71-frame RTL replays actual Cortex-M4 E1 bytes; E0 refill, full RUN/IRQ and ROM contention are not coupled.",
+      "Ordinary execution is native C plus bus service allocation, not actual65816. ACK attests execution; sequential reads alone do not prove PPU writes.",
+      "900 master-clock DMA setup,400ns bus byte,560ns ordinary byte are allocations. Native C decode cycles are uncharged.",
+      "Final display ACK is a bus model without VBlank. New requirements/fence target65816 display context and RAM are not implemented.",
+      "C oracle metadata/event arrays/206B saved requirements are verification storage, not target allocation.",
+      "Partial scroll prefix and partial raw-tail granules are rejected by this candidate; no arbitrary scatter update support claim.",
+      "ARM serial sensitivity uses a separate endpoint poll model and CPI1; it is not a retimed critical path, upper bound or measured frame.",
+      "Source/core and transport still use shared CRC ownership; no full FIT/STA/CDC/IO,490LE40LAB baseline shortage remains.",
+      "CRC is not authentication or collision-free proof."
+    ]
   }
 }
