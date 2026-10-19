@@ -24,7 +24,7 @@
     },
     {
       "id": "nes",
-      "status": "NES227_hardware_baseline_267_whole_cost_gate_failed",
+      "status": "NES227_hardware_baseline_268_HDMA_improved_whole_gates_failed",
       "candidate": "NES227",
       "planned_product_version": null,
       "released": false,
@@ -38,15 +38,15 @@
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
       "verification": "analysis/game227-hardware01-verification.json",
-      "plan": "docs/nes-joint267-contract.ko.md",
+      "plan": "docs/nes-joint268-contract.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "NES267_ARM_ROM_65816_whole_cost",
+      "investigation": "NES268_HDMA_reuse_joint_control_gate",
       "hardware_baseline": "NES227",
-      "hardware_verified_scope": "227 unchanged;267 ARM instructions/ROM RTL/ordinary65816 bus trace; no physical60fps or fullRUN.",
-      "development_evidence": "analysis/joint267-verification.json",
+      "hardware_verified_scope": "227 unchanged;268 ordinary65816 and liveARM/RTL trace, no physical60fps/fullRUN.",
+      "development_evidence": "analysis/joint268-verification.json",
       "hardware_candidate": "NES227",
-      "reproduction_document": "docs/nes-joint267-contract.ko.md",
-      "next_gate": "267의 whole-board 자원 실패를 반영해 E0 출력과 E8/E9 tile 계획의 admission·identity·retire 제어를 함께 대체하는 경계 또는 변환/검증 역할 재배치를 비교한다. 실제65816에서 매 프레임 HDMA1100B 채우기(약2.89ms)와 OAM 반복 생성 비용을 확인했으므로 fixed-source DMA/유효 bank 재사용을 시간 후보로 함께 검토한다. 무효화·receipt·HDMA 종료·잔존 sprite를 먼저 보장하고 full ARM 입력/planner/IRQ·active VBlank 비용 및 whole logic/RAM 예산을 함께 확정한다. 현재267은 P2 미선택이며 독립 FSM/opcode/seed/FIT 반복은 하지 않는다.",
+      "reproduction_document": "docs/nes-joint268-contract.ko.md",
+      "next_gate": "268의 HDMA DMA/유효 bank 재사용 시간 이득을 보존하되 전체 WRAM writer와 STOP에 유효성을 결합한다. 남은 OAM 반복·active VBlank·full ARM 입력/planner/IRQ를 같은 일정으로 검증한다. 회로는 공통 queue/plan frontend만으로 부족하므로 source/core와 출력 CRC·문맥·receipt까지 교체 경계를 넓혀2271comb 및 배치 여유 회수 계획을 먼저 제시한다. 계획 batch는 기존 RAM에 복사 후 head를 해제하며 plan credit 예약과 final display/capture lease retire를 분리한다. head-held zero-copy는 교착 반례로 배제한다. 제어3블록을 비용0으로 둬도 밖에서844comb가 더 필요하므로 작은 FSM/opcode/seed/FIT 반복으로 진행하지 않는다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "Production227 retained;240 functional-only/unplaced;241+246 rejected;no new installable pair.",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -706,8 +706,8 @@
         "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
         "paired_candidate": "deployed180 unchanged;1813 exporter/SPI/receiver candidate only; no new full ARM/FIT/installable pair"
       },
-      "active_plan": "docs/nes-joint267-plan.json",
-      "current_status_scope": "267 supersedes historical NEXT; whole-board resource gate failed; P2 not selected; production227 unchanged."
+      "active_plan": "docs/nes-joint268-plan.json",
+      "current_status_scope": "268 supersedes historical NEXT; whole resource/time gates failed; P2 not selected; production227 unchanged."
     },
     {
       "id": "pce",

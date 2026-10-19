@@ -4,9 +4,9 @@
   "date_kst": "2026-10-20",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint267-contract.ko.md",
-  "assessment": "NES267: 실제 ARM refill/IRQ 본체·E8/E9 tile 계획·ROM reader와 실제65816 일반 명령의 bus trace를 통합71프레임에서 검증했다. whole-board Lite MAP은 23714LE/18399comb/9488FF, 조합 논리만 칩 한도15408을 2991개 초과해 자원 게이트 실패다. H2 공유 전후 같은 보드 delta는 -102LE/-169FF다. CPI1/항상 허용 ROM 슬롯 조건의 source+출력 직렬 진단 최대20.909704ms, warm69 중25개가16.667ms를 넘었다. 실기/전체RUN/active VBlank/FIT/STA/CDC 승인이 아니며 P2 미선택이다.",
-  "next_action": "267의 whole-board 자원 실패를 반영해 E0 출력과 E8/E9 tile 계획의 admission·identity·retire 제어를 함께 대체하는 경계 또는 변환/검증 역할 재배치를 비교한다. 실제65816에서 매 프레임 HDMA1100B 채우기(약2.89ms)와 OAM 반복 생성 비용을 확인했으므로 fixed-source DMA/유효 bank 재사용을 시간 후보로 함께 검토한다. 무효화·receipt·HDMA 종료·잔존 sprite를 먼저 보장하고 full ARM 입력/planner/IRQ·active VBlank 비용 및 whole logic/RAM 예산을 함께 확정한다. 현재267은 P2 미선택이며 독립 FSM/opcode/seed/FIT 반복은 하지 않는다.",
+  "authoritative_document": "docs/nes-joint268-contract.ko.md",
+  "assessment": "NES268: 실제65816 HDMA zero DMA와 bank-tail 재사용을522일반명령·33경계명령에서 검증했다. 재사용은 cold2회만1100B를 채우고69회 생략한다. 같은ARM/SPI/ROM RTL의71프레임 직렬 진단 최대는20.909704→18.294508ms, warm초과25→6개이며60Hz까지 최소1.627841ms가 더 필요하다. E0 polling5380→3465회. 보드의 중복 legacy E0/E1을 제거한 Lite MAP은23714→22657LE/18399→17679comb/9488→9045FF/RAM8192bits감소이며2271comb가 아직 초과다. queue+plan3블록1427comb를 비용0으로 둬도 밖에서844comb가 더 필요하다. 실제decoder/staging의 head 유지 정책은 교착, RAM 복사 후 해제 정책은 완료했다. fullRUN/activeVBlank/실기/FIT/STA/통합STOP은 미검증이며 P2 미선택이다.",
+  "next_action": "268의 HDMA DMA/유효 bank 재사용 시간 이득을 보존하되 전체 WRAM writer와 STOP에 유효성을 결합한다. 남은 OAM 반복·active VBlank·full ARM 입력/planner/IRQ를 같은 일정으로 검증한다. 회로는 공통 queue/plan frontend만으로 부족하므로 source/core와 출력 CRC·문맥·receipt까지 교체 경계를 넓혀2271comb 및 배치 여유 회수 계획을 먼저 제시한다. 계획 batch는 기존 RAM에 복사 후 head를 해제하며 plan credit 예약과 final display/capture lease retire를 분리한다. head-held zero-copy는 교착 반례로 배제한다. 제어3블록을 비용0으로 둬도 밖에서844comb가 더 필요하므로 작은 FSM/opcode/seed/FIT 반복으로 진행하지 않는다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "R1_retimed_components_verified_whole_board_resource_gate_failed",
+      "status": "R1_HDMA_time_improved_both_whole_cost_gates_still_failed",
       "depends_on": [
         "P0"
       ],
@@ -102,7 +102,8 @@
         "analysis/joint263-verification.json",
         "docs/nes-joint264-contract.ko.md",
         "analysis/joint264-verification.json",
-        "analysis/joint267-verification.json"
+        "analysis/joint267-verification.json",
+        "analysis/joint268-verification.json"
       ]
     },
     {
@@ -3193,8 +3194,8 @@
       }
     ]
   },
-  "active_plan": "docs/nes-joint267-plan.json",
-  "current_status_scope": "267 active plan supersedes historical NEXT; whole-board resource gate failed, conditional schedule not60fps; production227 preserved.",
+  "active_plan": "docs/nes-joint268-plan.json",
+  "current_status_scope": "268 supersedes historical NEXT; measured component improvement, diagnostic time and resource gates remain failed; production227 preserved.",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
@@ -4271,6 +4272,773 @@
       "Whole-board MAP glue resource integration unplaced and not functionally board-qualified; no FIT/STA/CDC/IO",
       "Prior266 38 negative guards retained as prior evidence; new combined ARM/ROM abort/STOP faults not qualified",
       "No active-display CGRAM/OAM/VBlank schedule or full rendered-frame oracle; source plus output is diagnostic serialized schedule"
+    ]
+  },
+  "joint268": {
+    "status": "R1_HDMA_time_improved_both_whole_cost_gates_still_failed",
+    "contract": "docs/nes-joint268-contract.ko.md",
+    "evidence": "analysis/joint268-verification.json",
+    "MAP": {
+      "prior267": {
+        "LE": 23714,
+        "comb": 18399,
+        "FF": 9488,
+        "RAM_bits": 311904
+      },
+      "cleanup268": {
+        "LE": 22657,
+        "comb": 17679,
+        "FF": 9045,
+        "RAM_bits": 303712
+      },
+      "new_run": true,
+      "core_RTL_unchanged": true,
+      "board_cleanup_only": true,
+      "delta": {
+        "LE": -1057,
+        "comb": -720,
+        "FF": -443,
+        "RAM_bits": -8192
+      },
+      "legacy_ROM_pad": {
+        "|nes_sink_bridge165:sink|": {
+          "comb": 44,
+          "FF": 139,
+          "RAM_bits": 32768
+        },
+        "|nes_sink_bus165:bus|": {
+          "comb": 41,
+          "FF": 132,
+          "RAM_bits": 32768
+        }
+      },
+      "ROM_pad_guard": {
+        "scope": "Remove the retained legacy E0/E1 endpoint, preserving local program ROM/pad.\n\nOne Lite whole-board MAP. The separate bus guard does not qualify full board\nCDC/IO/STA or link the complete65816 program.\n",
+        "input_hashes": {
+          "CPU_result": "f59a3a6d0e15394aea776d8ed6b8761a7e2fccb58418a30f3955d712351cbdb7",
+          "CPU_ROM": "0357489619a6147c289496eade7be074065aaf8314aed58c14d85f5bfc3811bb"
+        },
+        "changed_hashes": {
+          "nes_sink_bridge165.sv": "3f250f0fb143d2917d7ed712658234cdc6bed9adf90d5166a5e517822f59281b",
+          "nes_sink_bus165.sv": "d5f32c990ef78d27ad0bb203a5c8bb564ca8394c8d2bd8a35831b915cfdd5adb"
+        },
+        "script_sha256": "d3c5ce2982d79005eed977396150ea3e739665136ca565cb29d8cb8d3e0744d7",
+        "full_board_functional": false,
+        "FIT": false,
+        "STA": false,
+        "passed": true,
+        "guard": true,
+        "log": [
+          "# PASS ROMPAD268 checks=12 pad=1 no_legacy_E0_E1"
+        ]
+      },
+      "comb_capacity": 15408,
+      "comb_deficit": 2271,
+      "minimum_reduction_percent": 12.845749193958934,
+      "FIT": false,
+      "STA": false,
+      "functional_board_glue_verified": false,
+      "program_link_changed": false
+    },
+    "controls": {
+      "hierarchy": {
+        "|nes_queue260:queue|": {
+          "comb": 571,
+          "FF": 319,
+          "RAM_bits": 8192
+        },
+        "|nes_plan_batch206:transport|": {
+          "comb": 410,
+          "FF": 361,
+          "RAM_bits": 8192
+        },
+        "|nes_plan_spi200:endpoint|": {
+          "comb": 446,
+          "FF": 223,
+          "RAM_bits": 0
+        }
+      },
+      "identified_comb": 1427,
+      "zero_cost_replacement_outside_deficit": 844,
+      "accounting_only": true,
+      "net_reclaim_proven": 0,
+      "new_RTL": false,
+      "new_MAP": false,
+      "plan_RAM_bits_retained_by_copy_policy": 8192,
+      "replacement_sensitivity": [
+        {
+          "new_controller_comb": 0,
+          "required_additional_outside_reduction": 844
+        },
+        {
+          "new_controller_comb": 400,
+          "required_additional_outside_reduction": 1244
+        },
+        {
+          "new_controller_comb": 600,
+          "required_additional_outside_reduction": 1444
+        },
+        {
+          "new_controller_comb": 800,
+          "required_additional_outside_reduction": 1644
+        },
+        {
+          "new_controller_comb": 1000,
+          "required_additional_outside_reduction": 1844
+        }
+      ],
+      "plans": 598,
+      "plan_batches": 88,
+      "END_batches": 71,
+      "max_plan_payload": 113,
+      "blocked_witness": [
+        "# PASS HELD_HEAD_BLOCKED completed=5/11 bytes=96 sealed=3",
+        "# PASS COPY_RELEASE completed=11 bytes=288 chunks=6"
+      ],
+      "actual_plan_break_batches": [
+        {
+          "frame": 906,
+          "batch": 6,
+          "breaks": 4,
+          "plans": [
+            {
+              "kind": 0,
+              "slot": 75,
+              "generation": 2,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 76,
+              "generation": 2,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 77,
+              "generation": 2,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 78,
+              "generation": 2,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 79,
+              "generation": 2,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 80,
+              "generation": 2,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 81,
+              "generation": 2,
+              "bytes": 16
+            },
+            {
+              "kind": 1,
+              "slot": 0,
+              "generation": 2,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 1,
+              "generation": 2,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 3,
+              "generation": 2,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 4,
+              "generation": 2,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 5,
+              "generation": 2,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 7,
+              "generation": 2,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 10,
+              "generation": 2,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 11,
+              "generation": 2,
+              "bytes": 32
+            }
+          ]
+        },
+        {
+          "frame": 949,
+          "batch": 1,
+          "breaks": 5,
+          "plans": [
+            {
+              "kind": 2,
+              "slot": 0,
+              "generation": 45,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 116,
+              "generation": 45,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 117,
+              "generation": 45,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 118,
+              "generation": 45,
+              "bytes": 16
+            },
+            {
+              "kind": 1,
+              "slot": 13,
+              "generation": 45,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 14,
+              "generation": 45,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 16,
+              "generation": 45,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 18,
+              "generation": 45,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 20,
+              "generation": 45,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 21,
+              "generation": 45,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 22,
+              "generation": 45,
+              "bytes": 32
+            }
+          ]
+        },
+        {
+          "frame": 952,
+          "batch": 1,
+          "breaks": 5,
+          "plans": [
+            {
+              "kind": 2,
+              "slot": 0,
+              "generation": 48,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 119,
+              "generation": 48,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 120,
+              "generation": 48,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 121,
+              "generation": 48,
+              "bytes": 16
+            },
+            {
+              "kind": 1,
+              "slot": 27,
+              "generation": 48,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 29,
+              "generation": 48,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 31,
+              "generation": 48,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 39,
+              "generation": 48,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 40,
+              "generation": 48,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 41,
+              "generation": 48,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 42,
+              "generation": 48,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 43,
+              "generation": 48,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 44,
+              "generation": 48,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 45,
+              "generation": 48,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 46,
+              "generation": 48,
+              "bytes": 32
+            }
+          ]
+        },
+        {
+          "frame": 953,
+          "batch": 1,
+          "breaks": 4,
+          "plans": [
+            {
+              "kind": 2,
+              "slot": 0,
+              "generation": 49,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 119,
+              "generation": 49,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 120,
+              "generation": 49,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 121,
+              "generation": 49,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 122,
+              "generation": 49,
+              "bytes": 16
+            },
+            {
+              "kind": 1,
+              "slot": 39,
+              "generation": 49,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 40,
+              "generation": 49,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 42,
+              "generation": 49,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 43,
+              "generation": 49,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 51,
+              "generation": 49,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 52,
+              "generation": 49,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 53,
+              "generation": 49,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 54,
+              "generation": 49,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 55,
+              "generation": 49,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 56,
+              "generation": 49,
+              "bytes": 32
+            }
+          ]
+        },
+        {
+          "frame": 955,
+          "batch": 1,
+          "breaks": 4,
+          "plans": [
+            {
+              "kind": 2,
+              "slot": 0,
+              "generation": 51,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 123,
+              "generation": 51,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 124,
+              "generation": 51,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 125,
+              "generation": 51,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 126,
+              "generation": 51,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 127,
+              "generation": 51,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 128,
+              "generation": 51,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 129,
+              "generation": 51,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 130,
+              "generation": 51,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 131,
+              "generation": 51,
+              "bytes": 16
+            },
+            {
+              "kind": 1,
+              "slot": 59,
+              "generation": 51,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 60,
+              "generation": 51,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 62,
+              "generation": 51,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 63,
+              "generation": 51,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 71,
+              "generation": 51,
+              "bytes": 32
+            }
+          ]
+        },
+        {
+          "frame": 956,
+          "batch": 1,
+          "breaks": 6,
+          "plans": [
+            {
+              "kind": 2,
+              "slot": 0,
+              "generation": 52,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 132,
+              "generation": 52,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 133,
+              "generation": 52,
+              "bytes": 16
+            },
+            {
+              "kind": 0,
+              "slot": 134,
+              "generation": 52,
+              "bytes": 16
+            },
+            {
+              "kind": 1,
+              "slot": 72,
+              "generation": 52,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 74,
+              "generation": 52,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 76,
+              "generation": 52,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 78,
+              "generation": 52,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 81,
+              "generation": 52,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 82,
+              "generation": 52,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 83,
+              "generation": 52,
+              "bytes": 32
+            },
+            {
+              "kind": 1,
+              "slot": 84,
+              "generation": 52,
+              "bytes": 32
+            }
+          ]
+        }
+      ],
+      "frozen_transcript_wire_saving_B": 5808,
+      "optional_common_generation_bytes": 1338,
+      "wire_projection_is_timing": false
+    },
+    "CPU": {
+      "prior_code_bytes": 374,
+      "DMA_code_bytes": 557,
+      "reuse_code_bytes": 565,
+      "ROM_constant_bytes": 1,
+      "zero_source": 33333,
+      "validity_WRAM_bytes": 2,
+      "bank_index_scratch_bytes": 2,
+      "total_extra_WRAM_bytes": 4,
+      "normal_commands": 522,
+      "output_bytes": 128041,
+      "normal_reuse_fills": 2,
+      "normal_skips": 69,
+      "guards": {
+        "passed": true,
+        "commands": 33,
+        "output_bytes": 28607,
+        "zero_DMA_fills": 10,
+        "zero_DMA_bytes": 11000
+      },
+      "common_STOP_binding": false,
+      "all_write_owners_bound": false
+    },
+    "paired": [
+      {
+        "frame": 905,
+        "prior_output_ms": 44.561556164,
+        "DMA_output_ms": 43.59447686,
+        "reuse_output_ms": 43.59447686,
+        "prior_restricted_ROM_ms": 85.295021902,
+        "reuse_restricted_ROM_ms": 84.327942598,
+        "restricted_source_ms": 19.282404972,
+        "restricted_diagnostic_serial_ms": 103.61034757
+      },
+      {
+        "frame": 906,
+        "prior_output_ms": 47.790608324,
+        "DMA_output_ms": 46.82307448,
+        "reuse_output_ms": 46.82307448,
+        "prior_restricted_ROM_ms": 112.455741424,
+        "reuse_restricted_ROM_ms": 112.475286644,
+        "restricted_source_ms": 3.810045188,
+        "restricted_diagnostic_serial_ms": 116.285331832
+      },
+      {
+        "frame": 907,
+        "prior_output_ms": 10.372693708,
+        "DMA_output_ms": 8.146902236,
+        "reuse_output_ms": 7.663226222,
+        "prior_restricted_ROM_ms": 16.949160244,
+        "reuse_restricted_ROM_ms": 15.207499326,
+        "restricted_source_ms": 4.083950992,
+        "restricted_diagnostic_serial_ms": 19.291450318000003
+      }
+    ],
+    "warm_max_serial": {
+      "frame": 954,
+      "source_ms": 6.254970394,
+      "output_schedule_ms": 12.039537342,
+      "diagnostic_serial_ms": 18.294507736,
+      "prior_serial_ms": 20.909703626,
+      "serial_saved_ms": 2.615195889999999,
+      "remaining_to_60_ms": 1.627841069333332,
+      "budget_headroom_ms": -1.627841069333332,
+      "ARM_instructions": 199079,
+      "SPI_bytes": 2942,
+      "source_SPI_bytes": 1969,
+      "shared_SPI_bytes": 4911,
+      "shared_SPI_wire_ms": 14.966857142857142,
+      "non_wire_elapsed_ms": 3.3276505931428577,
+      "E0_polls": 55,
+      "E8_polls": 10,
+      "E9_batches": 3,
+      "EA_retire": 1,
+      "plan_SPI_bytes": 403,
+      "prior_E0_polls": 82,
+      "shared_envelope_frozen_transcript_wire_saving_B": 174
+    },
+    "warm_over_serial": 6,
+    "remaining": {
+      "diagnostic_ms": 1.627841069333332,
+      "current_time_reduction_percent": 8.89797688368548,
+      "comb": 2271,
+      "restricted_warm_sample_ms": 19.291450318000003,
+      "restricted_warm_sample_gap_ms": 2.6247836513333347,
+      "full_path_ms": null,
+      "extra_full_RUN_VBlank_mapper_margin_ms": null,
+      "physical60fps": false
+    },
+    "P2_selected": false,
+    "limitations": [
+      "Actual65816 ordinary command kernel uses forced blank; live VBlank, map/tile DMA and final display remain outside this CPU run.",
+      "Live ARM serializer/refill uses instruction CPI1; full input/planner/NVIC/IRQ entry/exit and hardware SRAM margin are not measured.",
+      "Actual ROM/cache/priority RTL uses synthetic core requests and qualified slot policy; no live NES core or universal worst-case bound.",
+      "Bank reuse validity covers this kernel write owner and two cold banks; board common STOP/external writers are not bound.",
+      "Whole-board Lite MAP removes the duplicate legacy E0/E1 endpoint and preserves local ROM/pad; no whole-board functional/CDC/STA or complete firmware link qualification.",
+      "Unified queue head policies are liveness experiments on retained decoder/staging RTL; no unified controller implementation or area gain is claimed.",
+      "Frozen transcript wire projection excludes new controller/ARM polling schedule costs and must not be added to measured CPU gains."
     ]
   }
 }
