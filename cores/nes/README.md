@@ -1,3 +1,5 @@
+PR129 회고·다음 계획: 전체 회로와 프레임 예산을 같은 구성으로 판정한다. 머지 전 구현은 중단하며, 머지 확인 후 master 기준 새 브랜치·새 PR에서 시작한다. [회고](../../docs/nes-pr129-retrospective.ko.md) · [다음 계획](../../docs/nes-pr129-next-plan.json). 아래 NEXT는 당시 기록이다.
+
 # 현재 상태 — NES255 선행 읽기·소비 제어
 
 NES255는 별도 query FSM 없이 선행 읽기를 복원하고, receipt와 실제 바이트 수락 어댑터의 제어를 공유했다. 동일 어댑터 경계 MAP은 기준3414LE/1046FF에서 후보3362LE/985FF로 52LE·61FF 감소하며 RAM49152bits는 같다. warm 준비는11836..11854cycles, 출력 제어는 기준보다74..152cycles 감소했다. 두 구성 각각71프레임·28오류 검사와 후보의8개 부분 CRC 갱신을 통과했다. 실제 출력은 같은 클록의 valid/ready 수락까지이며 SPI packet parser·SNES 실행/표시 연결은 미완료다. 전체490LE/40LAB 부족과60fps는 미해결이며 P2 미선정이다.

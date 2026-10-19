@@ -4,9 +4,9 @@
   "date_kst": "2026-10-19",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint255-contract.ko.md",
+  "authoritative_document": "docs/nes-pr129-retrospective.ko.md",
   "assessment": "NES255는 별도 query FSM 없이 선행 읽기를 복원하고, receipt와 실제 바이트 수락 어댑터의 제어를 공유했다. 동일 어댑터 경계 MAP은 기준3414LE/1046FF에서 후보3362LE/985FF로 52LE·61FF 감소하며 RAM49152bits는 같다. warm 준비는11836..11854cycles, 출력 제어는 기준보다74..152cycles 감소했다. 두 구성 각각71프레임·28오류 검사와 후보의8개 부분 CRC 갱신을 통과했다. 실제 출력은 같은 클록의 valid/ready 수락까지이며 SPI packet parser·SNES 실행/표시 연결은 미완료다. 전체490LE/40LAB 부족과60fps는 미해결이며 P2 미선정이다.",
-  "next_action": "NES255의 선행 읽기와 범위 receipt/소비 제어 공유는 P1 후보로 유지한다. 다음은 기존 출력 SPI 큐의 head/READ/ACK 소유권과 실제 typed parser·SNES 소비를 이 경계에 연결해 기존 제어를 대체하는 구조를 검토한다. tail CRC·fresh scroll·OAM·H2 전치도 실제 소비에 결합하고, 입력 COMMITTED/typed consume/final display ACK를 구분한다. ARM N5 복원·계획·전송 fullRUN/IRQ 및 실제 SNES setup/DMA/poll/VBlank 비용을 함께 계산해야 한다. 추가 기능만 누적하거나 작은 국소 차이를 전체 회수로 계산하지 않고, 근거 없는 FIT·seed·ROM/opcode 반복은 하지 않는다.",
+  "next_action": "PR129 머지 전에는 회고·계획·인계만 갱신하고 구현을 중단한다. 머지 상태와 merge SHA의 origin/master 포함을 확인한 뒤 새 codex/ 브랜치와 새 PR에서 R0 교체 경계/비용표 → R1 실제 ARM–FPGA–SNES 연결 비용 → R2 같은 구성의 전체 FIT/STA·fullRUN/IRQ·71프레임 판정 → R3 실기 연속 표시 순으로 진행한다. NES255는 후보이며 P2 미선정이다. 실제 면적/시간이 맞지 않고 구조적 회수 근거가 없으면 전송량·역할 분담을 재계획한다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,12 +25,12 @@
     },
     {
       "id": "P1",
-      "status": "P1_same_boundary_area_and_time_gain_P2_not_selected",
+      "status": "NES255_candidate_wholepath_feasibility_pending_after_PR129_merge",
       "depends_on": [
         "P0"
       ],
       "deliverable": "Compare limited240 dedicated logic, semantic field/row changes, and joint transfer/conversion relocation.",
-      "exit": "Select one candidate with defensible area/time/memory margin; reject or revisit assumptions if none qualifies. Unified sequencer remains optional.",
+      "exit": "R0/R1 establish fixed replacement scope and defensible whole-path cost before selecting a product implementation; see active_plan.",
       "evidence": [
         "docs/nes-wholepath247-contract.ko.md",
         "docs/nes-schedule247-contract.ko.md",
@@ -82,7 +82,8 @@
         "docs/nes-joint254-contract.ko.md",
         "analysis/joint254-verification.json",
         "docs/nes-joint255-contract.ko.md",
-        "analysis/joint255-verification.json"
+        "analysis/joint255-verification.json",
+        "docs/nes-pr129-retrospective.ko.md"
       ]
     },
     {
@@ -3173,7 +3174,7 @@
       }
     ]
   },
-  "active_plan": "docs/nes-joint255-plan.json",
+  "active_plan": "docs/nes-pr129-next-plan.json",
   "current_status_scope": "Top-level active_plan/gates supersede historical fields; legacy versioned records and old open_issues remain historical, not current acceptance.",
   "p1_placement_followup": {
     "selected": "placement05",
@@ -3579,5 +3580,41 @@
         ]
       }
     ]
-  }
+  },
+  "status": "approved_plan_implementation_deferred_until_pr129_merge",
+  "next_milestones": [
+    {
+      "id": "R0",
+      "status": "pending_after_merge",
+      "deliverable": "기존 제어의 제거/유지/추가 목록과 같은 프레임의 전체 비용표",
+      "exit": "parser/head/READ/ACK/bank/token/receipt/display ownership, RAM/CDC/packet costs included; measured/model/unknown and overlap dependencies explicit"
+    },
+    {
+      "id": "R1",
+      "status": "pending",
+      "depends_on": [
+        "R0"
+      ],
+      "deliverable": "부담이 큰 프레임의 실제 ARM N5/계획/전송 → SPI parser → SNES 실행 연결",
+      "exit": "ARM service and SNES setup/validation/DMA/poll/VBlank measured; input commit, typed consume and final display ACK distinct; unknown MCU costs cannot pass"
+    },
+    {
+      "id": "R2",
+      "status": "pending",
+      "depends_on": [
+        "R1"
+      ],
+      "deliverable": "같은 소스 구성의 전체 보드와71프레임·오류/전환 검증",
+      "exit": "Whole FIT and required STA/CDC/IO, mapper/resource margin, full ARM RUN/IRQ/memory, frame deadlines and final display ownership pass; raw2-to-0 both banks and partial consume cancellation covered"
+    },
+    {
+      "id": "R3",
+      "status": "pending",
+      "depends_on": [
+        "R2"
+      ],
+      "deliverable": "SMB3 첫 레벨 실기 연속 스크롤",
+      "exit": "Actual display cadence/gaps/age plus sound/input/menu pass; cold and transition separate; no frame dropping or game slowdown"
+    }
+  ]
 }
