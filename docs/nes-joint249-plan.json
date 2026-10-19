@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "plan_id": "NES-JOINT249-20261019",
+  "date_kst": "2026-10-19",
+  "status": "P1_time_candidate_identified_joint_area_margin_unproven",
+  "document": "docs/nes-joint249-contract.ko.md",
+  "branch": "codex/nes-typed-schedule-248",
+  "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/129",
+  "merged_pr128_base": "64640645e3e37adb697d0293a509d0329e4eae4e",
+  "selected": {
+    "analysis": "analysis02",
+    "source_A": "test01/map01",
+    "source_B": "blocktest03/blockmap01"
+  },
+  "assessment": "NES249 고정블록+rowshift source와 FPGA 통합 receipt/validity 후보를 공동 검토했다. Source RTL 기록71+합성3프레임 PASS;단독 MAP1079LE/1062comb/307FF. Python754B RAM정책192726byte/155반례와3726조건부 일정 PASS. setup/service500인 gap16 최대15.472ms,잔여1.195ms는 query/ARM/실제parser/SNES layout검사/DMA/대기 전체 공동예산이다. Whole240490LE40LAB부족+새logic/mapper여유 회수 미입증, RAM56/56 유지. 시간 우선 조사 후보B만 남기며 P2/60fps 승인 없음.",
+  "next_action": "B 고정블록 source의 semantic query/projector+encoder+통합 range/validity validator+FIFO read-port 소유권을 같은 교체 경계로 묶어 실제 제거 회로와 추가 비용을 비교한다. 유지되는 SNES 명령작성·validate181 layout/HDMA 비용도 실행해1.195ms 공동잔여와 대조한다. 490LE40LAB+새logic+mapper여유 회수 근거 없으면 후보 기각/경계 재검토. 근거가 생긴 뒤 최소경계/wholeboard FIT·STA·CDC·IO/fullARM RUN·IRQ/최종display ownership,그 다음FIRSTLEVELSCROLL. 국소opcode·seed·자동FIT루프/227044재시험 금지.",
+  "production": "NES227",
+  "functional_reference": "NES240_unplaced",
+  "priority_investigation": "B_fixed_block_rowshift_plus_unified_FPGA_receipt_validity",
+  "production_implementation_selected": false,
+  "responsibilities": {
+    "ARM": "screen plan and game semantics;commit dirty/resident after display ACK",
+    "FPGA": "range/receipt/validity/CRC and immutable typed publication",
+    "SNES": "bounded command/DMA,layout/HDMA validation,display ACK"
+  },
+  "conditional_max_ms": 15.471663937423696,
+  "all_unknown_work_residual_ms": 1.1950027292429724,
+  "area": {
+    "standalone_encoder_LE": 1079,
+    "wholeboard_baseline_deficit_LE": 490,
+    "wholeboard_baseline_deficit_LAB": 40,
+    "new_validator_area": null,
+    "wholeboard_reclaim_proven": false
+  },
+  "ram": {
+    "unified_policy_bytes": 754,
+    "policy_capacity_bytes": 1024,
+    "wholeboard_scenario_M9K": 56,
+    "device_M9K": 56
+  },
+  "remaining": [
+    "collector query/projection",
+    "full ARM RUN/IRQ",
+    "actual parser/CDC/FIFO ownership",
+    "retained SNES command/layout/HDMA work",
+    "ordinary DMA/dispatch/polls/gaps/VBlank",
+    "952/955 VRAM bursts",
+    "wholeboard FIT/STA/mapper margin",
+    "final display ACK/capture lease retire",
+    "physical sustained scroll/audio/input/menu"
+  ],
+  "artifacts": [
+    "analysis/joint249-verification.json",
+    "analysis/joint249-frames.csv",
+    "analysis/joint249-wire.csv"
+  ]
+}

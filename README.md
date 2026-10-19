@@ -1,3 +1,17 @@
+PR129 회고·다음 계획: 전체 회로와 프레임 예산을 같은 구성으로 판정한다. 머지 전 구현은 중단하며, 머지 확인 후 master 기준 새 브랜치·새 PR에서 시작한다. [회고](docs/nes-pr129-retrospective.ko.md) · [다음 계획](docs/nes-pr129-next-plan.json). 아래 NEXT는 당시 기록이다.
+
+NES255: 선행 읽기와 receipt·바이트 소비 제어를 공유해 동일 경계에서 52LE·61FF 및 처리 시간을 줄였다. 전체FIT·60fps는 미입증이다. [최신 검토](docs/nes-joint255-contract.ko.md) · [현재 계획](docs/nes-joint255-plan.json). 아래는 이전 기록이다.
+
+NES254: FSM 미추출 원인을 분리 검증하고 query/source와 인증서 RAM을 통합했다. MAP3404→3296→3239LE, 조건부500setup최대16.028909ms. 전체FIT·60fps는 미입증이다. [최신 검토](docs/nes-joint254-contract.ko.md) · [현재 계획](docs/nes-joint254-plan.json). 아래는 이전 기록이다.
+
+NES253: 64B CRC를공유RAM에넣은실제query/source/SPI/검증경계의회로와시간을측정했다. MAP 2646→3404LE,조건부500setup최대15.993545ms. 전체FIT·ARM·SNES여유는미입증이다. [최신 검토](docs/nes-joint253-contract.ko.md) · [현재 계획](docs/nes-joint253-plan.json). 아래는 이전 기록이다.
+
+NES252: HDMA의상속내용까지봉인하려면새수신분CRC만으로는부족하다. 양bank의raw-tail CRC64B를보관하는후보는단순재전송보다유리하며조건부잔여0.454ms다. 실제RTL·논리회수·MCU시간은아직미입증이다. [최신 검토](docs/nes-binding252-contract.ko.md) · [현재 계획](docs/nes-binding252-plan.json). 아래는 이전 기록이다.
+
+NES251: 단계별 공유 RAM으로 M9K instance 하나를 줄였지만 논리는33LE 늘었다. ARM HDMA 검사는97779사례를 통과했으며,실행·봉인 비용을 배정한 조건부 잔여는0.485ms다. 전체 논리·시간 여유가 미확보라 P2로 선택하지 않았다. [최신 검토](docs/nes-joint251-contract.ko.md) · [현재 계획](docs/nes-joint251-plan.json).
+
+NES250: source+receipt 공동MAP1506LE,남은 SNES layout/HDMA 검사 약0.654ms. 실측 반영 조건부 최대16.355ms/공동잔여0.312ms이며 회로·시간 여유가 미입증이라 독립 코어 추가 구성은 P2 후보로 채택하지 않았다. [최신 검토](docs/nes-joint250-contract.ko.md) · [현재 계획](docs/nes-joint250-plan.json). 아래는 이전 기록이다.
+
 > 최신 ROM 응답 결합: ROM 응답 로컬8비트를 실제 service/arbiter/FIFO/reader에 결합했다. 70ns 모델16위상과9.904ns 데이터 지연에서 기존 응답/샘플과 같았으며, 새8개 경계만 제한했다. FIT15048LE/963LAB/38M9K, 배선 평균68.8→61.4%·수직peak91.2→75.8%로 개선됐다. 실제setup−1.408ns/hold+0.147ns로 전체타이밍은 아직 실패이며 새SD패키지는 없다. [검증·다음 단계](docs/nes-replyjoin181-contract.ko.md)
 
 > 최신 배선 연구: 공식 배선 최적화 자료와 현재 보고서를 대조해 ROM 응답을 수신 클록에서 받는 RTL 후보를 추가했다. reader 경계19경우(456읽기/714중단·리셋/19클록정지),9.904ns지연 및 잘못된 캡처 대조군을 확인했다. 응답 추가클록0은 단독 비교 범위이며 보드 결합·새FIT·실기 승인은 아직 없다. [설계 반영](docs/nes-routing181-design.ko.md)

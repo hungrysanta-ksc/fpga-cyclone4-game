@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "plan_id": "NES-PR129-REPLAN-20261019",
+  "date_kst": "2026-10-19",
+  "status": "approved_plan_implementation_deferred_until_pr129_merge",
+  "document": "docs/nes-pr129-retrospective.ko.md",
+  "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/129",
+  "reviewed_head": "cdb64745c823b7eed9b127f8da8baa4670ad12e2",
+  "scope": "Retrospective and handoff only; no new implementation or hardware verification in this update.",
+  "supersedes": "Historical248–255 NEXT recommendations; original evidence remains unchanged.",
+  "primary_goal": "같은 ARM/FPGA/SNES 구성의 전체 회로·연속 표시 프레임 예산을 함께 판정",
+  "roles": {
+    "production": "NES227",
+    "functional_reference": "NES240_unplaced",
+    "feasibility_candidate": "NES255",
+    "selected_production_implementation": null
+  },
+  "reference_period_ms": 16.6666666667,
+  "actual_display_clock": "Measure NTSC cadence and VBlank/DMA deadlines; nominal60Hz is not an exact measured period.",
+  "initial_heavy_frames": [
+    952,
+    954,
+    955,
+    962,
+    963,
+    968,
+    970
+  ],
+  "milestones": [
+    {
+      "id": "R0",
+      "status": "pending_after_merge",
+      "deliverable": "기존 제어의 제거/유지/추가 목록과 같은 프레임의 전체 비용표",
+      "exit": "parser/head/READ/ACK/bank/token/receipt/display ownership, RAM/CDC/packet costs included; measured/model/unknown and overlap dependencies explicit"
+    },
+    {
+      "id": "R1",
+      "status": "pending",
+      "depends_on": [
+        "R0"
+      ],
+      "deliverable": "부담이 큰 프레임의 실제 ARM N5/계획/전송 → SPI parser → SNES 실행 연결",
+      "exit": "ARM service and SNES setup/validation/DMA/poll/VBlank measured; input commit, typed consume and final display ACK distinct; unknown MCU costs cannot pass"
+    },
+    {
+      "id": "R2",
+      "status": "pending",
+      "depends_on": [
+        "R1"
+      ],
+      "deliverable": "같은 소스 구성의 전체 보드와71프레임·오류/전환 검증",
+      "exit": "Whole FIT and required STA/CDC/IO, mapper/resource margin, full ARM RUN/IRQ/memory, frame deadlines and final display ownership pass; raw2-to-0 both banks and partial consume cancellation covered"
+    },
+    {
+      "id": "R3",
+      "status": "pending",
+      "depends_on": [
+        "R2"
+      ],
+      "deliverable": "SMB3 첫 레벨 실기 연속 스크롤",
+      "exit": "Actual display cadence/gaps/age plus sound/input/menu pass; cold and transition separate; no frame dropping or game slowdown"
+    }
+  ],
+  "next_action": "PR129 머지 전에는 회고·계획·인계만 갱신하고 구현을 중단한다. 머지 상태와 merge SHA의 origin/master 포함을 확인한 뒤 새 codex/ 브랜치와 새 PR에서 R0 교체 경계/비용표 → R1 실제 ARM–FPGA–SNES 연결 비용 → R2 같은 구성의 전체 FIT/STA·fullRUN/IRQ·71프레임 판정 → R3 실기 연속 표시 순으로 진행한다. NES255는 후보이며 P2 미선정이다. 실제 면적/시간이 맞지 않고 구조적 회수 근거가 없으면 전송량·역할 분담을 재계획한다.",
+  "stop_rule": "If real time/whole area fails without concrete structural replacement or transfer reduction, defer adoption and reconsider transfer representation and role allocation; no seed/opcode/FIT loops.",
+  "resume": {
+    "require_merged": true,
+    "verify_merge_sha_in": "origin/master",
+    "new_branch_prefix": "codex/",
+    "new_pull_request": true,
+    "first_stage": "R0",
+    "automatic_merge": false
+  },
+  "preserve": [
+    "NES227",
+    "NES240_unplaced",
+    "NES241_rejected",
+    "NES246_rejected",
+    "NES2472_rejected",
+    "5886_diagnostic",
+    "GBC164",
+    "saveSRAM",
+    "NES255_public_evidence_and_private_archive"
+  ]
+}

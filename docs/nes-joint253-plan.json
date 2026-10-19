@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "plan_id": "NES-JOINT253-20261019",
+  "date_kst": "2026-10-19",
+  "status": "P1_integrated_boundary_area_regression_P2_not_selected",
+  "document": "docs/nes-joint253-contract.ko.md",
+  "branch": "codex/nes-typed-schedule-248",
+  "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/129",
+  "selected": {
+    "test": "test07",
+    "incremental": "test08",
+    "map": "map02",
+    "reference": "reference01",
+    "analysis": "analysis01"
+  },
+  "assessment": "NES253은 실제 frame201 query→4398B 투영→N5 source→SPI 핀과, 기록된 C 출력 소비 바이트→64B CRC RAM→H2 인증서를 검증했다. 71프레임·14오류 검사 PASS. 동일 독립 경계 MAP은 기존240 2646LE/2336comb/989FF/57344bits에서 새 검증을 포함한253 3404LE/3078comb/1100FF/49152bits로 변했다(LE +758). Warm 출력 검증 1949..2081cycles, 해시 상태 170..170cycles. 조건부500setup 최대15.993545ms/잔여0.673121ms. RAM 이득은 확인했으나 논리 증가로 이 구성은 회로 여유 확보 후보로 채택하지 않는다. 전체 회로·ARM·SNES 여유는 미입증이며 P2 미선정.",
+  "next_action": "실측 경계의 query/projector와 source 입력 커서·행 제어 중 중복을 실제로 제거하고, 출력 인증서 문맥의 단계별 RAM 수명과 소비 어댑터 비용을 함께 비교한다. source/receipt 한 FSM 및 CRC 공유만으로 전체490LE/40LAB 부족이 해소됐다고 보지 않는다. 실제 ARM N5 복원·계획·H2 생성·출력 소비/최종 ACK 연결과 fullRUN/IRQ·SNES 잔존 DMA·poll/VBlank 비용이 필요하다. 독립 CRC/ROM/seed 미세조정이나 근거 없는 fullFIT 반복은 하지 않는다.",
+  "production": "NES227",
+  "functional_reference": "NES240_unplaced",
+  "production_implementation_selected": false,
+  "area_before": {
+    "LE": 2646,
+    "comb": 2336,
+    "FF": 989,
+    "bits": 57344
+  },
+  "area_after": {
+    "LE": 3404,
+    "comb": 3078,
+    "FF": 1100,
+    "bits": 49152
+  },
+  "area_delta": {
+    "LE": 758,
+    "comb": 742,
+    "FF": 111,
+    "bits": -8192
+  },
+  "wholeboard_reclaim_proven": false,
+  "memory": {
+    "validity": [
+      0,
+      331
+    ],
+    "shadow": [
+      332,
+      395
+    ],
+    "received": [
+      396,
+      561
+    ],
+    "map_receipt": [
+      562,
+      817
+    ],
+    "source_scratch": [
+      512,
+      1023
+    ],
+    "persistent_bytes": 396,
+    "phase_output_bytes": 818
+  },
+  "warm_bounds": {
+    "source_total_cycles": [
+      75214,
+      138081
+    ],
+    "source_prepare_cycles": [
+      11836,
+      11854
+    ],
+    "output_cycles": [
+      1949,
+      2081
+    ],
+    "hash_state_cycles": [
+      170,
+      170
+    ],
+    "source_ms": [
+      3.4188181818181818,
+      6.276409090909091
+    ],
+    "output_ms": [
+      0.0885909090909091,
+      0.09459090909090909
+    ],
+    "combined_measured_boundary_ms": [
+      3.5084545454545455,
+      6.3705
+    ],
+    "source_total_delta_cycles": [
+      -8348,
+      21858
+    ]
+  },
+  "conditional_summaries": [
+    {
+      "setup": 500,
+      "retained_policy": "command_tail",
+      "max_ms": 15.993545447237826,
+      "min_residual_ms": 0.6731212194288414,
+      "worst_frame": 970,
+      "over": []
+    },
+    {
+      "setup": 500,
+      "retained_policy": "only_bitmap_removed",
+      "max_ms": 16.374413220469705,
+      "min_residual_ms": 0.2922534461969626,
+      "worst_frame": 970,
+      "over": []
+    },
+    {
+      "setup": 1000,
+      "retained_policy": "command_tail",
+      "max_ms": 16.85492121799453,
+      "min_residual_ms": -0.18825455132786217,
+      "worst_frame": 970,
+      "over": [
+        970
+      ]
+    },
+    {
+      "setup": 1000,
+      "retained_policy": "only_bitmap_removed",
+      "max_ms": 17.235788991226414,
+      "min_residual_ms": -0.5691223245597463,
+      "worst_frame": 970,
+      "over": [
+        954,
+        962,
+        970
+      ]
+    }
+  ],
+  "conditional_allocations": {
+    "ARM_cycles": 32000,
+    "extra_certificate_bytes": 32,
+    "parser": "retained prior eight cycles per output byte"
+  },
+  "new_RTL": true,
+  "new_MAP": true,
+  "new_FIT": false,
+  "new_STA": false,
+  "ARM_hardware_time_measured": false,
+  "full_RUN_linked": false,
+  "new_SNES_execution": false,
+  "baseline_deficit_LE": 490,
+  "baseline_deficit_LAB": 40,
+  "remaining": [
+    "query/source state and operand consolidation",
+    "real output parser and consume adapter",
+    "actual ARM N5-to-plan and H2 RUN/IRQ costs",
+    "final display ACK/capture retire",
+    "remaining SNES DMA/dispatch/poll/VBlank",
+    "952/955 bursts",
+    "wholeboard FIT/STA/CDC/IO/mapper margin",
+    "physical sustained audio/input/scroll"
+  ]
+}

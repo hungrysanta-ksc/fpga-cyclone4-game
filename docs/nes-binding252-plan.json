@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "plan_id": "NES-BINDING252-20261019",
+  "date_kst": "2026-10-19",
+  "status": "P1_64B_HDMA_shadow_candidate_not_selected_for_P2",
+  "document": "docs/nes-binding252-contract.ko.md",
+  "branch": "codex/nes-typed-schedule-248",
+  "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/129",
+  "merged_pr128_base": "64640645e3e37adb697d0293a509d0329e4eae4e",
+  "selected": {
+    "test": "test03",
+    "control_audit": "control-audit.json"
+  },
+  "assessment": "NES252 실제71프레임에서warm69 모두HDMA90B 중69B를상속했다. 새수신분CRC만으로는부족. 기존16B재전송은181B추가/조건부16.732788ms초과,compact100B는16.485931ms. Raw-tail16granule CRC를양bank64B에보존하면추가표전송0B,공유RAM배치818B후보로16.212805ms/잔여0.453861ms(추가CRC처리배정). C certificate와Python수신모델71frames,9372+2769거부/10갱신무효화검사PASS. ARMtext총908B/함수별48·48·36·12B,fullRUN·MCU시간·RTL·논리회수미입증/P2미선정.",
+  "next_action": "64B raw-tail CRC를기존validity와결합한공유RAM배치(영속396/임시422/source512..1023)를후보로,실제query/projector→source→SPI와outputconsume→CRC→certificate의기존제어를제거하는최소통합경계를검증한다. CRC source/block누산상태와clock/SS/token/CDC/최종displayACK는자동공유하지않는다. 단독CRC/작은counter/ROM/seed/FIT반복금지. 전체ARMIRQ·SNES남은DMA·poll/VBlank·952955·mapper·CDCIOSTA 공동여유 전 fullFIT/설치FW/실기금지.",
+  "production": "NES227",
+  "functional_reference": "NES240_unplaced",
+  "production_implementation_selected": false,
+  "shadow_RAM": {
+    "granule": 16,
+    "crc_bits": 16,
+    "per_bank_entries": 16,
+    "both_banks_bytes": 64,
+    "validity_plus_receipt_bytes": 754,
+    "sum_bytes": 818,
+    "persistent_bytes": 396,
+    "temp_bytes": 422,
+    "source_start": 512,
+    "not_implemented": true,
+    "scroll_shadow_needed": false
+  },
+  "conditional_max_ms": 16.212805187497565,
+  "all_unknown_work_residual_ms": 0.45386147916910247,
+  "conditional_allocations": {
+    "ARM_cycles": 32000,
+    "extra_certificate_bytes": 32,
+    "map_setup_master_clocks": 500,
+    "shadow_extra_warm_FPGA_cycles": 696
+  },
+  "new_logic_saving_proven": 0,
+  "new_RTL": false,
+  "new_MAP_FIT": false,
+  "ARM_hardware_time_measured": false,
+  "full_RUN_linked": false,
+  "prior251_MAP_LE": 1539,
+  "baseline_deficit_LE": 490,
+  "baseline_deficit_LAB": 40,
+  "remaining": [
+    "source/query/transport replacement and phase ownership",
+    "packet parser CRC/epoch/token/certificate",
+    "full ARM RUN/IRQ and HDMA validation relocation cost",
+    "new SNES consumer and ordinary DMA/dispatch",
+    "SPI polls/gaps/VBlank",
+    "952/955 VRAM bursts",
+    "wholeboard FIT/STA/CDC/IO/mapper margin",
+    "actual final display ACK and capture lease retire",
+    "physical sustained scroll/audio/input/menu"
+  ]
+}

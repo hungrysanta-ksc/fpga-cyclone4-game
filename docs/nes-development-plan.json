@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
-  "date_kst": "2026-10-18",
+  "date_kst": "2026-10-19",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-wholepath247-contract.ko.md",
-  "assessment": "NES247 처리위치비교:같은71map290816B typed재구성/14Python반례 PASS,새RTL·CPU실행아님. 입력COMMITTED장벽+출력낙관겹침+기존표시표본 최대5886 20.420ms/9초과,2472 27.153/39,ARMliteral18.545/5,FPGA좁은검증15.525/0,ARMlayout+FPGA16.028/0. FPGA954직렬17.334ms;45범위 setup/source/ARM/parser/대기미포함,60fps승인아님. ARM planner+FPGA map범위/receipt+SNES typedDMA/표시를다음조사대상으로정함;M9K54+2-1+1=56/56,logic490LE40LAB부족/새비용UNKNOWN. 비교기준5886B·생산227/P2미선정.",
-  "next_action": "NEXT placement 경계설계:ARM planner·의미검증/FPGA map범위·receipt/SNES boundedDMA·표시의담당과certificate/STOP/epoch/token수명명시. 같은954/970·952/955에서tile drain→typedmap→manifest→SEAL의실제일정+source/ARM/parser/새SNES setup-service+전체LE/LAB/M9K예산결합. 기존4packet window를새겹침기능으로세지말고입력COMMITTED장벽유지. 15.525ms는낙관모델,17.334ms직렬도미측정비용제외. 56/56산술/490LE40LAB부족은승인아님;새RTL/FIT/토큰opcode미세루프자동진행금지. 5886/227/GBC164/saveSRAM보존,4/5/6KiB고정금지.",
+  "authoritative_document": "docs/nes-pr129-retrospective.ko.md",
+  "assessment": "NES255는 별도 query FSM 없이 선행 읽기를 복원하고, receipt와 실제 바이트 수락 어댑터의 제어를 공유했다. 동일 어댑터 경계 MAP은 기준3414LE/1046FF에서 후보3362LE/985FF로 52LE·61FF 감소하며 RAM49152bits는 같다. warm 준비는11836..11854cycles, 출력 제어는 기준보다74..152cycles 감소했다. 두 구성 각각71프레임·28오류 검사와 후보의8개 부분 CRC 갱신을 통과했다. 실제 출력은 같은 클록의 valid/ready 수락까지이며 SPI packet parser·SNES 실행/표시 연결은 미완료다. 전체490LE/40LAB 부족과60fps는 미해결이며 P2 미선정이다.",
+  "next_action": "PR129 머지 전에는 회고·계획·인계만 갱신하고 구현을 중단한다. 머지 상태와 merge SHA의 origin/master 포함을 확인한 뒤 새 codex/ 브랜치와 새 PR에서 R0 교체 경계/비용표 → R1 실제 ARM–FPGA–SNES 연결 비용 → R2 같은 구성의 전체 FIT/STA·fullRUN/IRQ·71프레임 판정 → R3 실기 연속 표시 순으로 진행한다. NES255는 후보이며 P2 미선정이다. 실제 면적/시간이 맞지 않고 구조적 회수 근거가 없으면 전송량·역할 분담을 재계획한다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,12 +25,12 @@
     },
     {
       "id": "P1",
-      "status": "partial_no_candidate_with_joint_margin",
+      "status": "NES255_candidate_wholepath_feasibility_pending_after_PR129_merge",
       "depends_on": [
         "P0"
       ],
       "deliverable": "Compare limited240 dedicated logic, semantic field/row changes, and joint transfer/conversion relocation.",
-      "exit": "Select one candidate with defensible area/time/memory margin; reject or revisit assumptions if none qualifies. Unified sequencer remains optional.",
+      "exit": "R0/R1 establish fixed replacement scope and defensible whole-path cost before selecting a product implementation; see active_plan.",
       "evidence": [
         "docs/nes-wholepath247-contract.ko.md",
         "docs/nes-schedule247-contract.ko.md",
@@ -66,7 +66,24 @@
         "docs/nes-validation247-contract.ko.md",
         "analysis/validation247-verification.json",
         "docs/nes-jointdecode247-contract.ko.md",
-        "analysis/jointdecode247-verification.json"
+        "analysis/jointdecode247-verification.json",
+        "docs/nes-schedule248-contract.ko.md",
+        "analysis/schedule248-verification.json",
+        "docs/nes-joint249-contract.ko.md",
+        "analysis/joint249-verification.json",
+        "docs/nes-joint250-contract.ko.md",
+        "analysis/joint250-verification.json",
+        "docs/nes-joint251-contract.ko.md",
+        "analysis/joint251-verification.json",
+        "docs/nes-binding252-contract.ko.md",
+        "analysis/binding252-verification.json",
+        "docs/nes-joint253-contract.ko.md",
+        "analysis/joint253-verification.json",
+        "docs/nes-joint254-contract.ko.md",
+        "analysis/joint254-verification.json",
+        "docs/nes-joint255-contract.ko.md",
+        "analysis/joint255-verification.json",
+        "docs/nes-pr129-retrospective.ko.md"
       ]
     },
     {
@@ -3026,7 +3043,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES247 처리위치비교:같은71map290816B typed재구성/14Python반례 PASS,새RTL·CPU실행아님. 입력COMMITTED장벽+출력낙관겹침+기존표시표본 최대5886 20.420ms/9초과,2472 27.153/39,ARMliteral18.545/5,FPGA좁은검증15.525/0,ARMlayout+FPGA16.028/0. FPGA954직렬17.334ms;45범위 setup/source/ARM/parser/대기미포함,60fps승인아님. ARM planner+FPGA map범위/receipt+SNES typedDMA/표시를다음조사대상으로정함;M9K54+2-1+1=56/56,logic490LE40LAB부족/새비용UNKNOWN. 비교기준5886B·생산227/P2미선정.",
+  "summary": "NES255는 별도 query FSM 없이 선행 읽기를 복원하고, receipt와 실제 바이트 수락 어댑터의 제어를 공유했다. 동일 어댑터 경계 MAP은 기준3414LE/1046FF에서 후보3362LE/985FF로 52LE·61FF 감소하며 RAM49152bits는 같다. warm 준비는11836..11854cycles, 출력 제어는 기준보다74..152cycles 감소했다. 두 구성 각각71프레임·28오류 검사와 후보의8개 부분 CRC 갱신을 통과했다. 실제 출력은 같은 클록의 valid/ready 수락까지이며 SPI packet parser·SNES 실행/표시 연결은 미완료다. 전체490LE/40LAB 부족과60fps는 미해결이며 P2 미선정이다.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3069,8 +3086,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-placement247-contract.ko.md",
-  "latest_development_evidence": "analysis/placement247-verification.json",
+  "latest_review": "docs/nes-joint255-contract.ko.md",
+  "latest_development_evidence": "analysis/joint255-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {
@@ -3157,7 +3174,7 @@
       }
     ]
   },
-  "active_plan": "docs/nes-wholepath247-plan.json",
+  "active_plan": "docs/nes-pr129-next-plan.json",
   "current_status_scope": "Top-level active_plan/gates supersede historical fields; legacy versioned records and old open_issues remain historical, not current acceptance.",
   "p1_placement_followup": {
     "selected": "placement05",
@@ -3172,5 +3189,432 @@
     "m9k_capacity_arithmetic": 56,
     "new_logic_cost": null,
     "qualified_for_p2": false
-  }
+  },
+  "p1_schedule248_followup": {
+    "selected": "analysis04",
+    "document": "docs/nes-schedule248-contract.ko.md",
+    "evidence": "analysis/schedule248-verification.json",
+    "qualified_for_p2": false,
+    "conditional_schedules": 1104,
+    "python_reconstructions": 284,
+    "python_negatives": 15,
+    "new_logic_measured": false,
+    "actual_new_CPU_execution": false
+  },
+  "p1_joint249_followup": {
+    "status": "P1_time_candidate_identified_joint_area_margin_unproven",
+    "document": "docs/nes-joint249-contract.ko.md",
+    "selected": {
+      "analysis": "analysis02",
+      "source_A": "test01/map01",
+      "source_B": "blocktest03/blockmap01"
+    },
+    "priority_investigation": "B_fixed_block_rowshift_plus_unified_FPGA_receipt_validity",
+    "production_implementation_selected": false,
+    "conditional_max_ms": 15.471663937423696,
+    "all_unknown_work_residual_ms": 1.1950027292429724,
+    "area": {
+      "standalone_encoder_LE": 1079,
+      "wholeboard_baseline_deficit_LE": 490,
+      "wholeboard_baseline_deficit_LAB": 40,
+      "new_validator_area": null,
+      "wholeboard_reclaim_proven": false
+    },
+    "ram": {
+      "unified_policy_bytes": 754,
+      "policy_capacity_bytes": 1024,
+      "wholeboard_scenario_M9K": 56,
+      "device_M9K": 56
+    }
+  },
+  "p1_joint250_followup": {
+    "status": "P1_independent_source_plus_receipt_not_selected",
+    "document": "docs/nes-joint250-contract.ko.md",
+    "selected": {
+      "snes": "snes01",
+      "receipt": "receipt02",
+      "map": "map02",
+      "analysis": "analysis02"
+    },
+    "production_implementation_selected": false,
+    "conditional_max_ms": 16.35454678062575,
+    "all_unknown_work_residual_ms": 0.312119886040918,
+    "area": {
+      "joint_envelope_LE": 1506,
+      "joint_comb": 1489,
+      "joint_FF": 408,
+      "receipt_child_comb": 423,
+      "receipt_child_FF": 101,
+      "wholeboard_reclaim_proven": false,
+      "baseline_deficit_LE": 490,
+      "baseline_deficit_LAB": 40,
+      "parser_query_CDC_included": false
+    },
+    "ram": {
+      "wholeboard_scenario_M9K": 56,
+      "device_M9K": 56,
+      "receipt_RAM_bits": 8192,
+      "receipt_used_bytes": 754,
+      "phase_reuse_proven": false
+    }
+  },
+  "p1_joint251_followup": {
+    "status": "P1_phase_RAM_verified_ARM_semantics_candidate_not_selected",
+    "document": "docs/nes-joint251-contract.ko.md",
+    "selected": {
+      "phase": "phase03",
+      "map": "map02",
+      "arm": "arm03",
+      "analysis": "analysis02"
+    },
+    "production_implementation_selected": false,
+    "conditional_max_ms": 16.181168823861203,
+    "all_unknown_work_residual_ms": 0.48549784280546504,
+    "area": {
+      "LE": 1539,
+      "comb": 1522,
+      "FF": 410,
+      "bits": 45056
+    },
+    "area_delta": {
+      "LE": 33,
+      "comb": 33,
+      "FF": 2,
+      "bits": -4096
+    },
+    "arm": {
+      "text_bytes": 300,
+      "static_bytes": 0,
+      "function_stack_bytes": 36,
+      "hardware_time_measured": false,
+      "full_RUN_linked": false,
+      "certificate_binding": false
+    }
+  },
+  "p1_binding252_followup": {
+    "status": "P1_64B_HDMA_shadow_candidate_not_selected_for_P2",
+    "document": "docs/nes-binding252-contract.ko.md",
+    "selected": {
+      "test": "test03",
+      "control_audit": "control-audit.json"
+    },
+    "production_implementation_selected": false,
+    "conditional_max_ms": 16.212805187497565,
+    "all_unknown_work_residual_ms": 0.45386147916910247,
+    "shadow_RAM": {
+      "granule": 16,
+      "crc_bits": 16,
+      "per_bank_entries": 16,
+      "both_banks_bytes": 64,
+      "validity_plus_receipt_bytes": 754,
+      "sum_bytes": 818,
+      "persistent_bytes": 396,
+      "temp_bytes": 422,
+      "source_start": 512,
+      "not_implemented": true,
+      "scroll_shadow_needed": false
+    },
+    "new_logic_saving_proven": 0
+  },
+  "p1_joint253_followup": {
+    "status": "P1_integrated_boundary_area_regression_P2_not_selected",
+    "document": "docs/nes-joint253-contract.ko.md",
+    "selected": {
+      "test": "test07",
+      "incremental": "test08",
+      "map": "map02",
+      "reference": "reference01",
+      "analysis": "analysis01"
+    },
+    "area_before": {
+      "LE": 2646,
+      "comb": 2336,
+      "FF": 989,
+      "bits": 57344
+    },
+    "area_after": {
+      "LE": 3404,
+      "comb": 3078,
+      "FF": 1100,
+      "bits": 49152
+    },
+    "area_delta": {
+      "LE": 758,
+      "comb": 742,
+      "FF": 111,
+      "bits": -8192
+    },
+    "wholeboard_reclaim_proven": false,
+    "conditional_summaries": [
+      {
+        "setup": 500,
+        "retained_policy": "command_tail",
+        "max_ms": 15.993545447237826,
+        "min_residual_ms": 0.6731212194288414,
+        "worst_frame": 970,
+        "over": []
+      },
+      {
+        "setup": 500,
+        "retained_policy": "only_bitmap_removed",
+        "max_ms": 16.374413220469705,
+        "min_residual_ms": 0.2922534461969626,
+        "worst_frame": 970,
+        "over": []
+      },
+      {
+        "setup": 1000,
+        "retained_policy": "command_tail",
+        "max_ms": 16.85492121799453,
+        "min_residual_ms": -0.18825455132786217,
+        "worst_frame": 970,
+        "over": [
+          970
+        ]
+      },
+      {
+        "setup": 1000,
+        "retained_policy": "only_bitmap_removed",
+        "max_ms": 17.235788991226414,
+        "min_residual_ms": -0.5691223245597463,
+        "worst_frame": 970,
+        "over": [
+          954,
+          962,
+          970
+        ]
+      }
+    ]
+  },
+  "p1_joint254_followup": {
+    "status": "P1_local_logic_reduction_latency_tradeoff_P2_not_selected",
+    "document": "docs/nes-joint254-contract.ko.md",
+    "selected": {
+      "fsm_test": "fsm01",
+      "fsm_map": "fsmmap01",
+      "test": "test03",
+      "incremental": "test04",
+      "map": "map01",
+      "analysis": "analysis01"
+    },
+    "area_253": {
+      "LE": 3404,
+      "comb": 3078,
+      "FF": 1100,
+      "bits": 49152
+    },
+    "area_fsm": {
+      "LE": 3296,
+      "comb": 2970,
+      "FF": 1130,
+      "bits": 49152
+    },
+    "area_joint": {
+      "LE": 3239,
+      "comb": 2932,
+      "FF": 1006,
+      "bits": 49152
+    },
+    "wholeboard_reclaim_proven": false,
+    "conditional_summaries": [
+      {
+        "setup": 500,
+        "retained_policy": "command_tail",
+        "max_ms": 16.028909083601462,
+        "min_residual_ms": 0.6377575830652056,
+        "worst_frame": 970,
+        "over": []
+      },
+      {
+        "setup": 500,
+        "retained_policy": "only_bitmap_removed",
+        "max_ms": 16.409776856833343,
+        "min_residual_ms": 0.256889809833325,
+        "worst_frame": 970,
+        "over": []
+      },
+      {
+        "setup": 1000,
+        "retained_policy": "command_tail",
+        "max_ms": 16.890284854358168,
+        "min_residual_ms": -0.22361818769149977,
+        "worst_frame": 970,
+        "over": [
+          970
+        ]
+      },
+      {
+        "setup": 1000,
+        "retained_policy": "only_bitmap_removed",
+        "max_ms": 17.27115262759005,
+        "min_residual_ms": -0.6044859609233839,
+        "worst_frame": 970,
+        "over": [
+          954,
+          962,
+          970
+        ]
+      }
+    ]
+  },
+  "p1_joint255_followup": {
+    "status": "P1_same_boundary_area_and_time_gain_P2_not_selected",
+    "document": "docs/nes-joint255-contract.ko.md",
+    "selected": {
+      "test": "test03",
+      "reference": "reference02",
+      "incremental": "test04",
+      "consumer_guards": "test05",
+      "map": "map01",
+      "reference_map": "refmap02",
+      "analysis": "analysis01"
+    },
+    "area_reference": {
+      "LE": 3414,
+      "comb": 3107,
+      "FF": 1046,
+      "bits": 49152
+    },
+    "area_joint": {
+      "LE": 3362,
+      "comb": 3055,
+      "FF": 985,
+      "bits": 49152
+    },
+    "area_delta": {
+      "LE": -52,
+      "comb": -52,
+      "FF": -61,
+      "bits": 0
+    },
+    "wholeboard_reclaim_proven": false,
+    "conditional_summaries": [
+      {
+        "accounting_policy": "transfer_covered_conditional",
+        "setup": 500,
+        "retained_policy": "command_tail",
+        "max_ms": 15.995909083601463,
+        "min_residual_ms": 0.670757583065205,
+        "worst_frame": 970,
+        "over": []
+      },
+      {
+        "accounting_policy": "transfer_covered_conditional",
+        "setup": 500,
+        "retained_policy": "only_bitmap_removed",
+        "max_ms": 16.37677685683334,
+        "min_residual_ms": 0.28988980983332624,
+        "worst_frame": 970,
+        "over": []
+      },
+      {
+        "accounting_policy": "transfer_covered_conditional",
+        "setup": 1000,
+        "retained_policy": "command_tail",
+        "max_ms": 16.857284854358166,
+        "min_residual_ms": -0.19061818769149852,
+        "worst_frame": 970,
+        "over": [
+          970
+        ]
+      },
+      {
+        "accounting_policy": "transfer_covered_conditional",
+        "setup": 1000,
+        "retained_policy": "only_bitmap_removed",
+        "max_ms": 17.23815262759005,
+        "min_residual_ms": -0.5714859609233827,
+        "worst_frame": 970,
+        "over": [
+          954,
+          962,
+          970
+        ]
+      },
+      {
+        "accounting_policy": "serialized_stress_reservation",
+        "setup": 500,
+        "retained_policy": "command_tail",
+        "max_ms": 16.548909083601462,
+        "min_residual_ms": 0.117757583065206,
+        "worst_frame": 970,
+        "over": []
+      },
+      {
+        "accounting_policy": "serialized_stress_reservation",
+        "setup": 500,
+        "retained_policy": "only_bitmap_removed",
+        "max_ms": 16.929776856833342,
+        "min_residual_ms": -0.2631101901666746,
+        "worst_frame": 970,
+        "over": [
+          954,
+          962,
+          970
+        ]
+      },
+      {
+        "accounting_policy": "serialized_stress_reservation",
+        "setup": 1000,
+        "retained_policy": "command_tail",
+        "max_ms": 17.410284854358167,
+        "min_residual_ms": -0.7436181876914993,
+        "worst_frame": 970,
+        "over": [
+          954,
+          970
+        ]
+      },
+      {
+        "accounting_policy": "serialized_stress_reservation",
+        "setup": 1000,
+        "retained_policy": "only_bitmap_removed",
+        "max_ms": 17.79115262759005,
+        "min_residual_ms": -1.1244859609233835,
+        "worst_frame": 970,
+        "over": [
+          952,
+          954,
+          962,
+          970
+        ]
+      }
+    ]
+  },
+  "status": "approved_plan_implementation_deferred_until_pr129_merge",
+  "next_milestones": [
+    {
+      "id": "R0",
+      "status": "pending_after_merge",
+      "deliverable": "기존 제어의 제거/유지/추가 목록과 같은 프레임의 전체 비용표",
+      "exit": "parser/head/READ/ACK/bank/token/receipt/display ownership, RAM/CDC/packet costs included; measured/model/unknown and overlap dependencies explicit"
+    },
+    {
+      "id": "R1",
+      "status": "pending",
+      "depends_on": [
+        "R0"
+      ],
+      "deliverable": "부담이 큰 프레임의 실제 ARM N5/계획/전송 → SPI parser → SNES 실행 연결",
+      "exit": "ARM service and SNES setup/validation/DMA/poll/VBlank measured; input commit, typed consume and final display ACK distinct; unknown MCU costs cannot pass"
+    },
+    {
+      "id": "R2",
+      "status": "pending",
+      "depends_on": [
+        "R1"
+      ],
+      "deliverable": "같은 소스 구성의 전체 보드와71프레임·오류/전환 검증",
+      "exit": "Whole FIT and required STA/CDC/IO, mapper/resource margin, full ARM RUN/IRQ/memory, frame deadlines and final display ownership pass; raw2-to-0 both banks and partial consume cancellation covered"
+    },
+    {
+      "id": "R3",
+      "status": "pending",
+      "depends_on": [
+        "R2"
+      ],
+      "deliverable": "SMB3 첫 레벨 실기 연속 스크롤",
+      "exit": "Actual display cadence/gaps/age plus sound/input/menu pass; cold and transition separate; no frame dropping or game slowdown"
+    }
+  ]
 }

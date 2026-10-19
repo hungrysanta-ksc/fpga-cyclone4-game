@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "plan_id": "NES-JOINT250-20261019",
+  "date_kst": "2026-10-19",
+  "status": "P1_independent_source_plus_receipt_not_selected",
+  "document": "docs/nes-joint250-contract.ko.md",
+  "branch": "codex/nes-typed-schedule-248",
+  "pull_request": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/129",
+  "merged_pr128_base": "64640645e3e37adb697d0293a509d0329e4eae4e",
+  "selected": {
+    "snes": "snes01",
+    "receipt": "receipt02",
+    "map": "map02",
+    "analysis": "analysis02"
+  },
+  "assessment": "NES250 실제 SNES 잔존700구간·71프레임 계측과 receipt RTL53534B/12검사 PASS. Layout/HDMA0.651945..0.653807ms. Block source+receipt 공동MAP1506LE/1489comb/408FF;receipt423comb이며 query/parser/CDC 제외. Gap16 조건부276일정:setup500 명령경로만 유지 최대16.354547ms/잔여0.312120ms;비트맵만 제거16.735415ms/970초과. 기존490LE40LAB부족/56M9K 시나리오 미해결. 독립source+독립receipt 구성 P2 미선정,wire 자체 불가능성은 아님.",
+  "next_action": "독립 코어 추가 대신 source 입력/output 검사 단계의 비중첩 수명·clock/STOP 소유권을 입증한 임시RAM/주소/CRC/제어 공유와,ARM 계획 단계 HDMA 생성·의미검사 봉인의 전체비용을 함께 비교한다. Persistent validity332B를 보존하며 공유전 회수량0;실제 query/SPI/parser와 fullARM/정확한certificate·최종display ownership 비용 포함. 490LE40LAB+새logic/mapper여유 및0.312ms 공동잔여 근거 없이 FIT/새FW/실기 진행 금지. control-onlyROM/opcode-seed/작은단독튜닝 재개 금지.",
+  "production": "NES227",
+  "functional_reference": "NES240_unplaced",
+  "production_implementation_selected": false,
+  "wire_format_rejected": false,
+  "conditional_max_ms": 16.35454678062575,
+  "all_unknown_work_residual_ms": 0.312119886040918,
+  "area": {
+    "joint_envelope_LE": 1506,
+    "joint_comb": 1489,
+    "joint_FF": 408,
+    "receipt_child_comb": 423,
+    "receipt_child_FF": 101,
+    "wholeboard_reclaim_proven": false,
+    "baseline_deficit_LE": 490,
+    "baseline_deficit_LAB": 40,
+    "parser_query_CDC_included": false
+  },
+  "ram": {
+    "wholeboard_scenario_M9K": 56,
+    "device_M9K": 56,
+    "receipt_RAM_bits": 8192,
+    "receipt_used_bytes": 754,
+    "phase_reuse_proven": false
+  },
+  "remaining": [
+    "source/query/transport replacement and phase ownership",
+    "packet parser CRC/epoch/token/certificate",
+    "full ARM RUN/IRQ and HDMA validation relocation cost",
+    "new SNES consumer and ordinary DMA/dispatch",
+    "SPI polls/gaps/VBlank",
+    "952/955 VRAM bursts",
+    "wholeboard FIT/STA/CDC/IO/mapper margin",
+    "actual final display ACK and capture lease retire",
+    "physical sustained scroll/audio/input/menu"
+  ]
+}

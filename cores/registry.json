@@ -24,7 +24,7 @@
     },
     {
       "id": "nes",
-      "status": "NES227_hardware_baseline_247_P0_complete_P1_partial",
+      "status": "NES227_hardware_baseline_PR129_replan_waiting_merge",
       "candidate": "NES227",
       "planned_product_version": null,
       "released": false,
@@ -38,15 +38,15 @@
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
       "verification": "analysis/game227-hardware01-verification.json",
-      "plan": "docs/nes-wholepath247-contract.ko.md",
+      "plan": "docs/nes-pr129-retrospective.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "NES247_placement_comparison",
+      "investigation": "NES255_prefetch_receipt_consume_boundary",
       "hardware_baseline": "NES227",
-      "hardware_verified_scope": "227 user reports game/audio/menu normal; scroll60fps open.247 has no new hardware result.",
-      "development_evidence": "analysis/placement247-verification.json",
+      "hardware_verified_scope": "227 hardware unchanged;255 actual collector/query/source/SPI and same-clock range byte sink replay plus standalone MAP;no new MCU/SNES/physical timing.",
+      "development_evidence": "analysis/joint255-verification.json",
       "hardware_candidate": "NES227",
-      "reproduction_document": "docs/nes-placement247-contract.ko.md",
-      "next_gate": "NEXT placement 경계설계:ARM planner·의미검증/FPGA map범위·receipt/SNES boundedDMA·표시의담당과certificate/STOP/epoch/token수명명시. 같은954/970·952/955에서tile drain→typedmap→manifest→SEAL의실제일정+source/ARM/parser/새SNES setup-service+전체LE/LAB/M9K예산결합. 기존4packet window를새겹침기능으로세지말고입력COMMITTED장벽유지. 15.525ms는낙관모델,17.334ms직렬도미측정비용제외. 56/56산술/490LE40LAB부족은승인아님;새RTL/FIT/토큰opcode미세루프자동진행금지. 5886/227/GBC164/saveSRAM보존,4/5/6KiB고정금지.",
+      "reproduction_document": "docs/nes-joint255-contract.ko.md",
+      "next_gate": "PR129 머지 전에는 회고·계획·인계만 갱신하고 구현을 중단한다. 머지 상태와 merge SHA의 origin/master 포함을 확인한 뒤 새 codex/ 브랜치와 새 PR에서 R0 교체 경계/비용표 → R1 실제 ARM–FPGA–SNES 연결 비용 → R2 같은 구성의 전체 FIT/STA·fullRUN/IRQ·71프레임 판정 → R3 실기 연속 표시 순으로 진행한다. NES255는 후보이며 P2 미선정이다. 실제 면적/시간이 맞지 않고 구조적 회수 근거가 없으면 전송량·역할 분담을 재계획한다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "Production227 retained;240 functional-only/unplaced;241+246 rejected;no new installable pair.",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -706,8 +706,8 @@
         "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
         "paired_candidate": "deployed180 unchanged;1813 exporter/SPI/receiver candidate only; no new full ARM/FIT/installable pair"
       },
-      "active_plan": "docs/nes-wholepath247-plan.json",
-      "current_status_scope": "247 current pointers supersede historical NEXT;240 unplaced/241+246 rejected;P1 no selected implementation."
+      "active_plan": "docs/nes-joint255-plan.json",
+      "current_status_scope": "255 supersedes historical NEXT;P2 not selected;local same-boundary area/time gain;production227 unchanged."
     },
     {
       "id": "pce",
