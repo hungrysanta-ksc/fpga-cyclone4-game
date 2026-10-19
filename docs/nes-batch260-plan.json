@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "stage": "NES260",
+  "status": "R1_batch_connected_time_area_tradeoff_full_path_open",
+  "date_kst": "2026-10-19",
+  "pr": 130,
+  "branch": "codex/nes-wholepath-boundary-256",
+  "parent": "docs/nes-output259-plan.json",
+  "contract": "docs/nes-batch260-contract.ko.md",
+  "evidence": "analysis/batch260-verification.json",
+  "selected": {
+    "arm": "arm01",
+    "arm_guards": "arm-guards01",
+    "guards": "batch02",
+    "legacy": "legacy01",
+    "maps": [
+      "map01"
+    ],
+    "rtl": [
+      "rtl01",
+      "cold01",
+      "heavy952",
+      "heavy955",
+      "heavy962",
+      "heavy963",
+      "heavy968",
+      "heavy970",
+      "slow01",
+      "cpi01",
+      "wrap01"
+    ],
+    "bus": [
+      "bus954",
+      "bus963",
+      "bus970",
+      "bus-cpi2",
+      "bus-slow"
+    ],
+    "analysis": "analysis02"
+  },
+  "completed": [
+    "Cortex-M4 serializer:71 pinned plans,2069 map ranges grouped into124 packets",
+    "Packet head held through per-range DMA and receipt,one credit returned only at final range",
+    "Token reservation,malformed tail,cancellation,bank reuse and pending tile competition guards",
+    "Shared SPI heavy-frame schedules and matching-source Quartus Lite MAP"
+  ],
+  "next_action": "batch의 시간 이득과 추가227LE를 함께 보존한 상태에서 source/core와 출력 parser/receipt/최종 표시 경계를 실제로 결합한다. 실제 ARM N5/planner/RUN/IRQ,65816 전체 명령/PPU VBlank,tile192/ROM arbiter 비용을 먼저 닫고 기존 단일범위 parser 등 대체되는 제어를 명시해 전체 회로 예산을 재판정한다. 시간·회로 교체 경계가 타당할 때만 whole FIT/STA로 진행한다.",
+  "open": [
+    "N5 decoder and planner execution on ARM/full RUN/IRQ",
+    "actual STM32 SPI driver/hardware cycles",
+    "actual65816 full command stream and final PPU/VBlank costs",
+    "real FPGA H2/manifest/receipt verifier bound to full output stream",
+    "tile192/ROM arbiter contention beyond FETCH_WAIT sensitivity",
+    "whole board FIT/STA/CDC/IO and mapper margin",
+    "full71 new RTL/physical60fps"
+  ],
+  "production": "227 unchanged",
+  "P2_selected": false,
+  "quartus_policy": "Lite only by default; Standard purchase only if a concrete missing capability requires it"
+}
