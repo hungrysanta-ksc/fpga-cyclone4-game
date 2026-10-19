@@ -4,9 +4,9 @@
   "date_kst": "2026-10-19",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-boundary256-contract.ko.md",
-  "assessment": "NES256 R0: PR129 merged2978f04 from verified master; source/queue/parser/lease/DMA receipt replacement boundary fixed. 552 prior schedules decomposed into11 terms, maximum reconciliation error7.11e-15ms. Eight integration costs remain unknown; no new implementation or wholeboard/60fps approval.",
-  "next_action": "R1은 source export 뒤 collector→display lease 전환과 한 범위의 실제 packet→staging→SNES DMA→token/receipt→final ACK 연결부터 시작한다. 4credit queue의 단일 head/retire 소유자와 기존 타일 경로를 보존한다. U1–U8 비용을 실제 구현/계측으로 교체한 뒤 heavy7 및71프레임으로 확장하고 같은 구성의 전체 자원/시간 gate를 판정한다. 국소 MAP 절약을 전체 회수로 계산하거나 미확인 비용을0으로 두지 않는다.",
+  "authoritative_document": "docs/nes-slice257-contract.ko.md",
+  "assessment": "NES257 R1 first slice: input/display lease plus actual64B packet/queue/staging/65816 DMA/VRAM/receipt/seal/finalACK PASS,9guards. Logical RPC only; inclusive Lite MAP1947LE/40960bits with ordinaryACK pruned. Full R1/wholeboard/60fps open.",
+  "next_action": "일반/typed packet의 단일 head/retire 중재와 tile/map aperture 공유, bank/token 재사용을 같은 경계에 연결한다. 실제 ARM 계획/serializer 및 tail/scroll/OAM/H2를 붙인 뒤 heavy7/71프레임의 시간과 전체 RUN/IRQ/FIT/STA를 판정한다. NES257은 한64B map 범위의 논리적 RTL/65816 연결이며 전체 R1/60fps 완료가 아니다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "R0_complete_R1_feasibility_pending",
+      "status": "R1_first_slice_complete_full_R1_open",
       "depends_on": [
         "P0"
       ],
@@ -85,7 +85,9 @@
         "analysis/joint255-verification.json",
         "docs/nes-pr129-retrospective.ko.md",
         "docs/nes-boundary256-contract.ko.md",
-        "analysis/boundary256-verification.json"
+        "analysis/boundary256-verification.json",
+        "docs/nes-slice257-contract.ko.md",
+        "analysis/slice257-verification.json"
       ]
     },
     {
@@ -3176,7 +3178,7 @@
       }
     ]
   },
-  "active_plan": "docs/nes-boundary256-plan.json",
+  "active_plan": "docs/nes-slice257-plan.json",
   "current_status_scope": "Top-level active_plan/gates supersede historical fields; legacy versioned records and old open_issues remain historical, not current acceptance.",
   "p1_placement_followup": {
     "selected": "placement05",
@@ -3583,11 +3585,11 @@
       }
     ]
   },
-  "status": "R0_complete_with_explicit_unknowns_R1_pending",
+  "status": "R1_first_slice_complete_full_R1_open",
   "next_milestones": [
     {
       "id": "R0",
-      "status": "R0_complete_with_explicit_unknowns_R1_pending",
+      "status": "complete_with_explicit_unknowns",
       "deliverable": "기존 제어의 제거/유지/추가 목록과 같은 프레임의 전체 비용표",
       "exit": "parser/head/READ/ACK/bank/token/receipt/display ownership, RAM/CDC/packet costs included; measured/model/unknown and overlap dependencies explicit",
       "evidence": [
@@ -3596,12 +3598,15 @@
     },
     {
       "id": "R1",
-      "status": "pending",
+      "status": "first_slice_complete_full_path_pending",
       "depends_on": [
         "R0"
       ],
       "deliverable": "부담이 큰 프레임의 실제 ARM N5/계획/전송 → SPI parser → SNES 실행 연결",
-      "exit": "ARM service and SNES setup/validation/DMA/poll/VBlank measured; input commit, typed consume and final display ACK distinct; unknown MCU costs cannot pass"
+      "exit": "ARM service and SNES setup/validation/DMA/poll/VBlank measured; input commit, typed consume and final display ACK distinct; unknown MCU costs cannot pass",
+      "evidence": [
+        "analysis/slice257-verification.json"
+      ]
     },
     {
       "id": "R2",
@@ -3621,5 +3626,11 @@
       "deliverable": "SMB3 첫 레벨 실기 연속 스크롤",
       "exit": "Actual display cadence/gaps/age plus sound/input/menu pass; cold and transition separate; no frame dropping or game slowdown"
     }
-  ]
+  ],
+  "slice257": {
+    "evidence": "analysis/slice257-verification.json",
+    "full_R1": false,
+    "physical": false,
+    "whole_FIT": false
+  }
 }

@@ -1,3 +1,5 @@
+NES257 R1 첫 범위: 입력 완료 후 표시 lease로 전환하고 실제 packet→staging→65816 DMA(64B VRAM 일치)→receipt→seal→VBlank 표시 ACK 연결과9개 취소 검사를 통과했다. 논리적 RPC 연결이며 전체 R1·실기60fps는 미통과다. Lite 단독 MAP1947LE/40960bits는 일반 ACK가 제거된 제한 경계다. [현재 검증](../../docs/nes-slice257-contract.ko.md) · [계획](../../docs/nes-slice257-plan.json). 아래는 이전 기록이다.
+
 NES256 R0: PR129 머지2978f04를 확인한 새 브랜치에서 교체 경계와 전체 비용표를 확정했다. 552개 조건부 일정을 재구성했고 collector/display lease와 실제 DMA receipt 연결 문제를 확인했다. R1·전체FIT·60fps는 미통과다. [현재 경계](../../docs/nes-boundary256-contract.ko.md) · [실행 계획](../../docs/nes-boundary256-plan.json). 아래 머지 대기/NEXT는 당시 기록이다.
 
 PR129 회고·다음 계획: 전체 회로와 프레임 예산을 같은 구성으로 판정한다. 머지 전 구현은 중단하며, 머지 확인 후 master 기준 새 브랜치·새 PR에서 시작한다. [회고](../../docs/nes-pr129-retrospective.ko.md) · [다음 계획](../../docs/nes-pr129-next-plan.json). 아래 NEXT는 당시 기록이다.
