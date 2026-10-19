@@ -1,3 +1,5 @@
+NES266: H2와 표시 문맥을 결합하고 기존 phase RAM864..867에 오프셋4B만 저장했다. 71프레임·38오류와 실제65816의905/906/907 표시/HDMA/최종ACK PASS. 통합 Lite MAP8277→8149LE(-128),2924→2755FF(-169),RAM90368bits 유지. warm출력5.847475ms로 기존 재전송 제거 이득을 유지했다. 전체ARM/일반65816/ROM중재/wholeFIT/실기60fps는 미완료다. [현재 검증](docs/nes-joint266-contract.ko.md) · [계획](docs/nes-joint266-plan.json). 아래는 이전 기록이다.
+
 NES265: header identity/ACK 저장·재읽기 제어를 실제로 교체하고 manifest/fence를 FPGA 내부에서 처리했다. RTL71프레임·29오류 PASS,byte echo0 유지. 표시 문맥24B 보관·sealed 후1회 읽기를 포함해 warm출력최대5.846112ms,동일 Lite MAP8277LE(+47)/90368bits. queue는163comb/117FF 줄었으나 전체 면적 절감에는 실패했다. full ARM/일반65816/ROM/VBlank/FIT/실기60fps는 미완료다. [현재 검증](docs/nes-joint265-contract.ko.md) · [계획](docs/nes-joint265-plan.json). 아래는 이전 기록이다.
 
 NES264: ACK 후 queue head를 유지해 수신 payload에서 직접 CRC·receipt를 만들고 manifest를 요구166B→map256B→fence 순서로 바꿨다. ARM/RTL71프레임,RTL19오류/ARM18오류 PASS;byte echo55237→0. warm출력최대5.912ms,동일 Lite MAP8230LE(+943)/90368bits. full ARM/일반65816/ROM/VBlank/FIT/실기60fps는 미완료다. [현재 검증](docs/nes-joint264-contract.ko.md) · [계획](docs/nes-joint264-plan.json). 아래는 이전 기록이다.

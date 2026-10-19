@@ -4,9 +4,9 @@
   "date_kst": "2026-10-19",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint265-contract.ko.md",
-  "assessment": "NES265: header identity/ACK 저장·재읽기 제어를 실제로 교체하고 manifest/fence를 FPGA 내부에서 처리했다. RTL71프레임·29오류 PASS,byte echo0 유지. 표시 문맥24B 보관·sealed 후1회 읽기를 포함해 warm출력최대5.846112ms,동일 Lite MAP8277LE(+47)/90368bits. queue는163comb/117FF 줄었으나 전체 면적 절감에는 실패했다. full ARM/일반65816/ROM/VBlank/FIT/실기60fps는 미완료다.",
-  "next_action": "24B 표시 문맥의 의미·H2 결합과 실제65816 설정/최종 VBlank ACK를 먼저 확정하고, 문맥·parser 상태를 기존 phase RAM에 함께 넣는 교체 경계의 포트/수명/전체 비용을 비교한다. ACK 12B 축소는 stale serial/generation/sequence 방어를 유지할 때만 후보로 삼는다. ARM E0 refill/IRQ와 실제 tile ROM 중재를 같은 일정에 연결해 전체 시간·회로 게이트를 확인한다. 단독 FSM/opcode/seed/FIT 반복이나 개별 계층 절감의 보드 회수 환산은 하지 않는다.",
+  "authoritative_document": "docs/nes-joint266-contract.ko.md",
+  "assessment": "NES266: H2와 표시 문맥을 결합하고 기존 phase RAM864..867에 오프셋4B만 저장했다. 71프레임·38오류와 실제65816의905/906/907 표시/HDMA/최종ACK PASS. 통합 Lite MAP8277→8149LE(-128),2924→2755FF(-169),RAM90368bits 유지. warm출력5.847475ms로 기존 재전송 제거 이득을 유지했다. 전체ARM/일반65816/ROM중재/wholeFIT/실기60fps는 미완료다.",
+  "next_action": "266의 H2/phase-RAM 표시 경계를 유지하고, 실제 ARM E0 refill/IRQ·tile ROM 중재와 일반65816 명령/DMA를 같은 일정에 연결한다. 기존 보드의 실제 교체 목록·동시 수명·남는 제어를 확정한 뒤 whole-board Lite 자원 게이트를 수행한다. 부분 MAP의128LE를 기존490LE/40LAB 부족에서 빼지 않는다. 다음 후보는 잔여 admission/packet identity와 실제 소비 제어의 중복을 공동 제거하는 경계이며, 독립 FSM/opcode/seed/FIT 반복은 하지 않는다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -3944,6 +3944,79 @@
       "24 byte display context transport/read coverage verified, semantic binding to H2 and target register programming remain open",
       "ARM E0 refill/IRQ and tile ROM arbitration not retimed; serial sensitivity is not a bound",
       "Lite MAP partial integrated boundary, not whole FIT/STA/CDC/IO; no allocation-free display context",
+      "264 single-packet active scroll prefix and aligned raw granule limitations retained"
+    ]
+  },
+  "joint266": {
+    "status": "R1_shared_display_local_time_area_gain_verified",
+    "contract": "docs/nes-joint266-contract.ko.md",
+    "evidence": "analysis/joint266-verification.json",
+    "MAP": {
+      "prior265": {
+        "LE": 8277,
+        "comb": 6760,
+        "FF": 2924,
+        "RAM_bits": 90368
+      },
+      "replacement266": {
+        "LE": 8149,
+        "comb": 6830,
+        "FF": 2755,
+        "RAM_bits": 90368
+      },
+      "delta": {
+        "LE": -128,
+        "comb": 70,
+        "FF": -169,
+        "RAM_bits": 0
+      },
+      "hierarchy": {
+        "|nes_joint257:core|": {
+          "comb": 3177,
+          "FF": 991,
+          "RAM_bits": 49152
+        },
+        "|nes_output260:flow|": {
+          "comb": 3450,
+          "FF": 1664,
+          "RAM_bits": 41216
+        },
+        "|nes_queue260:queue|": {
+          "comb": 591,
+          "FF": 319,
+          "RAM_bits": 8192
+        }
+      },
+      "output_and_core_FSM_extracted": true,
+      "warning_counts": {
+        "265": {
+          "10335": 3,
+          "10230": 23,
+          "10764": 3,
+          "10036": 2,
+          "276027": 1,
+          "13024": 1,
+          "13410": 2
+        },
+        "266": {
+          "10335": 3,
+          "10230": 23,
+          "10764": 3,
+          "10036": 2,
+          "276027": 1,
+          "13024": 1,
+          "13410": 2
+        }
+      }
+    },
+    "whole_board_FIT": false,
+    "remaining": [
+      "actual65816 display/HDMA/ACK only; ordinary and map transfers remain native C/bus model",
+      "HDMA WRAM fixture preload from independently verified metadata; no full rendered-frame pixel oracle",
+      "file RPC stretches RTL time; CPU/VBlank clocks are separate observations, not a full-frame bound",
+      "ARM E0 refill/IRQ and actual tile ROM arbitration not retimed; prior sensitivity is unmatched",
+      "Lite MAP partial integrated boundary, not whole FIT/STA/CDC/IO or recovery of whole240 deficit",
+      "recorded display cases mask18/raw2; raw0/mask1e branches are not new actual65816 evidence",
       "264 single-packet active scroll prefix and aligned raw granule limitations retained"
     ]
   }
