@@ -4,9 +4,9 @@
   "date_kst": "2026-10-19",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-batch260-contract.ko.md",
-  "assessment": "NES260: ARM이2,069개 map 범위를124개 패킷으로 묶고 FPGA는 범위별 DMA·receipt 후 마지막에만 head/credit을 반환한다. 954 출력 ARM 완료 모델11.047→7.222ms,같은48DMA/714B다. 공유SPI954는14.381ms/CPI2는16.550ms·잔여0.117ms다. Lite MAP3282→3509LE(+227),RAM41216bits 유지로 시간·회로 상충을 확인했다. full RUN/실제65816 전체 명령/최종 표시/전체FIT·60fps는 미완료다.",
-  "next_action": "batch의 시간 이득과 추가227LE를 함께 보존한 상태에서 source/core와 출력 parser/receipt/최종 표시 경계를 실제로 결합한다. 실제 ARM N5/planner/RUN/IRQ,65816 전체 명령/PPU VBlank,tile192/ROM arbiter 비용을 먼저 닫고 기존 단일범위 parser 등 대체되는 제어를 명시해 전체 회로 예산을 재판정한다. 시간·회로 교체 경계가 타당할 때만 whole FIT/STA로 진행한다.",
+  "authoritative_document": "docs/nes-joint261-contract.ko.md",
+  "assessment": "NES261: 실제 source/core→묶음 map DMA/receipt→표시 lease를 연결해71프레임/124묶음/2069범위와6취소 검사를 통과했다. 실제65816 cold4096B/64DMA·VRAM·표시ACK도 통과했다. 같은4credit cold 출력 경계18.392→15.765ms, warm907은0.858→0.627ms다. 통합Lite MAP7141LE/5665comb/2788FF/90368bits이며 기존 제어 제거 장부를 포함해도 논리 여유는 미입증이다. 실제CPU의 nominalDMA 외900..948master clocks로500setup 배정을 재검토한다. non-map/H2/manifest 생산기·full ARM·전체65816/ROM 중재·wholeFIT·실기60fps는 미완료다.",
+  "next_action": "실제65816 dispatch/token/refresh 계측으로 기존500setup 배정을 교체한다. H2 prelude/context 시점과 일반 출력 packet→core stream/manifest 생산 경계를 확정하고, 기존 source+output 제어를 함께 제거할 구조를 전체 비용으로 비교한다. 단순 결합은 장부상 +2129comb/+605FF로 회로 여유를 입증하지 못했다. full ARM N5/planner/RUN/IRQ·실제65816 전체명령·tile192/ROM 중재를 포함한 시간/회로 게이트가 성립한 뒤에만 whole FIT/STA로 진행한다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "R1_batch_connected_time_area_tradeoff_full_path_open",
+      "status": "R1_map_core_joined_area_and_full_path_gate_open",
       "depends_on": [
         "P0"
       ],
@@ -93,7 +93,9 @@
         "docs/nes-output259-contract.ko.md",
         "analysis/output259-verification.json",
         "docs/nes-batch260-contract.ko.md",
-        "analysis/batch260-verification.json"
+        "analysis/batch260-verification.json",
+        "docs/nes-joint261-contract.ko.md",
+        "analysis/joint261-verification.json"
       ]
     },
     {
@@ -3184,7 +3186,7 @@
       }
     ]
   },
-  "active_plan": "docs/nes-batch260-plan.json",
+  "active_plan": "docs/nes-joint261-plan.json",
   "current_status_scope": "Top-level active_plan/gates supersede historical fields; legacy versioned records and old open_issues remain historical, not current acceptance.",
   "p1_placement_followup": {
     "selected": "placement05",
@@ -3671,5 +3673,23 @@
     "shared_SPI_954_model_ms": 14.381105164571428,
     "shared_SPI_954_CPI2_model_ms": 16.54953369714286,
     "remaining_display_unknown": true
+  },
+  "joint261": {
+    "evidence": "analysis/joint261-verification.json",
+    "full_path_verified": false,
+    "P2_selected": false,
+    "integrated_MAP_LE": 7141,
+    "whole_board_FIT": false,
+    "nonmap_H2_manifest_producer": "fixture boundary",
+    "frames": 71,
+    "map_ranges": 2069,
+    "batches": 124,
+    "CPU_DMA_bytes": 4096,
+    "CPU_ranges": 64,
+    "CPU_beyond_nominal_DMA_clocks": [
+      900,
+      948
+    ],
+    "shared_CPI2_serial_sensitivity_ms": 17.45535493524873
   }
 }
