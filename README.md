@@ -1,3 +1,5 @@
+NES259: Cortex-M4 명령으로 실제 token·4credit·serializer·H2를 실행해71계획/12오류/queue counter순환을 검증했다. 출력 RTL은 전체 metadata/tile과 일반 명령·typed consume·최종 ACK를 비교하고 source/output 공유 SPI를 연결했다. SNES/CPI/ROM 대기는 조건부 모델이며 full RUN·표시는 열려 있다. 공유 MAP3282LE/41216bits로258보다37LE 감소했으나954 조건부 입력+ARM출력17.30ms로 시간 게이트 실패. Quartus Lite를 기본으로 사용한다. [현재 검증](docs/nes-output259-contract.ko.md) · [계획](docs/nes-output259-plan.json). 아래는 이전 기록이다.
+
 NES258: 일반/typed 단일 head·retire와 실제206 tile/map staging 공유를 연결했다. 공유/분리 각각 정상+16검사, 실제65816 일반 ACK→tile16B/map64B DMA→receipt→표시 ACK 통과. 같은 직렬 일정의 MAP은3559→3319LE,73984→41216bits로240LE·4KiB 감소하며 실행 기록은 같다. Standard 평가판 만료 재확인/Lite 합성 성공. 전체 R1/FIT/60fps는 미완료다. [현재 검증](docs/nes-mux258-contract.ko.md) · [계획](docs/nes-mux258-plan.json). 아래는 이전 기록이다.
 
 NES257 R1 첫 범위: 입력 완료 후 표시 lease로 전환하고 실제 packet→staging→65816 DMA(64B VRAM 일치)→receipt→seal→VBlank 표시 ACK 연결과9개 취소 검사를 통과했다. 논리적 RPC 연결이며 전체 R1·실기60fps는 미통과다. Lite 단독 MAP1947LE/40960bits는 일반 ACK가 제거된 제한 경계다. [현재 검증](docs/nes-slice257-contract.ko.md) · [계획](docs/nes-slice257-plan.json). 아래는 이전 기록이다.

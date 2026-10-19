@@ -4,9 +4,9 @@
   "date_kst": "2026-10-19",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-mux258-contract.ko.md",
-  "assessment": "NES258: 일반/typed 단일 head·retire와 실제206 tile/map staging 공유를 연결했다. 공유/분리 각각 정상+16검사, 실제65816 일반 ACK→tile16B/map64B DMA→receipt→표시 ACK 통과. 같은 직렬 일정의 MAP은3559→3319LE,73984→41216bits로240LE·4KiB 감소하며 실행 기록은 같다. Standard 평가판 만료 재확인/Lite 합성 성공. 전체 R1/FIT/60fps는 미완료다.",
-  "next_action": "ARM 계획/serializer의 tile token 배정·일반/typed queue credit와 tail/scroll/OAM/H2·일반 payload 소비를 실제로 연결한다. 공유 SPI 및 tile192/ROM arbiter 경쟁을 포함한 heavy7 전체 시간표와 full RUN/IRQ·회로 경계를 완성한 뒤 같은 구성의 whole FIT/STA/CDC/IO/71프레임으로 판정한다. 258의 직렬 중재 공유 이득은 전체60fps/회로 여유 승인이 아니다.",
+  "authoritative_document": "docs/nes-output259-contract.ko.md",
+  "assessment": "NES259: Cortex-M4 명령으로 실제 token·4credit·serializer·H2를 실행해71계획/12오류/queue counter순환을 검증했다. 출력 RTL은 전체 metadata/tile과 일반 명령·typed consume·최종 ACK를 비교하고 source/output 공유 SPI를 연결했다. SNES/CPI/ROM 대기는 조건부 모델이며 full RUN·표시는 열려 있다. 공유 MAP3282LE/41216bits로258보다37LE 감소했으나954 조건부 입력+ARM출력17.30ms로 시간 게이트 실패. Quartus Lite를 기본으로 사용한다.",
+  "next_action": "map 여러 범위를 한 packet head로 묶고 범위별 DMA/receipt 뒤 retire하는 후보를 source/output 공유 SPI·token/credit/STOP·공유 RAM 포트와 함께 비교한다. 실제 tile192/ROM arbiter, ARM N5/planner/RUN/IRQ, 실제 SNES/최종 표시를 같은 비용표에 결합한 뒤 시간·전체 회로 게이트가 타당할 때만 whole FIT/STA로 진행한다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "R1_bounded_arbitration_complete_full_R1_open",
+      "status": "R1_ARM_output_connected_time_gate_failed_full_path_open",
       "depends_on": [
         "P0"
       ],
@@ -89,7 +89,9 @@
         "docs/nes-slice257-contract.ko.md",
         "analysis/slice257-verification.json",
         "docs/nes-mux258-contract.ko.md",
-        "analysis/mux258-verification.json"
+        "analysis/mux258-verification.json",
+        "docs/nes-output259-contract.ko.md",
+        "analysis/output259-verification.json"
       ]
     },
     {
@@ -3180,7 +3182,7 @@
       }
     ]
   },
-  "active_plan": "docs/nes-mux258-plan.json",
+  "active_plan": "docs/nes-output259-plan.json",
   "current_status_scope": "Top-level active_plan/gates supersede historical fields; legacy versioned records and old open_issues remain historical, not current acceptance.",
   "p1_placement_followup": {
     "selected": "placement05",
@@ -3587,7 +3589,7 @@
       }
     ]
   },
-  "status": "R1_bounded_arbitration_complete_full_R1_open",
+  "status": "R1_ARM_output_connected_time_gate_failed_full_path_open",
   "next_milestones": [
     {
       "id": "R0",
@@ -3600,7 +3602,7 @@
     },
     {
       "id": "R1",
-      "status": "bounded_arbitration_complete_full_path_pending",
+      "status": "ARM_output_connected_time_gate_failed_full_path_pending",
       "depends_on": [
         "R0"
       ],
@@ -3608,7 +3610,8 @@
       "exit": "ARM service and SNES setup/validation/DMA/poll/VBlank measured; input commit, typed consume and final display ACK distinct; unknown MCU costs cannot pass",
       "evidence": [
         "analysis/slice257-verification.json",
-        "analysis/mux258-verification.json"
+        "analysis/mux258-verification.json",
+        "analysis/output259-verification.json"
       ]
     },
     {
@@ -3643,5 +3646,15 @@
     "whole_FIT": false,
     "shared_minus_separate_LE": -240,
     "shared_minus_separate_RAM_bits": -32768
+  },
+  "output259": {
+    "evidence": "analysis/output259-verification.json",
+    "full_R1": false,
+    "physical": false,
+    "whole_FIT": false,
+    "shared_minus_separate_LE": -185,
+    "shared_minus_separate_RAM_bits": -32768,
+    "quartus": "Lite",
+    "P2_selected": false
   }
 }
