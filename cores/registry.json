@@ -24,7 +24,7 @@
     },
     {
       "id": "nes",
-      "status": "NES227_hardware_baseline_266_shared_display_cost_comparison",
+      "status": "NES227_hardware_baseline_267_whole_cost_gate_failed",
       "candidate": "NES227",
       "planned_product_version": null,
       "released": false,
@@ -38,15 +38,15 @@
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
       "verification": "analysis/game227-hardware01-verification.json",
-      "plan": "docs/nes-joint266-contract.ko.md",
+      "plan": "docs/nes-joint267-contract.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "NES266_H2_phase_RAM_display",
+      "investigation": "NES267_ARM_ROM_65816_whole_cost",
       "hardware_baseline": "NES227",
-      "hardware_verified_scope": "227 unchanged;266 actual65816 display/HDMA/ACK plus RTL/native C comparison; no whole-board timing.",
-      "development_evidence": "analysis/joint266-verification.json",
+      "hardware_verified_scope": "227 unchanged;267 ARM instructions/ROM RTL/ordinary65816 bus trace; no physical60fps or fullRUN.",
+      "development_evidence": "analysis/joint267-verification.json",
       "hardware_candidate": "NES227",
-      "reproduction_document": "docs/nes-joint266-contract.ko.md",
-      "next_gate": "266의 H2/phase-RAM 표시 경계를 유지하고, 실제 ARM E0 refill/IRQ·tile ROM 중재와 일반65816 명령/DMA를 같은 일정에 연결한다. 기존 보드의 실제 교체 목록·동시 수명·남는 제어를 확정한 뒤 whole-board Lite 자원 게이트를 수행한다. 부분 MAP의128LE를 기존490LE/40LAB 부족에서 빼지 않는다. 다음 후보는 잔여 admission/packet identity와 실제 소비 제어의 중복을 공동 제거하는 경계이며, 독립 FSM/opcode/seed/FIT 반복은 하지 않는다.",
+      "reproduction_document": "docs/nes-joint267-contract.ko.md",
+      "next_gate": "267의 whole-board 자원 실패를 반영해 E0 출력과 E8/E9 tile 계획의 admission·identity·retire 제어를 함께 대체하는 경계 또는 변환/검증 역할 재배치를 비교한다. 실제65816에서 매 프레임 HDMA1100B 채우기(약2.89ms)와 OAM 반복 생성 비용을 확인했으므로 fixed-source DMA/유효 bank 재사용을 시간 후보로 함께 검토한다. 무효화·receipt·HDMA 종료·잔존 sprite를 먼저 보장하고 full ARM 입력/planner/IRQ·active VBlank 비용 및 whole logic/RAM 예산을 함께 확정한다. 현재267은 P2 미선택이며 독립 FSM/opcode/seed/FIT 반복은 하지 않는다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "Production227 retained;240 functional-only/unplaced;241+246 rejected;no new installable pair.",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -706,8 +706,8 @@
         "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
         "paired_candidate": "deployed180 unchanged;1813 exporter/SPI/receiver candidate only; no new full ARM/FIT/installable pair"
       },
-      "active_plan": "docs/nes-joint255-plan.json",
-      "current_status_scope": "255 supersedes historical NEXT;P2 not selected;local same-boundary area/time gain;production227 unchanged."
+      "active_plan": "docs/nes-joint267-plan.json",
+      "current_status_scope": "267 supersedes historical NEXT; whole-board resource gate failed; P2 not selected; production227 unchanged."
     },
     {
       "id": "pce",
