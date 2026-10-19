@@ -1,0 +1,505 @@
+{
+  "passed": true,
+  "stage": 256,
+  "scope": "R0 source audit and exact decomposition of the existing conditional schedule.\n\nNo hardware execution: RTL measurements are inherited fixture measurements.\nUnknown integration costs remain null, never zero or a measured time bound.\n",
+  "merged129": "2978f04aef65987c615d62ca54576e68fc946637",
+  "schedule_rows": 552,
+  "warm_frames": 69,
+  "heavy_frames": [
+    952,
+    954,
+    955,
+    962,
+    963,
+    968,
+    970
+  ],
+  "components": {
+    "source_rtl_ms": "inherited_RTL_fixture_elapsed_includes_SPI_polling_and_waits",
+    "output_spi_model_ms": "modeled_existing_output_and_control_wire_at_2.625MHz_excludes_extra_H2",
+    "service_wait_model_ms": "derived_critical_path_wait_after_existing_SPI_overlap_not_all_CPU_work",
+    "display_sample_ms": "historical_SNES_sample_reused_by_model_excludes_VBlank_wait_not_WCET",
+    "parser_allocated_ms": "unmeasured_8_FPGA_cycles_per_output_byte",
+    "final_fixed_allocated_ms": "unmeasured_2000_SNES_master_clocks",
+    "phase_allocated_ms": "unmeasured_2_FPGA_cycles_retained_from251",
+    "arm_allocated_ms": "unmeasured_32000_ARM_cycles_at84MHz",
+    "certificate_wire_allocated_ms": "unbound_extra32B_wire_at2.625MHz",
+    "receipt_nonstream_rtl_ms": "inherited_RTL_fixture_elapsed_minus_driver_stream_not_actual_parser_or_DMA",
+    "stress_stream_reservation_ms": "artificial_driver_reservation_double_charges_transfer_not_a_bound"
+  },
+  "max_reconciliation_error_ms": 7.105427357601002e-15,
+  "summaries": [
+    {
+      "setup": 500,
+      "retained_policy": "command_tail",
+      "accounting_policy": "serialized_stress_reservation",
+      "worst_frame": 970,
+      "maximum_ms": 16.548909083601462,
+      "over": []
+    },
+    {
+      "setup": 500,
+      "retained_policy": "command_tail",
+      "accounting_policy": "transfer_covered_conditional",
+      "worst_frame": 970,
+      "maximum_ms": 15.995909083601463,
+      "over": []
+    },
+    {
+      "setup": 500,
+      "retained_policy": "only_bitmap_removed",
+      "accounting_policy": "serialized_stress_reservation",
+      "worst_frame": 970,
+      "maximum_ms": 16.929776856833346,
+      "over": [
+        954,
+        962,
+        970
+      ]
+    },
+    {
+      "setup": 500,
+      "retained_policy": "only_bitmap_removed",
+      "accounting_policy": "transfer_covered_conditional",
+      "worst_frame": 970,
+      "maximum_ms": 16.37677685683335,
+      "over": []
+    },
+    {
+      "setup": 1000,
+      "retained_policy": "command_tail",
+      "accounting_policy": "serialized_stress_reservation",
+      "worst_frame": 970,
+      "maximum_ms": 17.41028485435817,
+      "over": [
+        954,
+        970
+      ]
+    },
+    {
+      "setup": 1000,
+      "retained_policy": "command_tail",
+      "accounting_policy": "transfer_covered_conditional",
+      "worst_frame": 970,
+      "maximum_ms": 16.857284854358173,
+      "over": [
+        970
+      ]
+    },
+    {
+      "setup": 1000,
+      "retained_policy": "only_bitmap_removed",
+      "accounting_policy": "serialized_stress_reservation",
+      "worst_frame": 970,
+      "maximum_ms": 17.791152627590055,
+      "over": [
+        952,
+        954,
+        962,
+        970
+      ]
+    },
+    {
+      "setup": 1000,
+      "retained_policy": "only_bitmap_removed",
+      "accounting_policy": "transfer_covered_conditional",
+      "worst_frame": 970,
+      "maximum_ms": 17.238152627590054,
+      "over": [
+        954,
+        962,
+        970
+      ]
+    }
+  ],
+  "old_board_MAP_hierarchy": [
+    {
+      "instance": "|nes_direct206:direct_path|",
+      "comb": 2503,
+      "FF": 1670,
+      "bits": 41216,
+      "metric": "old240_MAP_inclusive_hierarchy_NOT_reclaim"
+    },
+    {
+      "instance": "|nes_bulk_control194:control|",
+      "comb": 100,
+      "FF": 174,
+      "bits": 0,
+      "metric": "old240_MAP_inclusive_hierarchy_NOT_reclaim"
+    },
+    {
+      "instance": "|nes_plan_batch206:transport|",
+      "comb": 410,
+      "FF": 357,
+      "bits": 8192,
+      "metric": "old240_MAP_inclusive_hierarchy_NOT_reclaim"
+    },
+    {
+      "instance": "|nes_plan_spi200:endpoint|",
+      "comb": 557,
+      "FF": 296,
+      "bits": 0,
+      "metric": "old240_MAP_inclusive_hierarchy_NOT_reclaim"
+    },
+    {
+      "instance": "|nes_tile_bulk206:bulk|",
+      "comb": 465,
+      "FF": 512,
+      "bits": 33024,
+      "metric": "old240_MAP_inclusive_hierarchy_NOT_reclaim"
+    },
+    {
+      "instance": "|nes_source240:native_source240|",
+      "comb": 2092,
+      "FF": 974,
+      "bits": 57344,
+      "metric": "old240_MAP_inclusive_hierarchy_NOT_reclaim"
+    },
+    {
+      "instance": "|nes_sink_bridge165:sink|",
+      "comb": 748,
+      "FF": 580,
+      "bits": 40960,
+      "metric": "old240_MAP_inclusive_hierarchy_NOT_reclaim"
+    },
+    {
+      "instance": "|nes_sink_bus165:bus|",
+      "comb": 66,
+      "FF": 149,
+      "bits": 32768,
+      "metric": "old240_MAP_inclusive_hierarchy_NOT_reclaim"
+    },
+    {
+      "instance": "|nes_sink_spi165:endpoint|",
+      "comb": 679,
+      "FF": 424,
+      "bits": 8192,
+      "metric": "old240_MAP_inclusive_hierarchy_NOT_reclaim"
+    }
+  ],
+  "candidate_standalone_MAP": {
+    "LE": 3362,
+    "comb": 3055,
+    "FF": 985,
+    "bits": 49152
+  },
+  "wholeboard_savings_proven": false,
+  "static_observations": [
+    {
+      "path": "probes/nes-source240/board01/nes_live_joint.sv",
+      "anchor": "nes_source240 native_source240",
+      "lines": [
+        317
+      ]
+    },
+    {
+      "path": "probes/nes-source240/board01/nes_live_joint.sv",
+      "anchor": ".done(export_release204)",
+      "lines": [
+        327
+      ]
+    },
+    {
+      "path": "probes/nes-source240/board01/nes_live_joint.sv",
+      "anchor": "nes_direct206 direct_path",
+      "lines": [
+        251
+      ]
+    },
+    {
+      "path": "probes/nes-source240/board01/nes_sink_spi165.sv",
+      "anchor": "buffer[0:1023]",
+      "lines": [
+        14
+      ]
+    },
+    {
+      "path": "probes/nes-source240/board01/nes_sink_spi165.sv",
+      "anchor": "wire [2:0] used=accepted[2:0]-retired[2:0]",
+      "lines": [
+        17
+      ]
+    },
+    {
+      "path": "probes/nes-source240/board01/nes_sink_spi165.sv",
+      "anchor": "read_address=checking?",
+      "lines": [
+        24
+      ]
+    },
+    {
+      "path": "probes/nes-source240/board01/nes_sink_spi165.sv",
+      "anchor": "retired<=retired+1",
+      "lines": [
+        85
+      ]
+    },
+    {
+      "path": "probes/nes-source240/board01/nes_sink_spi165.sv",
+      "anchor": "module nes_sink_spi165",
+      "lines": [
+        6
+      ]
+    },
+    {
+      "path": "probes/nes-source240/board01/nes_direct206.sv",
+      "anchor": "nes_source_tile192",
+      "lines": [
+        62
+      ]
+    },
+    {
+      "path": "probes/nes-source240/board01/nes_direct206.sv",
+      "anchor": "nes_tile_bulk206",
+      "lines": [
+        71
+      ]
+    },
+    {
+      "path": "probes/nes-source240/board01/nes_direct206.sv",
+      "anchor": "nes_bulk_control194",
+      "lines": [
+        77
+      ]
+    },
+    {
+      "path": "probes/nes-source240/board01/nes_direct206.sv",
+      "anchor": "nes_plan_batch206",
+      "lines": [
+        54
+      ]
+    },
+    {
+      "path": "probes/nes-joint255/test03/nes_core255.sv",
+      "anchor": "assign lease_ok=frame_owned&&geometry_valid&&generation==frame_generation",
+      "lines": [
+        161
+      ]
+    },
+    {
+      "path": "probes/nes-joint255/test03/nes_core255.sv",
+      "anchor": "base_serial<=serial;done<=1;",
+      "lines": [
+        351
+      ]
+    },
+    {
+      "path": "probes/nes-joint255/test03/nes_core255.sv",
+      "anchor": "state<=V_IDLE",
+      "lines": [
+        351
+      ]
+    },
+    {
+      "path": "probes/nes-joint255/test03/nes_core255.sv",
+      "anchor": "assign sink_valid=",
+      "lines": [
+        153
+      ]
+    },
+    {
+      "path": "probes/nes-joint255/test03/nes_core255.sv",
+      "anchor": "V_WAITDISPLAY:if(v_display_ack)",
+      "lines": [
+        401
+      ]
+    },
+    {
+      "path": "probes/nes-joint255/test03/nes_joint255.sv",
+      "anchor": "frame_owned&&geometry_valid&&output_phase",
+      "lines": [
+        72
+      ]
+    },
+    {
+      "path": "probes/nes-joint255/test03/nes_joint255.sv",
+      "anchor": "nes_transport255 transport",
+      "lines": [
+        75
+      ]
+    },
+    {
+      "path": "repository-nes-milestone/src/nes/rtl/nes_capture_lease201.sv",
+      "anchor": "waiting_display",
+      "lines": [
+        12,
+        20,
+        23,
+        26,
+        33,
+        42,
+        44
+      ]
+    },
+    {
+      "path": "repository-nes-milestone/src/nes/rtl/nes_capture_lease201.sv",
+      "anchor": "assign release_frame=stop||export_release",
+      "lines": [
+        30
+      ]
+    },
+    {
+      "path": "repository-nes-milestone/src/nes/rtl/nes_capture_lease201.sv",
+      "anchor": "retire_commit&&!bad_retire",
+      "lines": [
+        44
+      ]
+    },
+    {
+      "path": "repository-nes-milestone/src/nes/rtl/nes_bulk_aperture188.sv",
+      "anchor": "storage[0:4095]",
+      "lines": [
+        21
+      ]
+    },
+    {
+      "path": "repository-nes-milestone/src/nes/rtl/nes_bulk_aperture188.sv",
+      "anchor": "consume_token==tokens[reader]",
+      "lines": [
+        51
+      ]
+    },
+    {
+      "path": "repository-nes-milestone/src/nes/rtl/nes_bulk_aperture188.sv",
+      "anchor": "sealed[reader]<=0",
+      "lines": [
+        52
+      ]
+    },
+    {
+      "path": "probes/nes-runtime233/arm01/src/nes_native_runtime165.c",
+      "anchor": "nes_sink231_seal",
+      "lines": [
+        105
+      ]
+    },
+    {
+      "path": "probes/nes-runtime233/arm01/src/nes_native_runtime165.c",
+      "anchor": "if(!s->sink.displayed",
+      "lines": [
+        109
+      ]
+    },
+    {
+      "path": "probes/nes-runtime233/arm01/src/nes_native_runtime165.c",
+      "anchor": "nes_plan200_retire",
+      "lines": [
+        118
+      ]
+    },
+    {
+      "path": "probes/nes-runtime233/arm01/src/nes_native_runtime165.c",
+      "anchor": "nes_native165_consumed",
+      "lines": [
+        119
+      ]
+    }
+  ],
+  "integration_findings": [
+    "255 output lease uses collector ownership;240 export releases collector and waits on separate display lease.",
+    "255 byte acceptance cannot stand in for SNES DMA completion or final display ACK.",
+    "240 sink module is named nes_sink_spi165 but contains four-packet queue184 behavior."
+  ],
+  "unknown_costs": [
+    {
+      "id": "U1",
+      "owner": "ARM",
+      "required_measurement": "N5 restore/planner/H2 generation/output serialization/fullRUN IRQ actual cycles and memory",
+      "time_ms": null,
+      "area_LE": null
+    },
+    {
+      "id": "U2",
+      "owner": "FPGA_host",
+      "required_measurement": "Output packet parser/head arbitration/typed packet retirement and CRC service",
+      "time_ms": null,
+      "area_LE": null
+    },
+    {
+      "id": "U3",
+      "owner": "FPGA_cross_clock",
+      "required_measurement": "Host parser to NES core transfer and phase-specific captured/display lease binding",
+      "time_ms": null,
+      "area_LE": null
+    },
+    {
+      "id": "U4",
+      "owner": "FPGA_SNES",
+      "required_measurement": "Range staging to actual DMA completion/token receipt, bank/display serial history",
+      "time_ms": null,
+      "area_LE": null
+    },
+    {
+      "id": "U5",
+      "owner": "FPGA",
+      "required_measurement": "Map staging RAM, descriptor storage, arbitration with existing tile aperture and credit lifetime",
+      "time_ms": null,
+      "area_LE": null
+    },
+    {
+      "id": "U6",
+      "owner": "SNES",
+      "required_measurement": "Actual typed setup, ordinary payload copy/DMA, dispatch and polling not covered by retained marks",
+      "time_ms": null,
+      "area_LE": null
+    },
+    {
+      "id": "U7",
+      "owner": "whole_path",
+      "required_measurement": "VBlank waits, NES capture/execute overlap, audio/input scheduling, final retire stalls",
+      "time_ms": null,
+      "area_LE": null
+    },
+    {
+      "id": "U8",
+      "owner": "FPGA_ARM_SNES",
+      "required_measurement": "tail CRC/fresh scroll/OAM/H2 transport and coverage binding; final check removal approval",
+      "time_ms": null,
+      "area_LE": null
+    }
+  ],
+  "new_RTL": false,
+  "new_MAP": false,
+  "new_FIT": false,
+  "new_SNES": false,
+  "new_ARM_execution": false,
+  "R0_scope": "boundary and accounting inventory only; no product adoption or timing approval",
+  "input_hashes": {
+    "probes/nes-joint250/analysis02/result.json": "d331a10a85c1b8090c37cf2a6d56866ceb6cccbb6546ec03bf489426b9311dd1",
+    "probes/nes-joint249/analysis02/result.json": "1a19450ee8133700cee334f1a0c5209aedfc240d6d24ffede2a57d582bd4becc",
+    "probes/nes-wholepath247/placement05/result.json": "a3065fa24bfdda5c84ba4ad3cb26a458156253b4a4fc21f4fe47a588666de308",
+    "repository-nes-milestone/analysis/joint255-verification.json": "de2c210f4c07cbf64ec94f127600218b063f841d74b8ce7d800bb871f583c399",
+    "repository-nes-milestone/analysis/joint250-verification.json": "83234e11a27639bb757f6ff2ab374a6e8f7722b6fce9133d11e2df382bb93c84",
+    "repository-nes-milestone/analysis/joint249-verification.json": "1fb038cb9a95c7c55ab1f72c8ad47ce2314e92af6c168b83761fabf8cd7f586c",
+    "repository-nes-milestone/analysis/placement247-verification.json": "08bd1b823a6d10778116b47b0c828aee8c0c4506fc05c79b3024dea0d8adc88b",
+    "repository-nes-milestone/analysis/joint255-frames.csv": "e3a1aeaa816d5d6154aff6a77b7962c774827beb7a479c13f077ea5d77145920",
+    "repository-nes-milestone/analysis/joint255-schedules.csv": "0ff8e5a7c57785d7f49e6ab0409eacebda0d931a77a6f7b8eee79efac36905a9",
+    "probes/nes-source240/board01/nes_live_joint.sv": "cffe72edf749df6b7c496add3a81c574f9fbc76d813b32a3255f7d7abe278ae1",
+    "probes/nes-source240/board01/nes_sink_spi165.sv": "639ec92b11a93fed6afbe588556607b13e2c7769edbfc863b37a4716b15c246b",
+    "probes/nes-source240/board01/nes_direct206.sv": "ab31ad8ab6dca5ec9bb33c63a46ee4d9014e190e9922df0084ea7279514c8514",
+    "probes/nes-joint255/test03/nes_core255.sv": "dfcb9359ba173cc68666e8608d5afdbeb034122c34b08a374c63476d9df8abc8",
+    "probes/nes-joint255/test03/nes_joint255.sv": "29bc6bdd83ccd37e08105990ca8f02d273d6502a18499081ddcdda3e5e0858af",
+    "repository-nes-milestone/src/nes/rtl/nes_capture_lease201.sv": "c3f95b8e7b56afbe65e3484e1006d4fc2c54b6e47407bf32124d8ae461fb7f61",
+    "repository-nes-milestone/src/nes/rtl/nes_bulk_aperture188.sv": "fdc4e32278fbeab002b74ffbcac84951a346e11469c7fa2d332d0b74861bf466",
+    "probes/nes-runtime233/arm01/src/nes_native_runtime165.c": "c08ce86c9641e784fa93afdc3b63083f9d964f224ea96e0869063da1290d7e50",
+    "probes/nes-joint255/test03/result.json": "db29e24a80088e412e39be59a00bd5f22d2575519be0d704928b41fdb457ccb5",
+    "probes/nes-joint255/test03/nes_transport255.sv": "cc9947927351afddab1c60434f8a41e61b1bad7e88163dd314668a9a6cde5c80",
+    "probes/nes-joint255/test03/nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "probes/nes-source240/board01/output_files/board.map.rpt": "2e6e18dd1eef5ea6cee34ffe351e7563964a938dfacf2185e01d5df76aad3b3c",
+    "repository-nes-milestone/tools/analyze_nes_schedule248.py": "2bd38618d432ec60843093e7081fa992276d0dffa1c4378c4a007bf60378a52e",
+    "repository-nes-milestone/tools/analyze_nes_joint249.py": "8bb0bf1d9eb6790fd49dfe1a455c35cd7d17761c25f95adbe78e9dc7bf0a76fb",
+    "repository-nes-milestone/tools/analyze_nes_joint250.py": "a0de55936255bc4b9bed2624659ef40889e06febcd78ac6205fa5fa9559d348b",
+    "repository-nes-milestone/tools/analyze_nes_joint251.py": "7c30f731a2810187e5e4390e0de170c0e3aedbe3994448ed4a68c437b5bc1e8f",
+    "repository-nes-milestone/tools/analyze_nes_binding252.py": "434f81fd3418657aef47e8ac385075219ea311c8cd9873d86bdfe917b7d3806a",
+    "repository-nes-milestone/tools/analyze_nes_joint253.py": "9739317bd2e11953e649cf460298aaa6fe8bc2c16892c7e85aeef2dc5ef34261",
+    "repository-nes-milestone/tools/analyze_nes_joint254.py": "c55e7f3070e0ac23290be0e4392fb68851ab655c66678297a4657c14c9a61764",
+    "repository-nes-milestone/tools/analyze_nes_joint255.py": "ee84c4a8af2df1088ec03ed473afd821918549c99e5a53c3e0ee07bdd9bcf8da",
+    "repository-nes-milestone/analysis/source240-verification.json": "eaf9cd2d0f62b84e42e3443bdbe9c384881c68f74522b3fde70ffc6cb2404367",
+    "repository-nes-milestone/analysis/runtime233-verification.json": "2ab518bd81f8c98fe8e9da0eb44c8bd3c3e872982219500310cab1888b503058"
+  },
+  "private_result_sha256": "c11ccc862ef3ac873245b1c372cca38d6b15e4f05652a0bc3a870c2d9f00f3bc",
+  "script_sha256": "3687186d52f797402a3b8aa96fef8eaa32d021a2fb305d529db3502d3f7d7ce1",
+  "board240_result_sha256_verified": "f286baa478a13dbe3d40c2313119dfdea154aadcecd311eccf5bf9ed011e15c5",
+  "baseline255_public_evidence_unchanged": true,
+  "input_count": 31
+}
