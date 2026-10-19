@@ -24,7 +24,7 @@
     },
     {
       "id": "nes",
-      "status": "NES227_hardware_baseline_252_HDMA_binding_P1_partial",
+      "status": "NES227_hardware_baseline_253_integrated_boundary_P1_partial",
       "candidate": "NES227",
       "planned_product_version": null,
       "released": false,
@@ -38,15 +38,15 @@
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
       "verification": "analysis/game227-hardware01-verification.json",
-      "plan": "docs/nes-binding252-contract.ko.md",
+      "plan": "docs/nes-joint253-contract.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "NES252_sparse_HDMA_inheritance_and_64B_CRC_candidate",
+      "investigation": "NES253_shared_CRC_RAM_source_transport_receipt",
       "hardware_baseline": "NES227",
-      "hardware_verified_scope": "227 hardware unchanged;252 host C certificate/ARM objects and Python packet/shadow policies only;no RTL/MAP/MCU timing.",
-      "development_evidence": "analysis/binding252-verification.json",
+      "hardware_verified_scope": "227 hardware unchanged;253 actual collector/query/source/SPI RTL and recorded output-consume/H2 replay/MAP;no new MCU/SNES/physical timing.",
+      "development_evidence": "analysis/joint253-verification.json",
       "hardware_candidate": "NES227",
-      "reproduction_document": "docs/nes-binding252-contract.ko.md",
-      "next_gate": "64B raw-tail CRC를기존validity와결합한공유RAM배치(영속396/임시422/source512..1023)를후보로,실제query/projector→source→SPI와outputconsume→CRC→certificate의기존제어를제거하는최소통합경계를검증한다. CRC source/block누산상태와clock/SS/token/CDC/최종displayACK는자동공유하지않는다. 단독CRC/작은counter/ROM/seed/FIT반복금지. 전체ARMIRQ·SNES남은DMA·poll/VBlank·952955·mapper·CDCIOSTA 공동여유 전 fullFIT/설치FW/실기금지.",
+      "reproduction_document": "docs/nes-joint253-contract.ko.md",
+      "next_gate": "실측 경계의 query/projector와 source 입력 커서·행 제어 중 중복을 실제로 제거하고, 출력 인증서 문맥의 단계별 RAM 수명과 소비 어댑터 비용을 함께 비교한다. source/receipt 한 FSM 및 CRC 공유만으로 전체490LE/40LAB 부족이 해소됐다고 보지 않는다. 실제 ARM N5 복원·계획·H2 생성·출력 소비/최종 ACK 연결과 fullRUN/IRQ·SNES 잔존 DMA·poll/VBlank 비용이 필요하다. 독립 CRC/ROM/seed 미세조정이나 근거 없는 fullFIT 반복은 하지 않는다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "Production227 retained;240 functional-only/unplaced;241+246 rejected;no new installable pair.",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -706,8 +706,8 @@
         "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
         "paired_candidate": "deployed180 unchanged;1813 exporter/SPI/receiver candidate only; no new full ARM/FIT/installable pair"
       },
-      "active_plan": "docs/nes-binding252-plan.json",
-      "current_status_scope": "252 pointers supersede historical NEXT;64B shadow is a candidate,not selected P2;production227 unchanged."
+      "active_plan": "docs/nes-joint253-plan.json",
+      "current_status_scope": "253 supersedes historical NEXT;P2 not selected;output parser/ARM/SNES binding incomplete;production227 unchanged."
     },
     {
       "id": "pce",

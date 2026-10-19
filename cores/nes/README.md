@@ -1,3 +1,15 @@
+# 현재 상태 — NES253 공유 CRC 통합 경계
+
+NES253은 실제 frame201 query→4398B 투영→N5 source→SPI 핀과, 기록된 C 출력 소비 바이트→64B CRC RAM→H2 인증서를 검증했다. 71프레임·14오류 검사 PASS. 동일 독립 경계 MAP은 기존240 2646LE/2336comb/989FF/57344bits에서 새 검증을 포함한253 3404LE/3078comb/1100FF/49152bits로 변했다(LE +758). Warm 출력 검증 1949..2081cycles, 해시 상태 170..170cycles. 조건부500setup 최대15.993545ms/잔여0.673121ms. RAM 이득은 확인했으나 논리 증가로 이 구성은 회로 여유 확보 후보로 채택하지 않는다. 전체 회로·ARM·SNES 여유는 미입증이며 P2 미선정.
+
+실측 경계의 query/projector와 source 입력 커서·행 제어 중 중복을 실제로 제거하고, 출력 인증서 문맥의 단계별 RAM 수명과 소비 어댑터 비용을 함께 비교한다. source/receipt 한 FSM 및 CRC 공유만으로 전체490LE/40LAB 부족이 해소됐다고 보지 않는다. 실제 ARM N5 복원·계획·H2 생성·출력 소비/최종 ACK 연결과 fullRUN/IRQ·SNES 잔존 DMA·poll/VBlank 비용이 필요하다. 독립 CRC/ROM/seed 미세조정이나 근거 없는 fullFIT 반복은 하지 않는다.
+
+[검토](../../docs/nes-joint253-contract.ko.md) · [현재 계획](../../docs/nes-joint253-plan.json) · [집계](../../analysis/joint253-verification.json)
+
+아래252 및 이전 NEXT는 당시 기록이다.
+
+---
+
 # 현재 상태 — NES252 HDMA 상속 봉인
 
 NES252 실제71프레임에서warm69 모두HDMA90B 중69B를상속했다. 새수신분CRC만으로는부족. 기존16B재전송은181B추가/조건부16.732788ms초과,compact100B는16.485931ms. Raw-tail16granule CRC를양bank64B에보존하면추가표전송0B,공유RAM배치818B후보로16.212805ms/잔여0.453861ms(추가CRC처리배정). C certificate와Python수신모델71frames,9372+2769거부/10갱신무효화검사PASS. ARMtext총908B/함수별48·48·36·12B,fullRUN·MCU시간·RTL·논리회수미입증/P2미선정.
