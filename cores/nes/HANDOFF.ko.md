@@ -1,3 +1,5 @@
+NES258: 일반/typed 단일 head·retire와 실제206 tile/map staging 공유를 연결했다. 공유/분리 각각 정상+16검사, 실제65816 일반 ACK→tile16B/map64B DMA→receipt→표시 ACK 통과. 같은 직렬 일정의 MAP은3559→3319LE,73984→41216bits로240LE·4KiB 감소하며 실행 기록은 같다. Standard 평가판 만료 재확인/Lite 합성 성공. 전체 R1/FIT/60fps는 미완료다. [현재 검증](../../docs/nes-mux258-contract.ko.md) · [계획](../../docs/nes-mux258-plan.json). 아래는 이전 기록이다.
+
 NES257 R1 첫 범위: 입력 완료 후 표시 lease로 전환하고 실제 packet→staging→65816 DMA(64B VRAM 일치)→receipt→seal→VBlank 표시 ACK 연결과9개 취소 검사를 통과했다. 논리적 RPC 연결이며 전체 R1·실기60fps는 미통과다. Lite 단독 MAP1947LE/40960bits는 일반 ACK가 제거된 제한 경계다. [현재 검증](../../docs/nes-slice257-contract.ko.md) · [계획](../../docs/nes-slice257-plan.json). 아래는 이전 기록이다.
 
 NES256 R0: PR129 머지2978f04를 확인한 새 브랜치에서 교체 경계와 전체 비용표를 확정했다. 552개 조건부 일정을 재구성했고 collector/display lease와 실제 DMA receipt 연결 문제를 확인했다. R1·전체FIT·60fps는 미통과다. [현재 경계](../../docs/nes-boundary256-contract.ko.md) · [실행 계획](../../docs/nes-boundary256-plan.json). 아래 머지 대기/NEXT는 당시 기록이다.
