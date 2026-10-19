@@ -4,9 +4,9 @@
   "date_kst": "2026-10-19",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint264-contract.ko.md",
-  "assessment": "NES264: ACK 후 queue head를 유지해 수신 payload에서 직접 CRC·receipt를 만들고 manifest를 요구166B→map256B→fence 순서로 바꿨다. ARM/RTL71프레임,RTL19오류/ARM18오류 PASS;byte echo55237→0. warm출력최대5.912ms,동일 Lite MAP8230LE(+943)/90368bits. full ARM/일반65816/ROM/VBlank/FIT/실기60fps는 미완료다.",
-  "next_action": "직접 payload CRC/receipt와 ACK 이후 queue 소유권을 유지한다. 다음은 admission/header/ACK의 중복 identity 검사·상태를 같은 경계에서 줄이고, 검사용 manifest의 SNES 재읽기·ACK까지 없앨 수 있는지 비교한다. 최종 fence의 실제65816 표시 문맥 보관/소비, ARM E0 refill/IRQ와 실제 tile ROM 중재를 함께 연결해 시간·회로 표를 갱신한 뒤 P2를 판단한다. 개별 FSM/opcode/FIT 반복으로 회수량을 추정하지 않는다.",
+  "authoritative_document": "docs/nes-joint265-contract.ko.md",
+  "assessment": "NES265: header identity/ACK 저장·재읽기 제어를 실제로 교체하고 manifest/fence를 FPGA 내부에서 처리했다. RTL71프레임·29오류 PASS,byte echo0 유지. 표시 문맥24B 보관·sealed 후1회 읽기를 포함해 warm출력최대5.846112ms,동일 Lite MAP8277LE(+47)/90368bits. queue는163comb/117FF 줄었으나 전체 면적 절감에는 실패했다. full ARM/일반65816/ROM/VBlank/FIT/실기60fps는 미완료다.",
+  "next_action": "24B 표시 문맥의 의미·H2 결합과 실제65816 설정/최종 VBlank ACK를 먼저 확정하고, 문맥·parser 상태를 기존 phase RAM에 함께 넣는 교체 경계의 포트/수명/전체 비용을 비교한다. ACK 12B 축소는 stale serial/generation/sequence 방어를 유지할 때만 후보로 삼는다. ARM E0 refill/IRQ와 실제 tile ROM 중재를 같은 일정에 연결해 전체 시간·회로 게이트를 확인한다. 단독 FSM/opcode/seed/FIT 반복이나 개별 계층 절감의 보드 회수 환산은 하지 않는다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -3894,6 +3894,57 @@
       "ARM serial sensitivity uses a separate endpoint poll model and CPI1; it is not a retimed critical path, upper bound or measured frame.",
       "Source/core and transport still use shared CRC ownership; no full FIT/STA/CDC/IO,490LE40LAB baseline shortage remains.",
       "CRC is not authentication or collision-free proof."
+    ]
+  },
+  "joint265": {
+    "status": "R1_header_ACK_replacement_verified_area_gate_failed",
+    "contract": "docs/nes-joint265-contract.ko.md",
+    "evidence": "analysis/joint265-verification.json",
+    "MAP": {
+      "prior264": {
+        "LE": 8230,
+        "comb": 6745,
+        "FF": 2884,
+        "RAM_bits": 90368
+      },
+      "replacement265": {
+        "LE": 8277,
+        "comb": 6760,
+        "FF": 2924,
+        "RAM_bits": 90368
+      },
+      "delta": {
+        "LE": 47,
+        "comb": 15,
+        "FF": 40,
+        "RAM_bits": 0
+      },
+      "hierarchy": {
+        "|nes_joint257:core|": {
+          "comb": 3041,
+          "FF": 987,
+          "RAM_bits": 49152
+        },
+        "|nes_output260:flow|": {
+          "comb": 3523,
+          "FF": 1837,
+          "RAM_bits": 41216
+        },
+        "|nes_queue260:queue|": {
+          "comb": 586,
+          "FF": 319,
+          "RAM_bits": 8192
+        }
+      },
+      "output_FSM_extracted": true
+    },
+    "whole_board_FIT": false,
+    "remaining": [
+      "native C ordinary execution; no actual general65816 or PPU display configuration application",
+      "24 byte display context transport/read coverage verified, semantic binding to H2 and target register programming remain open",
+      "ARM E0 refill/IRQ and tile ROM arbitration not retimed; serial sensitivity is not a bound",
+      "Lite MAP partial integrated boundary, not whole FIT/STA/CDC/IO; no allocation-free display context",
+      "264 single-packet active scroll prefix and aligned raw granule limitations retained"
     ]
   }
 }

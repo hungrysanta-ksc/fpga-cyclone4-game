@@ -1,3 +1,5 @@
+NES265: header identity/ACK 저장·재읽기 제어를 실제로 교체하고 manifest/fence를 FPGA 내부에서 처리했다. RTL71프레임·29오류 PASS,byte echo0 유지. 표시 문맥24B 보관·sealed 후1회 읽기를 포함해 warm출력최대5.846112ms,동일 Lite MAP8277LE(+47)/90368bits. queue는163comb/117FF 줄었으나 전체 면적 절감에는 실패했다. full ARM/일반65816/ROM/VBlank/FIT/실기60fps는 미완료다. [현재 검증](../../docs/nes-joint265-contract.ko.md) · [계획](../../docs/nes-joint265-plan.json). 아래는 이전 기록이다.
+
 NES264: ACK 후 queue head를 유지해 수신 payload에서 직접 CRC·receipt를 만들고 manifest를 요구166B→map256B→fence 순서로 바꿨다. ARM/RTL71프레임,RTL19오류/ARM18오류 PASS;byte echo55237→0. warm출력최대5.912ms,동일 Lite MAP8230LE(+943)/90368bits. full ARM/일반65816/ROM/VBlank/FIT/실기60fps는 미완료다. [현재 검증](../../docs/nes-joint264-contract.ko.md) · [계획](../../docs/nes-joint264-plan.json). 아래는 이전 기록이다.
 
 NES263: 실제 일반 SPI 패킷→native C 소비기→SNES 버스/공유CDC→core manifest/CRC/receipt를71프레임에서 검증했다. 실제65816 문맥 재사용은cold64DMA에서1148clocks 느리지만 warm7DMA에서566clocks 줄었고,조회 MAP7216LE는 같다. 일반byte-event bridge는7287LE(+71)/RAM동일,출력모델warm최대7.441ms로60fps 구현에 선택하지 않았다. 일반65816/full ARM/ROM경쟁/wholeFIT/실기60fps는 미완료다. [현재 검증](../../docs/nes-joint263-contract.ko.md) · [계획](../../docs/nes-joint263-plan.json). 아래는 이전 기록이다.
