@@ -24,7 +24,7 @@
     },
     {
       "id": "nes",
-      "status": "NES227_hardware_baseline_254_query_context_P1_partial",
+      "status": "NES227_hardware_baseline_255_prefetch_consume_P1_partial",
       "candidate": "NES227",
       "planned_product_version": null,
       "released": false,
@@ -38,15 +38,15 @@
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
       "verification": "analysis/game227-hardware01-verification.json",
-      "plan": "docs/nes-joint254-contract.ko.md",
+      "plan": "docs/nes-joint255-contract.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "NES254_query_context_FSM_boundary",
+      "investigation": "NES255_prefetch_receipt_consume_boundary",
       "hardware_baseline": "NES227",
-      "hardware_verified_scope": "227 hardware unchanged;254 actual collector/query/source/SPI and recorded output/context/H2 replay plus standalone MAP;no new MCU/SNES/physical timing.",
-      "development_evidence": "analysis/joint254-verification.json",
+      "hardware_verified_scope": "227 hardware unchanged;255 actual collector/query/source/SPI and same-clock range byte sink replay plus standalone MAP;no new MCU/SNES/physical timing.",
+      "development_evidence": "analysis/joint255-verification.json",
       "hardware_candidate": "NES227",
-      "reproduction_document": "docs/nes-joint254-contract.ko.md",
-      "next_gate": "FSM 추출 수정의 효과는 보존하되 현재 query 통합을 제품 구현으로 채택하지 않는다. 다음 후보는 query 선행 읽기의 시간 이득과 cursor 기반 주소 해독 비용, receipt의 범위·manifest 제어 및 실제 출력 소비 어댑터를 같은 경계에서 함께 설계해야 한다. 별도 query FSM을 단순 복원하거나 레지스터만 줄였다고 전체 이득으로 계산하지 않는다. ARM N5 복원·계획·H2 전치·출력 전송·fullRUN/IRQ, 실제 SNES 소비/표시 이력·DMA/poll/VBlank 및 캡처 lease 중첩 비용을 포함해야 한다. 근거 없는 fullFIT/ROM/opcode/seed 반복은 하지 않는다.",
+      "reproduction_document": "docs/nes-joint255-contract.ko.md",
+      "next_gate": "NES255의 선행 읽기와 범위 receipt/소비 제어 공유는 P1 후보로 유지한다. 다음은 기존 출력 SPI 큐의 head/READ/ACK 소유권과 실제 typed parser·SNES 소비를 이 경계에 연결해 기존 제어를 대체하는 구조를 검토한다. tail CRC·fresh scroll·OAM·H2 전치도 실제 소비에 결합하고, 입력 COMMITTED/typed consume/final display ACK를 구분한다. ARM N5 복원·계획·전송 fullRUN/IRQ 및 실제 SNES setup/DMA/poll/VBlank 비용을 함께 계산해야 한다. 추가 기능만 누적하거나 작은 국소 차이를 전체 회수로 계산하지 않고, 근거 없는 FIT·seed·ROM/opcode 반복은 하지 않는다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "Production227 retained;240 functional-only/unplaced;241+246 rejected;no new installable pair.",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -706,8 +706,8 @@
         "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
         "paired_candidate": "deployed180 unchanged;1813 exporter/SPI/receiver candidate only; no new full ARM/FIT/installable pair"
       },
-      "active_plan": "docs/nes-joint254-plan.json",
-      "current_status_scope": "254 supersedes historical NEXT;P2 not selected;local logic reduction and input latency regression;production227 unchanged."
+      "active_plan": "docs/nes-joint255-plan.json",
+      "current_status_scope": "255 supersedes historical NEXT;P2 not selected;local same-boundary area/time gain;production227 unchanged."
     },
     {
       "id": "pce",

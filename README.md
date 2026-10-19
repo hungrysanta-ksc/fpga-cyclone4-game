@@ -1,3 +1,5 @@
+NES255: 선행 읽기와 receipt·바이트 소비 제어를 공유해 동일 경계에서 52LE·61FF 및 처리 시간을 줄였다. 전체FIT·60fps는 미입증이다. [최신 검토](docs/nes-joint255-contract.ko.md) · [현재 계획](docs/nes-joint255-plan.json). 아래는 이전 기록이다.
+
 NES254: FSM 미추출 원인을 분리 검증하고 query/source와 인증서 RAM을 통합했다. MAP3404→3296→3239LE, 조건부500setup최대16.028909ms. 전체FIT·60fps는 미입증이다. [최신 검토](docs/nes-joint254-contract.ko.md) · [현재 계획](docs/nes-joint254-plan.json). 아래는 이전 기록이다.
 
 NES253: 64B CRC를공유RAM에넣은실제query/source/SPI/검증경계의회로와시간을측정했다. MAP 2646→3404LE,조건부500setup최대15.993545ms. 전체FIT·ARM·SNES여유는미입증이다. [최신 검토](docs/nes-joint253-contract.ko.md) · [현재 계획](docs/nes-joint253-plan.json). 아래는 이전 기록이다.

@@ -4,9 +4,9 @@
   "date_kst": "2026-10-19",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint254-contract.ko.md",
-  "assessment": "NES254는 query/source 제어 중복과 인증서 문맥 레지스터를 실제로 제거했다. 상태 대소 비교만 동등 비교로 바꾸면 core FSM이 추출되며 3404→3296LE가 된다. query 통합·인증서32B RAM까지 적용하면 3239LE/2932comb/1006FF/49152bits다. 253 대비165LE·94FF 감소지만 준비 시간 증가와 출력66cycles 추가가 발생한다. 71프레임·21오류 검사·별도8granule 갱신 PASS. 조건부500setup 최대16.028909ms/잔여0.637758ms. 전체490LE/40LAB 부족 해결이나60fps는 입증하지 못했으며 P2 미선정이다.",
-  "next_action": "FSM 추출 수정의 효과는 보존하되 현재 query 통합을 제품 구현으로 채택하지 않는다. 다음 후보는 query 선행 읽기의 시간 이득과 cursor 기반 주소 해독 비용, receipt의 범위·manifest 제어 및 실제 출력 소비 어댑터를 같은 경계에서 함께 설계해야 한다. 별도 query FSM을 단순 복원하거나 레지스터만 줄였다고 전체 이득으로 계산하지 않는다. ARM N5 복원·계획·H2 전치·출력 전송·fullRUN/IRQ, 실제 SNES 소비/표시 이력·DMA/poll/VBlank 및 캡처 lease 중첩 비용을 포함해야 한다. 근거 없는 fullFIT/ROM/opcode/seed 반복은 하지 않는다.",
+  "authoritative_document": "docs/nes-joint255-contract.ko.md",
+  "assessment": "NES255는 별도 query FSM 없이 선행 읽기를 복원하고, receipt와 실제 바이트 수락 어댑터의 제어를 공유했다. 동일 어댑터 경계 MAP은 기준3414LE/1046FF에서 후보3362LE/985FF로 52LE·61FF 감소하며 RAM49152bits는 같다. warm 준비는11836..11854cycles, 출력 제어는 기준보다74..152cycles 감소했다. 두 구성 각각71프레임·28오류 검사와 후보의8개 부분 CRC 갱신을 통과했다. 실제 출력은 같은 클록의 valid/ready 수락까지이며 SPI packet parser·SNES 실행/표시 연결은 미완료다. 전체490LE/40LAB 부족과60fps는 미해결이며 P2 미선정이다.",
+  "next_action": "NES255의 선행 읽기와 범위 receipt/소비 제어 공유는 P1 후보로 유지한다. 다음은 기존 출력 SPI 큐의 head/READ/ACK 소유권과 실제 typed parser·SNES 소비를 이 경계에 연결해 기존 제어를 대체하는 구조를 검토한다. tail CRC·fresh scroll·OAM·H2 전치도 실제 소비에 결합하고, 입력 COMMITTED/typed consume/final display ACK를 구분한다. ARM N5 복원·계획·전송 fullRUN/IRQ 및 실제 SNES setup/DMA/poll/VBlank 비용을 함께 계산해야 한다. 추가 기능만 누적하거나 작은 국소 차이를 전체 회수로 계산하지 않고, 근거 없는 FIT·seed·ROM/opcode 반복은 하지 않는다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "P1_local_logic_reduction_latency_tradeoff_P2_not_selected",
+      "status": "P1_same_boundary_area_and_time_gain_P2_not_selected",
       "depends_on": [
         "P0"
       ],
@@ -80,7 +80,9 @@
         "docs/nes-joint253-contract.ko.md",
         "analysis/joint253-verification.json",
         "docs/nes-joint254-contract.ko.md",
-        "analysis/joint254-verification.json"
+        "analysis/joint254-verification.json",
+        "docs/nes-joint255-contract.ko.md",
+        "analysis/joint255-verification.json"
       ]
     },
     {
@@ -3040,7 +3042,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES254는 query/source 제어 중복과 인증서 문맥 레지스터를 실제로 제거했다. 상태 대소 비교만 동등 비교로 바꾸면 core FSM이 추출되며 3404→3296LE가 된다. query 통합·인증서32B RAM까지 적용하면 3239LE/2932comb/1006FF/49152bits다. 253 대비165LE·94FF 감소지만 준비 시간 증가와 출력66cycles 추가가 발생한다. 71프레임·21오류 검사·별도8granule 갱신 PASS. 조건부500setup 최대16.028909ms/잔여0.637758ms. 전체490LE/40LAB 부족 해결이나60fps는 입증하지 못했으며 P2 미선정이다.",
+  "summary": "NES255는 별도 query FSM 없이 선행 읽기를 복원하고, receipt와 실제 바이트 수락 어댑터의 제어를 공유했다. 동일 어댑터 경계 MAP은 기준3414LE/1046FF에서 후보3362LE/985FF로 52LE·61FF 감소하며 RAM49152bits는 같다. warm 준비는11836..11854cycles, 출력 제어는 기준보다74..152cycles 감소했다. 두 구성 각각71프레임·28오류 검사와 후보의8개 부분 CRC 갱신을 통과했다. 실제 출력은 같은 클록의 valid/ready 수락까지이며 SPI packet parser·SNES 실행/표시 연결은 미완료다. 전체490LE/40LAB 부족과60fps는 미해결이며 P2 미선정이다.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3083,8 +3085,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-joint254-contract.ko.md",
-  "latest_development_evidence": "analysis/joint254-verification.json",
+  "latest_review": "docs/nes-joint255-contract.ko.md",
+  "latest_development_evidence": "analysis/joint255-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {
@@ -3171,7 +3173,7 @@
       }
     ]
   },
-  "active_plan": "docs/nes-joint254-plan.json",
+  "active_plan": "docs/nes-joint255-plan.json",
   "current_status_scope": "Top-level active_plan/gates supersede historical fields; legacy versioned records and old open_issues remain historical, not current acceptance.",
   "p1_placement_followup": {
     "selected": "placement05",
@@ -3447,6 +3449,130 @@
         "min_residual_ms": -0.6044859609233839,
         "worst_frame": 970,
         "over": [
+          954,
+          962,
+          970
+        ]
+      }
+    ]
+  },
+  "p1_joint255_followup": {
+    "status": "P1_same_boundary_area_and_time_gain_P2_not_selected",
+    "document": "docs/nes-joint255-contract.ko.md",
+    "selected": {
+      "test": "test03",
+      "reference": "reference02",
+      "incremental": "test04",
+      "consumer_guards": "test05",
+      "map": "map01",
+      "reference_map": "refmap02",
+      "analysis": "analysis01"
+    },
+    "area_reference": {
+      "LE": 3414,
+      "comb": 3107,
+      "FF": 1046,
+      "bits": 49152
+    },
+    "area_joint": {
+      "LE": 3362,
+      "comb": 3055,
+      "FF": 985,
+      "bits": 49152
+    },
+    "area_delta": {
+      "LE": -52,
+      "comb": -52,
+      "FF": -61,
+      "bits": 0
+    },
+    "wholeboard_reclaim_proven": false,
+    "conditional_summaries": [
+      {
+        "accounting_policy": "transfer_covered_conditional",
+        "setup": 500,
+        "retained_policy": "command_tail",
+        "max_ms": 15.995909083601463,
+        "min_residual_ms": 0.670757583065205,
+        "worst_frame": 970,
+        "over": []
+      },
+      {
+        "accounting_policy": "transfer_covered_conditional",
+        "setup": 500,
+        "retained_policy": "only_bitmap_removed",
+        "max_ms": 16.37677685683334,
+        "min_residual_ms": 0.28988980983332624,
+        "worst_frame": 970,
+        "over": []
+      },
+      {
+        "accounting_policy": "transfer_covered_conditional",
+        "setup": 1000,
+        "retained_policy": "command_tail",
+        "max_ms": 16.857284854358166,
+        "min_residual_ms": -0.19061818769149852,
+        "worst_frame": 970,
+        "over": [
+          970
+        ]
+      },
+      {
+        "accounting_policy": "transfer_covered_conditional",
+        "setup": 1000,
+        "retained_policy": "only_bitmap_removed",
+        "max_ms": 17.23815262759005,
+        "min_residual_ms": -0.5714859609233827,
+        "worst_frame": 970,
+        "over": [
+          954,
+          962,
+          970
+        ]
+      },
+      {
+        "accounting_policy": "serialized_stress_reservation",
+        "setup": 500,
+        "retained_policy": "command_tail",
+        "max_ms": 16.548909083601462,
+        "min_residual_ms": 0.117757583065206,
+        "worst_frame": 970,
+        "over": []
+      },
+      {
+        "accounting_policy": "serialized_stress_reservation",
+        "setup": 500,
+        "retained_policy": "only_bitmap_removed",
+        "max_ms": 16.929776856833342,
+        "min_residual_ms": -0.2631101901666746,
+        "worst_frame": 970,
+        "over": [
+          954,
+          962,
+          970
+        ]
+      },
+      {
+        "accounting_policy": "serialized_stress_reservation",
+        "setup": 1000,
+        "retained_policy": "command_tail",
+        "max_ms": 17.410284854358167,
+        "min_residual_ms": -0.7436181876914993,
+        "worst_frame": 970,
+        "over": [
+          954,
+          970
+        ]
+      },
+      {
+        "accounting_policy": "serialized_stress_reservation",
+        "setup": 1000,
+        "retained_policy": "only_bitmap_removed",
+        "max_ms": 17.79115262759005,
+        "min_residual_ms": -1.1244859609233835,
+        "worst_frame": 970,
+        "over": [
+          952,
           954,
           962,
           970
