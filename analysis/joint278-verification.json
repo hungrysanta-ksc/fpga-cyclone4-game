@@ -1,0 +1,2503 @@
+{
+  "passed": true,
+  "stage": 278,
+  "scope": "Bind host single-consume RTL, retimed ARM/ROM/CPU trace and whole Lite MAP.",
+  "selected": [
+    "test07",
+    "window01",
+    "guards03",
+    "guards04",
+    "board01"
+  ],
+  "frames": 71,
+  "packets": 1231,
+  "source_bytes": 83240,
+  "map_ranges": 2069,
+  "map_bytes": 13406,
+  "map_tile_DMA_bytes": 26350,
+  "metadata_per_frame": 8570,
+  "receipt_per_frame": 754,
+  "CRC_per_frame": 64,
+  "ordinary_CPU_trace_commands": 544,
+  "original_wire_and_ARM_loaded_sections_identical274": true,
+  "source_query_prefetch_preserved": true,
+  "source_cycle_deltas274": {
+    "total": {
+      "min": -1,
+      "max": 1
+    },
+    "prepare": {
+      "min": 0,
+      "max": 0
+    },
+    "blocked": {
+      "min": -1,
+      "max": 1
+    },
+    "ackwait": {
+      "min": -2,
+      "max": 2
+    },
+    "transfer": {
+      "min": 0,
+      "max": 0
+    },
+    "overlap": {
+      "min": 0,
+      "max": 0
+    }
+  },
+  "changed_RTL": [
+    "nes_core257.sv",
+    "nes_joint257.sv",
+    "nes_queue260.sv",
+    "nes_mux260.sv",
+    "nes_joint266.sv",
+    "nes_validator278.sv"
+  ],
+  "board_binding": {
+    "nes_core257.sv": [],
+    "nes_joint257.sv": [],
+    "nes_queue260.sv": [],
+    "nes_mux260.sv": [
+      "+ output wire tile_closed267,",
+      "- reg tiles_closed;",
+      "+ reg tiles_closed;assign tile_closed267=tiles_closed;"
+    ],
+    "nes_joint266.sv": [
+      "-module nes_joint266 #(parameter SHARED=1)(input wire [48:0] link270,output wire [183:0] source_status270,output_status270,",
+      "+module nes_joint267_board #(parameter SHARED=1)(input wire [48:0] link270,output wire [183:0] source_status270,output_status270,",
+      "-output wire release_frame,lease_valid,waiting_display,lease_fault,retired,display_ack,",
+      "+output wire release_frame,retired,display_ack,",
+      "+input wire lease_valid,waiting_display,lease_fault,",
+      "+output wire tile_closed267,",
+      "- nes_capture_lease201 lease(.clk(clk),.reset(reset),.stop(abort_source||flow_fault||fault!=0),",
+      "- .capture_begin(capture_begin),.frame_owned(frame_owned),.geometry_valid(geometry_valid),.frame_generation(frame_generation),",
+      "- .export_release(done),.export_error(fault),.source_ready(source_ready),.source_is_rom(source_is_rom),",
+      "- .source_writing(source_writing),.live_epoch(content_epoch),.reader_drained(reader_drained),",
+      "- .retire_commit(display_ack),.retire_generation(display_generation),.release_frame(release_frame),",
+      "- .lease_valid(lease_valid),.retire_permitted(),.export_permitted(),.captured_epoch(display_epoch),",
+      "- .captured_generation(display_generation),.waiting_display(waiting_display),.fault(lease_fault));",
+      "+ assign display_generation=frame_generation;assign display_epoch=content_epoch;",
+      "+ assign release_frame=1'b0;",
+      "+",
+      "- .identity_valid(identity_valid&&output_phase),.identity_ready(identity_ready),.serial(frame_serial),.generation(display_generation),.bank(bank),",
+      "+ .tile_closed267(tile_closed267),.identity_valid(identity_valid&&output_phase),.identity_ready(identity_ready),.serial(frame_serial),.generation(display_generation),.bank(bank),"
+    ],
+    "nes_validator278.sv": []
+  },
+  "counters": {
+    "original_bus_body_reads": 17277,
+    "deferred_source_mask_writes": 40754,
+    "provisional_raw_CRCs": 32,
+    "ordered_ACKs": 793
+  },
+  "raw_counts": {
+    "2": 71
+  },
+  "raw_zero_transition_executed": false,
+  "retained_OAM_repeat4_patterns": {
+    "00f00000": 71
+  },
+  "warm_max": {
+    "frame": 954,
+    "source_ms": 6.254970394,
+    "output_schedule_ms": 11.92508417,
+    "diagnostic_serial_ms": 18.180054564,
+    "prior274_ms": 18.222144968,
+    "delta274_ms": -0.04209040399999964,
+    "prior276_ms": 18.222144968,
+    "delta276_ms": -0.04209040399999964,
+    "budget_gap_ms": 1.513387897333331,
+    "E1_wire": 1239,
+    "E0_full": 4,
+    "E2_short": 109,
+    "E8": 11,
+    "E9": 3,
+    "EA": 1,
+    "SPI_bytes": 2739,
+    "ARM_IRQ_event_instructions": 200379,
+    "prior276_E2": 110,
+    "post_ACK_parser_ms": 0.027667,
+    "prior276_post_ACK_parser_ms": 0.275519,
+    "ordinary_parser_ms": 0.002084,
+    "prior276_ordinary_parser_ms": 0.041033,
+    "wire_instruction_transaction_delta276_ms": -0.04210714285714286,
+    "remaining_schedule_delta276_ms": 1.6738857143219765e-05,
+    "retained_general_CPU_master_clocks": 70674,
+    "retained_OAM_pattern4_master_clocks": 28952,
+    "retained_OAM_after_read_before_DMA_setup_master_clocks": 23224
+  },
+  "warm_over": 6,
+  "over_frames": [
+    952,
+    954,
+    955,
+    962,
+    963,
+    970
+  ],
+  "frame954": {
+    "frame": 954,
+    "source_ms": 6.254970394,
+    "output_schedule_ms": 11.92508417,
+    "diagnostic_serial_ms": 18.180054564,
+    "prior274_ms": 18.222144968,
+    "delta274_ms": -0.04209040399999964,
+    "prior276_ms": 18.222144968,
+    "delta276_ms": -0.04209040399999964,
+    "budget_gap_ms": 1.513387897333331,
+    "E1_wire": 1239,
+    "E0_full": 4,
+    "E2_short": 109,
+    "E8": 11,
+    "E9": 3,
+    "EA": 1,
+    "SPI_bytes": 2739,
+    "ARM_IRQ_event_instructions": 200379,
+    "prior276_E2": 110,
+    "post_ACK_parser_ms": 0.027667,
+    "prior276_post_ACK_parser_ms": 0.275519,
+    "ordinary_parser_ms": 0.002084,
+    "prior276_ordinary_parser_ms": 0.041033,
+    "wire_instruction_transaction_delta276_ms": -0.04210714285714286,
+    "remaining_schedule_delta276_ms": 1.6738857143219765e-05,
+    "retained_general_CPU_master_clocks": 70674,
+    "retained_OAM_pattern4_master_clocks": 28952,
+    "retained_OAM_after_read_before_DMA_setup_master_clocks": 23224
+  },
+  "restricted_ROM": [
+    {
+      "frame": 905,
+      "diagnostic_serial_ms": 90.225462736,
+      "prior276_ms": 90.39341526599999,
+      "delta276_ms": -0.16795252999999377,
+      "budget_gap_ms": 73.55879606933333,
+      "E2": 354,
+      "SPI_bytes": 17406
+    },
+    {
+      "frame": 906,
+      "diagnostic_serial_ms": 114.266946962,
+      "prior276_ms": 114.311219158,
+      "delta276_ms": -0.044272195999994324,
+      "budget_gap_ms": 97.60028029533333,
+      "E2": 1124,
+      "SPI_bytes": 26120
+    },
+    {
+      "frame": 907,
+      "diagnostic_serial_ms": 18.372461346,
+      "prior276_ms": 18.204690632000002,
+      "delta276_ms": 0.16777071399999954,
+      "budget_gap_ms": 1.7057946793333336,
+      "E2": 240,
+      "SPI_bytes": 3145
+    }
+  ],
+  "restricted_sequence": {
+    "current_end_ms": 264.957002,
+    "prior276_end_ms": 265.001456
+  },
+  "SPI": {
+    "total": 165131,
+    "E2": 6989
+  },
+  "ARM": {
+    "CPI": 1,
+    "clock_MHz": 84,
+    "loaded_sections_identical274": true,
+    "observed_stack": 248,
+    "IRQ_bodies": 202,
+    "full_RUN": false
+  },
+  "ROM_observations": {
+    "normal": [
+      [
+        "rom267",
+        "905",
+        "1632",
+        "826",
+        "1424",
+        "0"
+      ],
+      [
+        "romwait267",
+        "905",
+        "319",
+        "0",
+        "55"
+      ],
+      [
+        "rom267",
+        "906",
+        "1568",
+        "9660",
+        "2848",
+        "0"
+      ],
+      [
+        "romwait267",
+        "906",
+        "628",
+        "0",
+        "108"
+      ],
+      [
+        "rom267",
+        "907",
+        "160",
+        "17089",
+        "2960",
+        "0"
+      ],
+      [
+        "romwait267",
+        "907",
+        "648",
+        "0",
+        "112"
+      ],
+      [
+        "rom267",
+        "908",
+        "64",
+        "18304",
+        "3008",
+        "0"
+      ],
+      [
+        "romwait267",
+        "908",
+        "653",
+        "0",
+        "113"
+      ],
+      [
+        "rom267",
+        "909",
+        "64",
+        "19717",
+        "3056",
+        "0"
+      ],
+      [
+        "romwait267",
+        "909",
+        "658",
+        "0",
+        "114"
+      ],
+      [
+        "rom267",
+        "910",
+        "16",
+        "21375",
+        "3056",
+        "0"
+      ],
+      [
+        "romwait267",
+        "910",
+        "658",
+        "0",
+        "114"
+      ],
+      [
+        "rom267",
+        "911",
+        "32",
+        "22932",
+        "3072",
+        "0"
+      ],
+      [
+        "romwait267",
+        "911",
+        "658",
+        "0",
+        "114"
+      ],
+      [
+        "rom267",
+        "912",
+        "32",
+        "24273",
+        "3072",
+        "0"
+      ],
+      [
+        "romwait267",
+        "912",
+        "658",
+        "0",
+        "114"
+      ],
+      [
+        "rom267",
+        "913",
+        "32",
+        "25894",
+        "3088",
+        "0"
+      ],
+      [
+        "romwait267",
+        "913",
+        "662",
+        "0",
+        "114"
+      ],
+      [
+        "rom267",
+        "914",
+        "112",
+        "27418",
+        "3168",
+        "0"
+      ],
+      [
+        "romwait267",
+        "914",
+        "677",
+        "0",
+        "117"
+      ],
+      [
+        "rom267",
+        "915",
+        "96",
+        "29006",
+        "3248",
+        "0"
+      ],
+      [
+        "romwait267",
+        "915",
+        "677",
+        "0",
+        "117"
+      ],
+      [
+        "rom267",
+        "916",
+        "16",
+        "30758",
+        "3248",
+        "0"
+      ],
+      [
+        "romwait267",
+        "916",
+        "677",
+        "0",
+        "117"
+      ],
+      [
+        "rom267",
+        "917",
+        "96",
+        "32224",
+        "3328",
+        "0"
+      ],
+      [
+        "romwait267",
+        "917",
+        "692",
+        "0",
+        "120"
+      ],
+      [
+        "rom267",
+        "918",
+        "96",
+        "33764",
+        "3408",
+        "0"
+      ],
+      [
+        "romwait267",
+        "918",
+        "701",
+        "0",
+        "121"
+      ],
+      [
+        "rom267",
+        "919",
+        "16",
+        "35292",
+        "3408",
+        "0"
+      ],
+      [
+        "romwait267",
+        "919",
+        "701",
+        "0",
+        "121"
+      ],
+      [
+        "rom267",
+        "920",
+        "64",
+        "37000",
+        "3456",
+        "0"
+      ],
+      [
+        "romwait267",
+        "920",
+        "715",
+        "0",
+        "123"
+      ],
+      [
+        "rom267",
+        "921",
+        "64",
+        "38653",
+        "3504",
+        "0"
+      ],
+      [
+        "romwait267",
+        "921",
+        "720",
+        "0",
+        "124"
+      ],
+      [
+        "rom267",
+        "922",
+        "112",
+        "40110",
+        "3600",
+        "0"
+      ],
+      [
+        "romwait267",
+        "922",
+        "735",
+        "0",
+        "127"
+      ],
+      [
+        "rom267",
+        "923",
+        "112",
+        "41751",
+        "3696",
+        "0"
+      ],
+      [
+        "romwait267",
+        "923",
+        "760",
+        "0",
+        "132"
+      ],
+      [
+        "rom267",
+        "924",
+        "16",
+        "43359",
+        "3696",
+        "0"
+      ],
+      [
+        "romwait267",
+        "924",
+        "760",
+        "0",
+        "132"
+      ],
+      [
+        "rom267",
+        "925",
+        "16",
+        "44744",
+        "3696",
+        "0"
+      ],
+      [
+        "romwait267",
+        "925",
+        "760",
+        "0",
+        "132"
+      ],
+      [
+        "rom267",
+        "926",
+        "16",
+        "46349",
+        "3696",
+        "0"
+      ],
+      [
+        "romwait267",
+        "926",
+        "760",
+        "0",
+        "132"
+      ],
+      [
+        "rom267",
+        "927",
+        "16",
+        "47798",
+        "3696",
+        "0"
+      ],
+      [
+        "romwait267",
+        "927",
+        "760",
+        "0",
+        "132"
+      ],
+      [
+        "rom267",
+        "928",
+        "16",
+        "49155",
+        "3696",
+        "0"
+      ],
+      [
+        "romwait267",
+        "928",
+        "760",
+        "0",
+        "132"
+      ],
+      [
+        "rom267",
+        "929",
+        "16",
+        "50741",
+        "3696",
+        "0"
+      ],
+      [
+        "romwait267",
+        "929",
+        "760",
+        "0",
+        "132"
+      ],
+      [
+        "rom267",
+        "930",
+        "112",
+        "52376",
+        "3792",
+        "0"
+      ],
+      [
+        "romwait267",
+        "930",
+        "782",
+        "0",
+        "134"
+      ],
+      [
+        "rom267",
+        "931",
+        "32",
+        "53918",
+        "3792",
+        "0"
+      ],
+      [
+        "romwait267",
+        "931",
+        "782",
+        "0",
+        "134"
+      ],
+      [
+        "rom267",
+        "932",
+        "16",
+        "55739",
+        "3792",
+        "0"
+      ],
+      [
+        "romwait267",
+        "932",
+        "782",
+        "0",
+        "134"
+      ],
+      [
+        "rom267",
+        "933",
+        "16",
+        "57215",
+        "3792",
+        "0"
+      ],
+      [
+        "romwait267",
+        "933",
+        "782",
+        "0",
+        "134"
+      ],
+      [
+        "rom267",
+        "934",
+        "16",
+        "58546",
+        "3792",
+        "0"
+      ],
+      [
+        "romwait267",
+        "934",
+        "782",
+        "0",
+        "134"
+      ],
+      [
+        "rom267",
+        "935",
+        "16",
+        "59876",
+        "3792",
+        "0"
+      ],
+      [
+        "romwait267",
+        "935",
+        "782",
+        "0",
+        "134"
+      ],
+      [
+        "rom267",
+        "936",
+        "16",
+        "61289",
+        "3792",
+        "0"
+      ],
+      [
+        "romwait267",
+        "936",
+        "782",
+        "0",
+        "134"
+      ],
+      [
+        "rom267",
+        "937",
+        "16",
+        "62835",
+        "3792",
+        "0"
+      ],
+      [
+        "romwait267",
+        "937",
+        "782",
+        "0",
+        "134"
+      ],
+      [
+        "rom267",
+        "938",
+        "32",
+        "64417",
+        "3808",
+        "0"
+      ],
+      [
+        "romwait267",
+        "938",
+        "782",
+        "0",
+        "134"
+      ],
+      [
+        "rom267",
+        "939",
+        "32",
+        "66342",
+        "3808",
+        "0"
+      ],
+      [
+        "romwait267",
+        "939",
+        "782",
+        "0",
+        "134"
+      ],
+      [
+        "rom267",
+        "940",
+        "16",
+        "68178",
+        "3808",
+        "0"
+      ],
+      [
+        "romwait267",
+        "940",
+        "782",
+        "0",
+        "134"
+      ],
+      [
+        "rom267",
+        "941",
+        "16",
+        "69535",
+        "3808",
+        "0"
+      ],
+      [
+        "romwait267",
+        "941",
+        "782",
+        "0",
+        "134"
+      ],
+      [
+        "rom267",
+        "942",
+        "16",
+        "71153",
+        "3808",
+        "0"
+      ],
+      [
+        "romwait267",
+        "942",
+        "782",
+        "0",
+        "134"
+      ],
+      [
+        "rom267",
+        "943",
+        "16",
+        "72653",
+        "3808",
+        "0"
+      ],
+      [
+        "romwait267",
+        "943",
+        "782",
+        "0",
+        "134"
+      ],
+      [
+        "rom267",
+        "944",
+        "16",
+        "74010",
+        "3808",
+        "0"
+      ],
+      [
+        "romwait267",
+        "944",
+        "782",
+        "0",
+        "134"
+      ],
+      [
+        "rom267",
+        "945",
+        "16",
+        "75582",
+        "3808",
+        "0"
+      ],
+      [
+        "romwait267",
+        "945",
+        "782",
+        "0",
+        "134"
+      ],
+      [
+        "rom267",
+        "946",
+        "64",
+        "77011",
+        "3856",
+        "0"
+      ],
+      [
+        "romwait267",
+        "946",
+        "787",
+        "0",
+        "135"
+      ],
+      [
+        "rom267",
+        "947",
+        "64",
+        "78662",
+        "3904",
+        "0"
+      ],
+      [
+        "romwait267",
+        "947",
+        "787",
+        "0",
+        "135"
+      ],
+      [
+        "rom267",
+        "948",
+        "272",
+        "80637",
+        "4000",
+        "0"
+      ],
+      [
+        "romwait267",
+        "948",
+        "802",
+        "0",
+        "138"
+      ],
+      [
+        "rom267",
+        "949",
+        "288",
+        "82606",
+        "4144",
+        "0"
+      ],
+      [
+        "romwait267",
+        "949",
+        "818",
+        "0",
+        "140"
+      ],
+      [
+        "rom267",
+        "950",
+        "224",
+        "84194",
+        "4240",
+        "0"
+      ],
+      [
+        "romwait267",
+        "950",
+        "827",
+        "0",
+        "141"
+      ],
+      [
+        "rom267",
+        "951",
+        "400",
+        "85734",
+        "4336",
+        "0"
+      ],
+      [
+        "romwait267",
+        "951",
+        "832",
+        "0",
+        "142"
+      ],
+      [
+        "rom267",
+        "952",
+        "576",
+        "88208",
+        "4544",
+        "0"
+      ],
+      [
+        "romwait267",
+        "952",
+        "853",
+        "0",
+        "145"
+      ],
+      [
+        "rom267",
+        "953",
+        "464",
+        "90281",
+        "4720",
+        "0"
+      ],
+      [
+        "romwait267",
+        "953",
+        "871",
+        "0",
+        "148"
+      ],
+      [
+        "rom267",
+        "954",
+        "560",
+        "91998",
+        "4992",
+        "0"
+      ],
+      [
+        "romwait267",
+        "954",
+        "918",
+        "0",
+        "155"
+      ],
+      [
+        "rom267",
+        "955",
+        "608",
+        "94367",
+        "5280",
+        "0"
+      ],
+      [
+        "romwait267",
+        "955",
+        "959",
+        "0",
+        "160"
+      ],
+      [
+        "rom267",
+        "956",
+        "320",
+        "96640",
+        "5408",
+        "0"
+      ],
+      [
+        "romwait267",
+        "956",
+        "973",
+        "0",
+        "162"
+      ],
+      [
+        "rom267",
+        "957",
+        "352",
+        "98190",
+        "5552",
+        "0"
+      ],
+      [
+        "romwait267",
+        "957",
+        "995",
+        "0",
+        "164"
+      ],
+      [
+        "rom267",
+        "958",
+        "336",
+        "100057",
+        "5648",
+        "0"
+      ],
+      [
+        "romwait267",
+        "958",
+        "998",
+        "0",
+        "164"
+      ],
+      [
+        "rom267",
+        "959",
+        "240",
+        "101579",
+        "5696",
+        "0"
+      ],
+      [
+        "romwait267",
+        "959",
+        "998",
+        "0",
+        "164"
+      ],
+      [
+        "rom267",
+        "960",
+        "240",
+        "103005",
+        "5744",
+        "0"
+      ],
+      [
+        "romwait267",
+        "960",
+        "1003",
+        "0",
+        "165"
+      ],
+      [
+        "rom267",
+        "961",
+        "240",
+        "104720",
+        "5792",
+        "0"
+      ],
+      [
+        "romwait267",
+        "961",
+        "1003",
+        "0",
+        "165"
+      ],
+      [
+        "rom267",
+        "962",
+        "400",
+        "106843",
+        "6032",
+        "0"
+      ],
+      [
+        "romwait267",
+        "962",
+        "1057",
+        "0",
+        "175"
+      ],
+      [
+        "rom267",
+        "963",
+        "304",
+        "108805",
+        "6256",
+        "0"
+      ],
+      [
+        "romwait267",
+        "963",
+        "1106",
+        "0",
+        "184"
+      ],
+      [
+        "rom267",
+        "964",
+        "144",
+        "110920",
+        "6296",
+        "0"
+      ],
+      [
+        "romwait267",
+        "964",
+        "1106",
+        "0",
+        "184"
+      ],
+      [
+        "rom267",
+        "965",
+        "112",
+        "112720",
+        "6324",
+        "0"
+      ],
+      [
+        "romwait267",
+        "965",
+        "1106",
+        "0",
+        "184"
+      ],
+      [
+        "rom267",
+        "966",
+        "304",
+        "114391",
+        "6436",
+        "0"
+      ],
+      [
+        "romwait267",
+        "966",
+        "1120",
+        "0",
+        "186"
+      ],
+      [
+        "rom267",
+        "967",
+        "368",
+        "116171",
+        "6564",
+        "0"
+      ],
+      [
+        "romwait267",
+        "967",
+        "1128",
+        "0",
+        "186"
+      ],
+      [
+        "rom267",
+        "968",
+        "368",
+        "117990",
+        "6692",
+        "0"
+      ],
+      [
+        "romwait267",
+        "968",
+        "1131",
+        "0",
+        "186"
+      ],
+      [
+        "rom267",
+        "969",
+        "144",
+        "119895",
+        "6724",
+        "0"
+      ],
+      [
+        "romwait267",
+        "969",
+        "1131",
+        "0",
+        "186"
+      ],
+      [
+        "rom267",
+        "970",
+        "272",
+        "121704",
+        "6932",
+        "0"
+      ],
+      [
+        "romwait267",
+        "970",
+        "1184",
+        "0",
+        "195"
+      ],
+      [
+        "rom267",
+        "971",
+        "272",
+        "123793",
+        "7140",
+        "0"
+      ],
+      [
+        "romwait267",
+        "971",
+        "1238",
+        "0",
+        "205"
+      ],
+      [
+        "rom267",
+        "972",
+        "80",
+        "125716",
+        "7140",
+        "0"
+      ],
+      [
+        "romwait267",
+        "972",
+        "1238",
+        "0",
+        "205"
+      ],
+      [
+        "rom267",
+        "973",
+        "16",
+        "127116",
+        "7140",
+        "0"
+      ],
+      [
+        "romwait267",
+        "973",
+        "1238",
+        "0",
+        "205"
+      ],
+      [
+        "rom267",
+        "974",
+        "16",
+        "128744",
+        "7140",
+        "0"
+      ],
+      [
+        "romwait267",
+        "974",
+        "1238",
+        "0",
+        "205"
+      ],
+      [
+        "rom267",
+        "975",
+        "16",
+        "130332",
+        "7140",
+        "0"
+      ],
+      [
+        "romwait267",
+        "975",
+        "1238",
+        "0",
+        "205"
+      ]
+    ],
+    "restricted": [
+      [
+        "rom267",
+        "905",
+        "1632",
+        "5746",
+        "1424",
+        "0"
+      ],
+      [
+        "romwait267",
+        "905",
+        "627743",
+        "627583",
+        "160"
+      ],
+      [
+        "rom267",
+        "906",
+        "1568",
+        "26110",
+        "2848",
+        "0"
+      ],
+      [
+        "romwait267",
+        "906",
+        "2076301",
+        "2075988",
+        "313"
+      ],
+      [
+        "rom267",
+        "907",
+        "160",
+        "34782",
+        "2960",
+        "0"
+      ],
+      [
+        "romwait267",
+        "907",
+        "2244736",
+        "2244409",
+        "327"
+      ]
+    ],
+    "note": "Counters except tile byte count are cumulative at ROM end markers. Upstream tile wait/core_block show contention; ready-gated denied counter is not a contention measure. These counters overlap the measured schedule."
+  },
+  "MAP": {
+    "current": {
+      "LE": 22730,
+      "comb": 17815,
+      "FF": 9077,
+      "RAM_bits": 303712
+    },
+    "prior276": {
+      "LE": 22986,
+      "comb": 18245,
+      "FF": 8832,
+      "RAM_bits": 303712
+    },
+    "prior274": {
+      "LE": 22487,
+      "comb": 17680,
+      "FF": 8892,
+      "RAM_bits": 303712
+    },
+    "delta276": {
+      "LE": -256,
+      "comb": -430,
+      "FF": 245,
+      "RAM_bits": 0
+    },
+    "delta274": {
+      "LE": 243,
+      "comb": 135,
+      "FF": 185,
+      "RAM_bits": 0
+    },
+    "comb_deficit": 2407,
+    "own_changes": [
+      {
+        "path": "|fxpak_nes_screen137_top",
+        "before": {
+          "comb": 124,
+          "FF": 4
+        },
+        "after": {
+          "comb": 125,
+          "FF": 4
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core",
+        "before": {
+          "comb": 190,
+          "FF": 33
+        },
+        "after": {
+          "comb": 181,
+          "FF": 33
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267",
+        "before": {
+          "comb": 2,
+          "FF": 1
+        },
+        "after": {
+          "comb": 22,
+          "FF": 0
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core",
+        "before": {
+          "comb": 22,
+          "FF": 4
+        },
+        "after": {
+          "comb": 22,
+          "FF": 6
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|altsyncram:memory_rtl_0|altsyncram_6512:auto_generated",
+        "before": {
+          "comb": 0,
+          "FF": 0
+        },
+        "after": {
+          "comb": 0,
+          "FF": 0
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|altsyncram:memory_rtl_0|altsyncram_u152:auto_generated",
+        "before": {
+          "comb": 0,
+          "FF": 0
+        },
+        "after": {
+          "comb": 0,
+          "FF": 0
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_core257:encoder",
+        "before": {
+          "comb": 3818,
+          "FF": 576
+        },
+        "after": {
+          "comb": 1399,
+          "FF": 419
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_transport257:transport",
+        "before": {
+          "comb": 305,
+          "FF": 200
+        },
+        "after": {
+          "comb": 309,
+          "FF": 200
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_transport257:transport|nes_native_mailbox206:prepared",
+        "before": {
+          "comb": 9,
+          "FF": 42
+        },
+        "after": {
+          "comb": 10,
+          "FF": 42
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_validator278:validator",
+        "before": {
+          "comb": 0,
+          "FF": 0
+        },
+        "after": {
+          "comb": 1063,
+          "FF": 273
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow",
+        "before": {
+          "comb": 1536,
+          "FF": 598
+        },
+        "after": {
+          "comb": 2486,
+          "FF": 736
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_bulk_aperture188:shared_ram.aperture",
+        "before": {
+          "comb": 173,
+          "FF": 253
+        },
+        "after": {
+          "comb": 170,
+          "FF": 253
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_native_mailbox206:admission",
+        "before": {
+          "comb": 9,
+          "FF": 114
+        },
+        "after": {
+          "comb": 9,
+          "FF": 184
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_native_mailbox206:consumed",
+        "before": {
+          "comb": 21,
+          "FF": 56
+        },
+        "after": {
+          "comb": 0,
+          "FF": 0
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_native_mailbox206:receipt",
+        "before": {
+          "comb": 13,
+          "FF": 24
+        },
+        "after": {
+          "comb": 0,
+          "FF": 0
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_queue260:queue",
+        "before": {
+          "comb": 173,
+          "FF": 87
+        },
+        "after": {
+          "comb": 174,
+          "FF": 87
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_tile_producer260:tiles",
+        "before": {
+          "comb": 196,
+          "FF": 143
+        },
+        "after": {
+          "comb": 192,
+          "FF": 143
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture201:native_frame|nes_capture_lease201:ownership",
+        "before": {
+          "comb": 49,
+          "FF": 99
+        },
+        "after": {
+          "comb": 48,
+          "FF": 99
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture201:native_frame|nes_native_frame201:frame",
+        "before": {
+          "comb": 49,
+          "FF": 28
+        },
+        "after": {
+          "comb": 48,
+          "FF": 28
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture201:native_frame|nes_native_frame201:frame|nes_native_compact181:compact",
+        "before": {
+          "comb": 1065,
+          "FF": 1078
+        },
+        "after": {
+          "comb": 1067,
+          "FF": 1078
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture201:native_frame|nes_native_frame201:frame|nes_native_planes165:fetch",
+        "before": {
+          "comb": 227,
+          "FF": 186
+        },
+        "after": {
+          "comb": 228,
+          "FF": 186
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture201:native_frame|nes_native_frame201:frame|nes_native_raster181:raster",
+        "before": {
+          "comb": 505,
+          "FF": 422
+        },
+        "after": {
+          "comb": 504,
+          "FF": 422
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture201:native_frame|nes_native_frame201:frame|nes_patch_capture181:pixels",
+        "before": {
+          "comb": 20,
+          "FF": 1
+        },
+        "after": {
+          "comb": 21,
+          "FF": 1
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture201:native_frame|nes_native_frame201:frame|nes_patch_capture181:pixels|nes_patch_rows181:rows",
+        "before": {
+          "comb": 97,
+          "FF": 62
+        },
+        "after": {
+          "comb": 96,
+          "FF": 62
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_plan_batch206:transport|nes_native_mailbox206:control",
+        "before": {
+          "comb": 11,
+          "FF": 44
+        },
+        "after": {
+          "comb": 10,
+          "FF": 44
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_plan_batch206:transport|nes_native_mailbox206:rearm",
+        "before": {
+          "comb": 8,
+          "FF": 10
+        },
+        "after": {
+          "comb": 10,
+          "FF": 10
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_plan_spi200:endpoint",
+        "before": {
+          "comb": 299,
+          "FF": 135
+        },
+        "after": {
+          "comb": 300,
+          "FF": 135
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_source_tile192:source|nes_chr_cache192:cache_path.cache",
+        "before": {
+          "comb": 246,
+          "FF": 234
+        },
+        "after": {
+          "comb": 255,
+          "FF": 234
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_source_tile192:source|nes_native_arbiter165:arbiter",
+        "before": {
+          "comb": 43,
+          "FF": 41
+        },
+        "after": {
+          "comb": 48,
+          "FF": 41
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_source_tile192:source|nes_tile205:tile",
+        "before": {
+          "comb": 659,
+          "FF": 40
+        },
+        "after": {
+          "comb": 662,
+          "FF": 40
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core",
+        "before": {
+          "comb": 212,
+          "FF": 24
+        },
+        "after": {
+          "comb": 208,
+          "FF": 24
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu",
+        "before": {
+          "comb": 45,
+          "FF": 9
+        },
+        "after": {
+          "comb": 44,
+          "FF": 9
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|DmcChan:Dmc",
+        "before": {
+          "comb": 146,
+          "FF": 98
+        },
+        "after": {
+          "comb": 147,
+          "FF": 98
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|FrameCtr:frame_counter",
+        "before": {
+          "comb": 47,
+          "FF": 23
+        },
+        "after": {
+          "comb": 46,
+          "FF": 23
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|SquareChan:Squ1",
+        "before": {
+          "comb": 122,
+          "FF": 40
+        },
+        "after": {
+          "comb": 123,
+          "FF": 40
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|TriangleChan:Tri|LenCounterUnit:LenTri",
+        "before": {
+          "comb": 28,
+          "FF": 20
+        },
+        "after": {
+          "comb": 29,
+          "FF": 20
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu",
+        "before": {
+          "comb": 451,
+          "FF": 125
+        },
+        "after": {
+          "comb": 456,
+          "FF": 125
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|OAMEval:spriteeval",
+        "before": {
+          "comb": 1120,
+          "FF": 318
+        },
+        "after": {
+          "comb": 1116,
+          "FF": 318
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|PaletteRam:palette_ram",
+        "before": {
+          "comb": 403,
+          "FF": 169
+        },
+        "after": {
+          "comb": 407,
+          "FF": 169
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|PixelMuxer:pixel_muxer",
+        "before": {
+          "comb": 10,
+          "FF": 0
+        },
+        "after": {
+          "comb": 11,
+          "FF": 0
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|T65:cpu",
+        "before": {
+          "comb": 567,
+          "FF": 169
+        },
+        "after": {
+          "comb": 569,
+          "FF": 169
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|T65:cpu|T65_ALU:alu",
+        "before": {
+          "comb": 164,
+          "FF": 0
+        },
+        "after": {
+          "comb": 163,
+          "FF": 0
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|T65:cpu|T65_MCode:mcode",
+        "before": {
+          "comb": 382,
+          "FF": 0
+        },
+        "after": {
+          "comb": 383,
+          "FF": 0
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|cart_top:multi_mapper",
+        "before": {
+          "comb": 58,
+          "FF": 0
+        },
+        "after": {
+          "comb": 56,
+          "FF": 0
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_rom_early:rom_service",
+        "before": {
+          "comb": 320,
+          "FF": 279
+        },
+        "after": {
+          "comb": 294,
+          "FF": 279
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control",
+        "before": {
+          "comb": 392,
+          "FF": 281
+        },
+        "after": {
+          "comb": 393,
+          "FF": 281
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_run_observer134:observer",
+        "before": {
+          "comb": 418,
+          "FF": 241
+        },
+        "after": {
+          "comb": 419,
+          "FF": 241
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_screen_status151:screen_status",
+        "before": {
+          "comb": 143,
+          "FF": 206
+        },
+        "after": {
+          "comb": 142,
+          "FF": 206
+        }
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_sink_bridge165:sink",
+        "before": {
+          "comb": 4,
+          "FF": 5
+        },
+        "after": {
+          "comb": 6,
+          "FF": 5
+        }
+      }
+    ],
+    "source_validator_host_queue_comb": 5122,
+    "retained_other_comb": 12693,
+    "region_budget_if_others_fixed": 2715,
+    "phase_RAM_summary": "; nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|altsyncram:memory_rtl_0|altsyncram_6512:auto_generated|ALTSYNCRAM                                                            ; M9K  ; True Dual Port   ; 1024         ; 8            ; 1024         ; 8            ; 8192  ; None                                           ;",
+    "extracted_FSM_paths": [
+      "nes_core257:encoder|state",
+      "nes_validator278:validator|state",
+      "nes_output260:flow|state",
+      "nes_output260:flow|tap_state278"
+    ],
+    "fixed_dual_clock_phase_RAM": true,
+    "FIT": false,
+    "STA": false
+  },
+  "guards": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52
+  ],
+  "stronger_ACK_counter_guards": [
+    1,
+    2,
+    3,
+    4,
+    20,
+    21,
+    22,
+    23,
+    24,
+    27,
+    28,
+    29
+  ],
+  "full_path_ms": null,
+  "full_RUN": false,
+  "actual_SNES_live": false,
+  "reused_SPI_guards": [
+    "# PASS SPI270 checks=171"
+  ],
+  "reused_ARM_guards": {
+    "passed": true,
+    "counter_wrap": {
+      "start": 65530,
+      "final": 54,
+      "packets": 60,
+      "max_credit": 4
+    },
+    "cases": [
+      {
+        "case": 1,
+        "error": 2,
+        "sticky_no_more_SPI": true,
+        "no_SEAL": true
+      },
+      {
+        "case": 2,
+        "error": 3,
+        "sticky_no_more_SPI": true,
+        "no_SEAL": true
+      },
+      {
+        "case": 3,
+        "error": 3,
+        "sticky_no_more_SPI": true,
+        "no_SEAL": true
+      },
+      {
+        "case": 4,
+        "error": 17,
+        "sticky_no_more_SPI": true,
+        "no_SEAL": true
+      },
+      {
+        "case": 5,
+        "error": 17,
+        "sticky_no_more_SPI": true,
+        "no_SEAL": true
+      },
+      {
+        "case": 6,
+        "error": 9,
+        "sticky_no_more_SPI": true,
+        "no_SEAL": true
+      },
+      {
+        "case": 7,
+        "error": 2,
+        "sticky_no_more_SPI": true,
+        "no_SEAL": true
+      },
+      {
+        "case": 8,
+        "error": 10,
+        "sticky_no_more_SPI": true,
+        "no_SEAL": true
+      },
+      {
+        "case": 9,
+        "error": 12,
+        "sticky_no_more_SPI": true,
+        "no_SEAL": true
+      },
+      {
+        "case": 10,
+        "error": 15,
+        "sticky_no_more_SPI": true,
+        "no_SEAL": true
+      },
+      {
+        "case": 11,
+        "error": 19,
+        "sticky_no_more_SPI": true,
+        "no_SEAL": true
+      },
+      {
+        "case": 12,
+        "error": 11,
+        "sticky_no_more_SPI": true,
+        "no_SEAL": true
+      }
+    ],
+    "preflight": [
+      {
+        "case": "missing_seal",
+        "no_SPI": true,
+        "no_H2": true
+      },
+      {
+        "case": "short_seal",
+        "no_SPI": true,
+        "no_H2": true
+      },
+      {
+        "case": "trailing_packet",
+        "no_SPI": true,
+        "no_H2": true
+      },
+      {
+        "case": "wrong_seal_serial",
+        "no_SPI": true,
+        "no_H2": true
+      },
+      {
+        "case": "truncated_prefix",
+        "no_SPI": true,
+        "no_H2": true
+      },
+      {
+        "case": "truncated_tail",
+        "no_SPI": true,
+        "no_H2": true
+      }
+    ],
+    "ELF_sha256": "8ce1d5f25c1cbd5fc962363e74205f5a3490e5880ef07ba6b737fe80fe8d7fd7",
+    "scope": "Retain270 ARM guards, then exercise split bounds and preflight atomicity.",
+    "descriptions": [
+      "bad status CRC",
+      "accepted counter mismatch",
+      "retired beyond pending",
+      "tile generation mismatch",
+      "tile length mismatch",
+      "missing tile-end barrier",
+      "old F7 status",
+      "token exhaustion",
+      "truncated plan",
+      "invalid packed map tag",
+      "bad HDMA meaning",
+      "invalid serial"
+    ],
+    "short_status_guards": [
+      {
+        "case": 0,
+        "error": 2,
+        "no_packet": true,
+        "sticky_no_SPI": true
+      },
+      {
+        "case": 1,
+        "error": 2,
+        "no_packet": true,
+        "sticky_no_SPI": true
+      },
+      {
+        "case": 2,
+        "error": 3,
+        "no_packet": true,
+        "sticky_no_SPI": true
+      },
+      {
+        "case": 3,
+        "error": 3,
+        "no_packet": true,
+        "sticky_no_SPI": true
+      },
+      {
+        "case": 4,
+        "error": 3,
+        "no_packet": true,
+        "sticky_no_SPI": true
+      },
+      {
+        "case": 5,
+        "error": 2,
+        "no_packet": true,
+        "sticky_no_SPI": true
+      }
+    ],
+    "split_guards": [
+      "CGRAM_start",
+      "CGRAM_length",
+      "CGRAM_limit",
+      "section",
+      "scroll_partial",
+      "bitmap_start",
+      "tail_start",
+      "tail_end",
+      "dense_limit",
+      "dense_empty",
+      "RLE_marker",
+      "RLE_prefix_only",
+      "RLE_truncated",
+      "RLE_overflow",
+      "RLE_type",
+      "manifest_outlen"
+    ],
+    "partial_RLE_preflight": {
+      "passed": true,
+      "no_fragment_sent": true,
+      "sticky_no_more_SPI": true
+    },
+    "script_sha256": "0146c53742a13b12a31ee413cb7423c304d24ae34e07d24a0b9cd8be6da5d73b"
+  },
+  "P2_selected": false,
+  "physical": false,
+  "input_hashes": {
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\result.json": "390640eab84a64c97ddda476544c0b5154891a8431a77efdbef75dbcbfb5bd19",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\result.json": "434cf3314099c8e31302e8b620626bbd790dcfecf3565be0a1d5737c0a430a2f",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\result.json": "e8e09d10f64e5f0930557b7ae87fc1283c9d7163e26e9bec96747dacf5f6fbf9",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\result.json": "e2999fc0aaa081fb35cb733657d4db2c997bb57885ec90ac8ee00072cfc71850",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\board01\\result.json": "bba08e2256c365550fd029f639593d66d7250b1874b94b44c761972d3f6a980b",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\analysis01\\costs.csv": "c6d3af83351f7efd81e15666621865cae4e32648be42125eafc1524dbb86121b",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint276\\analysis01\\costs.csv": "9c9247e90b969cfd2da248e2696effccb6ba89e748293d9410be9cde892f11dc",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\result.json": "71b09ca656194499a29b1698dc4e2a126d59c86370490c8e46e3ea0e6bdb2b87",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_core257.sv": "34b8a75994b8769d0f6b7f126e349d3236da109b7236c0859b73f357552e8dcd",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_core257.sv": "34b8a75994b8769d0f6b7f126e349d3236da109b7236c0859b73f357552e8dcd",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_core257.sv": "34b8a75994b8769d0f6b7f126e349d3236da109b7236c0859b73f357552e8dcd",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_core257.sv": "34b8a75994b8769d0f6b7f126e349d3236da109b7236c0859b73f357552e8dcd",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_transport257.sv": "a81fee826ed7ed67064e0b723dbbfa49f3d2730752e828db4b181e1d9f1bda4c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_transport257.sv": "a81fee826ed7ed67064e0b723dbbfa49f3d2730752e828db4b181e1d9f1bda4c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_transport257.sv": "a81fee826ed7ed67064e0b723dbbfa49f3d2730752e828db4b181e1d9f1bda4c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_transport257.sv": "a81fee826ed7ed67064e0b723dbbfa49f3d2730752e828db4b181e1d9f1bda4c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_joint257.sv": "a499b089fa3d3519a852733d5d2dec036e7b10b078a79c20c9c54d7c3cb5dce2",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_joint257.sv": "a499b089fa3d3519a852733d5d2dec036e7b10b078a79c20c9c54d7c3cb5dce2",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_joint257.sv": "a499b089fa3d3519a852733d5d2dec036e7b10b078a79c20c9c54d7c3cb5dce2",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_joint257.sv": "a499b089fa3d3519a852733d5d2dec036e7b10b078a79c20c9c54d7c3cb5dce2",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_queue260.sv": "32a4b9276f7dea3d74221e418d5556cce510ea06d8860073f44a2023b3109356",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_queue260.sv": "32a4b9276f7dea3d74221e418d5556cce510ea06d8860073f44a2023b3109356",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_queue260.sv": "32a4b9276f7dea3d74221e418d5556cce510ea06d8860073f44a2023b3109356",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_queue260.sv": "32a4b9276f7dea3d74221e418d5556cce510ea06d8860073f44a2023b3109356",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_tile_producer260.sv": "1e4aa58907216042458e82f66335a157d44cf8c1a1cb7b0af9df281cf2d74145",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_tile_producer260.sv": "1e4aa58907216042458e82f66335a157d44cf8c1a1cb7b0af9df281cf2d74145",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_tile_producer260.sv": "1e4aa58907216042458e82f66335a157d44cf8c1a1cb7b0af9df281cf2d74145",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_tile_producer260.sv": "1e4aa58907216042458e82f66335a157d44cf8c1a1cb7b0af9df281cf2d74145",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_mux260.sv": "db3f71f646ff3ed5893e7d8bf8094423284ef82f12edc7bc5097713e94f6bf53",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_mux260.sv": "db3f71f646ff3ed5893e7d8bf8094423284ef82f12edc7bc5097713e94f6bf53",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_mux260.sv": "db3f71f646ff3ed5893e7d8bf8094423284ef82f12edc7bc5097713e94f6bf53",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_mux260.sv": "db3f71f646ff3ed5893e7d8bf8094423284ef82f12edc7bc5097713e94f6bf53",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_native_frame201.sv": "2c3fd46c4c4f1e3be6619da71abafe8d56d85b5273067f5d70f74783cb0bf64c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_native_frame201.sv": "2c3fd46c4c4f1e3be6619da71abafe8d56d85b5273067f5d70f74783cb0bf64c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_native_frame201.sv": "2c3fd46c4c4f1e3be6619da71abafe8d56d85b5273067f5d70f74783cb0bf64c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_native_frame201.sv": "2c3fd46c4c4f1e3be6619da71abafe8d56d85b5273067f5d70f74783cb0bf64c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_native_planes165.sv": "5ffb80c410948eff320e94ed2676a73c04780a46cbfb53e3acda181d316a999a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_native_planes165.sv": "5ffb80c410948eff320e94ed2676a73c04780a46cbfb53e3acda181d316a999a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_native_planes165.sv": "5ffb80c410948eff320e94ed2676a73c04780a46cbfb53e3acda181d316a999a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_native_planes165.sv": "5ffb80c410948eff320e94ed2676a73c04780a46cbfb53e3acda181d316a999a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_patch_capture181.sv": "a4730979575696afde9e8aa5911a67fbf6404c96f609da02def8e76e831c5984",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_patch_capture181.sv": "a4730979575696afde9e8aa5911a67fbf6404c96f609da02def8e76e831c5984",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_patch_capture181.sv": "a4730979575696afde9e8aa5911a67fbf6404c96f609da02def8e76e831c5984",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_patch_capture181.sv": "a4730979575696afde9e8aa5911a67fbf6404c96f609da02def8e76e831c5984",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_native_compact181.sv": "b6134f4264eed933ed830489239273e682a0494cd36345def1c135f11e3c8bde",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_native_compact181.sv": "b6134f4264eed933ed830489239273e682a0494cd36345def1c135f11e3c8bde",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_native_compact181.sv": "b6134f4264eed933ed830489239273e682a0494cd36345def1c135f11e3c8bde",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_native_compact181.sv": "b6134f4264eed933ed830489239273e682a0494cd36345def1c135f11e3c8bde",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_native_raster181.sv": "25f9762f7f0842dacf5915804f398f71b9ed5e9b54edd99f4ad1ce5423ae8b95",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_native_raster181.sv": "25f9762f7f0842dacf5915804f398f71b9ed5e9b54edd99f4ad1ce5423ae8b95",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_native_raster181.sv": "25f9762f7f0842dacf5915804f398f71b9ed5e9b54edd99f4ad1ce5423ae8b95",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_native_raster181.sv": "25f9762f7f0842dacf5915804f398f71b9ed5e9b54edd99f4ad1ce5423ae8b95",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_capture_lease201.sv": "c3f95b8e7b56afbe65e3484e1006d4fc2c54b6e47407bf32124d8ae461fb7f61",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_capture_lease201.sv": "c3f95b8e7b56afbe65e3484e1006d4fc2c54b6e47407bf32124d8ae461fb7f61",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_capture_lease201.sv": "c3f95b8e7b56afbe65e3484e1006d4fc2c54b6e47407bf32124d8ae461fb7f61",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_capture_lease201.sv": "c3f95b8e7b56afbe65e3484e1006d4fc2c54b6e47407bf32124d8ae461fb7f61",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_bulk_aperture188.sv": "fdc4e32278fbeab002b74ffbcac84951a346e11469c7fa2d332d0b74861bf466",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_bulk_aperture188.sv": "fdc4e32278fbeab002b74ffbcac84951a346e11469c7fa2d332d0b74861bf466",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_bulk_aperture188.sv": "fdc4e32278fbeab002b74ffbcac84951a346e11469c7fa2d332d0b74861bf466",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_bulk_aperture188.sv": "fdc4e32278fbeab002b74ffbcac84951a346e11469c7fa2d332d0b74861bf466",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_joint266.sv": "24ca448e30129eb1d0ebb8ce46a1725c7aa07531bff8d0e1904f2a248f4d6894",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_joint266.sv": "24ca448e30129eb1d0ebb8ce46a1725c7aa07531bff8d0e1904f2a248f4d6894",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_joint266.sv": "24ca448e30129eb1d0ebb8ce46a1725c7aa07531bff8d0e1904f2a248f4d6894",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_joint266.sv": "24ca448e30129eb1d0ebb8ce46a1725c7aa07531bff8d0e1904f2a248f4d6894",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_plan_spi200.sv": "4e64fd4f51005ab9c666dc8d503774168e99886facf16aa46a97476e5010417a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_plan_spi200.sv": "4e64fd4f51005ab9c666dc8d503774168e99886facf16aa46a97476e5010417a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_plan_batch206.sv": "9427e8970abc92f6027cd304d09f3d7b296ce996a3d775b4a5ca5270d8112c43",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_plan_batch206.sv": "9427e8970abc92f6027cd304d09f3d7b296ce996a3d775b4a5ca5270d8112c43",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_source_tile192.sv": "98135e455b8934d5c9873da7f1f7fd251cf30a8c3d74872db7d432c1b929c635",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_source_tile192.sv": "98135e455b8934d5c9873da7f1f7fd251cf30a8c3d74872db7d432c1b929c635",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_tile205.sv": "21008911a47cb2092a9589f9959c32a9c9b28070b81bef2f594f4647334cc7cb",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_tile205.sv": "21008911a47cb2092a9589f9959c32a9c9b28070b81bef2f594f4647334cc7cb",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_chr_cache192.sv": "ca3e5e4fc596ee8662646276386571c6487ce142d98cb318666e288c7dd76a9f",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_chr_cache192.sv": "ca3e5e4fc596ee8662646276386571c6487ce142d98cb318666e288c7dd76a9f",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_native_arbiter165.sv": "cd4818bc2e7a02d84b101f55c2fb2f564d59588561237002bb2ecde6d6035e23",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_native_arbiter165.sv": "cd4818bc2e7a02d84b101f55c2fb2f564d59588561237002bb2ecde6d6035e23",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_rom_physical.sv": "6870eb15955c7e1f7bc3510e7654a45c6f42c8723779a382496c0cb437be47c9",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_rom_physical.sv": "6870eb15955c7e1f7bc3510e7654a45c6f42c8723779a382496c0cb437be47c9",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_plan_rom267.sv": "74ba90ad32c6a70f1cf43d27d1d84672ad98f6d420e78a24f43402ad1ecd25ec",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_plan_rom267.sv": "74ba90ad32c6a70f1cf43d27d1d84672ad98f6d420e78a24f43402ad1ecd25ec",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_spi270.sv": "75725ef36901de4591caec98c9c45c2b0d29cfc962e9d2b06cfd99d30a7bbfb1",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_spi270.sv": "75725ef36901de4591caec98c9c45c2b0d29cfc962e9d2b06cfd99d30a7bbfb1",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_spi270.sv": "75725ef36901de4591caec98c9c45c2b0d29cfc962e9d2b06cfd99d30a7bbfb1",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_spi270.sv": "75725ef36901de4591caec98c9c45c2b0d29cfc962e9d2b06cfd99d30a7bbfb1",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_validator278.sv": "c5044c42f0338c9b40001dde47de2c0d845cdc7970cebfc6acdd3a13a413e5d8",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\nes_validator278.sv": "c5044c42f0338c9b40001dde47de2c0d845cdc7970cebfc6acdd3a13a413e5d8",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards03\\nes_validator278.sv": "c5044c42f0338c9b40001dde47de2c0d845cdc7970cebfc6acdd3a13a413e5d8",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\nes_validator278.sv": "c5044c42f0338c9b40001dde47de2c0d845cdc7970cebfc6acdd3a13a413e5d8",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\board01\\nes_core257.sv": "34b8a75994b8769d0f6b7f126e349d3236da109b7236c0859b73f357552e8dcd",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\nes_core257.sv": "c41837f76072d99c189e7bc4d7d297c5cf964ca3286e5325ecb5235e967138b2",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint270\\board02\\nes_core257.sv": "c41837f76072d99c189e7bc4d7d297c5cf964ca3286e5325ecb5235e967138b2",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\board01\\nes_joint257.sv": "a499b089fa3d3519a852733d5d2dec036e7b10b078a79c20c9c54d7c3cb5dce2",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\nes_joint257.sv": "8be6c964788b7c273664baf4fd44f023d439cd085a6f424818b6b8b50dcf77da",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint270\\board02\\nes_joint257.sv": "8be6c964788b7c273664baf4fd44f023d439cd085a6f424818b6b8b50dcf77da",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\board01\\nes_queue260.sv": "32a4b9276f7dea3d74221e418d5556cce510ea06d8860073f44a2023b3109356",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\nes_queue260.sv": "846bb5aa480a06766f21fe57b1376cf7a8aa08d4dd475d70c090c59dd35f79fe",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint270\\board02\\nes_queue260.sv": "846bb5aa480a06766f21fe57b1376cf7a8aa08d4dd475d70c090c59dd35f79fe",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\board01\\nes_mux260.sv": "e5d5599027497d56e67c11cd80248f86db528bbeab6c6890f24d7ffa5fc3c2be",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\nes_mux260.sv": "71a164deaa278a75d12ea04b6484ba8c85a02c8383ba9e0153cdfc09e41e2e80",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint270\\board02\\nes_mux260.sv": "6f7e121dbe04ab2f684e2a6fc5a160fc03c00118413f96a1984312d29529794c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\board01\\nes_joint266.sv": "c03ba1c1194535d4379bc0226727d231a3587148862201c9820199a4d01b5cb5",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\nes_joint266.sv": "61490acbf7f2df211b2dc5e35466523f2e0abe476e974de3aeae320b31a47530",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint270\\board02\\nes_joint266.sv": "cd3cfd892f4236200abec71472d43ea0fd42fb77052cc9cebf2972d7d97276a7",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\board01\\nes_validator278.sv": "c5044c42f0338c9b40001dde47de2c0d845cdc7970cebfc6acdd3a13a413e5d8",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\blocks.txt": "c435d1a4a17d9276bded97e14f00241135e3f556f62acab9f3131a5f030ef39c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\blocks.txt": "c435d1a4a17d9276bded97e14f00241135e3f556f62acab9f3131a5f030ef39c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\commands.hex": "88ef9e4892f6b5b4a5a960d781a215b70d2491966ce6211099acc5a4b7773b9d",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\commands.hex": "88ef9e4892f6b5b4a5a960d781a215b70d2491966ce6211099acc5a4b7773b9d",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\stream.hex": "3138a5933c7508d7f550e99d199b17ab6cf17b50f0158d4da10b8ebcc8c6ba61",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\stream.hex": "3138a5933c7508d7f550e99d199b17ab6cf17b50f0158d4da10b8ebcc8c6ba61",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\expected.hex": "b31e7f316e1c70c01de28aa0bba8e7e8fc008e28515669436591af1d7aa92059",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\expected.hex": "b31e7f316e1c70c01de28aa0bba8e7e8fc008e28515669436591af1d7aa92059",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\hashes.hex": "f6c0ba7a833270ea23d4f6e32af2823091db89bfe6d1e2379d7f1ac58f4c8361",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\hashes.hex": "f6c0ba7a833270ea23d4f6e32af2823091db89bfe6d1e2379d7f1ac58f4c8361",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\certs.hex": "d021da9df5e119530729a86b893bd28cfb32819b48c059129c93dfb75df98f4a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\certs.hex": "d021da9df5e119530729a86b893bd28cfb32819b48c059129c93dfb75df98f4a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\CPU-bus.csv": "5e846b7f364f97966007de32b68c86d2221e41fb6a3584429f6d9e3ac1d8972c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\CPU-bus.csv": "5e846b7f364f97966007de32b68c86d2221e41fb6a3584429f6d9e3ac1d8972c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\CPU-timing.csv": "4ca7d05b4ff4607cc83f02c576580b95f3058dbfa430e40f7aa6ab8aa5e18d5a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\CPU-timing.csv": "4ca7d05b4ff4607cc83f02c576580b95f3058dbfa430e40f7aa6ab8aa5e18d5a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\CPU-ordinary.sfc": "12c4e7c21c7138da9f67a9c2ce6c06a62ff5aefb092914c552110b021ebbff0f",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\CPU-ordinary.sfc": "12c4e7c21c7138da9f67a9c2ce6c06a62ff5aefb092914c552110b021ebbff0f",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\CPU-packets.hex": "6849b96d88ea15364d60dc389dc61ee5f3dc33bbdf3b999076f1b456b67fb676",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\CPU-packets.hex": "6849b96d88ea15364d60dc389dc61ee5f3dc33bbdf3b999076f1b456b67fb676",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\nes_output264.c": "323f3ec45567bed79a2ff25e545aa2d5edec37ff5330de19def4e23895ef9643",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\nes_output264.c": "323f3ec45567bed79a2ff25e545aa2d5edec37ff5330de19def4e23895ef9643",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint275\\spiguards01\\result.json": "91351698787305cc9ea3ea3778971d41359f1d74df13f963fd1cdeb543f1c2ec",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\armguards01\\result.json": "ee22cdfb68020af6b23a627edb163d8b3668b096858a013dcc015c6e5f2bcb82",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\nes_output264.c": "323f3ec45567bed79a2ff25e545aa2d5edec37ff5330de19def4e23895ef9643",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\output.elf": "8ce1d5f25c1cbd5fc962363e74205f5a3490e5880ef07ba6b737fe80fe8d7fd7",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\output.elf": "eeac1b29df3f5431a9dadfd69870c299132640413e4ec174e8926bdcc49c44df",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\output.elf": "dc06a625c16df7255b3b64b2049a20ac5b9af96aa5bb7301e5bba05934b9d4e5",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\joint-events.csv": "0423540c3e5f87987aa43a12d82b88067e03aabc61021a3720ffcb14c8de5325",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint276\\test03\\joint-events.csv": "a216076a459764fd49a6fac10fbb47ad3d4b9bd28a1496d635956da62d080049",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\cycles.csv": "65cc3956df1d7707c1b8281d99de80b2c818b3bc8af9e0d90d37927d0c67888e",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\test01\\cycles.csv": "ab62b4d9f345d7a08ebfea98de537852776ac73fb165cdc87d149d663288f562",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame905.packets": "219e0547bf33b8542e764fc35a220e169f3145e4371e49d5fb07ebfc867bdc2a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm905.json": "5fc7a1fca2ad38487df059fb7c500fa9f7edd18ba571d17ba561e9ff50449cc8",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame906.packets": "eea27ad385b3fe7c3b9f41579e110e8955d68d67230e34185a16bc658f500eb1",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm906.json": "9e99406ee46601fbba9700ce06bd3f8d00efff9f9da12089aa3467968de426bd",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame907.packets": "eda48423d167b81ac31be547aadcf68284d58cf8bc345ad16fb1621575e89b0f",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm907.json": "f32903a41238194b1e4ed13dc3d485d875e7ab0764b42044b9f1b45e34e2df3f",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame908.packets": "2bae266b9730a5032eee5fa889a4e1d6dd9857695c19982bd2c7d7a922e73dff",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm908.json": "686e0ed5713e3eeddf03b610beada73476a608300d6ec3d10c89897bb573e305",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame909.packets": "f4007faf9f04220ad27289732649d28906139b36d3228ec8190fb099af644df5",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm909.json": "e019c61e16df5ca8d722f296cbd08d6f21eb2c43e29ae78447a1ececf226a5a7",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame910.packets": "34b13207078d0cb6b66089f0b50c31e64893fa05450d182604d524058df16d9e",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm910.json": "a1f440e06cf206473206ba1ed88a6c69de1ea1b3fa3541fc3af66b16c311663f",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame911.packets": "5f424741f5b80d7f3cd6411b588972ecb2a32ac5ce5046fca052fc5fbe4f2fcd",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm911.json": "5d6d15ee56e048a01c4ec2b12b90364aeb1548501e8197e9289af2be9133bf7f",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame912.packets": "6c83c5bb14e1c7524aaa38cd30c769da6028cb77a20fe757ddfe75c9d42d64a3",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm912.json": "68fc4fccc041f5f0a87c672d13b3ac255e916cd7cab73c57c842de3c51a59c11",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame913.packets": "63404cc3f85eeca1f1b3679d2cacec3ffbdd5f88200721ea45823c619d204fce",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm913.json": "06be44dc1a4869ef5abd3c6a145a3a77f454e7601f8326a1699ab4dbf5b02d02",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame914.packets": "c155d8ad7f92168498c282583908a31c09afb9b077fb0117f0fcc82122bd81b7",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm914.json": "f40be6241346803843ca1d230373e1b4ef98dbc3f5529d749323f908232a4f8d",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame915.packets": "31261b1b8ec08cb56dfbff6560c3440db87f4584e868cf994f51f00981c08547",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm915.json": "06d94098b255c3b6e2cdbd067a187c43528d7a3c5c2e735e60a30c16cc8b09c2",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame916.packets": "4b6acadded88ab12136a66c92e6207be005e4b4f72e7e30cd44e36cf13857480",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm916.json": "826139eb963db3b192cac509fd894bb16fe28250b5855c71b6de2f13cf25e34b",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame917.packets": "b2ff4dc82062b5418b82900a3f5692779819bf7c50920d7985af981066ffae0b",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm917.json": "3af4d8e2426998088826fc371eabbeebd241156ee693d13ddb953aa5cbff90f1",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame918.packets": "54c7cceb63f5fd0f44d894dc15d5c6ea5b8a5a76b174fce6e7101949fbe8d06d",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm918.json": "b79bc7e0d638893ddc08f92c260f1442d086e5b9e69d12ecb3ec7b1033877479",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame919.packets": "ed0b2067ecfe4ff4a5cdfcb801dd8bc81da93de6cf96ea4e887b94f3fecafb21",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm919.json": "89d236377c3af438d9e3fcc6435255bc2e091c93fffc803929e58864bb6c683a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame920.packets": "a0bf42a04373d50eff3342f68e3929bd9ee3bc1bdbd9e6344ba2da560bc6002d",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm920.json": "9263528343a92cc62f8890758289c5e95e12e61833711fd31ee2535097285dc8",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame921.packets": "b33b4cde9774e139033cfd56faa3c7c870dd7319fe7d510474fdc1eae0209994",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm921.json": "9e57eb292637307fedf86a32eb4144e9bf2fe924cadb08bc265bfc3793d89a1d",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame922.packets": "a06ed170c9b5e5644f1e3cb06dabab0551351dcfa02f1f87ebc400aa8388c40e",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm922.json": "b8c54b77bda74fbb0911a1f8c2c35d73e51bedcd5aba234fa4afc19ac08987b5",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame923.packets": "929dda243e52ecefc58757ab71dff108eac40ecb7068e449bb163bd9a68a9470",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm923.json": "f8a06ce6aa0e4f3a9667162d4a964821c8a92472ae838ea06140300c29c92182",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame924.packets": "56323fb6b8e436ad98a5877ab9b349c93e492e6d97c1bac3c44aee0d73281203",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm924.json": "c4c1796d9425da95c4c0f56f112717be63ac43d6d7e16442524aacc6c6f3066b",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame925.packets": "e0d828f13fbf4fc8e17490edaad72b70779c23c410670491f06a68dd0d363677",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm925.json": "e8f2349befcb33c5f6ab2b1af5eaaedcaa37d621e0db1336a2a9e2443a84b432",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame926.packets": "c35654c188df1c52a5612d99d1950de92c588cf765183f87e1815832bf16978c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm926.json": "3ac6e2888d63bca3ad065bca7c6ebf8d91047e91f27fa9767a5649e17163a4d2",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame927.packets": "e67a4d6cc5e6712614b0fb5db99986ae1ae9aaa65cce0ad72e9dc4c8ea55de27",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm927.json": "93452542b75eec40f9726268ae3b890cf2d6dd654deb1dff84007d708d9d5e08",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame928.packets": "98f772cb63b88a92003e34ba63bc224800556e07523fe49a95de297d80cbc880",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm928.json": "44324ead8eb1cf4872c8492b5dfef364fe36a7754ac6f6adff8dea7e6c21399c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame929.packets": "bb8a798f7113770ce321c6e598257d30a3c592a50094276265d30d1dbed61c41",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm929.json": "f75cf8b8e6c87ede2b84d333f908ebad83667198bed16dac6d26894831fdc6d3",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame930.packets": "4a3f2f2bf64e3207139fa3fd04582c40e54426ba3ae9f50b264ea7e2668acf72",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm930.json": "f6d362e060882ae9fa7a70e4498e6c25c0c47e665bae5b757e10302a2691de2c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame931.packets": "3b9bab093ea7dae3c83f13a292647a047d16c67b1798e11f8df78a1f55ed629d",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm931.json": "7405d3fc1b7987a7013d39a8db31bd80005d127c567e778f1e0b120e927e435f",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame932.packets": "a4e4e80d292dd37d159fb9787e1b5ef9984874a9dc64a7ff339d77cf54300c17",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm932.json": "d77a5daa915d324ab035e5a4392dc95b564a29a178813c98f8f3cb169336eb83",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame933.packets": "69910aa30d6351cc9329d3c0ccd3e93b206788f3ba170fd8d1f05c85a42ba843",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm933.json": "4dec8d700f90d51feb3d7db9cd199144c26f14e4fa648274e3f15ba49144cfd2",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame934.packets": "61815b017912894359a01e8b0eb3505f9c2d224c5586f61003f3a7c43dcb0b5d",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm934.json": "3f922d02fa029986919793025254ac8081ada8e0346aaf206a58bac5a93fc2b5",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame935.packets": "280d73395a97b4f9cc0e49ab16a3ac0c7d094ad889ffbe9f5ab0bcb120d93a8d",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm935.json": "089ea104f55c29cb900be5d829ccd3d043640861f68fd6028b14384d261ece62",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame936.packets": "87dd88d50b031fe05b8cce94592c35e0c58822b25aa5282baf4a06b40a3082f1",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm936.json": "fd670ea82818a025351b09e20c60965296a490b95e1c6f81037098f460342372",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame937.packets": "ef51adb9898c923fdfd818f6619cf3b6547f151de0aaeb470f5660bbe4be07a1",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm937.json": "ce62137a9c79b5bd1cc2f4b250f0fa975433e5234580831d0610de0aee98cd54",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame938.packets": "f8d5b9d83dceb45d04c2cca84ca8ae4390b56d0ec7c523faa0519ba26ef822a5",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm938.json": "2bce777f30ea304e1769f6926de3875e4d4731f990d22330481b03cf349d06cb",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame939.packets": "a5c9b8311e4bda89a2c02f75acd7357c8b7a3dd2418894a85249e54d414bda98",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm939.json": "a76d84287cbae6069fed466dd2948a11b94649f40a4dc794c1c9b151b9c8c294",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame940.packets": "5bba6725afdfe367e501623841d27e49db4b45d5d09472331deafc5ebd6ce34a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm940.json": "dd85020d6638edbb9d4df9bcd8b359bced28236c4789df6b039f10732f5ebd1b",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame941.packets": "5ea3dddd5c1ffc4cc0100107b0db8bac91a1670aa36363251bc9fe056504fdfd",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm941.json": "5c4ab7ea0fb62687994ddeeba7693d2954141da06e72ca8b311b9049c771d05a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame942.packets": "70579b5a934525ab3ab04b0c9a91e9585737b50480393d88adcc9a4290439425",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm942.json": "62e982cdfb87151b559a44a826186839a03d35ad4c29d4371b174fb3368079de",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame943.packets": "d2e68be9ee5310f0b50f9d74bdb1dda93d6764e5be2cf83e7148a0a04b4be6c6",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm943.json": "b7b6c600259989f978c6488c1ef833c4e74527cdf2ea0f3e04d91964fa01ddf0",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame944.packets": "1d3c830d315a3b94357c09aba29e4611780d1a2e5386344c6054bb04b76aded7",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm944.json": "bc77ca62392fe4b5441833ee57dd6ea47fc6d02056aeb3f3b26c387d667896b8",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame945.packets": "c8a94da3c3238d671d78d936bad8827ae62256b355813b5a2c56248be369144a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm945.json": "a99259019535ba23e94d5e33afc5a15abef360ac3a9e61771b40ec430fa28b7c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame946.packets": "8785759d931d5413f3d6fc28db9c19c114b46511adb771b545004b75a5a7dede",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm946.json": "ee052e79caa4885a5ef942ae97b249bc9ec8d785cbe0a7b0aef8fc630dfe4bf7",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame947.packets": "c58c8edb715f4bb81a5b7c09146afe6af5b6ecb9e713da42d08d7f824f03c27d",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm947.json": "b9f7d187279411252523164cb84999070835b8c5027ee15f52a247599a6ff5a4",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame948.packets": "93562bf57647c40ebd0784a63585eb93959f879bfb814bb00bd2449f1ab91569",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm948.json": "f378dfab0ee0674aa6664d14ad4df54835d50b40d9d4a149c6ea0e0ef59b6d11",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame949.packets": "64329ac1109a37304e63c1b02587c4ef0d9621f54fef3f3ba2e782f4d0066684",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm949.json": "551931606c801dcbef3c26acd0d5b95b0311c8d9fa70fd1630c2b98c5bcfcab7",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame950.packets": "fb9cc1cd809e970c64ac134a1d088010a59053aaab95d18e9c910db7066fffcc",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm950.json": "c33bd368ff69e798aa15ac5d880bcd9401fdc8b0fc8a395b5a43177abc2e1f04",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame951.packets": "4ccb0086df85f9a209745c583f496b9c0734879fd7935cafbd130c34089c5eb4",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm951.json": "e9ba7ac6317d918920c3b96a9a5e4d00fb3a24960bf7213cbba64553968c6b36",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame952.packets": "19b3b37d95f10e396ffe52ea811ae5f5078eab57e1fa1e631adf5d6bd1d7a9fa",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm952.json": "81a5ff95ea0f3f3f57e4c22cd1448bd516bd7a8314a2da3190f5cf4163887899",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame953.packets": "a338727d581c33b676d423e30be10d7531cecbcb71fdece5ead88d3670f55fdb",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm953.json": "879e7f3b076eaf77c767d9bb67e9fd8914b81ae499fc1f410824b4fc0c09f9a6",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame954.packets": "2dde401bc830356d8aa109d37fbbd468b2d1343cb2aa54a98baeb5de528b4238",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm954.json": "5173279964e1f425ce8ad87bf8cee334bbcaddc3fa016dbd724b32facd4d3748",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame955.packets": "7f574835184f4add3acd6a0d373fe7e58c4bdd9841f20b3265fdfacf6ff07699",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm955.json": "000fb7817501b51bc59dc0d6d29b21abf1becd113d11b5554b83af6b0d4ea609",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame956.packets": "3229412c67621bbadca9a9b0ef7ec8576b592e2d8db2447755f95ec2345a3210",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm956.json": "edbb384b4b0e080430fb66e1f0f0d8001580d888d08d65ccd927d94f69087dad",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame957.packets": "089b23fdcc12df666b90467ebbcea0e54472e6a643279f47b28bdf148de5d8bf",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm957.json": "aca6be1fb6de67fe3833fc2a034dd9f56fbd5920a4be2d8bb7efe8c590a3cb8a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame958.packets": "c9c8c71ff574597e3bd283a46064940f8e703598589710f4348fde809f7142f2",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm958.json": "1d1d9d7d2d76a51b320a09f5180a906f1b2b4171a7b5c9cc993290057c2f4771",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame959.packets": "76e0005e8511d08f156b774bb095c73ebd6d83b0ea7328a0b2016b22a7493935",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm959.json": "d570603bbf1bdbc55570fdc457249728c746a96d536f02d1fd3255c537146e3b",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame960.packets": "d8aa91a8275ee7307a8cfa3e15cacf953f9b018716329fc86447592b1dcff08b",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm960.json": "d01a779d07e60b3a14041c8a9e0dafec2f940c05860f3789f314db07a7b199e4",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame961.packets": "91964a7415fd5ec58b5d687139100892ddc2a9c602821925979498ed8948484f",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm961.json": "7fd1f537fd792f81be034d6d30122e1945a65cd4aefc081e1e9cf84182f1b4f8",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame962.packets": "1249306f4f7449d210d2d3b8f0cd8ba2bf40d426a9815738bf761460a1eeb80e",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm962.json": "887ed25fa8f6c47a47eb7309ff6380f25c1731a7e493f9f02ddcb74b726d8bbe",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame963.packets": "54565e0a5459d27c5ba12f6e7fa1c966d5df3e6c9778288bb18bf1bc4044b2d0",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm963.json": "0bd83322ccc14e842d31ba6027ba3419289d12dd0ef365b1ec112cc0e0568d11",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame964.packets": "5e636102a731aab89790ac5df179f6d13f185c54305d1e49995be690199c6ac5",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm964.json": "0f9d91cee17a7a6c894a94819ab8dd5be3d0edc056b8aca7bc937a6a318464b4",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame965.packets": "e09c71e517830930f97f8cd76e9e2718c1a380ca684c9d7eabcbafc9e13f166e",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm965.json": "9c5850ff802726eb8a60e9f274eeb60300e8724256b86253af31ac9d26d4b6be",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame966.packets": "17b661defadf3b49c16d63f65d0588a946550ae589fbaa0027a027613a7c12d9",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm966.json": "c9dd35985de216350be701a50e26b126272b73aa22494936397926d0f11c4071",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame967.packets": "a4fef58859b875d6903ea06859628ac794a95f4bace1107384529f71791c8468",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm967.json": "b9fc15caa88bd99cb4780b5a2fdf7ce9fde1b4d928d0b88785e91a576aa754ee",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame968.packets": "974d847cb513c431457da07a1e1a82677673f6fc22765b4c3ed9a1fd4311b647",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm968.json": "571378c0d496da17b96f75792fc5ddbe11939279b24341a52936c6506e4a1100",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame969.packets": "ee2e0cfe7a49dc08a29f5fe589ac84edb8f2bce4324fd1ff1db6924eca85d5da",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm969.json": "339f676d89d04e60b921242aa7c1c0e2293ddf8c8b351fc5dd7410cbc9f3144f",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame970.packets": "aa41fd59ce990fe62978fc5f4bf67e329acbd97c4b1c1f081bbd48e9000fc78b",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm970.json": "4bbf98e7dc485ae6b098f6ce4e56f8ad1c79b248643a0e76aac37dff871f5931",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame971.packets": "8b048b6227765d76a12f9deab67e81f67547e5c0b3539d9dfeca614d436f83e9",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm971.json": "a1842a5878f4c39d4a34edf650c3acd20ab3e9362f220a0301741701d86b42d2",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame972.packets": "7217bd4439e18b7e3b9525f3a94872ede22a97d527846bcf2627ae30262eeaab",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm972.json": "b0441938d6c217327e98104954295ea70524f903e43aef46b7586c7e9509c417",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame973.packets": "f49a942beff3dbcaf173c0f1c1abaf8b82d8a5ec2783ffa0026ffc5f0df9546f",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm973.json": "6a1738e7e6a054bfe92a8f3d03c890ee20bdf8216dc910ccc36812b83e6d6381",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame974.packets": "1ac41a1643cac526cdbcf6750480759571d70a27a50889e381f7424993e64428",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm974.json": "ce09840a6e6c0de5517d7f1e3976ffde15b68dfbf887fae7d9aeabdacbc00ec3",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint274\\arm01\\frame975.packets": "bd8eb00fae2db046a9a005dcb6e564736ae1d6624a694fe038e00fd226768f57",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\arm975.json": "59b684fee9a5342985c1d616e3ae6b2372051c48b99a3af91f98640305a8e38e",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\joint-events.csv": "bb45bcbd851694853fd3c6bbaedcd59f5fd94af21ff8f6d124983f159d609bde",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\window01\\cycles.csv": "6923112bcf66091fe354be98e462c92d2c1a56eb09be359ad931ec1311fa53e6",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint276\\analysis01\\result.json": "8bad9fe5273590b0b8ca94327ea838e9da41c62f7f45fb798feeb5483bfc8e47",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\board01\\output_files\\board.map.summary": "3b643c8baf404d6a6177565338c8eaa287e6179d5615cefd129eba2b9075f406",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\board01\\output_files\\board.map.rpt": "79fddbb21b33cba4694f09bd22d33dcb1b98ecaaff3fe248860f51d784e572ae",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint276\\board01\\output_files\\board.map.summary": "92a11b73b694041f133566ed7569817679fabc82f8f936f80a84f8ab56b529f0",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint276\\board01\\output_files\\board.map.rpt": "ea2a6bb45ccec92351682143243afc9c9861c61c6dd9c105dac6b7dfad211e62",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint270\\board02\\output_files\\board.map.summary": "d61f6afee52fb7ed9cab9028a598d1a5df0b4c88b5fee5724c131b00d2326085",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint270\\board02\\output_files\\board.map.rpt": "d232c72420d77f08ad2f4ed0bccd82639337a361a3b94bd83ccc5534f09889f5",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\test07\\vsim.log": "0ec457666bb3d50ba2e1a05eba60bcb88fe39e04f683b0deacb5c0dd4463cea4",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\guard1.log": "22284cec6a926a97f7a6f59a7a79a24f53e4979f276400094f2a82a909c4a4bb",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\guard2.log": "dff6875e9ed791a6d58db7a673eaea1033c3fb14db755b6f79e0b447e86f9f0d",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\guard3.log": "040cf92189b026e7b36b37d4fad87414cc6b9e66cca11d42541acf537f90fb14",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\guard4.log": "620b80c4976553761b8bbdf729e0cc117c7b1015a43b8296ad8a7c6a315e59f1",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\guard20.log": "b2f4f1b8af66052b2055e57b36f8d6bdcebfe260e27ddbc7b8aa05943d78ef71",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\guard21.log": "44041a45f3021466d9a3d8524ed619d76558da17afbc12da76c7629ca65a9ff6",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\guard22.log": "6a9401c5abaf15b3f6164fc97da666901674f68bf867f9fc959be2de5a175d29",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\guard23.log": "57675670064a7ff206bf58adac6006663bd3750ca430c335638e49b98ff92828",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\guard24.log": "ea9ce7921126ddb4a82585e30f7a93eb7cefe243d1ca71b254722a7ed54fb317",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\guard27.log": "8059f27d12aacfce668f59ae03bae016c3ce9f463773af3de40b6afaea9279aa",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\guard28.log": "0add1383fd16ad38c4dee2a66b397db966de17a240ffc5571aa83a5b69880b91",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint278\\guards04\\guard29.log": "2ed65059119f31de1c112eb0603bd98f11ac57e4c45795bde3ff3d89551bde4a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint276\\window01\\joint-events.csv": "05090b3199733498185e32956b2095b52921eea469f3fca1c69b2c05e21c7fa5"
+  },
+  "script_sha256": "39512b79a7e1f0a1dac61e0e9d5630176ede444c1f70fbe193a591a652d57f8b"
+}

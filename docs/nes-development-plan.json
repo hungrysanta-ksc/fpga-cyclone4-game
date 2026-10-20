@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
-  "date_kst": "2026-10-20",
+  "date_kst": "2026-10-21",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint277-contract.ko.md",
-  "assessment": "NES277: 원본 payload 한 번 읽기 모델로71프레임/1231패킷의 metadata·receipt·CRC와544개 기존CPU trace를 대조했다. host 출력 실행기와고정 RAM 포트 경계를 정했으나 새RTL/MAP/일정 검증은 아니다. 954 parser 전체0 민감도도17.946626ms로1.279959ms 부족; 실제276 기준1.555478ms/2837comb 부족 유지. STOP·ACK·포트 계약71개 모델 거절 사례 PASS. 최적화 채택/P2는 보류한다.",
-  "next_action": "Prototype only the fixed-port host-output boundary with actual removal of descriptor byte RPC, local-event/continuation mux and both output data mailboxes; retain source codec/query, queue/staging/plan credits, independent coverage, STOP and final ACK. Charge deferred source mask write, serial host receipt RAM, CRC and grant/return. Same whole Lite MAP target region2724comb before placement margin; retime actual ARM refill/IRQ/polling/ROM/CPU stream to recover at least1.280ms plus new costs beyond optimistic parser credit. No isolated opcode/FSM/FIT-seed loops; no P2/physical claim.",
+  "authoritative_document": "docs/nes-joint278-contract.ko.md",
+  "assessment": "NES278: host 출력 실행기와 고정 NES A/host B phase RAM을 구현해 descriptor·바이트 RPC와 출력 24/8bit mailbox를 제거했다. 원본 payload의 CRC와 ordered ACK 이후 receipt를 연결하고, 71프레임·52개 STOP/ACK 검사를 통과했다. 일반 조건 warm 최대 18.180055ms(276 대비 -0.042090ms), 목표 부족 1.513388ms. 제한 ROM 907은 +0.167771ms로 회귀했다. 전체 Lite 조합 논리는 17,815개(276 대비 -430, 274 대비 +135)로, 장치 한도를 2,407개 초과한다. 60fps·회로 공동 게이트는 미달이며 P2는 보류한다.",
+  "next_action": "Do not adopt278 or run FIT seeds: diagnostic warm gap1.513388ms and whole deficit2407comb remain. Use278 actual read/ACK/port ownership as the verified reference; break remaining source wire, plan/tile ROM service, polling and SNES work down on the same heavy frames. Compare transfer/role changes against the whole source+validator+host+queue region5122comb and allowed2715comb before another implementation. Preserve independent CRC/coverage, ordered ACK, STOP and final display; no free clock/port/CRC or parser-only credits. FullRUN/activeVBlank/FIT/STA/physical follow only after both gates. Production227/GBC164/saveSRAM unchanged.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "R1_common_descriptor_single_core_verified_whole_area_rejected",
+      "status": "R1_host_fixed_ports_verified_joint_gate_unmet",
       "depends_on": [
         "P0"
       ],
@@ -111,7 +111,8 @@
         "analysis/joint273-verification.json",
         "analysis/joint274-verification.json",
         "analysis/joint275-verification.json",
-        "analysis/joint276-verification.json"
+        "analysis/joint276-verification.json",
+        "analysis/joint278-verification.json"
       ]
     },
     {
@@ -3071,7 +3072,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES277: 원본 payload 한 번 읽기 모델로71프레임/1231패킷의 metadata·receipt·CRC와544개 기존CPU trace를 대조했다. host 출력 실행기와고정 RAM 포트 경계를 정했으나 새RTL/MAP/일정 검증은 아니다. 954 parser 전체0 민감도도17.946626ms로1.279959ms 부족; 실제276 기준1.555478ms/2837comb 부족 유지. STOP·ACK·포트 계약71개 모델 거절 사례 PASS. 최적화 채택/P2는 보류한다.",
+  "summary": "NES278: host 출력 실행기와 고정 NES A/host B phase RAM을 구현해 descriptor·바이트 RPC와 출력 24/8bit mailbox를 제거했다. 원본 payload의 CRC와 ordered ACK 이후 receipt를 연결하고, 71프레임·52개 STOP/ACK 검사를 통과했다. 일반 조건 warm 최대 18.180055ms(276 대비 -0.042090ms), 목표 부족 1.513388ms. 제한 ROM 907은 +0.167771ms로 회귀했다. 전체 Lite 조합 논리는 17,815개(276 대비 -430, 274 대비 +135)로, 장치 한도를 2,407개 초과한다. 60fps·회로 공동 게이트는 미달이며 P2는 보류한다.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3114,8 +3115,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-joint277-contract.ko.md",
-  "latest_development_evidence": "analysis/joint277-verification.json",
+  "latest_review": "docs/nes-joint278-contract.ko.md",
+  "latest_development_evidence": "analysis/joint278-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {
@@ -3202,8 +3203,8 @@
       }
     ]
   },
-  "active_plan": "docs/nes-joint277-plan.json",
-  "current_status_scope": "277 role/port review supersedes NEXT; no new RTL/MAP/schedule. 276 measured deficits unchanged; production227 retained.",
+  "active_plan": "docs/nes-joint278-plan.json",
+  "current_status_scope": "278 host output/fixed ports verified; joint gate unmet, production227 unchanged.",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
@@ -7106,6 +7107,219 @@
       "fallback_stall_cycles": 574,
       "fallback_ms": 0.02609090909090909,
       "RTL_verified": false
+    },
+    "full_path_ms": null,
+    "P2_selected": false
+  },
+  "joint278": {
+    "schema_version": 1,
+    "stage": "NES278",
+    "date_kst": "2026-10-21",
+    "status": "R1_host_fixed_ports_verified_joint_gate_unmet",
+    "pr": 130,
+    "branch": "codex/nes-wholepath-boundary-256",
+    "parent": "docs/nes-joint277-plan.json",
+    "contract": "docs/nes-joint278-contract.ko.md",
+    "evidence": "analysis/joint278-verification.json",
+    "selected": [
+      "test07",
+      "window01",
+      "guards03",
+      "guards04",
+      "board01"
+    ],
+    "summary": "NES278: host 출력 실행기와 고정 NES A/host B phase RAM을 구현해 descriptor·바이트 RPC와 출력 24/8bit mailbox를 제거했다. 원본 payload의 CRC와 ordered ACK 이후 receipt를 연결하고, 71프레임·52개 STOP/ACK 검사를 통과했다. 일반 조건 warm 최대 18.180055ms(276 대비 -0.042090ms), 목표 부족 1.513388ms. 제한 ROM 907은 +0.167771ms로 회귀했다. 전체 Lite 조합 논리는 17,815개(276 대비 -430, 274 대비 +135)로, 장치 한도를 2,407개 초과한다. 60fps·회로 공동 게이트는 미달이며 P2는 보류한다.",
+    "decision": "Host single consumption and fixed RAM ports verified; not an adopted 60fps/whole-area solution.",
+    "next_action": "Do not adopt278 or run FIT seeds: diagnostic warm gap1.513388ms and whole deficit2407comb remain. Use278 actual read/ACK/port ownership as the verified reference; break remaining source wire, plan/tile ROM service, polling and SNES work down on the same heavy frames. Compare transfer/role changes against the whole source+validator+host+queue region5122comb and allowed2715comb before another implementation. Preserve independent CRC/coverage, ordered ACK, STOP and final display; no free clock/port/CRC or parser-only credits. FullRUN/activeVBlank/FIT/STA/physical follow only after both gates. Production227/GBC164/saveSRAM unchanged.",
+    "frames": 71,
+    "new_RTL": true,
+    "new_MAP": true,
+    "new_ARM_code": false,
+    "new_CPU_code": false,
+    "actual_ARM_retimed": true,
+    "CPU_trace_commands": 544,
+    "guards": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52
+    ],
+    "counters": {
+      "original_bus_body_reads": 17277,
+      "deferred_source_mask_writes": 40754,
+      "provisional_raw_CRCs": 32,
+      "ordered_ACKs": 793
+    },
+    "stronger_ACK_counter_guards": [
+      1,
+      2,
+      3,
+      4,
+      20,
+      21,
+      22,
+      23,
+      24,
+      27,
+      28,
+      29
+    ],
+    "raw_zero_transition_executed": false,
+    "MAP": {
+      "current": {
+        "LE": 22730,
+        "comb": 17815,
+        "FF": 9077,
+        "RAM_bits": 303712
+      },
+      "prior276": {
+        "LE": 22986,
+        "comb": 18245,
+        "FF": 8832,
+        "RAM_bits": 303712
+      },
+      "prior274": {
+        "LE": 22487,
+        "comb": 17680,
+        "FF": 8892,
+        "RAM_bits": 303712
+      },
+      "delta276": {
+        "LE": -256,
+        "comb": -430,
+        "FF": 245,
+        "RAM_bits": 0
+      },
+      "delta274": {
+        "LE": 243,
+        "comb": 135,
+        "FF": 185,
+        "RAM_bits": 0
+      },
+      "comb_deficit": 2407,
+      "source_validator_host_queue_comb": 5122,
+      "retained_other_comb": 12693,
+      "region_budget_if_others_fixed": 2715,
+      "phase_RAM_summary": "; nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|altsyncram:memory_rtl_0|altsyncram_6512:auto_generated|ALTSYNCRAM                                                            ; M9K  ; True Dual Port   ; 1024         ; 8            ; 1024         ; 8            ; 8192  ; None                                           ;",
+      "extracted_FSM_paths": [
+        "nes_core257:encoder|state",
+        "nes_validator278:validator|state",
+        "nes_output260:flow|state",
+        "nes_output260:flow|tap_state278"
+      ],
+      "fixed_dual_clock_phase_RAM": true,
+      "FIT": false,
+      "STA": false
+    },
+    "warm_max": {
+      "frame": 954,
+      "source_ms": 6.254970394,
+      "output_schedule_ms": 11.92508417,
+      "diagnostic_serial_ms": 18.180054564,
+      "prior274_ms": 18.222144968,
+      "delta274_ms": -0.04209040399999964,
+      "prior276_ms": 18.222144968,
+      "delta276_ms": -0.04209040399999964,
+      "budget_gap_ms": 1.513387897333331,
+      "E1_wire": 1239,
+      "E0_full": 4,
+      "E2_short": 109,
+      "E8": 11,
+      "E9": 3,
+      "EA": 1,
+      "SPI_bytes": 2739,
+      "ARM_IRQ_event_instructions": 200379,
+      "prior276_E2": 110,
+      "post_ACK_parser_ms": 0.027667,
+      "prior276_post_ACK_parser_ms": 0.275519,
+      "ordinary_parser_ms": 0.002084,
+      "prior276_ordinary_parser_ms": 0.041033,
+      "wire_instruction_transaction_delta276_ms": -0.04210714285714286,
+      "remaining_schedule_delta276_ms": 1.6738857143219765e-05,
+      "retained_general_CPU_master_clocks": 70674,
+      "retained_OAM_pattern4_master_clocks": 28952,
+      "retained_OAM_after_read_before_DMA_setup_master_clocks": 23224
+    },
+    "restricted_ROM": [
+      {
+        "frame": 905,
+        "diagnostic_serial_ms": 90.225462736,
+        "prior276_ms": 90.39341526599999,
+        "delta276_ms": -0.16795252999999377,
+        "budget_gap_ms": 73.55879606933333,
+        "E2": 354,
+        "SPI_bytes": 17406
+      },
+      {
+        "frame": 906,
+        "diagnostic_serial_ms": 114.266946962,
+        "prior276_ms": 114.311219158,
+        "delta276_ms": -0.044272195999994324,
+        "budget_gap_ms": 97.60028029533333,
+        "E2": 1124,
+        "SPI_bytes": 26120
+      },
+      {
+        "frame": 907,
+        "diagnostic_serial_ms": 18.372461346,
+        "prior276_ms": 18.204690632000002,
+        "delta276_ms": 0.16777071399999954,
+        "budget_gap_ms": 1.7057946793333336,
+        "E2": 240,
+        "SPI_bytes": 3145
+      }
+    ],
+    "restricted_sequence": {
+      "current_end_ms": 264.957002,
+      "prior276_end_ms": 265.001456
     },
     "full_path_ms": null,
     "P2_selected": false
