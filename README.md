@@ -1,3 +1,5 @@
+NES276: 별도 참조 전송을 제거하고 원본 descriptor 해석을 source/query/receipt core의 한 FSM에 통합했다. 71프레임/1231패킷/2069map 범위/544일반65816 trace와49 STOP·semantic guard PASS. warm 최대18.222145ms(274 대비+0.000000,275 대비-0.965852), 목표 부족1.555478ms. whole Lite18245comb(274 대비+565,275 대비+115), 부족2837개. 기능 통합은 검증했지만 시간·회로 공동 최적화 후보로 채택하지 않는다. [검증 계약](docs/nes-joint276-contract.ko.md) · [계획](docs/nes-joint276-plan.json). 아래는 이전 기록이다.
+
 NES275: 실제 ARM 참조 프로그램 전송과 descriptor 결합 FPGA 실행을 연결했다. 71프레임/1231패킷/2069map 범위/544일반65816 trace와 STOP·최종ACK 검증을 통과했다. warm 최대19.187997ms(274 대비+0.965852), 목표 부족2.521330ms. whole Lite18130comb(+450), 부족2722개. 기존 일반 해석·queue 길이/CRC 제어는 대체했으나 source/query/core는 유지했다. 시간·회로 최적화 후보로는 채택하지 않는다. [검증 계약](docs/nes-joint275-contract.ko.md) · [계획](docs/nes-joint275-plan.json). 아래는 이전 기록이다.
 
 NES274: ARM 명령을 분할해 참조 프로그램 포함256B 초과50개→0개를 확인했다. 실제71프레임1231패킷·2069map 범위,65816 일반 명령544개·출력128041B·PPU DMA39648B와bank fill2회가 통과했다. warm 직렬 진단 최대18.222145ms, 제한 ROM907 18.246508ms(3프레임전체종료는약9.7us만개선)로목표는미달이다. 참조 프로그램은아직미전송이며RTL동일/noMAP/2272comb 부족유지. [검증 계약](docs/nes-joint274-contract.ko.md) · [계획](docs/nes-joint274-plan.json). 아래는 이전 기록이다.

@@ -4,9 +4,9 @@
   "date_kst": "2026-10-20",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint275-contract.ko.md",
-  "assessment": "NES275: 실제 ARM 참조 프로그램 전송과 descriptor 결합 FPGA 실행을 연결했다. 71프레임/1231패킷/2069map 범위/544일반65816 trace와 STOP·최종ACK 검증을 통과했다. warm 최대19.187997ms(274 대비+0.965852), 목표 부족2.521330ms. whole Lite18130comb(+450), 부족2722개. 기존 일반 해석·queue 길이/CRC 제어는 대체했으나 source/query/core는 유지했다. 시간·회로 최적화 후보로는 채택하지 않는다.",
-  "next_action": "Reject duplicated descriptor+reference representation as an optimization; preserve its checked descriptor/STOP evidence. Compare one original DMA descriptor driving source/query/CRC/receipt read-execute-return ownership, with an explicit whole removal list and ARM/wire/RAM-port/CDC costs before implementation. Queue-only local saving is not whole closure. Reconsider transfer/roles if both timing and area gates lack a defensible path; no opcode/FF/FSM encoding/FIT seed loops. Production227 unchanged.",
+  "authoritative_document": "docs/nes-joint276-contract.ko.md",
+  "assessment": "NES276: 별도 참조 전송을 제거하고 원본 descriptor 해석을 source/query/receipt core의 한 FSM에 통합했다. 71프레임/1231패킷/2069map 범위/544일반65816 trace와49 STOP·semantic guard PASS. warm 최대18.222145ms(274 대비+0.000000,275 대비-0.965852), 목표 부족1.555478ms. whole Lite18245comb(274 대비+565,275 대비+115), 부족2837개. 기능 통합은 검증했지만 시간·회로 공동 최적화 후보로 채택하지 않는다.",
+  "next_action": "Reconsider role/transfer and RAM-port ownership before another candidate. Compare one original-payload consumption feeding DMA/receipt/CRC, explicitly retaining independent coverage/STOP/finalACK checks and charging host/SNES/NES clocks, queue ports, CDC, ARM and wire. Fix a whole removal list and both budgets first; no further opcode/FF/FSM-encoding/FIT-seed tuning of276. Production227 unchanged.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "R1_inline_reference_execution_verified_time_area_candidate_rejected",
+      "status": "R1_common_descriptor_single_core_verified_whole_area_rejected",
       "depends_on": [
         "P0"
       ],
@@ -110,7 +110,8 @@
         "analysis/joint272-verification.json",
         "analysis/joint273-verification.json",
         "analysis/joint274-verification.json",
-        "analysis/joint275-verification.json"
+        "analysis/joint275-verification.json",
+        "analysis/joint276-verification.json"
       ]
     },
     {
@@ -3070,7 +3071,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES275: 실제 ARM 참조 프로그램 전송과 descriptor 결합 FPGA 실행을 연결했다. 71프레임/1231패킷/2069map 범위/544일반65816 trace와 STOP·최종ACK 검증을 통과했다. warm 최대19.187997ms(274 대비+0.965852), 목표 부족2.521330ms. whole Lite18130comb(+450), 부족2722개. 기존 일반 해석·queue 길이/CRC 제어는 대체했으나 source/query/core는 유지했다. 시간·회로 최적화 후보로는 채택하지 않는다.",
+  "summary": "NES276: 별도 참조 전송을 제거하고 원본 descriptor 해석을 source/query/receipt core의 한 FSM에 통합했다. 71프레임/1231패킷/2069map 범위/544일반65816 trace와49 STOP·semantic guard PASS. warm 최대18.222145ms(274 대비+0.000000,275 대비-0.965852), 목표 부족1.555478ms. whole Lite18245comb(274 대비+565,275 대비+115), 부족2837개. 기능 통합은 검증했지만 시간·회로 공동 최적화 후보로 채택하지 않는다.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3113,8 +3114,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-joint275-contract.ko.md",
-  "latest_development_evidence": "analysis/joint275-verification.json",
+  "latest_review": "docs/nes-joint276-contract.ko.md",
+  "latest_development_evidence": "analysis/joint276-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {
@@ -3201,8 +3202,8 @@
       }
     ]
   },
-  "active_plan": "docs/nes-joint275-plan.json",
-  "current_status_scope": "275 supersedes historical NEXT; actual inline executor verified but rejected for time/area; source/query/core retained; production227 unchanged.",
+  "active_plan": "docs/nes-joint276-plan.json",
+  "current_status_scope": "276 supersedes historical NEXT; shared source/query/descriptor/receipt core verified but whole area rejected; production227 unchanged.",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
@@ -6776,6 +6777,253 @@
       "prior274_end_ms": 264.959866,
       "delta_ms": 0.35699600000003784,
       "note": "Absolute three-frame completion includes shifted ROM/poll wait; individual907 delta is not an independent gain."
+    }
+  },
+  "joint276": {
+    "schema_version": 1,
+    "stage": "NES276",
+    "date_kst": "2026-10-20",
+    "status": "R1_common_descriptor_single_core_verified_whole_area_rejected",
+    "pr": 130,
+    "branch": "codex/nes-wholepath-boundary-256",
+    "parent": "docs/nes-joint275-plan.json",
+    "contract": "docs/nes-joint276-contract.ko.md",
+    "evidence": "analysis/joint276-verification.json",
+    "selected": [
+      "test03",
+      "window01",
+      "guards01",
+      "board01"
+    ],
+    "next_action": "Reconsider role/transfer and RAM-port ownership before another candidate. Compare one original-payload consumption feeding DMA/receipt/CRC, explicitly retaining independent coverage/STOP/finalACK checks and charging host/SNES/NES clocks, queue ports, CDC, ARM and wire. Fix a whole removal list and both budgets first; no further opcode/FF/FSM-encoding/FIT-seed tuning of276. Production227 unchanged.",
+    "decision": "Reject as a joint time/area optimization: original wire and one shared source/query/descriptor/receipt FSM are verified, but whole combinational logic exceeds both274 and275. Keep the measured boundary and STOP evidence; physical60fps and fit remain unproven.",
+    "frames": 71,
+    "new_RTL": true,
+    "new_MAP": true,
+    "reference_program_transmitted": false,
+    "source_query_descriptor_receipt_single_FSM": true,
+    "whole_board_single_FSM": false,
+    "source_prefetch_preserved": true,
+    "full_path_ms": null,
+    "P2_selected": false,
+    "MAP": {
+      "current": {
+        "LE": 22986,
+        "comb": 18245,
+        "FF": 8832,
+        "RAM_bits": 303712
+      },
+      "prior270_274": {
+        "LE": 22487,
+        "comb": 17680,
+        "FF": 8892,
+        "RAM_bits": 303712
+      },
+      "prior275": {
+        "LE": 22898,
+        "comb": 18130,
+        "FF": 8877,
+        "RAM_bits": 303712
+      },
+      "delta274": {
+        "LE": 499,
+        "comb": 565,
+        "FF": -60,
+        "RAM_bits": 0
+      },
+      "delta275": {
+        "LE": 88,
+        "comb": 115,
+        "FF": -45,
+        "RAM_bits": 0
+      },
+      "entities": {
+        "nes_core257": {
+          "comb": "3818 (3818)",
+          "FF": "576 (576)",
+          "RAM_bits": "36864"
+        },
+        "nes_output260": {
+          "comb": "2137 (1536)",
+          "FF": "1363 (598)",
+          "RAM_bits": "41216"
+        },
+        "nes_queue260": {
+          "comb": "173 (173)",
+          "FF": "87 (87)",
+          "RAM_bits": "8192"
+        }
+      },
+      "prior_entities": {
+        "nes_core257": {
+          "comb": "2448 (2448)",
+          "FF": "537 (537)",
+          "RAM_bits": "36864"
+        },
+        "nes_output260": {
+          "comb": "2902 (2206)",
+          "FF": "1462 (665)",
+          "RAM_bits": "41216"
+        },
+        "nes_queue260": {
+          "comb": "282 (282)",
+          "FF": "119 (119)",
+          "RAM_bits": "8192"
+        }
+      },
+      "core_FSM_extracted_states": [
+        "state.P_RECV",
+        "state.P_RETURN",
+        "state.P_ORET",
+        "state.P_OFINISH",
+        "state.P_OCERT",
+        "state.P_OCHECKNEXT",
+        "state.P_ORLE",
+        "state.P_PCAP",
+        "state.P_READREQ",
+        "state.P_ODATA",
+        "state.P_OSELECT",
+        "state.P_OTILE",
+        "state.P_OSETUP",
+        "state.P_LOAD",
+        "state.D_RETURN",
+        "state.D_FETCH",
+        "state.D_CHECK",
+        "state.D_READ",
+        "state.H_LENHI",
+        "state.H_LENHIREAD",
+        "state.H_LENLO",
+        "state.H_LENLOREAD",
+        "state.H_CERTREAD",
+        "state.H_CERT",
+        "state.H_HASHBYTE",
+        "state.H_HASHREAD",
+        "state.H_SCROLL",
+        "state.H_WRITEHI",
+        "state.H_WRITELO",
+        "state.H_BYTES",
+        "state.V_RAWINVALID",
+        "state.V_WAITDISPLAY",
+        "state.V_CHECKTEST",
+        "state.V_CHECKREAD",
+        "state.V_RWRITE",
+        "state.V_RREAD",
+        "state.V_ACTIVE",
+        "state.V_CLEARFRAME",
+        "state.V_IDLE",
+        "state.IDLE",
+        "state.V_STREAM",
+        "state.WAITACK",
+        "state.ENDTRAILER",
+        "state.RAWCHECK",
+        "state.RAWWAIT",
+        "state.RAWASK",
+        "state.RAWSTART",
+        "state.GEOTRAILER",
+        "state.SBYTE",
+        "state.SREAD",
+        "state.REQUEST",
+        "state.BLOCKEND",
+        "state.FSTORE",
+        "state.FETCH",
+        "state.HEADER",
+        "state.V_CLEARALL"
+      ],
+      "host_FSM_extracted": true,
+      "region_core_host_queue_comb": 5527,
+      "region_delta274": 591,
+      "other_synthesis_delta": -26,
+      "retained_other_comb": 12718,
+      "region_budget_if_others_fixed": 2690,
+      "required_region_reduction_percent": 51.32983535371811,
+      "comb_deficit": 2837,
+      "FIT": false,
+      "STA": false
+    },
+    "ARM": {
+      "full": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n   4206\t      0\t    612\t   4818\t   12d2\toutput.elf\n",
+      "live_stack": 248,
+      "IRQ_bodies": 203,
+      "runtime_sections_identical274": true,
+      "full_ELF_identical274": false,
+      "ELF_differences": [
+        {
+          "section": ".strtab",
+          "flags": 0,
+          "reason": "temporary assembler object filename only"
+        }
+      ]
+    },
+    "warm_max": {
+      "frame": 954,
+      "source_ms": 6.254970394,
+      "output_schedule_ms": 11.967174574,
+      "diagnostic_serial_ms": 18.222144968,
+      "prior274_ms": 18.222144968,
+      "delta274_ms": 0.0,
+      "prior275_ms": 19.187997014,
+      "delta275_ms": -0.965852046000002,
+      "budget_gap_ms": 1.5554783013333306,
+      "E1_wire": 1239,
+      "reference_wire_extra": 0,
+      "E0_full": 4,
+      "E2_short": 110,
+      "SPI_bytes": 2748,
+      "prior274_SPI_bytes": 2748,
+      "ARM_instructions": 201676,
+      "ARM_IRQ_event_instructions": 200940,
+      "prior274_ARM_IRQ_event_instructions": 200937,
+      "transaction_delta": 0,
+      "wire_instruction_transaction_delta_ms": 3.571428571428572e-05,
+      "remaining_schedule_delta_ms": -3.571428571428572e-05,
+      "E8": 11,
+      "E9": 3,
+      "EA": 1
+    },
+    "restricted_ROM": [
+      {
+        "frame": 905,
+        "diagnostic_serial_ms": 90.39341526599999,
+        "prior274_ms": 90.35141576999999,
+        "delta274_ms": 0.04199949600000252,
+        "prior275_ms": 91.54003786999999,
+        "delta275_ms": -1.146622604000001,
+        "budget_gap_ms": 73.72674859933332,
+        "E2": 358,
+        "SPI_bytes": 17442,
+        "ARM_IRQ_event_instructions": 1065313
+      },
+      {
+        "frame": 906,
+        "diagnostic_serial_ms": 114.311219158,
+        "prior274_ms": 114.269810564,
+        "delta274_ms": 0.04140859400000352,
+        "prior275_ms": 114.16199367600001,
+        "delta275_ms": 0.14922548199999142,
+        "budget_gap_ms": 97.64455249133333,
+        "E2": 1127,
+        "SPI_bytes": 26127,
+        "ARM_IRQ_event_instructions": 1576168
+      },
+      {
+        "frame": 907,
+        "diagnostic_serial_ms": 18.204690632000002,
+        "prior274_ms": 18.246508312,
+        "delta274_ms": -0.04181767999999764,
+        "prior275_ms": 17.522698816000002,
+        "delta275_ms": 0.681991816,
+        "budget_gap_ms": 1.538023965333334,
+        "E2": 236,
+        "SPI_bytes": 3109,
+        "ARM_IRQ_event_instructions": 212812
+      }
+    ],
+    "restricted_sequence": {
+      "current_end_ms": 265.001456,
+      "prior274_end_ms": 264.959866,
+      "prior275_end_ms": 265.316862,
+      "delta274_ms": 0.04159000000004198,
+      "delta275_ms": -0.31540599999999586
     }
   }
 }
