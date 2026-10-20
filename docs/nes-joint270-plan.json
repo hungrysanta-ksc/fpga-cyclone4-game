@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "stage": "NES270",
+  "date_kst": "2026-10-20",
+  "status": "R1_shared_SPI_implemented_restricted_ROM_regression_whole_area_failed",
+  "pr": 130,
+  "branch": "codex/nes-wholepath-boundary-256",
+  "parent": "docs/nes-joint269-plan.json",
+  "contract": "docs/nes-joint270-contract.ko.md",
+  "evidence": "analysis/joint270-verification.json",
+  "selected": [
+    "test05",
+    "window01",
+    "guards01",
+    "spiguards01",
+    "armguards02",
+    "board02"
+  ],
+  "next_action": "270 common SPI는 실험 기준으로 보존하고269 STOP/ROM 계약을 유지한다. 제한ROM warm907의 polling118->290회/setup+1.376ms 퇴행 때문에 E2 short polling의 일괄 채택은 보류한다. credit 대기와 ROM 준비 대기를 구분한 bounded polling 또는 E1 credit snapshot을 실제 normal/restricted 일정에서 비교한다. 추가 endpoint/FSM/seed/FIT 반복 대신 source·receipt core와 output parser를 함께 바꾸는 경계를 먼저 고정한다. 현재core2448+output자체2206=4654comb는 나머지1832 유지 시2382이하가 필요한 장부다. immutable queue byte 해석·CRC/receipt를 NES 출력 phase로 옮겨 source phase와 주소/문맥/제어를 공유하는 후보에서 RAM port·CDC·SNES consume/ACK·plan copy credit 비용을 함께 제시한다. host84→NES22MHz 이동의 추가 service를 실제 polling/ROM/65816 일정에 반영한다. E1 MISO credit snapshot 후보도 admission 전/후 counter·CRC·STOP 계약을 검증하며 무료 절감으로 계산하지 않는다. fullARM RUN/IRQ/activeVBlank/모든WRAMwriter/wholeboard CDCIOSTA는 별도다.",
+  "MAP": {
+    "prior269": {
+      "LE": 22670,
+      "comb": 17692,
+      "FF": 9046,
+      "RAM_bits": 303712
+    },
+    "current270": {
+      "LE": 22487,
+      "comb": 17680,
+      "FF": 8892,
+      "RAM_bits": 303712
+    },
+    "delta": {
+      "LE": -183,
+      "comb": -12,
+      "FF": -154,
+      "RAM_bits": 0
+    },
+    "comb_deficit": 2272,
+    "FIT": false,
+    "STA": false
+  },
+  "replacement": {
+    "current_region": {
+      "|nes_core257:encoder|": 2448,
+      "|nes_transport257:transport|": 327,
+      "|nes_queue260:queue|": 282,
+      "|nes_plan_spi200:endpoint|": 301,
+      "|nes_plan_batch206:transport|": 410,
+      "|nes_spi270:spi_front270|": 512,
+      "output exclusive": 2206
+    },
+    "region_comb": 6486,
+    "new_region_limit": 4214,
+    "whole_comb_reclaim": 12,
+    "receipt_core_replaced": false,
+    "extra_RAM_bits": 0
+  },
+  "warm_max": {
+    "frame": 954,
+    "source_ms": 6.254970394,
+    "source_delta_cycles": 0,
+    "output_schedule_ms": 11.810403728,
+    "diagnostic_serial_ms": 18.065374122,
+    "prior269_ms": 18.391188394,
+    "delta_ms": -0.3258142719999988,
+    "budget_gap_ms": 1.3987074553333336,
+    "ARM_instructions": 194296,
+    "SPI_bytes": 2728,
+    "source_SPI_bytes": 1969,
+    "shared_SPI_bytes": 4697,
+    "shared_SPI_wire_ms": 14.314666666666668,
+    "E0_full": 4,
+    "E2_short": 110,
+    "status_polls": 114,
+    "prior269_E0": 56,
+    "status_wire_bytes": 1086,
+    "status_wire_ms": 3.3097142857142856,
+    "status_transfer_setup_ms": 0.912,
+    "status_setup_delta_ms": 0.464,
+    "foreground_CPI1_delta_ms": -0.07251190476190476,
+    "E8_polls": 11,
+    "E9_batches": 3,
+    "EA_retire": 1
+  },
+  "warm_over": 5,
+  "restricted_ROM": [
+    {
+      "frame": 905,
+      "source_ms": 19.282404972,
+      "output_ms": 69.423394182,
+      "diagnostic_serial_ms": 88.70579915399999,
+      "prior269_ms": 103.609711214,
+      "delta_ms": -14.90391206000001,
+      "budget_gap_ms": 72.03913248733332,
+      "current_polls": {
+        "E0": 3,
+        "E2": 343,
+        "polls": 346,
+        "status_bytes": 3159,
+        "SPI_bytes": 17079
+      },
+      "prior_polls": {
+        "E0": 362,
+        "E2": 0,
+        "polls": 362,
+        "status_bytes": 8688,
+        "SPI_bytes": 21268
+      },
+      "status_wire_delta_ms": -16.850285714285715,
+      "status_setup_delta_ms": -0.128,
+      "foreground_CPI1_delta_ms": -2.5446309523809525
+    },
+    {
+      "frame": 906,
+      "source_ms": 3.810045188,
+      "output_ms": 110.078588132,
+      "diagnostic_serial_ms": 113.88863332,
+      "prior269_ms": 116.382148852,
+      "delta_ms": -2.4935155320000035,
+      "budget_gap_ms": 97.22196665333333,
+      "current_polls": {
+        "E0": 11,
+        "E2": 1117,
+        "polls": 1128,
+        "status_bytes": 10317,
+        "SPI_bytes": 26069
+      },
+      "prior_polls": {
+        "E0": 591,
+        "E2": 0,
+        "polls": 591,
+        "status_bytes": 14184,
+        "SPI_bytes": 28276
+      },
+      "status_wire_delta_ms": -11.785142857142857,
+      "status_setup_delta_ms": 4.296,
+      "foreground_CPI1_delta_ms": -0.7274047619047619
+    },
+    {
+      "frame": 907,
+      "source_ms": 4.083950992,
+      "output_ms": 16.199078336,
+      "diagnostic_serial_ms": 20.283029327999998,
+      "prior269_ms": 19.291450318000003,
+      "delta_ms": 0.9915790099999953,
+      "budget_gap_ms": 3.61636266133333,
+      "current_polls": {
+        "E0": 4,
+        "E2": 286,
+        "polls": 290,
+        "status_bytes": 2670,
+        "SPI_bytes": 3559
+      },
+      "prior_polls": {
+        "E0": 118,
+        "E2": 0,
+        "polls": 118,
+        "status_bytes": 2832,
+        "SPI_bytes": 3721
+      },
+      "status_wire_delta_ms": -0.4937142857142857,
+      "status_setup_delta_ms": 1.3760000000000001,
+      "foreground_CPI1_delta_ms": 0.11011904761904762
+    }
+  ],
+  "candidate_decision": "Conditional experiment only: normal warm timing improves, restricted warm907 regresses; whole-board comb still exceeds capacity.",
+  "full_path_ms": null,
+  "P2_selected": false,
+  "physical60fps": false,
+  "limitations": [
+    "CPI1 and IRQ bodies at service boundaries are not full RUN/NVIC/hardware cycles.",
+    "Forced-blank actual26965816 ordinary bus trace; map/tile/final display remain modeled. No new full CPU/FPGA STOP co-simulation.",
+    "ROM cache/arbiter/reader RTL uses synthetic competing core requests; three restricted frames are not a worst-case bound.",
+    "Common reset requires SPI bus quiescence; local fault/STOP, CRC and stale ACK are guarded. Board-level reset/CDC/IO/STA are not qualified.",
+    "Core source/receipt control is retained; host SPI reclamation alone does not establish fit or mapper margin."
+  ],
+  "preserve": [
+    "production227",
+    "GBC164",
+    "saveSRAM",
+    "240 unplaced reference"
+  ]
+}
