@@ -4,9 +4,9 @@
   "date_kst": "2026-10-20",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint274-contract.ko.md",
-  "assessment": "NES274: ARM 명령을 분할해 참조 프로그램 포함256B 초과50개→0개를 확인했다. 실제71프레임1231패킷·2069map 범위,65816 일반 명령544개·출력128041B·PPU DMA39648B와bank fill2회가 통과했다. warm 직렬 진단 최대18.222145ms, 제한 ROM907 18.246508ms(3프레임전체종료는약9.7us만개선)로목표는미달이다. 참조 프로그램은아직미전송이며RTL동일/noMAP/2272comb 부족유지.",
-  "next_action": "Use bounded split input only as an ownership policy. Bind actual inline reference/DMA/receipt to one checked descriptor and jointly replace source/query/header/map/receipt read-execute-return control; do not add a decoder while retaining all old controls. Then retime actual program wire/CRC/credit/refillIRQ/ROM/SNES polling and compare same whole Lite MAP with2272comb deficit plus placement margin. FIT/STA/fullRUN/activeVBlank/physical follow only after both gates.",
+  "authoritative_document": "docs/nes-joint275-contract.ko.md",
+  "assessment": "NES275: 실제 ARM 참조 프로그램 전송과 descriptor 결합 FPGA 실행을 연결했다. 71프레임/1231패킷/2069map 범위/544일반65816 trace와 STOP·최종ACK 검증을 통과했다. warm 최대19.187997ms(274 대비+0.965852), 목표 부족2.521330ms. whole Lite18130comb(+450), 부족2722개. 기존 일반 해석·queue 길이/CRC 제어는 대체했으나 source/query/core는 유지했다. 시간·회로 최적화 후보로는 채택하지 않는다.",
+  "next_action": "Reject duplicated descriptor+reference representation as an optimization; preserve its checked descriptor/STOP evidence. Compare one original DMA descriptor driving source/query/CRC/receipt read-execute-return ownership, with an explicit whole removal list and ARM/wire/RAM-port/CDC costs before implementation. Queue-only local saving is not whole closure. Reconsider transfer/roles if both timing and area gates lack a defensible path; no opcode/FF/FSM encoding/FIT seed loops. Production227 unchanged.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "R1_split_capacity_and_live_cost_verified_reference_executor_pending",
+      "status": "R1_inline_reference_execution_verified_time_area_candidate_rejected",
       "depends_on": [
         "P0"
       ],
@@ -109,7 +109,8 @@
         "analysis/joint271-verification.json",
         "analysis/joint272-verification.json",
         "analysis/joint273-verification.json",
-        "analysis/joint274-verification.json"
+        "analysis/joint274-verification.json",
+        "analysis/joint275-verification.json"
       ]
     },
     {
@@ -3069,7 +3070,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES274: ARM 명령을 분할해 참조 프로그램 포함256B 초과50개→0개를 확인했다. 실제71프레임1231패킷·2069map 범위,65816 일반 명령544개·출력128041B·PPU DMA39648B와bank fill2회가 통과했다. warm 직렬 진단 최대18.222145ms, 제한 ROM907 18.246508ms(3프레임전체종료는약9.7us만개선)로목표는미달이다. 참조 프로그램은아직미전송이며RTL동일/noMAP/2272comb 부족유지.",
+  "summary": "NES275: 실제 ARM 참조 프로그램 전송과 descriptor 결합 FPGA 실행을 연결했다. 71프레임/1231패킷/2069map 범위/544일반65816 trace와 STOP·최종ACK 검증을 통과했다. warm 최대19.187997ms(274 대비+0.965852), 목표 부족2.521330ms. whole Lite18130comb(+450), 부족2722개. 기존 일반 해석·queue 길이/CRC 제어는 대체했으나 source/query/core는 유지했다. 시간·회로 최적화 후보로는 채택하지 않는다.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3112,8 +3113,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-joint274-contract.ko.md",
-  "latest_development_evidence": "analysis/joint274-verification.json",
+  "latest_review": "docs/nes-joint275-contract.ko.md",
+  "latest_development_evidence": "analysis/joint275-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {
@@ -3200,8 +3201,8 @@
       }
     ]
   },
-  "active_plan": "docs/nes-joint274-plan.json",
-  "current_status_scope": "274 supersedes historical NEXT; actual split cost verified; reference transport/common executor/whole area unresolved; production227 unchanged.",
+  "active_plan": "docs/nes-joint275-plan.json",
+  "current_status_scope": "275 supersedes historical NEXT; actual inline executor verified but rejected for time/area; source/query/core retained; production227 unchanged.",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
@@ -5975,5 +5976,806 @@
       "Actual forced-blank ordinary65816 trace is replayed; map/tile/final ACK are modeled, not a new whole65816 execution.",
       "No new FIT/STA/CDC/IO qualification, active-VBlank deadline or physical60fps claim."
     ]
+  },
+  "joint275": {
+    "schema_version": 1,
+    "stage": "NES275",
+    "date_kst": "2026-10-20",
+    "status": "R1_inline_reference_execution_verified_time_area_candidate_rejected",
+    "pr": 130,
+    "branch": "codex/nes-wholepath-boundary-256",
+    "parent": "docs/nes-joint274-plan.json",
+    "contract": "docs/nes-joint275-contract.ko.md",
+    "evidence": "analysis/joint275-verification.json",
+    "selected": [
+      "arm02",
+      "armguards01",
+      "test04",
+      "window01",
+      "guards02",
+      "spiguards01",
+      "board01"
+    ],
+    "next_action": "Reject duplicated descriptor+reference representation as an optimization; preserve its checked descriptor/STOP evidence. Compare one original DMA descriptor driving source/query/CRC/receipt read-execute-return ownership, with an explicit whole removal list and ARM/wire/RAM-port/CDC costs before implementation. Queue-only local saving is not whole closure. Reconsider transfer/roles if both timing and area gates lack a defensible path; no opcode/FF/FSM encoding/FIT seed loops. Production227 unchanged.",
+    "decision": "Reject inline references as a time/area optimization. Keep the verified descriptor/STOP contract as evidence; source/query/core replacement remains incomplete.",
+    "frames": 71,
+    "reference_program_transmitted": true,
+    "reference_program_executed_by_FPGA": true,
+    "new_RTL": true,
+    "new_MAP": true,
+    "single_FSM": false,
+    "full_path_ms": null,
+    "P2_selected": false,
+    "MAP": {
+      "current": {
+        "LE": 22898,
+        "comb": 18130,
+        "FF": 8877,
+        "RAM_bits": 303712
+      },
+      "prior270": {
+        "LE": 22487,
+        "comb": 17680,
+        "FF": 8892,
+        "RAM_bits": 303712
+      },
+      "delta": {
+        "LE": 411,
+        "comb": 450,
+        "FF": -15,
+        "RAM_bits": 0
+      },
+      "entities": {
+        "nes_core257": {
+          "comb": "2451 (2451)",
+          "FF": "537 (537)",
+          "RAM_bits": "36864"
+        },
+        "nes_output260": {
+          "comb": "3387 (2798)",
+          "FF": "1447 (682)",
+          "RAM_bits": "41216"
+        },
+        "nes_queue260": {
+          "comb": "174 (174)",
+          "FF": "87 (87)",
+          "RAM_bits": "8192"
+        }
+      },
+      "prior_entities": {
+        "nes_core257": {
+          "comb": "2448 (2448)",
+          "FF": "537 (537)",
+          "RAM_bits": "36864"
+        },
+        "nes_output260": {
+          "comb": "2902 (2206)",
+          "FF": "1462 (665)",
+          "RAM_bits": "41216"
+        },
+        "nes_queue260": {
+          "comb": "282 (282)",
+          "FF": "119 (119)",
+          "RAM_bits": "8192"
+        }
+      },
+      "own_changes": [
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core",
+          "before": {
+            "comb": 180,
+            "FF": 33
+          },
+          "after": {
+            "comb": 179,
+            "FF": 33
+          },
+          "delta": {
+            "comb": -1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_core257:encoder",
+          "before": {
+            "comb": 2448,
+            "FF": 537
+          },
+          "after": {
+            "comb": 2451,
+            "FF": 537
+          },
+          "delta": {
+            "comb": 3,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_transport257:transport",
+          "before": {
+            "comb": 303,
+            "FF": 200
+          },
+          "after": {
+            "comb": 306,
+            "FF": 200
+          },
+          "delta": {
+            "comb": 3,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow",
+          "before": {
+            "comb": 2206,
+            "FF": 665
+          },
+          "after": {
+            "comb": 2798,
+            "FF": 682
+          },
+          "delta": {
+            "comb": 592,
+            "FF": 17
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_bulk_aperture188:shared_ram.aperture",
+          "before": {
+            "comb": 172,
+            "FF": 253
+          },
+          "after": {
+            "comb": 171,
+            "FF": 253
+          },
+          "delta": {
+            "comb": -1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_native_mailbox206:admission",
+          "before": {
+            "comb": 9,
+            "FF": 114
+          },
+          "after": {
+            "comb": 10,
+            "FF": 114
+          },
+          "delta": {
+            "comb": 1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_queue260:queue",
+          "before": {
+            "comb": 282,
+            "FF": 119
+          },
+          "after": {
+            "comb": 174,
+            "FF": 87
+          },
+          "delta": {
+            "comb": -108,
+            "FF": -32
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_tile_producer260:tiles",
+          "before": {
+            "comb": 195,
+            "FF": 143
+          },
+          "after": {
+            "comb": 196,
+            "FF": 143
+          },
+          "delta": {
+            "comb": 1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture201:native_frame|nes_native_frame201:frame",
+          "before": {
+            "comb": 50,
+            "FF": 28
+          },
+          "after": {
+            "comb": 49,
+            "FF": 28
+          },
+          "delta": {
+            "comb": -1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture201:native_frame|nes_native_frame201:frame|nes_native_compact181:compact",
+          "before": {
+            "comb": 1067,
+            "FF": 1078
+          },
+          "after": {
+            "comb": 1065,
+            "FF": 1078
+          },
+          "delta": {
+            "comb": -2,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture201:native_frame|nes_native_frame201:frame|nes_native_planes165:fetch",
+          "before": {
+            "comb": 226,
+            "FF": 186
+          },
+          "after": {
+            "comb": 227,
+            "FF": 186
+          },
+          "delta": {
+            "comb": 1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture201:native_frame|nes_native_frame201:frame|nes_patch_capture181:pixels",
+          "before": {
+            "comb": 22,
+            "FF": 1
+          },
+          "after": {
+            "comb": 21,
+            "FF": 1
+          },
+          "delta": {
+            "comb": -1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture201:native_frame|nes_native_frame201:frame|nes_patch_capture181:pixels|nes_patch_rows181:rows",
+          "before": {
+            "comb": 96,
+            "FF": 62
+          },
+          "after": {
+            "comb": 95,
+            "FF": 62
+          },
+          "delta": {
+            "comb": -1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_plan_batch206:transport",
+          "before": {
+            "comb": 390,
+            "FF": 299
+          },
+          "after": {
+            "comb": 387,
+            "FF": 299
+          },
+          "delta": {
+            "comb": -3,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_source_tile192:source|nes_chr_cache192:cache_path.cache",
+          "before": {
+            "comb": 259,
+            "FF": 234
+          },
+          "after": {
+            "comb": 252,
+            "FF": 234
+          },
+          "delta": {
+            "comb": -7,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_source_tile192:source|nes_native_arbiter165:arbiter",
+          "before": {
+            "comb": 45,
+            "FF": 41
+          },
+          "after": {
+            "comb": 43,
+            "FF": 41
+          },
+          "delta": {
+            "comb": -2,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_source_tile192:source|nes_tile205:tile",
+          "before": {
+            "comb": 663,
+            "FF": 40
+          },
+          "after": {
+            "comb": 659,
+            "FF": 40
+          },
+          "delta": {
+            "comb": -4,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core",
+          "before": {
+            "comb": 212,
+            "FF": 24
+          },
+          "after": {
+            "comb": 208,
+            "FF": 24
+          },
+          "delta": {
+            "comb": -4,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu",
+          "before": {
+            "comb": 45,
+            "FF": 9
+          },
+          "after": {
+            "comb": 44,
+            "FF": 9
+          },
+          "delta": {
+            "comb": -1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|FrameCtr:frame_counter",
+          "before": {
+            "comb": 46,
+            "FF": 23
+          },
+          "after": {
+            "comb": 47,
+            "FF": 23
+          },
+          "delta": {
+            "comb": 1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|NoiseChan:Noi",
+          "before": {
+            "comb": 47,
+            "FF": 32
+          },
+          "after": {
+            "comb": 48,
+            "FF": 32
+          },
+          "delta": {
+            "comb": 1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|SquareChan:Squ1",
+          "before": {
+            "comb": 122,
+            "FF": 40
+          },
+          "after": {
+            "comb": 124,
+            "FF": 40
+          },
+          "delta": {
+            "comb": 2,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|SquareChan:Squ1|EnvelopeUnit:EnvSq",
+          "before": {
+            "comb": 21,
+            "FF": 15
+          },
+          "after": {
+            "comb": 20,
+            "FF": 15
+          },
+          "delta": {
+            "comb": -1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|SquareChan:Squ2",
+          "before": {
+            "comb": 121,
+            "FF": 40
+          },
+          "after": {
+            "comb": 124,
+            "FF": 40
+          },
+          "delta": {
+            "comb": 3,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|SquareChan:Squ2|EnvelopeUnit:EnvSq",
+          "before": {
+            "comb": 21,
+            "FF": 15
+          },
+          "after": {
+            "comb": 20,
+            "FF": 15
+          },
+          "delta": {
+            "comb": -1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu",
+          "before": {
+            "comb": 454,
+            "FF": 125
+          },
+          "after": {
+            "comb": 457,
+            "FF": 125
+          },
+          "delta": {
+            "comb": 3,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|BgPainter:bg_painter",
+          "before": {
+            "comb": 28,
+            "FF": 68
+          },
+          "after": {
+            "comb": 29,
+            "FF": 68
+          },
+          "delta": {
+            "comb": 1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|ClockGen:clock",
+          "before": {
+            "comb": 49,
+            "FF": 22
+          },
+          "after": {
+            "comb": 50,
+            "FF": 22
+          },
+          "delta": {
+            "comb": 1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|OAMEval:spriteeval",
+          "before": {
+            "comb": 1116,
+            "FF": 318
+          },
+          "after": {
+            "comb": 1107,
+            "FF": 318
+          },
+          "delta": {
+            "comb": -9,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|PaletteRam:palette_ram",
+          "before": {
+            "comb": 405,
+            "FF": 169
+          },
+          "after": {
+            "comb": 402,
+            "FF": 169
+          },
+          "delta": {
+            "comb": -3,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|PixelMuxer:pixel_muxer",
+          "before": {
+            "comb": 14,
+            "FF": 0
+          },
+          "after": {
+            "comb": 11,
+            "FF": 0
+          },
+          "delta": {
+            "comb": -3,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|SpriteAddressGen:address_gen",
+          "before": {
+            "comb": 28,
+            "FF": 32
+          },
+          "after": {
+            "comb": 26,
+            "FF": 32
+          },
+          "delta": {
+            "comb": -2,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|T65:cpu",
+          "before": {
+            "comb": 568,
+            "FF": 169
+          },
+          "after": {
+            "comb": 564,
+            "FF": 169
+          },
+          "delta": {
+            "comb": -4,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|T65:cpu|T65_ALU:alu",
+          "before": {
+            "comb": 163,
+            "FF": 0
+          },
+          "after": {
+            "comb": 164,
+            "FF": 0
+          },
+          "delta": {
+            "comb": 1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|T65:cpu|T65_MCode:mcode",
+          "before": {
+            "comb": 386,
+            "FF": 0
+          },
+          "after": {
+            "comb": 389,
+            "FF": 0
+          },
+          "delta": {
+            "comb": 3,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|cart_top:multi_mapper",
+          "before": {
+            "comb": 56,
+            "FF": 0
+          },
+          "after": {
+            "comb": 57,
+            "FF": 0
+          },
+          "delta": {
+            "comb": 1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|cart_top:multi_mapper|MMC3:mapper",
+          "before": {
+            "comb": 118,
+            "FF": 84
+          },
+          "after": {
+            "comb": 117,
+            "FF": 84
+          },
+          "delta": {
+            "comb": -1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_rom_early:rom_service",
+          "before": {
+            "comb": 312,
+            "FF": 279
+          },
+          "after": {
+            "comb": 300,
+            "FF": 279
+          },
+          "delta": {
+            "comb": -12,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_spi270:spi_front270",
+          "before": {
+            "comb": 512,
+            "FF": 211
+          },
+          "after": {
+            "comb": 516,
+            "FF": 211
+          },
+          "delta": {
+            "comb": 4,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control",
+          "before": {
+            "comb": 392,
+            "FF": 281
+          },
+          "after": {
+            "comb": 393,
+            "FF": 281
+          },
+          "delta": {
+            "comb": 1,
+            "FF": 0
+          }
+        },
+        {
+          "path": "|fxpak_nes_screen137_top|nes_run_observer134:observer",
+          "before": {
+            "comb": 419,
+            "FF": 241
+          },
+          "after": {
+            "comb": 418,
+            "FF": 241
+          },
+          "delta": {
+            "comb": -1,
+            "FF": 0
+          }
+        }
+      ],
+      "changed_queue_flow_own_delta": 484,
+      "other_synthesis_optimization_delta": -34,
+      "comb_deficit": 2722,
+      "prior_deficit": 2272,
+      "FIT": false,
+      "STA": false
+    },
+    "ARM": {
+      "standalone": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n   5866\t      0\t    392\t   6258\t   1872\toutput.elf\n",
+      "full": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n   6498\t      0\t    684\t   7182\t   1c0e\toutput.elf\n",
+      "standalone_stack": 336,
+      "live_stack": 336,
+      "IRQ_bodies": 208
+    },
+    "warm_max": {
+      "frame": 954,
+      "source_ms": 6.254970394,
+      "output_schedule_ms": 12.93302662,
+      "diagnostic_serial_ms": 19.187997014,
+      "prior274_ms": 18.222144968,
+      "delta274_ms": 0.965852046000002,
+      "prior270_ms": 18.065374122,
+      "budget_gap_ms": 2.5213303473333326,
+      "E1_wire": 1465,
+      "reference_wire_extra": 226,
+      "program_bytes": 204,
+      "E0_full": 4,
+      "E2_short": 106,
+      "status_polls": 110,
+      "prior274_E2": 110,
+      "SPI_bytes": 2938,
+      "prior274_SPI_bytes": 2748,
+      "ARM_instructions": 236853,
+      "ARM_IRQ_event_instructions": 236117,
+      "prior274_ARM_IRQ_event_instructions": 200937,
+      "transaction_delta": -4,
+      "wire_instruction_transaction_delta_ms": 0.9658571428571427,
+      "remaining_schedule_delta_ms": -5.096857140785005e-06,
+      "E8": 11,
+      "E9": 3,
+      "EA": 1
+    },
+    "restricted_ROM": [
+      {
+        "frame": 905,
+        "diagnostic_serial_ms": 91.54003786999999,
+        "prior274_ms": 90.35141576999999,
+        "delta274_ms": 1.1886221000000035,
+        "budget_gap_ms": 74.87337120333332,
+        "current": {
+          "E2": 340,
+          "SPI": 17583,
+          "ARM_IRQ_event_instructions": 1137627
+        },
+        "prior": {
+          "E2": 357,
+          "SPI": 17433,
+          "ARM_IRQ_event_instructions": 1064760
+        }
+      },
+      {
+        "frame": 906,
+        "diagnostic_serial_ms": 114.16199367600001,
+        "prior274_ms": 114.269810564,
+        "delta274_ms": -0.1078168879999879,
+        "budget_gap_ms": 97.49532700933334,
+        "current": {
+          "E2": 1095,
+          "SPI": 25962,
+          "ARM_IRQ_event_instructions": 1634769
+        },
+        "prior": {
+          "E2": 1126,
+          "SPI": 26118,
+          "ARM_IRQ_event_instructions": 1575665
+        }
+      },
+      {
+        "frame": 907,
+        "diagnostic_serial_ms": 17.522698816000002,
+        "prior274_ms": 18.246508312,
+        "delta274_ms": -0.7238094959999977,
+        "budget_gap_ms": 0.856032149333334,
+        "current": {
+          "E2": 209,
+          "SPI": 2953,
+          "ARM_IRQ_event_instructions": 213607
+        },
+        "prior": {
+          "E2": 237,
+          "SPI": 3118,
+          "ARM_IRQ_event_instructions": 213351
+        }
+      }
+    ],
+    "restricted_sequence": {
+      "current_end_ms": 265.316862,
+      "prior274_end_ms": 264.959866,
+      "delta_ms": 0.35699600000003784,
+      "note": "Absolute three-frame completion includes shifted ROM/poll wait; individual907 delta is not an independent gain."
+    }
   }
 }
