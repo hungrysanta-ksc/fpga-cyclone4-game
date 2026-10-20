@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "stage": "NES277",
+  "date_kst": "2026-10-20",
+  "status": "R1_single_payload_role_port_review_no_joint_gate",
+  "pr": 130,
+  "branch": "codex/nes-wholepath-boundary-256",
+  "parent": "docs/nes-joint276-plan.json",
+  "contract": "docs/nes-joint277-contract.ko.md",
+  "evidence": "analysis/joint277-verification.json",
+  "selected": [
+    "analysis03"
+  ],
+  "decision": "B host output validator with fixed NES/host phase-RAM ports is the next structural boundary, not an adopted optimization. Offline byte and ownership results cannot establish whole area or retimed throughput.",
+  "next_action": "Prototype only the fixed-port host-output boundary with actual removal of descriptor byte RPC, local-event/continuation mux and both output data mailboxes; retain source codec/query, queue/staging/plan credits, independent coverage, STOP and final ACK. Charge deferred source mask write, serial host receipt RAM, CRC and grant/return. Same whole Lite MAP target region2724comb before placement margin; retime actual ARM refill/IRQ/polling/ROM/CPU stream to recover at least1.280ms plus new costs beyond optimistic parser credit. No isolated opcode/FSM/FIT-seed loops; no P2/physical claim.",
+  "summary": "NES277: 원본 payload 한 번 읽기 모델로71프레임/1231패킷의 metadata·receipt·CRC와544개 기존CPU trace를 대조했다. host 출력 실행기와고정 RAM 포트 경계를 정했으나 새RTL/MAP/일정 검증은 아니다. 954 parser 전체0 민감도도17.946626ms로1.279959ms 부족; 실제276 기준1.555478ms/2837comb 부족 유지. STOP·ACK·포트 계약71개 모델 거절 사례 PASS. 최적화 채택/P2는 보류한다.",
+  "frames": 71,
+  "new_RTL": false,
+  "new_MAP": false,
+  "new_CPU": false,
+  "new_ARM": false,
+  "new_schedule": false,
+  "guard_model_cases": 71,
+  "proved_reclaim_comb": 0,
+  "actual_baseline": {
+    "baseline_comb": 18245,
+    "device_comb": 15408,
+    "deficit": 2837,
+    "core_host_queue_region": 5527,
+    "retained_other": 12718,
+    "region_budget": 2690,
+    "output_mailboxes": {
+      "admission": {
+        "comb": 9,
+        "FF": 114
+      },
+      "consumed": {
+        "comb": 21,
+        "FF": 56
+      },
+      "final_ack": {
+        "comb": 5,
+        "FF": 8
+      },
+      "receipt": {
+        "comb": 13,
+        "FF": 24
+      }
+    },
+    "proposed_region_including_two_mailboxes": 5561,
+    "proposed_region_budget": 2724,
+    "proposed_mailbox_removal_comb": 34,
+    "proved_reclaim": 0,
+    "new_MAP": false
+  },
+  "time_sensitivity": {
+    "frame": 954,
+    "baseline_ms": 18.222144968,
+    "parser_ms": 0.275519,
+    "ordinary_parser_ms": 0.041033,
+    "frozen_schedule_zero_parser_ms": 17.946625968,
+    "frozen_schedule_remaining_ms": 1.2799593013333315,
+    "E2_observed": 110,
+    "E2_removal_sensitivity": 37,
+    "payload_once_bytes": 878,
+    "canonical_CRC_bytes": 21,
+    "pattern_expansion_bytes": 1524,
+    "serial_receipt_extra_host_cycles": 16,
+    "serial_receipt_extra_ms": 0.000190464
+  },
+  "source_port_model": {
+    "vectors": 3,
+    "blocks": 68,
+    "bytes_per_vector": 4398,
+    "deferred_mask_writes_per_frame": 574,
+    "proposed_pending_bits": 18,
+    "modeled_extra_cycles": 0,
+    "fallback_stall_cycles": 574,
+    "fallback_ms": 0.02609090909090909,
+    "RTL_verified": false
+  },
+  "full_path_ms": null,
+  "P2_selected": false
+}
