@@ -4,9 +4,9 @@
   "date_kst": "2026-10-20",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint270-contract.ko.md",
-  "assessment": "NES270: source/output/plan의 SPI 수신·상태snapshot·CRC8을 공통 엔진으로 실제 교체하고, ARM의 E2 short9 polling과 필요시 E0 full24 문맥 조회를 연결했다. 71프레임/522일반명령/2069map범위,38오류/STOP,ARM24오류+wrap,공통SPI guard PASS. 실제 polling·ROM 재실행 warm 직렬 진단 최대18.065374ms/부족1.398707ms/5개 초과, 제한ROM warm907 20.283029ms로 이전보다0.991579ms 악화됐다. short polling의 일괄 채택은 보류한다. Lite wholeMAP17692→17680comb/9046→8892FF/RAM동일,전체 순절감12comb지만2272개 부족하다. source·receipt core와 출력parser 전체 대체는 아직이며,현재6486comb 교체 영역은4214 이하+배치여유가 필요하다. fullRUN/activeVBlank/실기/FITSTA 미완료,P2 미선택이다.",
-  "next_action": "270 common SPI는 실험 기준으로 보존하고269 STOP/ROM 계약을 유지한다. 제한ROM warm907의 polling118->290회/setup+1.376ms 퇴행 때문에 E2 short polling의 일괄 채택은 보류한다. credit 대기와 ROM 준비 대기를 구분한 bounded polling 또는 E1 credit snapshot을 실제 normal/restricted 일정에서 비교한다. 추가 endpoint/FSM/seed/FIT 반복 대신 source·receipt core와 output parser를 함께 바꾸는 경계를 먼저 고정한다. 현재core2448+output자체2206=4654comb는 나머지1832 유지 시2382이하가 필요한 장부다. immutable queue byte 해석·CRC/receipt를 NES 출력 phase로 옮겨 source phase와 주소/문맥/제어를 공유하는 후보에서 RAM port·CDC·SNES consume/ACK·plan copy credit 비용을 함께 제시한다. host84→NES22MHz 이동의 추가 service를 실제 polling/ROM/65816 일정에 반영한다. E1 MISO credit snapshot 후보도 admission 전/후 counter·CRC·STOP 계약을 검증하며 무료 절감으로 계산하지 않는다. fullARM RUN/IRQ/activeVBlank/모든WRAMwriter/wholeboard CDCIOSTA는 별도다.",
+  "authoritative_document": "docs/nes-joint271-contract.ko.md",
+  "assessment": "NES271: tile-ready만 bounded backoff하는 A와 E1 전송 전 credit snapshot을 추가한 B를 실제 ARM·SPI·ROM으로 비교했다. 각 후보의 normal/restricted905..907 총12프레임 실행과 ARM/SPI 오류 검사는 통과했다. 제한ROM warm907은269의19.291450ms 대비 A 19.913352ms, B 20.116850ms로 모두 느려 단독 채택하지 않는다. B의 whole Lite MAP은17680→17694comb로14개 늘었고 2286개 초과한다. 새71프레임·FIT/STA·실기60fps 검증은 아니다. 다음은 host queue/SNES 읽기 port를 유지하고 기존24비트 mailbox로 NES source/receipt/parser 제어를 공유하는 경계이며, 현재 출력 phase RAM의 빈170B에 전체256B packet은 들어가지 않는다.",
+  "next_action": "A/B polling 후보는 채택하지 않고 대기 상수/E1 응답/seed/FIT 반복을 중단한다. 270 common SPI 회로를 비교 기준으로 host RAM reader와 SNES bus 제어를 유지하고, 기존24비트 mailbox를 통해 제한된 바이트 단위를 NES core로 전달하는 parser 교체를 먼저 구현한다. header 검증 전 SNES 창·typed staging 완료를 공개하지 않고, ordinary ACK 뒤 검증·receipt 및 map DMA consume 뒤 최종 head 반환을 유지한다. phase RAM 출력 빈170B: 문맥868..895 28B와 조각896..1023 128B 후보, 추가 RAM0은 설계 제약이지 증명된 비용이 아니다. source/output phase 주소·CRC·문맥 제어를 실제 공유하고 기존 host parser/semantic event 제어를 제거한 동일 전체 보드에서 비교한다. 기본6486->4214 이하 또는 다른1832 유지 시core+output4654->2382 이하와 배치여유가 필요하다. RAM port/CDC/양쪽cursor/plan copy credit/STOP/finalACK와 실제 service를 포함한다. 실패하면 전송 표현·역할 분담을 재검토한다. full RUN/IRQ/active VBlank/whole CDCIOSTA/실기는 별도다.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "R1_shared_SPI_implemented_restricted_ROM_regression_whole_area_failed",
+      "status": "R1_polling_candidates_rejected_parser_boundary_defined",
       "depends_on": [
         "P0"
       ],
@@ -105,7 +105,8 @@
         "analysis/joint267-verification.json",
         "analysis/joint268-verification.json",
         "analysis/joint269-verification.json",
-        "analysis/joint270-verification.json"
+        "analysis/joint270-verification.json",
+        "analysis/joint271-verification.json"
       ]
     },
     {
@@ -3196,8 +3197,8 @@
       }
     ]
   },
-  "active_plan": "docs/nes-joint270-plan.json",
-  "current_status_scope": "270 supersedes historical NEXT; common SPI replacement measured, restricted ROM regressed, whole area gate failed and full time open; production227 unchanged.",
+  "active_plan": "docs/nes-joint271-plan.json",
+  "current_status_scope": "271 supersedes historical NEXT; polling candidates rejected, integrated parser boundary defined but not implemented; production227 unchanged.",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
@@ -5411,6 +5412,231 @@
       "ROM cache/arbiter/reader RTL uses synthetic competing core requests; three restricted frames are not a worst-case bound.",
       "Common reset requires SPI bus quiescence; local fault/STOP, CRC and stale ACK are guarded. Board-level reset/CDC/IO/STA are not qualified.",
       "Core source/receipt control is retained; host SPI reclamation alone does not establish fit or mapper margin."
+    ]
+  },
+  "joint271": {
+    "status": "R1_polling_candidates_rejected_parser_boundary_defined",
+    "contract": "docs/nes-joint271-contract.ko.md",
+    "evidence": "analysis/joint271-verification.json",
+    "MAP": {
+      "A_reused270": {
+        "LE": 22487,
+        "comb": 17680,
+        "FF": 8892,
+        "RAM_bits": 303712
+      },
+      "B": {
+        "LE": 22501,
+        "comb": 17694,
+        "FF": 8892,
+        "RAM_bits": 303712
+      },
+      "deltaB270": {
+        "LE": 14,
+        "comb": 14,
+        "FF": 0,
+        "RAM_bits": 0
+      },
+      "comb_deficit": 2286,
+      "FIT": false,
+      "STA": false
+    },
+    "boundary": {
+      "layout": [
+        [
+          "validity",
+          0,
+          331
+        ],
+        [
+          "retained CRC",
+          332,
+          395
+        ],
+        [
+          "receipts",
+          396,
+          561
+        ],
+        [
+          "map coverage",
+          562,
+          817
+        ],
+        [
+          "H2",
+          832,
+          863
+        ],
+        [
+          "display offset",
+          864,
+          867
+        ]
+      ],
+      "output_phase_free_bytes": 170,
+      "free_ranges": [
+        [
+          818,
+          831
+        ],
+        [
+          868,
+          1023
+        ]
+      ],
+      "full256B_shortfall": 86,
+      "header28B_candidate": [
+        868,
+        895
+      ],
+      "contiguous128B_candidate": [
+        896,
+        1023
+      ],
+      "candidate_buffer_implemented": false,
+      "current_B_region": {
+        "|nes_core257:encoder|": 2446,
+        "|nes_transport257:transport|": 327,
+        "|nes_queue260:queue|": 281,
+        "|nes_plan_spi200:endpoint|": 300,
+        "|nes_plan_batch206:transport|": 410,
+        "|nes_spi270:spi_front270|": 516,
+        "output exclusive": 2206
+      },
+      "current_B_region_comb": 6486,
+      "B_new_region_limit": 4200,
+      "future_reference": "270 common SPI; rejected E1 extra logic is not carried into the baseline budget",
+      "base270_region": {
+        "current_region": {
+          "|nes_core257:encoder|": 2448,
+          "|nes_transport257:transport|": 327,
+          "|nes_queue260:queue|": 282,
+          "|nes_plan_spi200:endpoint|": 301,
+          "|nes_plan_batch206:transport|": 410,
+          "|nes_spi270:spi_front270|": 512,
+          "output exclusive": 2206
+        },
+        "region_comb": 6486,
+        "new_region_limit": 4214,
+        "whole_comb_reclaim": 12,
+        "receipt_core_replaced": false,
+        "extra_RAM_bits": 0
+      },
+      "new_parser_core_area": null,
+      "alternatives": [
+        {
+          "name": "NES queue read port",
+          "extra_RAM_bits": null,
+          "new_CDC": null,
+          "SNES_read_timing_verified": false,
+          "decision": "No free clock mux: preserve SNES host read or charge a new bridge/replica."
+        },
+        {
+          "name": "host RAM reader to existing24bit mailbox",
+          "extra_RAM_bits": 0,
+          "extra_RAM_bits_status": "design constraint, NOT synthesized proof",
+          "new_CDC": null,
+          "decision": "Candidate boundary: stream bounded bytes; retain SNES port, head lifetime, DMA receipt and final ACK. Parser/control area and service are unproven."
+        },
+        {
+          "name": "copy full256B packet into phase RAM",
+          "extra_RAM_bits": null,
+          "decision": "Does not fit fixed live layout:170B free,86B short. No valid map/CRC/H2 bytes may be overwritten."
+        }
+      ]
+    },
+    "warm907": [
+      {
+        "variant": "A",
+        "mode": "normal",
+        "frame": 907,
+        "source_ms": 4.083950992,
+        "output_ms": 7.459865026,
+        "serial_ms": 11.543816018000001,
+        "gap_ms": -5.122850648666667,
+        "E0": 4,
+        "E2": 78,
+        "E1": 15,
+        "status_polls": 82,
+        "SPI_bytes": 1687,
+        "instructions": 124320,
+        "delta269_ms": -0.30004185399999983,
+        "delta270_ms": 0.00013636200000100018,
+        "pause_calls": 0,
+        "pause_iterations": 0,
+        "pause_CPI1_reference_ms": 0.0
+      },
+      {
+        "variant": "A",
+        "mode": "restricted",
+        "frame": 907,
+        "source_ms": 4.083950992,
+        "output_ms": 15.829400954,
+        "serial_ms": 19.913351946,
+        "gap_ms": 3.246685279333331,
+        "E0": 4,
+        "E2": 132,
+        "E1": 15,
+        "status_polls": 136,
+        "SPI_bytes": 2173,
+        "instructions": 666511,
+        "delta269_ms": 0.6219016279999963,
+        "delta270_ms": -0.369677381999999,
+        "pause_calls": 53,
+        "pause_iterations": 102272,
+        "pause_CPI1_reference_ms": 6.090773809523809
+      },
+      {
+        "variant": "B",
+        "mode": "normal",
+        "frame": 907,
+        "source_ms": 4.083950992,
+        "output_ms": 7.500046362,
+        "serial_ms": 11.583997354000001,
+        "gap_ms": -5.082669312666667,
+        "E0": 4,
+        "E2": 77,
+        "E1": 15,
+        "status_polls": 81,
+        "SPI_bytes": 1678,
+        "instructions": 130606,
+        "delta269_ms": -0.259860518,
+        "delta270_ms": 0.040317698000000846,
+        "pause_calls": 0,
+        "pause_iterations": 0,
+        "pause_CPI1_reference_ms": 0.0
+      },
+      {
+        "variant": "B",
+        "mode": "restricted",
+        "frame": 907,
+        "source_ms": 4.083950992,
+        "output_ms": 16.032898512,
+        "serial_ms": 20.116849504,
+        "gap_ms": 3.450182837333333,
+        "E0": 4,
+        "E2": 132,
+        "E1": 15,
+        "status_polls": 136,
+        "SPI_bytes": 2173,
+        "instructions": 683606,
+        "delta269_ms": 0.8253991859999985,
+        "delta270_ms": -0.16617982399999676,
+        "pause_calls": 54,
+        "pause_iterations": 104320,
+        "pause_CPI1_reference_ms": 6.2127380952380955
+      }
+    ],
+    "decision": "Reject standalone adoption of both polling candidates; restricted warm907 remains slower than269 and no whole-area recovery.",
+    "new_full71": false,
+    "P2_selected": false,
+    "limitations": [
+      "Only905..907 newly executed in each normal/restricted scenario; no new heavy-frame or71-frame claim.",
+      "Busy-loop instruction count charged at CPI1; not hardware timing, WFI, full RUN or NVIC preemption.",
+      "Actual26965816 ordinary bus traces; map/tile/final display still modeled. Synthetic ROM competitors.",
+      "E1 snapshot precedes current admission; bad response can follow a physically accepted packet. Sticky stop and coherent reset are required, not retry.",
+      "Next source/receipt/parser replacement is a boundary proposal, not RTL or area savings."
     ]
   }
 }
