@@ -4,9 +4,9 @@
   "date_kst": "2026-10-20",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint271-contract.ko.md",
-  "assessment": "NES271: tile-ready만 bounded backoff하는 A와 E1 전송 전 credit snapshot을 추가한 B를 실제 ARM·SPI·ROM으로 비교했다. 각 후보의 normal/restricted905..907 총12프레임 실행과 ARM/SPI 오류 검사는 통과했다. 제한ROM warm907은269의19.291450ms 대비 A 19.913352ms, B 20.116850ms로 모두 느려 단독 채택하지 않는다. B의 whole Lite MAP은17680→17694comb로14개 늘었고 2286개 초과한다. 새71프레임·FIT/STA·실기60fps 검증은 아니다. 다음은 host queue/SNES 읽기 port를 유지하고 기존24비트 mailbox로 NES source/receipt/parser 제어를 공유하는 경계이며, 현재 출력 phase RAM의 빈170B에 전체256B packet은 들어가지 않는다.",
-  "next_action": "A/B polling 후보는 채택하지 않고 대기 상수/E1 응답/seed/FIT 반복을 중단한다. 270 common SPI 회로를 비교 기준으로 host RAM reader와 SNES bus 제어를 유지하고, 기존24비트 mailbox를 통해 제한된 바이트 단위를 NES core로 전달하는 parser 교체를 먼저 구현한다. header 검증 전 SNES 창·typed staging 완료를 공개하지 않고, ordinary ACK 뒤 검증·receipt 및 map DMA consume 뒤 최종 head 반환을 유지한다. phase RAM 출력 빈170B: 문맥868..895 28B와 조각896..1023 128B 후보, 추가 RAM0은 설계 제약이지 증명된 비용이 아니다. source/output phase 주소·CRC·문맥 제어를 실제 공유하고 기존 host parser/semantic event 제어를 제거한 동일 전체 보드에서 비교한다. 기본6486->4214 이하 또는 다른1832 유지 시core+output4654->2382 이하와 배치여유가 필요하다. RAM port/CDC/양쪽cursor/plan copy credit/STOP/finalACK와 실제 service를 포함한다. 실패하면 전송 표현·역할 분담을 재검토한다. full RUN/IRQ/active VBlank/whole CDCIOSTA/실기는 별도다.",
+  "authoritative_document": "docs/nes-joint272-contract.ko.md",
+  "assessment": "NES272: 일반 명령·manifest 해석을 NES clock으로 옮긴 A와 source 레지스터120비트를 출력 문맥과 공유한 B를 실제로 연결했다. 905..907 normal A/B와 restricted B의9프레임,기존38+새4 STOP/오류 검사 PASS. ARM270/원래SPI packet bytes 유지. normal907 A 11.543680ms/B 11.543680ms,restricted B 20.156985ms는 CPI1 직렬 진단이며 fullpath가 아니다. Whole Lite MAP은270의17680comb 대비 A17834(+154),B17945(+265),B는한도보다2537개 초과/RAM동일이다. source 공유로FF109개를 줄여도 조합논리는111개 늘었다. 두 부분 후보 모두 미채택;host admission/typed-map와단일FSM/phaseRAM통합은남아있다.",
+  "next_action": "272 A/B의 단순 clock 이동·source FF 공유는 전체 회로 게이트 실패로 채택하지 않는다. 270 기준에서 host admission/map/NES parser 사이 문맥·cursor·continuation을 제거하는 단일 source/receipt/parser 실행 제어와 ARM 생산 primitive 표현을 비교한다. header·descriptor까지 포함한 동일 전체 경계, ARM 추가 명령·wire/refill/IRQ·ROM 경쟁·SNES polling 및 RAM port/CDC/receipt/STOP/final ACK를 함께 계산한다. core+host4654->2382,전체6486->4214이하+배치여유 필요;272 부분 실패를 전체 교체 불가능으로 일반화하지 않는다. phaseRAM170B에256Bpacket복사 금지. 구조상 절감 경로가 없으면 역할/전송표현을 바꾼다. seed/encoding/FIT/poll상수 반복 금지. fullRUN/activeVBlank/wholeCDCIOSTA/실기 별도.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "R1_polling_candidates_rejected_parser_boundary_defined",
+      "status": "R1_ordinary_parser_relocation_and_source_context_sharing_rejected",
       "depends_on": [
         "P0"
       ],
@@ -106,7 +106,8 @@
         "analysis/joint268-verification.json",
         "analysis/joint269-verification.json",
         "analysis/joint270-verification.json",
-        "analysis/joint271-verification.json"
+        "analysis/joint271-verification.json",
+        "analysis/joint272-verification.json"
       ]
     },
     {
@@ -3197,8 +3198,8 @@
       }
     ]
   },
-  "active_plan": "docs/nes-joint271-plan.json",
-  "current_status_scope": "271 supersedes historical NEXT; polling candidates rejected, integrated parser boundary defined but not implemented; production227 unchanged.",
+  "active_plan": "docs/nes-joint272-plan.json",
+  "current_status_scope": "272 supersedes historical NEXT; ordinary parser slices rejected, complete271 replacement remains open; production227 unchanged.",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
@@ -5638,5 +5639,132 @@
       "E1 snapshot precedes current admission; bad response can follow a physically accepted packet. Sticky stop and coherent reset are required, not retry.",
       "Next source/receipt/parser replacement is a boundary proposal, not RTL or area savings."
     ]
+  },
+  "joint272": {
+    "status": "R1_ordinary_parser_relocation_and_source_context_sharing_rejected",
+    "contract": "docs/nes-joint272-contract.ko.md",
+    "evidence": "analysis/joint272-verification.json",
+    "MAP": {
+      "areas": {
+        "270": {
+          "LE": 22487,
+          "comb": 17680,
+          "FF": 8892,
+          "RAM_bits": 303712
+        },
+        "A": {
+          "LE": 22767,
+          "comb": 17834,
+          "FF": 9052,
+          "RAM_bits": 303712
+        },
+        "B": {
+          "LE": 22726,
+          "comb": 17945,
+          "FF": 8943,
+          "RAM_bits": 303712
+        }
+      },
+      "deltaA270": {
+        "LE": 280,
+        "comb": 154,
+        "FF": 160,
+        "RAM_bits": 0
+      },
+      "deltaB270": {
+        "LE": 239,
+        "comb": 265,
+        "FF": 51,
+        "RAM_bits": 0
+      },
+      "deltaBA": {
+        "LE": -41,
+        "comb": 111,
+        "FF": -109,
+        "RAM_bits": 0
+      },
+      "comb_deficit": {
+        "270": 2272,
+        "A": 2426,
+        "B": 2537
+      },
+      "FIT": false,
+      "STA": false
+    },
+    "warm907": [
+      {
+        "variant": "A",
+        "mode": "normal",
+        "frame": 907,
+        "source_ms": 4.083950992,
+        "output_ms": 7.459728664,
+        "serial_ms": 11.543679656,
+        "gap_ms": -5.122987010666668,
+        "E0": 4,
+        "E2": 78,
+        "E1": 15,
+        "E8": 4,
+        "SPI_bytes": 1687,
+        "instructions": 124308,
+        "delta270_ms": 0.0,
+        "delta270_instructions": 0,
+        "delta270_E2": 0,
+        "delta270_E8": 0,
+        "delta270_SPI_bytes": 0
+      },
+      {
+        "variant": "B",
+        "mode": "normal",
+        "frame": 907,
+        "source_ms": 4.083950992,
+        "output_ms": 7.459728664,
+        "serial_ms": 11.543679656,
+        "gap_ms": -5.122987010666668,
+        "E0": 4,
+        "E2": 78,
+        "E1": 15,
+        "E8": 4,
+        "SPI_bytes": 1687,
+        "instructions": 124308,
+        "delta270_ms": 0.0,
+        "delta270_instructions": 0,
+        "delta270_E2": 0,
+        "delta270_E8": 0,
+        "delta270_SPI_bytes": 0
+      },
+      {
+        "variant": "B",
+        "mode": "restricted",
+        "frame": 907,
+        "source_ms": 4.083950992,
+        "output_ms": 16.073034394,
+        "serial_ms": 20.156985386000002,
+        "gap_ms": 3.4903187193333345,
+        "E0": 4,
+        "E2": 283,
+        "E1": 15,
+        "E8": 4,
+        "SPI_bytes": 3532,
+        "instructions": 237672,
+        "delta270_ms": -0.12604394199999547,
+        "delta270_instructions": -1659,
+        "delta270_E2": -3,
+        "delta270_E8": 0,
+        "delta270_SPI_bytes": -27
+      }
+    ],
+    "decision": "Reject both slices for adoption: NES interpreter relocation and source register reuse do not recover whole-board combinational area.",
+    "new_full71": false,
+    "P2_selected": false,
+    "limitations": [
+      "Only905..907 newly executed, not heavy954 or a new71-frame sweep.",
+      "CPI1/service IRQ bodies, not actual MCU cycles/full RUN/NVIC.",
+      "65816 ordinary bus traces, modeled map/tile/final display and synthetic ROM contenders.",
+      "Host admission and typed-map parser retained; not the complete271 removal boundary.",
+      "No phase RAM header/chunk buffering or single source/parser/receipt FSM proof.",
+      "Source input context sharing is phase gated; no independent endpoint-reset claim."
+    ],
+    "partial_boundary": true,
+    "source_register_shared_bits": 120
   }
 }

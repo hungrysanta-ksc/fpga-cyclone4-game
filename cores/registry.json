@@ -24,7 +24,7 @@
     },
     {
       "id": "nes",
-      "status": "NES227_hardware_baseline_271_polling_candidates_rejected",
+      "status": "NES227_hardware_baseline_272_parser_slices_rejected",
       "candidate": "NES227",
       "planned_product_version": null,
       "released": false,
@@ -38,15 +38,15 @@
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
       "verification": "analysis/game227-hardware01-verification.json",
-      "plan": "docs/nes-joint271-contract.ko.md",
+      "plan": "docs/nes-joint272-contract.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "NES271_polling_E1_cost_and_parser_boundary",
+      "investigation": "NES272_ordinary_parser_and_source_context_cost",
       "hardware_baseline": "NES227",
-      "hardware_verified_scope": "227 unchanged;271 candidate3frame normal/restricted actualARM/RTL with269ordinaryCPUtrace; no new71 or physical60fps/fullRUN.",
-      "development_evidence": "analysis/joint271-verification.json",
+      "hardware_verified_scope": "227 unchanged;272 A/B3frame normal+Brestricted actualARM/RTL with269ordinaryCPUtrace; no new71 or physical60fps/fullRUN.",
+      "development_evidence": "analysis/joint272-verification.json",
       "hardware_candidate": "NES227",
-      "reproduction_document": "docs/nes-joint271-contract.ko.md",
-      "next_gate": "A/B polling 후보는 채택하지 않고 대기 상수/E1 응답/seed/FIT 반복을 중단한다. 270 common SPI 회로를 비교 기준으로 host RAM reader와 SNES bus 제어를 유지하고, 기존24비트 mailbox를 통해 제한된 바이트 단위를 NES core로 전달하는 parser 교체를 먼저 구현한다. header 검증 전 SNES 창·typed staging 완료를 공개하지 않고, ordinary ACK 뒤 검증·receipt 및 map DMA consume 뒤 최종 head 반환을 유지한다. phase RAM 출력 빈170B: 문맥868..895 28B와 조각896..1023 128B 후보, 추가 RAM0은 설계 제약이지 증명된 비용이 아니다. source/output phase 주소·CRC·문맥 제어를 실제 공유하고 기존 host parser/semantic event 제어를 제거한 동일 전체 보드에서 비교한다. 기본6486->4214 이하 또는 다른1832 유지 시core+output4654->2382 이하와 배치여유가 필요하다. RAM port/CDC/양쪽cursor/plan copy credit/STOP/finalACK와 실제 service를 포함한다. 실패하면 전송 표현·역할 분담을 재검토한다. full RUN/IRQ/active VBlank/whole CDCIOSTA/실기는 별도다.",
+      "reproduction_document": "docs/nes-joint272-contract.ko.md",
+      "next_gate": "272 A/B의 단순 clock 이동·source FF 공유는 전체 회로 게이트 실패로 채택하지 않는다. 270 기준에서 host admission/map/NES parser 사이 문맥·cursor·continuation을 제거하는 단일 source/receipt/parser 실행 제어와 ARM 생산 primitive 표현을 비교한다. header·descriptor까지 포함한 동일 전체 경계, ARM 추가 명령·wire/refill/IRQ·ROM 경쟁·SNES polling 및 RAM port/CDC/receipt/STOP/final ACK를 함께 계산한다. core+host4654->2382,전체6486->4214이하+배치여유 필요;272 부분 실패를 전체 교체 불가능으로 일반화하지 않는다. phaseRAM170B에256Bpacket복사 금지. 구조상 절감 경로가 없으면 역할/전송표현을 바꾼다. seed/encoding/FIT/poll상수 반복 금지. fullRUN/activeVBlank/wholeCDCIOSTA/실기 별도.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "Production227 retained;240 functional-only/unplaced;241+246 rejected;no new installable pair.",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -706,8 +706,8 @@
         "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
         "paired_candidate": "deployed180 unchanged;1813 exporter/SPI/receiver candidate only; no new full ARM/FIT/installable pair"
       },
-      "active_plan": "docs/nes-joint271-plan.json",
-      "current_status_scope": "271 supersedes historical NEXT; A/B polling rejected; source/receipt/parser replacement not implemented; P2 not selected; production227 unchanged."
+      "active_plan": "docs/nes-joint272-plan.json",
+      "current_status_scope": "272 supersedes historical NEXT; partial parser relocation/source register sharing rejected; full replacement unimplemented; P2 not selected."
     },
     {
       "id": "pce",
