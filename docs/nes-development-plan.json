@@ -4,9 +4,9 @@
   "date_kst": "2026-10-20",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint272-contract.ko.md",
-  "assessment": "NES272: 일반 명령·manifest 해석을 NES clock으로 옮긴 A와 source 레지스터120비트를 출력 문맥과 공유한 B를 실제로 연결했다. 905..907 normal A/B와 restricted B의9프레임,기존38+새4 STOP/오류 검사 PASS. ARM270/원래SPI packet bytes 유지. normal907 A 11.543680ms/B 11.543680ms,restricted B 20.156985ms는 CPI1 직렬 진단이며 fullpath가 아니다. Whole Lite MAP은270의17680comb 대비 A17834(+154),B17945(+265),B는한도보다2537개 초과/RAM동일이다. source 공유로FF109개를 줄여도 조합논리는111개 늘었다. 두 부분 후보 모두 미채택;host admission/typed-map와단일FSM/phaseRAM통합은남아있다.",
-  "next_action": "272 A/B의 단순 clock 이동·source FF 공유는 전체 회로 게이트 실패로 채택하지 않는다. 270 기준에서 host admission/map/NES parser 사이 문맥·cursor·continuation을 제거하는 단일 source/receipt/parser 실행 제어와 ARM 생산 primitive 표현을 비교한다. header·descriptor까지 포함한 동일 전체 경계, ARM 추가 명령·wire/refill/IRQ·ROM 경쟁·SNES polling 및 RAM port/CDC/receipt/STOP/final ACK를 함께 계산한다. core+host4654->2382,전체6486->4214이하+배치여유 필요;272 부분 실패를 전체 교체 불가능으로 일반화하지 않는다. phaseRAM170B에256Bpacket복사 금지. 구조상 절감 경로가 없으면 역할/전송표현을 바꾼다. seed/encoding/FIT/poll상수 반복 금지. fullRUN/activeVBlank/wholeCDCIOSTA/실기 별도.",
+  "authoritative_document": "docs/nes-joint273-contract.ko.md",
+  "assessment": "NES273: ARM producer의event24·값run·payload참조3표현을71프레임/1181packets/35152의미동작으로대조했다. 60ARM오류·17decoder오류·21codec vector PASS. 참조형2032text/64BSS/관측stack136B. inline우선은warm추가87–287SPI B,954의추가직렬민감도0.980690ms이며새실행시간이아니다. 50packet은256B를넘어별도소유권경로가필요하다. 문법상유효한거짓receipt 반례로DMA/receipt 공통descriptor 검증을필수화했다. 새RTL/MAP/retimedSPI없음,기준270의2272comb부족유지;단일source/receipt/parser는미구현이다.",
+  "next_action": "payload참조와DMA/receipt 공통descriptor를한queue소유권/byte실행경로로연결하고50overflow packet의continuation 또는split을실제SNES비용으로검증한다. source/query·header·typed-map·receipt 제어를함께대체해야하며unchangedcore2448은고정other1832조건의목표2382를초과한다. 다음은새ARMserializer/CRC/credit/refillIRQ·ROM경쟁·SNESpoll동일일정과wholeLiteMAP;별도decoder추가만으로절감주장금지. 같은SPI에서full-literal source는warm69의datawire하한부터실패하므로제외. phaseRAM170B에256B복사금지,FIT/STA/fullRUN/activeVBlank/실기는그후게이트.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "R1_ordinary_parser_relocation_and_source_context_sharing_rejected",
+      "status": "R1_ARM_primitive_producer_verified_joint_executor_and_schedule_pending",
       "depends_on": [
         "P0"
       ],
@@ -107,7 +107,8 @@
         "analysis/joint269-verification.json",
         "analysis/joint270-verification.json",
         "analysis/joint271-verification.json",
-        "analysis/joint272-verification.json"
+        "analysis/joint272-verification.json",
+        "analysis/joint273-verification.json"
       ]
     },
     {
@@ -3067,7 +3068,7 @@
     "adopted": false,
     "best_candidate": "map04"
   },
-  "summary": "NES255는 별도 query FSM 없이 선행 읽기를 복원하고, receipt와 실제 바이트 수락 어댑터의 제어를 공유했다. 동일 어댑터 경계 MAP은 기준3414LE/1046FF에서 후보3362LE/985FF로 52LE·61FF 감소하며 RAM49152bits는 같다. warm 준비는11836..11854cycles, 출력 제어는 기준보다74..152cycles 감소했다. 두 구성 각각71프레임·28오류 검사와 후보의8개 부분 CRC 갱신을 통과했다. 실제 출력은 같은 클록의 valid/ready 수락까지이며 SPI packet parser·SNES 실행/표시 연결은 미완료다. 전체490LE/40LAB 부족과60fps는 미해결이며 P2 미선정이다.",
+  "summary": "NES273: ARM producer의event24·값run·payload참조3표현을71프레임/1181packets/35152의미동작으로대조했다. 60ARM오류·17decoder오류·21codec vector PASS. 참조형2032text/64BSS/관측stack136B. inline우선은warm추가87–287SPI B,954의추가직렬민감도0.980690ms이며새실행시간이아니다. 50packet은256B를넘어별도소유권경로가필요하다. 문법상유효한거짓receipt 반례로DMA/receipt 공통descriptor 검증을필수화했다. 새RTL/MAP/retimedSPI없음,기준270의2272comb부족유지;단일source/receipt/parser는미구현이다.",
   "hardware_game170": {
     "evidence": "analysis/game170-hardware01-verification.json",
     "document": "docs/nes-game170-hardware01.ko.md",
@@ -3110,8 +3111,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-joint255-contract.ko.md",
-  "latest_development_evidence": "analysis/joint255-verification.json",
+  "latest_review": "docs/nes-joint273-contract.ko.md",
+  "latest_development_evidence": "analysis/joint273-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {
@@ -3198,8 +3199,8 @@
       }
     ]
   },
-  "active_plan": "docs/nes-joint272-plan.json",
-  "current_status_scope": "272 supersedes historical NEXT; ordinary parser slices rejected, complete271 replacement remains open; production227 unchanged.",
+  "active_plan": "docs/nes-joint273-plan.json",
+  "current_status_scope": "273 supersedes historical NEXT; ARM producer verified, common executor/ownership/retimed schedule open; production227 unchanged.",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
@@ -5766,5 +5767,53 @@
     ],
     "partial_boundary": true,
     "source_register_shared_bits": 120
+  },
+  "joint273": {
+    "schema_version": 1,
+    "stage": "NES273",
+    "date_kst": "2026-10-20",
+    "status": "R1_ARM_primitive_producer_verified_joint_executor_and_schedule_pending",
+    "pr": 130,
+    "branch": "codex/nes-wholepath-boundary-256",
+    "parent": "docs/nes-joint272-plan.json",
+    "contract": "docs/nes-joint273-contract.ko.md",
+    "evidence": "analysis/joint273-verification.json",
+    "selected": [
+      "arm05",
+      "analysis03"
+    ],
+    "next_action": "payload참조와DMA/receipt 공통descriptor를한queue소유권/byte실행경로로연결하고50overflow packet의continuation 또는split을실제SNES비용으로검증한다. source/query·header·typed-map·receipt 제어를함께대체해야하며unchangedcore2448은고정other1832조건의목표2382를초과한다. 다음은새ARMserializer/CRC/credit/refillIRQ·ROM경쟁·SNESpoll동일일정과wholeLiteMAP;별도decoder추가만으로절감주장금지. 같은SPI에서full-literal source는warm69의datawire하한부터실패하므로제외. phaseRAM170B에256B복사금지,FIT/STA/fullRUN/activeVBlank/실기는그후게이트.",
+    "decision": "Do not adopt sidecar-only offload with unchanged core. Inline packet references are a bounded next experiment, not an area/timing pass; oversized packets need explicit ownership/continuation.",
+    "ARM": {
+      "text": 2032,
+      "bss": 64,
+      "observed_stack": 136,
+      "guard_executions": 60,
+      "decoder_negatives": 17,
+      "directed_executions": 21
+    },
+    "frames": 71,
+    "producer_executions": 213,
+    "semantic_events": 35152,
+    "inline_overflow_packets": 50,
+    "reference_max_program_bytes": 212,
+    "new_RTL": false,
+    "new_MAP": false,
+    "new_SPI_schedule": false,
+    "single_FSM": false,
+    "full_path_ms": null,
+    "P2_selected": false,
+    "whole270_comb": 17680,
+    "comb_deficit": 2272,
+    "region_target_without_margin": 4214,
+    "scope": "New ARM transformation execution and independent semantic comparison; wire/layout arithmetic, not a live replacement.",
+    "remaining": [
+      "Single source/receipt/parser executor with header/map ownership is not implemented.",
+      "FPGA must validate reference bounds/types against the consumed command, not trust ARM receipt claims.",
+      "Inline requires transport kind/length demultiplexing and a shifted SNES read view; overflow requires two queue slots or a proven split.",
+      "New packet CRC/credit/refill/IRQ costs and overlap/polling are not executed.",
+      "ARM producer memory is standalone; it is not a full firmware link/stack bound.",
+      "Whole RUN/NVIC, active VBlank, CDC/IO/STA and physical deadline remain open."
+    ]
   }
 }
