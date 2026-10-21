@@ -1,3 +1,5 @@
+NES296 DMA 대기 중 OBJ planner 공급·공동 cursor 후보 미채택. native71 plan/1039명령73260B 유지; 실제 ARM/IRQ/ROM 정상·제한3씩과 독립 오류검사 PASS. 정상907 15.473814ms, 제한907 17.468381ms(295대비-14.747959ms),60Hz 초과0.801715ms. Lite22644LE/17744comb/9002FF/307808bits: +41comb/-27FF/2336부족. 시간 회귀는 줄었으나 회로 공유는 반려. [대기 공급과 비용](docs/nes-joint296-contract.ko.md). 아래는 이전 기록이다.
+
 NES295 비최종 BG 완료를 ARM plan·aperture·DMA·receipt에 연결했으나 후보 미채택. native71 원래 plan/1039명령73260B 유지, warm69 중32개 실제BG 조기발행. 정상907 15.527359ms/제한907 32.216341ms(294대비+0.104/+14.123). whole Lite22603LE/17703comb/9029FF/307808bits, +32comb/2295부족. BG receipt 개선 뒤 OBJ ROM 창을 놓친 회귀다. [BG 완료와 비용](docs/nes-joint295-contract.ko.md). 아래는 이전 기록이다.
 
 NES294 BG batch와 증분 native DMA 연결 후보 미채택. native71 plan/1039명령73260B 일치·fixture0,STOP/생산실패/H2/IRQ 및 정상·제한3씩 최종ACK PASS. warm69 중32개 조기DMA,31개는16B blank뿐. 정상907 15.423360ms(289대비+0.108362),제한907 18.093828ms(+0.094181),초과1.427162ms. RTL287 동일/회로절감0/2263comb부족;새MAP 없음. [조기 DMA 검증](docs/nes-joint294-contract.ko.md). 아래는 이전 기록이다.

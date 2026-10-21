@@ -4,13 +4,13 @@
   "date_kst": "2026-10-22",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint295-contract.ko.md",
-  "assessment": "NES295 비최종 BG 완료를 ARM plan·aperture·DMA·receipt에 연결했으나 후보 미채택. native71 원래 plan/1039명령73260B 유지, warm69 중32개 실제BG 조기발행. 정상907 15.527359ms/제한907 32.216341ms(294대비+0.104/+14.123). whole Lite22603LE/17703comb/9029FF/307808bits, +32comb/2295부족. BG receipt 개선 뒤 OBJ ROM 창을 놓친 회귀다.",
-  "next_action": "현재295를 채택하지 않는다. BG 완료의 별도 E9와 blocking DMA/receipt 대기가 후속 OBJ plan 공급을 늦추므로, 기존 batch 끝에 완료 의미를 결합하고 pending DMA와 plan refill을 함께 진행하는 실행 순서를 비교한다. 단순 marker 축소만으로 회로2295개 부족을 해결했다고 계산하지 않는다. packet reader·descriptor admission·manifest·receipt·retire 공동 실행기의 제거/유지 datapath와 concurrent CRC tap·RAM port·CDC를 명시하고, 현재 고정경계4847에서 한도2552 이하의 근거를 확보해야 한다. 이 근거가 있는 후보에만 normal71/heavy7/restricted와 matching whole Lite를 실행한다. 독립 bounds/실소비CRC/coverage·4credit·STOP·최종ACK 유지; isolated FSM/opcode/seed/FIT 반복 금지.",
+  "authoritative_document": "docs/nes-joint296-contract.ko.md",
+  "assessment": "NES296 DMA 대기 중 OBJ planner 공급·공동 cursor 후보 미채택. native71 plan/1039명령73260B 유지; 실제 ARM/IRQ/ROM 정상·제한3씩과 독립 오류검사 PASS. 정상907 15.473814ms, 제한907 17.468381ms(295대비-14.747959ms),60Hz 초과0.801715ms. Lite22644LE/17744comb/9002FF/307808bits: +41comb/-27FF/2336부족. 시간 회귀는 줄었으나 회로 공유는 반려.",
+  "next_action": "시간 개선 대기 서비스와 반려한 cursor 공유 RTL을 분리해295의 원래 제어에서 실제 일정을 먼저 확인한다. 그다음 packet read·descriptor·manifest·receipt 공동 실행 front-end가 없앨 decode/주소/control mux와 retained CRC tap·RAM port·CDC를 고정 예산으로 제시한다. 현재4879→2543(2336comb 감소) 근거 없이 scalar cursor/FSM/marker 바이트의 MAP 반복을 하지 않는다. 독립 검사·4credit/2planbank·STOP·최종ACK 유지. 실질적 공동 제거 근거가 있는 후보에만 normal71/heavy7/restricted/wholeLite/FITSTA를 확대한다.",
   "next_three_deliverables": [
-    "Co-schedule following OBJ plan refill with pending DMA/receipt; preserve ordering and ROM availability.",
-    "Substantiate joint reader/descriptor/manifest/receipt/retire replacement within whole-area budget.",
-    "Run matched whole Lite and full schedules only for a substantiated candidate."
+    "Separate improved wait service from rejected cursor sharing and bind actual timing on retained295 RTL.",
+    "Substantiate common execution front-end removal within full boundary budget.",
+    "Run matched whole Lite and expanded schedules only for a substantiated joint candidate."
   ],
   "gates": [
     {
@@ -3125,8 +3125,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-joint295-contract.ko.md",
-  "latest_development_evidence": "analysis/joint295-verification.json",
+  "latest_review": "docs/nes-joint296-contract.ko.md",
+  "latest_development_evidence": "analysis/joint296-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {
@@ -3213,8 +3213,8 @@
       }
     ]
   },
-  "active_plan": "docs/nes-joint295-plan.json",
-  "current_status_scope": "295 nonfinal BG close connected; restricted ROM schedule and whole-area regressed; candidate not adopted.",
+  "active_plan": "docs/nes-joint296-plan.json",
+  "current_status_scope": "296 wait service reduces ROM regression; joint cursor sharing increases whole area; not adopted.",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
@@ -9793,6 +9793,32 @@
     "new_MAP": true,
     "full_schedule71": false,
     "comb_deficit": 2295,
+    "P2_selected": false
+  },
+  "joint296": {
+    "stage": 296,
+    "status": "wait_service_improves_time_joint_cursor_area_rejected",
+    "summary": "NES296 DMA 대기 중 OBJ planner 공급·공동 cursor 후보 미채택. native71 plan/1039명령73260B 유지; 실제 ARM/IRQ/ROM 정상·제한3씩과 독립 오류검사 PASS. 정상907 15.473814ms, 제한907 17.468381ms(295대비-14.747959ms),60Hz 초과0.801715ms. Lite22644LE/17744comb/9002FF/307808bits: +41comb/-27FF/2336부족. 시간 회귀는 줄었으나 회로 공유는 반려.",
+    "next_action": "시간 개선 대기 서비스와 반려한 cursor 공유 RTL을 분리해295의 원래 제어에서 실제 일정을 먼저 확인한다. 그다음 packet read·descriptor·manifest·receipt 공동 실행 front-end가 없앨 decode/주소/control mux와 retained CRC tap·RAM port·CDC를 고정 예산으로 제시한다. 현재4879→2543(2336comb 감소) 근거 없이 scalar cursor/FSM/marker 바이트의 MAP 반복을 하지 않는다. 독립 검사·4credit/2planbank·STOP·최종ACK 유지. 실질적 공동 제거 근거가 있는 후보에만 normal71/heavy7/restricted/wholeLite/FITSTA를 확대한다.",
+    "selected": [
+      "native01",
+      "armguard01",
+      "h2guard01",
+      "irqguard01",
+      "test02",
+      "window02",
+      "guards01",
+      "board01",
+      "analysis01"
+    ],
+    "evidence": "analysis/joint296-verification.json",
+    "functional_reference": 289,
+    "performance_reference": 287,
+    "new_ELF": true,
+    "new_RTL": true,
+    "new_MAP": true,
+    "full_schedule71": false,
+    "comb_deficit": 2336,
     "P2_selected": false
   }
 }
