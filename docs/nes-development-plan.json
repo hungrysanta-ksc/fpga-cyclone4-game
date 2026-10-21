@@ -4,13 +4,13 @@
   "date_kst": "2026-10-21",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint287-contract.ko.md",
-  "assessment": "NES287: checked row planner를 같은 ARM ELF의 실제 E9/credit/refill·IRQ에 연결하고 H2의 metadata8570B 복사를 native view로 대체했다. host receipt 진행을 validator의 단일 descriptor RAM walk로 옮겼다. 71프레임 plan·metadata·실제 E1/E9 일치, STOP/최종ACK25·범위315·ARM/H2/IRQ 검증 PASS. 일반 warm 최대 26.375411ms, 제한907 18.727048ms. 전체 Lite 17671comb(-75), 부족2263; 기존5블록은 +8, 연결 논리 포함 교체 범위는 -36comb다. 전체60fps·회로 목표는 미달이다.",
-  "next_action": "row 전체 fallback이 많은954/963/970의 실제 변경 cell·workset을 기준으로 planner 비용을 줄인다. input COMMITTED·raw 검사 후의 로컬 H2/BEGIN과 준비된 row 출력 생산을 연결해 전체 planner 완료 뒤에만 ordinary DMA가 시작되는 직렬 장벽을 검토한다. 원본 ordinary command/manifest 생산도 native view와 bounded batch 소비에 연결한다. 진단용8192B plan buffer 제거와 source live ARM/IRQ까지 소유권을 명시한다. host/validator/queue/plan/SPI와 두 연결 wrapper의 own logic을 합친4853comb를 실제 descriptor 저장·물리 읽기·receipt 완료 제어와 함께 <= 2590(128여유 2462)로 줄이는 교체가 필요하다. 기존5블록 경계4806와 예산2543도 비교용으로 유지한다. 독립 CRC/H2/coverage, input COMMITTED, token/credit, STOP와 최종12B ACK를 유지한다. 정상·제한 ROM phase 전체 시간과 같은 whole Lite 경계를 함께 검증하며 단독 opcode/seed/FIT 반복이나 자동 merge는 하지 않는다.",
+  "authoritative_document": "docs/nes-joint288-contract.ko.md",
+  "assessment": "NES288 workset 후보는 미채택: 실제 ARM71 plan/metadata 일치, 정상·제한 ROM3씩과 오류/STOP/IRQ/H2 검사 PASS. planner954 -0.429738ms지만907 +0.363738ms, live907 14.885003ms(+0.363723), 제한907 18.727048ms(+0.000000). ARM RAM+2048B, 동일 RTL287이므로 FPGA 절감0; 2263comb 부족 유지. 현재 통합 비교 기준은 NES287이며288의71프레임 전체 재일정/새MAP/FIT/STA/fullRUN은 없다.",
+  "next_action": "다음 후보는 row/workset 이진검색 튜닝이 아니라 native ordinary/manifest 생산과 단계별 출력 실행의 공동 교체다. COMMITTED/raw 검사 뒤 로컬H2 인증서를 발행하되 BG exact-key/raw table union의 수명을 보존한다. 완성된 E9 batch에 대응하는 BG DMA descriptor만 공급하고, OBJ/OAM·map·manifest·SEAL은 각각 실제 생산 완료/coverage에 묶는다. ARM bounded cursor가 host의 descriptor 해석·반복 전송 제어를 실제 대체하는 범위를 먼저 구현하고 FPGA 독립 bounds/CRC/receipt/orderedACK/STOP/최종ACK는 남긴다. 공유SPI·credit·ROM 위상을 포함한 동일 일정으로 검증하며 회로 경계4853comb를2590(128여유2462) 이하로 줄여야 한다. 2KiB 검색표 단독 최적화나 근거 없는 earlyBEGIN 시간 차감은 반복하지 않는다.",
   "next_three_deliverables": [
-    "Reduce heavy changed-row/cell workset cost and bind ordinary/manifest native producer to bounded E9/output consumption.",
-    "Replace host/validator/queue/plan/SPI+2wrapper own4853comb within2590 (2462 with128reserve); retain fixed5block4806/2543 comparison and independent terminal checks.",
-    "Bind live source ARM/IRQ and full firmware memory; compare restricted ROM phase and whole Lite before FITSTA/physical gates."
+    "Native resumable ordinary producer coupled to complete tile batches, preserving H2/union/COMMITTED lifetimes.",
+    "Replace actual host descriptor and repeated dispatch control with bounded ARM cursor; retain independent FPGA verification and 4853->2590comb budget.",
+    "Retimed full source/planner/IRQ/ROM and whole Lite comparison before FITSTA/physical gates."
   ],
   "gates": [
     {
@@ -9690,5 +9690,31 @@
     "FIT": false,
     "STA": false,
     "physical": false
+  },
+  "joint288": {
+    "stage": 288,
+    "status": "workset_candidate_not_adopted",
+    "current_integrated_reference": 287,
+    "summary": "NES288 workset 후보는 미채택: 실제 ARM71 plan/metadata 일치, 정상·제한 ROM3씩과 오류/STOP/IRQ/H2 검사 PASS. planner954 -0.429738ms지만907 +0.363738ms, live907 14.885003ms(+0.363723), 제한907 18.727048ms(+0.000000). ARM RAM+2048B, 동일 RTL287이므로 FPGA 절감0; 2263comb 부족 유지. 현재 통합 비교 기준은 NES287이며288의71프레임 전체 재일정/새MAP/FIT/STA/fullRUN은 없다.",
+    "next_action": "다음 후보는 row/workset 이진검색 튜닝이 아니라 native ordinary/manifest 생산과 단계별 출력 실행의 공동 교체다. COMMITTED/raw 검사 뒤 로컬H2 인증서를 발행하되 BG exact-key/raw table union의 수명을 보존한다. 완성된 E9 batch에 대응하는 BG DMA descriptor만 공급하고, OBJ/OAM·map·manifest·SEAL은 각각 실제 생산 완료/coverage에 묶는다. ARM bounded cursor가 host의 descriptor 해석·반복 전송 제어를 실제 대체하는 범위를 먼저 구현하고 FPGA 독립 bounds/CRC/receipt/orderedACK/STOP/최종ACK는 남긴다. 공유SPI·credit·ROM 위상을 포함한 동일 일정으로 검증하며 회로 경계4853comb를2590(128여유2462) 이하로 줄여야 한다. 2KiB 검색표 단독 최적화나 근거 없는 earlyBEGIN 시간 차감은 반복하지 않는다.",
+    "selected": [
+      "arm03",
+      "armguard01",
+      "rowguard01",
+      "workset01",
+      "irqguard01",
+      "h2guard01",
+      "test01",
+      "window01",
+      "analysis01"
+    ],
+    "evidence": "analysis/joint288-verification.json",
+    "full_path71": null,
+    "new_MAP": false,
+    "adopted": false,
+    "P2_selected": false,
+    "whole_comb": 17671,
+    "comb_deficit": 2263,
+    "extra_ARM_RAM": 2048
   }
 }
