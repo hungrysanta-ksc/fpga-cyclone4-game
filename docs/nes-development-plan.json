@@ -4,13 +4,13 @@
   "date_kst": "2026-10-21",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint292-contract.ko.md",
-  "assessment": "NES292: 기존 M4 ELF71프레임/2130step을 새로 추적했다. warm69 모두 첫 불변 E9 batch가 마지막 step29에서 나왔다. 중간batch 동결 가정32프레임 중31은16B blank만 조기종료, 실제그래픽 범위는930 하나다. native 명령/plan/DMA범위·생산명령수 일치/fixture0 PASS. 공동packet·receipt·manifest·retire17전이 설계와 확대경계 비용을 기록했다. 새RTL/전체일정/MAP/절감 없음;2263comb 부족 유지.",
-  "next_action": "BG row 완료 경계에서 pending batch를 확정해 실제 ARM refill/IRQ/ROM과 연결한다. 추가 E9·정렬·credit·변환시작·최초DMA·최종ACK·STOP 비용을 확인하고 blank-only24프레임도 비교한다. 조기 E9를 조기DMA로 간주하지 않는다. 공동 실행 제어의 공유 datapath와 bus/continuation/mux·독립 검사 비용을 포함해3451→1188 제거 근거를 확보하며, 불가능하면 source/plan을 포함한 역할 배치를 비교한다. 실질적인 공동 후보에만 matched whole Lite/normal71/heavy7/restricted를 적용한다.",
+  "authoritative_document": "docs/nes-joint293-contract.ko.md",
+  "assessment": "NES293 BG 확정·실제 refill/IRQ/ROM 연결 후보는 미채택. 원래 BG/OBJ batch 용량을 예약해 정렬 경계를 유지했고 native71의 plan 순서·1039명령/73260B 일치·fixture0 PASS. BG 전후 STOP/실제 ISR·생산 실패·정상/제한3씩 최종ACK PASS. 정상907 15.407088ms(+0.092090), 제한907 18.094783ms(+0.095135), 부족1.428116ms. 선행 tile 변환은 생겼지만 planner 종료 전 DMA 소비0. ARM text+172/BSS+8/stack1296B; RTL287 동일·새MAP 없음·절감0·2263comb 부족 유지.",
+  "next_action": "BG 확정만 더 잘게 나누지 않는다. 기존 E9/plan 소비에서 확인된 완결 BG 범위를 bounded native producer가 즉시 DMA descriptor로 발행하도록 결합하고, 뒤따르는 OBJ 정렬·열린 range를 유지한다. host packet reader/descriptor admission/manifest compare/retire 공동 실행기에서 제거할 datapath와 concurrent CRC tap·새 continuation/context/mux를 명시하고4853→2590(또는 host+validator3451→1188) 근거를 확보한다. source/plan까지 확대할 때는 clock·RAM 포트·lease 중재를 포함한다. 실제 공동 후보가 있을 때만 normal71/heavy7/restricted와 matching whole Lite를 실행한다. 독립 검사·4credit/2planbank·STOP·최종ACK 유지, 단순 FSM/주소/seed 반복 금지.",
   "next_three_deliverables": [
-    "Connect BG-phase immutable publication to actual ARM refill/IRQ/ROM; charge ordering, E9 and credit changes.",
-    "Compare transform-start and DMA completion separately, including blank-only and heavy cases with STOP/finalACK.",
-    "Substantiate joint controller datapath/continuation area before whole Lite and full schedules."
+    "Bind completed BG ranges to bounded early native DMA production without altering open-range or OBJ ordering.",
+    "Substantiate joint packet/descriptor/receipt/manifest/retire datapath removal including independent checks and concurrent tap.",
+    "Only then run matched full71/heavy7/restricted schedules and whole Quartus Lite."
   ],
   "gates": [
     {
@@ -3213,8 +3213,8 @@
       }
     ]
   },
-  "active_plan": "docs/nes-joint284-plan.json",
-  "current_status_scope": "284 checked progress/plan/IRQ measured; capacity short, no fullRUN/P2/physical.",
+  "active_plan": "docs/nes-joint293-plan.json",
+  "current_status_scope": "293 BG publication candidate rejected after normal/restricted3 and native71; unchanged RTL287/2263comb deficit; no full71 schedule/fullRUN/P2/physical.",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
@@ -9716,5 +9716,31 @@
     "whole_comb": 17671,
     "comb_deficit": 2263,
     "extra_ARM_RAM": 2048
+  },
+  "joint293": {
+    "stage": 293,
+    "status": "BG_publication_candidate_not_adopted",
+    "summary": "NES293 BG 확정·실제 refill/IRQ/ROM 연결 후보는 미채택. 원래 BG/OBJ batch 용량을 예약해 정렬 경계를 유지했고 native71의 plan 순서·1039명령/73260B 일치·fixture0 PASS. BG 전후 STOP/실제 ISR·생산 실패·정상/제한3씩 최종ACK PASS. 정상907 15.407088ms(+0.092090), 제한907 18.094783ms(+0.095135), 부족1.428116ms. 선행 tile 변환은 생겼지만 planner 종료 전 DMA 소비0. ARM text+172/BSS+8/stack1296B; RTL287 동일·새MAP 없음·절감0·2263comb 부족 유지.",
+    "next_action": "BG 확정만 더 잘게 나누지 않는다. 기존 E9/plan 소비에서 확인된 완결 BG 범위를 bounded native producer가 즉시 DMA descriptor로 발행하도록 결합하고, 뒤따르는 OBJ 정렬·열린 range를 유지한다. host packet reader/descriptor admission/manifest compare/retire 공동 실행기에서 제거할 datapath와 concurrent CRC tap·새 continuation/context/mux를 명시하고4853→2590(또는 host+validator3451→1188) 근거를 확보한다. source/plan까지 확대할 때는 clock·RAM 포트·lease 중재를 포함한다. 실제 공동 후보가 있을 때만 normal71/heavy7/restricted와 matching whole Lite를 실행한다. 독립 검사·4credit/2planbank·STOP·최종ACK 유지, 단순 FSM/주소/seed 반복 금지.",
+    "selected": [
+      "native02",
+      "guards01",
+      "bg-guards01",
+      "irq-guards01",
+      "test02",
+      "window01",
+      "analysis02"
+    ],
+    "evidence": "analysis/joint293-verification.json",
+    "functional_reference": 289,
+    "performance_reference": 287,
+    "new_ARM_execution": true,
+    "new_ELF": true,
+    "new_RTL": false,
+    "new_MAP": false,
+    "full_schedule71": false,
+    "P2_selected": false,
+    "comb_deficit": 2263,
+    "restricted907_gap_ms": 1.4281161933333308
   }
 }
