@@ -1,3 +1,9 @@
+NES295 비최종 BG 완료를 ARM plan·aperture·DMA·receipt에 연결했으나 후보 미채택. native71 원래 plan/1039명령73260B 유지, warm69 중32개 실제BG 조기발행. 정상907 15.527359ms/제한907 32.216341ms(294대비+0.104/+14.123). whole Lite22603LE/17703comb/9029FF/307808bits, +32comb/2295부족. BG receipt 개선 뒤 OBJ ROM 창을 놓친 회귀다.
+
+현재295를 채택하지 않는다. BG 완료의 별도 E9와 blocking DMA/receipt 대기가 후속 OBJ plan 공급을 늦추므로, 기존 batch 끝에 완료 의미를 결합하고 pending DMA와 plan refill을 함께 진행하는 실행 순서를 비교한다. 단순 marker 축소만으로 회로2295개 부족을 해결했다고 계산하지 않는다. packet reader·descriptor admission·manifest·receipt·retire 공동 실행기의 제거/유지 datapath와 concurrent CRC tap·RAM port·CDC를 명시하고, 현재 고정경계4847에서 한도2552 이하의 근거를 확보해야 한다. 이 근거가 있는 후보에만 normal71/heavy7/restricted와 matching whole Lite를 실행한다. 독립 bounds/실소비CRC/coverage·4credit·STOP·최종ACK 유지; isolated FSM/opcode/seed/FIT 반복 금지.
+
+최신 계약: `docs/nes-joint295-contract.ko.md`, 계획: `docs/nes-joint295-plan.json`. 아래는 이전 기록이다.
+
 NES294 BG batch와 증분 native DMA 연결 후보 미채택. native71 plan/1039명령73260B 일치·fixture0,STOP/생산실패/H2/IRQ 및 정상·제한3씩 최종ACK PASS. warm69 중32개 조기DMA,31개는16B blank뿐. 정상907 15.423360ms(289대비+0.108362),제한907 18.093828ms(+0.094181),초과1.427162ms. RTL287 동일/회로절감0/2263comb부족;새MAP 없음. [조기 DMA 검증](../../docs/nes-joint294-contract.ko.md). 아래는 이전 기록이다.
 
 NES293 BG 확정·실제 refill/IRQ/ROM 연결 후보는 미채택. 원래 BG/OBJ batch 용량을 예약해 정렬 경계를 유지했고 native71의 plan 순서·1039명령/73260B 일치·fixture0 PASS. BG 전후 STOP/실제 ISR·생산 실패·정상/제한3씩 최종ACK PASS. 정상907 15.407088ms(+0.092090), 제한907 18.094783ms(+0.095135), 부족1.428116ms. 선행 tile 변환은 생겼지만 planner 종료 전 DMA 소비0. ARM text+172/BSS+8/stack1296B; RTL287 동일·새MAP 없음·절감0·2263comb 부족 유지. [BG 연결과 비용](../../docs/nes-joint293-contract.ko.md). 아래는 이전 기록이다.
