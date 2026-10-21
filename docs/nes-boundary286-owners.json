@@ -1,0 +1,83 @@
+{
+  "stage": 286,
+  "status": "admission_implemented_remaining_joint_replacement_open",
+  "reference": "NES286 board01 matching test01/window01",
+  "whole_comb": 17746,
+  "device_comb": 15408,
+  "selected_own_comb": 4798,
+  "retained_outside_comb": 12948,
+  "selected_budget": 2460,
+  "selected_target_with_128_reserve": 2332,
+  "early_supply_preconditions": {
+    "geometry": "Original N5 order already geometry first; forced block boundary adds68 blocks/1020SPI bytes, ARM packing-only",
+    "raw": "Canonical expansion/geometry/H2 before raw commit implemented; dirty material still after raw admission and before BG scratch reuse",
+    "H2": "Local32B H2 exact71; live output producer unchanged and charged separately",
+    "bounded_supply": "Group callbacks implemented, but diagnostic batching remains; bounded E9/output producer integration and IRQ preemption remain open",
+    "classification": "The H2/callback cycle is a static integration constraint, not a newly observed RTL deadlock. Pre-recorded plan/material fixtures cannot serve as its proof."
+  },
+  "rows": [
+    {
+      "owner": "admission identity",
+      "current": "Host-owned immutable84bit admitted register; validator reads bound views",
+      "replace": "Implemented: duplicate validator epoch/serial/generation/raw/bank and host prelude raw storage removed",
+      "retain": "Monotone serial, generation/bank, epoch binding, namespace after STOP/reset, final display retirement",
+      "proof_needed": "Met within RTL tests: held context through final ACK; forged H2 fields with recomputed CRC rejected; unaccepted mailbox mutation leaves reference unchanged; STOP freezes RAM",
+      "new_comb": null,
+      "proven_saving": null,
+      "measured_joint_delta_comb": -11,
+      "measurement_note": "No isolated admission comb saving assigned. Whole MAP−19 includes−11 selected boundary and−8 outside mapping changes."
+    },
+    {
+      "owner": "descriptor execution",
+      "current": "host header bytes, map descriptor fields, ordinary expansion/tap fields and receipt first/end calculation",
+      "replace": "One tagged descriptor lifetime with a shared checked end and operation-specific views; consume original compact payload once",
+      "retain": "Wire length/CRC, exact SNES original read order, output domain/alignment, actual DMA token/coverage and ordered ACK",
+      "proof_needed": "SPI enqueue, SNES asynchronous reads and CRC tap coexist; queue read port and held descriptor cannot be reclaimed on parser completion alone",
+      "new_comb": null,
+      "proven_saving": 0
+    },
+    {
+      "owner": "receipt and manifest RAM walk",
+      "current": "NES283 validator owns range end/cursor; NES282 manifest cursor/phase already derived from validator",
+      "replace": "Joint descriptor completion to RAM walk with one continuation instead of treating already shared cursor as another reclaim",
+      "retain": "Independent duplicate/domain/monotone-map checks, persistent validity vs current receipt, full cold map coverage",
+      "proof_needed": "Original physical read and ACK must precede receipt; range validation must not trust an ARM-provided acceptance bit",
+      "new_comb": null,
+      "proven_saving": 0
+    },
+    {
+      "owner": "CRC and H2",
+      "current": "Host captures original payload while validator computes provisional CRC; receipt waits for ordered ACK",
+      "replace": "One scheduled byte service may share combinational CRC work while retaining distinct live accumulators and tags",
+      "retain": "Provisional hash is not committed receipt; scroll freshness, retained raw CRC, H2 certificate/digest binding",
+      "proof_needed": "SPI request CRC and SNES byte capture may arrive concurrently; neither can silently lose a byte or assume unimplemented bus backpressure",
+      "new_comb": null,
+      "proven_saving": 0
+    },
+    {
+      "owner": "plan and tile lifetime",
+      "current": "Two immutable 512B plan RAM banks, decoded held plan, tile source/cache, shared staging and token owner",
+      "replace": "Pending speculative plan admission must be distinct from COMMITTED tile execution and final display",
+      "retain": "Generation/epoch, bank write credits, physical ROM priority/response, STOP drain and token burn",
+      "proof_needed": "Actual284 rejects a sealed plan without lease; one decoded plan plus two pending RAM packets is possible only after a valid lease releases the first bank",
+      "new_comb": null,
+      "proven_saving": 0
+    },
+    {
+      "owner": "final display",
+      "current": "Manifest/H2 sealed then twelve exact display reads and token-bound final ACK across clock domains",
+      "replace": "Common completion owner may derive phase but must retain the terminal ACK boundary",
+      "retain": "Input COMMITTED != DMA completion != receipt != final visible display ACK",
+      "proof_needed": "STOP at every intermediate stage freezes writes and prevents stale final ACK or bank reuse",
+      "new_comb": null,
+      "proven_saving": 0
+    }
+  ],
+  "constraints": {
+    "source_port": "NES clock phase-RAM A remains source-owned until drain",
+    "output_port": "host clock phase-RAM B remains receipt/H2 owner; new descriptor storage/arbitration is not free",
+    "wire": "Original compressed E1/E9 retained unless a separately charged format change is justified",
+    "joint_gate": "New matched whole Lite MAP plus retimed ARM/source/planner/IRQ/ROM/consumer schedule; no inclusive-parent subtraction or FIT seed search",
+    "implementation_status": "Only admission context jointly replaced. Descriptor/receipt/CRC/plan/final display full control replacement remains open; independent checks and fixed ports retained."
+  }
+}
