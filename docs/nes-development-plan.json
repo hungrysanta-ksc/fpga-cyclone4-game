@@ -4,13 +4,13 @@
   "date_kst": "2026-10-21",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint288-contract.ko.md",
-  "assessment": "NES288 workset 후보는 미채택: 실제 ARM71 plan/metadata 일치, 정상·제한 ROM3씩과 오류/STOP/IRQ/H2 검사 PASS. planner954 -0.429738ms지만907 +0.363738ms, live907 14.885003ms(+0.363723), 제한907 18.727048ms(+0.000000). ARM RAM+2048B, 동일 RTL287이므로 FPGA 절감0; 2263comb 부족 유지. 현재 통합 비교 기준은 NES287이며288의71프레임 전체 재일정/새MAP/FIT/STA/fullRUN은 없다.",
-  "next_action": "다음 후보는 row/workset 이진검색 튜닝이 아니라 native ordinary/manifest 생산과 단계별 출력 실행의 공동 교체다. COMMITTED/raw 검사 뒤 로컬H2 인증서를 발행하되 BG exact-key/raw table union의 수명을 보존한다. 완성된 E9 batch에 대응하는 BG DMA descriptor만 공급하고, OBJ/OAM·map·manifest·SEAL은 각각 실제 생산 완료/coverage에 묶는다. ARM bounded cursor가 host의 descriptor 해석·반복 전송 제어를 실제 대체하는 범위를 먼저 구현하고 FPGA 독립 bounds/CRC/receipt/orderedACK/STOP/최종ACK는 남긴다. 공유SPI·credit·ROM 위상을 포함한 동일 일정으로 검증하며 회로 경계4853comb를2590(128여유2462) 이하로 줄여야 한다. 2KiB 검색표 단독 최적화나 근거 없는 earlyBEGIN 시간 차감은 반복하지 않는다.",
+  "authoritative_document": "docs/nes-joint289-contract.ko.md",
+  "assessment": "NES289: 기록된 ordinary/manifest 명령을 실제 M4 native 생산기로 대체했다. 71프레임 1039명령/73260B 일치·fixture read0, producer6+오류8 검사와 실제 IRQ/ROM 정상·제한3씩 PASS. 일반907 15.314998ms(+0.793718), 제한907 17.999648ms(-0.727400); ARM text+4236B/BSS+768B/관측stack1296B. FPGA RTL287 동일/새MAP 없음/절감0/2263comb 부족 유지. native 생산 첫 연결이며 시간·회로 공동 최적화 완료가 아니다.",
+  "next_action": "NES289 native 생산기를 기능 기준으로 보존하되 성능 비교 기준287도 유지한다. 다음은 완료된 E9 batch와 BG DMA cursor의 단계별 연결 및 원본 descriptor dispatch/host 전송 제어를 실제 제거하는 공동 교체다. raw/BG-key union, COMMITTED, H2, 양 bank dirty 수명을 지키고 OBJ/OAM/map/manifest/SEAL의 독립 coverage·CRC·receipt·STOP·최종ACK를 유지한다. queue/plan/SPI/glue1402comb를 유지하면 host+validator3451comb는1188 이하(128여유1060)가 필요하다. ARM 생산 추가비용·stack1296·공유SPI·IRQ·제한ROM을 모두 포함해4853→2590 경계를 검증한다. 새로운 전체71 일정과 matched whole Lite 전까지 조기DMA 이득/회로 절감/60fps를 주장하지 않는다.",
   "next_three_deliverables": [
-    "Native resumable ordinary producer coupled to complete tile batches, preserving H2/union/COMMITTED lifetimes.",
-    "Replace actual host descriptor and repeated dispatch control with bounded ARM cursor; retain independent FPGA verification and 4853->2590comb budget.",
-    "Retimed full source/planner/IRQ/ROM and whole Lite comparison before FITSTA/physical gates."
+    "Stage native production with completed E9 batches, preserving union and input ownership.",
+    "Replace actual host/validator descriptor control within 4853->2590comb boundary.",
+    "Measure full71 ARM/IRQ/ROM schedule and matched whole Lite before FITSTA/physical gates."
   ],
   "gates": [
     {
