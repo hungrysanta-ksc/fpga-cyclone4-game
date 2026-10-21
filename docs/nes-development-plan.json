@@ -4,9 +4,9 @@
   "date_kst": "2026-10-21",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint280-contract.ko.md",
-  "assessment": "NES280: raw를 기존 MASK/base/query 경로로 통합하고 source POP+READ/최종 input ACK 교환 및 source·plan·output 공통 요청 문맥을 구현했다. 실제 ARM codec 71프레임 원본 복원과 SPI47·raw 전환·STOP/최종 ACK 검사를 통과했다. 실제 source codec/control 명령 비용을 block별로 재생한 71프레임의 warm 최대는 16.593392ms(frame954), 한도 초과는 0개다. whole Lite는 17,815comb로 기존과 같아 2,407개 부족하다. host 출력 실행기는 아직 유지되며 공동 시간·회로 후보로 채택하지 않는다.",
-  "next_action": "Do not adopt280 or run FIT seeds: common request sharing and raw MASK do not recover the2407comb deficit. Retain the278 fixed-port/ordered-ACK ownership and279 OAM evidence;280 proves checked raw source exchange, not replacement of the host output executor. Redefine a joint host DMA-admission/manifest/ACK/receipt/validator and plan-lifetime replacement with explicit independently retained checks and concurrent contexts, before another implementation. Charge actual source codec/control instruction costs, new wire/CRC, RAM ports/CDC, ROM phase, polling and SNES service. Require both whole Lite<=15408comb with margin and retimed warm69/heavy7<=16.666667ms plus full71 correctness and separately charged cold startup; no isolated opcode/FF/poll/FIT loops. FullRUN/NVIC, activeVBlank, complete programROM linking, FIT/STA and physical sustained60fps remain open.",
+  "authoritative_document": "docs/nes-boundary281-contract.ko.md",
+  "assessment": "NES281: host·queue·독립 검증기·plan 제어의 공동 교체 범위 4250comb와 새 예산1843comb(계획 여유128 포함 목표1715)를 확정했다. ARM helper 실제71프레임/1231packet·10오류 입력을 검증했으나 dense/span/compact 전송은954 고정 일정 민감도17.163/17.302/17.070ms로 불리하다. 기존 압축 wire를 유지하는 직접 실행·검사 통합을 다음 prototype으로 삼는다. parser 전체0도27.664us만 줄며 source CPI2에서는0.992ms, 제한ROM907은 기준1.924ms 부족하다. 새RTL/MAP/일정 절감은 미검증, 기존2407comb 부족과P2 보류를 유지한다.",
+  "next_action": "Prototype the compact-wire joint host/queue/validator/plan lifecycle. Remove event264/consumer_word/continuation and duplicated manifest/receipt/retire control, while retaining independent original-byte CRC/coverage, ordered ACK, 4-credit, live plan banks, fixed RAM ports/CDC, STOP and final display ACK. Selected4250comb must become<=1843, planning target1715 with128comb reserve (whole15280); outside13565 is retained and any growth reduces budget. No dense/hint wire expansion for the first prototype. Parser-zero only saves27.664us at954; charge actual source/output ARM, polling, tileROM and SNES. Evaluate checked progress snapshots in existing full-duplex transfers and prompt sealed plan supply only in a retimed whole schedule, not standalone backoff. Normal71/heavy7/restricted3, new STOP/finalACK guards and same whole Lite before adoption. FullRUN/hardwareCPI/activeVBlank/programROM/FITSTA/physical60fps remain open; no automatic merge or FIT seed loop.",
   "next_three_deliverables": [
     "실제 SMB3 사운드·약60fps 연속 표시: 완전 정지와 초반 갱신 지연을 모두 개선",
     "60초 종료 해제·오류/본체 리셋 시 안전 정지 후 TXT 저장·메뉴 복귀",
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "R1_raw_exchange_verified_whole_area_gate_failed",
+      "status": "boundary_budget_fixed_joint_benefit_unproven",
       "depends_on": [
         "P0"
       ],
@@ -114,7 +114,9 @@
         "analysis/joint276-verification.json",
         "analysis/joint278-verification.json",
         "analysis/joint279-verification.json",
-        "analysis/joint280-verification.json"
+        "analysis/joint280-verification.json",
+        "docs/nes-boundary281-contract.ko.md",
+        "analysis/boundary281-verification.json"
       ]
     },
     {
@@ -3205,8 +3207,8 @@
       }
     ]
   },
-  "active_plan": "docs/nes-joint280-plan.json",
-  "current_status_scope": "280 raw/transaction prototype and measured ARM cost replay; whole area gate failed; production227 unchanged.",
+  "active_plan": "docs/nes-boundary281-plan.json",
+  "current_status_scope": "281 boundary/budget and actual ARM helpers only; both gains unproven, 280 whole deficit2407 retained; production227 unchanged.",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
@@ -7577,6 +7579,186 @@
     "source_ARM_cost_replay": true,
     "source_SPI_live_ARM": false,
     "host_execution_replaced": false,
+    "full_path_ms": null,
+    "P2_selected": false
+  },
+  "boundary281": {
+    "schema_version": 1,
+    "stage": "NES281",
+    "date_kst": "2026-10-21",
+    "status": "boundary_budget_fixed_joint_benefit_unproven",
+    "pr": 130,
+    "branch": "codex/nes-wholepath-boundary-256",
+    "parent": "docs/nes-joint280-plan.json",
+    "contract": "docs/nes-boundary281-contract.ko.md",
+    "evidence": "analysis/boundary281-verification.json",
+    "selected": [
+      "arm02",
+      "analysis02"
+    ],
+    "summary": "NES281: host·queue·독립 검증기·plan 제어의 공동 교체 범위 4250comb와 새 예산1843comb(계획 여유128 포함 목표1715)를 확정했다. ARM helper 실제71프레임/1231packet·10오류 입력을 검증했으나 dense/span/compact 전송은954 고정 일정 민감도17.163/17.302/17.070ms로 불리하다. 기존 압축 wire를 유지하는 직접 실행·검사 통합을 다음 prototype으로 삼는다. parser 전체0도27.664us만 줄며 source CPI2에서는0.992ms, 제한ROM907은 기준1.924ms 부족하다. 새RTL/MAP/일정 절감은 미검증, 기존2407comb 부족과P2 보류를 유지한다.",
+    "next_action": "Prototype the compact-wire joint host/queue/validator/plan lifecycle. Remove event264/consumer_word/continuation and duplicated manifest/receipt/retire control, while retaining independent original-byte CRC/coverage, ordered ACK, 4-credit, live plan banks, fixed RAM ports/CDC, STOP and final display ACK. Selected4250comb must become<=1843, planning target1715 with128comb reserve (whole15280); outside13565 is retained and any growth reduces budget. No dense/hint wire expansion for the first prototype. Parser-zero only saves27.664us at954; charge actual source/output ARM, polling, tileROM and SNES. Evaluate checked progress snapshots in existing full-duplex transfers and prompt sealed plan supply only in a retimed whole schedule, not standalone backoff. Normal71/heavy7/restricted3, new STOP/finalACK guards and same whole Lite before adoption. FullRUN/hardwareCPI/activeVBlank/programROM/FITSTA/physical60fps remain open; no automatic merge or FIT seed loop.",
+    "new_RTL": false,
+    "new_ARM_helper": true,
+    "new_MAP": false,
+    "new_CPU": false,
+    "new_schedule": false,
+    "budget": {
+      "current_whole": 17815,
+      "device_comb": 15408,
+      "deficit": 2407,
+      "own_regions": {
+        "host": 2488,
+        "queue": 129,
+        "validator": 1056,
+        "plan": 577
+      },
+      "narrow": 3673,
+      "narrow_budget": 1266,
+      "selected": 4250,
+      "outside": 13565,
+      "selected_budget": 1843,
+      "planning_reserve": 128,
+      "selected_target": 1715,
+      "whole_target": 15280,
+      "measured_new_area": null,
+      "reclaimed": 0
+    },
+    "frame954": {
+      "frame": 954,
+      "baseline_ms": 16.593391786,
+      "margin_ms": 0.07327488066666632,
+      "source_codec_instructions": 91786,
+      "parser_ms": 0.027664,
+      "manifest_parser_ms": 0.023986,
+      "receipt_ms": 0.001752,
+      "E2": 91,
+      "output_SPI_bytes": 2577,
+      "ARM_IRQ_event_instructions": 190251,
+      "ROM_tile_wait_cycles": 53,
+      "ROM_slot_wait_cycles": 0,
+      "ROM_core_blocks": 9,
+      "frozen_zero_parser_ms": 16.565727786,
+      "frozen_source_CPI2_zero_parser_ms": 17.658418262190477,
+      "dense_bytes_delta": 144,
+      "dense_packets_delta": 0,
+      "dense_extra_instructions": 10969,
+      "dense_wire_setup_delta_ms": 0.43885714285714283,
+      "dense_ARM_CPI1_delta_ms": 0.13058333333333333,
+      "dense_added_CPI1_ms": 0.5694404761904761,
+      "dense_frozen_total_ms": 17.162832262190477,
+      "dense_frozen_zero_parser_ms": 17.135168262190476,
+      "dense_frozen_source_and_extra_CPI2_ms": 18.386106071714288,
+      "spans_bytes_delta": 179,
+      "spans_packets_delta": 0,
+      "spans_extra_instructions": 13723,
+      "spans_wire_setup_delta_ms": 0.5455238095238095,
+      "spans_ARM_CPI1_delta_ms": 0.1633690476190476,
+      "spans_added_CPI1_ms": 0.7088928571428571,
+      "spans_frozen_total_ms": 17.30228464314286,
+      "spans_frozen_zero_parser_ms": 17.274620643142857,
+      "spans_frozen_source_and_extra_CPI2_ms": 18.558344166952384,
+      "compact_bytes_delta": 103,
+      "compact_packets_delta": 0,
+      "compact_extra_instructions": 13682,
+      "compact_wire_setup_delta_ms": 0.3139047619047619,
+      "compact_ARM_CPI1_delta_ms": 0.16288095238095238,
+      "compact_added_CPI1_ms": 0.47678571428571426,
+      "compact_frozen_total_ms": 17.070177500285716,
+      "compact_frozen_zero_parser_ms": 17.042513500285715,
+      "compact_frozen_source_and_extra_CPI2_ms": 18.325748928857145
+    },
+    "variants": {
+      "dense": {
+        "warm_max": 17.162832262190477,
+        "warm_max_frame": 954,
+        "warm_over": [
+          954
+        ],
+        "byte_delta_total": 12797
+      },
+      "spans": {
+        "warm_max": 17.30228464314286,
+        "warm_max_frame": 954,
+        "warm_over": [
+          954
+        ],
+        "byte_delta_total": 14995
+      },
+      "compact": {
+        "warm_max": 17.070177500285716,
+        "warm_max_frame": 954,
+        "warm_over": [
+          954
+        ],
+        "byte_delta_total": 9907
+      }
+    },
+    "needed": {
+      "planning_time_reserve_ms": 0.5,
+      "normal_CPI1_for_reserve_ms": 0.4267251193333337,
+      "source_CPI2_to_limit_ms": 1.0194155955238102,
+      "source_CPI2_after_zero_parser_to_limit_ms": 0.9917515955238088,
+      "restricted907_to_limit_ms": 1.9237466093333317,
+      "E2_wire_setup_ms": 0.03542857142857143,
+      "source_CPI2_poll_equivalent": 29
+    },
+    "restricted": [
+      {
+        "frame": 905,
+        "baseline_ms": 89.483198916,
+        "absolute_end_ms": 103.762209,
+        "parser_ms": 0.045343,
+        "manifest_parser_ms": 0.026665,
+        "receipt_ms": 0.006857,
+        "E2": 303,
+        "output_SPI_bytes": 16327,
+        "ARM_IRQ_event_instructions": 1002807,
+        "ROM_tile_wait_cycles": 541993,
+        "ROM_slot_wait_cycles": 541836,
+        "ROM_core_blocks": 157,
+        "dense_frozen_total_ms": 89.43984177314286,
+        "spans_frozen_total_ms": 89.97554415409525,
+        "compact_frozen_total_ms": 89.42125843980953,
+        "frozen_zero_parser_ms": 89.437855916
+      },
+      {
+        "frame": 906,
+        "baseline_ms": 113.828088592,
+        "absolute_end_ms": 231.496858,
+        "parser_ms": 0.045509,
+        "manifest_parser_ms": 0.026664,
+        "receipt_ms": 0.006857,
+        "E2": 1112,
+        "output_SPI_bytes": 26352,
+        "ARM_IRQ_event_instructions": 1586699,
+        "ROM_tile_wait_cycles": 1486448,
+        "ROM_slot_wait_cycles": 1486292,
+        "ROM_core_blocks": 156,
+        "dense_frozen_total_ms": 113.78473144914285,
+        "spans_frozen_total_ms": 114.47376716342858,
+        "compact_frozen_total_ms": 113.80729097295239,
+        "frozen_zero_parser_ms": 113.782579592
+      },
+      {
+        "frame": 907,
+        "baseline_ms": 18.590413276,
+        "absolute_end_ms": 263.993832,
+        "parser_ms": 0.023844,
+        "manifest_parser_ms": 0.021248,
+        "receipt_ms": 0.000252,
+        "E2": 279,
+        "output_SPI_bytes": 3496,
+        "ARM_IRQ_event_instructions": 236148,
+        "ROM_tile_wait_cycles": 225581,
+        "ROM_slot_wait_cycles": 225567,
+        "ROM_core_blocks": 14,
+        "dense_frozen_total_ms": 19.55800851409524,
+        "spans_frozen_total_ms": 19.658198990285715,
+        "compact_frozen_total_ms": 19.45796089504762,
+        "frozen_zero_parser_ms": 18.566569276
+      }
+    ],
     "full_path_ms": null,
     "P2_selected": false
   }
