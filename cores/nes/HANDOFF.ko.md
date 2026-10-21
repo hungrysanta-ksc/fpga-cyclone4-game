@@ -1,3 +1,5 @@
+NES292: 기존 M4 ELF71프레임/2130step을 새로 추적했다. warm69 모두 첫 불변 E9 batch가 마지막 step29에서 나왔다. 중간batch 동결 가정32프레임 중31은16B blank만 조기종료, 실제그래픽 범위는930 하나다. native 명령/plan/DMA범위·생산명령수 일치/fixture0 PASS. 공동packet·receipt·manifest·retire17전이 설계와 확대경계 비용을 기록했다. 새RTL/전체일정/MAP/절감 없음;2263comb 부족 유지. [추적과 설계](../../docs/nes-joint292-contract.ko.md). 아래는 이전 기록이다.
+
 NES291 구조 감사: retained287 RTL·native289 실행 로그·전체 Lite own 비용 재대조 PASS. host+validator3451→1188(65.575% 축소), 고정경계4853→2590 필요. 11개 상태/RAM 소유권과 packet read·descriptor·manifest·retire 공동 교체 경계를 명시했다. 제한289/907 17.999648ms 중 parser+map receipt 구간 합계0.019585ms, 초과1.332981ms. 작은 대기 제어 제거만으로 시간·회로 목표를 설명할 수 없다. 새RTL/시뮬레이션/MAP/절감 없음;2263comb 부족 유지. [교체 경계와 비용](../../docs/nes-joint291-contract.ko.md). 아래는 이전 기록이다.
 
 NES290 후보 미채택: H2/BEGIN과 닫힌 tile DMA 범위를 실제 planner 중 전송했다. 71프레임 명령 일치·fixture read0, 선행DMA는906의5개뿐이다. ARM/STOP/H2 및 정상·제한ROM3씩, RTL25·범위318 검사 PASS. 일반907 15.336589ms(+0.021591), 제한907 17.318156ms(-0.681492) vs289. 통일 receipt 끝 주소의 whole Lite 17764comb(+93), 부족2356; 고정 교체 경계4896(+43). ARM text+560/BSS+20/stack1304B. 공동 개선 실패로 native 기준289·성능 기준287 유지. [검증과 다음 경계](../../docs/nes-joint290-contract.ko.md). 아래는 이전 기록이다.
