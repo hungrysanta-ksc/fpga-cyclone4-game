@@ -1,3 +1,5 @@
+NES294 BG batch와 증분 native DMA 연결 후보 미채택. native71 plan/1039명령73260B 일치·fixture0,STOP/생산실패/H2/IRQ 및 정상·제한3씩 최종ACK PASS. warm69 중32개 조기DMA,31개는16B blank뿐. 정상907 15.423360ms(289대비+0.108362),제한907 18.093828ms(+0.094181),초과1.427162ms. RTL287 동일/회로절감0/2263comb부족;새MAP 없음. [조기 DMA 검증](../../docs/nes-joint294-contract.ko.md). 아래는 이전 기록이다.
+
 NES293 BG 확정·실제 refill/IRQ/ROM 연결 후보는 미채택. 원래 BG/OBJ batch 용량을 예약해 정렬 경계를 유지했고 native71의 plan 순서·1039명령/73260B 일치·fixture0 PASS. BG 전후 STOP/실제 ISR·생산 실패·정상/제한3씩 최종ACK PASS. 정상907 15.407088ms(+0.092090), 제한907 18.094783ms(+0.095135), 부족1.428116ms. 선행 tile 변환은 생겼지만 planner 종료 전 DMA 소비0. ARM text+172/BSS+8/stack1296B; RTL287 동일·새MAP 없음·절감0·2263comb 부족 유지. [BG 연결과 비용](../../docs/nes-joint293-contract.ko.md). 아래는 이전 기록이다.
 
 NES292: 기존 M4 ELF71프레임/2130step을 새로 추적했다. warm69 모두 첫 불변 E9 batch가 마지막 step29에서 나왔다. 중간batch 동결 가정32프레임 중31은16B blank만 조기종료, 실제그래픽 범위는930 하나다. native 명령/plan/DMA범위·생산명령수 일치/fixture0 PASS. 공동packet·receipt·manifest·retire17전이 설계와 확대경계 비용을 기록했다. 새RTL/전체일정/MAP/절감 없음;2263comb 부족 유지. [추적과 설계](../../docs/nes-joint292-contract.ko.md). 아래는 이전 기록이다.
