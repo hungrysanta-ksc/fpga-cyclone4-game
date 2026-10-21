@@ -1,3 +1,9 @@
+NES297 ARM296 대기 서비스를 기존 RTL295에 분리 연결 PASS. 정상907 15.473814ms/제한907 17.468381ms,60Hz 초과0.801715ms. whole Lite295 hash 재사용22603LE/17703comb/9029FF/307808bits;296 대비-41comb,2295부족. 새 공동 실행기/추가 시간 절감은 미입증.
+
+ARM296+RTL295를 분리 참조로 유지한다. receipt·manifest·descriptor 완료 continuation/dispatch를 함께 교체하되 concurrent CRC observer·독립 검사·RAM B 단일 소유·4credit/2planbank·STOP/최종ACK를 유지한다. host+validator3440→1145 또는 고정경계4847→2552의 실제 제거/추가 회로를 포함해 구현하고 matching whole Lite와 정상/제한 일정을 비교한다. parser/receipt 시간 단순차감이나 scalar FSM/opcode/seed/FIT 반복 금지. 목표 미달이면 full71/heavy7/FIT 확대하지 않는다.
+
+최신 계약: `docs/nes-joint297-contract.ko.md`, 계획: `docs/nes-joint297-plan.json`. 아래는 이전 기록이다.
+
 NES296 DMA 대기 중 OBJ planner 공급·공동 cursor 후보 미채택. native71 plan/1039명령73260B 유지; 실제 ARM/IRQ/ROM 정상·제한3씩과 독립 오류검사 PASS. 정상907 15.473814ms, 제한907 17.468381ms(295대비-14.747959ms),60Hz 초과0.801715ms. Lite22644LE/17744comb/9002FF/307808bits: +41comb/-27FF/2336부족. 시간 회귀는 줄었으나 회로 공유는 반려.
 
 시간 개선 대기 서비스와 반려한 cursor 공유 RTL을 분리해295의 원래 제어에서 실제 일정을 먼저 확인한다. 그다음 packet read·descriptor·manifest·receipt 공동 실행 front-end가 없앨 decode/주소/control mux와 retained CRC tap·RAM port·CDC를 고정 예산으로 제시한다. 현재4879→2543(2336comb 감소) 근거 없이 scalar cursor/FSM/marker 바이트의 MAP 반복을 하지 않는다. 독립 검사·4credit/2planbank·STOP·최종ACK 유지. 실질적 공동 제거 근거가 있는 후보에만 normal71/heavy7/restricted/wholeLite/FITSTA를 확대한다.

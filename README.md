@@ -1,3 +1,5 @@
+NES297 ARM296 대기 서비스를 기존 RTL295에 분리 연결 PASS. 정상907 15.473814ms/제한907 17.468381ms,60Hz 초과0.801715ms. whole Lite295 hash 재사용22603LE/17703comb/9029FF/307808bits;296 대비-41comb,2295부족. 새 공동 실행기/추가 시간 절감은 미입증. [ARM 분리와 공동 제어 예산](docs/nes-joint297-contract.ko.md). 아래는 이전 기록이다.
+
 NES296 DMA 대기 중 OBJ planner 공급·공동 cursor 후보 미채택. native71 plan/1039명령73260B 유지; 실제 ARM/IRQ/ROM 정상·제한3씩과 독립 오류검사 PASS. 정상907 15.473814ms, 제한907 17.468381ms(295대비-14.747959ms),60Hz 초과0.801715ms. Lite22644LE/17744comb/9002FF/307808bits: +41comb/-27FF/2336부족. 시간 회귀는 줄었으나 회로 공유는 반려. [대기 공급과 비용](docs/nes-joint296-contract.ko.md). 아래는 이전 기록이다.
 
 NES295 비최종 BG 완료를 ARM plan·aperture·DMA·receipt에 연결했으나 후보 미채택. native71 원래 plan/1039명령73260B 유지, warm69 중32개 실제BG 조기발행. 정상907 15.527359ms/제한907 32.216341ms(294대비+0.104/+14.123). whole Lite22603LE/17703comb/9029FF/307808bits, +32comb/2295부족. BG receipt 개선 뒤 OBJ ROM 창을 놓친 회귀다. [BG 완료와 비용](docs/nes-joint295-contract.ko.md). 아래는 이전 기록이다.
