@@ -1,0 +1,142 @@
+{
+  "stage": 309,
+  "status": "ARM_preparation_hidden_but_restricted_frame_regressed",
+  "summary": "NES309 actualM4 metadata-ready 계측+ARM-only bounded seal준비. ref3는307코드/시간동일;후보정상3/제한3·24prepguards/71native/STOP35IRQ11등PASS. 기준907ready271.890507ms는BG승인274.905042보다3.014535ms빠르나cold905/906은BG뒤. 후보907준비271.917043완료,final1851→79instructions;정상907fallback2820. normal90714.356691→14.377191ms(+20.500us),restricted17.616925→17.620470ms(+3.545us)/0.953804초과. 미채택. 동일RTL/307wholeLite재사용17583comb/2175부족;새MAP없음. ARMtext+212/BSS+4/stack1288동일.",
+  "next_action": "prepare미세튜닝중단. queue저장credit과실소비receipt를분리하지않으면earlymanifest+orderedretire가4credit창을막는순환대기. 기존1024B저장/byte-recordcredit+공통reader+host-validator완료소유권을함께삭제대체하는프로토콜경계검토. 기능2427comb+128여유,원307기준0.950258ms/2175comb순개선요구. 독립CRC/coverage/STOP/12read최종ACK/VBlank/ROM창유지. 후보면적시간null;부분준비만으로목표해결주장금지.",
+  "contract": "docs/nes-prepare309-contract.ko.md",
+  "evidence": "analysis/prepare309-verification.json",
+  "implementation_selected": false,
+  "ARM_candidate_verified": true,
+  "new_RTL": false,
+  "new_MAP": false,
+  "comparison_reference": 307,
+  "whole_MAP": {
+    "LE": 22402,
+    "comb": 17583,
+    "FF": 8965,
+    "RAM_bits": 307808
+  },
+  "comb_deficit": 2175,
+  "runs": {
+    "reference": {
+      "rows": [
+        {
+          "frame": 905,
+          "total_ms": 103.654756128,
+          "delta307_ms": 0.0,
+          "gap_ms": 86.98808946133333,
+          "absolute_finish_ms": 117.933767,
+          "frame_start_ms": 14.279010872,
+          "instructions": 2233671,
+          "SPI_bytes": 10042,
+          "max_credit": 4
+        },
+        {
+          "frame": 906,
+          "total_ms": 116.901733526,
+          "delta307_ms": 0.0,
+          "gap_ms": 100.23506685933333,
+          "absolute_finish_ms": 248.742061,
+          "frame_start_ms": 131.840327474,
+          "instructions": 1619079,
+          "SPI_bytes": 10650,
+          "max_credit": 4
+        },
+        {
+          "frame": 907,
+          "total_ms": 17.616924958,
+          "delta307_ms": 0.0,
+          "gap_ms": 0.9502582913333306,
+          "absolute_finish_ms": 280.265546,
+          "frame_start_ms": 262.64862104199995,
+          "instructions": 697018,
+          "SPI_bytes": 1079,
+          "max_credit": 4
+        }
+      ],
+      "stack": 1288
+    },
+    "restricted": {
+      "rows": [
+        {
+          "frame": 905,
+          "total_ms": 103.657528822,
+          "delta307_ms": 0.002772694000000797,
+          "gap_ms": 86.99086215533333,
+          "absolute_finish_ms": 117.936539,
+          "frame_start_ms": 14.279010177999993,
+          "instructions": 2237723,
+          "SPI_bytes": 10042,
+          "max_credit": 4
+        },
+        {
+          "frame": 906,
+          "total_ms": 116.87996106,
+          "delta307_ms": -0.0217724660000016,
+          "gap_ms": 100.21329439333333,
+          "absolute_finish_ms": 248.723061,
+          "frame_start_ms": 131.84309994,
+          "instructions": 1624589,
+          "SPI_bytes": 10650,
+          "max_credit": 4
+        },
+        {
+          "frame": 907,
+          "total_ms": 17.62047037,
+          "delta307_ms": 0.0035454120000011358,
+          "gap_ms": 0.9538037033333318,
+          "absolute_finish_ms": 280.250092,
+          "frame_start_ms": 262.62962163,
+          "instructions": 700060,
+          "SPI_bytes": 1079,
+          "max_credit": 4
+        }
+      ],
+      "stack": 1288
+    },
+    "normal": {
+      "rows": [
+        {
+          "frame": 905,
+          "total_ms": 78.509421512,
+          "delta307_ms": 0.016363440000006335,
+          "gap_ms": 61.84275484533333,
+          "absolute_finish_ms": 92.788432,
+          "frame_start_ms": 14.279010487999997,
+          "instructions": 2230419,
+          "SPI_bytes": 9922,
+          "max_credit": 4
+        },
+        {
+          "frame": 906,
+          "total_ms": 54.943113401999994,
+          "delta307_ms": -0.009545340000002511,
+          "gap_ms": 38.27644673533332,
+          "absolute_finish_ms": 161.638106,
+          "frame_start_ms": 106.694992598,
+          "instructions": 1614074,
+          "SPI_bytes": 10458,
+          "max_credit": 4
+        },
+        {
+          "frame": 907,
+          "total_ms": 14.377191108,
+          "delta307_ms": 0.02049975399999937,
+          "gap_ms": -2.289475558666668,
+          "absolute_finish_ms": 189.921857,
+          "frame_start_ms": 175.54466589199998,
+          "instructions": 696446,
+          "SPI_bytes": 1019,
+          "max_credit": 4
+        }
+      ],
+      "stack": 1288
+    }
+  },
+  "ARM_memory": {
+    "text": 28306,
+    "bss": 47124,
+    "observed_stack": 1288
+  },
+  "automatic_merge": false
+}
