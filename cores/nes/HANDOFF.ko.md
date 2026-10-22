@@ -1,3 +1,9 @@
+NES298 descriptor/manifest/receipt 공동 실행기 실제 구현 PASS. ARM296 유지, 정상907 15.473814ms/제한907 17.468381ms,초과0.801715ms. whole Lite 22583LE/17683comb/9022FF/307808bits;297대비-20comb/-7FF,부족2275개. 시간 추가 절감 없이 회로20개만 회복,목표 해결안으로 미채택.
+
+ARM296 시간 개선과 공동 실행기298의 제거/유지 증거를 보존한다. control-state 추가 병합 대신 original descriptor/packet의 중복 해석·주소 선택과 ROM plan 공급 시점을 함께 재설계한다. 독립 bounds/실소비CRC/coverage,4credit/2planbank,STOP/최종ACK를 유지하고 새 mux/continuation/port 비용을 포함한 실질적 whole-area/시간 개선 근거를 먼저 확보한다. scalar FSM/opcode/seed/FIT 반복 및 근거 없는 full71/heavy7 확대 금지.
+
+최신 계약: `docs/nes-joint298-contract.ko.md`, 계획: `docs/nes-joint298-plan.json`. 아래는 이전 기록이다.
+
 NES297 ARM296 대기 서비스를 기존 RTL295에 분리 연결 PASS. 정상907 15.473814ms/제한907 17.468381ms,60Hz 초과0.801715ms. whole Lite295 hash 재사용22603LE/17703comb/9029FF/307808bits;296 대비-41comb,2295부족. 새 공동 실행기/추가 시간 절감은 미입증.
 
 ARM296+RTL295를 분리 참조로 유지한다. receipt·manifest·descriptor 완료 continuation/dispatch를 함께 교체하되 concurrent CRC observer·독립 검사·RAM B 단일 소유·4credit/2planbank·STOP/최종ACK를 유지한다. host+validator3440→1145 또는 고정경계4847→2552의 실제 제거/추가 회로를 포함해 구현하고 matching whole Lite와 정상/제한 일정을 비교한다. parser/receipt 시간 단순차감이나 scalar FSM/opcode/seed/FIT 반복 금지. 목표 미달이면 full71/heavy7/FIT 확대하지 않는다.

@@ -4,13 +4,13 @@
   "date_kst": "2026-10-22",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint297-contract.ko.md",
-  "assessment": "NES297 ARM296 대기 서비스를 기존 RTL295에 분리 연결 PASS. 정상907 15.473814ms/제한907 17.468381ms,60Hz 초과0.801715ms. whole Lite295 hash 재사용22603LE/17703comb/9029FF/307808bits;296 대비-41comb,2295부족. 새 공동 실행기/추가 시간 절감은 미입증.",
-  "next_action": "ARM296+RTL295를 분리 참조로 유지한다. receipt·manifest·descriptor 완료 continuation/dispatch를 함께 교체하되 concurrent CRC observer·독립 검사·RAM B 단일 소유·4credit/2planbank·STOP/최종ACK를 유지한다. host+validator3440→1145 또는 고정경계4847→2552의 실제 제거/추가 회로를 포함해 구현하고 matching whole Lite와 정상/제한 일정을 비교한다. parser/receipt 시간 단순차감이나 scalar FSM/opcode/seed/FIT 반복 금지. 목표 미달이면 full71/heavy7/FIT 확대하지 않는다.",
+  "authoritative_document": "docs/nes-joint298-contract.ko.md",
+  "assessment": "NES298 descriptor/manifest/receipt 공동 실행기 실제 구현 PASS. ARM296 유지, 정상907 15.473814ms/제한907 17.468381ms,초과0.801715ms. whole Lite 22583LE/17683comb/9022FF/307808bits;297대비-20comb/-7FF,부족2275개. 시간 추가 절감 없이 회로20개만 회복,목표 해결안으로 미채택.",
+  "next_action": "ARM296 시간 개선과 공동 실행기298의 제거/유지 증거를 보존한다. control-state 추가 병합 대신 original descriptor/packet의 중복 해석·주소 선택과 ROM plan 공급 시점을 함께 재설계한다. 독립 bounds/실소비CRC/coverage,4credit/2planbank,STOP/최종ACK를 유지하고 새 mux/continuation/port 비용을 포함한 실질적 whole-area/시간 개선 근거를 먼저 확보한다. scalar FSM/opcode/seed/FIT 반복 및 근거 없는 full71/heavy7 확대 금지.",
   "next_three_deliverables": [
-    "Use measured ARM296+RTL295 as isolated comparison reference.",
-    "Replace receipt/manifest/descriptor dispatch jointly while retaining concurrent observer and independent checks.",
-    "Compare matching whole Lite and normal/restricted schedule before expanded validation."
+    "Preserve measured298 common engine and297 isolated baseline.",
+    "Reconsider descriptor/packet representation and address selection with ROM plan timing; retain independent checks.",
+    "Require substantiated whole-area and schedule benefit before broad validation/FIT."
   ],
   "gates": [
     {
@@ -3125,8 +3125,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-joint297-contract.ko.md",
-  "latest_development_evidence": "analysis/joint297-verification.json",
+  "latest_review": "docs/nes-joint298-contract.ko.md",
+  "latest_development_evidence": "analysis/joint298-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {
@@ -3213,8 +3213,8 @@
       }
     ]
   },
-  "active_plan": "docs/nes-joint297-plan.json",
-  "current_status_scope": "ARM296 isolated on RTL295; measured time retained and rejected 41comb increase avoided; broad executor unimplemented.",
+  "active_plan": "docs/nes-joint298-plan.json",
+  "current_status_scope": "Common executor implemented; 20comb saved and ARM timing retained, but time/area goals unmet.",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
@@ -9867,6 +9867,53 @@
     },
     "full_schedule71": false,
     "comb_deficit": 2295,
+    "P2_selected": false
+  },
+  "joint298": {
+    "stage": 298,
+    "status": "common_executor_implemented_small_area_gain_no_time_gain_target_not_met",
+    "summary": "NES298 descriptor/manifest/receipt 공동 실행기 실제 구현 PASS. ARM296 유지, 정상907 15.473814ms/제한907 17.468381ms,초과0.801715ms. whole Lite 22583LE/17683comb/9022FF/307808bits;297대비-20comb/-7FF,부족2275개. 시간 추가 절감 없이 회로20개만 회복,목표 해결안으로 미채택.",
+    "next_action": "ARM296 시간 개선과 공동 실행기298의 제거/유지 증거를 보존한다. control-state 추가 병합 대신 original descriptor/packet의 중복 해석·주소 선택과 ROM plan 공급 시점을 함께 재설계한다. 독립 bounds/실소비CRC/coverage,4credit/2planbank,STOP/최종ACK를 유지하고 새 mux/continuation/port 비용을 포함한 실질적 whole-area/시간 개선 근거를 먼저 확보한다. scalar FSM/opcode/seed/FIT 반복 및 근거 없는 full71/heavy7 확대 금지.",
+    "selected": [
+      "test04",
+      "window04",
+      "guards02",
+      "board01",
+      "analysis01"
+    ],
+    "evidence": "analysis/joint298-verification.json",
+    "functional_reference": 289,
+    "performance_reference": 287,
+    "comparison_reference": 297,
+    "ARM_loaded_identical296": true,
+    "new_RTL": true,
+    "new_MAP": true,
+    "new_live_frames": 6,
+    "new_RTL_guards": 42,
+    "reused_tests": {
+      "native01": {
+        "result_sha256": "f9cb09dcf8bd9df502f6640478345a70403683bc08888c475684be28842acc00",
+        "fresh": false
+      },
+      "armguard01": {
+        "result_sha256": "c3a7badaa05a85bbb00f1e080a3747e54cb9e7a469a3ebfcb1e7d9bddea8246f",
+        "fresh": false
+      },
+      "h2guard01": {
+        "result_sha256": "88ba15cfea1abb5865d61a8332061b4c86a6729fbd475fae43339abaedbd8840",
+        "fresh": false
+      },
+      "irqguard01": {
+        "result_sha256": "4a8183881e5f1a5e9fc3fbfd31a27be08ec4ae0cb9b7927a26fbeb84bdf51a96",
+        "fresh": false
+      },
+      "close02": {
+        "result_sha256": "69c9551beffc0c8187c0f9ecf73be839dd2006543a2ce84cbf70669adf817e54",
+        "fresh": false
+      }
+    },
+    "full_schedule71": false,
+    "comb_deficit": 2275,
     "P2_selected": false
   }
 }
