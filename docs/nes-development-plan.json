@@ -4,13 +4,13 @@
   "date_kst": "2026-10-22",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-ingress306-contract.ko.md",
-  "assessment": "NES306 구조/예산 검토. 305실제17617comb/2209부족,제한90717.462790444ms/0.796123777ms초과 유지. queue+SPI+plan1361을0으로 해도848comb부족. 공통admission/CRC domain/실행owner+마지막DMA뒤manifest선행큐잉을 다음교체경계로 지정. 기능2409+여유128=2537 요구,예상합성값 아님. native71 requirements codec모델64..87B/총9708B절감;907209→64B,wire감도0.441905ms만으로0.354219ms남음. manifest전체발행0.792499ms무료가정도0.003625ms부족;중복합산금지. BG이전ROMslot최소12.575576ms조기공급필요,window유지.",
-  "next_action": "실제4credit/생산가능시점/IRQ로마지막DMA뒤manifest선행발행을305RTL에분리검증한후공통ingress/실행/manifest제어를삭제대체. output/planRAM별도소유권과독립CRC/coverage/STOP/12read최종ACK유지. 전체기능2409comb/0.796124ms netgain(여유1.046124ms)동시검증. 새RTL/ARM/MAP/재배치실행없음,후보시간면적null/fullRUN/live65816/FITSTA/실물미검증.",
+  "authoritative_document": "docs/nes-ingress307-contract.ko.md",
+  "assessment": "NES307 실제manifest선행큐잉+공통E1/E9 CRC/close검사+requirements/map RLE실행 공유. fresh9live(3ARM분리+6공동),49RTLguards/13SPI/71native/76actualARMcodec/STOP35IRQ11 등PASS. 제한907op15발행pending3,원본semantic/E9동일. wholeLite22402LE17583comb8965FF307808bits:305대비-50LE/-34comb/-32FF/0RAM,부족2175. BG첫tile cycle6047986동일,후반6.434445→5.360231ms(-1.074214),하지만이전cold개선으로frame시작이앞당겨져ROM대기증가. 제한90717.616924958ms/0.950258291ms초과(+0.154134514회귀);공동목표미채택,ARM296/RTL300/부분305보존.",
+  "next_action": "경계4730/outside12853/hardcap2555(128여유기능2427),추가2175comb/여유포함2303와0.950258ms/여유1.200258ms 요구. 단독manifest/CRC/FSM미세반복 중단. BG ROM창대기중 가능한준비/전송과PPU VBlank/DMA/staging의존관계를host-validator큰제어삭제범위와함께재검토. 윈도우완화/유리한phase고정/중복시간차감 금지. fullRUN/live65816/whole71/FITSTA/실물미검증.",
   "next_three_deliverables": [
-    "Measure credit-safe manifest issue after last DMA accepted using RTL305",
-    "Replace ingress admission/CRC domains and execution owner with independent validation retained",
-    "Compare matching-source whole Lite and actual ARM/IRQ/ROM timelines; no additive overlap claims"
+    "Reconsider full control replacement against remaining2175comb shortage",
+    "Bind ROM window wait, staging and PPU VBlank dependencies without favorable phase selection",
+    "Require full-frame gain and matching whole Lite before promotion"
   ],
   "gates": [
     {
@@ -3213,7 +3213,7 @@
       }
     ]
   },
-  "active_plan": "docs/nes-ingress306-plan.json",
+  "active_plan": "docs/nes-ingress307-plan.json",
   "current_status_scope": "NES300 implemented and verified; -5comb, no meaningful restricted timing gain, normal regressions; not selected.",
   "p1_placement_followup": {
     "selected": "placement05",
