@@ -4,13 +4,13 @@
   "date_kst": "2026-10-22",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-prepare309-contract.ko.md",
-  "assessment": "NES309 actualM4 metadata-ready 계측+ARM-only bounded seal준비. ref3는307코드/시간동일;후보정상3/제한3·24prepguards/71native/STOP35IRQ11등PASS. 기준907ready271.890507ms는BG승인274.905042보다3.014535ms빠르나cold905/906은BG뒤. 후보907준비271.917043완료,final1851→79instructions;정상907fallback2820. normal90714.356691→14.377191ms(+20.500us),restricted17.616925→17.620470ms(+3.545us)/0.953804초과. 미채택. 동일RTL/307wholeLite재사용17583comb/2175부족;새MAP없음. ARMtext+212/BSS+4/stack1288동일.",
-  "next_action": "prepare미세튜닝중단. queue저장credit과실소비receipt를분리하지않으면earlymanifest+orderedretire가4credit창을막는순환대기. 기존1024B저장/byte-recordcredit+공통reader+host-validator완료소유권을함께삭제대체하는프로토콜경계검토. 기능2427comb+128여유,원307기준0.950258ms/2175comb순개선요구. 독립CRC/coverage/STOP/12read최종ACK/VBlank/ROM창유지. 후보면적시간null;부분준비만으로목표해결주장금지.",
+  "authoritative_document": "docs/nes-storage310-contract.ko.md",
+  "assessment": "NES310 stored requirements90B/phaseRAM166..255 + common reader/state completion 실제 구현. 저장 credit 반환 뒤 DMA 진행, 첫 map manifest 전 독립 재생. 제한3 early path/정상3 late fallback·7newfault+25retained·ARM71/STOP35IRQ11 등PASS. normal90714.375327ms(+18.636us),restricted17.940557ms(+323.632us)/1.273891ms초과. absolute finish55.863us빨라졌지만frame start379.495us빨라져고정BG ROM승인대기증가. wholeLite22536LE17717comb8968FF307808bits:307대비+134LE/+134comb/+3FF/0RAM,부족2309. 후보미채택,307기준보존. ARMtext+356/BSS+4/stack1288. queue4slot/counters/SPI/plan은유지된부분교체이며9packet arena완료아님.",
+  "next_action": "별도보관FSM/미세튜닝중단. 기존queue·host·validator의저장/해석/완료상태를실제삭제하는정규화record 경계와independent검사/STOP/최종ACK소유권을먼저설계. 307기능2427comb+128여유및0.950258ms순개선요구유지. 고정ROM창과frame시작이동포함;fullRUN/live65816/whole71/FITSTA/physical은미검증.",
   "next_three_deliverables": [
-    "Specify separate storage credit and actual consumption fences without ordered-retirement deadlock",
-    "Replace queue storage/reader and host-validator ownership within the whole boundary budget",
-    "Require actual ARM/IRQ/ROM/VBlank schedule and same-source whole Lite improvement before adoption"
+    "Define normalized record ownership that removes existing queue/host/validator state rather than adding a replay controller",
+    "Retain independent CRC/coverage/STOP/final ACK and separate storage credit from consumption fences",
+    "Recheck whole Lite and fixed-ROM-window frame timing before adopting a candidate"
   ],
   "gates": [
     {

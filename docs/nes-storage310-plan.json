@@ -1,0 +1,180 @@
+{
+  "stage": 310,
+  "status": "storage_credit_separated_candidate_rejected_time_and_area",
+  "summary": "NES310 stored requirements90B/phaseRAM166..255 + common reader/state completion 실제 구현. 저장 credit 반환 뒤 DMA 진행, 첫 map manifest 전 독립 재생. 제한3 early path/정상3 late fallback·7newfault+25retained·ARM71/STOP35IRQ11 등PASS. normal90714.375327ms(+18.636us),restricted17.940557ms(+323.632us)/1.273891ms초과. absolute finish55.863us빨라졌지만frame start379.495us빨라져고정BG ROM승인대기증가. wholeLite22536LE17717comb8968FF307808bits:307대비+134LE/+134comb/+3FF/0RAM,부족2309. 후보미채택,307기준보존. ARMtext+356/BSS+4/stack1288. queue4slot/counters/SPI/plan은유지된부분교체이며9packet arena완료아님.",
+  "next_action": "별도보관FSM/미세튜닝중단. 기존queue·host·validator의저장/해석/완료상태를실제삭제하는정규화record 경계와independent검사/STOP/최종ACK소유권을먼저설계. 307기능2427comb+128여유및0.950258ms순개선요구유지. 고정ROM창과frame시작이동포함;fullRUN/live65816/whole71/FITSTA/physical은미검증.",
+  "contract": "docs/nes-storage310-contract.ko.md",
+  "evidence": "analysis/storage310-verification.json",
+  "implementation_selected": false,
+  "comparison_reference": 307,
+  "whole_MAP": {
+    "LE": 22536,
+    "comb": 17717,
+    "FF": 8968,
+    "RAM_bits": 307808
+  },
+  "comb_deficit": 2309,
+  "runs": {
+    "restricted": {
+      "rows": [
+        {
+          "frame": 905,
+          "total_ms": 103.299351302,
+          "delta307_ms": -0.35540482599999734,
+          "gap_ms": 86.63268463533333,
+          "absolute_finish_ms": 117.578362,
+          "frame_start_ms": 14.279010697999993,
+          "instructions": 2238391,
+          "instruction_delta": 4720,
+          "SPI_bytes": 10054,
+          "max_credit": 4,
+          "store_events": [
+            [
+              "store310",
+              "905",
+              "3",
+              "2",
+              "53616042000"
+            ]
+          ],
+          "replay_events": [
+            [
+              "replay310",
+              "905",
+              "56",
+              "56",
+              "117058065000"
+            ]
+          ],
+          "later_DMA_consumptions": 66
+        },
+        {
+          "frame": 906,
+          "total_ms": 116.87764290599999,
+          "delta307_ms": -0.02409062000000972,
+          "gap_ms": 100.21097623933332,
+          "absolute_finish_ms": 248.362565,
+          "frame_start_ms": 131.484922094,
+          "instructions": 1625201,
+          "instruction_delta": 6122,
+          "SPI_bytes": 10662,
+          "max_credit": 4,
+          "store_events": [
+            [
+              "store310",
+              "906",
+              "8",
+              "67",
+              "180994247000"
+            ]
+          ],
+          "replay_events": [
+            [
+              "replay310",
+              "906",
+              "64",
+              "124",
+              "247842123000"
+            ]
+          ],
+          "later_DMA_consumptions": 69
+        },
+        {
+          "frame": 907,
+          "total_ms": 17.940557438,
+          "delta307_ms": 0.32363248000000056,
+          "gap_ms": 1.2738907713333312,
+          "absolute_finish_ms": 280.209683,
+          "frame_start_ms": 262.269125562,
+          "instructions": 700776,
+          "instruction_delta": 3758,
+          "SPI_bytes": 1091,
+          "max_credit": 4,
+          "store_events": [
+            [
+              "store310",
+              "907",
+              "3",
+              "130",
+              "271884667000"
+            ]
+          ],
+          "replay_events": [
+            [
+              "replay310",
+              "907",
+              "13",
+              "141",
+              "280041907000"
+            ]
+          ],
+          "later_DMA_consumptions": 10
+        }
+      ],
+      "observed_stack": 1288
+    },
+    "normal": {
+      "rows": [
+        {
+          "frame": 905,
+          "total_ms": 78.50746699,
+          "delta307_ms": 0.014408918000000881,
+          "gap_ms": 61.840800323333326,
+          "absolute_finish_ms": 92.786477,
+          "frame_start_ms": 14.279010010000007,
+          "instructions": 2230257,
+          "instruction_delta": 2139,
+          "SPI_bytes": 9922,
+          "max_credit": 4,
+          "store_events": [],
+          "replay_events": [],
+          "later_DMA_consumptions": 0
+        },
+        {
+          "frame": 906,
+          "total_ms": 54.941522512,
+          "delta307_ms": -0.011136229999998193,
+          "gap_ms": 38.274855845333335,
+          "absolute_finish_ms": 161.63456,
+          "frame_start_ms": 106.69303748799999,
+          "instructions": 1613940,
+          "instruction_delta": 3595,
+          "SPI_bytes": 10458,
+          "max_credit": 4,
+          "store_events": [],
+          "replay_events": [],
+          "later_DMA_consumptions": 0
+        },
+        {
+          "frame": 907,
+          "total_ms": 14.375327494,
+          "delta307_ms": 0.018636139999999912,
+          "gap_ms": -2.2913391726666674,
+          "absolute_finish_ms": 189.916448,
+          "frame_start_ms": 175.541120506,
+          "instructions": 696288,
+          "instruction_delta": 1858,
+          "SPI_bytes": 1019,
+          "max_credit": 4,
+          "store_events": [],
+          "replay_events": [],
+          "later_DMA_consumptions": 0
+        }
+      ],
+      "observed_stack": 1288
+    }
+  },
+  "selected_runs": [
+    "window05",
+    "normal01",
+    "board01",
+    "earlyguards01",
+    "guards01",
+    "analysis01"
+  ],
+  "remaining_scope": [
+    "Queue four-slot storage/counters and SPI/plan controllers retained; no complete 9-packet byte arena replacement",
+    "CPI1/84MHz M4 execution model; ordinary65816 recorded bus timing with physical sequence data rebound, not fresh full CPU execution",
+    "Only 905/906/907 live; no whole71/full ARM RUN, FIT/STA or physical60fps"
+  ]
+}
