@@ -1,0 +1,26 @@
+{
+  "stage": 293,
+  "status": "BG_publication_candidate_not_adopted",
+  "summary": "NES293 BG 확정·실제 refill/IRQ/ROM 연결 후보는 미채택. 원래 BG/OBJ batch 용량을 예약해 정렬 경계를 유지했고 native71의 plan 순서·1039명령/73260B 일치·fixture0 PASS. BG 전후 STOP/실제 ISR·생산 실패·정상/제한3씩 최종ACK PASS. 정상907 15.407088ms(+0.092090), 제한907 18.094783ms(+0.095135), 부족1.428116ms. 선행 tile 변환은 생겼지만 planner 종료 전 DMA 소비0. ARM text+172/BSS+8/stack1296B; RTL287 동일·새MAP 없음·절감0·2263comb 부족 유지.",
+  "next_action": "BG 확정만 더 잘게 나누지 않는다. 기존 E9/plan 소비에서 확인된 완결 BG 범위를 bounded native producer가 즉시 DMA descriptor로 발행하도록 결합하고, 뒤따르는 OBJ 정렬·열린 range를 유지한다. host packet reader/descriptor admission/manifest compare/retire 공동 실행기에서 제거할 datapath와 concurrent CRC tap·새 continuation/context/mux를 명시하고4853→2590(또는 host+validator3451→1188) 근거를 확보한다. source/plan까지 확대할 때는 clock·RAM 포트·lease 중재를 포함한다. 실제 공동 후보가 있을 때만 normal71/heavy7/restricted와 matching whole Lite를 실행한다. 독립 검사·4credit/2planbank·STOP·최종ACK 유지, 단순 FSM/주소/seed 반복 금지.",
+  "selected": [
+    "native02",
+    "guards01",
+    "bg-guards01",
+    "irq-guards01",
+    "test02",
+    "window01",
+    "analysis02"
+  ],
+  "evidence": "analysis/joint293-verification.json",
+  "functional_reference": 289,
+  "performance_reference": 287,
+  "new_ARM_execution": true,
+  "new_ELF": true,
+  "new_RTL": false,
+  "new_MAP": false,
+  "full_schedule71": false,
+  "P2_selected": false,
+  "comb_deficit": 2263,
+  "restricted907_gap_ms": 1.4281161933333308
+}

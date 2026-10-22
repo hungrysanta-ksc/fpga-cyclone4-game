@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "stage": "NES263",
+  "date_kst": "2026-10-19",
+  "status": "R1_native_consumer_bridge_verified_byte_echo_not_selected",
+  "pr": 130,
+  "branch": "codex/nes-wholepath-boundary-256",
+  "parent": "docs/nes-joint262-plan.json",
+  "contract": "docs/nes-joint263-contract.ko.md",
+  "evidence": "analysis/joint263-verification.json",
+  "selected": {
+    "normal": "test03",
+    "bridge_guards": "guards03",
+    "C_guards": "cguard02",
+    "CPU_reference": "cpuref01",
+    "CPU_cached": "cpucache01",
+    "CPU_warm_reference": "cpuwarmref01",
+    "CPU_warm_cached": "cpuwarmcache01",
+    "CPU_mock_guards": "cpuguard01",
+    "bridge_MAP": "map01",
+    "common_MAP": "map02",
+    "analysis": "analysis01"
+  },
+  "next_action": "바이트별 소비 결과 재전송 bridge는 P2로 선택하지 않는다. 기존 SPI queue의 header/ACK/parser와 manifest 발행 순서를 함께 정리해, 이미 수신한 ordinary payload에서 직접 CRC/receipt를 만들고 두 번째 바이트 전송을 없애는 경계를 검토한다. 독립 manifest 대조·DMA 후 receipt·STOP·최종 표시 ACK를 유지하며 full ARM refill/IRQ·ROM 경쟁과 같은 전체 시간/회로 표에서 판정한다.",
+  "full_path_ms": null,
+  "P2_selected": false,
+  "whole_board_FIT": false,
+  "physical60fps": false,
+  "MAP": {
+    "prior262": {
+      "LE": 7216,
+      "comb": 5755,
+      "FF": 2806,
+      "RAM_bits": 90368
+    },
+    "bridge_and_common": {
+      "LE": 7287,
+      "comb": 5791,
+      "FF": 2842,
+      "RAM_bits": 90368
+    },
+    "common_only": {
+      "LE": 7216,
+      "comb": 5755,
+      "FF": 2806,
+      "RAM_bits": 90368
+    },
+    "bridge_delta": {
+      "LE": 71,
+      "comb": 36,
+      "FF": 36,
+      "RAM_bits": 0
+    },
+    "common_delta": {
+      "LE": 0,
+      "comb": 0,
+      "FF": 0,
+      "RAM_bits": 0
+    }
+  },
+  "CPU_saved_service_clocks": -1148,
+  "open": [
+    "C ordinary executor is native DPI; its event queue/metadata/touched arrays are verification storage, not a target allocation.",
+    "Tile bytes and ARM packet plans remain recorded inputs; full N5/planner/RUN/IRQ and real ROM contention are absent.",
+    "All E1 packets replay unchanged but ARM E0 polling/refill is not executed in the71-frame RTL run.",
+    "900-clock DMA setup,400ns bus byte and560ns ordinary byte are allocations; native C decoder cycles are not charged.",
+    "Paired65816 test uses262 non-map fixture producers. It is not a coupled full ordinary65816 implementation.",
+    "Warm907 replays905/906 with the bus model and seeds prior905 VRAM before its first real CPU DMA; not continuous full-game execution.",
+    "CPU service includes post-consume software token increment up to the first next poll; polling waits and VBlank are separate.",
+    "Prior ARM poll/CPI sensitivity is serial and unmatched endpoint behavior, not a bound or retimed full-frame schedule.",
+    "CRC is not authentication or collision-free proof; FIT/STA/CDC/IO and490LE40LAB wholeboard deficit remain open."
+  ],
+  "preserve": [
+    "production227",
+    "unplaced240/490LE40LAB deficit",
+    "GBC164",
+    "saveSRAM"
+  ],
+  "rejected": "byte-event bridge as60fps implementation; retain it as executable reference boundary"
+}

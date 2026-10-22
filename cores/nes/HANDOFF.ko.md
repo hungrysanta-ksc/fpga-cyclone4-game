@@ -1,3 +1,107 @@
+PR130 RETROSPECTIVE (2026-10-22): Read docs/nes-pr130-retrospective.ko.md + docs/nes-pr130-next-plan.json FIRST. PR130 회고: 통합 검증과 국소 절감은 성과이나 60fps/보드 적합성 미달. 최초 whole267 대비298 -716comb, 정리268 대비+4comb. native289 대비298 제한907 -0.531266ms/정상907 +0.158816ms, comb+12. 최신2275comb·제한907 0.801715ms 부족. 이번 PR은 회고·증거 정리로 마무리한다. 다음 구현 전에 descriptor/manifest 해석·주소 선택·ROM 공급의 전체 제거/유지/추가 예산을 확정한다. 전체2275comb와 최소0.802ms를 해소할 구조 근거 없이는 소규모 FSM/MAP 반복을 하지 않는다. 자동 merge 및 production 승격 없음. Historical NEXT below is superseded; historical evidence remains.
+
+NES298 descriptor/manifest/receipt 공동 실행기 실제 구현 PASS. ARM296 유지, 정상907 15.473814ms/제한907 17.468381ms,초과0.801715ms. whole Lite 22583LE/17683comb/9022FF/307808bits;297대비-20comb/-7FF,부족2275개. 시간 추가 절감 없이 회로20개만 회복,목표 해결안으로 미채택.
+
+ARM296 시간 개선과 공동 실행기298의 제거/유지 증거를 보존한다. control-state 추가 병합 대신 original descriptor/packet의 중복 해석·주소 선택과 ROM plan 공급 시점을 함께 재설계한다. 독립 bounds/실소비CRC/coverage,4credit/2planbank,STOP/최종ACK를 유지하고 새 mux/continuation/port 비용을 포함한 실질적 whole-area/시간 개선 근거를 먼저 확보한다. scalar FSM/opcode/seed/FIT 반복 및 근거 없는 full71/heavy7 확대 금지.
+
+최신 계약: `docs/nes-joint298-contract.ko.md`, 계획: `docs/nes-joint298-plan.json`. 아래는 이전 기록이다.
+
+NES297 ARM296 대기 서비스를 기존 RTL295에 분리 연결 PASS. 정상907 15.473814ms/제한907 17.468381ms,60Hz 초과0.801715ms. whole Lite295 hash 재사용22603LE/17703comb/9029FF/307808bits;296 대비-41comb,2295부족. 새 공동 실행기/추가 시간 절감은 미입증.
+
+ARM296+RTL295를 분리 참조로 유지한다. receipt·manifest·descriptor 완료 continuation/dispatch를 함께 교체하되 concurrent CRC observer·독립 검사·RAM B 단일 소유·4credit/2planbank·STOP/최종ACK를 유지한다. host+validator3440→1145 또는 고정경계4847→2552의 실제 제거/추가 회로를 포함해 구현하고 matching whole Lite와 정상/제한 일정을 비교한다. parser/receipt 시간 단순차감이나 scalar FSM/opcode/seed/FIT 반복 금지. 목표 미달이면 full71/heavy7/FIT 확대하지 않는다.
+
+최신 계약: `docs/nes-joint297-contract.ko.md`, 계획: `docs/nes-joint297-plan.json`. 아래는 이전 기록이다.
+
+NES296 DMA 대기 중 OBJ planner 공급·공동 cursor 후보 미채택. native71 plan/1039명령73260B 유지; 실제 ARM/IRQ/ROM 정상·제한3씩과 독립 오류검사 PASS. 정상907 15.473814ms, 제한907 17.468381ms(295대비-14.747959ms),60Hz 초과0.801715ms. Lite22644LE/17744comb/9002FF/307808bits: +41comb/-27FF/2336부족. 시간 회귀는 줄었으나 회로 공유는 반려.
+
+시간 개선 대기 서비스와 반려한 cursor 공유 RTL을 분리해295의 원래 제어에서 실제 일정을 먼저 확인한다. 그다음 packet read·descriptor·manifest·receipt 공동 실행 front-end가 없앨 decode/주소/control mux와 retained CRC tap·RAM port·CDC를 고정 예산으로 제시한다. 현재4879→2543(2336comb 감소) 근거 없이 scalar cursor/FSM/marker 바이트의 MAP 반복을 하지 않는다. 독립 검사·4credit/2planbank·STOP·최종ACK 유지. 실질적 공동 제거 근거가 있는 후보에만 normal71/heavy7/restricted/wholeLite/FITSTA를 확대한다.
+
+최신 계약: `docs/nes-joint296-contract.ko.md`, 계획: `docs/nes-joint296-plan.json`. 아래는 이전 기록이다.
+
+NES295 비최종 BG 완료를 ARM plan·aperture·DMA·receipt에 연결했으나 후보 미채택. native71 원래 plan/1039명령73260B 유지, warm69 중32개 실제BG 조기발행. 정상907 15.527359ms/제한907 32.216341ms(294대비+0.104/+14.123). whole Lite22603LE/17703comb/9029FF/307808bits, +32comb/2295부족. BG receipt 개선 뒤 OBJ ROM 창을 놓친 회귀다.
+
+현재295를 채택하지 않는다. BG 완료의 별도 E9와 blocking DMA/receipt 대기가 후속 OBJ plan 공급을 늦추므로, 기존 batch 끝에 완료 의미를 결합하고 pending DMA와 plan refill을 함께 진행하는 실행 순서를 비교한다. 단순 marker 축소만으로 회로2295개 부족을 해결했다고 계산하지 않는다. packet reader·descriptor admission·manifest·receipt·retire 공동 실행기의 제거/유지 datapath와 concurrent CRC tap·RAM port·CDC를 명시하고, 현재 고정경계4847에서 한도2552 이하의 근거를 확보해야 한다. 이 근거가 있는 후보에만 normal71/heavy7/restricted와 matching whole Lite를 실행한다. 독립 bounds/실소비CRC/coverage·4credit·STOP·최종ACK 유지; isolated FSM/opcode/seed/FIT 반복 금지.
+
+최신 계약: `docs/nes-joint295-contract.ko.md`, 계획: `docs/nes-joint295-plan.json`. 아래는 이전 기록이다.
+
+NES294 BG batch와 증분 native DMA 연결 후보 미채택. native71 plan/1039명령73260B 일치·fixture0,STOP/생산실패/H2/IRQ 및 정상·제한3씩 최종ACK PASS. warm69 중32개 조기DMA,31개는16B blank뿐. 정상907 15.423360ms(289대비+0.108362),제한907 18.093828ms(+0.094181),초과1.427162ms. RTL287 동일/회로절감0/2263comb부족;새MAP 없음. [조기 DMA 검증](../../docs/nes-joint294-contract.ko.md). 아래는 이전 기록이다.
+
+NES293 BG 확정·실제 refill/IRQ/ROM 연결 후보는 미채택. 원래 BG/OBJ batch 용량을 예약해 정렬 경계를 유지했고 native71의 plan 순서·1039명령/73260B 일치·fixture0 PASS. BG 전후 STOP/실제 ISR·생산 실패·정상/제한3씩 최종ACK PASS. 정상907 15.407088ms(+0.092090), 제한907 18.094783ms(+0.095135), 부족1.428116ms. 선행 tile 변환은 생겼지만 planner 종료 전 DMA 소비0. ARM text+172/BSS+8/stack1296B; RTL287 동일·새MAP 없음·절감0·2263comb 부족 유지. [BG 연결과 비용](../../docs/nes-joint293-contract.ko.md). 아래는 이전 기록이다.
+
+NES292: 기존 M4 ELF71프레임/2130step을 새로 추적했다. warm69 모두 첫 불변 E9 batch가 마지막 step29에서 나왔다. 중간batch 동결 가정32프레임 중31은16B blank만 조기종료, 실제그래픽 범위는930 하나다. native 명령/plan/DMA범위·생산명령수 일치/fixture0 PASS. 공동packet·receipt·manifest·retire17전이 설계와 확대경계 비용을 기록했다. 새RTL/전체일정/MAP/절감 없음;2263comb 부족 유지. [추적과 설계](../../docs/nes-joint292-contract.ko.md). 아래는 이전 기록이다.
+
+NES291 구조 감사: retained287 RTL·native289 실행 로그·전체 Lite own 비용 재대조 PASS. host+validator3451→1188(65.575% 축소), 고정경계4853→2590 필요. 11개 상태/RAM 소유권과 packet read·descriptor·manifest·retire 공동 교체 경계를 명시했다. 제한289/907 17.999648ms 중 parser+map receipt 구간 합계0.019585ms, 초과1.332981ms. 작은 대기 제어 제거만으로 시간·회로 목표를 설명할 수 없다. 새RTL/시뮬레이션/MAP/절감 없음;2263comb 부족 유지. [교체 경계와 비용](../../docs/nes-joint291-contract.ko.md). 아래는 이전 기록이다.
+
+NES290 후보 미채택: H2/BEGIN과 닫힌 tile DMA 범위를 실제 planner 중 전송했다. 71프레임 명령 일치·fixture read0, 선행DMA는906의5개뿐이다. ARM/STOP/H2 및 정상·제한ROM3씩, RTL25·범위318 검사 PASS. 일반907 15.336589ms(+0.021591), 제한907 17.318156ms(-0.681492) vs289. 통일 receipt 끝 주소의 whole Lite 17764comb(+93), 부족2356; 고정 교체 경계4896(+43). ARM text+560/BSS+20/stack1304B. 공동 개선 실패로 native 기준289·성능 기준287 유지. [검증과 다음 경계](../../docs/nes-joint290-contract.ko.md). 아래는 이전 기록이다.
+
+NES289: 기록된 ordinary/manifest 명령을 실제 M4 native 생산기로 대체했다. 71프레임 1039명령/73260B 일치·fixture read0, producer6+오류8 검사와 실제 IRQ/ROM 정상·제한3씩 PASS. 일반907 15.314998ms(+0.793718), 제한907 17.999648ms(-0.727400); ARM text+4236B/BSS+768B/관측stack1296B. FPGA RTL287 동일/새MAP 없음/절감0/2263comb 부족 유지. native 생산 첫 연결이며 시간·회로 공동 최적화 완료가 아니다. [검증과 다음 경계](../../docs/nes-joint289-contract.ko.md). 아래는 이전 기록이다.
+
+NES288 workset 후보는 미채택: 실제 ARM71 plan/metadata 일치, 정상·제한 ROM3씩과 오류/STOP/IRQ/H2 검사 PASS. planner954 -0.429738ms지만907 +0.363738ms, live907 14.885003ms(+0.363723), 제한907 18.727048ms(+0.000000). ARM RAM+2048B, 동일 RTL287이므로 FPGA 절감0; 2263comb 부족 유지. 현재 통합 비교 기준은 NES287이며288의71프레임 전체 재일정/새MAP/FIT/STA/fullRUN은 없다. [검증과 다음 경계](../../docs/nes-joint288-contract.ko.md). 아래는 이전 기록이다.
+
+NES287: checked row planner를 같은 ARM ELF의 실제 E9/credit/refill·IRQ에 연결하고 H2의 metadata8570B 복사를 native view로 대체했다. host receipt 진행을 validator의 단일 descriptor RAM walk로 옮겼다. 71프레임 plan·metadata·실제 E1/E9 일치, STOP/최종ACK25·범위315·ARM/H2/IRQ 검증 PASS. 일반 warm 최대 26.375411ms, 제한907 18.727048ms. 전체 Lite 17671comb(-75), 부족2263; 기존5블록은 +8, 연결 논리 포함 교체 범위는 -36comb다. 전체60fps·회로 목표는 미달이다. [계약](../../docs/nes-joint287-contract.ko.md) · [계획](../../docs/nes-joint287-plan.json). 아래는 이전 기록이다.
+
+NES286: 실제 N5→native 확장·BG group별 planner·로컬 선행 H2를 구현하고, host와 독립 validator의 admission 문맥을 공유했다. 71프레임 plan·metadata8570B·H2 일치, ARM15/RTL23 guards, 정상71·제한3 일정 PASS. warm postdecode 비용 9.409262..10.735060ms(CPI1/84MHz). 일반 최대 26.497495ms, 제한907 18.727270ms. 전체 Lite17746comb(-19)/9031FF(-55), 부족2338. 시간·회로가 모두 줄었지만 목표 미달이며 full RUN/60fps는 입증하지 않았다. [계약](../../docs/nes-joint286-contract.ko.md) · [계획](../../docs/nes-joint286-plan.json). 아래는 이전 기록이다.
+
+NES285: source 중 조기 plan 공급은 현재 ARM COMMITTED/raw 의존성과 FPGA lease 검사에 막힌다. 실제 M4 planner71의 원본 plan·전체 metadata8570B 일치, prefix71·늦은 CRC3·early ARM12·lease/STOP8을 검증했다. geometry68/71은 마지막 SPI block에서 확정된다. 기존 진단 일정 밖의 planner 준비·계획은 warm 12.467155..13.779964ms(CPI1/84MHz·명시 helper). 이를 직렬 재생한 정상71/제한3 일정의 warm 최대 29.542368ms, 제한907 34.971257ms이며 fullRUN은 아니다. 동일 RTL의 기존 Lite17765comb/2357부족 유지, 새 RTL/MAP/절감0; 공동 목표 미달. [검토 계약](../../docs/nes-joint285-contract.ko.md) · [계획](../../docs/nes-joint285-plan.json). 아래는 이전 기록이다.
+
+NES284: E2/E8·plan 진행 응답을 공통 CRC snapshot으로 통합하고 기존 MCU_RDY/PB8 알림을 실제 ARM EXTI handler·WFI·refill에 연결했다. 정상71·제한ROM3와 독립 검사·STOP·최종 ACK를 검증했다. warm 최대 15.748447ms(954), 제한 ROM907 18.726366ms(+0.004500), 남은 시간 2.059700ms다. 전체 Lite 17,765comb(-37), 부족 2,357개. 확장 제어 경계 자체는 +4comb이므로 전체 감소를 구조적 절감으로 모두 귀속하지 않는다. 제한 ROM warm 회귀로 공동 목표는 미달이며 P2/FITSTA/실물60fps는 미승인이다. [검증 계약](../../docs/nes-joint284-contract.ko.md) · [계획](../../docs/nes-joint284-plan.json). 아래는 이전 기록이다.
+
+NES283: host의 receipt 분할과 validator의 잔여 범위 계산을 단일 RAM 진행으로 통합하고 ARM CRC8 검사를 nibble 표로 바꿨다. 정상71·제한ROM3, STOP/ACK17·범위307·ARM25·SPI51·실제 ARM CRC65,536쌍을 통과했다. warm 최대 16.063171ms(954, 282 대비 -0.103590ms), 제한 ROM907 18.721866ms(+0.013636ms). 전체 Lite 17,802comb(-108), 부족 2,394개다. 일반 시간·회로는 개선했지만 제한 warm 회귀까지 줄이는 공동 목표는 미달이다. P2·FITSTA·실물60fps는 미승인 상태다. [검증 계약](../../docs/nes-joint283-contract.ko.md) · [계획](../../docs/nes-joint283-plan.json). 아래는 이전 기록이다.
+
+NES282: 기존 압축 E1/E9 바이트를 유지하면서 host event/return·manifest 중복 상태를 제거하고, checked 진행 응답과 tile plan 공급을 실제 ARM 경로에 연결했다. 정상71·제한ROM3 및 ARM25/SPI51/STOP·ACK17 검사를 통과했다. warm 최대 16.166761ms(frame954), 280 대비 -0.426631ms다. whole Lite는 17,910comb(+95), 부족 2,502개로 회로가 악화됐다. 시간·회로 공동 후보/P2로 채택하지 않는다. 제한 ROM907은 18.708230ms로 0.117817ms 회귀했다. [검증 계약](../../docs/nes-joint282-contract.ko.md) · [계획](../../docs/nes-joint282-plan.json). 아래는 이전 기록이다.
+
+NES281: host·queue·독립 검증기·plan 제어의 공동 교체 범위 4250comb와 새 예산1843comb(계획 여유128 포함 목표1715)를 확정했다. ARM helper 실제71프레임/1231packet·10오류 입력을 검증했으나 dense/span/compact 전송은954 고정 일정 민감도17.163/17.302/17.070ms로 불리하다. 기존 압축 wire를 유지하는 직접 실행·검사 통합을 다음 prototype으로 삼는다. parser 전체0도27.664us만 줄며 source CPI2에서는0.992ms, 제한ROM907은 기준1.924ms 부족하다. 새RTL/MAP/일정 절감은 미검증, 기존2407comb 부족과P2 보류를 유지한다. [검토 계약](../../docs/nes-boundary281-contract.ko.md) · [계획](../../docs/nes-boundary281-plan.json). 아래는 이전 기록이다.
+
+NES280: raw를 기존 MASK/base/query 경로로 통합하고 source POP+READ/최종 input ACK 교환 및 source·plan·output 공통 요청 문맥을 구현했다. 실제 ARM codec 71프레임 원본 복원과 SPI47·raw 전환·STOP/최종 ACK 검사를 통과했다. 실제 source codec/control 명령 비용을 block별로 재생한 71프레임의 warm 최대는 16.593392ms(frame954), 한도 초과는 0개다. whole Lite는 17,815comb로 기존과 같아 2,407개 부족하다. host 출력 실행기는 아직 유지되며 공동 시간·회로 후보로 채택하지 않는다. [검증 계약](../../docs/nes-joint280-contract.ko.md) · [계획](../../docs/nes-joint280-plan.json). 아래는 이전 기록이다.
+
+NES279: 제한 ROM 907의 구간 증가 167.771µs는 시작이 212.225µs 빨라진 상태에서의 slot 대기·E2 4회 증가로 설명되며, 절대 종료는 44.454µs 빨라졌다. OAM ROM→WRAM DMA는 실제 544명령·7 STOP과 정상/제한 ROM 각 3프레임을 통과했다. 새 OAM 후보도 제한 ROM 907 구간은 +0.206270ms지만, 세 프레임 절대 종료는 0.989033ms 빨라졌다. 954 CPU 순절감은 0.779056ms다. raw MASK+교환 통합의 71프레임 복원·조건부 비용은 최대 15.495856ms이며 새 ARM/RTL 구현·전체 일정 수치가 아니다. whole Lite 기준 17,815comb/2,407개 초과는 유지한다. 다음은 raw 차분과 plan/output 제어를 함께 교체해 시간·회로를 검증하며 P2는 보류한다. [검증 계약](../../docs/nes-joint279-contract.ko.md) · [계획](../../docs/nes-joint279-plan.json). 아래는 이전 기록이다.
+
+NES278: host 출력 실행기와 고정 NES A/host B phase RAM을 구현해 descriptor·바이트 RPC와 출력 24/8bit mailbox를 제거했다. 원본 payload의 CRC와 ordered ACK 이후 receipt를 연결하고, 71프레임·52개 STOP/ACK 검사를 통과했다. 일반 조건 warm 최대 18.180055ms(276 대비 -0.042090ms), 목표 부족 1.513388ms. 제한 ROM 907은 +0.167771ms로 회귀했다. 전체 Lite 조합 논리는 17,815개(276 대비 -430, 274 대비 +135)로, 장치 한도를 2,407개 초과한다. 60fps·회로 공동 게이트는 미달이며 P2는 보류한다. [검증 계약](../../docs/nes-joint278-contract.ko.md) · [계획](../../docs/nes-joint278-plan.json). 아래는 이전 기록이다.
+
+NES277: 원본 payload 한 번 읽기 모델로71프레임/1231패킷의 metadata·receipt·CRC와544개 기존CPU trace를 대조했다. host 출력 실행기와고정 RAM 포트 경계를 정했으나 새RTL/MAP/일정 검증은 아니다. 954 parser 전체0 민감도도17.946626ms로1.279959ms 부족; 실제276 기준1.555478ms/2837comb 부족 유지. STOP·ACK·포트 계약71개 모델 거절 사례 PASS. 최적화 채택/P2는 보류한다. [검토 계약](../../docs/nes-joint277-contract.ko.md) · [계획](../../docs/nes-joint277-plan.json). 아래는 이전 기록이다.
+
+NES276: 별도 참조 전송을 제거하고 원본 descriptor 해석을 source/query/receipt core의 한 FSM에 통합했다. 71프레임/1231패킷/2069map 범위/544일반65816 trace와49 STOP·semantic guard PASS. warm 최대18.222145ms(274 대비+0.000000,275 대비-0.965852), 목표 부족1.555478ms. whole Lite18245comb(274 대비+565,275 대비+115), 부족2837개. 기능 통합은 검증했지만 시간·회로 공동 최적화 후보로 채택하지 않는다. [검증 계약](../../docs/nes-joint276-contract.ko.md) · [계획](../../docs/nes-joint276-plan.json). 아래는 이전 기록이다.
+
+NES275: 실제 ARM 참조 프로그램 전송과 descriptor 결합 FPGA 실행을 연결했다. 71프레임/1231패킷/2069map 범위/544일반65816 trace와 STOP·최종ACK 검증을 통과했다. warm 최대19.187997ms(274 대비+0.965852), 목표 부족2.521330ms. whole Lite18130comb(+450), 부족2722개. 기존 일반 해석·queue 길이/CRC 제어는 대체했으나 source/query/core는 유지했다. 시간·회로 최적화 후보로는 채택하지 않는다. [검증 계약](../../docs/nes-joint275-contract.ko.md) · [계획](../../docs/nes-joint275-plan.json). 아래는 이전 기록이다.
+
+NES274: ARM 명령을 분할해 참조 프로그램 포함256B 초과50개→0개를 확인했다. 실제71프레임1231패킷·2069map 범위,65816 일반 명령544개·출력128041B·PPU DMA39648B와bank fill2회가 통과했다. warm 직렬 진단 최대18.222145ms, 제한 ROM907 18.246508ms(3프레임전체종료는약9.7us만개선)로목표는미달이다. 참조 프로그램은아직미전송이며RTL동일/noMAP/2272comb 부족유지. [검증 계약](../../docs/nes-joint274-contract.ko.md) · [계획](../../docs/nes-joint274-plan.json). 아래는 이전 기록이다.
+
+NES273: ARM producer의event24·값run·payload참조3표현을71프레임/1181packets/35152의미동작으로대조했다. 60ARM오류·17decoder오류·21codec vector PASS. 참조형2032text/64BSS/관측stack136B. inline우선은warm추가87–287SPI B,954의추가직렬민감도0.980690ms이며새실행시간이아니다. 50packet은256B를넘어별도소유권경로가필요하다. 문법상유효한거짓receipt 반례로DMA/receipt 공통descriptor 검증을필수화했다. 새RTL/MAP/retimedSPI없음,기준270의2272comb부족유지;단일source/receipt/parser는미구현이다. [검증 계약](../../docs/nes-joint273-contract.ko.md) · [계획](../../docs/nes-joint273-plan.json). 아래는 이전 기록이다.
+
+NES272: 일반 명령·manifest 해석을 NES clock으로 옮긴 A와 source 레지스터120비트를 출력 문맥과 공유한 B를 실제로 연결했다. 905..907 normal A/B와 restricted B의9프레임,기존38+새4 STOP/오류 검사 PASS. ARM270/원래SPI packet bytes 유지. normal907 A 11.543680ms/B 11.543680ms,restricted B 20.156985ms는 CPI1 직렬 진단이며 fullpath가 아니다. Whole Lite MAP은270의17680comb 대비 A17834(+154),B17945(+265),B는한도보다2537개 초과/RAM동일이다. source 공유로FF109개를 줄여도 조합논리는111개 늘었다. 두 부분 후보 모두 미채택;host admission/typed-map와단일FSM/phaseRAM통합은남아있다. [검증 계약](../../docs/nes-joint272-contract.ko.md) · [계획](../../docs/nes-joint272-plan.json). 아래는 이전 기록이다.
+
+NES271: tile-ready만 bounded backoff하는 A와 E1 전송 전 credit snapshot을 추가한 B를 실제 ARM·SPI·ROM으로 비교했다. 각 후보의 normal/restricted905..907 총12프레임 실행과 ARM/SPI 오류 검사는 통과했다. 제한ROM warm907은269의19.291450ms 대비 A 19.913352ms, B 20.116850ms로 모두 느려 단독 채택하지 않는다. B의 whole Lite MAP은17680→17694comb로14개 늘었고 2286개 초과한다. 새71프레임·FIT/STA·실기60fps 검증은 아니다. 다음은 host queue/SNES 읽기 port를 유지하고 기존24비트 mailbox로 NES source/receipt/parser 제어를 공유하는 경계이며, 현재 출력 phase RAM의 빈170B에 전체256B packet은 들어가지 않는다. [검증 계약](../../docs/nes-joint271-contract.ko.md) · [계획](../../docs/nes-joint271-plan.json). 아래는 이전 기록이다.
+
+NES270: source/output/plan의 SPI 수신·상태snapshot·CRC8을 공통 엔진으로 실제 교체하고, ARM의 E2 short9 polling과 필요시 E0 full24 문맥 조회를 연결했다. 71프레임/522일반명령/2069map범위,38오류/STOP,ARM24오류+wrap,공통SPI guard PASS. 실제 polling·ROM 재실행 warm 직렬 진단 최대18.065374ms/부족1.398707ms/5개 초과, 제한ROM warm907 20.283029ms로 이전보다0.991579ms 악화됐다. short polling의 일괄 채택은 보류한다. Lite wholeMAP17692→17680comb/9046→8892FF/RAM동일,전체 순절감12comb지만2272개 부족하다. source·receipt core와 출력parser 전체 대체는 아직이며,현재6486comb 교체 영역은4214 이하+배치여유가 필요하다. fullRUN/activeVBlank/실기/FITSTA 미완료,P2 미선택이다. [검증 계약](../../docs/nes-joint270-contract.ko.md) · [계획](../../docs/nes-joint270-plan.json). 아래는 이전 기록이다.
+
+NES269: STOP 후 양 bank 표식을 지우고6006으로 응답하는 경계를 실제65816과 RTL에서 검증했다. 짧은 STOP·DMA/MVN·부분ACK·버스 철회7지점, 기존522명령/33범위/38오류를 통과했다. RUN STOP 중 local ROM/6001은 유지하고 pad/packet/ACK는 차단한다. 71프레임의 polling·ROM 재실행 warm 직렬 진단 최대는18.294508→18.391188ms, 부족1.724522ms이며6개 초과다. 안전 경로 비용까지 포함한 Lite MAP은17679→17692comb/2284초과, RAM동일이다. source·receipt 포함6512comb 교체 경계는4228이하가 필요한 장부이며 실제 대체 절감은0이다. 짧은 상태조회는 추가transfer setup을 포함해2.317ms의 고정poll 후보 여지가 있으나 구현된 절감이 아니다. fullRUN/activeVBlank/실기/FIT/STA는 미완료, P2 미선택이다. [검증 계약](../../docs/nes-joint269-contract.ko.md) · [계획](../../docs/nes-joint269-plan.json). 아래는 이전 기록이다.
+
+NES268: 실제65816 HDMA zero DMA와 bank-tail 재사용을522일반명령·33경계명령에서 검증했다. 재사용은 cold2회만1100B를 채우고69회 생략한다. 같은ARM/SPI/ROM RTL의71프레임 직렬 진단 최대는20.909704→18.294508ms, warm초과25→6개이며60Hz까지 최소1.627841ms가 더 필요하다. E0 polling5380→3465회. 보드의 중복 legacy E0/E1을 제거한 Lite MAP은23714→22657LE/18399→17679comb/9488→9045FF/RAM8192bits감소이며2271comb가 아직 초과다. queue+plan3블록1427comb를 비용0으로 둬도 밖에서844comb가 더 필요하다. 실제decoder/staging의 head 유지 정책은 교착, RAM 복사 후 해제 정책은 완료했다. fullRUN/activeVBlank/실기/FIT/STA/통합STOP은 미검증이며 P2 미선택이다. [현재 검증](../../docs/nes-joint268-contract.ko.md) · [계획](../../docs/nes-joint268-plan.json). 아래는 이전 기록이다.
+
+NES267: 실제 ARM refill/IRQ 본체·E8/E9 tile 계획·ROM reader와 실제65816 일반 명령의 bus trace를 통합71프레임에서 검증했다. whole-board Lite MAP은 23714LE/18399comb/9488FF, 조합 논리만 칩 한도15408을 2991개 초과해 자원 게이트 실패다. H2 공유 전후 같은 보드 delta는 -102LE/-169FF다. CPI1/항상 허용 ROM 슬롯 조건의 source+출력 직렬 진단 최대20.909704ms, warm69 중25개가16.667ms를 넘었다. 실기/전체RUN/active VBlank/FIT/STA/CDC 승인이 아니며 P2 미선택이다. [현재 검증](../../docs/nes-joint267-contract.ko.md) · [계획](../../docs/nes-joint267-plan.json). 아래는 이전 기록이다.
+
+NES266: H2와 표시 문맥을 결합하고 기존 phase RAM864..867에 오프셋4B만 저장했다. 71프레임·38오류와 실제65816의905/906/907 표시/HDMA/최종ACK PASS. 통합 Lite MAP8277→8149LE(-128),2924→2755FF(-169),RAM90368bits 유지. warm출력5.847475ms로 기존 재전송 제거 이득을 유지했다. 전체ARM/일반65816/ROM중재/wholeFIT/실기60fps는 미완료다. [현재 검증](../../docs/nes-joint266-contract.ko.md) · [계획](../../docs/nes-joint266-plan.json). 아래는 이전 기록이다.
+
+NES265: header identity/ACK 저장·재읽기 제어를 실제로 교체하고 manifest/fence를 FPGA 내부에서 처리했다. RTL71프레임·29오류 PASS,byte echo0 유지. 표시 문맥24B 보관·sealed 후1회 읽기를 포함해 warm출력최대5.846112ms,동일 Lite MAP8277LE(+47)/90368bits. queue는163comb/117FF 줄었으나 전체 면적 절감에는 실패했다. full ARM/일반65816/ROM/VBlank/FIT/실기60fps는 미완료다. [현재 검증](../../docs/nes-joint265-contract.ko.md) · [계획](../../docs/nes-joint265-plan.json). 아래는 이전 기록이다.
+
+NES264: ACK 후 queue head를 유지해 수신 payload에서 직접 CRC·receipt를 만들고 manifest를 요구166B→map256B→fence 순서로 바꿨다. ARM/RTL71프레임,RTL19오류/ARM18오류 PASS;byte echo55237→0. warm출력최대5.912ms,동일 Lite MAP8230LE(+943)/90368bits. full ARM/일반65816/ROM/VBlank/FIT/실기60fps는 미완료다. [현재 검증](../../docs/nes-joint264-contract.ko.md) · [계획](../../docs/nes-joint264-plan.json). 아래는 이전 기록이다.
+
+NES263: 실제 일반 SPI 패킷→native C 소비기→SNES 버스/공유CDC→core manifest/CRC/receipt를71프레임에서 검증했다. 실제65816 문맥 재사용은cold64DMA에서1148clocks 느리지만 warm7DMA에서566clocks 줄었고,조회 MAP7216LE는 같다. 일반byte-event bridge는7287LE(+71)/RAM동일,출력모델warm최대7.441ms로60fps 구현에 선택하지 않았다. 일반65816/full ARM/ROM경쟁/wholeFIT/실기60fps는 미완료다. [현재 검증](../../docs/nes-joint263-contract.ko.md) · [계획](../../docs/nes-joint263-plan.json). 아래는 이전 기록이다.
+
+NES262: H2를 BEGIN 앞에 보내 실제 SPI→core 문맥RAM→일반 BEGIN ACK 경로를 연결했다. ARM71계획·기존12오류/신규6선행검사와 공유RTL71프레임/124묶음/2069범위/12취소를 통과했다. 기존24bit map 완료 mailbox를 공유해 별도 구조7266→7216LE(-50),2830→2806FF(-24),RAM90368bits 유지;261 대비+75LE로 전체 여유는 미입증이다. ARM2320text/312bss/관측stack136B,전체SPI량 동일. setup900 민감도와 실제중첩을 비교했으며 일반stream/digest/manifest 생산기·full ARM/65816·ROM 중재·wholeFIT·실기60fps는 미완료다. [현재 검증](../../docs/nes-joint262-contract.ko.md) · [계획](../../docs/nes-joint262-plan.json). 아래는 이전 기록이다.
+
+NES261: 실제 source/core→묶음 map DMA/receipt→표시 lease를 연결해71프레임/124묶음/2069범위와6취소 검사를 통과했다. 실제65816 cold4096B/64DMA·VRAM·표시ACK도 통과했다. 같은4credit cold 출력 경계18.392→15.765ms, warm907은0.858→0.627ms다. 통합Lite MAP7141LE/5665comb/2788FF/90368bits이며 기존 제어 제거 장부를 포함해도 논리 여유는 미입증이다. 실제CPU의 nominalDMA 외900..948master clocks로500setup 배정을 재검토한다. non-map/H2/manifest 생산기·full ARM·전체65816/ROM 중재·wholeFIT·실기60fps는 미완료다. [현재 검증](../../docs/nes-joint261-contract.ko.md) · [계획](../../docs/nes-joint261-plan.json). 아래는 이전 기록이다.
+
+NES260: ARM이2,069개 map 범위를124개 패킷으로 묶고 FPGA는 범위별 DMA·receipt 후 마지막에만 head/credit을 반환한다. 954 출력 ARM 완료 모델11.047→7.222ms,같은48DMA/714B다. 입력·출력 공유SPI는14.381ms/CPI2에서는16.550ms로잔여0.117ms다. Lite MAP3282→3509LE(+227),RAM41216bits 유지로 시간·회로 상충을 확인했다. full RUN/실제65816 전체 명령/최종 표시/전체FIT·60fps는 미완료다. [현재 검증](../../docs/nes-batch260-contract.ko.md) · [계획](../../docs/nes-batch260-plan.json). 아래는 이전 기록이다.
+
+NES259: Cortex-M4 명령으로 실제 token·4credit·serializer·H2를 실행해71계획/12오류/queue counter순환을 검증했다. 출력 RTL은 전체 metadata/tile과 일반 명령·typed consume·최종 ACK를 비교하고 source/output 공유 SPI를 연결했다. SNES/CPI/ROM 대기는 조건부 모델이며 full RUN·표시는 열려 있다. 공유 MAP3282LE/41216bits로258보다37LE 감소했으나954 조건부 입력+ARM출력17.30ms로 시간 게이트 실패. Quartus Lite를 기본으로 사용한다. [현재 검증](../../docs/nes-output259-contract.ko.md) · [계획](../../docs/nes-output259-plan.json). 아래는 이전 기록이다.
+
+NES258: 일반/typed 단일 head·retire와 실제206 tile/map staging 공유를 연결했다. 공유/분리 각각 정상+16검사, 실제65816 일반 ACK→tile16B/map64B DMA→receipt→표시 ACK 통과. 같은 직렬 일정의 MAP은3559→3319LE,73984→41216bits로240LE·4KiB 감소하며 실행 기록은 같다. Standard 평가판 만료 재확인/Lite 합성 성공. 전체 R1/FIT/60fps는 미완료다. [현재 검증](../../docs/nes-mux258-contract.ko.md) · [계획](../../docs/nes-mux258-plan.json). 아래는 이전 기록이다.
+
+NES257 R1 첫 범위: 입력 완료 후 표시 lease로 전환하고 실제 packet→staging→65816 DMA(64B VRAM 일치)→receipt→seal→VBlank 표시 ACK 연결과9개 취소 검사를 통과했다. 논리적 RPC 연결이며 전체 R1·실기60fps는 미통과다. Lite 단독 MAP1947LE/40960bits는 일반 ACK가 제거된 제한 경계다. [현재 검증](../../docs/nes-slice257-contract.ko.md) · [계획](../../docs/nes-slice257-plan.json). 아래는 이전 기록이다.
+
+NES256 R0: PR129 머지2978f04를 확인한 새 브랜치에서 교체 경계와 전체 비용표를 확정했다. 552개 조건부 일정을 재구성했고 collector/display lease와 실제 DMA receipt 연결 문제를 확인했다. R1·전체FIT·60fps는 미통과다. [현재 경계](../../docs/nes-boundary256-contract.ko.md) · [실행 계획](../../docs/nes-boundary256-plan.json). 아래 머지 대기/NEXT는 당시 기록이다.
+
 PR129 회고·다음 계획: 전체 회로와 프레임 예산을 같은 구성으로 판정한다. 머지 전 구현은 중단하며, 머지 확인 후 master 기준 새 브랜치·새 PR에서 시작한다. [회고](../../docs/nes-pr129-retrospective.ko.md) · [다음 계획](../../docs/nes-pr129-next-plan.json). 아래 NEXT는 당시 기록이다.
 
 # 현재 상태 — NES255 선행 읽기·소비 제어

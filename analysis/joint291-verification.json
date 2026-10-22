@@ -1,0 +1,599 @@
+{
+  "stage": 291,
+  "passed": true,
+  "kind": "source_and_existing_evidence_audit",
+  "functional_reference": 289,
+  "performance_reference": 287,
+  "regions": {
+    "host": 2361,
+    "validator": 1090,
+    "queue": 129,
+    "plan": 568,
+    "SPI": 658,
+    "glue": 47
+  },
+  "whole_comb": 17671,
+  "whole_limit": 15408,
+  "deficit": 2263,
+  "fixed_boundary": 4853,
+  "outside": 12818,
+  "budget": 2590,
+  "reserve128_budget": 2462,
+  "budgets": [
+    {
+      "candidate": "host_only",
+      "old_comb": 2361,
+      "retained_comb": 2492,
+      "replacement_budget": 98,
+      "reserve128_budget": -30,
+      "required_reduction": 2263,
+      "required_percent": 95.84921643371453,
+      "measured_replacement_comb": null
+    },
+    {
+      "candidate": "validator_only",
+      "old_comb": 1090,
+      "retained_comb": 3763,
+      "replacement_budget": -1173,
+      "reserve128_budget": -1301,
+      "required_reduction": 2263,
+      "required_percent": 207.61467889908258,
+      "measured_replacement_comb": null
+    },
+    {
+      "candidate": "queue_plan_SPI_only",
+      "old_comb": 1355,
+      "retained_comb": 3498,
+      "replacement_budget": -908,
+      "reserve128_budget": -1036,
+      "required_reduction": 2263,
+      "required_percent": 167.0110701107011,
+      "measured_replacement_comb": null
+    },
+    {
+      "candidate": "host_validator",
+      "old_comb": 3451,
+      "retained_comb": 1402,
+      "replacement_budget": 1188,
+      "reserve128_budget": 1060,
+      "required_reduction": 2263,
+      "required_percent": 65.57519559547957,
+      "measured_replacement_comb": null
+    },
+    {
+      "candidate": "whole_fixed_boundary",
+      "old_comb": 4853,
+      "retained_comb": 0,
+      "replacement_budget": 2590,
+      "reserve128_budget": 2462,
+      "required_reduction": 2263,
+      "required_percent": 46.63094992787966,
+      "measured_replacement_comb": null
+    }
+  ],
+  "ownership": [
+    {
+      "resource": "queue credit/head",
+      "file": "nes_queue260.sv",
+      "line": 19,
+      "anchor": "reg [15:0] accepted,retired;",
+      "lifetime": "E1 accepted through parser_retire; next SPI write overlaps SNES/head read",
+      "decision": "retain",
+      "retain": "4 immutable packets; accepted/retired wrap; length and CRC admission",
+      "replace": "Only one combined completion event may drive parser_retire",
+      "measured_comb_saving": null
+    },
+    {
+      "resource": "packet reader",
+      "file": "nes_mux260.sv",
+      "line": 102,
+      "anchor": "wire [7:0] qaddr=",
+      "lifetime": "header/internal read OR NORMAL SNES read; queue write remains concurrent",
+      "decision": "replace_control",
+      "retain": "registered read latency, qtag, exact sequential SNES read proof",
+      "replace": "One queue read sequencer for H2/header/map/manifest; no extra byte buffer",
+      "measured_comb_saving": null
+    },
+    {
+      "resource": "ACK progress",
+      "file": "nes_mux260.sv",
+      "line": 86,
+      "anchor": "wire ack_publish=",
+      "lifetime": "ordinary reads and 12 ACK writes precede OSETUP; final ACK later",
+      "decision": "retain",
+      "retain": "at already reused for header/ACK/display; ordinary_reads differs from ACK index",
+      "replace": "Fold ACKWAIT dispatch into combined completion; never release on bus ACK alone",
+      "measured_comb_saving": null
+    },
+    {
+      "resource": "descriptor receipt bridge",
+      "file": "nes_mux260.sv",
+      "line": 249,
+      "anchor": "reg [11:0] receipt_first282,receipt_count282;",
+      "lifetime": "descriptor held through validator walk; map/ordinary mutually exclusive",
+      "decision": "replace_control",
+      "retain": "independent alignment/domain/duplicate/CRC checks and original descriptor",
+      "replace": "Remove OTILE/OSELECT/SEND/WAIT_RECEIPT/ORET rendezvous in a combined host controller",
+      "measured_comb_saving": null
+    },
+    {
+      "resource": "range RAM walk",
+      "file": "nes_validator278.sv",
+      "line": 33,
+      "anchor": "reg [11:0] v_bit_at,v_end283,v_map_end;",
+      "lifetime": "range endpoint live during walk; map_end persists across subsequent descriptors",
+      "decision": "retain",
+      "retain": "read-before-OR duplicate detection; persistent validity after receipt; monotone map_end",
+      "replace": "Single range admission and walker; map_end cannot alias per-range cursor",
+      "measured_comb_saving": null
+    },
+    {
+      "resource": "manifest transport",
+      "file": "nes_mux260.sv",
+      "line": 161,
+      "anchor": "reg [7:0] rle_left;reg rle_zero,tile_proven;",
+      "lifetime": "compressed packet/RLE cursor and expanded manifest cursor both live",
+      "decision": "replace_control",
+      "retain": "compressed remaining/opos and independent expanded cursor remain distinct",
+      "replace": "Joint byte decode -> RAM check -> advance; remove OCHECKNEXT/ORLE ready relay, not coverage",
+      "measured_comb_saving": null
+    },
+    {
+      "resource": "manifest comparison",
+      "file": "nes_validator278.sv",
+      "line": 243,
+      "anchor": "V_PCHECKTEST:if(checked_byte",
+      "lifetime": "received byte retained while receipt then persistent-valid RAM are read",
+      "decision": "retain",
+      "retain": "422-byte checks including cold full map and raw0 rules",
+      "replace": "Combined continuation after V_CHECKTEST/V_PCHECKTEST; keep checked_byte",
+      "measured_comb_saving": null
+    },
+    {
+      "resource": "payload CRC tap",
+      "file": "nes_mux260.sv",
+      "line": 183,
+      "anchor": "reg [2:0] tap_state278;",
+      "lifetime": "NORMAL SNES read/ACK observer concurrent with H_BYTES/H_SCROLL",
+      "decision": "retain_concurrent",
+      "retain": "tap position/value/pattern and CRC byte/lane progress",
+      "replace": "Cannot alias with packet cursor or CRC engine simply because phases share host clock",
+      "measured_comb_saving": null
+    },
+    {
+      "resource": "phase RAM ports",
+      "file": "nes_joint257.sv",
+      "line": 76,
+      "anchor": "always @(posedge host_clk)begin bq",
+      "lifetime": "port A NES source; port B host validator; source/display lease separates overlapping addresses",
+      "decision": "retain",
+      "retain": "two clock domains; registered outputs and abort/fault write gates",
+      "replace": "Keep validator sole port-B owner; packet RAM is a separate concurrently used memory",
+      "measured_comb_saving": null
+    },
+    {
+      "resource": "plan banks",
+      "file": "nes_plan_batch206.sv",
+      "line": 34,
+      "anchor": "reg pending,writer,reader,retire_pending",
+      "lifetime": "host writes next bank while NES owns sealed bank through tile_done",
+      "decision": "retain_concurrent",
+      "retain": "2 immutable bank ownership/CRC/CDC and EA retirement",
+      "replace": "No phase RAM or queue bank overlay without new concurrent-capacity proof",
+      "measured_comb_saving": null
+    },
+    {
+      "resource": "final display ACK",
+      "file": "nes_mux260.sv",
+      "line": 397,
+      "anchor": "if(ap==24'h006058)begin",
+      "lifetime": "after manifest/CRC seal and all 12 exact display reads",
+      "decision": "retain",
+      "retain": "owner NONE, no queue/tile request, complete token/mask, sealed, core retirement",
+      "replace": "Unified final transition may drive existing mailbox; keep final ACK distinct from packet receipt",
+      "measured_comb_saving": null
+    }
+  ],
+  "traces": [
+    {
+      "mode": "normal",
+      "frame": 905,
+      "total_ms": 79.99835819,
+      "parser_windows_ms": 0.021902,
+      "map_receipt_windows_ms": 0.006854,
+      "diagnostic_sum_ms": 0.028756,
+      "frozen_schedule_zero_windows_ms": 79.96960219,
+      "margin_ms": -63.33169152333333,
+      "measured_new_time_ms": null
+    },
+    {
+      "mode": "normal",
+      "frame": 906,
+      "total_ms": 56.574002922,
+      "parser_windows_ms": 0.022425,
+      "map_receipt_windows_ms": 0.006858,
+      "diagnostic_sum_ms": 0.029283,
+      "frozen_schedule_zero_windows_ms": 56.544719922,
+      "margin_ms": -39.907336255333334,
+      "measured_new_time_ms": null
+    },
+    {
+      "mode": "normal",
+      "frame": 907,
+      "total_ms": 15.314998036,
+      "parser_windows_ms": 0.019332,
+      "map_receipt_windows_ms": 0.00025,
+      "diagnostic_sum_ms": 0.019582,
+      "frozen_schedule_zero_windows_ms": 15.295416036,
+      "margin_ms": 1.3516686306666674,
+      "measured_new_time_ms": null
+    },
+    {
+      "mode": "restricted",
+      "frame": 905,
+      "total_ms": 105.718594998,
+      "parser_windows_ms": 0.021898,
+      "map_receipt_windows_ms": 0.006855,
+      "diagnostic_sum_ms": 0.028753,
+      "frozen_schedule_zero_windows_ms": 105.689841998,
+      "margin_ms": -89.05192833133333,
+      "measured_new_time_ms": null
+    },
+    {
+      "mode": "restricted",
+      "frame": 906,
+      "total_ms": 114.910302878,
+      "parser_windows_ms": 0.022433,
+      "map_receipt_windows_ms": 0.006858,
+      "diagnostic_sum_ms": 0.029291,
+      "frozen_schedule_zero_windows_ms": 114.881011878,
+      "margin_ms": -98.24363621133332,
+      "measured_new_time_ms": null
+    },
+    {
+      "mode": "restricted",
+      "frame": 907,
+      "total_ms": 17.999647638,
+      "parser_windows_ms": 0.019333,
+      "map_receipt_windows_ms": 0.000252,
+      "diagnostic_sum_ms": 0.019584999999999998,
+      "frozen_schedule_zero_windows_ms": 17.980062638,
+      "margin_ms": -1.3329809713333312,
+      "measured_new_time_ms": null
+    }
+  ],
+  "early_DMA": [
+    {
+      "frame": 905,
+      "early_DMA": 0
+    },
+    {
+      "frame": 906,
+      "early_DMA": 5
+    },
+    {
+      "frame": 907,
+      "early_DMA": 0
+    },
+    {
+      "frame": 908,
+      "early_DMA": 0
+    },
+    {
+      "frame": 909,
+      "early_DMA": 0
+    },
+    {
+      "frame": 910,
+      "early_DMA": 0
+    },
+    {
+      "frame": 911,
+      "early_DMA": 0
+    },
+    {
+      "frame": 912,
+      "early_DMA": 0
+    },
+    {
+      "frame": 913,
+      "early_DMA": 0
+    },
+    {
+      "frame": 914,
+      "early_DMA": 0
+    },
+    {
+      "frame": 915,
+      "early_DMA": 0
+    },
+    {
+      "frame": 916,
+      "early_DMA": 0
+    },
+    {
+      "frame": 917,
+      "early_DMA": 0
+    },
+    {
+      "frame": 918,
+      "early_DMA": 0
+    },
+    {
+      "frame": 919,
+      "early_DMA": 0
+    },
+    {
+      "frame": 920,
+      "early_DMA": 0
+    },
+    {
+      "frame": 921,
+      "early_DMA": 0
+    },
+    {
+      "frame": 922,
+      "early_DMA": 0
+    },
+    {
+      "frame": 923,
+      "early_DMA": 0
+    },
+    {
+      "frame": 924,
+      "early_DMA": 0
+    },
+    {
+      "frame": 925,
+      "early_DMA": 0
+    },
+    {
+      "frame": 926,
+      "early_DMA": 0
+    },
+    {
+      "frame": 927,
+      "early_DMA": 0
+    },
+    {
+      "frame": 928,
+      "early_DMA": 0
+    },
+    {
+      "frame": 929,
+      "early_DMA": 0
+    },
+    {
+      "frame": 930,
+      "early_DMA": 0
+    },
+    {
+      "frame": 931,
+      "early_DMA": 0
+    },
+    {
+      "frame": 932,
+      "early_DMA": 0
+    },
+    {
+      "frame": 933,
+      "early_DMA": 0
+    },
+    {
+      "frame": 934,
+      "early_DMA": 0
+    },
+    {
+      "frame": 935,
+      "early_DMA": 0
+    },
+    {
+      "frame": 936,
+      "early_DMA": 0
+    },
+    {
+      "frame": 937,
+      "early_DMA": 0
+    },
+    {
+      "frame": 938,
+      "early_DMA": 0
+    },
+    {
+      "frame": 939,
+      "early_DMA": 0
+    },
+    {
+      "frame": 940,
+      "early_DMA": 0
+    },
+    {
+      "frame": 941,
+      "early_DMA": 0
+    },
+    {
+      "frame": 942,
+      "early_DMA": 0
+    },
+    {
+      "frame": 943,
+      "early_DMA": 0
+    },
+    {
+      "frame": 944,
+      "early_DMA": 0
+    },
+    {
+      "frame": 945,
+      "early_DMA": 0
+    },
+    {
+      "frame": 946,
+      "early_DMA": 0
+    },
+    {
+      "frame": 947,
+      "early_DMA": 0
+    },
+    {
+      "frame": 948,
+      "early_DMA": 0
+    },
+    {
+      "frame": 949,
+      "early_DMA": 0
+    },
+    {
+      "frame": 950,
+      "early_DMA": 0
+    },
+    {
+      "frame": 951,
+      "early_DMA": 0
+    },
+    {
+      "frame": 952,
+      "early_DMA": 0
+    },
+    {
+      "frame": 953,
+      "early_DMA": 0
+    },
+    {
+      "frame": 954,
+      "early_DMA": 0
+    },
+    {
+      "frame": 955,
+      "early_DMA": 0
+    },
+    {
+      "frame": 956,
+      "early_DMA": 0
+    },
+    {
+      "frame": 957,
+      "early_DMA": 0
+    },
+    {
+      "frame": 958,
+      "early_DMA": 0
+    },
+    {
+      "frame": 959,
+      "early_DMA": 0
+    },
+    {
+      "frame": 960,
+      "early_DMA": 0
+    },
+    {
+      "frame": 961,
+      "early_DMA": 0
+    },
+    {
+      "frame": 962,
+      "early_DMA": 0
+    },
+    {
+      "frame": 963,
+      "early_DMA": 0
+    },
+    {
+      "frame": 964,
+      "early_DMA": 0
+    },
+    {
+      "frame": 965,
+      "early_DMA": 0
+    },
+    {
+      "frame": 966,
+      "early_DMA": 0
+    },
+    {
+      "frame": 967,
+      "early_DMA": 0
+    },
+    {
+      "frame": 968,
+      "early_DMA": 0
+    },
+    {
+      "frame": 969,
+      "early_DMA": 0
+    },
+    {
+      "frame": 970,
+      "early_DMA": 0
+    },
+    {
+      "frame": 971,
+      "early_DMA": 0
+    },
+    {
+      "frame": 972,
+      "early_DMA": 0
+    },
+    {
+      "frame": 973,
+      "early_DMA": 0
+    },
+    {
+      "frame": 974,
+      "early_DMA": 0
+    },
+    {
+      "frame": 975,
+      "early_DMA": 0
+    }
+  ],
+  "measured_new_saving_comb": null,
+  "measured_new_time_ms": null,
+  "new_RTL": false,
+  "new_MAP": false,
+  "new_simulation": false,
+  "P2_selected": false,
+  "decision": "No evidence-backed area-fit candidate yet; joint controller specification only.",
+  "input_hashes": {
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\repository-nes-milestone\\analysis\\joint287-verification.json": "a8984859af27dab6aea9c50c0ac209f620bdcd4e9851b24935384fd59373b62d",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\repository-nes-milestone\\analysis\\joint289-verification.json": "565131609c6ff7bb120cbaa7c25b40b9fa947c23f37165fe2f638b3aa9946f71",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\repository-nes-milestone\\analysis\\joint290-verification.json": "5962b2d770257266b6672a4c35c7538bdb6cd06cab36c8911d7b31580b939d9d",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint287\\board01\\output_files\\board.map.rpt": "2d2fc0a3ede470eac86b4f39c1ed1ded1b6c1746e01608118b6ec3018856d7a0",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\result.json": "32dcd5f4474aff152bd76f82015d359f3dc8f3b57984f66d7bd5b74b72755a74",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_core257.sv": "046ae1e93fa990b46d1607f413dd35348ed0221896e7f32e6a43049b02808b8b",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_transport257.sv": "83d28f407a8a27da4ffa1effb5421b987fc65f0b071359ebf3f7482799389485",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_joint257.sv": "cdaf1e0e79f6d2a6bec70b4997fe1939b2de0c2f73c31e7698a19c912aea9bdc",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_queue260.sv": "685b37e2d0d293cbe72cb0799462d7ac064aa21873b2828ee09bd151358948a3",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_tile_producer260.sv": "1e4aa58907216042458e82f66335a157d44cf8c1a1cb7b0af9df281cf2d74145",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_mux260.sv": "67edd8661ef7fc8b596fc3a1f9af5d6e3823082e9b644e902700e3b4340a3e54",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_native_frame201.sv": "2c3fd46c4c4f1e3be6619da71abafe8d56d85b5273067f5d70f74783cb0bf64c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_native_planes165.sv": "5ffb80c410948eff320e94ed2676a73c04780a46cbfb53e3acda181d316a999a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_patch_capture181.sv": "a4730979575696afde9e8aa5911a67fbf6404c96f609da02def8e76e831c5984",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_native_compact181.sv": "b6134f4264eed933ed830489239273e682a0494cd36345def1c135f11e3c8bde",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_native_raster181.sv": "25f9762f7f0842dacf5915804f398f71b9ed5e9b54edd99f4ad1ce5423ae8b95",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_capture_lease201.sv": "c3f95b8e7b56afbe65e3484e1006d4fc2c54b6e47407bf32124d8ae461fb7f61",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_bulk_aperture188.sv": "fdc4e32278fbeab002b74ffbcac84951a346e11469c7fa2d332d0b74861bf466",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_joint266.sv": "b1c910313ea6c064fbcdf63e047e913e596e9786b0a114288af2f67ad9083e2d",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_plan_spi200.sv": "714f73ab1149fafa1af51fbed21b2064f35669f655f0bd0bb7dff264e1018432",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_plan_batch206.sv": "9427e8970abc92f6027cd304d09f3d7b296ce996a3d775b4a5ca5270d8112c43",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_source_tile192.sv": "98135e455b8934d5c9873da7f1f7fd251cf30a8c3d74872db7d432c1b929c635",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_tile205.sv": "21008911a47cb2092a9589f9959c32a9c9b28070b81bef2f594f4647334cc7cb",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_chr_cache192.sv": "ca3e5e4fc596ee8662646276386571c6487ce142d98cb318666e288c7dd76a9f",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_native_arbiter165.sv": "cd4818bc2e7a02d84b101f55c2fb2f564d59588561237002bb2ecde6d6035e23",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_rom_physical.sv": "6870eb15955c7e1f7bc3510e7654a45c6f42c8723779a382496c0cb437be47c9",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_plan_rom267.sv": "2923b78495042f9fbfaff90eb343aa46bd3940fedcebc233f740fcf203e32fa4",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_spi270.sv": "1d12c0cbd516cb4d800a0c5f4f1aa73f957104c4eea891c5fec30dd0ac694792",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\nes_validator278.sv": "a28cc6d40c2a76e0113150688b978f4021ea1dee4c96f28b49b6003e3454c232",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\joint-events.csv": "20971ce9d2b2924b0f4cc13dd832df5ee85c2a3f30a4ad161c33b830590a7161",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\cycles.csv": "9e9f5c4774bb9add8fefc288cd97eeaac99ea189f5055755e07ff8e5271ccb38",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\test02\\joint266_tb.sv": "f59aaef9b7055bb1e0b5a765a310985a8aa3fe0d5027c58ba47978313ac884aa",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\window01\\joint-events.csv": "2402a8d72d6c9ef87be79b2d6588dc9d37d72d891adafb11fec8e4129628dce8",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\window01\\cycles.csv": "e33b4e2d31adbc99c0d9f38d578233a5da1456d4789f2af9fc26833546d35144",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-joint289\\window01\\joint266_tb.sv": "f59aaef9b7055bb1e0b5a765a310985a8aa3fe0d5027c58ba47978313ac884aa"
+  },
+  "script_sha256": "481af31eacb8d01ad94e91ca941c3a188766e3c24973bdfa292db5b7e393f50d"
+}

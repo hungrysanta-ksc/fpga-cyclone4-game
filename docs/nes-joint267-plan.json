@@ -1,0 +1,280 @@
+{
+  "schema_version": 1,
+  "stage": "NES267",
+  "date_kst": "2026-10-20",
+  "status": "R1_retimed_path_verified_whole_board_resource_gate_failed",
+  "pr": 130,
+  "branch": "codex/nes-wholepath-boundary-256",
+  "parent": "docs/nes-joint266-plan.json",
+  "contract": "docs/nes-joint267-contract.ko.md",
+  "evidence": "analysis/joint267-verification.json",
+  "selected": {
+    "normal": "joint04",
+    "comparison": "compare01",
+    "qualified_ROM": "window01",
+    "ROM_observer": "window02",
+    "CPU": "cpu05",
+    "planner": "plans01",
+    "IRQ": "irq01",
+    "MAP": "board02",
+    "reference_MAP": "board26501",
+    "analysis": "analysis02"
+  },
+  "next_action": "267의 whole-board 자원 실패를 반영해 E0 출력과 E8/E9 tile 계획의 admission·identity·retire 제어를 함께 대체하는 경계 또는 변환/검증 역할 재배치를 비교한다. 실제65816에서 매 프레임 HDMA1100B 채우기(약2.89ms)와 OAM 반복 생성 비용을 확인했으므로 fixed-source DMA/유효 bank 재사용을 시간 후보로 함께 검토한다. 무효화·receipt·HDMA 종료·잔존 sprite를 먼저 보장하고 full ARM 입력/planner/IRQ·active VBlank 비용 및 whole logic/RAM 예산을 함께 확정한다. 현재267은 P2 미선택이며 독립 FSM/opcode/seed/FIT 반복은 하지 않는다.",
+  "MAP": {
+    "prior240": {
+      "LE": 19809,
+      "comb": 14966,
+      "FF": 8577,
+      "RAM_bits": 311904
+    },
+    "prior265": {
+      "LE": 23816,
+      "comb": 18301,
+      "FF": 9657,
+      "RAM_bits": 311904
+    },
+    "replacement266": {
+      "LE": 23714,
+      "comb": 18399,
+      "FF": 9488,
+      "RAM_bits": 311904
+    },
+    "delta_shared": {
+      "LE": -102,
+      "comb": 98,
+      "FF": -169,
+      "RAM_bits": 0
+    },
+    "delta_vs240": {
+      "LE": 3905,
+      "comb": 3433,
+      "FF": 911,
+      "RAM_bits": 0
+    },
+    "comb_capacity": 15408,
+    "comb_over_capacity": 2991,
+    "hierarchy": {
+      "board26501": {
+        "|nes_joint267_board:native_joint267|": {
+          "comb": 6071,
+          "FF": 2807,
+          "RAM_bits": 90368
+        },
+        "|nes_joint257:core|": {
+          "comb": 2763,
+          "FF": 972,
+          "RAM_bits": 49152
+        },
+        "|nes_output260:flow|": {
+          "comb": 3278,
+          "FF": 1834,
+          "RAM_bits": 41216
+        },
+        "|nes_plan_path267:retained_plan267|": {
+          "comb": 1821,
+          "FF": 900,
+          "RAM_bits": 8192
+        },
+        "|nes_plan_batch206:transport|": {
+          "comb": 409,
+          "FF": 361,
+          "RAM_bits": 8192
+        },
+        "|nes_plan_spi200:endpoint|": {
+          "comb": 446,
+          "FF": 223,
+          "RAM_bits": 0
+        },
+        "|nes_source_tile192:source|": {
+          "comb": 963,
+          "FF": 315,
+          "RAM_bits": 0
+        }
+      },
+      "board02": {
+        "|nes_joint267_board:native_joint267|": {
+          "comb": 6113,
+          "FF": 2638,
+          "RAM_bits": 90368
+        },
+        "|nes_joint257:core|": {
+          "comb": 2913,
+          "FF": 976,
+          "RAM_bits": 49152
+        },
+        "|nes_output260:flow|": {
+          "comb": 3171,
+          "FF": 1661,
+          "RAM_bits": 41216
+        },
+        "|nes_plan_path267:retained_plan267|": {
+          "comb": 1825,
+          "FF": 900,
+          "RAM_bits": 8192
+        },
+        "|nes_plan_batch206:transport|": {
+          "comb": 408,
+          "FF": 361,
+          "RAM_bits": 8192
+        },
+        "|nes_plan_spi200:endpoint|": {
+          "comb": 445,
+          "FF": 223,
+          "RAM_bits": 0
+        },
+        "|nes_source_tile192:source|": {
+          "comb": 969,
+          "FF": 315,
+          "RAM_bits": 0
+        }
+      }
+    },
+    "warning_counts": {
+      "board26501": {
+        "10335": 11,
+        "10036": 31,
+        "287013": 1,
+        "10027": 1,
+        "10240": 1,
+        "12125": 1,
+        "10230": 30,
+        "10764": 3,
+        "10030": 3,
+        "14284": 3,
+        "14285": 3,
+        "14320": 512,
+        "13046": 1,
+        "13049": 44,
+        "276027": 1,
+        "12241": 1,
+        "13024": 1,
+        "13410": 25
+      },
+      "board02": {
+        "10335": 11,
+        "10036": 31,
+        "287013": 1,
+        "10027": 1,
+        "10240": 1,
+        "12125": 1,
+        "10230": 30,
+        "10764": 3,
+        "10030": 3,
+        "14284": 3,
+        "14285": 3,
+        "14320": 512,
+        "13046": 1,
+        "13049": 44,
+        "276027": 1,
+        "12241": 1,
+        "13024": 1,
+        "13410": 25
+      },
+      "prior240": {
+        "10335": 9,
+        "10036": 29,
+        "287013": 1,
+        "10027": 1,
+        "10240": 1,
+        "12125": 1,
+        "10230": 28,
+        "10030": 3,
+        "14284": 3,
+        "14285": 3,
+        "14320": 512,
+        "13046": 1,
+        "13049": 44,
+        "276027": 1,
+        "12241": 1,
+        "13024": 1,
+        "13410": 25
+      }
+    },
+    "removed": [
+      "native_source240",
+      "direct_path.bulk",
+      "direct_path.control"
+    ],
+    "retained": [
+      "native_frame.ownership",
+      "direct_path fault/reset shell",
+      "E8/E9 endpoint",
+      "plan batch decoder/RAM",
+      "tile205",
+      "CHR cache",
+      "core-priority arbiter",
+      "loader shared physical ROM reader"
+    ],
+    "functional_board_glue_verified": false,
+    "FIT": false,
+    "STA": false
+  },
+  "paired": [
+    {
+      "frame": 905,
+      "prior265_ms": 44.561556164,
+      "shared266_ms": 44.561556164,
+      "shared_delta_us": 0.0,
+      "qualified_window_ms": 85.295021902,
+      "window_added_ms": 40.733465738
+    },
+    {
+      "frame": 906,
+      "prior265_ms": 47.790608324,
+      "shared266_ms": 47.790608324,
+      "shared_delta_us": 0.0,
+      "qualified_window_ms": 112.455741424,
+      "window_added_ms": 64.66513309999999
+    },
+    {
+      "frame": 907,
+      "prior265_ms": 10.372693708,
+      "shared266_ms": 10.372693708,
+      "shared_delta_us": 0.0,
+      "qualified_window_ms": 16.949160244,
+      "window_added_ms": 6.576466536000002
+    }
+  ],
+  "warm_max_serial": {
+    "frame": 954,
+    "source_ms": 6.254970394,
+    "output_schedule_ms": 14.654733232,
+    "diagnostic_serial_ms": 20.909703626,
+    "ARM_instructions": 234725,
+    "ARM_CPI1_ms": 2.794345238095238,
+    "SPI_bytes": 3590,
+    "SPI_wire_ms": 10.94095238095238,
+    "source_SPI_bytes": 1969,
+    "shared_SPI_bytes": 5559,
+    "shared_SPI_wire_ms": 16.941714285714287,
+    "E0_polls": 82,
+    "E8_polls": 10,
+    "E9_batches": 3,
+    "EA_retire": 1,
+    "plan_SPI_bytes": 403,
+    "ordinary_packets": 12,
+    "DMA_bytes": 714
+  },
+  "warm_over_serial": 25,
+  "full_path_ms": null,
+  "P2_selected": false,
+  "whole_board_FIT": false,
+  "physical60fps": false,
+  "limitations": [
+    "ARM instruction CPI1 sensitivity; IRQ bodies at service boundaries, no NVIC preemption/entry/exit or hardware wait states",
+    "Actual C planner output is input fixture; full ARM RUN/input planner/IRQ stack margin not linked",
+    "Actual65816 ordinary-command bus trace replay, forced blank; map/tile consumer and final display ACK remain native model",
+    "ROM physical reader and priority arbiter are actual RTL; core requests and qualified slot timing are synthetic stress policies",
+    "Always-qualified 71-frame schedule is optimistic; three-frame restricted-window case is not a live NES workload or universal WCET",
+    "Whole-board MAP glue resource integration unplaced and not functionally board-qualified; no FIT/STA/CDC/IO",
+    "Prior266 38 negative guards retained as prior evidence; new combined ARM/ROM abort/STOP faults not qualified",
+    "No active-display CGRAM/OAM/VBlank schedule or full rendered-frame oracle; source plus output is diagnostic serialized schedule"
+  ],
+  "preserve": [
+    "production227",
+    "GBC164",
+    "saveSRAM",
+    "240 unplaced reference"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "stage": "NES258",
+  "status": "R1_bounded_arbitration_complete_full_R1_open",
+  "date_kst": "2026-10-19",
+  "pr": 130,
+  "branch": "codex/nes-wholepath-boundary-256",
+  "parent": "docs/nes-slice257-plan.json",
+  "contract": "docs/nes-mux258-contract.ko.md",
+  "evidence": "analysis/mux258-verification.json",
+  "selected": {
+    "unit": "probes/nes-mux258/test07",
+    "coupled": "probes/nes-mux258/coupled05",
+    "reference": "probes/nes-mux258/reference02",
+    "maps": [
+      "probes/nes-mux258/map-separate02",
+      "probes/nes-mux258/map-shared02"
+    ],
+    "analysis": "probes/nes-mux258/analysis02",
+    "timeout_negative": "probes/nes-mux258/timeout01"
+  },
+  "completed": [
+    "ordinary/typed single head and active ordinary ACK checker",
+    "actual206 tile producer and exclusive shared tile/map staging",
+    "bank/identity reuse; token and serial history persist across STOP",
+    "both variants normal+16guards; actual65816 ordinary ACK/tile16B/map64B/finalACK",
+    "same serialized boundary Lite MAP saves240LE/171FF/32768bits with identical traces",
+    "Standard expiry rechecked; Lua RPC timeout reproduced and process-local bridge repaired"
+  ],
+  "next_action": "ARM 계획/serializer의 tile token 배정·일반/typed queue credit와 tail/scroll/OAM/H2·일반 payload 소비를 실제로 연결한다. 공유 SPI 및 tile192/ROM arbiter 경쟁을 포함한 heavy7 전체 시간표와 full RUN/IRQ·회로 경계를 완성한 뒤 같은 구성의 whole FIT/STA/CDC/IO/71프레임으로 판정한다. 258의 직렬 중재 공유 이득은 전체60fps/회로 여유 승인이 아니다.",
+  "open": [
+    "full ARM serializer/RUN/IRQ",
+    "ordinary payload consumer",
+    "upstream tile192/ROM arbiter",
+    "remaining ranges and H2 still fixtures",
+    "shared physical SPI schedule",
+    "full board FIT/STA/CDC/IO and mapper margin",
+    "heavy7/71frames/physical60fps"
+  ],
+  "production": "227 unchanged",
+  "P2_selected": false
+}

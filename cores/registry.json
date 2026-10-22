@@ -24,7 +24,7 @@
     },
     {
       "id": "nes",
-      "status": "NES227_hardware_baseline_PR129_replan_waiting_merge",
+      "status": "NES227_hardware_baseline_287_live_row_receipt_capacity_short",
       "candidate": "NES227",
       "planned_product_version": null,
       "released": false,
@@ -38,15 +38,15 @@
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
       "verification": "analysis/game227-hardware01-verification.json",
-      "plan": "docs/nes-pr129-retrospective.ko.md",
+      "plan": "docs/nes-joint287-contract.ko.md",
       "plan_state": "docs/nes-development-plan.json",
-      "investigation": "NES255_prefetch_receipt_consume_boundary",
+      "investigation": "NES287_actual_row_E9_descriptor_receipt",
       "hardware_baseline": "NES227",
-      "hardware_verified_scope": "227 hardware unchanged;255 actual collector/query/source/SPI and same-clock range byte sink replay plus standalone MAP;no new MCU/SNES/physical timing.",
-      "development_evidence": "analysis/joint255-verification.json",
+      "hardware_verified_scope": "227 unchanged.287 actual M4 row planner/native H2/E9 refill and IRQ/ROM plus independent descriptor receipt RTL; source cost replay andCPU279trace retained. Whole Lite MAP; no fullRUN/FITSTA/physical60fps.",
+      "development_evidence": "analysis/joint287-verification.json",
       "hardware_candidate": "NES227",
-      "reproduction_document": "docs/nes-joint255-contract.ko.md",
-      "next_gate": "PR129 머지 전에는 회고·계획·인계만 갱신하고 구현을 중단한다. 머지 상태와 merge SHA의 origin/master 포함을 확인한 뒤 새 codex/ 브랜치와 새 PR에서 R0 교체 경계/비용표 → R1 실제 ARM–FPGA–SNES 연결 비용 → R2 같은 구성의 전체 FIT/STA·fullRUN/IRQ·71프레임 판정 → R3 실기 연속 표시 순으로 진행한다. NES255는 후보이며 P2 미선정이다. 실제 면적/시간이 맞지 않고 구조적 회수 근거가 없으면 전송량·역할 분담을 재계획한다.",
+      "reproduction_document": "docs/nes-joint287-contract.ko.md",
+      "next_gate": "row 전체 fallback이 많은954/963/970의 실제 변경 cell·workset을 기준으로 planner 비용을 줄인다. input COMMITTED·raw 검사 후의 로컬 H2/BEGIN과 준비된 row 출력 생산을 연결해 전체 planner 완료 뒤에만 ordinary DMA가 시작되는 직렬 장벽을 검토한다. 원본 ordinary command/manifest 생산도 native view와 bounded batch 소비에 연결한다. 진단용8192B plan buffer 제거와 source live ARM/IRQ까지 소유권을 명시한다. host/validator/queue/plan/SPI와 두 연결 wrapper의 own logic을 합친4853comb를 실제 descriptor 저장·물리 읽기·receipt 완료 제어와 함께 <= 2590(128여유 2462)로 줄이는 교체가 필요하다. 기존5블록 경계4806와 예산2543도 비교용으로 유지한다. 독립 CRC/H2/coverage, input COMMITTED, token/credit, STOP와 최종12B ACK를 유지한다. 정상·제한 ROM phase 전체 시간과 같은 whole Lite 경계를 함께 검증하며 단독 opcode/seed/FIT 반복이나 자동 merge는 하지 않는다.",
       "proposal_history": "cores/nes/PROPOSAL.ko.md",
       "paired_candidate": "Production227 retained;240 functional-only/unplaced;241+246 rejected;no new installable pair.",
       "observation_candidate": "NES-CLOCK-OBSERVATION-087",
@@ -681,7 +681,7 @@
         "document": "docs/nes-game172-hardware01.ko.md",
         "scope": "NES172 실기에서 표시 준비와 14회 표시 완료 응답을 통과했지만 이후 화면이 멈췄다. 버튼·스테이지 음악은 계속 반응했고 정상 약60초 한도로 메뉴에 복귀했다. BEGIN/END/COMMIT 각14, ABORT0, 마지막 generation27이다.170의 수집 시간 초과와 달리 다음 BEGIN이 수신되지 않은 경계이며, 연속 화면 목표는 미달성이다. 사용자 추가 확인: 처음 표시된 구간도 뚝뚝 끊겼다. 14회 ACK는 원활한 화면의 증거가 아니다. 목표는 실제 SMB3에서 약60fps의 연속 표시이며, 정지 해소만으로 완료 처리하지 않는다. 프레임 생성·전송·SNES 반영별 진행 시간과 화면 완료 간격을 구분해 병목을 줄인다. 60fps의 프레임 간격 약16.7ms를 목표 예산으로 삼되 현재 측정치로 주장하지 않는다. 전체 SPI 바이트에는 상태 폴링이 포함되므로 영상 전송량이나 유효 FPS로 바로 환산하지 않는다."
       },
-      "current_review": "docs/nes-placement247-contract.ko.md",
+      "current_review": "docs/nes-joint277-contract.ko.md",
       "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
       "hardware_game180": {
         "evidence": "analysis/game180-hardware01-verification.json",
@@ -706,8 +706,8 @@
         "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
         "paired_candidate": "deployed180 unchanged;1813 exporter/SPI/receiver candidate only; no new full ARM/FIT/installable pair"
       },
-      "active_plan": "docs/nes-joint255-plan.json",
-      "current_status_scope": "255 supersedes historical NEXT;P2 not selected;local same-boundary area/time gain;production227 unchanged."
+      "active_plan": "docs/nes-joint284-plan.json",
+      "current_status_scope": "NES284: E2/E8·plan 진행 응답을 공통 CRC snapshot으로 통합하고 기존 MCU_RDY/PB8 알림을 실제 ARM EXTI handler·WFI·refill에 연결했다. 정상71·제한ROM3와 독립 검사·STOP·최종 ACK를 검증했다. warm 최대 15.748447ms(954), 제한 ROM907 18.726366ms(+0.004500), 남은 시간 2.059700ms다. 전체 Lite 17,765comb(-37), 부족 2,357개. 확장 제어 경계 자체는 +4comb이므로 전체 감소를 구조적 절감으로 모두 귀속하지 않는다. 제한 ROM warm 회귀로 공동 목표는 미달이며 P2/FITSTA/실물60fps는 미승인이다."
     },
     {
       "id": "pce",

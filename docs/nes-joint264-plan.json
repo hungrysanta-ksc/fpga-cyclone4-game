@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "stage": "NES264",
+  "date_kst": "2026-10-19",
+  "status": "R1_direct_payload_verified_whole_cost_gate_open",
+  "pr": 130,
+  "branch": "codex/nes-wholepath-boundary-256",
+  "parent": "docs/nes-joint263-plan.json",
+  "contract": "docs/nes-joint264-contract.ko.md",
+  "evidence": "analysis/joint264-verification.json",
+  "selected": {
+    "ARM": "arm01",
+    "ARM_guards": "armguard01",
+    "normal": "test04",
+    "RTL_guards": "guards01",
+    "MAP": "map01",
+    "analysis": "analysis01"
+  },
+  "next_action": "직접 payload CRC/receipt와 ACK 이후 queue 소유권을 유지한다. 다음은 admission/header/ACK의 중복 identity 검사·상태를 같은 경계에서 줄이고, 검사용 manifest의 SNES 재읽기·ACK까지 없앨 수 있는지 비교한다. 최종 fence의 실제65816 표시 문맥 보관/소비, ARM E0 refill/IRQ와 실제 tile ROM 중재를 함께 연결해 시간·회로 표를 갱신한 뒤 P2를 판단한다. 개별 FSM/opcode/FIT 반복으로 회수량을 추정하지 않는다.",
+  "full_path_ms": null,
+  "P2_selected": false,
+  "whole_board_FIT": false,
+  "physical60fps": false,
+  "MAP": {
+    "prior263": {
+      "LE": 7287,
+      "comb": 5791,
+      "FF": 2842,
+      "RAM_bits": 90368
+    },
+    "direct264": {
+      "LE": 8230,
+      "comb": 6745,
+      "FF": 2884,
+      "RAM_bits": 90368
+    },
+    "FSM": {
+      "core_extracted": true,
+      "output_state_extracted": false,
+      "prior263_output_state_extracted": true,
+      "structural_observation": "state <= after_event is a register-derived next-state assignment; possible extraction obstacle, not isolated attribution of943LE",
+      "extractor_diagnostic_reason": null
+    },
+    "delta": {
+      "LE": 943,
+      "comb": 954,
+      "FF": 42,
+      "RAM_bits": 0
+    },
+    "hierarchy": {
+      "|nes_joint257:core|": {
+        "comb": 3052,
+        "FF": 987,
+        "RAM_bits": 49152
+      },
+      "|nes_output260:flow|": {
+        "comb": 3489,
+        "FF": 1797,
+        "RAM_bits": 41216
+      }
+    }
+  },
+  "ARM": {
+    "text": 2472,
+    "static_BSS": 312,
+    "observed_stack": 144,
+    "text_delta": 152,
+    "stack_delta": 8,
+    "extra_SPI_bytes": 43,
+    "instruction_delta_min": 2182,
+    "instruction_delta_max": 3043
+  },
+  "decision": "Time improves; logic increases943LE. Keep as executable direct-payload reference, not selected as60fps implementation.",
+  "open": [
+    "71-frame RTL replays actual Cortex-M4 E1 bytes; E0 refill, full RUN/IRQ and ROM contention are not coupled.",
+    "Ordinary execution is native C plus bus service allocation, not actual65816. ACK attests execution; sequential reads alone do not prove PPU writes.",
+    "900 master-clock DMA setup,400ns bus byte,560ns ordinary byte are allocations. Native C decode cycles are uncharged.",
+    "Final display ACK is a bus model without VBlank. New requirements/fence target65816 display context and RAM are not implemented.",
+    "C oracle metadata/event arrays/206B saved requirements are verification storage, not target allocation.",
+    "Partial scroll prefix and partial raw-tail granules are rejected by this candidate; no arbitrary scatter update support claim.",
+    "ARM serial sensitivity uses a separate endpoint poll model and CPI1; it is not a retimed critical path, upper bound or measured frame.",
+    "Source/core and transport still use shared CRC ownership; no full FIT/STA/CDC/IO,490LE40LAB baseline shortage remains.",
+    "CRC is not authentication or collision-free proof."
+  ],
+  "preserve": [
+    "production227",
+    "unplaced240/490LE40LAB shortage",
+    "GBC164",
+    "saveSRAM"
+  ]
+}

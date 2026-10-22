@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "stage": "NES266",
+  "date_kst": "2026-10-19",
+  "status": "R1_shared_display_local_time_area_gain_verified",
+  "pr": 130,
+  "branch": "codex/nes-wholepath-boundary-256",
+  "parent": "docs/nes-joint265-plan.json",
+  "contract": "docs/nes-joint266-contract.ko.md",
+  "evidence": "analysis/joint266-verification.json",
+  "selected": {
+    "normal": "test03",
+    "RTL_guards": "guards01",
+    "MAP": "map01",
+    "MAP_bound_cold": "test02",
+    "analysis": "analysis01",
+    "CPU": [
+      "cpu01",
+      "cpu02",
+      "cpu04"
+    ],
+    "ARM_reused": "nes-joint264/arm01"
+  },
+  "next_action": "266의 H2/phase-RAM 표시 경계를 유지하고, 실제 ARM E0 refill/IRQ·tile ROM 중재와 일반65816 명령/DMA를 같은 일정에 연결한다. 기존 보드의 실제 교체 목록·동시 수명·남는 제어를 확정한 뒤 whole-board Lite 자원 게이트를 수행한다. 부분 MAP의128LE를 기존490LE/40LAB 부족에서 빼지 않는다. 다음 후보는 잔여 admission/packet identity와 실제 소비 제어의 중복을 공동 제거하는 경계이며, 독립 FSM/opcode/seed/FIT 반복은 하지 않는다.",
+  "full_path_ms": null,
+  "P2_selected": false,
+  "whole_board_FIT": false,
+  "physical60fps": false,
+  "MAP": {
+    "prior265": {
+      "LE": 8277,
+      "comb": 6760,
+      "FF": 2924,
+      "RAM_bits": 90368
+    },
+    "replacement266": {
+      "LE": 8149,
+      "comb": 6830,
+      "FF": 2755,
+      "RAM_bits": 90368
+    },
+    "delta": {
+      "LE": -128,
+      "comb": 70,
+      "FF": -169,
+      "RAM_bits": 0
+    },
+    "hierarchy": {
+      "|nes_joint257:core|": {
+        "comb": 3177,
+        "FF": 991,
+        "RAM_bits": 49152
+      },
+      "|nes_output260:flow|": {
+        "comb": 3450,
+        "FF": 1664,
+        "RAM_bits": 41216
+      },
+      "|nes_queue260:queue|": {
+        "comb": 591,
+        "FF": 319,
+        "RAM_bits": 8192
+      }
+    },
+    "output_and_core_FSM_extracted": true,
+    "warning_counts": {
+      "265": {
+        "10335": 3,
+        "10230": 23,
+        "10764": 3,
+        "10036": 2,
+        "276027": 1,
+        "13024": 1,
+        "13410": 2
+      },
+      "266": {
+        "10335": 3,
+        "10230": 23,
+        "10764": 3,
+        "10036": 2,
+        "276027": 1,
+        "13024": 1,
+        "13410": 2
+      }
+    }
+  },
+  "limitations": [
+    "actual65816 display/HDMA/ACK only; ordinary and map transfers remain native C/bus model",
+    "HDMA WRAM fixture preload from independently verified metadata; no full rendered-frame pixel oracle",
+    "file RPC stretches RTL time; CPU/VBlank clocks are separate observations, not a full-frame bound",
+    "ARM E0 refill/IRQ and actual tile ROM arbitration not retimed; prior sensitivity is unmatched",
+    "Lite MAP partial integrated boundary, not whole FIT/STA/CDC/IO or recovery of whole240 deficit",
+    "recorded display cases mask18/raw2; raw0/mask1e branches are not new actual65816 evidence",
+    "264 single-packet active scroll prefix and aligned raw granule limitations retained"
+  ],
+  "preserve": [
+    "production227",
+    "GBC164",
+    "saveSRAM",
+    "240 unplaced reference"
+  ]
+}

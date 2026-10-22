@@ -1,0 +1,20 @@
+{
+  "stage": 292,
+  "status": "frontier_measured_controller_design_unproven",
+  "summary": "NES292: 기존 M4 ELF71프레임/2130step을 새로 추적했다. warm69 모두 첫 불변 E9 batch가 마지막 step29에서 나왔다. 중간batch 동결 가정32프레임 중31은16B blank만 조기종료, 실제그래픽 범위는930 하나다. native 명령/plan/DMA범위·생산명령수 일치/fixture0 PASS. 공동packet·receipt·manifest·retire17전이 설계와 확대경계 비용을 기록했다. 새RTL/전체일정/MAP/절감 없음;2263comb 부족 유지.",
+  "next_action": "BG row 완료 경계에서 pending batch를 확정해 실제 ARM refill/IRQ/ROM과 연결한다. 추가 E9·정렬·credit·변환시작·최초DMA·최종ACK·STOP 비용을 확인하고 blank-only24프레임도 비교한다. 조기 E9를 조기DMA로 간주하지 않는다. 공동 실행 제어의 공유 datapath와 bus/continuation/mux·독립 검사 비용을 포함해3451→1188 제거 근거를 확보하며, 불가능하면 source/plan을 포함한 역할 배치를 비교한다. 실질적인 공동 후보에만 matched whole Lite/normal71/heavy7/restricted를 적용한다.",
+  "selected": [
+    "frontier02",
+    "analysis01"
+  ],
+  "evidence": "analysis/joint292-verification.json",
+  "functional_reference": 289,
+  "performance_reference": 287,
+  "new_ARM_execution": true,
+  "new_ELF": false,
+  "new_RTL": false,
+  "new_MAP": false,
+  "new_schedule": false,
+  "P2_selected": false,
+  "retained_comb_deficit": 2263
+}

@@ -1,0 +1,18 @@
+state,guard,next,action,invariant
+HEAD,queue ready + admitted identity,READ_HEADER,hold head; reset packet CRC mask,no credit return
+READ_HEADER,registered byte valid and identity matches,ADMIT,advance one packet reader,retain qtag/latency
+ADMIT,H2/BEGIN/map/ordinary/manifest checks,EXECUTE,select operation and single continuation,retain independent bounds
+EXECUTE,ordinary command exposed,BUS_WAIT,enable bus observer and CRC tap,head and descriptor immutable
+BUS_WAIT,exact reads + ordered ACK + tap drained,RANGE_READ,admit independent receipt walk,ACK alone never retires
+EXECUTE,map chunk staged,DMA_WAIT,publish held token/length/first,retain aperture owner
+DMA_WAIT,exact reads + full token consume,RANGE_READ,admit map receipt walk,no staging-as-DMA shortcut
+RANGE_READ,RAM result registered,RANGE_TEST,capture coverage mask,CRC domain remains independent
+RANGE_TEST,no duplicate + raw CRC coverage,VALID_READ_OR_NEXT,write provisional receipt; read persistent validity if ordinary,fault blocks every write
+VALID_READ_OR_NEXT,required validity write complete,RANGE_READ_OR_COMPLETE,advance byte range or common completion,retain persistent map_end
+EXECUTE,manifest literal or decoded RLE byte available,MANIFEST_READ,hold value and expanded index,compressed/expanded cursors distinct
+MANIFEST_READ,all required RAM comparisons pass,MANIFEST_NEXT,advance expanded cursor and return to decoder,422-byte/cold/raw0 checks retained
+COMPLETE,more map ranges in same packet,READ_DESCRIPTOR,advance token and descriptor,keep credit until last range
+COMPLETE,"whole command valid, not final display",RETIRE,one qretire and packet sequence advance,tap and RAM work finished
+EXECUTE,manifest complete + H2/digest/certificate valid,DISPLAY,seal and supply 12 byte H2 view,retain RAM read latency
+DISPLAY,12 exact reads + full final token + empty queue/owner,FINAL_ACK,existing mailbox then lease return,packet ACK cannot substitute
+ANY,STOP/fault,FAULT,"gate RAM writes, invalidate, burn allocated tokens",no stale callback or ACK resumes execution

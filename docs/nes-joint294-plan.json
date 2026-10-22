@@ -1,0 +1,25 @@
+{
+  "stage": 294,
+  "status": "early_DMA_connected_candidate_not_adopted",
+  "summary": "NES294 BG batch와 증분 native DMA 연결 후보 미채택. native71 plan/1039명령73260B 일치·fixture0,STOP/생산실패/H2/IRQ 및 정상·제한3씩 최종ACK PASS. warm69 중32개 조기DMA,31개는16B blank뿐. 정상907 15.423360ms(289대비+0.108362),제한907 18.093828ms(+0.094181),초과1.427162ms. RTL287 동일/회로절감0/2263comb부족;새MAP 없음.",
+  "next_action": "기존 append-불일치/최종END만으로는 마지막 BG range가 열려 남는다. 다음은 frame END와 구분되는 BG range 완료 계약을 ARM descriptor 생산과 FPGA aperture/receipt 소유권에 함께 연결하는 안과,출력/plan 제어를 단일 실행기로 대체하는 안을 비교한다. 기존 END를 중간에 재사용하거나 blank 선행DMA를 BG 개선으로 계산하지 않는다. 새 marker·CDC·token·credit 비용까지 포함해 기존 제어 제거 목록과4853→2590 예산 근거를 먼저 확정한다. 독립 pre-DMA bounds/실소비CRC/receipt/manifest/STOP/최종ACK를 유지하고,실질적 공동 후보에만 whole Lite·normal71/heavy7/restricted를 실행한다.",
+  "selected": [
+    "native01",
+    "guards01",
+    "h2guard01",
+    "bg-guards02",
+    "irq-guards01",
+    "test01",
+    "window01",
+    "analysis02"
+  ],
+  "evidence": "analysis/joint294-verification.json",
+  "functional_reference": 289,
+  "performance_reference": 287,
+  "new_ELF": true,
+  "new_RTL": false,
+  "new_MAP": false,
+  "full_schedule71": false,
+  "comb_deficit": 2263,
+  "P2_selected": false
+}

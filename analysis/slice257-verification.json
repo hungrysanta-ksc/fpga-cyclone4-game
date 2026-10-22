@@ -1,0 +1,224 @@
+{
+  "passed": true,
+  "stage": "R1_first_slice_complete_full_R1_open",
+  "selected": {
+    "test": "test06",
+    "map": "map03"
+  },
+  "scope": "frame905 bank0 map words0..31; actual collector/source/SPI, output packet/queue/parser/aperture, Mesen65816 DMA/VRAM, receipt/seal/display ACK",
+  "source": {
+    "canonical_bytes": 4398,
+    "SPI_payload_bytes": 5597
+  },
+  "cpu": {
+    "passed": true,
+    "dma_bytes": 64,
+    "dma_start_master": 1130,
+    "consume_master": 2010,
+    "final_ack_master": 307316
+  },
+  "rom_body_bytes": 180,
+  "events_NES_ticks": {
+    "input_done": 738361,
+    "staged": 760957,
+    "dma_done_range": 761897,
+    "receipt": 761910,
+    "sealed": 789509,
+    "display_ack": 790709
+  },
+  "DMA_reads": {
+    "bytes": 64,
+    "first_master": 1164,
+    "last_master": 1668,
+    "stride_master": 8
+  },
+  "timing": {
+    "domain_relation": "logical RPC, host bus 200ns active +200ns release; poll-zero advances RTL100us; no common physical timeline",
+    "DMA_start_to_consume_master": 880,
+    "DMA_range_to_receipt_NES_ticks": 13,
+    "whole_frame_bound_ms": null,
+    "sixty_fps": false
+  },
+  "guards": [
+    {
+      "case": 1,
+      "fault": 4,
+      "description": "consume without DMA reads"
+    },
+    {
+      "case": 2,
+      "fault": 4,
+      "description": "wrong consume token after64 reads"
+    },
+    {
+      "case": 3,
+      "fault": 4,
+      "description": "final ACK before DMA/receipt/seal"
+    },
+    {
+      "case": 4,
+      "fault": 4,
+      "description": "STOP after8 DMA reads"
+    },
+    {
+      "case": 5,
+      "fault": 2,
+      "description": "display generation mismatch after input release"
+    },
+    {
+      "case": 6,
+      "fault": 4,
+      "description": "duplicate consume after receipt"
+    },
+    {
+      "case": 7,
+      "fault": 4,
+      "description": "bad E1 packet CRC"
+    },
+    {
+      "case": 8,
+      "fault": 4,
+      "description": "packet generation mismatch"
+    },
+    {
+      "case": 9,
+      "fault": 4,
+      "description": "packet bank mismatch"
+    }
+  ],
+  "area": {
+    "logic_elements": 1947,
+    "comb": 1068,
+    "registers": 1098,
+    "memory_bits": 40960,
+    "tool": "Quartus25.1std Lite Build1129",
+    "inclusive": true,
+    "incremental_cost": null,
+    "ordinary_ACK_pruned": true,
+    "source_core_and_lease_outside_MAP": true,
+    "whole_fit": false,
+    "STA": false,
+    "RAM_inferred": "1024x8 queue +4096x8 aperture, both M9K; no placement proof",
+    "local_top_comb": 481,
+    "local_top_FF": 460,
+    "mailboxes_comb": 25,
+    "mailboxes_FF": 174,
+    "warnings": "async_reg unrecognized including retained206; reset-loop index j latch warning; six constant range_count pins"
+  },
+  "limitations": [
+    "other90 ranges/8224 bytes and H2/manifest are255 fixtures, not new SPI/SNES path",
+    "diagnostic180B consumer body; actual bank register write and VRAM verified, not full rendered game image",
+    "single identity/range/session only; ordinary head arbitration, multi-bank/restart/token freshness, tile aperture sharing remain open",
+    "collector released, but next capture overlap not exercised",
+    "full ARM serializer/RUN/IRQ, heavy7/71frames, board CDC/IO/STA, physical60fps remain open"
+  ],
+  "history": {
+    "test01": "compile declarations/syntax failure",
+    "test02": "Tcl radix bus error and CPU timeout",
+    "test03": "normal logical coupling PASS",
+    "test04": "normal RTL PASS, final RPC non-atomic reply race",
+    "test05": "normal + guards1..4 PASS; guard5 found uncleared display lease",
+    "test06": "common STOP includes core fault; normal +all9 PASS",
+    "map01": "Standard evaluation expired before synthesis in sandbox",
+    "map02": "same expiry before synthesis on host",
+    "map03": "one actual MAP with installed Lite"
+  },
+  "rtl_hashes": {
+    "nes_core257.sv": "6ca389cc8d0790d5dcbca16e33fd2823ea48244ddfff126ea4a5aaa2f28ab122",
+    "nes_transport257.sv": "1142dd2945671d0ae1ff7763c82b51330b95fc4624d0a1bb52bd6c8081f981fa",
+    "nes_joint257.sv": "7b701bfdf9e89cfc9c1f29ced21e5dab3743d368a1554af73455686ae258abfe",
+    "nes_queue257.sv": "2c5f6057af1ff63de14b5c2db24c91e98334eddab5e7852f74290f8caaa5e2a9",
+    "nes_range257.sv": "a9cb8bc79341d9887006ead35cceac1271467c9be67bfb5d099e33afd020cd40",
+    "nes_native_frame201.sv": "2c3fd46c4c4f1e3be6619da71abafe8d56d85b5273067f5d70f74783cb0bf64c",
+    "nes_native_planes165.sv": "5ffb80c410948eff320e94ed2676a73c04780a46cbfb53e3acda181d316a999a",
+    "nes_patch_capture181.sv": "a4730979575696afde9e8aa5911a67fbf6404c96f609da02def8e76e831c5984",
+    "nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+    "nes_native_compact181.sv": "b6134f4264eed933ed830489239273e682a0494cd36345def1c135f11e3c8bde",
+    "nes_native_raster181.sv": "25f9762f7f0842dacf5915804f398f71b9ed5e9b54edd99f4ad1ce5423ae8b95",
+    "nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "nes_capture_lease201.sv": "c3f95b8e7b56afbe65e3484e1006d4fc2c54b6e47407bf32124d8ae461fb7f61",
+    "nes_bulk_aperture188.sv": "fdc4e32278fbeab002b74ffbcac84951a346e11469c7fa2d332d0b74861bf466"
+  },
+  "provenance": {
+    "probes/nes-slice257/test06/result.json": "9c7d1e24d6d243ee953da8490027a5aaabdc57955948f6c988fe3c1f2a7cb3ad",
+    "probes/nes-slice257/map03/result.json": "db1a7a40b469d51b64414fbf722dab3b7f46c37af34c51625b65c1bfaba221d8",
+    "probes/nes-slice257/test06/nes_core257.sv": "6ca389cc8d0790d5dcbca16e33fd2823ea48244ddfff126ea4a5aaa2f28ab122",
+    "probes/nes-slice257/test06/nes_transport257.sv": "1142dd2945671d0ae1ff7763c82b51330b95fc4624d0a1bb52bd6c8081f981fa",
+    "probes/nes-slice257/test06/nes_joint257.sv": "7b701bfdf9e89cfc9c1f29ced21e5dab3743d368a1554af73455686ae258abfe",
+    "probes/nes-slice257/test06/nes_queue257.sv": "2c5f6057af1ff63de14b5c2db24c91e98334eddab5e7852f74290f8caaa5e2a9",
+    "probes/nes-slice257/test06/nes_range257.sv": "a9cb8bc79341d9887006ead35cceac1271467c9be67bfb5d099e33afd020cd40",
+    "probes/nes-slice257/test06/nes_native_frame201.sv": "2c3fd46c4c4f1e3be6619da71abafe8d56d85b5273067f5d70f74783cb0bf64c",
+    "probes/nes-slice257/test06/nes_native_planes165.sv": "5ffb80c410948eff320e94ed2676a73c04780a46cbfb53e3acda181d316a999a",
+    "probes/nes-slice257/test06/nes_patch_capture181.sv": "a4730979575696afde9e8aa5911a67fbf6404c96f609da02def8e76e831c5984",
+    "probes/nes-slice257/test06/nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+    "probes/nes-slice257/test06/nes_native_compact181.sv": "b6134f4264eed933ed830489239273e682a0494cd36345def1c135f11e3c8bde",
+    "probes/nes-slice257/test06/nes_native_raster181.sv": "25f9762f7f0842dacf5915804f398f71b9ed5e9b54edd99f4ad1ce5423ae8b95",
+    "probes/nes-slice257/test06/nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "probes/nes-slice257/test06/nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "probes/nes-slice257/test06/nes_capture_lease201.sv": "c3f95b8e7b56afbe65e3484e1006d4fc2c54b6e47407bf32124d8ae461fb7f61",
+    "probes/nes-slice257/test06/nes_bulk_aperture188.sv": "fdc4e32278fbeab002b74ffbcac84951a346e11469c7fa2d332d0b74861bf466",
+    "probes/nes-slice257/map03/nes_range257.sv": "a9cb8bc79341d9887006ead35cceac1271467c9be67bfb5d099e33afd020cd40",
+    "probes/nes-slice257/map03/nes_queue257.sv": "2c5f6057af1ff63de14b5c2db24c91e98334eddab5e7852f74290f8caaa5e2a9",
+    "probes/nes-slice257/map03/nes_bulk_aperture188.sv": "fdc4e32278fbeab002b74ffbcac84951a346e11469c7fa2d332d0b74861bf466",
+    "probes/nes-slice257/map03/nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "probes/nes-slice257/map03/nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "probes/nes-counter224/mapfit02/nes_native_frame201.sv": "2c3fd46c4c4f1e3be6619da71abafe8d56d85b5273067f5d70f74783cb0bf64c",
+    "probes/nes-counter224/mapfit02/nes_native_planes165.sv": "5ffb80c410948eff320e94ed2676a73c04780a46cbfb53e3acda181d316a999a",
+    "probes/nes-counter224/mapfit02/nes_patch_capture181.sv": "a4730979575696afde9e8aa5911a67fbf6404c96f609da02def8e76e831c5984",
+    "probes/nes-counter224/mapfit02/nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+    "probes/nes-counter224/mapfit02/nes_native_compact181.sv": "b6134f4264eed933ed830489239273e682a0494cd36345def1c135f11e3c8bde",
+    "probes/nes-counter224/mapfit02/nes_native_raster181.sv": "25f9762f7f0842dacf5915804f398f71b9ed5e9b54edd99f4ad1ce5423ae8b95",
+    "probes/nes-counter224/mapfit02/nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "probes/nes-counter224/mapfit02/nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "repository-nes-milestone/src/nes/rtl/nes_capture_lease201.sv": "c3f95b8e7b56afbe65e3484e1006d4fc2c54b6e47407bf32124d8ae461fb7f61",
+    "repository-nes-milestone/src/nes/rtl/nes_bulk_aperture188.sv": "fdc4e32278fbeab002b74ffbcac84951a346e11469c7fa2d332d0b74861bf466",
+    "probes/nes-joint255/test03/commands.hex": "c4b288f96a8cf25b25aaf4e6ed86de8be273831d23941e9d02411c393dcb6f4f",
+    "probes/nes-joint255/test03/expected.hex": "ceb8f024f9a8b151f830ddbeb70b85d13c24cc5ad99977f189b8a05f9c04eaa0",
+    "probes/nes-joint255/test03/certs.hex": "d021da9df5e119530729a86b893bd28cfb32819b48c059129c93dfb75df98f4a",
+    "probes/nes-joint255/test03/hashes.hex": "f6c0ba7a833270ea23d4f6e32af2823091db89bfe6d1e2379d7f1ac58f4c8361",
+    "probes/nes-joint255/test03/stream.hex": "3138a5933c7508d7f550e99d199b17ab6cf17b50f0158d4da10b8ebcc8c6ba61",
+    "probes/nes-joint255/test03/sink.hex": "7d591e299b59e50f34c211520d71ef223ee3d2edfd715072ca5a6c833049af9f",
+    "probes/nes-joint255/test03/frame905.hex": "dd80c77a6d60ae3e60d3b7b9b78ac2094942321593a8f29784457dda5dcb2dcd",
+    "probes/nes-joint255/test03/frame905.palette": "685c3c874cfff2b9ee2c6eae1fbc67f2e31e040ea5285d35ab7f419bffc39094",
+    "probes/nes-joint255/test03/frame905.expected": "3cd9912d1c00eb3bad1cf69c090dc3e7de23ff071091bc0bb7a55f814a173e01",
+    "repository-nes-milestone/tools/nes_slice257.py": "4da35dd887c541b44753c1f344265a936e7955f05319b7bf834d92f8679d72ac",
+    "repository-nes-milestone/tools/probe_nes_slice257.py": "a848d85c54158d33b51f624c6ea5b3c58ed7ea4c1889e0f4ebbc8310239e98ff",
+    "probes/nes-slice257/test06/blocks.txt": "cd5d6bf6b6415c670d4aa3a79531517bd4a380d59d6ed71ecc0465129bcbb7e6",
+    "probes/nes-joint249/blocktest03/frame905.meta": "12bb32a271212518798a7fec8516d53efc47bd80cbae065c96cc325ec3ae2ed9",
+    "probes/nes-joint249/blocktest03/frame905.expected.hex": "2a7bbaeb93c091f097e947ea6a9cd5d7e01502d6ffe8d0c622d71a8d6f189ca5",
+    "probes/nes-slice257/test06/events.csv": "983ddab8112fe800185438dda0c5d06266b9a8a08c9c56328831a33af8fe75f7",
+    "probes/nes-slice257/test06/cpu-bus.csv": "17e88be04c0bb3538a35f48e83ab22a9e2ff07d1f44a9eb7f5a24a699d19d2ae",
+    "probes/nes-slice257/test06/selected.hex": "c7f9a9698bda40341af23338c4a7b0c5ce0d314b380688151d7df1d17efeb9fc",
+    "probes/nes-slice257/test06/cpu-result.json": "e22cca1620f94f79f5e64270b9e676863958e41c70d6252cf42f14158410e97b",
+    "probes/nes-slice257/test06/vsim.log": "99274ee6067ad755fb914a80f32a5d84293e3d5744849e76cec45900f7ef37d9",
+    "probes/nes-slice257/test06/vlog.log": "a3e714ea1c736ead5b814ec987cf57cbb6315a24267daf1445e1d7a09f1a468e",
+    "probes/nes-slice257/test06/capture.lua": "66f4ab0260655b08d76eca063e3de02d4aa42eee999616773506bd9b51b652ac",
+    "probes/nes-slice257/test06/rpc.do": "880ab5812fece5cc00f9d70b85a0d867d89af9482e84f7d1fd2ae4da8cb66786",
+    "probes/nes-slice257/test06/slice257_tb.sv": "36fb3c57aa214042208c94454356f477690d4c59477abc29d129cc6248d3da41",
+    "probes/nes-slice257/test06/cycles.csv": "4a0143bd304c9834ac9994b7ef546e0d20daf273c80f83ebb2c35d0d9882d5fc",
+    "probes/nes-slice257/test06/stream-cycles.csv": "5bf3a7623530d12cbfd648d90412a4b80f4b5ccedfaf3b16aeedc2b178fbaedc",
+    "probes/nes-slice257/test06/output-cycles.csv": "beacda31572affe3ea6e7fe86da8ee3e0905ef7af324c8e76141faa71084606b",
+    "probes/nes-slice257/test06/guard01/vsim.log": "d4222782fd7ae776c66daad3513f53be9a0ec837d79bb01abfefd098eb4d4860",
+    "probes/nes-slice257/test06/guard01/guard.do": "5ae9c2ffc9f614789e6e3b76dc8074864edfa30efcac04a23ec0992b1f4f1ad4",
+    "probes/nes-slice257/test06/guard02/vsim.log": "39ca9bdd1272d30f689638266911f7268ab7122b74296373aaa795a78e700a44",
+    "probes/nes-slice257/test06/guard02/guard.do": "b06af3dd56b5d2f313ab8bb2c67231c4f42e90fc9510ccc72e878a44aafc2c54",
+    "probes/nes-slice257/test06/guard03/vsim.log": "12964027294ce5f77f9b83063db48d83a54859e66afed9a6a75d4fa56b1e1da9",
+    "probes/nes-slice257/test06/guard03/guard.do": "b4d0f51a49a07cabfda29e2b429c85bd964f881d6f5b717d88e70fc27c53e4cb",
+    "probes/nes-slice257/test06/guard04/vsim.log": "24005e040bbc36d3083178f15add8e60cc288a0f1972409fd244bdc16e080139",
+    "probes/nes-slice257/test06/guard04/guard.do": "fb702baafcadd9c7b513ac43fae1d73a14fcb32e772e0da3eaad23e855151488",
+    "probes/nes-slice257/test06/guard05/vsim.log": "6aecd506075ff90b40fa698538fe39db37e5f7b158e2253110a7e737aea3f07d",
+    "probes/nes-slice257/test06/guard05/guard.do": "6974fb17af393302129ae7550f26f98b0da202d5b1920b63e5b04e93a93b6042",
+    "probes/nes-slice257/test06/guard06/vsim.log": "d40ce76a7cc732b844dacc777c7ab776cd6577456f9859102e280cd28893333c",
+    "probes/nes-slice257/test06/guard06/guard.do": "0ba50dfd11f25b4483234b219aa457195b5864d6dffe99906f87e282a04d442d",
+    "probes/nes-slice257/test06/guard07/vsim.log": "988770324436686a7c4d945ab8d7f023fae2980891c9a45bc26cda33d09c07d9",
+    "probes/nes-slice257/test06/guard07/guard.do": "4ae8938e5859e790c782635095368515d9b8da131433f4e656da3d5f8fb7fc45",
+    "probes/nes-slice257/test06/guard08/vsim.log": "ba8ac73e5525436dcd48ba0d7da5dbd6b18f49d6aefa52ad54eed893f00e288a",
+    "probes/nes-slice257/test06/guard08/guard.do": "1928651149e892bfc16882016e5273f67a1d2ba9b0a38f85564c285f956ddafe",
+    "probes/nes-slice257/test06/guard09/vsim.log": "39b3e5c725808084dbab1ececcb9fb074ee50ebef28048be127d67bb11987877",
+    "probes/nes-slice257/test06/guard09/guard.do": "02bc13458596354d68730188e4cb5278055ba519682a10bf774b03ea05ec1817",
+    "probes/nes-slice257/map03/map.log": "98b7d0ad31d0f0bb01fe9747cc9a326bce529d307829bd8ae71bece4cd087144",
+    "probes/nes-slice257/map03/output_files/range.map.rpt": "efd814913035799359cc6460838c8e03d53129b97d33115b7e2189449d0dd699",
+    "probes/nes-slice257/map03/output_files/range.map.summary": "1cbb82481bc99e9204d487e75e33f5df772ab6b66c0d06a65b507725072dee9d"
+  }
+}

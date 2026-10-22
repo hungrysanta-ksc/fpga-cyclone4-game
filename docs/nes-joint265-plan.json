@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "stage": "NES265",
+  "date_kst": "2026-10-19",
+  "status": "R1_header_ACK_replacement_verified_area_gate_failed",
+  "pr": 130,
+  "branch": "codex/nes-wholepath-boundary-256",
+  "parent": "docs/nes-joint264-plan.json",
+  "contract": "docs/nes-joint265-contract.ko.md",
+  "evidence": "analysis/joint265-verification.json",
+  "selected": {
+    "normal": "test04",
+    "RTL_guards": "guards01",
+    "MAP": "map01",
+    "MAP_bound_cold": "test03",
+    "analysis": "analysis02",
+    "ARM_reused": "nes-joint264/arm01"
+  },
+  "next_action": "24B 표시 문맥의 의미·H2 결합과 실제65816 설정/최종 VBlank ACK를 먼저 확정하고, 문맥·parser 상태를 기존 phase RAM에 함께 넣는 교체 경계의 포트/수명/전체 비용을 비교한다. ACK 12B 축소는 stale serial/generation/sequence 방어를 유지할 때만 후보로 삼는다. ARM E0 refill/IRQ와 실제 tile ROM 중재를 같은 일정에 연결해 전체 시간·회로 게이트를 확인한다. 단독 FSM/opcode/seed/FIT 반복이나 개별 계층 절감의 보드 회수 환산은 하지 않는다.",
+  "full_path_ms": null,
+  "P2_selected": false,
+  "whole_board_FIT": false,
+  "physical60fps": false,
+  "MAP": {
+    "prior264": {
+      "LE": 8230,
+      "comb": 6745,
+      "FF": 2884,
+      "RAM_bits": 90368
+    },
+    "replacement265": {
+      "LE": 8277,
+      "comb": 6760,
+      "FF": 2924,
+      "RAM_bits": 90368
+    },
+    "delta": {
+      "LE": 47,
+      "comb": 15,
+      "FF": 40,
+      "RAM_bits": 0
+    },
+    "hierarchy": {
+      "|nes_joint257:core|": {
+        "comb": 3041,
+        "FF": 987,
+        "RAM_bits": 49152
+      },
+      "|nes_output260:flow|": {
+        "comb": 3523,
+        "FF": 1837,
+        "RAM_bits": 41216
+      },
+      "|nes_queue260:queue|": {
+        "comb": 586,
+        "FF": 319,
+        "RAM_bits": 8192
+      }
+    },
+    "output_FSM_extracted": true
+  },
+  "limitations": [
+    "native C ordinary execution; no actual general65816 or PPU display configuration application",
+    "24 byte display context transport/read coverage verified, semantic binding to H2 and target register programming remain open",
+    "ARM E0 refill/IRQ and tile ROM arbitration not retimed; serial sensitivity is not a bound",
+    "Lite MAP partial integrated boundary, not whole FIT/STA/CDC/IO; no allocation-free display context",
+    "264 single-packet active scroll prefix and aligned raw granule limitations retained"
+  ],
+  "preserve": [
+    "production227",
+    "GBC164",
+    "saveSRAM",
+    "240 unplaced reference",
+    "264 direct-payload evidence"
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "stage": "NES272",
+  "date_kst": "2026-10-20",
+  "status": "R1_ordinary_parser_relocation_and_source_context_sharing_rejected",
+  "pr": 130,
+  "branch": "codex/nes-wholepath-boundary-256",
+  "parent": "docs/nes-joint271-plan.json",
+  "contract": "docs/nes-joint272-contract.ko.md",
+  "evidence": "analysis/joint272-verification.json",
+  "selected": [
+    "test02",
+    "test03",
+    "window02",
+    "guards01",
+    "board01",
+    "board02",
+    "analysis01"
+  ],
+  "next_action": "272 A/B의 단순 clock 이동·source FF 공유는 전체 회로 게이트 실패로 채택하지 않는다. 270 기준에서 host admission/map/NES parser 사이 문맥·cursor·continuation을 제거하는 단일 source/receipt/parser 실행 제어와 ARM 생산 primitive 표현을 비교한다. header·descriptor까지 포함한 동일 전체 경계, ARM 추가 명령·wire/refill/IRQ·ROM 경쟁·SNES polling 및 RAM port/CDC/receipt/STOP/final ACK를 함께 계산한다. core+host4654->2382,전체6486->4214이하+배치여유 필요;272 부분 실패를 전체 교체 불가능으로 일반화하지 않는다. phaseRAM170B에256Bpacket복사 금지. 구조상 절감 경로가 없으면 역할/전송표현을 바꾼다. seed/encoding/FIT/poll상수 반복 금지. fullRUN/activeVBlank/wholeCDCIOSTA/실기 별도.",
+  "decision": "Reject both slices for adoption: NES interpreter relocation and source register reuse do not recover whole-board combinational area.",
+  "MAP": {
+    "areas": {
+      "270": {
+        "LE": 22487,
+        "comb": 17680,
+        "FF": 8892,
+        "RAM_bits": 303712
+      },
+      "A": {
+        "LE": 22767,
+        "comb": 17834,
+        "FF": 9052,
+        "RAM_bits": 303712
+      },
+      "B": {
+        "LE": 22726,
+        "comb": 17945,
+        "FF": 8943,
+        "RAM_bits": 303712
+      }
+    },
+    "deltaA270": {
+      "LE": 280,
+      "comb": 154,
+      "FF": 160,
+      "RAM_bits": 0
+    },
+    "deltaB270": {
+      "LE": 239,
+      "comb": 265,
+      "FF": 51,
+      "RAM_bits": 0
+    },
+    "deltaBA": {
+      "LE": -41,
+      "comb": 111,
+      "FF": -109,
+      "RAM_bits": 0
+    },
+    "comb_deficit": {
+      "270": 2272,
+      "A": 2426,
+      "B": 2537
+    },
+    "FIT": false,
+    "STA": false
+  },
+  "warm907": [
+    {
+      "variant": "A",
+      "mode": "normal",
+      "frame": 907,
+      "source_ms": 4.083950992,
+      "output_ms": 7.459728664,
+      "serial_ms": 11.543679656,
+      "gap_ms": -5.122987010666668,
+      "E0": 4,
+      "E2": 78,
+      "E1": 15,
+      "E8": 4,
+      "SPI_bytes": 1687,
+      "instructions": 124308,
+      "delta270_ms": 0.0,
+      "delta270_instructions": 0,
+      "delta270_E2": 0,
+      "delta270_E8": 0,
+      "delta270_SPI_bytes": 0
+    },
+    {
+      "variant": "B",
+      "mode": "normal",
+      "frame": 907,
+      "source_ms": 4.083950992,
+      "output_ms": 7.459728664,
+      "serial_ms": 11.543679656,
+      "gap_ms": -5.122987010666668,
+      "E0": 4,
+      "E2": 78,
+      "E1": 15,
+      "E8": 4,
+      "SPI_bytes": 1687,
+      "instructions": 124308,
+      "delta270_ms": 0.0,
+      "delta270_instructions": 0,
+      "delta270_E2": 0,
+      "delta270_E8": 0,
+      "delta270_SPI_bytes": 0
+    },
+    {
+      "variant": "B",
+      "mode": "restricted",
+      "frame": 907,
+      "source_ms": 4.083950992,
+      "output_ms": 16.073034394,
+      "serial_ms": 20.156985386000002,
+      "gap_ms": 3.4903187193333345,
+      "E0": 4,
+      "E2": 283,
+      "E1": 15,
+      "E8": 4,
+      "SPI_bytes": 3532,
+      "instructions": 237672,
+      "delta270_ms": -0.12604394199999547,
+      "delta270_instructions": -1659,
+      "delta270_E2": -3,
+      "delta270_E8": 0,
+      "delta270_SPI_bytes": -27
+    }
+  ],
+  "new_frame_executions": 9,
+  "new_full71": false,
+  "partial_boundary": true,
+  "host_header_and_map_retained": true,
+  "single_FSM": false,
+  "phase_RAM_chunk_buffer": false,
+  "source_register_shared_bits": 120,
+  "full_path_ms": null,
+  "P2_selected": false,
+  "limitations": [
+    "Only905..907 newly executed, not heavy954 or a new71-frame sweep.",
+    "CPI1/service IRQ bodies, not actual MCU cycles/full RUN/NVIC.",
+    "65816 ordinary bus traces, modeled map/tile/final display and synthetic ROM contenders.",
+    "Host admission and typed-map parser retained; not the complete271 removal boundary.",
+    "No phase RAM header/chunk buffering or single source/parser/receipt FSM proof.",
+    "Source input context sharing is phase gated; no independent endpoint-reset claim."
+  ]
+}

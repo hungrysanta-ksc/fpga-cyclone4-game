@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "stage": "NES261",
+  "status": "R1_map_core_joined_area_and_full_path_gate_open",
+  "date_kst": "2026-10-19",
+  "pr": 130,
+  "branch": "codex/nes-wholepath-boundary-256",
+  "parent": "docs/nes-batch260-plan.json",
+  "contract": "docs/nes-joint261-contract.ko.md",
+  "evidence": "analysis/joint261-verification.json",
+  "selected": {
+    "joint": "test05",
+    "single": "single02",
+    "cpu": "cpu02",
+    "map": "map01",
+    "analysis": "analysis01"
+  },
+  "completed": [
+    "Actual collector/query/source/sharedCRC plus batch parser/receipt/display lease on sharedSPI",
+    "Actual ARM260 map descriptors and packet splits; all71 per-bank map reconstruction",
+    "Common STOP and DMA/token/finalACK guards",
+    "Actual65816 cold full-map DMA/VRAM/VBlank/lease retirement",
+    "One matching-source Quartus Lite integrated MAP and explicit replacement ledger"
+  ],
+  "next_action": "실제65816 dispatch/token/refresh 계측으로 기존500setup 배정을 교체한다. H2 prelude/context 시점과 일반 출력 packet→core stream/manifest 생산 경계를 확정하고, 기존 source+output 제어를 함께 제거할 구조를 전체 비용으로 비교한다. 단순 결합은 장부상 +2129comb/+605FF로 회로 여유를 입증하지 못했다. full ARM N5/planner/RUN/IRQ·실제65816 전체명령·tile192/ROM 중재를 포함한 시간/회로 게이트가 성립한 뒤에만 whole FIT/STA로 진행한다.",
+  "open": [
+    "Non-map stream/H2/context/manifest producers still fixtures; actual ARM H2 is late while core needs context before begin",
+    "ARM260 original batches replayed with sequence/token rebound; no full ARM N5/planner/RUN/IRQ",
+    "SNES all ordinary commands/HDMA/OAM/full displayed frame",
+    "tile192/ROM arbiter contention and next collector capture overlap",
+    "whole board FIT/STA/CDC/IO mapper margin",
+    "physical60fps"
+  ],
+  "P2_selected": false,
+  "production": "227/GBC164/saveSRAM unchanged",
+  "quartus_policy": "Lite only; existing Questa FLOAT workflow",
+  "preserved_experiments": {
+    "test01": "testbench forward declaration compile failure",
+    "test03": "prior gap16 manifest differs from ARM260 sparse descriptors; frame914 correctly rejected",
+    "test04": "71 frames/6guards PASS with one-packet producer, cold pipeline regression recorded",
+    "single01": "same one-packet producer op12 reference on905..907",
+    "cpu01": "Windows request-file sharing error atreq291; no RTL assertion failure",
+    "test02": "first cold pass; exact RTL binding for the sole Lite MAP"
+  },
+  "actual_CPU_beyond_nominal_DMA_clocks": [
+    900,
+    948
+  ],
+  "shared_SPI_CPI2_900_serial_sensitivity_ms": 17.45535493524873
+}

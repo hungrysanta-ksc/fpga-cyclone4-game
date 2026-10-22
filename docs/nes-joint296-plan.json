@@ -1,0 +1,26 @@
+{
+  "stage": 296,
+  "status": "wait_service_improves_time_joint_cursor_area_rejected",
+  "summary": "NES296 DMA 대기 중 OBJ planner 공급·공동 cursor 후보 미채택. native71 plan/1039명령73260B 유지; 실제 ARM/IRQ/ROM 정상·제한3씩과 독립 오류검사 PASS. 정상907 15.473814ms, 제한907 17.468381ms(295대비-14.747959ms),60Hz 초과0.801715ms. Lite22644LE/17744comb/9002FF/307808bits: +41comb/-27FF/2336부족. 시간 회귀는 줄었으나 회로 공유는 반려.",
+  "next_action": "시간 개선 대기 서비스와 반려한 cursor 공유 RTL을 분리해295의 원래 제어에서 실제 일정을 먼저 확인한다. 그다음 packet read·descriptor·manifest·receipt 공동 실행 front-end가 없앨 decode/주소/control mux와 retained CRC tap·RAM port·CDC를 고정 예산으로 제시한다. 현재4879→2543(2336comb 감소) 근거 없이 scalar cursor/FSM/marker 바이트의 MAP 반복을 하지 않는다. 독립 검사·4credit/2planbank·STOP·최종ACK 유지. 실질적 공동 제거 근거가 있는 후보에만 normal71/heavy7/restricted/wholeLite/FITSTA를 확대한다.",
+  "selected": [
+    "native01",
+    "armguard01",
+    "h2guard01",
+    "irqguard01",
+    "test02",
+    "window02",
+    "guards01",
+    "board01",
+    "analysis01"
+  ],
+  "evidence": "analysis/joint296-verification.json",
+  "functional_reference": 289,
+  "performance_reference": 287,
+  "new_ELF": true,
+  "new_RTL": true,
+  "new_MAP": true,
+  "full_schedule71": false,
+  "comb_deficit": 2336,
+  "P2_selected": false
+}

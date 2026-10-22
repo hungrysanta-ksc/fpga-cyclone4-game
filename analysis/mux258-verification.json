@@ -1,0 +1,400 @@
+{
+  "passed": true,
+  "stage": "R1_bounded_arbitration_complete_full_R1_open",
+  "selected": {
+    "unit": "test07",
+    "coupled": "coupled05",
+    "reference": "reference02",
+    "maps": [
+      "map-separate02",
+      "map-shared02"
+    ],
+    "timeout_negative": "timeout01"
+  },
+  "scope": "ordinary16B header ACK + actual206 tile producer + typed64B map, one queue and exclusive staging lease; bounded source257/receipt/Mesen join",
+  "area": {
+    "boundary": "nes_mux258 inclusive output adapter; source/core/capture lease/upstream tile192 excluded",
+    "separate": {
+      "LE": 3559,
+      "comb": 2177,
+      "FF": 1922,
+      "RAM_bits": 73984
+    },
+    "shared": {
+      "LE": 3319,
+      "comb": 2062,
+      "FF": 1751,
+      "RAM_bits": 41216
+    },
+    "shared_minus_separate": {
+      "LE": -240,
+      "comb": -115,
+      "FF": -171,
+      "RAM_bits": -32768
+    },
+    "schedule": "identical serialized ownership; concurrent dual-aperture reference not evaluated",
+    "whole_FIT": false,
+    "STA": false
+  },
+  "normal": [
+    {
+      "shared": 0,
+      "guard": 0,
+      "ticks": 137315,
+      "bytes": 288,
+      "receipts": 4,
+      "ordinary": 2,
+      "map_wait_tile": 2282,
+      "ordinary_hold": 61210,
+      "ack_check": 36
+    },
+    {
+      "shared": 1,
+      "guard": 0,
+      "ticks": 137315,
+      "bytes": 288,
+      "receipts": 4,
+      "ordinary": 2,
+      "map_wait_tile": 2282,
+      "ordinary_hold": 61210,
+      "ack_check": 36
+    }
+  ],
+  "guards": [
+    {
+      "case": 1,
+      "description": "wrong consume token after complete DMA",
+      "passed_both_variants": true
+    },
+    {
+      "case": 2,
+      "description": "stale map token after bank/identity reuse",
+      "passed_both_variants": true
+    },
+    {
+      "case": 3,
+      "description": "stale admitted serial after STOP",
+      "passed_both_variants": true
+    },
+    {
+      "case": 4,
+      "description": "ordinary ACK writes while typed owns head",
+      "passed_both_variants": true
+    },
+    {
+      "case": 5,
+      "description": "consume after partial DMA",
+      "passed_both_variants": true
+    },
+    {
+      "case": 6,
+      "description": "wrong ordinary ACK sequence",
+      "passed_both_variants": true
+    },
+    {
+      "case": 7,
+      "description": "STOP during map fill, restart with next token",
+      "passed_both_variants": true
+    },
+    {
+      "case": 8,
+      "description": "STOP during DMA, old token against new chunk",
+      "passed_both_variants": true
+    },
+    {
+      "case": 9,
+      "description": "STOP during ordinary ACK checker, no leaked retire",
+      "passed_both_variants": true
+    },
+    {
+      "case": 10,
+      "description": "STOP during tile CDC input, clean restart",
+      "passed_both_variants": true
+    },
+    {
+      "case": 11,
+      "description": "duplicate consume after receipt",
+      "passed_both_variants": true
+    },
+    {
+      "case": 12,
+      "description": "last token FFFFFFFE allowed, FFFFFFFF rejected",
+      "passed_both_variants": true
+    },
+    {
+      "case": 13,
+      "description": "new identity blocked until final display ACK",
+      "passed_both_variants": true
+    },
+    {
+      "case": 14,
+      "description": "serial FFFFFFFF to zero after STOP rejected",
+      "passed_both_variants": true
+    },
+    {
+      "case": 15,
+      "description": "map lease backpressures tile, then tile drains before final ACK",
+      "passed_both_variants": true
+    },
+    {
+      "case": 16,
+      "description": "two sealed tile banks, partial DMA STOP, stale second token rejected",
+      "passed_both_variants": true
+    }
+  ],
+  "coupled": {
+    "cpu": {
+      "passed": true,
+      "dma_bytes": 80,
+      "dma_start_master": 4338,
+      "consume_master": 5218,
+      "final_ack_master": 307324
+    },
+    "events": [
+      [
+        "input_done",
+        738361
+      ],
+      [
+        "staged",
+        755119
+      ],
+      [
+        "staged",
+        763968
+      ],
+      [
+        "dma_done_range",
+        764634
+      ],
+      [
+        "receipt",
+        764647
+      ],
+      [
+        "sealed",
+        792246
+      ],
+      [
+        "display_ack",
+        793446
+      ]
+    ],
+    "rom_sha256": "272f5294b16e65a225af030239251a2336703ed7fb185d80f0137ce1d42d0cc5",
+    "rom_body_bytes": 446
+  },
+  "timing": {
+    "unit_host_tick_ns": 10,
+    "unit_total_ms": 1.37315,
+    "map_wait_tile_us": 22.82,
+    "ordinary_intentional_hold_us": 612.1,
+    "ordinary_ACK_check_cycles": 36,
+    "actual_CPU_trace_identical": true,
+    "map_DMA_start_to_consume_master": 880,
+    "physical_timeline": false,
+    "whole_frame_bound_ms": null,
+    "sixty_fps": false,
+    "caveat": "unit fixed8-NES-cycle receipt endpoint; coupled logical RPC 200+200ns bus and100us poll advance, no common timeline"
+  },
+  "bridge": {
+    "negative_error": "seq=141 op=0 address=24658 error=Maximum execution time (1 seconds) exceeded.",
+    "default_one_second_timeout_reproduced": true,
+    "original_coupled03": "missing Lua return/trace after RPC140; consistent with reproduced timeout, original callback error was not captured",
+    "repair": "per-process90s Lua timeout plus fail-fast error file; both final runs tolerate injected2.5s host delay without emulated trace change"
+  },
+  "licenses": {
+    "Standard": "292037 evaluation expired before synthesis",
+    "Lite": "two successful25.1std MAPs",
+    "Questa": "authorized temporary FLOAT worked"
+  },
+  "open": [
+    "full ARM planner/serializer/RUN/IRQ",
+    "ordinary payload semantic consumer",
+    "upstream tile192 ROM arbiter",
+    "remaining90ranges/8224B and H2 remain255 fixtures",
+    "tail/scroll/OAM/H2 actual output transfer",
+    "shared physical SPI and source/output scheduling",
+    "CDC/IO/STA/whole FIT/mapper margin",
+    "heavy7/71/full frame/physical60fps"
+  ],
+  "production227_unchanged": true,
+  "P2_selected": false,
+  "pins": {
+    "probes/nes-mux258/test07/result.json": "383eb8da22bbd711b31fbc140d64f25b71bef3edd45b0c1adcaa18f81f254d48",
+    "probes/nes-mux258/test07/nes_core257.sv": "6ca389cc8d0790d5dcbca16e33fd2823ea48244ddfff126ea4a5aaa2f28ab122",
+    "probes/nes-mux258/test07/nes_transport257.sv": "1142dd2945671d0ae1ff7763c82b51330b95fc4624d0a1bb52bd6c8081f981fa",
+    "probes/nes-mux258/test07/nes_joint257.sv": "7b701bfdf9e89cfc9c1f29ced21e5dab3743d368a1554af73455686ae258abfe",
+    "probes/nes-mux258/test07/nes_queue258.sv": "24dde0710b2462a5601d9eb95a4948e0fc12d6753ff01361ae46a8f048a37e62",
+    "probes/nes-mux258/test07/nes_tile_producer258.sv": "a429d6a4fd842ca43539e1b70a63e43ea73e94d1d3ff27d428eeb681ba196bdd",
+    "probes/nes-mux258/test07/nes_mux258.sv": "522ee8bc71c8c24f5c0f160a845bd89b730b52fa1a95e21d80e845af9637684f",
+    "probes/nes-mux258/test07/nes_bulk_aperture188.sv": "fdc4e32278fbeab002b74ffbcac84951a346e11469c7fa2d332d0b74861bf466",
+    "probes/nes-mux258/test07/nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "probes/nes-mux258/test07/nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "probes/nes-mux258/test07/nes_tile_bulk206.sv": "a9253577f8b52dc399f252af2d28daaea00ab2561ed15df7f7c66b85243054e5",
+    "probes/nes-mux258/test07/nes_mux258.py": "1d216b9aa6de8363f164d4a7e9d7f17d545438c538e9dbe4cde595f94bae34e6",
+    "probes/nes-mux258/test07/probe_nes_mux258.py": "1dbff201bb7db172124236d05779fc183a9c97e9d431a1673576bfea0e467e73",
+    "probes/nes-mux258/test07/mux258_tb.sv": "c9029aa199575e08d6c51338a07a2cd62fd8524c177697f5e6b29bddc72bf135",
+    "probes/nes-mux258/test07/shared0-guard00/vsim.log": "8855846c8bce73102771673b9f9c6ab6725cd4eff5fb3656afd898aa2122b023",
+    "probes/nes-mux258/test07/shared0-guard01/vsim.log": "d4673b208338bbd5a02fbfb8d54c3198917c8a3b5bd2d1de3ad43c45b8632a3d",
+    "probes/nes-mux258/test07/shared0-guard02/vsim.log": "69ef0c6b29af117cbb3389c92130299ae7c5ff227dc9d6d62357a37a8750c3a3",
+    "probes/nes-mux258/test07/shared0-guard03/vsim.log": "d0b6723e7efdd166535de9b862d10d37657579ae4c33812972cc799a1aeff129",
+    "probes/nes-mux258/test07/shared0-guard04/vsim.log": "fa26acd8d8f981a51cb1aa749da43516412597fa0717c0f8f4ee8e717413407e",
+    "probes/nes-mux258/test07/shared0-guard05/vsim.log": "c38019cddb076221e8de590063f4e260833db7428308308509f657d2f602223d",
+    "probes/nes-mux258/test07/shared0-guard06/vsim.log": "b19a6c53be6b5eb6bff8c55e68e3f01a78ec9d0bd76a6dd5a4de9d3fd36977e0",
+    "probes/nes-mux258/test07/shared0-guard07/vsim.log": "e3c57143275d30ca614307b8cd6096ce37cc3b0c2dc497378535b981fe1762a8",
+    "probes/nes-mux258/test07/shared0-guard08/vsim.log": "e644609199090cee6487fddcf6ef08144810855380b59963fee96c98fe2eb8c3",
+    "probes/nes-mux258/test07/shared0-guard09/vsim.log": "56a15c88ba64c6e6239bbd6a36b5a2b4c88b25dc5511c43384f8b7bd5d70c2d0",
+    "probes/nes-mux258/test07/shared0-guard10/vsim.log": "6e44cbc71594d1717e783f1bbf75c2d14409f7b4010d6842fabe0ed2d018be99",
+    "probes/nes-mux258/test07/shared0-guard11/vsim.log": "211b6cebcb04a0c2299f1626ecf24f8871c8a3ab7ec6ddd978b2e18b0a64f83d",
+    "probes/nes-mux258/test07/shared0-guard12/vsim.log": "4c024e98c7e3edb9ad0e2d9fc2b1c0d0a8a4ae93ac879b45bd6a57208851f313",
+    "probes/nes-mux258/test07/shared0-guard13/vsim.log": "64c4d1c31332919cc694efb60cf9f383ab3bc7d021c3d75068700c62a17dce6a",
+    "probes/nes-mux258/test07/shared0-guard14/vsim.log": "9590007c90d78090edbc65bb63ceb377f831bf6d4271542873d6d1d4ef2cf00f",
+    "probes/nes-mux258/test07/shared0-guard15/vsim.log": "0efb434256075b9b13921ca0a2b1afb40878f4ad895af59142a994a92ed0b3da",
+    "probes/nes-mux258/test07/shared0-guard16/vsim.log": "c804bc96f314e6ff50574e8f33e64f6fc64e724e80b87c1dadd9627db3e6360f",
+    "probes/nes-mux258/test07/shared1-guard00/vsim.log": "2088d0d9a49231ad04ae4c09a079582e3ebe3ef9dc4364f9ab4b977f0d9009e8",
+    "probes/nes-mux258/test07/shared1-guard01/vsim.log": "112e7af5e4813b0caed63e12a30f915b20f183edc2e0e6d403fddf2cefd7016a",
+    "probes/nes-mux258/test07/shared1-guard02/vsim.log": "9fb1b4bdc7d0297080ee8895d74da20d9890ad5dbbbf02a1eca1035bd58760cb",
+    "probes/nes-mux258/test07/shared1-guard03/vsim.log": "4deadf5761430e81e9ab23938d558f6c95fee41c37dc9297357bbd15a492b186",
+    "probes/nes-mux258/test07/shared1-guard04/vsim.log": "ed4cc070948b39d105da151a68f638e6108a0f557c2e5730ab44e0e504a936dc",
+    "probes/nes-mux258/test07/shared1-guard05/vsim.log": "768dfb52cb8ab9798ed18ce4695e2ddd22929d2a55629108f735f002607a6a15",
+    "probes/nes-mux258/test07/shared1-guard06/vsim.log": "125e78b240a6312408adb58229d4da56097c91338a70fd8d263a5e6b0c665178",
+    "probes/nes-mux258/test07/shared1-guard07/vsim.log": "02e7d44715f18e20ff908fb03c6fc7d28cc66a8608544679b1468351fb806b16",
+    "probes/nes-mux258/test07/shared1-guard08/vsim.log": "e8e24c10df9650412d45f51d095329018c2758089343f9900331d563c021820b",
+    "probes/nes-mux258/test07/shared1-guard09/vsim.log": "fd02bb6fcfd164edce4bd65cf492a2b9da9bd387c88778caa38d94fedc3350e2",
+    "probes/nes-mux258/test07/shared1-guard10/vsim.log": "88e72b993431464c22efa8ac368e70faa3e3083bf5155802372eb1b94db58933",
+    "probes/nes-mux258/test07/shared1-guard11/vsim.log": "507f6dac1e6d38d03f031ad024b4d882319505b35908206b1412b89357919b28",
+    "probes/nes-mux258/test07/shared1-guard12/vsim.log": "926e5a42143640ce7e1ce7955fc26b76aa7f936ab18d0da76a35f82c810ce591",
+    "probes/nes-mux258/test07/shared1-guard13/vsim.log": "f064969604572aff567701898fb8ba7193579ff1318fd334ced0628aa1cf52b5",
+    "probes/nes-mux258/test07/shared1-guard14/vsim.log": "c0a7303799bad6fa0977d0f1540cb90b824fdd073a00a6989787f209b4f73f17",
+    "probes/nes-mux258/test07/shared1-guard15/vsim.log": "ae58913b19e5af8b101b325238df6247dea64067d40fb87bce27ef51a6aedf77",
+    "probes/nes-mux258/test07/shared1-guard16/vsim.log": "3b00c423dc38dfe4590ec97c0b891ef6ac4138cd8c4c83089196d711d03f3626",
+    "probes/nes-mux258/test07/shared0-guard00/events.csv": "80fa83c830342a703ab605f4d8cd3835e37e0a2d0227a6c0df516fd0d2121013",
+    "probes/nes-mux258/test07/shared1-guard00/events.csv": "80fa83c830342a703ab605f4d8cd3835e37e0a2d0227a6c0df516fd0d2121013",
+    "probes/nes-mux258/map-separate02/result.json": "c13a94504e6babaffc937e6d017b5dc8263e15390859570c8e911e941572738e",
+    "probes/nes-mux258/map-separate02/nes_core257.sv": "6ca389cc8d0790d5dcbca16e33fd2823ea48244ddfff126ea4a5aaa2f28ab122",
+    "probes/nes-mux258/map-separate02/nes_transport257.sv": "1142dd2945671d0ae1ff7763c82b51330b95fc4624d0a1bb52bd6c8081f981fa",
+    "probes/nes-mux258/map-separate02/nes_joint257.sv": "7b701bfdf9e89cfc9c1f29ced21e5dab3743d368a1554af73455686ae258abfe",
+    "probes/nes-mux258/map-separate02/nes_queue258.sv": "24dde0710b2462a5601d9eb95a4948e0fc12d6753ff01361ae46a8f048a37e62",
+    "probes/nes-mux258/map-separate02/nes_tile_producer258.sv": "a429d6a4fd842ca43539e1b70a63e43ea73e94d1d3ff27d428eeb681ba196bdd",
+    "probes/nes-mux258/map-separate02/nes_mux258.sv": "522ee8bc71c8c24f5c0f160a845bd89b730b52fa1a95e21d80e845af9637684f",
+    "probes/nes-mux258/map-separate02/nes_bulk_aperture188.sv": "fdc4e32278fbeab002b74ffbcac84951a346e11469c7fa2d332d0b74861bf466",
+    "probes/nes-mux258/map-separate02/nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "probes/nes-mux258/map-separate02/nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "probes/nes-mux258/map-separate02/nes_tile_bulk206.sv": "a9253577f8b52dc399f252af2d28daaea00ab2561ed15df7f7c66b85243054e5",
+    "probes/nes-mux258/map-separate02/nes_mux258.py": "1d216b9aa6de8363f164d4a7e9d7f17d545438c538e9dbe4cde595f94bae34e6",
+    "probes/nes-mux258/map-separate02/probe_nes_mux258.py": "1dbff201bb7db172124236d05779fc183a9c97e9d431a1673576bfea0e467e73",
+    "probes/nes-mux258/map-separate02/mux258_tb.sv": "c9029aa199575e08d6c51338a07a2cd62fd8524c177697f5e6b29bddc72bf135",
+    "probes/nes-mux258/test06/result.json": "08b76ea98a271a694e9f056115c8296080b5e0a8a2bcb1372f982adb636d64df",
+    "probes/nes-mux258/map-separate02/map.log": "60d8b2bdfb37dfca9fa7b63a8b652b63e73b002f9060c49ef3ab5a7a3289d3ed",
+    "probes/nes-mux258/map-separate02/output_files/mux.map.rpt": "b0d206b64fb020cb684764656edbe4844200fc055d87e57526564c7c60434449",
+    "probes/nes-mux258/map-separate02/output_files/mux.map.summary": "9f2781f05bbda20ce7bd416025ad08f4c7e8677200b213bbef182c572e1fdc8d",
+    "probes/nes-mux258/map-shared02/result.json": "5f719987324aa5b458078b295fd2e5670c0ccbb01ffc2bf0dc3f3d42f396f403",
+    "probes/nes-mux258/map-shared02/nes_core257.sv": "6ca389cc8d0790d5dcbca16e33fd2823ea48244ddfff126ea4a5aaa2f28ab122",
+    "probes/nes-mux258/map-shared02/nes_transport257.sv": "1142dd2945671d0ae1ff7763c82b51330b95fc4624d0a1bb52bd6c8081f981fa",
+    "probes/nes-mux258/map-shared02/nes_joint257.sv": "7b701bfdf9e89cfc9c1f29ced21e5dab3743d368a1554af73455686ae258abfe",
+    "probes/nes-mux258/map-shared02/nes_queue258.sv": "24dde0710b2462a5601d9eb95a4948e0fc12d6753ff01361ae46a8f048a37e62",
+    "probes/nes-mux258/map-shared02/nes_tile_producer258.sv": "a429d6a4fd842ca43539e1b70a63e43ea73e94d1d3ff27d428eeb681ba196bdd",
+    "probes/nes-mux258/map-shared02/nes_mux258.sv": "522ee8bc71c8c24f5c0f160a845bd89b730b52fa1a95e21d80e845af9637684f",
+    "probes/nes-mux258/map-shared02/nes_bulk_aperture188.sv": "fdc4e32278fbeab002b74ffbcac84951a346e11469c7fa2d332d0b74861bf466",
+    "probes/nes-mux258/map-shared02/nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "probes/nes-mux258/map-shared02/nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "probes/nes-mux258/map-shared02/nes_tile_bulk206.sv": "a9253577f8b52dc399f252af2d28daaea00ab2561ed15df7f7c66b85243054e5",
+    "probes/nes-mux258/map-shared02/nes_mux258.py": "1d216b9aa6de8363f164d4a7e9d7f17d545438c538e9dbe4cde595f94bae34e6",
+    "probes/nes-mux258/map-shared02/probe_nes_mux258.py": "1dbff201bb7db172124236d05779fc183a9c97e9d431a1673576bfea0e467e73",
+    "probes/nes-mux258/map-shared02/mux258_tb.sv": "c9029aa199575e08d6c51338a07a2cd62fd8524c177697f5e6b29bddc72bf135",
+    "probes/nes-mux258/map-shared02/map.log": "5921df57ecf2cbaf3318b89e3e9fb8371444db13900eb5d360026922d27e59ba",
+    "probes/nes-mux258/map-shared02/output_files/mux.map.rpt": "b6db3467ee68214022aa79bbcedd847306c0a0cf86c1b9ae1b4c9796a3238cd3",
+    "probes/nes-mux258/map-shared02/output_files/mux.map.summary": "444e2daafb09e435995e5425fcbe670c536bde15e3394963142aef7bff23d32c",
+    "probes/nes-mux258/coupled05/result.json": "700221c29024a1d569964f2a338f065d592182d8a64362c8adbac8661aecad55",
+    "probes/nes-mux258/coupled05/nes_core257.sv": "6ca389cc8d0790d5dcbca16e33fd2823ea48244ddfff126ea4a5aaa2f28ab122",
+    "probes/nes-mux258/coupled05/nes_transport257.sv": "1142dd2945671d0ae1ff7763c82b51330b95fc4624d0a1bb52bd6c8081f981fa",
+    "probes/nes-mux258/coupled05/nes_joint257.sv": "7b701bfdf9e89cfc9c1f29ced21e5dab3743d368a1554af73455686ae258abfe",
+    "probes/nes-mux258/coupled05/nes_queue258.sv": "24dde0710b2462a5601d9eb95a4948e0fc12d6753ff01361ae46a8f048a37e62",
+    "probes/nes-mux258/coupled05/nes_tile_producer258.sv": "a429d6a4fd842ca43539e1b70a63e43ea73e94d1d3ff27d428eeb681ba196bdd",
+    "probes/nes-mux258/coupled05/nes_mux258.sv": "522ee8bc71c8c24f5c0f160a845bd89b730b52fa1a95e21d80e845af9637684f",
+    "probes/nes-mux258/coupled05/nes_native_frame201.sv": "2c3fd46c4c4f1e3be6619da71abafe8d56d85b5273067f5d70f74783cb0bf64c",
+    "probes/nes-mux258/coupled05/nes_native_planes165.sv": "5ffb80c410948eff320e94ed2676a73c04780a46cbfb53e3acda181d316a999a",
+    "probes/nes-mux258/coupled05/nes_patch_capture181.sv": "a4730979575696afde9e8aa5911a67fbf6404c96f609da02def8e76e831c5984",
+    "probes/nes-mux258/coupled05/nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+    "probes/nes-mux258/coupled05/nes_native_compact181.sv": "b6134f4264eed933ed830489239273e682a0494cd36345def1c135f11e3c8bde",
+    "probes/nes-mux258/coupled05/nes_native_raster181.sv": "25f9762f7f0842dacf5915804f398f71b9ed5e9b54edd99f4ad1ce5423ae8b95",
+    "probes/nes-mux258/coupled05/nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "probes/nes-mux258/coupled05/nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "probes/nes-mux258/coupled05/nes_capture_lease201.sv": "c3f95b8e7b56afbe65e3484e1006d4fc2c54b6e47407bf32124d8ae461fb7f61",
+    "probes/nes-mux258/coupled05/nes_bulk_aperture188.sv": "fdc4e32278fbeab002b74ffbcac84951a346e11469c7fa2d332d0b74861bf466",
+    "probes/nes-mux258/coupled05/commands.hex": "c4b288f96a8cf25b25aaf4e6ed86de8be273831d23941e9d02411c393dcb6f4f",
+    "probes/nes-mux258/coupled05/expected.hex": "ceb8f024f9a8b151f830ddbeb70b85d13c24cc5ad99977f189b8a05f9c04eaa0",
+    "probes/nes-mux258/coupled05/certs.hex": "d021da9df5e119530729a86b893bd28cfb32819b48c059129c93dfb75df98f4a",
+    "probes/nes-mux258/coupled05/hashes.hex": "f6c0ba7a833270ea23d4f6e32af2823091db89bfe6d1e2379d7f1ac58f4c8361",
+    "probes/nes-mux258/coupled05/stream.hex": "3138a5933c7508d7f550e99d199b17ab6cf17b50f0158d4da10b8ebcc8c6ba61",
+    "probes/nes-mux258/coupled05/sink.hex": "7d591e299b59e50f34c211520d71ef223ee3d2edfd715072ca5a6c833049af9f",
+    "probes/nes-mux258/coupled05/frame905.hex": "dd80c77a6d60ae3e60d3b7b9b78ac2094942321593a8f29784457dda5dcb2dcd",
+    "probes/nes-mux258/coupled05/frame905.palette": "685c3c874cfff2b9ee2c6eae1fbc67f2e31e040ea5285d35ab7f419bffc39094",
+    "probes/nes-mux258/coupled05/frame905.expected": "3cd9912d1c00eb3bad1cf69c090dc3e7de23ff071091bc0bb7a55f814a173e01",
+    "probes/nes-mux258/coupled05/nes_slice257.py": "4da35dd887c541b44753c1f344265a936e7955f05319b7bf834d92f8679d72ac",
+    "probes/nes-mux258/coupled05/probe_nes_slice257.py": "a848d85c54158d33b51f624c6ea5b3c58ed7ea4c1889e0f4ebbc8310239e98ff",
+    "probes/nes-mux258/coupled05/slice257_tb.sv": "f8b7f469273ae0de8148baa27de84bce9a48006732ba00295d0878d5f8bd6aa0",
+    "probes/nes-mux258/coupled05/capture.lua": "22ea8286b7ccab15333b2d5ec63cb49a46bb4269346476c52ee059eb121ae33e",
+    "probes/nes-mux258/coupled05/rpc.do": "d43a8a88e92021878bd45854dfd732eec6696d872f25a84e58473098ebcaaacd",
+    "probes/nes-mux258/coupled05/vlog.log": "0da1c2c3d7861619f259470f098aecec8d71f1d7d3c5a023f32f3c56293fb815",
+    "probes/nes-mux258/coupled05/vsim.log": "2765cf6a51d516fac99c8b2ca7a12a029aae2bbadef46adc48c23d57fc3008f8",
+    "probes/nes-mux258/coupled05/bridge.json": "b5cb5f6aa8b611b6af80a0e750800e88dfbd1ddbe61bd9d7b38794dc75f3cf41",
+    "probes/nes-mux258/coupled05/probe_nes_mux258_coupled.py": "b56bda816f22bb4fea757d4947f57807d08fa68fbe85d69983e2fccc9ed5d7ed",
+    "probes/nes-mux258/coupled05/nes_mux258.py": "1d216b9aa6de8363f164d4a7e9d7f17d545438c538e9dbe4cde595f94bae34e6",
+    "probes/nes-mux258/coupled05/cpu-bus.csv": "6c197e3ec58b0f788f024e287527ccf6dd476fdb869f31e2ddc1a8854aee8e31",
+    "probes/nes-mux258/coupled05/tile.hex": "96c00e10e21a4266fefd3957f6f7424b19be0ad01ce110a28c52d8593e7e52d0",
+    "probes/nes-mux258/coupled05/selected.hex": "c7f9a9698bda40341af23338c4a7b0c5ce0d314b380688151d7df1d17efeb9fc",
+    "probes/nes-mux258/coupled05/cpu-result.json": "c87c5550961bad3a6aee100916e44d1694f7f1785ed841f58fbbd7f641590a23",
+    "probes/nes-mux258/coupled05/slice.sfc": "272f5294b16e65a225af030239251a2336703ed7fb185d80f0137ce1d42d0cc5",
+    "probes/nes-mux258/coupled05/events.csv": "261650249682e0de84b386a13c248521568794256b1355978f39bada501b62ea",
+    "probes/nes-mux258/reference02/result.json": "1dcbb07c4a68182024270e2c53a785171c1b17b2d0b56e0d44307893eba15fc5",
+    "probes/nes-mux258/reference02/nes_core257.sv": "6ca389cc8d0790d5dcbca16e33fd2823ea48244ddfff126ea4a5aaa2f28ab122",
+    "probes/nes-mux258/reference02/nes_transport257.sv": "1142dd2945671d0ae1ff7763c82b51330b95fc4624d0a1bb52bd6c8081f981fa",
+    "probes/nes-mux258/reference02/nes_joint257.sv": "7b701bfdf9e89cfc9c1f29ced21e5dab3743d368a1554af73455686ae258abfe",
+    "probes/nes-mux258/reference02/nes_queue258.sv": "24dde0710b2462a5601d9eb95a4948e0fc12d6753ff01361ae46a8f048a37e62",
+    "probes/nes-mux258/reference02/nes_tile_producer258.sv": "a429d6a4fd842ca43539e1b70a63e43ea73e94d1d3ff27d428eeb681ba196bdd",
+    "probes/nes-mux258/reference02/nes_mux258.sv": "522ee8bc71c8c24f5c0f160a845bd89b730b52fa1a95e21d80e845af9637684f",
+    "probes/nes-mux258/reference02/nes_native_frame201.sv": "2c3fd46c4c4f1e3be6619da71abafe8d56d85b5273067f5d70f74783cb0bf64c",
+    "probes/nes-mux258/reference02/nes_native_planes165.sv": "5ffb80c410948eff320e94ed2676a73c04780a46cbfb53e3acda181d316a999a",
+    "probes/nes-mux258/reference02/nes_patch_capture181.sv": "a4730979575696afde9e8aa5911a67fbf6404c96f609da02def8e76e831c5984",
+    "probes/nes-mux258/reference02/nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+    "probes/nes-mux258/reference02/nes_native_compact181.sv": "b6134f4264eed933ed830489239273e682a0494cd36345def1c135f11e3c8bde",
+    "probes/nes-mux258/reference02/nes_native_raster181.sv": "25f9762f7f0842dacf5915804f398f71b9ed5e9b54edd99f4ad1ce5423ae8b95",
+    "probes/nes-mux258/reference02/nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "probes/nes-mux258/reference02/nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "probes/nes-mux258/reference02/nes_capture_lease201.sv": "c3f95b8e7b56afbe65e3484e1006d4fc2c54b6e47407bf32124d8ae461fb7f61",
+    "probes/nes-mux258/reference02/nes_bulk_aperture188.sv": "fdc4e32278fbeab002b74ffbcac84951a346e11469c7fa2d332d0b74861bf466",
+    "probes/nes-mux258/reference02/commands.hex": "c4b288f96a8cf25b25aaf4e6ed86de8be273831d23941e9d02411c393dcb6f4f",
+    "probes/nes-mux258/reference02/expected.hex": "ceb8f024f9a8b151f830ddbeb70b85d13c24cc5ad99977f189b8a05f9c04eaa0",
+    "probes/nes-mux258/reference02/certs.hex": "d021da9df5e119530729a86b893bd28cfb32819b48c059129c93dfb75df98f4a",
+    "probes/nes-mux258/reference02/hashes.hex": "f6c0ba7a833270ea23d4f6e32af2823091db89bfe6d1e2379d7f1ac58f4c8361",
+    "probes/nes-mux258/reference02/stream.hex": "3138a5933c7508d7f550e99d199b17ab6cf17b50f0158d4da10b8ebcc8c6ba61",
+    "probes/nes-mux258/reference02/sink.hex": "7d591e299b59e50f34c211520d71ef223ee3d2edfd715072ca5a6c833049af9f",
+    "probes/nes-mux258/reference02/frame905.hex": "dd80c77a6d60ae3e60d3b7b9b78ac2094942321593a8f29784457dda5dcb2dcd",
+    "probes/nes-mux258/reference02/frame905.palette": "685c3c874cfff2b9ee2c6eae1fbc67f2e31e040ea5285d35ab7f419bffc39094",
+    "probes/nes-mux258/reference02/frame905.expected": "3cd9912d1c00eb3bad1cf69c090dc3e7de23ff071091bc0bb7a55f814a173e01",
+    "probes/nes-mux258/reference02/nes_slice257.py": "4da35dd887c541b44753c1f344265a936e7955f05319b7bf834d92f8679d72ac",
+    "probes/nes-mux258/reference02/probe_nes_slice257.py": "a848d85c54158d33b51f624c6ea5b3c58ed7ea4c1889e0f4ebbc8310239e98ff",
+    "probes/nes-mux258/reference02/slice257_tb.sv": "ee3ca36686000bc3c9cf62ea4cece01c17928e98bc1ecb4867f5e110bfeae56b",
+    "probes/nes-mux258/reference02/capture.lua": "14f7ec70fd63a43e2f849ec49ceb256284e80d69282bfdcb8da8b5de1975d378",
+    "probes/nes-mux258/reference02/rpc.do": "d43a8a88e92021878bd45854dfd732eec6696d872f25a84e58473098ebcaaacd",
+    "probes/nes-mux258/reference02/vlog.log": "e23bfd0f21bc5581e950ed2c3b564ee547871330328f401754dcd62fd74981b5",
+    "probes/nes-mux258/reference02/vsim.log": "8c4ad33c69dc25e72e8d9d9a333e673903c2cdf4570103b98368a118b13707d6",
+    "probes/nes-mux258/reference02/bridge.json": "b5cb5f6aa8b611b6af80a0e750800e88dfbd1ddbe61bd9d7b38794dc75f3cf41",
+    "probes/nes-mux258/reference02/probe_nes_mux258_coupled.py": "b56bda816f22bb4fea757d4947f57807d08fa68fbe85d69983e2fccc9ed5d7ed",
+    "probes/nes-mux258/reference02/nes_mux258.py": "1d216b9aa6de8363f164d4a7e9d7f17d545438c538e9dbe4cde595f94bae34e6",
+    "probes/nes-mux258/reference02/cpu-bus.csv": "6c197e3ec58b0f788f024e287527ccf6dd476fdb869f31e2ddc1a8854aee8e31",
+    "probes/nes-mux258/reference02/tile.hex": "96c00e10e21a4266fefd3957f6f7424b19be0ad01ce110a28c52d8593e7e52d0",
+    "probes/nes-mux258/reference02/selected.hex": "c7f9a9698bda40341af23338c4a7b0c5ce0d314b380688151d7df1d17efeb9fc",
+    "probes/nes-mux258/reference02/cpu-result.json": "c87c5550961bad3a6aee100916e44d1694f7f1785ed841f58fbbd7f641590a23",
+    "probes/nes-mux258/reference02/slice.sfc": "272f5294b16e65a225af030239251a2336703ed7fb185d80f0137ce1d42d0cc5",
+    "probes/nes-mux258/reference02/events.csv": "261650249682e0de84b386a13c248521568794256b1355978f39bada501b62ea",
+    "probes/nes-mux258/coupled04/cpu-bus.csv": "6c197e3ec58b0f788f024e287527ccf6dd476fdb869f31e2ddc1a8854aee8e31",
+    "probes/nes-mux258/coupled04/events.csv": "261650249682e0de84b386a13c248521568794256b1355978f39bada501b62ea",
+    "probes/nes-mux258/license01/map.log": "bffc316c40777951ddf843c91157d16d5deafa1c62aee71fe7d1a15370ba6369",
+    "probes/nes-mux258/timeout01/rpc-error.txt": "31611d38212da984a9148efd02236b87c991d1c70cac7350deaf8523cb5c0395",
+    "probes/nes-mux258/timeout01/bridge.json": "17d57ec9aa8f457c0d0951756df2eb000da3841bb7d0bc27b5c28b417da20dc2",
+    "probes/nes-mux258/coupled03/vsim.log": "984656edae37868f37e976eaad7639000a14b2b8206af82a1ec8be4cb0075ecb",
+    "probes/nes-mux258/coupled03/cpu-bus.csv": "53d09e2ce9143eed4140654809fb8f53462a8dc85417c593038618f9c4454d8d"
+  }
+}

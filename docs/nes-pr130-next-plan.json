@@ -1,0 +1,55 @@
+{
+  "status": "retrospective_complete_targets_unmet",
+  "implementation_head": "c0a68362e3c6fa1cb3d336bc69c4445e0ebdb3ca",
+  "summary": "PR130 회고: 통합 검증과 국소 절감은 성과이나 60fps/보드 적합성 미달. 최초 whole267 대비298 -716comb, 정리268 대비+4comb. native289 대비298 제한907 -0.531266ms/정상907 +0.158816ms, comb+12. 최신2275comb·제한907 0.801715ms 부족.",
+  "next_action": "이번 PR은 회고·증거 정리로 마무리한다. 다음 구현 전에 descriptor/manifest 해석·주소 선택·ROM 공급의 전체 제거/유지/추가 예산을 확정한다. 전체2275comb와 최소0.802ms를 해소할 구조 근거 없이는 소규모 FSM/MAP 반복을 하지 않는다. 자동 merge 및 production 승격 없음.",
+  "evidence": "analysis/pr130-retrospective.json",
+  "references": {
+    "functional": 289,
+    "performance": 287,
+    "isolated": 297,
+    "latest_experiment": 298,
+    "production": 227
+  },
+  "gates": [
+    {
+      "id": "R0",
+      "status": "complete"
+    },
+    {
+      "id": "R1",
+      "status": "partial_actual_slices_not_full_path"
+    },
+    {
+      "id": "R2",
+      "status": "not_complete"
+    },
+    {
+      "id": "R3",
+      "status": "not_complete"
+    }
+  ],
+  "next_deliverables": [
+    "Freeze same inputs, ROM phase, cold/warm policy and removal/retention/addition ledger; compare 289/297/298, not only last failed candidate.",
+    "Compare representation/decoder/address-port architecture and ARM/SPI/SRAM/ROM schedule together. Current fixed region4837 requires <=2562comb if outside12846 remains; host+validator3427 requires <=1152 if other logic unchanged. Include new logic and margin.",
+    "Only a justified candidate proceeds to actual ARM/IRQ/ROM slices and matching whole Lite, then heavy7/71, full65816/fullRUN and FIT/STA/physical gates. Otherwise re-evaluate roles/representation/hardware suitability."
+  ],
+  "retain": [
+    "compressed transfer",
+    "independent bounds/CRC/coverage",
+    "4credit/2planbank",
+    "STOP invalidation",
+    "exact final ACK/display lease",
+    "failed experiments and raw evidence"
+  ],
+  "not_claimed": [
+    "physical60fps",
+    "full_schedule71_latest",
+    "fullRUN",
+    "whole_live65816",
+    "FIT",
+    "STA"
+  ],
+  "new_hardware_runs": false,
+  "automatic_merge": false
+}

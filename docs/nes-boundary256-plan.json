@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "plan_id": "NES-BOUNDARY256-R0-20261019",
+  "date_kst": "2026-10-19",
+  "status": "R0_complete_with_explicit_unknowns_R1_pending",
+  "document": "docs/nes-boundary256-contract.ko.md",
+  "branch": "codex/nes-wholepath-boundary-256",
+  "base_commit": "2978f04aef65987c615d62ca54576e68fc946637",
+  "merged_pr": 129,
+  "merge_verified_in_origin_master": true,
+  "scope": "Read-only source audit and schedule reconstruction; no new RTL/MAP/FIT/ARM/SNES execution.",
+  "selected": "analysis01",
+  "candidate": "NES255_feasibility_only",
+  "production": "NES227",
+  "R0_complete": true,
+  "R1_complete": false,
+  "P2_selected": false,
+  "heavy_frames": [
+    952,
+    954,
+    955,
+    962,
+    963,
+    968,
+    970
+  ],
+  "next_action": "R1은 source export 뒤 collector→display lease 전환과 한 범위의 실제 packet→staging→SNES DMA→token/receipt→final ACK 연결부터 시작한다. 4credit queue의 단일 head/retire 소유자와 기존 타일 경로를 보존한다. U1–U8 비용을 실제 구현/계측으로 교체한 뒤 heavy7 및71프레임으로 확장하고 같은 구성의 전체 자원/시간 gate를 판정한다. 국소 MAP 절약을 전체 회수로 계산하거나 미확인 비용을0으로 두지 않는다.",
+  "unknown_costs": [
+    {
+      "id": "U1",
+      "owner": "ARM",
+      "required_measurement": "N5 restore/planner/H2 generation/output serialization/fullRUN IRQ actual cycles and memory",
+      "time_ms": null,
+      "area_LE": null
+    },
+    {
+      "id": "U2",
+      "owner": "FPGA_host",
+      "required_measurement": "Output packet parser/head arbitration/typed packet retirement and CRC service",
+      "time_ms": null,
+      "area_LE": null
+    },
+    {
+      "id": "U3",
+      "owner": "FPGA_cross_clock",
+      "required_measurement": "Host parser to NES core transfer and phase-specific captured/display lease binding",
+      "time_ms": null,
+      "area_LE": null
+    },
+    {
+      "id": "U4",
+      "owner": "FPGA_SNES",
+      "required_measurement": "Range staging to actual DMA completion/token receipt, bank/display serial history",
+      "time_ms": null,
+      "area_LE": null
+    },
+    {
+      "id": "U5",
+      "owner": "FPGA",
+      "required_measurement": "Map staging RAM, descriptor storage, arbitration with existing tile aperture and credit lifetime",
+      "time_ms": null,
+      "area_LE": null
+    },
+    {
+      "id": "U6",
+      "owner": "SNES",
+      "required_measurement": "Actual typed setup, ordinary payload copy/DMA, dispatch and polling not covered by retained marks",
+      "time_ms": null,
+      "area_LE": null
+    },
+    {
+      "id": "U7",
+      "owner": "whole_path",
+      "required_measurement": "VBlank waits, NES capture/execute overlap, audio/input scheduling, final retire stalls",
+      "time_ms": null,
+      "area_LE": null
+    },
+    {
+      "id": "U8",
+      "owner": "FPGA_ARM_SNES",
+      "required_measurement": "tail CRC/fresh scroll/OAM/H2 transport and coverage binding; final check removal approval",
+      "time_ms": null,
+      "area_LE": null
+    }
+  ],
+  "ownership": {
+    "source_clock": "NES",
+    "output_queue_clock": "host",
+    "query": "source cursor with one-word prefetch",
+    "queue_retire": "single head owner; staged parser completion or validated ordinary SNES ACK",
+    "receipt": "actual range DMA completion and matching token; never staging acceptance alone",
+    "display": "final display ACK distinct from input commit and range consume",
+    "lease": "collector during input, captured display lease during output; transition not implemented"
+  },
+  "area_rule": "Old240 inclusive MAP hierarchy is not additive and not subtractable from255 standalone LE. Whole490LE40LAB shortage unresolved.",
+  "timing_rule": "552 conditional rows reconcile, not measured end-to-end bounds. Unknown actual costs remain null.",
+  "preserve": [
+    "production227",
+    "unplaced240",
+    "rejected2412462472",
+    "diagnostic5886",
+    "GBC164",
+    "saveSRAM",
+    "prior255_evidence"
+  ]
+}

@@ -1,0 +1,49 @@
+# SPDX-License-Identifier: MIT
+"""Actual BG-phase publication into retained refill/IRQ/tile ROM path."""
+import inspect,shutil
+import probe_nes_live289 as old
+from nes_bg293 import prepare as native,unbatch
+from nes_delta231 import ROOT,sha,once
+
+
+def build_rom(d):
+    ns=dict(old.__dict__);ns['native']=native
+    exec(compile(inspect.getsource(old.build_rom),'build293','exec'),ns);ns['build_rom'](d)
+
+
+def prepare(*args,**kwargs):
+    src,pins=old.prepare(*args,**kwargs);d=args[0]
+    p=d/'joint266_tb.sv';s=p.read_text()
+    s=once(s,' task clear_output;', '''
+ always @(posedge clk)if(!reset&&active263)begin
+  if(planrom.pv&&planrom.pready)$fwrite(events261,"plan293,%0d,%0d,%0d,%0t\\n",f,planrom.kind,planrom.slot,$time);
+  if(tv263&&tr263&&ti263==0)$fwrite(events261,"tile293,%0d,%0d,%0d,%0t\\n",f,tk263,ts263,$time);
+ end
+ always @(posedge host_clk)if(!reset&&active263)begin
+  if(dut.flow.tile_consume||dut.flow.map_consume)$fwrite(events261,"consume293,%0d,%0d,%0d,%0t\\n",f,dut.flow.owner,dut.flow.chunk_token,$time);
+ end
+ task clear_output;''')
+    p.write_text(s,encoding='utf-8',newline='\n')
+    for n in ('nes_bg293.py','probe_nes_live293.py'):
+        shutil.copyfile(ROOT/'tools'/n,d/n);pins[n]=sha(d/n)
+    return src,pins
+
+
+def worker(*args,**kwargs):
+    s=inspect.getsource(old.previous.worker)
+    s=once(s,'arm.uc.mem_write(0x20010000,blob)',"arm.uc.mem_write(0x20010000,b'\\xa5'*len(blob))")
+    s=once(s,"assert actual==(d/f'plans{f-904}.bin').read_bytes(),('plans',f)","assert unbatch(actual)==unbatch((d/f'plans{f-904}.bin').read_bytes()),('plan order293',f)\n        (d/f'actual-plans293-{f}.bin').write_bytes(actual)")
+    s=once(s,'steps=[];prefills=0;last_size=0','steps=[];prefills=0;last_size=0;early_refills293=0')
+    s=once(s,"if n!=last_size:call('prefill287');prefills+=1;last_size=n", "if n!=last_size:\n                call('prefill287');prefills+=1;last_size=n\n                if ok!=2:early_refills293+=1")
+    s=once(s,'row=dict(frame=f,instructions=', 'row=dict(frame=f,early_refills=early_refills293,instructions=')
+    ns=dict(old.previous.__dict__);ns['unbatch']=unbatch
+    exec(compile(s,'worker293','exec'),ns);return ns['worker'](*args,**kwargs)
+
+
+def main():
+    ns=dict(old.previous.prior.__dict__)
+    ns.update(prepare=prepare,build_rom=build_rom,worker=worker,__file__=__file__,__doc__=__doc__)
+    exec(compile(inspect.getsource(old.previous.prior.main),'live293','exec'),ns);ns['main']()
+
+
+if __name__=='__main__':main()
