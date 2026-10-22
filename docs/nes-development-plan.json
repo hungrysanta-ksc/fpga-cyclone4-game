@@ -4,13 +4,13 @@
   "date_kst": "2026-10-22",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-joint303-contract.ko.md",
-  "assessment": "NES303 BG/OBJ pending+plancredit 우선 gate,공통9bit queue cursor/SNES port handoff/receipt 상태완료 실제 구현. fresh6live/71native/44RTLguards,35STOP11IRQ재개,credit11+공급20+actualwait7/H2 9/IRQ8 PASS. 제한90717.462790ms(302c동일,298대비-5.591us),0.796124ms초과. 정상906-32.045us/907-42.863us이나905+31.136us. wholeLite22644LE17744comb9015FF307808bits:300대비+66comb/-7FF,부족2336으로악화하여미채택. ARMtext27918/BSS47120/stack1288. 기준ARM296/RTL300의0.802ms/2270comb 부족은그대로보존.",
-  "next_action": "cursor/FSM 미세반복 중단. 남아있는 header/descriptor 해석·RAM선택·XWAIT와source/output ingress를 포함한 실제 제거 경계·독립 검사·포트 비용을 먼저 재설계. 생산자 승인bit로 검사 대체 금지. 후보 경계4839/outside12905/ceiling2503;예상 절감null. fullRUN/live65816/FITSTA/physical60fps 미검증.",
+  "authoritative_document": "docs/nes-budget304-contract.ko.md",
+  "assessment": "NES304 교체범위/예산 재설정. 기준ARM296/RTL300 유지(17678comb/2270부족),303미채택 유지. header/descriptor 단일 admission+기존저장 대체 record125bit(cap160),page/offset RAM 선택,head/receipt retirement와queue/SPI/plan ingress를 실제 제거범위로 지정. 경계4827→2557,기능2429+여유128 요구(2398comb 절감);예상합성값 아님. 6952주소동등성/8bounds 모델PASS,기존362입력SHA 재검증. 제한907 BG첫plan→tile2.552742ms/OBJ0.000545ms,기록된parser+receipt+ARMtail 무료가정0.399400ms도고정일정초과0.396723ms 남음. 기존ARM/IRQ/ROM/Lite 비용 재분석이며새실행/합성 없음.",
+  "next_action": "원본header/범위변환/중복저장 삭제와active record binding을 먼저 입증. hot descriptor RAM716..747은CRC/receipt 포트경쟁 때문에미채택. 독립bounds/실소비CRC/coverage/STOP/12read최종ACK 유지. BG필요byte·cache miss·ROM창phase 계측과공급변경을함께구체화. 최소2270comb/0.801715ms 순개선,여유포함2398comb/1.051715ms 요구. 예상시간/면적null,새후보미채택;FSM/seed 미세반복 금지.",
   "next_three_deliverables": [
-    "Eliminate duplicated original descriptor/header interpretation with retained independent checks",
-    "Account source/output queue and phase-RAM ownership in one removal ledger",
-    "Only a candidate with quantified whole-area and ROM-schedule margin can advance"
+    "One-pass raw header admission replaces old fields and range conversion; independent checks retained",
+    "Replace physical RAM arithmetic with validated region/local offsets without extra hot port",
+    "Joint BG ROM-window schedule and whole Lite budget gate; estimates remain null"
   ],
   "gates": [
     {
