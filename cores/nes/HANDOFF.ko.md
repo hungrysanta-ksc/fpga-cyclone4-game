@@ -1,3 +1,5 @@
+PR130 RETROSPECTIVE (2026-10-22): Read docs/nes-pr130-retrospective.ko.md + docs/nes-pr130-next-plan.json FIRST. PR130 회고: 통합 검증과 국소 절감은 성과이나 60fps/보드 적합성 미달. 최초 whole267 대비298 -716comb, 정리268 대비+4comb. native289 대비298 제한907 -0.531266ms/정상907 +0.158816ms, comb+12. 최신2275comb·제한907 0.801715ms 부족. 이번 PR은 회고·증거 정리로 마무리한다. 다음 구현 전에 descriptor/manifest 해석·주소 선택·ROM 공급의 전체 제거/유지/추가 예산을 확정한다. 전체2275comb와 최소0.802ms를 해소할 구조 근거 없이는 소규모 FSM/MAP 반복을 하지 않는다. 자동 merge 및 production 승격 없음. Historical NEXT below is superseded; historical evidence remains.
+
 NES298 descriptor/manifest/receipt 공동 실행기 실제 구현 PASS. ARM296 유지, 정상907 15.473814ms/제한907 17.468381ms,초과0.801715ms. whole Lite 22583LE/17683comb/9022FF/307808bits;297대비-20comb/-7FF,부족2275개. 시간 추가 절감 없이 회로20개만 회복,목표 해결안으로 미채택.
 
 ARM296 시간 개선과 공동 실행기298의 제거/유지 증거를 보존한다. control-state 추가 병합 대신 original descriptor/packet의 중복 해석·주소 선택과 ROM plan 공급 시점을 함께 재설계한다. 독립 bounds/실소비CRC/coverage,4credit/2planbank,STOP/최종ACK를 유지하고 새 mux/continuation/port 비용을 포함한 실질적 whole-area/시간 개선 근거를 먼저 확보한다. scalar FSM/opcode/seed/FIT 반복 및 근거 없는 full71/heavy7 확대 금지.

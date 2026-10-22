@@ -1,3 +1,5 @@
+PR130 RETROSPECTIVE (2026-10-22): Read docs/nes-pr130-retrospective.ko.md + docs/nes-pr130-next-plan.json FIRST. PR130 회고: 통합 검증과 국소 절감은 성과이나 60fps/보드 적합성 미달. 최초 whole267 대비298 -716comb, 정리268 대비+4comb. native289 대비298 제한907 -0.531266ms/정상907 +0.158816ms, comb+12. 최신2275comb·제한907 0.801715ms 부족. 이번 PR은 회고·증거 정리로 마무리한다. 다음 구현 전에 descriptor/manifest 해석·주소 선택·ROM 공급의 전체 제거/유지/추가 예산을 확정한다. 전체2275comb와 최소0.802ms를 해소할 구조 근거 없이는 소규모 FSM/MAP 반복을 하지 않는다. 자동 merge 및 production 승격 없음. Historical NEXT below is superseded; historical evidence remains.
+
 NES298 descriptor/manifest/receipt 공동 실행기 실제 구현 PASS. ARM296 유지, 정상907 15.473814ms/제한907 17.468381ms,초과0.801715ms. whole Lite 22583LE/17683comb/9022FF/307808bits;297대비-20comb/-7FF,부족2275개. 시간 추가 절감 없이 회로20개만 회복,목표 해결안으로 미채택. [공동 실행기와 전체 비용](docs/nes-joint298-contract.ko.md). 아래는 이전 기록이다.
 
 NES297 ARM296 대기 서비스를 기존 RTL295에 분리 연결 PASS. 정상907 15.473814ms/제한907 17.468381ms,60Hz 초과0.801715ms. whole Lite295 hash 재사용22603LE/17703comb/9029FF/307808bits;296 대비-41comb,2295부족. 새 공동 실행기/추가 시간 절감은 미입증. [ARM 분리와 공동 제어 예산](docs/nes-joint297-contract.ko.md). 아래는 이전 기록이다.
