@@ -4,13 +4,13 @@
   "date_kst": "2026-10-22",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-record305-contract.ko.md",
-  "assessment": "NES305 active record145bit+cursor9=154bit로 raw header/typed중복저장 대체,admission end/receipt 재사용,page/local RAM 주소 실제 교체. fresh6live+동일3ROM진단/71native/44RTLguards+35STOP11IRQ재개 PASS. wholeLite22452LE17617comb8997FF307808bits:300대비-126LE/-61comb/-25FF/0RAM,부족2209. 정상/제한3프레임모두ARM303시간동일;제한90717.462790444ms/0.796123777ms초과. 시간추가이득0으로공동목표승격없음,기준ARM296/RTL300보존.",
-  "next_action": "record비트/FSM미세반복 중단. 새경계4746/outside12871/ceiling2537(128여유포함기능2409),추가2209comb/여유포함2337 요구. BG cache miss 허용window와후반ordinaryDMA/209Bmanifest를같은일정에서검토하고,queue/SPI/plan ingress와host-validator 해석을실제로삭제할정규화프로토콜경계부터설계. window임의완화/생산자승인bit로독립검사삭제금지. fullRUN/live65816/FITSTA/physical60fps미검증.",
+  "authoritative_document": "docs/nes-ingress306-contract.ko.md",
+  "assessment": "NES306 구조/예산 검토. 305실제17617comb/2209부족,제한90717.462790444ms/0.796123777ms초과 유지. queue+SPI+plan1361을0으로 해도848comb부족. 공통admission/CRC domain/실행owner+마지막DMA뒤manifest선행큐잉을 다음교체경계로 지정. 기능2409+여유128=2537 요구,예상합성값 아님. native71 requirements codec모델64..87B/총9708B절감;907209→64B,wire감도0.441905ms만으로0.354219ms남음. manifest전체발행0.792499ms무료가정도0.003625ms부족;중복합산금지. BG이전ROMslot최소12.575576ms조기공급필요,window유지.",
+  "next_action": "실제4credit/생산가능시점/IRQ로마지막DMA뒤manifest선행발행을305RTL에분리검증한후공통ingress/실행/manifest제어를삭제대체. output/planRAM별도소유권과독립CRC/coverage/STOP/12read최종ACK유지. 전체기능2409comb/0.796124ms netgain(여유1.046124ms)동시검증. 새RTL/ARM/MAP/재배치실행없음,후보시간면적null/fullRUN/live65816/FITSTA/실물미검증.",
   "next_three_deliverables": [
-    "Replace normalized ingress and manifest execution while preserving independent checks",
-    "Bind actual BG cache miss grants and late DMA/manifest bytes to one feasible ROM schedule",
-    "Require whole-boundary<=2537comb and restricted907 time gain before full board gates"
+    "Measure credit-safe manifest issue after last DMA accepted using RTL305",
+    "Replace ingress admission/CRC domains and execution owner with independent validation retained",
+    "Compare matching-source whole Lite and actual ARM/IRQ/ROM timelines; no additive overlap claims"
   ],
   "gates": [
     {
@@ -3213,7 +3213,7 @@
       }
     ]
   },
-  "active_plan": "docs/nes-arch300-plan.json",
+  "active_plan": "docs/nes-ingress306-plan.json",
   "current_status_scope": "NES300 implemented and verified; -5comb, no meaningful restricted timing gain, normal regressions; not selected.",
   "p1_placement_followup": {
     "selected": "placement05",
