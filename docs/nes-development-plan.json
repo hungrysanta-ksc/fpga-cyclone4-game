@@ -4,13 +4,13 @@
   "date_kst": "2026-10-22",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-arch300-contract.ko.md",
-  "assessment": "NES300 구현·검증 PASS, 공동 목표 해결안 미채택. descriptor17bit end 공유/일반 receipt first-end/정렬1KiB RAM/OBJ 선행 공급 연결. whole Lite22578LE17678comb9022FF307808bits:298대비-5comb,2270부족. 정상90715.532450ms(+0.058636),제한90717.468336ms(0.801669초과). 새RTL+ARM296 제한3은298과 정확히 동일.",
-  "next_action": "현재 E9 직후 OBJ service는 BG 부분완료 표식 송신을 늦추므로 채택하지 않는다. ARM296 대기 서비스를 유지하고 BG 완료 발행·실제 DMA 공급을 막지 않는 위치만 별도 검토한다. 회로는 host만0이어도167comb 부족하다. packet/header/queue/plan의 실제 제거·새 독립 검사·포트 비용을 포함한 구조 근거 없이 주소/FSM/MAP/FIT 미세 반복 금지.",
+  "authoritative_document": "docs/nes-supply301-contract.ko.md",
+  "assessment": "NES301 BG-close E9 송신+BG DMA E1 제출 후 OBJ service 구현. fresh6live/71native/STOP9/H2 9/IRQ8 PASS, 독립 검사·최종ACK 유지. 정상90715.475223ms:300 회귀57.227us 회복이나298대비+1.409us. 제한90717.611334ms/0.944667초과(+0.142953ms),906+0.332769ms로 미채택. unchangedRTL300 wholeLite17678comb/2270부족,새MAP없음. ARMtext27586/BSS47108/stack1288.",
+  "next_action": "기준ARM296 유지. 원자적 OBJ 단계 위치 이동 대신 중단 가능한 증분 단위+DMA/credit 우선 일정 설계. packet/header/queue/plan 공동 ingress/head reader/descriptor/receipt 교체의 실제 제거·포트·독립검사 비용부터 확정. 경계4827→2557comb 필요; endpoint만0이어도910부족. 예상 비용null, 미세MAP/FIT 반복 금지.",
   "next_three_deliverables": [
-    "Preserve300 evidence and ARM296/298 references; reject premature E9 service placement",
-    "Review supply only after BG completion publication without blocking actual DMA, charge extra work and ROM phase",
-    "Require concrete broader packet/header/queue/plan replacement before new whole MAP/FIT"
+    "Preemptible OBJ units with immutable BG prefix and DMA/credit priority",
+    "Joint ingress/head-reader/descriptor-view/executor removal and retention table",
+    "Only justified structural candidate: live ROM schedules and matching whole Lite cost"
   ],
   "gates": [
     {
