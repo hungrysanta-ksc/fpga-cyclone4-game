@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
-  "date_kst": "2026-10-23",
+  "date_kst": "2026-10-24",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-resume330-contract.ko.md",
-  "assessment": "NES330 implements ARM record-boundary tile continuation and first-map preparation in released209B manifest scratch; no new payload buffer, +28B state/+696B text, stack1304 unchanged. Actual12 M4/SPI/IRQ/2slot/ROM/unchanged325 CPU replay schedules PASS;71 producer frames +3 forced-pause frames +6 RTL faults/aperture PASS. Restricted907 17.882967220ms/gap1.216300553; fixed-phase gain0.242406182ms; normal90714.130784974ms. Tile-only restricted regression0.001818160ms; do not credit tile continuation for speed. Normal cold regressions39.045/41.909us. Whole325RTL hash unchanged:22617LE17802comb9021FF307808bits/2394comb deficit. No new MAP or area gain;330 is a warm ARM candidate, not joint target acceptance. Default325RTL+327earlyARM retained.",
-  "next_action": "Preserve329 deletion budgets and330 evidence. First-map preparation plus zero-byte walking produced the warm gain; tile continuation only proves bounded resume/failure behavior. Next evaluate cold preparation overhead together with a common completion/identity event replacing host/queue/validator/SPI owners, not longer status everywhere or cursor-only sharing. Retain independent expected/actual CRC, STOP/drain/finalACK/VBlank, tile pingpong,2slot storage!=consume, clock/CDC/RAM ownership and source/plan deletion scope. Same-start/ROM phase plus restricted/normal ARM/IRQ schedules and wholeLite must jointly improve; no FIT/STA/physical60fps approval.",
+  "authoritative_document": "docs/nes-completion331-contract.ko.md",
+  "assessment": "NES331 cold preparation + common completion/identity response implemented. E0 26->25B shares E2 progress/checker; selected token replaces duplicate allocation/chunk token. SPI dynamic byte selector replaced by25-byte rotation with49bit autonomous IRQ key including fault. Actual15 M4/SPI/IRQ/2slot/ROM/unchanged325 CPU trace schedules,71 producer frames,3 pause frames,205 response+11 identity checks,58 SPI cases,6 RTL faults/aperture PASS. Restricted907 17.849467622ms/gap1.182800955; fixed warm gain0.083589906ms vs330. WholeLite 22563LE/17673comb/9100FF/307808bits; delta -54LE/-129comb/+79FF/0RAM, deficit2265. Host/validator execution FSM and storage!=consume counters remain. No FIT/STA/physical60fps acceptance.",
+  "next_action": "Preserve331 paired time/area evidence and325/328/330 references. Replace actual host manifest/receipt completion and source/plan decode/port owners together; current SPI gain does not delete those FSMs. Keep independent expected/actual CRC, STOP/drain/finalACK/VBlank,tile pingpong,metadata early issue and2slot storage!=consume. Budget the remaining post-ROM schedule and2265comb jointly; compare identical source-start/ROM phase plus restricted/normal continuous actual ARM/IRQ/SPI schedules and wholeLite. No response-length expansion, free ports, cursor/FSM/seed/FIT loops or physical60fps claim.",
   "next_three_deliverables": [
-    "Retain325RTL+327earlyARM and330 warm/cold split evidence",
-    "Replace actual completion/identity owners together with phase-aware ARM preparation",
-    "Same-phase/continuous full schedule and wholeLite joint acceptance"
+    "Preserve331 paired timing/wholeLite and all counterexamples",
+    "Delete actual host/validator and source/plan RAM/control owners within remaining budgets",
+    "Same-phase and continuous ARM/IRQ/SPI/ROM joint verification before FIT/STA"
   ],
   "gates": [
     {
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "normal_polling_improved_restricted_warm_regressed_capacity_short",
+      "status": "bounded_joint_gain_time_and_capacity_short",
       "depends_on": [
         "P0"
       ],
@@ -3213,8 +3213,8 @@
       }
     ]
   },
-  "active_plan": "docs/nes-owner319-plan.json",
-  "current_status_scope": "Actual partial clock-local ownership replacement;15 positive frame schedules and7 faults pass;no timing gain/area budget unmet",
+  "active_plan": "docs/nes-completion331-plan.json",
+  "current_status_scope": "Actual common completion/identity response replacement;15 schedules and6 RTL faults pass;time and area improve but60Hz/whole capacity remain unmet",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
