@@ -4,13 +4,13 @@
   "date_kst": "2026-10-23",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-ownership318-contract.ko.md",
-  "assessment": "NES318 ownership review:315 RTL +317 early metadata ARM baseline; restricted907 17.119885ms/gap0.453219;wholeLite315 17870comb/deficit2462. BG request earlier0.512630ms but accepted ROM/firstBG unchanged;tail improves0.299815ms. No newRTL/ARM/MAP.",
-  "next_action": "Implement/evaluate clock-local host transaction and NES source/plan ownership within6717->4255comb (4127with128margin); retain physical RAM ports/CDC, independent expected-vs-actual checks, stored!=consumed,STOP/finalACK/VBlank. First bind ARM-only unrestricted and same-start/same-ROM-phase A/B plus continuous905..907 before area claims. No isolated mux/FSM/seed/FIT loops.",
+  "authoritative_document": "docs/nes-owner319-contract.ko.md",
+  "assessment": "NES319 implemented host admission/source record termination/source-plan cursor ownership on315+early metadata ARM. Fixed-phase A/B and continuous normal/restricted905..907 all identical timing;restricted90717.119885ms/gap0.453219. WholeLite22618LE17824comb9022FF307808bits (-46comb/-18FF);deficit2416. Regional6717->6700 only17comb, outside mapping-29. Seven fault guards PASS. Not full FSM replacement;not selected.",
+  "next_action": "Preserve315+317 early ARM and319 measured negative time result. Admission/cursor sharing does not meet6717->4255 budget; no further isolated counter/FSM-number/seed/FIT tuning. Remaining host/validator descriptor-manifest-receipt execution and source/plan decode FSMs require actual deletion/replacement and port-stall budget. Retain independent expected/actual checks, stored!=consumed,STOP/ROM drain/finalACK/VBlank; same-start-ROM-phase and continuous ARM/IRQ/2slot comparisons before whole71/fullRUN/FITSTA.",
   "next_three_deliverables": [
-    "Clock-local source/plan/host replacement and RAM-port contract",
-    "Same-phase ARM/IRQ/2slot timing and whole Lite budget",
-    "full RUN/whole71/FITSTA only after both budgets pass"
+    "Remaining whole execution-control deletion boundary and port-stall budget",
+    "Actual broad replacement with same-phase/continuous ARM and whole Lite comparison",
+    "whole71/fullRUN/FITSTA only after both budgets pass"
   ],
   "gates": [
     {
@@ -3213,8 +3213,8 @@
       }
     ]
   },
-  "active_plan": "docs/nes-ownership318-plan.json",
-  "current_status_scope": "315 RTL plus early metadata ARM ownership/ROM-phase review; budgets only, no new RTL/ARM/MAP or proven joint saving",
+  "active_plan": "docs/nes-owner319-plan.json",
+  "current_status_scope": "Actual partial clock-local ownership replacement;15 positive frame schedules and7 faults pass;no timing gain/area budget unmet",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
