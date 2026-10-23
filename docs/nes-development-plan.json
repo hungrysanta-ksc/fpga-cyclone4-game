@@ -4,9 +4,9 @@
   "date_kst": "2026-10-23",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-executor313-contract.ko.md",
-  "assessment": "NES313 공통 packet/RLE 실행·canonical manifest446B·새65816 descriptor/staging 소비 연결. raw queue/header/ordinary ACK relay와 validator packet_at/executing/E decoder 삭제. storage2credit/consume분리,E2 14B/E0 26B 유지. 제한907 16.905615ms(307대비-0.711310),정상14.747414;wholeLite22959LE/18150comb/9027FF/307808bits,307대비comb+567,부족2742. 907시작 위상 이동으로 warm만 단축/전체 일정과 회로 회귀로 미채택.",
-  "next_action": "307 기준/production 유지. validator 절감보다 host·queue·SPI 증가가 크다. SPI/plan 상태·RAM 주소 선택·수신 directory/실행 cursor까지 실제 없앨 더 넓은 교체와 RAM 포트 배치를 전체 예산으로 재검토한다. 고정 ROM 창/실제 ARM·IRQ/새 CPU 준비·consume 비용을 유지하고, 두 예산 동시 통과 전 FIT/seed/부분 FSM 반복 금지.",
+  "authoritative_document": "docs/nes-control314-contract.ko.md",
+  "assessment": "NES314 FSM 원인 확정: state 범위 비교→명시적 equality만 변경해 host FSM 추출/wholecomb18150→18021(-129). SPI/plan shared seal·queue 기준주소·plan 절대cursor 공동 교체 최종22758LE/17964comb/9043FF/307808bits;313대비comb-186,부족2556. 제한907 16.905615ms/313대비+0.000000,정상14.747414. 시간·면적 동시 목표 미달/production 미채택.",
+  "next_action": "307 비교 기준과 production227,313/314 증거 유지. serializer snapshot/CRC8 주소 mux, queue clear/load/credit와 공통 실행 주소·완료 소유권의 남은 비용을 같은 전체 경계로 재예산한다. 상태 번호/seed/FIT 반복 대신 실제 삭제할 제어와 전체 일정 이득을 먼저 제시한다. 두 예산 통과 전 whole71/fullRUN/FITSTA/실물60fps 승인 금지.",
   "next_three_deliverables": [
     "SPI/plan/RAM-address ownership replacement budget",
     "same-boundary time and area candidate",
@@ -3213,8 +3213,8 @@
       }
     ]
   },
-  "active_plan": "docs/nes-executor313-plan.json",
-  "current_status_scope": "common packet executor and new ordinary consumer connected; warm phase shift / whole schedule and area regression; not selected",
+  "active_plan": "docs/nes-control314-plan.json",
+  "current_status_scope": "FSM extraction restored; shared SPI/plan/queue addresses reduce area; simultaneous time/area goal unmet",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
@@ -10528,5 +10528,45 @@
       "CPU": "cpu03",
       "early": "early04"
     }
+  },
+  "latest314": {
+    "stage": 314,
+    "status": "shared_control_measured_not_selected",
+    "selected": false,
+    "summary": "NES314 FSM 원인 확정: state 범위 비교→명시적 equality만 변경해 host FSM 추출/wholecomb18150→18021(-129). SPI/plan shared seal·queue 기준주소·plan 절대cursor 공동 교체 최종22758LE/17964comb/9043FF/307808bits;313대비comb-186,부족2556. 제한907 16.905615ms/313대비+0.000000,정상14.747414. 시간·면적 동시 목표 미달/production 미채택.",
+    "contract": "docs/nes-control314-contract.ko.md",
+    "evidence": "analysis/control314-verification.json",
+    "next_action": "307 비교 기준과 production227,313/314 증거 유지. serializer snapshot/CRC8 주소 mux, queue clear/load/credit와 공통 실행 주소·완료 소유권의 남은 비용을 같은 전체 경계로 재예산한다. 상태 번호/seed/FIT 반복 대신 실제 삭제할 제어와 전체 일정 이득을 먼저 제시한다. 두 예산 통과 전 whole71/fullRUN/FITSTA/실물60fps 승인 금지.",
+    "whole_MAP": {
+      "LE": 22758,
+      "comb": 17964,
+      "FF": 9043,
+      "RAM_bits": 307808
+    },
+    "delta313": {
+      "LE": -201,
+      "comb": -186,
+      "FF": 16,
+      "RAM_bits": 0
+    },
+    "remaining_ms": 0.2389486453333305,
+    "comb_deficit": 2556,
+    "selected_runs": {
+      "FSM": "fsm01",
+      "board": "board02",
+      "restricted": "window01",
+      "normal": "normal01",
+      "guards": "guards01",
+      "early": "early01",
+      "queue": "queue01",
+      "SPI": "spi01",
+      "plan": "plan01"
+    },
+    "limits": [
+      "Actual M4 instructions at modeled CPI1/84MHz; IRQ body, fixed ROM competition and two-slot responses included.",
+      "New actual 65816 ordinary kernel measured separately and its bus trace replayed against RTL. Tile/map and VBlank/final display retain modeled service; no full-system live 65816 proof.",
+      "Only 905..907 retimed; no whole71/full ARM RUN/FIT/STA/physical 60fps.",
+      "SPI/plan FSMs retained; 32B RAM directory reservation unused; reception cursors are registers."
+    ]
   }
 }
