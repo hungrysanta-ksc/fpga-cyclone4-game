@@ -1,0 +1,39 @@
+{
+  "stage": 315,
+  "status": "shared_response_queue_measured_not_selected",
+  "selected": false,
+  "summary": "NES315 snapshot byte selector·queue host load 통합: whole Lite 22664LE/17870comb/9040FF/307808bits;314 대비 comb-94,부족2462. 제한907 16.906343ms/314 대비+0.000727,정상14.746505. 시간·면적 동시 목표 미달/production 미채택.",
+  "contract": "docs/nes-response315-contract.ko.md",
+  "evidence": "analysis/response315-verification.json",
+  "next_action": "307/314 비교 기준과 production227 유지. 남은 immutable snapshot·CRC/ingress cursor, host/validator의 주소·완료 경계를 전체 예산으로 재검토하되 독립 coverage·STOP·최종ACK는 유지한다. 제한907의 BG ROM 허용 시각 전후를 분리해 실제 임계 경로를 줄이는 후보만 평가한다. 작은 FF 절감/상태 번호/seed/FIT 반복으로 회로 부족을 해결했다고 주장하지 않는다. 두 예산 통과 전 whole71/fullRUN/FITSTA/실물60fps 승인 금지.",
+  "whole_MAP": {
+    "LE": 22664,
+    "comb": 17870,
+    "FF": 9040,
+    "RAM_bits": 307808
+  },
+  "delta314": {
+    "LE": -94,
+    "comb": -94,
+    "FF": -3,
+    "RAM_bits": 0
+  },
+  "remaining_ms": 0.23967590933333227,
+  "comb_deficit": 2462,
+  "selected_runs": {
+    "board": "board01",
+    "restricted": "window01",
+    "normal": "normal01",
+    "guards": "guards01",
+    "early": "early01",
+    "queue": "queue02",
+    "SPI": "spi01",
+    "reply": "reply01"
+  },
+  "limits": [
+    "Actual M4 instructions at modeled CPI1/84MHz; IRQ body, fixed ROM competition and two-slot responses included.",
+    "New actual 65816 ordinary kernel measured separately and its bus trace replayed against RTL. Tile/map and VBlank/final display retain modeled service; no full-system live 65816 proof.",
+    "Only 905..907 retimed; no whole71/full ARM RUN/FIT/STA/physical 60fps.",
+    "SPI/plan FSMs retained; 32B RAM directory reservation unused; reception cursors are registers."
+  ]
+}
