@@ -1,0 +1,27 @@
+{
+  "stage": 347,
+  "status": "codec_verified_structure_budget_unproven",
+  "selected_RTL": 338,
+  "selected_ARM": 336,
+  "assessment": "NES347 review/codec prototype only; selected338RTL/336ARM unchanged. Fixed original block order and mapMASK/SHIFT exact; nonmap/raw full-block repeat8/16 only when shorter than MASK. Actual isolated M4 reference+candidate71frames/348610B and10malformed/history guards PASS. Wire52113->28435B,907564->189B/3->1banks;vs34032236B but905+102B. Decoder allframes -12610..-134973instructions,90736220->16658;isolatedtext1332->1428,BSS28/stack48same. No newRTL/fullARM/MAP/timing gain. Proposed host+queueSPI+plan joint3418->2044cap(-1374),source1747->1100(-647),validator1159/outside10950retained=>whole15253;2021net removal unproven. Source no saving requires joint1397;only1374 removal leaves15900/492short.907 serialwire+decode proxy1.375738ms still lacks0.915689ms to priorROMclose,NOTprediction. Internal32Bplan normalization addsconditional21usNESread/3.429usclear warm;wire expansion wouldadd0.704ms andisrejected. Prior3461369pins rehashed;newtotal1749pins. Remaining4.022994145ms/1866comb unchanged;noFITSTA/fullRUN/physical.",
+  "next_action": "Keep338RTL/336ARM. Minimal A: implement fixed-block nonmap repeat using existing edge0/edge1,left/right flags,block cursor/history,retainMASK/SHIFT/CRC/query and common final-record output;connect v4decoder only to336 batching/fullCOMMIT,measure source completion/firstROM request with actualSPI/IRQ/staging samephase and continuous. Minimal B: shared host-clock E1/E9 transaction decode/commit and streaming normalized32Bplan slots in existing512Bbanks;delete duplicate ingress length/endpoint event control and NES short/full/alt-walk only when replacement removesoldlogic. Keep wire compression,live plan fields/CDC/bank ownership,independentexpected/readCRC/coverage,accepted/retired/consumed separation,STOP/finalACK/VBlank. Budget allRAM port work within256hostclocks/SPIbyte;header40Bgap is conditional not free. Do not count alreadyshared snapshot/CRC or move cost betweenblocks as saving. WholeLite15253cap remains unproven;noautomaticmerge/FITloops.",
+  "deliverables": [
+    "Fixed-block repeat source+v4decoder on338/336,exact71codec and actual whole-path timing/STOP guard comparison",
+    "Common E1/E9 ingress and internal32Bplan storage replacement with explicit per-byte/RAM/CDC/credit ownership costs",
+    "Joint wholeLite disjoint cost ledger and samephase/continuous timelines;reject area-only or normal-ROM-only gain"
+  ],
+  "evidence": "analysis/fixed347-verification.json",
+  "new_codec_ARM": true,
+  "new_full_ARM": false,
+  "new_RTL": false,
+  "new_MAP": false,
+  "FIT": false,
+  "STA": false,
+  "physical": false,
+  "selected_gap_ms": 4.022994145333332,
+  "selected_comb_deficit": 1866,
+  "whole_comb_cap": 15253,
+  "required_comb_reduction": 2021,
+  "codec_frames": 71,
+  "codec_guards": 10
+}
