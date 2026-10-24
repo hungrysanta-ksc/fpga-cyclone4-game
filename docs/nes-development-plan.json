@@ -4,13 +4,13 @@
   "date_kst": "2026-10-24",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-owner349-contract.ko.md",
-  "assessment": "NES349 ownership/deletion review only; retain338RTL/336ARM. header/record/length views are wires, not duplicate storage; active121bits mutate through batch descriptor/token/remaining and cannot alias incoming header. Gap40B cannot hold two21B headers; compact15+5B fits arithmetically but adds15writes/packet and retains active context. Warm907 HLOAD+HCHECK185hostclocks=2.202240us directwork only; sequential fullheader adds90clocks=1.071360us. Fixedrequest8.381149 vs priorclose6.089722 requires2.291427ms advance;source-to-request5.714454 must fall<=3.423027ms,postROM3.833249->3.180 needs.653249ms. Continuous20.689660812/gap4.022994145 unchanged. Whole17274comb/1866deficit,cap15253 needs2021net;source/validator/outside unchanged forcesjoint3418->1397(59.13%),unproven. Prior3482197pins rehashed/9recorded schedule-frame loader audits;no newRTL/ARM/MAP/FITSTA/physical. Old347 optimistic allocation withdrawn as prediction.",
-  "next_action": "Keep338/336. Instrument RAM request/return/writegrant/STOP owner and actual ARM fullCOMMIT-to-firstBG plus postROM separately. Candidate preserves original compressed packet and two independent ingress/active lifetimes;replace queue field/load adapter and host returned-byte/address/progress cases together with one host execution-port owner,retain physical packet-vs-expected mux,mutable context,independentCRC/coverage,storage!=consume,CDC,STOP/finalACK/VBlank. No checkedheader gap copy or expandedplan. Require actual deletion/addition ledger before implementation;header-only has no demonstrated path to2021comb. Reconsider broader execution/checker interface if gate cannot close,not state/seed/FIT loops. Matching wholeLite and samephase/continuous actualARM/SPI/IRQ/2slot/ROM required;noautomaticmerge.",
+  "authoritative_document": "docs/nes-port350-contract.ko.md",
+  "assessment": "NES350 passive actual port trace PASS;338RTL/336ARM kept.9observations/3unique frames: productRTL hashes,ARM PT_LOAD/execution,source and joint event timeline byte-exact baseline. Cold905/906 useful simultaneous A/B11each;warm ingress167bytes whilehostactive,446expectedwrites/446independentcaptures,finalscan23.308us all9. STOPheader30(state55 addr523 prev522),descriptor31(state18 addr789),expected12(state53 addr356) pass RAMfreeze/noACK;aperture/raw0final8 PASS.2200priorpins rehashed/2351pins. Replacement scope hostBport queuefield/load adapter+host request/response/address/progress;retain portA,independentchecker,mutable121bits,storage!=consume,CDC/STOP/finalACK/VBlank. Skipidentity cursor0..3->10..end keeps10/14/15reads;429packet field-model observations equal,notcandidateRTLproof. Warm continuous firstBG interval5.712ms=ARM440125instructions5.239583+SPI.464762+residual.007655;31checkpoints/0IRQwait. Fixed5.714409ms/440332instructions retained;firstrequeststill2.291427ms late,postROMneed.653249. Initialprepare267357instructions3.182821ms;dirtymaterial must precede BG scratch overwrite. WholeLite reused identicalRTL17274comb/1866short;hostqueue2386 wouldneed365ifalone pays2021net. No measuredgain/newMAP/FITSTA/fullRUN/physical.",
+  "next_action": "Keep338/336. Implement only a justified original-packet hostB reader:skip0..3->10..end,one-cycle response ownership and header pipeline,delete queuefield/load adapter plus host duplicate request/return/progress cases together. Retain portA/2slot/accepted-retired-consumed,mutable batchcontext,packet-vs-expected select,encoded-vs-expanded progress,independentexpected446/readCRCcoverage,STOPpending cancellation/finalACK/VBlank. First check exact deletion/addition and wholecost;hostqueue-only cannot substantiate2021comb. Separately instrument dirtymaterial/start and firstBG prep dependencies before attempting validated reuse/overlap;old displayed material is overwritten by BG key scratch,so defer only with charged preservation/recheck. Keep samephase andcontinuous/normal/cold actualARM/SPI/IRQ costs;wholeLite net decrease+time nonregression are prototype gates,notwholefit/60fps. No seed/FIT loops orautomaticmerge.",
   "next_three_deliverables": [
-  "Bound RAM owner trace and exact old-case/address/response-adapter deletion ledger with independent checks and concurrent ingress retained",
-  "Separate ARM firstBG window-crossing2.291427ms and postROM.653249ms budgets;samephase/continuous/normal/cold comparisons including IRQ/2slot responses",
-  "Justified wholeLite net2021comb deletion gate;do not claim header-only or relocation savings;preserve338/336 and348 failures"
+  "Original-packet skip reader+common hostB request/return owner with explicit old case/address/load adapter deletion,header onebyte/clock and retained independent STOP/ACK checks",
+  "Bound dirtymaterial/start/firstBG preparation dependency and reuse cost against2.291427ms request advance and.653249ms postROM budget;no free shadow/earlycommit",
+  "Matching wholeLite cost and exact samephase/continuous/normal/cold ARM/IRQ/2slot traces;reject local-only claims if2021net wholebudget remains open"
 ],
   "gates": [
     {
@@ -3214,24 +3214,35 @@
     ]
   },
   "active_plan": {
-  "stage": 349,
-  "status": "review_complete_no_candidate_selected",
+  "stage": 350,
+  "status": "actual_port_boundary_verified_candidate_not_implemented",
   "selected_RTL": 338,
   "selected_ARM": 336,
-  "assessment": "NES349 ownership/deletion review only; retain338RTL/336ARM. header/record/length views are wires, not duplicate storage; active121bits mutate through batch descriptor/token/remaining and cannot alias incoming header. Gap40B cannot hold two21B headers; compact15+5B fits arithmetically but adds15writes/packet and retains active context. Warm907 HLOAD+HCHECK185hostclocks=2.202240us directwork only; sequential fullheader adds90clocks=1.071360us. Fixedrequest8.381149 vs priorclose6.089722 requires2.291427ms advance;source-to-request5.714454 must fall<=3.423027ms,postROM3.833249->3.180 needs.653249ms. Continuous20.689660812/gap4.022994145 unchanged. Whole17274comb/1866deficit,cap15253 needs2021net;source/validator/outside unchanged forcesjoint3418->1397(59.13%),unproven. Prior3482197pins rehashed/9recorded schedule-frame loader audits;no newRTL/ARM/MAP/FITSTA/physical. Old347 optimistic allocation withdrawn as prediction.",
-  "next_action": "Keep338/336. Instrument RAM request/return/writegrant/STOP owner and actual ARM fullCOMMIT-to-firstBG plus postROM separately. Candidate preserves original compressed packet and two independent ingress/active lifetimes;replace queue field/load adapter and host returned-byte/address/progress cases together with one host execution-port owner,retain physical packet-vs-expected mux,mutable context,independentCRC/coverage,storage!=consume,CDC,STOP/finalACK/VBlank. No checkedheader gap copy or expandedplan. Require actual deletion/addition ledger before implementation;header-only has no demonstrated path to2021comb. Reconsider broader execution/checker interface if gate cannot close,not state/seed/FIT loops. Matching wholeLite and samephase/continuous actualARM/SPI/IRQ/2slot/ROM required;noautomaticmerge.",
+  "assessment": "NES350 passive actual port trace PASS;338RTL/336ARM kept.9observations/3unique frames: productRTL hashes,ARM PT_LOAD/execution,source and joint event timeline byte-exact baseline. Cold905/906 useful simultaneous A/B11each;warm ingress167bytes whilehostactive,446expectedwrites/446independentcaptures,finalscan23.308us all9. STOPheader30(state55 addr523 prev522),descriptor31(state18 addr789),expected12(state53 addr356) pass RAMfreeze/noACK;aperture/raw0final8 PASS.2200priorpins rehashed/2351pins. Replacement scope hostBport queuefield/load adapter+host request/response/address/progress;retain portA,independentchecker,mutable121bits,storage!=consume,CDC/STOP/finalACK/VBlank. Skipidentity cursor0..3->10..end keeps10/14/15reads;429packet field-model observations equal,notcandidateRTLproof. Warm continuous firstBG interval5.712ms=ARM440125instructions5.239583+SPI.464762+residual.007655;31checkpoints/0IRQwait. Fixed5.714409ms/440332instructions retained;firstrequeststill2.291427ms late,postROMneed.653249. Initialprepare267357instructions3.182821ms;dirtymaterial must precede BG scratch overwrite. WholeLite reused identicalRTL17274comb/1866short;hostqueue2386 wouldneed365ifalone pays2021net. No measuredgain/newMAP/FITSTA/fullRUN/physical.",
+  "next_action": "Keep338/336. Implement only a justified original-packet hostB reader:skip0..3->10..end,one-cycle response ownership and header pipeline,delete queuefield/load adapter plus host duplicate request/return/progress cases together. Retain portA/2slot/accepted-retired-consumed,mutable batchcontext,packet-vs-expected select,encoded-vs-expanded progress,independentexpected446/readCRCcoverage,STOPpending cancellation/finalACK/VBlank. First check exact deletion/addition and wholecost;hostqueue-only cannot substantiate2021comb. Separately instrument dirtymaterial/start and firstBG prep dependencies before attempting validated reuse/overlap;old displayed material is overwritten by BG key scratch,so defer only with charged preservation/recheck. Keep samephase andcontinuous/normal/cold actualARM/SPI/IRQ costs;wholeLite net decrease+time nonregression are prototype gates,notwholefit/60fps. No seed/FIT loops orautomaticmerge.",
   "deliverables": [
-    "Bound RAM owner trace and exact old-case/address/response-adapter deletion ledger with independent checks and concurrent ingress retained",
-    "Separate ARM firstBG window-crossing2.291427ms and postROM.653249ms budgets;samephase/continuous/normal/cold comparisons including IRQ/2slot responses",
-    "Justified wholeLite net2021comb deletion gate;do not claim header-only or relocation savings;preserve338/336 and348 failures"
+    "Original-packet skip reader+common hostB request/return owner with explicit old case/address/load adapter deletion,header onebyte/clock and retained independent STOP/ACK checks",
+    "Bound dirtymaterial/start/firstBG preparation dependency and reuse cost against2.291427ms request advance and.653249ms postROM budget;no free shadow/earlycommit",
+    "Matching wholeLite cost and exact samephase/continuous/normal/cold ARM/IRQ/2slot traces;reject local-only claims if2021net wholebudget remains open"
   ],
-  "evidence": "analysis/owner349-verification.json",
+  "evidence": "analysis/port350-verification.json",
   "new_RTL": false,
   "new_ARM": false,
+  "new_functional_run": true,
   "new_MAP": false,
   "FIT": false,
   "STA": false,
   "physical": false,
+  "observations": 9,
+  "unique_frames": 3,
+  "STOP_cases": [
+    30,
+    31,
+    12
+  ],
+  "header_model_observations": 429,
+  "prior_pins_rehashed": 2200,
+  "pins": 2351,
   "selected_gap_ms": 4.022994145333332,
   "selected_comb_deficit": 1866,
   "whole_comb_cap": 15253,
