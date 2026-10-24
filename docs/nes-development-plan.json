@@ -4,13 +4,13 @@
   "date_kst": "2026-10-24",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-structure339-contract.ko.md",
-  "assessment": "NES339 design/model audit only; selected338RTL+336ARM unchanged. Hybrid retains map MASK/SHIFT and uses region greedy nonmap records:71 exact reconstructions,213 Python negative cases;successful wire52113->26273B,no recorded wire regressions,warm907564->126B,cold9056058->3375B. Header/seals are charged placeholders,new ABI/CRC/RTL not implemented. Full commit before E9;BG prefix in one bank is not visible before bank CRC. Actual wholeLite17274comb/1866deficit and restricted20.689660812ms/4.022994145gap unchanged. No new simulation/MAP/FIT/STA.",
-  "next_action": "Prototype versioned hybrid source+region word query and actual incremental M4 private BG preparation;full commit/CRC/independent checks/STOP/finalACK/VBlank retained. Prove immutable first E9 prefix ordering/credit and actual IRQ/2slot/staging schedule. Nonwire cap1.20ms vs1.269335415 allowed gives conditional69.335us;optional early bank seal adds53.714us and E9 split adds32.381us total wire occupancy. PostROM still needs.653795ms. Host checked-run execution must delete old address/data paths,not repeat failed321 FSM/323 byte restoration. Scoped6324->4303 requires2021 net comb deletion,whole cap15253/155margin;host1015/source647 savings unproven. Separate fixed ROM phase and continuous schedule,charge cold/new logic/RAM packing;one matching wholeLite gate after actual prototype. No automatic merge;production227/GBC164/saveSRAM unchanged.",
+  "authoritative_document": "docs/nes-hybrid340-contract.ko.md",
+  "assessment": "NES340 implemented N5v3 map MASK/SHIFT + bounded nonmap literal/repeat8/raster repeat16,region query select and host single packet cursor/shared metadata counter. Actual71 M4 codec348610B/15guards PASS;9 joint schedules and8 RTL fault guards+raw0/aperture,4 actual M4 BG lifetime guards PASS. Same M4 instance decodes at actual verified SPI-bank checkpoints and prepares private BG before final input ACK;D4 prefix/shifter remains modeled/replayed,not full firmwareRUN. Sorted tile2KiB becomes checked membership bitmap,required/raw union preserved. Conditional clear+slot1 prefix18B cold,46B warm;original batch capacity/order preserved. Wire52113->32236B total,no recorded regression;warm successful564->206B,actual668->336B,empty polls8->10. WholeLite22489LE17602comb9041FF307808bits:vs338 +345/+328/+23/0,deficit2194. Sourceencoder+320/host-13;FSMs extracted. Fixed90725.051199382ms unchanged,restricted20.691024432ms +1.363620us,normal11.992901538ms -1.417164812ms. Candidate REJECTED jointly;selected338RTL+336ARM stays,gap4.022994145ms/1866comb. Text30370(+260)/BSS47428(+24)/stack1288same;noFITSTA/physical60fps.",
+  "next_action": "Retain338/336;do not expand340 dual map-mask/nonmap-run machinery or claim339 model126B/69us margin. Actual206B permits onlyabout1.026ms nonwire with hypothetical18B prefix atsame1.728ms close;warm actualfirstrequest6.970ms andpostROM3.834ms. Prove general warm immutable-plan frontier without slot1 assumption,lower-slot/duplicate/bulk/DMA/credit costs;source/ARM work cannot be charged as free overlap. Rebudget actual host/source address/data-path deletions:baseline6324 scoped->4303 needs2021netcomb,host1146/source1100 caps remain unproven;340 addedsource320. Compare common query/compare/record execution that removes retained datapaths,not FSM-only321/unit-restore323/seed loops. Keep independent expected/actual read CRC+coverage,STOP/reset cold,commit lease,metadata/tile preproduction,exact finalACK/VBlank;same ROM phase and continuous schedules separately. No automatic merge;production227/GBC164/saveSRAM unchanged.",
   "next_three_deliverables": [
-  "Implement hybrid source and typed private BG view with real CRC/commit/STOP ownership",
-  "Measure first immutable BG prefix and optional bank seal separately on actual ARM/SPI/IRQ/2slot schedules",
-  "Replace host/source datapaths with explicit deletion ledger and wholeLite scope cap4303;retain independent actual-read validation"
+  "General warm first-plan frontier and actual ARM preparation budget,including downstream order/credit/DMA costs",
+  "Joint host/source datapath deletion ledger that removes old machinery and stays within4303 scoped comb",
+  "Only justified prototype with same-phase/continuous actual M4+SPI+IRQ+2slot and one wholeLite gate;retain338/336 until both improve"
 ],
   "gates": [
     {
@@ -3214,34 +3214,33 @@
     ]
   },
   "active_plan": {
-  "stage": 339,
-  "status": "design_budget_only",
+  "stage": 340,
+  "status": "joint_candidate_rejected",
   "selected_RTL": 338,
   "selected_ARM": 336,
-  "assessment": "NES339 design/model audit only; selected338RTL+336ARM unchanged. Hybrid retains map MASK/SHIFT and uses region greedy nonmap records:71 exact reconstructions,213 Python negative cases;successful wire52113->26273B,no recorded wire regressions,warm907564->126B,cold9056058->3375B. Header/seals are charged placeholders,new ABI/CRC/RTL not implemented. Full commit before E9;BG prefix in one bank is not visible before bank CRC. Actual wholeLite17274comb/1866deficit and restricted20.689660812ms/4.022994145gap unchanged. No new simulation/MAP/FIT/STA.",
-  "next_action": "Prototype versioned hybrid source+region word query and actual incremental M4 private BG preparation;full commit/CRC/independent checks/STOP/finalACK/VBlank retained. Prove immutable first E9 prefix ordering/credit and actual IRQ/2slot/staging schedule. Nonwire cap1.20ms vs1.269335415 allowed gives conditional69.335us;optional early bank seal adds53.714us and E9 split adds32.381us total wire occupancy. PostROM still needs.653795ms. Host checked-run execution must delete old address/data paths,not repeat failed321 FSM/323 byte restoration. Scoped6324->4303 requires2021 net comb deletion,whole cap15253/155margin;host1015/source647 savings unproven. Separate fixed ROM phase and continuous schedule,charge cold/new logic/RAM packing;one matching wholeLite gate after actual prototype. No automatic merge;production227/GBC164/saveSRAM unchanged.",
+  "assessment": "NES340 implemented N5v3 map MASK/SHIFT + bounded nonmap literal/repeat8/raster repeat16,region query select and host single packet cursor/shared metadata counter. Actual71 M4 codec348610B/15guards PASS;9 joint schedules and8 RTL fault guards+raw0/aperture,4 actual M4 BG lifetime guards PASS. Same M4 instance decodes at actual verified SPI-bank checkpoints and prepares private BG before final input ACK;D4 prefix/shifter remains modeled/replayed,not full firmwareRUN. Sorted tile2KiB becomes checked membership bitmap,required/raw union preserved. Conditional clear+slot1 prefix18B cold,46B warm;original batch capacity/order preserved. Wire52113->32236B total,no recorded regression;warm successful564->206B,actual668->336B,empty polls8->10. WholeLite22489LE17602comb9041FF307808bits:vs338 +345/+328/+23/0,deficit2194. Sourceencoder+320/host-13;FSMs extracted. Fixed90725.051199382ms unchanged,restricted20.691024432ms +1.363620us,normal11.992901538ms -1.417164812ms. Candidate REJECTED jointly;selected338RTL+336ARM stays,gap4.022994145ms/1866comb. Text30370(+260)/BSS47428(+24)/stack1288same;noFITSTA/physical60fps.",
+  "next_action": "Retain338/336;do not expand340 dual map-mask/nonmap-run machinery or claim339 model126B/69us margin. Actual206B permits onlyabout1.026ms nonwire with hypothetical18B prefix atsame1.728ms close;warm actualfirstrequest6.970ms andpostROM3.834ms. Prove general warm immutable-plan frontier without slot1 assumption,lower-slot/duplicate/bulk/DMA/credit costs;source/ARM work cannot be charged as free overlap. Rebudget actual host/source address/data-path deletions:baseline6324 scoped->4303 needs2021netcomb,host1146/source1100 caps remain unproven;340 addedsource320. Compare common query/compare/record execution that removes retained datapaths,not FSM-only321/unit-restore323/seed loops. Keep independent expected/actual read CRC+coverage,STOP/reset cold,commit lease,metadata/tile preproduction,exact finalACK/VBlank;same ROM phase and continuous schedules separately. No automatic merge;production227/GBC164/saveSRAM unchanged.",
   "deliverables": [
-    "Implement hybrid source and typed private BG view with real CRC/commit/STOP ownership",
-    "Measure first immutable BG prefix and optional bank seal separately on actual ARM/SPI/IRQ/2slot schedules",
-    "Replace host/source datapaths with explicit deletion ledger and wholeLite scope cap4303;retain independent actual-read validation"
+    "General warm first-plan frontier and actual ARM preparation budget,including downstream order/credit/DMA costs",
+    "Joint host/source datapath deletion ledger that removes old machinery and stays within4303 scoped comb",
+    "Only justified prototype with same-phase/continuous actual M4+SPI+IRQ+2slot and one wholeLite gate;retain338/336 until both improve"
   ],
-  "evidence": "analysis/structure339-verification.json",
-  "area_caps": {
-    "host": 1146,
-    "validator_aperture": 1160,
-    "queue_SPI": 600,
-    "source": 1100,
-    "plan": 297
+  "evidence": "analysis/hybrid340-verification.json",
+  "candidate_whole": {
+    "LE": 22489,
+    "comb": 17602,
+    "FF": 9041,
+    "RAM_bits": 307808
   },
-  "nonwire_design_caps_ms": {
-    "source_query_compare_seal": 0.45,
-    "ARM_decode": 0.1,
-    "ARM_BG_prepare": 0.36,
-    "ARM_first_plan_refill": 0.18,
-    "IRQ_CDC_poll": 0.11
-  },
-  "new_RTL": false,
-  "new_MAP": false
+  "candidate_comb_deficit": 2194,
+  "selected_comb_deficit": 1866,
+  "selected_restricted_gap_ms": 4.022994145333332,
+  "new_RTL": true,
+  "new_MAP": true,
+  "full_RUN": false,
+  "FIT": false,
+  "STA": false,
+  "physical": false
 },
   "current_status_scope": "Queue-aware map publication and independent final RAM execution; bounded joint gain, time and capacity still unmet",
   "p1_placement_followup": {
