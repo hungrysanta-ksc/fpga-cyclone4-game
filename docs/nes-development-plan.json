@@ -4,13 +4,13 @@
   "date_kst": "2026-10-24",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-order343-contract.ko.md",
-  "assessment": "NES343 structure/model review only; selected338RTL/336ARM unchanged. Rehashed1268 evidence files.167 recorded BG promotions preserve symbolic disjoint destination footprint but add up to3 cold/2 warm chunks;23B E1 per extra chunk is70.095us wire only. SHIFT+byte-run model reconstructs71 maps but has11 wire regressions/max896B despite52113->40916B total;retain MASK as well as SHIFT. No new ARM/RTL/MAP/timing gain. Restricted20.689660812ms/gap4.022994145ms and whole17274comb/1866deficit unchanged.",
-  "next_action": "Prototype one complete disjoint contiguous BG run promotion after clear/fullCOMMIT, before BG marker; instrument callback readiness, ROM acceptance, chunk publication and actual DMA receipt. Keep submission-order tokens, independent expected/readCRC+coverage and STOP/finalACK/VBlank. Replace source output address/mux with contiguous record builder preserving MASK/SHIFT, then consider bounded nonmap compression without dual emitters. Host must replace both ordinary and metadata destination progression, not merely shared reader/storage. Conditional46B prefix nonwire cap0.900ms and postROM3.180ms;whole15253comb cap requires2021net deletion,all unproven. Compare fixed ROM phase and continuous schedules separately;no automatic merge/FIT loops.",
+  "authoritative_document": "docs/nes-record344-contract.ko.md",
+  "assessment": "NES344 implemented one ready contiguous warm BG prefix and wire-identical contiguous MASK/SHIFT source records. RTL-only restricted905..907 exact bytes/timing unchanged. First prefix stalled remaining BG in bulk289:ARM-only/joint warm36.678150766ms(+15.988489954). Bounded BG wait-service fixes that stall but warm restricted20.790295968(+.100635156),fixed25.152879980(+.101680598),normal13.572655308(+.162588958) all regress;E9+1/E2+2 adds36wireB,chunk count unchanged. WholeLite22129LE17263comb9020FF307808bits(-15LE/-11comb/+2FF/0RAM),candidate deficit1855;encoder1348->1324 is not whole24 savings.18 integrated observations/3 unique recorded frames,10RTL faults+aperture/raw0,10M4 prefix guards on2ELFs+3continuation cases PASS. Dedicated actualRTL4 synthetic frames cover left/rightSHIFT,stalls,SHIFT-buildSTOP exact independent bytes/CRC PASS;905..907 contain noSHIFT. M4text30638(+528),BSS47412(+8),stack1288same. Joint candidate rejected;selected338RTL/336ARM remains4.022994145ms/1866comb. NoFITSTA/fullRUN/new71/physical60fps.",
+  "next_action": "Do not tune early-prefix length or add more E9 packets: same-phase and continuous schedules both regress. First budget source completion/ROM-window crossing with MASK+SHIFT and bounded nonmap compression in one record builder,not340 dual emitters or343 MASK removal. Replace host ordinary PUT/EXPAND and metadata MNEXT/MISSUE/MWAIT via accepted-byte destination ISSUE/WAIT/ADVANCE with explicit expected-RAM port ownership/completion;retain independent readCRC/coverage/private jobs,2slot storagecredit vsconsume,STOP/finalACK/VBlank. Host1015comb/source647 baseline savings remain unproven;344 whole gain11 leaves2010 to15253 cap. Record-layout changes alone cannot close the gap. Compare actual ARM/SPI/IRQ/ROM/staging costs including responses before next matching wholeLite gate;noisolatedFSM/seed/FIT loops orautomaticmerge.",
   "next_three_deliverables": [
-  "Actual ready-run ordering/credit/staging/receipt proof on338RTL/336ARM",
-  "Wire-identical MASK/SHIFT contiguous source record builder and host accepted-byte destination executor deletion",
-  "Same-phase and continuous fullcost with cold/11 regression frames and matching whole Quartus Lite gate"
+  "Deletion and byte/time budget for compressed source completion plus host destination execution, retaining MASK/SHIFT",
+  "Only a justified integrated candidate with independent checks, credit/STOP/final ACK/VBlank and matched phase versus continuous schedule",
+  "Matching-source whole Quartus Lite cost including retained controls; do not promote local11comb saving as whole solution"
 ],
   "gates": [
     {
@@ -3214,30 +3214,33 @@
     ]
   },
   "active_plan": {
-  "stage": 343,
-  "status": "structure_budget_only",
+  "stage": 344,
+  "status": "joint_candidates_rejected",
   "selected_RTL": 338,
   "selected_ARM": 336,
-  "assessment": "NES343 structure/model review only; selected338RTL/336ARM unchanged. Rehashed1268 evidence files.167 recorded BG promotions preserve symbolic disjoint destination footprint but add up to3 cold/2 warm chunks;23B E1 per extra chunk is70.095us wire only. SHIFT+byte-run model reconstructs71 maps but has11 wire regressions/max896B despite52113->40916B total;retain MASK as well as SHIFT. No new ARM/RTL/MAP/timing gain. Restricted20.689660812ms/gap4.022994145ms and whole17274comb/1866deficit unchanged.",
-  "next_action": "Prototype one complete disjoint contiguous BG run promotion after clear/fullCOMMIT, before BG marker; instrument callback readiness, ROM acceptance, chunk publication and actual DMA receipt. Keep submission-order tokens, independent expected/readCRC+coverage and STOP/finalACK/VBlank. Replace source output address/mux with contiguous record builder preserving MASK/SHIFT, then consider bounded nonmap compression without dual emitters. Host must replace both ordinary and metadata destination progression, not merely shared reader/storage. Conditional46B prefix nonwire cap0.900ms and postROM3.180ms;whole15253comb cap requires2021net deletion,all unproven. Compare fixed ROM phase and continuous schedules separately;no automatic merge/FIT loops.",
+  "assessment": "NES344 implemented one ready contiguous warm BG prefix and wire-identical contiguous MASK/SHIFT source records. RTL-only restricted905..907 exact bytes/timing unchanged. First prefix stalled remaining BG in bulk289:ARM-only/joint warm36.678150766ms(+15.988489954). Bounded BG wait-service fixes that stall but warm restricted20.790295968(+.100635156),fixed25.152879980(+.101680598),normal13.572655308(+.162588958) all regress;E9+1/E2+2 adds36wireB,chunk count unchanged. WholeLite22129LE17263comb9020FF307808bits(-15LE/-11comb/+2FF/0RAM),candidate deficit1855;encoder1348->1324 is not whole24 savings.18 integrated observations/3 unique recorded frames,10RTL faults+aperture/raw0,10M4 prefix guards on2ELFs+3continuation cases PASS. Dedicated actualRTL4 synthetic frames cover left/rightSHIFT,stalls,SHIFT-buildSTOP exact independent bytes/CRC PASS;905..907 contain noSHIFT. M4text30638(+528),BSS47412(+8),stack1288same. Joint candidate rejected;selected338RTL/336ARM remains4.022994145ms/1866comb. NoFITSTA/fullRUN/new71/physical60fps.",
+  "next_action": "Do not tune early-prefix length or add more E9 packets: same-phase and continuous schedules both regress. First budget source completion/ROM-window crossing with MASK+SHIFT and bounded nonmap compression in one record builder,not340 dual emitters or343 MASK removal. Replace host ordinary PUT/EXPAND and metadata MNEXT/MISSUE/MWAIT via accepted-byte destination ISSUE/WAIT/ADVANCE with explicit expected-RAM port ownership/completion;retain independent readCRC/coverage/private jobs,2slot storagecredit vsconsume,STOP/finalACK/VBlank. Host1015comb/source647 baseline savings remain unproven;344 whole gain11 leaves2010 to15253 cap. Record-layout changes alone cannot close the gap. Compare actual ARM/SPI/IRQ/ROM/staging costs including responses before next matching wholeLite gate;noisolatedFSM/seed/FIT loops orautomaticmerge.",
   "deliverables": [
-    "Actual ready-run ordering/credit/staging/receipt proof on338RTL/336ARM",
-    "Wire-identical MASK/SHIFT contiguous source record builder and host accepted-byte destination executor deletion",
-    "Same-phase and continuous fullcost with cold/11 regression frames and matching whole Quartus Lite gate"
+    "Deletion and byte/time budget for compressed source completion plus host destination execution, retaining MASK/SHIFT",
+    "Only a justified integrated candidate with independent checks, credit/STOP/final ACK/VBlank and matched phase versus continuous schedule",
+    "Matching-source whole Quartus Lite cost including retained controls; do not promote local11comb saving as whole solution"
   ],
-  "evidence": "analysis/order343-verification.json",
-  "new_RTL": false,
-  "new_ARM": false,
-  "new_MAP": false,
+  "evidence": "analysis/record344-verification.json",
+  "new_RTL": true,
+  "new_ARM": true,
+  "new_MAP": true,
   "FIT": false,
   "STA": false,
   "physical": false,
   "selected_gap_ms": 4.022994145333332,
   "selected_comb_deficit": 1866,
+  "candidate_comb_deficit": 1855,
+  "candidate_restricted_gap_ms": 4.123629301333331,
   "whole_comb_cap": 15253,
-  "net_comb_reduction_required": 2021,
-  "conditional_nonwire_cap_ms": 0.9,
-  "post_ROM_cap_ms": 3.18
+  "remaining_to_cap": 2010,
+  "integrated_observations": 18,
+  "unique_recorded_frames": 3,
+  "directed_source_frames": 4
 },
   "current_status_scope": "Queue-aware map publication and independent final RAM execution; bounded joint gain, time and capacity still unmet",
   "p1_placement_followup": {
