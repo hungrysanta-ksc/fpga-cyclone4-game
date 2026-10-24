@@ -4,13 +4,13 @@
   "date_kst": "2026-10-24",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-receipt335-contract.ko.md",
-  "assessment": "NES335 passive audit on unchanged332RTL+334ARM:9 schedules exactly match334 event timelines and ARM frames;56877 actual aperture bytes/13983 units/1914 bitmap updates/96 raw CRCs independently reconciled. Warm receipt RAM 0.357120us,ACK-to-last-RAM 0.631944us,all ACK-to-release 1.001000us. No candidate time/area improvement measured. Restricted20.696615274ms/fixed25.059517464/normal13.435202412 unchanged;frozen ROM acceptance even zero post-ROM leaves0.187835607ms restricted gap. Restricted/fixed cold expected arrives after2048/2078 units;normal905/906/907 after2316/2314/31 units. Streaming comparison cannot replace final scan under current order. Whole332 Lite rebound22539LE17649comb9097FF307808bits/2241comb deficit;host+validator+aperture3607comb,even zero validator+aperture still982short. No new MAP/FIT/STA/physical60fps.",
-  "next_action": "Keep332RTL+334ARM. Compare strict post-token deferred mask jobs(A,up to18B proposed phase716..733;walk remains and added reads cost) with actual-read-event private RMW/publication at exact token ACK(B). B is conditional design only: qualify actual served byte/address/token/count,hold one chunk context,drain CRC/RAM jobs before publish;STOP/wrong ACK freezes writes and forces cold reset before either bank reuse. Preserve independent expected/final scan,2slot storage!=consume,metadata/tile prefetch,12 display reads/finalACK/VBlank. Existing physical receipt-before-ACK assertions must be replaced by stronger private/published invariants,never silently removed. Whole host/validator/aperture2306+queue/SPI600+source1100+plan310 cap includes all new arbitration/CDC/state. Receipt latency cannot close time gap:separately advance input/firstROM request and tile/ordinary supply with actual ARM/IRQ/SPI and fixed+continuous schedules. No shared-state/seed/FIT loops or free area/wire claims.",
+  "authoritative_document": "docs/nes-read336-contract.ko.md",
+  "assessment": "NES336 implements actual-response-owned CRC/unit coverage/private RAM jobs and exact token ACK publication; removes24bit descriptor receipt snapshot,range end/masks/walk. Independent expected/finalCRC/display retained. 15 actual M4/CPI1/SPI/IRQ/2slot schedules,13 selected fault injections,964 M4 E9 CRC cases,7 raw0/final cases+private STOP/reset and aperture PASS. WholeLite22256LE17378comb9066FF307808bits vs332 -283LE/-271comb/-31FF/0RAM;deficit2241->1970. Fixed90725.051199382ms(-8.318082us),restricted continuous20.689660812(-6.954462us),normal13.410066350(-25.136062us). RTL-only warm delta0;ARM-only equals joint:time from E9 nibble CRC,area from RTL. Restricted firstROM acceptance unchanged;postROM3.833795ms remains0.653795ms over3.180cap;60Hzgap4.022994ms. Text30110(+56),BSS47404,stack1288. Private RMW RAM work increases and overlaps DMA;max observed read-to-write108ns vs369ns min read gap. No whole65816 polling/fullRUN71/FIT/STA/physical60fps proof.",
+  "next_action": "Keep336 RTL+ARM candidate and332/334 references. Do not optimize private receipt tail again as a millisecond solution. Jointly replace retained host descriptor/queue/SPI progress and source/plan decode/address ownership; establish actual deletions before implementation. Current scoped6405comb with outside10973 allows4435comb at capacity or4303 with132margin; all added CDC/RAM arbitration/control included. Rebudget old4316 cap (only119margin now), seek at least2102 scope reduction for132margin. Timing:advance actual input/firstROM acceptance and postROM tile/ordinary supply; a faster request alone did not cross restricted ROM gate. Preserve independent expected/finalCRC,private jobs drained before exact ACK,2slot storage!=consume,STOP freeze/reset cold both banks,metadata/tile preproduction/finalACK/VBlank. Compare same start/ROM phase and continuous schedules separately. No shared-state/FSM/seed/FIT loops;product227/GBC164/saveSRAM unchanged.",
   "next_three_deliverables": [
-  "Retain332RTL+334ARM and335 passive trace/model evidence",
-  "Prove private/published receipt ownership vs strict post-ACK masks before actual replacement",
-  "Pair wholeLite reduction with input/first-ROM and supply scheduling; receipt-only time bound is about1us"
+  "Retain336 actual read-owned receipt and E9 CRC evidence; preserve failed drivers and all baseline runs",
+  "Budget concrete host/queue/SPI plus source/plan decode/address removals against4303 scoped comb including additions",
+  "Advance actual ROM acceptance and post-ROM supply with same-phase/continuous ARM IRQ schedules; complete fullRUN/whole65816/FIT/STA only after justified candidate"
 ],
   "gates": [
     {
@@ -3213,7 +3213,7 @@
       }
     ]
   },
-  "active_plan": "docs/nes-receipt335-plan.json",
+  "active_plan": "docs/nes-read336-plan.json",
   "current_status_scope": "Queue-aware map publication and independent final RAM execution; bounded joint gain, time and capacity still unmet",
   "p1_placement_followup": {
     "selected": "placement05",
