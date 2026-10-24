@@ -1,0 +1,34 @@
+{
+  "stage": 329,
+  "status": "architecture_and_acceptance_budgets_defined_not_implemented",
+  "baseline": 325,
+  "ARM": 327,
+  "verified_selected_runs": [
+    "nes-joint328/arm-fixed01",
+    "nes-joint328/arm-window01",
+    "nes-joint328/arm-normal01"
+  ],
+  "authoritative_document": "docs/nes-budget329-contract.ko.md",
+  "evidence": "analysis/budget329-verification.json",
+  "assessment": "NES329 reanalyzes selected325RTL+early ARM using nine328 schedules and325 wholeLite; no new RTL/ARM/CPU/MAP. Restricted907 previous ROM window closed1.747069944ms BEFORE source start; earlier same-frame plan alone cannot catch it. Request wait4.947895ms, post-ROM4.750602ms, total18.131464238/gap1.464797571. Post-ROM design cap3.180ms requires1.570602ms net gain, modeled margin0.105804429ms. Whole17802comb/2394deficit unchanged; four-region6632->4110 design cap gives whole15280/128comb margin if outside11170 unchanged. These are acceptance budgets, NOT measured savings.",
+  "next_action": "Keep325RTL+327early manifest, independent expected/actual CRC, STOP/drain/finalACK/VBlank, tile pingpong and2slot storage!=consume. First isolate resumable ARM tiles290 and ROM-wait first-map preparation with decode/build/submit profiling; then replace actual host/validator RAM job owners and source/plan NES-clock byte owners plus queue/SPI completion controls. Retain clock/CDC/port ownership; no free ports or source-plan overlap assumption. Fixed start/ROM phase AND restricted/normal continuous full schedules plus wholeLite must both improve; no cursor/FSM/seed/FIT loops or physical60fps claim.",
+  "comb_deficit": 2394,
+  "restricted_gap_ms": 1.4647975713333317,
+  "design_caps": {
+    "host_validator": 2100,
+    "queue_SPI": 600,
+    "source": 1100,
+    "plan": 310,
+    "whole_comb": 15280,
+    "post_ROM_ms": 3.18,
+    "additional_ARM_state_bytes": 32,
+    "additional_payload_buffer_bytes": 0
+  },
+  "new_RTL": false,
+  "new_MAP": false,
+  "new_measured_time_gain_ms": null,
+  "new_measured_comb_gain": null,
+  "physical_60fps": false,
+  "FIT": false,
+  "STA": false
+}

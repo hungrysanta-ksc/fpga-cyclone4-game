@@ -1,0 +1,36 @@
+{
+  "stage": 312,
+  "status": "partial_replacement_measured_rejected_full_executor_unfinished",
+  "summary": "NES312 partial record/2slot gate 실제 구현, 전체311 실행기 교체미완료/미채택. raw4slot/lengths/hostHREAD-HCAP/두번째snapshot 삭제,24Brecord+compactpayload를480/752의272B slot에저장. 단일active record;storage와consume16bit분리,마지막batch staging후slot반환/receipt까지owner고정. E2 14B FB/E0 26B FC,shortE9fallback+IRQ,2credit ARM실행. 제한907 27.048357ms(+9.431432)/정상14.992547(+0.635856);wholeLite22884LE18061comb9023FF307808bits,307대비+482LE/+478comb/+58FF/0RAM,부족2653. hostown-64comb보다queue+443/SPI+66이큼. 6live/queue14/retained25/ARM20/supply20 PASS. ordinarySNESvirtualview/ACK relay/validatorpacketRLE/manifestterminal/SPIplanFSM잔존. canonicalmanifest446B+directory32/공통DMA-receipt실행/새65816소비미구현. 기존307기준유지;fullRUN/whole71/FITSTA/physical미검증.",
+  "next_action": "이번 부분 adapter를 최종312공통실행기로 오인하지 말 것. ordinary 가상header/queue read·ACK relay와 validator packet/RLE·completion을 실제 삭제하고 canonical expected manifest walker 및 staging descriptor 소비로 연결하는 코드가 남음. 두 슬롯은 새 실행기에서 재평가할 미채택 배치이며 부분 adapter 미세합성/seed/FIT 반복 금지. 독립 receipt/CRC/H2·STOP·12read/token/finalACK·VBlank 및 고정 ROM 창을 유지. 307 대비 전체 최소2175comb/.950258ms 개선 gate 유지.",
+  "contract": "docs/nes-slots312-contract.ko.md",
+  "evidence": "analysis/slots312-verification.json",
+  "implementation_complete": false,
+  "selected": false,
+  "baseline": 307,
+  "whole_MAP": {
+    "LE": 22884,
+    "comb": 18061,
+    "FF": 9023,
+    "RAM_bits": 307808
+  },
+  "delta307": {
+    "LE": 482,
+    "comb": 478,
+    "FF": 58,
+    "RAM_bits": 0
+  },
+  "comb_deficit": 2653,
+  "remaining": [
+    "canonical expected manifest walker/directory",
+    "one common DMA/receipt executor replacing all retained relays",
+    "new actual 65816 staging descriptor consumer"
+  ],
+  "retained": [
+    "ordinary SNES virtual header/body adapter and ACK identity",
+    "host batch range parser and completion relays",
+    "validator packet/RLE decoder",
+    "manifest terminal order",
+    "SPI/plan state machines"
+  ]
+}

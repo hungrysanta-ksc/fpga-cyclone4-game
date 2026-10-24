@@ -1,0 +1,47 @@
+{
+  "stage": 319,
+  "status": "partial_control_replacement_measured_not_selected",
+  "selected": false,
+  "summary": "NES319 implemented host admission/source record termination/source-plan cursor ownership on315+early metadata ARM. Fixed-phase A/B and continuous normal/restricted905..907 all identical timing;restricted90717.119885ms/gap0.453219. WholeLite22618LE17824comb9022FF307808bits (-46comb/-18FF);deficit2416. Regional6717->6700 only17comb, outside mapping-29. Seven fault guards PASS. Not full FSM replacement;not selected.",
+  "contract": "docs/nes-owner319-contract.ko.md",
+  "evidence": "analysis/owner319-verification.json",
+  "next_action": "Preserve315+317 early ARM and319 measured negative time result. Admission/cursor sharing does not meet6717->4255 budget; no further isolated counter/FSM-number/seed/FIT tuning. Remaining host/validator descriptor-manifest-receipt execution and source/plan decode FSMs require actual deletion/replacement and port-stall budget. Retain independent expected/actual checks, stored!=consumed,STOP/ROM drain/finalACK/VBlank; same-start-ROM-phase and continuous ARM/IRQ/2slot comparisons before whole71/fullRUN/FITSTA.",
+  "whole_MAP": {
+    "LE": 22618,
+    "comb": 17824,
+    "FF": 9022,
+    "RAM_bits": 307808
+  },
+  "delta315": {
+    "LE": -46,
+    "comb": -46,
+    "FF": -18,
+    "RAM_bits": 0
+  },
+  "remaining_ms": 0.4532188013333318,
+  "comb_deficit": 2416,
+  "regional_comb": {
+    "baseline": 6717,
+    "candidate": 6700,
+    "delta": -17,
+    "outside_delta": -29
+  },
+  "selected_runs": {
+    "fixed_reference": "reference01",
+    "fixed_candidate": "fixed02",
+    "restricted": "window01",
+    "normal_reference": "normalref01",
+    "normal_candidate": "normal01",
+    "board": "board01",
+    "guards": [
+      "guards03:1..4",
+      "guards04:5..7"
+    ]
+  },
+  "limits": [
+    "Actual M4 instructions CPI1/84MHz and IRQ model, not hardware cycles.",
+    "Fixed absolute capture/source start and ROM phase paired separately from continuous frames.",
+    "RAM banks/ports and independent validator unchanged; source/plan decode FSMs still separate.",
+    "Ordinary 65816 bus trace replayed; tile/map/VBlank partly modeled; no whole71/fullRUN/FITSTA/physical60fps."
+  ]
+}

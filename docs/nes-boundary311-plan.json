@@ -1,0 +1,103 @@
+{
+  "stage": 311,
+  "status": "deletion_boundary_and_required_budgets_fixed_candidate_unmeasured",
+  "summary": "NES311 삭제경계/예산확정. 새ARM/RTL/MAP없음. 307/310실제일정/wholeLite재분석,286E1형상과1024B배치검산PASS. queue raw4slot/host parser·SNES queue read/validator packet RLE·completion relay/310 replay를공통record실행+독립소비coverage로삭제대체. canonical manifest446+directory32+padding2+2x272=1024B,record24+payload<=240. 4→2credit압력307 32/32/8발행진단,지연추정아님. E2 14/E0 26B 소비counter비용포함. trio3462밖14121→hard1287/기능1159;SPI/plan/glue포함4730밖12853→hard2555/기능2427+128여유필수. 요구2175comb/.950258ms,여유2303/1.200258. 310회귀17717comb/17.940557유지,새후보수치null/production미선택.",
+  "next_action": "정규화record admission/2credit ARM·IRQ/E9공급과ordinary·batch staging/소비/receipt/manifest walker/새65816descriptor 소비를같은경계로구현. independent CRC/coverage/H2,STOPwritefreeze,token12readfinalACK,VBlank,고정ROM창유지. 기존NORMAL/ACKWAIT/OSETUP/validator E decoder와rawqueue포트실제삭제증명. new wholeLite+actualARM/IRQ/ROM/65816일정동시예산통과전FIT/seed/부분FSM반복금지. 2slot회귀시배치폐기;무료RAM/상태응답/직전CPU회수주장금지.",
+  "contract": "docs/nes-boundary311-contract.ko.md",
+  "evidence": "analysis/boundary311-verification.json",
+  "implementation_selected": false,
+  "boundary_selected": true,
+  "new_ARM": false,
+  "new_RTL": false,
+  "new_MAP": false,
+  "comparison_reference": 307,
+  "area": {
+    "trio": 3462,
+    "trio_outside": 14121,
+    "trio_hard_cap": 1287,
+    "trio_function_cap": 1159,
+    "extended_boundary": 4730,
+    "extended_outside": 12853,
+    "extended_hard_cap": 2555,
+    "extended_function_cap": 2427,
+    "reserve": 128,
+    "required_net_reduction": 2175,
+    "required_with_reserve": 2303,
+    "requirements_not_estimates": {
+      "admission_DMA_owner": 700,
+      "independent_validator_CRC_display": 900,
+      "queue_SPI_ingress_response": 450,
+      "plan_transport": 328,
+      "glue": 49
+    }
+  },
+  "time": {
+    "required_net_ms": 0.9502582913333306,
+    "reserve_ms": 0.25,
+    "required_with_reserve_ms": 1.2002582913333306,
+    "maximum_frame_ms": 16.666666666666668,
+    "preferred_frame_ms": 16.416666666666668,
+    "fixed_start_finish_deadline_ms": 279.31528770866663,
+    "shifted310_start_finish_deadline_ms": 278.9357922286667,
+    "removed_manifest_accounting_ms": 0.39751190476190473,
+    "gap_after_free_manifest_accounting_ms": 0.5527463865714258,
+    "note": "No fixed-start bound, no free overlap, and no candidate timing prediction"
+  },
+  "storage": {
+    "regions": [
+      [
+        "requirements",
+        0,
+        190
+      ],
+      [
+        "map_expected",
+        190,
+        446
+      ],
+      [
+        "manifest_directory",
+        446,
+        478
+      ],
+      [
+        "padding",
+        478,
+        480
+      ],
+      [
+        "stream0",
+        480,
+        752
+      ],
+      [
+        "stream1",
+        752,
+        1024
+      ]
+    ],
+    "total_bytes": 1024,
+    "canonical_manifest_bytes": 446,
+    "directory_bytes": 32,
+    "stream_slots": 2,
+    "slot_bytes": 272,
+    "descriptor_bytes": 24,
+    "max_payload_bytes": 240,
+    "max_record_bytes": 264,
+    "per_slot_slack_bytes": 8,
+    "extra_RAM_bits_required_by_layout": 0,
+    "retained_compact_batch_entries": true,
+    "all_general_metadata_preload": false
+  },
+  "candidate_time_ms": null,
+  "candidate_MAP": null,
+  "required_tests": [
+    "new 2slot/versioned progress with independent storage/consumption counters",
+    "E1 full still permits E9 refill/IRQ handling",
+    "one-pass ordinary/batch staging and actual SNES descriptor consumption",
+    "metadata gap/duplicate/long RLE/partial CRC and receipt mismatch",
+    "STOP at ingress/staging/consume/replay/phase boundaries and RAM freeze",
+    "token/bank reuse and 12 exact reads/final ACK/VBlank",
+    "same-source whole Lite plus fixed-ROM actual ARM schedule"
+  ]
+}

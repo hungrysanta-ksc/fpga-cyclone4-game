@@ -1,17 +1,17 @@
 {
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
-  "date_kst": "2026-10-22",
+  "date_kst": "2026-10-24",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-pr130-retrospective.ko.md",
-  "assessment": "PR130 회고: 통합 검증과 국소 절감은 성과이나 60fps/보드 적합성 미달. 최초 whole267 대비298 -716comb, 정리268 대비+4comb. native289 대비298 제한907 -0.531266ms/정상907 +0.158816ms, comb+12. 최신2275comb·제한907 0.801715ms 부족.",
-  "next_action": "이번 PR은 회고·증거 정리로 마무리한다. 다음 구현 전에 descriptor/manifest 해석·주소 선택·ROM 공급의 전체 제거/유지/추가 예산을 확정한다. 전체2275comb와 최소0.802ms를 해소할 구조 근거 없이는 소규모 FSM/MAP 반복을 하지 않는다. 자동 merge 및 production 승격 없음.",
+  "authoritative_document": "docs/nes-owner349-contract.ko.md",
+  "assessment": "NES349 ownership/deletion review only; retain338RTL/336ARM. header/record/length views are wires, not duplicate storage; active121bits mutate through batch descriptor/token/remaining and cannot alias incoming header. Gap40B cannot hold two21B headers; compact15+5B fits arithmetically but adds15writes/packet and retains active context. Warm907 HLOAD+HCHECK185hostclocks=2.202240us directwork only; sequential fullheader adds90clocks=1.071360us. Fixedrequest8.381149 vs priorclose6.089722 requires2.291427ms advance;source-to-request5.714454 must fall<=3.423027ms,postROM3.833249->3.180 needs.653249ms. Continuous20.689660812/gap4.022994145 unchanged. Whole17274comb/1866deficit,cap15253 needs2021net;source/validator/outside unchanged forcesjoint3418->1397(59.13%),unproven. Prior3482197pins rehashed/9recorded schedule-frame loader audits;no newRTL/ARM/MAP/FITSTA/physical. Old347 optimistic allocation withdrawn as prediction.",
+  "next_action": "Keep338/336. Instrument RAM request/return/writegrant/STOP owner and actual ARM fullCOMMIT-to-firstBG plus postROM separately. Candidate preserves original compressed packet and two independent ingress/active lifetimes;replace queue field/load adapter and host returned-byte/address/progress cases together with one host execution-port owner,retain physical packet-vs-expected mux,mutable context,independentCRC/coverage,storage!=consume,CDC,STOP/finalACK/VBlank. No checkedheader gap copy or expandedplan. Require actual deletion/addition ledger before implementation;header-only has no demonstrated path to2021comb. Reconsider broader execution/checker interface if gate cannot close,not state/seed/FIT loops. Matching wholeLite and samephase/continuous actualARM/SPI/IRQ/2slot/ROM required;noautomaticmerge.",
   "next_three_deliverables": [
-    "Freeze same inputs, ROM phase, cold/warm policy and removal/retention/addition ledger; compare 289/297/298, not only last failed candidate.",
-    "Compare representation/decoder/address-port architecture and ARM/SPI/SRAM/ROM schedule together. Current fixed region4837 requires <=2562comb if outside12846 remains; host+validator3427 requires <=1152 if other logic unchanged. Include new logic and margin.",
-    "Only a justified candidate proceeds to actual ARM/IRQ/ROM slices and matching whole Lite, then heavy7/71, full65816/fullRUN and FIT/STA/physical gates. Otherwise re-evaluate roles/representation/hardware suitability."
-  ],
+  "Bound RAM owner trace and exact old-case/address/response-adapter deletion ledger with independent checks and concurrent ingress retained",
+  "Separate ARM firstBG window-crossing2.291427ms and postROM.653249ms budgets;samephase/continuous/normal/cold comparisons including IRQ/2slot responses",
+  "Justified wholeLite net2021comb deletion gate;do not claim header-only or relocation savings;preserve338/336 and348 failures"
+],
   "gates": [
     {
       "id": "P0",
@@ -25,7 +25,7 @@
     },
     {
       "id": "P1",
-      "status": "normal_polling_improved_restricted_warm_regressed_capacity_short",
+      "status": "bounded_joint_gain_time_and_capacity_short",
       "depends_on": [
         "P0"
       ],
@@ -3125,8 +3125,8 @@
     "target_fps": 60,
     "measured_fps": null
   },
-  "latest_review": "docs/nes-joint298-contract.ko.md",
-  "latest_development_evidence": "analysis/joint298-verification.json",
+  "latest_review": "docs/nes-arch300-contract.ko.md",
+  "latest_development_evidence": "analysis/arch300-verification.json",
   "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
   "current_181_delivery_gates": [
     {
@@ -3213,8 +3213,32 @@
       }
     ]
   },
-  "active_plan": "docs/nes-pr130-next-plan.json",
-  "current_status_scope": "Common executor implemented; 20comb saved and ARM timing retained, but time/area goals unmet.",
+  "active_plan": {
+  "stage": 349,
+  "status": "review_complete_no_candidate_selected",
+  "selected_RTL": 338,
+  "selected_ARM": 336,
+  "assessment": "NES349 ownership/deletion review only; retain338RTL/336ARM. header/record/length views are wires, not duplicate storage; active121bits mutate through batch descriptor/token/remaining and cannot alias incoming header. Gap40B cannot hold two21B headers; compact15+5B fits arithmetically but adds15writes/packet and retains active context. Warm907 HLOAD+HCHECK185hostclocks=2.202240us directwork only; sequential fullheader adds90clocks=1.071360us. Fixedrequest8.381149 vs priorclose6.089722 requires2.291427ms advance;source-to-request5.714454 must fall<=3.423027ms,postROM3.833249->3.180 needs.653249ms. Continuous20.689660812/gap4.022994145 unchanged. Whole17274comb/1866deficit,cap15253 needs2021net;source/validator/outside unchanged forcesjoint3418->1397(59.13%),unproven. Prior3482197pins rehashed/9recorded schedule-frame loader audits;no newRTL/ARM/MAP/FITSTA/physical. Old347 optimistic allocation withdrawn as prediction.",
+  "next_action": "Keep338/336. Instrument RAM request/return/writegrant/STOP owner and actual ARM fullCOMMIT-to-firstBG plus postROM separately. Candidate preserves original compressed packet and two independent ingress/active lifetimes;replace queue field/load adapter and host returned-byte/address/progress cases together with one host execution-port owner,retain physical packet-vs-expected mux,mutable context,independentCRC/coverage,storage!=consume,CDC,STOP/finalACK/VBlank. No checkedheader gap copy or expandedplan. Require actual deletion/addition ledger before implementation;header-only has no demonstrated path to2021comb. Reconsider broader execution/checker interface if gate cannot close,not state/seed/FIT loops. Matching wholeLite and samephase/continuous actualARM/SPI/IRQ/2slot/ROM required;noautomaticmerge.",
+  "deliverables": [
+    "Bound RAM owner trace and exact old-case/address/response-adapter deletion ledger with independent checks and concurrent ingress retained",
+    "Separate ARM firstBG window-crossing2.291427ms and postROM.653249ms budgets;samephase/continuous/normal/cold comparisons including IRQ/2slot responses",
+    "Justified wholeLite net2021comb deletion gate;do not claim header-only or relocation savings;preserve338/336 and348 failures"
+  ],
+  "evidence": "analysis/owner349-verification.json",
+  "new_RTL": false,
+  "new_ARM": false,
+  "new_MAP": false,
+  "FIT": false,
+  "STA": false,
+  "physical": false,
+  "selected_gap_ms": 4.022994145333332,
+  "selected_comb_deficit": 1866,
+  "whole_comb_cap": 15253,
+  "candidate_comb": null,
+  "candidate_time_gain_ms": null
+},
+  "current_status_scope": "Queue-aware map publication and independent final RAM execution; bounded joint gain, time and capacity still unmet",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
@@ -9970,5 +9994,714 @@
     ],
     "new_hardware_runs": false,
     "automatic_merge": false
+  },
+  "arch299": {
+    "stage": 299,
+    "status": "architecture_and_acceptance_budget_defined_feasibility_unproven",
+    "merged_pr": 130,
+    "merge_sha": "d7a96c5652d7c511d061ae5035277027c14ec597",
+    "branch": "codex/nes-architecture-budget-299",
+    "summary": "NES299 구조 예산: PR130 merged d7a96c5/master 확인. 원본 descriptor 단일 admission·정렬 phaseRAM·압축 manifest 단일 decode·선행OBJ 공급을 검토 대상으로 선택. 목표 fixed4837→2562comb/제한907 순절감>=0.801715ms. 예상 합성·새시간 미확정,제품 미채택.",
+    "next_action": "원본 descriptor→checked record→DMA/receipt의 전이표, 유지 독립검사와 old/new 주소 datapath·제어 제거/추가 목록을 확정한다. RAM remap·record·ROM 일정은 분리 검증한다. 목표 규모의 구조 근거 없이는 소규모 FSM/MAP/FIT 반복을 하지 않는다.",
+    "evidence": "analysis/arch299-verification.json",
+    "comparison_references": [
+      289,
+      297,
+      298
+    ],
+    "candidate": {
+      "descriptor": "one FPGA admission from original bytes; checked range record replaces duplicate retained fields",
+      "manifest": "retain compressed wire and independent semantic/state comparison",
+      "RAM": "aligned 1KiB layout; two clear intervals; sourceA/hostB unchanged",
+      "ROM": "earlier OBJ production/refill preserving batch boundaries and credit"
+    },
+    "budgets": {
+      "whole_comb": 15408,
+      "current_comb": 17683,
+      "required_reduction": 2275,
+      "outside_fixed": 12846,
+      "fixed_max": 2562,
+      "fixed_with128reserve": 2434,
+      "host_validator_max_if_others_unchanged": 1152,
+      "required_net_time_ms": 0.8017146193333318,
+      "new_FPGA_RAM_bits": 0,
+      "new_ARM_memory": null,
+      "projected_comb": null,
+      "projected_time_ms": null
+    },
+    "validation": {
+      "fresh": "exhaustive address model and budget arithmetic",
+      "logical_bytes": 854,
+      "manifest_reads": 888,
+      "clear_bytes": 422,
+      "negative": "contiguous512..1023 clear corrupts H2/context36B",
+      "new_RTL": false,
+      "new_ARM": false,
+      "new_MAP": false,
+      "RTL_equivalence": false
+    },
+    "retain": [
+      "independent bounds/alignment/overflow",
+      "actual-consumption CRC and coverage",
+      "4credit/2planbank",
+      "STOP gates and invalidation",
+      "seal/certificate/12exactreads/fulltoken/emptyqueue final ACK",
+      "production227/GBC164/saveSRAM"
+    ],
+    "acceptance": [
+      "same input/source/ROM-phase normal+restricted905/906/907 compared against289/297/298, report every regression",
+      "include extra ARM/SPI/IRQ/packet/port/CDC cost; no parser-window arithmetic savings claim",
+      "matching whole Lite only after concrete structural justification; FIT/STA still required",
+      "then heavy7/71/fullRUN/full65816/physical gates"
+    ],
+    "automatic_merge": false
+  },
+  "arch300": {
+    "stage": 300,
+    "status": "implemented_verified_small_area_gain_normal_regression_not_selected",
+    "summary": "NES300 구현·검증 PASS, 공동 목표 해결안 미채택. descriptor17bit end 공유/일반 receipt first-end/정렬1KiB RAM/OBJ 선행 공급 연결. whole Lite22578LE17678comb9022FF307808bits:298대비-5comb,2270부족. 정상90715.532450ms(+0.058636),제한90717.468336ms(0.801669초과). 새RTL+ARM296 제한3은298과 정확히 동일.",
+    "next_action": "현재 E9 직후 OBJ service는 BG 부분완료 표식 송신을 늦추므로 채택하지 않는다. ARM296 대기 서비스를 유지하고 BG 완료 발행·실제 DMA 공급을 막지 않는 위치만 별도 검토한다. 회로는 host만0이어도167comb 부족하다. packet/header/queue/plan의 실제 제거·새 독립 검사·포트 비용을 포함한 구조 근거 없이 주소/FSM/MAP/FIT 미세 반복 금지.",
+    "selected": [
+      "test03",
+      "window01",
+      "isolated01",
+      "guards01",
+      "native01",
+      "armguard01",
+      "h2guard01",
+      "irqguard01",
+      "board01",
+      "analysis01"
+    ],
+    "evidence": "analysis/arch300-verification.json",
+    "comparison_reference": 298,
+    "functional_reference": 289,
+    "performance_reference": 287,
+    "whole_MAP": {
+      "LE": 22578,
+      "comb": 17678,
+      "FF": 9022,
+      "RAM_bits": 307808
+    },
+    "delta_MAP": {
+      "LE": -5,
+      "comb": -5,
+      "FF": 0,
+      "RAM_bits": 0
+    },
+    "comb_deficit": 2270,
+    "fixed_boundary": 4827,
+    "outside": 12851,
+    "fixed_budget": 2557,
+    "normal": [
+      {
+        "frame": 905,
+        "source_ms": 23.20063068,
+        "output_ms": 57.067451546,
+        "total_ms": 80.268082226,
+        "prior298_ms": 79.689998254,
+        "delta_ms": 0.5780839720000017,
+        "margin_ms": -63.60141555933333,
+        "ARM_instructions": 2231320,
+        "SPI_bytes": 10095,
+        "max_credit": 4,
+        "E2": 33,
+        "E9": 10,
+        "timer_fallbacks": 0,
+        "slot_wait_cycles": 0,
+        "core_priority_blocks": 53,
+        "map_receipts": 64
+      },
+      {
+        "frame": 906,
+        "source_ms": 2.490015574,
+        "output_ms": 54.061942158,
+        "total_ms": 56.551957732,
+        "prior298_ms": 56.212189081999995,
+        "delta_ms": 0.33976865000000345,
+        "margin_ms": -39.885291065333334,
+        "ARM_instructions": 1612072,
+        "SPI_bytes": 10631,
+        "max_credit": 4,
+        "E2": 49,
+        "E9": 9,
+        "timer_fallbacks": 0,
+        "slot_wait_cycles": 0,
+        "core_priority_blocks": 59,
+        "map_receipts": 64
+      },
+      {
+        "frame": 907,
+        "source_ms": 2.666649818,
+        "output_ms": 12.865800154,
+        "total_ms": 15.532449972,
+        "prior298_ms": 15.473814312,
+        "delta_ms": 0.0586356600000002,
+        "margin_ms": 1.1342166946666676,
+        "ARM_instructions": 697636,
+        "SPI_bytes": 1188,
+        "max_credit": 4,
+        "E2": 22,
+        "E9": 4,
+        "timer_fallbacks": 0,
+        "slot_wait_cycles": 0,
+        "core_priority_blocks": 3,
+        "map_receipts": 7
+      }
+    ],
+    "restricted": [
+      {
+        "frame": 905,
+        "source_ms": 23.20063068,
+        "output_ms": 81.675428974,
+        "total_ms": 104.876059654,
+        "prior298_ms": 104.876059654,
+        "delta_ms": 0.0,
+        "margin_ms": -88.20939298733333,
+        "ARM_instructions": 2235390,
+        "SPI_bytes": 10203,
+        "max_credit": 4,
+        "E2": 42,
+        "E9": 10,
+        "timer_fallbacks": 3,
+        "slot_wait_cycles": 680601,
+        "core_priority_blocks": 160,
+        "map_receipts": 64
+      },
+      {
+        "frame": 906,
+        "source_ms": 2.490015574,
+        "output_ms": 114.410717964,
+        "total_ms": 116.900733538,
+        "prior298_ms": 116.900688084,
+        "delta_ms": 4.545400000210975e-05,
+        "margin_ms": -100.23406687133333,
+        "ARM_instructions": 1618581,
+        "SPI_bytes": 10799,
+        "max_credit": 4,
+        "E2": 63,
+        "E9": 9,
+        "timer_fallbacks": 5,
+        "slot_wait_cycles": 1374922,
+        "core_priority_blocks": 152,
+        "map_receipts": 64
+      },
+      {
+        "frame": 907,
+        "source_ms": 2.666649818,
+        "output_ms": 14.801686014,
+        "total_ms": 17.468335832,
+        "prior298_ms": 17.468381286,
+        "delta_ms": -4.545399999855704e-05,
+        "margin_ms": -0.8016691653333332,
+        "ARM_instructions": 699406,
+        "SPI_bytes": 1236,
+        "max_credit": 4,
+        "E2": 26,
+        "E9": 4,
+        "timer_fallbacks": 1,
+        "slot_wait_cycles": 57319,
+        "core_priority_blocks": 13,
+        "map_receipts": 7
+      }
+    ],
+    "RTL_only_restricted": [
+      {
+        "frame": 905,
+        "source_ms": 23.20063068,
+        "output_ms": 81.675428974,
+        "total_ms": 104.876059654,
+        "prior298_ms": 104.876059654,
+        "delta_ms": 0.0,
+        "margin_ms": -88.20939298733333,
+        "ARM_instructions": 2235244,
+        "SPI_bytes": 10203,
+        "max_credit": 4,
+        "E2": 42,
+        "E9": 10,
+        "timer_fallbacks": 3,
+        "slot_wait_cycles": 680620,
+        "core_priority_blocks": 160,
+        "map_receipts": 64
+      },
+      {
+        "frame": 906,
+        "source_ms": 2.490015574,
+        "output_ms": 114.41067251,
+        "total_ms": 116.900688084,
+        "prior298_ms": 116.900688084,
+        "delta_ms": 0.0,
+        "margin_ms": -100.23402141733332,
+        "ARM_instructions": 1618409,
+        "SPI_bytes": 10799,
+        "max_credit": 4,
+        "E2": 63,
+        "E9": 9,
+        "timer_fallbacks": 5,
+        "slot_wait_cycles": 1374927,
+        "core_priority_blocks": 152,
+        "map_receipts": 64
+      },
+      {
+        "frame": 907,
+        "source_ms": 2.6666952719999997,
+        "output_ms": 14.801686014,
+        "total_ms": 17.468381286,
+        "prior298_ms": 17.468381286,
+        "delta_ms": 0.0,
+        "margin_ms": -0.8017146193333318,
+        "ARM_instructions": 699344,
+        "SPI_bytes": 1236,
+        "max_credit": 4,
+        "E2": 26,
+        "E9": 4,
+        "timer_fallbacks": 1,
+        "slot_wait_cycles": 57322,
+        "core_priority_blocks": 13,
+        "map_receipts": 7
+      }
+    ],
+    "new_live_frames": 9,
+    "new_native_frames": 71,
+    "new_RTL_guards": 44,
+    "ARM_guards": {
+      "native": 6,
+      "wait_STOP": 8,
+      "H2": 9,
+      "IRQ_cases": 8,
+      "IRQ_exceptions": 33
+    },
+    "ARM": {
+      "text": 27490,
+      "text_delta": 32,
+      "BSS": 47100,
+      "BSS_delta": 0,
+      "live_observed_stack": 1288
+    },
+    "new_MAP": true,
+    "new_FIT": false,
+    "new_STA": false,
+    "full_schedule71": false,
+    "full_RUN": false,
+    "physical60fps": false,
+    "production_selected": false,
+    "preserved": [
+      "production227",
+      "functional289",
+      "performance287",
+      "isolated297",
+      "latest298",
+      "GBC164",
+      "saveSRAM",
+      "transform01/test01/test02 failures"
+    ],
+    "limitations": "Actual shared descriptor end / aligned metadata RAM / early OBJ supply. Source replay, CPI1/84MHz, IRQ allocation, ordinary65816 trace and map/tile/display bus model retained.",
+    "automatic_merge": false
+  },
+  "latest308": {
+    "stage": 308,
+    "status": "dependency_review_candidate_not_selected",
+    "summary": "NES308은307 실제ARM/IRQ/ROM·wholeLite 증거의 의존관계/예산 검토. BG대기3.780773ms에는기존OBJ계산포함,metadata prepared시각미계측. manifest106SPIB+직전CPU의고정회계0.397512ms를모두숨겨도0.552746ms남음. 넓은map/ordinary/manifest9packet414SPIB/387storedB는현4slot보관불가. phaseRAM공백170B<expanded446B. 새ARM/RTL/MAP없음;17.616925ms/17583comb/2175부족유지,후보시간면적null.",
+    "next_action": "ARM-only bounded metadata 준비시각/비용을먼저계측;SPI재귀없이DMA/plancredit/IRQ우선. 공동후보는queue byte storage/credit+단일reader/active record+host-validator완료소유권을삭제대체하고수신보관과terminal검사를분리. STOP/독립CRC/coverage/최종12readACK/PPU VBlank유지. 기능2427comb+128여유,최소0.950258ms/2175comb netgain 요구. 9packet바이트만으로무료RAM/credit주장금지. 전체비용미확정전FIT/seed반복금지.",
+    "contract": "docs/nes-overlap308-contract.ko.md",
+    "evidence": "analysis/overlap308-verification.json",
+    "implementation_selected": false,
+    "new_ARM": false,
+    "new_RTL": false,
+    "new_MAP": false,
+    "baseline": 307,
+    "baseline_MAP": {
+      "LE": 22402,
+      "comb": 17583,
+      "FF": 8965,
+      "RAM_bits": 307808
+    },
+    "area": {
+      "boundary": 4730,
+      "outside": 12853,
+      "capacity": 15408,
+      "hard_cap": 2555,
+      "function_cap": 2427,
+      "reserve": 128,
+      "deficit": 2175,
+      "required_with_reserve": 2303,
+      "host_zero_deficit": 82,
+      "host_validator_only_cap": 1169,
+      "host_validator_only_reserve_cap": 1041,
+      "budget": {
+        "admission_DMA_owner": 700,
+        "independent_validator_CRC_display": 900,
+        "queue_SPI_ingress_response": 450,
+        "plan_transport": 328,
+        "glue": 49
+      }
+    },
+    "time": {
+      "required_ms": 0.9502582913333306,
+      "required_with_margin_ms": 1.2002582913333306
+    },
+    "candidate_time_ms": null,
+    "candidate_MAP": null,
+    "automatic_merge": false
+  },
+  "latest309": {
+    "stage": 309,
+    "status": "ARM_preparation_hidden_but_restricted_frame_regressed",
+    "summary": "NES309 actualM4 metadata-ready 계측+ARM-only bounded seal준비. ref3는307코드/시간동일;후보정상3/제한3·24prepguards/71native/STOP35IRQ11등PASS. 기준907ready271.890507ms는BG승인274.905042보다3.014535ms빠르나cold905/906은BG뒤. 후보907준비271.917043완료,final1851→79instructions;정상907fallback2820. normal90714.356691→14.377191ms(+20.500us),restricted17.616925→17.620470ms(+3.545us)/0.953804초과. 미채택. 동일RTL/307wholeLite재사용17583comb/2175부족;새MAP없음. ARMtext+212/BSS+4/stack1288동일.",
+    "next_action": "prepare미세튜닝중단. queue저장credit과실소비receipt를분리하지않으면earlymanifest+orderedretire가4credit창을막는순환대기. 기존1024B저장/byte-recordcredit+공통reader+host-validator완료소유권을함께삭제대체하는프로토콜경계검토. 기능2427comb+128여유,원307기준0.950258ms/2175comb순개선요구. 독립CRC/coverage/STOP/12read최종ACK/VBlank/ROM창유지. 후보면적시간null;부분준비만으로목표해결주장금지.",
+    "contract": "docs/nes-prepare309-contract.ko.md",
+    "evidence": "analysis/prepare309-verification.json",
+    "implementation_selected": false,
+    "ARM_candidate_verified": true,
+    "new_RTL": false,
+    "new_MAP": false,
+    "comparison_reference": 307,
+    "whole_MAP": {
+      "LE": 22402,
+      "comb": 17583,
+      "FF": 8965,
+      "RAM_bits": 307808
+    },
+    "comb_deficit": 2175,
+    "runs": {
+      "reference": {
+        "rows": [
+          {
+            "frame": 905,
+            "total_ms": 103.654756128,
+            "delta307_ms": 0.0,
+            "gap_ms": 86.98808946133333,
+            "absolute_finish_ms": 117.933767,
+            "frame_start_ms": 14.279010872,
+            "instructions": 2233671,
+            "SPI_bytes": 10042,
+            "max_credit": 4
+          },
+          {
+            "frame": 906,
+            "total_ms": 116.901733526,
+            "delta307_ms": 0.0,
+            "gap_ms": 100.23506685933333,
+            "absolute_finish_ms": 248.742061,
+            "frame_start_ms": 131.840327474,
+            "instructions": 1619079,
+            "SPI_bytes": 10650,
+            "max_credit": 4
+          },
+          {
+            "frame": 907,
+            "total_ms": 17.616924958,
+            "delta307_ms": 0.0,
+            "gap_ms": 0.9502582913333306,
+            "absolute_finish_ms": 280.265546,
+            "frame_start_ms": 262.64862104199995,
+            "instructions": 697018,
+            "SPI_bytes": 1079,
+            "max_credit": 4
+          }
+        ],
+        "stack": 1288
+      },
+      "restricted": {
+        "rows": [
+          {
+            "frame": 905,
+            "total_ms": 103.657528822,
+            "delta307_ms": 0.002772694000000797,
+            "gap_ms": 86.99086215533333,
+            "absolute_finish_ms": 117.936539,
+            "frame_start_ms": 14.279010177999993,
+            "instructions": 2237723,
+            "SPI_bytes": 10042,
+            "max_credit": 4
+          },
+          {
+            "frame": 906,
+            "total_ms": 116.87996106,
+            "delta307_ms": -0.0217724660000016,
+            "gap_ms": 100.21329439333333,
+            "absolute_finish_ms": 248.723061,
+            "frame_start_ms": 131.84309994,
+            "instructions": 1624589,
+            "SPI_bytes": 10650,
+            "max_credit": 4
+          },
+          {
+            "frame": 907,
+            "total_ms": 17.62047037,
+            "delta307_ms": 0.0035454120000011358,
+            "gap_ms": 0.9538037033333318,
+            "absolute_finish_ms": 280.250092,
+            "frame_start_ms": 262.62962163,
+            "instructions": 700060,
+            "SPI_bytes": 1079,
+            "max_credit": 4
+          }
+        ],
+        "stack": 1288
+      },
+      "normal": {
+        "rows": [
+          {
+            "frame": 905,
+            "total_ms": 78.509421512,
+            "delta307_ms": 0.016363440000006335,
+            "gap_ms": 61.84275484533333,
+            "absolute_finish_ms": 92.788432,
+            "frame_start_ms": 14.279010487999997,
+            "instructions": 2230419,
+            "SPI_bytes": 9922,
+            "max_credit": 4
+          },
+          {
+            "frame": 906,
+            "total_ms": 54.943113401999994,
+            "delta307_ms": -0.009545340000002511,
+            "gap_ms": 38.27644673533332,
+            "absolute_finish_ms": 161.638106,
+            "frame_start_ms": 106.694992598,
+            "instructions": 1614074,
+            "SPI_bytes": 10458,
+            "max_credit": 4
+          },
+          {
+            "frame": 907,
+            "total_ms": 14.377191108,
+            "delta307_ms": 0.02049975399999937,
+            "gap_ms": -2.289475558666668,
+            "absolute_finish_ms": 189.921857,
+            "frame_start_ms": 175.54466589199998,
+            "instructions": 696446,
+            "SPI_bytes": 1019,
+            "max_credit": 4
+          }
+        ],
+        "stack": 1288
+      }
+    },
+    "ARM_memory": {
+      "text": 28306,
+      "bss": 47124,
+      "observed_stack": 1288
+    },
+    "automatic_merge": false
+  },
+  "latest312": {
+    "stage": 312,
+    "status": "partial_replacement_measured_rejected_full_executor_unfinished",
+    "summary": "NES312 partial record/2slot gate 실제 구현, 전체311 실행기 교체미완료/미채택. raw4slot/lengths/hostHREAD-HCAP/두번째snapshot 삭제,24Brecord+compactpayload를480/752의272B slot에저장. 단일active record;storage와consume16bit분리,마지막batch staging후slot반환/receipt까지owner고정. E2 14B FB/E0 26B FC,shortE9fallback+IRQ,2credit ARM실행. 제한907 27.048357ms(+9.431432)/정상14.992547(+0.635856);wholeLite22884LE18061comb9023FF307808bits,307대비+482LE/+478comb/+58FF/0RAM,부족2653. hostown-64comb보다queue+443/SPI+66이큼. 6live/queue14/retained25/ARM20/supply20 PASS. ordinarySNESvirtualview/ACK relay/validatorpacketRLE/manifestterminal/SPIplanFSM잔존. canonicalmanifest446B+directory32/공통DMA-receipt실행/새65816소비미구현. 기존307기준유지;fullRUN/whole71/FITSTA/physical미검증.",
+    "next_action": "이번 부분 adapter를 최종312공통실행기로 오인하지 말 것. ordinary 가상header/queue read·ACK relay와 validator packet/RLE·completion을 실제 삭제하고 canonical expected manifest walker 및 staging descriptor 소비로 연결하는 코드가 남음. 두 슬롯은 새 실행기에서 재평가할 미채택 배치이며 부분 adapter 미세합성/seed/FIT 반복 금지. 독립 receipt/CRC/H2·STOP·12read/token/finalACK·VBlank 및 고정 ROM 창을 유지. 307 대비 전체 최소2175comb/.950258ms 개선 gate 유지.",
+    "contract": "docs/nes-slots312-contract.ko.md",
+    "evidence": "analysis/slots312-verification.json",
+    "implementation_complete": false,
+    "selected": false,
+    "baseline": 307,
+    "whole_MAP": {
+      "LE": 22884,
+      "comb": 18061,
+      "FF": 9023,
+      "RAM_bits": 307808
+    },
+    "delta307": {
+      "LE": 482,
+      "comb": 478,
+      "FF": 58,
+      "RAM_bits": 0
+    },
+    "comb_deficit": 2653,
+    "remaining": [
+      "canonical expected manifest walker/directory",
+      "one common DMA/receipt executor replacing all retained relays",
+      "new actual 65816 staging descriptor consumer"
+    ],
+    "retained": [
+      "ordinary SNES virtual header/body adapter and ACK identity",
+      "host batch range parser and completion relays",
+      "validator packet/RLE decoder",
+      "manifest terminal order",
+      "SPI/plan state machines"
+    ]
+  },
+  "latest313": {
+    "stage": 313,
+    "status": "common_executor_connected_measured_not_selected",
+    "summary": "NES313 공통 packet/RLE 실행·canonical manifest446B·새65816 descriptor/staging 소비 연결. raw queue/header/ordinary ACK relay와 validator packet_at/executing/E decoder 삭제. storage2credit/consume분리,E2 14B/E0 26B 유지. 제한907 16.905615ms(307대비-0.711310),정상14.747414;wholeLite22959LE/18150comb/9027FF/307808bits,307대비comb+567,부족2742. 907시작 위상 이동으로 warm만 단축/전체 일정과 회로 회귀로 미채택.",
+    "selected": false,
+    "contract": "docs/nes-executor313-contract.ko.md",
+    "evidence": "analysis/executor313-verification.json",
+    "next_action": "307 기준/production 유지. validator 절감보다 host·queue·SPI 증가가 크다. SPI/plan 상태·RAM 주소 선택·수신 directory/실행 cursor까지 실제 없앨 더 넓은 교체와 RAM 포트 배치를 전체 예산으로 재검토한다. 고정 ROM 창/실제 ARM·IRQ/새 CPU 준비·consume 비용을 유지하고, 두 예산 동시 통과 전 FIT/seed/부분 FSM 반복 금지.",
+    "whole_MAP": {
+      "LE": 22959,
+      "comb": 18150,
+      "FF": 9027,
+      "RAM_bits": 307808
+    },
+    "remaining_ms": 0.2389486453333305,
+    "comb_deficit": 2742,
+    "limits": [
+      "Actual M4 instructions at modeled CPI1/84MHz; IRQ body, fixed ROM competition and two-slot responses included.",
+      "New actual 65816 ordinary kernel measured separately and its bus trace replayed against RTL. Tile/map and VBlank/final display retain modeled service; no full-system live 65816 proof.",
+      "Only 905..907 retimed; no whole71/full ARM RUN/FIT/STA/physical 60fps.",
+      "SPI/plan FSMs retained; 32B RAM directory reservation unused; reception cursors are registers."
+    ],
+    "selected_runs": {
+      "restricted": "window12",
+      "normal": "normal04",
+      "board": "board05",
+      "guards": "guards06",
+      "CPU": "cpu03",
+      "early": "early04"
+    }
+  },
+  "latest314": {
+    "stage": 314,
+    "status": "shared_control_measured_not_selected",
+    "selected": false,
+    "summary": "NES314 FSM 원인 확정: state 범위 비교→명시적 equality만 변경해 host FSM 추출/wholecomb18150→18021(-129). SPI/plan shared seal·queue 기준주소·plan 절대cursor 공동 교체 최종22758LE/17964comb/9043FF/307808bits;313대비comb-186,부족2556. 제한907 16.905615ms/313대비+0.000000,정상14.747414. 시간·면적 동시 목표 미달/production 미채택.",
+    "contract": "docs/nes-control314-contract.ko.md",
+    "evidence": "analysis/control314-verification.json",
+    "next_action": "307 비교 기준과 production227,313/314 증거 유지. serializer snapshot/CRC8 주소 mux, queue clear/load/credit와 공통 실행 주소·완료 소유권의 남은 비용을 같은 전체 경계로 재예산한다. 상태 번호/seed/FIT 반복 대신 실제 삭제할 제어와 전체 일정 이득을 먼저 제시한다. 두 예산 통과 전 whole71/fullRUN/FITSTA/실물60fps 승인 금지.",
+    "whole_MAP": {
+      "LE": 22758,
+      "comb": 17964,
+      "FF": 9043,
+      "RAM_bits": 307808
+    },
+    "delta313": {
+      "LE": -201,
+      "comb": -186,
+      "FF": 16,
+      "RAM_bits": 0
+    },
+    "remaining_ms": 0.2389486453333305,
+    "comb_deficit": 2556,
+    "selected_runs": {
+      "FSM": "fsm01",
+      "board": "board02",
+      "restricted": "window01",
+      "normal": "normal01",
+      "guards": "guards01",
+      "early": "early01",
+      "queue": "queue01",
+      "SPI": "spi01",
+      "plan": "plan01"
+    },
+    "limits": [
+      "Actual M4 instructions at modeled CPI1/84MHz; IRQ body, fixed ROM competition and two-slot responses included.",
+      "New actual 65816 ordinary kernel measured separately and its bus trace replayed against RTL. Tile/map and VBlank/final display retain modeled service; no full-system live 65816 proof.",
+      "Only 905..907 retimed; no whole71/full ARM RUN/FIT/STA/physical 60fps.",
+      "SPI/plan FSMs retained; 32B RAM directory reservation unused; reception cursors are registers."
+    ]
+  },
+  "latest315": {
+    "stage": 315,
+    "status": "shared_response_queue_measured_not_selected",
+    "selected": false,
+    "summary": "NES315 snapshot byte selector·queue host load 통합: whole Lite 22664LE/17870comb/9040FF/307808bits;314 대비 comb-94,부족2462. 제한907 16.906343ms/314 대비+0.000727,정상14.746505. 시간·면적 동시 목표 미달/production 미채택.",
+    "contract": "docs/nes-response315-contract.ko.md",
+    "evidence": "analysis/response315-verification.json",
+    "next_action": "307/314 비교 기준과 production227 유지. 남은 immutable snapshot·CRC/ingress cursor, host/validator의 주소·완료 경계를 전체 예산으로 재검토하되 독립 coverage·STOP·최종ACK는 유지한다. 제한907의 BG ROM 허용 시각 전후를 분리해 실제 임계 경로를 줄이는 후보만 평가한다. 작은 FF 절감/상태 번호/seed/FIT 반복으로 회로 부족을 해결했다고 주장하지 않는다. 두 예산 통과 전 whole71/fullRUN/FITSTA/실물60fps 승인 금지.",
+    "whole_MAP": {
+      "LE": 22664,
+      "comb": 17870,
+      "FF": 9040,
+      "RAM_bits": 307808
+    },
+    "delta314": {
+      "LE": -94,
+      "comb": -94,
+      "FF": -3,
+      "RAM_bits": 0
+    },
+    "remaining_ms": 0.23967590933333227,
+    "comb_deficit": 2462,
+    "selected_runs": {
+      "board": "board01",
+      "restricted": "window01",
+      "normal": "normal01",
+      "guards": "guards01",
+      "early": "early01",
+      "queue": "queue02",
+      "SPI": "spi01",
+      "reply": "reply01"
+    },
+    "limits": [
+      "Actual M4 instructions at modeled CPI1/84MHz; IRQ body, fixed ROM competition and two-slot responses included.",
+      "New actual 65816 ordinary kernel measured separately and its bus trace replayed against RTL. Tile/map and VBlank/final display retain modeled service; no full-system live 65816 proof.",
+      "Only 905..907 retimed; no whole71/full ARM RUN/FIT/STA/physical 60fps.",
+      "SPI/plan FSMs retained; 32B RAM directory reservation unused; reception cursors are registers."
+    ]
+  },
+  "latest316": {
+    "stage": 316,
+    "status": "replacement_budget_review_only",
+    "selected": false,
+    "summary": "NES316 REVIEW ONLY:315 measured ARM/IRQ/2slot/ROM+wholeLite evidence re-audited; no newRTL/ARM/MAP. Restricted907 lastconsume->internalreturn .313539ms +final .202364ms; required .239676ms=76.44% of firstwindow,NOT savings. queue+SPI own972comb cannot alone cover2462; host+validator3502. Four-region4474->2012 conditional budget,NOT predictedMAP. Actual remaining .239676ms/2462 unchanged/unselected.",
+    "contract": "docs/nes-budget316-contract.ko.md",
+    "evidence": "analysis/budget316-verification.json",
+    "baseline": "NES315 board01/window01/normal01",
+    "new_RTL": false,
+    "new_ARM": false,
+    "new_MAP": false,
+    "time_delta_ms": null,
+    "comb_delta": null,
+    "remaining_ms": 0.23967590933333227,
+    "comb_deficit": 2462,
+    "candidate": "common transaction executor plus immutable metadata preparation and issuance",
+    "conditional_region_comb_budget": 2012,
+    "whole_comb_gate": 15408,
+    "RAM_bits_gate": 307808,
+    "next_action": "Instrument metadata immutable-ready/prepare cost against BG/DMA/plan-credit/IRQ on315 first; split requirements issuance from ARM ordinary-command prohibition; retain terminal seal/independent receipt/STOP/finalACK/VBlank. Then common transaction address/completion ownership across host+validator+ingress, with explicit RAM port latency and retained checks. Joint gate restricted907<=16.666667ms,3frame aggregate/absolute finish/tail nonregression,wholecomb<=15408/RAM<=307808. No cosmetic mux/FSM/seed/FIT loops; re-evaluate wider source/plan boundary if budget cannot close. Production227/GBC164/saveSRAM unchanged.",
+    "limits": [
+      "Metadata immutable-ready time is not instrumented in NES315.",
+      "Transfer instruction counts include work since preceding checkpoint; not pure encoder cost.",
+      "Phase classification uses transaction completion, not exact occupancy interval.",
+      "Retained independent validation and final display checks cannot be credited as deleted.",
+      "Actual M4 instructions at modeled CPI1/84MHz; IRQ body, fixed ROM competition and two-slot responses included.",
+      "New actual 65816 ordinary kernel measured separately and its bus trace replayed against RTL. Tile/map and VBlank/final display retain modeled service; no full-system live 65816 proof.",
+      "Only 905..907 retimed; no whole71/full ARM RUN/FIT/STA/physical 60fps.",
+      "SPI/plan FSMs retained; 32B RAM directory reservation unused; reception cursors are registers."
+    ]
+  },
+  "latest317": {
+    "stage": 317,
+    "status": "measured_joint_candidate_not_selected",
+    "selected": false,
+    "summary": "NES317 actual M4 metadata+joint terminal measured: restricted907 ARM-only 17.119885ms/joint 17.119885ms;wholeLite 17891comb (+21vs315),deficit2483. Joint not selected; independent checks/STOP/finalACK retained. No physical60fps/FITSTA.",
+    "contract": "docs/nes-metadata317-contract.ko.md",
+    "evidence": "analysis/metadata317-verification.json",
+    "next_action": "Preserve315 baseline and317 rejected joint terminal evidence. Do not tune isolated state/seed/FIT. Compare validated ARM scheduling separately; widening address mux alone did not meet the4474->2012 regional budget. Reconsider whole host/validator/source/plan roles and RAM port ownership with measured metadata ready and BG timing before another implementation. Keep independent expectation/receipt/CRC, storage!=consumption, STOP/finalACK/VBlank and actual ARM/IRQ/2slot costs.",
+    "whole_MAP": {
+      "LE": 22685,
+      "comb": 17891,
+      "FF": 9037,
+      "RAM_bits": 307808
+    },
+    "delta315": {
+      "LE": 21,
+      "comb": 21,
+      "FF": -3,
+      "RAM_bits": 0
+    },
+    "remaining_ms": 0.4532188013333318,
+    "comb_deficit": 2483,
+    "selected_runs": {
+      "observation": "observe02",
+      "ARM_only": "arm01",
+      "joint": "window01",
+      "normal": "normal01",
+      "board": "board01",
+      "guards": "guards01",
+      "terminal": "terminal01",
+      "ARM_guards": "armguards01"
+    },
+    "limits": [
+      "Actual M4 instructions at modeled CPI1/84MHz; IRQ body, fixed ROM competition and two-slot responses included.",
+      "New actual 65816 ordinary kernel measured separately and its bus trace replayed against RTL. Tile/map and VBlank/final display retain modeled service; no full-system live 65816 proof.",
+      "Only 905..907 retimed; no whole71/full ARM RUN/FIT/STA/physical 60fps.",
+      "SPI/plan FSMs retained; 32B RAM directory reservation unused; reception cursors are registers.",
+      "Passive modeled event time equals RTL checkpoint plus pending CPI1/84MHz instructions; not hardware cycle measurement.",
+      "Joint terminal controller has a measured area regression; no adoption/FIT/STA."
+    ]
   }
 }

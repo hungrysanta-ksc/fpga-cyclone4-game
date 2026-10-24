@@ -1,0 +1,33 @@
+{
+  "stage": 334,
+  "status": "ARM_arithmetic_candidate_retained_joint_RTL_rejected",
+  "baseline": 332,
+  "authoritative_document": "docs/nes-execute334-contract.ko.md",
+  "evidence": "analysis/execute334-verification.json",
+  "assessment": "NES334 implements constant-space ARM nibble CRC and linear period-two span search. Actual18 M4/SPI/IRQ/2slot/ROM schedules,71 producer+71 pause frames,5120 CRC/1562 span/205 response/8 publication checks and16 joint RTL faults +6 selected ARM/332RTL faults plus aperture/raw0 PASS. Retain332RTL: ARM-only fixed907 25.059517464ms(delta-0.452040030),normal907 13.435202412ms,continuous restricted907 20.696615274ms/gap4.029948607. Restricted start shifted-3.420050000ms and absolute finish-0.451222000ms; do not confuse added wait with post-ROM work. Joint host reader/receipt completion and NES source-plan shared state rejected:22575LE17687comb9085FF307808bits,+38comb/-12FF,2279comb deficit. FSMs extracted; decode growth defeats state removal. ARM-only area remains33222539LE17649comb9097FF307808bits/2241deficit. Text30054(+60),BSS47404,stack1288;no H2 cache/slicing;full semantic/CRC recheck retained. No FIT/STA/physical60fps.",
+  "next_action": "Keep332RTL and334 ARM arithmetic candidate, preserve rejected334 RTL and failed window01/board01/guards01-case11 evidence. Do not repeat shared-state/FSM/seed/FIT tuning. Replace actual descriptor destination/receipt RAM address and progression datapaths plus plan field decode; current independent validator receipt FSM remains. Rebudget all added ARM serialization/SPI/IRQ/cold/staging costs before ABI changes. Keep independent expected vs actual CRC,2slot storage!=consume,STOP/ROM drain/finalACK/VBlank,tile and metadata early production. Separate fixed ROM phase,continuous start shift and post-ROM work;333 postROM3.180ms/whole15276comb remain unmet acceptance caps. FullRUN71/FIT/STA/physical cadence remain open.",
+  "selected_RTL": 332,
+  "selected_ARM": 334,
+  "whole": {
+    "LE": 22539,
+    "comb": 17649,
+    "FF": 9097,
+    "RAM_bits": 307808
+  },
+  "comb_deficit": 2241,
+  "rejected_whole": {
+    "LE": 22575,
+    "comb": 17687,
+    "FF": 9085,
+    "RAM_bits": 307808
+  },
+  "rejected_comb_deficit": 2279,
+  "restricted_gap_ms": 4.029948607333331,
+  "fixed_delta_ms": -0.45204002999999915,
+  "restricted_start_delta_ms": -3.4200500000000034,
+  "restricted_finish_delta_ms": -0.4512219999999729,
+  "target_budget_met": false,
+  "FIT": false,
+  "STA": false,
+  "physical_60fps": false
+}
