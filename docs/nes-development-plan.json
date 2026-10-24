@@ -4,14 +4,14 @@
   "date_kst": "2026-10-24",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-boundary353-contract.ko.md",
-  "assessment": "NES353 review keeps338RTL/352ARM. Passive fixed01 3frames: originaljoint-events/ARM/sourcecycles byteexact352. ActualM4 snapshot replay9calls matches costs aftergeometryphase correction. Warmexpand70407=32840own+19710copy+8197clear+9650need+10;geometry35879,H212060. Allcopy/clear33530=.399167ms impossible-free upperbound leaves.729001ms of1.128168firstBGadvance. FixedbeforeBG340614instructions4.054929ms+SPI.464761+residual.007687;31checkpoints/0waits. Query1959/1957/1957 oneNESclock;Awrite5580/938/1055 at512..904 inputonly,plan646/631/56steps outputonly;coldBinit970endsbeforeA. Existingencoder13bitcursor alsoowns10bitNESplanaddress;cannotmovewholesale tohostclk. Newquerymailbox declared226bits vsoldsource242 plusretained10bitcursor leaves6gross bits beforephasecontrol,NOTMAPsaving. WholeLite33822144LE17274comb9018FF307808bits reused;1866short/2021net target unchanged. Host-source2035cap MUSTinclude newCDC/query/phase/portcost,unknown. No newRTL/ARM/MAP/FITSTA orphysicalclaim;fixed25.051517560/continuous20.689660812/normal12.246307588ms unchanged.",
-  "next_action": "Keep338RTL and352ARM optimization. Next implement only justified compact-geometry/direct-access or incremental preparation to remove intermediatecopy/reinterpretation while retaining semantic guards; measure actualM4 netfirstBGcost against94767instruction threshold includingSPI/IRQ/credit,notmemory-loop-only orfailedfrontier replay. Inparallel define actual source-host clock ownership/querytransaction/NESplan-cursor/phaseRAM/queueSTOP drain and deletion/addition ledger;source-host2035cap includes allnewCDC,notfree. No largeRTLreplacement until budget justified. Preserveindependentexpected/readCRCcoverage/STOP/finalACK/VBlank,wholeLite boundary,noautomaticmerge.",
+  "authoritative_document": "docs/nes-compact354-contract.ko.md",
+  "assessment": "NES354 keeps338RTL/352 decoder+raw-group improvement; fused compact map/OBJ/exception load-check-store-require, inactive tails skipped. Warmexpand70407->53129(-17278instructions)/1670Bcopy removed.71preparations+13malformed+5boundary+65lifetime guards PASS;9schedule observations3frames exact wire/read-private-publish/credit<=2. Restrictedcontinuous20.689660812ms(delta+0.000000000),fixed25.051517560(delta+0.000000000),normal12.040582784(delta-0.205724804). FirstBG fixed advances0.205725ms but still needs0.922443ms for earlierROMwindow. Text30630(-8)/bss47420/stack1288. Whole338Lite22144LE17274comb9018FF307808bits unchanged/reused;1866short/2021net target. QueryCDC+NEScursor+RAMowner+STOPdrain included2035source-hostcap,unimplemented. No newRTL/MAP/FITSTA/physical claim;guards01 Python bytearray harness failure retained.",
+  "next_action": "Carry338RTL and354ARM with352 raw-group improvement. Next remove native64 raster intermediate representation across geometry/H2/dirty/final-raw consumers together, preserve generic semantic guards, measure firstBG earlier-ROM gap separately from postROM tail. Before broad source-host replacement, implement/test minimal query request-response STOP drain boundary with NES plan cursor retained and actual RAM ownership costs; allnewCDC includedsource-host2035/queueSPI650caps. Keepindependentexpected/readCRCcoverage,storage!=consume,STOP/finalACK/VBlank;noautomaticmerge/FITseed loops.",
   "next_three_deliverables": [
-    "Compact geometry/direct access preparation withsameguards,realM4 costs andsamephase/continuous firstBG schedule",
-    "Clock-by-clock query/plan cursor/phase RAM andqueue ownership,STOP drain,oldcontrol deletion/newCDC cost within2035cap",
-    "Only justified candidate integrated schedule andwholeLite comparison; retain352 gains andallpriorfailures"
-  ],
+  "Compact raster consumer contract and actualM4 candidate with same semantic checks and separate earlier-ROM/postROM budgets",
+  "Minimal clock-boundary query/response drain, NES cursor andRAM ownership deletion/addition cost before broadreplacement",
+  "Samephase/continuous actualARM+IRQ+2slot+ROM schedule andwholeLite cost including allnewbridges"
+],
   "gates": [
     {
       "id": "P0",
@@ -3214,66 +3214,58 @@
     ]
   },
   "active_plan": {
-    "stage": 353,
-    "status": "measured_review_no_new_optimization_selected",
-    "selected_RTL": 338,
-    "selected_ARM": 352,
-    "assessment": "NES353 review keeps338RTL/352ARM. Passive fixed01 3frames: originaljoint-events/ARM/sourcecycles byteexact352. ActualM4 snapshot replay9calls matches costs aftergeometryphase correction. Warmexpand70407=32840own+19710copy+8197clear+9650need+10;geometry35879,H212060. Allcopy/clear33530=.399167ms impossible-free upperbound leaves.729001ms of1.128168firstBGadvance. FixedbeforeBG340614instructions4.054929ms+SPI.464761+residual.007687;31checkpoints/0waits. Query1959/1957/1957 oneNESclock;Awrite5580/938/1055 at512..904 inputonly,plan646/631/56steps outputonly;coldBinit970endsbeforeA. Existingencoder13bitcursor alsoowns10bitNESplanaddress;cannotmovewholesale tohostclk. Newquerymailbox declared226bits vsoldsource242 plusretained10bitcursor leaves6gross bits beforephasecontrol,NOTMAPsaving. WholeLite33822144LE17274comb9018FF307808bits reused;1866short/2021net target unchanged. Host-source2035cap MUSTinclude newCDC/query/phase/portcost,unknown. No newRTL/ARM/MAP/FITSTA orphysicalclaim;fixed25.051517560/continuous20.689660812/normal12.246307588ms unchanged.",
-    "next_action": "Keep338RTL and352ARM optimization. Next implement only justified compact-geometry/direct-access or incremental preparation to remove intermediatecopy/reinterpretation while retaining semantic guards; measure actualM4 netfirstBGcost against94767instruction threshold includingSPI/IRQ/credit,notmemory-loop-only orfailedfrontier replay. Inparallel define actual source-host clock ownership/querytransaction/NESplan-cursor/phaseRAM/queueSTOP drain and deletion/addition ledger;source-host2035cap includes allnewCDC,notfree. No largeRTLreplacement until budget justified. Preserveindependentexpected/readCRCcoverage/STOP/finalACK/VBlank,wholeLite boundary,noautomaticmerge.",
-    "deliverables": [
-      "Compact geometry/direct access preparation withsameguards,realM4 costs andsamephase/continuous firstBG schedule",
-      "Clock-by-clock query/plan cursor/phase RAM andqueue ownership,STOP drain,oldcontrol deletion/newCDC cost within2035cap",
-      "Only justified candidate integrated schedule andwholeLite comparison; retain352 gains andallpriorfailures"
-    ],
-    "evidence": "analysis/boundary353-verification.json",
-    "new_RTL": false,
-    "new_ARM": false,
-    "new_MAP": false,
-    "FIT": false,
-    "STA": false,
-    "physical": false,
-    "new_passive_observations": 3,
-    "reused_schedule_observations": 9,
-    "unique_frames": 3,
-    "ARM_profile_calls": 9,
-    "critical_budget": {
-      "first_BG_advance_needed_ms": 1.128168,
-      "minimum_net_ARM_instructions_at_CPI1": 94767,
-      "initial_prepare_instructions": 167639,
-      "three_preparation_calls_instructions": 118346,
-      "memory_routine_impossible_free_upper_bound_ms": 0.39916666666666667,
-      "remaining_after_free_memory_ms": 0.7290013333333334,
-      "post_ROM_gap_ms": 0.653568
-    },
-    "whole_budget": {
-      "whole": {
-        "LE": 22144,
-        "comb": 17274,
-        "FF": 9018,
-        "RAM_bits": 307808
-      },
-      "comb_deficit": 1866,
-      "whole_cap": 15253,
-      "required_net_deletion": 2021,
-      "source_host_cap_including_new_CDC": 2035,
-      "queue_SPI_cap": 650,
-      "retained_plan": 459,
-      "retained_checker_aperture": 1159,
-      "outside": 10950,
-      "new_bridge_comb": null,
-      "new_engine_comb": null,
-      "synthesized_saving": 0
-    },
-    "CDC_inventory": {
-      "request_width": 32,
-      "response_width": 65,
-      "new_mailbox_declared_bits": 226,
-      "old_source_mailbox_declared_bits": 242,
-      "NES_plan_cursor_retained_bits": 10,
-      "scope": "Structural storage inventory only; aliases/constant pruning and new phase/lease control unmeasured. No FF-to-comb conversion or area claim."
-    },
-    "pins": 2848
+  "stage": 354,
+  "status": "ARM_geometry_verified_RTL_replacement_unselected",
+  "selected_RTL": 338,
+  "selected_ARM": 354,
+  "preserved_ARM_improvement": 352,
+  "assessment": "NES354 keeps338RTL/352 decoder+raw-group improvement; fused compact map/OBJ/exception load-check-store-require, inactive tails skipped. Warmexpand70407->53129(-17278instructions)/1670Bcopy removed.71preparations+13malformed+5boundary+65lifetime guards PASS;9schedule observations3frames exact wire/read-private-publish/credit<=2. Restrictedcontinuous20.689660812ms(delta+0.000000000),fixed25.051517560(delta+0.000000000),normal12.040582784(delta-0.205724804). FirstBG fixed advances0.205725ms but still needs0.922443ms for earlierROMwindow. Text30630(-8)/bss47420/stack1288. Whole338Lite22144LE17274comb9018FF307808bits unchanged/reused;1866short/2021net target. QueryCDC+NEScursor+RAMowner+STOPdrain included2035source-hostcap,unimplemented. No newRTL/MAP/FITSTA/physical claim;guards01 Python bytearray harness failure retained.",
+  "next_action": "Carry338RTL and354ARM with352 raw-group improvement. Next remove native64 raster intermediate representation across geometry/H2/dirty/final-raw consumers together, preserve generic semantic guards, measure firstBG earlier-ROM gap separately from postROM tail. Before broad source-host replacement, implement/test minimal query request-response STOP drain boundary with NES plan cursor retained and actual RAM ownership costs; allnewCDC includedsource-host2035/queueSPI650caps. Keepindependentexpected/readCRCcoverage,storage!=consume,STOP/finalACK/VBlank;noautomaticmerge/FITseed loops.",
+  "deliverables": [
+    "Compact raster consumer contract and actualM4 candidate with same semantic checks and separate earlier-ROM/postROM budgets",
+    "Minimal clock-boundary query/response drain, NES cursor andRAM ownership deletion/addition cost before broadreplacement",
+    "Samephase/continuous actualARM+IRQ+2slot+ROM schedule andwholeLite cost including allnewbridges"
+  ],
+  "evidence": "analysis/compact354-verification.json",
+  "new_RTL": false,
+  "new_ARM": true,
+  "new_MAP": false,
+  "FIT": false,
+  "STA": false,
+  "physical": false,
+  "preparation_frames": 71,
+  "malformed_cases": 13,
+  "boundary_cases": 5,
+  "lifetime_cases": 65,
+  "schedule_observations": 9,
+  "unique_schedule_frames": 3,
+  "critical_budget": {
+    "first_BG_advance_ms": 0.20572499999997262,
+    "earlier_ROM_window_gap_ms": 0.9224430000000385,
+    "minimum_net_instructions": 77486,
+    "post_ROM_gap_ms": 0.6535679999999569,
+    "continuous_frame_gap_ms": 4.022994145333332
   },
+  "whole": {
+    "LE": 22144,
+    "comb": 17274,
+    "FF": 9018,
+    "RAM_bits": 307808
+  },
+  "comb_deficit": 1866,
+  "budget": {
+    "status": "unimplemented budget, not predicted synthesis saving",
+    "whole_cap": 15253,
+    "required_net_deletion": 2021,
+    "retained_outside": 10950,
+    "retained_checker_aperture": 1159,
+    "retained_concurrent_plan": 459,
+    "source_host_current": 3908,
+    "source_host_cap": 2035,
+    "queue_SPI_current": 798,
+    "queue_SPI_cap": 650
+  }
+},
   "current_status_scope": "Queue-aware map publication and independent final RAM execution; bounded joint gain, time and capacity still unmet",
   "p1_placement_followup": {
     "selected": "placement05",
