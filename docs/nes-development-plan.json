@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
-  "date_kst": "2026-10-25",
-  "technical_candidate": "NES367 actual ARM source/hint measured; continuous capture and whole capacity fail, not production",
+  "date_kst": "2026-10-26",
+  "technical_candidate": "NES368 measured source/collector specialization;continuous911 and whole capacity fail,not production",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-hint367-contract.ko.md",
-  "assessment": "NES367 actual M4 source_receive+causal hint+output planner share one ELF and SPI/EXTI. CRC-checked current geometry wins, prior displayed-bank BG/OBJ is fallback; 28B EA and seven-entry cache retained. 908 same-RTL/start/ROM phase hint-only 20.650139->13.117365ms (-7.532774ms). Warm90921.458584ms (4.791917over60Hz),hint misses required0216;collector58.248uslate. Actual905..909 drain;908/909 capture starts admitted but910 rejected:2/3,1miss. Final local BLOCKEND handoff raw0/1/2+256clock blocked-tail PASS;source queries still exceed910 deadline. WholeLite 22803LE/17762comb/9218FF/308832bits;delta366 -14LE/-14comb/1FF/0RAM;2354comb over,net2509 with155reserve. ARM text33618/BSS48476,delta+1604text/+1056BSS;observed stack1288. 28hint guards/9source IO cases/11pin modes/68EA STOP guards and inherited22session cases;source to board11canonical files/30shared modules. No sustained60fps approval: failed cadence retained; actual C instructions with bounded IRQ/CPI adapter,ordinary65816 trace+DMA/finalACK busmodels,fullVBlank CPU/liveNES/WCET/FITSTA/physical stillOPEN.",
-  "next_action": "909의0216 BG tag가 실제 plan에는 필요하지만 hint에서 빠진 원인과 후반 cache miss를 먼저 분리한다. 58.248us collector 해제 부족과4.791917ms 표시 초과를 각각 줄이는 공급·준비 예산을 잡는다.909 입력의 실제 저장 완료·credit 반환과 ARM decode/hint를 분리할 범위 및 RAM 포트·바이트 예산을 먼저 확정한다. 기존 D4의 다음 요청에서만 pop하는 경로, ARM SPI DMA/수신 보관의 중첩 후보를 전체 비용으로 비교한다. 캡처 기한을 늦추거나 실패를 승인하지 않는다. 독립 검사·STOP·최종 ACK·VBlank를 유지하고, 연속/heavy7/71 및 실제65816 표시 서비스 통과 뒤에만 전체 Lite FIT/STA/실물 단계로 간다. 새 opcode/부분 FSM/seed/FIT 반복을 먼저 시작하지 않는다.",
+  "authoritative_document": "docs/nes-source368-contract.ko.md",
+  "assessment": "NES368 real M4 frontier completion+256entry source CRC.909 same-start/ROM phase 21.458493->18.218941ms (-3.239552). Unused retained keys excluded by prior displayed used mask;910 hint28B->0 and continuous timing19.463653->12.028333ms (different preceding schedules,not additive isolated gain). ARM-only read completion18.251us before910 still failed because8192clock bitmap scrub (~372.364us). Selected N5 source never queries6; parameter-only removal deletes8192x2bitmap/scrub/RMW while default query6 and all plane/event/errors remain. Actual905..910 drained, next908/909/910 accepted,911 rejected:3/4.911 local handoff117.611us late due909output backlog;continuous gateFAIL. WholeLite22710LE/17698comb/9171FF/292448bits vs367 -93LE/-64comb/-47FF/-16384bits;2290combshort/2445withreserve. ARM text34178(+560),BSS48476(same),stack1288. Retire-generation edge is latched in verification before next source clears live retired;actual ACK unchanged.13canonical/30compiled shared modules;1280CRC vectors/all intermediate source states/37retained+6frontier guards/10planes/16384query selectors/22session guards. Actual C/IRQ at allocated CPI1;ROM origin-request accounting retained,ordinary65816trace+DMA/finalACK busmodels;fullCPU/VBlank/FITSTA/physical60fps OPEN.",
+  "next_action": "Keep the measured368 components and failed911 gate. Budget at least1.552274ms further909 display improvement and117.611us earlier next-source handoff at the observed backlog. First measure per-row planner/late ordinary preparation versus E2/credit/DMA gaps. Compare actual ARM SPI DMA/two-buffer reception plus tentative incremental row preparation, preserving the early hint ROM deadline and CRC/semantic checks; do not subtract unexecuted overlap. Reconcile source/host/RAM port ownership and the2290comb whole deficit (2445net with155reserve) before a broader replacement. No new opcode/smallFSM/seed/FIT loop. Full65816/VBlank,heavy7/71,multiple start phases,firmware WCET/token-session recovery and hardware gates remain.",
   "next_three_deliverables": [
-  "909 source handoff deadline: storage credit/decode/hint/SPI overlap and explicit port/buffer budget",
-  "Actual SNES full DMA/final display/VBlank service and sustained heavy7/71/phase coverage",
-  "Reconciled whole deletion ledger and matching hardware build before FIT/STA"
+  "Row/ordinary/credit/IRQ/ROM critical-path budget for909 and next-source start",
+  "Executed DMA/buffer/incremental preparation candidate and independent invalidation/STOP checks",
+  "Whole2290comb deletion/port ledger plus full65816/71/phase/hardware gates"
 ],
   "gates": [
     {
@@ -3214,115 +3214,296 @@
     ]
   },
   "active_plan": {
-  "stage": 367,
-  "date_kst": "2026-10-25",
+  "stage": 368,
+  "date_kst": "2026-10-26",
+  "base": "0d3a520353249558b546a0852b02895929ebe0d7",
   "branch": "codex/nes-capture-admission-365",
-  "contract": "docs/nes-hint367-contract.ko.md",
-  "evidence": "analysis/hint367-verification.json",
+  "contract": "docs/nes-source368-contract.ko.md",
+  "evidence": "analysis/source368-verification.json",
   "selected": {
-    "component": "Per-frame source foreground and causal hint measured; continuous candidate not selected",
-    "diagnostic": "long02",
-    "strict": "long01/long03",
+    "diagnostic": "joint07",
+    "strict_joint": "joint03",
+    "ARM_only": "fixed01",
     "control": "control01",
-    "MAP": "map02"
+    "MAP": "map01",
+    "source_guard": "guards06",
+    "bitmap_guard": "bitmap01",
+    "query_guard": "query01",
+    "session_guard": "session01",
+    "physical": false
   },
-  "R0": "Same functional/whole canonical boundary and actual M4 source foreground implemented.",
-  "R1": "Failed continuous capture gate:910 rejected.905..909 drained in diagnostic,not five successful consecutive captures.",
-  "R2": "Whole capacity gate fails; explicit further deletion budget retained.",
-  "R3": "Full65816 VBlank/whole FIT/STA/physical pending.",
-  "assessment": "NES367 actual M4 source_receive+causal hint+output planner share one ELF and SPI/EXTI. CRC-checked current geometry wins, prior displayed-bank BG/OBJ is fallback; 28B EA and seven-entry cache retained. 908 same-RTL/start/ROM phase hint-only 20.650139->13.117365ms (-7.532774ms). Warm90921.458584ms (4.791917over60Hz),hint misses required0216;collector58.248uslate. Actual905..909 drain;908/909 capture starts admitted but910 rejected:2/3,1miss. Final local BLOCKEND handoff raw0/1/2+256clock blocked-tail PASS;source queries still exceed910 deadline. WholeLite 22803LE/17762comb/9218FF/308832bits;delta366 -14LE/-14comb/1FF/0RAM;2354comb over,net2509 with155reserve. ARM text33618/BSS48476,delta+1604text/+1056BSS;observed stack1288. 28hint guards/9source IO cases/11pin modes/68EA STOP guards and inherited22session cases;source to board11canonical files/30shared modules. No sustained60fps approval: failed cadence retained; actual C instructions with bounded IRQ/CPI adapter,ordinary65816 trace+DMA/finalACK busmodels,fullVBlank CPU/liveNES/WCET/FITSTA/physical stillOPEN.",
-  "preserve": [
-    "MASK/SHIFT compressed source",
-    "CRC-checked causal producer",
-    "independent expected/read CRC and coverage",
-    "2slot storage vs consumed completion",
-    "STOP/cancel/drain and no DONE after STOP",
-    "final exact12read/token ACK",
-    "unchanged SNES VBlank firmware",
-    "production227",
-    "GBC164",
-    "saveSRAM"
-  ],
+  "R0": "Actual shared source/lease/client ports reconciled; query6 specialization implemented with retained default.",
+  "R1": "Bounded improvement only:910 capture repaired,911 still fails.6completed frames include2serialized startup frames.",
+  "R2": "Actual whole Lite improves64comb/47FF/16384bits;whole capacity still fails.",
+  "R3": "Full firmware/65816/VBlank/WCET/FIT/STA/physical remain pending.",
+  "assessment": "NES368 real M4 frontier completion+256entry source CRC.909 same-start/ROM phase 21.458493->18.218941ms (-3.239552). Unused retained keys excluded by prior displayed used mask;910 hint28B->0 and continuous timing19.463653->12.028333ms (different preceding schedules,not additive isolated gain). ARM-only read completion18.251us before910 still failed because8192clock bitmap scrub (~372.364us). Selected N5 source never queries6; parameter-only removal deletes8192x2bitmap/scrub/RMW while default query6 and all plane/event/errors remain. Actual905..910 drained, next908/909/910 accepted,911 rejected:3/4.911 local handoff117.611us late due909output backlog;continuous gateFAIL. WholeLite22710LE/17698comb/9171FF/292448bits vs367 -93LE/-64comb/-47FF/-16384bits;2290combshort/2445withreserve. ARM text34178(+560),BSS48476(same),stack1288. Retire-generation edge is latched in verification before next source clears live retired;actual ACK unchanged.13canonical/30compiled shared modules;1280CRC vectors/all intermediate source states/37retained+6frontier guards/10planes/16384query selectors/22session guards. Actual C/IRQ at allocated CPI1;ROM origin-request accounting retained,ordinary65816trace+DMA/finalACK busmodels;fullCPU/VBlank/FITSTA/physical60fps OPEN.",
   "measured": {
-    "hint_only_908": {
-      "frame": 908,
-      "candidate_ms": 13.117365,
-      "control_ms": 20.650139,
-      "delta_ms": -7.532774,
-      "same_RTL_start_and_ROM_phase": true
-    },
+    "paired": [
+      {
+        "frame": 907,
+        "candidate_ms": 12.037605,
+        "control_ms": 12.157104,
+        "delta_ms": -0.11949900000000113,
+        "same_start_ROM_phase": true
+      },
+      {
+        "frame": 908,
+        "candidate_ms": 13.00273,
+        "control_ms": 13.117365,
+        "delta_ms": -0.11463499999999982,
+        "same_start_ROM_phase": true
+      },
+      {
+        "frame": 909,
+        "candidate_ms": 18.218941,
+        "control_ms": 21.458493,
+        "delta_ms": -3.2395519999999998,
+        "same_start_ROM_phase": true
+      }
+    ],
+    "captures": [
+      {
+        "frame": 908,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 260388740000,
+        "handoff_margin_ms": 0.67247
+      },
+      {
+        "frame": 909,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 276632545000,
+        "handoff_margin_ms": 1.763275
+      },
+      {
+        "frame": 910,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 292876350000,
+        "handoff_margin_ms": 0.01816
+      },
+      {
+        "frame": 911,
+        "admitted": false,
+        "owned": 1,
+        "at_ps": 309120155000,
+        "handoff_margin_ms": -0.117611
+      }
+    ],
+    "warm_timings": [
+      {
+        "frame": 907,
+        "start_ps": 258048472000,
+        "start_ROM_cycle": 5677131,
+        "processing_ms": 12.037605,
+        "materialized_ms": 1.667798,
+        "input_ACK_ms": 2.752444,
+        "actual_retired_ms": 11.873766,
+        "source_instructions": 39595,
+        "ARM_instructions": 509883,
+        "source_SPI_bytes": 582,
+        "total_SPI_bytes": 1667,
+        "hints": [
+          {
+            "tags": [
+              6525,
+              6424,
+              6426,
+              6425,
+              6427,
+              5082,
+              5080
+            ],
+            "end_ms": 1.562694
+          }
+        ],
+        "blocks": 3,
+        "credit": 2,
+        "published": 16,
+        "qualified_units": 31,
+        "independent_read_accounting": true,
+        "BG": {
+          "first_ms": 6.989779,
+          "last_ms": 7.011961
+        },
+        "OBJ": {
+          "first_ms": 8.489534,
+          "last_ms": 8.49917
+        }
+      },
+      {
+        "frame": 908,
+        "start_ps": 274292322000,
+        "start_ROM_cycle": 6034500,
+        "processing_ms": 13.00273,
+        "materialized_ms": 0.576948,
+        "input_ACK_ms": 2.576901,
+        "actual_retired_ms": 12.840346,
+        "source_instructions": 51574,
+        "ARM_instructions": 619613,
+        "source_SPI_bytes": 468,
+        "total_SPI_bytes": 1531,
+        "hints": [
+          {
+            "tags": [
+              531,
+              536,
+              534,
+              531,
+              531,
+              531,
+              531
+            ],
+            "end_ms": 1.651638
+          }
+        ],
+        "blocks": 2,
+        "credit": 2,
+        "published": 25,
+        "qualified_units": 22,
+        "independent_read_accounting": true,
+        "BG": {
+          "first_ms": 7.902496,
+          "last_ms": 7.912132
+        }
+      },
+      {
+        "frame": 909,
+        "start_ps": 290536127000,
+        "start_ROM_cycle": 6391868,
+        "processing_ms": 18.218941,
+        "materialized_ms": 2.322063,
+        "input_ACK_ms": 3.906567,
+        "actual_retired_ms": 18.056556,
+        "source_instructions": 74051,
+        "ARM_instructions": 865409,
+        "source_SPI_bytes": 917,
+        "total_SPI_bytes": 2268,
+        "hints": [
+          {
+            "tags": [
+              531,
+              536,
+              534,
+              531,
+              531,
+              531,
+              531
+            ],
+            "end_ms": 1.332894
+          }
+        ],
+        "blocks": 4,
+        "credit": 2,
+        "published": 41,
+        "qualified_units": 52,
+        "independent_read_accounting": true,
+        "BG": {
+          "first_ms": 11.708541,
+          "last_ms": 11.718178
+        }
+      },
+      {
+        "frame": 910,
+        "start_ps": 308670637000,
+        "start_ROM_cycle": 6790832,
+        "processing_ms": 12.028333,
+        "materialized_ms": 0.567129,
+        "input_ACK_ms": 1.992226,
+        "actual_retired_ms": 11.865948,
+        "source_instructions": 34869,
+        "ARM_instructions": 510504,
+        "source_SPI_bytes": 364,
+        "total_SPI_bytes": 1544,
+        "hints": [],
+        "blocks": 2,
+        "credit": 2,
+        "published": 38,
+        "qualified_units": 39,
+        "independent_read_accounting": true
+      }
+    ],
     "whole_MAP": {
       "before": {
-        "LE": 22817,
-        "comb": 17776,
-        "FF": 9217,
-        "RAM_bits": 308832
-      },
-      "after": {
         "LE": 22803,
         "comb": 17762,
         "FF": 9218,
         "RAM_bits": 308832
       },
+      "after": {
+        "LE": 22710,
+        "comb": 17698,
+        "FF": 9171,
+        "RAM_bits": 292448
+      },
       "delta": {
-        "LE": -14,
-        "comb": -14,
-        "FF": 1,
-        "RAM_bits": 0
+        "LE": -93,
+        "comb": -64,
+        "FF": -47,
+        "RAM_bits": -16384
       }
     },
     "ARM_size": {
       "before": {
-        "text": 32014,
-        "data": 0,
-        "BSS": 47420
-      },
-      "after": {
         "text": 33618,
         "data": 4,
         "BSS": 48476
       },
-      "delta": {
-        "text": 1604,
+      "after": {
+        "text": 34178,
         "data": 4,
-        "BSS": 1056
+        "BSS": 48476
+      },
+      "delta": {
+        "text": 560,
+        "data": 0,
+        "BSS": 0
       }
     },
-    "completed_frames": 5,
-    "source_frames_in_continuous_phase": 3,
-    "attempted_next_captures": 3,
-    "admitted": 2,
-    "missed": 1,
-    "missed_frame": 910,
-    "continuous_capture_passed": false,
-    "comb_deficit": 2354,
-    "deletion_needed_with155reserve": 2509
+    "display909_remaining_ms": 1.552274333333333,
+    "next_source_handoff_short_us": 117.61099999999999,
+    "comb_deficit": 2290,
+    "deletion_needed_with155reserve": 2445
   },
-  "next_action": "909의0216 BG tag가 실제 plan에는 필요하지만 hint에서 빠진 원인과 후반 cache miss를 먼저 분리한다. 58.248us collector 해제 부족과4.791917ms 표시 초과를 각각 줄이는 공급·준비 예산을 잡는다.909 입력의 실제 저장 완료·credit 반환과 ARM decode/hint를 분리할 범위 및 RAM 포트·바이트 예산을 먼저 확정한다. 기존 D4의 다음 요청에서만 pop하는 경로, ARM SPI DMA/수신 보관의 중첩 후보를 전체 비용으로 비교한다. 캡처 기한을 늦추거나 실패를 승인하지 않는다. 독립 검사·STOP·최종 ACK·VBlank를 유지하고, 연속/heavy7/71 및 실제65816 표시 서비스 통과 뒤에만 전체 Lite FIT/STA/실물 단계로 간다. 새 opcode/부분 FSM/seed/FIT 반복을 먼저 시작하지 않는다.",
+  "preserve": [
+    "MASK/SHIFT compression and existing D4/D5/EA wire ABI",
+    "independent expected/read CRC and coverage",
+    "CRC8/header and CRC16 payload plus N5 semantics",
+    "2slot storage/consume separation",
+    "STOP/cancel/drain and post-STOP DONE rejection",
+    "final exact12read/token ACK",
+    "unchanged VBlank firmware",
+    "production227",
+    "GBC164",
+    "saveSRAM"
+  ],
+  "next_action": "Keep the measured368 components and failed911 gate. Budget at least1.552274ms further909 display improvement and117.611us earlier next-source handoff at the observed backlog. First measure per-row planner/late ordinary preparation versus E2/credit/DMA gaps. Compare actual ARM SPI DMA/two-buffer reception plus tentative incremental row preparation, preserving the early hint ROM deadline and CRC/semantic checks; do not subtract unexecuted overlap. Reconcile source/host/RAM port ownership and the2290comb whole deficit (2445net with155reserve) before a broader replacement. No new opcode/smallFSM/seed/FIT loop. Full65816/VBlank,heavy7/71,multiple start phases,firmware WCET/token-session recovery and hardware gates remain.",
   "next_three_deliverables": [
-    "909 source handoff deadline: storage credit/decode/hint/SPI overlap and explicit port/buffer budget",
-    "Actual SNES full DMA/final display/VBlank service and sustained heavy7/71/phase coverage",
-    "Reconciled whole deletion ledger and matching hardware build before FIT/STA"
+    "Row/ordinary/credit/IRQ/ROM critical-path budget for909 and next-source start",
+    "Executed DMA/buffer/incremental preparation candidate and independent invalidation/STOP checks",
+    "Whole2290comb deletion/port ledger plus full65816/71/phase/hardware gates"
   ],
   "limits": [
-    "Compiled SysTick/EXTI bodies plus allocated 24 entry/exit cycles; bounded peripheral adapter, not hardware WCET.",
-    "Declared ready-gated period120 NES-clock stress at001234 during both input/output; real physical-reader arbitration, not live NES CPU.",
-    "Existing ordinary65816 bus traces; DMA/final display remain bus models. Unchanged VBlank firmware is not a new full65816 proof.",
-    "905/906 serialized startup",
-    "fixture period357368NES clocks at45.454ns; not physical console cadence",
-    "no fullfirmware RUN/SPI DMA hardware WCET",
-    "source cancel requires existing drained session recovery; no automatic input token wrap",
-    "whole MAP delta is not explicit body deletion or FIT recovery"
+    "Compiled ARM C at allocated CPI1/84MHz; IRQ bodies plus24entry/exitcycles,not hardware WCET.",
+    "Ready-gated ROM stress during input/output,not live NES CPU.",
+    "Ordinary65816 trace replay;map DMA/final display busmodels;unchanged VBlank firmware,not fullCPU proof.",
+    "905/906 serialized startup;frame907 capture fixed at predeclared5371247clock,then357368clock cadence.",
+    "Full71/heavy7/FIT/STA/physical60fps remain open.",
+    "Prior resident is filtered by actual used bits,still advisory prediction.",
+    "Source input token wrap requires existing drained session recovery.",
+    "Completed6-frame diagnostic fails coverage; planned905..911 strict completion was not achieved."
   ],
   "FIT": false,
   "STA": false,
   "physical": false,
   "sustained60fps": false,
+  "continuous_capture_passed": false,
   "automatic_merge": false,
   "quartus_policy": "Lite",
-  "questa_policy": "authorized temporary FLOAT wrapper"
+  "questa_policy": "existing temporary FLOAT wrapper"
 },
-  "current_status_scope": "908 ROM wait improved;910 capture rejected in strict and drained diagnostic;2354comb over;no60fps approval",
+  "current_status_scope": "910rearm repaired;90918.219ms/911capture rejected;2290comb over,no60fps approval",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
