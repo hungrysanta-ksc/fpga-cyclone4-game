@@ -1,0 +1,68 @@
+{
+  "stage": 362,
+  "assessment": "NES362 keeps338RTL/355ARM and359 host reduction. Repaired358 host clock boundary removes old source transport descriptor/prepared CDC; two local source/checker CRC functions replaced by one phase-owned operator. Source+host FSM bodies NOT replaced. Separate boundary time unchanged20.689706/25.051563ms; whole17283comb without CRCshare,17307 withshare vs35917213. Actual prior-bank M4 BG5+OBJ2 hint EA28/112B cache integrated with common boundary;4497 instructions, decoder unchanged, text2320/BSS96. Joint warm continuous20.779023ms/fixed12.328443ms, paired delta0.089317/-12.723120; not hardware60fps. Source338 retained control: warm12.156081/12.157717ms, firstblock decoded1.458201/1.458201ms vs migrated1.628915/1.628915. WholeLite22744LE/17765comb/9236FF/308832bits,2357comb short; no simultaneous time+area win/candidate not selected. 6x3frames actualoutputARM/IRQ/2slots/read-unit-private-publish/final12read PASS,6 STOP/token/drain guards+8final/raw0+68EA guards. H2 actual680..711 corrects357 old832..863; row slots640..705/800..865 overlap ordinary receipt+H2/map receipt and require row return/source drain/ACK before output ownership. Selected4.023039ms/1866comb deficits unchanged. No full firmware hint loop/full65816VBlank/FITSTA/physical proof.",
+  "next_action": "Keep338/355 and359host evidence. Do not iterate clock-only CRC sharing or enlarge cache again to chase fit. Preserve causal BG/OBJ hint/time evidence but jointly replace source codec FETCH/FSTORE/SREAD/SBYTE and host PREAD/PCAP/PUT/RLE continuation with a real row-fed host executor; transport/CRC-only replacement failed area gate. Prefer NES-local query/row producer; reject per-query host migration which delays the first hint by0.170714ms. Time-only source338+7tag reference needs3832->1495 source-host and784->650 queueSPI,2471 netcomb removal to15253. Rejected joint source-host includingqueryCDC/sharedCRC 4033->1655, queueSPI 784->650 are acceptance caps,not predictions; 2512comb net deletion needed to15253. Fixed NES row port/host byte port, bounded source/queue storage and actual collector cancel/DONE drain must delete old bodies, preserve independent expected/CRC/coverage and2credit/STOP/finalACK/VBlank. Correct H2 address680 and row-return/transport ACK phase handoff. If no credible deletion reaches cap, revisit transfer/role partition before further implementation. Hint foreground integration/deadline fallback, more warm frames/fullCPU/hardware remain open; noauto merge.",
+  "deliverables": [
+    "Actual source+host FSM deletion within whole measured cap, fixed NES/host RAM ownership including corrected H2 overlap",
+    "Preserve causal two-OBJ+five-BG early fill and verify general eligibility/fallback in real firmware foreground",
+    "Paired same-phase/continuous actualARM/IRQ/2slot wholeLite gate then qualified full CPU/board validation"
+  ],
+  "selected_RTL": 338,
+  "selected_ARM": 355,
+  "candidate_selected": false,
+  "maps": {
+    "map01": {
+      "LE": 22146,
+      "comb": 17307,
+      "FF": 9056,
+      "RAM_bits": 307808
+    },
+    "map02": {
+      "LE": 22122,
+      "comb": 17283,
+      "FF": 9056,
+      "RAM_bits": 307808
+    },
+    "objmap01": {
+      "LE": 22733,
+      "comb": 17724,
+      "FF": 9179,
+      "RAM_bits": 308832
+    },
+    "jointmap01": {
+      "LE": 22744,
+      "comb": 17765,
+      "FF": 9236,
+      "RAM_bits": 308832
+    }
+  },
+  "budget": {
+    "source_host_including_query_CDC_shared_CRC": 4033,
+    "independent_checker_aperture": 1216,
+    "queue_SPI": 784,
+    "plan": 462,
+    "rest": 11270,
+    "source_host_cap": 1655,
+    "source_host_delete": 2378,
+    "queue_SPI_delete": 134,
+    "total_delete": 2512
+  },
+  "keep_source_budget": {
+    "source_host": 3832,
+    "independent_checker_aperture": 1250,
+    "queue_SPI": 784,
+    "plan": 467,
+    "rest": 11391,
+    "source_host_cap": 1495,
+    "source_host_delete": 2337,
+    "queue_SPI_delete": 134,
+    "total_delete": 2471
+  },
+  "evidence": "analysis/execute362-verification.json",
+  "wide_source_host_FSM_replacement": false,
+  "shared_CRC_and_transport_CDC_replacement": true,
+  "full_firmware_hint_loop": false,
+  "FIT": false,
+  "STA": false,
+  "physical": false
+}

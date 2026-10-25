@@ -40,7 +40,7 @@ validator 최종 순회는 정적 no-stall 경로 raw1956/raw01856cycles다. 84�
 
 1957개 collector query의 per-query CDC를 없애고 NES가 로컬 query를 수행해 canonical block을 만든다. map32×66B, 기타35×64B+46B=4398B, 총68blocks다. raw 최대512B까지 포함하면76blocks다. 두66B 슬롯과 `{generation16, block7, length7, slot1}` held descriptor/반환 credit을 사용한다. frame epoch/namespace는BEGIN에 고정하고 순서·길이를 검사한다. generation 단독으로 stale 판정을 하지 않는다. collector 로컬 read 수, source SPI bytes, ARM decode가 자동으로 줄어드는 것은 아니다.
 
-기존512B scratch의 delta0..65/header256..275/mask384..392와 겹치지 않는128..193,288..353에132B를 배정할 수 있다. phaseRAM 물리 주소는640..705,800..865다. 두 번째 슬롯은 output H2(832..863)와 겹치므로 input 종료·row drain 후 output owner가 H2를 다시 써야 한다.
+기존512B scratch의 delta0..65/header256..275/mask384..392와 겹치지 않는128..193,288..353에132B를 배정할 수 있다. phaseRAM 물리 주소는640..705,800..865다. **NES362 주소식 재검토 정정:** 현재338 validator의 H2는680..711이며,832..863이라는 이전 설명은 오래된 배치였다. 첫 슬롯은ordinary receipt640..677 및H2의680..705와, 두 번째 슬롯은map receipt800..865와 겹친다. row 반환·source 전송 drain·입력 ACK를 모두 완료한 뒤 output owner가 receipt를 초기화하고H2를 써야 한다. 공간 산술은 동시 소유나 실제 공동 실행기 구현 증명이 아니다. [NES362 검토](nes-execute362-contract.ko.md)를 따른다.
 
 포트 A는 고정 NES row producer, B는 고정 host input codec/output validator로 둔다. runtime clock mux는 금지한다. initializer는 source 시작 전에 끝내며 B의 row read/capture와 delta/mask/header write를 직렬화한 새 비용을 계산한다. 원래 source A/mask 진행 제어는 실제 이 경로로 대체된 뒤 삭제한다. 이 포트·수명 조건을 입증하지 못하면 별도 row RAM 최소1M9K 비용을 명시한다. 여유132B만 발견했다고 RAM 절감으로 계산하지 않는다. MASK·SHIFT·base serial·CRC·출력 ABI를 유지한다.
 
