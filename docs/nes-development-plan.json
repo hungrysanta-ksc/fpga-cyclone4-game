@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-25",
-  "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
+  "technical_candidate": "NES366 canonical capture/source/plan candidate; whole Lite over device, not production",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-pr131-retrospective.ko.md",
-  "assessment": "PR131 retrospective: role split remains a hypothesis worth testing, but integration/capture gates must precede more ABI optimization. Whole MAP298 17683comb -> best-area359 17213 (-470,1805over); BG5OBJ2 fast candidate17724 (+41vs298,2316over). Fast warm907 12.156081/12.157717ms is processing latency, not sustained capture/display proof. Original MAP source/lease join reproduced pre-capture and stale-zero first-epoch admission fault1; functional TB bypasses that join. Model rearm upper2.340517ms versus measured input2.838466ms requires continuous-capture validation. Core ROM requests gated off during input-stage hint fill;29.361us window margin not full-firmware WCET. 364 3314->843 is arithmetic74.6% deletion allowance, actualnewcostnull. No selected wholeFIT/STA/physical60fps.",
-  "next_action": "Proposed: R0 materialize same board/source/lease/port connections for functional and resource tests; fix capture-vs-display ownership and STOP drain. R1 free-running capture N+1/output N with continuous ROM demand, actual source/hint ARM+IRQ and65816 service; then heavy7/71 and frame-ID/deadline accounting. R2 one broad justified whole-board deletion with actual serializer/receiver and measured total area; recompute843budget after capture integration. R3 matching LiteFIT/STA/CDC/IO and physical sustained gameplay. No immediate364ABI implementation or smallFSM/seed loops. This turn is retrospective only; no automatic merge or new implementation.",
+  "authoritative_document": "docs/nes-capture365-contract.ko.md",
+  "assessment": "NES365-366 after verified PR131 merge9141389. Canonical10files and30compiled shared modules match functional/wholeLite. Actual collector capture epoch/generation drives automatic one-shot source start; admitted context frozen until finalACK+drained plan retire. Materialized source releases collector before ARMinputACK, no newRAM/copy. Actual908 overlaps907output and909begin:2/2starts,0miss versus3651miss. Readrelease9071.711980ms/inputACK2.838444/nextcapture2.340269 =>.628289margin;908margin1.763276ms. Input ROM stress5736requests/replies;22session guards+actualcore raw0/1/2 lifetime PASS. Ownership error remains latched after cancellation. Warm90712.155968ms unchanged paired365;actual90820.651275ms(3.984608over60Hz),no newhint908;907-only causalBG5OBJ2 is not per-frameforeground. WholeLite22817LE17776comb9217FF308832bits,+52comb/+38FF/0RAM vs362;2368combshort/2523deletion incl155reserve. Source ARM measured per-block costs/outputM4live+IRQ+2slots/ordinary65816trace;finalDMA/display busmodels,fullVBlank CPU/liveNESROM/WCET/heavy7/71/FITSTA/physicalOPEN.",
+  "next_action": "Connect causal hint production on every supported frame to the real ARM source foreground and shared SPI/IRQ, not only907 in TB. Bind full SNES DMA/final display/VBlank service, then extend free-running capture/display to heavy7/71 and phase variation; measure frame IDs/backlog/cold recovery separately. Recompute actual whole deletion boundaries afterward; no small FSM/opcode/seed loop or automatic purchase. Keep corrected common capture/source boundary; do not restore manual test-only admission or release collector at inputACK. No automatic merge.",
   "next_three_deliverables": [
-  "Same implementation and source/capture/display admission proof",
-  "Continuous capture/display deadline and ROM/ARM/65816 schedule proof",
-  "One measured joint time/area candidate, then matching physical build"
+  "Per-frame causal hint/ARM foreground and declared full input/output ROM workload",
+  "Full SNES display service plus longer continuous/heavy7/71 and phase coverage",
+  "Reconciled whole resource/port/deletion ledger before another architecture candidate"
 ],
   "gates": [
     {
@@ -3214,102 +3214,81 @@
     ]
   },
   "active_plan": {
-  "status": "proposed_after_retrospective",
+  "stage": "365-366",
   "date_kst": "2026-10-25",
-  "review": "docs/nes-pr131-retrospective.ko.md",
-  "implementation_head": "6674e57c68695b67b02ee36b57fd6868ae2f9831",
+  "merged_PR131": "914138969246387162bf2c909159824e72a3666d",
+  "branch": "codex/nes-capture-admission-365",
+  "contract": "docs/nes-capture365-contract.ko.md",
+  "evidence": "analysis/capture365-verification.json",
+  "selected": {
+    "run": "early03",
+    "MAP": "map03",
+    "controller_guards": "guards04",
+    "raw_lifetime_guards": "rawguards02",
+    "EARLY_RELEASE": 1
+  },
+  "R0": "Implemented and bounded verified: same canonical source/lease/host/plan RTL and corrected admission; actual collector query data, automatic source start, stable admitted context.",
+  "R1": "Partially verified: real908 overlaps907 output,909 start admitted; two starts without misses.908 processing still20.651275ms. Not sustained71/heavy7/fullfirmware/full65816.",
+  "R2": "Pending validated whole schedule and a new inclusive deletion ledger. Old843cap is historical arithmetic, not current feasible implementation.",
+  "R3": "Pending whole FIT/STA/CDC/IO and matching hardware build.",
   "preserve": [
-    "source338",
-    "ARM355",
-    "host359",
-    "BG5_OBJ2 as conditional prefetch evidence",
-    "independent expected/actual verification",
-    "MASK/SHIFT and output compression",
-    "2slot storage credit separate from consumption",
-    "STOP drain and post-STOP DONE suppression",
-    "final ACK and VBlank",
+    "source338/ARM355/host359 semantics",
+    "MASK/SHIFT and compressed transport",
+    "causal BG5/OBJ2 evidence",
+    "independent expected/actual CRC and coverage",
+    "2slot storage credit separate from consumed completion",
+    "STOP and post-STOP DONE rejection",
+    "final exact-read/token ACK",
+    "unchanged SNES VBlank firmware",
     "production227",
     "GBC164",
     "saveSRAM"
   ],
-  "supersedes_next": "Immediate NES364 host ABI 3314-to843 implementation before integration/capture cadence proof",
-  "phases": [
-    {
-      "id": "R0_same_implementation",
-      "objective": "Materialize and pin a single candidate; use the same board admission/context/port connections in functional simulation and synthesis.",
-      "required": [
-        "Separate current capture context from display context",
-        "Correct source launch/lifetime and STOP drain ownership",
-        "Exercise actual collector query rather than fixed epoch/current generation injection",
-        "Cold/warm/next-capture-overlap/STOP/final-ACK/epoch-generation rollover guards"
-      ],
-      "exit": "No test-only bypass of source admission; same generated top and complete artifact manifest. No hardware or 60fps claim."
-    },
-    {
-      "id": "R1_sustained_capture_display",
-      "objective": "Prove capture rearm and display deadlines using continuous PPU cadence and actual or justified worst-case ROM demand during both source input and output.",
-      "required": [
-        "Investigate 2.838466ms source input versus at-most 2.340517ms model rearm window",
-        "Continuous frame IDs and capture N+1/output N overlap",
-        "Actual ARM source/hint foreground, IRQ and shared SPI",
-        "Actual 65816 service, DMA/poll/VBlank/final ACK",
-        "First capture rearm case, then heavy7 and 71-frame whole path",
-        "Independent phase sweep and continuous schedule",
-        "Startup versus gameplay cold/STOP recovery policy"
-      ],
-      "metrics": [
-        "capture-to-display latency",
-        "capture start interval and missed capture count",
-        "display period and repeated/dropped frame IDs",
-        "queue backlog",
-        "IRQ/ROM window worst-case margin"
-      ],
-      "exit": "No unexplained missed capture/display deadline or unbounded backlog; benchmark scope and hardware-clock assumptions explicit. Oversized RTL simulation is allowed, hardware claim is not."
-    },
-    {
-      "id": "R2_joint_architecture_gate",
-      "objective": "Choose one broad, justified implementation deletion based on the validated schedule and RAM lifetime.",
-      "required": [
-        "Audit retained11391 and resource-only wrapper versus required product functionality",
-        "Replace actual old bodies rather than add a second engine",
-        "Direct actual ARM serializer and new receiver including every fragment credit/status response",
-        "Independent verification and STOP/final ACK preserved",
-        "Whole Quartus Lite cost on the same implementation"
-      ],
-      "budget": {
-        "device_comb": 15408,
-        "prior_target_with_reserve": 15253,
-        "old_ABI_scope": 3314,
-        "old_arithmetic_cap": 843,
-        "old_required_deletion": 2471,
-        "new_cost": null,
-        "note": "Recompute after capture/port integration. 843 is not a demonstrated feasible design."
-      },
-      "exit": "Same candidate meets sustained timing and whole resource budget. If it fails, reconsider representation/roles/hardware feasibility; do not enter small-FSM/opcode/seed loops."
-    },
-    {
-      "id": "R3_hardware",
-      "objective": "Build and test a matching FPGA/ARM/SNES candidate on the existing board.",
-      "required": [
-        "Whole FIT and STA",
-        "New CDC, external IO and clock review",
-        "Pinned bitstream/firmware/65816 artifacts",
-        "Boot smoke then sustained scroll/audio/input/menu/STOP/save validation",
-        "Actual regional display cadence and frame-ID/drop/repeat measurements"
-      ],
-      "exit": "Measured sustained hardware cadence with recorded worst-case latency and zero unexplained loss/corruption."
-    }
-  ],
-  "execution_policy": {
-    "new_implementation_in_this_review": false,
-    "automatic_merge": false,
-    "quartus": "Lite",
-    "questa": "authorized temporary Starter FLOAT wrapper",
-    "automatic_license_or_hardware_purchase": false
+  "measured": {
+    "canonical_boundary_files": 10,
+    "matching_compiled_shared_modules": 30,
+    "normal_frames": 4,
+    "bounded_continuous_starts": 2,
+    "missed_starts": 0,
+    "session_guards": 22,
+    "raw_lifetime_cases": 3,
+    "input_ROM_requests_replied": 5736,
+    "warm907_ms": 12.155968,
+    "warm908_ms": 20.651275,
+    "warm908_excess_60Hz_ms": 3.9846083333333304,
+    "whole_LE": 22817,
+    "whole_comb": 17776,
+    "whole_FF": 9217,
+    "whole_RAM_bits": 308832,
+    "whole_comb_delta_vs362": 52,
+    "comb_deficit": 2368,
+    "net_deletion_needed_with155reserve": 2523
   },
-  "physical_60fps_proven": false
+  "next_action": "Connect causal hint production on every supported frame to the real ARM source foreground and shared SPI/IRQ, not only907 in TB. Bind full SNES DMA/final display/VBlank service, then extend free-running capture/display to heavy7/71 and phase variation; measure frame IDs/backlog/cold recovery separately. Recompute actual whole deletion boundaries afterward; no small FSM/opcode/seed loop or automatic purchase.",
+  "next_three_deliverables": [
+    "Per-frame causal hint/ARM foreground and declared full input/output ROM workload",
+    "Full SNES display service plus longer continuous/heavy7/71 and phase coverage",
+    "Reconciled whole resource/port/deletion ledger before another architecture candidate"
+  ],
+  "limits": [
+    "905/906 startup frames serialized",
+    "909 capture start only",
+    "synthetic core ROM stress, not live NES CPU trace",
+    "source M4 measured per-block costs, not full firmware IRQ WCET",
+    "ordinary65816 trace replay plus DMA/finalACK bus models",
+    "new whole65816 VBlank integration pending",
+    "BG5OBJ2 hint only907 in current harness",
+    "resource-only board RAM service remains"
+  ],
+  "FIT": false,
+  "STA": false,
+  "physical": false,
+  "sustained60fps": false,
+  "automatic_merge": false,
+  "quartus_policy": "Lite",
+  "questa_policy": "Existing authorized temporary Starter FLOAT workflow"
 },
-  "current_status_scope": "Queue-aware map publication and independent final RAM execution; bounded joint gain, time and capacity still unmet",
+  "current_status_scope": "Common admission repaired, two next-capture deadlines met;908 display time and whole capacity still exceed budget",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
