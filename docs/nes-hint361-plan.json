@@ -1,0 +1,36 @@
+{
+  "stage": 361,
+  "assessment": "NES361 keeps338RTL/355ARM and359 host. Actual shared SPI EA24 hint + CRC16 reuse, private5tag cache port mux and bundled CDC implemented; EA7 retire preserved. Actual M4 hint runs on received firstblock and previous ARM commit RAM:3631 extra instructions/24B, input decoder cost unchanged. Whole schedule warm continuous19.700809ms delta-0.988897, fixed24.070347ms delta-0.981216; separate start phases. 3frames each/independent read-unit-private-publish/final12read/2credit PASS;60 admission/STOP/legacy-retire guards with real cache/arbiter/READ16 PASS. WholeLite22499LE17576comb9093FF308832bits,2168comb short;359host+363comb/+94FF/+1024bits. Whole area gate fails, not selected. Source/transport/host/validator bodies unchanged359; wide joint replacement NOT implemented. Source-host3806->1625 andqueueSPI792->650 caps require2323net deletions to15253. Source ingress/extraIRQ timing replay and TB SPI remain harness; actual M4 hint data dynamically bound, outputARM/IRQ live. No full firmware hint loop/full65816VBlank/FITSTA/physical proof. Selected4.023039ms/1866comb deficits unchanged.",
+  "next_action": "Keep338/355 and359host baseline. Do not tune/add separate hint controller to chase fit. Replace source codec/host byte continuation as one phase-owned host executor, including actual NES row/query CDC, collector cancel/DONE drain and H2 overlapping RAM ownership; remove old bodies before claiming savings. Use measured source-host1625/queueSPI650 whole caps (acceptance limits, not prediction). If architecture cannot meet them, reconsider transfer/role division before implementation. Time critical path now includes first OBJ ROM wait; compare a bounded prior-history BG/OBJ hint selection without future-plan oracle, and measure all extra preparation/IRQ/cache/SPI costs. Preserve independent expected/readCRC/coverage/2credit/STOP/finalACK/VBlank. Firmware foreground hint integration and deadline/fallback remain open; no auto merge.",
+  "deliverables": [
+    "Demonstrate actual deletion of old source+host bodies within1625comb cap with fixed RAM/CDC ownership",
+    "Resolve first OBJ ROM critical path using causally available hint inputs and a bounded fallback",
+    "Actual firmware ingress/IRQ plus full same-phase/continuous wholeLite validation of a structurally qualified candidate"
+  ],
+  "selected_RTL": 338,
+  "selected_ARM": 355,
+  "candidate_selected": false,
+  "whole": {
+    "LE": 22499,
+    "comb": 17576,
+    "FF": 9093,
+    "RAM_bits": 308832
+  },
+  "budget": {
+    "source_host": 3806,
+    "checker": 1250,
+    "queue_SPI": 792,
+    "plan": 459,
+    "rest_including_hint_cache": 11269,
+    "source_host_cap": 1625,
+    "source_host_delete": 2181,
+    "queue_SPI_delete": 142,
+    "total_delete": 2323
+  },
+  "evidence": "analysis/hint361-verification.json",
+  "wide_source_host_replacement": false,
+  "full_firmware_hint_loop": false,
+  "FIT": false,
+  "STA": false,
+  "physical": false
+}

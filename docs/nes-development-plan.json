@@ -4,13 +4,13 @@
   "date_kst": "2026-10-24",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-hint360-contract.ko.md",
-  "assessment": "NES360 keeps338RTL/355ARM and359 host saving. Actual prior-history M4 hint producer905..907,4guards and zero source decode overhead PASS. Incremental16slot preparation with grouped5tags24B costs3631instructions vs2/2/1tags52B4295. Sequential80Bcache/128x8M9K actual arbiter READ16 retention STOP drain epoch PASS. Bounded continuous fill CPI1 1.642753ms/CPI2 1.686389ms; fixedCPI1 5.032076ms. Not full-frame gain. WholeLite22234LE17364comb9005FF308832bits,1956short: host359+151comb,338+90comb. EA admission/CDC/lease/sharedSPI feedback absent. Selected4.023039ms/1866comb deficits unchanged; no simultaneous improvement established.",
-  "next_action": "Retain incremental preparation and grouped5tag wire candidate only. Implement measured EA admission and HINT-to-PLAN ownership without occupying ordinary2slot credit; preserve independent CRC/coverage/input COMMIT, STOP drain/finalACK/VBlank. Replace source codec and host byte/RAM continuation jointly; source-host3805->1839 and queueSPI795->650 are acceptance caps, not predicted savings. Include missing control in caps. Bind actual sharedSPI/ARM IRQ/output schedule only after area and early-window gates; compare same phase separately from continuous. No automatic merge.",
+  "authoritative_document": "docs/nes-hint361-contract.ko.md",
+  "assessment": "NES361 keeps338RTL/355ARM and359 host. Actual shared SPI EA24 hint + CRC16 reuse, private5tag cache port mux and bundled CDC implemented; EA7 retire preserved. Actual M4 hint runs on received firstblock and previous ARM commit RAM:3631 extra instructions/24B, input decoder cost unchanged. Whole schedule warm continuous19.700809ms delta-0.988897, fixed24.070347ms delta-0.981216; separate start phases. 3frames each/independent read-unit-private-publish/final12read/2credit PASS;60 admission/STOP/legacy-retire guards with real cache/arbiter/READ16 PASS. WholeLite22499LE17576comb9093FF308832bits,2168comb short;359host+363comb/+94FF/+1024bits. Whole area gate fails, not selected. Source/transport/host/validator bodies unchanged359; wide joint replacement NOT implemented. Source-host3806->1625 andqueueSPI792->650 caps require2323net deletions to15253. Source ingress/extraIRQ timing replay and TB SPI remain harness; actual M4 hint data dynamically bound, outputARM/IRQ live. No full firmware hint loop/full65816VBlank/FITSTA/physical proof. Selected4.023039ms/1866comb deficits unchanged.",
+  "next_action": "Keep338/355 and359host baseline. Do not tune/add separate hint controller to chase fit. Replace source codec/host byte continuation as one phase-owned host executor, including actual NES row/query CDC, collector cancel/DONE drain and H2 overlapping RAM ownership; remove old bodies before claiming savings. Use measured source-host1625/queueSPI650 whole caps (acceptance limits, not prediction). If architecture cannot meet them, reconsider transfer/role division before implementation. Time critical path now includes first OBJ ROM wait; compare a bounded prior-history BG/OBJ hint selection without future-plan oracle, and measure all extra preparation/IRQ/cache/SPI costs. Preserve independent expected/readCRC/coverage/2credit/STOP/finalACK/VBlank. Firmware foreground hint integration and deadline/fallback remain open; no auto merge.",
   "next_three_deliverables": [
-  "Actual source-host control deletion with fixed dual-clock RAM ownership and source-host1839comb cap",
-  "Bound EA hint CRC/epoch/STOP lease and sharedSPI cost; preserve fallback for unhinted tags",
-  "WholeLite and actual ARM/IRQ/2slot same-phase+continuous comparison including source delay"
+  "Demonstrate actual deletion of old source+host bodies within1625comb cap with fixed RAM/CDC ownership",
+  "Resolve first OBJ ROM critical path using causally available hint inputs and a bounded fallback",
+  "Actual firmware ingress/IRQ plus full same-phase/continuous wholeLite validation of a structurally qualified candidate"
 ],
   "gates": [
     {
@@ -3214,38 +3214,37 @@
     ]
   },
   "active_plan": {
-  "stage": 360,
-  "assessment": "NES360 keeps338RTL/355ARM and359 host saving. Actual prior-history M4 hint producer905..907,4guards and zero source decode overhead PASS. Incremental16slot preparation with grouped5tags24B costs3631instructions vs2/2/1tags52B4295. Sequential80Bcache/128x8M9K actual arbiter READ16 retention STOP drain epoch PASS. Bounded continuous fill CPI1 1.642753ms/CPI2 1.686389ms; fixedCPI1 5.032076ms. Not full-frame gain. WholeLite22234LE17364comb9005FF308832bits,1956short: host359+151comb,338+90comb. EA admission/CDC/lease/sharedSPI feedback absent. Selected4.023039ms/1866comb deficits unchanged; no simultaneous improvement established.",
-  "next_action": "Retain incremental preparation and grouped5tag wire candidate only. Implement measured EA admission and HINT-to-PLAN ownership without occupying ordinary2slot credit; preserve independent CRC/coverage/input COMMIT, STOP drain/finalACK/VBlank. Replace source codec and host byte/RAM continuation jointly; source-host3805->1839 and queueSPI795->650 are acceptance caps, not predicted savings. Include missing control in caps. Bind actual sharedSPI/ARM IRQ/output schedule only after area and early-window gates; compare same phase separately from continuous. No automatic merge.",
+  "stage": 361,
+  "assessment": "NES361 keeps338RTL/355ARM and359 host. Actual shared SPI EA24 hint + CRC16 reuse, private5tag cache port mux and bundled CDC implemented; EA7 retire preserved. Actual M4 hint runs on received firstblock and previous ARM commit RAM:3631 extra instructions/24B, input decoder cost unchanged. Whole schedule warm continuous19.700809ms delta-0.988897, fixed24.070347ms delta-0.981216; separate start phases. 3frames each/independent read-unit-private-publish/final12read/2credit PASS;60 admission/STOP/legacy-retire guards with real cache/arbiter/READ16 PASS. WholeLite22499LE17576comb9093FF308832bits,2168comb short;359host+363comb/+94FF/+1024bits. Whole area gate fails, not selected. Source/transport/host/validator bodies unchanged359; wide joint replacement NOT implemented. Source-host3806->1625 andqueueSPI792->650 caps require2323net deletions to15253. Source ingress/extraIRQ timing replay and TB SPI remain harness; actual M4 hint data dynamically bound, outputARM/IRQ live. No full firmware hint loop/full65816VBlank/FITSTA/physical proof. Selected4.023039ms/1866comb deficits unchanged.",
+  "next_action": "Keep338/355 and359host baseline. Do not tune/add separate hint controller to chase fit. Replace source codec/host byte continuation as one phase-owned host executor, including actual NES row/query CDC, collector cancel/DONE drain and H2 overlapping RAM ownership; remove old bodies before claiming savings. Use measured source-host1625/queueSPI650 whole caps (acceptance limits, not prediction). If architecture cannot meet them, reconsider transfer/role division before implementation. Time critical path now includes first OBJ ROM wait; compare a bounded prior-history BG/OBJ hint selection without future-plan oracle, and measure all extra preparation/IRQ/cache/SPI costs. Preserve independent expected/readCRC/coverage/2credit/STOP/finalACK/VBlank. Firmware foreground hint integration and deadline/fallback remain open; no auto merge.",
   "deliverables": [
-    "Actual source-host control deletion with fixed dual-clock RAM ownership and source-host1839comb cap",
-    "Bound EA hint CRC/epoch/STOP lease and sharedSPI cost; preserve fallback for unhinted tags",
-    "WholeLite and actual ARM/IRQ/2slot same-phase+continuous comparison including source delay"
+    "Demonstrate actual deletion of old source+host bodies within1625comb cap with fixed RAM/CDC ownership",
+    "Resolve first OBJ ROM critical path using causally available hint inputs and a bounded fallback",
+    "Actual firmware ingress/IRQ plus full same-phase/continuous wholeLite validation of a structurally qualified candidate"
   ],
   "selected_RTL": 338,
   "selected_ARM": 355,
   "candidate_selected": false,
-  "evidence": "analysis/hint360-verification.json",
   "whole": {
-    "LE": 22234,
-    "comb": 17364,
-    "FF": 9005,
+    "LE": 22499,
+    "comb": 17576,
+    "FF": 9093,
     "RAM_bits": 308832
   },
   "budget": {
-    "target_comb": 15253,
-    "source_host_current": 3805,
-    "source_host_cap": 1839,
-    "source_host_required_deletion": 1966,
-    "queue_SPI_current": 795,
-    "queue_SPI_cap": 650,
-    "checker_aperture": 1245,
-    "plan": 458,
-    "retained_plus_cache": 11061,
-    "total_required_deletion": 2111,
-    "estimated_achievement": false
+    "source_host": 3806,
+    "checker": 1250,
+    "queue_SPI": 792,
+    "plan": 459,
+    "rest_including_hint_cache": 11269,
+    "source_host_cap": 1625,
+    "source_host_delete": 2181,
+    "queue_SPI_delete": 142,
+    "total_delete": 2323
   },
-  "integrated_EA": false,
+  "evidence": "analysis/hint361-verification.json",
+  "wide_source_host_replacement": false,
+  "full_firmware_hint_loop": false,
   "FIT": false,
   "STA": false,
   "physical": false
