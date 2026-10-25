@@ -1,0 +1,52 @@
+{
+  "stage": 359,
+  "status": "host_local_gain_prefetch_rejected_keep338_355",
+  "selected_RTL": 338,
+  "selected_ARM": 355,
+  "candidate_selected": false,
+  "assessment": "NES359 keeps338RTL/355ARM. Actual84MHz host tap continuation FSM/pos/value removed; independent validator owns read CRC/unit/private RAM continuation, source338 unchanged. Both actualARM355/IRQ/2slot schedules905..907 PASS, same start/ROM phase and wire, warm continuous20.689706/fixed25.051563ms unchanged. WholeLite host22083LE17213comb8999FF307808bits: -61comb/-19FF,1805short candidate; selected1866short/4.023039ms unchanged. ActualM4 prefix17tags71frames+4guards PASS: first tracking+filter23980instructions/.285476ms,packet ready1.743677ms misses previousROMwindow1.727707 beforeSPI.48Brequest+CS .154286ms and272ROMbyte floor.148364ms exceed .269505ms available even with freeARM for packet-then-fill. Bounded actual272Bcache/arbiter/READ16+TB SPI/portdriver,retention/STOPdrain/epoch PASS: fixedfill5.138393ms vscontinuous17.019978ms,NOTwholeframe improvement. Physical512x8M9K cache capacity whole22982LE18254comb9353FF311904bits,host+1041comb/+354FF/+4096bits,2846short;EA dispatcher/CDC/prefetch lease notincluded. Host STOP private/rawCRC+wrongtoken3cases,aperture/final8checks PASS. No full jointEA integration/fullRUN/full65816/VBlank/FITSTA/physical proof. Reject17tag packet-then-fill candidate; retain host reduction as separate verified candidate.",
+  "next_action": "Keep338RTL/355ARM baseline and359 host read-sharing evidence. Replace remaining host/source row/address/port ownership controls with actual deletions; host-only needs1960 furthercomb reduction to15253 target. Do not add17-way associative cache or reuse fixed-phase gain as continuous benefit. Compare a provable smaller first-BG working set (actualfinal5tags is an oracle,not permission) with incremental ARM collection and bounded sequential cache lookup;5tags24B request+80BROM floor.124779ms leaves.144726ms forARM/IRQ/control under same prefix. Alternatively stream validated tag hints while ROM fills,with private cache validity until packetCRC/inputCOMMIT and actualcollector cancellation/STOPdrain;do not apply serial lower bound to overlappedSPI/ROM. Charge EA dispatch/CDC/lease/cache RAM and RAM lookup latency,source-host2035/queueSPI650 caps; preserve independent expected/readCRC/coverage,2credit,STOP,finalACK,VBlank. Whole joint model only after measured deadline/area gates;no automatic merge.",
+  "deliverables": [
+    "Replace remaining source/host controls within whole15253comb target using retained359 read sharing",
+    "Measure actual incremental smaller-tag or streaming hint producer with complete SPI/lease/cache storage budget",
+    "Bind only a deadline-qualified candidate to real ARM/IRQ/2slot samephase+continuous schedule and wholeLite"
+  ],
+  "evidence": "analysis/prefetch359-verification.json",
+  "host_whole": {
+    "LE": 22083,
+    "comb": 17213,
+    "FF": 8999,
+    "RAM_bits": 307808
+  },
+  "host_comb_deficit": 1805,
+  "cache_capacity_whole": {
+    "LE": 22982,
+    "comb": 18254,
+    "FF": 9353,
+    "RAM_bits": 311904
+  },
+  "ARM_budget": {
+    "prefix_ms": 1.4582011904761905,
+    "window_end_upper_ms": 1.72770654,
+    "available_ms": 0.26950534952380956,
+    "ARM_extra_instructions": 23980,
+    "ARM_extra_CPI1_ms": 0.2854761904761905,
+    "packet_ready_ms": 1.743677380952381,
+    "packet_late_before_SPI_ms": 0.015970840952380883,
+    "SPI_48B_plus_CS_ms": 0.15428571428571428,
+    "ROM_272B_12clock_floor_ms": 0.14836363636363636,
+    "packet_then_fill_zero_ARM_lower_bound_ms": 0.3026493506493506,
+    "zero_ARM_over_budget_ms": 0.033144001125541056,
+    "warm_total_extra_decode_instructions": 12085,
+    "warm_total_filter_instructions": 18459,
+    "ARM_text_delta": 800,
+    "ARM_BSS_delta": 104,
+    "ARM_observed_stack_delta": 8,
+    "full_firmware_bound": false,
+    "condition": "Packet CRC complete before cache fill. Streaming SPI/ROM overlap is not ruled out by the serial lower bound; current actual ARM misses the window before any SPI regardless."
+  },
+  "integrated_EA_prefetch": false,
+  "FIT": false,
+  "STA": false,
+  "physical": false
+}
