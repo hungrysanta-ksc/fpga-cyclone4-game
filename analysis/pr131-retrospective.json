@@ -1,0 +1,172 @@
+{
+  "scope": "PR131 retrospective: recompute archived costs and audit integration boundaries.\n\nNo new performance, synthesis, firmware or hardware run. The separate join\nprobe reproduces two admission failures using unchanged source/lease modules.\n",
+  "implementation_head": "6674e57c68695b67b02ee36b57fd6868ae2f9831",
+  "base_master": "d7a96c5652d7c511d061ae5035277027c14ec597",
+  "whole_MAP": {
+    "298": {
+      "LE": 22583,
+      "comb": 17683,
+      "FF": 9022,
+      "RAM_bits": 307808
+    },
+    "338": {
+      "LE": 22144,
+      "comb": 17274,
+      "FF": 9018,
+      "RAM_bits": 307808
+    },
+    "359": {
+      "LE": 22083,
+      "comb": 17213,
+      "FF": 8999,
+      "RAM_bits": 307808
+    },
+    "362": {
+      "LE": 22733,
+      "comb": 17724,
+      "FF": 9179,
+      "RAM_bits": 308832
+    }
+  },
+  "whole_delta_vs_PR130": {
+    "298": {
+      "LE": 0,
+      "comb": 0,
+      "FF": 0,
+      "RAM_bits": 0
+    },
+    "338": {
+      "LE": -439,
+      "comb": -409,
+      "FF": -4,
+      "RAM_bits": 0
+    },
+    "359": {
+      "LE": -500,
+      "comb": -470,
+      "FF": -23,
+      "RAM_bits": 0
+    },
+    "362": {
+      "LE": 150,
+      "comb": 41,
+      "FF": 157,
+      "RAM_bits": 1024
+    }
+  },
+  "comb_device_limit": 15408,
+  "comb_deficits": {
+    "298": 2275,
+    "338": 1866,
+    "359": 1805,
+    "362": 2316
+  },
+  "best_area_initial_shortage_recovered_percent": 20.659340659340657,
+  "retained_local_deletions": {
+    "336_read_event_comb": -271,
+    "338_aligned_queue_comb": -104,
+    "359_host_comb": -61
+  },
+  "normal_ARM_series": {
+    "before_ms": 13.41006635,
+    "after_ms": 12.007265002,
+    "delta_ms": -1.4028013479999988,
+    "scope": "Recorded normal-service series, not PR-wide matched phase or restricted-ROM WCET."
+  },
+  "prefetch_comparisons": {
+    "keepfixed01": {
+      "before_ms": 25.051563,
+      "after_ms": 12.157717,
+      "delta_ms": -12.893846000000002,
+      "same_source_start_ROM_phase": true,
+      "before_ROM_cycle": 7368026,
+      "after_ROM_cycle": 7368026
+    },
+    "keepwindow01": {
+      "before_ms": 20.689706,
+      "after_ms": 12.156081,
+      "delta_ms": -8.533625,
+      "same_source_start_ROM_phase": false,
+      "before_ROM_cycle": 5677152,
+      "after_ROM_cycle": 5677489
+    }
+  },
+  "fast_hint_window_margin_us": 29.361181818181812,
+  "capture_deadline_audit": {
+    "keepwindow01": {
+      "total_ms": 12.156081,
+      "source_input_ms": 2.838466,
+      "next_capture_upper_clocks": 51492,
+      "next_capture_upper_ms": 2.3405173680000004,
+      "input_over_upper_ms": 0.4979486319999995,
+      "source_start_ROM_cycle": 5677489
+    },
+    "keepfixed01": {
+      "total_ms": 12.157717,
+      "source_input_ms": 2.838466,
+      "next_capture_upper_clocks": 51492,
+      "next_capture_upper_ms": 2.3405173680000004,
+      "input_over_upper_ms": 0.4979486319999995,
+      "source_start_ROM_cycle": 7368026
+    }
+  },
+  "capture_deadline_scope": "Conditional audit of existing 262-line / four-NES-clock-per-dot fixture. No free-running collector simulation; source input excludes capture and post-capture wait. Actual hardware phase/cadence must be bound. Does not assert hardware FPS or add fixture capture time to latency.",
+  "board_join_probe": {
+    "passed": true,
+    "cases": 3,
+    "reproduced_failures": [
+      "start allowed without a captured frame",
+      "first valid capture passes stale zero display epoch/generation to source"
+    ],
+    "scope": "Retrospective reproducer for the MAP wrapper's source/lease admission join.\n\nActual unmodified lease and source core, exact wrapper expressions. This is a\nbounded join test, not full board/collector/firmware simulation or a product fix.\n",
+    "control": "Live capture epoch/generation plus captured-frame gate admits source; not a complete repair"
+  },
+  "untested_integration": [
+    "MAP resource wrapper source context differs from functional TB",
+    "core_req267 is zero during critical input-stage hint fill",
+    "next collector frame is driven only after preceding output_frame returns",
+    "full firmware hint foreground loop and full 65816 service are unbound",
+    "no selected candidate whole FIT/STA/physical run"
+  ],
+  "ABI364": {
+    "required_deletion_comb": 2471,
+    "replace_total_comb": 3314,
+    "deletion_fraction_percent": 74.56246228123115,
+    "remaining_cap_comb": 843,
+    "actual_deleted_comb": 0,
+    "new_measured_cost": null,
+    "status": "Arithmetic allowance, not an achievable implementation demonstrated by this PR."
+  },
+  "conclusion": "Keep proven component gains. Integration and sustained-capture deadline gates precede further ABI/control optimization.",
+  "new_performance_run": false,
+  "new_MAP": false,
+  "FIT": false,
+  "STA": false,
+  "physical": false,
+  "pins": {
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\repository-nes-milestone\\analysis\\pr130-retrospective.json": "51ad6eb96835a1a68893bf9fda46423aae3eb89c533e44bad8b764d209d0df53",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\repository-nes-milestone\\analysis\\ingress338-verification.json": "9c6b3918d88a0e14737864a606858328ba5c7e1defd8af88a5f747ee5cf91913",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\repository-nes-milestone\\analysis\\raw352-verification.json": "42fb04c5ad50bb1233c13165625b5923c3a2b9e0679e613ae9d71d8abb038550",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\repository-nes-milestone\\analysis\\raster355-verification.json": "070574baa25c6a2093c58349219146c3588755bf059ceb85cdcc5364257f4c54",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\repository-nes-milestone\\analysis\\prefetch359-verification.json": "a8a3b3ab2add49dec5cac9fedae3217f79c9e03e83ec745c12e71150ef1d73cc",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\repository-nes-milestone\\analysis\\execute362-verification.json": "75dce00db27d47eaa3792fed0c24a6c1b4973ca07b2a6d42754df47b354b83b5",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\repository-nes-milestone\\analysis\\abi364-verification.json": "df5606250ad57ef1628fc076001f4af5cbe2c0880546baedf6e6cf692ca10070",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\repository-nes-milestone\\analysis\\read336-verification.json": "3d4b4cda898fa30fafc0bf1e287b6de350be39701eb26c5fd3f2c4b3854e61aa",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-pr131-review\\join02\\result.json": "60dd8c495774379c33e2bc6efc7f3a55a81f910cccf5245016a502ebab57d94c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-execute362\\objmap01\\nes_core257.sv": "bb5db8b66bca105d9b534313f991555e9b24d9248794225d17d2054bb4837ee2",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-execute362\\objmap01\\nes_capture_lease201.sv": "c3f95b8e7b56afbe65e3484e1006d4fc2c54b6e47407bf32124d8ae461fb7f61",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-execute362\\objmap01\\nes_live_joint.sv": "67708d6e062740183007ae0e80369c0852eda2dc72cb7508fb79f3e79f967f67",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-execute362\\objmap01\\nes_native_frame201.sv": "2c3fd46c4c4f1e3be6619da71abafe8d56d85b5273067f5d70f74783cb0bf64c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-execute362\\objmap01\\nes_joint266.sv": "48a151dd344f3e63ab28f61a0ee28d22593f15596482c29bf9454100024423bd",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-execute362\\objmap01\\board.qsf": "9bf3bc5243148490dd33309501416c7fe11444084f4a218ada1122041db0050a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-pr131-review\\join02\\case0.log": "95794d7b9f01fbabb359c61be42f44f36d9d090255598bdab2375ac3a383fa44",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-pr131-review\\join02\\case1.log": "3889be17992fff09a3aae29c562847ef414a4972583c54e81d77140a0a22ba78",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-pr131-review\\join02\\case2.log": "9bed0122d252bce9a57ae31156bb2f969108008b44b5aab9656235e701f8a8a8",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\repository-nes-milestone\\tools\\probe_nes_pr131_join.py": "796f190cf3fbc5bd5e0eb809c98416acf75949400af6de5b1dff32069977f6ff",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-execute362\\objmap01\\nes_native_planes165.sv": "5ffb80c410948eff320e94ed2676a73c04780a46cbfb53e3acda181d316a999a",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-execute362\\keepwindow01\\joint266_tb.sv": "58df809a1a1c2885003af111202faa9fe52d691130808bea377b8206ceb4ac8c",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-execute362\\keepwindow01\\joint-events.csv": "cf8ec4dd456e939c7509fc6f8ae674946fbf9529c80d8f2429137d68fafc68e7",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-execute362\\keepfixed01\\joint266_tb.sv": "cba65579653d7e9b43ebe1b0dc0f3ad757c70ece17d3dd25d4db590d4b546b7e",
+    "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-execute362\\keepfixed01\\joint-events.csv": "20da6a659f4c4b7d5d7ebaa84422088ded061d28bb2c17b83db3bc6ff9e2a7dc"
+  }
+}

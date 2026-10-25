@@ -1,0 +1,38 @@
+{
+  "status": "proposed_after_retrospective",
+  "date_kst": "2026-10-25",
+  "review": "docs/nes-pr131-retrospective.ko.md",
+  "implementation_head": "6674e57c68695b67b02ee36b57fd6868ae2f9831",
+  "preserve": ["source338", "ARM355", "host359", "BG5_OBJ2 as conditional prefetch evidence", "independent expected/actual verification", "MASK/SHIFT and output compression", "2slot storage credit separate from consumption", "STOP drain and post-STOP DONE suppression", "final ACK and VBlank", "production227", "GBC164", "saveSRAM"],
+  "supersedes_next": "Immediate NES364 host ABI 3314-to843 implementation before integration/capture cadence proof",
+  "phases": [
+    {
+      "id": "R0_same_implementation",
+      "objective": "Materialize and pin a single candidate; use the same board admission/context/port connections in functional simulation and synthesis.",
+      "required": ["Separate current capture context from display context", "Correct source launch/lifetime and STOP drain ownership", "Exercise actual collector query rather than fixed epoch/current generation injection", "Cold/warm/next-capture-overlap/STOP/final-ACK/epoch-generation rollover guards"],
+      "exit": "No test-only bypass of source admission; same generated top and complete artifact manifest. No hardware or 60fps claim."
+    },
+    {
+      "id": "R1_sustained_capture_display",
+      "objective": "Prove capture rearm and display deadlines using continuous PPU cadence and actual or justified worst-case ROM demand during both source input and output.",
+      "required": ["Investigate 2.838466ms source input versus at-most 2.340517ms model rearm window", "Continuous frame IDs and capture N+1/output N overlap", "Actual ARM source/hint foreground, IRQ and shared SPI", "Actual 65816 service, DMA/poll/VBlank/final ACK", "First capture rearm case, then heavy7 and 71-frame whole path", "Independent phase sweep and continuous schedule", "Startup versus gameplay cold/STOP recovery policy"],
+      "metrics": ["capture-to-display latency", "capture start interval and missed capture count", "display period and repeated/dropped frame IDs", "queue backlog", "IRQ/ROM window worst-case margin"],
+      "exit": "No unexplained missed capture/display deadline or unbounded backlog; benchmark scope and hardware-clock assumptions explicit. Oversized RTL simulation is allowed, hardware claim is not."
+    },
+    {
+      "id": "R2_joint_architecture_gate",
+      "objective": "Choose one broad, justified implementation deletion based on the validated schedule and RAM lifetime.",
+      "required": ["Audit retained11391 and resource-only wrapper versus required product functionality", "Replace actual old bodies rather than add a second engine", "Direct actual ARM serializer and new receiver including every fragment credit/status response", "Independent verification and STOP/final ACK preserved", "Whole Quartus Lite cost on the same implementation"],
+      "budget": {"device_comb": 15408, "prior_target_with_reserve": 15253, "old_ABI_scope": 3314, "old_arithmetic_cap": 843, "old_required_deletion": 2471, "new_cost": null, "note": "Recompute after capture/port integration. 843 is not a demonstrated feasible design."},
+      "exit": "Same candidate meets sustained timing and whole resource budget. If it fails, reconsider representation/roles/hardware feasibility; do not enter small-FSM/opcode/seed loops."
+    },
+    {
+      "id": "R3_hardware",
+      "objective": "Build and test a matching FPGA/ARM/SNES candidate on the existing board.",
+      "required": ["Whole FIT and STA", "New CDC, external IO and clock review", "Pinned bitstream/firmware/65816 artifacts", "Boot smoke then sustained scroll/audio/input/menu/STOP/save validation", "Actual regional display cadence and frame-ID/drop/repeat measurements"],
+      "exit": "Measured sustained hardware cadence with recorded worst-case latency and zero unexplained loss/corruption."
+    }
+  ],
+  "execution_policy": {"new_implementation_in_this_review": false, "automatic_merge": false, "quartus": "Lite", "questa": "authorized temporary Starter FLOAT wrapper", "automatic_license_or_hardware_purchase": false},
+  "physical_60fps_proven": false
+}
