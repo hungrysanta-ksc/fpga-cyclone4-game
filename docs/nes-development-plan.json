@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-25",
-  "technical_candidate": "NES366 canonical capture/source/plan candidate; whole Lite over device, not production",
+  "technical_candidate": "NES367 actual ARM source/hint measured; continuous capture and whole capacity fail, not production",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-capture365-contract.ko.md",
-  "assessment": "NES365-366 after verified PR131 merge9141389. Canonical10files and30compiled shared modules match functional/wholeLite. Actual collector capture epoch/generation drives automatic one-shot source start; admitted context frozen until finalACK+drained plan retire. Materialized source releases collector before ARMinputACK, no newRAM/copy. Actual908 overlaps907output and909begin:2/2starts,0miss versus3651miss. Readrelease9071.711980ms/inputACK2.838444/nextcapture2.340269 =>.628289margin;908margin1.763276ms. Input ROM stress5736requests/replies;22session guards+actualcore raw0/1/2 lifetime PASS. Ownership error remains latched after cancellation. Warm90712.155968ms unchanged paired365;actual90820.651275ms(3.984608over60Hz),no newhint908;907-only causalBG5OBJ2 is not per-frameforeground. WholeLite22817LE17776comb9217FF308832bits,+52comb/+38FF/0RAM vs362;2368combshort/2523deletion incl155reserve. Source ARM measured per-block costs/outputM4live+IRQ+2slots/ordinary65816trace;finalDMA/display busmodels,fullVBlank CPU/liveNESROM/WCET/heavy7/71/FITSTA/physicalOPEN.",
-  "next_action": "Connect causal hint production on every supported frame to the real ARM source foreground and shared SPI/IRQ, not only907 in TB. Bind full SNES DMA/final display/VBlank service, then extend free-running capture/display to heavy7/71 and phase variation; measure frame IDs/backlog/cold recovery separately. Recompute actual whole deletion boundaries afterward; no small FSM/opcode/seed loop or automatic purchase. Keep corrected common capture/source boundary; do not restore manual test-only admission or release collector at inputACK. No automatic merge.",
+  "authoritative_document": "docs/nes-hint367-contract.ko.md",
+  "assessment": "NES367 actual M4 source_receive+causal hint+output planner share one ELF and SPI/EXTI. CRC-checked current geometry wins, prior displayed-bank BG/OBJ is fallback; 28B EA and seven-entry cache retained. 908 same-RTL/start/ROM phase hint-only 20.650139->13.117365ms (-7.532774ms). Warm90921.458584ms (4.791917over60Hz),hint misses required0216;collector58.248uslate. Actual905..909 drain;908/909 capture starts admitted but910 rejected:2/3,1miss. Final local BLOCKEND handoff raw0/1/2+256clock blocked-tail PASS;source queries still exceed910 deadline. WholeLite 22803LE/17762comb/9218FF/308832bits;delta366 -14LE/-14comb/1FF/0RAM;2354comb over,net2509 with155reserve. ARM text33618/BSS48476,delta+1604text/+1056BSS;observed stack1288. 28hint guards/9source IO cases/11pin modes/68EA STOP guards and inherited22session cases;source to board11canonical files/30shared modules. No sustained60fps approval: failed cadence retained; actual C instructions with bounded IRQ/CPI adapter,ordinary65816 trace+DMA/finalACK busmodels,fullVBlank CPU/liveNES/WCET/FITSTA/physical stillOPEN.",
+  "next_action": "909의0216 BG tag가 실제 plan에는 필요하지만 hint에서 빠진 원인과 후반 cache miss를 먼저 분리한다. 58.248us collector 해제 부족과4.791917ms 표시 초과를 각각 줄이는 공급·준비 예산을 잡는다.909 입력의 실제 저장 완료·credit 반환과 ARM decode/hint를 분리할 범위 및 RAM 포트·바이트 예산을 먼저 확정한다. 기존 D4의 다음 요청에서만 pop하는 경로, ARM SPI DMA/수신 보관의 중첩 후보를 전체 비용으로 비교한다. 캡처 기한을 늦추거나 실패를 승인하지 않는다. 독립 검사·STOP·최종 ACK·VBlank를 유지하고, 연속/heavy7/71 및 실제65816 표시 서비스 통과 뒤에만 전체 Lite FIT/STA/실물 단계로 간다. 새 opcode/부분 FSM/seed/FIT 반복을 먼저 시작하지 않는다.",
   "next_three_deliverables": [
-  "Per-frame causal hint/ARM foreground and declared full input/output ROM workload",
-  "Full SNES display service plus longer continuous/heavy7/71 and phase coverage",
-  "Reconciled whole resource/port/deletion ledger before another architecture candidate"
+  "909 source handoff deadline: storage credit/decode/hint/SPI overlap and explicit port/buffer budget",
+  "Actual SNES full DMA/final display/VBlank service and sustained heavy7/71/phase coverage",
+  "Reconciled whole deletion ledger and matching hardware build before FIT/STA"
 ],
   "gates": [
     {
@@ -3214,71 +3214,105 @@
     ]
   },
   "active_plan": {
-  "stage": "365-366",
+  "stage": 367,
   "date_kst": "2026-10-25",
-  "merged_PR131": "914138969246387162bf2c909159824e72a3666d",
   "branch": "codex/nes-capture-admission-365",
-  "contract": "docs/nes-capture365-contract.ko.md",
-  "evidence": "analysis/capture365-verification.json",
+  "contract": "docs/nes-hint367-contract.ko.md",
+  "evidence": "analysis/hint367-verification.json",
   "selected": {
-    "run": "early03",
-    "MAP": "map03",
-    "controller_guards": "guards04",
-    "raw_lifetime_guards": "rawguards02",
-    "EARLY_RELEASE": 1
+    "component": "Per-frame source foreground and causal hint measured; continuous candidate not selected",
+    "diagnostic": "long02",
+    "strict": "long01/long03",
+    "control": "control01",
+    "MAP": "map02"
   },
-  "R0": "Implemented and bounded verified: same canonical source/lease/host/plan RTL and corrected admission; actual collector query data, automatic source start, stable admitted context.",
-  "R1": "Partially verified: real908 overlaps907 output,909 start admitted; two starts without misses.908 processing still20.651275ms. Not sustained71/heavy7/fullfirmware/full65816.",
-  "R2": "Pending validated whole schedule and a new inclusive deletion ledger. Old843cap is historical arithmetic, not current feasible implementation.",
-  "R3": "Pending whole FIT/STA/CDC/IO and matching hardware build.",
+  "R0": "Same functional/whole canonical boundary and actual M4 source foreground implemented.",
+  "R1": "Failed continuous capture gate:910 rejected.905..909 drained in diagnostic,not five successful consecutive captures.",
+  "R2": "Whole capacity gate fails; explicit further deletion budget retained.",
+  "R3": "Full65816 VBlank/whole FIT/STA/physical pending.",
+  "assessment": "NES367 actual M4 source_receive+causal hint+output planner share one ELF and SPI/EXTI. CRC-checked current geometry wins, prior displayed-bank BG/OBJ is fallback; 28B EA and seven-entry cache retained. 908 same-RTL/start/ROM phase hint-only 20.650139->13.117365ms (-7.532774ms). Warm90921.458584ms (4.791917over60Hz),hint misses required0216;collector58.248uslate. Actual905..909 drain;908/909 capture starts admitted but910 rejected:2/3,1miss. Final local BLOCKEND handoff raw0/1/2+256clock blocked-tail PASS;source queries still exceed910 deadline. WholeLite 22803LE/17762comb/9218FF/308832bits;delta366 -14LE/-14comb/1FF/0RAM;2354comb over,net2509 with155reserve. ARM text33618/BSS48476,delta+1604text/+1056BSS;observed stack1288. 28hint guards/9source IO cases/11pin modes/68EA STOP guards and inherited22session cases;source to board11canonical files/30shared modules. No sustained60fps approval: failed cadence retained; actual C instructions with bounded IRQ/CPI adapter,ordinary65816 trace+DMA/finalACK busmodels,fullVBlank CPU/liveNES/WCET/FITSTA/physical stillOPEN.",
   "preserve": [
-    "source338/ARM355/host359 semantics",
-    "MASK/SHIFT and compressed transport",
-    "causal BG5/OBJ2 evidence",
-    "independent expected/actual CRC and coverage",
-    "2slot storage credit separate from consumed completion",
-    "STOP and post-STOP DONE rejection",
-    "final exact-read/token ACK",
+    "MASK/SHIFT compressed source",
+    "CRC-checked causal producer",
+    "independent expected/read CRC and coverage",
+    "2slot storage vs consumed completion",
+    "STOP/cancel/drain and no DONE after STOP",
+    "final exact12read/token ACK",
     "unchanged SNES VBlank firmware",
     "production227",
     "GBC164",
     "saveSRAM"
   ],
   "measured": {
-    "canonical_boundary_files": 10,
-    "matching_compiled_shared_modules": 30,
-    "normal_frames": 4,
-    "bounded_continuous_starts": 2,
-    "missed_starts": 0,
-    "session_guards": 22,
-    "raw_lifetime_cases": 3,
-    "input_ROM_requests_replied": 5736,
-    "warm907_ms": 12.155968,
-    "warm908_ms": 20.651275,
-    "warm908_excess_60Hz_ms": 3.9846083333333304,
-    "whole_LE": 22817,
-    "whole_comb": 17776,
-    "whole_FF": 9217,
-    "whole_RAM_bits": 308832,
-    "whole_comb_delta_vs362": 52,
-    "comb_deficit": 2368,
-    "net_deletion_needed_with155reserve": 2523
+    "hint_only_908": {
+      "frame": 908,
+      "candidate_ms": 13.117365,
+      "control_ms": 20.650139,
+      "delta_ms": -7.532774,
+      "same_RTL_start_and_ROM_phase": true
+    },
+    "whole_MAP": {
+      "before": {
+        "LE": 22817,
+        "comb": 17776,
+        "FF": 9217,
+        "RAM_bits": 308832
+      },
+      "after": {
+        "LE": 22803,
+        "comb": 17762,
+        "FF": 9218,
+        "RAM_bits": 308832
+      },
+      "delta": {
+        "LE": -14,
+        "comb": -14,
+        "FF": 1,
+        "RAM_bits": 0
+      }
+    },
+    "ARM_size": {
+      "before": {
+        "text": 32014,
+        "data": 0,
+        "BSS": 47420
+      },
+      "after": {
+        "text": 33618,
+        "data": 4,
+        "BSS": 48476
+      },
+      "delta": {
+        "text": 1604,
+        "data": 4,
+        "BSS": 1056
+      }
+    },
+    "completed_frames": 5,
+    "source_frames_in_continuous_phase": 3,
+    "attempted_next_captures": 3,
+    "admitted": 2,
+    "missed": 1,
+    "missed_frame": 910,
+    "continuous_capture_passed": false,
+    "comb_deficit": 2354,
+    "deletion_needed_with155reserve": 2509
   },
-  "next_action": "Connect causal hint production on every supported frame to the real ARM source foreground and shared SPI/IRQ, not only907 in TB. Bind full SNES DMA/final display/VBlank service, then extend free-running capture/display to heavy7/71 and phase variation; measure frame IDs/backlog/cold recovery separately. Recompute actual whole deletion boundaries afterward; no small FSM/opcode/seed loop or automatic purchase.",
+  "next_action": "909의0216 BG tag가 실제 plan에는 필요하지만 hint에서 빠진 원인과 후반 cache miss를 먼저 분리한다. 58.248us collector 해제 부족과4.791917ms 표시 초과를 각각 줄이는 공급·준비 예산을 잡는다.909 입력의 실제 저장 완료·credit 반환과 ARM decode/hint를 분리할 범위 및 RAM 포트·바이트 예산을 먼저 확정한다. 기존 D4의 다음 요청에서만 pop하는 경로, ARM SPI DMA/수신 보관의 중첩 후보를 전체 비용으로 비교한다. 캡처 기한을 늦추거나 실패를 승인하지 않는다. 독립 검사·STOP·최종 ACK·VBlank를 유지하고, 연속/heavy7/71 및 실제65816 표시 서비스 통과 뒤에만 전체 Lite FIT/STA/실물 단계로 간다. 새 opcode/부분 FSM/seed/FIT 반복을 먼저 시작하지 않는다.",
   "next_three_deliverables": [
-    "Per-frame causal hint/ARM foreground and declared full input/output ROM workload",
-    "Full SNES display service plus longer continuous/heavy7/71 and phase coverage",
-    "Reconciled whole resource/port/deletion ledger before another architecture candidate"
+    "909 source handoff deadline: storage credit/decode/hint/SPI overlap and explicit port/buffer budget",
+    "Actual SNES full DMA/final display/VBlank service and sustained heavy7/71/phase coverage",
+    "Reconciled whole deletion ledger and matching hardware build before FIT/STA"
   ],
   "limits": [
-    "905/906 startup frames serialized",
-    "909 capture start only",
-    "synthetic core ROM stress, not live NES CPU trace",
-    "source M4 measured per-block costs, not full firmware IRQ WCET",
-    "ordinary65816 trace replay plus DMA/finalACK bus models",
-    "new whole65816 VBlank integration pending",
-    "BG5OBJ2 hint only907 in current harness",
-    "resource-only board RAM service remains"
+    "Compiled SysTick/EXTI bodies plus allocated 24 entry/exit cycles; bounded peripheral adapter, not hardware WCET.",
+    "Declared ready-gated period120 NES-clock stress at001234 during both input/output; real physical-reader arbitration, not live NES CPU.",
+    "Existing ordinary65816 bus traces; DMA/final display remain bus models. Unchanged VBlank firmware is not a new full65816 proof.",
+    "905/906 serialized startup",
+    "fixture period357368NES clocks at45.454ns; not physical console cadence",
+    "no fullfirmware RUN/SPI DMA hardware WCET",
+    "source cancel requires existing drained session recovery; no automatic input token wrap",
+    "whole MAP delta is not explicit body deletion or FIT recovery"
   ],
   "FIT": false,
   "STA": false,
@@ -3286,9 +3320,9 @@
   "sustained60fps": false,
   "automatic_merge": false,
   "quartus_policy": "Lite",
-  "questa_policy": "Existing authorized temporary Starter FLOAT workflow"
+  "questa_policy": "authorized temporary FLOAT wrapper"
 },
-  "current_status_scope": "Common admission repaired, two next-capture deadlines met;908 display time and whole capacity still exceed budget",
+  "current_status_scope": "908 ROM wait improved;910 capture rejected in strict and drained diagnostic;2354comb over;no60fps approval",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",
