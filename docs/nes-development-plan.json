@@ -4,13 +4,13 @@
   "date_kst": "2026-10-24",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-arch357-contract.ko.md",
-  "assessment": "NES357 architecture review keeps338 RTL/355 ARM. A NES22MHz common executor vs B host84MHz row supply; neither selected. Whole338 Lite17274comb/1866short unchanged; target15253 requires2021 net deletion including CDC/cancel. Mandatory warm source floor2.201190ms exceeds continuous previous ROM window end upper1.727707ms: full-input-before-first-plan contract cannot recover earlier window even with zero output preparation. B source saving at most.489323ms, fixed-phase additional ARM need.383894ms/32248instructions; A unchanged-source fixed-phase need.873217ms. A final-check clock slowdown62.268..65.623us must be charged. B132B two-row scratch reuse requires fixed NES A/host B ports and H2 phase drain. Collector cancellation-applied ACK and destination DONE gate mandatory;356 failures remain. Abstract40320 orderings PASS,97pins;NOnewRTL/ARM/MAP/FITSTA/physical60fps.",
-  "next_action": "Keep338RTL/355ARM. First test actual A NES6cycle read/CRC/RAM completion and dual-clock2slot storage/retire/consume with collector cancel-applied ACK and both-end STOP/DONE gates. Measure firstBG dependency availability for validated-prefix speculative ROM prefetch or interframe lease scheduling; prefetch is not display/DMA permission. Compare B fixed-port row codec with all new microstep/credit/drain costs. Only if boundaries fit2035source-host/650queue-SPI caps, delete old execution controls and run paired same-phase/continuous actualARM/IRQ/SPI/2slot schedule plus wholeLite MAP. Retain independent expected/coverage,STOP,finalACK,VBlank;no automatic merge.",
+  "authoritative_document": "docs/nes-exec358-contract.ko.md",
+  "assessment": "NES358 keeps338RTL/355ARM. Actual338 extracted tap+independent validator22MHz: map4/OAM6/scroll8/raw-final10cycles;6cycle gate FAIL,12STOP offsets PASS. Separate rejected356 host-clock diagnostic gains actual collector cancellation-applied ACK and producer/destination DONE gates;actual WAIT/response/handoff STOP3guards plus aperture/final8regressions PASS. WholeLite22116LE17277comb9075FF307808bits:vs338 -28LE/+3comb/+57FF/0RAM,1869short;notNES common executor cost. Warm diagnostic continuous20.689706/fixed25.051563ms;selected4.023039ms/1866combshort unchanged. ActualM4 prefix1.458201ms vsfullgeometry2.656427;previousROMwindowend1.727707 gives.269505ms. One16Bcache insufficient;actualBG5tags,first8rowspool5matches0,all82tags wirefloor.500ms,changedsemanticprefix17tags includes5 but272B+metadata/cache ports/ARM/SPI/ROM cost unmeasured. No earlyROM implementation/fullRUN/full65816/VBlank/STA/physical proof.",
+  "next_action": "Keep338RTL/355ARM. Reject clock-only NES executor migration: raw-last10cycles cannot meet6. Prioritize actual B fixed NES row producer/host84MHz common RAM executor removing source-host control within2035cap plusqueueSPI650;actual collector cancel ACK/DONE gate is required but diagnostic356 not selected. In parallel measure real ARM changed exception/raster prefix filter, bounded17tag speculative rawCHR prefetch storage272B+tags/ports and overlappedSPI/ROM withcollector lease/STOP drain,not E9/display permission. Only justified replacement gets pairedsamephase/continuous schedules andwholeLite;independentexpected/CRCcoverage/finalACK/VBlank retained,noautomaticmerge.",
   "next_three_deliverables": [
-  "Actual NES clock read/queue/cancel/DONE boundary within six-cycle read budget; B fixed-port row comparison",
-  "First BG dependency timing and safe pre-input-completion ROM prefetch/interframe schedule contract",
-  "Justified whole control replacement with paired schedule and wholeLite cost, all additions inside budgets"
+  "Host84MHz row common execution boundary with actual old-control deletion and fixed RAM ownership",
+  "Actual ARM prefix filter plus bounded speculative ROM/cache ownership/STOP, all storage and SPI costs charged",
+  "Paired samephase/continuous actualARM/IRQ/2slot schedule and wholeLite only for justified integrated replacement"
 ],
   "gates": [
     {
@@ -3214,65 +3214,41 @@
     ]
   },
   "active_plan": {
-  "stage": 357,
-  "status": "architecture_budget_only_keep338_355",
+  "stage": 358,
+  "status": "NES_six_cycle_gate_failed_keep338_355",
   "selected_RTL": 338,
   "selected_ARM": 355,
-  "implementation_selected": false,
-  "assessment": "NES357 architecture review keeps338 RTL/355 ARM. A NES22MHz common executor vs B host84MHz row supply; neither selected. Whole338 Lite17274comb/1866short unchanged; target15253 requires2021 net deletion including CDC/cancel. Mandatory warm source floor2.201190ms exceeds continuous previous ROM window end upper1.727707ms: full-input-before-first-plan contract cannot recover earlier window even with zero output preparation. B source saving at most.489323ms, fixed-phase additional ARM need.383894ms/32248instructions; A unchanged-source fixed-phase need.873217ms. A final-check clock slowdown62.268..65.623us must be charged. B132B two-row scratch reuse requires fixed NES A/host B ports and H2 phase drain. Collector cancellation-applied ACK and destination DONE gate mandatory;356 failures remain. Abstract40320 orderings PASS,97pins;NOnewRTL/ARM/MAP/FITSTA/physical60fps.",
-  "next_action": "Keep338RTL/355ARM. First test actual A NES6cycle read/CRC/RAM completion and dual-clock2slot storage/retire/consume with collector cancel-applied ACK and both-end STOP/DONE gates. Measure firstBG dependency availability for validated-prefix speculative ROM prefetch or interframe lease scheduling; prefetch is not display/DMA permission. Compare B fixed-port row codec with all new microstep/credit/drain costs. Only if boundaries fit2035source-host/650queue-SPI caps, delete old execution controls and run paired same-phase/continuous actualARM/IRQ/SPI/2slot schedule plus wholeLite MAP. Retain independent expected/coverage,STOP,finalACK,VBlank;no automatic merge.",
+  "candidate_selected": false,
+  "assessment": "NES358 keeps338RTL/355ARM. Actual338 extracted tap+independent validator22MHz: map4/OAM6/scroll8/raw-final10cycles;6cycle gate FAIL,12STOP offsets PASS. Separate rejected356 host-clock diagnostic gains actual collector cancellation-applied ACK and producer/destination DONE gates;actual WAIT/response/handoff STOP3guards plus aperture/final8regressions PASS. WholeLite22116LE17277comb9075FF307808bits:vs338 -28LE/+3comb/+57FF/0RAM,1869short;notNES common executor cost. Warm diagnostic continuous20.689706/fixed25.051563ms;selected4.023039ms/1866combshort unchanged. ActualM4 prefix1.458201ms vsfullgeometry2.656427;previousROMwindowend1.727707 gives.269505ms. One16Bcache insufficient;actualBG5tags,first8rowspool5matches0,all82tags wirefloor.500ms,changedsemanticprefix17tags includes5 but272B+metadata/cache ports/ARM/SPI/ROM cost unmeasured. No earlyROM implementation/fullRUN/full65816/VBlank/STA/physical proof.",
+  "next_action": "Keep338RTL/355ARM. Reject clock-only NES executor migration: raw-last10cycles cannot meet6. Prioritize actual B fixed NES row producer/host84MHz common RAM executor removing source-host control within2035cap plusqueueSPI650;actual collector cancel ACK/DONE gate is required but diagnostic356 not selected. In parallel measure real ARM changed exception/raster prefix filter, bounded17tag speculative rawCHR prefetch storage272B+tags/ports and overlappedSPI/ROM withcollector lease/STOP drain,not E9/display permission. Only justified replacement gets pairedsamephase/continuous schedules andwholeLite;independentexpected/CRCcoverage/finalACK/VBlank retained,noautomaticmerge.",
   "deliverables": [
-    "Actual NES clock read/queue/cancel/DONE boundary within six-cycle read budget; B fixed-port row comparison",
-    "First BG dependency timing and safe pre-input-completion ROM prefetch/interframe schedule contract",
-    "Justified whole control replacement with paired schedule and wholeLite cost, all additions inside budgets"
+    "Host84MHz row common execution boundary with actual old-control deletion and fixed RAM ownership",
+    "Actual ARM prefix filter plus bounded speculative ROM/cache ownership/STOP, all storage and SPI costs charged",
+    "Paired samephase/continuous actualARM/IRQ/2slot schedule and wholeLite only for justified integrated replacement"
   ],
-  "evidence": "analysis/arch357-verification.json",
-  "budget": {
-    "whole_baseline": {
-      "LE": 22144,
-      "comb": 17274,
-      "FF": 9018,
-      "RAM_bits": 307808
-    },
-    "whole_cap": 15253,
-    "device_comb": 15408,
-    "required_net_deletion": 2021,
-    "source_host_current": 3908,
-    "source_host_cap": 2035,
-    "queue_SPI_current": 798,
-    "queue_SPI_cap": 650,
-    "checker_aperture_retained": 1159,
-    "plan_retained": 459,
-    "outside_retained": 10950,
-    "A": {
-      "source_transport": 399,
-      "new_CDC_cancel_allowance": 100,
-      "common_executor_cap": 1536
-    },
-    "B": {
-      "direct_transport_allowance": 335,
-      "row_producer_CDC_cancel_allowance": 200,
-      "common_executor_cap": 1500
-    },
-    "status": "Acceptance allocations, NOT estimated or measured new synthesis savings. New additions must fit inside caps; baseline outside cannot silently pay for them."
+  "evidence": "analysis/exec358-verification.json",
+  "read_max_clocks": 10,
+  "read_STOP_cases": 12,
+  "collector_cancel_guard_cases": [
+    24,
+    25,
+    26
+  ],
+  "cancellation_diagnostic_whole": {
+    "LE": 22116,
+    "comb": 17277,
+    "FF": 9075,
+    "RAM_bits": 307808
   },
-  "time_budget": {
-    "first_ROM_gap_ms": 0.873217,
-    "continuous_previous_window_end_upper_ms": 1.72770654,
-    "continuous_source_floor_excess_ms": 0.47348393619047635,
-    "continuous_first_ROM_after_deadline_ms": 0.1889263333333311,
-    "continuous_contract_change_required": true,
-    "A_fixed_phase_ARM_advance_required_ms": 0.873217,
-    "B_best_case_source_saving_ms": 0.4893225238095238,
-    "B_fixed_phase_additional_ARM_advance_required_ms": 0.38389447619047623,
-    "B_min_additional_ARM_instructions": 32248,
-    "post_ROM_gap_ms": 0.653568,
-    "limits": "A keeps338 source schedule; B assumes unchanged canonical source bytes. Serial mandatory nonempty SPI + existing measured ARM source decode/prefix/reply + retained CS delays. Excludes final D5 entirely and removes all empty polls/codec wait: optimistic lower bound under unchanged N5/MASK/SHIFT/ARM355, not new execution/WCET."
+  "whole_delta_vs338": {
+    "LE": -28,
+    "comb": 3,
+    "FF": 57,
+    "RAM_bits": 0
   },
-  "cancel_model_scope": "Bounded abstract protocol, one stale namespace and two row slots; not RTL/CDC/metastability proof. Event ordering is logical, no clock latency asserted.",
-  "new_RTL": false,
-  "new_ARM": false,
-  "new_MAP": false,
+  "new_NES_whole_executor": false,
+  "new_whole_MAP": true,
+  "early_ROM_implemented": false,
   "FIT": false,
   "STA": false,
   "physical": false
