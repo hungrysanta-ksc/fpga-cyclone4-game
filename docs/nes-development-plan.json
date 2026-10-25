@@ -4,13 +4,13 @@
   "date_kst": "2026-10-24",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-execute362-contract.ko.md",
-  "assessment": "NES362 keeps338RTL/355ARM and359 host reduction. Repaired358 host clock boundary removes old source transport descriptor/prepared CDC; two local source/checker CRC functions replaced by one phase-owned operator. Source+host FSM bodies NOT replaced. Separate boundary time unchanged20.689706/25.051563ms; whole17283comb without CRCshare,17307 withshare vs35917213. Actual prior-bank M4 BG5+OBJ2 hint EA28/112B cache integrated with common boundary;4497 instructions, decoder unchanged, text2320/BSS96. Joint warm continuous20.779023ms/fixed12.328443ms, paired delta0.089317/-12.723120; not hardware60fps. Source338 retained control: warm12.156081/12.157717ms, firstblock decoded1.458201/1.458201ms vs migrated1.628915/1.628915. WholeLite22744LE/17765comb/9236FF/308832bits,2357comb short; no simultaneous time+area win/candidate not selected. 6x3frames actualoutputARM/IRQ/2slots/read-unit-private-publish/final12read PASS,6 STOP/token/drain guards+8final/raw0+68EA guards. H2 actual680..711 corrects357 old832..863; row slots640..705/800..865 overlap ordinary receipt+H2/map receipt and require row return/source drain/ACK before output ownership. Selected4.023039ms/1866comb deficits unchanged. No full firmware hint loop/full65816VBlank/FITSTA/physical proof.",
-  "next_action": "Keep338/355 and359host evidence. Do not iterate clock-only CRC sharing or enlarge cache again to chase fit. Preserve causal BG/OBJ hint/time evidence but jointly replace source codec FETCH/FSTORE/SREAD/SBYTE and host PREAD/PCAP/PUT/RLE continuation with a real row-fed host executor; transport/CRC-only replacement failed area gate. Prefer NES-local query/row producer; reject per-query host migration which delays the first hint by0.170714ms. Time-only source338+7tag reference needs3832->1495 source-host and784->650 queueSPI,2471 netcomb removal to15253. Rejected joint source-host includingqueryCDC/sharedCRC 4033->1655, queueSPI 784->650 are acceptance caps,not predictions; 2512comb net deletion needed to15253. Fixed NES row port/host byte port, bounded source/queue storage and actual collector cancel/DONE drain must delete old bodies, preserve independent expected/CRC/coverage and2credit/STOP/finalACK/VBlank. Correct H2 address680 and row-return/transport ACK phase handoff. If no credible deletion reaches cap, revisit transfer/role partition before further implementation. Hint foreground integration/deadline fallback, more warm frames/fullCPU/hardware remain open; noauto merge.",
+  "authoritative_document": "docs/nes-rows363-contract.ko.md",
+  "assessment": "NES363 actually replaces source FSTORE/SREAD and host PCAP/PUT with a phase-owned byte executor; NES-local query fills two leased66B rows using fixed NES portA/host portB. Old per-query32/65bit CDC is absent; source transport descriptor/prepared ACK CDC removed. Source new_byte and host held registers share the executor register. MASK/SHIFT, RLE expansion and independent359 validator retained. BG5/OBJ2 source338+355ARM+359host reference warm continuous12.156081/fixed12.157717ms -> 12.156218/12.157854ms. WholeLite22789LE/17856comb/9127FF/308832bits; delta+132comb/-52FF. 2448comb over device;2603 further deletion including155reserve vs2471 before. 2x3frames PASS, 10STOP/token/final/row guards plus aperture and8final/raw0 checks PASS; unchanged EA68-case evidence retained by hash. Complete source/host orchestration NOT replaced; source row559comb/common32/hostself2066 remain. Candidate rejected for area; no full firmware/full65816/FITSTA/physical60fps.",
+  "next_action": "Keep source338/ARM355/host359 and BG5OBJ2 reference. Reject363 as area solution; do not repeat byte-state/CRC/CDC microtuning. Whole nonoverlap budget source-host4061 checker/aperture1182 queueSPI779 plan468 rest11366; source-host cap1587, queueSPI650 needs2474+129 actualcomb deletion. Compare a changed host command/descriptor ABI and joint queue/plan execution against retained compression, with explicit old-state/address-decode deletion, actual extra ARM instructions/SPI bytes and same-window deadline. Keep independent expected/readCRC/coverage, collector STOP drain, final12readACK and VBlank; do not count shared-engine insertion or total parent plus child as savings. NES-local row approach preserved hint deadline but adds control; only carry its timing/ownership proof forward if wider replacement pays all of it. Full foreground/IRQ deadline fallback and more warm frames/fullCPU/board remain open; no automatic merge.",
   "next_three_deliverables": [
-  "Actual source+host FSM deletion within whole measured cap, fixed NES/host RAM ownership including corrected H2 overlap",
-  "Preserve causal two-OBJ+five-BG early fill and verify general eligibility/fallback in real firmware foreground",
-  "Paired same-phase/continuous actualARM/IRQ/2slot wholeLite gate then qualified full CPU/board validation"
+  "Host command ABI/queue/plan replacement with explicit deleted logic and whole cap before implementation",
+  "Preserve causal BG5OBJ2 deadlines including actual ARM/SPI/IRQ costs and extra bytes",
+  "Same-phase/continuous and independent STOP/final ownership gates before board FIT/STA"
 ],
   "gates": [
     {
@@ -3214,69 +3214,45 @@
     ]
   },
   "active_plan": {
-  "stage": 362,
-  "assessment": "NES362 keeps338RTL/355ARM and359 host reduction. Repaired358 host clock boundary removes old source transport descriptor/prepared CDC; two local source/checker CRC functions replaced by one phase-owned operator. Source+host FSM bodies NOT replaced. Separate boundary time unchanged20.689706/25.051563ms; whole17283comb without CRCshare,17307 withshare vs35917213. Actual prior-bank M4 BG5+OBJ2 hint EA28/112B cache integrated with common boundary;4497 instructions, decoder unchanged, text2320/BSS96. Joint warm continuous20.779023ms/fixed12.328443ms, paired delta0.089317/-12.723120; not hardware60fps. Source338 retained control: warm12.156081/12.157717ms, firstblock decoded1.458201/1.458201ms vs migrated1.628915/1.628915. WholeLite22744LE/17765comb/9236FF/308832bits,2357comb short; no simultaneous time+area win/candidate not selected. 6x3frames actualoutputARM/IRQ/2slots/read-unit-private-publish/final12read PASS,6 STOP/token/drain guards+8final/raw0+68EA guards. H2 actual680..711 corrects357 old832..863; row slots640..705/800..865 overlap ordinary receipt+H2/map receipt and require row return/source drain/ACK before output ownership. Selected4.023039ms/1866comb deficits unchanged. No full firmware hint loop/full65816VBlank/FITSTA/physical proof.",
-  "next_action": "Keep338/355 and359host evidence. Do not iterate clock-only CRC sharing or enlarge cache again to chase fit. Preserve causal BG/OBJ hint/time evidence but jointly replace source codec FETCH/FSTORE/SREAD/SBYTE and host PREAD/PCAP/PUT/RLE continuation with a real row-fed host executor; transport/CRC-only replacement failed area gate. Prefer NES-local query/row producer; reject per-query host migration which delays the first hint by0.170714ms. Time-only source338+7tag reference needs3832->1495 source-host and784->650 queueSPI,2471 netcomb removal to15253. Rejected joint source-host includingqueryCDC/sharedCRC 4033->1655, queueSPI 784->650 are acceptance caps,not predictions; 2512comb net deletion needed to15253. Fixed NES row port/host byte port, bounded source/queue storage and actual collector cancel/DONE drain must delete old bodies, preserve independent expected/CRC/coverage and2credit/STOP/finalACK/VBlank. Correct H2 address680 and row-return/transport ACK phase handoff. If no credible deletion reaches cap, revisit transfer/role partition before further implementation. Hint foreground integration/deadline fallback, more warm frames/fullCPU/hardware remain open; noauto merge.",
+  "stage": 363,
+  "assessment": "NES363 actually replaces source FSTORE/SREAD and host PCAP/PUT with a phase-owned byte executor; NES-local query fills two leased66B rows using fixed NES portA/host portB. Old per-query32/65bit CDC is absent; source transport descriptor/prepared ACK CDC removed. Source new_byte and host held registers share the executor register. MASK/SHIFT, RLE expansion and independent359 validator retained. BG5/OBJ2 source338+355ARM+359host reference warm continuous12.156081/fixed12.157717ms -> 12.156218/12.157854ms. WholeLite22789LE/17856comb/9127FF/308832bits; delta+132comb/-52FF. 2448comb over device;2603 further deletion including155reserve vs2471 before. 2x3frames PASS, 10STOP/token/final/row guards plus aperture and8final/raw0 checks PASS; unchanged EA68-case evidence retained by hash. Complete source/host orchestration NOT replaced; source row559comb/common32/hostself2066 remain. Candidate rejected for area; no full firmware/full65816/FITSTA/physical60fps.",
+  "next_action": "Keep source338/ARM355/host359 and BG5OBJ2 reference. Reject363 as area solution; do not repeat byte-state/CRC/CDC microtuning. Whole nonoverlap budget source-host4061 checker/aperture1182 queueSPI779 plan468 rest11366; source-host cap1587, queueSPI650 needs2474+129 actualcomb deletion. Compare a changed host command/descriptor ABI and joint queue/plan execution against retained compression, with explicit old-state/address-decode deletion, actual extra ARM instructions/SPI bytes and same-window deadline. Keep independent expected/readCRC/coverage, collector STOP drain, final12readACK and VBlank; do not count shared-engine insertion or total parent plus child as savings. NES-local row approach preserved hint deadline but adds control; only carry its timing/ownership proof forward if wider replacement pays all of it. Full foreground/IRQ deadline fallback and more warm frames/fullCPU/board remain open; no automatic merge.",
   "deliverables": [
-    "Actual source+host FSM deletion within whole measured cap, fixed NES/host RAM ownership including corrected H2 overlap",
-    "Preserve causal two-OBJ+five-BG early fill and verify general eligibility/fallback in real firmware foreground",
-    "Paired same-phase/continuous actualARM/IRQ/2slot wholeLite gate then qualified full CPU/board validation"
+    "Host command ABI/queue/plan replacement with explicit deleted logic and whole cap before implementation",
+    "Preserve causal BG5OBJ2 deadlines including actual ARM/SPI/IRQ costs and extra bytes",
+    "Same-phase/continuous and independent STOP/final ownership gates before board FIT/STA"
   ],
   "selected_RTL": 338,
   "selected_ARM": 355,
   "candidate_selected": false,
   "maps": {
-    "map01": {
-      "LE": 22146,
-      "comb": 17307,
-      "FF": 9056,
-      "RAM_bits": 307808
-    },
-    "map02": {
-      "LE": 22122,
-      "comb": 17283,
-      "FF": 9056,
-      "RAM_bits": 307808
-    },
-    "objmap01": {
+    "reference": {
       "LE": 22733,
       "comb": 17724,
       "FF": 9179,
       "RAM_bits": 308832
     },
-    "jointmap01": {
-      "LE": 22744,
-      "comb": 17765,
-      "FF": 9236,
+    "candidate": {
+      "LE": 22789,
+      "comb": 17856,
+      "FF": 9127,
       "RAM_bits": 308832
     }
   },
   "budget": {
-    "source_host_including_query_CDC_shared_CRC": 4033,
-    "independent_checker_aperture": 1216,
-    "queue_SPI": 784,
-    "plan": 462,
-    "rest": 11270,
-    "source_host_cap": 1655,
-    "source_host_delete": 2378,
-    "queue_SPI_delete": 134,
-    "total_delete": 2512
+    "source_host": 4061,
+    "independent_checker_aperture": 1182,
+    "queue_SPI": 779,
+    "plan": 468,
+    "rest": 11366,
+    "source_host_cap": 1587,
+    "source_host_delete": 2474,
+    "queue_SPI_delete": 129,
+    "total_delete": 2603
   },
-  "keep_source_budget": {
-    "source_host": 3832,
-    "independent_checker_aperture": 1250,
-    "queue_SPI": 784,
-    "plan": 467,
-    "rest": 11391,
-    "source_host_cap": 1495,
-    "source_host_delete": 2337,
-    "queue_SPI_delete": 134,
-    "total_delete": 2471
-  },
-  "evidence": "analysis/execute362-verification.json",
-  "wide_source_host_FSM_replacement": false,
-  "shared_CRC_and_transport_CDC_replacement": true,
-  "full_firmware_hint_loop": false,
+  "evidence": "analysis/rows363-verification.json",
+  "hot_byte_FSM_replaced": true,
+  "complete_source_host_orchestration_replaced": false,
   "FIT": false,
   "STA": false,
   "physical": false
