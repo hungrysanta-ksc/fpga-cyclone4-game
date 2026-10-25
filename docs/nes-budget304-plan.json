@@ -1,0 +1,45 @@
+{
+  "stage": 304,
+  "status": "replacement_contract_and_requirement_budget_complete_feasibility_open",
+  "summary": "NES304 교체범위/예산 재설정. 기준ARM296/RTL300 유지(17678comb/2270부족),303미채택 유지. header/descriptor 단일 admission+기존저장 대체 record125bit(cap160),page/offset RAM 선택,head/receipt retirement와queue/SPI/plan ingress를 실제 제거범위로 지정. 경계4827→2557,기능2429+여유128 요구(2398comb 절감);예상합성값 아님. 6952주소동등성/8bounds 모델PASS,기존362입력SHA 재검증. 제한907 BG첫plan→tile2.552742ms/OBJ0.000545ms,기록된parser+receipt+ARMtail 무료가정0.399400ms도고정일정초과0.396723ms 남음. 기존ARM/IRQ/ROM/Lite 비용 재분석이며새실행/합성 없음.",
+  "next_action": "원본header/범위변환/중복저장 삭제와active record binding을 먼저 입증. hot descriptor RAM716..747은CRC/receipt 포트경쟁 때문에미채택. 독립bounds/실소비CRC/coverage/STOP/12read최종ACK 유지. BG필요byte·cache miss·ROM창phase 계측과공급변경을함께구체화. 최소2270comb/0.801715ms 순개선,여유포함2398comb/1.051715ms 요구. 예상시간/면적null,새후보미채택;FSM/seed 미세반복 금지.",
+  "evidence": "analysis/budget304-verification.json",
+  "selected_evidence": [
+    "analysis02"
+  ],
+  "implementation_selected": false,
+  "new_ARM": false,
+  "new_RTL": false,
+  "new_MAP": false,
+  "source_reference": 300,
+  "time_reference": 298,
+  "whole_MAP": {
+    "LE": 22578,
+    "comb": 17678,
+    "FF": 9022,
+    "RAM_bits": 307808
+  },
+  "comb_deficit": 2270,
+  "required_gain_ms": 0.8017146193333318,
+  "boundary_cap": 2557,
+  "functional_caps": {
+    "host_decode_execution": 700,
+    "independent_validator": 900,
+    "queue_and_SPI": 450,
+    "plan": 325,
+    "glue": 54
+  },
+  "reserve_comb": 128,
+  "required_net_comb_gain_with_reserve": 2398,
+  "required_gain_ms_with_margin": 1.0517146193333318,
+  "active_record_bits": 125,
+  "active_record_cap": 160,
+  "record_storage": "replace registers; no new hot RAM owner",
+  "address_equalities": 6952,
+  "model_guards": 8,
+  "expected_next_comb": null,
+  "expected_next_time_ms": null,
+  "FIT": false,
+  "STA": false,
+  "physical": false
+}

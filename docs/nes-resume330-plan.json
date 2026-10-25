@@ -1,0 +1,31 @@
+{
+  "stage": 330,
+  "status": "ARM_warm_candidate_cold_regressions_area_unchanged",
+  "baseline": "325RTL+327ARM verified328",
+  "authoritative_document": "docs/nes-resume330-contract.ko.md",
+  "evidence": "analysis/resume330-verification.json",
+  "assessment": "NES330 implements ARM record-boundary tile continuation and first-map preparation in released209B manifest scratch; no new payload buffer, +28B state/+696B text, stack1304 unchanged. Actual12 M4/SPI/IRQ/2slot/ROM/unchanged325 CPU replay schedules PASS;71 producer frames +3 forced-pause frames +6 RTL faults/aperture PASS. Restricted907 17.882967220ms/gap1.216300553; fixed-phase gain0.242406182ms; normal90714.130784974ms. Tile-only restricted regression0.001818160ms; do not credit tile continuation for speed. Normal cold regressions39.045/41.909us. Whole325RTL hash unchanged:22617LE17802comb9021FF307808bits/2394comb deficit. No new MAP or area gain;330 is a warm ARM candidate, not joint target acceptance. Default325RTL+327earlyARM retained.",
+  "next_action": "Preserve329 deletion budgets and330 evidence. First-map preparation plus zero-byte walking produced the warm gain; tile continuation only proves bounded resume/failure behavior. Next evaluate cold preparation overhead together with a common completion/identity event replacing host/queue/validator/SPI owners, not longer status everywhere or cursor-only sharing. Retain independent expected/actual CRC, STOP/drain/finalACK/VBlank, tile pingpong,2slot storage!=consume, clock/CDC/RAM ownership and source/plan deletion scope. Same-start/ROM phase plus restricted/normal ARM/IRQ schedules and wholeLite must jointly improve; no FIT/STA/physical60fps approval.",
+  "selected": {
+    "default": "325RTL+327earlyARM",
+    "diagnostic": [
+      "window01",
+      "fixed01",
+      "normal01",
+      "tile-window01"
+    ],
+    "guards": [
+      "producer01",
+      "pause01",
+      "guards01"
+    ]
+  },
+  "comb_deficit": 2394,
+  "restricted_gap_ms": 1.2163005533333298,
+  "area_gain": 0,
+  "new_RTL": false,
+  "new_MAP": false,
+  "FIT": false,
+  "STA": false,
+  "physical_60fps": false
+}

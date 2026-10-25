@@ -1,0 +1,43 @@
+{
+  "stage": 335,
+  "status": "read_receipt_architecture_comparison_no_candidate_implementation",
+  "selected_RTL": 332,
+  "selected_ARM": 334,
+  "authoritative_document": "docs/nes-receipt335-contract.ko.md",
+  "evidence": "analysis/receipt335-verification.json",
+  "assessment": "NES335 passive audit on unchanged332RTL+334ARM:9 schedules exactly match334 event timelines and ARM frames;56877 actual aperture bytes/13983 units/1914 bitmap updates/96 raw CRCs independently reconciled. Warm receipt RAM 0.357120us,ACK-to-last-RAM 0.631944us,all ACK-to-release 1.001000us. No candidate time/area improvement measured. Restricted20.696615274ms/fixed25.059517464/normal13.435202412 unchanged;frozen ROM acceptance even zero post-ROM leaves0.187835607ms restricted gap. Restricted/fixed cold expected arrives after2048/2078 units;normal905/906/907 after2316/2314/31 units. Streaming comparison cannot replace final scan under current order. Whole332 Lite rebound22539LE17649comb9097FF307808bits/2241comb deficit;host+validator+aperture3607comb,even zero validator+aperture still982short. No new MAP/FIT/STA/physical60fps.",
+  "next_action": "Keep332RTL+334ARM. Compare strict post-token deferred mask jobs(A,up to18B proposed phase716..733;walk remains and added reads cost) with actual-read-event private RMW/publication at exact token ACK(B). B is conditional design only: qualify actual served byte/address/token/count,hold one chunk context,drain CRC/RAM jobs before publish;STOP/wrong ACK freezes writes and forces cold reset before either bank reuse. Preserve independent expected/final scan,2slot storage!=consume,metadata/tile prefetch,12 display reads/finalACK/VBlank. Existing physical receipt-before-ACK assertions must be replaced by stronger private/published invariants,never silently removed. Whole host/validator/aperture2306+queue/SPI600+source1100+plan310 cap includes all new arbitration/CDC/state. Receipt latency cannot close time gap:separately advance input/firstROM request and tile/ordinary supply with actual ARM/IRQ/SPI and fixed+continuous schedules. No shared-state/seed/FIT loops or free area/wire claims.",
+  "whole": {
+    "LE": 22539,
+    "comb": 17649,
+    "FF": 9097,
+    "RAM_bits": 307808
+  },
+  "comb_deficit": 2241,
+  "baseline_restricted_ms": 20.696615274,
+  "baseline_fixed_ms": 25.059517464,
+  "baseline_normal_ms": 13.435202412,
+  "optimistic_ACK_release_saving_ms": 0.001001,
+  "frozen_ROM_zero_post_gap_ms": 0.18783560733329097,
+  "design_candidates": [
+    "A strict ACK then deferred mask RMW",
+    "B private RMW during DMA then token-bound publication"
+  ],
+  "deferred_RAM_candidate": {
+    "base": 716,
+    "length": 18,
+    "unvalidated_remaining_window": [
+      734,
+      767
+    ]
+  },
+  "design_scope_comb": 6689,
+  "design_scope_cap": 4316,
+  "new_candidate_RTL": false,
+  "new_MAP": false,
+  "new_measured_gain_ms": null,
+  "new_candidate_comb": null,
+  "FIT": false,
+  "STA": false,
+  "physical_60fps": false
+}

@@ -1,0 +1,35 @@
+{
+  "stage": 328,
+  "status": "ARM_only_timing_retained_shared_RTL_rejected",
+  "baseline": 325,
+  "historical_baseline": 319,
+  "authoritative_document": "docs/nes-joint328-contract.ko.md",
+  "evidence": "analysis/joint328-verification.json",
+  "assessment": "NES328 separately validated327 early-manifest ARM on exact325 RTL and implemented active-record expected storage plus shared receipt/final-check cursor. Actual18 ARM/SPI/IRQ/2slot/ROM/unchanged65816 trace schedules,13 joint faults and5 ARM-only faults plus aperture PASS. Retain325RTL+earlyARM: restricted907 18.131464238ms/gap1.464797571; same-phase warm gain0.217815568ms. Joint328 wholeLite22691LE17876comb9005FF307808bits vs325+74LE/+74comb/-16FF/0RAM;deficit2468, NOT selected. Retained RTL17802comb/2394deficit; ARMtext+408/BSS+28/stack1304.319 historical reference.",
+  "next_action": "Preserve328 ARM-only timing candidate and rejected shared-cursor evidence. No more register-sharing savings assumed: replacing counters left ingress RLE, receipt read/modify/write and final checker owners; mixed-unit mux/load costs increased area. Next budget actual control-module deletion and BG ROM request/service schedule together, not isolated cursor/FSM/seed/FIT tuning. Retain independent expected vs actual CRC/coverage,metadata early issue,STOP/drain/finalACK/VBlank,tile pingpong,2slot storage!=consume. Compare fixed source-start/ROM phase and continuous schedules; no free ports or physical60fps claim.",
+  "selected": {
+    "ARM_only": [
+      "arm-fixed01",
+      "arm-window01",
+      "arm-normal01"
+    ],
+    "joint_diagnostic": [
+      "joint-fixed01",
+      "joint-window01",
+      "joint-normal01"
+    ],
+    "board": "board01",
+    "guards": [
+      "guards01",
+      "guards02",
+      "armguards01"
+    ],
+    "unchanged_CPU": "nes-expand325/cpu01"
+  },
+  "candidate_comb_deficit": 2468,
+  "retained325_comb_deficit": 2394,
+  "retained_ARM_restricted_gap_ms": 1.4647975713333317,
+  "physical_60fps": false,
+  "FIT": false,
+  "STA": false
+}

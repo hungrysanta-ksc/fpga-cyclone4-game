@@ -1,0 +1,69 @@
+{
+  "stage": 303,
+  "status": "verified_combined_candidate_rejected_area_regression",
+  "summary": "NES303 BG/OBJ pending+plancredit 우선 gate,공통9bit queue cursor/SNES port handoff/receipt 상태완료 실제 구현. fresh6live/71native/44RTLguards,35STOP11IRQ재개,credit11+공급20+actualwait7/H2 9/IRQ8 PASS. 제한90717.462790ms(302c동일,298대비-5.591us),0.796124ms초과. 정상906-32.045us/907-42.863us이나905+31.136us. wholeLite22644LE17744comb9015FF307808bits:300대비+66comb/-7FF,부족2336으로악화하여미채택. ARMtext27918/BSS47120/stack1288. 기준ARM296/RTL300의0.802ms/2270comb 부족은그대로보존.",
+  "next_action": "cursor/FSM 미세반복 중단. 남아있는 header/descriptor 해석·RAM선택·XWAIT와source/output ingress를 포함한 실제 제거 경계·독립 검사·포트 비용을 먼저 재설계. 생산자 승인bit로 검사 대체 금지. 후보 경계4839/outside12905/ceiling2503;예상 절감null. fullRUN/live65816/FITSTA/physical60fps 미검증.",
+  "selected": [
+    "test01",
+    "window01",
+    "native01",
+    "armguard01",
+    "credit01",
+    "supply01",
+    "wait01",
+    "h2guard01",
+    "irqguard01",
+    "guards01",
+    "board01",
+    "analysis03"
+  ],
+  "evidence": "analysis/joint303-verification.json",
+  "comparison_reference": 298,
+  "area_reference": 300,
+  "whole_MAP": {
+    "LE": 22644,
+    "comb": 17744,
+    "FF": 9015,
+    "RAM_bits": 307808
+  },
+  "delta_MAP": {
+    "LE": 66,
+    "comb": 66,
+    "FF": -7,
+    "RAM_bits": 0
+  },
+  "new_MAP": true,
+  "new_RTL": true,
+  "comb_deficit": 2336,
+  "baseline_deficit_comb": 2270,
+  "baseline_deficit_ms": 0.801714619,
+  "candidate_deficit_ms": 0.7961237773333316,
+  "implementation_selected": false,
+  "actual_replacement": [
+    "shared queue cursor/address owner",
+    "receipt completion state"
+  ],
+  "retained": [
+    "header/descriptor interpretation",
+    "registered read/capture states",
+    "XWAIT retirement relay",
+    "independent bounds CRC coverage certificate and final ACK"
+  ],
+  "regions": {
+    "host": 2114,
+    "validator": 1314,
+    "queue": 129,
+    "plan": 576,
+    "SPI": 655,
+    "glue": 51
+  },
+  "fixed_boundary": 4839,
+  "outside": 12905,
+  "fixed_budget": 2503,
+  "expected_next_comb": null,
+  "expected_next_time_ms": null,
+  "FIT": false,
+  "STA": false,
+  "full_RUN": false,
+  "physical": false
+}

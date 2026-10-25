@@ -1,0 +1,64 @@
+{
+  "stage": 338,
+  "selected_RTL": 338,
+  "selected_ARM": 336,
+  "status": "implemented_area_gain_timing_unchanged",
+  "authoritative_document": "docs/nes-ingress338-contract.ko.md",
+  "analysis": "analysis/ingress338-verification.json",
+  "assessment": "NES338 implements original-packet aligned512/768x256 queue,removes opcode/prefix/base and ingress field permutation;active record wire-index loader and all identity/CRC/credit checks retained. D4 reuses held bank length/CRC and token,removes40bit snapshots;ready/reading remains sampled. WholeLite22144LE17274comb9018FF307808bits vs336 -112LE/-104comb/-48FF/0RAM,deficit1970->1866. Queue own285->225,transport396->375;do not attribute whole104 to local81. Nine actual M4/IRQ/SPI/2slot schedules have identical full event timelines,ARM results and ELF images to336/337:fixed90725.051199382ms,restricted continuous20.689660812,normal13.410066350;new time gain0. Unit1428 queue combinations+D4 mailbox bank reuse/empty late publication/token/generation/partial/STOP/D5 PASS;13 integrated faults plus aperture/raw0/final checks PASS. Restricted60Hzgap4.022994145ms/postROMcapgap.653795 unchanged. Warm source237/246/28B;GEO10B starts last block with18B tail. GEO-only flush adds1block/15wireB/8us gap=53.714286us SPI occupancy model,not frame gain. Initial compile/observer/analyzer whitespace mismatch preserved. No fullRUN71/FIT/STA/physical60fps.",
+  "next_action": "Keep338RTL+336ARM and336 reference. Jointly redesign source publication/geometry ordering and actual ARM first complete BG batch supply;bind live input preparation with source/plan RAM ports,commit lease,CRC/STOP,credit/IRQ priority and cold/split costs. Current restricted phase misses prior ROM close even with zero input processing by18.664585us,166.855061us including first E9;same transaction gaps imply55wireB equivalent before real compute. Empty-poll occupancy is producer wait,not free frame saving. Do not select GEO-only flush or fixed16B plan based on isolated cycles. Replace actual host/source encoder decode/address/datapath,not just control:current scope6324/outside10950;retain4303 scope budget for2021 net reduction/155comb margin (132margin minimum1998). Even free queueSPI798+source transport/mailbox399+plan459 leaves210comb shortage. Preserve independent expected/private read jobs/exact ACK,STOP/reset cold reuse,metadata/tile preproduction,finalACK/VBlank;compare same ROM phase and continuous schedules and one wholeLite gate. No opcode/seed/FIT loops;production227/GBC164/saveSRAM unchanged.",
+  "next_three_deliverables": [
+    "Bind geometry availability and first complete BG plan to actual source receive/ARM/IRQ schedule;charge extra packets and preserve commit lease",
+    "Specify actual host/source encoder decode and address datapath deletions including all new RAM/CDC arbitration within4303comb scope",
+    "Implement only the justified joint candidate;compare identical phase and continuous schedules,STOP/independent checks/finalACK/VBlank and wholeLite"
+  ],
+  "whole": {
+    "LE": 22144,
+    "comb": 17274,
+    "FF": 9018,
+    "RAM_bits": 307808
+  },
+  "whole_delta": {
+    "LE": -112,
+    "comb": -104,
+    "FF": -48,
+    "RAM_bits": 0
+  },
+  "comb_deficit": 1866,
+  "groups": {
+    "host_validator_aperture": 3320,
+    "queue_SPI": 798,
+    "source": 1747,
+    "plan": 459
+  },
+  "outside_comb": 10950,
+  "scope_budget": {
+    "host": 1146,
+    "validator_aperture": 1160,
+    "queue_SPI": 600,
+    "source": 1100,
+    "plan": 297
+  },
+  "scope_reduction_required": 2021,
+  "min_reduction_for_132_margin": 1998,
+  "selected_runs": [
+    "window03",
+    "fixed01",
+    "normal01",
+    "unit01",
+    "guards01",
+    "board01"
+  ],
+  "new_measured_gain_ms": 0,
+  "failures_preserved": {
+    "window01": "declaration ordering",
+    "window02": "old queue observer reference",
+    "unit_compile01": "sandbox DLL launch;compile02 PASS",
+    "analysis_partial01": "pre-existing one blank line in board transport;strict normalized comparison added"
+  },
+  "limits": [
+    "actual M4 instruction/CPI1 and source decoder cost replay,not MCU hardware WCET/fullRUN",
+    "existing536B ordinary65816 trace;tile/map DMA bus model,not whole65816 polling",
+    "whole Lite MAP,not FIT/STA or physical60fps"
+  ]
+}
