@@ -4,14 +4,14 @@
   "date_kst": "2026-10-24",
   "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-raster355-contract.ko.md",
-  "assessment": "NES355 retains338RTL and354 fused geometry/352 raw-group gains. Compact raster448B replaces native64 expansion on N5 path; geometry selects compact/native64 once, generic route retained. Warm five calls142784->139633;wholeARM549015->546216(-2799). Text32014(+1384),bss47420/stack1288 unchanged.71prepare+13malformed+5boundary+6independent compact faults+native64 comparison+65lifetime PASS;9schedule observations/3frames exactwire/read-private-publish/2credit. Restrictedcontinuous20.689660812,fixed25.051517560ms unchanged;normal12.007265002(delta-0.033317782). FirstBG fixed6.962939 advances.049226;earlierROMgap0.873217ms. NewstandalonequeryCDC/STOPdrain/NEScursor:279cases/3phases PASS;query01 caught drainbeforecursorclear,stop_applied localack fixesquery02. FinalLite map04 372LE125comb339FF0RAM,notwhole saving. Unpaused queryready380..393ns notintegrated. Whole33822144LE17274comb9018FF307808bits reused;1866short/2021net target. Source-host2035cap inclbridge125=>conditional engine1910,unproven. NoFITSTA/fullRUN/physical60fps.",
-  "next_action": "Keep338RTL and355ARM candidate with354 comparison baseline. Stop per-access representation tuning: compare joint compact-row semantics/H2/raw-table preparation against remaining.873217ms first-ROM gap andpostROM.653568ms separately. Before broad source-host replacement, bind query boundary to actual collector/source prefetch and phaseRAM ownership, measuring1957 roundtrips andSTOP drain with samephase/continuous schedule; remove actual olddescriptor/ACK/address/control,include allnewCDC within2035cap (standalone125 leaves conditional1910),then wholeLite. Independentexpected/readCRCcoverage,credit,STOP/finalACK/VBlank retained;noautomaticmerge.",
+  "authoritative_document": "docs/nes-query356-contract.ko.md",
+  "assessment": "NES356 actual collector query/prefetch connected to host-clock source/phaseRAM A;two40bit descriptor CDC and17bit ACK CDC removed,replaced by24bit bank descriptors/direct busy+ACK plus query/start/done/final lease handshakes andNES cursor.355ARM unchanged PT_LOAD.9schedule observations/3frames exactwire,independentread/private/publication,credit<=2;6of8faults PASS;queryWAIT STOP fails drain because actual collector release cancels response;handoffSTOP exposes queued sourceDONE. NormalreplySTOP plusaperture/raw0/privateRESET PASS. Failure preserved;NO safe replacement. WholeLite22142LE17303comb9074FF307808bits vs338 -2LE/+29comb/+56FF/0RAM;candidate1895combshort,REJECTED. Warm wall continuous20.689706/fixed25.051563ms unchanged;normal12.007311->12.178036(+.170725). Source668->707B/poll8->11/input+0.170725ms;1957queries369..417ns;firstBG6.962939->7.133709. Keep338RTL+355ARM selected1866combshort/~4.023ms gap. NoFITSTA/fullRUN/full65816/physical60fps.",
+  "next_action": "Keep338RTL+355ARM. Reject per-query host-clock source migration;actual collector cancellation acknowledgment and cancel-gated completion publication are mandatory before any boundary reuse; do not tune its counters/FF or add standalone125comb as whole cost. Compare(A)NES-clock source/query plus common output/receipt phase executor using real dual-clock SPI queue, charging84->22MHz RLE/CRC/final-check slowdown; (B)host executor with collector row/record delivery, charging buffering/phaseRAM ports/credit/drain. Both require actual deletion of source+host control within2035cap and2021whole net saving,not mailbox-only savings. ARM compare compact-row semantics/H2/material/first-plan together;geometry+H2 total45066 instructions(.5365ms) alone cannot close selected.873217ms firstROM gap. Preserveindependentchecks,STOP,finalACK,VBlank;noautomaticmerge.",
   "next_three_deliverables": [
-  "Joint compact-row semantics/H2/material/final raw-table candidate with independent checks and actualARM net costs",
-  "Actual collector/source prefetch query integration andRAM-owner STOP handoff with replacement deletion ledger",
-  "Samephase/continuous schedule plus sameboundarywholeLite; charge newCDC and preserve338/354 evidence"
-],
+    "Compare NES-clock common executor vs host row/record boundary with explicit deletions, RAM/CDC owners and whole budget",
+    "Joint compact-row/H2/material preparation and first-plan schedule; preserve canonicalCRC and independent expectation",
+    "Only justified candidate: actual clock/STOP integration, same-start/ROM-phase and continuous liveARM/IRQ/2slot costs, one wholeLite comparison"
+  ],
   "gates": [
     {
       "id": "P0",
@@ -3214,79 +3214,64 @@
     ]
   },
   "active_plan": {
-  "stage": 355,
-  "status": "compact_ARM_verified_boundary_unit_verified_not_integrated",
-  "selected_RTL": 338,
-  "selected_ARM": 355,
-  "reference_ARM": 354,
-  "assessment": "NES355 retains338RTL and354 fused geometry/352 raw-group gains. Compact raster448B replaces native64 expansion on N5 path; geometry selects compact/native64 once, generic route retained. Warm five calls142784->139633;wholeARM549015->546216(-2799). Text32014(+1384),bss47420/stack1288 unchanged.71prepare+13malformed+5boundary+6independent compact faults+native64 comparison+65lifetime PASS;9schedule observations/3frames exactwire/read-private-publish/2credit. Restrictedcontinuous20.689660812,fixed25.051517560ms unchanged;normal12.007265002(delta-0.033317782). FirstBG fixed6.962939 advances.049226;earlierROMgap0.873217ms. NewstandalonequeryCDC/STOPdrain/NEScursor:279cases/3phases PASS;query01 caught drainbeforecursorclear,stop_applied localack fixesquery02. FinalLite map04 372LE125comb339FF0RAM,notwhole saving. Unpaused queryready380..393ns notintegrated. Whole33822144LE17274comb9018FF307808bits reused;1866short/2021net target. Source-host2035cap inclbridge125=>conditional engine1910,unproven. NoFITSTA/fullRUN/physical60fps.",
-  "next_action": "Keep338RTL and355ARM candidate with354 comparison baseline. Stop per-access representation tuning: compare joint compact-row semantics/H2/raw-table preparation against remaining.873217ms first-ROM gap andpostROM.653568ms separately. Before broad source-host replacement, bind query boundary to actual collector/source prefetch and phaseRAM ownership, measuring1957 roundtrips andSTOP drain with samephase/continuous schedule; remove actual olddescriptor/ACK/address/control,include allnewCDC within2035cap (standalone125 leaves conditional1910),then wholeLite. Independentexpected/readCRCcoverage,credit,STOP/finalACK/VBlank retained;noautomaticmerge.",
-  "deliverables": [
-    "Joint compact-row semantics/H2/material/final raw-table candidate with independent checks and actualARM net costs",
-    "Actual collector/source prefetch query integration andRAM-owner STOP handoff with replacement deletion ledger",
-    "Samephase/continuous schedule plus sameboundarywholeLite; charge newCDC and preserve338/354 evidence"
-  ],
-  "evidence": "analysis/raster355-verification.json",
-  "new_ARM": true,
-  "new_boundary_RTL": true,
-  "new_integrated_RTL": false,
-  "new_MAP": true,
-  "new_whole_MAP": false,
-  "FIT": false,
-  "STA": false,
-  "physical": false,
-  "preparation_frames": 71,
-  "malformed_cases": 13,
-  "boundary_cases": 5,
-  "independent_compact_checks": 6,
-  "native64_route_checked": true,
-  "lifetime_cases": 65,
-  "query_boundary_cases": 279,
-  "query_phases": 3,
-  "schedule_observations": 9,
-  "unique_schedule_frames": 3,
-  "critical_budget": {
-    "first_BG_advance_ms": 0.049226000000032855,
-    "earlier_ROM_window_gap_ms": 0.8732170000000057,
-    "minimum_net_instructions": 73351,
-    "post_ROM_gap_ms": 0.6535679999999569,
-    "continuous_frame_gap_ms": 4.022994145333332
-  },
-  "whole": {
-    "LE": 22144,
-    "comb": 17274,
-    "FF": 9018,
-    "RAM_bits": 307808
-  },
-  "comb_deficit": 1866,
-  "budget": {
-    "status": "unimplemented budget, not predicted synthesis saving",
-    "whole_cap": 15253,
-    "required_net_deletion": 2021,
-    "retained_outside": 10950,
-    "retained_checker_aperture": 1159,
-    "retained_concurrent_plan": 459,
-    "source_host_current": 3908,
-    "source_host_cap": 2035,
-    "queue_SPI_current": 798,
-    "queue_SPI_cap": 650
-  },
-  "boundary_budget": {
-    "standalone": {
-      "LE": 372,
-      "comb": 125,
-      "FF": 339,
+    "stage": 356,
+    "status": "integrated_candidate_rejected_keep338_355",
+    "selected_RTL": 338,
+    "selected_ARM": 355,
+    "candidate_RTL": 356,
+    "candidate_selected": false,
+    "assessment": "NES356 actual collector query/prefetch connected to host-clock source/phaseRAM A;two40bit descriptor CDC and17bit ACK CDC removed,replaced by24bit bank descriptors/direct busy+ACK plus query/start/done/final lease handshakes andNES cursor.355ARM unchanged PT_LOAD.9schedule observations/3frames exactwire,independentread/private/publication,credit<=2;6of8faults PASS;queryWAIT STOP fails drain because actual collector release cancels response;handoffSTOP exposes queued sourceDONE. NormalreplySTOP plusaperture/raw0/privateRESET PASS. Failure preserved;NO safe replacement. WholeLite22142LE17303comb9074FF307808bits vs338 -2LE/+29comb/+56FF/0RAM;candidate1895combshort,REJECTED. Warm wall continuous20.689706/fixed25.051563ms unchanged;normal12.007311->12.178036(+.170725). Source668->707B/poll8->11/input+0.170725ms;1957queries369..417ns;firstBG6.962939->7.133709. Keep338RTL+355ARM selected1866combshort/~4.023ms gap. NoFITSTA/fullRUN/full65816/physical60fps.",
+    "next_action": "Keep338RTL+355ARM. Reject per-query host-clock source migration;actual collector cancellation acknowledgment and cancel-gated completion publication are mandatory before any boundary reuse; do not tune its counters/FF or add standalone125comb as whole cost. Compare(A)NES-clock source/query plus common output/receipt phase executor using real dual-clock SPI queue, charging84->22MHz RLE/CRC/final-check slowdown; (B)host executor with collector row/record delivery, charging buffering/phaseRAM ports/credit/drain. Both require actual deletion of source+host control within2035cap and2021whole net saving,not mailbox-only savings. ARM compare compact-row semantics/H2/material/first-plan together;geometry+H2 total45066 instructions(.5365ms) alone cannot close selected.873217ms firstROM gap. Preserveindependentchecks,STOP,finalACK,VBlank;noautomaticmerge.",
+    "deliverables": [
+      "Compare NES-clock common executor vs host row/record boundary with explicit deletions, RAM/CDC owners and whole budget",
+      "Joint compact-row/H2/material preparation and first-plan schedule; preserve canonicalCRC and independent expectation",
+      "Only justified candidate: actual clock/STOP integration, same-start/ROM-phase and continuous liveARM/IRQ/2slot costs, one wholeLite comparison"
+    ],
+    "evidence": "analysis/query356-verification.json",
+    "new_ARM": false,
+    "new_integrated_RTL": true,
+    "new_whole_MAP": true,
+    "FIT": false,
+    "STA": false,
+    "physical": false,
+    "schedule_observations": 9,
+    "unique_schedule_frames": 3,
+    "fault_cases": 8,
+    "fault_passed": 6,
+    "fault_failed": 2,
+    "STOP_drain_passed": false,
+    "whole": {
+      "LE": 22142,
+      "comb": 17303,
+      "FF": 9074,
+      "RAM_bits": 307808
+    },
+    "whole_delta": {
+      "LE": -2,
+      "comb": 29,
+      "FF": 56,
       "RAM_bits": 0
     },
-    "source_host_cap": 2035,
-    "conditional_remaining_engine_cap": 1910,
-    "unpaused_ready_latency_ns": [
-      380.0,
-      393.0
-    ],
-    "scope": "Standalone logic only; no whole reclaim and no integrated query timing measured."
-  }
-},
+    "candidate_comb_deficit": 1895,
+    "selected_comb_deficit": 1866,
+    "budget": {
+      "whole_cap": 15253,
+      "selected_net_deletion_required": 2021,
+      "candidate_net_deletion_required": 2050,
+      "source_host_cap": 2035,
+      "queue_SPI_cap": 650,
+      "retained_plan": 459,
+      "retained_checker_aperture": 1159,
+      "retained_outside": 10950
+    },
+    "critical_budget": {
+      "selected_first_ROM_gap_ms": 0.873217,
+      "selected_first_ROM_min_instructions": 73351,
+      "geometry_H2_entire_call_upper_ms": 0.5365,
+      "selected_continuous_wall_gap_ms": 4.023039333333333
+    },
+    "next_candidates_selected": false
+  },
   "current_status_scope": "Queue-aware map publication and independent final RAM execution; bounded joint gain, time and capacity still unmet",
   "p1_placement_followup": {
     "selected": "placement05",
