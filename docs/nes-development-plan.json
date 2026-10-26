@@ -2,15 +2,15 @@
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
   "date_kst": "2026-10-26",
-  "technical_candidate": "NES370 timing baseline retained;NES371 input/owner implementation experiment not selected for performance or production",
+  "technical_candidate": "NES372 ARM+370 RTL bounded improvement;915 accepted,next916/display and whole capacity fail,not production",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-ingress371-contract.ko.md",
-  "assessment": "NES371 paired D4 flags0/D5 storage1/final3,owned RX250+existing wire259;alternating raw prefetch after causal28B hint,no DMA. Actual capture915 admitted=False,misses=[915];905..914 drained10,startup2/warm8. 914 materialized2.598514ms vs370 2.614195,915handoff margin-0.258292ms;914processing21.493355 vs21.545718. Worst warm914=21.493355ms;60Hz margin-4.826688ms. Other same-phase warm regress;not selected as performance baseline,370 retained. M4 ten-input decoder/history exact+4latefaults+11guards;realSPI15credit guards;6request-owner/WAIT-drain/STOP-lateDONE guards. ARMtext34822(+588),data4/BSS48740(+264),observedstack1288. ROM57811pairs/input9353pairs/pending0;independentCRC/coverage/2credits/12read/token/actualretire retained. Five canonical replacements/30compiled shared modules exact. WholeLite22747LE17735comb9172FF292448bits vs370 +37LE/+37comb/+1FF/0RAM;RX-only whole+1comb despite transport self-24. 2327comb deficit/2482net with155reserve;retainedcodec1358/checker1041 scenario leaves3423control->941ceiling,not a proved saving. FullCPU/VBlank/WCET/71/heavy7/multiple phases/FITSTA/physical60fpsOPEN.",
-  "next_action": "370의 exact-key/group-local 개선과 독립 검사를 유지한다. raw credit부터 실제 BLOCKEND/materialized까지 SPI 바이트·CRC·source 준비 비용을 분리하고 캡처 기한을 늦추지 않는다. BG hint의 tag 포함과 ROM byte 유효 완료를 구분하며 실제 첫 사용 순서·ROM 허용 구간·core 우선순위를 계측한다. 공통 source/host/queue/expected/plan 실행기는 실제 기존 제어 삭제·포트/CDC/STOP·독립 expected 수명을 포함해2482순삭제 필요량과941comb 시나리오 상한을 검토한다. 더 긴 연속/heavy7/71·여러 시작 위상·전체65816/VBlank·firmware WCET·ABI/session 회복을 통과한 뒤 전체Lite FIT/STA·실기를 진행한다. 이번 경로를 회로·지속60fps 성공으로 승인하지 않는다.",
+  "authoritative_document": "docs/nes-frontier372-contract.ko.md",
+  "assessment": "NES372 370 protocol/RTL and hint bytes retained;byte MASK popcount/set-bit traversal,map/raw split,bounded64B overlap-safe SHIFT unroll and target resident bitmap scan. 51blocks/96globals exact+2573mask/shift/odd-base cases+28hint/9source guards+8hint snapshots PASS.First914block32421->10758(-21663),hint8917->8084(-833),whole source73062->39941;instruction replay not added to live time. Actual905..915 drained11(startup2/warm9),capture915 admitted+41.159us;firstmiss916,8/9next captures.914 materialized2.614195->2.299063(-315.132us),processing21.545718->21.500992(-44.726us),4.834325ms over60Hz. 907..914 same-start/ROMphase all improve;908extraemptyD4+13B charged.Payload/hint/semantic plan records exact370.915source starts2.832533ms AFTER916deadline,materializes4.408605ms late;its17.269452ms is new measurement,not a370 regression. ROM60477pairs/input8846pairs/pending0;actual readCRC/coverage/2credit/12read-token/retire retained.ARMtext35862(+1628),data4/BSS48476same,stack1288. 30compiled modules exact370;inheritedLite22710LE17698comb9171FF292448bits,no newMAP.371rollback-37comb NOTnew370saving;2290combshort/2445with155reserve. Queue224self now included:8disjoint modules6064,retain codec/checker2392 =>3672control->1227ceiling;all8->3619,host-only2945->500.Upper budgets only,new replacement area null. 916 requires separate input/display contexts and simultaneous scratch/IRQ/ROM ownership,not just one common FSM.4packet source1KiB+shadow1KiB budget+12288bits/304736total;max71fixture needs500B rawARM,bits not FIT proof. 914 BG-boundary repack[220,187,246,30]->[190,217,246,30],same bytes/count,no extra wire;RTL/timing not implemented.71fixture954 2slot minimumwire2.956190ms versus4slot1.526857,not new71 timings. FullCPU/VBlank/WCET/71/heavy7/multiple phases/session/FITSTA/physical60fpsOPEN.Production227/GBC164/saveSRAM unchanged.",
+  "next_action": "372 ARM과370 ABI/RTL을 기준으로 유지한다.916 기한 전에 source915를 시작할 수 있도록 input/display lease·epoch/generation·STOP/retire를 분리하고,source shadow와raw RX의 동시 수명을 명시한다. 4packet source ring/footer descriptor·BG/nonmap 조기seal과 host 공통 주소/진행 실행기·native32B/32bit word plan을 기존source/host/queue/plan FSM 삭제 목록과 함께 구현한다. 단일phase 장벽을 남긴 공유FSM이나 RAM clock mux/무료 phase중첩을 승인하지 않는다.같은 시작/ROM위상·고정capture기한과input/output request-origin ROM경쟁·실제ARM/SPI/IRQ·독립expected/STOP/12read-token finalACK를 검증한다. 전체8모듈3619 또는codec/checker보존제어1227 상한에추가bridge/arbiter/shadow를포함해전체Lite MAP을비교한다.ARM500Braw와FPGA12288bits는구현전예산이며시간/회로절감0으로둔다.전체CPU/VBlank/heavy7/71/WCET/다중위상/FITSTA/실기는미완료다.",
   "next_three_deliverables": [
-    "Input BLOCKEND deadline under actual SPI/CRC/source preparation",
-    "ROM byte fill deadline and actual first-use order,not only hinted tag coverage",
-    "Net2482 deletion,941control scenario with ports/CDC/independent checks;full display and hardware gates"
+    "Separate input/display context and simultaneous source shadow/raw RX lifetimes before916",
+    "4packet source/footer and BG boundary seal with real SPI/IRQ/ROM schedule",
+    "Delete old source/host/queue/plan controls within whole8module3619 budget,retain independent check/finalACK/VBlank"
   ],
   "gates": [
     {
@@ -3214,129 +3214,126 @@
     ]
   },
   "active_plan": {
-    "stage": 371,
+    "stage": 372,
     "date_kst": "2026-10-26",
-    "base": "ce7fcf28bf8ffaa7cc4b6363083ccfbb4c923070",
+    "base": "e9005716f76f37244ec8272acbdcd41f497d7ec5",
     "branch": "codex/nes-capture-admission-365",
-    "contract": "docs/nes-ingress371-contract.ko.md",
-    "evidence": "analysis/ingress371-verification.json",
+    "contract": "docs/nes-frontier372-contract.ko.md",
+    "evidence": "analysis/frontier372-verification.json",
     "selected": {
-      "build": "build09",
-      "M4_warm": "armwarm08",
-      "M4_guards": "armguards05",
-      "SPI_guards": "credit01",
-      "owner_guards": "handoff03",
-      "runtime": "joint11",
-      "strict": "joint10",
-      "whole_MAP": "map01",
-      "RX_only_MAP": "map-rx01"
+      "build": "build06",
+      "checks": "check05",
+      "guards": "guards04",
+      "runtime": "joint02",
+      "control_audit": "control05",
+      "whole_MAP": "inherited368/370/map01"
     },
-    "assessment": "NES371 paired D4 flags0/D5 storage1/final3,owned RX250+existing wire259;alternating raw prefetch after causal28B hint,no DMA. Actual capture915 admitted=False,misses=[915];905..914 drained10,startup2/warm8. 914 materialized2.598514ms vs370 2.614195,915handoff margin-0.258292ms;914processing21.493355 vs21.545718. Worst warm914=21.493355ms;60Hz margin-4.826688ms. Other same-phase warm regress;not selected as performance baseline,370 retained. M4 ten-input decoder/history exact+4latefaults+11guards;realSPI15credit guards;6request-owner/WAIT-drain/STOP-lateDONE guards. ARMtext34822(+588),data4/BSS48740(+264),observedstack1288. ROM57811pairs/input9353pairs/pending0;independentCRC/coverage/2credits/12read/token/actualretire retained. Five canonical replacements/30compiled shared modules exact. WholeLite22747LE17735comb9172FF292448bits vs370 +37LE/+37comb/+1FF/0RAM;RX-only whole+1comb despite transport self-24. 2327comb deficit/2482net with155reserve;retainedcodec1358/checker1041 scenario leaves3423control->941ceiling,not a proved saving. FullCPU/VBlank/WCET/71/heavy7/multiple phases/FITSTA/physical60fpsOPEN.",
+    "assessment": "NES372 370 protocol/RTL and hint bytes retained;byte MASK popcount/set-bit traversal,map/raw split,bounded64B overlap-safe SHIFT unroll and target resident bitmap scan. 51blocks/96globals exact+2573mask/shift/odd-base cases+28hint/9source guards+8hint snapshots PASS.First914block32421->10758(-21663),hint8917->8084(-833),whole source73062->39941;instruction replay not added to live time. Actual905..915 drained11(startup2/warm9),capture915 admitted+41.159us;firstmiss916,8/9next captures.914 materialized2.614195->2.299063(-315.132us),processing21.545718->21.500992(-44.726us),4.834325ms over60Hz. 907..914 same-start/ROMphase all improve;908extraemptyD4+13B charged.Payload/hint/semantic plan records exact370.915source starts2.832533ms AFTER916deadline,materializes4.408605ms late;its17.269452ms is new measurement,not a370 regression. ROM60477pairs/input8846pairs/pending0;actual readCRC/coverage/2credit/12read-token/retire retained.ARMtext35862(+1628),data4/BSS48476same,stack1288. 30compiled modules exact370;inheritedLite22710LE17698comb9171FF292448bits,no newMAP.371rollback-37comb NOTnew370saving;2290combshort/2445with155reserve. Queue224self now included:8disjoint modules6064,retain codec/checker2392 =>3672control->1227ceiling;all8->3619,host-only2945->500.Upper budgets only,new replacement area null. 916 requires separate input/display contexts and simultaneous scratch/IRQ/ROM ownership,not just one common FSM.4packet source1KiB+shadow1KiB budget+12288bits/304736total;max71fixture needs500B rawARM,bits not FIT proof. 914 BG-boundary repack[220,187,246,30]->[190,217,246,30],same bytes/count,no extra wire;RTL/timing not implemented.71fixture954 2slot minimumwire2.956190ms versus4slot1.526857,not new71 timings. FullCPU/VBlank/WCET/71/heavy7/multiple phases/session/FITSTA/physical60fpsOPEN.Production227/GBC164/saveSRAM unchanged.",
     "measured": {
       "paired": [
         {
           "frame": 907,
           "before_ms": 12.040741,
-          "after_ms": 12.128468,
-          "delta_ms": 0.08772699999999922,
+          "after_ms": 11.879334,
+          "delta_ms": -0.16140700000000052,
           "same_start_ROM_phase": true,
           "before_materialized_ms": 1.667798,
-          "after_materialized_ms": 1.372574,
-          "total_SPI_bytes_before": 1693,
-          "total_SPI_bytes_after": 1709,
-          "source_SPI_bytes_including_D5_before": 616,
-          "source_SPI_bytes_including_D5_after": 632
+          "after_materialized_ms": 1.586708,
+          "source_SPI_before": 616,
+          "source_SPI_after": 616,
+          "total_SPI_before": 1693,
+          "total_SPI_after": 1693
         },
         {
           "frame": 908,
           "before_ms": 12.417419,
-          "after_ms": 12.530236,
-          "delta_ms": 0.11281699999999972,
+          "after_ms": 12.104741,
+          "delta_ms": -0.312678,
           "same_start_ROM_phase": true,
           "before_materialized_ms": 0.576948,
           "after_materialized_ms": 0.576948,
-          "total_SPI_bytes_before": 1531,
-          "total_SPI_bytes_after": 1539,
-          "source_SPI_bytes_including_D5_before": 476,
-          "source_SPI_bytes_including_D5_after": 484
+          "source_SPI_before": 476,
+          "source_SPI_after": 489,
+          "total_SPI_before": 1531,
+          "total_SPI_after": 1544
         },
         {
           "frame": 909,
           "before_ms": 16.215692,
-          "after_ms": 16.404508,
-          "delta_ms": 0.1888159999999992,
+          "after_ms": 15.933014,
+          "delta_ms": -0.28267800000000065,
           "same_start_ROM_phase": true,
           "before_materialized_ms": 2.322063,
-          "after_materialized_ms": 2.248064,
-          "total_SPI_bytes_before": 2268,
-          "total_SPI_bytes_after": 2292,
-          "source_SPI_bytes_including_D5_before": 925,
-          "source_SPI_bytes_including_D5_after": 949
+          "after_materialized_ms": 2.149565,
+          "source_SPI_before": 925,
+          "source_SPI_after": 925,
+          "total_SPI_before": 2268,
+          "total_SPI_after": 2268
         },
         {
           "frame": 910,
           "before_ms": 12.030379,
-          "after_ms": 12.5096,
-          "delta_ms": 0.4792210000000008,
-          "same_start_ROM_phase": false,
+          "after_ms": 11.865608,
+          "delta_ms": -0.164771,
+          "same_start_ROM_phase": true,
           "before_materialized_ms": 0.56713,
           "after_materialized_ms": 0.56713,
-          "total_SPI_bytes_before": 1544,
-          "total_SPI_bytes_after": 1552,
-          "source_SPI_bytes_including_D5_before": 372,
-          "source_SPI_bytes_including_D5_after": 380
+          "source_SPI_before": 372,
+          "source_SPI_after": 372,
+          "total_SPI_before": 1544,
+          "total_SPI_after": 1544
         },
         {
           "frame": 911,
           "before_ms": 12.47901,
-          "after_ms": 12.586327,
-          "delta_ms": 0.1073170000000001,
+          "after_ms": 12.206831,
+          "delta_ms": -0.2721790000000013,
           "same_start_ROM_phase": true,
           "before_materialized_ms": 1.828433,
-          "after_materialized_ms": 1.378347,
-          "total_SPI_bytes_before": 1639,
-          "total_SPI_bytes_after": 1655,
-          "source_SPI_bytes_including_D5_before": 658,
-          "source_SPI_bytes_including_D5_after": 674
+          "after_materialized_ms": 1.651026,
+          "source_SPI_before": 658,
+          "source_SPI_after": 658,
+          "total_SPI_before": 1639,
+          "total_SPI_after": 1639
         },
         {
           "frame": 912,
           "before_ms": 15.424883,
-          "after_ms": 15.548427,
-          "delta_ms": 0.12354400000000076,
+          "after_ms": 15.237431,
+          "delta_ms": -0.18745199999999862,
           "same_start_ROM_phase": true,
           "before_materialized_ms": 1.719162,
-          "after_materialized_ms": 1.240485,
-          "total_SPI_bytes_before": 1945,
-          "total_SPI_bytes_after": 1961,
-          "source_SPI_bytes_including_D5_before": 676,
-          "source_SPI_bytes_including_D5_after": 692
+          "after_materialized_ms": 1.641844,
+          "source_SPI_before": 676,
+          "source_SPI_after": 676,
+          "total_SPI_before": 1945,
+          "total_SPI_after": 1945
         },
         {
           "frame": 913,
           "before_ms": 12.130105,
-          "after_ms": 12.184604,
-          "delta_ms": 0.05449899999999985,
+          "after_ms": 11.940062,
+          "delta_ms": -0.19004300000000107,
           "same_start_ROM_phase": true,
           "before_materialized_ms": 0.568721,
           "after_materialized_ms": 0.568721,
-          "total_SPI_bytes_before": 1555,
-          "total_SPI_bytes_after": 1563,
-          "source_SPI_bytes_including_D5_before": 389,
-          "source_SPI_bytes_including_D5_after": 397
+          "source_SPI_before": 389,
+          "source_SPI_after": 389,
+          "total_SPI_before": 1555,
+          "total_SPI_after": 1555
         },
         {
           "frame": 914,
           "before_ms": 21.545718,
-          "after_ms": 21.493355,
-          "delta_ms": -0.052362999999999715,
+          "after_ms": 21.500992,
+          "delta_ms": -0.04472600000000071,
           "same_start_ROM_phase": true,
           "before_materialized_ms": 2.614195,
-          "after_materialized_ms": 2.598514,
-          "total_SPI_bytes_before": 2095,
-          "total_SPI_bytes_after": 2119,
-          "source_SPI_bytes_including_D5_before": 777,
-          "source_SPI_bytes_including_D5_after": 801
+          "after_materialized_ms": 2.299063,
+          "source_SPI_before": 777,
+          "source_SPI_after": 777,
+          "total_SPI_before": 2095,
+          "total_SPI_after": 2095
         }
       ],
       "captures": [
@@ -3345,7 +3342,7 @@
           "admitted": true,
           "owned": 0,
           "at_ps": 260388740000,
-          "handoff_margin_ms": 0.967694
+          "handoff_margin_ms": 0.75356
         },
         {
           "frame": 909,
@@ -3359,28 +3356,28 @@
           "admitted": true,
           "owned": 0,
           "at_ps": 292876350000,
-          "handoff_margin_ms": 0.092159
+          "handoff_margin_ms": 0.190658
         },
         {
           "frame": 911,
           "admitted": true,
           "owned": 0,
           "at_ps": 309120155000,
-          "handoff_margin_ms": 1.696821
+          "handoff_margin_ms": 1.773093
         },
         {
           "frame": 912,
           "admitted": true,
           "owned": 0,
           "at_ps": 325363960000,
-          "handoff_margin_ms": 0.961876
+          "handoff_margin_ms": 0.689197
         },
         {
           "frame": 913,
           "admitted": true,
           "owned": 0,
           "at_ps": 341607765000,
-          "handoff_margin_ms": 1.099738
+          "handoff_margin_ms": 0.698379
         },
         {
           "frame": 914,
@@ -3391,10 +3388,17 @@
         },
         {
           "frame": 915,
+          "admitted": true,
+          "owned": 0,
+          "at_ps": 374095375000,
+          "handoff_margin_ms": 0.041159
+        },
+        {
+          "frame": 916,
           "admitted": false,
           "owned": 1,
-          "at_ps": 374095375000,
-          "handoff_margin_ms": -0.258292
+          "at_ps": 390339181000,
+          "handoff_margin_ms": -4.408605
         }
       ],
       "ARM_size": {
@@ -3404,318 +3408,122 @@
           "BSS": 48476
         },
         "after": {
-          "text": 34822,
+          "text": 35862,
           "data": 4,
-          "BSS": 48740
+          "BSS": 48476
         },
         "delta": {
-          "text": 588,
+          "text": 1628,
           "data": 0,
-          "BSS": 264
+          "BSS": 0
         }
       },
-      "stack_observed": 1288,
       "ROM": {
-        "requests": 57811,
-        "replies": 57811,
+        "requests": 60477,
+        "replies": 60477,
         "pending": 0,
-        "input_requests": 9353,
-        "input_replies": 9353,
+        "input_requests": 8846,
+        "input_replies": 8846,
         "input_pending": 0,
         "origin_phase_matched": true
       },
       "whole_MAP": {
-        "before": {
+        "values": {
           "LE": 22710,
           "comb": 17698,
           "FF": 9171,
           "RAM_bits": 292448
         },
-        "after": {
-          "LE": 22747,
-          "comb": 17735,
-          "FF": 9172,
-          "RAM_bits": 292448
-        },
-        "delta": {
-          "LE": 37,
-          "comb": 37,
-          "FF": 1,
+        "inherited_from368_370": true,
+        "new_MAP": false,
+        "delta_vs370": {
+          "LE": 0,
+          "comb": 0,
+          "FF": 0,
           "RAM_bits": 0
         },
-        "RX_only": {
-          "LE": 22711,
-          "comb": 17699,
-          "FF": 9171,
-          "RAM_bits": 292448
-        },
-        "source_clock_domain_costs_before": {
-          "|nes_transport257:transport|": {
-            "comb_inclusive": 402,
-            "comb_self": 378,
-            "FF_inclusive": 399
-          },
-          "|nes_hint361:hint|": {
-            "comb_inclusive": 160,
-            "comb_self": 160,
-            "FF_inclusive": 114
-          },
-          "|nes_source_tile192:source|": {
-            "comb_inclusive": 1214,
-            "comb_self": 3,
-            "FF_inclusive": 382
-          },
-          "|nes_chr_cache192:cache_path.cache|": {
-            "comb_inclusive": 539,
-            "comb_self": 539,
-            "FF_inclusive": 300
-          }
-        },
-        "source_clock_domain_costs_after": {
-          "|nes_transport257:transport|": {
-            "comb_inclusive": 378,
-            "comb_self": 354,
-            "FF_inclusive": 399
-          },
-          "|nes_hint361:hint|": {
-            "comb_inclusive": 162,
-            "comb_self": 162,
-            "FF_inclusive": 114
-          },
-          "|nes_source_tile192:source|": {
-            "comb_inclusive": 1267,
-            "comb_self": 28,
-            "FF_inclusive": 383
-          },
-          "|nes_chr_cache192:cache_path.cache|": {
-            "comb_inclusive": 562,
-            "comb_self": 562,
-            "FF_inclusive": 300
-          }
-        },
-        "new_MAP": true
+        "delta_vs371": {
+          "LE": -37,
+          "comb": -37,
+          "FF": -1,
+          "RAM_bits": 0
+        }
       },
-      "replacement_budget": {
-        "self_comb": {
-          "nes_core257:encoder": 1358,
-          "nes_transport257:transport": 354,
-          "nes_validator278:validator": 1041,
-          "nes_output260:flow": 2057,
-          "nes_plan_batch206:transport": 353,
-          "nes_plan_spi200:endpoint": 95,
-          "nes_spi270:spi_front270": 564
-        },
-        "retained_codec_checker": 2399,
-        "control_pool": 3423,
-        "required_net": 2482,
-        "replacement_ceiling": 941,
-        "implemented_deletion_credit": 0,
-        "scenario_only": true
+      "source915_late_start_ms": 2.832533
+    },
+    "replacement_budget": {
+      "disjoint_self_comb": {
+        "nes_core257:encoder": 1352,
+        "nes_transport257:transport": 378,
+        "nes_validator278:validator": 1040,
+        "nes_output260:flow": 2058,
+        "nes_queue260:queue": 224,
+        "nes_plan_batch206:transport": 349,
+        "nes_plan_spi200:endpoint": 96,
+        "nes_spi270:spi_front270": 567
       },
-      "timeline914": {
-        "frame": 914,
-        "source_parts": [
-          {
-            "phase": 1,
-            "command": null,
-            "flags": null,
-            "bytes": 13,
-            "end_ms": -4.010233,
-            "pending_instructions": 453
-          },
-          {
-            "phase": 2,
-            "command": null,
-            "flags": null,
-            "bytes": 0,
-            "end_ms": -4.003364,
-            "pending_instructions": 241
-          },
-          {
-            "phase": 1,
-            "command": null,
-            "flags": null,
-            "bytes": 13,
-            "end_ms": -1.705545,
-            "pending_instructions": 410
-          },
-          {
-            "phase": 2,
-            "command": null,
-            "flags": null,
-            "bytes": 0,
-            "end_ms": -1.698676,
-            "pending_instructions": 241
-          },
-          {
-            "phase": 1,
-            "command": null,
-            "flags": null,
-            "bytes": 13,
-            "end_ms": 0.481547,
-            "pending_instructions": 421
-          },
-          {
-            "phase": 2,
-            "command": null,
-            "flags": null,
-            "bytes": 222,
-            "end_ms": 1.164987,
-            "pending_instructions": 241
-          },
-          {
-            "phase": 0,
-            "command": 213,
-            "flags": 1,
-            "bytes": 8,
-            "end_ms": 1.227844,
-            "pending_instructions": 2560
-          },
-          {
-            "phase": 0,
-            "command": 234,
-            "flags": null,
-            "bytes": 28,
-            "end_ms": 1.84001,
-            "pending_instructions": 43582
-          },
-          {
-            "phase": 1,
-            "command": null,
-            "flags": null,
-            "bytes": 13,
-            "end_ms": 1.888558,
-            "pending_instructions": 414
-          },
-          {
-            "phase": 2,
-            "command": null,
-            "flags": null,
-            "bytes": 189,
-            "end_ms": 2.471391,
-            "pending_instructions": 238
-          },
-          {
-            "phase": 0,
-            "command": 213,
-            "flags": 1,
-            "bytes": 8,
-            "end_ms": 2.530319,
-            "pending_instructions": 2230
-          },
-          {
-            "phase": 1,
-            "command": null,
-            "flags": null,
-            "bytes": 13,
-            "end_ms": 2.604224,
-            "pending_instructions": 2544
-          },
-          {
-            "phase": 2,
-            "command": null,
-            "flags": null,
-            "bytes": 248,
-            "end_ms": 3.366902,
-            "pending_instructions": 241
-          },
-          {
-            "phase": 0,
-            "command": 213,
-            "flags": 1,
-            "bytes": 8,
-            "end_ms": 3.432842,
-            "pending_instructions": 2819
-          },
-          {
-            "phase": 1,
-            "command": null,
-            "flags": null,
-            "bytes": 13,
-            "end_ms": 3.590318,
-            "pending_instructions": 9564
-          },
-          {
-            "phase": 2,
-            "command": null,
-            "flags": null,
-            "bytes": 32,
-            "end_ms": 3.694711,
-            "pending_instructions": 241
-          },
-          {
-            "phase": 0,
-            "command": 213,
-            "flags": 3,
-            "bytes": 8,
-            "end_ms": 3.90814,
-            "pending_instructions": 15208
-          }
+      "required_with155reserve": 2445,
+      "control_pool_with_queue": 3672,
+      "replacement_control_ceiling": 1227,
+      "cases": [
+        {
+          "name": "Host only,keep mixed-clock source/plan",
+          "pool_upper_bound": 2945,
+          "replacement_upper_bound": 500
+        },
+        {
+          "name": "Host plus entire mixed-clock source transport,optimistic upper bound",
+          "pool_upper_bound": 3323,
+          "replacement_upper_bound": 878
+        },
+        {
+          "name": "All eight modules including codec/checker control",
+          "pool_upper_bound": 6064,
+          "replacement_upper_bound": 3619
+        }
+      ],
+      "host_context_candidate": {
+        "SPI_request": [
+          472,
+          483
         ],
-        "first_plan_SPI_end_ms": 9.126413,
-        "first_zero_ms": 9.125163,
-        "first_BG_ms": 16.857025,
-        "retrospective_BG_tags": [
-          6136,
-          6653,
-          6552,
-          6554,
-          6553,
-          6555
+        "active_record": [
+          484,
+          499
         ],
-        "missing_from_initial_hint": [],
-        "hint_replay_instructions": 13817,
-        "hint_pending_instructions": 43582,
-        "future_information_used_for_hint": false,
-        "scope": "Retrospective only;tag inclusion does not prove byte fill by ROM deadline;SPI remains synchronous."
+        "execution": [
+          500,
+          507
+        ],
+        "spare": [
+          508,
+          511
+        ],
+        "bytes": 36,
+        "retained_FF": "SPI shift/synchronizers,immutable snapshot and token/serial burn history,CDC grants;source/checker states not included.",
+        "implemented": false,
+        "port": "Would add an A-side read/owner arbiter;B remains expected/read-event priority. No throughput or area credit."
+      },
+      "overlap_candidate": {
+        "source_packet_RAM_bytes": 1024,
+        "source_shadow_RAM_bytes": 1024,
+        "incremental_RAM_bits": 12288,
+        "proposed_whole_bits": 304736,
+        "logical_source_packets": 4,
+        "output_queue_packets": 2,
+        "ARM_raw_prefetch_bytes_for_max_fixture": 500,
+        "input_context_and_display_context_separate": true,
+        "implemented": false,
+        "extra_FPGA_logic": null,
+        "whole_area_saving": null
       }
     },
+    "scope": "New actual ARM schedule and static/source-record/71fixture size structural review;no new RTL/shared-control implementation/MAP/71 timing.",
+    "next_action": "372 ARM과370 ABI/RTL을 기준으로 유지한다.916 기한 전에 source915를 시작할 수 있도록 input/display lease·epoch/generation·STOP/retire를 분리하고,source shadow와raw RX의 동시 수명을 명시한다. 4packet source ring/footer descriptor·BG/nonmap 조기seal과 host 공통 주소/진행 실행기·native32B/32bit word plan을 기존source/host/queue/plan FSM 삭제 목록과 함께 구현한다. 단일phase 장벽을 남긴 공유FSM이나 RAM clock mux/무료 phase중첩을 승인하지 않는다.같은 시작/ROM위상·고정capture기한과input/output request-origin ROM경쟁·실제ARM/SPI/IRQ·독립expected/STOP/12read-token finalACK를 검증한다. 전체8모듈3619 또는codec/checker보존제어1227 상한에추가bridge/arbiter/shadow를포함해전체Lite MAP을비교한다.ARM500Braw와FPGA12288bits는구현전예산이며시간/회로절감0으로둔다.전체CPU/VBlank/heavy7/71/WCET/다중위상/FITSTA/실기는미완료다.",
     "continuous_capture_passed": false,
-    "bounded_warm_60Hz_budget_passed": false,
-    "first_missed_capture": 915,
-    "failed_variants": {
-      "joint03": {
-        "first_missed_capture": 910,
-        "passed": false,
-        "vsim_log_sha256": "0614d7fe356a5e2c3cb9108346307dc5b6280fee9230e51bf9a06784aa979049"
-      },
-      "joint04": {
-        "first_missed_capture": 913,
-        "passed": false,
-        "vsim_log_sha256": "76caf9288e1aed3a25ab94acddaba7039da6e572b01908d5c6a4961524e34f0a"
-      },
-      "joint05": {
-        "first_missed_capture": 909,
-        "passed": false,
-        "vsim_log_sha256": "db38707ddb20c8c02bfddb194e16f71216a98daf22f2ee87455c250104043e97"
-      },
-      "joint06": {
-        "first_missed_capture": 915,
-        "passed": false,
-        "vsim_log_sha256": "38a70d7efc3a04798e7f1fdb5db4306dbbf39a63077bfe0bcd15da8b52519f65"
-      },
-      "joint08": {
-        "first_missed_capture": 915,
-        "passed": false,
-        "vsim_log_sha256": "c0fc0d073df863c674272ef461088fa6e91ae521b8a2fb6a7c1839c6aaa57a42"
-      }
-    },
-    "strict_diagnostic_check": {
-      "first_miss": 915,
-      "all_events_before_failure_exact": true
-    },
-    "protocol": "Paired experimental ABI only;default legacy preserved;D5 storage credit is not input semantic ACK or display ACK. Record-atomic source,immutable raw slot until semantic consumption.",
-    "retained": [
-      "Independent expected/read CRC and coverage",
-      "STOP drains accepted physical request and suppresses late DONE",
-      "Input semantic seal before flags3",
-      "12exact display reads/token and actual generation retire",
-      "Existing VBlank firmware;not a new full CPU proof",
-      "Production227/GBC164/saveSRAM"
-    ],
-    "next_action": "370의 exact-key/group-local 개선과 독립 검사를 유지한다. raw credit부터 실제 BLOCKEND/materialized까지 SPI 바이트·CRC·source 준비 비용을 분리하고 캡처 기한을 늦추지 않는다. BG hint의 tag 포함과 ROM byte 유효 완료를 구분하며 실제 첫 사용 순서·ROM 허용 구간·core 우선순위를 계측한다. 공통 source/host/queue/expected/plan 실행기는 실제 기존 제어 삭제·포트/CDC/STOP·독립 expected 수명을 포함해2482순삭제 필요량과941comb 시나리오 상한을 검토한다. 더 긴 연속/heavy7/71·여러 시작 위상·전체65816/VBlank·firmware WCET·ABI/session 회복을 통과한 뒤 전체Lite FIT/STA·실기를 진행한다. 이번 경로를 회로·지속60fps 성공으로 승인하지 않는다.",
-    "candidate_selected_as_performance_baseline": false,
-    "recommended_timing_baseline": 370,
+    "capture915_admitted": true,
+    "first_missed_capture": 916,
+    "actual_control_replacement_implemented": false,
     "FIT": false,
     "STA": false,
     "physical": false,
