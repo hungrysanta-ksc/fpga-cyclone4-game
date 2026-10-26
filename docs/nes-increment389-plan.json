@@ -1,0 +1,291 @@
+{
+  "stage": 389,
+  "PR": 132,
+  "baseline": {
+    "RTL": 375,
+    "ARM": 377,
+    "SNES_reference": 386,
+    "mapper_gate": 376
+  },
+  "selected_for_production": false,
+  "selected_as_time_improvement": false,
+  "verification": "analysis/increment389-verification.json",
+  "implementation": {
+    "native": "native07:10warm+1STOPpass",
+    "guards": "guards05:16pass",
+    "joint_native_profile": "native06;normal event/time hashes exactly matchnative07",
+    "PPU_jobs": "12B*256 at7EA000..ABFF;unused token copy removed",
+    "map_coordinates": "4B*256 at7EAC00..AFFF",
+    "dirty_columns": "64B at7EF081..F0C0",
+    "column_tracking": "activate at >7ranges or >128B;chargecompact replay andinitialization",
+    "token": "read directly at receipt from immutable descriptor;actualhigh32-bit token guard",
+    "budget": "saturating accumulation onjob append;no post-view job scan",
+    "STOP_fix": "all display suffix aborts route tocommoncache invalidator"
+  },
+  "cost": {
+    "ROM_body_bytes": 3274,
+    "previous386_ROM_body_bytes": 3290,
+    "payload_record_WRAM_bytes": 24769,
+    "previous386_payload_record_WRAM_bytes": 24705,
+    "job_bytes": 3072,
+    "map_coordinate_bytes": 1024,
+    "dirty_column_bytes": 64,
+    "additional_DP_reservation_bytes": 37,
+    "DP_copy_bytes_not_reclaimed_from_fullresident": 8,
+    "inherited375_MAP": {
+      "LE": 22390,
+      "comb": 17663,
+      "FF": 8985,
+      "RAM_bits": 300640
+    },
+    "new_FPGA_savings": 0,
+    "comb_deficit": 2255,
+    "required_net_deletion_with155reserve": 2410,
+    "new_MAP": false,
+    "ROM_installed_on_board": false
+  },
+  "runs": {
+    "reference386": {
+      "passed": false,
+      "first_missed_capture": 911,
+      "completed": [
+        905,
+        906,
+        907,
+        908
+      ],
+      "frames": [
+        {
+          "frame": 905,
+          "start_ps": 14243080000,
+          "ROM_start_cycle": 305898,
+          "done_ps": 100752277000,
+          "processing_ms": 86.509197,
+          "qualified_units": 2316
+        },
+        {
+          "frame": 906,
+          "start_ps": 114994612000,
+          "ROM_start_cycle": 2469759,
+          "done_ps": 232629884000,
+          "processing_ms": 117.635272,
+          "qualified_units": 2314
+        },
+        {
+          "frame": 907,
+          "start_ps": 264333059000,
+          "ROM_start_cycle": 5677131,
+          "done_ps": 281560560000,
+          "processing_ms": 17.227501,
+          "qualified_units": 31,
+          "ready_ps": 278230315000,
+          "display_poll_ps": 278336748000,
+          "display_poll_phase": 260003,
+          "native_cutoff_line": 238,
+          "VBlank_index": 16,
+          "present_ps": 281477316000,
+          "VBlank_service_ms": 0.954249
+        },
+        {
+          "frame": 908,
+          "start_ps": 280972517000,
+          "ROM_start_cycle": 6034500,
+          "done_ps": 314515271000,
+          "processing_ms": 33.542754,
+          "qualified_units": 22,
+          "ready_ps": 297479321000,
+          "display_poll_ps": 297585754000,
+          "display_poll_phase": 316049,
+          "native_cutoff_line": 246,
+          "VBlank_index": 18,
+          "present_ps": 314432029000,
+          "VBlank_service_ms": 0.630382
+        }
+      ],
+      "captures": [
+        {
+          "frame": 908,
+          "admitted": true,
+          "time_ps": 266730323000
+        },
+        {
+          "frame": 909,
+          "admitted": true,
+          "time_ps": 283369735000
+        },
+        {
+          "frame": 910,
+          "admitted": true,
+          "time_ps": 300009146000
+        },
+        {
+          "frame": 911,
+          "admitted": false,
+          "time_ps": 316648558000
+        }
+      ]
+    },
+    "incremental388": {
+      "passed": false,
+      "first_missed_capture": 911,
+      "completed": [
+        905,
+        906,
+        907,
+        908
+      ],
+      "frames": [
+        {
+          "frame": 905,
+          "start_ps": 14243080000,
+          "ROM_start_cycle": 305898,
+          "done_ps": 100752277000,
+          "processing_ms": 86.509197,
+          "qualified_units": 2316
+        },
+        {
+          "frame": 906,
+          "start_ps": 114994612000,
+          "ROM_start_cycle": 2469759,
+          "done_ps": 232629884000,
+          "processing_ms": 117.635272,
+          "qualified_units": 2314
+        },
+        {
+          "frame": 907,
+          "start_ps": 264333059000,
+          "ROM_start_cycle": 5677131,
+          "done_ps": 281559116000,
+          "processing_ms": 17.226057,
+          "qualified_units": 31,
+          "ready_ps": 277776498000,
+          "display_poll_ps": 277882932000,
+          "display_poll_phase": 250256,
+          "native_cutoff_line": 238,
+          "VBlank_index": 16,
+          "present_ps": 281475888000,
+          "VBlank_service_ms": 0.954251
+        },
+        {
+          "frame": 908,
+          "start_ps": 280972517000,
+          "ROM_start_cycle": 6034500,
+          "done_ps": 314515132000,
+          "processing_ms": 33.542615,
+          "qualified_units": 22,
+          "ready_ps": 297967444000,
+          "display_poll_ps": 298073878000,
+          "display_poll_phase": 326533,
+          "native_cutoff_line": 246,
+          "VBlank_index": 18,
+          "present_ps": 314431910000,
+          "VBlank_service_ms": 0.630658
+        }
+      ],
+      "captures": [
+        {
+          "frame": 908,
+          "admitted": true,
+          "time_ps": 266730323000
+        },
+        {
+          "frame": 909,
+          "admitted": true,
+          "time_ps": 283369735000
+        },
+        {
+          "frame": 910,
+          "admitted": true,
+          "time_ps": 300009146000
+        },
+        {
+          "frame": 911,
+          "admitted": false,
+          "time_ps": 316648558000
+        }
+      ]
+    }
+  },
+  "paired_differences": [
+    {
+      "frame": 905,
+      "same_start_and_ROM_cycle": true,
+      "absolute_completion_gain_ms": 0.0,
+      "ready_gain_ms": 0.0
+    },
+    {
+      "frame": 906,
+      "same_start_and_ROM_cycle": true,
+      "absolute_completion_gain_ms": 0.0,
+      "ready_gain_ms": 0.0
+    },
+    {
+      "frame": 907,
+      "same_start_and_ROM_cycle": true,
+      "absolute_completion_gain_ms": 0.001444,
+      "ready_gain_ms": 0.453817
+    },
+    {
+      "frame": 908,
+      "same_start_and_ROM_cycle": true,
+      "absolute_completion_gain_ms": 0.000139,
+      "ready_gain_ms": -0.488123
+    }
+  ],
+  "causal_deadline": {
+    "frame": 908,
+    "post_view_phase": 326533,
+    "native_cutoff_line": 246,
+    "post_view_to_native_cutoff_clocks": 9011,
+    "post_view_to_native_cutoff_ms": 0.41956117099999996,
+    "actual_preflight_clocks": 16884,
+    "preflight_over_native_cutoff_ms": 0.366574753,
+    "modeled_remaining_after_preflight_clocks": 13951,
+    "modeled_tail_budget_clocks": 14048,
+    "modeled_tail_shortfall_clocks": 97,
+    "do_not_relax_cutoff_budget_or_phase": true
+  },
+  "decision": "Reject as sustained60fps/time solution:post-view target met907/908 butnew source cost shiftsready;first capture miss911 unchanged.",
+  "next": [
+    {
+      "candidate": "Actual ARM compact execution metadata through retained ordinaryWRAM ABI and new65816 ordinary5consumer",
+      "implemented": false,
+      "provisional_post_view_target_ms": 0.35,
+      "target_is_conditional_on_new_ready_time": true,
+      "required": [
+        "actualM4 planning/staticRAM/stack",
+        "SPI metadata/response/2credit/IRQ",
+        "real65816 metadata ingest/bounds/coverage/gather",
+        "bank-epoch-generation/cache-STOP/finalACK",
+        "samefixedcapture/ROMphase",
+        "source-host-queue-plan-receipt control deletion includingbridge/ROMdecodecost"
+      ],
+      "new_time_gain_ms": null,
+      "new_FPGA_area": null
+    }
+  ],
+  "open": [
+    "71/heavy7/multiplephases/livecoremapper",
+    "cold/postSTOP normalrecovery",
+    "fullresidentCPU/IO/audio/WCET",
+    "wholeLiteFITSTA/CDCIO",
+    "physical60fps",
+    "MMC4/5implementation/margin"
+  ],
+  "preserve": [
+    "375RTL",
+    "377ARM",
+    "compressedwire",
+    "independentexpected/CRC/coverage",
+    "STOP",
+    "finalACK",
+    "VBlank",
+    "fixedcapturedeadlines",
+    "production227",
+    "GBC164",
+    "saveSRAM"
+  ],
+  "automatic_merge": false,
+  "automatic_purchase": false,
+  "full_per_record_profiles": "analysis/increment389-verification.json"
+}
