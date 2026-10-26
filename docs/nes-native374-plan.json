@@ -1,0 +1,453 @@
+{
+  "stage": 374,
+  "date_kst": "2026-10-26",
+  "base": "b3ac54903cd7b8d7ff39655aced232ebcd6213ee",
+  "branch": "codex/nes-capture-admission-365",
+  "contract": "docs/nes-native374-contract.ko.md",
+  "evidence": "analysis/native374-verification.json",
+  "selected_evidence": {
+    "runtime": "joint02",
+    "guards": "guards06",
+    "lifetime": "lifetime02",
+    "whole_MAP": "map06",
+    "context": "context02",
+    "analysis": "analysis02"
+  },
+  "assessment": "NES374 candidate implements compressed E9 -> host native32B -> one256x32 M9K -> NES pipelined8word consumer,replacingNES operand/shortform/packed-alt decoder.372 ARM PT_LOAD,373 dualcontexts/source4ring/shadow512 unchanged. Realaltera_mf_ver primitive used bothsim/board.52differential(36valid incl512B/16records,8malformed,8STOP)+6lifetime cases PASS;source/context37314guards byte-identical retained. Finaljoint02/guards06/lifetime02/MAP06:12frames905..916,next908..917captures10/10,916margin1.746003ms/9171.772094same;31compiledmodules matchboard;wireplan/source/hint exact373all12;stack1288/SPI45528B/IRQ41/EXTI254same.907..916same source-start/ROMcycle,warmtimeallunchanged;91421.500992ms/firstBG16.857025/maxcompletion25.804373ms unchanged.Dataread90->63clocks is not fullpath gain.Cold905-.773us/906-.318us;906startphasechanged.ROM62222pairs/input10878pairs,pending0. InitialRAMFFfallbackMAP02 37348LE24347comb17301FF292448bits rejected;4fragmentMAP03 apparent-36comb notselected;finaloneM9K22596LE17757comb9077FF300640bits vs373 -5LE/0comb/-14FF/0bits.2349combshort/2504withreserve unchanged;nativehostdecoder isstillseparate,so no net control saving. Keep373default;374notselectedboard. ConditionalpostinitRAMaudit finds716..767=52B,partialcontext42B fits10spare;initclearalltouchesit,frameclear677->768skipsit.Newportnotimplemented/noarea-timecredit.E1read-overlap12105bytes/E23398;minobserved369ns~31hostticks,notWCET;42Bcontext-per-read cannotfit,needread-criticalcache/arbiter. Fullhostexecutor/FITSTA/heavy7/71/multiplephase/fullCPU-VBlank/WCET/physical60fpsOPEN. Production227/GBC164/saveSRAM unchanged.",
+  "paired": [
+    {
+      "frame": 905,
+      "before_ms": 85.301772,
+      "after_ms": 85.300999,
+      "delta_ms": -0.0007729999999952497,
+      "same_source_start_ROM_cycle": true,
+      "before_materialized_ms": 17.780969,
+      "after_materialized_ms": 17.780969,
+      "before_BG": {
+        "first_ms": 33.587779,
+        "last_ms": 50.379396
+      },
+      "after_BG": {
+        "first_ms": 33.587779,
+        "last_ms": 50.377759
+      },
+      "before_OBJ": {
+        "first_ms": 50.703392,
+        "last_ms": 50.856663
+      },
+      "after_OBJ": {
+        "first_ms": 50.702301,
+        "last_ms": 50.855026
+      },
+      "before_SPI": 16277,
+      "after_SPI": 16277,
+      "plan_records": 92,
+      "old_data_read_clocks": 1300,
+      "native_data_read_clocks": 828,
+      "data_read_clock_allocation_delta": -472
+    },
+    {
+      "frame": 906,
+      "before_ms": 114.790145,
+      "after_ms": 114.789827,
+      "delta_ms": -0.00031799999999293505,
+      "same_source_start_ROM_cycle": false,
+      "before_materialized_ms": 0.579493,
+      "after_materialized_ms": 0.579493,
+      "before_BG": {
+        "first_ms": 15.601131,
+        "last_ms": 64.896539
+      },
+      "after_BG": {
+        "first_ms": 15.601904,
+        "last_ms": 64.896221
+      },
+      "before_OBJ": {
+        "first_ms": 65.221081,
+        "last_ms": 80.925119
+      },
+      "after_OBJ": {
+        "first_ms": 65.221308,
+        "last_ms": 80.924801
+      },
+      "before_SPI": 11395,
+      "after_SPI": 11395,
+      "plan_records": 90,
+      "old_data_read_clocks": 1268,
+      "native_data_read_clocks": 810,
+      "data_read_clock_allocation_delta": -458
+    },
+    {
+      "frame": 907,
+      "before_ms": 11.879698,
+      "after_ms": 11.879698,
+      "delta_ms": 0.0,
+      "same_source_start_ROM_cycle": true,
+      "before_materialized_ms": 0.584993,
+      "after_materialized_ms": 0.584993,
+      "before_BG": {
+        "first_ms": 6.829872,
+        "last_ms": 6.852236
+      },
+      "after_BG": {
+        "first_ms": 6.829781,
+        "last_ms": 6.851372
+      },
+      "before_OBJ": {
+        "first_ms": 8.332718,
+        "last_ms": 8.342354
+      },
+      "after_OBJ": {
+        "first_ms": 8.3324,
+        "last_ms": 8.341809
+      },
+      "before_SPI": 1693,
+      "after_SPI": 1693,
+      "plan_records": 8,
+      "old_data_read_clocks": 108,
+      "native_data_read_clocks": 72,
+      "data_read_clock_allocation_delta": -36
+    },
+    {
+      "frame": 908,
+      "before_ms": 12.105105,
+      "after_ms": 12.105105,
+      "delta_ms": 0.0,
+      "same_source_start_ROM_cycle": true,
+      "before_materialized_ms": 0.57722,
+      "after_materialized_ms": 0.57722,
+      "before_BG": {
+        "first_ms": 7.001734,
+        "last_ms": 7.011552
+      },
+      "after_BG": {
+        "first_ms": 7.001643,
+        "last_ms": 7.010825
+      },
+      "before_OBJ": null,
+      "after_OBJ": null,
+      "before_SPI": 1544,
+      "after_SPI": 1544,
+      "plan_records": 4,
+      "old_data_read_clocks": 48,
+      "native_data_read_clocks": 36,
+      "data_read_clock_allocation_delta": -12
+    },
+    {
+      "frame": 909,
+      "before_ms": 15.933377,
+      "after_ms": 15.933377,
+      "delta_ms": 0.0,
+      "same_source_start_ROM_cycle": true,
+      "before_materialized_ms": 0.615447,
+      "after_materialized_ms": 0.615447,
+      "before_BG": {
+        "first_ms": 9.418705,
+        "last_ms": 9.428432
+      },
+      "after_BG": {
+        "first_ms": 9.418614,
+        "last_ms": 9.427887
+      },
+      "before_OBJ": null,
+      "after_OBJ": null,
+      "before_SPI": 2268,
+      "after_SPI": 2268,
+      "plan_records": 4,
+      "old_data_read_clocks": 48,
+      "native_data_read_clocks": 36,
+      "data_read_clock_allocation_delta": -12
+    },
+    {
+      "frame": 910,
+      "before_ms": 11.865926,
+      "after_ms": 11.865926,
+      "delta_ms": 0.0,
+      "same_source_start_ROM_cycle": true,
+      "before_materialized_ms": 0.567403,
+      "after_materialized_ms": 0.567403,
+      "before_BG": null,
+      "after_BG": null,
+      "before_OBJ": null,
+      "after_OBJ": null,
+      "before_SPI": 1544,
+      "after_SPI": 1544,
+      "plan_records": 1,
+      "old_data_read_clocks": 6,
+      "native_data_read_clocks": 9,
+      "data_read_clock_allocation_delta": 3
+    },
+    {
+      "frame": 911,
+      "before_ms": 12.207195,
+      "after_ms": 12.207195,
+      "delta_ms": 0.0,
+      "same_source_start_ROM_cycle": true,
+      "before_materialized_ms": 0.591448,
+      "after_materialized_ms": 0.591448,
+      "before_BG": {
+        "first_ms": 7.416411,
+        "last_ms": 7.416411
+      },
+      "after_BG": {
+        "first_ms": 7.41632,
+        "last_ms": 7.41632
+      },
+      "before_OBJ": null,
+      "after_OBJ": null,
+      "before_SPI": 1639,
+      "after_SPI": 1639,
+      "plan_records": 2,
+      "old_data_read_clocks": 20,
+      "native_data_read_clocks": 18,
+      "data_read_clock_allocation_delta": -2
+    },
+    {
+      "frame": 912,
+      "before_ms": 15.237795,
+      "after_ms": 15.237795,
+      "delta_ms": 0.0,
+      "same_source_start_ROM_cycle": true,
+      "before_materialized_ms": 0.595039,
+      "after_materialized_ms": 0.595039,
+      "before_BG": {
+        "first_ms": 8.987665,
+        "last_ms": 8.987665
+      },
+      "after_BG": {
+        "first_ms": 8.987483,
+        "last_ms": 8.987483
+      },
+      "before_OBJ": null,
+      "after_OBJ": null,
+      "before_SPI": 1945,
+      "after_SPI": 1945,
+      "plan_records": 2,
+      "old_data_read_clocks": 20,
+      "native_data_read_clocks": 18,
+      "data_read_clock_allocation_delta": -2
+    },
+    {
+      "frame": 913,
+      "before_ms": 11.940425,
+      "after_ms": 11.940425,
+      "delta_ms": 0.0,
+      "same_source_start_ROM_cycle": true,
+      "before_materialized_ms": 0.568994,
+      "after_materialized_ms": 0.568994,
+      "before_BG": {
+        "first_ms": 6.188244,
+        "last_ms": 6.188244
+      },
+      "after_BG": {
+        "first_ms": 6.188153,
+        "last_ms": 6.188153
+      },
+      "before_OBJ": null,
+      "after_OBJ": null,
+      "before_SPI": 1555,
+      "after_SPI": 1555,
+      "plan_records": 2,
+      "old_data_read_clocks": 20,
+      "native_data_read_clocks": 18,
+      "data_read_clock_allocation_delta": -2
+    },
+    {
+      "frame": 914,
+      "before_ms": 21.500992,
+      "after_ms": 21.500992,
+      "delta_ms": 0.0,
+      "same_source_start_ROM_cycle": true,
+      "before_materialized_ms": 0.601538,
+      "after_materialized_ms": 0.601538,
+      "before_BG": {
+        "first_ms": 16.857025,
+        "last_ms": 16.909388
+      },
+      "after_BG": {
+        "first_ms": 16.857025,
+        "last_ms": 16.907751
+      },
+      "before_OBJ": null,
+      "after_OBJ": null,
+      "before_SPI": 2095,
+      "after_SPI": 2095,
+      "plan_records": 7,
+      "old_data_read_clocks": 90,
+      "native_data_read_clocks": 63,
+      "data_read_clock_allocation_delta": -27
+    },
+    {
+      "frame": 915,
+      "before_ms": 21.111314,
+      "after_ms": 21.111314,
+      "delta_ms": 0.0,
+      "same_source_start_ROM_cycle": true,
+      "before_materialized_ms": 0.59422,
+      "after_materialized_ms": 0.59422,
+      "before_BG": {
+        "first_ms": 13.90206,
+        "last_ms": 13.925423
+      },
+      "after_BG": {
+        "first_ms": 13.901969,
+        "last_ms": 13.924014
+      },
+      "before_OBJ": null,
+      "after_OBJ": null,
+      "before_SPI": 2155,
+      "after_SPI": 2155,
+      "plan_records": 6,
+      "old_data_read_clocks": 76,
+      "native_data_read_clocks": 54,
+      "data_read_clock_allocation_delta": -22
+    },
+    {
+      "frame": 916,
+      "before_ms": 15.720925,
+      "after_ms": 15.720925,
+      "delta_ms": 0.0,
+      "same_source_start_ROM_cycle": true,
+      "before_materialized_ms": 0.568129,
+      "after_materialized_ms": 0.568129,
+      "before_BG": null,
+      "after_BG": null,
+      "before_OBJ": null,
+      "after_OBJ": null,
+      "before_SPI": 1418,
+      "after_SPI": 1418,
+      "plan_records": 1,
+      "old_data_read_clocks": 6,
+      "native_data_read_clocks": 9,
+      "data_read_clock_allocation_delta": 3
+    }
+  ],
+  "whole_MAP": {
+    "before": {
+      "LE": 22601,
+      "comb": 17757,
+      "FF": 9091,
+      "RAM_bits": 300640
+    },
+    "after": {
+      "LE": 22596,
+      "comb": 17757,
+      "FF": 9077,
+      "RAM_bits": 300640
+    },
+    "delta": {
+      "LE": -5,
+      "comb": 0,
+      "FF": -14,
+      "RAM_bits": 0
+    },
+    "disjoint_self_before": {
+      "nes_core257:encoder": 1337,
+      "nes_transport257:transport": 401,
+      "nes_spi270:spi_front270": 577,
+      "nes_validator278:validator": 1039,
+      "nes_output260:flow": 2048,
+      "nes_plan_batch206:transport": 351,
+      "nes_plan_spi200:endpoint": 101,
+      "nes_queue260:queue": 217
+    },
+    "disjoint_self_after": {
+      "nes_core257:encoder": 1335,
+      "nes_transport257:transport": 402,
+      "nes_spi270:spi_front270": 574,
+      "nes_validator278:validator": 1037,
+      "nes_output260:flow": 2049,
+      "nes_plan_batch206:transport": 331,
+      "nes_plan_spi200:endpoint": 100,
+      "nes_queue260:queue": 219
+    }
+  },
+  "context_port_audit": {
+    "stage": 374,
+    "passed": true,
+    "kind": "Constrained static audit,not new RAM port implementation/whole coverage or WCET proof",
+    "trace": {
+      "input": "..\\probes\\nes-native374\\joint02\\joint-events.csv",
+      "sha256": "1d60991c4537399d68b0550fc1eb28e5b356b0d43be336fee1ee9fed067509f8",
+      "minimum_observed_read_period_ps": 369000,
+      "approximately_host_clocks": 31,
+      "read_bytes_during_command_windows": {
+        "226": 3398,
+        "225": 12105
+      },
+      "WCET": false,
+      "constraint": "42B context cannot be fetched serially for every observed31clock DMA read;retain a read-critical cache/pending capture and prove arbitration deadlines. No new scheduler measured."
+    },
+    "phase_RAM_bytes": 1024,
+    "source_shadow_bytes": 512,
+    "existing_RAM_port": "one host read/write port;source NES access moved to separate shadow373",
+    "postinit_legal_region_bytes": {
+      "received_coverage": 422,
+      "persistent_validity": 332,
+      "CRC_banks": 64,
+      "H2_and_display": 36
+    },
+    "postinit_used_bytes": 854,
+    "unused_total_bytes": 170,
+    "contiguous_context_candidate": [
+      716,
+      767
+    ],
+    "candidate_bytes": 52,
+    "minimum_partial_context": [
+      [
+        "active_record",
+        16
+      ],
+      [
+        "flow_byte_progress",
+        9
+      ],
+      [
+        "flow_flags",
+        2
+      ],
+      [
+        "plan_wire_progress",
+        6
+      ],
+      [
+        "SPI_request_and_CRC",
+        9
+      ]
+    ],
+    "minimum_partial_context_bytes": 42,
+    "headroom_bytes": 10,
+    "initialization": "V_CLEARALL touches all1024 bytes;new A port must remain disabled until init278,reset/STOP cancels authority.",
+    "frame_clear": "V_CLEARFRAME512..677 then768..1023;V_RAWINVALID148..165/404..421,so52B remains untouched after initialization.",
+    "bounds": "Coverage addresses assume existing accepted-unit<1328/nonmap or<2048/map and existing final-check cursor0..165/255 guards;not an unconstrained all-state theorem.",
+    "retained_FF": "SPI shift/synchronizers,immutable response snapshots/CRC8,queue credit/history,token/serial burn history,physical read capture and independent fault state.",
+    "required_work": "Add host-clock context A port/owner arbiter and schedule SPI ingress vs SNES read/private completion;replace old states/registers/address muxes,not add a shadow. Charge fetch/store deadlines and CDC/fullMAP.",
+    "actual_port_added": false,
+    "actual_logic_deleted": 0,
+    "time_credit_ms": 0,
+    "area_credit_comb": 0,
+    "inputs": {
+      "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-dual373\\map03\\nes_validator278.sv": "e37dbcbf9a7b1319ca56317c983a57c0dff6571376c64b395df9a039f9389e25",
+      "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\repository-nes-milestone\\src\\fpga\\nes_dual373\\nes_joint257.sv": "9c3d208a8053f8afcdd43a64ab0a745522f7be57379fd302051799f66b1d9194"
+    }
+  },
+  "next_action": "373을기본검증경로로유지하고374단독변환은채택하지않는다. 독립native decoder를더하는대신host HLOAD/HCHECK·descriptor/manifest/receipt·queue ingress/credit·plan 생성의주소/진행실행기를공유하면서기존제어를삭제한다. source를분리한validatorRAM의716..767(52B)에최소부분문맥42B후보를두고init278전접근차단/프레임clear보존/STOP무효화와host-clock A포트의추가비용을포함해실제구현한다. responseCRC/snapshot·namespace/credit·readcapture는별도유지한다.31hosttick관측read간격보다긴42Bfetch를매DMAbyte에넣지말고read-criticalcache/pending과SPIE1동시우선순위/WCET를검증한다. 373의2504순삭제예산(8모듈6071/codec-checker보존제어3695->1191)을전체board로맞춘다.914ROM창·선행planner/후반DMA/manifest공급은같은시작/연속일정으로검증하고미래tag나무료overlap을쓰지않는다. heavy7/71/다중위상·전체CPU/VBlank·WCET·용량확보뒤FITSTA/실기를검증한다.자동merge하지않는다.",
+  "default_RTL": 373,
+  "NES_operand_decoder_replaced": true,
+  "host_shared_executor_replaced": false,
+  "candidate_selected_for_board": false,
+  "continuous_capture_passed": true,
+  "FIT": false,
+  "STA": false,
+  "physical": false,
+  "sustained60fps": false,
+  "limits": [
+    "Compiled372 M4 at CPI1/84MHz and explicit IRQ/peripheral allocations,not hardware WCET.",
+    "Ready-gated ROM stress;ordinary65816 trace plus map DMA/display models,not fullCPU/VBlank/liveNES.",
+    "12frames905..916,next917 capture;not71/heavy7/multiple phase/session/physical validation.",
+    "Native byte default writes must finish before next byte;tested actual2.625MHzSPI and32host-clock unit spacing.",
+    "Vendor model warns DONT_CARE mixed-port reads assume OLD_DATA;bank/decoded lifetime tests ensure no consumed response relies on a collision.",
+    "No combinational-area saving after retaining one M9K;host decoder remains independent of host output executor."
+  ]
+}
