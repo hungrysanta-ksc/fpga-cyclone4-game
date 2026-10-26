@@ -35,7 +35,7 @@ DMA의 $420B write 직후 첫 opcode fetch를 완료 증거로 쓰지 않았다.
 
 guards04는 실제 같은 ROM에서7case를 확인한다. 첫 저장 뒤STOP,모두 저장한 뒤STOP,PPU job2개 뒤STOP은 HDMA off/forced blank로 무효화하고 최종ACK를 보내지 않는다. tile8193B와257번째job은 WRAM 용량 한도에서 거절한다. 별도 CGRAM512B 전송도 실제 PPU data port의512바이트를 확인했다. CGRAM-only case의 이전 VRAM/OAM도 명시적 fixture이며 실제 FPGA 최종 ACK 경계 시험은 아니다.
 
-마지막 `densepalettebudget`은 기존907에 유효한512B palette 갱신을 더한 경우다. 모든 source 저장 뒤 VBlank 예산에서 거절하고 PPU/최종 ACK를 실행하지 않는다. 이는 안전한 admission 동작을 확인하지만 **지원해야 할 프레임을 현재 dense 전략으로 처리하지 못한다는 반례**다. 일반 palette 변경이나 MMC4/5 확장 여유가 확보됐다는 뜻이 아니다.
+마지막 `densepalettebudget`은 기존907 크기 구성에 출력 ABI의 길이·종류가 허용하는512B palette 갱신을 더한 synthetic case다. 추가 ARM/NES 생산 프레임을 실행한 결과는 아니다. 모든 source 저장 뒤 VBlank 예산에서 거절하고 PPU/최종 ACK를 실행하지 않는다. 이는 안전한 admission 동작을 확인하지만 **지원해야 할 palette 갱신 크기를 현재 dense 전략으로 처리하지 못한다는 반례**다. 일반 palette 변경이나 MMC4/5 확장 여유가 확보됐다는 뜻이 아니다.
 
 ## 실제 ARM·SPI·IRQ·ROM 연속 일정
 
