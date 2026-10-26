@@ -1,0 +1,67 @@
+{
+  "stage": 378,
+  "range": [378, 382],
+  "PR": 132,
+  "baseline": {"RTL": 375, "ARM": 377, "mapper_gate": 376},
+  "selected_for_production": false,
+  "audit": "analysis/present378-verification.json",
+  "runs": {
+    "control02": "PASS clock-calibrated immediate-ACK control12frames/capture10of10;not presentation proof",
+    "present02": "FAIL cold display coupling misses fixed907start",
+    "present03": "PASS warm display coupling12frames/capture10of10,but915skipsoneVBlank",
+    "dma01": "FAIL legal warmPPU command gate misses capture910",
+    "commit382-01": "FAIL sameblank381 service still misses capture910;first4212 atline260",
+    "cancel02": "PASS actualARM/RTL STOP after12view reads;noPPU replay/ACK and256hostclockRAMfreeze",
+    "commit01": "PASS7actualCPU cases;old415BSTOP counterexample/new472Bguards",
+    "vblank01": "PASS12actualCPU cases;new516BcurrentblankVcounter admission"
+  },
+  "clock": {
+    "master_period_ps": 46561,
+    "frame_cycles": 357368,
+    "SNES_relative_phase_cycles": 0,
+    "capture_cycle_deadlines_unchanged": true,
+    "measured_hardware_frequency": false,
+    "multiple_phases_tested": false
+  },
+  "whole_area": {
+    "inherited_MAP": 375,
+    "new_MAP": false,
+    "LE": 22390,
+    "comb": 17663,
+    "FF": 8985,
+    "RAM_bits": 300640,
+    "comb_deficit": 2255,
+    "required_net_deletion_with155reserve": 2410,
+    "existing_control_pool": 3582,
+    "replacement_control_ceiling_before_mapper_delta": 1172,
+    "new_simultaneous_input_PPU_commit_control_comb": null,
+    "mapper_delta_comb": null
+  },
+  "next": [
+    {
+      "boundary": "WRAM staging versus PPU DMA/commit",
+      "work": "Move legal WRAM precopy beforeVBlank;batchtile/map setup;keepCGRAM/OAM andbankdisplay atomic. DefineactualPPUDMAcompletion distinctfromFPGAreadreceipt.",
+      "include": ["SNES WRAM address/lifetime", "setup andrefresh", "typedactualportreads", "SPI/IRQ/2slotcredit", "actualPPUDMAcompletion token", "coldboot/recovery"],
+      "time_gain_ms": null,
+      "extra_RAM_bytes": null
+    },
+    {
+      "boundary": "ARM next-source ingest versus current display retirement",
+      "work": "Auditreceiver/history/certificate/video/resident/dirty alias lifetimes;freeze immutablecurrentcommit record before receivingnextsource. PreserveSTOPinvalidatesboth andpostACKhistorycommit.",
+      "include": ["actualM4 calls andsourceCRC", "sharedSPI ownership", "RXbuffer lifetime", "ringbackpressure", "noIRQrecursiveSPI", "inputcredit distinctfromdisplayACK"],
+      "time_gain_ms": null,
+      "extra_RAM_bytes": null
+    },
+    {
+      "boundary": "whole source-host-queue-plan/receipt control deletion",
+      "work": "Replace old execution/address/completion control includingnewstaging andcommitbridge,keepingindependentcodec/checker. VerifywholeLitebudgetbeforeFITSTA.",
+      "include": ["clock/CDC", "RAMport arbitration", "namespace/history", "responseCRC/snapshot", "readcapture", "independentexpected", "mapper376delta"],
+      "comb_result": null
+    }
+  ],
+  "preserve": ["compressed source/377causalhint", "independent CRC/coverage", "STOP/drain", "exact12viewreads", "finaltokenACK", "fixedcapturedeadlines", "VBlankconstraints", "production227", "GBC164", "saveSRAM"],
+  "stop_rule": "If legalPPUschedule andwholecontrolbudgetcannotbothfit,recompareROMarbitration/renderrepresentation/roles/hardwarescope;do not repeatisolatedFSM/counter/seedFITloops or relaxchecks/deadlines.",
+  "open": ["PPUatomicity/fullpixels", "fullresident65816andHDMAupload", "WRIOshadow integration", "liveNEScore/ROMmappercompetition", "MMC4/5implementation andbudget", "71/heavy7", "multiplephase/WCET", "postSTOPnormalrecovery", "wholeFIT/STA/CDCIO", "physical60fps"],
+  "automatic_merge": false,
+  "automatic_purchase": false
+}
