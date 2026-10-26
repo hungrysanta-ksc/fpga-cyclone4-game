@@ -1,0 +1,59 @@
+// SPDX-License-Identifier: MIT
+// One physical CHR-ROM tile, byte-valid, same source clock. Not a CHR-RAM snapshot.
+// Caller flushes on STOP, source write/epoch change, ownership fault and reset.
+module nes_chr_cache192 #(parameter PREEMPT371=0)(input wire withdraw371,
+ input wire clk,reset,flush,request,input wire [31:0] content_epoch,input wire [21:0] address,input wire [15:0] generation,
+ output wire ready,idle,response,error,output wire [21:0] response_address,
+ output wire [15:0] response_generation,output wire [7:0] data,
+ output wire back_request,back_abort,output wire [21:0] back_address,output wire [15:0] back_generation,
+ input wire back_ready,back_idle,back_response,back_error,input wire [21:0] back_response_address,
+ input wire [15:0] back_response_generation,input wire [7:0] back_data
+);
+
+ (* ramstyle="M9K, no_rw_check" *) reg [7:0] bytes[0:127];
+ reg [17:0] tags[0:6];reg [15:0] valid[0:6];
+ reg [2:0] scan,slot,replacement;
+ localparam IDLE=0,SCAN=1,HIT=2,MISS=3,WAIT=4,REPLY=5;
+ reg [2:0] state;reg [31:0] cached_epoch;
+ reg [21:0] held_address;reg [15:0] held_generation;reg [7:0] value,q;reg failed;
+ wire invalidate=reset||flush||cached_epoch!=content_epoch;
+ wire withdraw=PREEMPT371&&withdraw371;
+ wire live=!invalidate;wire pending=state==WAIT;
+ wire good=back_response&&!back_error&&back_response_address==held_address&&back_response_generation==held_generation;
+ assign ready=live&&state==IDLE&&back_idle;
+ assign idle=live&&state==IDLE&&back_idle;
+ assign response=live&&state==REPLY;assign error=failed;
+ assign response_address=held_address;assign response_generation=held_generation;assign data=value;
+ assign back_request=live&&state==MISS&&!withdraw;assign back_abort=invalidate;
+ assign back_address=held_address;assign back_generation=held_generation;
+ always @(posedge clk)begin
+  q<=bytes[{scan,held_address[3:0]}];
+  if(live&&pending&&good)bytes[{slot,held_address[3:0]}]<=back_data;
+ end
+ always @(posedge clk)begin
+  cached_epoch<=content_epoch;
+  if(invalidate)begin
+   state<=IDLE;scan<=0;slot<=0;replacement<=0;held_address<=0;held_generation<=0;value<=0;failed<=0;
+   for(integer j=0;j<7;j++)begin tags[j]<=0;valid[j]<=0;end
+  end else if(withdraw&&state!=WAIT&&state!=IDLE)begin state<=IDLE;failed<=0;end
+  else case(state)
+   IDLE:if(request&&ready)begin held_address<=address;held_generation<=generation;scan<=0;failed<=0;state<=SCAN;end
+   SCAN:begin
+    if(valid[scan]!=0&&tags[scan]==held_address[21:4])begin
+     slot<=scan;state<=valid[scan][held_address[3:0]]?HIT:MISS;
+    end else if(scan==6)begin
+     slot<=replacement;tags[replacement]<=held_address[21:4];valid[replacement]<=0;
+     replacement<=replacement==6?0:replacement+1'b1;state<=MISS;
+    end else scan<=scan+1'b1;
+   end
+   HIT:begin value<=q;state<=REPLY;end
+   MISS:if(back_ready)state<=WAIT;
+   WAIT:if(back_response)begin
+    value<=back_data;failed<=!good;state<=REPLY;
+    if(good)valid[slot]<=valid[slot]|(16'd1<<held_address[3:0]);
+   end
+   REPLY:state<=IDLE;
+   default:begin failed<=1;state<=IDLE;end
+  endcase
+ end
+endmodule
