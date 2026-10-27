@@ -1,0 +1,107 @@
+{
+  "stage": 392,
+  "PR": 132,
+  "baseline": {
+    "RTL": 375,
+    "ARM": 377,
+    "mapper_gate": 376,
+    "SNES": 388
+  },
+  "selected_for_production": false,
+  "selected_as_time_improvement": false,
+  "verification": "analysis/plan392-verification.json",
+  "implementation": {
+    "ARM": "real target bitmap -> compact sparse/column/dense;separate209B buffer",
+    "wire": "op2 section6 literal,start0,16..144B;bank/gen/serial bound",
+    "SNES": "actual metadata and ordinary5 WRAM DMA;independent map coverage/count;PPU then finalACK",
+    "original_independent_checker": "retained",
+    "source_receipt": "WRAM storage,not PPU",
+    "STOP": "bothcachebits0,forcedblank,HDMAoff,noACK",
+    "VBlank": "original cutoff and512reserve"
+  },
+  "results": {
+    "component_frames": 10,
+    "ARM_guard_vectors": 30,
+    "native_frames": 10,
+    "native_STOP": 1,
+    "native_guards": 19,
+    "RTL_decision_checks": 518,
+    "continuous_completed": [
+      905,
+      906,
+      907,
+      908
+    ],
+    "first_missed_capture": 911,
+    "same_start_and_ROM_frames": [
+      907,
+      908
+    ],
+    "max_storage_credit": 2,
+    "scope": "Real M4 producer, exact extra SPI plan and measured real65816 storage/PPU service on liveRTL;not fullresident CPU lockstep/physical/WCET. Cold905906 original. Original independent expected/CRC/coverage retained;metadata execution coverage additionally checked by native CPU."
+  },
+  "cost": {
+    "ARM": {
+      "text": 36570,
+      "data": 4,
+      "BSS": 48724
+    },
+    "ARM_delta": {
+      "text": 588,
+      "data": 0,
+      "BSS": 248
+    },
+    "SNES_ROM_body_bytes": 3543,
+    "SNES_ROM_delta_vs388": 269,
+    "SNES_active_fragment_WRAM_bytes": 23697,
+    "SNES_both_plan_banks_reserved_WRAM_bytes": 23841,
+    "SNES_reserved_delta_vs388": -928,
+    "DP_additional_conservative_bytes": 52,
+    "whole_RTL_MAP": {
+      "LE": 22471,
+      "comb": 17744,
+      "FF": 8985,
+      "RAM_bits": 300640
+    },
+    "whole_RTL_delta": {
+      "LE": 81,
+      "comb": 81,
+      "FF": 0,
+      "RAM_bits": 0
+    },
+    "comb_shortfall": 2336,
+    "net_deletion_with155reserve": 2491,
+    "board_program_ROM_unchanged": true,
+    "resident_CPU_ROM_decode_delta": null,
+    "FIT": false,
+    "STA": false
+  },
+  "causal": {
+    "frame": 908,
+    "post_view_phase": 339307,
+    "native_cutoff_phase": 335544,
+    "already_late_clocks": 3763,
+    "post_view_preparation_ms": 2.58739477,
+    "do_not_relax_phase_cutoff_capture_or_reserve": true
+  },
+  "next": [
+    "Keep375/377 baseline and376mappergate;reject this bounds-only adapter as simultaneous time/area solution.",
+    "Compare final ARM DMA jobs and column-ordered payload so SNES job rebuild,64column scan and late gather disappear together;charge actual ARM/wire/storage/CRC/IRQ/receipt.",
+    "Require this common ABI to DELETE legacy source/host/queue/plan/receipt execution,not add another adapter;2491 netcomb deletion plus resident/context/mapper delta;legacy3582control<=1091 ifnew81retained.",
+    "Before selecting,complete empty-warm plan publication,cold/STOP recovery,71/heavy7,multiplephases,fullresidentCPU,wholeFIT/STA andphysical continuous60fps."
+  ],
+  "remaining": {
+    "resident_program_ROM_installed": false,
+    "empty_warm_publication": false,
+    "full_RUN": false,
+    "physical60fps": false,
+    "MMC4_5_headroom_approved": false
+  },
+  "preserve": [
+    "production227",
+    "GBC164",
+    "saveSRAM",
+    "all390/391/392 intermediate failures"
+  ],
+  "automatic_merge": false
+}
