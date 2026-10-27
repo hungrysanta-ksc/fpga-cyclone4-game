@@ -1,0 +1,1904 @@
+{
+  "audit_passed": true,
+  "production_selected": false,
+  "time_goal_met": false,
+  "area_goal_met": false,
+  "FIT": false,
+  "STA": false,
+  "scope": "Audit matching 398 implementation, safety tests and whole costs.\nAn audit PASS verifies the reported outcome; it is not a 60fps/board approval.\n",
+  "selected": {
+    "build": "build16",
+    "whole_map": "map15",
+    "live": "live11",
+    "unit": "host10",
+    "hint": "hint07",
+    "execution": "exec07",
+    "repeat": "repeat02",
+    "ARM_component": "arm02",
+    "ARM_frontier": "armguard02",
+    "ARM_ownership": "owner04",
+    "repeat32": "repeat03"
+  },
+  "whole": {
+    "baseline396": {
+      "LE": 22872,
+      "comb": 18108,
+      "FF": 9033,
+      "RAM_bits": 310112
+    },
+    "EA_only398": {
+      "LE": 22899,
+      "comb": 18131,
+      "FF": 9045,
+      "RAM_bits": 310112
+    },
+    "joint398": {
+      "LE": 22157,
+      "comb": 17428,
+      "FF": 8916,
+      "RAM_bits": 382304
+    },
+    "delta_vs396": {
+      "LE": -715,
+      "comb": -680,
+      "FF": -117,
+      "RAM_bits": 72192
+    }
+  },
+  "control": {
+    "baseline": 4027,
+    "pool": {
+      "host_and_byte_core": 1422,
+      "NES_source_plan_hint": 1012,
+      "SPI": 686,
+      "queue": 263,
+      "tile": 48,
+      "program_decode": 40
+    },
+    "total": 3471,
+    "cap": 1172,
+    "over_cap": 2299,
+    "retained": 2335,
+    "outside": 11622,
+    "net_control_deletion": 556,
+    "device_comb_deficit": 2020,
+    "with155reserve_deficit": 2175,
+    "host_plus_program_alone": 1462
+  },
+  "program": {
+    "code_words": 2410,
+    "allocated_words": 4096,
+    "bits": 18,
+    "context_RAM_bytes": 1024,
+    "context_range": [
+      800,
+      1023
+    ],
+    "tag_range": [
+      928,
+      941
+    ]
+  },
+  "guards": {
+    "independent_vectors": 24000,
+    "physical_errors_STOP": 20,
+    "actual_reads": 25462,
+    "repeat_reads": 26560,
+    "max_credit": 2,
+    "EA_valid_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "EA7_generations": [
+      0,
+      1,
+      12,
+      13,
+      65530
+    ],
+    "EA_negatives": 9,
+    "E9_512B": true,
+    "frontier_cases": 1770,
+    "repeat32_reads": 26560,
+    "active_hint_STOP_late_DONE": true,
+    "ARM_map_ownership_cases": [
+      {
+        "case": "legacy_owner_blocks_incremental",
+        "wire": [
+          "e1aa020000010000000300000000294a"
+        ],
+        "packet_count": 1
+      },
+      {
+        "case": "incremental_owner_blocks_legacy",
+        "packet_count": 1
+      },
+      {
+        "case": "END_reserved_before_physical_E1",
+        "phase_at_publication": [
+          1
+        ]
+      }
+    ],
+    "old_ARM_duplicate_reproduced": true,
+    "ARM_component_exact_coverage_frames": 71,
+    "old_live915_END_then_MAP": {
+      "END_bytes": 13,
+      "extra_MAP_bytes": 130,
+      "END_ms": 434.690911,
+      "extra_MAP_ms": 435.286732,
+      "FPGA_rejection_correct": true
+    }
+  },
+  "ARM": {
+    "text": 35780,
+    "data": 4,
+    "BSS": 48728,
+    "ELF": "41a5658122a0349d461f034dcfbdcfb606e7ba53bb6c554a21e7439f20eedb5c",
+    "EA_packets": [
+      {
+        "frame": 907,
+        "tags": [
+          6525,
+          6424,
+          6426,
+          6425,
+          6427,
+          5082,
+          5080
+        ],
+        "bytes": 28
+      },
+      {
+        "frame": 908,
+        "tags": [
+          531,
+          536,
+          534
+        ],
+        "bytes": 20
+      },
+      {
+        "frame": 909,
+        "tags": [
+          531,
+          536,
+          534
+        ],
+        "bytes": 20
+      },
+      {
+        "frame": 911,
+        "tags": [
+          535
+        ],
+        "bytes": 16
+      },
+      {
+        "frame": 912,
+        "tags": [
+          535
+        ],
+        "bytes": 16
+      },
+      {
+        "frame": 913,
+        "tags": [
+          6136
+        ],
+        "bytes": 16
+      },
+      {
+        "frame": 914,
+        "tags": [
+          6653,
+          6552,
+          6553,
+          6136,
+          6554,
+          6555
+        ],
+        "bytes": 26
+      },
+      {
+        "frame": 915,
+        "tags": [
+          6653,
+          6552,
+          6553,
+          6554,
+          6555
+        ],
+        "bytes": 24
+      }
+    ],
+    "CPI": 1,
+    "hardware_WCET": false,
+    "schedule_rows": [
+      {
+        "frame": 905,
+        "instructions_reported": 1572416,
+        "source_instructions_reported": 227662,
+        "instruction_reports_not_added": true,
+        "SPI_bytes": 17031,
+        "source_read_wire_bytes": 6076,
+        "output_and_commit_wire_bytes": 10955,
+        "output_and_commit_commands": {
+          "d5": 1,
+          "e1": 69,
+          "e2": 117,
+          "e9": 10,
+          "ea": 1
+        },
+        "source_D4_commands": 28,
+        "logged_SPI_IRQ_instructions": 660,
+        "logged_SPI_exception_cycles": 1944,
+        "IRQ_log_is_precommit_subset": true,
+        "wire_only_ms": 51.903999999999996,
+        "wire_is_already_in_actual_schedule": true
+      },
+      {
+        "frame": 906,
+        "instructions_reported": 1121526,
+        "source_instructions_reported": 21271,
+        "instruction_reports_not_added": true,
+        "SPI_bytes": 11742,
+        "source_read_wire_bytes": 507,
+        "output_and_commit_wire_bytes": 11235,
+        "output_and_commit_commands": {
+          "d5": 1,
+          "e1": 77,
+          "e2": 125,
+          "e9": 9,
+          "ea": 1
+        },
+        "source_D4_commands": 4,
+        "logged_SPI_IRQ_instructions": 744,
+        "logged_SPI_exception_cycles": 1944,
+        "IRQ_log_is_precommit_subset": true,
+        "wire_only_ms": 35.78514285714286,
+        "wire_is_already_in_actual_schedule": true
+      },
+      {
+        "frame": 907,
+        "instructions_reported": 548726,
+        "source_instructions_reported": 27531,
+        "instruction_reports_not_added": true,
+        "SPI_bytes": 2140,
+        "source_read_wire_bytes": 608,
+        "output_and_commit_wire_bytes": 1532,
+        "output_and_commit_commands": {
+          "ea": 2,
+          "d5": 1,
+          "e1": 22,
+          "e2": 46,
+          "e9": 4
+        },
+        "source_D4_commands": 7,
+        "logged_SPI_IRQ_instructions": 276,
+        "logged_SPI_exception_cycles": 672,
+        "IRQ_log_is_precommit_subset": true,
+        "wire_only_ms": 6.521904761904762,
+        "wire_is_already_in_actual_schedule": true
+      },
+      {
+        "frame": 908,
+        "instructions_reported": 565855,
+        "source_instructions_reported": 31958,
+        "instruction_reports_not_added": true,
+        "SPI_bytes": 1582,
+        "source_read_wire_bytes": 455,
+        "output_and_commit_wire_bytes": 1127,
+        "output_and_commit_commands": {
+          "ea": 2,
+          "d5": 1,
+          "e1": 17,
+          "e2": 29,
+          "e9": 3
+        },
+        "source_D4_commands": 2,
+        "logged_SPI_IRQ_instructions": 69,
+        "logged_SPI_exception_cycles": 408,
+        "IRQ_log_is_precommit_subset": true,
+        "wire_only_ms": 4.8213333333333335,
+        "wire_is_already_in_actual_schedule": true
+      },
+      {
+        "frame": 909,
+        "instructions_reported": 701033,
+        "source_instructions_reported": 61267,
+        "instruction_reports_not_added": true,
+        "SPI_bytes": 2290,
+        "source_read_wire_bytes": 891,
+        "output_and_commit_wire_bytes": 1399,
+        "output_and_commit_commands": {
+          "ea": 2,
+          "d5": 1,
+          "e1": 20,
+          "e2": 36,
+          "e9": 3
+        },
+        "source_D4_commands": 4,
+        "logged_SPI_IRQ_instructions": 138,
+        "logged_SPI_exception_cycles": 552,
+        "IRQ_log_is_precommit_subset": true,
+        "wire_only_ms": 6.979047619047619,
+        "wire_is_already_in_actual_schedule": true
+      },
+      {
+        "frame": 910,
+        "instructions_reported": 510733,
+        "source_instructions_reported": 20361,
+        "instruction_reports_not_added": true,
+        "SPI_bytes": 1605,
+        "source_read_wire_bytes": 351,
+        "output_and_commit_wire_bytes": 1254,
+        "output_and_commit_commands": {
+          "d5": 1,
+          "e1": 18,
+          "e2": 34,
+          "e9": 3,
+          "ea": 1
+        },
+        "source_D4_commands": 2,
+        "logged_SPI_IRQ_instructions": 69,
+        "logged_SPI_exception_cycles": 456,
+        "IRQ_log_is_precommit_subset": true,
+        "wire_only_ms": 4.8914285714285715,
+        "wire_is_already_in_actual_schedule": true
+      },
+      {
+        "frame": 911,
+        "instructions_reported": 555611,
+        "source_instructions_reported": 36768,
+        "instruction_reports_not_added": true,
+        "SPI_bytes": 1726,
+        "source_read_wire_bytes": 637,
+        "output_and_commit_wire_bytes": 1089,
+        "output_and_commit_commands": {
+          "ea": 2,
+          "d5": 1,
+          "e1": 17,
+          "e2": 29,
+          "e9": 3
+        },
+        "source_D4_commands": 4,
+        "logged_SPI_IRQ_instructions": 69,
+        "logged_SPI_exception_cycles": 432,
+        "IRQ_log_is_precommit_subset": true,
+        "wire_only_ms": 5.260190476190476,
+        "wire_is_already_in_actual_schedule": true
+      },
+      {
+        "frame": 912,
+        "instructions_reported": 701353,
+        "source_instructions_reported": 57986,
+        "instruction_reports_not_added": true,
+        "SPI_bytes": 1956,
+        "source_read_wire_bytes": 668,
+        "output_and_commit_wire_bytes": 1288,
+        "output_and_commit_commands": {
+          "ea": 2,
+          "d5": 1,
+          "e1": 19,
+          "e2": 34,
+          "e9": 3
+        },
+        "source_D4_commands": 4,
+        "logged_SPI_IRQ_instructions": 138,
+        "logged_SPI_exception_cycles": 504,
+        "IRQ_log_is_precommit_subset": true,
+        "wire_only_ms": 5.961142857142858,
+        "wire_is_already_in_actual_schedule": true
+      },
+      {
+        "frame": 913,
+        "instructions_reported": 517130,
+        "source_instructions_reported": 22012,
+        "instruction_reports_not_added": true,
+        "SPI_bytes": 1498,
+        "source_read_wire_bytes": 381,
+        "output_and_commit_wire_bytes": 1117,
+        "output_and_commit_commands": {
+          "ea": 2,
+          "d5": 1,
+          "e1": 16,
+          "e2": 27,
+          "e9": 3
+        },
+        "source_D4_commands": 3,
+        "logged_SPI_IRQ_instructions": 69,
+        "logged_SPI_exception_cycles": 432,
+        "IRQ_log_is_precommit_subset": true,
+        "wire_only_ms": 4.565333333333333,
+        "wire_is_already_in_actual_schedule": true
+      },
+      {
+        "frame": 914,
+        "instructions_reported": 678598,
+        "source_instructions_reported": 49619,
+        "instruction_reports_not_added": true,
+        "SPI_bytes": 2855,
+        "source_read_wire_bytes": 756,
+        "output_and_commit_wire_bytes": 2099,
+        "output_and_commit_commands": {
+          "ea": 2,
+          "d5": 1,
+          "e1": 29,
+          "e2": 68,
+          "e9": 3
+        },
+        "source_D4_commands": 5,
+        "logged_SPI_IRQ_instructions": 138,
+        "logged_SPI_exception_cycles": 816,
+        "IRQ_log_is_precommit_subset": true,
+        "wire_only_ms": 8.70095238095238,
+        "wire_is_already_in_actual_schedule": true
+      },
+      {
+        "frame": 915,
+        "instructions_reported": 761908,
+        "source_instructions_reported": 56910,
+        "instruction_reports_not_added": true,
+        "SPI_bytes": 2845,
+        "source_read_wire_bytes": 646,
+        "output_and_commit_wire_bytes": 2199,
+        "output_and_commit_commands": {
+          "ea": 2,
+          "d5": 1,
+          "e1": 30,
+          "e2": 69,
+          "e9": 3
+        },
+        "source_D4_commands": 3,
+        "logged_SPI_IRQ_instructions": 138,
+        "logged_SPI_exception_cycles": 792,
+        "IRQ_log_is_precommit_subset": true,
+        "wire_only_ms": 8.67047619047619,
+        "wire_is_already_in_actual_schedule": true
+      },
+      {
+        "frame": 916,
+        "instructions_reported": 500534,
+        "source_instructions_reported": 20893,
+        "instruction_reports_not_added": true,
+        "SPI_bytes": 1408,
+        "source_read_wire_bytes": 359,
+        "output_and_commit_wire_bytes": 1049,
+        "output_and_commit_commands": {
+          "d5": 1,
+          "e1": 15,
+          "e2": 27,
+          "e9": 3,
+          "ea": 1
+        },
+        "source_D4_commands": 2,
+        "logged_SPI_IRQ_instructions": 138,
+        "logged_SPI_exception_cycles": 408,
+        "IRQ_log_is_precommit_subset": true,
+        "wire_only_ms": 4.291047619047619,
+        "wire_is_already_in_actual_schedule": true
+      }
+    ],
+    "schedule_comparison": [
+      {
+        "frame": 905,
+        "joint_SPI_bytes": 17031,
+        "joint_instructions": 1572416,
+        "baseline396": {
+          "SPI_bytes": 16233,
+          "instructions": 1511850,
+          "SPI_byte_delta": 798,
+          "instruction_delta": 60566
+        },
+        "EA_only398": {
+          "SPI_bytes": 16233,
+          "instructions": 1511876,
+          "SPI_byte_delta": 798,
+          "instruction_delta": 60540
+        }
+      },
+      {
+        "frame": 906,
+        "joint_SPI_bytes": 11742,
+        "joint_instructions": 1121526,
+        "baseline396": {
+          "SPI_bytes": 10916,
+          "instructions": 1059891,
+          "SPI_byte_delta": 826,
+          "instruction_delta": 61635
+        },
+        "EA_only398": {
+          "SPI_bytes": 10916,
+          "instructions": 1059893,
+          "SPI_byte_delta": 826,
+          "instruction_delta": 61633
+        }
+      },
+      {
+        "frame": 907,
+        "joint_SPI_bytes": 2140,
+        "joint_instructions": 548726,
+        "baseline396": {
+          "SPI_bytes": 1958,
+          "instructions": 525621,
+          "SPI_byte_delta": 182,
+          "instruction_delta": 23105
+        },
+        "EA_only398": {
+          "SPI_bytes": 1958,
+          "instructions": 525635,
+          "SPI_byte_delta": 182,
+          "instruction_delta": 23091
+        }
+      },
+      {
+        "frame": 908,
+        "joint_SPI_bytes": 1582,
+        "joint_instructions": 565855,
+        "baseline396": {
+          "SPI_bytes": 1604,
+          "instructions": 564527,
+          "SPI_byte_delta": -22,
+          "instruction_delta": 1328
+        },
+        "EA_only398": {
+          "SPI_bytes": 1456,
+          "instructions": 549476,
+          "SPI_byte_delta": 126,
+          "instruction_delta": 16379
+        }
+      },
+      {
+        "frame": 909,
+        "joint_SPI_bytes": 2290,
+        "joint_instructions": 701033,
+        "EA_only398": {
+          "SPI_bytes": 2108,
+          "instructions": 680240,
+          "SPI_byte_delta": 182,
+          "instruction_delta": 20793
+        }
+      },
+      {
+        "frame": 910,
+        "joint_SPI_bytes": 1605,
+        "joint_instructions": 510733,
+        "EA_only398": {
+          "SPI_bytes": 1450,
+          "instructions": 492824,
+          "SPI_byte_delta": 155,
+          "instruction_delta": 17909
+        }
+      },
+      {
+        "frame": 911,
+        "joint_SPI_bytes": 1726,
+        "joint_instructions": 555611,
+        "EA_only398": {
+          "SPI_bytes": 1600,
+          "instructions": 539232,
+          "SPI_byte_delta": 126,
+          "instruction_delta": 16379
+        }
+      },
+      {
+        "frame": 912,
+        "joint_SPI_bytes": 1956,
+        "joint_instructions": 701353,
+        "EA_only398": {
+          "SPI_bytes": 1774,
+          "instructions": 682232,
+          "SPI_byte_delta": 182,
+          "instruction_delta": 19121
+        }
+      },
+      {
+        "frame": 913,
+        "joint_SPI_bytes": 1498,
+        "joint_instructions": 517130,
+        "EA_only398": {
+          "SPI_bytes": 1386,
+          "instructions": 499999,
+          "SPI_byte_delta": 112,
+          "instruction_delta": 17131
+        }
+      },
+      {
+        "frame": 914,
+        "joint_SPI_bytes": 2855,
+        "joint_instructions": 678598,
+        "EA_only398": {
+          "SPI_bytes": 2561,
+          "instructions": 649228,
+          "SPI_byte_delta": 294,
+          "instruction_delta": 29370
+        }
+      },
+      {
+        "frame": 915,
+        "joint_SPI_bytes": 2845,
+        "joint_instructions": 761908,
+        "EA_only398": {
+          "SPI_bytes": 2509,
+          "instructions": 728066,
+          "SPI_byte_delta": 336,
+          "instruction_delta": 33842
+        }
+      },
+      {
+        "frame": 916,
+        "joint_SPI_bytes": 1408,
+        "joint_instructions": 500534,
+        "EA_only398": {
+          "SPI_bytes": 1310,
+          "instructions": 486608,
+          "SPI_byte_delta": 98,
+          "instruction_delta": 13926
+        }
+      }
+    ],
+    "component_ELF": "e3886a92f27681c9de279ba10b7354ce6ec852f5a577b0590efdf1106ce9bfbb",
+    "component_live_PT_LOAD_and_symbols_exact": true,
+    "PT_LOAD": [
+      {
+        "vaddr": 134217728,
+        "paddr": 134217728,
+        "memsz": 35780,
+        "flags": 5,
+        "sha256": "5fefba0f8fdb72b45cae84298dad7bc73cf7760d55bc6b6bf1f735cc906948dd"
+      },
+      {
+        "vaddr": 536870912,
+        "paddr": 536870912,
+        "memsz": 48736,
+        "flags": 6,
+        "sha256": "67abdd721024f0ff4e0b3f4c2fc13bc5bad42d0b7851d456d88d203d15aaa450"
+      }
+    ],
+    "matching_materialized_sources": {
+      "layout.ld": "9347fe98658ad3c797886a4e44d51a911f2eb8dbf8c1de43445b9c292f53d264",
+      "libgcc.a": "055bcb8f88115d9623a7668e8cc7742b77a239f8e8fbd832126227864845eed1",
+      "nes_bind287.c": "05b64c1dbbe7265314888fede116cd769a1d820f7f78815a471f018f5b57e612",
+      "nes_bridge267.c": "4c6f87d604f79c4446c7b9e19fd1fe06608cd0966e3902b6886fe50e6e5bd578",
+      "nes_compact390.c": "135adb75be62c9afc0a372660c8d19388f2372facee17f70b5763bff8a0d06cd",
+      "nes_crc283.h": "98e30664253639d8c5d0d100fd0c43673774ffc9fc3926b92099c9a447086aa2",
+      "nes_decode280.c": "1fc1cbf249864aa7555084f57057adaa14be92f96c1bd2ac69081f1530ce59db",
+      "nes_delta231.c": "c3fc4d73f64c6b3dc7d0e09303d529dc6ff603f8af67b136297e1bb5f5e58111",
+      "nes_delta231.h": "8d3b4a52f8460d14280b854f003e755a9f707a266c7d412660ca2d1dcdb6b98f",
+      "nes_delta231_receiver.inc": "93bee8d2422efaf256f06915fdadd2079f59d9b9c8e031c89bd7062fcac657c7",
+      "nes_exchange280.inc": "5d8479121f738d977d1d204a9a6129b317f06feeb1dd6f6718701d5f6fbcc541",
+      "nes_input286.inc": "c0ee723ce6d29233d8b7b5e53fd72e4466670e0031381c0171c60da0853acfe9",
+      "nes_irq284.c": "a54e54188a251be6b782af55199544cc88d3b2992acfd1305d8442ce2549a633",
+      "nes_native165.c": "ac8914729dec0c48df7e85074d0b9a10377ac97afdd8b21f526a41901c65af06",
+      "nes_native165.h": "df998eec151220b684a68a4bc689dc46c5910c329b7cef90bffa9cbf1442b963",
+      "nes_native289.c": "362d35b12a4c39673837f6d09245d5c8b9f2ff1eaeb48961c874db48df2a0496",
+      "nes_native289.inc": "ddf115b5ecc468e61136916048bae1aad3e5fa5b2076202eda9404180824e049",
+      "nes_native_sink165.h": "76dce1550806abe9950f9f5c8c108b1ae94c59cbfd66912abefe77c0d80eb76f",
+      "nes_native_video165.h": "a3b66043f463631bba7d4d2197a1396933887ad95f6c035ed448396ab21a5768",
+      "nes_output264.c": "0a1adb704a580922c2365f148fe7a548d6115fc5df849d21f8627b4b5ff12252",
+      "nes_output270.c": "57d3e82f35c6d4d7875e51306fd2333e9b468081a7c1c6a03b2a78f3c7d779ca",
+      "nes_plan191.h": "8792dec36d2166bb3c06e3b7fab2ae4ab823b025ff007af73ba248520951f7cf",
+      "nes_plan_wire196.h": "e05c68d7faed7223667f70981b7c915cf180aeac7d1bc4df416c3c7085453018",
+      "nes_plan_wire199.h": "518c0c885b180ae14a58f644f089130a9bbabe0ba6bfb21eb30dae084f7d6707",
+      "nes_planner211.c": "bab77f462774fdc7d4616eaec3cff38103399575725de5f87108b0b5403c3ac5",
+      "nes_planner285.c": "329fbc74a37f194bd6bc5546bb9779a9cf8e73c5f9a5234e2205b6a7576d4dd6",
+      "nes_producer264.c": "2c496f6f2041d1cd49d04578484e1fb112cc647b2e27dffe9ddf458861a149d6",
+      "nes_progress282.c.inc": "c3660308650a3205250aa987ade2d3d0522f9831d2777979f97e71b5bdcf875b",
+      "nes_refill267.c": "fd6ce847ce0048095fa226c930028eb6d28dace4133f1c597fd53f74a7756e6b",
+      "nes_refill282.c": "2acceb245d5ba56ea4abea5d66df1207a6534ed1aba441488aaead9c344792a0",
+      "nes_refill284.c": "2011df942a3a710ce14e714db06a97e65710b3c815d2cc583408d46430bd6993",
+      "nes_resident211.c": "8e5631c1ee37d3ca39b000d7869034f474547ea9f7f273ae77f914aa0f6f3700",
+      "nes_resident211.h": "01a3bdd5341b1a2488614117bf156c365ec0697d8bee434b1de9bcc186f1d7d1",
+      "nes_rows287.inc": "10891cc03bd390c36e8e7183b74350fe6bce3a64686c4ce0f199abf8bbba7b23",
+      "nes_sink_bulk195.h": "108c539e4b5db7365b2bd8c8806baccf7b0f65c67673479a13647f03226205be",
+      "nes_sink_bulk195.inc": "ec105d501010678b2b9d15e2cae45bbbd4602ba82fb39742ac69635e9a08f69c",
+      "nes_sink_trace168.h": "806eb4349a3afef2008dd02f92a1523e3dd7f1521ebc94a7429e94d42c85aacb",
+      "nes_source367.c": "97af8c2ce572e16a3ee8344fce45aa372d15f3f3b20edbb0baf6a1b9bf48b492",
+      "nes_source368.c": "7da95e4d6c459d3a7ff38a5b04a4c88b686251dbee72b788a692116f19ec31d2",
+      "nes_source_exchange280.inc": "69b630c9349558b31739dc615c7dc16ee2e308d9ba8a4838173df9351d07d1de",
+      "nes_split274.inc": "68b62d209e1b09da72e091abac17ed08ba20fa4a77d4328c3b353510f947603a",
+      "nes_trace166.c": "eb400234d88399773a671233eef4d15e13f20bb750de834cfbf2b53e21dc316c",
+      "nes_trace166.h": "76923567ede1a152fc056c482e27eb3a81e97fe19d04ff84a789a26cc9d319e5",
+      "order247.h": "f80a97979e41f26e13a25d2a16e01e1fdf4d2712847de12ac5dd45ff6e98d998",
+      "reference203.h": "d959e0809dbd33491e92d171b0f3788546cfa16790ca3c81748dd3ccb7fedd00",
+      "scene203.inc": "22b4d2219ff48e7f9fa8d8de160aa04754f2520d8a2b0ce5ea13d1def2cfad31",
+      "source-ARM-nes_decode280.c": "a92d4f4ce40121716b02dbbbe3afb90a6ef9ce53943631cac532a6dea8695465",
+      "stubs.s": "2656d2a3b513d8d018fe88aa3bec771999c6dc6b4144756a67f0514ed3ca2c00"
+    },
+    "no_E1_after_END_in_completed_frame_logs": true
+  },
+  "timing": {
+    "actual": {
+      "present": [
+        {
+          "frame": 905,
+          "ms": 114.231057,
+          "VBlank": 6,
+          "phase": 309151
+        },
+        {
+          "frame": 906,
+          "ms": 230.705506,
+          "VBlank": 13,
+          "phase": 309121
+        },
+        {
+          "frame": 907,
+          "ms": 281.568132,
+          "VBlank": 16,
+          "phase": 329404
+        },
+        {
+          "frame": 908,
+          "ms": 297.832032,
+          "VBlank": 17,
+          "phase": 321339
+        },
+        {
+          "frame": 909,
+          "ms": 315.456451,
+          "VBlank": 18,
+          "phase": 342494
+        },
+        {
+          "frame": 910,
+          "ms": 331.109687,
+          "VBlank": 19,
+          "phase": 321314
+        },
+        {
+          "frame": 911,
+          "ms": 347.735266,
+          "VBlank": 20,
+          "phase": 321017
+        },
+        {
+          "frame": 912,
+          "ms": 364.447458,
+          "VBlank": 21,
+          "phase": 322580
+        },
+        {
+          "frame": 913,
+          "ms": 381.026326,
+          "VBlank": 22,
+          "phase": 321279
+        },
+        {
+          "frame": 914,
+          "ms": 415.069611,
+          "VBlank": 24,
+          "phase": 337698
+        },
+        {
+          "frame": 915,
+          "ms": 448.360873,
+          "VBlank": 26,
+          "phase": 337965
+        },
+        {
+          "frame": 916,
+          "ms": 464.102247,
+          "VBlank": 27,
+          "phase": 318678
+        }
+      ],
+      "done": [
+        {
+          "frame": 905,
+          "ms": 114.314239
+        },
+        {
+          "frame": 906,
+          "ms": 230.788676
+        },
+        {
+          "frame": 907,
+          "ms": 281.651307
+        },
+        {
+          "frame": 908,
+          "ms": 297.915204
+        },
+        {
+          "frame": 909,
+          "ms": 315.53966
+        },
+        {
+          "frame": 910,
+          "ms": 331.192863
+        },
+        {
+          "frame": 911,
+          "ms": 347.818446
+        },
+        {
+          "frame": 912,
+          "ms": 364.530632
+        },
+        {
+          "frame": 913,
+          "ms": 381.109514
+        },
+        {
+          "frame": 914,
+          "ms": 415.152822
+        },
+        {
+          "frame": 915,
+          "ms": 448.444077
+        },
+        {
+          "frame": 916,
+          "ms": 464.18542
+        }
+      ],
+      "captures": [
+        {
+          "frame": 908,
+          "owned": false,
+          "accepted": true,
+          "ms": 266.730323
+        },
+        {
+          "frame": 909,
+          "owned": false,
+          "accepted": true,
+          "ms": 283.369735
+        },
+        {
+          "frame": 910,
+          "owned": false,
+          "accepted": true,
+          "ms": 300.009146
+        },
+        {
+          "frame": 911,
+          "owned": false,
+          "accepted": true,
+          "ms": 316.648558
+        },
+        {
+          "frame": 912,
+          "owned": false,
+          "accepted": true,
+          "ms": 333.287969
+        },
+        {
+          "frame": 913,
+          "owned": false,
+          "accepted": true,
+          "ms": 349.927381
+        },
+        {
+          "frame": 914,
+          "owned": false,
+          "accepted": true,
+          "ms": 366.566792
+        },
+        {
+          "frame": 915,
+          "owned": false,
+          "accepted": true,
+          "ms": 383.206204
+        },
+        {
+          "frame": 916,
+          "owned": false,
+          "accepted": true,
+          "ms": 399.845615
+        },
+        {
+          "frame": 917,
+          "owned": true,
+          "accepted": false,
+          "ms": 416.485026
+        }
+      ],
+      "starts": [
+        {
+          "frame": 905,
+          "ms": 14.242474,
+          "ROM_cycle": 305885
+        },
+        {
+          "frame": 906,
+          "ms": 128.556574,
+          "ROM_cycle": 2761032
+        },
+        {
+          "frame": 907,
+          "ms": 264.333059,
+          "ROM_cycle": 5677131
+        },
+        {
+          "frame": 908,
+          "ms": 280.972517,
+          "ROM_cycle": 6034500
+        },
+        {
+          "frame": 909,
+          "ms": 297.611929,
+          "ROM_cycle": 6391868
+        },
+        {
+          "frame": 910,
+          "ms": 314.25134,
+          "ROM_cycle": 6749236
+        },
+        {
+          "frame": 911,
+          "ms": 330.890752,
+          "ROM_cycle": 7106604
+        },
+        {
+          "frame": 912,
+          "ms": 347.530163,
+          "ROM_cycle": 7463972
+        },
+        {
+          "frame": 913,
+          "ms": 364.169575,
+          "ROM_cycle": 7821340
+        },
+        {
+          "frame": 914,
+          "ms": 380.808986,
+          "ROM_cycle": 8178708
+        },
+        {
+          "frame": 915,
+          "ms": 397.448398,
+          "ROM_cycle": 8536076
+        },
+        {
+          "frame": 916,
+          "ms": 417.932677,
+          "ROM_cycle": 8976021
+        }
+      ],
+      "materialized": [
+        {
+          "frame": 905,
+          "ROM_cycle": 687845,
+          "ms": 32.026914
+        },
+        {
+          "frame": 906,
+          "ROM_cycle": 2773788,
+          "ms": 129.150506
+        },
+        {
+          "frame": 907,
+          "ROM_cycle": 5690015,
+          "ms": 264.932951
+        },
+        {
+          "frame": 908,
+          "ROM_cycle": 6047206,
+          "ms": 281.564122
+        },
+        {
+          "frame": 909,
+          "ROM_cycle": 6405429,
+          "ms": 298.243343
+        },
+        {
+          "frame": 910,
+          "ROM_cycle": 6761726,
+          "ms": 314.832887
+        },
+        {
+          "frame": 911,
+          "ROM_cycle": 7119630,
+          "ms": 331.497255
+        },
+        {
+          "frame": 912,
+          "ROM_cycle": 7477077,
+          "ms": 348.140345
+        },
+        {
+          "frame": 913,
+          "ROM_cycle": 7833865,
+          "ms": 364.752751
+        },
+        {
+          "frame": 914,
+          "ROM_cycle": 8191963,
+          "ms": 381.426152
+        },
+        {
+          "frame": 915,
+          "ROM_cycle": 8549163,
+          "ms": 398.057741
+        },
+        {
+          "frame": 916,
+          "ROM_cycle": 8988527,
+          "ms": 418.514969
+        }
+      ],
+      "presentation_gaps": [
+        {
+          "after_frame": 913,
+          "before_frame": 914,
+          "VBlanks": 2
+        },
+        {
+          "after_frame": 914,
+          "before_frame": 915,
+          "VBlanks": 2
+        }
+      ],
+      "first_missed_capture": 917
+    },
+    "separated_EA_only": {
+      "present": [
+        {
+          "frame": 905,
+          "ms": 114.229223,
+          "VBlank": 6,
+          "phase": 309112
+        },
+        {
+          "frame": 906,
+          "ms": 230.706518,
+          "VBlank": 13,
+          "phase": 309142
+        },
+        {
+          "frame": 907,
+          "ms": 281.566584,
+          "VBlank": 16,
+          "phase": 329370
+        },
+        {
+          "frame": 908,
+          "ms": 297.830651,
+          "VBlank": 17,
+          "phase": 321309
+        },
+        {
+          "frame": 909,
+          "ms": 314.605363,
+          "VBlank": 18,
+          "phase": 324215
+        },
+        {
+          "frame": 910,
+          "ms": 331.107854,
+          "VBlank": 19,
+          "phase": 321274
+        },
+        {
+          "frame": 911,
+          "ms": 347.733504,
+          "VBlank": 20,
+          "phase": 320979
+        },
+        {
+          "frame": 912,
+          "ms": 364.449744,
+          "VBlank": 21,
+          "phase": 322629
+        },
+        {
+          "frame": 913,
+          "ms": 381.024885,
+          "VBlank": 22,
+          "phase": 321248
+        },
+        {
+          "frame": 914,
+          "ms": 415.069433,
+          "VBlank": 24,
+          "phase": 337694
+        },
+        {
+          "frame": 915,
+          "ms": 448.358957,
+          "VBlank": 26,
+          "phase": 337924
+        },
+        {
+          "frame": 916,
+          "ms": 464.103806,
+          "VBlank": 27,
+          "phase": 318711
+        }
+      ],
+      "done": [
+        {
+          "frame": 905,
+          "ms": 114.312423
+        },
+        {
+          "frame": 906,
+          "ms": 230.7897
+        },
+        {
+          "frame": 907,
+          "ms": 281.64977
+        },
+        {
+          "frame": 908,
+          "ms": 297.913854
+        },
+        {
+          "frame": 909,
+          "ms": 314.688571
+        },
+        {
+          "frame": 910,
+          "ms": 331.191047
+        },
+        {
+          "frame": 911,
+          "ms": 347.816676
+        },
+        {
+          "frame": 912,
+          "ms": 364.532913
+        },
+        {
+          "frame": 913,
+          "ms": 381.108071
+        },
+        {
+          "frame": 914,
+          "ms": 415.152636
+        },
+        {
+          "frame": 915,
+          "ms": 448.442168
+        },
+        {
+          "frame": 916,
+          "ms": 464.187003
+        }
+      ],
+      "captures": [
+        {
+          "frame": 908,
+          "owned": false,
+          "accepted": true,
+          "ms": 266.730323
+        },
+        {
+          "frame": 909,
+          "owned": false,
+          "accepted": true,
+          "ms": 283.369735
+        },
+        {
+          "frame": 910,
+          "owned": false,
+          "accepted": true,
+          "ms": 300.009146
+        },
+        {
+          "frame": 911,
+          "owned": false,
+          "accepted": true,
+          "ms": 316.648558
+        },
+        {
+          "frame": 912,
+          "owned": false,
+          "accepted": true,
+          "ms": 333.287969
+        },
+        {
+          "frame": 913,
+          "owned": false,
+          "accepted": true,
+          "ms": 349.927381
+        },
+        {
+          "frame": 914,
+          "owned": false,
+          "accepted": true,
+          "ms": 366.566792
+        },
+        {
+          "frame": 915,
+          "owned": false,
+          "accepted": true,
+          "ms": 383.206204
+        },
+        {
+          "frame": 916,
+          "owned": false,
+          "accepted": true,
+          "ms": 399.845615
+        },
+        {
+          "frame": 917,
+          "owned": true,
+          "accepted": false,
+          "ms": 416.485026
+        }
+      ],
+      "starts": [
+        {
+          "frame": 905,
+          "ms": 14.242474,
+          "ROM_cycle": 305885
+        },
+        {
+          "frame": 906,
+          "ms": 128.554758,
+          "ROM_cycle": 2760993
+        },
+        {
+          "frame": 907,
+          "ms": 264.333059,
+          "ROM_cycle": 5677131
+        },
+        {
+          "frame": 908,
+          "ms": 280.972517,
+          "ROM_cycle": 6034500
+        },
+        {
+          "frame": 909,
+          "ms": 297.611929,
+          "ROM_cycle": 6391868
+        },
+        {
+          "frame": 910,
+          "ms": 314.25134,
+          "ROM_cycle": 6749236
+        },
+        {
+          "frame": 911,
+          "ms": 330.890752,
+          "ROM_cycle": 7106604
+        },
+        {
+          "frame": 912,
+          "ms": 347.530163,
+          "ROM_cycle": 7463972
+        },
+        {
+          "frame": 913,
+          "ms": 364.169575,
+          "ROM_cycle": 7821340
+        },
+        {
+          "frame": 914,
+          "ms": 380.808986,
+          "ROM_cycle": 8178708
+        },
+        {
+          "frame": 915,
+          "ms": 397.448398,
+          "ROM_cycle": 8536076
+        },
+        {
+          "frame": 916,
+          "ms": 417.932491,
+          "ROM_cycle": 8976017
+        }
+      ],
+      "materialized": [
+        {
+          "frame": 905,
+          "ROM_cycle": 687831,
+          "ms": 32.026262
+        },
+        {
+          "frame": 906,
+          "ROM_cycle": 2773749,
+          "ms": 129.14869
+        },
+        {
+          "frame": 907,
+          "ROM_cycle": 5690015,
+          "ms": 264.932951
+        },
+        {
+          "frame": 908,
+          "ROM_cycle": 6047206,
+          "ms": 281.564122
+        },
+        {
+          "frame": 909,
+          "ROM_cycle": 6405429,
+          "ms": 298.243343
+        },
+        {
+          "frame": 910,
+          "ROM_cycle": 6761726,
+          "ms": 314.832887
+        },
+        {
+          "frame": 911,
+          "ROM_cycle": 7119630,
+          "ms": 331.497255
+        },
+        {
+          "frame": 912,
+          "ROM_cycle": 7477077,
+          "ms": 348.140345
+        },
+        {
+          "frame": 913,
+          "ROM_cycle": 7833865,
+          "ms": 364.752751
+        },
+        {
+          "frame": 914,
+          "ROM_cycle": 8191963,
+          "ms": 381.426152
+        },
+        {
+          "frame": 915,
+          "ROM_cycle": 8549163,
+          "ms": 398.057741
+        },
+        {
+          "frame": 916,
+          "ROM_cycle": 8988523,
+          "ms": 418.514782
+        }
+      ],
+      "presentation_gaps": [
+        {
+          "after_frame": 913,
+          "before_frame": 914,
+          "VBlanks": 2
+        },
+        {
+          "after_frame": 914,
+          "before_frame": 915,
+          "VBlanks": 2
+        }
+      ],
+      "first_missed_capture": 917
+    },
+    "actual_runtime_clean": false,
+    "fatal_messages": [
+      "capture coverage367"
+    ],
+    "VBlank908": 17,
+    "capture911": true,
+    "startup907_recovered": true,
+    "cold906_done": {
+      "frame": 906,
+      "ms": 230.788676
+    },
+    "same_initial_capture_and_ROM_phase": true,
+    "consecutive_present_VBlanks": false,
+    "full_native_CPU_lockstep": false,
+    "observed_start_comparison": [
+      {
+        "frame": 907,
+        "baseline_ms": 264.333059,
+        "actual_ms": 264.333059,
+        "baseline_ROM_cycle": 5677131,
+        "actual_ROM_cycle": 5677131,
+        "actual_delta_ms": 0.0,
+        "late_starts_are_charged_not_phase_reset": true
+      },
+      {
+        "frame": 908,
+        "baseline_ms": 280.972517,
+        "actual_ms": 280.972517,
+        "baseline_ROM_cycle": 6034500,
+        "actual_ROM_cycle": 6034500,
+        "actual_delta_ms": 0.0,
+        "late_starts_are_charged_not_phase_reset": true
+      }
+    ],
+    "completion_intervals": [
+      {
+        "after_frame": 907,
+        "before_frame": 908,
+        "ms": 16.263897000000043
+      },
+      {
+        "after_frame": 908,
+        "before_frame": 909,
+        "ms": 17.62445600000001
+      },
+      {
+        "after_frame": 909,
+        "before_frame": 910,
+        "ms": 15.653202999999962
+      },
+      {
+        "after_frame": 910,
+        "before_frame": 911,
+        "ms": 16.625583000000006
+      },
+      {
+        "after_frame": 911,
+        "before_frame": 912,
+        "ms": 16.71218600000003
+      },
+      {
+        "after_frame": 912,
+        "before_frame": 913,
+        "ms": 16.578881999999965
+      },
+      {
+        "after_frame": 913,
+        "before_frame": 914,
+        "ms": 34.043308000000025
+      },
+      {
+        "after_frame": 914,
+        "before_frame": 915,
+        "ms": 33.29125499999998
+      },
+      {
+        "after_frame": 915,
+        "before_frame": 916,
+        "ms": 15.741343000000029
+      }
+    ],
+    "max_warm_completion_interval_ms": 34.043308000000025,
+    "completed_frames_with_exact_final_ACK": 12,
+    "all_final_ACK_gates_passed": true,
+    "only_capture_coverage_assertion_failed": true,
+    "ROM_pairs": 71962,
+    "input_origin_ROM_pairs": 17761,
+    "ROM_pending": 0,
+    "hint908_events": [
+      {
+        "event": "hint_start367",
+        "ms": 282.635487
+      },
+      {
+        "event": "hint_end367",
+        "ms": 282.70444
+      },
+      {
+        "event": "hint_fill367",
+        "ms": 282.736388
+      },
+      {
+        "event": "hint_start367",
+        "ms": 294.733724
+      },
+      {
+        "event": "hint_end367",
+        "ms": 294.763058
+      }
+    ],
+    "hint908_ROM_window": {
+      "close_ms": 282.742976208,
+      "actual_fill_ms": 282.736388,
+      "margin_ms": 0.006588208000039231,
+      "EA_only_fill_ms": 282.733035,
+      "joint_extra_vs_EA_only_ms": 0.003353000000004158,
+      "wire_only_saved_ms": 0.02438095238095238,
+      "return_markers_are_not_SS_edges": true
+    },
+    "next_capture_ownership_debt": {
+      "missed_frame": 917,
+      "deadline_ms": 416.485026,
+      "predecessor": 916,
+      "source_start_ms": 417.932677,
+      "materialized_ms": 418.514969,
+      "start_after_deadline_ms": 1.4476510000000076,
+      "materialized_after_deadline_ms": 2.029943000000003,
+      "not_a_full_60fps_time_bound": true
+    }
+  },
+  "remaining_bodies": [
+    "source writer/D4 deadline checks",
+    "NES plan decode",
+    "SPI response snapshot",
+    "hot read/token/publication IO"
+  ],
+  "matching_whole_functional_RTL": {
+    "nes_core257.sv": "5b4d42018bbba907981f2ba210eb4220045e82cc04bffaf7b2ace6fcebf673bb",
+    "nes_transport257.sv": "a493545b97a7d1afaf964f2c60c6adbbb469964fb9097b210981cc62df0f4a34",
+    "nes_joint257.sv": "b514e08266d7af4ddb03e567a7dcc2537748c60622ad51f93058f00f19763962",
+    "nes_queue260.sv": "ef9dc38e595beba0359b70aa79091569fbb61c7452546b6a62346cbf07f90b27",
+    "nes_mux260.sv": "a4d0870543239b10f9fc3955f5f055685c88b647e8906a06735f2c671c16cf64",
+    "nes_native_frame201.sv": "15b739dc7609bdea2649fc5bb1417c9e5f953379e3f2bde4ac79558f1bc00df1",
+    "nes_native_planes165.sv": "e07d18c1deaab283774898d7a67a3d362b00bcefe5c1bd22d48da97be38d34cf",
+    "nes_patch_capture181.sv": "a4730979575696afde9e8aa5911a67fbf6404c96f609da02def8e76e831c5984",
+    "nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+    "nes_native_compact181.sv": "b6134f4264eed933ed830489239273e682a0494cd36345def1c135f11e3c8bde",
+    "nes_native_raster181.sv": "25f9762f7f0842dacf5915804f398f71b9ed5e9b54edd99f4ad1ce5423ae8b95",
+    "nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "nes_bulk_aperture188.sv": "dafbc07930e225bf64915f5762c7933a5f2d41dbbac2454f90de13c59759bd6d",
+    "nes_plan_spi200.sv": "1c45eaced200d15789c5aa5ce133fcaf8876c73949cb2df515d21db9c561e5e8",
+    "nes_plan_batch206.sv": "c78b2d5eb15a1c97cb7b5f7f8e0bee9fd8eb970d7bc48a8f5389fb43bb2fcc99",
+    "nes_source_tile192.sv": "65a81b158ec3ef6b7eef4d0b65b97ec7cd39a960bcbc7e702d4b6f540a5fc1c7",
+    "nes_tile205.sv": "21008911a47cb2092a9589f9959c32a9c9b28070b81bef2f594f4647334cc7cb",
+    "nes_chr_cache192.sv": "f980de51bff69091d15bbba6894e7d4cca998a50c92ae43dd00e569ec92c3549",
+    "nes_native_arbiter165.sv": "cd4818bc2e7a02d84b101f55c2fb2f564d59588561237002bb2ecde6d6035e23",
+    "nes_rom_physical.sv": "6870eb15955c7e1f7bc3510e7654a45c6f42c8723779a382496c0cb437be47c9",
+    "nes_spi270.sv": "eec3d829c6167dc70a0bcf16cf9573a43821889a4ddbe73e7b6f73801d564928",
+    "nes_validator278.sv": "6d57b9c91849169d5a4c77df6aaba44a71d2684d47c2ac5743c12e574e518d06",
+    "nes_native_capture365.sv": "1438182205c3142c3555bb28c87a663927e0c89fdefc866a6ad7a765577ab886",
+    "nes_capture_lease201.sv": "ff93a07ddf972f4b57f0136c8e5236529d6f845a7106ebacd83cadebeba105fb",
+    "nes_joint266.sv": "b4097a6098c0074491eb949bd40bb027479db6036c2c795831d199f86649ab6b",
+    "nes_plan_path267.sv": "c1f1f974eb0880c770bd9110ff00bd9e8910ed6eab9cd4d96fd2e7e20fb24e70",
+    "nes_capture_lease366.sv": "5cdd357b1f5201aea7fc5dec4e0e4c2bc4cb8638a22049ee9518da9f22c71775",
+    "nes_tile_link394.sv": "0d06b3f3408869d6c61d865e493812198e9bf0e2d3bc02ca7611f22a2207d19d",
+    "nes_stage396.sv": "01921f977a557fe8dba268ce36f26ecab3961996c4afba851956b4d50f3487bc",
+    "nes_check396.sv": "e724a5f95a30b28c422e777b4eb73a329de6365d2a619c50a13458301710c95e",
+    "nes_walk396.sv": "5b62b661c5c2f771ece550995d2396b831404946ea78b12123376be3aa59c763",
+    "nes_byte398.sv": "506e22d81da052573d960019c40d0160505bd076f67d4f6aba0a5f1b81028c1f"
+  },
+  "physical60fps": false,
+  "open": [
+    "1172 control budget",
+    "remaining body replacement",
+    "FIT/STA",
+    "full resident/ARM WCET",
+    "71heavy/multipleROMphase",
+    "normal STOP recovery",
+    "MMC4/MMC5"
+  ],
+  "pins": {
+    "repository-nes-milestone/analysis/joint396-verification.json": "49400928e36edd83b84f2d1c061f5b050391e2de67a6784a6498c8054ab1a4ba",
+    "probes/nes-joint396/map03/result.json": "10685b0e217742e7c27ca81b1288df4dba7b83b7cd8e9e0b71b835ff28678ad9",
+    "probes/nes-joint398/map15/result.json": "0996181c56a772e75d6c1897e019d98bc489258103a5fca21796e30fed476b4b",
+    "probes/nes-joint398/map13/result.json": "d4c28ef885a19f5803084aa2ee4f4ff3d06a486cc9d935c6e83b1eccef10743c",
+    "probes/nes-joint398/map15/output_files/board.map.rpt": "8fec54c55372cca726f773c9d85012961c22a8d6da5166dfe2f11bd5a274d784",
+    "probes/nes-joint398/host10/result.json": "58e7f15de1d522dc190ce99fd4732b119775407240a78f884f188662e32c786b",
+    "probes/nes-joint398/host10/record_tb.sv": "de476344958f12929a41e2141e3da04f90ad03ed414ac5039de5759e9fb8e0e2",
+    "probes/nes-joint398/host10/guard20.log": "0e0cd15df4fc60ccaaf1f8fb7338542f795d8bb039cfad29d94c381f13178f6c",
+    "probes/nes-joint398/repeat02/result.json": "cd81a64af32541c9252cfffe35902aeb2a462767d38939a4ea5ab957383cce19",
+    "probes/nes-joint398/repeat03/result.json": "cd81a64af32541c9252cfffe35902aeb2a462767d38939a4ea5ab957383cce19",
+    "probes/nes-joint398/repeat02/data905.hex": "113a8bb8861f2e7f4ebf86dcf287b582d2df9db655cbe05c3768cd1c6acb20f5",
+    "probes/nes-joint398/repeat03/data905.hex": "113a8bb8861f2e7f4ebf86dcf287b582d2df9db655cbe05c3768cd1c6acb20f5",
+    "probes/nes-joint398/repeat02/desc905.hex": "da340e9f7790df760ac276f20bc031c23decdf973b5454aea11450e1380105f4",
+    "probes/nes-joint398/repeat03/desc905.hex": "89dd13e735f2cdf31497f6c6de17a2f242daf6b865b8e737090b07268bea7c75",
+    "probes/nes-joint398/exec07/result.json": "3bd1d8fbb965052953dbe582391ae0cc5774c3a9b0a1d686e937f6ae95f4aa8a",
+    "probes/nes-joint398/hint07/result.json": "d0e51a7ccc4509cceb5d8472c21af74bb18609bb2e3a7f15f752b358831646c8",
+    "probes/nes-joint398/live11/preflight398/result.json": "5cba2a93d9fec11639d08174858bde280b5783f14b951cd609e74876ffebcc58",
+    "probes/nes-joint398/build16/program398.json": "b425589c3ad55fdfc7b1b8e8a7a6049c248169e786ceb2d1fc51cd709c579c40",
+    "probes/nes-joint398/build16/program398.hex": "257d3be2f144c125374721323e66f472120cbf053b99883aa90c7b5edbb14450",
+    "probes/nes-joint398/map15/program398.hex": "257d3be2f144c125374721323e66f472120cbf053b99883aa90c7b5edbb14450",
+    "probes/nes-joint398/host10/program398.hex": "257d3be2f144c125374721323e66f472120cbf053b99883aa90c7b5edbb14450",
+    "probes/nes-joint398/repeat02/program398.hex": "257d3be2f144c125374721323e66f472120cbf053b99883aa90c7b5edbb14450",
+    "probes/nes-joint398/repeat03/program398.hex": "257d3be2f144c125374721323e66f472120cbf053b99883aa90c7b5edbb14450",
+    "probes/nes-joint398/exec07/program398.hex": "257d3be2f144c125374721323e66f472120cbf053b99883aa90c7b5edbb14450",
+    "probes/nes-joint398/hint07/program398.hex": "257d3be2f144c125374721323e66f472120cbf053b99883aa90c7b5edbb14450",
+    "probes/nes-joint398/live11/program398.hex": "257d3be2f144c125374721323e66f472120cbf053b99883aa90c7b5edbb14450",
+    "probes/nes-joint398/live11/preflight398/program398.hex": "257d3be2f144c125374721323e66f472120cbf053b99883aa90c7b5edbb14450",
+    "probes/nes-joint398/live11/manifest398.json": "3bd5be89580e3c990301450acc730d70dbe7cce652de0d93cb17276dc0d470ad",
+    "probes/nes-joint398/live11/output.elf": "41a5658122a0349d461f034dcfbdcfb606e7ba53bb6c554a21e7439f20eedb5c",
+    "probes/nes-joint398/build16/output.elf": "e3886a92f27681c9de279ba10b7354ce6ec852f5a577b0590efdf1106ce9bfbb",
+    "probes/nes-joint398/build16/layout.ld": "9347fe98658ad3c797886a4e44d51a911f2eb8dbf8c1de43445b9c292f53d264",
+    "probes/nes-joint398/live11/layout.ld": "9347fe98658ad3c797886a4e44d51a911f2eb8dbf8c1de43445b9c292f53d264",
+    "probes/nes-joint398/build16/libgcc.a": "055bcb8f88115d9623a7668e8cc7742b77a239f8e8fbd832126227864845eed1",
+    "probes/nes-joint398/live11/libgcc.a": "055bcb8f88115d9623a7668e8cc7742b77a239f8e8fbd832126227864845eed1",
+    "probes/nes-joint398/build16/nes_bind287.c": "05b64c1dbbe7265314888fede116cd769a1d820f7f78815a471f018f5b57e612",
+    "probes/nes-joint398/live11/nes_bind287.c": "05b64c1dbbe7265314888fede116cd769a1d820f7f78815a471f018f5b57e612",
+    "probes/nes-joint398/build16/nes_bridge267.c": "4c6f87d604f79c4446c7b9e19fd1fe06608cd0966e3902b6886fe50e6e5bd578",
+    "probes/nes-joint398/live11/nes_bridge267.c": "4c6f87d604f79c4446c7b9e19fd1fe06608cd0966e3902b6886fe50e6e5bd578",
+    "probes/nes-joint398/build16/nes_compact390.c": "135adb75be62c9afc0a372660c8d19388f2372facee17f70b5763bff8a0d06cd",
+    "probes/nes-joint398/live11/nes_compact390.c": "135adb75be62c9afc0a372660c8d19388f2372facee17f70b5763bff8a0d06cd",
+    "probes/nes-joint398/build16/nes_crc283.h": "98e30664253639d8c5d0d100fd0c43673774ffc9fc3926b92099c9a447086aa2",
+    "probes/nes-joint398/live11/nes_crc283.h": "98e30664253639d8c5d0d100fd0c43673774ffc9fc3926b92099c9a447086aa2",
+    "probes/nes-joint398/build16/nes_decode280.c": "1fc1cbf249864aa7555084f57057adaa14be92f96c1bd2ac69081f1530ce59db",
+    "probes/nes-joint398/live11/nes_decode280.c": "1fc1cbf249864aa7555084f57057adaa14be92f96c1bd2ac69081f1530ce59db",
+    "probes/nes-joint398/build16/nes_delta231.c": "c3fc4d73f64c6b3dc7d0e09303d529dc6ff603f8af67b136297e1bb5f5e58111",
+    "probes/nes-joint398/live11/nes_delta231.c": "c3fc4d73f64c6b3dc7d0e09303d529dc6ff603f8af67b136297e1bb5f5e58111",
+    "probes/nes-joint398/build16/nes_delta231.h": "8d3b4a52f8460d14280b854f003e755a9f707a266c7d412660ca2d1dcdb6b98f",
+    "probes/nes-joint398/live11/nes_delta231.h": "8d3b4a52f8460d14280b854f003e755a9f707a266c7d412660ca2d1dcdb6b98f",
+    "probes/nes-joint398/build16/nes_delta231_receiver.inc": "93bee8d2422efaf256f06915fdadd2079f59d9b9c8e031c89bd7062fcac657c7",
+    "probes/nes-joint398/live11/nes_delta231_receiver.inc": "93bee8d2422efaf256f06915fdadd2079f59d9b9c8e031c89bd7062fcac657c7",
+    "probes/nes-joint398/build16/nes_exchange280.inc": "5d8479121f738d977d1d204a9a6129b317f06feeb1dd6f6718701d5f6fbcc541",
+    "probes/nes-joint398/live11/nes_exchange280.inc": "5d8479121f738d977d1d204a9a6129b317f06feeb1dd6f6718701d5f6fbcc541",
+    "probes/nes-joint398/build16/nes_input286.inc": "c0ee723ce6d29233d8b7b5e53fd72e4466670e0031381c0171c60da0853acfe9",
+    "probes/nes-joint398/live11/nes_input286.inc": "c0ee723ce6d29233d8b7b5e53fd72e4466670e0031381c0171c60da0853acfe9",
+    "probes/nes-joint398/build16/nes_irq284.c": "a54e54188a251be6b782af55199544cc88d3b2992acfd1305d8442ce2549a633",
+    "probes/nes-joint398/live11/nes_irq284.c": "a54e54188a251be6b782af55199544cc88d3b2992acfd1305d8442ce2549a633",
+    "probes/nes-joint398/build16/nes_native165.c": "ac8914729dec0c48df7e85074d0b9a10377ac97afdd8b21f526a41901c65af06",
+    "probes/nes-joint398/live11/nes_native165.c": "ac8914729dec0c48df7e85074d0b9a10377ac97afdd8b21f526a41901c65af06",
+    "probes/nes-joint398/build16/nes_native165.h": "df998eec151220b684a68a4bc689dc46c5910c329b7cef90bffa9cbf1442b963",
+    "probes/nes-joint398/live11/nes_native165.h": "df998eec151220b684a68a4bc689dc46c5910c329b7cef90bffa9cbf1442b963",
+    "probes/nes-joint398/build16/nes_native289.c": "362d35b12a4c39673837f6d09245d5c8b9f2ff1eaeb48961c874db48df2a0496",
+    "probes/nes-joint398/live11/nes_native289.c": "362d35b12a4c39673837f6d09245d5c8b9f2ff1eaeb48961c874db48df2a0496",
+    "probes/nes-joint398/build16/nes_native289.inc": "ddf115b5ecc468e61136916048bae1aad3e5fa5b2076202eda9404180824e049",
+    "probes/nes-joint398/live11/nes_native289.inc": "ddf115b5ecc468e61136916048bae1aad3e5fa5b2076202eda9404180824e049",
+    "probes/nes-joint398/build16/nes_native_sink165.h": "76dce1550806abe9950f9f5c8c108b1ae94c59cbfd66912abefe77c0d80eb76f",
+    "probes/nes-joint398/live11/nes_native_sink165.h": "76dce1550806abe9950f9f5c8c108b1ae94c59cbfd66912abefe77c0d80eb76f",
+    "probes/nes-joint398/build16/nes_native_video165.h": "a3b66043f463631bba7d4d2197a1396933887ad95f6c035ed448396ab21a5768",
+    "probes/nes-joint398/live11/nes_native_video165.h": "a3b66043f463631bba7d4d2197a1396933887ad95f6c035ed448396ab21a5768",
+    "probes/nes-joint398/build16/nes_output264.c": "0a1adb704a580922c2365f148fe7a548d6115fc5df849d21f8627b4b5ff12252",
+    "probes/nes-joint398/live11/nes_output264.c": "0a1adb704a580922c2365f148fe7a548d6115fc5df849d21f8627b4b5ff12252",
+    "probes/nes-joint398/build16/nes_output270.c": "57d3e82f35c6d4d7875e51306fd2333e9b468081a7c1c6a03b2a78f3c7d779ca",
+    "probes/nes-joint398/live11/nes_output270.c": "57d3e82f35c6d4d7875e51306fd2333e9b468081a7c1c6a03b2a78f3c7d779ca",
+    "probes/nes-joint398/build16/nes_plan191.h": "8792dec36d2166bb3c06e3b7fab2ae4ab823b025ff007af73ba248520951f7cf",
+    "probes/nes-joint398/live11/nes_plan191.h": "8792dec36d2166bb3c06e3b7fab2ae4ab823b025ff007af73ba248520951f7cf",
+    "probes/nes-joint398/build16/nes_plan_wire196.h": "e05c68d7faed7223667f70981b7c915cf180aeac7d1bc4df416c3c7085453018",
+    "probes/nes-joint398/live11/nes_plan_wire196.h": "e05c68d7faed7223667f70981b7c915cf180aeac7d1bc4df416c3c7085453018",
+    "probes/nes-joint398/build16/nes_plan_wire199.h": "518c0c885b180ae14a58f644f089130a9bbabe0ba6bfb21eb30dae084f7d6707",
+    "probes/nes-joint398/live11/nes_plan_wire199.h": "518c0c885b180ae14a58f644f089130a9bbabe0ba6bfb21eb30dae084f7d6707",
+    "probes/nes-joint398/build16/nes_planner211.c": "bab77f462774fdc7d4616eaec3cff38103399575725de5f87108b0b5403c3ac5",
+    "probes/nes-joint398/live11/nes_planner211.c": "bab77f462774fdc7d4616eaec3cff38103399575725de5f87108b0b5403c3ac5",
+    "probes/nes-joint398/build16/nes_planner285.c": "329fbc74a37f194bd6bc5546bb9779a9cf8e73c5f9a5234e2205b6a7576d4dd6",
+    "probes/nes-joint398/live11/nes_planner285.c": "329fbc74a37f194bd6bc5546bb9779a9cf8e73c5f9a5234e2205b6a7576d4dd6",
+    "probes/nes-joint398/build16/nes_producer264.c": "2c496f6f2041d1cd49d04578484e1fb112cc647b2e27dffe9ddf458861a149d6",
+    "probes/nes-joint398/live11/nes_producer264.c": "2c496f6f2041d1cd49d04578484e1fb112cc647b2e27dffe9ddf458861a149d6",
+    "probes/nes-joint398/build16/nes_progress282.c.inc": "c3660308650a3205250aa987ade2d3d0522f9831d2777979f97e71b5bdcf875b",
+    "probes/nes-joint398/live11/nes_progress282.c.inc": "c3660308650a3205250aa987ade2d3d0522f9831d2777979f97e71b5bdcf875b",
+    "probes/nes-joint398/build16/nes_refill267.c": "fd6ce847ce0048095fa226c930028eb6d28dace4133f1c597fd53f74a7756e6b",
+    "probes/nes-joint398/live11/nes_refill267.c": "fd6ce847ce0048095fa226c930028eb6d28dace4133f1c597fd53f74a7756e6b",
+    "probes/nes-joint398/build16/nes_refill282.c": "2acceb245d5ba56ea4abea5d66df1207a6534ed1aba441488aaead9c344792a0",
+    "probes/nes-joint398/live11/nes_refill282.c": "2acceb245d5ba56ea4abea5d66df1207a6534ed1aba441488aaead9c344792a0",
+    "probes/nes-joint398/build16/nes_refill284.c": "2011df942a3a710ce14e714db06a97e65710b3c815d2cc583408d46430bd6993",
+    "probes/nes-joint398/live11/nes_refill284.c": "2011df942a3a710ce14e714db06a97e65710b3c815d2cc583408d46430bd6993",
+    "probes/nes-joint398/build16/nes_resident211.c": "8e5631c1ee37d3ca39b000d7869034f474547ea9f7f273ae77f914aa0f6f3700",
+    "probes/nes-joint398/live11/nes_resident211.c": "8e5631c1ee37d3ca39b000d7869034f474547ea9f7f273ae77f914aa0f6f3700",
+    "probes/nes-joint398/build16/nes_resident211.h": "01a3bdd5341b1a2488614117bf156c365ec0697d8bee434b1de9bcc186f1d7d1",
+    "probes/nes-joint398/live11/nes_resident211.h": "01a3bdd5341b1a2488614117bf156c365ec0697d8bee434b1de9bcc186f1d7d1",
+    "probes/nes-joint398/build16/nes_rows287.inc": "10891cc03bd390c36e8e7183b74350fe6bce3a64686c4ce0f199abf8bbba7b23",
+    "probes/nes-joint398/live11/nes_rows287.inc": "10891cc03bd390c36e8e7183b74350fe6bce3a64686c4ce0f199abf8bbba7b23",
+    "probes/nes-joint398/build16/nes_sink_bulk195.h": "108c539e4b5db7365b2bd8c8806baccf7b0f65c67673479a13647f03226205be",
+    "probes/nes-joint398/live11/nes_sink_bulk195.h": "108c539e4b5db7365b2bd8c8806baccf7b0f65c67673479a13647f03226205be",
+    "probes/nes-joint398/build16/nes_sink_bulk195.inc": "ec105d501010678b2b9d15e2cae45bbbd4602ba82fb39742ac69635e9a08f69c",
+    "probes/nes-joint398/live11/nes_sink_bulk195.inc": "ec105d501010678b2b9d15e2cae45bbbd4602ba82fb39742ac69635e9a08f69c",
+    "probes/nes-joint398/build16/nes_sink_trace168.h": "806eb4349a3afef2008dd02f92a1523e3dd7f1521ebc94a7429e94d42c85aacb",
+    "probes/nes-joint398/live11/nes_sink_trace168.h": "806eb4349a3afef2008dd02f92a1523e3dd7f1521ebc94a7429e94d42c85aacb",
+    "probes/nes-joint398/build16/nes_source367.c": "97af8c2ce572e16a3ee8344fce45aa372d15f3f3b20edbb0baf6a1b9bf48b492",
+    "probes/nes-joint398/live11/nes_source367.c": "97af8c2ce572e16a3ee8344fce45aa372d15f3f3b20edbb0baf6a1b9bf48b492",
+    "probes/nes-joint398/build16/nes_source368.c": "7da95e4d6c459d3a7ff38a5b04a4c88b686251dbee72b788a692116f19ec31d2",
+    "probes/nes-joint398/live11/nes_source368.c": "7da95e4d6c459d3a7ff38a5b04a4c88b686251dbee72b788a692116f19ec31d2",
+    "probes/nes-joint398/build16/nes_source_exchange280.inc": "69b630c9349558b31739dc615c7dc16ee2e308d9ba8a4838173df9351d07d1de",
+    "probes/nes-joint398/live11/nes_source_exchange280.inc": "69b630c9349558b31739dc615c7dc16ee2e308d9ba8a4838173df9351d07d1de",
+    "probes/nes-joint398/build16/nes_split274.inc": "68b62d209e1b09da72e091abac17ed08ba20fa4a77d4328c3b353510f947603a",
+    "probes/nes-joint398/live11/nes_split274.inc": "68b62d209e1b09da72e091abac17ed08ba20fa4a77d4328c3b353510f947603a",
+    "probes/nes-joint398/build16/nes_trace166.c": "eb400234d88399773a671233eef4d15e13f20bb750de834cfbf2b53e21dc316c",
+    "probes/nes-joint398/live11/nes_trace166.c": "eb400234d88399773a671233eef4d15e13f20bb750de834cfbf2b53e21dc316c",
+    "probes/nes-joint398/build16/nes_trace166.h": "76923567ede1a152fc056c482e27eb3a81e97fe19d04ff84a789a26cc9d319e5",
+    "probes/nes-joint398/live11/nes_trace166.h": "76923567ede1a152fc056c482e27eb3a81e97fe19d04ff84a789a26cc9d319e5",
+    "probes/nes-joint398/build16/order247.h": "f80a97979e41f26e13a25d2a16e01e1fdf4d2712847de12ac5dd45ff6e98d998",
+    "probes/nes-joint398/live11/order247.h": "f80a97979e41f26e13a25d2a16e01e1fdf4d2712847de12ac5dd45ff6e98d998",
+    "probes/nes-joint398/build16/reference203.h": "d959e0809dbd33491e92d171b0f3788546cfa16790ca3c81748dd3ccb7fedd00",
+    "probes/nes-joint398/live11/reference203.h": "d959e0809dbd33491e92d171b0f3788546cfa16790ca3c81748dd3ccb7fedd00",
+    "probes/nes-joint398/build16/scene203.inc": "22b4d2219ff48e7f9fa8d8de160aa04754f2520d8a2b0ce5ea13d1def2cfad31",
+    "probes/nes-joint398/live11/scene203.inc": "22b4d2219ff48e7f9fa8d8de160aa04754f2520d8a2b0ce5ea13d1def2cfad31",
+    "probes/nes-joint398/build16/source-ARM-nes_decode280.c": "a92d4f4ce40121716b02dbbbe3afb90a6ef9ce53943631cac532a6dea8695465",
+    "probes/nes-joint398/live11/source-ARM-nes_decode280.c": "a92d4f4ce40121716b02dbbbe3afb90a6ef9ce53943631cac532a6dea8695465",
+    "probes/nes-joint398/build16/stubs.s": "2656d2a3b513d8d018fe88aa3bec771999c6dc6b4144756a67f0514ed3ca2c00",
+    "probes/nes-joint398/live11/stubs.s": "2656d2a3b513d8d018fe88aa3bec771999c6dc6b4144756a67f0514ed3ca2c00",
+    "probes/nes-joint398/build16/build368.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "probes/nes-joint398/live11/build368.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "probes/nes-joint398/build16/size368.log": "104de9327abfb7f60c81c01ad89eca7bc690b13ecce7b7f74ed2006b38530159",
+    "probes/nes-joint398/live11/size368.log": "104de9327abfb7f60c81c01ad89eca7bc690b13ecce7b7f74ed2006b38530159",
+    "probes/nes-joint398/build16/disassembly368.log": "1bbd01206e7d76e6c6f06130f32fb493cdbec92358fdefc98224fb5a6db095ee",
+    "probes/nes-joint398/live11/disassembly368.log": "1bbd01206e7d76e6c6f06130f32fb493cdbec92358fdefc98224fb5a6db095ee",
+    "probes/nes-joint398/live11/joint266_tb.sv": "63dd75f60b5dbf947c5e146fc95a1845499efcf74799ae351c54e8c73539eacb",
+    "probes/nes-joint398/live11/nes_core257.sv": "5b4d42018bbba907981f2ba210eb4220045e82cc04bffaf7b2ace6fcebf673bb",
+    "probes/nes-joint398/map15/nes_core257.sv": "5b4d42018bbba907981f2ba210eb4220045e82cc04bffaf7b2ace6fcebf673bb",
+    "probes/nes-joint398/live11/nes_transport257.sv": "a493545b97a7d1afaf964f2c60c6adbbb469964fb9097b210981cc62df0f4a34",
+    "probes/nes-joint398/map15/nes_transport257.sv": "a493545b97a7d1afaf964f2c60c6adbbb469964fb9097b210981cc62df0f4a34",
+    "probes/nes-joint398/live11/nes_joint257.sv": "b514e08266d7af4ddb03e567a7dcc2537748c60622ad51f93058f00f19763962",
+    "probes/nes-joint398/map15/nes_joint257.sv": "b514e08266d7af4ddb03e567a7dcc2537748c60622ad51f93058f00f19763962",
+    "probes/nes-joint398/live11/nes_queue260.sv": "ef9dc38e595beba0359b70aa79091569fbb61c7452546b6a62346cbf07f90b27",
+    "probes/nes-joint398/map15/nes_queue260.sv": "ef9dc38e595beba0359b70aa79091569fbb61c7452546b6a62346cbf07f90b27",
+    "probes/nes-joint398/live11/nes_mux260.sv": "a4d0870543239b10f9fc3955f5f055685c88b647e8906a06735f2c671c16cf64",
+    "probes/nes-joint398/map15/nes_mux260.sv": "a4d0870543239b10f9fc3955f5f055685c88b647e8906a06735f2c671c16cf64",
+    "probes/nes-joint398/live11/nes_native_frame201.sv": "15b739dc7609bdea2649fc5bb1417c9e5f953379e3f2bde4ac79558f1bc00df1",
+    "probes/nes-joint398/map15/nes_native_frame201.sv": "15b739dc7609bdea2649fc5bb1417c9e5f953379e3f2bde4ac79558f1bc00df1",
+    "probes/nes-joint398/live11/nes_native_planes165.sv": "e07d18c1deaab283774898d7a67a3d362b00bcefe5c1bd22d48da97be38d34cf",
+    "probes/nes-joint398/map15/nes_native_planes165.sv": "e07d18c1deaab283774898d7a67a3d362b00bcefe5c1bd22d48da97be38d34cf",
+    "probes/nes-joint398/live11/nes_patch_capture181.sv": "a4730979575696afde9e8aa5911a67fbf6404c96f609da02def8e76e831c5984",
+    "probes/nes-joint398/map15/nes_patch_capture181.sv": "a4730979575696afde9e8aa5911a67fbf6404c96f609da02def8e76e831c5984",
+    "probes/nes-joint398/live11/nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+    "probes/nes-joint398/map15/nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+    "probes/nes-joint398/live11/nes_native_compact181.sv": "b6134f4264eed933ed830489239273e682a0494cd36345def1c135f11e3c8bde",
+    "probes/nes-joint398/map15/nes_native_compact181.sv": "b6134f4264eed933ed830489239273e682a0494cd36345def1c135f11e3c8bde",
+    "probes/nes-joint398/live11/nes_native_raster181.sv": "25f9762f7f0842dacf5915804f398f71b9ed5e9b54edd99f4ad1ce5423ae8b95",
+    "probes/nes-joint398/map15/nes_native_raster181.sv": "25f9762f7f0842dacf5915804f398f71b9ed5e9b54edd99f4ad1ce5423ae8b95",
+    "probes/nes-joint398/live11/nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "probes/nes-joint398/map15/nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "probes/nes-joint398/live11/nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "probes/nes-joint398/map15/nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "probes/nes-joint398/live11/nes_bulk_aperture188.sv": "dafbc07930e225bf64915f5762c7933a5f2d41dbbac2454f90de13c59759bd6d",
+    "probes/nes-joint398/map15/nes_bulk_aperture188.sv": "dafbc07930e225bf64915f5762c7933a5f2d41dbbac2454f90de13c59759bd6d",
+    "probes/nes-joint398/live11/nes_plan_spi200.sv": "1c45eaced200d15789c5aa5ce133fcaf8876c73949cb2df515d21db9c561e5e8",
+    "probes/nes-joint398/map15/nes_plan_spi200.sv": "1c45eaced200d15789c5aa5ce133fcaf8876c73949cb2df515d21db9c561e5e8",
+    "probes/nes-joint398/live11/nes_plan_batch206.sv": "c78b2d5eb15a1c97cb7b5f7f8e0bee9fd8eb970d7bc48a8f5389fb43bb2fcc99",
+    "probes/nes-joint398/map15/nes_plan_batch206.sv": "c78b2d5eb15a1c97cb7b5f7f8e0bee9fd8eb970d7bc48a8f5389fb43bb2fcc99",
+    "probes/nes-joint398/live11/nes_source_tile192.sv": "65a81b158ec3ef6b7eef4d0b65b97ec7cd39a960bcbc7e702d4b6f540a5fc1c7",
+    "probes/nes-joint398/map15/nes_source_tile192.sv": "65a81b158ec3ef6b7eef4d0b65b97ec7cd39a960bcbc7e702d4b6f540a5fc1c7",
+    "probes/nes-joint398/live11/nes_tile205.sv": "21008911a47cb2092a9589f9959c32a9c9b28070b81bef2f594f4647334cc7cb",
+    "probes/nes-joint398/map15/nes_tile205.sv": "21008911a47cb2092a9589f9959c32a9c9b28070b81bef2f594f4647334cc7cb",
+    "probes/nes-joint398/live11/nes_chr_cache192.sv": "f980de51bff69091d15bbba6894e7d4cca998a50c92ae43dd00e569ec92c3549",
+    "probes/nes-joint398/map15/nes_chr_cache192.sv": "f980de51bff69091d15bbba6894e7d4cca998a50c92ae43dd00e569ec92c3549",
+    "probes/nes-joint398/live11/nes_native_arbiter165.sv": "cd4818bc2e7a02d84b101f55c2fb2f564d59588561237002bb2ecde6d6035e23",
+    "probes/nes-joint398/map15/nes_native_arbiter165.sv": "cd4818bc2e7a02d84b101f55c2fb2f564d59588561237002bb2ecde6d6035e23",
+    "probes/nes-joint398/live11/nes_rom_physical.sv": "6870eb15955c7e1f7bc3510e7654a45c6f42c8723779a382496c0cb437be47c9",
+    "probes/nes-joint398/map15/nes_rom_physical.sv": "6870eb15955c7e1f7bc3510e7654a45c6f42c8723779a382496c0cb437be47c9",
+    "probes/nes-joint398/live11/nes_spi270.sv": "eec3d829c6167dc70a0bcf16cf9573a43821889a4ddbe73e7b6f73801d564928",
+    "probes/nes-joint398/map15/nes_spi270.sv": "eec3d829c6167dc70a0bcf16cf9573a43821889a4ddbe73e7b6f73801d564928",
+    "probes/nes-joint398/live11/nes_validator278.sv": "6d57b9c91849169d5a4c77df6aaba44a71d2684d47c2ac5743c12e574e518d06",
+    "probes/nes-joint398/map15/nes_validator278.sv": "6d57b9c91849169d5a4c77df6aaba44a71d2684d47c2ac5743c12e574e518d06",
+    "probes/nes-joint398/live11/nes_native_capture365.sv": "1438182205c3142c3555bb28c87a663927e0c89fdefc866a6ad7a765577ab886",
+    "probes/nes-joint398/map15/nes_native_capture365.sv": "1438182205c3142c3555bb28c87a663927e0c89fdefc866a6ad7a765577ab886",
+    "probes/nes-joint398/live11/nes_capture_lease201.sv": "ff93a07ddf972f4b57f0136c8e5236529d6f845a7106ebacd83cadebeba105fb",
+    "probes/nes-joint398/map15/nes_capture_lease201.sv": "ff93a07ddf972f4b57f0136c8e5236529d6f845a7106ebacd83cadebeba105fb",
+    "probes/nes-joint398/live11/nes_joint266.sv": "b4097a6098c0074491eb949bd40bb027479db6036c2c795831d199f86649ab6b",
+    "probes/nes-joint398/map15/nes_joint266.sv": "b4097a6098c0074491eb949bd40bb027479db6036c2c795831d199f86649ab6b",
+    "probes/nes-joint398/live11/nes_plan_path267.sv": "c1f1f974eb0880c770bd9110ff00bd9e8910ed6eab9cd4d96fd2e7e20fb24e70",
+    "probes/nes-joint398/map15/nes_plan_path267.sv": "c1f1f974eb0880c770bd9110ff00bd9e8910ed6eab9cd4d96fd2e7e20fb24e70",
+    "probes/nes-joint398/live11/nes_capture_lease366.sv": "5cdd357b1f5201aea7fc5dec4e0e4c2bc4cb8638a22049ee9518da9f22c71775",
+    "probes/nes-joint398/map15/nes_capture_lease366.sv": "5cdd357b1f5201aea7fc5dec4e0e4c2bc4cb8638a22049ee9518da9f22c71775",
+    "probes/nes-joint398/live11/nes_tile_link394.sv": "0d06b3f3408869d6c61d865e493812198e9bf0e2d3bc02ca7611f22a2207d19d",
+    "probes/nes-joint398/map15/nes_tile_link394.sv": "0d06b3f3408869d6c61d865e493812198e9bf0e2d3bc02ca7611f22a2207d19d",
+    "probes/nes-joint398/live11/nes_stage396.sv": "01921f977a557fe8dba268ce36f26ecab3961996c4afba851956b4d50f3487bc",
+    "probes/nes-joint398/map15/nes_stage396.sv": "01921f977a557fe8dba268ce36f26ecab3961996c4afba851956b4d50f3487bc",
+    "probes/nes-joint398/live11/nes_check396.sv": "e724a5f95a30b28c422e777b4eb73a329de6365d2a619c50a13458301710c95e",
+    "probes/nes-joint398/map15/nes_check396.sv": "e724a5f95a30b28c422e777b4eb73a329de6365d2a619c50a13458301710c95e",
+    "probes/nes-joint398/live11/nes_walk396.sv": "5b62b661c5c2f771ece550995d2396b831404946ea78b12123376be3aa59c763",
+    "probes/nes-joint398/map15/nes_walk396.sv": "5b62b661c5c2f771ece550995d2396b831404946ea78b12123376be3aa59c763",
+    "probes/nes-joint398/live11/nes_byte398.sv": "506e22d81da052573d960019c40d0160505bd076f67d4f6aba0a5f1b81028c1f",
+    "probes/nes-joint398/map15/nes_byte398.sv": "506e22d81da052573d960019c40d0160505bd076f67d4f6aba0a5f1b81028c1f",
+    "probes/nes-joint398/ea01/manifest396.json": "a3d6b10a5166f2a427e1cf718482e3648877c524ad78a8c8f4af8de3ca537eb3",
+    "probes/nes-joint398/ea01/nes_core257.sv": "5b4d42018bbba907981f2ba210eb4220045e82cc04bffaf7b2ace6fcebf673bb",
+    "probes/nes-joint398/map13/nes_core257.sv": "5b4d42018bbba907981f2ba210eb4220045e82cc04bffaf7b2ace6fcebf673bb",
+    "probes/nes-joint398/ea01/nes_transport257.sv": "5746b7fe12f63c4aefb28de5524799d91dc4d263d41978a5a5076f182e7b9e9a",
+    "probes/nes-joint398/map13/nes_transport257.sv": "5746b7fe12f63c4aefb28de5524799d91dc4d263d41978a5a5076f182e7b9e9a",
+    "probes/nes-joint398/ea01/nes_joint257.sv": "4e06b8efc9bf71193d8a2974211caf4939bc5528ae2d8e2cfafcea186c279b4e",
+    "probes/nes-joint398/map13/nes_joint257.sv": "4e06b8efc9bf71193d8a2974211caf4939bc5528ae2d8e2cfafcea186c279b4e",
+    "probes/nes-joint398/ea01/nes_queue260.sv": "2c5a376e4122361287fee5e946d0b0df906f86f91bc3c44ec1bb0d594461a34c",
+    "probes/nes-joint398/map13/nes_queue260.sv": "2c5a376e4122361287fee5e946d0b0df906f86f91bc3c44ec1bb0d594461a34c",
+    "probes/nes-joint398/ea01/nes_mux260.sv": "d59bcd7a206e3a049e6731eafa4e499d45fdc42c62271f5bfc0ec5b2dc99c671",
+    "probes/nes-joint398/map13/nes_mux260.sv": "d59bcd7a206e3a049e6731eafa4e499d45fdc42c62271f5bfc0ec5b2dc99c671",
+    "probes/nes-joint398/ea01/nes_native_frame201.sv": "15b739dc7609bdea2649fc5bb1417c9e5f953379e3f2bde4ac79558f1bc00df1",
+    "probes/nes-joint398/map13/nes_native_frame201.sv": "15b739dc7609bdea2649fc5bb1417c9e5f953379e3f2bde4ac79558f1bc00df1",
+    "probes/nes-joint398/ea01/nes_native_planes165.sv": "e07d18c1deaab283774898d7a67a3d362b00bcefe5c1bd22d48da97be38d34cf",
+    "probes/nes-joint398/map13/nes_native_planes165.sv": "e07d18c1deaab283774898d7a67a3d362b00bcefe5c1bd22d48da97be38d34cf",
+    "probes/nes-joint398/ea01/nes_patch_capture181.sv": "a4730979575696afde9e8aa5911a67fbf6404c96f609da02def8e76e831c5984",
+    "probes/nes-joint398/map13/nes_patch_capture181.sv": "a4730979575696afde9e8aa5911a67fbf6404c96f609da02def8e76e831c5984",
+    "probes/nes-joint398/ea01/nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+    "probes/nes-joint398/map13/nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+    "probes/nes-joint398/ea01/nes_native_compact181.sv": "b6134f4264eed933ed830489239273e682a0494cd36345def1c135f11e3c8bde",
+    "probes/nes-joint398/map13/nes_native_compact181.sv": "b6134f4264eed933ed830489239273e682a0494cd36345def1c135f11e3c8bde",
+    "probes/nes-joint398/ea01/nes_native_raster181.sv": "25f9762f7f0842dacf5915804f398f71b9ed5e9b54edd99f4ad1ce5423ae8b95",
+    "probes/nes-joint398/map13/nes_native_raster181.sv": "25f9762f7f0842dacf5915804f398f71b9ed5e9b54edd99f4ad1ce5423ae8b95",
+    "probes/nes-joint398/ea01/nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "probes/nes-joint398/map13/nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "probes/nes-joint398/ea01/nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "probes/nes-joint398/map13/nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "probes/nes-joint398/ea01/nes_bulk_aperture188.sv": "dafbc07930e225bf64915f5762c7933a5f2d41dbbac2454f90de13c59759bd6d",
+    "probes/nes-joint398/map13/nes_bulk_aperture188.sv": "dafbc07930e225bf64915f5762c7933a5f2d41dbbac2454f90de13c59759bd6d",
+    "probes/nes-joint398/ea01/nes_plan_spi200.sv": "3fe4ba54f83dd6e3c56efa1935439c104238d1d0be0af445a3943064d30953f4",
+    "probes/nes-joint398/map13/nes_plan_spi200.sv": "3fe4ba54f83dd6e3c56efa1935439c104238d1d0be0af445a3943064d30953f4",
+    "probes/nes-joint398/ea01/nes_plan_batch206.sv": "c78b2d5eb15a1c97cb7b5f7f8e0bee9fd8eb970d7bc48a8f5389fb43bb2fcc99",
+    "probes/nes-joint398/map13/nes_plan_batch206.sv": "c78b2d5eb15a1c97cb7b5f7f8e0bee9fd8eb970d7bc48a8f5389fb43bb2fcc99",
+    "probes/nes-joint398/ea01/nes_source_tile192.sv": "65a81b158ec3ef6b7eef4d0b65b97ec7cd39a960bcbc7e702d4b6f540a5fc1c7",
+    "probes/nes-joint398/map13/nes_source_tile192.sv": "65a81b158ec3ef6b7eef4d0b65b97ec7cd39a960bcbc7e702d4b6f540a5fc1c7",
+    "probes/nes-joint398/ea01/nes_tile205.sv": "21008911a47cb2092a9589f9959c32a9c9b28070b81bef2f594f4647334cc7cb",
+    "probes/nes-joint398/map13/nes_tile205.sv": "21008911a47cb2092a9589f9959c32a9c9b28070b81bef2f594f4647334cc7cb",
+    "probes/nes-joint398/ea01/nes_chr_cache192.sv": "f980de51bff69091d15bbba6894e7d4cca998a50c92ae43dd00e569ec92c3549",
+    "probes/nes-joint398/map13/nes_chr_cache192.sv": "f980de51bff69091d15bbba6894e7d4cca998a50c92ae43dd00e569ec92c3549",
+    "probes/nes-joint398/ea01/nes_native_arbiter165.sv": "cd4818bc2e7a02d84b101f55c2fb2f564d59588561237002bb2ecde6d6035e23",
+    "probes/nes-joint398/map13/nes_native_arbiter165.sv": "cd4818bc2e7a02d84b101f55c2fb2f564d59588561237002bb2ecde6d6035e23",
+    "probes/nes-joint398/ea01/nes_rom_physical.sv": "6870eb15955c7e1f7bc3510e7654a45c6f42c8723779a382496c0cb437be47c9",
+    "probes/nes-joint398/map13/nes_rom_physical.sv": "6870eb15955c7e1f7bc3510e7654a45c6f42c8723779a382496c0cb437be47c9",
+    "probes/nes-joint398/ea01/nes_spi270.sv": "4fd5e319b365a0436d75f0d4f8b8e2ba3fbefa4238dbdf62e6fcd12bbc0c900a",
+    "probes/nes-joint398/map13/nes_spi270.sv": "4fd5e319b365a0436d75f0d4f8b8e2ba3fbefa4238dbdf62e6fcd12bbc0c900a",
+    "probes/nes-joint398/ea01/nes_validator278.sv": "6d57b9c91849169d5a4c77df6aaba44a71d2684d47c2ac5743c12e574e518d06",
+    "probes/nes-joint398/map13/nes_validator278.sv": "6d57b9c91849169d5a4c77df6aaba44a71d2684d47c2ac5743c12e574e518d06",
+    "probes/nes-joint398/ea01/nes_native_capture365.sv": "1438182205c3142c3555bb28c87a663927e0c89fdefc866a6ad7a765577ab886",
+    "probes/nes-joint398/map13/nes_native_capture365.sv": "1438182205c3142c3555bb28c87a663927e0c89fdefc866a6ad7a765577ab886",
+    "probes/nes-joint398/ea01/nes_capture_lease201.sv": "ff93a07ddf972f4b57f0136c8e5236529d6f845a7106ebacd83cadebeba105fb",
+    "probes/nes-joint398/map13/nes_capture_lease201.sv": "ff93a07ddf972f4b57f0136c8e5236529d6f845a7106ebacd83cadebeba105fb",
+    "probes/nes-joint398/ea01/nes_joint266.sv": "78a07b67177d8624df73e088ebf43e8a8ffeae78777b1e13a501e129c31df5b9",
+    "probes/nes-joint398/map13/nes_joint266.sv": "78a07b67177d8624df73e088ebf43e8a8ffeae78777b1e13a501e129c31df5b9",
+    "probes/nes-joint398/ea01/nes_plan_path267.sv": "40b2598eac4b1f92b4a33bbd4e4b71bcf63af14c41b8054a890e4889eb8579d6",
+    "probes/nes-joint398/map13/nes_plan_path267.sv": "40b2598eac4b1f92b4a33bbd4e4b71bcf63af14c41b8054a890e4889eb8579d6",
+    "probes/nes-joint398/ea01/nes_capture_lease366.sv": "5cdd357b1f5201aea7fc5dec4e0e4c2bc4cb8638a22049ee9518da9f22c71775",
+    "probes/nes-joint398/map13/nes_capture_lease366.sv": "5cdd357b1f5201aea7fc5dec4e0e4c2bc4cb8638a22049ee9518da9f22c71775",
+    "probes/nes-joint398/ea01/nes_tile_link394.sv": "19609ad8e92b438ff063d40fe66c9702bd9c1d947de09688d069be6f79ceb24a",
+    "probes/nes-joint398/map13/nes_tile_link394.sv": "19609ad8e92b438ff063d40fe66c9702bd9c1d947de09688d069be6f79ceb24a",
+    "probes/nes-joint398/ea01/nes_stage396.sv": "1620cd3495d867eb37b4469c0e59e7ea7a79ea627872d8132fe180ff05a330f4",
+    "probes/nes-joint398/map13/nes_stage396.sv": "1620cd3495d867eb37b4469c0e59e7ea7a79ea627872d8132fe180ff05a330f4",
+    "probes/nes-joint398/ea01/nes_check396.sv": "e724a5f95a30b28c422e777b4eb73a329de6365d2a619c50a13458301710c95e",
+    "probes/nes-joint398/map13/nes_check396.sv": "e724a5f95a30b28c422e777b4eb73a329de6365d2a619c50a13458301710c95e",
+    "probes/nes-joint398/ea01/nes_walk396.sv": "5b62b661c5c2f771ece550995d2396b831404946ea78b12123376be3aa59c763",
+    "probes/nes-joint398/map13/nes_walk396.sv": "5b62b661c5c2f771ece550995d2396b831404946ea78b12123376be3aa59c763",
+    "probes/nes-joint398/host10/nes_mux260.sv": "a4d0870543239b10f9fc3955f5f055685c88b647e8906a06735f2c671c16cf64",
+    "probes/nes-joint398/host10/nes_queue260.sv": "ef9dc38e595beba0359b70aa79091569fbb61c7452546b6a62346cbf07f90b27",
+    "probes/nes-joint398/host10/nes_spi270.sv": "eec3d829c6167dc70a0bcf16cf9573a43821889a4ddbe73e7b6f73801d564928",
+    "probes/nes-joint398/host10/nes_validator278.sv": "6d57b9c91849169d5a4c77df6aaba44a71d2684d47c2ac5743c12e574e518d06",
+    "probes/nes-joint398/host10/nes_tile_link394.sv": "0d06b3f3408869d6c61d865e493812198e9bf0e2d3bc02ca7611f22a2207d19d",
+    "probes/nes-joint398/host10/nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "probes/nes-joint398/host10/nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "probes/nes-joint398/host10/nes_bulk_aperture188.sv": "dafbc07930e225bf64915f5762c7933a5f2d41dbbac2454f90de13c59759bd6d",
+    "probes/nes-joint398/host10/nes_stage396.sv": "01921f977a557fe8dba268ce36f26ecab3961996c4afba851956b4d50f3487bc",
+    "probes/nes-joint398/host10/nes_check396.sv": "e724a5f95a30b28c422e777b4eb73a329de6365d2a619c50a13458301710c95e",
+    "probes/nes-joint398/host10/nes_byte398.sv": "506e22d81da052573d960019c40d0160505bd076f67d4f6aba0a5f1b81028c1f",
+    "probes/nes-joint398/armguard02/result.json": "da00113e79384aef98d234992f504f7afa0d3a66c5a44c4c78cc8523d2df774d",
+    "probes/nes-joint398/owner04/result.json": "b2ca951093e0ffb7fe73e3fa5d880ca9d73aa92154cf7403d41c1cc4bf2ce70e",
+    "probes/nes-joint398/owner05/cases.json": "46c6e61fac155339f10d3ed3c281a847fe451264cd42baec1c9d52d47b3361e0",
+    "probes/nes-joint398/arm02/result.json": "4db62b23e645b50323274fa6aaa3e284229747a57d4c81e51e3ca4fdae0352aa",
+    "probes/nes-joint398/live11/vsim.log": "4711f0eb817b6796a446243ad6ef9608d838e928fb94dcb69f6ad3a5e56443a8",
+    "probes/nes-joint398/live11/joint-events.csv": "d5572bd903105d514c8650ab68b1b2abc55205a5ee01143000597619fc2e6fdc",
+    "probes/nes-joint398/ea01/joint-events.csv": "090350f2dc853ff054c5c6c611314016400d1090c706a7fbb7adb72e64eb064e",
+    "probes/nes-joint398/live11/arm-worker.log": "02ff049a6baf942ad502292335f88d5b7732e3e744006d10c74c39f520126b8f",
+    "probes/nes-joint398/live11/arm905.json": "c0a66fd3e1c82fcea1b76b2a5e8e738af68537ff162f8ff017131f3c25638dd8",
+    "probes/nes-joint398/live11/arm906.json": "902acfc879e3e29bea8545e9891ee793d2ff6f2e80fd33f1c7738aca62624cd5",
+    "probes/nes-joint398/live11/arm907.json": "d0ea31a44ce77d577aa56bf9eb2d00a1b4033ad0c373b37f03503f32a0f0ddf6",
+    "probes/nes-joint398/live11/arm908.json": "340c05be5f1a9c3a3cc78f10d026c47b5324ceec553c7095e1c6815fe02342d7",
+    "probes/nes-joint398/live11/arm909.json": "f840ca1101ccc4ffe2a2bf61cdd9fef3b23f9a73cd8f05995e2745d15016036d",
+    "probes/nes-joint398/live11/arm910.json": "1dbff797c4242b5f743ac5b063188c705c5eda5814f9a3e5097451b4fbec7444",
+    "probes/nes-joint398/live11/arm911.json": "9cb1c133ec40431a4ecc4399811316b7fdc360b5bf359e0e419e488124fa9120",
+    "probes/nes-joint398/live11/arm912.json": "3dbc1409b7fa125e7e781445fe6665a01b1b4d73b2847b3c4bfa12c329235c98",
+    "probes/nes-joint398/live11/arm913.json": "1baba0b32033edf093a8eec2f91ab105d5b849d474b2911f748975a1056ef8b2",
+    "probes/nes-joint398/live11/arm914.json": "89ac2169d1b6e4d85734fee65ae386adb12a82aad98c06e61d74833f5d272044",
+    "probes/nes-joint398/live11/arm915.json": "efa152022273ae10760130cabe90af0e2c9c5b51da29b1533c113ef911f0830c",
+    "probes/nes-joint398/live11/arm916.json": "dc4c8d679e1deea04f4eaedf7baf62f08bfe7e09bad5ffc983a951a86ea03112",
+    "probes/nes-joint396/live07/joint-events.csv": "63a5aeec3e59fc6ac2f23aed41e1fa0905fa1f49db9c04a5d5ee28b75504382f",
+    "probes/nes-jobs394/native04/905/spool.sfc": "b6c6e900cfcd2ee3e0f9eefc52f66505304b501822b4551566b148dc379ce13e",
+    "probes/nes-joint398/map15/sink-program.hex": "4484da9bbca47dde391b7b5cfaaeb1e7e12ab8b557c9df2dd48015bc0a30b2ee",
+    "repository-nes-milestone/tools/analyze_nes_joint398.py": "da727edb7fed4272fdc15adc7941c506b01a730a75f6c6e0a3e9a3e78a88fe84",
+    "repository-nes-milestone/tools/archive_nes_joint398.py": "7c3c236a408b3e3bf8d5af100603af24ddf20713a488b2ab89a7a1a21f5786a7",
+    "repository-nes-milestone/tools/build_nes_joint398.py": "d2073fbbbec7b74c8c8076d0cc0b8f73ce93d63f22c7f996f97e383622aa29dd",
+    "repository-nes-milestone/tools/guard_nes_joint398.py": "4d9af95a8902f24d7001d79563aa2a5379afdeec29d5653dab120dbe3a66d08d",
+    "repository-nes-milestone/tools/map_nes_joint398.py": "89463ee99512ac5d6a488910185b9b107eb3ec82b90837bc646e8e2650faad58",
+    "repository-nes-milestone/tools/nes_exec398.py": "b01f1b94a0489983ab101f5e90bfa972c3480cca9c0c0aa588bcb730845872d4",
+    "repository-nes-milestone/tools/nes_host398.py": "9b90631b382c30b5c9d3ca3df5cb433856817e4d934ce3f8139bd01ac702c30e",
+    "repository-nes-milestone/tools/nes_joint398.py": "256204455dc9f94b2b814b70bdd82f70b906157fcd68a11523a4cc6650ea5775",
+    "repository-nes-milestone/tools/prepare_nes_repeat398.py": "47a8f5e5154e618ec6a7146f93f30fa759021d6ec999dfbd64b8883a4b9cb69a",
+    "repository-nes-milestone/tools/probe_nes_exec398.py": "e80041a2c26aaa3313b870ddb6219844713721cbb1709ca54a68b2c8836c061c",
+    "repository-nes-milestone/tools/probe_nes_hint398.py": "236028e1196201e90aa451f97f3eb6abf42af6ee929cb513b469dcea81715aa6",
+    "repository-nes-milestone/tools/probe_nes_joint398.py": "d0cb559cbb4257293c3eb555a843823df9b8b777469711c1e506f03d7e8fc2c6",
+    "repository-nes-milestone/src/fpga/nes_exec398/hint.sv": "f523ac5b0462e6cf104eef3caccfee7027057c4682ef75b4b9d1b6d63b7620b5",
+    "repository-nes-milestone/src/fpga/nes_exec398/host_body.svh": "e895cf525f4c360dc2147abe9eab03e59781c85ce1bca9f0ec83c510e137e68c",
+    "repository-nes-milestone/src/fpga/nes_exec398/nes_byte398.sv": "506e22d81da052573d960019c40d0160505bd076f67d4f6aba0a5f1b81028c1f",
+    "repository-nes-milestone/src/fpga/nes_exec398/plan_body.svh": "adb9b41c69355ca9b78beb0a74f9b9fbaf40cb30c454d4e18c9a830d49ad6c63",
+    "repository-nes-milestone/src/fpga/nes_exec398/queue_body.svh": "af70d06a06448e739b4e2c11c1db2c30adad036600b56dcac68558291a02e406",
+    "probes/nes-joint396/live07/arm-worker.log": "4a4280302a0c7fe643afe6665b243d754555124dc5698afdc1170a43f8053c25",
+    "probes/nes-joint398/ea01/arm-worker.log": "c1f116b1584c1e8d91e1d49910c466e685ed4655981c1d29ac3dc1169706fb6f",
+    "probes/nes-joint398/live09/arm-req6482": "9ec9aaa70019226def7a891e74e8d0a49994d495cac343705c11b69f76941a9b",
+    "probes/nes-joint398/live09/arm-req6499": "d0ad36689933643331680ee3a49ff2f05be4cc855f427f4118dfe40215f5d037"
+  },
+  "separated_EA_only_matching_RTL": {
+    "nes_core257.sv": "5b4d42018bbba907981f2ba210eb4220045e82cc04bffaf7b2ace6fcebf673bb",
+    "nes_transport257.sv": "5746b7fe12f63c4aefb28de5524799d91dc4d263d41978a5a5076f182e7b9e9a",
+    "nes_joint257.sv": "4e06b8efc9bf71193d8a2974211caf4939bc5528ae2d8e2cfafcea186c279b4e",
+    "nes_queue260.sv": "2c5a376e4122361287fee5e946d0b0df906f86f91bc3c44ec1bb0d594461a34c",
+    "nes_mux260.sv": "d59bcd7a206e3a049e6731eafa4e499d45fdc42c62271f5bfc0ec5b2dc99c671",
+    "nes_native_frame201.sv": "15b739dc7609bdea2649fc5bb1417c9e5f953379e3f2bde4ac79558f1bc00df1",
+    "nes_native_planes165.sv": "e07d18c1deaab283774898d7a67a3d362b00bcefe5c1bd22d48da97be38d34cf",
+    "nes_patch_capture181.sv": "a4730979575696afde9e8aa5911a67fbf6404c96f609da02def8e76e831c5984",
+    "nes_patch_rows181.sv": "d9c74feeaa8dbbbb2a85ab47128275682048f37441813a269034466a5a009560",
+    "nes_native_compact181.sv": "b6134f4264eed933ed830489239273e682a0494cd36345def1c135f11e3c8bde",
+    "nes_native_raster181.sv": "25f9762f7f0842dacf5915804f398f71b9ed5e9b54edd99f4ad1ce5423ae8b95",
+    "nes_native_mailbox206.sv": "46fe011c99d40f3746686866d046e4cb97550ba6765aae4a1ccdbb8b9b63c983",
+    "nes_domain_reset124.sv": "dd547634467f382ad400259bdad9e4def5837e93d0498d4efea4a39c227c3f81",
+    "nes_bulk_aperture188.sv": "dafbc07930e225bf64915f5762c7933a5f2d41dbbac2454f90de13c59759bd6d",
+    "nes_plan_spi200.sv": "3fe4ba54f83dd6e3c56efa1935439c104238d1d0be0af445a3943064d30953f4",
+    "nes_plan_batch206.sv": "c78b2d5eb15a1c97cb7b5f7f8e0bee9fd8eb970d7bc48a8f5389fb43bb2fcc99",
+    "nes_source_tile192.sv": "65a81b158ec3ef6b7eef4d0b65b97ec7cd39a960bcbc7e702d4b6f540a5fc1c7",
+    "nes_tile205.sv": "21008911a47cb2092a9589f9959c32a9c9b28070b81bef2f594f4647334cc7cb",
+    "nes_chr_cache192.sv": "f980de51bff69091d15bbba6894e7d4cca998a50c92ae43dd00e569ec92c3549",
+    "nes_native_arbiter165.sv": "cd4818bc2e7a02d84b101f55c2fb2f564d59588561237002bb2ecde6d6035e23",
+    "nes_rom_physical.sv": "6870eb15955c7e1f7bc3510e7654a45c6f42c8723779a382496c0cb437be47c9",
+    "nes_spi270.sv": "4fd5e319b365a0436d75f0d4f8b8e2ba3fbefa4238dbdf62e6fcd12bbc0c900a",
+    "nes_validator278.sv": "6d57b9c91849169d5a4c77df6aaba44a71d2684d47c2ac5743c12e574e518d06",
+    "nes_native_capture365.sv": "1438182205c3142c3555bb28c87a663927e0c89fdefc866a6ad7a765577ab886",
+    "nes_capture_lease201.sv": "ff93a07ddf972f4b57f0136c8e5236529d6f845a7106ebacd83cadebeba105fb",
+    "nes_joint266.sv": "78a07b67177d8624df73e088ebf43e8a8ffeae78777b1e13a501e129c31df5b9",
+    "nes_plan_path267.sv": "40b2598eac4b1f92b4a33bbd4e4b71bcf63af14c41b8054a890e4889eb8579d6",
+    "nes_capture_lease366.sv": "5cdd357b1f5201aea7fc5dec4e0e4c2bc4cb8638a22049ee9518da9f22c71775",
+    "nes_tile_link394.sv": "19609ad8e92b438ff063d40fe66c9702bd9c1d947de09688d069be6f79ceb24a",
+    "nes_stage396.sv": "1620cd3495d867eb37b4469c0e59e7ea7a79ea627872d8132fe180ff05a330f4",
+    "nes_check396.sv": "e724a5f95a30b28c422e777b4eb73a329de6365d2a619c50a13458301710c95e",
+    "nes_walk396.sv": "5b62b661c5c2f771ece550995d2396b831404946ea78b12123376be3aa59c763"
+  },
+  "separated_EA_only_precedes_ARM_END_fix": true
+}
