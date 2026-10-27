@@ -1,0 +1,98 @@
+{
+  "experiment": 401,
+  "baseline": {
+    "RTL": 400,
+    "ARM": 400,
+    "native_kernel_bytes": 1778,
+    "whole_Lite_MAP": "400/map01",
+    "live": "400/live04"
+  },
+  "scope": "Replace complete control bodies and state storage; do not add a second executor",
+  "invariants": [
+    "independent expected/CRC/coverage",
+    "STOP cancels both ports and late DONE",
+    "old display identity until exact final ACK",
+    "12 ordered view reads",
+    "PPU DMA and commit only in legal VBlank",
+    "3584B tile FIFO + 512B ordinary reservation",
+    "2 output slots,4 source packets",
+    "same initial capture/start/ROM phase"
+  ],
+  "implementation_this_turn": {
+    "replacement_RTL": false,
+    "new_area_measurement": false,
+    "native_prior_active_HDMA": true,
+    "exact_view_CPU_service": true
+  },
+  "design_budget": "analysis/scope401-budget.json",
+  "next": [
+    {
+      "id": "R1",
+      "task": "Fixed host-record/SPI/source-plan/queue ownership prototype, remove VM and adapters together",
+      "comb_cap": 803,
+      "FF_cap": 480,
+      "gate": "same ABI bytes and 917 capture with actual CPU envelope; independent negative/STOP/final ACK tests"
+    },
+    {
+      "id": "R2",
+      "task": "Replace staging and capture temporary state/CHR metadata with separate RAM ports",
+      "comb_cap": 1400,
+      "FF_cap": 992,
+      "gate": "one PPU event per clock, same-rank bypass, palette384FF retained with existing comparisons; cache STOP drain; identical canonical bytes"
+    },
+    {
+      "id": "R3",
+      "task": "Whole Lite MAP with the exact functional source and all CDC/decode",
+      "gate": {
+        "LE_max": 15408,
+        "comb_max": 15253,
+        "control_closure_max": 1172
+      },
+      "fallback": "If inadequate, reconsider ROM arbitration/render roles or FPGA capacity; do not continue isolated FSM/opcode/seed/FIT loops"
+    },
+    {
+      "id": "R4",
+      "task": "Full resident/71 heavy/multiple phase/mapper and recovery, then FIT/STA/IO and bounded physical test",
+      "gate": "No physical60fps or MMC4/5 margin claim before measured acceptance"
+    }
+  ],
+  "time_budget": {
+    "existing400_lower_bound_ms": {
+      "914": 1.032200247,
+      "915": 0.083284351
+    },
+    "updated_result": "analysis/control401-verification.json",
+    "not_WCET": true,
+    "avoid_double_count_HDMA": true,
+    "prior_fixture_prehistory_excluded": true,
+    "first_ROM_window_must_not_regress": true
+  },
+  "new_replacement_time_cost": null,
+  "new_replacement_area_cost": null,
+  "automatic_merge": false,
+  "hardware_ready": false,
+  "selected": {
+    "native": [
+      "native09",
+      "native10",
+      "native11"
+    ],
+    "HDMA_off": "native08",
+    "service": "service02",
+    "live": "live02",
+    "RAM_shape": "ram01",
+    "audit": "analysis/control401-verification.json"
+  },
+  "outcome": {
+    "display_ACK_frames": 12,
+    "captures": 10,
+    "capture917_margin_ms": 0.300342,
+    "gate_advance_ms": {
+      "914": 1.401912133,
+      "915": 0.460513237
+    },
+    "whole_MAP_inherited": true,
+    "new_control_area": null,
+    "physical60fps": false
+  }
+}
