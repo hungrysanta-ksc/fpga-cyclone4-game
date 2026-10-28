@@ -44,4 +44,3 @@ try {
  if($mountedArm){& subst V: /D | Out-Null}
  Copy-Item -LiteralPath $out -Destination $archive -Recurse
 }
-
