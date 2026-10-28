@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// Functional actual board/core, seeded ROM and verified flag. Not a full load.
+// Actual loader prefix to full board and functional PSRAM; deliberately incomplete.
 `timescale 1ns/1ps
 module nrom449_tb;
  reg CLKIN=0,SNES_SYSCLK=0,SPI_SS=1,SPI_SCK=0,SPI_MOSI=0;
