@@ -1,0 +1,89 @@
+{
+  "fit_le": 14741,
+  "device_le": 15408,
+  "raw_sta_setup_ns": -6.568,
+  "raw_sta_recovery_ns": -11.467,
+  "related_paths": {
+    "implementation": {
+      "setup": {
+        "corner": "8_slow_1200mv_85c",
+        "from_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+        "to_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+        "kind": "setup",
+        "from": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|phase[8]",
+        "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|loaded_bytes[10]",
+        "slack": "0.102",
+        "delay": "5.106"
+      },
+      "hold": {
+        "corner": "MIN_fast_1200mv_0c",
+        "from_clock": "core|pll|altpll_component|auto_generated|pll1|clk[0]",
+        "to_clock": "core|pll|altpll_component|auto_generated|pll1|clk[0]",
+        "kind": "hold",
+        "from": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_bulk_aperture188:aperture|address_sync[0]",
+        "to": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_bulk_aperture188:aperture|altsyncram:storage_rtl_0|altsyncram_9vi1:auto_generated|ram_block1a4~portb_address_reg0",
+        "slack": "0.135",
+        "delay": "0.456"
+      }
+    },
+    "nominal": {
+      "setup": {
+        "corner": "8_slow_1200mv_85c",
+        "from_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+        "to_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+        "kind": "setup",
+        "from": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|load_end",
+        "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|reject_state[1]",
+        "slack": "0.203",
+        "delay": "5.670"
+      },
+      "hold": {
+        "corner": "MIN_fast_1200mv_0c",
+        "from_clock": "core|pll|altpll_component|auto_generated|pll1|clk[0]",
+        "to_clock": "core|pll|altpll_component|auto_generated|pll1|clk[0]",
+        "kind": "hold",
+        "from": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_bulk_aperture188:aperture|address_sync[0]",
+        "to": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_bulk_aperture188:aperture|altsyncram:storage_rtl_0|altsyncram_9vi1:auto_generated|ram_block1a4~portb_address_reg0",
+        "slack": "0.135",
+        "delay": "0.456"
+      }
+    }
+  },
+  "reset_epoch_paths": 576,
+  "reset_epoch_min_slack_ns": 1.605,
+  "first_stage_fanout": 45,
+  "cdc_classes": {
+    "inherited_unmodified": 1716,
+    "control_first": 90,
+    "held_payload": 276,
+    "gray_first": 192,
+    "related": 390,
+    "inherited_reset_review": 1272
+  },
+  "held_max_ns": 6.471,
+  "gray_max_ns": 6.67,
+  "conditional_io": {
+    "psram_conditional_margin_ns": 3.034,
+    "snes_read_envelope_ns": 79.887,
+    "spi_reply_envelope_ns": 165.097,
+    "spi_half_period_ns": 190.476,
+    "conditional_data_bounds_pass": true,
+    "native_payload_reset_pass": true,
+    "negative_reset_path_count": 39,
+    "native_payload_negative_reset_path_count": 0
+  },
+  "inherited_unmodified_not_reaudited": true,
+  "unconstrained_paths_remain": true,
+  "actual_board_signoff": false,
+  "input_sha256": {
+    "board.fit.summary": "499d1eaa6b3a9aa5f846cea55db48aa7ac9c31805b4f05419abe9567f8ce5320",
+    "board.sta.summary": "74e76c1793496442d1b4d0c704d9a2f1f0b124ec59f8c50a49a2ae60f4bb2182",
+    "board.sta.rpt": "ac3ff4a4eafad17d9fcda03b7539816178ff6331ee3714fa0b1d8fe392964ac8",
+    "inventory206.tsv": "eb1bb75dbc55fa60159cd344b6eb5d06147b3fa1dd51a097b86815e06f99d1d9",
+    "topology206.tsv": "ba6fc007065b2aef7961bffa787d319f4efdb167cbfb4a12931c1c71072dbe0a",
+    "reset207.tsv": "c5c57fc9ebeea56a6cf729ced154c4cd71940b64afd4b23db46d70d1f7ea2082",
+    "boundary165-paths.tsv": "d134203e56a220a022596dd6292a40407a5a75b5870e42e3b063cab066e466c7",
+    "implementation-paths204.tsv": "3104e9acd99e861d7ea7ab13f7bed83a31f7ab32c41c4766aca01676b0c8abde",
+    "nominal-paths204.tsv": "5b91edc1ada05143d6fec553738daa0db9b39d4d44ee4663e224e916c7218363"
+  }
+}
