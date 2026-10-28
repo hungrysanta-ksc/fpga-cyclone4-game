@@ -1,19 +1,19 @@
 # SPDX-License-Identifier: MIT
-"""Prepare actual run136/observer/screen SPI prefix fixture; compile only.
+"""Prepare actual run136/observer/screen SPI prefix fixture.
 
 It is intentionally not a full board or display implementation. The existing
-411 simulation occupies the sole Starter seat; this job does not run vsim.
+411 simulation occupies the sole Starter seat; default is compile only.
 """
 import argparse
 import sys
 from pathlib import Path
 from nes_delta231 import BASE,ROOT
-p=argparse.ArgumentParser();p.add_argument('--build',required=True,type=Path);p.add_argument('--fixture',required=True,type=Path);p.add_argument('--out',required=True,type=Path);a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--build',required=True,type=Path);p.add_argument('--fixture',required=True,type=Path);p.add_argument('--out',required=True,type=Path);p.add_argument('--run',action='store_true');a=p.parse_args()
 loader=(a.fixture/'run03-loader.c').resolve();disk=(a.fixture/'loader01-disk.c').resolve();assert loader.is_file() and disk.is_file()
 runner=(ROOT/'tools/test_nes_nrom410_prefix.py').read_text()
 def once(s,old,new):
  assert s.count(old)==1,(old,s.count(old));return s.replace(old,new)
-runner=once(runner," and os.environ.get('SALT_LICENSE_SERVER')=='18000@localhost'",'')
+if not a.run:runner=once(runner," and os.environ.get('SALT_LICENSE_SERVER')=='18000@localhost'",'')
 runner=once(runner,"(ROOT/'tests/nes-nrom408/full_tb.c').read_text()",'Path('+repr(str(loader))+').read_text()')
 runner=once(runner,"str(ROOT/'tests/nes-nrom408/fat_disk.c')",'str(Path('+repr(str(disk))+'))')
 runner=once(runner,"for f in host.glob('*.h'):shutil.copyfile(f,d/f.name)","for f in host.glob('*.h'):shutil.copyfile(f,d/f.name)\nshutil.copyfile(prod/'nes_run136.h',d/'nes_run136.h')")
@@ -34,7 +34,9 @@ bench=bench.replace('nes_rom_spi_check dut(.*,.spi_selected());', """nes_rom_spi
 for n in ('nes_run_observer134.sv','nes_pad_trace156.sv','nes_ppu_history157.sv','nes_screen_status151.sv'):shutil.copyfile(board/n,d/n)'''
 runner=once(runner,"shutil.copyfile(ROOT/'tests/nes-nrom410/prefix_tb.sv',d/'prefix_tb.sv')",replacement)
 runner=once(runner,"'nes_rom_physical.sv','prefix_tb.sv'", "'nes_rom_physical.sv','nes_run_observer134.sv','nes_pad_trace156.sv','nes_ppu_history157.sv','nes_screen_status151.sv','prefix_tb.sv'")
-runner=once(runner,'for label,cmd in steps:', 'for label,cmd in steps[:3]:')
-runner=once(runner,"log=(d/'simulation.log').read_text(errors='replace')", "print('NROM415 DLL AND RTL COMPILE ONLY');raise SystemExit(0)\nlog=(d/'simulation.log').read_text(errors='replace')")
+runner=once(runner,"'scope':'deliberately aborted before full load, actual 227 loader/FatFS host C to actual FPGA SPI/boot/loader and PSRAM pin model; no complete CRC/readback/START/STOP/base recovery or ARM execution'", "'scope':'actual loader/programmer/run136 host C with actual boot/observer/screen RTL and functional PSRAM; deliberately aborted at 256 DATA, modeled programmer pins and native session; no full load or physical hardware'")
+if not a.run:
+ runner=once(runner,'for label,cmd in steps:', 'for label,cmd in steps[:3]:')
+ runner=once(runner,"log=(d/'simulation.log').read_text(errors='replace')", "print('NROM415 DLL AND RTL COMPILE ONLY');raise SystemExit(0)\nlog=(d/'simulation.log').read_text(errors='replace')")
 sys.argv=['test_nes_nrom410_prefix.py','--build',str(a.build),'--out',str(a.out),'--limit','256']
 exec(compile(runner,str(ROOT/'tools/test_nes_nrom410_prefix.py'),'exec'),{'__name__':'__main__','__file__':str(ROOT/'tools/test_nes_nrom410_prefix.py')})
