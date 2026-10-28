@@ -11,7 +11,7 @@ observer 2.625MHz는 실제 firmware 설정과 이전 250kHz 명시 사이 차�
 | 순서 | 목표와 완료 조건 | 상태 |
 |---|---|---|
 | 0 | 기존 227 및 GBC164·SRAM 복구 자료 보존. 411 결과·범위 기록, 단일 seat 반환 | **완료**: 384KiB 쓰기·readback·RTL START/STOP 통과; 실제 run136·base는 모델 |
-| 1 | 한정 NROM16 수평 profile의 실제 menu 경로·ID 78·ARM/FPGA/65816 짝과 재현 가능한 자체 테스트 ROM을 결합. header/CRC 실패는 START 차단 | **진행 중**: ARM·FPGA 진단 짝, 65816 ROM atom, 실제 board/NES core pixel과 수동 SNES bus pad 확인; 실제 65816 실행·display ACK 및 복구는 미연결 |
+| 1 | 한정 NROM16 수평 profile의 실제 menu 경로·ID 78·ARM/FPGA/65816 짝과 재현 가능한 자체 테스트 ROM을 결합. header/CRC 실패는 START 차단 | **진행 중**: ARM·FPGA 진단 짝, 65816 ROM atom, 실제 board/NES core pixel과 수동 SNES bus pad, 지원 mask ROM의 첫 geometry SPI 블록과 227 수신 확인; 전체 geometry·실제 65816 실행·display ACK 및 복구는 미연결 |
 | 2 | 같은 source로 Lite 전체 FIT/STA·핀/클록/CDC 확인, CRC·STOP·독립 검증 및 base token/menu 복원 절차 확인. observer 대표 조건을 단일 seat에서 순차 시험 | **진행 중**: Lite FIT 14,751LE, 224 방식 관련 clock 양수, observer 초기 대표 조건 통과; raw reset/CDC·미제약 IO와 실제 복구는 미해결 |
 | 3 | 사용자의 제한 실기: paired build에서 부팅·화면·입력·해당 음성, STOP·메뉴 복귀·재시작·복원 기록. 실패 시 복원 자료 사용 | **대기**: 1·2 완료 후에만 실기 가능. 새 NROM 실기 성공 아님 |
 | 4 | 같은 workload에서 capture/표시 ACK·누락·VBlank·ARM/SPI/IRQ/ROM 시간을 계측. 60fps의 16.667ms와 지속 프레임을 확인하고 병목을 정한다 | **미달/미측정**: 227 실기 465 ACK/60.06s, 402 fixture 최대 warm 34.048ms이며 서로 다른 경계. 실제 새 후보 시간 없음 |
