@@ -1,0 +1,26 @@
+{
+  "base_merge_pr132": "935b7bf4b4243c8881fb443a732ba167ce82fce4",
+  "stage": "P0 read-only inventory plus architecture and mapper sample plan",
+  "contract": "docs/nes-hardware405-contract.ko.md",
+  "audit": "analysis/hardware405-audit.json",
+  "production227": {"hardware_evidence": "analysis/game227-hardware01-verification.json", "actual_SMB3_run": true, "display_ACKs": 465, "duration_seconds": 60.06, "mean_ACKs_per_second_whole_run": 7.74, "scroll_FPS_measured": false, "physical_60fps": false, "paired_package_hash_verified": true, "existing_224_FIT_LE": 15249, "device": "EP4CE15F17C8", "new_FIT_227": false, "old_fit_tool": "historical Standard; future work Lite", "physical_board_current_configuration": null},
+  "nrom": {"production227_support": false, "reason": "actual production loader enforces target MMC3 header/CRC/393216B and board cart hardwires MMC3 flags4", "proposed_scope": "iNES1 mapper0 PRG16 or32KiB, CHR-ROM8KiB, fixed mirroring, no trainer/battery/NES2; CHR-RAM later", "new_loader_or_mapper_implemented": false, "actual_compatible_package": null, "new_FIT_STA": false, "hardware_ready": false},
+  "candidates": [
+    {"id":"A", "name":"402 common RAM executor plus actual source/plan/SPI and raster/lease replacement", "old_402_MAP":{"LE":20199,"comb":16508,"FF":7917,"RAM_bits":347991}, "new_MAP":null,"actual_new_time":null,"joint_replacement_implemented":false},
+    {"id":"B", "name":"ARM final DMA jobs/layout; FPGA compressed receive/independent check/staging; SNES sequential DMA", "whole_boundary_MAP":null,"actual_new_time":null,"additional_ARM_SPI_SNES_cost":null,"joint_replacement_implemented":false},
+    {"id":"C", "name":"literal full-frame 256x224x4bpp serial SPI", "payload_bytes":28672,"SPI_Hz":2625000,"wire_lower_bound_ms":87.381,"assumptions":"no compression or delta; not a bound on other representations", "selected":false}
+  ],
+  "mapper_samples": {
+    "MMC4": {"mapper":10,"actual_mapper_connected":false,"needed":"PPU-trigger latch ordering, full physical bank identity and side-effect-free prefetch","measured_new_time":null,"measured_new_area":null},
+    "MMC5": {"mapper":5,"actual_mapper_connected":false,"needed":"16bit tile tags, mutable provenance/epoch, ExRAM, split/attribute, IRQ/audio/PRG RAM","measured_new_time":null,"measured_new_area":null},
+    "existing_376": {"high_tag8192":"reject, no alias","split":"specific 224-row stimulus exceeds 128 exception capacity", "not_actual_mapper_game_test":true},
+    "measure":"same-start and additional ROM phases; real mapper CPU/PPU plus input/output ARM/IRQ/credit competition; grant wait, FIFO backlog, capture and display deadlines"
+  },
+  "next": ["Implement and separately verify fixed-scope NROM mapper0 loader/physical PRG/CHR and mirror/STOP/recovery on the real production boundary; do not modify frozen227 artifacts", "Measure same-source Lite whole FIT/STA and paired ARM/FPGA/65816 RAM/stack/package before limited hardware", "Choose A or B only after exact deleted/retained/new control and port/CDC budget and a minimal complete data/credit/receipt experiment", "Measure actual MMC4/5 request-origin contention rather than treating existing synthetic core_safe=1 fixture as a bound"],
+  "production227_GBC164_saveSRAM_changed": false,
+  "new_hardware_test": false,
+  "FIT_STA_new_candidate": false,
+  "physical60fps": false,
+  "MMC4_5_margin_proven": false,
+  "automatic_purchase_merge_deploy": false
+}
