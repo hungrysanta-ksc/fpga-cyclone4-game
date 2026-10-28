@@ -10,4 +10,6 @@
 
 411의 마지막 확인은 339,968/393,216 DATA였으며 아직 완료·readback·START/STOP 결과가 없다. 이 시험은 415/416 observer와 412 실제 프로그래머를 포함하지 않는다. 402 live06의 8,858,219 ARM 명령, SPI 53,011B, ROM 71,964쌍 및 warm 최대 34.048237ms는 해당 fixture의 실제 M4·SPI·IRQ·ROM 결합 결과지만 CPI1과 65816 header/view/HDMA envelope가 포함된 제한 결과다. 914/915 VBlank가 부족했고 전체 Lite MAP은 20,199LE/16,508조합 논리다. 227 실기 465ACK/60.06초와 직접 개선률로 비교하지 않는다.
 
+후속 확인에서 411은 393,216 DATA 쓰기를 마치고 readback ACK 16,384까지 진행했다. 아직 전체 readback·START/STOP PASS가 아니다. 415 생성기는 초기 SPI 시작 위상을 `--phase-ns` 0..46으로 지정할 수 있게 확장했고 17ns fixture `wiring04`는 DLL·RTL 컴파일만 통과했다. 각 위상 시뮬레이션 및 선택 중재 assertion은 실행 전이다. 이 시작 위상 변화가 물리적 CDC·STA 전체 검증을 대체하지 않는다.
+
 MMC4 mapper10은 live latch와 실제 ROM 경쟁이 아직 연결되지 않았다. MMC5 mapper5는 기존 13bit tag 대비 최대 CHR에 16bit가 필요하고 합성 split 스트레스는 예외 3,808개로 현 한도 128개를 초과했다. 이는 선택 자극의 반례이지 실제 mapper별 전체 시간·회로 측정이 아니다. 동일 workload·ROM 위상·ARM/IRQ/SPI/65816/VBlank·독립 검사·STOP/final ACK 및 mapper별 전체 Lite MAP/FIT/STA가 필요하다. 두 mapper의 추가 시간·회로 비용은 null로 유지한다.
