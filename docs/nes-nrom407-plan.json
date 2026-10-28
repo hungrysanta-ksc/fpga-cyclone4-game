@@ -1,0 +1,14 @@
+{
+  "stage":"partial generated 227 NROM16 horizontal loader and profile identity; full function/board validation incomplete",
+  "contract":"docs/nes-nrom407-contract.ko.md",
+  "evidence":"analysis/nrom407-verification.json",
+  "candidate":{"PRG_bytes":16384,"CHR_ROM_bytes":8192,"mirroring":"horizontal","PRG_RAM":false,"FPGA_status_ID":120,"CRC":"first pass derived file CRC, second and third pass must match; not authentication","other_profiles":"rejected before configuration"},
+  "selected":{"build":"build04","write_blocks":"transfer01","readback":"source04","cleanup_blocks":"cleanup01","actual_SPI_RTL":"spi02","arm_objects":"arm01","whole_Lite_MAP":"map01"},
+  "tests":{"actual_generated_loader_blocks_with_models":true,"actual_serial_RTL_status_and_idle_STOP":true,"full_227_loader_function":false,"real_FatFS_SPI_FPGA_PSRAM_combination":false,"actual_hardware_STOP_base_recovery":false},
+  "ARM":{"loader_object_text_delta":72,"layout_object_text":206,"menu_static_stack_old":1008,"menu_static_stack_new":1032,"source_static_stack_old":32,"source_static_stack_new":40,"full_link_stack_IRQ_cycles":null},
+  "Lite_MAP":{"LE":18178,"comb":13557,"FF":8029,"RAM_bits":185824,"changed_sources":["cart_nrom.sv","nes_rom_spi.sv"],"same_boundary_227_baseline_LE":18850,"FIT":false,"STA":false},
+  "startup_wire_bound_seconds":{"payload":1.1983725714,"DATA_and_STATUS":19.1739611429,"assumptions":"2.625MHz and two 8B frames per padded byte, excludes all other work; not per-frame time"},
+  "performance":{"actual_ARM_SPI_IRQ_ROM_timeline":null,"whole_60fps_candidates_A_B":null,"MMC4_5_contention_and_area":null},
+  "next":["link whole 227 firmware with fixed NROM profile and identity-safe menu selection, quantify full RAM/stack/IRQ", "actual entire loader C plus FPGA SPI/loader/PSRAM and FatFS models: 3 CRC passes, DATA/readback/START/STOP, identity mismatch and fail-closed base/menu recovery", "connect actual NES core + SNES path and same-phase ARM/IRQ/ROM timing; Lite FIT/STA and CDC/IO before any package", "measure actual MMC4/5 workload and candidate A/B at same whole-boundary"],
+  "production227_GBC164_saveSRAM_changed":false,"hardware_ready":false,"physical60fps":false
+}

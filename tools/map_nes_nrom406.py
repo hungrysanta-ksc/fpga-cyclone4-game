@@ -17,6 +17,7 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument('--out', required=True, type=Path)
     p.add_argument('--cart', required=True, type=Path)
+    p.add_argument('--spi', type=Path)
     a = p.parse_args()
     d = a.out.resolve()
     assert d.as_posix().isascii() and not d.exists()
@@ -31,6 +32,8 @@ def main():
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(q, dest)
     shutil.copyfile(a.cart, d / 'cart_nrom.sv')
+    if a.spi:
+        shutil.copyfile(a.spi, d / 'nes_rom_spi.sv')
     inputs = {x.relative_to(d).as_posix(): sha(x) for x in d.rglob('*') if x.is_file()}
     with (d / 'map.log').open('wb') as log:
         run = subprocess.run(['C:/altera_lite/25.1std/quartus/bin64/quartus_map.exe', 'board'],
