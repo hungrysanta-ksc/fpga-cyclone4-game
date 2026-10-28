@@ -1,0 +1,63 @@
+{
+  "experiment": 403,
+  "PR": 132,
+  "stage": "R0 scope, port observation and implementation budget",
+  "baseline": {"RTL": "402/build07", "whole_Lite": "402/map07", "live": "402/live04", "matched_reference": "402/live06", "ARM_image_changed": false, "kernel_bytes": 1778},
+  "evidence": {"passive_full_path": "403/trace01", "port_shape_only": "403/ram01", "budget": "analysis/scope403-budget.json", "verification": "analysis/scope403-verification.json"},
+  "preserve": ["402 previous/rank RAM and same-rank forwarding", "shared144x18 cache", "palette384FF and PPU-time comparisons", "single payload expansion and MASK/SHIFT", "3584B tile FIFO plus512B ordinary", "2 output slots and4 source packets", "independent expected and actual-read CRC/coverage", "STOP blocks all writes/publication and late DONE", "old display identity until exact finalACK plus plan drain", "legal VBlank and exact402 initial source/ROM origins"],
+  "actual_whole": {"LE": 20199, "comb": 16508, "FF": 7917, "RAM_bits": 347991, "LE_over15408": 4791, "comb_over15253": 1255},
+  "selected_replacement_scope": ["host VM, arbitrary IO and duplicate active/public header", "source transport and NES plan decode/cursor/CDC", "SPI response snapshot and request framing", "queue storage-credit and consume completion", "staging bind/copy/address/progress", "raster,lease,compact,plane-fetch,patch and frame control"],
+  "design_caps_not_measured": {
+    "host_record": {"comb": 256, "FF": 160},
+    "SPI": {"comb": 224, "FF": 96},
+    "NES_source_plan": {"comb": 192, "FF": 128},
+    "queue": {"comb": 130, "FF": 96},
+    "staging": {"comb": 192, "FF": 128},
+    "capture_raster_lease_fetch": {"comb": 1100, "FF": 512},
+    "new_total_excluding_retained_palette384FF": {"comb": 2094, "FF": 1120},
+    "retained_read_hint_tile": {"comb": 370, "FF": 264},
+    "control_comb_cap": 1172,
+    "new_control_comb_cap": 802,
+    "global_C_FF_overlap_needed_if_caps_realized": 4115,
+    "current_MAP_C_plus_FF_minus_LE": 4226,
+    "maximum_loss_of_that_overlap_if_caps_realized": 111,
+    "whole_LE_prediction": null,
+    "fit_proven": false
+  },
+  "clock_ownership": {"host": "84MHz record/ingress/staging/snapshot executor", "NES": "local fast PPU validation plus row/lease/source-plan executor", "not_one_FSM_clocked_by_two_clocks": true, "hot_comparator_and_cancel_lane_preserved": true},
+  "RAM_plan": {"host_metadata_control_region": [800,1023], "hint_preserved": [928,941], "NES_context_row_tail": [224,255], "row_width": 56, "row_SDP_nominal_M9K": 2, "row_TDP_nominal_M9K": 4, "old_program_removed_nominal_M9K": 4, "new_microcontrol_nominal_M9K_budget": 1, "logical_bits_if_plan_realized": 321111, "physical_fit_proven": false, "permanent_program_limit": false},
+  "service_caps_not_measured": {"uninterruptible_host_clocks": 2, "header_response_host_clocks": 8, "payload_byte_host_clocks": 8, "no_extra_ARM_wire_bytes_or_new_poll_required_by_ABI": true},
+  "time_scope": {
+    "baseline_extra_gate_advance_ms": {"914": 1.401853133, "915_local_after_actual914": 0.460335237},
+    "last_ARM_E1_supply_advance_even_zero_executor_ms": {"914": 1.128634133, "915_local_after_actual914": 0.231550237},
+    "ideal_VBlank_targets": {"914": 23, "915": 24},
+    "current915_gate_to_ideal_VBlank24_ms": 17.099746685,
+    "includes_prior_skipped_VBlank_wait": true,
+    "not_independent_new_CPU_work_ms": true,
+    "required_joint_change": "faster record execution must advance actual storage credit/IRQ and ARM producer schedule, not only the final scan",
+    "new_measured_time_gain_ms": null
+  },
+  "time_candidates": [
+    {"id": "A", "work": "same ARM ABI/image, faster record expansion and real storage-credit/IRQ feedback", "new_measured_gain": null, "does_not_count_final_ACK_wait_polling_as_saved_work": true},
+    {"id": "B", "work": "next-input plan/ROM prefill while old fully-staged frame waits for display VBlank", "requirements": ["next ARM plan input actually ready, not merely FPGA materialized", "old independent seal,read drain,DMA storage and plan/ROM drain completed", "separate input prep lease and old display identity", "old-generation outstanding0 instead of deleting global-empty safety", "sum old and next payload<=3584B and stamps<=192", "plan read-drain proof separate from display retirement", "old sealed,tile-closed,receipt and identity evidence preserved", "no next header/token publication before old exactACK", "STOP cancels both and all lateDONE", "preemptible actual ARM preparation with old ACK/credit/IRQ priority", "provisional history invalidated if old ACK fails"], "incremental_ARM_text_BSS_stack_instructions_SPI_IRQ": null, "new_measured_gain": null, "must_fit_same_control_and_lease_caps": true}
+  ],
+  "actual_port_observation": {"exact402_events_and_ARM_result": true, "minimum_header_host_clocks": 31, "minimum_palette_sample_NES_clocks": 4, "palette_sample_ns": 186.244, "bytewise_compare_ns_at84MHz": 285.714285714, "SPI_key_changed_E1": [142,349], "SPI_key_changed_E2": [123,762], "SPI_key_changed_E9": [50,50], "old_display_and_next_materialized_foreground915_ms": 32.18482564, "capture917_is_start_admission_not_complete_display": true},
+  "next": [
+    {"id": "I1", "work": "RAM record executor plus stage scratch/ALU and lease slot handoff; delete corresponding VM/IO/address/completion bodies", "gate": "early-header, wrong stamp/generation/CRC, STOP at every ownership boundary, duplicate/missing-read, token/credit, lateDONE guards"},
+    {"id": "I2", "work": "raster/compact/fetch/frame shared row control with preserved fast palette checks", "gate": "one event/clock, raw/mixed/8ranks, row-commit/query/context contention; exact first source/hint readiness"},
+    {"id": "I3", "work": "actual unchanged ARM ABI on sharedSPI/IRQ/ROM and2slots", "gate": "12 exactACK/10captures through917 and every warm actual nextVBlank; no phase shift or invented free producer time"},
+    {"id": "I3B", "work": "if next-plan prefill candidateB is selected, measure actual new ARM compiler/RAM/stack and full scheduler", "gate": "separate prep/display generations, bounded old ACK/credit/IRQ priority, sum payload<=3584, independent old finalACK and STOP retained; charge all ARM/SPI/IRQ/ROM changes"},
+    {"id": "I4", "work": "matching-source whole Quartus Lite MAP", "gate": "LE<=15408,comb<=15253,closedcontrol<=1172; all RAM/CDC/FF charged"},
+    {"id": "I5", "work": "FIT/STA,CDC/IO,residentRAM-stack/audio-input-STOP package and longer/multiphase tests", "gate": "limited hardware only after actual capacity/timing/package", "calendar": null}
+  ],
+  "new_controller_RTL_implemented": false,
+  "new_whole_MAP": false,
+  "new_area_saving": null,
+  "FIT": false,
+  "STA": false,
+  "hardware_ready": false,
+  "physical60fps": false,
+  "MMC4_5_margin_proven": false,
+  "production227_GBC164_saveSRAM_changed": false,
+  "automatic_merge_purchase_deploy": false
+}
