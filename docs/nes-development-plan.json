@@ -1,17 +1,17 @@
 {
   "schema_version": 1,
   "plan_id": "NES-PLAN-20261005-R1",
-  "date_kst": "2026-10-25",
-  "technical_candidate": "NES240 functional reference, unplaced;NES246 rejected",
+  "date_kst": "2026-10-26",
+  "technical_candidate": "NES372 ARM+370 RTL bounded improvement;915 accepted,next916/display and whole capacity fail,not production",
   "implementation_candidate": "NES227 production/hardware baseline",
-  "authoritative_document": "docs/nes-pr131-retrospective.ko.md",
-  "assessment": "PR131 retrospective: role split remains a hypothesis worth testing, but integration/capture gates must precede more ABI optimization. Whole MAP298 17683comb -> best-area359 17213 (-470,1805over); BG5OBJ2 fast candidate17724 (+41vs298,2316over). Fast warm907 12.156081/12.157717ms is processing latency, not sustained capture/display proof. Original MAP source/lease join reproduced pre-capture and stale-zero first-epoch admission fault1; functional TB bypasses that join. Model rearm upper2.340517ms versus measured input2.838466ms requires continuous-capture validation. Core ROM requests gated off during input-stage hint fill;29.361us window margin not full-firmware WCET. 364 3314->843 is arithmetic74.6% deletion allowance, actualnewcostnull. No selected wholeFIT/STA/physical60fps.",
-  "next_action": "Proposed: R0 materialize same board/source/lease/port connections for functional and resource tests; fix capture-vs-display ownership and STOP drain. R1 free-running capture N+1/output N with continuous ROM demand, actual source/hint ARM+IRQ and65816 service; then heavy7/71 and frame-ID/deadline accounting. R2 one broad justified whole-board deletion with actual serializer/receiver and measured total area; recompute843budget after capture integration. R3 matching LiteFIT/STA/CDC/IO and physical sustained gameplay. No immediate364ABI implementation or smallFSM/seed loops. This turn is retrospective only; no automatic merge or new implementation.",
+  "authoritative_document": "docs/nes-frontier372-contract.ko.md",
+  "assessment": "NES372 370 protocol/RTL and hint bytes retained;byte MASK popcount/set-bit traversal,map/raw split,bounded64B overlap-safe SHIFT unroll and target resident bitmap scan. 51blocks/96globals exact+2573mask/shift/odd-base cases+28hint/9source guards+8hint snapshots PASS.First914block32421->10758(-21663),hint8917->8084(-833),whole source73062->39941;instruction replay not added to live time. Actual905..915 drained11(startup2/warm9),capture915 admitted+41.159us;firstmiss916,8/9next captures.914 materialized2.614195->2.299063(-315.132us),processing21.545718->21.500992(-44.726us),4.834325ms over60Hz. 907..914 same-start/ROMphase all improve;908extraemptyD4+13B charged.Payload/hint/semantic plan records exact370.915source starts2.832533ms AFTER916deadline,materializes4.408605ms late;its17.269452ms is new measurement,not a370 regression. ROM60477pairs/input8846pairs/pending0;actual readCRC/coverage/2credit/12read-token/retire retained.ARMtext35862(+1628),data4/BSS48476same,stack1288. 30compiled modules exact370;inheritedLite22710LE17698comb9171FF292448bits,no newMAP.371rollback-37comb NOTnew370saving;2290combshort/2445with155reserve. Queue224self now included:8disjoint modules6064,retain codec/checker2392 =>3672control->1227ceiling;all8->3619,host-only2945->500.Upper budgets only,new replacement area null. 916 requires separate input/display contexts and simultaneous scratch/IRQ/ROM ownership,not just one common FSM.4packet source1KiB+shadow1KiB budget+12288bits/304736total;max71fixture needs500B rawARM,bits not FIT proof. 914 BG-boundary repack[220,187,246,30]->[190,217,246,30],same bytes/count,no extra wire;RTL/timing not implemented.71fixture954 2slot minimumwire2.956190ms versus4slot1.526857,not new71 timings. FullCPU/VBlank/WCET/71/heavy7/multiple phases/session/FITSTA/physical60fpsOPEN.Production227/GBC164/saveSRAM unchanged.",
+  "next_action": "372 ARM과370 ABI/RTL을 기준으로 유지한다.916 기한 전에 source915를 시작할 수 있도록 input/display lease·epoch/generation·STOP/retire를 분리하고,source shadow와raw RX의 동시 수명을 명시한다. 4packet source ring/footer descriptor·BG/nonmap 조기seal과 host 공통 주소/진행 실행기·native32B/32bit word plan을 기존source/host/queue/plan FSM 삭제 목록과 함께 구현한다. 단일phase 장벽을 남긴 공유FSM이나 RAM clock mux/무료 phase중첩을 승인하지 않는다.같은 시작/ROM위상·고정capture기한과input/output request-origin ROM경쟁·실제ARM/SPI/IRQ·독립expected/STOP/12read-token finalACK를 검증한다. 전체8모듈3619 또는codec/checker보존제어1227 상한에추가bridge/arbiter/shadow를포함해전체Lite MAP을비교한다.ARM500Braw와FPGA12288bits는구현전예산이며시간/회로절감0으로둔다.전체CPU/VBlank/heavy7/71/WCET/다중위상/FITSTA/실기는미완료다.",
   "next_three_deliverables": [
-  "Same implementation and source/capture/display admission proof",
-  "Continuous capture/display deadline and ROM/ARM/65816 schedule proof",
-  "One measured joint time/area candidate, then matching physical build"
-],
+    "Separate input/display context and simultaneous source shadow/raw RX lifetimes before916",
+    "4packet source/footer and BG boundary seal with real SPI/IRQ/ROM schedule",
+    "Delete old source/host/queue/plan controls within whole8module3619 budget,retain independent check/finalACK/VBlank"
+  ],
   "gates": [
     {
       "id": "P0",
@@ -3214,102 +3214,322 @@
     ]
   },
   "active_plan": {
-  "status": "proposed_after_retrospective",
-  "date_kst": "2026-10-25",
-  "review": "docs/nes-pr131-retrospective.ko.md",
-  "implementation_head": "6674e57c68695b67b02ee36b57fd6868ae2f9831",
-  "preserve": [
-    "source338",
-    "ARM355",
-    "host359",
-    "BG5_OBJ2 as conditional prefetch evidence",
-    "independent expected/actual verification",
-    "MASK/SHIFT and output compression",
-    "2slot storage credit separate from consumption",
-    "STOP drain and post-STOP DONE suppression",
-    "final ACK and VBlank",
-    "production227",
-    "GBC164",
-    "saveSRAM"
-  ],
-  "supersedes_next": "Immediate NES364 host ABI 3314-to843 implementation before integration/capture cadence proof",
-  "phases": [
-    {
-      "id": "R0_same_implementation",
-      "objective": "Materialize and pin a single candidate; use the same board admission/context/port connections in functional simulation and synthesis.",
-      "required": [
-        "Separate current capture context from display context",
-        "Correct source launch/lifetime and STOP drain ownership",
-        "Exercise actual collector query rather than fixed epoch/current generation injection",
-        "Cold/warm/next-capture-overlap/STOP/final-ACK/epoch-generation rollover guards"
-      ],
-      "exit": "No test-only bypass of source admission; same generated top and complete artifact manifest. No hardware or 60fps claim."
+    "stage": 372,
+    "date_kst": "2026-10-26",
+    "base": "e9005716f76f37244ec8272acbdcd41f497d7ec5",
+    "branch": "codex/nes-capture-admission-365",
+    "contract": "docs/nes-frontier372-contract.ko.md",
+    "evidence": "analysis/frontier372-verification.json",
+    "selected": {
+      "build": "build06",
+      "checks": "check05",
+      "guards": "guards04",
+      "runtime": "joint02",
+      "control_audit": "control05",
+      "whole_MAP": "inherited368/370/map01"
     },
-    {
-      "id": "R1_sustained_capture_display",
-      "objective": "Prove capture rearm and display deadlines using continuous PPU cadence and actual or justified worst-case ROM demand during both source input and output.",
-      "required": [
-        "Investigate 2.838466ms source input versus at-most 2.340517ms model rearm window",
-        "Continuous frame IDs and capture N+1/output N overlap",
-        "Actual ARM source/hint foreground, IRQ and shared SPI",
-        "Actual 65816 service, DMA/poll/VBlank/final ACK",
-        "First capture rearm case, then heavy7 and 71-frame whole path",
-        "Independent phase sweep and continuous schedule",
-        "Startup versus gameplay cold/STOP recovery policy"
+    "assessment": "NES372 370 protocol/RTL and hint bytes retained;byte MASK popcount/set-bit traversal,map/raw split,bounded64B overlap-safe SHIFT unroll and target resident bitmap scan. 51blocks/96globals exact+2573mask/shift/odd-base cases+28hint/9source guards+8hint snapshots PASS.First914block32421->10758(-21663),hint8917->8084(-833),whole source73062->39941;instruction replay not added to live time. Actual905..915 drained11(startup2/warm9),capture915 admitted+41.159us;firstmiss916,8/9next captures.914 materialized2.614195->2.299063(-315.132us),processing21.545718->21.500992(-44.726us),4.834325ms over60Hz. 907..914 same-start/ROMphase all improve;908extraemptyD4+13B charged.Payload/hint/semantic plan records exact370.915source starts2.832533ms AFTER916deadline,materializes4.408605ms late;its17.269452ms is new measurement,not a370 regression. ROM60477pairs/input8846pairs/pending0;actual readCRC/coverage/2credit/12read-token/retire retained.ARMtext35862(+1628),data4/BSS48476same,stack1288. 30compiled modules exact370;inheritedLite22710LE17698comb9171FF292448bits,no newMAP.371rollback-37comb NOTnew370saving;2290combshort/2445with155reserve. Queue224self now included:8disjoint modules6064,retain codec/checker2392 =>3672control->1227ceiling;all8->3619,host-only2945->500.Upper budgets only,new replacement area null. 916 requires separate input/display contexts and simultaneous scratch/IRQ/ROM ownership,not just one common FSM.4packet source1KiB+shadow1KiB budget+12288bits/304736total;max71fixture needs500B rawARM,bits not FIT proof. 914 BG-boundary repack[220,187,246,30]->[190,217,246,30],same bytes/count,no extra wire;RTL/timing not implemented.71fixture954 2slot minimumwire2.956190ms versus4slot1.526857,not new71 timings. FullCPU/VBlank/WCET/71/heavy7/multiple phases/session/FITSTA/physical60fpsOPEN.Production227/GBC164/saveSRAM unchanged.",
+    "measured": {
+      "paired": [
+        {
+          "frame": 907,
+          "before_ms": 12.040741,
+          "after_ms": 11.879334,
+          "delta_ms": -0.16140700000000052,
+          "same_start_ROM_phase": true,
+          "before_materialized_ms": 1.667798,
+          "after_materialized_ms": 1.586708,
+          "source_SPI_before": 616,
+          "source_SPI_after": 616,
+          "total_SPI_before": 1693,
+          "total_SPI_after": 1693
+        },
+        {
+          "frame": 908,
+          "before_ms": 12.417419,
+          "after_ms": 12.104741,
+          "delta_ms": -0.312678,
+          "same_start_ROM_phase": true,
+          "before_materialized_ms": 0.576948,
+          "after_materialized_ms": 0.576948,
+          "source_SPI_before": 476,
+          "source_SPI_after": 489,
+          "total_SPI_before": 1531,
+          "total_SPI_after": 1544
+        },
+        {
+          "frame": 909,
+          "before_ms": 16.215692,
+          "after_ms": 15.933014,
+          "delta_ms": -0.28267800000000065,
+          "same_start_ROM_phase": true,
+          "before_materialized_ms": 2.322063,
+          "after_materialized_ms": 2.149565,
+          "source_SPI_before": 925,
+          "source_SPI_after": 925,
+          "total_SPI_before": 2268,
+          "total_SPI_after": 2268
+        },
+        {
+          "frame": 910,
+          "before_ms": 12.030379,
+          "after_ms": 11.865608,
+          "delta_ms": -0.164771,
+          "same_start_ROM_phase": true,
+          "before_materialized_ms": 0.56713,
+          "after_materialized_ms": 0.56713,
+          "source_SPI_before": 372,
+          "source_SPI_after": 372,
+          "total_SPI_before": 1544,
+          "total_SPI_after": 1544
+        },
+        {
+          "frame": 911,
+          "before_ms": 12.47901,
+          "after_ms": 12.206831,
+          "delta_ms": -0.2721790000000013,
+          "same_start_ROM_phase": true,
+          "before_materialized_ms": 1.828433,
+          "after_materialized_ms": 1.651026,
+          "source_SPI_before": 658,
+          "source_SPI_after": 658,
+          "total_SPI_before": 1639,
+          "total_SPI_after": 1639
+        },
+        {
+          "frame": 912,
+          "before_ms": 15.424883,
+          "after_ms": 15.237431,
+          "delta_ms": -0.18745199999999862,
+          "same_start_ROM_phase": true,
+          "before_materialized_ms": 1.719162,
+          "after_materialized_ms": 1.641844,
+          "source_SPI_before": 676,
+          "source_SPI_after": 676,
+          "total_SPI_before": 1945,
+          "total_SPI_after": 1945
+        },
+        {
+          "frame": 913,
+          "before_ms": 12.130105,
+          "after_ms": 11.940062,
+          "delta_ms": -0.19004300000000107,
+          "same_start_ROM_phase": true,
+          "before_materialized_ms": 0.568721,
+          "after_materialized_ms": 0.568721,
+          "source_SPI_before": 389,
+          "source_SPI_after": 389,
+          "total_SPI_before": 1555,
+          "total_SPI_after": 1555
+        },
+        {
+          "frame": 914,
+          "before_ms": 21.545718,
+          "after_ms": 21.500992,
+          "delta_ms": -0.04472600000000071,
+          "same_start_ROM_phase": true,
+          "before_materialized_ms": 2.614195,
+          "after_materialized_ms": 2.299063,
+          "source_SPI_before": 777,
+          "source_SPI_after": 777,
+          "total_SPI_before": 2095,
+          "total_SPI_after": 2095
+        }
       ],
-      "metrics": [
-        "capture-to-display latency",
-        "capture start interval and missed capture count",
-        "display period and repeated/dropped frame IDs",
-        "queue backlog",
-        "IRQ/ROM window worst-case margin"
+      "captures": [
+        {
+          "frame": 908,
+          "admitted": true,
+          "owned": 0,
+          "at_ps": 260388740000,
+          "handoff_margin_ms": 0.75356
+        },
+        {
+          "frame": 909,
+          "admitted": true,
+          "owned": 0,
+          "at_ps": 276632545000,
+          "handoff_margin_ms": 1.763275
+        },
+        {
+          "frame": 910,
+          "admitted": true,
+          "owned": 0,
+          "at_ps": 292876350000,
+          "handoff_margin_ms": 0.190658
+        },
+        {
+          "frame": 911,
+          "admitted": true,
+          "owned": 0,
+          "at_ps": 309120155000,
+          "handoff_margin_ms": 1.773093
+        },
+        {
+          "frame": 912,
+          "admitted": true,
+          "owned": 0,
+          "at_ps": 325363960000,
+          "handoff_margin_ms": 0.689197
+        },
+        {
+          "frame": 913,
+          "admitted": true,
+          "owned": 0,
+          "at_ps": 341607765000,
+          "handoff_margin_ms": 0.698379
+        },
+        {
+          "frame": 914,
+          "admitted": true,
+          "owned": 0,
+          "at_ps": 357851570000,
+          "handoff_margin_ms": 1.771502
+        },
+        {
+          "frame": 915,
+          "admitted": true,
+          "owned": 0,
+          "at_ps": 374095375000,
+          "handoff_margin_ms": 0.041159
+        },
+        {
+          "frame": 916,
+          "admitted": false,
+          "owned": 1,
+          "at_ps": 390339181000,
+          "handoff_margin_ms": -4.408605
+        }
       ],
-      "exit": "No unexplained missed capture/display deadline or unbounded backlog; benchmark scope and hardware-clock assumptions explicit. Oversized RTL simulation is allowed, hardware claim is not."
-    },
-    {
-      "id": "R2_joint_architecture_gate",
-      "objective": "Choose one broad, justified implementation deletion based on the validated schedule and RAM lifetime.",
-      "required": [
-        "Audit retained11391 and resource-only wrapper versus required product functionality",
-        "Replace actual old bodies rather than add a second engine",
-        "Direct actual ARM serializer and new receiver including every fragment credit/status response",
-        "Independent verification and STOP/final ACK preserved",
-        "Whole Quartus Lite cost on the same implementation"
-      ],
-      "budget": {
-        "device_comb": 15408,
-        "prior_target_with_reserve": 15253,
-        "old_ABI_scope": 3314,
-        "old_arithmetic_cap": 843,
-        "old_required_deletion": 2471,
-        "new_cost": null,
-        "note": "Recompute after capture/port integration. 843 is not a demonstrated feasible design."
+      "ARM_size": {
+        "before": {
+          "text": 34234,
+          "data": 4,
+          "BSS": 48476
+        },
+        "after": {
+          "text": 35862,
+          "data": 4,
+          "BSS": 48476
+        },
+        "delta": {
+          "text": 1628,
+          "data": 0,
+          "BSS": 0
+        }
       },
-      "exit": "Same candidate meets sustained timing and whole resource budget. If it fails, reconsider representation/roles/hardware feasibility; do not enter small-FSM/opcode/seed loops."
+      "ROM": {
+        "requests": 60477,
+        "replies": 60477,
+        "pending": 0,
+        "input_requests": 8846,
+        "input_replies": 8846,
+        "input_pending": 0,
+        "origin_phase_matched": true
+      },
+      "whole_MAP": {
+        "values": {
+          "LE": 22710,
+          "comb": 17698,
+          "FF": 9171,
+          "RAM_bits": 292448
+        },
+        "inherited_from368_370": true,
+        "new_MAP": false,
+        "delta_vs370": {
+          "LE": 0,
+          "comb": 0,
+          "FF": 0,
+          "RAM_bits": 0
+        },
+        "delta_vs371": {
+          "LE": -37,
+          "comb": -37,
+          "FF": -1,
+          "RAM_bits": 0
+        }
+      },
+      "source915_late_start_ms": 2.832533
     },
-    {
-      "id": "R3_hardware",
-      "objective": "Build and test a matching FPGA/ARM/SNES candidate on the existing board.",
-      "required": [
-        "Whole FIT and STA",
-        "New CDC, external IO and clock review",
-        "Pinned bitstream/firmware/65816 artifacts",
-        "Boot smoke then sustained scroll/audio/input/menu/STOP/save validation",
-        "Actual regional display cadence and frame-ID/drop/repeat measurements"
+    "replacement_budget": {
+      "disjoint_self_comb": {
+        "nes_core257:encoder": 1352,
+        "nes_transport257:transport": 378,
+        "nes_validator278:validator": 1040,
+        "nes_output260:flow": 2058,
+        "nes_queue260:queue": 224,
+        "nes_plan_batch206:transport": 349,
+        "nes_plan_spi200:endpoint": 96,
+        "nes_spi270:spi_front270": 567
+      },
+      "required_with155reserve": 2445,
+      "control_pool_with_queue": 3672,
+      "replacement_control_ceiling": 1227,
+      "cases": [
+        {
+          "name": "Host only,keep mixed-clock source/plan",
+          "pool_upper_bound": 2945,
+          "replacement_upper_bound": 500
+        },
+        {
+          "name": "Host plus entire mixed-clock source transport,optimistic upper bound",
+          "pool_upper_bound": 3323,
+          "replacement_upper_bound": 878
+        },
+        {
+          "name": "All eight modules including codec/checker control",
+          "pool_upper_bound": 6064,
+          "replacement_upper_bound": 3619
+        }
       ],
-      "exit": "Measured sustained hardware cadence with recorded worst-case latency and zero unexplained loss/corruption."
-    }
-  ],
-  "execution_policy": {
-    "new_implementation_in_this_review": false,
-    "automatic_merge": false,
-    "quartus": "Lite",
-    "questa": "authorized temporary Starter FLOAT wrapper",
-    "automatic_license_or_hardware_purchase": false
+      "host_context_candidate": {
+        "SPI_request": [
+          472,
+          483
+        ],
+        "active_record": [
+          484,
+          499
+        ],
+        "execution": [
+          500,
+          507
+        ],
+        "spare": [
+          508,
+          511
+        ],
+        "bytes": 36,
+        "retained_FF": "SPI shift/synchronizers,immutable snapshot and token/serial burn history,CDC grants;source/checker states not included.",
+        "implemented": false,
+        "port": "Would add an A-side read/owner arbiter;B remains expected/read-event priority. No throughput or area credit."
+      },
+      "overlap_candidate": {
+        "source_packet_RAM_bytes": 1024,
+        "source_shadow_RAM_bytes": 1024,
+        "incremental_RAM_bits": 12288,
+        "proposed_whole_bits": 304736,
+        "logical_source_packets": 4,
+        "output_queue_packets": 2,
+        "ARM_raw_prefetch_bytes_for_max_fixture": 500,
+        "input_context_and_display_context_separate": true,
+        "implemented": false,
+        "extra_FPGA_logic": null,
+        "whole_area_saving": null
+      }
+    },
+    "scope": "New actual ARM schedule and static/source-record/71fixture size structural review;no new RTL/shared-control implementation/MAP/71 timing.",
+    "next_action": "372 ARM과370 ABI/RTL을 기준으로 유지한다.916 기한 전에 source915를 시작할 수 있도록 input/display lease·epoch/generation·STOP/retire를 분리하고,source shadow와raw RX의 동시 수명을 명시한다. 4packet source ring/footer descriptor·BG/nonmap 조기seal과 host 공통 주소/진행 실행기·native32B/32bit word plan을 기존source/host/queue/plan FSM 삭제 목록과 함께 구현한다. 단일phase 장벽을 남긴 공유FSM이나 RAM clock mux/무료 phase중첩을 승인하지 않는다.같은 시작/ROM위상·고정capture기한과input/output request-origin ROM경쟁·실제ARM/SPI/IRQ·독립expected/STOP/12read-token finalACK를 검증한다. 전체8모듈3619 또는codec/checker보존제어1227 상한에추가bridge/arbiter/shadow를포함해전체Lite MAP을비교한다.ARM500Braw와FPGA12288bits는구현전예산이며시간/회로절감0으로둔다.전체CPU/VBlank/heavy7/71/WCET/다중위상/FITSTA/실기는미완료다.",
+    "continuous_capture_passed": false,
+    "capture915_admitted": true,
+    "first_missed_capture": 916,
+    "actual_control_replacement_implemented": false,
+    "FIT": false,
+    "STA": false,
+    "physical": false,
+    "sustained60fps": false
   },
-  "physical_60fps_proven": false
-},
-  "current_status_scope": "Queue-aware map publication and independent final RAM execution; bounded joint gain, time and capacity still unmet",
+  "current_status_scope": "NES370 per-group two-positive-tag cache,reset each call,no persistent authority.909 same-start/ROM phase16.873457->16.215692ms(-.657765);907+.003227/908-.156680. 41steps/96globals exact;320descriptor+5STOP retained,45membership/missing/kind/alt/generation/STOP/stack-expiry/churn cases PASS. BG queries792->189,OBJ8 unchanged;55253extra instructions saved,not added to live gain. ARMtext34234(+48),data4/BSS48476same,stack1288. Long strict905..915 fails at915 owned1;diagnostic905..914 drained10(2startup+8warm) then coverageFAIL,7/8next captures accepted. Strict/diagnostic prefix identical.914 materialized2.614195ms,273.973us late;processing21.545718ms/4.879051over60Hz. FirstBGplan8.926865ms/result16.901206;initial hint misses retrospective BG6136/6554/6555,not future hints. ROM57623pairs/input8908pairs/pending0. RTLunchanged;inheritedLite22710LE17698comb9171FF292448bits,no newMAP/delta0/2290combshort2445withreserve. Port audit:source512B NESwrite/hostread,queue1KiB includes472B independentexpected+2slots,phase/plan dualclock ownership retained. Scenario3448controlpool->1003replacement required,not a proved saving. FullCPU/VBlank/WCET/71/heavy7/multiple phases/FITSTA/physicalOPEN.",
   "p1_placement_followup": {
     "selected": "placement05",
     "document": "docs/nes-placement247-contract.ko.md",

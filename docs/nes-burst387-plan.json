@@ -1,0 +1,390 @@
+{
+  "stage": 387,
+  "PR": 132,
+  "baseline": {
+    "RTL": 375,
+    "ARM": 377,
+    "SNES_spool": 383,
+    "continuous": 384,
+    "mapper_gate": 376
+  },
+  "selected_for_production": false,
+  "verification": "analysis/burst387-verification.json",
+  "implementation": {
+    "native_ROM_body_bytes": 3290,
+    "SNES_payload_record_WRAM_bytes": 24705,
+    "extra_WRAM_bytes": 4225,
+    "extra_live_DP_bytes": 30,
+    "board_ROM_updated": false,
+    "map_policy": "sparse shortcut<=7ranges/128B;otherwise min modeled DMA budget across sparse,column,dense;screen-aware64columns",
+    "job_compaction": "beforeVBlank",
+    "cache_validity": "warm fixture bits;reject0;STOP clears both;no cold loader/normal recovery",
+    "source_receipt": "WRAM storage acceptance",
+    "final_ACK": "only after real nativePPUjobs andcurrentdisplay",
+    "native": "native08:10warm+1STOPpass",
+    "guards": "guards03:11pass incltwo-screenholes/dense/palette/gatherSTOP/invalidcache",
+    "passive_profile": "profile01:identicalROM/bus events for907/908/915"
+  },
+  "whole_cost": {
+    "new_MAP": false,
+    "inherited_Lite375": {
+      "LE": 22390,
+      "comb": 17663,
+      "FF": 8985,
+      "RAM_bits": 300640
+    },
+    "FPGA_savings": 0,
+    "comb_deficit": 2255,
+    "net_deletion_with155reserve": 2410,
+    "control_pool": 3582,
+    "replacement_control_ceiling_before_context_mapper_delta": 1172,
+    "full_firmware_ROM_WRAM_admission": false,
+    "physical60fps": false
+  },
+  "next": [
+    {
+      "candidate": "Avoid post-seal reparse and64column scans using incremental dirty-column/range state",
+      "must_measure": [
+        "added per-source storage/receipt service",
+        "gather CPU time and validcache ownership",
+        "actual SPI/IRQ/2credit and VBlank deadline",
+        "full same-start/fixedcapture ROM schedule"
+      ],
+      "time_gain": null,
+      "area_gain": null,
+      "post_view_preflight_target_ms": 0.8
+    },
+    {
+      "candidate": "Compare ARM-produced compact map jobs through retained WRAM command ABI",
+      "must_measure": [
+        "actualM4 planning and extraSPI/slot/responses",
+        "SNES bounded destination/coverage checks",
+        "STOP/epoch/generation lifetime",
+        "existing host/source/queue/plan control removal with newbridge cost"
+      ],
+      "implemented": false,
+      "time_gain": null,
+      "new_FPGA_area": null
+    }
+  ],
+  "preserve": [
+    "375RTL",
+    "377ARM",
+    "compressedwire",
+    "independent expected/CRC/coverage",
+    "STOP",
+    "finalACK",
+    "VBlank",
+    "fixedcapturedeadlines",
+    "production227",
+    "GBC164",
+    "saveSRAM"
+  ],
+  "open": [
+    "cold/STOP normal recovery",
+    "fullresidentCPU/WRIO/HDMA/audio/input",
+    "71/heavy7/multiplephases/livecoremapper",
+    "wholeLiteFITSTA/CDCIO",
+    "physical60fps",
+    "MMC4/5implementation andmargin"
+  ],
+  "automatic_merge": false,
+  "automatic_purchase": false,
+  "continuous387": {
+    "passed": false,
+    "completed": [
+      905,
+      906,
+      907,
+      908
+    ],
+    "frames": [
+      {
+        "frame": 905,
+        "start_ps": 14243080000,
+        "ROM_start_cycle": 305898,
+        "done_ps": 100752277000,
+        "processing_ms": 86.509197,
+        "same_start_and_ROM_cycle": true,
+        "absolute_completion_gain_ms": 0.0,
+        "independent_read_units": 2316
+      },
+      {
+        "frame": 906,
+        "start_ps": 114994612000,
+        "ROM_start_cycle": 2469759,
+        "done_ps": 232629884000,
+        "processing_ms": 117.635272,
+        "same_start_and_ROM_cycle": true,
+        "absolute_completion_gain_ms": 0.0,
+        "independent_read_units": 2314
+      },
+      {
+        "frame": 907,
+        "start_ps": 264333059000,
+        "ROM_start_cycle": 5677131,
+        "done_ps": 281559349000,
+        "processing_ms": 17.22629,
+        "same_start_and_ROM_cycle": true,
+        "absolute_completion_gain_ms": 1.262269,
+        "independent_read_units": 31,
+        "ready_ps": 278254825000,
+        "ready_gain_ms": -0.557083,
+        "display_poll_ps": 278361259000,
+        "display_poll_phase": 260529,
+        "native_admission_cutoff_line": 238,
+        "present_ps": 281476126000,
+        "VBlank_index": 16,
+        "VBlank_service_ms": 0.954251,
+        "remaining_VBlank_ms": 1.39403634
+      },
+      {
+        "frame": 908,
+        "start_ps": 280972517000,
+        "ROM_start_cycle": 6034500,
+        "done_ps": 314516482000,
+        "processing_ms": 33.543965,
+        "same_start_and_ROM_cycle": true,
+        "absolute_completion_gain_ms": 1.503594,
+        "independent_read_units": 22,
+        "ready_ps": 297510545000,
+        "ready_gain_ms": 7.43919,
+        "display_poll_ps": 297616978000,
+        "display_poll_phase": 316720,
+        "native_admission_cutoff_line": 246,
+        "present_ps": 314433267000,
+        "VBlank_index": 18,
+        "VBlank_service_ms": 0.630381,
+        "remaining_VBlank_ms": 1.7157262889999998
+      }
+    ],
+    "captures": [
+      {
+        "frame": 908,
+        "admitted": true,
+        "time_ps": 266730323000
+      },
+      {
+        "frame": 909,
+        "admitted": true,
+        "time_ps": 283369735000
+      },
+      {
+        "frame": 910,
+        "admitted": true,
+        "time_ps": 300009146000
+      },
+      {
+        "frame": 911,
+        "admitted": false,
+        "time_ps": 316648558000
+      }
+    ],
+    "first_missed_capture": 911,
+    "native_profiles": {
+      "profiles": [
+        {
+          "frame": 907,
+          "native": "159e98308334b6c252adeda4dfde57c6cfd2d684a80211c21750750d3a337ae7",
+          "events": "e12bef1ef924d15ca03648e154ccb5bbb883f4484fcdd923027ba47975610675",
+          "source_records": 13,
+          "source_bytes": 744,
+          "staging_control_clocks": [
+            5504,
+            5530,
+            5686,
+            0,
+            3730
+          ],
+          "preflight_clocks": 26716,
+          "tail_clocks": 20486,
+          "budget_clocks": 20998,
+          "source_path": "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-burst386\\native08\\907"
+        },
+        {
+          "frame": 908,
+          "native": "159e98308334b6c252adeda4dfde57c6cfd2d684a80211c21750750d3a337ae7",
+          "events": "6d87108eab329ee17febbe009d7d91b2381233dfe07a0fd869bc39f62f935a76",
+          "source_records": 21,
+          "source_bytes": 640,
+          "staging_control_clocks": [
+            5702,
+            0,
+            6016,
+            0,
+            3730
+          ],
+          "preflight_clocks": 130140,
+          "tail_clocks": 13530,
+          "budget_clocks": 14042,
+          "source_path": "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-burst386\\native08\\908"
+        },
+        {
+          "frame": 909,
+          "native": "159e98308334b6c252adeda4dfde57c6cfd2d684a80211c21750750d3a337ae7",
+          "events": "a4e464d8730da2083ab08f7609152b2831d81250790e80769638dbf64e6019eb",
+          "source_records": 37,
+          "source_bytes": 700,
+          "staging_control_clocks": [
+            5504,
+            0,
+            5686,
+            0,
+            3690
+          ],
+          "preflight_clocks": 195180,
+          "tail_clocks": 16082,
+          "budget_clocks": 16594,
+          "source_path": "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-burst386\\native08\\909"
+        },
+        {
+          "frame": 910,
+          "native": "159e98308334b6c252adeda4dfde57c6cfd2d684a80211c21750750d3a337ae7",
+          "events": "91771123ec709eaa0a7b4fd9b77706e523b29ef7d3a871b742a7a8d5836e1e97",
+          "source_records": 34,
+          "source_bytes": 632,
+          "staging_control_clocks": [
+            5702,
+            0,
+            6016,
+            0,
+            3698
+          ],
+          "preflight_clocks": 175080,
+          "tail_clocks": 13470,
+          "budget_clocks": 13982,
+          "source_path": "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-burst386\\native08\\910"
+        },
+        {
+          "frame": 911,
+          "native": "159e98308334b6c252adeda4dfde57c6cfd2d684a80211c21750750d3a337ae7",
+          "events": "57d2cb4500ddc4afd70c4ea4401d0b88d6eb65fbd8c4af1344ac135bedcde92f",
+          "source_records": 17,
+          "source_bytes": 600,
+          "staging_control_clocks": [
+            5464,
+            0,
+            5694,
+            0,
+            3730
+          ],
+          "preflight_clocks": 119088,
+          "tail_clocks": 13230,
+          "budget_clocks": 13742,
+          "source_path": "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-burst386\\native08\\911"
+        },
+        {
+          "frame": 912,
+          "native": "159e98308334b6c252adeda4dfde57c6cfd2d684a80211c21750750d3a337ae7",
+          "events": "44613240192d9e95016827a41e262c2b7bb64502cbb006195ee29ced7ad219ef",
+          "source_records": 35,
+          "source_bytes": 648,
+          "staging_control_clocks": [
+            5702,
+            0,
+            6016,
+            0,
+            3690
+          ],
+          "preflight_clocks": 177724,
+          "tail_clocks": 14620,
+          "budget_clocks": 15132,
+          "source_path": "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-burst386\\native08\\912"
+        },
+        {
+          "frame": 913,
+          "native": "159e98308334b6c252adeda4dfde57c6cfd2d684a80211c21750750d3a337ae7",
+          "events": "aae0129f690b1edb7cd815ce3c68de16dd4e0847120e8bbd403eba4d8697c9aa",
+          "source_records": 30,
+          "source_bytes": 626,
+          "staging_control_clocks": [
+            5464,
+            0,
+            5694,
+            0,
+            3738
+          ],
+          "preflight_clocks": 153238,
+          "tail_clocks": 13440,
+          "budget_clocks": 13952,
+          "source_path": "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-burst386\\native08\\913"
+        },
+        {
+          "frame": 914,
+          "native": "159e98308334b6c252adeda4dfde57c6cfd2d684a80211c21750750d3a337ae7",
+          "events": "31c51b7b98f8a6950c0f4c26c50b9b6b9ecf897cc4a839aee9fc75ecc775273d",
+          "source_records": 33,
+          "source_bytes": 738,
+          "staging_control_clocks": [
+            5702,
+            0,
+            6016,
+            0,
+            3690
+          ],
+          "preflight_clocks": 227526,
+          "tail_clocks": 26848,
+          "budget_clocks": 27360,
+          "source_path": "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-burst386\\native08\\914"
+        },
+        {
+          "frame": 915,
+          "native": "159e98308334b6c252adeda4dfde57c6cfd2d684a80211c21750750d3a337ae7",
+          "events": "0cd680eb1f4fd8113b45742f62382be97f364a7a8ab6e5da4c9ed40bda92e644",
+          "source_records": 46,
+          "source_bytes": 768,
+          "staging_control_clocks": [
+            5504,
+            0,
+            5694,
+            0,
+            3738
+          ],
+          "preflight_clocks": 268672,
+          "tail_clocks": 27806,
+          "budget_clocks": 28318,
+          "source_path": "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-burst386\\native08\\915"
+        },
+        {
+          "frame": 916,
+          "native": "159e98308334b6c252adeda4dfde57c6cfd2d684a80211c21750750d3a337ae7",
+          "events": "82bcbedbd4deae565516410520146c82aa0a48431cf9b6fc919258cffad3a098",
+          "source_records": 28,
+          "source_bytes": 608,
+          "staging_control_clocks": [
+            5702,
+            0,
+            6016,
+            0,
+            3738
+          ],
+          "preflight_clocks": 144800,
+          "tail_clocks": 11230,
+          "budget_clocks": 11742,
+          "source_path": "C:\\Users\\mohallo\\Documents\\ChatGPT\\sd2snes 에서 게임보이컬러 전용 게임 구동하기\\probes\\nes-burst386\\native08\\916"
+        }
+      ],
+      "WRAM_bytes": 20480,
+      "FPGA_RTL_changed": false,
+      "ARM_changed": false,
+      "cold_prefix_original": true,
+      "head381_retained_conservatively": true,
+      "source_receipt": "WRAM storage only",
+      "finalACK": "after actual383 PPU service",
+      "scope": "383 WRAM-first consumer service on actual377ARM/375RTL shared schedule.\n\nNative source-job boundaries/data must match exactly;unknown profiles fail.\nRecorded native PPU service is charged after checked source storage and seal.\nCold prefix is unchanged;native prior-bank images are explicit fixtures.\n"
+    },
+    "scope": "Actual377 M4 and375 RTL;native386 observed service allocation,325WRAM ordinary and381view head retained;not fullresidentCPU/WCET."
+  },
+  "causal_schedule": {
+    "frame908_first_hint_fill_ps": 282681539000,
+    "first_hint_ROM_phase": 353317,
+    "first_window_close_phase": 354640,
+    "hint_close_margin_ms": 0.061600203,
+    "previous_frame908_hint_fill_events": 0,
+    "post_view_to_native_cutoff_clocks": 18824,
+    "post_view_to_native_cutoff_ms": 0.876464264,
+    "next_preflight_target_ms": 0.8,
+    "margin_is_not_mapper_allowance": true
+  },
+  "decision": "Do not select386 as a sustained60fps/board solution: nativePPUtail improves but post-sealCPU preparation missesVBlank andcapture911 stillfails."
+}

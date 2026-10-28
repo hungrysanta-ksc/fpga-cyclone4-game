@@ -1,0 +1,187 @@
+{
+  "id": 400,
+  "PR": 132,
+  "baseline": "398 build16/map15/live11 and399 header DMA component",
+  "production_selected": false,
+  "implemented": [
+    "fixed physical transaction/CRC/SS queue and plan acceptance",
+    "single capture/read-end/checker event owner",
+    "M4 next-input receive while waiting for old display",
+    "old display identity snapshot",
+    "deferred hint and semantic D5 after old ACK",
+    "native17B header DMA with real RTL RAM ports"
+  ],
+  "remaining_bodies_charged": [
+    "1979-word generic descriptor/manifest/receipt semantic program",
+    "4096x18 ROM and generic IO selection",
+    "source writer/D4 deadline",
+    "NES plan decoder",
+    "SPI response snapshots"
+  ],
+  "preserve": [
+    "independent expected/CRC/coverage",
+    "STOP/token namespace",
+    "exact final ACK/12view/VBlank",
+    "FIFO3584/ordinary512/frontier33",
+    "2 output slots/4 source ring slots",
+    "fixed RAM ports",
+    "MASK/SHIFT/single expansion",
+    "previously selected production and recovery images"
+  ],
+  "selected": {
+    "build": "build07",
+    "whole_map": "map01",
+    "host": "host03",
+    "hint": "hint02",
+    "execution": "exec02",
+    "ARM": "arm06",
+    "identity_STOP": "armguard18",
+    "frontier": "armguard16",
+    "END_MAP_owner": "armguard17",
+    "native": "native01",
+    "live": "live04",
+    "repeat16": "repeat01",
+    "repeat32": "repeat02"
+  },
+  "separate_tests": {
+    "host_frames": 12,
+    "reads": 25462,
+    "guards": 20,
+    "independent_duplicate_fault": 2,
+    "independent_coverage_fault": 3,
+    "STOP_freeze": 256,
+    "late_DONE": 32,
+    "bounds_vectors": 24000,
+    "ARM_plans": 71,
+    "frontier_cases": 1770,
+    "old_display_identity": true,
+    "STOP_before_deferred_D5": true,
+    "repeat16_32_reads_each": 26560,
+    "no_op_reports_no_SPI": true
+  },
+  "ARM": {
+    "text": 36800,
+    "data": 4,
+    "BSS": 48792,
+    "delta_text": 1020,
+    "delta_BSS": 64,
+    "fullresident": false,
+    "observed_component_stack": 1288,
+    "baseline_stack": 1288
+  },
+  "whole_MAP": {
+    "LE": 22114,
+    "comb": 17376,
+    "FF": 8903,
+    "RAM_bits": 382304,
+    "delta_vs398": {
+      "LE": -43,
+      "comb": -52,
+      "FF": -13,
+      "RAM_bits": 0
+    },
+    "FIT": false,
+    "STA": false
+  },
+  "control": {
+    "actual": 3465,
+    "cap": 1172,
+    "over": 2293,
+    "delta_vs398": -6,
+    "host_core_read_owner": 1374,
+    "NES_source_plan_hint": 1065,
+    "SPI": 723,
+    "queue": 215,
+    "tile": 48,
+    "ROM_decode": 40,
+    "retained_codec_checker": 2333,
+    "outside": 11578
+  },
+  "capacity": {
+    "raw_device_over": 1968,
+    "over15253_with155reserve": 2123,
+    "area_goal": false,
+    "MAP_LE_over": 6706
+  },
+  "time": {
+    "live_status": "PASS12 frames/all final ACKs/10of10 captures",
+    "capture917": true,
+    "time_goal": false,
+    "fixed_capture_cycle": 5371247,
+    "master_ps": 46561,
+    "SNES_phase": 0,
+    "ROM_window": 1,
+    "native_header_bus_read_pulse_ns": 200,
+    "pin_timing_signoff": false,
+    "capture917_headroom_ms": 0.30686100000002625,
+    "source916_materialized_ms": 416.178165,
+    "source916_advance_ms": 2.336804000000029,
+    "display_VBlank": {
+      "914": 24,
+      "915": 26
+    },
+    "physical_headroom_proven": false,
+    "max_warm_completion_interval_ms": 34.04494,
+    "hint908_headroom_ms": 0.1663862080000058,
+    "additional_display_advance_lower_bounds": [
+      {
+        "frame": 914,
+        "target_VBlank": 23,
+        "last_source_job_ms": 398.373061,
+        "minimum_gate_ms": 398.409243114,
+        "latest_gate_ms": 397.377042867,
+        "additional_advance_at_least_ms": 1.0322002469999916,
+        "exact_gate_measured": false,
+        "WCET": false
+      },
+      {
+        "frame": 915,
+        "target_VBlank": 25,
+        "last_source_job_ms": 430.702968,
+        "minimum_gate_ms": 430.739150114,
+        "latest_gate_ms": 430.655865763,
+        "additional_advance_at_least_ms": 0.08328435099997478,
+        "exact_gate_measured": false,
+        "WCET": false
+      }
+    ]
+  },
+  "preserved_failure": {
+    "time01": "worker source hook was overwritten; overlap was disabled; header-only retiming missed911; not a400 overlap result",
+    "hint01": "removed debug signal reference",
+    "host02": "debug expression syntax",
+    "live01": "unbounded whole-input prefetch delayed old ACK handling and908 hint; missed911",
+    "live02": "superseded build05 comparison stopped during cold906; no917 outcome",
+    "live03": "PASS12 and917 capture; unnecessary no-op cache/WFI invalidation inflated SPI68083; audit03 preserved"
+  },
+  "next_gate": "Do not select the partial receiver replacement as a1172 solution. Budget removal of the semantic VM/arbitrary IO plus source-plan-SPI physical bodies and LE/register/M9K packing together. Bind native12view CPU gaps and active HDMA/resident IRQ timing before a physical bound; remove914/915 VBlank gaps, then validate918+/longer schedules.",
+  "hardware": {
+    "ready": false,
+    "calendar_date": null,
+    "required": [
+      "actual fitting whole image and new timing/CDC/IO signoff",
+      "paired resident ARM/65816 RAM/stack/input/sound/STOP package"
+    ],
+    "bounded_first_test_need_not_wait_for_MMC4_5_or_full60fps": true
+  },
+  "physical60fps": false,
+  "status": "implemented and matched tests;917 capture recovered in model; sustained60fps and1172 budget fail",
+  "ARM_cost": {
+    "baseline398_instructions": 8735423,
+    "selected400_instructions": 8853510,
+    "baseline398_SPI_bytes": 48678,
+    "selected400_SPI_bytes": 52962,
+    "superseded_live03_SPI_bytes": 68083,
+    "noop_poll_fix_saved_bytes": 15121,
+    "CPI": 1,
+    "hardware_cycles": false,
+    "fullresident": false
+  },
+  "audit": {
+    "passed": true,
+    "pins": 327,
+    "report": "analysis/joint400-verification.json",
+    "time_goal": false,
+    "area_goal": false
+  }
+}

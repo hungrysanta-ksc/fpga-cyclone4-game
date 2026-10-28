@@ -1,0 +1,93 @@
+{
+  "stage": 385,
+  "range": [383, 384, 385],
+  "PR": 132,
+  "baseline": {"RTL": 375, "ARM": 377, "presentation": 382, "mapper_gate": 376},
+  "selected_for_production": false,
+  "verification": "analysis/spool385-verification.json",
+  "native383": {
+    "implementation": "Real65816 WRAM-first typed/map/CGRAM/OAM source consumption anddeferredPPUexecution",
+    "ROM_body_bytes": 2168,
+    "current_board_sink_ROM_capacity_bytes": 4096,
+    "full_firmware_ROM_bytes": null,
+    "ROM_capacity_is_hard_goal": false,
+    "SNES_payload_and_record_WRAM_bytes": 20480,
+    "regions": {"tile": "7E8000..7E9FFF", "jobs": "7EA000..7EAFFF", "bank_maps": "7EC000..7EDFFF"},
+    "DP_view_stack_extra": "Separate;fullresidentRAMadmissionopen",
+    "native07": "10warmcases+1STOPpass withcurrentframeH2view",
+    "guards04": "7cases pass;includessynthetic output-ABI densepalette-size rejection beforePPU;notanextraARM/NESframe",
+    "prior_bank_images": "Explicitindependentfixtures;nocoldloader/STOPrecoveryproof",
+    "receipt": "FPGAreadCRC/coverage/token now provesSNESWRAMstorage",
+    "final_ACK": "NativeCPU onlyafterPPUDMAjobs anddisplaywrites",
+    "hardware_observes_SNES_WRAM_cache_or_PPU_memory": false
+  },
+  "continuous384": {
+    "joint04": "FAIL nextcapture911owned1;completed905..908",
+    "captures": {"admitted": [908, 909, 910], "first_missed": 911},
+    "previous_first_missed": 910,
+    "frame907_ready_gain_ms": 21.602105,
+    "warm_presentations": {"907": 16, "908": 18},
+    "capture_deadlines_relaxed": false,
+    "ROM_start_phase_tuned": false,
+    "fullresidentCPU": false,
+    "service_components": ["383typedWRAMandPPUprofile", "325ordinaryWRAMbyteprofile", "381viewhead"],
+    "current_scroll_view_bound": true,
+    "cancel02": "ActualARM/RTL STOPafter36totalviewreads incl24cold;noPPUreplay/ACK,256clockRAMfreeze"
+  },
+  "ingest385": {
+    "actual_M4_next_N5_blocks": 2,
+    "decoder_instructions": 17877,
+    "source_history_exact": true,
+    "current_output_objects_unchanged": 7,
+    "lifetime_counterexample": "publish352 usesnextreceiver4 asdisplayhistory aftercurrentdisplay3;synthetic overlapfromactualsnapshots",
+    "frozen_commit_ARM_bytes": 16,
+    "incremental_RX_ARM_bytes": 24,
+    "implemented": false,
+    "publication_component": {"actual_M4_cases": 16, "text_bytes": 188, "old_function_text_bytes": 100, "instructions": 58, "old_instructions": 30, "extra_static_bytes": 0, "observed_stack_bytes": 20, "old_stack_bytes": 0, "source": "tools/nes_publish385.c", "selected_ARM_changed": false},
+    "hint_ownership_blockers": ["ARMresident.open", "FPGAhosthint excludesdisplaylease", "noindependentnextinputhintgeneration"],
+    "new_FPGA_context_area": null,
+    "time_gain_ms": null
+  },
+  "next_comparison": [
+    {
+      "candidate": "AdaptiveSNES sparse-column-dense mapbursts",
+      "reason": "ReduceVBlankcompletionlatency andrestorefirstROMwindow before addingnewARMscheduler/hintnamespaces",
+      "required": ["currentreceivedmapranges+validpriorcache", "row-versus-column span selection", "actual65816gather/preflight andDMAcost", "CGRAM/OAM/displayatomicity", "fixedcapturedeadlines", "fullcold/STOPinvalidity"],
+      "provisional_extra_SNES_WRAM_bytes": 4176,
+      "actual_ROM_bytes": null,
+      "time_gain_ms": null,
+      "implemented": false
+    },
+    {
+      "candidate": "EarlyARMsourceingest plussharedhint-ownerreplacement",
+      "required": ["freeze currentcommit identity", "oneboundedRXblock before recheckingDMA/credit/IRQ", "oldplanROMdrain andnextinputcachegeneration", "STOPcancelsbothcontexts", "actualSPI/runtime-RAMcost"],
+      "provisional_RX_static_ARM_bytes": 24,
+      "publication_extra_static_bytes": 0,
+      "publication_observed_stack_bytes": 20,
+      "alternative_frozen_commit_plus_RX_bytes": 40,
+      "new_FPGA_area": null,
+      "time_gain_ms": null,
+      "implemented": false
+    }
+  ],
+  "whole_area": {
+    "inherited_MAP": 375,
+    "new_MAP": false,
+    "new_SNES_ROM_installed_on_board": false,
+    "LE": 22390,
+    "comb": 17663,
+    "FF": 8985,
+    "RAM_bits": 300640,
+    "new_FPGA_savings": 0,
+    "comb_deficit": 2255,
+    "required_net_deletion_with155reserve": 2410,
+    "control_pool": 3582,
+    "replacement_control_ceiling_before_new_context_mapper_delta": 1172,
+    "ceiling_guarantees_FIT": false
+  },
+  "preserve": ["375RTL/377causalhintgain", "compressedwire", "independentCRC/expected/coverage", "STOP", "bank-generation-tokenbinding", "finalACK", "VBlank", "fixedcapturedeadlines", "production227", "GBC164", "saveSRAM"],
+  "stop_rule": "IflegalSNESschedule andwholecontrolbudgetcannotbothfit,recompareROMarbitration/renderrepresentation/roles/hardware;do not repeatcounter/FSM/seedFITloops or assumeMMC4/5margin.",
+  "open": ["coldinitialization andbankcacheownership", "fullresidentdispatcher/WRIOshadow/HDMA/audio/input", "SNESframe-reset/WCETcost", "71/heavy7/multiplephases", "livecore/mapperROMcontention", "MMC4/5implementationandbudget", "wholeLiteFITSTA/CDCIO", "physical60fps"],
+  "automatic_merge": false,
+  "automatic_purchase": false
+}

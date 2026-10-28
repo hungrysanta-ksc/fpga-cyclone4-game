@@ -1,0 +1,1499 @@
+{
+  "stage": 373,
+  "date_kst": "2026-10-26",
+  "base": "efe1b0c221b9a9faba493e498b93436062797445",
+  "branch": "codex/nes-capture-admission-365",
+  "contract": "docs/nes-dual373-contract.ko.md",
+  "evidence": "analysis/dual373-verification.json",
+  "selected": {
+    "runtime": "joint03",
+    "guards": "guards03",
+    "whole_MAP": "map03",
+    "analysis": "analysis05"
+  },
+  "assessment": "NES373 retains372 ARM PT_LOAD/stack1288 and ABI. Two input/display contexts,4packet1KiB source footer/Gray ring,separate512B source shadow;source WAITDISPLAY/plan-cursor sharing,2descriptor mailboxes/headerCRC8/queue length/field LUT removed;shared SPI CRC8/E1 length,sequential header/active record and ownNESplan cursor connected. Initial ACK->display1clock gap erased hints,907BG6.830->16.857ms regression;fixed prelease-through-promotion and new guard. Finaljoint03/guards03/MAP03:12frames905..916,10warm,next908..917captures10/10,916+1.746003ms/917+1.772094;914materialized2.299063->.601538(-1.697525),915capturemargin.041159->1.738684ms.907..914same source-start/ROMcycle,processingdelta0..+.454us;914still21.500992ms/4.834325over60Hz,firstBG16.857025unchanged.915source5.172756msearlier,own21.111314vs17.269452not same-start regression;absolute display1.330894msearlier. Maxwarmcompletioninterval25.804373ms,not sustained60fps. Source/hint/semanticplans exact372 across11pairedframes,30compiledmodules matchwholeboard;5011readunits/528publish/2credit/12read-token finalACK/actualretire PASS. ROM62222pairs/input10877pairs/pending0,IRQ41/EXTI254,SPI45528B. WholeLite22601LE17757comb9091FF300640bits vs372 -109LE/+59comb/-80FF/+8192bits;2349combshort2504withreserve.8selfpool6071,retaincodec/checker2376=>3695control->1191ceiling/all8->3567. FullhostFSM/nativeplan decode remain;subset replacements not fullcommon executor. Candidate for review,not boardselected/FITSTA/physical60fps. Production227/GBC164/saveSRAM unchanged.",
+  "measured": {
+    "paired": [
+      {
+        "frame": 905,
+        "before_ms": 85.301772,
+        "after_ms": 85.301772,
+        "delta_ms": 0.0,
+        "same_source_start_and_ROM_cycle": true,
+        "before_start_ps": 13904492000,
+        "after_start_ps": 13904492000,
+        "before_materialized_ms": 19.399858,
+        "after_materialized_ms": 17.780969,
+        "before_source_SPI_bytes": 6084,
+        "after_source_SPI_bytes": 6084,
+        "before_total_SPI_bytes": 16277,
+        "after_total_SPI_bytes": 16277
+      },
+      {
+        "frame": 906,
+        "before_ms": 114.790145,
+        "after_ms": 114.790145,
+        "delta_ms": 0.0,
+        "same_source_start_and_ROM_cycle": true,
+        "before_start_ps": 113109984000,
+        "after_start_ps": 113109984000,
+        "before_materialized_ms": 0.57922,
+        "after_materialized_ms": 0.579493,
+        "before_source_SPI_bytes": 528,
+        "after_source_SPI_bytes": 528,
+        "before_total_SPI_bytes": 11395,
+        "after_total_SPI_bytes": 11395
+      },
+      {
+        "frame": 907,
+        "before_ms": 11.879334,
+        "after_ms": 11.879698,
+        "delta_ms": 0.00036399999999936483,
+        "same_source_start_and_ROM_cycle": true,
+        "before_start_ps": 258048472000,
+        "after_start_ps": 258048472000,
+        "before_materialized_ms": 1.586708,
+        "after_materialized_ms": 0.584993,
+        "before_source_SPI_bytes": 616,
+        "after_source_SPI_bytes": 616,
+        "before_total_SPI_bytes": 1693,
+        "after_total_SPI_bytes": 1693
+      },
+      {
+        "frame": 908,
+        "before_ms": 12.104741,
+        "after_ms": 12.105105,
+        "delta_ms": 0.00036399999999936483,
+        "same_source_start_and_ROM_cycle": true,
+        "before_start_ps": 274292322000,
+        "after_start_ps": 274292322000,
+        "before_materialized_ms": 0.576948,
+        "after_materialized_ms": 0.57722,
+        "before_source_SPI_bytes": 489,
+        "after_source_SPI_bytes": 489,
+        "before_total_SPI_bytes": 1544,
+        "after_total_SPI_bytes": 1544
+      },
+      {
+        "frame": 909,
+        "before_ms": 15.933014,
+        "after_ms": 15.933377,
+        "delta_ms": 0.00036300000000011323,
+        "same_source_start_and_ROM_cycle": true,
+        "before_start_ps": 290536127000,
+        "after_start_ps": 290536127000,
+        "before_materialized_ms": 2.149565,
+        "after_materialized_ms": 0.615447,
+        "before_source_SPI_bytes": 925,
+        "after_source_SPI_bytes": 925,
+        "before_total_SPI_bytes": 2268,
+        "after_total_SPI_bytes": 2268
+      },
+      {
+        "frame": 910,
+        "before_ms": 11.865608,
+        "after_ms": 11.865926,
+        "delta_ms": 0.00031800000000004047,
+        "same_source_start_and_ROM_cycle": true,
+        "before_start_ps": 306779932000,
+        "after_start_ps": 306779932000,
+        "before_materialized_ms": 0.56713,
+        "after_materialized_ms": 0.567403,
+        "before_source_SPI_bytes": 372,
+        "after_source_SPI_bytes": 372,
+        "before_total_SPI_bytes": 1544,
+        "after_total_SPI_bytes": 1544
+      },
+      {
+        "frame": 911,
+        "before_ms": 12.206831,
+        "after_ms": 12.207195,
+        "delta_ms": 0.0003640000000011412,
+        "same_source_start_and_ROM_cycle": true,
+        "before_start_ps": 323023737000,
+        "after_start_ps": 323023737000,
+        "before_materialized_ms": 1.651026,
+        "after_materialized_ms": 0.591448,
+        "before_source_SPI_bytes": 658,
+        "after_source_SPI_bytes": 658,
+        "before_total_SPI_bytes": 1639,
+        "after_total_SPI_bytes": 1639
+      },
+      {
+        "frame": 912,
+        "before_ms": 15.237431,
+        "after_ms": 15.237795,
+        "delta_ms": 0.00036399999999936483,
+        "same_source_start_and_ROM_cycle": true,
+        "before_start_ps": 339267542000,
+        "after_start_ps": 339267542000,
+        "before_materialized_ms": 1.641844,
+        "after_materialized_ms": 0.595039,
+        "before_source_SPI_bytes": 676,
+        "after_source_SPI_bytes": 676,
+        "before_total_SPI_bytes": 1945,
+        "after_total_SPI_bytes": 1945
+      },
+      {
+        "frame": 913,
+        "before_ms": 11.940062,
+        "after_ms": 11.940425,
+        "delta_ms": 0.00036300000000011323,
+        "same_source_start_and_ROM_cycle": true,
+        "before_start_ps": 355511347000,
+        "after_start_ps": 355511347000,
+        "before_materialized_ms": 0.568721,
+        "after_materialized_ms": 0.568994,
+        "before_source_SPI_bytes": 389,
+        "after_source_SPI_bytes": 389,
+        "before_total_SPI_bytes": 1555,
+        "after_total_SPI_bytes": 1555
+      },
+      {
+        "frame": 914,
+        "before_ms": 21.500992,
+        "after_ms": 21.500992,
+        "delta_ms": 0.0,
+        "same_source_start_and_ROM_cycle": true,
+        "before_start_ps": 371755153000,
+        "after_start_ps": 371755153000,
+        "before_materialized_ms": 2.299063,
+        "after_materialized_ms": 0.601538,
+        "before_source_SPI_bytes": 777,
+        "after_source_SPI_bytes": 777,
+        "before_total_SPI_bytes": 2095,
+        "after_total_SPI_bytes": 2095
+      },
+      {
+        "frame": 915,
+        "before_ms": 17.269452,
+        "after_ms": 21.111314,
+        "delta_ms": 3.841861999999999,
+        "same_source_start_and_ROM_cycle": false,
+        "before_start_ps": 393171714000,
+        "after_start_ps": 387998958000,
+        "before_materialized_ms": 1.576072,
+        "after_materialized_ms": 0.59422,
+        "before_source_SPI_bytes": 667,
+        "after_source_SPI_bytes": 654,
+        "before_total_SPI_bytes": 2190,
+        "after_total_SPI_bytes": 2155
+      }
+    ],
+    "captures": [
+      {
+        "frame": 908,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 260388740000,
+        "handoff_margin_ms": 1.755275
+      },
+      {
+        "frame": 909,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 276632545000,
+        "handoff_margin_ms": 1.763003
+      },
+      {
+        "frame": 910,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 292876350000,
+        "handoff_margin_ms": 1.724776
+      },
+      {
+        "frame": 911,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 309120155000,
+        "handoff_margin_ms": 1.77282
+      },
+      {
+        "frame": 912,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 325363960000,
+        "handoff_margin_ms": 1.748775
+      },
+      {
+        "frame": 913,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 341607765000,
+        "handoff_margin_ms": 1.745184
+      },
+      {
+        "frame": 914,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 357851570000,
+        "handoff_margin_ms": 1.771229
+      },
+      {
+        "frame": 915,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 374095375000,
+        "handoff_margin_ms": 1.738684
+      },
+      {
+        "frame": 916,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 390339181000,
+        "handoff_margin_ms": 1.746003
+      },
+      {
+        "frame": 917,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 406582986000,
+        "handoff_margin_ms": 1.772094
+      }
+    ],
+    "overlap": [
+      {
+        "frame": 915,
+        "source_start_before_previous_display_done_ms": 5.257187,
+        "materialized_before_previous_display_done_ms": 4.662967,
+        "source_start_before_previous_actual_retire_ms": 5.097348,
+        "materialized_before_previous_actual_retire_ms": 4.503128
+      },
+      {
+        "frame": 916,
+        "source_start_before_previous_display_done_ms": 4.867509,
+        "materialized_before_previous_display_done_ms": 4.29938,
+        "source_start_before_previous_actual_retire_ms": 4.704761,
+        "materialized_before_previous_actual_retire_ms": 4.136632
+      }
+    ],
+    "completion_intervals": [
+      {
+        "frame": 907,
+        "completion_interval_ms": 42.028041
+      },
+      {
+        "frame": 908,
+        "completion_interval_ms": 16.469257
+      },
+      {
+        "frame": 909,
+        "completion_interval_ms": 20.072077
+      },
+      {
+        "frame": 910,
+        "completion_interval_ms": 12.176354
+      },
+      {
+        "frame": 911,
+        "completion_interval_ms": 16.585074
+      },
+      {
+        "frame": 912,
+        "completion_interval_ms": 19.274405
+      },
+      {
+        "frame": 913,
+        "completion_interval_ms": 12.946435
+      },
+      {
+        "frame": 914,
+        "completion_interval_ms": 25.804373
+      },
+      {
+        "frame": 915,
+        "completion_interval_ms": 15.854127
+      },
+      {
+        "frame": 916,
+        "completion_interval_ms": 10.853416
+      }
+    ],
+    "ROM": {
+      "requests": 62222,
+      "replies": 62222,
+      "pending": 0,
+      "input_requests": 10877,
+      "input_replies": 10877,
+      "input_pending": 0,
+      "origin_phase_matched": true
+    },
+    "SPI_bytes": 45528
+  },
+  "whole_MAP": {
+    "before": {
+      "LE": 22710,
+      "comb": 17698,
+      "FF": 9171,
+      "RAM_bits": 292448
+    },
+    "after": {
+      "LE": 22601,
+      "comb": 17757,
+      "FF": 9091,
+      "RAM_bits": 300640
+    },
+    "delta": {
+      "LE": -109,
+      "comb": 59,
+      "FF": -80,
+      "RAM_bits": 8192
+    },
+    "disjoint_self_before": {
+      "nes_core257:encoder": 1352,
+      "nes_transport257:transport": 378,
+      "nes_spi270:spi_front270": 567,
+      "nes_validator278:validator": 1040,
+      "nes_output260:flow": 2058,
+      "nes_plan_batch206:transport": 349,
+      "nes_plan_spi200:endpoint": 96,
+      "nes_queue260:queue": 224
+    },
+    "disjoint_self_after": {
+      "nes_core257:encoder": 1337,
+      "nes_transport257:transport": 401,
+      "nes_spi270:spi_front270": 577,
+      "nes_validator278:validator": 1039,
+      "nes_output260:flow": 2048,
+      "nes_plan_batch206:transport": 351,
+      "nes_plan_spi200:endpoint": 101,
+      "nes_queue260:queue": 217
+    },
+    "self_deltas": [
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame",
+        "before": 87,
+        "after": 260,
+        "delta": 173
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_capture_lease366:early366.ownership",
+        "before": 86,
+        "after": 0,
+        "delta": -86
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_transport257:transport",
+        "before": 378,
+        "after": 401,
+        "delta": 23
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267",
+        "before": 24,
+        "after": 2,
+        "delta": -22
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_core257:encoder",
+        "before": 1352,
+        "after": 1337,
+        "delta": -15
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_patch_capture181:pixels|nes_patch_rows181:rows",
+        "before": 110,
+        "after": 99,
+        "delta": -11
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|OAMEval:spriteeval",
+        "before": 1101,
+        "after": 1112,
+        "delta": 11
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame",
+        "before": 34,
+        "after": 45,
+        "delta": 11
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow",
+        "before": 2058,
+        "after": 2048,
+        "delta": -10
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_spi270:spi_front270",
+        "before": 567,
+        "after": 577,
+        "delta": 10
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_transport257:transport|nes_native_mailbox206:desc0",
+        "before": 8,
+        "after": 0,
+        "delta": -8
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_transport257:transport|nes_native_mailbox206:desc1",
+        "before": 7,
+        "after": 0,
+        "delta": -7
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_queue260:queue",
+        "before": 224,
+        "after": 217,
+        "delta": -7
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_hint361:hint",
+        "before": 160,
+        "after": 155,
+        "delta": -5
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_plan_spi200:endpoint",
+        "before": 96,
+        "after": 101,
+        "delta": 5
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_bulk_aperture188:shared_ram.aperture",
+        "before": 205,
+        "after": 200,
+        "delta": -5
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core",
+        "before": 28,
+        "after": 24,
+        "delta": -4
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|T65:cpu|T65_MCode:mcode",
+        "before": 384,
+        "after": 388,
+        "delta": 4
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_source_tile192:source|nes_chr_cache192:cache_path.cache",
+        "before": 539,
+        "after": 543,
+        "delta": 4
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_transport257:transport|nes_native_mailbox206:prepared",
+        "before": 9,
+        "after": 6,
+        "delta": -3
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_rom_early:rom_service",
+        "before": 299,
+        "after": 296,
+        "delta": -3
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core",
+        "before": 139,
+        "after": 136,
+        "delta": -3
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267",
+        "before": 1,
+        "after": 3,
+        "delta": 2
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|SquareChan:Squ2",
+        "before": 121,
+        "after": 123,
+        "delta": 2
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|cart_top:multi_mapper|MMC3:mapper",
+        "before": 116,
+        "after": 118,
+        "delta": 2
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|PixelMuxer:pixel_muxer",
+        "before": 12,
+        "after": 14,
+        "delta": 2
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu",
+        "before": 42,
+        "after": 44,
+        "delta": 2
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|cart_top:multi_mapper",
+        "before": 58,
+        "after": 56,
+        "delta": -2
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|ClockGen:clock",
+        "before": 47,
+        "after": 49,
+        "delta": 2
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_plan_batch206:transport",
+        "before": 349,
+        "after": 351,
+        "delta": 2
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_local_memory:local_memory",
+        "before": 75,
+        "after": 73,
+        "delta": -2
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|SpriteAddressGen:address_gen",
+        "before": 28,
+        "after": 26,
+        "delta": -2
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_plan_batch206:transport|nes_native_mailbox206:control",
+        "before": 10,
+        "after": 11,
+        "delta": 1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|NoiseChan:Noi|LenCounterUnit:LenNoi",
+        "before": 27,
+        "after": 26,
+        "delta": -1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_native_raster181:raster",
+        "before": 504,
+        "after": 505,
+        "delta": 1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|FrameCtr:frame_counter",
+        "before": 48,
+        "after": 47,
+        "delta": -1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_tile_producer260:tiles",
+        "before": 206,
+        "after": 205,
+        "delta": -1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_source_tile192:source|nes_tile205:tile",
+        "before": 625,
+        "after": 624,
+        "delta": -1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_run_observer134:observer",
+        "before": 417,
+        "after": 418,
+        "delta": 1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_validator278:validator",
+        "before": 1040,
+        "after": 1039,
+        "delta": -1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_screen_status151:screen_status",
+        "before": 141,
+        "after": 140,
+        "delta": -1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top",
+        "before": 124,
+        "after": 125,
+        "delta": 1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core",
+        "before": 211,
+        "after": 212,
+        "delta": 1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control",
+        "before": 393,
+        "after": 392,
+        "delta": -1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_patch_capture181:pixels",
+        "before": 22,
+        "after": 23,
+        "delta": 1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu",
+        "before": 460,
+        "after": 459,
+        "delta": -1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|T65:cpu",
+        "before": 563,
+        "after": 564,
+        "delta": 1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|NoiseChan:Noi|EnvelopeUnit:EnvNoi",
+        "before": 21,
+        "after": 22,
+        "delta": 1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_source_tile192:source",
+        "before": 3,
+        "after": 2,
+        "delta": -1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_fault267:retained_fault267",
+        "before": 4,
+        "after": 5,
+        "delta": 1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_native_planes165:fetch",
+        "before": 160,
+        "after": 159,
+        "delta": -1
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|TriangleChan:Tri",
+        "before": 66,
+        "after": 66,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_local_memory:local_memory|nes_native_ciram165:ciram|altsyncram:mem_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_native_raster181:raster|altsyncram:rows_rtl_0|altsyncram_7si1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|altsyncram:source_shadow373_rtl_0|altsyncram_78a1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_clock_pll123:pll",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_plan_spi200:endpoint|nes_domain_reset124:release_local",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_core257:encoder|altsyncram:base_lo_rtl_0|altsyncram_cba1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_native_compact181:compact|altsyncram:objects_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_plan_batch206:transport|altsyncram:payload_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_clock_pll123:pll|altpll:altpll_component|pll_altpll:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_local_memory:local_memory|nes_local_memory_ram:cpu_ram|altsyncram:mem_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|SpriteSet:sprite_gen|Sprite:sprite5",
+        "before": 31,
+        "after": 31,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|NoiseChan:Noi",
+        "before": 47,
+        "after": 47,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_transport257:transport|altsyncram:memory_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_fault267:retained_fault267|nes_domain_reset124:ncancel",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_core257:encoder|altsyncram:base_lo_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_domain_reset124:diagnostic_release",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_reject_witness180:witness",
+        "before": 9,
+        "after": 9,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_native_compact181:compact|altsyncram:maps_rtl_0|altsyncram_l1j1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_bulk_aperture188:shared_ram.aperture|nes_domain_reset124:release_local",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|SpriteSet:sprite_gen|Sprite:sprite2",
+        "before": 31,
+        "after": 31,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|OAMEval:spriteeval|altsyncram:primary_run_main_word1|altsyncram_jjg1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|SquareChan:Squ1|LenCounterUnit:LenSq",
+        "before": 25,
+        "after": 25,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_native_compact181:compact|altsyncram:maps_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_plan_batch206:transport|nes_domain_reset124:ncancel",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_native_compact181:compact|altsyncram:rows_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|SquareChan:Squ1",
+        "before": 122,
+        "after": 122,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_domain_reset124:memory_release",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|savestates:savestates",
+        "before": 1,
+        "after": 1,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|OAMEval:spriteeval|altsyncram:primary_run_copy_word1|altsyncram_jjg1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_plan_batch206:transport|altsyncram:payload_rtl_0|altsyncram_j1f1:auto_generated",
+        "before": 1,
+        "after": 1,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_native_raster181:raster|altsyncram:colors_rtl_0|altsyncram_pli1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_tile_producer260:tiles|nes_domain_reset124:hcancel",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_native_compact181:compact|altsyncram:exceptions_rtl_0|altsyncram_rri1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_domain_reset124:core_release",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|DmaController:dma",
+        "before": 24,
+        "after": 24,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_local_memory:local_memory|nes_local_memory_ram:prg_ram",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|TriangleChan:Tri|LenCounterUnit:LenTri",
+        "before": 28,
+        "after": 28,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|OAMEval:spriteeval|altsyncram:primary_run_copy_word0|altsyncram_jjg1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_plan_batch206:transport|nes_domain_reset124:hrelease",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|BgPainter:bg_painter",
+        "before": 28,
+        "after": 28,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_tile_producer260:tiles|nes_native_mailbox206:tiles",
+        "before": 11,
+        "after": 11,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|OAMEval:spriteeval|altsyncram:primary_run_copy_word0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_run_observer134:observer|nes_pad_trace156:trace",
+        "before": 91,
+        "after": 91,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot",
+        "before": 40,
+        "after": 40,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_native_compact181:compact",
+        "before": 1067,
+        "after": 1067,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_plan_batch206:transport|nes_domain_reset124:hcancel",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_native_compact181:compact|altsyncram:rows_rtl_0|altsyncram_toi1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_source_tile192:source|nes_chr_cache192:cache_path.cache|altsyncram:bytes_rtl_0|altsyncram_99e1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|OAMEval:spriteeval|altsyncram:primary_run_main_word0|altsyncram_jjg1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_plan_batch206:transport|nes_domain_reset124:nrelease",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_sink_bridge165:sink|nes_sink_bus165:bus|altsyncram:program_rom_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_sink_bridge165:sink|nes_sink_bus165:bus",
+        "before": 35,
+        "after": 35,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|VramAddressGen:vram0",
+        "before": 152,
+        "after": 152,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_tile_producer260:tiles|nes_domain_reset124:dst_release",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_dac162:audio",
+        "before": 116,
+        "after": 116,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|T65:cpu|T65_ALU:alu",
+        "before": 164,
+        "after": 164,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_domain_reset124:init_release",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_transport257:transport|altsyncram:memory_rtl_0|altsyncram_j1f1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_local_memory:local_memory|nes_local_memory_ram:cpu_ram",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_run_observer134:observer|nes_pad_trace156:trace|altsyncram:entries_rtl_0|altsyncram_doi1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_local_memory:local_memory|nes_local_memory_ram:prg_ram|altsyncram:mem_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_local_memory:local_memory|nes_native_ciram165:ciram",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_spi_boot:loader_boot|nes_source_epoch207:content_lifetime",
+        "before": 104,
+        "after": 104,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_local_memory:local_memory|nes_local_memory_ram:prg_ram|altsyncram:mem_rtl_0|altsyncram_eba1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_game_pad150:pad",
+        "before": 21,
+        "after": 21,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_tile_producer260:tiles|altsyncram:tile_store_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_core257:encoder|altsyncram:base_hi_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|SquareChan:Squ2|LenCounterUnit:LenSq",
+        "before": 25,
+        "after": 25,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|PaletteRam:palette_ram",
+        "before": 405,
+        "after": 405,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_run_observer134:observer|nes_ppu_history157:history|altsyncram:entries_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_tile_producer260:tiles|nes_domain_reset124:src_release",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_patch_capture181:pixels|nes_patch_rows181:rows|altsyncram:pixels_rtl_0|altsyncram_pui1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_native_raster181:raster|altsyncram:colors_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_run_observer134:observer|nes_ppu_history157:history",
+        "before": 23,
+        "after": 23,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_queue260:queue|altsyncram:buffer_rtl_0|altsyncram_cn42:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_native_raster181:raster|altsyncram:rows_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|SpriteSet:sprite_gen",
+        "before": 11,
+        "after": 11,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|SpriteSet:sprite_gen|Sprite:sprite4",
+        "before": 31,
+        "after": 31,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|SpriteSet:sprite_gen|Sprite:sprite6",
+        "before": 31,
+        "after": 31,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|altsyncram:source_shadow373_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_diag_startup_guard:startup",
+        "before": 23,
+        "after": 23,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader",
+        "before": 172,
+        "after": 172,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|SpriteSet:sprite_gen|Sprite:sprite1",
+        "before": 31,
+        "after": 31,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_run_observer134:observer|nes_pad_trace156:trace|altsyncram:entries_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_fault267:retained_fault267|nes_domain_reset124:hcancel",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_source_tile192:source|nes_tile205:tile|lpm_mult:Mult0|multcore:mult_core",
+        "before": 6,
+        "after": 6,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|DmcChan:Dmc",
+        "before": 147,
+        "after": 147,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_patch_capture181:pixels|nes_patch_rows181:rows|altsyncram:pixels_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|SquareChan:Squ2|EnvelopeUnit:EnvSq",
+        "before": 21,
+        "after": 21,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_source_tile192:source|nes_chr_cache192:cache_path.cache|altsyncram:bytes_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader",
+        "before": 76,
+        "after": 76,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_sink_bridge165:sink|nes_sink_bus165:bus|altsyncram:program_rom_rtl_0|altsyncram_ub91:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_core257:encoder|altsyncram:base_hi_rtl_0|altsyncram_uaa1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_domain_reset124:status_release",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_source_tile192:source|nes_native_arbiter165:arbiter",
+        "before": 41,
+        "after": 41,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_native_compact181:compact|altsyncram:exceptions_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|OAMEval:spriteeval|altsyncram:primary_run_copy_word1",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_tile_producer260:tiles|altsyncram:tile_store_rtl_0|altsyncram_noe1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_native_mailbox206:admission",
+        "before": 11,
+        "after": 11,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|altsyncram:memory_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_fault267:retained_fault267|nes_domain_reset124:nrelease",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|SpriteSet:sprite_gen|Sprite:sprite0",
+        "before": 32,
+        "after": 32,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|altsyncram:memory_rtl_0|altsyncram_uaa1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_source_tile192:source|nes_tile205:tile|lpm_mult:Mult0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_local_memory:local_memory|nes_local_memory_ram:cpu_ram|altsyncram:mem_rtl_0|altsyncram_6ba1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|OAMEval:spriteeval|altsyncram:primary_run_main_word0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|SquareChan:Squ1|EnvelopeUnit:EnvSq",
+        "before": 21,
+        "after": 21,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_diag_clock_guard127:clock_guard",
+        "before": 59,
+        "after": 59,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_spi_boot:loader_boot|nes_source_epoch207:content_lifetime|nes_domain_reset124:release_ready",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_clock_pll123:pll|altpll:altpll_component",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_tile_producer260:tiles|nes_domain_reset124:scancel",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_fault267:retained_fault267|nes_domain_reset124:hrelease",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_bulk_aperture188:shared_ram.aperture|altsyncram:storage_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|nes_transport257:transport|altsyncram:memory_rtl_0|altsyncram_5se1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_queue260:queue|altsyncram:buffer_rtl_0",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_local_memory:local_memory|nes_native_ciram165:ciram|altsyncram:mem_rtl_0|altsyncram_6ba1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_spi_boot:loader_boot",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_domain_reset124:observer_release",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|SpriteSet:sprite_gen|Sprite:sprite3",
+        "before": 31,
+        "after": 31,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_native_mailbox206:final_ack",
+        "before": 5,
+        "after": 5,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_run_observer134:observer|nes_ppu_history157:history|altsyncram:entries_rtl_0|altsyncram_loi1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_sink_bridge165:sink",
+        "before": 5,
+        "after": 5,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_native_capture365:native_frame|nes_native_frame201:frame|nes_native_compact181:compact|altsyncram:objects_rtl_0|altsyncram_bsi1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_joint257:core|altsyncram:memory_rtl_0|altsyncram_6512:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_joint267_board:native_joint267|nes_output260:flow|nes_bulk_aperture188:shared_ram.aperture|altsyncram:storage_rtl_0|altsyncram_9vi1:auto_generated",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|SpriteSet:sprite_gen|Sprite:sprite7",
+        "before": 42,
+        "after": 42,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|APU:apu|APUMixer:mixer",
+        "before": 505,
+        "after": 505,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_probe:dut|NES:core|PPU:ppu|OAMEval:spriteeval|altsyncram:primary_run_main_word1",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_live_joint:core|nes_plan_path267:retained_plan267|nes_plan_batch206:transport|nes_native_mailbox206:rearm",
+        "before": 7,
+        "after": 7,
+        "delta": 0
+      },
+      {
+        "path": "|fxpak_nes_screen137_top|nes_sink_bridge165:sink|nes_domain_reset124:release_local",
+        "before": 0,
+        "after": 0,
+        "delta": 0
+      }
+    ]
+  },
+  "replacement_budget": {
+    "eight_module_pool": 6071,
+    "retained_codec_checker": 2376,
+    "control_pool": 3695,
+    "required_with155reserve": 2504,
+    "all_eight_ceiling": 3567,
+    "retained_codec_control_ceiling": 1191
+  },
+  "implementation": {
+    "input_display_contexts": true,
+    "source_ring": true,
+    "separate_source_shadow": true,
+    "shared_D4_CRC8": true,
+    "shared_E1_length": true,
+    "sequential_header_reader": true,
+    "independent_NES_plan_cursor": true,
+    "ACK_to_display_hint_lease_gap_removed": true
+  },
+  "limits": [
+    "CPI1/84MHz and IRQ exception/peripheral allocations,not hardware WCET.",
+    "Ready-gated ROM requests charged during concurrent source/display,not live NES CPU.",
+    "Ordinary65816 trace plus map DMA/display bus models;VBlank firmware unchanged,not full CPU/VBlank proof.",
+    "12frames905..916 with10warm and next917 capture;not full71/heavy7/multiple-phase/session/physical validation.",
+    "Whole comb still overcapacity;LE/FF reduction does not establish fit.",
+    "Host FSM and native plan decoder remain;shared CRC8/length/header progress/cursor are the implemented replacement subset."
+  ],
+  "next_action": "373의 이중 문맥·prelease 연속성·4packet ring/512B shadow와372 ARM을 검증 기준으로 보존한다. 기존 host HLOAD/HCHECK·descriptor/manifest/receipt 주소/완료,queue ingress/credit,plan endpoint/operand decode 본체를 포함한 공동 실행기로 실제 삭제 범위를 넓힌다. 현재8self6071/codec-checker보존 control3695의새구현1191이하(전체3567이하)를2,504순삭제 예산으로 확인하고 context/bridge/RAMport/CDC도 wholeLite에 포함한다. 부분CRC/FF절감만으로 회로 성공을 주장하지 않는다.914 ROM창·후반OBJ/DMA/manifest와6packet raw500B/refillIRQ를 실제 ARM/SPI 경쟁에 연결한다. 동일 capture/ROM 위상·연속 완료 간격·heavy7/71/다중위상·전체65816/VBlank·WCET/CDC/IO를 검증하고 회로 용량 확보 뒤 FITSTA/실기로 진행한다. 캡처 승인과60fps표시를 구분하며 자동merge하지 않는다.",
+  "continuous_capture_passed": true,
+  "full_host_executor_replaced": false,
+  "full_plan_decode_replaced": false,
+  "selected_for_board": false,
+  "FIT": false,
+  "STA": false,
+  "physical": false,
+  "sustained60fps": false
+}

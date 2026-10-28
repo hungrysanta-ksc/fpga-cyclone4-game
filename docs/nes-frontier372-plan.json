@@ -1,0 +1,316 @@
+{
+  "stage": 372,
+  "date_kst": "2026-10-26",
+  "base": "e9005716f76f37244ec8272acbdcd41f497d7ec5",
+  "branch": "codex/nes-capture-admission-365",
+  "contract": "docs/nes-frontier372-contract.ko.md",
+  "evidence": "analysis/frontier372-verification.json",
+  "selected": {
+    "build": "build06",
+    "checks": "check05",
+    "guards": "guards04",
+    "runtime": "joint02",
+    "control_audit": "control05",
+    "whole_MAP": "inherited368/370/map01"
+  },
+  "assessment": "NES372 370 protocol/RTL and hint bytes retained;byte MASK popcount/set-bit traversal,map/raw split,bounded64B overlap-safe SHIFT unroll and target resident bitmap scan. 51blocks/96globals exact+2573mask/shift/odd-base cases+28hint/9source guards+8hint snapshots PASS.First914block32421->10758(-21663),hint8917->8084(-833),whole source73062->39941;instruction replay not added to live time. Actual905..915 drained11(startup2/warm9),capture915 admitted+41.159us;firstmiss916,8/9next captures.914 materialized2.614195->2.299063(-315.132us),processing21.545718->21.500992(-44.726us),4.834325ms over60Hz. 907..914 same-start/ROMphase all improve;908extraemptyD4+13B charged.Payload/hint/semantic plan records exact370.915source starts2.832533ms AFTER916deadline,materializes4.408605ms late;its17.269452ms is new measurement,not a370 regression. ROM60477pairs/input8846pairs/pending0;actual readCRC/coverage/2credit/12read-token/retire retained.ARMtext35862(+1628),data4/BSS48476same,stack1288. 30compiled modules exact370;inheritedLite22710LE17698comb9171FF292448bits,no newMAP.371rollback-37comb NOTnew370saving;2290combshort/2445with155reserve. Queue224self now included:8disjoint modules6064,retain codec/checker2392 =>3672control->1227ceiling;all8->3619,host-only2945->500.Upper budgets only,new replacement area null. 916 requires separate input/display contexts and simultaneous scratch/IRQ/ROM ownership,not just one common FSM.4packet source1KiB+shadow1KiB budget+12288bits/304736total;max71fixture needs500B rawARM,bits not FIT proof. 914 BG-boundary repack[220,187,246,30]->[190,217,246,30],same bytes/count,no extra wire;RTL/timing not implemented.71fixture954 2slot minimumwire2.956190ms versus4slot1.526857,not new71 timings. FullCPU/VBlank/WCET/71/heavy7/multiple phases/session/FITSTA/physical60fpsOPEN.Production227/GBC164/saveSRAM unchanged.",
+  "measured": {
+    "paired": [
+      {
+        "frame": 907,
+        "before_ms": 12.040741,
+        "after_ms": 11.879334,
+        "delta_ms": -0.16140700000000052,
+        "same_start_ROM_phase": true,
+        "before_materialized_ms": 1.667798,
+        "after_materialized_ms": 1.586708,
+        "source_SPI_before": 616,
+        "source_SPI_after": 616,
+        "total_SPI_before": 1693,
+        "total_SPI_after": 1693
+      },
+      {
+        "frame": 908,
+        "before_ms": 12.417419,
+        "after_ms": 12.104741,
+        "delta_ms": -0.312678,
+        "same_start_ROM_phase": true,
+        "before_materialized_ms": 0.576948,
+        "after_materialized_ms": 0.576948,
+        "source_SPI_before": 476,
+        "source_SPI_after": 489,
+        "total_SPI_before": 1531,
+        "total_SPI_after": 1544
+      },
+      {
+        "frame": 909,
+        "before_ms": 16.215692,
+        "after_ms": 15.933014,
+        "delta_ms": -0.28267800000000065,
+        "same_start_ROM_phase": true,
+        "before_materialized_ms": 2.322063,
+        "after_materialized_ms": 2.149565,
+        "source_SPI_before": 925,
+        "source_SPI_after": 925,
+        "total_SPI_before": 2268,
+        "total_SPI_after": 2268
+      },
+      {
+        "frame": 910,
+        "before_ms": 12.030379,
+        "after_ms": 11.865608,
+        "delta_ms": -0.164771,
+        "same_start_ROM_phase": true,
+        "before_materialized_ms": 0.56713,
+        "after_materialized_ms": 0.56713,
+        "source_SPI_before": 372,
+        "source_SPI_after": 372,
+        "total_SPI_before": 1544,
+        "total_SPI_after": 1544
+      },
+      {
+        "frame": 911,
+        "before_ms": 12.47901,
+        "after_ms": 12.206831,
+        "delta_ms": -0.2721790000000013,
+        "same_start_ROM_phase": true,
+        "before_materialized_ms": 1.828433,
+        "after_materialized_ms": 1.651026,
+        "source_SPI_before": 658,
+        "source_SPI_after": 658,
+        "total_SPI_before": 1639,
+        "total_SPI_after": 1639
+      },
+      {
+        "frame": 912,
+        "before_ms": 15.424883,
+        "after_ms": 15.237431,
+        "delta_ms": -0.18745199999999862,
+        "same_start_ROM_phase": true,
+        "before_materialized_ms": 1.719162,
+        "after_materialized_ms": 1.641844,
+        "source_SPI_before": 676,
+        "source_SPI_after": 676,
+        "total_SPI_before": 1945,
+        "total_SPI_after": 1945
+      },
+      {
+        "frame": 913,
+        "before_ms": 12.130105,
+        "after_ms": 11.940062,
+        "delta_ms": -0.19004300000000107,
+        "same_start_ROM_phase": true,
+        "before_materialized_ms": 0.568721,
+        "after_materialized_ms": 0.568721,
+        "source_SPI_before": 389,
+        "source_SPI_after": 389,
+        "total_SPI_before": 1555,
+        "total_SPI_after": 1555
+      },
+      {
+        "frame": 914,
+        "before_ms": 21.545718,
+        "after_ms": 21.500992,
+        "delta_ms": -0.04472600000000071,
+        "same_start_ROM_phase": true,
+        "before_materialized_ms": 2.614195,
+        "after_materialized_ms": 2.299063,
+        "source_SPI_before": 777,
+        "source_SPI_after": 777,
+        "total_SPI_before": 2095,
+        "total_SPI_after": 2095
+      }
+    ],
+    "captures": [
+      {
+        "frame": 908,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 260388740000,
+        "handoff_margin_ms": 0.75356
+      },
+      {
+        "frame": 909,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 276632545000,
+        "handoff_margin_ms": 1.763275
+      },
+      {
+        "frame": 910,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 292876350000,
+        "handoff_margin_ms": 0.190658
+      },
+      {
+        "frame": 911,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 309120155000,
+        "handoff_margin_ms": 1.773093
+      },
+      {
+        "frame": 912,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 325363960000,
+        "handoff_margin_ms": 0.689197
+      },
+      {
+        "frame": 913,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 341607765000,
+        "handoff_margin_ms": 0.698379
+      },
+      {
+        "frame": 914,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 357851570000,
+        "handoff_margin_ms": 1.771502
+      },
+      {
+        "frame": 915,
+        "admitted": true,
+        "owned": 0,
+        "at_ps": 374095375000,
+        "handoff_margin_ms": 0.041159
+      },
+      {
+        "frame": 916,
+        "admitted": false,
+        "owned": 1,
+        "at_ps": 390339181000,
+        "handoff_margin_ms": -4.408605
+      }
+    ],
+    "ARM_size": {
+      "before": {
+        "text": 34234,
+        "data": 4,
+        "BSS": 48476
+      },
+      "after": {
+        "text": 35862,
+        "data": 4,
+        "BSS": 48476
+      },
+      "delta": {
+        "text": 1628,
+        "data": 0,
+        "BSS": 0
+      }
+    },
+    "ROM": {
+      "requests": 60477,
+      "replies": 60477,
+      "pending": 0,
+      "input_requests": 8846,
+      "input_replies": 8846,
+      "input_pending": 0,
+      "origin_phase_matched": true
+    },
+    "whole_MAP": {
+      "values": {
+        "LE": 22710,
+        "comb": 17698,
+        "FF": 9171,
+        "RAM_bits": 292448
+      },
+      "inherited_from368_370": true,
+      "new_MAP": false,
+      "delta_vs370": {
+        "LE": 0,
+        "comb": 0,
+        "FF": 0,
+        "RAM_bits": 0
+      },
+      "delta_vs371": {
+        "LE": -37,
+        "comb": -37,
+        "FF": -1,
+        "RAM_bits": 0
+      }
+    },
+    "source915_late_start_ms": 2.832533
+  },
+  "replacement_budget": {
+    "disjoint_self_comb": {
+      "nes_core257:encoder": 1352,
+      "nes_transport257:transport": 378,
+      "nes_validator278:validator": 1040,
+      "nes_output260:flow": 2058,
+      "nes_queue260:queue": 224,
+      "nes_plan_batch206:transport": 349,
+      "nes_plan_spi200:endpoint": 96,
+      "nes_spi270:spi_front270": 567
+    },
+    "required_with155reserve": 2445,
+    "control_pool_with_queue": 3672,
+    "replacement_control_ceiling": 1227,
+    "cases": [
+      {
+        "name": "Host only,keep mixed-clock source/plan",
+        "pool_upper_bound": 2945,
+        "replacement_upper_bound": 500
+      },
+      {
+        "name": "Host plus entire mixed-clock source transport,optimistic upper bound",
+        "pool_upper_bound": 3323,
+        "replacement_upper_bound": 878
+      },
+      {
+        "name": "All eight modules including codec/checker control",
+        "pool_upper_bound": 6064,
+        "replacement_upper_bound": 3619
+      }
+    ],
+    "host_context_candidate": {
+      "SPI_request": [
+        472,
+        483
+      ],
+      "active_record": [
+        484,
+        499
+      ],
+      "execution": [
+        500,
+        507
+      ],
+      "spare": [
+        508,
+        511
+      ],
+      "bytes": 36,
+      "retained_FF": "SPI shift/synchronizers,immutable snapshot and token/serial burn history,CDC grants;source/checker states not included.",
+      "implemented": false,
+      "port": "Would add an A-side read/owner arbiter;B remains expected/read-event priority. No throughput or area credit."
+    },
+    "overlap_candidate": {
+      "source_packet_RAM_bytes": 1024,
+      "source_shadow_RAM_bytes": 1024,
+      "incremental_RAM_bits": 12288,
+      "proposed_whole_bits": 304736,
+      "logical_source_packets": 4,
+      "output_queue_packets": 2,
+      "ARM_raw_prefetch_bytes_for_max_fixture": 500,
+      "input_context_and_display_context_separate": true,
+      "implemented": false,
+      "extra_FPGA_logic": null,
+      "whole_area_saving": null
+    }
+  },
+  "scope": "New actual ARM schedule and static/source-record/71fixture size structural review;no new RTL/shared-control implementation/MAP/71 timing.",
+  "next_action": "372 ARM과370 ABI/RTL을 기준으로 유지한다.916 기한 전에 source915를 시작할 수 있도록 input/display lease·epoch/generation·STOP/retire를 분리하고,source shadow와raw RX의 동시 수명을 명시한다. 4packet source ring/footer descriptor·BG/nonmap 조기seal과 host 공통 주소/진행 실행기·native32B/32bit word plan을 기존source/host/queue/plan FSM 삭제 목록과 함께 구현한다. 단일phase 장벽을 남긴 공유FSM이나 RAM clock mux/무료 phase중첩을 승인하지 않는다.같은 시작/ROM위상·고정capture기한과input/output request-origin ROM경쟁·실제ARM/SPI/IRQ·독립expected/STOP/12read-token finalACK를 검증한다. 전체8모듈3619 또는codec/checker보존제어1227 상한에추가bridge/arbiter/shadow를포함해전체Lite MAP을비교한다.ARM500Braw와FPGA12288bits는구현전예산이며시간/회로절감0으로둔다.전체CPU/VBlank/heavy7/71/WCET/다중위상/FITSTA/실기는미완료다.",
+  "continuous_capture_passed": false,
+  "capture915_admitted": true,
+  "first_missed_capture": 916,
+  "actual_control_replacement_implemented": false,
+  "FIT": false,
+  "STA": false,
+  "physical": false,
+  "sustained60fps": false
+}

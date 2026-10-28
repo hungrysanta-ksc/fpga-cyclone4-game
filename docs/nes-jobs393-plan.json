@@ -1,0 +1,268 @@
+{
+  "stage": 393,
+  "PR": 132,
+  "status": "replacement boundary and budgets fixed;implementation pending",
+  "selected_for_production": false,
+  "new_RTL": false,
+  "new_MAP": false,
+  "new_live_schedule": false,
+  "baseline": {
+    "RTL": 375,
+    "ARM": 377,
+    "current_experiment": 392,
+    "mapper_gate": 376,
+    "first_capture_miss": 911
+  },
+  "verification": "analysis/jobs393-verification.json",
+  "abi": {
+    "execution_record_bytes": 12,
+    "fields": [
+      {
+        "offset": 0,
+        "bytes": 2,
+        "name": "PPU_destination"
+      },
+      {
+        "offset": 2,
+        "bytes": 2,
+        "name": "WRAM_store_and_DMA_source"
+      },
+      {
+        "offset": 4,
+        "bytes": 2,
+        "name": "decoded_bytes"
+      },
+      {
+        "offset": 6,
+        "bytes": 1,
+        "name": "class_source_reference_stride_flags"
+      },
+      {
+        "offset": 7,
+        "bytes": 1,
+        "name": "WRAM_bank"
+      },
+      {
+        "offset": 8,
+        "bytes": 1,
+        "name": "VMAIN"
+      },
+      {
+        "offset": 9,
+        "bytes": 1,
+        "name": "canonical_region"
+      },
+      {
+        "offset": 10,
+        "bytes": 2,
+        "name": "canonical_first"
+      }
+    ],
+    "flags": {
+      "PPU_class_bits": [
+        0,
+        1
+      ],
+      "source_mode_bits": [
+        2,
+        3
+      ],
+      "reference_bit": 4,
+      "stride32_bit": 5,
+      "HDMA_zero_exception_bit": 6,
+      "reserved_zero_bit": 7
+    },
+    "source_modes": [
+      "TILE",
+      "LITERAL",
+      "REPEAT16",
+      "REPEAT32"
+    ],
+    "regions": [
+      "BG",
+      "OBJ",
+      "MAP",
+      "CGRAM",
+      "OAM",
+      "HDMA"
+    ],
+    "output_wire_envelope_bytes": 10,
+    "wire_fields": [
+      "kind/version8",
+      "flags/jobcount8",
+      "sequence16",
+      "serial32",
+      "encoded_length16"
+    ],
+    "namespace": "generation/epoch/bank bound by existing84bit admission/H2;serial32+sequence on every output packet",
+    "wire_classes": [
+      "JOBS",
+      "HEAD_ONLY",
+      "DATA(offset16;one active HOST fragment)",
+      "CONTROL/EXPECTED/SEAL/END"
+    ],
+    "max_packet_bytes": 256,
+    "max_records_per_packet": 16,
+    "legacy_input_and_plan_wire": "Keep N5 D4prefix13/MASK/SHIFT and compactE9;normalize once in shared host executor;native32B plan only insideexisting1KiB RAM",
+    "source_credit": "HEAD safely stored releases storage credit;actual source-consumed and PPU completion are distinct",
+    "output_order": "TILE fixed job-boundaries;MAP exact dirty row/column runs;CGRAM/OAM/HDMA STORE then explicit REF;no MAP REF",
+    "empty_and_final_ACK": "END always,including empty;allocatefresh32bit fence token,not lastMAP token;no fake byte coverage;12exactviewreads/actualPPU/VBlank beforefinalACK"
+  },
+  "checker": {
+    "required_bitmap": "Unchanged separately produced canonical required bitmap",
+    "allow_extra_map_words": false,
+    "remove": "ascending unit359<v_map_end frontier only",
+    "retain": [
+      "actual read-only unit completion",
+      "domain/unit bounds",
+      "duplicate receipt bit rejection",
+      "exact final bitmap",
+      "original CRC/certificate/validity/H2 checks",
+      "independent final scan and fault state"
+    ],
+    "direct_unit_cursor": "increment1/32 only after actual word completion;canonical relationship and header authority checked",
+    "replacement_delta": "Any checker comb delta consumes additional space below1387"
+  },
+  "scope": {
+    "delete_SNES": [
+      "job rebuilding/strategy selection",
+      "64column scan",
+      "gather",
+      "map coordinate/bounds/cache",
+      "typed/ordinary destination reconstruction"
+    ],
+    "delete_FPGA": [
+      "flow1937/context102 header/descriptor/manifest/receipt execution",
+      "queue213 field/progress/completion duplication",
+      "SPI576 command/response selection duplication while retainingphysical shift/CRC/snapshot",
+      "source transport400 + plan350 + endpoint100 + tile adapter200 progress/address/lifetime control"
+    ],
+    "retain": [
+      "N5 codec1336",
+      "independent checker1038 baseline semantics",
+      "aperture207/physicalreadcapture",
+      "tile32B RAM andCDC ownership",
+      "4packet source ring1KiB+shadow512B",
+      "2output packet slots/credit",
+      "CRC/counters/token andserialburn/STOPgates"
+    ],
+    "clock_boundary": "One host executor and one NES executor withtworesumecontexts;no clockmux or freeCDC;actualROM/cancel/collectorDONEdrain maintained",
+    "legacy_fallback": "cold/empty/warm mustusev2;legacyA/B separate testtop,not runtime boardfallback"
+  },
+  "resources": {
+    "whole_current": {
+      "LE": 22471,
+      "comb": 17744,
+      "FF": 8985,
+      "RAM_bits": 300640
+    },
+    "control_pool": 3878,
+    "base_pool_without_tile": 3678,
+    "required_net_deletion": 2491,
+    "replacement_control_cap": 1387,
+    "base_replacement_cap": 1187,
+    "retained_codec_checker": 2374,
+    "other_retained": 11492,
+    "target_whole_comb": 15253,
+    "reserve_comb": 155,
+    "hard_caps": {
+      "SPI_frontend_snapshot_CRC8": 320,
+      "host_record_executor_and_context": 380,
+      "queue_credit_storage": 104,
+      "NES_source_plan_tile_resume": 460,
+      "new_port_arbiter_and_bridge_delta": 123
+    },
+    "old_control_FF": 1665,
+    "whole_FF_cap": 8985,
+    "phase_context": {
+      "start": 716,
+      "end": 767,
+      "total": 52,
+      "used": 48,
+      "spare": 4
+    },
+    "NES_resume_context_register_bytes": 32,
+    "ARM_extra_BSS_cap_vs377": 320,
+    "ARM_observed_stack_target": 1536,
+    "ARM_unit_outputs_not_production_bytes": 7168,
+    "SNES_spool_job_validity": 15361,
+    "SNES_old392": 23841,
+    "SNES_budget_saving": 8480,
+    "SNES_nonmap_bank_cache_separate": 8948,
+    "SNES_DP_provisional_cap": 64,
+    "resident_ROM_and_decode_delta": null,
+    "logical_RAM_bit_reference": 300640,
+    "RAM_growth": "May considercontrol/programROMgrowth ifactualM9Kcapacity,ports/fetchlatency andwholelogic/fitcostarecharged;notfreeorautomaticallyforbidden"
+  },
+  "time": {
+    "actual_new_component_cases": 219,
+    "warm_map_instructions_min": 3168,
+    "warm_map_instructions_max": 8189,
+    "component_stack_observed": 68,
+    "component_text": 604,
+    "component_BSS11808_is_fixture": true,
+    "critical_readiness": [
+      {
+        "frame": 907,
+        "new_component_instructions": 5776,
+        "old_component_instructions": 9791,
+        "component_CPI1_gain_ms": 0.04779761904761905,
+        "post_view_target_ms": 0.1,
+        "required_advance_at_current_phase_ms": -2.3528800409999997,
+        "conditional_overhead_ceiling_no_nonmap_batch_ms": 2.3214395648095234,
+        "conditional_overhead_ceiling_batched_ms": 2.5591538505238094,
+        "assumption": "ALL wire and component gains advance ready;unproven critical-path attribution. No E2/IRQ/stall reduction credited. Not new processing or capture timing."
+      },
+      {
+        "frame": 908,
+        "new_component_instructions": 3328,
+        "old_component_instructions": 10441,
+        "component_CPI1_gain_ms": 0.08467857142857142,
+        "post_view_target_ms": 0.1,
+        "required_advance_at_current_phase_ms": 0.27520904300000004,
+        "conditional_overhead_ceiling_no_nonmap_batch_ms": 0.28794571890476184,
+        "conditional_overhead_ceiling_batched_ms": 0.5652790522380952,
+        "assumption": "ALL wire and component gains advance ready;unproven critical-path attribution. No E2/IRQ/stall reduction credited. Not new processing or capture timing."
+      }
+    ],
+    "maximum_post_view_target_ms": 0.1,
+    "ROM_start_condition": "same46561ps master/phase0/fixedcapture5371247/ROM_WINDOW1;first908EA<=282.681539ms;do not blockrefillIRQ/firstBG withjobbuild",
+    "SPI_extra_E2_IRQ_gain_credit": 0,
+    "actual_completed392": [
+      905,
+      906,
+      907,
+      908
+    ],
+    "first_missed_capture392": 911,
+    "VBlank": {
+      "commit_control": 3328,
+      "per_byte": 8,
+      "reserve": 512,
+      "cap": 49104,
+      "old962_noreserve": 50400,
+      "old962_withreserve": 50912,
+      "new_VRAM_job_target": 1200,
+      "new_other_job_target": 1408,
+      "new962_withreserve": 48720,
+      "targets_proven": false,
+      "old_observed_VRAM_interjob_max": 1062,
+      "old_observed_OAM_interjob_max": 1300
+    }
+  },
+  "implementation_gates": [
+    "R1:raw12B/TILE/MAP/ordinary5/zero/REF/emptyEND-FENCE actualM4+native65816+actualreadchecker;2slotfragment/head storage liveness;duplicates/missing/stalens/STOP andpendingROM/collector drain",
+    "R2:sharedhostreader+nativeplan32B andNES source/plan/tileexec;deleteoldbodies;protected52Bport/fastreadcache proof;chargeallM9Kgrowth;noFFRAMfallback;matchingfunctional/boardwholeLiteMAP<=15253 includingalloutside-deltas;replacement<=1387 minusoutside-deltas",
+    "R3:same-startROMphase andseparatecontinuouscapture908..917;realARMserializer/refillIRQ/ROMcompetition;PPU/VBlank>=allheavy7/71,multiplephases,cold/empty/STOPrecovery,normalalloutputs",
+    "R4:wholeFIT/STA/CDC/IO,fullresidentmemory/WCET,physical sustained60fps andMMC4/5additionalcost beforeapproval"
+  ],
+  "stop_condition": "If1387orready/962budgets fail,revisit roles/transfer/hardware beforeadding adapters/opcode/seedFITloops",
+  "preserve": [
+    "production227",
+    "GBC164",
+    "saveSRAM",
+    "375/377/392/376 evidence",
+    "all393 component/intermediate failures"
+  ],
+  "automatic_merge": false
+}
