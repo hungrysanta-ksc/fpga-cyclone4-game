@@ -10,9 +10,9 @@ observer 2.625MHz는 실제 firmware 설정과 이전 250kHz 명시 사이 차�
 
 | 순서 | 목표와 완료 조건 | 상태 |
 |---|---|---|
-| 0 | 기존 227 및 GBC164·SRAM 복구 자료 보존. 411 결과·범위 기록, 단일 seat 반환 | **진행 중**: 393,216B 쓰기 완료, 독립 ACK 331,776B까지 확인; 실제 run136·base는 모델 |
-| 1 | 한정 NROM16 수평 profile의 실제 menu 경로·ID 78·ARM/FPGA/65816 짝과 재현 가능한 자체 테스트 ROM을 결합. header/CRC 실패는 START 차단 | **미완료**: loader·layout/고정 profile과 host/RLT prefix 있음; 실제 menu 선택·paired package 없음 |
-| 2 | 같은 source로 Lite 전체 FIT/STA·핀/클록/CDC 확인, CRC·STOP·독립 검증 및 base token/menu 복원 절차 확인. observer 대표 조건을 단일 seat에서 순차 시험 | **미완료**: 전체 MAP만 있음, 새 FIT/STA 및 base 실제 결합 없음. 417 5위상 전부 선행하지 않음 |
+| 0 | 기존 227 및 GBC164·SRAM 복구 자료 보존. 411 결과·범위 기록, 단일 seat 반환 | **완료**: 384KiB 쓰기·readback·RTL START/STOP 통과; 실제 run136·base는 모델 |
+| 1 | 한정 NROM16 수평 profile의 실제 menu 경로·ID 78·ARM/FPGA/65816 짝과 재현 가능한 자체 테스트 ROM을 결합. header/CRC 실패는 START 차단 | **진행 중**: 메뉴 ARM 링크, FPGA 구성, 65816 ROM atom 및 화면 fixture 확인; fixture 입력은 주입, 실제 display·pad와 복구는 미연결 |
+| 2 | 같은 source로 Lite 전체 FIT/STA·핀/클록/CDC 확인, CRC·STOP·독립 검증 및 base token/menu 복원 절차 확인. observer 대표 조건을 단일 seat에서 순차 시험 | **진행 중**: Lite FIT 14,751LE, 224 방식 관련 clock 양수, observer 초기 대표 조건 통과; raw reset/CDC·미제약 IO와 실제 복구는 미해결 |
 | 3 | 사용자의 제한 실기: paired build에서 부팅·화면·입력·해당 음성, STOP·메뉴 복귀·재시작·복원 기록. 실패 시 복원 자료 사용 | **대기**: 1·2 완료 후에만 실기 가능. 새 NROM 실기 성공 아님 |
 | 4 | 같은 workload에서 capture/표시 ACK·누락·VBlank·ARM/SPI/IRQ/ROM 시간을 계측. 60fps의 16.667ms와 지속 프레임을 확인하고 병목을 정한다 | **미달/미측정**: 227 실기 465 ACK/60.06s, 402 fixture 최대 warm 34.048ms이며 서로 다른 경계. 실제 새 후보 시간 없음 |
 | 5 | A 공동 실행기와 B ARM DMA job 중 **하나의 완결 경로**를 같은 일정·전체 Lite 비용으로 대조, 시간과 FIT 양쪽에 맞지 않으면 역할/장치 범위를 재결정 | **미완료**: 402 전체 MAP 20,199LE/16,508 조합, 914/915 VBlank 미달; B 동일 경계 부재 |
@@ -22,4 +22,4 @@ observer 2.625MHz는 실제 firmware 설정과 이전 250kHz 명시 사이 차�
 
 ## 다음 작업 하나
 
-411 결과를 확인한 뒤, **1의 실제 NROM 메뉴 선택과 paired package 연결**을 진행한다. 기존 227·GBC 복원물을 덮어쓰지 않고 파일·프로파일 identity를 고정하며, 그 다음 2의 한 번의 전체 Lite FIT/STA와 대표 observer 시험으로 넘어간다. 417 phase sweep은 대표 시험 실패 또는 실기 통신 불안정 시 진단용으로만 수행한다.
+**1의 실제 native display·65816 및 컨트롤러·base 복구 연결**을 진행한다. 기존 227·GBC 복원물을 덮어쓰지 않고 파일·프로파일 identity를 유지하며, 2에서 확인된 raw reset/CDC·미제약 IO를 별도로 다룬다. 417 phase sweep은 대표 시험 실패 또는 실기 통신 불안정 시 진단용으로만 수행한다.
