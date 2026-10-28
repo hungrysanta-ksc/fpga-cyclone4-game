@@ -1,0 +1,13 @@
+{
+  "stage":"actual 227 FatFS+whole generated loader on synthetic disk; separate actual FPGA boundary; no full cosimulation",
+  "contract":"docs/nes-nrom408-contract.ko.md",
+  "evidence":"analysis/nrom408-verification.json",
+  "selected":{"loader":"407/build04","FatFS":"408/fatfs02","C_model":"408/full04","FPGA_boundary":"408/rtl03","ARM_link":"408/arm01","whole_Lite_MAP":"407/map01"},
+  "C":{"whole_generated_227_loader":true,"actual_227_FatFS":true,"synthetic_FAT16_disk":true,"case_count":9,"SPI_PSRAM_run_base":"C models","hardware_or_actual_FPGA_cosimulation":false},
+  "FPGA":{"actual_SPI_boot_loader_physical_RTL":true,"PSRAM":"model","READY_count_verified":"seeded by testbench","corruptions":19,"cancellation_phases":72,"overlaps":2,"START_interlock_and_RUN_STOP":true,"whole_write_readback":false},
+  "ARM":{"full_link":true,"reference_firmware_bytes":209828,"candidate_firmware_bytes":210104,"text_delta":276,"static_data_bytes":10040,"static_bss_bytes":18076,"menu_profile_selection_complete":false,"full_IRQ_stack_or_execution_timing":null},
+  "whole_Lite_MAP":{"baseline":{"LE":18850,"comb":13951},"candidate":{"LE":18178,"comb":13557,"FF":8029,"RAM_bits":185824},"scope":"227 board only, cart+SPI changed; loader C outside FPGA MAP", "FIT":false,"STA":false},
+  "performance":{"actual_ARM_SPI_IRQ_ROM_schedule":null,"new_60fps_A_B_whole_cost":null,"actual_MMC4_MMC5_time_area":null},
+  "next":["Bind actual whole 227 loader/FatFS with actual FPGA SPI/loader/PSRAM model in same execution; distinguish accelerated functional from physical timing", "Prove complete DATA, CRC, independent readback, START, RUN STOP, late DONE and base/menu recovery with fault injection", "Connect profile-safe NROM menu, actual NES core and SNES display; pin same image/RTL and measure ARM/IRQ/ROM/VBlank", "Measure real mapper4/10/5 workloads and compare A/B whole cost; Lite FIT/STA and CDC/IO before physical"],
+  "physical60fps":false,"actual_hardware_test":false,"production227_GBC164_saveSRAM_changed":false
+}
