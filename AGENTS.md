@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- 사용자 지시로 NES 성능 개발을 재개했다. 현재 PC의476/477 실기와478의 게임 대표 입력·MMC3 배치 결과를 기준으로 479의 새 profile/엄격 loader·core/source 부팅·M4 재생을 완료했다. 다음은 live tile/query/ROM·65816 표시 복구 연결이다. PC 이전·이식성 정비는 당장 우선 작업이 아니다.
+- 사용자 지시로 NES 성능 개발을 재개했다. 현재 PC의476/477 실기와478의 게임 대표 입력·MMC3 배치 결과를 기준으로 479의 새 profile/엄격 loader·core/source 부팅·M4 재생을 완료했다. 480에서 live tile/ROM·65816 표시·픽셀/최종ACK/STOP 연결을 통과하고 비공개 실기 ZIP을 준비했다. 다음은 새3TXT·게임/메뉴 복귀 결과의 분석이다. PC 이전·이식성 정비는 당장 우선 작업이 아니다.
 - 추가 성공 코어는 GB/GBC G13C44/0.9.0. NES는 제한 NROM476 실기 평균23.84fps/약24fps 정상 구간이며 미완성이다.
 - 최신 실기 근거는 `analysis/receive477-hardware.json`, 인계는 `cores/nes/HANDOFF.ko.md`다.
 - `src/fpga`, `src/firmware-overlay`, `src/renderer`의 검증된 GBC와 사용자 저장·복원물을 보존한다.
@@ -45,4 +45,4 @@
 - 실기는 사용자가 설치 ZIP을 SD에 복사하고 로그를 돌려주는 방식이다. 알려진 보드나 SD/USB 연결을 다시 요구하지 않는다.
 - 단계 완료·큰 변경·중요한 결과 위주로 간결하게 보고한다. 자세한 진행은 문서에 남기며 이미 허가된 범위의 작업을 반복 확인하지 않는다.
 
-- 단순 NROM은 회귀 fixture다. OBJ0/mapdirty0·27/28group 재사용 결과를 일반 게임 성능으로 승격하지 않는다. 이 문양60fps를 실제 게임 진입의 선행 조건으로 삼지 않는다. 478에서71개 입력 동등성과MMC3 FIT15266LE(142잔여)를 확인했다. 478의 진단ID78은 실기 금지다. 479의 전용ID79·로더/부팅/M4와FIT15260LE(148잔여)는 docs/nes-mmc479-contract.ko.md를 따른다. 새 게임 설치본은 아직 없다.
+- 단순 NROM은 회귀 fixture다. OBJ0/mapdirty0·27/28group 재사용 결과를 일반 게임 성능으로 승격하지 않는다. 이 문양60fps를 실제 게임 진입의 선행 조건으로 삼지 않는다. 478에서71개 입력 동등성과MMC3 FIT15266LE(142잔여)를 확인했다. 478의 진단ID78은 실기 금지다. 479의 전용ID79·로더/부팅/M4와FIT15260LE(148잔여)는 docs/nes-mmc479-contract.ko.md를 따른다. 480 제한 실기 전달본은 docs/nes-mmc480-trial.ko.md를 따르며 실기 FPS는 미측정이다.

@@ -45,3 +45,7 @@
 ## 479 로컬 입력
 
 `prepare_nes_mmc479.py`는 선택476 전체 ARM source, hash 고정 원래227 loader,478의69파일 closure/QSF를 요구한다.479 실행 source·ARM03/loader02/core01/board01·M4 결과는 `probes/nes-mmc479`에 보존한다. 새 PC에서는 `execution-location.json`의 경로를 그대로 쓰지 말고 대응 source/도구를 복구한다. 원본 ROM은 private147 PRG/CHR hex에서 기존 전체 SHA와 byte 동일하게 복구했으며 Git에 넣지 않는다. host20건·seeded core smoke·M4 기록 재생을 실제 live ARM/IRQ/tile/SNES 구동으로 오인하지 않는다. 새 설치본은 아직 없다.
+
+## 480 연결 시험과 전달본
+
+`test_nes_mmc480_live.py --prepare-only`는 시뮬레이터 없이 생성 runner를 검사한다. 실제 실행은479 board/ARM·원본 ROM·core01 자료와 기존 FLOAT wrapper/Mesen/.NET을 요구한다. `probes/nes-mmc480/executed`에 live01/ARM01을 보존했다. FPGA는 같은479 fitted DB에서 ASM/CPF만 수행했다. `analyze_nes_mmc480.py`의 CLI로 같은 근거를 재분석한다. ZIP은 `trial03/MMC480-SMB3-TRIAL.zip`이며 hash/구성은 analysis/mmc480-package.json이다. 원본 SMB3 ROM·private trace·upstream/license·물리 timing/실기 승인 범위는 공개 소스로 승격하지 않는다.

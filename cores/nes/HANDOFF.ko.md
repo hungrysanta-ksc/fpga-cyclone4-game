@@ -23,10 +23,10 @@
 - 고정 cold M4 수신506568→309481명령(−38.91%)은 기능/CPU 성과다. 실기 전체는+1.06% 평균·정상 구간 약24fps 유지로, 이를 큰 FPS 이득으로 승인하지 않는다.
 - **이 문양60fps를 달성해야 실제 게임으로 가는 순서를 버린다.** 문양은 회귀 fixture로 남기고 게임 대표 입력과 실제 MMC3 진입을 다음 관문으로 둔다.
 
-1. **479의 새 ID79·정확 SMB3 loader·host20건·전체 ARM build/FIT·core/source 부팅·실제 패킷 M4 재생은 완료**했다. [479 계약](../../docs/nes-mmc479-contract.ko.md)과 [검증](../../analysis/mmc479-verification.json)을 읽는다. 새 게임 실기 설치본은 아직 없다.
-2. **479 live ARM/tile plan·query/ROM·staging을 연결**한다. core/source smoke와 실제15packet→linked M4는 통과했다. 동시 shared SPI/IRQ·MMC3 bank/IRQ·첫 유효 입력/표시 deadline은 별도로 검증한다.
-3. **paired65816 게임 표시·복구를 확인**한다. 실제 입력→DMA·독립 검사→최종ACK/EA→observer STOP/base/menu, 새 소스의 비용/timing을 연결한다.
-4. 같은 조합의 게임 장면·소스/원복을 고정한 뒤 전달한다. 월드맵·1-1·sprite/CHR/상태창·음악/효과음·capture cadence를 비교한다. 새 설치본은 아직 없다.
+1. **480 live 기능·독립 픽셀 관문을 완료**했다. [480 계약](../../docs/nes-mmc480-contract.ko.md)·[검증](../../analysis/mmc480-verification.json)·[설치](../../docs/nes-mmc480-trial.ko.md)를 읽는다.479 ID79/엄격 loader·현 C runtime·실제 tile ROM/queue/staging·65816 DMA/최종ACK/EA·STOP을 연결했다.
+2. **MMC480-SMB3-TRIAL.zip 실기 결과를 기다린다.** `probes/nes-mmc480/trial03`의 비공개 전달본과 byte 보존476/164/467 원복이다. 게임 ROM은 미포함이며 기존 동일 game227.nes 등을 mmc480.nes로 복사한다. 파일명/로그는MMC480이다.
+3. 새3TXT·메뉴 복귀·게임 동작으로 실제 ARM/IRQ/ROM·수신/계획/표시·실기 FPS와 다음 병목을 판정한다. NROM24fps와 다른 게임 개선율을 만들지 않는다. 새 미결 사유 없이 같은 부팅·전체 적재·합성을 반복하지 않는다.
+4. 부팅 한 캡처의 기능 통과는 연속60fps·월드맵/1-1·전 게임/매퍼·전체 CDC/IO 승인과 다르다. 실제 게임 성능은 아직 미측정이다.
 
 ## 게임 진입 관문478 결과
 
@@ -34,13 +34,19 @@
 
 기존 MMC3 cart를 복원한 whole Lite FIT은15266/15408LE(잔여142),14069comb/8387FF/256608bits다. 관련 setup+0.187ns/hold+0.146ns지만 raw setup−6.499ns/recovery−9.140ns·reset/CDC/IO는 미완료다. 자동 CIRAM/HEX와 transitive cdc181.sdc까지69파일을 고정했다. 원래66 QSF 항목만으로 입력이 완결된다고 가정하지 않는다.
 
-**다음은 새 profile identity+정확 SMB3 loader·실제 core/source/ROM 경쟁+paired65816/STOP/base/menu 연결이다.** 현재 진단은ID78/NROM loader이고 실기 사용 금지다. 새 game firmware/bitstream/ZIP는 아직 없다. `probes/nes-game478/mmc03`에 source/보고서를 보존했다. seed/제약 완화 없이 올바른 의존성을 갖춘map03/fit03을 선택했다.
+478 당시 진단은ID78/NROM loader로 실기 사용 금지였으며 이는 그대로다. 현재 전용 후보는 아래479/480 결과를 따른다. `probes/nes-game478/mmc03`에 source/보고서를 보존했다. seed/제약 완화 없이 올바른 의존성을 갖춘map03/fit03을 선택했다.
 
 ## 479 현재 개발 후보
 
 전용ID79·엄격 CRC5a04eed7/393232B loader를 복원했다. 실제 FatFS/programmer/run136 host20건 PASS(보드 IO/native 모델). ARM479-03 firmware212356B(−284B)/text202313·data10040·BSS18552, 후미636B. 변경 없는73object의 ALLOC영역이476과 같다. whole Lite FIT15260LE(148잔여)/14069comb/8387FF/256608bits, implementation 관련 setup+0.235/hold+0.154ns; raw reset/CDC/IO 미완료.
 
 70ns ROM·seeded loaded/verified core/source에서 부팅 blank 거부 후generation12의15packet/3206B·END/COMMIT·STOP PASS. 같은 실제 packet의 linked476/479 M4 상태·40B tile plan18개가 같다. 수신288231/계획330833명령은 cycles/FPS가 아니다. live ARM·tile ROM·65816 표시·실기 게임은 아직 미통과다. private 선택 source는 `probes/nes-mmc479`와 그 안 execution-location.json을 따른다. 기존476 선택은 그대로 유지한다.
+
+## 480 현재 비공개 실기 후보
+
+실제 source15packet/3206B → selected ARM C/plan·실제 tile ROM → staging → 실제65816 DMA/독립 검사/최종ACK·EA·run136 STOP을 한 실행에 연결했다. ACK34/commit1/retire2/VRAM4416B. 별도 관찰 NES PPU와 SNES 화면57344픽셀 모두 동일(고정 Mesen239 여백7/8 반영). 실제 M4/IRQ 공통 시간·실기 FPS는 아니다. linked480 M4의 해당 live 입력 복원/plan도 동등하다.
+
+ARM480은479에서 menu/checkpoint label만 변경(75object ALLOC 동일); firmware212356B/후미636B. 같은479 FIT15260LE/148잔여 DB의 ASM/CPF/BI3 roundtrip만 수행했고 새 MAP/FIT는 안 했다. [480 package](../../analysis/mmc480-package.json). 원본 source/trace/PPU/RGB는 `probes/nes-mmc480/executed`에 비공개 보존했다. 제품 공개/전체 CDC·IO·실기 승인은 아직 없다.
 
 ## 코드와 보존 경계
 
