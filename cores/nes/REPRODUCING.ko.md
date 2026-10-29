@@ -1,6 +1,6 @@
 # NES 재현 범위와 다른 PC 입력
 
-최신 기준은 [474/475](HANDOFF.ko.md)다. 이전 수백 단계의 절차는 [원문 이력](../../docs/progress/archive/README.md)에 보존했다. 다른 PC의 준비는 [재개 안내](../../docs/development/RESUME.ko.md)에서 시작한다.
+최신 기준은 [476/477](HANDOFF.ko.md)다. 476은 아래474 source를 기반으로 `prepare_nes_receive476.py`가 변환한다. 실기 재분석은 `analyze_nes_receive477.py --raw <raw3TXT> --out <fresh-json>`이며 원본 hash는 `analysis/receive477-hardware.json`에 있다. 이전 수백 단계의 절차는 [원문 이력](../../docs/progress/archive/README.md)에 보존했다. 다른 PC의 준비는 [재개 안내](../../docs/development/RESUME.ko.md)에서 시작한다.
 
 ## 저장소만으로 가능한 것
 

@@ -11,9 +11,9 @@
 
 ## 현재 작업 범위
 
-- 사용자 지시로 NES 성능 개발을 재개했다. 현재 PC의474/475를 기준으로 수신·CRC/record와 capture/export/표시 일정을 먼저 검증한다. PC 이전·이식성 정비는 당장 우선 작업이 아니다.
-- 추가 성공 코어는 GB/GBC G13C44/0.9.0. NES는 제한 NROM474 실기 평균23.59fps/약24fps 정상 구간이며 미완성이다.
-- 최신 실기 근거는 `analysis/nrom475-hardware.json`, 인계는 `cores/nes/HANDOFF.ko.md`다.
+- 사용자 지시로 NES 성능 개발을 재개했다. 현재 PC의476/477을 기준으로 게임 대표 입력·MMC3/SMB3 진입 비용과 capture/export/표시 일정을 검토한다. PC 이전·이식성 정비는 당장 우선 작업이 아니다.
+- 추가 성공 코어는 GB/GBC G13C44/0.9.0. NES는 제한 NROM476 실기 평균23.84fps/약24fps 정상 구간이며 미완성이다.
+- 최신 실기 근거는 `analysis/receive477-hardware.json`, 인계는 `cores/nes/HANDOFF.ko.md`다.
 - `src/fpga`, `src/firmware-overlay`, `src/renderer`의 검증된 GBC와 사용자 저장·복원물을 보존한다.
 
 ## 문서와 PR
@@ -44,3 +44,5 @@
 - 기존 원시 실패와 동결 산출물을 덮지 않는다. 새 전달본은 번호·marker·로그·설치/원복을 함께 갱신한다.
 - 실기는 사용자가 설치 ZIP을 SD에 복사하고 로그를 돌려주는 방식이다. 알려진 보드나 SD/USB 연결을 다시 요구하지 않는다.
 - 단계 완료·큰 변경·중요한 결과 위주로 간결하게 보고한다. 자세한 진행은 문서에 남기며 이미 허가된 범위의 작업을 반복 확인하지 않는다.
+
+- 단순 NROM은 회귀 fixture다. OBJ0/mapdirty0·27/28group 재사용 결과를 일반 게임 성능으로 승격하지 않는다. 이 문양60fps를 실제 게임 진입의 선행 조건으로 삼지 않는다. 다음 순서는 docs/nes-receive477-hardware.ko.md의 게임 대표 입력·실제 MMC3 예산 관문을 따른다.

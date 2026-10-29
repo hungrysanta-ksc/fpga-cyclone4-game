@@ -4,13 +4,14 @@
 
 ## 현재 실기 기준
 
-- 조합: ARM474-02 / FPGA471-04 byte 재사용 / 자체 이동 NROM scene02.
-- 두 회차 모두60.07초/1417최종 표시, **평균23.59fps**, 초기 이후 약24fps.
-- 동일 장면의471 평균19.61fps 대비20.29% 향상. 계획·준비13.63→6.09/6.07ms.
-- CRC/전송 오류0, START·STOP·base 복구·메뉴 복귀 정상.
-- 범위는 NROM16 수평 mirroring·CHR-ROM8KiB 자체 장면이다. 일반 NES·SMB3 지속 플레이·30/60fps·MMC4/5 완료를 뜻하지 않는다.
+- 조합: ARM476-02 / FPGA471-04 byte 재사용 / 자체 이동 NROM scene02.
+- 1회60.07초/1432최종 표시, **평균23.84fps**, 정상 구간 약24fps. 이전474 2회는23.59fps였다.
+- 수신 포함15.65ms로 줄었지만 SEAL/소비/최종ACK 대기가19.58ms로 늘어 전체 표시율은 거의 같다.
+- CRC/driver 오류0, START·STOP·base 복구·메뉴 복귀 정상. deadline 마지막 프레임의4packet은 취소됐고 표시로 세지 않았다.
+- OBJ0, warm mapdirty0, BG27/28group 재사용의 가벼운 장면이다. 실제 게임·SMB3 성능이나30/60fps를 대표하지 않는다.
+- 문양은 회귀용으로 유지한다. 다음은 게임 대표 입력과 MMC3/SMB3의 source·loader·WRAM·IRQ·ROM 경쟁·전체 비용 관문이다.
 
-[실기475](../../docs/nes-nrom475-hardware.ko.md) · [수치](../../analysis/nrom475-hardware.json) · [474 선택/해시](../../analysis/nrom474-verification.json) · [설치 명세](../../analysis/nrom474-package.json)
+[실기477·시험 대표성](../../docs/nes-receive477-hardware.ko.md) · [수치](../../analysis/receive477-hardware.json) · [476 소스/해시](../../analysis/receive476-verification.json) · [설치 명세](../../analysis/receive476-package.json)
 
 ## 소스와 기록
 
