@@ -52,4 +52,4 @@
 4. **후보 선택·최소 검증**: 실제 입력/일정 이득이 있는 변경만 독립 검사·STOP·최종ACK·메뉴 경로와 결합한다. RTL을 바꾸면 같은 전체 Lite FIT/timing, 유지하면 기존 bitstream 근거를 재사용한다.
 5. **실기 전달**: 476은 검증된 후보이며 아직 실기 전이다. 동일 이동 ROM, 새 marker/로그/ZIP와 원복을 묶어 비교한다. 30fps는 중간 목표이며60Hz 달성과 분리한다.
 
-추가 정보는 [현재 계획 JSON](../../docs/nes-replan472.json)·[PR134 기록](../../docs/progress/pr-134.md). 사용자 보드는 PC에 직접 연결하지 않는다. ZIP을 전달하고 사용자가 설치한 뒤 TXT를 돌려주는 기존 방식을 따른다. Quartus Lite, 기존 Starter FLOAT1좌석 순차 실행 원칙을 유지한다.
+추가 정보는 [현재 계획 JSON](../../docs/nes-replan472.json)·[PR135 기록](../../docs/progress/pr-135.md). 사용자 보드는 PC에 직접 연결하지 않는다. ZIP을 전달하고 사용자가 설치한 뒤 TXT를 돌려주는 기존 방식을 따른다. Quartus Lite, 기존 Starter FLOAT1좌석 순차 실행 원칙을 유지한다.

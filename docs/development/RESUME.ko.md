@@ -5,7 +5,7 @@
 ## 1. 상태를 읽는다
 
 1. [루트 README](../../README.md) → [프로젝트 현황](../PROJECT-STATUS.ko.md).
-2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR134](../progress/pr-134.md).
+2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR135](../progress/pr-135.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
 GB/GBC만 추가·공개 완료다. NES474는 같은 이동 NROM의2회 실기에서평균23.59fps/정상 구간 약24fps다. 목표60Hz,30fps 중간 목표와 일반 게임/매퍼 확장은 아직 미완료다.

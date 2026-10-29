@@ -16,7 +16,7 @@
 
 - 연결 RTL/firmware: `src/nes`, SNES 관련 소스: `snes/video_probe`, 생성/분석 도구: `tools`.
 - 실제 선택 소스와 로컬 입력은 [재현 범위](REPRODUCING.ko.md)에 구분한다. `src/nes`의 파일을 임의로 모아 현재 보드 이미지를 만들지 않는다.
-- [PR별 진척](../../docs/progress/README.md): 최근129–134와 전체 병합 색인.
+- [PR별 진척](../../docs/progress/README.md): 최근129–135와 전체 병합 색인.
 - [이전 문서 원문](../../docs/progress/archive/README.md): 과거 Current/NEXT는 당시 기록이다.
 
 재개 시에는 수신·CRC 비용과 이미 존재하는 capture/export/표시 중첩 일정을 먼저 확인한다. 자세한 예산·보존 조건·완료 조건은 현재 인계에서 관리한다.
