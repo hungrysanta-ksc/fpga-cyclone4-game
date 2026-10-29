@@ -23,10 +23,18 @@
 - 고정 cold M4 수신506568→309481명령(−38.91%)은 기능/CPU 성과다. 실기 전체는+1.06% 평균·정상 구간 약24fps 유지로, 이를 큰 FPS 이득으로 승인하지 않는다.
 - **이 문양60fps를 달성해야 실제 게임으로 가는 순서를 버린다.** 문양은 회귀 fixture로 남기고 게임 대표 입력과 실제 MMC3 진입을 다음 관문으로 둔다.
 
-1. 기존 SMB3의 BG/OBJ·split/예외·bank/tag 기록을 현재 ARM/ABI와 대조해 비용·동등성을 본다. 기록 replay는 실기 게임이 아니다. 최소 고부하 NROM은 mapper 부하를 분리하는 보조 대조군이다.
-2. 실제 MMC3/WRAM/IRQ·loader/PSRAM 배치·source/query/lease 교체 경계를 고정하고 동일 보드 전체 Lite 비용·입력 중 ROM 경쟁을 판정한다. 기존227의 SMB3 성공을 현재 경로의 성공으로 승계하지 않는다.
-3. 구동 가능할 때 같은 조합의 SMB3 월드맵·1-1 이동·sprite/상태창·CHR 변경을 실제로 비교한다. source/display ID·누락/반복·간격/p95·입력·STOP/최종ACK/base/menu를 확인한다.
-4. 새 설치본은 새 marker·파일명·원복과 묶는다. 새 후보 번호는 아직 선택하지 않았다. 동일 문양의 이름만 바꾼 반복 설치·옛 제어 미세 변경을 먼저 하지 않는다.
+1. **새 MMC3 profile identity와 정확 SMB3 loader를 구현**한다. header/길이/CRC·PRG/CHR 배치·readback·START·STOP/base를 묶고 NROM78과 혼동하지 않게 한다. 기존 검사를 단순 해제하지 않는다.
+2. **실제 MMC3 core+source/query+ROM 경쟁을 연결**한다. bank/IRQ·입력/display lease·첫 plan 공급과 ROM 소유권을 현재 source에서 검증한다. 478의 host 모델로 이 단계를 통과 처리하지 않는다.
+3. **paired65816 게임 표시·복구를 확인**한다. 실제 입력→DMA·독립 검사→최종ACK/EA→observer STOP/base/menu, 새 소스의 비용/timing을 연결한다.
+4. 같은 조합의 게임 장면·소스/원복을 고정한 뒤 전달한다. 월드맵·1-1·sprite/CHR/상태창·음악/효과음·capture cadence를 비교한다. 새 설치본은 아직 없다.
+
+## 게임 진입 관문478 결과
+
+[478 보고](../../docs/nes-game478-feasibility.ko.md)·[해시/비용](../../analysis/game478-feasibility.json). 기존 SMB3 기록71개를 실제474/476 M4에서 처리해 활성 canonical·전체 상태/출력 plan이 같음을 확인했다. 수신 절감 중앙48.22% 유지, 계획은799681명령 중앙값으로 문양 warm의4.63배다. host2232 encoder·SPI/plan 완료 모델이며 실기 게임/FPGA byte-stream proof는 아니다.
+
+기존 MMC3 cart를 복원한 whole Lite FIT은15266/15408LE(잔여142),14069comb/8387FF/256608bits다. 관련 setup+0.187ns/hold+0.146ns지만 raw setup−6.499ns/recovery−9.140ns·reset/CDC/IO는 미완료다. 자동 CIRAM/HEX와 transitive cdc181.sdc까지69파일을 고정했다. 원래66 QSF 항목만으로 입력이 완결된다고 가정하지 않는다.
+
+**다음은 새 profile identity+정확 SMB3 loader·실제 core/source/ROM 경쟁+paired65816/STOP/base/menu 연결이다.** 현재 진단은ID78/NROM loader이고 실기 사용 금지다. 새 game firmware/bitstream/ZIP는 아직 없다. `probes/nes-game478/mmc03`에 source/보고서를 보존했다. seed/제약 완화 없이 올바른 의존성을 갖춘map03/fit03을 선택했다.
 
 ## 코드와 보존 경계
 

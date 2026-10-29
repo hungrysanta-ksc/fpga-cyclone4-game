@@ -37,3 +37,7 @@
 ## 과거 공개 단위 시험
 
 `tools/run_nes_public_units.py`에는 자체 입력의 메모리/ROM service/boot 단위 경로가 있다. 유효한 설치 Questa 환경과 fresh ASCII output을 사용한다. 이 시험은 최신474 전체 경로·GBC 회귀·실기/60fps를 대신하지 않는다. 이번 문서 정리에서는 실행하지 않았다.
+
+## 478에서 추가 확인한 합성 의존성
+
+기존471의66 QSF 항목 외에 자동 발견 CIRAM/HEX와 board.sdc가 읽는 cdc181.sdc가 필요했다. [478 source closure](../../analysis/game478-feasibility.json)에69개 hash를 기록했다. 실제 실행 source·constraints를 `probes/nes-game478/mmc03`에 보존했으며 이는 아직 private다. 기존 board-source snapshot만으로 전체 재현 입력이 완결됐다고 가정하지 않는다. 현재 PC에서 이 자료를 사용하고, 다른 PC 재현 시 이식성 작업이 별도로 필요하다.

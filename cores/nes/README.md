@@ -21,3 +21,5 @@
 - [이전 문서 원문](../../docs/progress/archive/README.md): 과거 Current/NEXT는 당시 기록이다.
 
 재개 시에는 수신·CRC 비용과 이미 존재하는 capture/export/표시 중첩 일정을 먼저 확인한다. 자세한 예산·보존 조건·완료 조건은 현재 인계에서 관리한다.
+
+478에서 기존 SMB3 기록71개가 현재 ARM에서 동등하게 처리됐고 MMC3 복원 후보가15266/15408LE로 배치됐다. [게임 진입 관문](../../docs/nes-game478-feasibility.ko.md). 새 loader/profile·실제 core/ROM 경쟁·게임 표시/복구 검증 전이므로 설치본은476을 유지한다.
