@@ -11,9 +11,9 @@
 
 ## 현재 작업 범위
 
-- 현재 PR135에서 실기480 시작 실패를 분석했다. docs/nes-mmc481-startup.ko.md와 analysis/mmc481-hardware480.json을 먼저 읽는다. 사용자 ROM/384KiB 적재·검증·START·STOP/base/메뉴 복귀는 정상이나 SNES 표시 시작5초 timeout이다.481 진단 후보는 기능 시험 통과·관련 setup−0.228ns로 미전달이며 root cause는 미확정이다. 후속 순서는 cores/nes/HANDOFF.ko.md를 따른다.
+- 현재 PR135에서 실기480 시작 실패를 분석하고482 진단 전달본을 준비했다. docs/nes-mmc482-trial.ko.md와 analysis/mmc482-verification.json을 먼저 읽는다.481 타이밍 기각은 보존했고482는 오류코드 차단 선택을 끝으로 옮겨 전수 일치/FIT/관련 STA를 통과했다. 다음은 사용자 설치482의 새3TXT·화면/메뉴 복귀 확인이다. 물리 시작 실패 원인과 게임FPS는 아직 미확정이다.
 - 추가 성공 코어는 GB/GBC G13C44/0.9.0. NES는 제한 NROM476 실기 평균23.84fps/약24fps 정상 구간이며 미완성이다.
-- 최신 실기 근거는 `analysis/receive477-hardware.json`, 인계는 `cores/nes/HANDOFF.ko.md`다.
+- 성공 성능 기준은 `analysis/receive477-hardware.json`, 최신 게임 실기 실패는 `analysis/mmc481-hardware480.json`, 현재 인계는 `cores/nes/HANDOFF.ko.md`다.
 - `src/fpga`, `src/firmware-overlay`, `src/renderer`의 검증된 GBC와 사용자 저장·복원물을 보존한다.
 
 ## 문서와 PR
@@ -45,4 +45,4 @@
 - 실기는 사용자가 설치 ZIP을 SD에 복사하고 로그를 돌려주는 방식이다. 알려진 보드나 SD/USB 연결을 다시 요구하지 않는다.
 - 단계 완료·큰 변경·중요한 결과 위주로 간결하게 보고한다. 자세한 진행은 문서에 남기며 이미 허가된 범위의 작업을 반복 확인하지 않는다.
 
-- 단순 NROM은 회귀 fixture이며 게임60fps의 선행 조건이 아니다.480의 공동 기능/픽셀 근거는 실물 SNES 부팅 증명이 아니다. 현재 성공 실기 기준476 약24fps를 보존하고,481은 준비 조건 통과 전 전달하지 않는다. 같은480 재시험·계측만 늘리는 전달·근거 없는 FSM/seed/FIT 반복을 피한다.
+- 단순 NROM은 회귀 fixture이며 게임60fps의 선행 조건이 아니다.480의 공동 기능/픽셀 근거는 실물 SNES 부팅 증명이 아니다. 현재 성공 실기 기준476 약24fps를 보존하고,481은 기각 상태이며 새482만 제한 진단용으로 전달한다. 같은480 재시험·계측만 늘리는 전달·근거 없는 FSM/seed/FIT 반복을 피한다.

@@ -25,9 +25,9 @@
 
 1. **실기480 실패 분석 완료.** [481 시작 분석](../../docs/nes-mmc481-startup.ko.md)·[실기 JSON](../../analysis/mmc481-hardware480.json)을 먼저 읽는다. 사용자 ROM 해시 일치, 전체384KiB 적재/비교·START·NES observer·STOP/base/메뉴 복귀 정상이다. SNES boot214가5초 stage0/flags0으로 종료해 게임 FPS는 미측정이다.
 2. **추가 기능 검사 완료·실물 원인 미확정.** 전달480 BI3의 실제 C 복원·MIF/프로그램 일치와 실제 RTL4100ROM read/status/STOP을 확인했다.480 Mesen은 로컬 SFC에서 시작하고 console startup은 모델이었다. 이 간극을 기록하며 물리 버스 부팅 증명으로 승격하지 않는다.
-3. **481 진단 후보 구현·전달 보류.** profile7a/status3, 기존 snapshot의 raw 핀을 ARM에서 누적한다. 실제 parser256종/거부·누적과 전체 RTL4100read/STOP PASS. candidate03/FIT15264LE의 관련 setup−0.228ns로 diagnostic_trial_ready=false다. candidate01/02도 기각·보존했으며 현재 선택 SDC/seed는479와 같다. [후보 JSON](../../analysis/mmc481-verification.json).
-4. **다음 작업:** 해당 JSON의 check_failed→loader.error_code[1] 경로를 먼저 검토해 최소 진단 경계와 타이밍 조건을 확정한다. 추가 계측/seed 탐색/범용 FSM 교체·FIT 반복을 다음 목표로 삼지 않는다. 미달 산출물·481 ZIP은 전달하지 않았다.
-5. 준비 조건을 통과한 새 번호·marker·로그·원복 ZIP으로 사용자 설치/시작·메뉴 복귀를 확인한 뒤 실제 게임 수신·계획·표시/FPS 분석을 진행한다. ROM은 같은 원본을 쓴다.480 재시험·보드/SD의 PC 연결은 요구하지 않는다.
+3. **482 준비 조건 통과.** [482 설치·검증](../../docs/nes-mmc482-trial.ko.md)·[검증 JSON](../../analysis/mmc482-verification.json)을 읽는다.481의 check_failed→error_code 경로를 차단 여부의 마지막 선택으로 바꿨다. 기존 모든 코드/동시 명령/STOP 전수 일치·22개 C/FatFS 사례·실제 보드4100ROM read/응답/STOP·실제 C BI3 복원을 통과했다. 전체 Lite15254LE, 관련 setup/hold+0.133/+0.132ns이며 원래 SDC/seed/클록을 유지한다.
+4. **다음은 사용자 실기482 한 회.** 비공개 `probes/nes-mmc482/trial02/MMC482-BOOTDIAG.zip`, profile7b/status3이다. 동일 mmc480.nes를 mmc482.nes로 복사하고 새 항목을 실행한다. 새3TXT·화면·메뉴 복귀를 받는다. 원본480 실패나481 기각 산출물은 덮지 않았고 전체 reset/CDC/IO 승인·물리 부팅 복구/FPS는 아직 미확정이다.
+5. boot_last_hex는 STOP 전 값이며 최종 screen_flags와 분리한다. 실물 시작 원인을 먼저 판정한 뒤 실제 게임 수신·계획·표시/FPS 분석을 진행한다. 준비 완료는 게임 시작 복구나60fps 달성이 아니다.476 원복을 보존하며 보드/SD의 PC 연결은 요구하지 않는다.
 
 ## 게임 진입 관문478 결과
 

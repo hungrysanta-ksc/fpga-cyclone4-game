@@ -17,6 +17,8 @@ p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('--live', type=Path, required=True)
 p.add_argument('--out', type=Path, required=True)
 p.add_argument('--board', type=Path, help='Compile a new selected board instead of reusing480.')
+p.add_argument('--profile', default='7a', help='Expected board ID in hex; used with --board.')
+p.add_argument('--label', default='481', choices=['481', '482'])
 p.add_argument('--bin', type=Path, default=Path('C:/altera_standard/25.1std/questa_fse/win64'))
 a = p.parse_args()
 live = a.live.resolve()
@@ -81,6 +83,9 @@ if a.board:
   if(rx[1]!==8'h7a)$fatal(1,"MMC481 profile mismatch: %h",rx[1]);
   // Reset-vector reads first,''')
     (d/'bootbus_tb.sv').write_text(s, encoding='utf8', newline='\n')
+s = s.replace("rx[1]!==8'h7a", "rx[1]!==8'h"+format(int(a.profile, 16), '02x'))
+s = s.replace('MMC481', 'MMC'+a.label).replace('mmc481_bootbus_tb', 'mmc'+a.label+'_bootbus_tb')
+(d/'bootbus_tb.sv').write_text(s, encoding='utf8', newline='\n')
 
 def run(name, args):
     r = subprocess.run([str(a.bin/args[0]), *args[1:]], cwd=d,
@@ -90,7 +95,8 @@ def run(name, args):
         raise RuntimeError(f'{name}: exit {r.returncode}; inspect raw log')
 
 run('vmap-init.log', ['vmap.exe', '-c'])
-run('vmap-live.log', ['vmap.exe', 'live480', str(live/'work')])
+if not a.board:
+    run('vmap-live.log', ['vmap.exe', 'live480', str(live/'work')])
 run('vlib.log', ['vlib.exe', 'work'])
 if a.board:
     from nes_functional import VHDL
@@ -112,12 +118,13 @@ else:
     run('compile.log', ['vlog.exe', '-sv', 'bootbus_tb.sv'])
 libs = [] if a.board else ['-L', 'live480']
 run('simulation.log', ['vsim.exe', *libs, '-L', 'altera_mf_ver', '-c',
-                       'work.mmc481_bootbus_tb', '-do', 'onerror {quit -code 1};run -all;quit -f'])
+                       'work.mmc'+a.label+'_bootbus_tb', '-do', 'onerror {quit -code 1};run -all;quit -f'])
 log = (d/'simulation.log').read_text(encoding='utf8')
-assert f"PASS MMC481 bootbus reads=4100 status_flags={223 if a.board else 7} manual_stage31 STOP" in log
+assert f"PASS MMC{a.label} bootbus reads=4100 status_flags={223 if a.board else 7} manual_stage31 STOP" in log
 assert 'Errors: 0' in log
 result = {'passed': True, 'reads': 4100,
-          'board': '481 fresh compilation' if a.board else '480 reused compilation',
+          'board': a.label+' fresh compilation' if a.board else '480 reused compilation',
+          'profile_hex': a.profile if a.board else '79',
           'program_SHA256': hashlib.sha256(bytes.fromhex((d/'sink-program.hex').read_text(encoding='utf8'))).hexdigest(),
           'scope': __doc__, 'physical_timing': False, 'CPU_execution': False}
 (d/'result.json').write_text(json.dumps(result, indent=2)+'\n', encoding='utf8')
