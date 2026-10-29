@@ -1,25 +1,49 @@
-# 현재 개발 상태
-기준일: 2026-10-04
+# 프로젝트 현황
 
-## 공개 기준선
+기준일: 2026-10-29. 목표는 **sd2snes Cyclone IV 멀티 코어 확장**이다. 현재는 사용자 요청으로 성능 개발을 중지하고 저장소 안내를 정리했다. 개발 재개 지시 전에는 새 성능 후보를 실행하지 않는다.
 
-**sd2snesHST 0.9.0을 공개했습니다.** [릴리스](https://github.com/hungrysanta-ksc/sd2snesHST/releases/tag/v0.9.0)의 공개 시각은 2026-10-04 13:40:26 UTC입니다. 제품과 내부 GBC C44의 대응은 개발 저장소에서만 설명합니다.
+## 코어별 판정
 
-- 실행 구현 커밋: `35ef4aef14fc6abef6495a980b7f00f257e5174f`.
-- 대응 소스 묶음 커밋: `a2b1fb59390a96f70bbc8588a63e465831e7e247`.
-- 배포 저장소 머지 커밋: `5bf51452505c5b2f461dc2320b0527328472aa01`.
-- 최종 파일명·서버 SHA256·순서: [제품 매핑](../release/product-version-map.json).
-- 실기 성공 범위: [호환성 기록](COMPATIBILITY.ko.md). C44는 load/cap/state 파일 로그를 끄되 저장·설정·통신을 유지했고 사용자가 최종 점검을 통과했습니다.
-- 게임 실행은 Gameboy_MiSTer 기반 FPGA 이식, CGB 부트는 SameBoy 유래입니다.
+| 코어 | 판정 | 근거와 범위 |
+|---|---|---|
+| GB/GBC | 추가 성공·제품 공개 | G13C44 / sd2snesHST 0.9.0, [기준선](../cores/gbc/README.md)·[호환성](COMPATIBILITY.ko.md) |
+| NES | 개발 중, 제품 미포함 | 제한 자체 NROM의 표시·A 입력·STOP·메뉴 복귀 확인, 지속60fps·일반 게임/매퍼 확장 미완료 |
+| PC Engine | 조사 대기 | 구현·실기 성공 없음 |
 
-## 다음 작업: NES
+확인된 보드: FXPAK Pro / Mk.III, FPGA EP4CE15F17C8, MCU STM32F401RCT6, PSRAM IS66WVE4M16EBLL-70BLI 두 개. 다른 보드 지원이나 전체 외부 IO timing 승인을 뜻하지 않는다.
 
-사용자가 NES 구현 착수를 요청했습니다. [NES 인계 계획](../cores/nes/HANDOFF.ko.md)과 [GBC 이식 회고](development/GBC-PORTING-LESSONS.ko.md)를 기준으로 후보 선정 → 독립 합성·예산 → 최소 화면/입력/음향 통합 → 실기 후보 → 매퍼/저장 확장을 진행합니다. 아직 NES 합성·구동·실기 성공은 확인하지 않았고 편입 버전·일정도 정하지 않았습니다. PCE는 조사 대기입니다.
+## 최신 NES 실기 기준
 
-0.9.0 바이너리·소스·기존 저장을 보존하고 NES는 별도 FPGA 이미지/작업 브랜치로 진행합니다. 공통 MCU나 화면 경로가 바뀌면 기존 GBC와 코어 전환 회귀를 수행합니다. 문서 인계 자체는 실행 코드를 바꾸지 않습니다.
+선택 구성은 **ARM474-02 / byte 동일 FPGA471-04 / 자체 이동 scene02**다. PR134의 구현이며 현재 PR 병합 여부는 GitHub/remote에서 확인한다. 과거 연구 후보338/355/402 등은 현재 설치 조합이 아니다.
 
-## 저장소와 근거
+| 관측 | 471 | 474 1회차 | 474 2회차 |
+|---|---:|---:|---:|
+| 측정 구간 | 60.07s | 60.07s | 60.07s |
+| 최종 표시 완료 | 1178 | 1417 | 1417 |
+| 평균 표시율 | 19.61fps | **23.59fps** | **23.59fps** |
+| 계획·준비 포함 시간 | 13.63ms | 6.09ms | 6.07ms |
 
-개발 저장소는 구현·재현·검증·실패 원인을 관리하고 [배포 저장소](https://github.com/hungrysanta-ksc/sd2snesHST)는 사용자 안내와 제품 릴리스를 관리합니다. distribution/ 사본과 C43/C44 준비 문서의 공개 전 문구는 역사적 기록입니다. 사용자 문서의 최신 확정본을 과거 사본으로 덮어쓰지 않습니다.
+동일한 이동 장면에서 관측 처리율은20.29% 증가했고 정상 구간은 약24fps다. 과거 정적428의14.97fps와 직접 비율을 비교하지 않는다. FPS는 최종 표시 ACK를 확인한 완료율이며 NES 내부 실행속도나 무손실 capture를 입증하는 수치가 아니다.
 
-[소유자 승인 라이선스](../LICENSE.md), [대응 소스](SOURCE-BUNDLE.ko.md), [최종 준비 검증](FINAL-0.9.0.ko.md), [개발 문서 안내](README.md)를 참조합니다. 2026-09-24 및 C10 시점 기록의 미완료 상태를 현재 상태로 해석하지 않습니다. 실기 표본과 양수 constrained slack은 전체 보드 timing/CDC signoff가 아닙니다.
+두 회차 모두 CRC/전송 오류0,384KiB 적재/readback·START·STOP·base·메뉴 복귀 정상이다. 마지막 미완료1packet은 예정된 deadline에서 취소됐고 표시로 세지 않았다. 새 영상 없이 사용자의 동일 동작/메뉴 복귀 보고와 TXT를 확인했다.
+
+- [실기475 해석](nes-nrom475-hardware.ko.md), [동결 수치](../analysis/nrom475-hardware.json).
+- [474 기술·모델 범위](nes-nrom474-contract.ko.md), [선택 소스/해시](../analysis/nrom474-verification.json), [설치본 명세](../analysis/nrom474-package.json).
+- [현재 NES 인계](../cores/nes/HANDOFF.ko.md), [원래 개발 계획과 최근 순서](nes-replan472.json).
+
+## 비용과 남은 조건
+
+| 항목 | 현재 값/판정 |
+|---|---|
+| FPGA Lite 전체 | 14740LE /13672comb /8063FF /185824RAM bits,474는471 bitstream 재사용 |
+| 관련 timing | nominal setup+0.081ns/hold+0.143ns; 강화 배치 예산−0.036ns와 raw reset/CDC/미제약IO 미완료 |
+| ARM | text202569/data10040/bss18552B; Flash 파일 후미380B, 큰 RUN frame 뒤 산술 RAM4984B는 전체 callchain/IRQ proof가 아님 |
+| 다음 중간 목표 | 평균30fps까지 추가9.06ms/표시 단축 필요 |
+| 최종 목표 | 지속60Hz까지 평균25.73ms/표시 격차; cadence·capture miss/repeat·p95·VBlank 검증 필요 |
+| 일반 NES/MMC4·5 | 미완료; 제한 NROM 성과를 그대로 확장하지 않음 |
+
+재개 후 우선순위는 수신·CRC·record hot path와 기존 capture/export·SEAL/최종ACK 일정의 분리다. 기존 회로는 export COMMIT 뒤 다음 capture를 이미 시작한다. 이 기능을 새로 구현하는 성과로 계산하지 않는다. 4credit 부족 대기는 이번 자료에서 거의 없었다.
+
+## 현재 요청과 기록 위치
+
+최적화는 중지 상태다. 이 정리에서는 runtime 소스·bitstream·설치본·원시 검증을 바꾸지 않았다. PR별 목표/작업내용/성과/후속작업은 [progress](progress/README.md)에 둔다. 원본 누적 문서와 오래된 등록부는 [archive](progress/archive/README.md)에 보존한다. 다른 PC는 [재개 안내](development/RESUME.ko.md)에서 시작한다.

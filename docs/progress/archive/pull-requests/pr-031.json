@@ -1,0 +1,15 @@
+{
+  "snapshot_date": "2026-10-29",
+  "note": "Historical PR snapshot before repository organization; not active work instructions",
+  "number": 31,
+  "title": "NES 보고서 전용 SD 초기화와 FatFS 연결 검증",
+  "url": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/31",
+  "state": "closed",
+  "merged": false,
+  "base": "master",
+  "head": "codex/nes-report-init-081",
+  "head_sha": "fa3a4f911de3f4cc796e910fbee343595ce08419",
+  "merge_commit_sha": "c8ad576db032379ba24348fbcccf6b1cdc1d5ff7",
+  "merged_at": null,
+  "body": "## 작업 목표\n\n보고서 준비 화면 이전의 SD 초기화가 끝없이 기다리거나 잘못된 응답을 수용하지 않도록, 보고서 전용 초기화와 실제 FatFS 첫 mount를 연결합니다.\n\n## 작업 내용\n\n- 느린 SD 명령에 bounded 타이머·누적 ACMD41/busy 한도·응답 형식/CRC/상태 검사를 추가하고 오류 이후 클록 출력을 차단했습니다.\n- 기존 sdnative 전체와 active077 초기화 거부는 보존했습니다. 보고서 전용 disk_initialize는 검증된 상태만 FatFS에 전달하고 자동 재초기화·오류 초기화를 하지 않습니다.\n- 실제 초기화 GPIO 카드 시험에 실제 FatFS mount·오류 후 재mount 거부를 연결하고 최종 ARM 호출 순서를 확인했습니다. 상태/계획/후속 인계 및 병합 대상 확인 규칙을 갱신했습니다.\n- 이 PR의 대상도 master입니다. **PR30을 먼저 병합한 다음 이 PR을 병합해 주세요.** PR29가 이전079 브랜치로 병합되어, PR30 병합 전에는 기존080 변경도 이 PR 차이에 포함됩니다. 이번081만의 변경은 선행080 커밋 이후 19개 파일입니다.\n\n## 작업 결과\n\n이번 범위인 보고서 전용 SD 초기화·FatFS 상태 연결과 ARM 검증은 달성했습니다. 호스트 8,558검사, 보호 제거 2개 인과 대조를 통과했습니다. 최종 ARM은 초기화→file_init/mount→080 mini→writer/079 체크포인트를 호출합니다. 정상 GBC·원본 NES 및 기존 동결 증거의 해시는 보존했습니다.\n\n**P1 전체와 실기는 미완료입니다.** 새 시험의 mount sector 데이터는 모형 VBR이며 전체 native CMD17/24 저장 경로와 화면을 한 번에 실행한 증거는 아직 없습니다. 기존079/080 결과는 별도 근거로 재사용합니다. MCU 시작 전제·실제 화면 가독성·복원 패키지·0바이트 실기 원인도 남습니다. SDREPORT081은 컴파일 검증용이며 설치용이 아닙니다.\n\n다음 목표는 실제 초기화→전체 FatFS/native 저장·재읽기→mini/최종 화면을 단일 플랫폼 시험으로 연결하는 것입니다. 오류 뒤 추가 IO 금지와 외부 관측표·정상044 복원 자료까지 확인한 후 보고서 전용 실기 패키지를 판단합니다.\n\n사용자 요청에 따라 이 PR을 닫고 [PR32](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/32)로 대체했습니다. 새 PR은 최신 master에서 시작하며 기존 파일 내용은 동일합니다."
+}

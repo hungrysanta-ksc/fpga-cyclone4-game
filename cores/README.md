@@ -1,11 +1,11 @@
-# 코어 개발 현황과 로드맵
+# 코어 현황
 
-| 코어 | 현재 상태 | 첫 범위 | 제품 상태 |
-| --- | --- | --- | --- |
-| [GB/GBC](gbc/README.md) | C44 실기 정상 확인 | 기존 지원 매퍼·메뉴·저장·RTC | sd2snesHST 0.9.0 공개 완료 |
-| [NES](nes/README.md) | 044 진단 실기·060 SD 적재·읽기 비교·복구 연결 검증 | 제한된 BG 진단, 실제 보드·출력 통합 진행 | 미포함 |
-| [PC Engine](pce/README.md) | 조사 대기 | HuCard 기본 경로 우선 | 미포함 |
+프로젝트 목표와 최신 상태는 [루트 README](../README.md), 상세 판정은 [프로젝트 현황](../docs/PROJECT-STATUS.ko.md)에서 관리한다.
 
-GBC 0.9.0 공개를 완료했고, 사용자가 다음 작업으로 **NES 코어 개발 지속**를 요청했습니다. [인계 계획](nes/HANDOFF.ko.md)에 따라 다음 MCU SPI/보드/소비자 통합을 진행하며, 공통 경계 검증과 PCE 가능성 조사는 후속입니다. 구현 범위와 일정은 자원·입출력 실험 뒤 결정합니다. 비용에 비해 가능성이 낮으면 근거를 기록하고 중단·축소합니다.
+| 코어 | 현재 상태 | 진입점 |
+|---|---|---|
+| GB/GBC | **추가 성공·0.9.0 공개** | [G13C44 기준선·빌드·호환성](gbc/README.md) |
+| NES | **개발 중**: 제한 NROM474 실기 평균23.59fps, 정상 구간 약24fps | [현황](nes/README.md) · [현재 인계](nes/HANDOFF.ko.md) |
+| PC Engine | 조사 대기, 구현 미완료 | [조사 범위](pce/README.md) |
 
-각 코어는 [제안서](CORE-PROPOSAL.ko.md)와 [이식 절차](../docs/PORTING-PLAYBOOK.ko.md)로 시작합니다. [등록부](registry.json)는 실제 구현 상태와 코드 경로를 구분하며, 이름만 추가했다고 지원 완료로 보지 않습니다.
+[등록부](registry.json)는 현재 선택과 근거 경로만 유지한다. 후보별 실험·과거 실기는 [PR 기록](../docs/progress/README.md)과 그 상세 근거에서 읽는다. 새 코어는 [제안서](CORE-PROPOSAL.ko.md)·[포팅 절차](../docs/PORTING-PLAYBOOK.ko.md)를 따른다. 현재 성능 개발은 사용자 요청으로 중지했다.

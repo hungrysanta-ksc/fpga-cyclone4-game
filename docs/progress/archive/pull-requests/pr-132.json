@@ -1,0 +1,15 @@
+{
+  "snapshot_date": "2026-10-29",
+  "note": "Historical PR snapshot before repository organization; not active work instructions",
+  "number": 132,
+  "title": "NES: PR132 회고와 실기 진입·60프레임 후속 계획",
+  "url": "https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/132",
+  "state": "closed",
+  "merged": true,
+  "base": "master",
+  "head": "codex/nes-capture-admission-365",
+  "head_sha": "35f68581f1a5358c48baf209251dc1038b5eed68",
+  "merge_commit_sha": "935b7bf4b4243c8881fb443a732ba167ce82fce4",
+  "merged_at": "2026-10-28T02:59:48Z",
+  "body": "## 요약\n\nPR132는 실제 ARM·SPI·IRQ·ROM 경쟁과 SNES 표시 경로를 연결하고 capture·cache RAM 절감을 검증한 연구 체크포인트입니다. 회고 결과, 제한된 실기 진입과 지속 60프레임 달성을 별도 관문으로 두고 후속 구조 후보를 같은 보드 경계의 전체 시간·회로 비용으로 비교합니다.\n\n402 기준 전체 Quartus Lite MAP은 20,199 LE / 16,508 조합 논리 / 7,917 FF / 347,991 RAM bits입니다. 400/401보다 1,915 LE와 868 조합 논리가 줄었지만, 장치보다 4,791 LE, reserve 포함 조합 목표보다 1,255개 많습니다. MAP은 FIT·STA가 아닙니다.\n\n동일 ARM·ROM 위상에서 12회 표시와 정확한 ACK, 908~917 캡처 시작 수락 10/10을 확인했습니다. 914·915는 다음 VBlank를 놓쳤고, 917의 표시 완료와 71프레임 전체 경로는 아직 검증하지 않았습니다.\n\n404의 staging stamp 공유 실험은 12프레임 이벤트와 ARM 결과가 402와 동일했으나 전체 MAP은 20,221 LE / 16,580 조합 논리 / 7,898 FF로 악화됐습니다. 단독 후보를 기각하며, 공동 RAM 실행기나 raster·lease 본체가 구현된 성과로 계산하지 않습니다.\n\n## 병합 후 계획\n\n1. 병합 SHA가 origin/master에 반영된 것을 확인하고 새 브랜치와 PR에서 시작합니다.\n2. production227을 포함한 실제 산출물·보드·FIT/STA·CDC/IO·복구 경로를 조사해 제한된 NROM 실기 진입 조건을 정합니다. 기존 실기 성공을 가정하지 않습니다.\n3. 기존 제어 본체를 실제 삭제하는 공동 구조와 더 단순한 ARM/SNES 처리 재배치 후보를 동일 경계의 시간·RAM·회로 비용으로 비교하고, 판정력 있는 최소 연결 실험과 중단 기준을 먼저 정합니다.\n4. 선택한 구현에서 독립 검사·STOP·최종 ACK·VBlank·캡처 보존을 유지하며 실제 ARM·SPI·IRQ·ROM/SNES 일정과 전체 Lite MAP을 확인합니다. 면적 또는 시간만 만족한 후보는 승격하지 않습니다.\n5. 제한 실기 전에는 동일 구현의 FIT/STA·CDC/IO 및 복구 가능한 FPGA/ARM/SNES 패키지를 확인합니다. 지속 60프레임은 장시간 실기 cadence·누락/반복 측정으로 별도 판정합니다. MMC4/5의 실제 ROM 경쟁 위험도 조기에 표본화합니다.\n\n상세: [회고](docs/nes-pr132-retrospective.ko.md), [후속 계획](docs/nes-pr132-next-plan.json), [404 근거](analysis/pr132-retrospective.json). 원본 로그는 workspace의 probes/nes-stage404에 보존하며 Git에 포함하지 않습니다.\n\n## 검증\n\n- 404 Questa 단위 테스트: FIFO·ordinary 예약·wrap·동시 commit/consume·중간 STOP·metadata pause.\n- 404 연속 실행: 전체 이벤트와 ARM 결과가 402 기준과 동일.\n- 같은 후보의 Quartus Lite 전체 MAP 및 RAM 추론 확인.\n- 회고/계획 JSON 파싱, 재현 스크립트 구문 검사와 검증 스크립트 재실행, staged diff 및 파일 바이트 확인.\n\n이 PR은 제품 승격, 물리 60fps, FIT/STA, MMC4/5 여유 또는 실기 준비 완료를 주장하지 않습니다. 병합은 사용자가 결정합니다."
+}

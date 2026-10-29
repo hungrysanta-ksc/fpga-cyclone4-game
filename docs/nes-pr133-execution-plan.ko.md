@@ -1,5 +1,7 @@
 # PR133: 실기 진입과 60fps 작업 순서
 
+> PR133은 8d472d50으로 master 반영을 확인했다. 469 실물 결과 이후 작업 순서는 `docs/nes-cost470-contract.ko.md`와 `docs/nes-cost470-plan.json`이 이 문서의 과거 NEXT보다 우선한다.
+
 ## 방향 정정
 
 긴 단위 시뮬레이션과 미완성 mapper 비용 예측을 반복해 실제 보드 진입을 늦추지 않는다. 단일 Questa Starter FLOAT seat로 필요한 시험을 **순차 실행**한다. 추가 라이선스 구매나 대기 중 중복 시뮬레이션을 요구하지 않는다. 411의 전체 쓰기·readback·START/STOP은 통과했으며 RUN·base는 모델이다. 411 결과만으로 새 NROM 실기를 승인하지 않는다.

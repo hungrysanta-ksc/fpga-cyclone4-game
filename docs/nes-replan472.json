@@ -1,0 +1,205 @@
+{
+  "supersedes": "docs/nes-cost470-plan.json sequence/acceptance where conflict; cost facts retained",
+  "PR_scope": [
+    131,
+    132,
+    133
+  ],
+  "decision": {
+    "physical_speed_improvement_proven": true,
+    "limited_hardware_path_proven": true,
+    "research_optimizations_real_but_unpromoted": true,
+    "whole_redesign_selected": false,
+    "selected_work": "one production-derived vertical candidate for source bytes plus ARM compute, measured and fitted as the same artifact",
+    "limited_moving_hardware_trial_passed": true,
+    "same_workload_physical_speedup_pending": false,
+    "latest_physical_evidence": "analysis/nrom475-hardware.json",
+    "same_scene_observed_speedup_percent": 20.288624787775888
+  },
+  "baseline": {
+    "FPGA": 457,
+    "ARM": 418,
+    "fixture": 428,
+    "installed_trial": 467,
+    "evidence": 469,
+    "fps": 14.968364968364968
+  },
+  "metrics": [
+    "same-workload wire bytes and all direct/runtime SPI durations",
+    "ARM compute excluding transfers and nested callbacks",
+    "capture/display ID misses and repeats, max/p95 intervals",
+    "final ACK/VBlank and retirement timings",
+    "actual Lite LE/LAB/M9K/routing/related timing",
+    "STOP/base/menu recovery and correctness"
+  ],
+  "workload_matrix": [
+    {
+      "id": "T0",
+      "scene": "existing static NROM428 with A palette input",
+      "purpose": "same-baseline transport correctness and speed",
+      "already_observed_fps": 14.968364968364968
+    },
+    {
+      "id": "T1",
+      "scene": "deterministic changing NROM scroll/frame counter",
+      "purpose": "no static bypass; visible progression and real changing-frame cost",
+      "already_observed_fps": 23.589145996337606,
+      "evidence": "analysis/nrom475-hardware.json",
+      "previous_471_fps": 19.61045446978525
+    },
+    {
+      "id": "T2",
+      "scene": "same SMB3 segment/input/sound/board as retained227 baseline",
+      "purpose": "same-game physical comparison",
+      "already_observed_fps": null
+    },
+    {
+      "id": "T3",
+      "scene": "actual MMC4/5 mapper cases",
+      "purpose": "mapper latch/tag/ROM competition only after first sustained candidate",
+      "already_observed_fps": null
+    }
+  ],
+  "milestones": [
+    {
+      "id": "M0",
+      "work": "freeze467/469; audit source/artifact promotion lineage; label471",
+      "status": "completed by this retrospective; no new performance claim"
+    },
+    {
+      "id": "M1",
+      "work": "integrated cost probes and minimal bounded lossless source compression/ARM expansion on existing snapshot",
+      "gates": [
+        "exact canonical data/CRC/coverage and cold literal fallback",
+        "bounded RAM/ports and actual ARM work included",
+        "one whole Lite fit per structurally valid candidate",
+        "same trial STOP/finalACK/menu and input",
+        "shared-SPI wire ceiling compatible with60Hz; first physical intermediate30fps target",
+        "if only probes shipped, explain which missing decision they resolve; no label-only retest"
+      ],
+      "status": "471 T1 physical function/STOP/menu passed at19.610454fps;30fps intermediate and same-workload T0 speed comparison pending"
+    },
+    {
+      "id": "M2",
+      "work": "actual ARM changed-group/raster reuse plus progress-aware polling; actual capture/VBlank overlap",
+      "gates": [
+        "epoch/serial/display history/cold/STOP invalidation",
+        "credit not consumption, receipt not final ACK",
+        "next capture deadline and DMA delivery priority",
+        "same board-boundary resource/time ledger"
+      ],
+      "status": "474 partial M2 physical benefit confirmed in two runs: same-scene+20.29% display rate, planner phase-55.35..55.48%; input/ACK schedule redistribution remains; existing one-following-frame capture overlap must not be claimed as new"
+    },
+    {
+      "id": "M3",
+      "work": "paired physical T0/T1 then same-gameT2 sustained tests",
+      "gates": [
+        "60Hz sustained cadence with frame ID losses/repeats checked",
+        "maximum/p95 gaps and VBlank deadlines",
+        "sound/input/STOP/restart/base/menu",
+        "no transfer reduction through dropping frames"
+      ],
+      "status": "474 moving physical function/23.589146fps and both menu returns passed;30fps/60Hz/capture IDs/p95 andT0 same-static/T2/T3 remain open"
+    }
+  ],
+  "stop_rule": {
+    "maximum_failed_vertical_candidates_before_role_rethink": 2,
+    "stop_micro_FSM_or_seed_loops": true,
+    "failure_requires": "explicit bus/ARM/consumer/FIT cause and one role-boundary alternative, not more unproven deletion budgets"
+  },
+  "next_delivery": {
+    "label": "nrom471",
+    "reserved_names_from_470": true,
+    "firmware_built": true,
+    "artifact_hash_promotion_ledger_required": true,
+    "package": "NROM471-COST-PROBE.zip",
+    "selected_FPGA": "compact471-04",
+    "selected_ARM": "arm471-04",
+    "moving_scene": "scene02 NMI horizontal scroll",
+    "whole_physical_timing_measured": true,
+    "evidence": "analysis/nrom471-verification.json and analysis/nrom471-package.json",
+    "physical_result": "471 returned as receipt473; moving1178 displays/60.07s, STOP/base/menu normal"
+  },
+  "not_counted_as_success": [
+    "MAP-only candidate outside board capacity",
+    "isolated or ideal-CPI timing without firmware linkage",
+    "faster sample omitting continuous capture/ROM competition",
+    "different-workload physical speedup ratio",
+    "existing227 code renamed as new optimization",
+    "number of tests, commits, or evidence pins"
+  ],
+  "followup_candidate": {
+    "label": "nrom474",
+    "firmware_built": true,
+    "selection": "ARM planner reuse plus progress/credit/drain/finalACK scheduling on physical471 path",
+    "fix": "snapshot opcode before in-place SPI transfer; separate wait reason/progress counters",
+    "current_credit_slots": 4,
+    "FPGA_change_required": false,
+    "keep": "471 delivered bytes, STOP/independent validation/finalACK/base/menu and467/164 restore",
+    "physical_goals": [
+      "same T0/T1 workload comparison",
+      "first30fps then sustained60Hz with capture/display deadlines"
+    ],
+    "not_claimed": "lower E0 call count alone is not lower VBlank completion latency",
+    "package": "NROM474-PLANNER-POLL.zip",
+    "selected_ARM": "arm474-02",
+    "FPGA_reused": "byte-identical471-04 renamed nrom474",
+    "ROM_reused": "byte-identical471 scene02",
+    "evidence": "analysis/nrom474-verification.json and analysis/nrom474-package.json",
+    "physical_result_pending": false,
+    "actual_scope": "same-frame exact BG group reuse, not cross-frame changed-group history; quiet128us only after no-progress valid E0; original guard/4credit/finalACK",
+    "physical_result": "receipt475: two runs1417 displays/60.07s, CRC0/STOP/base/menu normal, same-scene+20.29% vs471"
+  },
+  "current_physical_baseline": {
+    "trial": 474,
+    "receipt": 475,
+    "ARM": "arm474-02",
+    "FPGA": "byte-identical471-04",
+    "scene": "same moving scene02, CRC0fddf31c",
+    "runs": 2,
+    "seconds_each": 60.07,
+    "display_completed_each": 1417,
+    "mean_fps_each": 23.589145996337606,
+    "mean_ms_each": 42.3923782639379,
+    "30fps_achieved": false,
+    "60Hz_achieved": false
+  },
+  "next_work_sequence": [
+    {
+      "order": 1,
+      "work": "freeze474 and two physical475 returns as current baseline",
+      "status": "complete"
+    },
+    {
+      "order": 2,
+      "work": "profile actual474 M4 receive/CRC/record hot path with preserved independent bytes/CRC/coverage; do not assume duplicate restoration",
+      "status": "next"
+    },
+    {
+      "order": 3,
+      "work": "trace existing capture start/done, next export permission/production, ARM input, SEAL/finalACK on one timeline; distinguish phase wait from source/compute work",
+      "status": "next with2; preserve existing capture overlap and ownership"
+    },
+    {
+      "order": 4,
+      "work": "select one measured input/schedule candidate within Flash/RAM/SPI/guard and same-board cost; deliver476 only with a real change and full recovery gates",
+      "status": "not implemented"
+    }
+  ],
+  "next_candidate_reservation": {
+    "label": "nrom476",
+    "firmware_built": false,
+    "requires_measured_scope": true,
+    "current_FLASH_file_tail_bytes": 380,
+    "current_RAM_gap_before_nested_calls_IRQ": 4984,
+    "FPGA_change_selected": false,
+    "next30fps_mean_gap_ms": 9.059044930604564,
+    "next60Hz_mean_gap_ms": 25.725711597271232,
+    "not_selected": "new generic FPGA executor, queue resize, or removal of independent validation"
+  },
+  "execution_state": {
+    "performance_work": "paused_by_user",
+    "current_request": "repository and PR documentation organization only",
+    "resume_requires_user_instruction": true
+  }
+}

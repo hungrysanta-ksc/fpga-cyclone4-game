@@ -1,0 +1,723 @@
+{
+  "schema_version": 1,
+  "product": "sd2snesHST",
+  "target_board": {
+    "name": "FXPAK Pro / Mk.III",
+    "mcu": "STM32",
+    "fpga": "EP4CE15F17C8"
+  },
+  "cores": [
+    {
+      "id": "gbc",
+      "status": "released",
+      "candidate": "G13C44",
+      "released": true,
+      "implementation_commit": "35ef4aef14fc6abef6495a980b7f00f257e5174f",
+      "source_paths": [
+        "src/fpga",
+        "src/firmware-overlay",
+        "src/renderer"
+      ],
+      "document": "cores/gbc/README.md",
+      "product_version": "0.9.0",
+      "release_url": "https://github.com/hungrysanta-ksc/sd2snesHST/releases/tag/v0.9.0"
+    },
+    {
+      "id": "nes",
+      "status": "NES227_hardware_baseline_287_live_row_receipt_capacity_short",
+      "candidate": "NES227",
+      "planned_product_version": null,
+      "released": false,
+      "implementation_commit": null,
+      "source_paths": [
+        "src/nes",
+        "tests/nes-functional",
+        "snes/video_probe",
+        "tools"
+      ],
+      "document": "cores/nes/README.md",
+      "handoff": "cores/nes/HANDOFF.ko.md",
+      "verification": "analysis/game227-hardware01-verification.json",
+      "plan": "docs/nes-joint287-contract.ko.md",
+      "plan_state": "docs/nes-development-plan.json",
+      "investigation": "NES287_actual_row_E9_descriptor_receipt",
+      "hardware_baseline": "NES227",
+      "hardware_verified_scope": "227 unchanged.287 actual M4 row planner/native H2/E9 refill and IRQ/ROM plus independent descriptor receipt RTL; source cost replay andCPU279trace retained. Whole Lite MAP; no fullRUN/FITSTA/physical60fps.",
+      "development_evidence": "analysis/joint287-verification.json",
+      "hardware_candidate": "NES227",
+      "reproduction_document": "docs/nes-joint287-contract.ko.md",
+      "next_gate": "row 전체 fallback이 많은954/963/970의 실제 변경 cell·workset을 기준으로 planner 비용을 줄인다. input COMMITTED·raw 검사 후의 로컬 H2/BEGIN과 준비된 row 출력 생산을 연결해 전체 planner 완료 뒤에만 ordinary DMA가 시작되는 직렬 장벽을 검토한다. 원본 ordinary command/manifest 생산도 native view와 bounded batch 소비에 연결한다. 진단용8192B plan buffer 제거와 source live ARM/IRQ까지 소유권을 명시한다. host/validator/queue/plan/SPI와 두 연결 wrapper의 own logic을 합친4853comb를 실제 descriptor 저장·물리 읽기·receipt 완료 제어와 함께 <= 2590(128여유 2462)로 줄이는 교체가 필요하다. 기존5블록 경계4806와 예산2543도 비교용으로 유지한다. 독립 CRC/H2/coverage, input COMMITTED, token/credit, STOP와 최종12B ACK를 유지한다. 정상·제한 ROM phase 전체 시간과 같은 whole Lite 경계를 함께 검증하며 단독 opcode/seed/FIT 반복이나 자동 merge는 하지 않는다.",
+      "proposal_history": "cores/nes/PROPOSAL.ko.md",
+      "paired_candidate": "Production227 retained;240 functional-only/unplaced;241+246 rejected;no new installable pair.",
+      "observation_candidate": "NES-CLOCK-OBSERVATION-087",
+      "observation_reader": "NES-CLOCK-READER-088",
+      "observation_configuration": "NES-CLOCK-CONFIG-089",
+      "first_game_target": "cores/nes/first-game-target.json",
+      "latest_mcu": "NES-GAME164-DEV",
+      "limited_trial_candidate": "NES-GAME-164",
+      "limited_trial_decision": "analysis/game164-verification.json",
+      "limited_trial_instructions": "docs/nes-game164-instructions.ko.md",
+      "short_recovery116_hardware": "117 short BASE/menu pass retained; full80 recovery subsequently passed in119",
+      "full80_116_hardware": "119 실기에서 동일116/CF86의 전체80KiB 적재·읽기비교·STOP·기본FPGA·메뉴 복귀·사용자044 복원이 통과했다. 진행45기록/최종 verified1,load/compare81920,오류0,RUN0. 메뉴준비491.34초는 펌웨어 시각이며 독립 벽시계 측정이 아니다. 이번 GBC 플레이는 미보고다.",
+      "hardware_run136": {
+        "passed": true,
+        "raw_sha256": {
+          "nes-run-last-136.txt": "e41bb45c0852fbabb68675c1f94fc55ecde480a66ba3bc1289fabf12acc21c34",
+          "nes-progress-136.txt": "4b2e312e411378a07fd99761ef1d289631e7e1a69a2a8876b547543e3979b4a8"
+        },
+        "records": 47,
+        "elapsed_ms": 491600,
+        "first": 7002,
+        "last": 124484,
+        "stopped": 132438,
+        "menu_return_user_confirmed": true,
+        "restore_user_confirmed": true,
+        "gbc_play_this_run": null
+      },
+      "screen137_package_ready": false,
+      "screen138_package_ready": true,
+      "hardware_screen138": {
+        "candidate": "NES-SCREEN-138",
+        "screen_passed": false,
+        "run_passed": false,
+        "raw_sha256": {
+          "nes-progress-138.txt": "aa85770282eb4c3ffcb36239d723da91fc39bb51022d347a147134cbf811acc9",
+          "nes-screen-last-138.txt": "dea46670d56ea6fabe821aa4a9c1b975756d94c096dad1a94c6ec08fc0ab7c57"
+        },
+        "final": {
+          "candidate": "NES-SCREEN-138",
+          "board_expected_hex": "5a",
+          "board_seen": "1",
+          "board_observed_hex": "5a",
+          "geometry_kib": "80",
+          "load_result": "0",
+          "file_result": "0",
+          "loaded_bytes": "81920",
+          "compared_bytes": "81920",
+          "verify_error": "0",
+          "verified": "1",
+          "end_accepted": "1",
+          "stop_ok": "1",
+          "base_attempted": "1",
+          "base_restored": "1",
+          "safe_to_reload": "1",
+          "menu_state": "PREPARED_RESET_HELD",
+          "start_sent": "1",
+          "run_passed": "0",
+          "run_error": "3",
+          "observer_id_hex": "d5",
+          "run_first": "123028",
+          "run_last": "123028",
+          "run_stopped": "123028",
+          "run_flags": "3",
+          "run_rom_error": "1"
+        },
+        "progress_records": 47,
+        "milestone_elapsed_ms": {
+          "DISPLAY_NEXT": 522580,
+          "DISPLAY_STOPPED": 532920,
+          "MENU_PREPARED": 536040
+        },
+        "user_confirmed": {
+          "menu_return": true,
+          "restoration": true,
+          "gbc_this_run": null,
+          "pattern_success": false
+        },
+        "interpretation": "CPU ROM deadline fault1; constant valid sample count123028. Final flags3 is post-STOP, not evidence of reset during RUN. run_error3 overwrites earlier MCU failures; STOP command succeeded.",
+        "next": "Target CPU/PPU shared ROM deadline; preserve first RUN failure separately from STOP; no repeat of unchanged138 trial."
+      },
+      "hardware_screen140": {
+        "candidate": "NES-SCREEN-140",
+        "run_passed": false,
+        "screen_success_confirmed": false,
+        "raw_sha256": {
+          "nes-screen-last-140.txt": "75aa4a12a89c04389bccd0e012af776fe5b20acca92c59a1fc6a869d17d151a0",
+          "nes-progress-140.txt": "d73585417cc9d3c0cb16e487b34f580974b22d7b09085cae45fe252f6f17283f"
+        },
+        "final": {
+          "candidate": "NES-SCREEN-140",
+          "board_expected_hex": "5c",
+          "board_seen": "1",
+          "board_observed_hex": "5c",
+          "geometry_kib": "80",
+          "load_result": "0",
+          "file_result": "0",
+          "loaded_bytes": "81920",
+          "compared_bytes": "81920",
+          "verify_error": "0",
+          "verified": "1",
+          "end_accepted": "1",
+          "stop_ok": "1",
+          "base_attempted": "1",
+          "base_restored": "1",
+          "safe_to_reload": "1",
+          "menu_state": "PREPARED_RESET_HELD",
+          "start_sent": "1",
+          "run_passed": "0",
+          "run_error": "1",
+          "observer_id_hex": "d7",
+          "run_first": "123028",
+          "run_last": "123028",
+          "run_stopped": "123028",
+          "run_flags": "3",
+          "run_rom_error": "1",
+          "run_first_error": "1",
+          "run_stop_error": "0",
+          "fault_context_valid": "1",
+          "fault_context_hi": "440181c3",
+          "fault_context_lo": "0800e184"
+        },
+        "decoded": {
+          "first_run_error": 1,
+          "stop_error": 0,
+          "rom_error": 1,
+          "context_valid": true,
+          "cpu_address": "0x000e184",
+          "pending_address": "0x00e184",
+          "age_nes_clocks": 3,
+          "ppu_valid": false,
+          "cpu_valid": false,
+          "ppu_sample": false,
+          "cpu_sample": true,
+          "rom_response": false,
+          "rom_ready": false,
+          "pending_ppu": false,
+          "busy": true
+        },
+        "progress_records": 47,
+        "record_bytes": 512,
+        "milestone_elapsed_ms": {
+          "DISPLAY_NEXT": 524870,
+          "DISPLAY_STOPPED": 524940,
+          "BASE_DONE": 525820,
+          "MENU_PREPARED": 528110
+        },
+        "display_phase_elapsed_ms": 70,
+        "same_fault_as139": true,
+        "user_confirmed": {
+          "logs_written": true,
+          "black_screen_after_about_9_minutes": true,
+          "menu_return_this_run": false,
+          "reset_button_menu_return": false,
+          "power_cycle_menu_return": true,
+          "restoration": null,
+          "gbc_this_run": null
+        },
+        "interpretation": "140 strict5C/D7 loaded; same CPU deadline1/context/sample123028 as139. STOP error0 and base/menu preparation complete, but user saw persistent black screen and reset did not return menu. MENU_PREPARED is the final SD record by design; released report uses persist=false/UART only. Absence of later TXT does not prove reset was never released. Power-cycle menu is not044 restoration.",
+        "next": "Investigate prepared-to-release/CIC/SRAM/menu handshake and CPU request/response timing together; keep140 failure as regression evidence, do not treat delayed-model PASS as a hardware fix. Add only narrowly scoped evidence needed to distinguish recovery outcomes. No identical140 rerun or video needed.",
+        "restoration_policy": "User waives routine repeat044 tests for unchanged restoration artifacts. Preserve known-good044. Revisit only a concrete changed restoration artifact/path or evidence of regression, explaining the change; distinguish candidate STOP/base/menu return from independent044 restoration."
+      },
+      "hardware_test_policy": "사용자 지시: 동일044 복원본의 매회 재설치·메뉴/GBC 반복 시험은 생략한다. 후보 자체 STOP/base/menu 복귀는 별도 기록한다. 복원본/경로 변경이나 구체적 회귀 근거가 생길 때만 재확인 이유와 범위를 명시한다. 과거 동결 실행 안내보다 현재 정책을 우선하며 미시험을 PASS로 기록하지 않는다.",
+      "hardware_screen143": "analysis/screen143-hardware-observation.json",
+      "screen144_package_ready": true,
+      "hardware_screen144": "analysis/screen144-hardware-observation.json",
+      "screen145_package_ready": true,
+      "hardware_screen145": "analysis/screen145-hardware-observation.json",
+      "screen146_package_ready": true,
+      "screen146_hardware_result": "lifecycle/display-present/menu PASS; fast-coherence INCONCLUSIVE",
+      "game147": "analysis/game147-verification.json",
+      "game148": "analysis/game148-verification.json",
+      "game154_hardware": "analysis/game154-hardware-verification.json",
+      "hardware_evidence": "analysis/game164-hardware-verification.json",
+      "hardware_game156": {
+        "verification": "analysis/game156-hardware-verification.json",
+        "select_cursor_passed": true,
+        "recovery_passed": true,
+        "gameplay_passed": false,
+        "same155_fault": true,
+        "sound_cause_confirmed": false
+      },
+      "hardware_game157": {
+        "verification": "analysis/game157-hardware-verification.json",
+        "history_passed": true,
+        "gameplay_passed": false,
+        "recovery_passed": true,
+        "physical_address_transition_confirmed": true,
+        "mapper_write_confirmed": false,
+        "context": "e30042f4:30217a18"
+      },
+      "porting_references": "docs/nes-porting-reference-guide.ko.md",
+      "hardware_game158": {
+        "verification": "analysis/game158-hardware-verification.json",
+        "history_passed": true,
+        "gameplay_passed": false,
+        "recovery_passed": true,
+        "early_future_hint_confirmed": true,
+        "write_only_cpu_read_confirmed": false,
+        "context": "e200c2f4:30217a18"
+      },
+      "hardware_game159": {
+        "verification": "analysis/game159-hardware-verification.json",
+        "world_map_passed": true,
+        "level1_entry_passed": false,
+        "full_gameplay_passed": false,
+        "recovery_passed": true,
+        "timeout_exit": false,
+        "context": "e70142e0:00217000"
+      },
+      "hardware_game160": {
+        "verification": "analysis/game160-hardware-verification.json",
+        "level1_entry_passed": false,
+        "full_gameplay_passed": false,
+        "stop_base_menu_prepared": true,
+        "timeout_exit": false,
+        "context": "e200c2ff:f0205ff0",
+        "presentation_continuous": false
+      },
+      "hardware_game161": {
+        "verification": "analysis/game161-hardware-verification.json",
+        "level1_entry_passed": true,
+        "level1_gameplay_session_passed": true,
+        "full_gameplay_compatibility_passed": false,
+        "continuous_held_input_passed": false,
+        "menu_return_passed": true,
+        "run_rom_error": 0,
+        "display_interval_ms": 60660
+      },
+      "hardware_game162": {
+        "verification": "analysis/game162-hardware-verification.json",
+        "level1_gameplay_session_passed": true,
+        "menu_return_passed": true,
+        "physical_audio_passed": false,
+        "audio_result": "silent",
+        "run_rom_error": 0,
+        "display_interval_ms": 60660,
+        "root_cause_confirmed": false
+      },
+      "hardware_game163": {
+        "verification": "analysis/game163-hardware-verification.json",
+        "level1_gameplay_session_passed": true,
+        "physical_audio_passed": true,
+        "base_restored_and_menu_prepared": true,
+        "physical_menu_return_confirmed_this_session": false,
+        "run_rom_error": 0,
+        "display_interval_ms": 60650
+      },
+      "hardware_game164": {
+        "verification": "analysis/game164-hardware-verification.json",
+        "blackout_removal_passed": true,
+        "audio_result": "user reports seems normal",
+        "playability_passed": false,
+        "physical_menu_return_confirmed": true,
+        "held_down_tested": false,
+        "run_rom_error": 0,
+        "display_interval_ms": 60650
+      },
+      "video_research_after164": {
+        "document": "docs/nes-video-transfer-research.ko.md",
+        "evidence": "analysis/nes-video-transfer-research.json",
+        "status": "source_research_and_offline_format_budget_probe_complete_runtime_open",
+        "followup": "docs/nes-native-video-feasibility.ko.md",
+        "offline_probe": "analysis/nes-native-video-feasibility.json"
+      },
+      "native_chr165": {
+        "status": "actual_ppu_capture_pass_host_consumer_open",
+        "contract": "docs/nes-native-chr165-contract.ko.md",
+        "verification": "analysis/native-chr165-verification.json",
+        "binding_verification": "analysis/native-tap165-verification.json",
+        "binding_contract": "docs/nes-native-tap165-contract.ko.md"
+      },
+      "native_raster165": {
+        "status": "state_packet_boundary_pass_not_complete_frame",
+        "verification": "analysis/native-raster165-verification.json",
+        "contract": "docs/nes-native-raster165-contract.ko.md",
+        "next": "Native raster state packet passed, not whole-frame readiness. Next actual OAM/nametable/required BG-OBJ set, common CHR/state generation, bounded missing bytes and physical bank versions; then host CDC/SNES consumer replacing38M9K and minimum changed checks -> real SMB3. Raw Loopy v/t needs fetch-coordinate mapping. Keep164/audio/STOPmenu; no new package or unchanged broad tests.",
+        "hardware": false
+      },
+      "native_scene165": {
+        "status": "common_state_memory_lease_pass_required_tiles_open",
+        "verification": "analysis/native-scene165-verification.json",
+        "contract": "docs/nes-native-scene165-contract.ko.md",
+        "next": "Common NES-domain CHR/raster/CIRAM-OAM lease passed. Next actual BG/OBJ fetch coordinates, required physical tile set, mapper mirroring/bank versions and bounded missing-byte fill, then host CDC/SNES updates replacing38M9K. snapshot_valid is not complete-frame readiness. Minimum changed checks then real SMB3. Preserve164/audio/menu; no new package or unchanged broad replay.",
+        "hardware": false
+      },
+      "native_fetch165": {
+        "status": "physical_required_set_coordinates_pass_native_commands_fill_open",
+        "verification": "analysis/native-fetch165-verification.json",
+        "contract": "docs/nes-native-fetch165-contract.ko.md",
+        "next": "Actual pattern events and conservative physical required-set passed. Next bounded native BG-map/OBJ/row command consumer, physical tile allocation and bounded missing-byte fill, then host CDC/SNES replacing38M9K. Raw worst-case73472B event stream must not become whole-frame buffer/transfer. Snapshotvalid is not full readiness. Minimum changed checks then real SMB3; retain164/audio/menu, no unchanged boot/044 replay.",
+        "hardware": false
+      },
+      "native_commands165": {
+        "status": "PC_command_reference_SNES_pixels_pass_live_producer_fill_transport_open",
+        "verification": "analysis/native-commands165-verification.json",
+        "contract": "docs/nes-native-commands165-contract.ko.md",
+        "next": "PC native command reference and actual SNES model pixels PASS; NOTlive producer. Next online bounded fetch/raster producer +physical CHR fill and actual SMB3 workload together, then host CDC/ACK/SNES consumer replacing38M9K. Retain164/audio/menu; do not port PC full-event/shadow buffers or repeat unchanged boot/Questa/044. Minimum changed checks then real first level.",
+        "hardware": false
+      },
+      "native_compact165": {
+        "status": "online_RTL_replay_and_two_game_pictures_pass_split_pair_loss_open",
+        "verification": "analysis/native-compact165-verification.json",
+        "contract": "docs/nes-native-compact165-contract.ko.md",
+        "next": "FIRST resolve actual fetch error04 at split row185 col28/30 using first low/high physical/logical/descriptor mismatch and consumed planes; do not ignore fault. Then direct online compact binding and raster contract, bounded physical CHR fill/host CDC/ACK/SNES replacing38M9K, minimum fit and real SMB3. Current164 remains hardware candidate.",
+        "hardware": false,
+        "superseded_by": "native_planes165"
+      },
+      "native_planes165": {
+        "status": "mixed_plane_loss_fixed_nine_game_frames_and_SNES_pixels_pass_board_open",
+        "verification": "analysis/native-planes165-verification.json",
+        "contract": "docs/nes-native-planes165-contract.ko.md",
+        "next": "Corrected same-tile mixed-plane capture and directly connected compact replay PASS. Next common-generation fetch/compact/raster admission, bounded physical CHR fill, host CDC/ACK and actual SNES consumer replacing38M9K; minimum fit/changed checks then real SMB3. Preserve164/audio/STOPmenu; do not repeat unchanged boot/A-B/044.",
+        "hardware": false,
+        "superseded_by": "native_frame165"
+      },
+      "native_frame165": {
+        "status": "actual_core_common_frame_and_bounded_fill_interface_pass_physical_transport_open",
+        "verification": "analysis/native-frame165-verification.json",
+        "contract": "docs/nes-native-frame165-contract.ko.md",
+        "next": "Connect bounded fill to actual CPU/PPU-priority memory grant/response/flush, then host CDC/ACK and SNES consumer replacing38M9K. Minimum changed checks/fit then real SMB3 first level; no unchanged boot, split-cell, A-B or044 replay.",
+        "hardware": false,
+        "superseded_by": "native_memory165"
+      },
+      "native_memory165": {
+        "status": "actual_core_shared_reader_fill_pass_host_transport_open",
+        "verification": "analysis/native-memory165-verification.json",
+        "contract": "docs/nes-native-memory165-contract.ko.md",
+        "next": "Connect same-generation geometry/raster/CHR stream to host CDC and upload ACK, then actual SNES consumer replacing38M9K. Minimum changed checks and resource/timing fit, then SMB3 first-level hardware. No unchanged boot/planes/A-B/044 repetition.",
+        "hardware": false,
+        "superseded_by": "native_host165"
+      },
+      "native_host165": {
+        "status": "native_export_cdc_prepared_commit_pass_physical_host_open",
+        "verification": "analysis/native-host165-verification.json",
+        "contract": "docs/nes-native-host165-contract.ko.md",
+        "next": "Connect logical ready/valid records to actual SPI/MMIO and bounded MCU receiver, then SNES commands/vblank completion replacing38M9K framebuffer. Measure real packed bytes; minimum changed tests/physical fit then SMB3 first-level. No unchanged boot/planes/A-B/044 reruns.",
+        "hardware": false,
+        "superseded_by": "native_spi165"
+      },
+      "native_spi165": {
+        "status": "native_spi_rtl_c_receiver_pass_mcu_snes_runtime_open",
+        "verification": "analysis/native-spi165-verification.json",
+        "contract": "docs/nes-native-spi165-contract.ko.md",
+        "next": "Wire bounded C receiver/bulk callback into MCU game loop; implement bounded native SNES commands/vblank consumer and replace38M9K framebuffer. SRAM link/resource/timing and combined source lease/serial budget checks, then real SMB3 first level. Current serial sample39.59ms is NOT60fps.",
+        "hardware": false,
+        "superseded_by": "native_video165"
+      },
+      "native_video165": {
+        "status": "bounded_c_native_video_snes_model_pass_board_staging_open",
+        "verification": "analysis/native-video165-verification.json",
+        "contract": "docs/nes-native-video165-contract.ko.md",
+        "next": "Connect external staging callback and SNES vblank consumer/ACK; schedule MCU receive/build/upload in RUN with existing guard/STOP. Single candidate only, actual SRAM link, replace38M9K framebuffer, fit/timing/serial budget then SMB3 first-level hardware. No repeated unchanged boot/A-B/044.",
+        "hardware": false,
+        "superseded_by": "native_stage165"
+      },
+      "native_stage165": {
+        "status": "wram_c_delta_snes_model_pass_save_sram_preserved_mailbox_open",
+        "verification": "analysis/native-stage165-verification.json",
+        "contract": "docs/nes-native-stage165-contract.ko.md",
+        "next": "Preserve cartridge SRAM/save/recovery contents. Connect SNES bank7F mailbox and display ACK; avoid full table MCU readback using SNES-local comparison/batching. Then RUN scheduler, full SRAM link, replace38M9K, fit/minimum changed checks and SMB3 first-level hardware. No unchanged boot/A-B/044.",
+        "hardware": false,
+        "superseded_by": "native_local165"
+      },
+      "native_local165": {
+        "status": "snes_local_diff_dynamic_dma_model_pass_mailbox_open_not60fps",
+        "verification": "analysis/native-local165-verification.json",
+        "contract": "docs/nes-native-local165-contract.ko.md",
+        "next": "Connect actual MCU-to-SNES WRAM receive, local compare and token/generation display ACK; preserve save SRAM and service input/STOP during comparison. Then full link/client space/replace38M9K/fit/minimal changed tests and SMB3 hardware. No unchanged boot/A-B/044 or generic diagnostic expansion.",
+        "hardware": false,
+        "superseded_by": "native_sink165"
+      },
+      "native_sink165": {
+        "status": "c_snes_receive_display_ack_roundtrip_pass_spi_bridge_open",
+        "verification": "analysis/native-sink165-verification.json",
+        "contract": "docs/nes-native-sink165-contract.ko.md",
+        "next": "Implement bounded SPI packet/ACK bridge and SNES bus/4KiB ROM decode for sink ABI, bind MCU guard/time/STOP. Replace38M9K framebuffer, full link/client space/fit/minimum changed checks then SMB3 hardware. Preserve save SRAM; no unchanged boot/A-B/044.",
+        "hardware": false,
+        "superseded_by": "sink_bridge165"
+      },
+      "sink_bridge165": {
+        "status": "spi_snes_sink_bridge_rtl_and_synthesis_pass_parent_open",
+        "verification": "analysis/sink-bridge165-verification.json",
+        "contract": "docs/nes-sink-bridge165-contract.ko.md",
+        "next": "Replace old framebuffer bus/38M9K in actual parent; bind exclusive E0/E1 MISO, common reset/active/fault/STOP and pad, then real MCU RUN guard/time/audio/input scheduling. Full link/stack/fit/changed I/O checks -> SMB3 first-level hardware. No new generic diagnostics or unchanged boot/A-B/044.",
+        "hardware": false,
+        "superseded_by": "sink_board165"
+      },
+      "sink_board165": {
+        "status": "physical_parent_connected_functional_pass_fit_resource_blocked",
+        "verification": "analysis/sink-board165-verification.json",
+        "contract": "docs/nes-sink-board165-contract.ko.md",
+        "next": "Reduce actual OAM/native scene logic cost while preserving behavior and saves; focused changed-path comparison then full parent fit. Once it fits, bind actual MCU RUN guard/time/audio/input + sink ACK, full-link/stack/minimum timing -> SMB3 first-level hardware. No unchanged boot/A-B/044 repetition.",
+        "hardware": false,
+        "superseded_by": "oam_select165"
+      },
+      "oam_select165": {
+        "status": "area_synthesis_reduced_794_fit_resource_blocked",
+        "verification": "analysis/oam-select165-verification.json",
+        "contract": "docs/nes-oam-select165-contract.ko.md",
+        "next": "Use area07 unchanged RTL as cost baseline. Reduce actual OAM memory/read-port cost, not equivalent onehot/row-writer expressions. Preserve CPU/PPU consumption timing and collision priority; test changed boundaries and real SMB3 if timing changes. Full fit/timing -> actual MCU RUN guard/time/audio/input/sink ACK/full-link/stack -> SMB3 hardware. No save SRAM or unchanged boot/A-B/044.",
+        "hardware": false,
+        "superseded_by": "oam_port165"
+      },
+      "oam_port165": {
+        "status": "oam_address_range_reduced_1719_fit_one_lab_blocked",
+        "verification": "analysis/oam-port165-verification.json",
+        "contract": "docs/nes-oam-port165-contract.ko.md",
+        "next": "Use selected range map02: reduce remaining primary OAM row-copy/storage or LAB control grouping; no repeated shared-read/physical-area/packed-area/bank-enable-OFF attempts. Preserve CPU/PPU consume edges and save SRAM. Full fit/timing -> MCU RUN receive/convert/ACK plus audio/input/STOP/time and whole-link/stack -> real SMB3 first level.",
+        "hardware": false,
+        "superseded_by": "oam_secondary165"
+      },
+      "oam_secondary165": {
+        "status": "full_fit_pass_check_timing_open",
+        "verification": "analysis/oam-secondary165-verification.json",
+        "contract": "docs/nes-oam-secondary165-contract.ko.md",
+        "next": "Use selected secondary map03 routed DB: repair CHECK response-address comparison to check_next/load_data (7 levels, -1.218ns under unchanged 5.5ns budget); preserve response validity/address/error and command completion order. Changed-boundary test then fit/setup/hold and necessary external IO/CDC, MCU RUN receive/convert/ACK with audio/input/STOP/time/full-link/stack, then real SMB3 first level. Do not repeat unchanged OAM/boot/A-B/044 or relax SDC; reserve save SRAM.",
+        "hardware": false,
+        "superseded_by": "check165"
+      },
+      "check165": {
+        "status": "check_timing_improved_still_open",
+        "verification": "analysis/check165-verification.json",
+        "contract": "docs/nes-check165-contract.ko.md",
+        "next": "Use selected CHECK map03: repair measured boot check_failed -> loader state.RECEIVE (-0.488ns at nominal5.952ns), byte_count -> miso_hold (-0.332ns at5.3ns target), and check_next -> check_busy (-0.174ns at5.5ns target); no uncontrolled latency/SDC relaxation or repeated attribute-only fits. Then necessary external IO/video CDC and MCU RUN receive/convert/ACK with existing audio/input/STOP/elapsed time, whole firmware link/stack, SMB3 first-level hardware. Preserve save SRAM and164; no unchanged OAM/boot/A-B/044 repeat.",
+        "hardware": false,
+        "superseded_by": "retire165"
+      },
+      "retire165": {
+        "status": "spi_reply_improved_nominal_check_timing_open",
+        "verification": "analysis/retire165-verification.json",
+        "contract": "docs/nes-retire165-contract.ko.md",
+        "next": "Selected retire165 map02/reproduce02: fix boot check_failed -> control check_next nominal -0.217ns (5.952ns period) using measured cone, preserve hard-fault precedence and retirement edge. Host margin +0.021ns and963/963LAB require whole-fit checks after any RTL change. Rejected parallel counter-clear/XOR map03 worsened feedback to nominal -1.002ns; do not repeat. Investigate predecoding stable pending command/header/body predicates at their existing capture edge before dynamic hard-fault gating; this is a proposal, not implemented. Keep stricter5.5/5.3ns budget misses separate; no clock/falsepath relaxation. Then necessary external IO/video CDC, MCU receive-convert-ACK/audio/input/STOP/time and full-link/stack, minimum SMB3 first-level hardware. Preserve save SRAM and installed164; no unchanged OAM/fullboot/A-B/044 repeats.",
+        "hardware": false,
+        "superseded_by": "predecode165"
+      },
+      "predecode165": {
+        "status": "predecode_timing_improved_still_open",
+        "verification": "analysis/predecode165-verification.json",
+        "contract": "docs/nes-predecode165-contract.ko.md",
+        "next": "Reuse selected map03: fix measured nominal -0.153ns path nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|check_next[0] -> nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|check_next[17] without moving retirement/fault edges or relaxing clocks. Routed path crosses response-address comparison -> counter_retire_ok -> final counter mux, not the carry increment itself; inspect comparator factoring/fanout or stable-tag capture contract before another fit. Inspect counter/capture/loader groups together, not only first worst row. Then necessary IO/video CDC and MCU RUN receive-convert-ACK/audio/input/STOP/time/full-link/stack, minimum SMB3(J) hardware. Keep save SRAM reserved/installed164/GBC. Do not repeat unchanged OAM/full writes/A-B/044 or rejected generic-body predecode/masked-XOR map04; preserve failed fixtures and completed archives.",
+        "hardware": false
+      },
+      "compare165": {
+        "status": "rejected_candidates_baseline_retained",
+        "adopted": false,
+        "selected": "predecode165/map03/reproduce03final",
+        "verification": "analysis/compare165-verification.json",
+        "contract": "docs/nes-compare165-contract.ko.md",
+        "next": "Retain predecode165 map03/reproduce03final (-0.153ns); no new RTL/SD selected. Do not repeat compare165 map01-04 or per-instance SPEED map06 (same result), and reject map05 invalid braced-node assignments. Before another full fit, derive a sequential ownership contract for CHECK request tag/counter/response: exactly which registers are stable from request acceptance through response and ACK. Use that contract to remove the response-address comparison from the counter feedback path, or precompute ownership validity where the tag is already stable. Preserve wrong-address, STOP/reset, fault and command retirement edges; do not simply waive arbitrary-state failures without proving reachability. Test only the changed boundary, then one full fit with counter/capture/loader and all-clock minima. Once safe, connect necessary native-video IO/CDC/reset and MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack to minimum SMB3(J) hardware. Keep installed164/GBC/save SRAM; no repeated full writes/OAM/A-B/044.",
+        "hardware": false
+      },
+      "tag165": {
+        "status": "not_adopted",
+        "adopted": false,
+        "selected": "predecode165/map03/reproduce03final",
+        "verification": "analysis/tag165-verification.json",
+        "contract": "docs/nes-tag165-contract.ko.md",
+        "next": "SELECT predecode165/map03/reproduce03final. Tag trial map02 nominal -0.616ns: nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|fault -> nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|pending_causes[2]. Preserve the established CHECK request-tag invariant and same-edge response rejection. Inspect this actual worst path and all-clock minima before another structural change; do not repeat compare165 local equations/SPEED or tag165 map01 guarded capture. Keep request-tag capture separate from dynamic response errors. Existing129/130/131 rejected phase-counter variants are not a new rationale. Only changed-boundary tests and justified fit, then minimum native-video IO/CDC + MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack and SMB3(J). No repeated CHECK/OAM/full writes/A-B/044 or save SRAM.",
+        "hardware": false
+      },
+      "eligibility165": {
+        "status": "not_adopted",
+        "adopted": false,
+        "selected": "predecode165/map03/reproduce03final",
+        "verification": "analysis/eligibility165-verification.json",
+        "contract": "docs/nes-eligibility165-contract.ko.md",
+        "next": "SELECT predecode165/map03/reproduce03final. Rejected eligibility165 map02 nominal -1.994ns, worst nes_dac162:audio|dac_release[1] -> nes_live_joint:core|nes_native_spi165:native_spi|held[13]. Mapping explicitly merges native_records.dr[1],native_prepared.sr[1],pad.host_release[1] into audio.dac_release[1]; this is shared reset-release fanout, NOT an audio sample defect. Inspect split/local preserved release and SPI held enable fanout with same-edge handshake/reset/cancel semantics, then check all clocks including memory -.203ns. Reuse READY/reader-terminal/CHECK tests; do not repeat compare165 equations/SPEED, tag165 guarded capture, or unmodified fits. Then necessary native-video IO/CDC/reset + MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack and minimum SMB3(J) hardware. No unchanged CHECK/OAM/full writes/A-B/044 or cartridge save SRAM.",
+        "hardware": false
+      },
+      "release165": {
+        "status": "not_adopted",
+        "adopted": false,
+        "selected": "predecode165/map03/reproduce03final",
+        "verification": "analysis/release165-verification.json",
+        "contract": "docs/nes-release165-contract.ko.md",
+        "next": "SELECT predecode165/map03/reproduce03final;retain release165map01 as isolated-host experiment, not installable. QSF four-release-register isolation verified; nominal -0.583ns worst nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|load_begin -> nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|state.WRITE. This is a 7-level same-clock load_begin->fault~2->state~43/44/45/52/53/73->WRITE/HOLD path, not the old reader predicate or host release. Inspect independent state-transition equations versus shared fault/error task, preserving exact WRITE/HOLD pulse drain and command conflict/STOP priority. Do not repeat compare165.drain (already rejected), old phase/counter variants, blind refits or global dont_merge/preserve. Reuse four local-release assignments only with new hierarchy timing evidence. Then necessary native-video IO/CDC/reset and MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack, minimum SMB3(J) hardware. No unchanged CHECK/OAM/full writes/A-B/044;saveSRAM reserved.",
+        "hardware": false
+      },
+      "state165": {
+        "status": "selected",
+        "adopted": true,
+        "selected": "state165/map01/reproduce01",
+        "verification": "analysis/state165-verification.json",
+        "contract": "docs/nes-state165-contract.ko.md",
+        "next": "SELECT state165/map01/reproduce01;state165map01 nominal -0.092ns, worst nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|start -> nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|state.SETUP. Actual path start->fault~3->phase_step~0->Selector9~0->state~60/61->SETUP:5levels,68percent routing. Also READY->WRITE/RECEIVE -.001ns. Preserve new single-state-owner contract; inspect shared command/timed-phase guard for SETUP hold/entry and those near-zero paths, without assuming START is a legal SETUP entry. No unchanged fit or old compare165 drain/phase/counter repeats, no clock/SDC relaxation. Preserve fault/STOP/write drain and four local release QSF assignments with fresh hierarchy checks. Then minimum IO/CDC/reset+MCU receive-convert-ACK/audio/input/STOP/time/full-link/stack and SMB3(J) hardware;no unchanged fullwrites/OAM/A-B/044/saveSRAM.",
+        "hardware": false
+      },
+      "phaseguard165": {
+        "status": "selected",
+        "adopted": true,
+        "selected": "phaseguard165/map01/reproduce01",
+        "verification": "analysis/phaseguard165-verification.json",
+        "contract": "docs/nes-phaseguard165-contract.ko.md",
+        "next": "SELECT phaseguard165/map01/reproduce01, not rejectedmap02. Reuse294912loader conditions/1056sequences and exact unchangedSPI/reader evidence. Remaining nominal -0.083ns loaded_bytes[6] -> pending_counter_clear: inspect offset=={5'd0,loaded_bytes} equality depth/partition and static clear eligibility on SAME capture edge. Do not pre-sample loaded_bytes: loader may advance while SPI frame is arriving. Do not repeat rejected STOP operand split map02 (-0.449 tag->check_next), compare165 response-mask/phase/drain variants, unchanged fits/fullwrites/OAM/A-B/044. Preserve state single owner/error priorities/WRITE-HOLD drain, local4release QSF, exact clocks/SDC. After same-clock closure, check necessary native-video held-data/control/reset/externalIO on selected hierarchy; connect MCU E6/version2 status73, E5 observer70, E0/F6 receive-convert-ACK/audio/input/STOP/elapsed-time/full-link/stack then minimal SMB3(J) first-level hardware. Save SRAM remains reserved; no broad debug expansion. Both candidate builds/FLOAT finished. SPI01 connected elaboration failed because old test force targeted a now-wire predicate; SPI02 targets equivalent captured operands and passes, not a hardware/license fault. Preserve failedSPI01 and completedarchives/finalizers/publicpins.",
+        "hardware": false
+      },
+      "length165": {
+        "status": "not_adopted",
+        "adopted": false,
+        "selected": "phaseguard165/map01/reproduce01",
+        "verification": "analysis/length165-verification.json",
+        "contract": "docs/nes-length165-contract.ko.md",
+        "next": "선택 phaseguard165/map01을 기준으로 진행한다. 이번 numeric keep의 비교 경계 효과와 map03의 상태별 판정은 실험 근거로만 재사용한다. 다음에는 check_failed의 CHECK 카운터·상태·오류 처리 팬아웃과 START/STOP 우선순위를 함께 읽고, 명령 완료 시점과 오류 대응을 바꾸지 않는 공통 자격 신호/다음 상태 구조를 설계한 뒤 변경 경계 동등성 시험과 한 번의 배치로 평가한다. 같은 세 후보의 무변경 재배치, 이전 STOP 저장 레지스터 분리, 클록 완화·false path 추가는 반복하지 않는다. 내부 타이밍 통과 후 필요한 외부IO/CDC와 E6/version2 상태73·E5 관측70, E0/F6 수신·변환 ACK 및 사운드·입력·STOP·경과시간 MCU 연결을 마무리해 SMB3 첫 레벨 실기로 간다. 불필요한 전체 ROM 쓰기와044 복원 반복은 생략한다.",
+        "hardware": false
+      },
+      "retirece165": {
+        "status": "not_adopted",
+        "selected": "phaseguard165/map01/reproduce01",
+        "adopted": false,
+        "verification": "analysis/retirece165-verification.json",
+        "contract": "docs/nes-retirece165-contract.ko.md",
+        "next": "선택 phaseguard165/map01/reproduce01을 유지한다. 개별 조합식 수정→전체 재배치만 반복하는 방식은 중단한다. 다음에는 실제 MCU SPI 프레임 간격과 SS/SCK 겹침·응답·ACK·STOP/reset 계약을 먼저 확인해, 명령 캡처와 실행 자격 판정을 명시적인 여러 클록 단계로 나눌 수 있는지 검토한다. 이것은 기존 같은 클록 처리 계약을 바꾸는 설계이므로 단순한 동등성 주장이나 false path로 넘기지 않는다. 외부 응답 지연 한도, queued 명령 중 오류·STOP 우선순위, 새 프레임의 fail-closed 처리와 식별 버전/MCU 호환성을 정의하고 변경 경계 시험을 통과한 구조만 한 번 배치한다. 추가 지연을 허용할 수 없다는 근거가 나오면 그 결과를 남기고 공통 오류 신호의 지역화 대안을 선택한다. 이번3후보·이전 length165/STOP 분리·무변경 fit/전체ROM 쓰기는 반복하지 않는다. 내부 타이밍 이후 필요한 외부IO/영상CDC/reset와 MCU E6/version2 상태73·E5 관측70·E0/F6 수신/변환/ACK·사운드·입력·STOP·경과시간을 연결해 SMB3 첫 레벨 실기로 진행한다. 설치164/GBC와 세이브 SRAM은 보존한다.",
+        "hardware": false
+      },
+      "commandstage165": {
+        "status": "not_adopted",
+        "selected": "phaseguard165/map01/reproduce01",
+        "adopted": false,
+        "verification": "analysis/commandstage165-verification.json",
+        "contract": "docs/nes-commandstage165-contract.ko.md",
+        "next": "선택 phaseguard165/map01은 유지한다. 명령3단계의 외부 지연 허용 가능성은 확인됐으므로 같은 MCU 간격 조사를 반복하지 않는다. 다음은 실제 잔여 경로 check_request_tag[6] → load_begin (-0.204ns)의7단 LUT 경로를 기준으로 C1에서 명령별 실행 허용 비트를 각각 등록하고 C2의 공통 오류 차단 뒤 최종 명령 재디코딩3단을 제거하는 후보 한 개를 검증한다. 오류 우선순위를 다음 클록으로 미루거나 응답 검사를 생략하지 않는다. 같은 두 후보의 무변경 배치나 작은 조합식 탐색은 반복하지 않는다. 실험 SPI 식별자74는 아직 설치용으로 승인하지 않았다. 후속 MCU는 기존6b를 묵인하지 말고 정확한 후보 식별자를 확인하고 SS high/setup 2µs 계약을 유지해야 한다. E6/version2 상태73·E5 관측70·E0/F6 수신/변환/ACK, 사운드·입력·STOP·경과시간, full-link/stack을 연결한 뒤 SMB3(J) 첫 레벨 실기로 간다. 설치164·GBC·세이브 SRAM 보존; 새SD 없음; 전체 ROM 쓰기·A/B·044 반복 생략.",
+        "hardware": false
+      },
+      "commandpulse165": {
+        "status": "not_adopted",
+        "selected": "phaseguard165/map01/reproduce01",
+        "adopted": false,
+        "verification": "analysis/commandpulse165-verification.json",
+        "contract": "docs/nes-commandpulse165-contract.ko.md",
+        "next": "기준 phaseguard165/map01/reproduce01을 유지한다. 이번 map02는 후속 구조 검토용이며 채택한 배포 기준이 아니다. 잔여 load_begin → state.WRITE (-0.136ns)은7단 LUT이며 data delay6.013ns 중 배선4.030ns(67%)다. 응답 주소→실행 허용과 STOP은 통과했으므로 다시 손대지 않는다. 다음은 로더의 공통 다음 상태 선택망을 WRITE/RECEIVE 등 목적 상태별 전이식으로 분리하는 한 후보를 검토한다. WRITE/HOLD drain·STOP·같은클록 오류·미사용4비트 상태의 기존 결과를 보존하고 변경 경계 비교 및 결합SPI 시험을 통과한 뒤 한 번 배치한다. 자동 상태 인코딩이나 속성만 바꿔 우연히 좋아지기를 기대하는 무변경 refit는 하지 않는다. 실험ID74/C0캡처-C1판정-C2실행/valid=0 payload 비관찰/SS high·setup2µs 계약과 같은클록 fault 우선순위를 보존한다. 후속 MCU는 정확한 식별자를 검사하고 E6/version2 상태73·E5 관측70·E0/F6 수신/변환/ACK, 사운드·입력·STOP·경과시간과 full-link/stack을 연결한다. 최소 조건을 갖추면 SMB3(J) 첫 레벨 실기로 진행한다. 설치164·GBC·세이브 SRAM 보존; 전체 ROM 쓰기·A/B·044 반복 생략.",
+        "hardware": false
+      },
+      "destination165": {
+        "status": "not_adopted",
+        "selected": "phaseguard165/map01/reproduce01",
+        "adopted": false,
+        "verification": "analysis/destination165-verification.json",
+        "contract": "docs/nes-destination165-contract.ko.md",
+        "next": "선택 phaseguard165/map01/reproduce01은 유지한다. destination165/map01은 상태 경로가 개선된 구조 검토용이며 채택·배포 기준이 아니다. 이번 병렬 상태 전이와 통과한 SPI 최종 실행 허용은 재수정하지 않는다. 다음은 실패 경로3개(command→주소검사, byte_count→command, remaining→loaded_bytes)의 실제 레지스터 갱신 조건을 함께 검토한다. SPI 첫 명령 바이트 수신 시 offset 검사 종류를 함께 등록하고 명령 레지스터의 소유권/갱신 허용을 분리하는 구조, 로더 terminal 판정을 동일 클록의 next-remaining과 일치하도록 유지하는 구조를 우선 검토한다. 단순한 사전 샘플링으로 live length·ready·fault를 늦추거나 WRITE/HOLD·STOP/리셋 시점을 바꾸지 않는다. 새 보조 레지스터는 실제 SPI 및 쓰기 시퀀스에서 불변식을 확인하고, 직접 상태 주입 시험에서도 관련 값을 일치시킨다. 변경 경계 검증 후 한 번 전체 배치하고 세 실패 경로와 state→error_code를 모두 확인한다. 같은 소스 refit/seed·속성 탐색이나 최악 경로 하나만 바꾸는 반복은 생략한다. ID74/C0C1C2/valid-only payload/SS high·setup2µs 계약을 유지한다. 내부 조건이 갖춰지면 필요한 외부IO·영상CDC/reset와 MCU E6/version2 상태73·E5 관측70·E0/F6 수신·변환·ACK, 사운드·입력·STOP·시간 및 full-link/stack을 연결하고 최소 SMB3(J) 첫 레벨 실기로 간다. 설치164/GBC/세이브 SRAM 보존; 새SD 없음; 전체ROM·A/B·044 반복 생략.",
+        "hardware": false
+      },
+      "update165": {
+        "status": "not_adopted",
+        "selected": "phaseguard165/map01/reproduce01",
+        "adopted": false,
+        "verification": "analysis/update165-verification.json",
+        "contract": "docs/nes-update165-contract.ko.md",
+        "next": "이번에 통과한 SPI 명령 수신·명령 종류·terminal 경로를 다시 미세 조정하지 않는다. 다음에는 실제 state→Equal→destination→state 경로를 기준으로 상태 판정의 등록/상태 표현 변경을 검토한다. 단순 ONE_HOT 옵션 재시도 대신 중복 decode와 실패 전이의 공유를 줄이는 RTL 후보의 논리 깊이·추가 FF·모든16개 상태 코드의 의미를 먼저 명시하고, STOP/오류 코드/쓰기 배출/reset의 같은 클록 동작을 유지한다. READ16 read_last→data_hold enable의 긴 배선도 동시에 검토하며, 필요하면 같은 값을 유지하는 지역 복제 레지스터를 후보에 포함하되 읽기 샘플 시점은 바꾸지 않는다. 기능·전체 배치·모든 내부 클록 setup/hold를 통과한 뒤 필요한 외부IO·영상CDC/reset 및 MCU RUN/시간/사운드/입력/STOP/full-link/stack을 연결하고 최소 SMB3(J) 첫 레벨 실기로 넘어간다. 새 SD 패키지는 아직 만들지 않는다.",
+        "hardware": false
+      },
+      "directstate165": {
+        "status": "selected",
+        "selected": "directstate165/map01/reproduce01",
+        "adopted": true,
+        "verification": "analysis/directstate165-verification.json",
+        "contract": "docs/nes-directstate165-contract.ko.md",
+        "next": "선택 기준을 directstate165/map01/reproduce01로 변경한다. 양수 여유를 더 늘리기 위한 미세 논리·seed·무변경 refit는 중단한다. 먼저 동일 배치에서 외부54입력/57출력과 혼합 클록 경로를 PSRAM70ns/SNES/MCU-SPI/영상 mailbox/reset으로 분류하고 기존 보드 근거를 재사용할 수 있는 범위를 확인한다. 실제 새 경계의 요청/응답 데이터 안정성·ACK 소유권·공통 reset/STOP 회수 및 필요한 지연 제약을 점검한다. 그 다음 MCU에 실험 SPI0x74와 E6/version2 상태73·E5관측70·E0/F6 패킷 수신/변환/SNES ACK를 연결하고, 기존 사운드·입력·경과시간·STOP 서비스를 유지한다. full-link/stack과 최소 변경 경계 검증 후 SMB3(J) 첫 레벨 실기 패키지로 넘어간다. 새로운 일반 진단체계나 전체 ROM/A-B/044 반복을 선행 조건으로 추가하지 않는다. 변경으로 배치가 달라질 때만 해당 완성 후보의 전체 타이밍을 다시 확인한다. 내부 통과만으로60fps·실기 안전성·장시간 입력 유지를 완료 처리하지 않는다. 설치164/GBC/세이브 SRAM은 보존한다.",
+        "hardware": false
+      },
+      "boundary165": {
+        "status": "selected",
+        "selected": "boundary165/map02/reproduce02",
+        "adopted": true,
+        "verification": "analysis/boundary165-verification.json",
+        "contract": "docs/nes-boundary165-contract.ko.md",
+        "next": "boundary165/map02를 기준으로 실제164 MCU 게임 루프에 수신→PREPARED→COMMIT→영상 변환→패킷→SNES 표시 ACK→consumed를 연결한다. 식별자74/E6 version2/E5/D6/F6를 정확히 검사하고 기존 CF86·사운드·입력·STOP·메뉴 복귀를 유지한다. SPI를 잡지 않은 경계에서 시간/오류를 서비스하고 반복 횟수 대신 단조 경과 시간을 사용한다. RUN 중 SD 기록은 금지하고 안전한 STOP 뒤 기록한다. receiver18064B+video15888B와 기존 전역·스택을 실제 ARM full-link로 확인한다. 필요한 새 경계 시험 후 SMB3(J) 첫 레벨 실기로 진행하며 기존 ROM 쓰기·부팅·A/B·044 반복 및 무변경 refit를 추가하지 않는다. 기존 전기적 E1/E2·MTBF·클록 정지 한계는 조건부 위험으로 계속 명시한다.",
+        "hardware": false
+      },
+      "runtime165": {
+        "status": "mcu_linked_stack_review_pending",
+        "selected_mcu": "runtime165/arm02",
+        "selected_fpga": "boundary165/map02/reproduce02",
+        "verification": "analysis/runtime165-verification.json",
+        "contract": "docs/nes-runtime165-contract.ko.md",
+        "mcu_integrated": true,
+        "full_arm_link": true,
+        "ram_after_static": 5000,
+        "whole_program_stack_approved": false,
+        "physical": false,
+        "hardware_package": false
+      },
+      "coupled165": {
+        "status": "physical_trial_ready",
+        "selected_mcu": "coupled165/arm01",
+        "selected_fpga": "boundary165/map02",
+        "verification": "analysis/coupled165-verification.json",
+        "contract": "docs/nes-coupled165-contract.ko.md",
+        "instructions": "docs/nes-game165-instructions.ko.md",
+        "hardware_package": true,
+        "physical": false,
+        "run_stack_margin": 1124
+      },
+      "hardware165": {
+        "status": "audio_and_return_pass_video_fail",
+        "verification": "analysis/game165-hardware01-verification.json",
+        "contract": "docs/nes-game165-hardware01.ko.md",
+        "video": false,
+        "audio": true,
+        "menu_return": true,
+        "root_cause_confirmed": false
+      },
+      "trace166": {
+        "verification": "analysis/trace166-verification.json",
+        "hardware_package": true,
+        "video_fixed": false,
+        "physical": false
+      },
+      "hardware166": {
+        "status": "video_fail_precommit_fill_abort_localized",
+        "verification": "analysis/game166-hardware01-verification.json",
+        "contract": "docs/nes-game166-hardware01.ko.md",
+        "video": false,
+        "fill_suberror_confirmed": false,
+        "begins": 383,
+        "aborts": 383,
+        "ends": 0,
+        "commits": 0
+      },
+      "pacing167": {
+        "status": "functional_pass_timing_fail_no_hardware_package",
+        "verification": "analysis/pacing167-verification.json",
+        "contract": "docs/nes-pacing167-contract.ko.md",
+        "functional": true,
+        "nominal_timing": false,
+        "hardware_package": false,
+        "adopted": false,
+        "best_candidate": "map04"
+      },
+      "investigation_evidence": "analysis/game172-hardware01-verification.json",
+      "hardware_game172": {
+        "evidence": "analysis/game172-hardware01-verification.json",
+        "document": "docs/nes-game172-hardware01.ko.md",
+        "scope": "NES172 실기에서 표시 준비와 14회 표시 완료 응답을 통과했지만 이후 화면이 멈췄다. 버튼·스테이지 음악은 계속 반응했고 정상 약60초 한도로 메뉴에 복귀했다. BEGIN/END/COMMIT 각14, ABORT0, 마지막 generation27이다.170의 수집 시간 초과와 달리 다음 BEGIN이 수신되지 않은 경계이며, 연속 화면 목표는 미달성이다. 사용자 추가 확인: 처음 표시된 구간도 뚝뚝 끊겼다. 14회 ACK는 원활한 화면의 증거가 아니다. 목표는 실제 SMB3에서 약60fps의 연속 표시이며, 정지 해소만으로 완료 처리하지 않는다. 프레임 생성·전송·SNES 반영별 진행 시간과 화면 완료 간격을 구분해 병목을 줄인다. 60fps의 프레임 간격 약16.7ms를 목표 예산으로 삼되 현재 측정치로 주장하지 않는다. 전체 SPI 바이트에는 상태 폴링이 포함되므로 영상 전송량이나 유효 FPS로 바로 환산하지 않는다."
+      },
+      "current_review": "docs/nes-joint277-contract.ko.md",
+      "latest_hardware_evidence": "analysis/game227-hardware01-verification.json",
+      "hardware_game180": {
+        "evidence": "analysis/game180-hardware01-verification.json",
+        "diagnostic_goal_achieved": true,
+        "continuous_video_pass": false,
+        "fps60_pass": false,
+        "implementation_unchanged": true
+      },
+      "historical_before_pr127_replan": {
+        "status": "blackout_removed_audio_retained_playability_failed_video_latency",
+        "candidate": "NES-GAME-164",
+        "verification": "analysis/GAME164-RESULT.ko.md",
+        "plan": "docs/development/NES-077-PROCESS-REVIEW.ko.md",
+        "development_evidence": "analysis/packed181-verification.json",
+        "hardware_candidate": "NES-GAME-180",
+        "latest_hardware_evidence": "analysis/game180-hardware01-verification.json",
+        "next_gate": "NEXT MCU→SNES section/CHR전송 축소와 raw steady-state fullbank rebuild 제거를 실제C/65816로 연결. ARM에이전plan전체추가금지;BGkey는raw가덮어쓰므로cache아님. bank기준generation/dirty저장위치·포트·수명먼저명시,필요시이전복사본없는losslesssection묶음(차분과구분). capture/export겹침도공동계약;ingress11.097ms/normal2.994ms만으로60fps아님. hostRUNSTOP도같은계약;이후통합FIT/ARM/IO와SMB3숫자1+A. 분석replyjoinmap02(-1.408)미채택/배포180유지;AV→longplay→heldinput/saveSRAM/GBC164/archives보존.",
+        "current_review": "docs/nes-render181-contract.ko.md",
+        "reproduction_document": "cores/nes/REPRODUCING.ko.md",
+        "investigation": "1813_packed_ingress_verified_sink_cadence_capture_overlap_open",
+        "hardware_baseline": "NES-H1-SAMPLING-044",
+        "hardware_verified_scope": "164: first-level movement/jump and file-menu return; repeated blackout removed, sound seems normal per user; severe stutter makes normal play impossible. run/ROM/first/stop errors0, full393216 load/compare,6B/E5/A9. Held DOWN not tested; screen count not trusted FPS.",
+        "paired_candidate": "deployed180 unchanged;1813 exporter/SPI/receiver candidate only; no new full ARM/FIT/installable pair"
+      },
+      "active_plan": "docs/nes-joint284-plan.json",
+      "current_status_scope": "NES284: E2/E8·plan 진행 응답을 공통 CRC snapshot으로 통합하고 기존 MCU_RDY/PB8 알림을 실제 ARM EXTI handler·WFI·refill에 연결했다. 정상71·제한ROM3와 독립 검사·STOP·최종 ACK를 검증했다. warm 최대 15.748447ms(954), 제한 ROM907 18.726366ms(+0.004500), 남은 시간 2.059700ms다. 전체 Lite 17,765comb(-37), 부족 2,357개. 확장 제어 경계 자체는 +4comb이므로 전체 감소를 구조적 절감으로 모두 귀속하지 않는다. 제한 ROM warm 회귀로 공동 목표는 미달이며 P2/FITSTA/실물60fps는 미승인이다."
+    },
+    {
+      "id": "pce",
+      "status": "investigation_pending",
+      "candidate": null,
+      "planned_product_version": null,
+      "released": false,
+      "implementation_commit": null,
+      "source_paths": [],
+      "document": "cores/pce/README.md"
+    }
+  ]
+}
