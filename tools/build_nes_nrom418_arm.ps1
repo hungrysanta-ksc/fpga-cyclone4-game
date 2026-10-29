@@ -1,4 +1,4 @@
-param([ValidatePattern('^[a-z0-9-]+$')][string]$Run='arm01',[ValidatePattern('^nrom[0-9]+$')][string]$TrialLabel='nrom469')
+param([ValidatePattern('^[a-z0-9-]+$')][string]$Run='arm01',[ValidatePattern('^nrom[0-9]+$')][string]$TrialLabel='nrom471')
 $ErrorActionPreference='Stop'
 $root='C:/Users/mohallo/Documents/ChatGPT/sd2snes 에서 게임보이컬러 전용 게임 구동하기'
 $source=Join-Path $root 'probes/nes-repeat227/arm01'

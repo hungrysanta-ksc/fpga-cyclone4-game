@@ -1,0 +1,116 @@
+{
+  "baseline": {
+    "merged_pr": 133,
+    "merge_commit": "8d472d50df7c396efac8426bb4de62cca8ce0346",
+    "branch": "codex/nes-hardware-cost-470",
+    "FPGA": 457,
+    "ARM": 418,
+    "fixture": 428,
+    "physical_trial": 467,
+    "evidence": 469
+  },
+  "objective": "60Hz sustained same-workload capture-to-display with no skipped captures, independent validation, STOP and final display ACK/menu recovery",
+  "selected_first_bottleneck": "reduce source payload before shared SPI; unchanged D1 payload alone exceeds frame period at verified 2.625MHz",
+  "protocol_invariants": [
+    "canonical data CRC and complete bounded coverage",
+    "D2 positive retirement and generation/token checks",
+    "queue storage credit does not imply consumption",
+    "DMA/read receipt does not imply final displayed ACK",
+    "VBlank publication and final identity-bound ACK before resident commit/EA retire",
+    "STOP cancels work and prevents stale DONE/ACK/RAM publication",
+    "base DONE/SPI idle/token and menu reload remain checked",
+    "cold and STOP invalidate histories; epoch/serial/bank reuse checked"
+  ],
+  "next_delivery": {
+    "label": "nrom471",
+    "marker": "NES NROM 471.nh1",
+    "logs": [
+      "nes-progress-nrom471.txt",
+      "nes-budget-nrom471.txt",
+      "nes-game-last-nrom471.txt"
+    ],
+    "zip": "NROM471-COST-PROBE.zip",
+    "status": "reserved names and builder default; not built or delivered",
+    "log_identity": [
+      "trial_id",
+      "firmware_hash in manifest",
+      "FPGA_hash in manifest",
+      "wire/schema versions",
+      "session sequence or epoch"
+    ]
+  },
+  "sequence": [
+    {
+      "id": "P0",
+      "action": "instrument the actual 418 RUN path on FPGA457, without protocol/clock changes",
+      "measure": [
+        "per-opcode count/bytes/duration/max; positive-progress vs empty polls",
+        "source ready/capture wait, D1 SPI, CRC and parser separately",
+        "planner computation excluding synchronous plan callbacks",
+        "BEGIN, E9 callback, FINISH, E0-credit, E0-finalACK, EA retirement separately",
+        "SEAL validator/queue/DMA/VBlank/ACK timestamps where visible; unknown stays unknown",
+        "observer service duration and nested guard/DMA polling",
+        "terminal deadline vs IO vs CRC classification and stage/counters",
+        "capture generation observed, missed generation and next-capture release timing"
+      ],
+      "gate": "counter overhead bounded, transfer/CRC/token traces unchanged, STOP/finalACK/base/menu preserved; 60s timer wrap handled; unique logs; user installs 471 once useful evidence is added"
+    },
+    {
+      "id": "P1",
+      "action": "prototype bounded lossless record/row compression before SPI on existing capture snapshot; ARM expands once into existing canonical receiver",
+      "compare": [
+        "no-history run/row span compression with literal fallback",
+        "prior source338/other codecs only if whole-board compatible; no local LUT savings assumption",
+        "canonical range count, encoded wire bytes, total ARM decode+CRC cost and FPGA whole Lite resource use"
+      ],
+      "gate": "same canonical 1404-record fixture replay and color updates; incompressible/cold data and malformed lengths; STOP during record/CRC; no lost generation; original independent checks retained; total wire and active time budgets both improve"
+    },
+    {
+      "id": "P2",
+      "action": "avoid repeated raw-group/raster/map preparation in ARM and reduce E0/E8 empty polling using measured progress",
+      "gate": "epoch/serial/display history/cold/STOP invalidation; 4-credit ownership unchanged; final ACK still required; compare actual ARM cost; do not claim all status bytes removable"
+    },
+    {
+      "id": "P3",
+      "action": "connect measured capture/transfer/compute/consumer overlap to the next VBlank deadline",
+      "gate": "explicit clock-by-clock ownership and RAM ports; positive input commit not substituted for display ACK; first map/late OBJ and cold cases; no lost next capture; source/output ROM arbitration included"
+    },
+    {
+      "id": "P4",
+      "action": "same-source whole Lite FIT/timing and actual paired ARM/65816 regression, then user hardware sustained test",
+      "gate": "complete artifact hashes/unique label/restoration; warm/cold/STOP/finalACK/menu; patterned then scrolling workload; compare frame distribution and missing capture rather than average alone; physical smoke is not complete CDC/IO signoff"
+    },
+    {
+      "id": "P5",
+      "action": "only after NROM sustained budget, implement/measure actual MMC4 latch and MMC5 ROM/tag/ExRAM/IRQ/audio scopes",
+      "gate": "actual mapper traffic and whole-board resource/timing; no promise that resolving current 15fps automatically makes MMC4/5 viable"
+    }
+  ],
+  "planning_only_reference_budget_ms": {
+    "shared_SPI_wire": 8,
+    "ARM_compute_excluding_SPI_service": 3,
+    "nonoverlapped_external_processing": 3,
+    "guard_service_scheduler": 0.6666666666666666,
+    "reserve": 2,
+    "total": 16.666666666666668,
+    "wire_byte_limit_at_2_625MHz": 2625,
+    "status": "design targets, not measured bounds or proof",
+    "VBlank_note": "final publication must fit periodic schedule; cannot simply add a full-frame VBlank wait or assume it vanishes; capture overlap must be demonstrated"
+  },
+  "whole_board_budget": {
+    "baseline_LE": 14770,
+    "capacity_LE": 15408,
+    "arithmetic_remaining_LE": 638,
+    "logic_routing_and_LAB_fit_not_guaranteed": true,
+    "no_new_Questa_seat": true,
+    "Quartus": "Lite",
+    "new_FPGA_fit_required_only_for_actual_RTL_change": true
+  },
+  "not_selected": [
+    "SPI clock doubling: 5.25MHz half-period95.238ns smaller than prior conditional reply164.848ns",
+    "unify all FPGA control before physical bottleneck measurement",
+    "remove CRC/receipt/finalACK to meet time",
+    "static-frame skipping passed off as 60fps",
+    "repeat full 384KiB board simulation without a change needing it"
+  ]
+}
