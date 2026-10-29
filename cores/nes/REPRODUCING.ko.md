@@ -41,3 +41,7 @@
 ## 478에서 추가 확인한 합성 의존성
 
 기존471의66 QSF 항목 외에 자동 발견 CIRAM/HEX와 board.sdc가 읽는 cdc181.sdc가 필요했다. [478 source closure](../../analysis/game478-feasibility.json)에69개 hash를 기록했다. 실제 실행 source·constraints를 `probes/nes-game478/mmc03`에 보존했으며 이는 아직 private다. 기존 board-source snapshot만으로 전체 재현 입력이 완결됐다고 가정하지 않는다. 현재 PC에서 이 자료를 사용하고, 다른 PC 재현 시 이식성 작업이 별도로 필요하다.
+
+## 479 로컬 입력
+
+`prepare_nes_mmc479.py`는 선택476 전체 ARM source, hash 고정 원래227 loader,478의69파일 closure/QSF를 요구한다.479 실행 source·ARM03/loader02/core01/board01·M4 결과는 `probes/nes-mmc479`에 보존한다. 새 PC에서는 `execution-location.json`의 경로를 그대로 쓰지 말고 대응 source/도구를 복구한다. 원본 ROM은 private147 PRG/CHR hex에서 기존 전체 SHA와 byte 동일하게 복구했으며 Git에 넣지 않는다. host20건·seeded core smoke·M4 기록 재생을 실제 live ARM/IRQ/tile/SNES 구동으로 오인하지 않는다. 새 설치본은 아직 없다.

@@ -6,7 +6,7 @@ PR29는 다른 작업 브랜치로 병합됐으며 이 clone에 해당 merge 객
 
 | PR | 상태 | 제목 | 근거/상세 |
 |---|---|---|---|
-| [#135](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/135) | 열림·초안 | NES476–478: 실기 판정·게임 입력 검증과 MMC3 배치 | [정리](pr-135.md) |
+| [#135](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/135) | 열림·초안 | NES476–479: 수신 개선과 MMC3 로더·부팅 경로 검증 | [정리](pr-135.md) |
 | [#134](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/134) | 병합 | 실기 NROM 20% 개선과 멀티 코어 현황·인계 정리 | [정리](pr-134.md) |
 | [#133](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/133) | 병합 | NES: 제한 NROM 실기 진입과 loader 경계 검증 | [정리](pr-133.md) |
 | [#132](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/132) | 병합 | NES: PR132 회고와 실기 진입·60프레임 후속 계획 | [정리](pr-132.md) |

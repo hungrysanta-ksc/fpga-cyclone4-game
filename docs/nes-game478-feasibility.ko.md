@@ -6,7 +6,7 @@ PR135의476/477 실기 이후 첫 게임 진입 관문이다. **새 SMB3 실기/
 
 기존에 동결한 SMB3905–975의71 geometry/raw를 원래 `nes-delta231/test07/result.json`의142개 해시와 대조했다. ROM이나 새 게임 실행을 생성하지 않고 캡처된 활성 배열만 현재2232 ABI의 host encoder로 포장했다. 실제474/476 ELF의 PT_LOAD와 firmware를 대조해 M4 poll·CRC·packet·prepare·planner를 실행했다.
 
-SPI peer와 tile plan/DMA 완료는 모델이다. generation905–975·epoch1·serial1–71을 부여해 bank0/1/0 수명을 이어갔다. 원래 게임의 시간·SPI 거래를 재생한 것이 아니며, model packet 분할/압축이 실제 FPGA 출력과 byte 동일하다고 주장하지 않는다. 활성 geometry·raw를 별도로 비교했고, 두 실제 ARM의 전체 receiver/video/resident bytes와 모든16B plan이71개 모두 같다.
+SPI peer와 tile plan/DMA 완료는 모델이다. generation905–975·epoch1·serial1–71을 부여해 bank0/1/0 수명을 이어갔다. 원래 게임의 시간·SPI 거래를 재생한 것이 아니며, model packet 분할/압축이 실제 FPGA 출력과 byte 동일하다고 주장하지 않는다. 활성 geometry·raw를 별도로 비교했고, 두 실제 ARM의 전체 receiver/video/resident bytes와 모든40B plan이71개 모두 같다.
 
 | 입력·CPU 비용 | 최소 | 중앙값 | 최대 |
 |---|---:|---:|---:|
