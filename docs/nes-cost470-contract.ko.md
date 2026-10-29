@@ -1,5 +1,7 @@
 # NES470: 실기 약15fps의 비용과 다음 순서
 
+> PR131–133 종합 회고와 이후 실행 관문은 docs/nes-pr131-133-retrospective.ko.md 및 docs/nes-replan472.json으로 갱신했다. 아래 비용 분석은 유지한다.
+
 PR133 머지8d472d50이 origin/master에 포함됨을 확인하고 새 codex/nes-hardware-cost-470 브랜치를 만들었다. 기준은 실제 시험467(FPGA457/ARM418/자체ROM428), 새 사용자 로그469다. 원본227 게임·402 등의 다른 workload 수치를 합산하지 않는다. 분석은 tools/analyze_nes_nrom470_cost.py로 재현하고 해시와 결과는 analysis/nrom470-cost.json에 기록한다. 새 ARM/RTL 성능 측정이나 합성은 이 분석에서 수행하지 않았다.
 
 ## 비용표
