@@ -1,32 +1,98 @@
 {
   "schema_version": 1,
-  "execution_state": {"performance_work": "active"},
+  "execution_state": {
+    "performance_work": "active"
+  },
   "physical_baseline": "MMC482",
   "physical_evidence": "analysis/mmc483-hardware482.json",
-  "development_candidate": "ARM484 candidate01 / unchanged FPGA482",
-  "development_evidence": "analysis/game484-planner.json",
+  "development_candidate": "ARM485 candidate03/ARM03 / FPGA482 byte-identical; trial01",
+  "development_evidence": "analysis/supply485-verification.json",
   "merged_PR135": "948a2e9bc6542aaec7737e28f4431cb0c0350f6d",
   "branch": "codex/nes-game-plan-supply-484",
   "budget": {
     "physical_mean_ms": 68.48346636259977,
     "physical_60Hz_gap_ms": 51.8167996959331,
-    "candidate_ARM_Flash_tail_bytes": 632,
-    "candidate_static_BSS_bytes": 18552,
+    "candidate_ARM_Flash_tail_bytes": 232,
+    "candidate_static_BSS_bytes": 18572,
     "existing_RUN_workspace_bytes": 31848,
     "new_allocation_proven_bytes": 0,
     "proposed_G2_added_Flash_ceiling_bytes": 384,
     "FPGA_remaining_LE_unchanged": 154,
-    "full_stack_proof": false
+    "full_stack_proof": false,
+    "new_ownership_state_bytes": 20,
+    "new_payload_buffer_bytes": 0,
+    "actual_G2_added_Flash_bytes": 400,
+    "G2_initial_ceiling_exceeded_bytes": 16,
+    "G2_ceiling_review": "Added64B guard wait to reject live01 busy-spin;400B actual versus384B initial proposal;232B physical Flash remains"
   },
   "steps": [
-    {"id": "G0", "status": "complete", "goal": "Physical482 costs and termination reconciled", "report": "docs/nes-mmc483-hardware.ko.md"},
-    {"id": "G1", "status": "complete", "goal": "Actual482 M4 function attribution,71 equal state/plans and prior480 E8 response classification", "report": "docs/nes-game484-planner.ko.md"},
-    {"id": "G2A", "status": "complete_bounded_candidate", "goal": "Move unused ordinary classification after exact-hit and fully assign BG/OBJ plans", "gate": "71 target runs:21.38% fewer planner instructions, identical receiver/state/40B plans;243645 host differential requests;4B more Flash, no allocation"},
-    {"id": "G2B", "status": "next", "goal": "Jointly connect first-BG batch release and nonblocking bulk ownership using existing window storage", "gate": "Trace descriptor token/generation and actual consume/ACK; never reuse staging or repeat op7 while in flight; retain independent CRC/credit/STOP/final ACK; actual code/stack/Flash budget before adoption"},
-    {"id": "G2C", "status": "pending", "goal": "Compare unchanged and joint supply using484 ARM and482 RTL on identical ROM phase and continuous frames", "gate": "Charge new E9/E8, IRQ,4credit,ROM and65816 service; whole receive/plan/SEAL time, not instruction scaling or free overlap; one Questa FLOAT seat sequentially"},
-    {"id": "G3", "status": "pending", "goal": "Reduce remaining input/SEAL costs and establish60Hz continuous capture/display feasibility", "gate": "Receive17.1571ms and SEAL18.4430ms remain; p95/capture/NES speed/ROM phase/full stack/CDC/IO remain open; Quartus Lite whole run only after actual RTL changes"},
-    {"id": "G4", "status": "pending", "goal": "Deliver a meaningful validated change for controlled same-ROM/input hardware comparison", "gate": "New filenames/logs/restore; preserve482 and476; no counters-only or instruction-only hardware package"}
+    {
+      "id": "G0",
+      "status": "complete",
+      "goal": "Physical482 costs and termination reconciled",
+      "report": "docs/nes-mmc483-hardware.ko.md"
+    },
+    {
+      "id": "G1",
+      "status": "complete",
+      "goal": "Actual482 M4 function attribution,71 equal state/plans and prior480 E8 response classification",
+      "report": "docs/nes-game484-planner.ko.md"
+    },
+    {
+      "id": "G2A",
+      "status": "complete_bounded_candidate",
+      "goal": "Move unused ordinary classification after exact-hit and fully assign BG/OBJ plans",
+      "gate": "71 target runs:21.38% fewer planner instructions, identical receiver/state/40B plans;243645 host differential requests;4B more Flash, no allocation"
+    },
+    {
+      "id": "G2B",
+      "status": "implemented_and_functionally_verified",
+      "goal": "Jointly connect first-BG batch release and nonblocking bulk ownership using existing window storage",
+      "gate": "Actual linked M4 twelve cases, generation rearm and delayed ACK; RTL/65816 first-frame ACK/VBlank/pixels/STOP pass. No actual whole-time claim.",
+      "report": "docs/nes-supply485-contract.ko.md"
+    },
+    {
+      "id": "G2C",
+      "status": "physical_time_pending",
+      "goal": "Measure485 DWT whole time with actual ARM/SPI/IRQ/ROM and continuous frames",
+      "gate": "Use485 logs; live C/RTL has no shared M4 clock. First early variant exposed E8 polling; final128us guard wait passes functional join but time benefit is unproven."
+    },
+    {
+      "id": "G3",
+      "status": "pending",
+      "goal": "Reduce remaining input/SEAL costs and establish60Hz continuous capture/display feasibility",
+      "gate": "Receive17.1571ms and SEAL18.4430ms remain; p95/capture/NES speed/ROM phase/full stack/CDC/IO remain open; Quartus Lite whole run only after actual RTL changes"
+    },
+    {
+      "id": "G4",
+      "status": "trial_ready_waiting_user_hardware",
+      "goal": "Install MMC485-SUPPLY and return new485 logs",
+      "gate": "Compare completed frames,total receive/plan/SEAL and nested SPI/quiet; menu return and same-scene limits; preserve482/476/164/467 restores.",
+      "report": "docs/nes-mmc485-trial.ko.md"
+    }
   ],
-  "retained": ["Compressed input and independent checks", "Credit distinct from actual consumption", "STOP/cold/epoch invalidation", "Final ACK before EA/retire", "VBlank and prior displayed identity", "ROM/IRQ and next-input ownership", "Working482 and476/164/467 restore/GBC/save"],
-  "not_proven": ["Candidate hardware time/FPS", "Combined supply benefit or transport timing", "Physical stack/IRQ bounds", "No capture loss or NES real-time speed", "All MMC3 scenes/MMC4/5", "Full CDC/IO signoff", "Sustained60Hz"]
+  "retained": [
+    "Compressed input and independent checks",
+    "Credit distinct from actual consumption",
+    "STOP/cold/epoch invalidation",
+    "Final ACK before EA/retire",
+    "VBlank and prior displayed identity",
+    "ROM/IRQ and next-input ownership",
+    "Working482 and476/164/467 restore/GBC/save"
+  ],
+  "not_proven": [
+    "Candidate hardware time/FPS",
+    "Combined supply benefit or transport timing",
+    "Physical stack/IRQ bounds",
+    "No capture loss or NES real-time speed",
+    "All MMC3 scenes/MMC4/5",
+    "Full CDC/IO signoff",
+    "Sustained60Hz"
+  ],
+  "trial_package": "analysis/supply485-package.json",
+  "next_order": [
+    "G4: user485 trial and new raw logs",
+    "G2C: reconcile actual whole-time costs and termination",
+    "G3: choose input/SEAL or supply follow-up from measured result"
+  ]
 }
