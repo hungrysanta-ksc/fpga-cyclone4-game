@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-"""Actual 418 ARM menu-loader through full model load, verify, STOP and base."""
+"""Actual ARM base-only recovery control with modeled failure responses."""
 import argparse,collections,hashlib,json,struct,sys,time
 from pathlib import Path
 from nes_delta231 import BASE,sha
