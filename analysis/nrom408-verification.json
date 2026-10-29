@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "profile": "fixed NROM16 horizontal CHR-ROM8, no PRG-RAM",
+  "actual_227_loader_function": true,
+  "actual_227_FatFS": true,
+  "synthetic_FAT16_disk": true,
+  "C_full_loader_peer": "modeled SPI/PSRAM, identify/run/base, not actual FPGA RTL",
+  "C_cases": 9,
+  "C_success": "3 passes/CRC, checked START and modeled STOP/base/IRQ restore",
+  "C_negative": "header, wrong ID, change during pass2/pass3, write/readback error, STOP/base failure; fail-closed",
+  "actual_FPGA_RTL": "SPI/boot/loader/physical reader with modeled PSRAM; READY/count/verified seeded",
+  "RTL_checks": "7 read ACKs, 19 corruptions, 72 cancellation phases, 2 overlap, unverified START rejection, verified RUN then STOP",
+  "full_loader_FPGA_cosimulation": false,
+  "actual_hardware_STOP_base_recovery": false,
+  "linked_ARM": {
+    "firmware_bytes_reference": 209828,
+    "firmware_bytes_candidate": 210104,
+    "delta": 276,
+    "text_reference": 199785,
+    "text_candidate": 200061,
+    "static_data": 10040,
+    "static_bss": 18076,
+    "same_conditions": true,
+    "full_IRQ_stack_and_execution_time": null,
+    "hardware_package": false
+  },
+  "whole_Lite_MAP": {
+    "baseline_LE": 18850,
+    "candidate_LE": 18178,
+    "baseline_comb": 13951,
+    "candidate_comb": 13557,
+    "FF": 8029,
+    "RAM_bits": 185824,
+    "scope": "227 board MAP, cart+SPI changed, actual full loader not connected"
+  },
+  "performance": {
+    "candidate_A_B_full_time": null,
+    "actual_ARM_IRQ_SPI_ROM_schedule": null,
+    "MMC4_MMC5_contention": null
+  },
+  "FIT": false,
+  "STA": false,
+  "physical60fps": false,
+  "pins": {
+    "fatfs_test": "7d51e454075d1dda75f8380e22d9b497ea817a17ed2de742afdd1c0a2d086817",
+    "RTL_test": "ecedcd93682d5d99712a7e3584964fa34ec255f4deabbcad616ead7f4566f1c4",
+    "firmware": "31bd5b623ce704871b4285c9a4e602450b3b5f84e255abfaf37d9cc4b1780820",
+    "ELF": "c843468862e877199ace6f2003291c61b4b98deff2ce03f4d5e8d44e8eb95a80",
+    "menu_disassembly": "9fa3a3f811288b32d8a6bdfc73ef11509e376cbfa61e765ad2e12026225da6fe",
+    "map_summary": "f3fc886090240ba5cc934bb4e8031561b824d3bc03a743995a77eb109223355b"
+  }
+}

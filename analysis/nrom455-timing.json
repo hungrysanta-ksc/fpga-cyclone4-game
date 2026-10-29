@@ -1,0 +1,89 @@
+{
+  "fit_le": 14827,
+  "device_le": 15408,
+  "raw_sta_setup_ns": -6.429,
+  "raw_sta_recovery_ns": -9.022,
+  "related_paths": {
+    "implementation": {
+      "setup": {
+        "corner": "8_slow_1200mv_85c",
+        "from_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+        "to_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+        "kind": "setup",
+        "from": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|check_response_address[12]",
+        "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|check_busy",
+        "slack": "0.213",
+        "delay": "5.203"
+      },
+      "hold": {
+        "corner": "MIN_fast_1200mv_0c",
+        "from_clock": "nes",
+        "to_clock": "nes",
+        "kind": "hold",
+        "from": "nes_run_observer134:observer|nes_pad_trace156:trace|ticks[17]",
+        "to": "nes_run_observer134:observer|nes_pad_trace156:trace|altsyncram:entries_rtl_0|altsyncram_doi1:auto_generated|ram_block1a0~porta_datain_reg0",
+        "slack": "0.122",
+        "delay": "0.442"
+      }
+    },
+    "nominal": {
+      "setup": {
+        "corner": "8_slow_1200mv_85c",
+        "from_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+        "to_clock": "core|pll|altpll_component|auto_generated|pll1|clk[1]",
+        "kind": "setup",
+        "from": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|checked_data[2]",
+        "to": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|raw_causes[4]",
+        "slack": "0.248",
+        "delay": "5.134"
+      },
+      "hold": {
+        "corner": "MIN_fast_1200mv_0c",
+        "from_clock": "nes",
+        "to_clock": "nes",
+        "kind": "hold",
+        "from": "nes_run_observer134:observer|nes_pad_trace156:trace|ticks[17]",
+        "to": "nes_run_observer134:observer|nes_pad_trace156:trace|altsyncram:entries_rtl_0|altsyncram_doi1:auto_generated|ram_block1a0~porta_datain_reg0",
+        "slack": "0.122",
+        "delay": "0.442"
+      }
+    }
+  },
+  "reset_epoch_paths": 576,
+  "reset_epoch_min_slack_ns": 1.512,
+  "first_stage_fanout": 45,
+  "cdc_classes": {
+    "inherited_unmodified": 1716,
+    "control_first": 90,
+    "held_payload": 276,
+    "gray_first": 192,
+    "related": 378,
+    "inherited_reset_review": 1152
+  },
+  "held_max_ns": 6.874,
+  "gray_max_ns": 6.715,
+  "conditional_io": {
+    "psram_conditional_margin_ns": 4.854,
+    "snes_read_envelope_ns": 82.425,
+    "spi_reply_envelope_ns": 167.229,
+    "spi_half_period_ns": 190.476,
+    "conditional_data_bounds_pass": true,
+    "native_payload_reset_pass": true,
+    "negative_reset_path_count": 39,
+    "native_payload_negative_reset_path_count": 0
+  },
+  "inherited_unmodified_not_reaudited": true,
+  "unconstrained_paths_remain": true,
+  "actual_board_signoff": false,
+  "input_sha256": {
+    "board.fit.summary": "9e00ac202f7592f9300bdc070c8f178fa77170fc3d04710d461e491be5ae0d92",
+    "board.sta.summary": "db1994377e3956562ad116efdb53d43a1ae5c296f3535142c3ac52926af3f698",
+    "board.sta.rpt": "dd74a18a34fe6008c1a91938838cad2d907af408a666366ec0fab457179151f6",
+    "inventory206.tsv": "a0a717a6f7cfb4c34e8fe8f8bfe84921d42096ee877ac4f4600da2785105157d",
+    "topology206.tsv": "ba3dd6d56d1b6e79db218c2cedb615098cb99d973ce4ad0aee73f524e88c9bc8",
+    "reset207.tsv": "69d52de63038873c2d06a6d5aeafa101670394eca6de4c11ff1bc47a79f4c031",
+    "boundary165-paths.tsv": "647a31f0d67a12a9226b7b35daa0feb1a3f5f440214ab9c283a088719ba5c357",
+    "implementation-paths204.tsv": "d99880f0458800b24a0907f04e281c00d16a7a120f376687c1ba02acf39038d1",
+    "nominal-paths204.tsv": "5e36d8323387a9bb4b08d51ade1db2acf89bbba7ecd1b802b3c714c8c64527a6"
+  }
+}

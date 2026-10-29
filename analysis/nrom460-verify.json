@@ -1,0 +1,103 @@
+{
+  "passed": true,
+  "firmware_sha256": "596a8a73ca2b8a66f946fe612b1f4480ecff258e01b2e9bf32b952e0448cd30c",
+  "elf_sha256": "4000194fb1bae97d7deb9102a124c286ac93dd01e4a035f1f605b5c9f87d362e",
+  "rom_sha256": "61cc6ae495fb34dd6aa28497db6f584fa308063a79ba9412bde50c0c9419fd2c",
+  "linked_functions": {
+    "nes_rom_spi_transfer": {
+      "elf_address": 134349312,
+      "size": 4,
+      "stm_offset": 82432
+    },
+    "nes_game149_transfer": {
+      "elf_address": 134327076,
+      "size": 404,
+      "stm_offset": 60196
+    },
+    "nes_rom_verified_start": {
+      "elf_address": 134350110,
+      "size": 66,
+      "stm_offset": 83230
+    },
+    "nes_rom_verify": {
+      "elf_address": 134349760,
+      "size": 350,
+      "stm_offset": 82880
+    },
+    "nes_cf86_monitoring094": {
+      "elf_address": 134320180,
+      "size": 20,
+      "stm_offset": 53300
+    },
+    "nes_rom_spi_frame": {
+      "elf_address": 134349242,
+      "size": 70,
+      "stm_offset": 82362
+    }
+  },
+  "cases": {
+    "complete": {
+      "report": {
+        "compared": 393216,
+        "error": 0,
+        "stop_ok": 0
+      },
+      "spi_counts": {
+        "0x63": 1,
+        "0x65": 5,
+        "0x66": 1,
+        "0x67": 393216,
+        "0x68": 393216,
+        "0x69": 1,
+        "0x6a": 393216
+      }
+    },
+    "corrupt": {
+      "report": {
+        "compared": 256,
+        "error": 6,
+        "stop_ok": 1
+      },
+      "spi_counts": {
+        "0x64": 1,
+        "0x65": 3,
+        "0x66": 1,
+        "0x67": 257,
+        "0x68": 256,
+        "0x6a": 257
+      }
+    },
+    "tag": {
+      "report": {
+        "compared": 64,
+        "error": 5,
+        "stop_ok": 1
+      },
+      "spi_counts": {
+        "0x64": 1,
+        "0x65": 3,
+        "0x66": 1,
+        "0x67": 65,
+        "0x68": 64,
+        "0x6a": 65
+      }
+    },
+    "source": {
+      "report": {
+        "compared": 33,
+        "error": 4,
+        "stop_ok": 1
+      },
+      "spi_counts": {
+        "0x64": 1,
+        "0x65": 3,
+        "0x66": 1,
+        "0x67": 33,
+        "0x68": 33,
+        "0x6a": 33
+      }
+    }
+  },
+  "wall_seconds": 19.281,
+  "scope": "actual linked ARM verification/START/frame code in Unicorn; SPI/PSRAM and source callback modeled; no actual FPGA or IRQ, no real-time measurement"
+}

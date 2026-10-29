@@ -1,0 +1,11 @@
+{
+  "stage":"partial fixed NROM cart and layout/readback unit; requested production integration incomplete",
+  "contract":"docs/nes-nrom406-contract.ko.md",
+  "evidence":"analysis/nrom406-verification.json",
+  "cart":{"board_interface":"227 cart_top", "fixed_build_profiles":"PRG16/32, horizontal/vertical", "CHR_ROM_bytes":8192, "PRG_RAM_supported":false, "four_screen_supported":false, "actual_NES_core_connected":false, "cart02_exhaustive_test":true},
+  "layout":{"C_header_and_384KiB_layout_unit":true,"file_IO_CRC_SPI_actual_loader_connected":false,"readback":"actual 227 C verifier with independent synthetic peer", "actual_STOP_recovery":false},
+  "whole_Lite_MAP":{"reference":{"LE":18850,"comb":13951,"FF":8353,"RAM_bits":256608},"NROM_fixed16_horizontal":{"LE":18178,"comb":13557,"FF":8029,"RAM_bits":185824},"delta":{"LE":-672,"comb":-394,"FF":-324,"RAM_bits":-70784},"source_changes":["cart_nrom.sv"],"source_count":90,"PRG_RAM_removed_bits":65536,"compact_changed_bits":5248,"functional_fullboard_test":false,"FIT":false,"STA":false},
+  "performance":{"actual_ARM_SPI_IRQ_ROM_schedule":null,"candidate_A_B_new_whole_cost":null,"MMC4_MMC5_actual_contention":null},
+  "next":["Connect original real loader C file validation and 3 CRC passes to NROM layout, preserve actual checked write/readback/FINISH/START and bind FPGA build profile to verified header", "Exercise actual board core and loader with synthetic NROM, both PRG sizes/mirroring, bad profile/header/CRC/readback, STOP/recovery and no late DONE", "Measure same candidate real ARM/SPI/IRQ/ROM/SNES timeline and full Lite cost, then FIT/STA before hardware", "Measure actual MMC4/5 CPU/PPU mapper request and ROM arbitration; preserve identity/latch/epoch and independent checks"],
+  "production227_GBC164_saveSRAM_changed":false,"hardware_ready":false,"physical60fps":false
+}

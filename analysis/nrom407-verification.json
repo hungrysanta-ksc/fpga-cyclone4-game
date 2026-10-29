@@ -1,0 +1,70 @@
+{
+  "passed": true,
+  "profile": "fixed NROM16 horizontal CHR-ROM8 no PRG-RAM",
+  "FPGA_status_ID": 120,
+  "sources": {
+    "Makefile": "688342168ac678ae7562c2a142cc325c79a086da8eb50d29e52b6641248e619c",
+    "nes_h1_stm32.c": "f3a425b1f8d0a666ddb8d7aa0b8b5973ade390a84f31b2a547917a413cc5d6b9",
+    "nes_rom_verify.c": "4be439ac6e3f3fc2661f8c63230809924a35db1e9684b5f96563e0052f926875",
+    "nes_run136.inc": "84058b0f0c14c9c908d988cef04808e645a2c247cb905f2b6983c407b27800a1",
+    "nes_nrom406.c": "0a2a74e620369b7010ce9ed27c71eefb22673a27553e0c9d706cf11835685d23",
+    "nes_nrom406.h": "29ad148462f5df7da7b8e5a4e7502a69ab22443740b5540b08ce54fbcd3fb981",
+    "cart_nrom.sv": "b722ccd8473bf29110112a2a9ba7dad8b05338681dac0a9f728ec6c0a0408898",
+    "nes_rom_spi.sv": "e9654351c50783fa2c8e5bd6404dccc0553144e9e189bbbf4241bd58afdc49f9"
+  },
+  "loader_sections_tested": [
+    "file prepass + padded write loop",
+    "sd_source + independent verification",
+    "cleanup STOP/base control"
+  ],
+  "test_mode": "separate extracted actual generated C blocks with modeled file/SPI/PSRAM/ownership; not full function",
+  "serial_RTL": "real SPI status78 and idle STOP pulse",
+  "ARM_object_text_bytes": {
+    "reference_loader": 9124,
+    "candidate_loader": 9196,
+    "new_layout_object": 206
+  },
+  "ARM_object_bss_bytes": {
+    "reference_loader": 772,
+    "candidate_loader": 772,
+    "new_layout_object": 0
+  },
+  "ARM_static_stack_bytes": {
+    "reference_menu_probe": 1008,
+    "candidate_menu_probe": 1032,
+    "reference_sd_source": 32,
+    "candidate_sd_source": 40
+  },
+  "full_ARM_link_RAM_stack_IRQ_cycles": null,
+  "whole_Lite_MAP": {
+    "LE": 18178,
+    "comb": 13557,
+    "FF": 8029,
+    "RAM_bits": 185824,
+    "changed_sources": [
+      "cart_nrom.sv",
+      "nes_rom_spi.sv"
+    ]
+  },
+  "startup_wire_lower_bound_seconds": {
+    "padded_payload_only": 1.1983725714285713,
+    "DATA_and_STATUS_frames_only": 19.17396114285714,
+    "assumptions": "2.625MHz, two 8-byte transfers per padded byte; excludes all other work"
+  },
+  "actual_ARM_SPI_IRQ_ROM_time": null,
+  "MMC4_MMC5_time_or_area": null,
+  "full_227_function_run": false,
+  "full_loader_FPGA_cosimulation": false,
+  "actual_base_recovery": false,
+  "FIT": false,
+  "STA": false,
+  "physical60fps": false,
+  "pins": {
+    "source_test": "0f521a17894cb41feaa60e039138bf475c1cd83b03c3a61b918d410f58902e6d",
+    "transfer_test": "595712a4f391cc77a5d9d4890730fa0cb5b90996dce8d41f707c2c0db17024f3",
+    "cleanup_test": "3e51a03e2f42d2b528ca0722d3fc477cad94f429b822243d12b5ddf6b4ab6892",
+    "spi_test": "ec46f173c63ec8b62251b9b7be621f68e5800862bb45917d5cca717421ac3390",
+    "ARM_test": "4be73ef5ad07d363223e84e00a854e6ce8e48f823dda7e29aec260875ba152ae",
+    "map_summary": "f3fc886090240ba5cc934bb4e8031561b824d3bc03a743995a77eb109223355b"
+  }
+}
