@@ -1,6 +1,6 @@
 # 다른 PC·새 작업에서 재개하기
 
-이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고482 실기 기준·484 ARM 후보와 전체 일정 관문을 따른다.
+이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고482 실기 기준·485 비교본의 전체 시간 관문을 따른다.
 
 ## 1. 상태를 읽는다
 
@@ -39,9 +39,9 @@ git log -5 --oneline
 
 ## 4. 개발 재개 후 순서
 
-1. [실기483 분석](../nes-mmc483-hardware.ko.md)·[484 후보](../nes-game484-planner.ko.md)·[다음 계획](../nes-game484-next-plan.json)을 읽는다. 실기482와 계획 명령21.38% 절감 후보484를 구분한다. 문양476은 별도 원복/회귀다.
-2. G1/제한 G2A는 완료했다. 다음 G2B에서 첫 BG 묶음과 bulk in-flight/lease 소유권을 함께 연결한다. credit 수령을 실제 consume/ACK로 취급하거나 미완료 staging을 재사용하지 않는다.
-3. G2C/G3에서 같은 ROM 위상·실제 ARM/SPI/IRQ/4credit/65816 전체 비용을 비교한다. 입력17ms·SEAL18ms도 포함한다. 후보 Flash632B/RUN31848B/154LE의 현 경계와 미완료 stack/IRQ 조건을 보존한다.
+1. [실기483 분석](../nes-mmc483-hardware.ko.md)·[485 계약](../nes-supply485-contract.ko.md)·[다음 계획](../nes-game484-next-plan.json)을 읽는다. 실기482와 미실기485를 구분한다. 문양476은 별도 원복/회귀다.
+2. G2B는 연결·기능 시험을 통과했다. candidate03/ARM03/armguard07/live02/trial02가 선택이다. 초기 busy-spin 후보는 전달하지 않는다. credit 수령·실제 ACK·staging 해제를 구분한다.
+3. **다음은485 로그 수신(G4→G2C)**이다. [실기 안내](../nes-mmc485-trial.ko.md)의 새3TXT를 실제 ARM/SPI/IRQ/ROM 전체 DWT 비용으로 비교한다. 그 뒤 입력17ms/SEAL18ms를 포함한G3를 정한다. Flash232B/RUN31848B/154LE와 BSS+20B·stack 미증명 범위를 보존한다.
 4. 독립 검사·STOP·최종 ACK·4credit·메뉴 복귀를 유지한다. RTL이 실제로 바뀔 때만 같은 source의 Lite 전체 비용/관련 timing을 다시 확인한다.
 5. 의미 있는 변경이 검증된 뒤 새 번호·marker·로그·원복으로 동일 ROM/입력 조건의 하드웨어를 비교한다.482 한 회 성공을480의 단일 물리 원인·전 게임/매퍼·60fps 증명으로 승격하지 않는다.
 

@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-PR135 merge948a2e9bc6542aaec7737e28f4431cb0c0350f6d의 origin/master 도달을 확인했고 `codex/nes-game-plan-supply-484` / [PR136](../../docs/progress/pr-136.md)에서 진행한다. 현재 PC를 유지한다. 먼저 [프로젝트 현황](../../docs/PROJECT-STATUS.ko.md)·[484 결과](../../docs/nes-game484-planner.ko.md)·[다음 계획](../../docs/nes-game484-next-plan.json)을 읽는다. 실기 기준은 아래482 그대로다.
+PR135 merge948a2e9bc6542aaec7737e28f4431cb0c0350f6d의 origin/master 도달을 확인했고 `codex/nes-game-plan-supply-484` / [PR136](../../docs/progress/pr-136.md)에서 진행한다. 먼저 [485 연결/한계](../../docs/nes-supply485-contract.ko.md)·[다음 계획](../../docs/nes-game484-next-plan.json)을 읽는다. 실기 기준은 아래482이며,485의 전체 시간은 새 실기 로그를 기다린다.
 
 ## 현재 실기 선택
 
@@ -23,8 +23,8 @@ PR135 merge948a2e9bc6542aaec7737e28f4431cb0c0350f6d의 origin/master 도달을 �
 1. **게임 실기 진입 완료.** 정확 ROM/전체readback·START·입력 관측·877최종ACK/EA·STOP·사용자 메뉴 복귀를 확인했다. legacy screen_frames0/phase_mask0와 SPC A9를 표시 실패로 재분류하지 않는다.
 2. **종료 경계 확인.** input COMMIT878 중 마지막 generation899는 deadline으로 미완료다. E1전송12710과 software sent/retired12709의 차이는 post-transfer guard에서 종료된1건이다. 마지막 물리 수신/표시는 미확정이며877에 더하지 않는다.
 3. **G1/제한 G2A 완료:** 실제482 M4/게임71입력을 계측하고 중복 형태 검사·40B 초기화를 줄인484 후보를 빌드했다. 명령56,068,750→44,083,214(21.38% 절감), 수신·전체 상태·598개 계획 일치,243645요청/5오류 회귀 통과다. 실기 시간/FPS 개선은 미측정이다.
-4. **다음 G2B/C:** warm69개 중61개는 첫 E9가 계산 종료까지 기다리는 정책이다. 첫 BG 묶음과 op7 blocking bulk의 in-flight/lease를 함께 연결해 실제 소비/ACK·SPI/IRQ/ROM/4credit/65816 전체 일정을 비교한다. Flash632B/RUN31848B/154LE·독립 검사·STOP·최종ACK를 보존한다. 입력17ms와SEAL18ms도 미해결이다.
-5. 의미 있는 변경이 검증된 뒤 새 번호/로그/원복으로 동일 ROM·입력 조건의 실기를 비교한다. 이번14.60fps는 상호작용1회이며 capture 누락/p95/NES 실시간 속도·MMC4/5·지속60fps는 미완료다.
+4. **G2B 연결·기능 검증 완료:** 첫 BG 선행 E9·op7 큐잉·동일 token 억제·실제 ACK drain을 연결했다. 초기 busy-spin을 발견해 flush/finish에128µs guard를 적용했다. M4 12사례·실제 RTL/65816의34ACK/VBlank/57344픽셀·STOP 통과다. Flash+400B/BSS+20B, 잔여232B·FPGA154LE다. C/RTL 모델은 M4/IRQ 공통 시계가 아니므로 시간 감소는 미확정이다.
+5. **다음 G4→G2C:** [MMC485 비교본](../../analysis/supply485-package.json)·[설치/새 로그](../../docs/nes-mmc485-trial.ko.md)로 실제 ARM/SPI/IRQ/ROM/VBlank 전체 비용을 먼저 비교한다. 로컬 ZIP은 `probes/nes-supply485/trial02/MMC485-SUPPLY.zip`이다. 그 뒤 입력17ms/SEAL18ms 후속을 정한다.14.60fps는 여전히482 한 회 값이며 capture/p95/NES 속도·MMC4/5·60fps는 미완료다.
 
 ## 게임 진입 관문478 결과
 
@@ -49,7 +49,7 @@ ARM480은479에서 menu/checkpoint label만 변경(75object ALLOC 동일); firmw
 ## 코드와 보존 경계
 
 - `tools/analyze_nes_receive477.py`: raw 실기 누계/종료·동일 장면 비교. `tools/prepare_nes_receive476.py`, `profile_nes_receive476.py`, `check_nes_receive476.py`: 현재 수신 변경·실제 M4·오류 경계.
-- 현재 실기 ARM source는 `probes/nes-mmc482/executed/ARM01/src`,484 후보는 `probes/nes-game484/ARM01/src`다.476 회귀는 `probes/nes-nrom418/arm476-02/src`로 별도 보존한다. `src/nes/experimental471`을 전체 current source로 착각하지 않는다. [로컬 입력](REPRODUCING.ko.md) 참조.
+- 현재 실기 ARM source는 `probes/nes-mmc482/executed/ARM01/src`, 전달 후보485는 `probes/nes-supply485/ARM03/src`다.484 계산 근거와476 회귀도 보존한다. `src/nes/experimental471`을 전체 current source로 착각하지 않는다. [로컬 입력](REPRODUCING.ko.md) 참조.
 - 실기476의 `cart_nrom.sv`는 고정 NROM16/H·CHR8이고 해당 loader는 다른 profile을 거부한다. 479는 별도MMC3/ID79 구성이다. SMB3는 MMC3/mapper4다. 검사만 해제하거나 ROM만 바꾸어 시험하지 않는다.
 - 독립 CRC/coverage·epoch/generation/token·실제 DMA 소비·STOP/stale DONE/ACK 차단·최종ACK 뒤 commit/EA·base/DONE/SPI/token/menu 복구를 유지한다.
 - export COMMIT 뒤 다음 capture는 이미 시작한다. 다음 export는 이전 표시 lease retire까지 막힌다. 이를 새 중첩 성과로 계산하거나 단일 receiver를 이전 표시 중 덮지 않는다.

@@ -38,15 +38,26 @@ def analyse(folder,trial):
                 'max_interval_ms':maximum/84000}
     phases={name:bucket(f'cost_phase_{i:02d}') for i,name in enumerate(['receive','plan_supply','seal_final_ACK'])}
     ops={name:bucket(f'cost_op_{i:02d}') for i,name in enumerate(b['cost_op_order'].split(','))}
+    quiet={}
+    for i,name in enumerate(['CREDIT_including485_plan_wait','DRAIN','FINAL_ACK']):
+        calls,progress,waits,hi,lo,maximum=map(int,b[f'cost_poll_{i}'].split(','));cycles=(hi<<32)|lo
+        quiet[name]={'calls':calls,'progress':progress,'quiet':waits,'cycles':cycles,
+                     'ms_per_completed_display':cycles/84000/n,'max_interval_ms':maximum/84000}
     columns=b['columns'].split(',');bins=[]
     for i,line in re.findall(r'^b(\d+)=(.*)$',raw['budget'],re.M):
         values=[int(x,16) for x in line.split(',')];assert len(values)==len(columns)
         bins.append({'index':int(i),**dict(zip(columns,values))})
     assert [v['index'] for v in bins]==list(range(12)) and sum(v['frames'] for v in bins)==n
+    sent,retired=int(g['sink_window_sent']),int(g['sink_window_retired'])
     return {'trial':trial,'hardware_run_passed':True,'display':{'completed':n,'seconds':seconds,'fps':n/seconds,
             'mean_ms':1000*seconds/n},'DWT_phases_nested':phases,'driver_ops_nested':ops,
+            'quiet_nested':quiet,
+            'E1_observation':{'driver_calls':ops['E1']['calls'],'software_sent16':sent,'software_retired16':retired,
+                              'driver_minus_sent_mod16':(ops['E1']['calls']-sent)&65535,
+                              'physical_queue_empty_proven':False,
+                              'note':'A post-transfer deadline can leave a physical E1 uncounted by software. Matching sent/retired does not prove physical acceptance/retirement of the last write.'},
             'wire_bytes':sum(v['bytes'] for v in ops.values()),'bins':bins,'source_SHA256':{q.name:sha(q) for q in paths.values()},
-            'terminal_state':{k:v for k,v in g.items() if k.startswith(('native_','plan_','window_'))},
+            'terminal_state':{k:v for k,v in g.items() if k.startswith(('native_','plan_','sink_window_'))},
             'menu_visible_user_confirmation_required':True,'same_scene_proven':False,
             'note':'DWT includes actual IRQ/guard/wait. Finite-run averages may include an unfinished final frame; op/quiet counters are nested, not extra time.'}
 

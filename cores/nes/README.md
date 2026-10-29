@@ -1,13 +1,13 @@
 # NES 개발 현황
 
-**NES는 진행 중이며 추가 완료 코어가 아니다.** 현재 PC에서474/475 기준 성능 개발을 재개했다. [전체 현황](../../docs/PROJECT-STATUS.ko.md) · [현재 인계](HANDOFF.ko.md) · [새 PC 재개](../../docs/development/RESUME.ko.md)
+**NES는 진행 중이며 추가 완료 코어가 아니다.** 실기482와 후보485를 구분해 개발한다. [전체 현황](../../docs/PROJECT-STATUS.ko.md) · [현재 인계](HANDOFF.ko.md) · [새 PC 재개](../../docs/development/RESUME.ko.md)
 
 ## 현재 게임 실기 기준
 
 - MMC482: ARM482-01 / FPGA482-01 / 엄격 SMB3(J) ROM, profile7b.
 - 1회60.06초·최종 표시877회, **평균14.60fps**. 시작50ms READY, 입력 변화 관측·STOP/base·메뉴 복귀 정상이다.
 - 전체 수신17.16ms / 계획·타일 공급32.32ms / SEAL·최종ACK18.44ms가 관측됐다. 단계 안의 op/quiet는 중첩이므로 합산하지 않는다.
-- 이번483은 결과 분석 번호이며 새 펌웨어·합성·전달본은 만들지 않았다. [실기 분석](../../docs/nes-mmc483-hardware.ko.md) · [근거](../../analysis/mmc483-hardware482.json) · [다음 계획](../../docs/nes-mmc483-next-plan.json).
+- 현재485는 첫 BG 발행·bulk ACK 추적을 연결한 미실기 후보다. 기능·픽셀·STOP 검증을 통과했지만 전체 시간/FPS 개선은 미확정이다. [485 계약](../../docs/nes-supply485-contract.ko.md) · [비교본/로그](../../docs/nes-mmc485-trial.ko.md) · [다음 계획](../../docs/nes-game484-next-plan.json).
 - 문양 NROM476의23.84fps/정상 약24fps는 별도 회귀 기준으로 보존한다. 장면이 다르므로 게임 FPS의 개선·퇴보율로 계산하지 않는다. [NROM 근거](../../analysis/receive477-hardware.json).
 - 60fps·전체 NES/MMC4/5·지속 capture 무손실·전체 CDC/IO 승인은 미완료다.
 

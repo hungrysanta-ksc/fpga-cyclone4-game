@@ -6,7 +6,7 @@ PR29는 다른 작업 브랜치로 병합됐으며 이 clone에 해당 merge 객
 
 | PR | 상태 | 제목 | 근거/상세 |
 |---|---|---|---|
-| [#136](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/136) | 열림·초안 | NES484: 실제 ARM 계획 절감과 공급 병목 분리 | [정리](pr-136.md) |
+| [#136](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/136) | 열림·초안 | NES484–485: ARM 계획 절감과 BG·bulk ACK 소유권 연결 | [정리](pr-136.md) |
 | [#135](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/135) | 병합 | NES476–483: 수신 개선·MMC3 실기 성공과 성능 기준선 | [정리](pr-135.md) |
 | [#134](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/134) | 병합 | 실기 NROM 20% 개선과 멀티 코어 현황·인계 정리 | [정리](pr-134.md) |
 | [#133](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/133) | 병합 | NES: 제한 NROM 실기 진입과 loader 경계 검증 | [정리](pr-133.md) |

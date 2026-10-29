@@ -1,6 +1,6 @@
 # 프로젝트 현황
 
-목표는 **sd2snes Cyclone IV 멀티 코어 확장**이다. PR135 병합 후 PR136에서 NES 개발을 계속한다. 실기 기준은482, 현재 ARM 후보는484다. 현재 판단과 다음 순서는 [NES 인계](../cores/nes/HANDOFF.ko.md), PR별 경과는 [progress](progress/README.md)를 따른다.
+목표는 **sd2snes Cyclone IV 멀티 코어 확장**이다. PR136에서 개발한다. 실기 기준은482, 현재 전달 후보는485다. 시간 개선 여부는 새 실기 로그를 기다린다. 현재 판단과 다음 순서는 [NES 인계](../cores/nes/HANDOFF.ko.md), PR별 경과는 [progress](progress/README.md)를 따른다.
 
 ## 코어별 판정
 
@@ -41,6 +41,6 @@
 | 게임/매퍼 범위 | SMB3 한 실행 성공、전 MMC3/MMC4/5·60fps·제품 공개 미완료 |
 | 지속성 | capture 누락/반복·frame p95·NES 실시간 속도·정확 VBlank/ROM 위상 미측정 |
 
-[484 후보](nes-game484-planner.ko.md)는 실제 M4 계획 명령을21.38% 줄였고71입력의 수신·전체 상태·출력598개가 같다. ARM Flash+4B/RAM 추가0B이며 FPGA482는 유지했다. 실기 FPS/전체 시간은 새로 측정하지 않았다. 다음은 첫 BG 묶음과 bulk 실제 소비/ACK의 소유권을 함께 바꿔 SPI/IRQ/ROM/65816 전체 일정을 비교하는 것이다. 입력17ms·SEAL18ms·독립 검사·4credit·STOP·최종ACK·원복을 함께 다룬다. [진행 순서](nes-game484-next-plan.json)를 따른다.
+[484 계산 절감](nes-game484-planner.ko.md)에 [485 선행 BG/bulk ACK](nes-supply485-contract.ko.md)를 연결했다. M4 소유권·RTL/65816의 VBlank/ACK/픽셀/STOP을 통과했고 새 이름의 [실기 비교본](nes-mmc485-trial.ko.md)을 준비했다. 전체 시간 감소는 미확정이다.485는484 대비 Flash400B·상태20B 추가, Flash232B/FPGA154LE 잔여다. 먼저 실제 ARM/IRQ/SPI/ROM의485 DWT 로그를 비교하고, 그 뒤 입력17ms·SEAL18ms 후속을 정한다. [진행 순서](nes-game484-next-plan.json)를 따른다.
 
 과거 원문은 [archive](progress/archive/README.md), 다른 PC의 입력 의존성은 [재개 안내](development/RESUME.ko.md)에 둔다. README는 의미 있는 변화 때만 갱신하고 PR은 목표·작업내용·성과·후속작업을 유지한다.
