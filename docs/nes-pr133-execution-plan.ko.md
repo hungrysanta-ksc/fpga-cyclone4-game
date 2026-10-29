@@ -13,16 +13,16 @@ observer 2.625MHz는 실제 firmware 설정과 이전 250kHz 명시 사이 차�
 | 0 | 기존 227 및 GBC164·SRAM 복구 자료 보존. 411 결과·범위 기록, 단일 seat 반환 | **완료**: 384KiB 쓰기·readback·RTL START/STOP 통과; 실제 run136·base는 모델 |
 | 1 | 한정 NROM16 수평 profile의 실제 menu 경로·ID 78·ARM/FPGA/65816 짝과 재현 가능한 자체 테스트 ROM을 결합. header/CRC 실패는 START 차단 | **진행 중**: ARM·FPGA 진단 짝, 65816 ROM atom, 실행 중인 227 board/NES core RTL을 227 RUN C·FPGA queue/tile RTL·65816 에뮬레이터의 표시 ACK·lease retire·board STOP에 공동 연결; loader·PSRAM은 시드이고 실제 ARM 기계어·실기·복구는 미완료 |
 | 2 | 같은 source로 Lite 전체 FIT/STA·핀/클록/CDC 확인, CRC·STOP·독립 검증 및 base token/menu 복원 절차 확인. observer 대표 조건을 단일 seat에서 순차 시험 | **진행 중**: Lite FIT 14,751LE, 관련 clock·observer 대표 조건 및 표시 후 RTL STOP 통과, 보존 base 파일의 실제 227 programmer 출력 일치; raw reset/CDC·미제약 IO와 실제 재설정·복구는 미해결 |
-| 3 | 사용자의 제한 실기: paired build에서 부팅·화면·입력·해당 음성, STOP·메뉴 복귀·재시작·복원 기록. 실패 시 복원 자료 사용 | **대기**: 1·2 완료 후에만 실기 가능. 새 NROM 실기 성공 아님 |
+| 3 | 사용자의 제한 실기: paired build에서 부팅·화면·입력·해당 음성, STOP·메뉴 복귀·재시작·복원 기록. 실패 시 복원 자료 사용 | **제한 관찰용 전달본 준비**: 467 ZIP과 복원물·기존457 한계를 함께 전달. 사용자 설치/로그 대기; 전체 timing 승인과 새 NROM 실기 성공은 미완료 |
 | 4 | 같은 workload에서 capture/표시 ACK·누락·VBlank·ARM/SPI/IRQ/ROM 시간을 계측. 60fps의 16.667ms와 지속 프레임을 확인하고 병목을 정한다 | **미달/미측정**: 227 실기 465 ACK/60.06s, 402 fixture 최대 warm 34.048ms이며 서로 다른 경계. 실제 새 후보 시간 없음 |
 | 5 | A 공동 실행기와 B ARM DMA job 중 **하나의 완결 경로**를 같은 일정·전체 Lite 비용으로 대조, 시간과 FIT 양쪽에 맞지 않으면 역할/장치 범위를 재결정 | **미완료**: 402 전체 MAP 20,199LE/16,508 조합, 914/915 VBlank 미달; B 동일 경계 부재 |
 | 6 | MMC4 mapper10 live latch, MMC5 mapper5 고위 tag·ExRAM/split·IRQ/audio 지원 범위를 정하고 실제 PPU/ROM 경쟁과 보드 전체 비용을 각각 측정 | **미완료**: MMC4 실 latch 미연결; MMC5 13bit tag 및 128 split 예외 한도 반례. 비용 수치는 없음 |
 
 1–3은 제한 NROM 실기 smoke를 위한 우선 경로다. 4–6은 60fps 및 mapper 확장 관문이며 순차적으로 진행한다. 예외적으로 실기 직전 새 변경에 연결된 기본 STOP·검증이나 Lite FIT/STA가 실패하면 이를 먼저 고친다. 측정하지 않은 ARM 시간, 새 하드웨어 동작이나 MMC4/5 비용은 null로 둔다. 411과 새 후보의 실행 경계 차이를 유지한다.
 
-## 현재 인계 경계 (464–465)
+## 현재 인계 경계 (464–467)
 
-실제 ARM의 base 복구 실패 4종은 메뉴 복귀 차단을 확인했다. 457의 미제약 input54/output56 전체와 reset 표본 45종단을 다시 정리하고 SD 해시 읽기 전용 점검 도구를 추가했다. **다음 구현은 sink admission 5개·fault sync의 reset 소유권 확인**, 그다음 실제 SD/보드 확인이다. 완료 조건·파일 경로·실물 기록 순서는 `docs/nes-nrom465-entry.ko.md`를 따른다. 실기나 60fps 관문은 아직 완료되지 않았다.
+실제 ARM의 base 복구 실패 4종은 메뉴 복귀 차단을 확인했다. 457의 미제약 input54/output56 전체와 reset 표본 45종단을 다시 정리하고 SD 해시 읽기 전용 점검 도구를 추가했다. sink admission 5개의 로컬 reset 후보466은 목표 recovery/removal을 고쳤으나 다른 관련 setup −0.091ns로 보류했다. 사용자 확인에 따라 SD 직접 연결은 요구하지 않고 기존 설치 파일 전달 방식으로 진행한다. **467 ZIP은 기존457 조합을 고정한 제한 실기 관찰용**이며 466은 포함하지 않는다. 사용자가 설치·관찰하고 로그를 돌려주면 실제 설정/복구를 판정한다. 전체 timing signoff와 60fps는 미완료다. 완료 조건·파일 경로·실물 기록 순서는 `docs/nes-nrom465-entry.ko.md`를 따른다. 실기나 60fps 관문은 아직 완료되지 않았다.
 
 ## 다음 작업 하나
 
