@@ -1,11 +1,11 @@
 # 다른 PC·새 작업에서 재개하기
 
-이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전·이식성 작업을 우선하지 않고476/477 실기와 게임 대표 입력·MMC3 예산 관문부터 진행한다.
+이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고482 실기 기준·484 ARM 후보와 전체 일정 관문을 따른다.
 
 ## 1. 상태를 읽는다
 
 1. [루트 README](../../README.md) → [프로젝트 현황](../PROJECT-STATUS.ko.md).
-2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR135](../progress/pr-135.md).
+2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR136](../progress/pr-136.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
 GB/GBC만 추가·공개 완료다. 현재 NES 게임 기준은 MMC482 실기1회60.06초/877최종 표시·평균14.60fps·50ms READY·STOP/base/메뉴 복귀 정상이다. 문양NROM476의23.84fps는 별도 회귀로 보존한다.60fps·전 게임/매퍼·capture/전체 CDC/IO 승인은 미완료다.
@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-먼저 로컬 변경을 보존한다. 필요할 때 remote를 fetch하고 PR134의 실제 병합 상태·base·merge commit과 master 도달 관계를 확인한다. PR134는93bb8f715914da12d46f1d5c8262d6e8b10d3362로 master에 병합됐으며, 현재 브랜치는 `codex/nes-receive-cost-476`이다. 새 PC에서 무조건 master로 바꾸거나 reset/pull로 덮지 않는다.
+먼저 로컬 변경을 보존한다. 필요할 때 remote를 fetch하고 실제 병합 상태·base·master 도달 관계를 확인한다. PR135는948a2e9bc6542aaec7737e28f4431cb0c0350f6d로 master에 병합됐으며, 현재 브랜치는 `codex/nes-game-plan-supply-484`다. 새 PC에서 무조건 master로 바꾸거나 reset/pull로 덮지 않는다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -39,9 +39,9 @@ git log -5 --oneline
 
 ## 4. 개발 재개 후 순서
 
-1. [실기483 분석](../nes-mmc483-hardware.ko.md)과 [다음 계획](../nes-mmc483-next-plan.json)을 읽는다. 현재 실제 게임 기준은482이며 registry/현재 인계의 source/해시와 묶는다. 문양476은 별도 원복/회귀다.
-2. G1에서 실제 M4 planner와 E8 busy/descriptor/credit/finish 공급을 기존 게임 입력·같은482 RTL로 분리한다. 계측만 늘린 새 실기 전달을 반복하지 않는다.
-3. G2/G3에서 planner·tile 공급·E8/E0 반복과 입력17ms·VBlank/ROM/IRQ를 전체 비용으로 비교한다. Flash636B/RUN31848B/154LE의 현 경계와 미완료 stack/IRQ 조건을 보존한다.
+1. [실기483 분석](../nes-mmc483-hardware.ko.md)·[484 후보](../nes-game484-planner.ko.md)·[다음 계획](../nes-game484-next-plan.json)을 읽는다. 실기482와 계획 명령21.38% 절감 후보484를 구분한다. 문양476은 별도 원복/회귀다.
+2. G1/제한 G2A는 완료했다. 다음 G2B에서 첫 BG 묶음과 bulk in-flight/lease 소유권을 함께 연결한다. credit 수령을 실제 consume/ACK로 취급하거나 미완료 staging을 재사용하지 않는다.
+3. G2C/G3에서 같은 ROM 위상·실제 ARM/SPI/IRQ/4credit/65816 전체 비용을 비교한다. 입력17ms·SEAL18ms도 포함한다. 후보 Flash632B/RUN31848B/154LE의 현 경계와 미완료 stack/IRQ 조건을 보존한다.
 4. 독립 검사·STOP·최종 ACK·4credit·메뉴 복귀를 유지한다. RTL이 실제로 바뀔 때만 같은 source의 Lite 전체 비용/관련 timing을 다시 확인한다.
 5. 의미 있는 변경이 검증된 뒤 새 번호·marker·로그·원복으로 동일 ROM/입력 조건의 하드웨어를 비교한다.482 한 회 성공을480의 단일 물리 원인·전 게임/매퍼·60fps 증명으로 승격하지 않는다.
 

@@ -1,12 +1,13 @@
 # PR 전체 이력 색인
 
-Git의 실제 merge commit과 확인한 GitHub PR 메타데이터를 기준으로 정리했다. 최근129–135는 개별 네 항목 기록에서 읽는다. 과거 PR의 테스트 결과를 새 후보에 승계하지 않는다.
+Git의 실제 merge commit과 확인한 GitHub PR 메타데이터를 기준으로 정리했다. 최근129–136는 개별 네 항목 기록에서 읽는다. 과거 PR의 테스트 결과를 새 후보에 승계하지 않는다.
 
-PR29는 다른 작업 브랜치로 병합됐으며 이 clone에 해당 merge 객체가 없어 master 도달을 단정하지 않는다. PR31은 확인 시점에 병합되지 않았다. PR134는 master에 병합됐고 PR135는 열려 있다. 상태는2026-10-29 스냅샷이며 현재 remote를 다시 확인한다.
+PR29는 다른 작업 브랜치로 병합됐으며 이 clone에 해당 merge 객체가 없어 master 도달을 단정하지 않는다. PR31은 확인 시점에 병합되지 않았다. PR135는948a2e9로 master에 병합됐고 PR136은 초안으로 열려 있다. 상태는2026-10-29 스냅샷이며 현재 remote를 다시 확인한다.
 
 | PR | 상태 | 제목 | 근거/상세 |
 |---|---|---|---|
-| [#135](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/135) | 열림·초안 | NES476–480: 수신 개선·MMC3 게임 표시 연결과 실기 비교본 | [정리](pr-135.md) |
+| [#136](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/136) | 열림·초안 | NES484: 실제 ARM 계획 절감과 공급 병목 분리 | [정리](pr-136.md) |
+| [#135](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/135) | 병합 | NES476–483: 수신 개선·MMC3 실기 성공과 성능 기준선 | [정리](pr-135.md) |
 | [#134](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/134) | 병합 | 실기 NROM 20% 개선과 멀티 코어 현황·인계 정리 | [정리](pr-134.md) |
 | [#133](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/133) | 병합 | NES: 제한 NROM 실기 진입과 loader 경계 검증 | [정리](pr-133.md) |
 | [#132](https://github.com/hungrysanta-ksc/fpga-cyclone4-game/pull/132) | 병합 | NES: PR132 회고와 실기 진입·60프레임 후속 계획 | [정리](pr-132.md) |

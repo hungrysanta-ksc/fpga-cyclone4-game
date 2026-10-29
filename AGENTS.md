@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- 현재 PR135에서 MMC482 게임 실기 성공을 수신 분석483으로 확정했다. docs/nes-mmc483-hardware.ko.md와 docs/nes-mmc483-next-plan.json을 먼저 읽는다.60.06초·877최종 표시/평균14.60fps·50ms READY·STOP/base/사용자 메뉴 복귀 정상이다. 다음은 같은482 RTL에서 실제 M4 planner와 E8 공급/대기의 비용 분리·전체 일정 개선이다. 분석만 했으며 새 빌드/합성/전달본은 없다.
+- PR135 merge948a2e9의 master 반영을 확인했고 새 codex/nes-game-plan-supply-484 / PR136에서 진행한다. docs/nes-game484-planner.ko.md와 docs/nes-game484-next-plan.json을 먼저 읽는다. 실제 M4 계획 명령21.38% 절감 후보는71입력의 전체 상태·출력 계획/수신 일치와243645요청 회귀를 통과했다. 실기 기준은 여전히 MMC482의14.60fps이며 새 설치본은 없다. 다음은 첫 BG 묶음과 op7 bulk in-flight/실제 소비·ACK 소유권을 함께 연결한 전체 일정이다. FPGA482 유지, Flash632B·154LE·기존 RAM 경계를 보존한다.
 - 추가·공개 완료 코어는 GB/GBC G13C44/0.9.0. NES는 MMC482 실제 SMB3 평균14.60fps로 미완성이다. 문양 NROM476의23.84fps는 별도 회귀 기준으로 보존한다.
 - 현재 게임 실기 근거는 `analysis/mmc483-hardware482.json`, 문양 회귀는 `analysis/receive477-hardware.json`, 인계는 `cores/nes/HANDOFF.ko.md`다.
 - `src/fpga`, `src/firmware-overlay`, `src/renderer`의 검증된 GBC와 사용자 저장·복원물을 보존한다.
