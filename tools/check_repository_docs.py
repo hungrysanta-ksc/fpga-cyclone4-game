@@ -95,7 +95,7 @@ def main():
                 require((progress / row[key]).is_file(), f"Missing PR {key}: {row['number']}")
     print(f"PASS: {len(paths)} entry documents, {links} local links, {len(notes)} PR formats")
     print(f"PASS: {len(manifest['files'])} byte/hash-preserved archives; GBC/PCE metadata unchanged")
-    print(f"PASS: {nes['hardware_candidate']} measured {fps}fps, pause/registry/index consistent")
+    print(f"PASS: {nes['hardware_candidate']} measured {fps}fps, work-state/registry/index consistent")
     print("Scope: documentation consistency only; no build, simulation or hardware test")
 
 

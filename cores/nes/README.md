@@ -1,6 +1,6 @@
 # NES 개발 현황
 
-**NES는 진행 중이며 추가 완료 코어가 아니다.** 사용자 요청으로 성능 개발은 중지했다. [전체 현황](../../docs/PROJECT-STATUS.ko.md) · [현재 인계](HANDOFF.ko.md) · [새 PC 재개](../../docs/development/RESUME.ko.md)
+**NES는 진행 중이며 추가 완료 코어가 아니다.** 현재 PC에서474/475 기준 성능 개발을 재개했다. [전체 현황](../../docs/PROJECT-STATUS.ko.md) · [현재 인계](HANDOFF.ko.md) · [새 PC 재개](../../docs/development/RESUME.ko.md)
 
 ## 현재 실기 기준
 

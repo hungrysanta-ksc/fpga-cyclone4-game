@@ -1,6 +1,6 @@
 # 다른 PC·새 작업에서 재개하기
 
-이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **현재 사용자 지시는 성능 개발 중지이며 문서 정리만 완료했다.** 재개 지시가 없으면 합성·새 후보·실기 시험을 시작하지 않는다.
+이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전·이식성 작업을 우선하지 않고474/475 기준 비용 분석부터 진행한다.
 
 ## 1. 상태를 읽는다
 
@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-먼저 로컬 변경을 보존한다. 필요할 때 remote를 fetch하고 PR134의 실제 병합 상태·base·merge commit과 master 도달 관계를 확인한다. 이 문서를 작성할 때 PR134는 열려 있었고 작업 브랜치는 `codex/nes-hardware-cost-470`이었다. 새 PC에서 무조건 master로 바꾸거나 reset/pull로 덮지 않는다.
+먼저 로컬 변경을 보존한다. 필요할 때 remote를 fetch하고 PR134의 실제 병합 상태·base·merge commit과 master 도달 관계를 확인한다. PR134는93bb8f715914da12d46f1d5c8262d6e8b10d3362로 master에 병합됐으며, 현재 브랜치는 `codex/nes-receive-cost-476`이다. 새 PC에서 무조건 master로 바꾸거나 reset/pull로 덮지 않는다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -43,11 +43,11 @@ git log -5 --oneline
 2. 남은 ARM 수신·CRC·record hot path와 기존 capture/export·SEAL/ACK의 시각을 분리한다. 기존 다음 capture 중첩을 새 기능으로 다시 만들지 않는다.
 3. Flash380B/산술 RAM4984B 등 전체 예산을 포함해 이득이 있는 후보만 선택한다. 새 계측만 늘리는 전달본을 반복하지 않는다.
 4. 독립 검사·STOP·최종 ACK·메뉴 복귀와 동일 ROM 비교를 유지한다. RTL 변경 때만 같은 source의 Lite 전체 비용/관련 timing을 다시 확인한다.
-5. 새 전달본은 번호·marker·로그·원복을 함께 갱신한다. 다음476은 예약일 뿐 아직 구현/빌드되지 않았다.
+5. 새 전달본은 번호·marker·로그·원복을 함께 갱신한다. 476은 CRC/tag 후보·연결 검증과 전달본을 준비했고 아직 실기 전이다.
 
 ## 5. 기록을 남긴다
 
-- 현재 판정은 PROJECT-STATUS/코어 인계/registry에서 교체한다.
+- 현재 판정은 PROJECT-STATUS/코어 인계/registry에서 교체한다. README는 의미 있는 진척·정정 시에만 갱신한다.
 - 이번 PR의 목표·작업내용·성과·후속작업은 `docs/progress/pr-NNN.md` 한 파일에 정리한다.
 - 근거는 기존 `analysis/`/상세 계약에 연결한다. 루트 README에 PR 요약을 덧붙이지 않는다.
 - `.github/PULL_REQUEST_TEMPLATE.md`를 사용하고 게시된 PR도 네 항목인지 확인한다.

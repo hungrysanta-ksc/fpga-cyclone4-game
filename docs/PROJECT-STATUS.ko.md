@@ -1,6 +1,6 @@
 # 프로젝트 현황
 
-기준일: 2026-10-29. 목표는 **sd2snes Cyclone IV 멀티 코어 확장**이다. 현재는 사용자 요청으로 성능 개발을 중지하고 저장소 안내를 정리했다. 개발 재개 지시 전에는 새 성능 후보를 실행하지 않는다.
+기준일: 2026-10-29. 목표는 **sd2snes Cyclone IV 멀티 코어 확장**이다. 사용자 지시로 성능 개발을 재개했다. PC는 유지하며474/475 기준 수신·CRC/record와 실제 캡처·표시 일정부터 검토한다.
 
 ## 코어별 판정
 
@@ -14,7 +14,7 @@
 
 ## 최신 NES 실기 기준
 
-선택 구성은 **ARM474-02 / byte 동일 FPGA471-04 / 자체 이동 scene02**다. PR134의 구현이며 현재 PR 병합 여부는 GitHub/remote에서 확인한다. 과거 연구 후보338/355/402 등은 현재 설치 조합이 아니다.
+선택 구성은 **ARM474-02 / byte 동일 FPGA471-04 / 자체 이동 scene02**다. PR134가93bb8f715914da12d46f1d5c8262d6e8b10d3362로 master에 병합된 것을 확인했다. 과거 연구 후보338/355/402 등은 현재 설치 조합이 아니다.
 
 | 관측 | 471 | 474 1회차 | 474 2회차 |
 |---|---:|---:|---:|
@@ -46,4 +46,6 @@
 
 ## 현재 요청과 기록 위치
 
-최적화는 중지 상태다. 이 정리에서는 runtime 소스·bitstream·설치본·원시 검증을 바꾸지 않았다. PR별 목표/작업내용/성과/후속작업은 [progress](progress/README.md)에 둔다. 원본 누적 문서와 오래된 등록부는 [archive](progress/archive/README.md)에 보존한다. 다른 PC는 [재개 안내](development/RESUME.ko.md)에서 시작한다.
+성능 개발을 재개했지만 최신 실기 기준은474/475 그대로다. 새 후보의 모델/명령 수를 새 실기 FPS로 표시하지 않는다. PR별 목표/작업내용/성과/후속작업은 [progress](progress/README.md)에 둔다. 원본 누적 문서와 오래된 등록부는 [archive](progress/archive/README.md)에 보존한다. 다른 PC는 [재개 안내](development/RESUME.ko.md)에서 시작한다.
+
+다음 실기 후보476은 고정 SPI replay의 실제 M4 수신 명령506568→309481(−38.91%), 같은 상태/거래를 확인했다. 전체 ARM text+28B·RAM/stack 동일, FPGA 재사용이다. CRC/bitmap·8fault·native C/RTL/65816 연결을 통과했으며 새 실기 FPS로 계산하지 않는다. [476 근거](nes-receive476-contract.ko.md) · [설치·비교](nes-receive476-trial.ko.md).
