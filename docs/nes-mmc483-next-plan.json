@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "execution_state": {
+    "performance_work": "active"
+  },
+  "physical_baseline": "MMC482",
+  "evidence": "analysis/mmc483-hardware482.json",
+  "scope": "Actual game performance after one successful482 run; preserve limited NROM476 regression separately",
+  "completed": [
+    "Strict ROM load/readback/start",
+    "50ms SNES boot readiness",
+    "877 final ACK/EA over60.06s",
+    "STOP/base and user-confirmed menu return"
+  ],
+  "measured_ms_per_display": {
+    "total": 68.48346636259977,
+    "receive_inclusive": 17.15710331487213,
+    "plan_supply_inclusive": 32.31827418960743,
+    "seal_final_ack_inclusive": 18.442983737850902
+  },
+  "budget": {
+    "target_Hz": 60,
+    "mean_gap_ms": 51.8167996959331,
+    "FPGA_remaining_LE": 154,
+    "ARM_Flash_tail_bytes": 636,
+    "static_BSS_bytes": 18552,
+    "existing_RUN_workspace_bytes": 31848,
+    "full_stack_proof": false,
+    "new_RAM_headroom_proven_bytes": null
+  },
+  "steps": [
+    {
+      "id": "G0",
+      "status": "complete",
+      "goal": "Reconcile hardware482 costs and deadline; archive raw logs",
+      "report": "docs/nes-mmc483-hardware.ko.md"
+    },
+    {
+      "id": "G1",
+      "status": "next",
+      "goal": "Attribute actual M4 planner cost and E8 busy/descriptor/credit/finish supply using current482 RTL and representative game packets",
+      "gate": "Same source/linked ARM, CRC and emitted plans; no extra hardware trial only for counters"
+    },
+    {
+      "id": "G2",
+      "status": "pending",
+      "goal": "Compare joint planner and tile/descriptor supply changes, reduce validated redundant E8/E0 polling and response work",
+      "gate": "Whole receive/plan/SEAL time including ARM/SPI/IRQ/ROM/4credit; retain independent validation and STOP/finalACK; no isolated subtotal success"
+    },
+    {
+      "id": "G3",
+      "status": "pending",
+      "goal": "Include input cost and VBlank/ROM phase in same-schedule60Hz feasibility and compare a bounded implementation",
+      "gate": "Whole time and firmware/RAM budget; use Quartus Lite whole costs only if RTL actually changes"
+    },
+    {
+      "id": "G4",
+      "status": "pending",
+      "goal": "Controlled same-ROM/input hardware comparison after meaningful validated change",
+      "gate": "New filenames/logs/restore; compare same workload, menu return and final ACK, measure p95/capture behavior when available"
+    }
+  ],
+  "retained": [
+    "Compressed input and independent checks",
+    "Credit versus actual consume distinction",
+    "ROM/IRQ ownership",
+    "STOP/cold/epoch invalidation",
+    "Final ACK before EA/retire",
+    "Working482 and NROM476/164/467 restores"
+  ],
+  "not_proven": [
+    "480 physical failure root cause isolated",
+    "Frame-level p95 and capture no-loss",
+    "NES real-time emulation speed",
+    "Full CDC/IO and stack/IRQ bounds",
+    "All MMC3 scenes or MMC4/5",
+    "Sustained60Hz or public NES product readiness"
+  ]
+}

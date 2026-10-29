@@ -1,6 +1,6 @@
 # NES 재현 범위와 다른 PC 입력
 
-최신 기준은 [474/475](HANDOFF.ko.md)다. 이전 수백 단계의 절차는 [원문 이력](../../docs/progress/archive/README.md)에 보존했다. 다른 PC의 준비는 [재개 안내](../../docs/development/RESUME.ko.md)에서 시작한다.
+최신 기준은 [476/477](HANDOFF.ko.md)다. 476은 아래474 source를 기반으로 `prepare_nes_receive476.py`가 변환한다. 실기 재분석은 `analyze_nes_receive477.py --raw <raw3TXT> --out <fresh-json>`이며 원본 hash는 `analysis/receive477-hardware.json`에 있다. 이전 수백 단계의 절차는 [원문 이력](../../docs/progress/archive/README.md)에 보존했다. 다른 PC의 준비는 [재개 안내](../../docs/development/RESUME.ko.md)에서 시작한다.
 
 ## 저장소만으로 가능한 것
 
@@ -37,3 +37,15 @@
 ## 과거 공개 단위 시험
 
 `tools/run_nes_public_units.py`에는 자체 입력의 메모리/ROM service/boot 단위 경로가 있다. 유효한 설치 Questa 환경과 fresh ASCII output을 사용한다. 이 시험은 최신474 전체 경로·GBC 회귀·실기/60fps를 대신하지 않는다. 이번 문서 정리에서는 실행하지 않았다.
+
+## 478에서 추가 확인한 합성 의존성
+
+기존471의66 QSF 항목 외에 자동 발견 CIRAM/HEX와 board.sdc가 읽는 cdc181.sdc가 필요했다. [478 source closure](../../analysis/game478-feasibility.json)에69개 hash를 기록했다. 실제 실행 source·constraints를 `probes/nes-game478/mmc03`에 보존했으며 이는 아직 private다. 기존 board-source snapshot만으로 전체 재현 입력이 완결됐다고 가정하지 않는다. 현재 PC에서 이 자료를 사용하고, 다른 PC 재현 시 이식성 작업이 별도로 필요하다.
+
+## 479 로컬 입력
+
+`prepare_nes_mmc479.py`는 선택476 전체 ARM source, hash 고정 원래227 loader,478의69파일 closure/QSF를 요구한다.479 실행 source·ARM03/loader02/core01/board01·M4 결과는 `probes/nes-mmc479`에 보존한다. 새 PC에서는 `execution-location.json`의 경로를 그대로 쓰지 말고 대응 source/도구를 복구한다. 원본 ROM은 private147 PRG/CHR hex에서 기존 전체 SHA와 byte 동일하게 복구했으며 Git에 넣지 않는다. host20건·seeded core smoke·M4 기록 재생을 실제 live ARM/IRQ/tile/SNES 구동으로 오인하지 않는다. 새 설치본은 아직 없다.
+
+## 480 연결 시험과 전달본
+
+`test_nes_mmc480_live.py --prepare-only`는 시뮬레이터 없이 생성 runner를 검사한다. 실제 실행은479 board/ARM·원본 ROM·core01 자료와 기존 FLOAT wrapper/Mesen/.NET을 요구한다. `probes/nes-mmc480/executed`에 live01/ARM01을 보존했다. FPGA는 같은479 fitted DB에서 ASM/CPF만 수행했다. `analyze_nes_mmc480.py`의 CLI로 같은 근거를 재분석한다. ZIP은 `trial03/MMC480-SMB3-TRIAL.zip`이며 hash/구성은 analysis/mmc480-package.json이다. 원본 SMB3 ROM·private trace·upstream/license·물리 timing/실기 승인 범위는 공개 소스로 승격하지 않는다.

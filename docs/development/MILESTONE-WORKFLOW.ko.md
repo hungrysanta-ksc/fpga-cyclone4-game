@@ -60,3 +60,5 @@
 [CONTRIBUTING](../../CONTRIBUTING.md)·[공개 정책](../REPOSITORY-POLICY.ko.md)의 allowlist와 자산 분리를 지킨다. 상용 ROM/BIOS·개인 save/dump/영상·키/라이선스·도구 캐시는 Git에 넣지 않는다. 검증된 GBC와 원복물을 보호하고 문서 정리만을 위해 source를 이동/수정하지 않는다.
 
 이전 상세 운영·사례 원문은 [archive](../progress/archive/README.md)에 보존했다. 현재 사용자 지시와 현재 코어 인계를 우선하며 특정 과거 경계를 조사할 때만 해당 사례를 읽는다.
+
+README는 의미 있는 진척 변화나 정정이 필요한 때만 갱신한다. 일상 진행은 PR별 기록에 남기며 네 항목 PR 양식은 계속 유지한다.
