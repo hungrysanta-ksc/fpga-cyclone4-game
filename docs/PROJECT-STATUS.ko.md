@@ -35,7 +35,7 @@ CRC/driver/입력abort0,384KiB 적재/readback·START·STOP·base·메뉴 정상
 
 단순 문양은 core→수신·검사→ARM 계획→FPGA/65816 DMA·표시→최종ACK·복구의 회귀에 유효하다. 그러나 OBJ0, warm mapdirty0, BG27/28group 재사용의 쉬운 장면이다. NES 내부 실행 속도·실제 게임 표시율/정상 동작을 대표하지 않는다.
 
-**이 문양60fps를 실제 게임 진입의 선행 조건으로 삼지 않는다.** 게임 대표 BG/OBJ·split/bank 입력과 현재 ARM을 비교하고, 실제 MMC3/SMB3의 loader·WRAM/IRQ·source/lease/ROM 경쟁·전체 보드 비용을 다음에 고정한다. 현재 NROM 전용 검사만 풀어 SMB3를 실행하지 않는다. 478에서 기존 MMC3 복원 진단 FIT15266/15408LE·관련 setup+0.187ns/hold+0.146ns를 확인했다. 이후479에서 새ID79/엄격 loader·host20건·core/source 부팅·실제15packet의 linked M4 처리를 통과했다. FIT15260LE/148잔여다. 480에서 live tile/ROM·65816 DMA/독립 검사/최종ACK/STOP과57344픽셀 일치를 확인해 비공개 실기 비교본을 준비했다. 실제 ARM/IRQ 공통 시간·게임 FPS와 전체 CDC/IO는 아직 미완료다. [480 설치·결과](nes-mmc480-contract.ko.md). [479 결과](nes-mmc479-contract.ko.md). [478 관문](nes-game478-feasibility.ko.md).
+**이 문양60fps를 실제 게임 진입의 선행 조건으로 삼지 않는다.** 게임 대표 BG/OBJ·split/bank 입력과 현재 ARM을 비교하고, 실제 MMC3/SMB3의 loader·WRAM/IRQ·source/lease/ROM 경쟁·전체 보드 비용을 다음에 고정한다. 현재 NROM 전용 검사만 풀어 SMB3를 실행하지 않는다. 478에서 기존 MMC3 복원 진단 FIT15266/15408LE·관련 setup+0.187ns/hold+0.146ns를 확인했다. 이후MMC480 게임 실기는 ROM hash/전체384KiB 적재·검증·START와 STOP·base/메뉴 복귀가 정상이었지만 SNES 표시 프로그램 시작5초 timeout으로 실패했다. 비용 계측 전 종료해 게임 FPS는 미측정이다.481 진단 후보의 기능 검사는 통과했으나 전체 Lite 관련 setup−0.228ns로 전달하지 않았다. [현재 실패 분석·작업 순서](nes-mmc481-startup.ko.md). 기능 모델의57344픽셀/최종ACK 통과를 실물 부팅 성공으로 승격하지 않는다.
 
 ## 비용과 미완료
 

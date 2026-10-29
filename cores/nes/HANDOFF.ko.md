@@ -23,10 +23,11 @@
 - 고정 cold M4 수신506568→309481명령(−38.91%)은 기능/CPU 성과다. 실기 전체는+1.06% 평균·정상 구간 약24fps 유지로, 이를 큰 FPS 이득으로 승인하지 않는다.
 - **이 문양60fps를 달성해야 실제 게임으로 가는 순서를 버린다.** 문양은 회귀 fixture로 남기고 게임 대표 입력과 실제 MMC3 진입을 다음 관문으로 둔다.
 
-1. **480 live 기능·독립 픽셀 관문을 완료**했다. [480 계약](../../docs/nes-mmc480-contract.ko.md)·[검증](../../analysis/mmc480-verification.json)·[설치](../../docs/nes-mmc480-trial.ko.md)를 읽는다.479 ID79/엄격 loader·현 C runtime·실제 tile ROM/queue/staging·65816 DMA/최종ACK/EA·STOP을 연결했다.
-2. **MMC480-SMB3-TRIAL.zip 실기 결과를 기다린다.** `probes/nes-mmc480/trial03`의 비공개 전달본과 byte 보존476/164/467 원복이다. 게임 ROM은 미포함이며 기존 동일 game227.nes 등을 mmc480.nes로 복사한다. 파일명/로그는MMC480이다.
-3. 새3TXT·메뉴 복귀·게임 동작으로 실제 ARM/IRQ/ROM·수신/계획/표시·실기 FPS와 다음 병목을 판정한다. NROM24fps와 다른 게임 개선율을 만들지 않는다. 새 미결 사유 없이 같은 부팅·전체 적재·합성을 반복하지 않는다.
-4. 부팅 한 캡처의 기능 통과는 연속60fps·월드맵/1-1·전 게임/매퍼·전체 CDC/IO 승인과 다르다. 실제 게임 성능은 아직 미측정이다.
+1. **실기480 실패 분석 완료.** [481 시작 분석](../../docs/nes-mmc481-startup.ko.md)·[실기 JSON](../../analysis/mmc481-hardware480.json)을 먼저 읽는다. 사용자 ROM 해시 일치, 전체384KiB 적재/비교·START·NES observer·STOP/base/메뉴 복귀 정상이다. SNES boot214가5초 stage0/flags0으로 종료해 게임 FPS는 미측정이다.
+2. **추가 기능 검사 완료·실물 원인 미확정.** 전달480 BI3의 실제 C 복원·MIF/프로그램 일치와 실제 RTL4100ROM read/status/STOP을 확인했다.480 Mesen은 로컬 SFC에서 시작하고 console startup은 모델이었다. 이 간극을 기록하며 물리 버스 부팅 증명으로 승격하지 않는다.
+3. **481 진단 후보 구현·전달 보류.** profile7a/status3, 기존 snapshot의 raw 핀을 ARM에서 누적한다. 실제 parser256종/거부·누적과 전체 RTL4100read/STOP PASS. candidate03/FIT15264LE의 관련 setup−0.228ns로 diagnostic_trial_ready=false다. candidate01/02도 기각·보존했으며 현재 선택 SDC/seed는479와 같다. [후보 JSON](../../analysis/mmc481-verification.json).
+4. **다음 작업:** 해당 JSON의 check_failed→loader.error_code[1] 경로를 먼저 검토해 최소 진단 경계와 타이밍 조건을 확정한다. 추가 계측/seed 탐색/범용 FSM 교체·FIT 반복을 다음 목표로 삼지 않는다. 미달 산출물·481 ZIP은 전달하지 않았다.
+5. 준비 조건을 통과한 새 번호·marker·로그·원복 ZIP으로 사용자 설치/시작·메뉴 복귀를 확인한 뒤 실제 게임 수신·계획·표시/FPS 분석을 진행한다. ROM은 같은 원본을 쓴다.480 재시험·보드/SD의 PC 연결은 요구하지 않는다.
 
 ## 게임 진입 관문478 결과
 

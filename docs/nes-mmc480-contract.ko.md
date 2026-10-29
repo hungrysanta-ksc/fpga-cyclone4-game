@@ -1,5 +1,7 @@
 # NES480: 실제 게임 source·타일 ROM·65816 표시 연결
 
+**실기 후속 판정: 표시 시작 실패.** 정확한 ROM 적재·검증·START와 STOP·메뉴 복귀는 정상이었으나 SNES client boot timeout으로 비용 측정 전 종료했다. 이 전달본의 재시험은 권고하지 않는다. 아래는 당시 기능 시험의 범위이며 실물 부팅 성공을 뜻하지 않는다. [실기480 분석·481 보류](nes-mmc481-startup.ko.md).
+
 **479의 전용 ID79와 엄격 SMB3 로더를 유지하고 live 입력→tile plan/query→실제 ROM→staging→65816 DMA/독립 검사→최종ACK/EA→STOP 경로를 한 실행에 연결했다.** 기능·독립 픽셀 관문을 통과해 제한된 실기 비교본을 준비했다. 실기 게임 FPS/60fps·전 게임 호환성은 아직 미확인이다. [검증 JSON](../analysis/mmc480-verification.json) · [설치·원복](nes-mmc480-trial.ko.md).
 
 ## 실제로 확인한 경계

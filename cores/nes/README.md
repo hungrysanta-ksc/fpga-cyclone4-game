@@ -22,8 +22,4 @@
 
 재개 시에는 수신·CRC 비용과 이미 존재하는 capture/export/표시 중첩 일정을 먼저 확인한다. 자세한 예산·보존 조건·완료 조건은 현재 인계에서 관리한다.
 
-478에서 기존 SMB3 기록71개가 현재 ARM에서 동등하게 처리됐고 MMC3 복원 후보가15266/15408LE로 배치됐다. [게임 진입 관문](../../docs/nes-game478-feasibility.ko.md). 새 loader/profile·실제 core/ROM 경쟁·게임 표시/복구 검증 전이므로 설치본은476을 유지한다.
-
-479에서 전용 MMC3 ID79·엄격 SMB3 로더/host20건·전체 ARM/FIT·core/source 부팅과 실제 packet의 M4 처리를 확인했다. live tile/query/ROM·65816 게임 표시·실기 승인은 남았다. [479 현재 개발 후보](../../docs/nes-mmc479-contract.ko.md).
-
-480에서 게임 source·tile ROM·현재 ARM C·staging·65816 DMA/독립 검사/최종ACK/STOP을 연결하고57344픽셀 일치를 확인했다. [비공개 MMC480 실기 비교본](../../docs/nes-mmc480-trial.ko.md)·[근거](../../analysis/mmc480-verification.json). 실제 게임 FPS·연속 동작은 새 실기 결과를 기다린다.
+현재 게임 실기480은 정확한 ROM의 전체 적재·readback/START와 STOP·메뉴 복귀는 정상이었지만 **SNES 표시 시작5초 timeout**으로 실패했다. 게임 FPS는 미측정이다. [실기 분석·다음 순서](../../docs/nes-mmc481-startup.ko.md). 기능 모델의 픽셀/ACK 통과와 실물 부팅을 구분하며,481 진단 후보는 관련 타이밍 미달로 전달을 보류했다. 성공 실기 기준은 위476이다.
