@@ -1,4 +1,4 @@
-param([ValidatePattern('^[a-z0-9-]+$')][string]$Run='arm01')
+param([ValidatePattern('^[a-z0-9-]+$')][string]$Run='arm01',[ValidatePattern('^nrom[0-9]+$')][string]$TrialLabel='nrom469')
 $ErrorActionPreference='Stop'
 $root='C:/Users/mohallo/Documents/ChatGPT/sd2snes 에서 게임보이컬러 전용 게임 구동하기'
 $source=Join-Path $root 'probes/nes-repeat227/arm01'
@@ -16,6 +16,8 @@ foreach($file in @('Makefile','nes_h1_stm32.c','nes_rom_verify.c','nes_run136.in
  Copy-Item -LiteralPath (Join-Path $candidate $file) -Destination (Join-Path $out "src/$file") -Force
 }
 Copy-Item -LiteralPath (Join-Path $root 'probes/nes-nrom418/menu01/nes_menu_diagnostic.c') -Destination (Join-Path $out 'src/nes_menu_diagnostic.c') -Force
+& (Join-Path $env:USERPROFILE '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe') (Join-Path $PSScriptRoot 'label_nes_nrom_trial.py') --directory (Join-Path $out 'src') --label $TrialLabel
+if($LASTEXITCODE){throw 'trial identity generation failed'}
 $arm=Join-Path $root '.tools/arm-gnu-toolchain-13.3.rel1/arm-gnu-toolchain-13.3.rel1-mingw-w64-i686-arm-none-eabi'
 $savedPath=$env:PATH
 $mountedWork=$false
