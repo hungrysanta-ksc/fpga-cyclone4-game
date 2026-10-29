@@ -73,7 +73,11 @@ def main():
         require((ROOT / nes[key]).is_file(), f"Registry link missing: {key}: {nes[key]}")
     measured = read_json(ROOT / nes["verification"])
     trial = re.search(r"\d+", str(measured["trial"])).group()
-    require(nes["hardware_candidate"] == "NROM" + trial, "Hardware candidate/evidence mismatch")
+    family = measured.get("trial_family", "NROM")
+    require(family in ["NROM", "MMC"], "Unknown measured trial family")
+    require(nes["hardware_candidate"] == family + trial, "Hardware candidate/evidence mismatch")
+    if family == "MMC":
+        require(measured.get("hardware_run_passed") is True, "MMC evidence has no passed hardware run")
     completed = sum(x["display"]["completed"] for x in measured["runs"])
     seconds = sum(x["display"]["seconds"] for x in measured["runs"])
     fps = f"{completed / seconds:.2f}"

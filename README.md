@@ -6,15 +6,15 @@
 
 ## 현재 진행 상황
 
-기준일: 2026-10-29. **추가·공개 완료된 코어는 GB/GBC이며, NES는 개발 중입니다.**
+기준일: 2026-10-30. **추가·공개 완료된 코어는 GB/GBC이며, NES는 개발 중입니다.**
 
 | 코어 | 상태 | 확인된 범위 | 다음 목표 |
 |---|---|---|---|
 | [GB/GBC](cores/gbc/README.md) | **추가 성공·공개 완료** | G13C44 / sd2snesHST 0.9.0, 실기·저장·RTC 등은 호환성 문서 범위 | 검증된 구현·세이브 보존, 회귀 유지 |
-| [NES](cores/nes/README.md) | **개발 중** | NROM476 실기 **평균23.84fps**, 정상 약24fps; MMC480은 표시 시작 실패 | 게임의 SNES 표시 시작 복구 후 실제 FPS 측정·지속60fps |
+| [NES](cores/nes/README.md) | **개발 중** | 실제 SMB3/MMC482 실기 **평균14.60fps**,877회 표시·메뉴 복귀 정상; 문양 NROM476은23.84fps | 게임의 계획·타일 공급·전송 병목을 줄여 지속60fps |
 | [PC Engine](cores/pce/README.md) | 조사 대기 | 구현·실기 성공 없음 | NES 이후 범위·자원 검토 |
 
-NES 수치는 제한된 자체 NROM 장면의 **표시 완료율**입니다. 일반 NES 게임·MMC4/5 지원 완료나60fps를 뜻하지 않습니다. MMC480 게임 실기는 정확한 ROM의 전체 적재·검증·START와 STOP·메뉴 복귀가 정상이었지만 **SNES 표시 프로그램 시작에서 시간 초과**했습니다. 게임 FPS는 아직 측정하지 못했습니다. [실기 실패 분석·다음 순서](docs/nes-mmc481-startup.ko.md) · [NROM 측정 근거](analysis/receive477-hardware.json) · [상세 현황](docs/PROJECT-STATUS.ko.md)
+MMC482는 실제 SMB3(J)에서60.06초 실행·877회 최종 표시와 STOP·메뉴 복귀를 확인했습니다. **표시 경로의 실기 성공이며 지속60fps·NES 전체 지원 완료는 아닙니다.** 문양 NROM476 약24fps는 별도 회귀 기준으로 보존하며 다른 장면의 개선율로 비교하지 않습니다. [실기 비용·다음 순서](docs/nes-mmc483-hardware.ko.md) · [측정 근거](analysis/mmc483-hardware482.json) · [상세 현황](docs/PROJECT-STATUS.ko.md)
 
 ## 여기서 시작하세요
 

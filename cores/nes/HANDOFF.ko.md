@@ -1,33 +1,30 @@
 # 현재 NES 인계
 
-사용자 지시로 개발 재개. PR134 merge93bb8f715914da12d46f1d5c8262d6e8b10d3362의 master 도달을 확인했고 `codex/nes-receive-cost-476` / [PR135](../../docs/progress/pr-135.md)에서 진행한다. 현재 PC를 유지한다. 먼저 [프로젝트 현황](../../docs/PROJECT-STATUS.ko.md)·[실기477와 시험 대표성](../../docs/nes-receive477-hardware.ko.md)을 읽는다.
+사용자 지시로 개발 재개. PR134 merge93bb8f715914da12d46f1d5c8262d6e8b10d3362의 master 도달을 확인했고 `codex/nes-receive-cost-476` / [PR135](../../docs/progress/pr-135.md)에서 진행한다. 현재 PC를 유지한다. 먼저 [프로젝트 현황](../../docs/PROJECT-STATUS.ko.md)·[게임 실기483](../../docs/nes-mmc483-hardware.ko.md)을 읽는다.
 
 ## 현재 실기 선택
 
 | 항목 | 고정 기준 |
 |---|---|
-| 구현 | NROM476 / ARM476-02, commit d1de042c6dfadf6079a91f72a2745d58f1585e8d |
-| ARM SHA256 | a57755e63dd04a9dbc1cfb93541b77361551d1b7af53f230bace80857019b49e |
-| FPGA | byte 동일471-04, BI3 SHA256 2c54ca3dc34a12215fe0fdcc468dab12cd3f0a60d9381155167e271de73f518a |
-| ROM | 자체 이동 scene02, SHA256 21799ff5d55d68c688bb70ce0e41aedc76b7b6de0ccc276d24c8ded9dc10791e, CRC0fddf31c |
-| protocol | input2232 / client2271 / profile78 /4credit, cost_schema474 유지 |
-| 실기477 | 1회60.07초/1432표시 =평균23.84fps, 정상 구간 약24fps |
-| 비교 | 474 2회23.59fps. 수신15.65ms로 감소, SEAL19.58ms로 증가; 정상 cadence 개선 미입증 |
-| 정상 종료 | CRC/driver/입력abort0, START·STOP·base·메뉴 복귀 정상; deadline 마지막 프레임의4packet 취소 |
+| 구현 | MMC482, source commit24cb658d7e6d0e9b5382da9b154026b26d12631f |
+| ARM | ARM482-01, SHA256 e201b95928e5891293449b202dacf9e16a9894a49e1513b0877a14ee883c47c8 |
+| FPGA | FPGA482-01, BI3 SHA256 2ddc943069789fa84b78f746f61e4b54f04fe2780819bbef38dfe991c8ed069b |
+| ROM/ABI | 원래 SMB3(J), CRC5a04eed7 / profile7b / status3 / input2232 / client2271 /4credit |
+| 실기 결과483 | 60.06초·877최종 표시, **평균14.60fps**,50ms READY·STOP/base/메뉴 복귀 정상 |
+| 전체 단계 | 입력17.16ms / 계획·타일 공급32.32ms / SEAL·최종ACK18.44ms, 중첩 op/quiet 합산 금지 |
+| 제약 | Lite15254LE/14049comb/8392FF/256608bits,154LE 잔여; 관련 setup/hold+0.133/+0.132ns, 전체 CDC/IO 미승인 |
 
-선택 소스는 [476 verification](../../analysis/receive476-verification.json), ZIP은 [package](../../analysis/receive476-package.json), 실기는 [477 JSON](../../analysis/receive477-hardware.json)이다. 원본3TXT는 `probes/nes-nrom477/hardware01`에 byte 그대로 보존한다. 사용자 영상은 새로 받지 않았다.
+[분석483](../../docs/nes-mmc483-hardware.ko.md)·[측정 JSON](../../analysis/mmc483-hardware482.json)·[다음 계획](../../docs/nes-mmc483-next-plan.json)·[구현482](../../analysis/mmc482-verification.json)·[package](../../analysis/mmc482-package.json)를 따른다. 원문3TXT는 `probes/nes-mmc483/hardware482-01`, 설치 ZIP은 `probes/nes-mmc482/trial02/MMC482-BOOTDIAG.zip`이다.483은 수신 분석 번호이며 새 빌드/합성은 없다.
+
+문양 회귀 기준NROM476/실기477의23.84fps와 [원복](../../analysis/receive476-package.json)은 보존한다. 다른 입력/장면의 개선율로 비교하지 않는다. 480 실패·481 기각도 덮지 않았고 이번482 성공만으로480의 물리 원인을 확정하지 않는다.
 
 ## 현재 판단과 다음 순서
 
-- 문양은 실제 core/전송·독립 검사·DMA/표시·STOP 회귀에 유효하다. OBJ0/warm mapdirty0/BG27/28group 재사용이므로 일반 게임/SMB3 성능을 대표하지 않는다.
-- 고정 cold M4 수신506568→309481명령(−38.91%)은 기능/CPU 성과다. 실기 전체는+1.06% 평균·정상 구간 약24fps 유지로, 이를 큰 FPS 이득으로 승인하지 않는다.
-- **이 문양60fps를 달성해야 실제 게임으로 가는 순서를 버린다.** 문양은 회귀 fixture로 남기고 게임 대표 입력과 실제 MMC3 진입을 다음 관문으로 둔다.
-
-1. **실기480 실패 분석 완료.** [481 시작 분석](../../docs/nes-mmc481-startup.ko.md)·[실기 JSON](../../analysis/mmc481-hardware480.json)을 먼저 읽는다. 사용자 ROM 해시 일치, 전체384KiB 적재/비교·START·NES observer·STOP/base/메뉴 복귀 정상이다. SNES boot214가5초 stage0/flags0으로 종료해 게임 FPS는 미측정이다.
-2. **추가 기능 검사 완료·실물 원인 미확정.** 전달480 BI3의 실제 C 복원·MIF/프로그램 일치와 실제 RTL4100ROM read/status/STOP을 확인했다.480 Mesen은 로컬 SFC에서 시작하고 console startup은 모델이었다. 이 간극을 기록하며 물리 버스 부팅 증명으로 승격하지 않는다.
-3. **482 준비 조건 통과.** [482 설치·검증](../../docs/nes-mmc482-trial.ko.md)·[검증 JSON](../../analysis/mmc482-verification.json)을 읽는다.481의 check_failed→error_code 경로를 차단 여부의 마지막 선택으로 바꿨다. 기존 모든 코드/동시 명령/STOP 전수 일치·22개 C/FatFS 사례·실제 보드4100ROM read/응답/STOP·실제 C BI3 복원을 통과했다. 전체 Lite15254LE, 관련 setup/hold+0.133/+0.132ns이며 원래 SDC/seed/클록을 유지한다.
-4. **다음은 사용자 실기482 한 회.** 비공개 `probes/nes-mmc482/trial02/MMC482-BOOTDIAG.zip`, profile7b/status3이다. 동일 mmc480.nes를 mmc482.nes로 복사하고 새 항목을 실행한다. 새3TXT·화면·메뉴 복귀를 받는다. 원본480 실패나481 기각 산출물은 덮지 않았고 전체 reset/CDC/IO 승인·물리 부팅 복구/FPS는 아직 미확정이다.
-5. boot_last_hex는 STOP 전 값이며 최종 screen_flags와 분리한다. 실물 시작 원인을 먼저 판정한 뒤 실제 게임 수신·계획·표시/FPS 분석을 진행한다. 준비 완료는 게임 시작 복구나60fps 달성이 아니다.476 원복을 보존하며 보드/SD의 PC 연결은 요구하지 않는다.
+1. **게임 실기 진입 완료.** 정확 ROM/전체readback·START·입력 관측·877최종ACK/EA·STOP·사용자 메뉴 복귀를 확인했다. legacy screen_frames0/phase_mask0와 SPC A9를 표시 실패로 재분류하지 않는다.
+2. **종료 경계 확인.** input COMMIT878 중 마지막 generation899는 deadline으로 미완료다. E1전송12710과 software sent/retired12709의 차이는 post-transfer guard에서 종료된1건이다. 마지막 물리 수신/표시는 미확정이며877에 더하지 않는다.
+3. **다음 G1:** 실제 M4 planner의 함수별 비용과 E8 busy/descriptor/credit/finish 공급을 기존 게임 입력·같은482 RTL로 분리한다. 거친 pure planner14.22ms·finish16.03ms 양쪽을 함께 본다. 계측만 늘린 실기 전달을 반복하지 않는다.
+4. G2/G3에서 planner 계산·tile 공급·E8/E0 반복·128µs quiet·입력17ms·ROM/IRQ/VBlank의 전체 시간을 비교한다. 지연을 다른 단계로 이동한 후보를 성공으로 세지 않는다. Flash636B/RUN31848B/154LE 여유와 독립 검사·4credit·STOP·최종ACK를 보존한다.
+5. 의미 있는 변경이 검증된 뒤 새 번호/로그/원복으로 동일 ROM·입력 조건의 실기를 비교한다. 이번14.60fps는 상호작용1회이며 capture 누락/p95/NES 실시간 속도·MMC4/5·지속60fps는 미완료다.
 
 ## 게임 진입 관문478 결과
 

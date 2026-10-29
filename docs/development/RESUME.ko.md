@@ -8,7 +8,7 @@
 2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR135](../progress/pr-135.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
-GB/GBC만 추가·공개 완료다. NES476은 같은 이동 NROM의1회 실기에서평균23.84fps/정상 구간 약24fps이며,474 2회23.59fps 대비 정상 cadence 개선은 입증되지 않았다. 목표60Hz,30fps 중간 목표와 일반 게임/매퍼 확장은 아직 미완료다.
+GB/GBC만 추가·공개 완료다. 현재 NES 게임 기준은 MMC482 실기1회60.06초/877최종 표시·평균14.60fps·50ms READY·STOP/base/메뉴 복귀 정상이다. 문양NROM476의23.84fps는 별도 회귀로 보존한다.60fps·전 게임/매퍼·capture/전체 CDC/IO 승인은 미완료다.
 
 ## 2. Git 기준을 확인한다
 
@@ -29,7 +29,7 @@ git log -5 --oneline
 |---|---|
 | 문서·JSON 검사 | Python3, Git. 특정 사용자 홈 경로 불필요 |
 | ARM | GNU Arm13.3.Rel1 계열·make·필수 유틸과 대상 config. 기존 빌더의 절대 경로를 먼저 확인 |
-| FPGA | Quartus **Lite**를 기본 사용. 현재471 bitstream을 재사용할 때 변경 없는 전체 합성을 반복하지 않음 |
+| FPGA | Quartus **Lite**를 기본 사용. 현재482 RTL/bitstream을 유지할 때 변경 없는 전체 합성을 반복하지 않음 |
 | Questa | 설치된 Starter FLOAT1좌석으로 순차 실행. 해당 PC의 유효한 권한과 wrapper를 준비하며 원본 signed license는 Git에 저장하지 않음 |
 | 에뮬레이터 | 필요한 경계에서만 Mesen/.NET 준비. 모델/CPU 실행과 전체 실기 시간을 구분 |
 | 로컬 source/로그 | [NES 재현 범위](../../cores/nes/REPRODUCING.ko.md)의 빠진 입력을 먼저 복구. `probes`/`.tools`/Downloads가 clone에 포함된다고 가정하지 않음 |
@@ -39,11 +39,11 @@ git log -5 --oneline
 
 ## 4. 개발 재개 후 순서
 
-1. 476/477을 기준으로 상태·입력을 고정한다. 설치 source와 연구 후보를 섞지 않는다.
-2. 문양은 회귀용으로 유지한다. [실기480 실패/481 보류](../nes-mmc481-startup.ko.md)를 먼저 읽는다. ROM/적재·START/STOP·메뉴 복귀는 정상이나 SNES 표시 시작에서5초 timeout이다.481은 타이밍 미달로 기각했다.482는 좁은 오류코드 경로 변경의 전수 일치/FIT/관련 STA와 새 설치본까지 준비했다. 다음은 docs/nes-mmc482-trial.ko.md에 따른 사용자 실기 시작 진단이며, 부팅 뒤 게임 비용/FPS 최적화를 재개한다.
-3. Flash352B/산술 RAM4984B 등 전체 예산을 포함해 이득이 있는 후보만 선택한다. 새 계측만 늘리는 전달본을 반복하지 않는다.
-4. 독립 검사·STOP·최종 ACK·메뉴 복귀와 동일 ROM 비교를 유지한다. RTL 변경 때만 같은 source의 Lite 전체 비용/관련 timing을 다시 확인한다.
-5. 새 전달본은 번호·marker·로그·원복을 함께 갱신한다. 성공 기준476은 보존하고480의 반복 재설치는 요구하지 않는다.481은 기각/보존하고 새482 제한 진단 ZIP을 전달한다. 실제 게임 FPS는 미측정이다.
+1. [실기483 분석](../nes-mmc483-hardware.ko.md)과 [다음 계획](../nes-mmc483-next-plan.json)을 읽는다. 현재 실제 게임 기준은482이며 registry/현재 인계의 source/해시와 묶는다. 문양476은 별도 원복/회귀다.
+2. G1에서 실제 M4 planner와 E8 busy/descriptor/credit/finish 공급을 기존 게임 입력·같은482 RTL로 분리한다. 계측만 늘린 새 실기 전달을 반복하지 않는다.
+3. G2/G3에서 planner·tile 공급·E8/E0 반복과 입력17ms·VBlank/ROM/IRQ를 전체 비용으로 비교한다. Flash636B/RUN31848B/154LE의 현 경계와 미완료 stack/IRQ 조건을 보존한다.
+4. 독립 검사·STOP·최종 ACK·4credit·메뉴 복귀를 유지한다. RTL이 실제로 바뀔 때만 같은 source의 Lite 전체 비용/관련 timing을 다시 확인한다.
+5. 의미 있는 변경이 검증된 뒤 새 번호·marker·로그·원복으로 동일 ROM/입력 조건의 하드웨어를 비교한다.482 한 회 성공을480의 단일 물리 원인·전 게임/매퍼·60fps 증명으로 승격하지 않는다.
 
 ## 5. 기록을 남긴다
 
