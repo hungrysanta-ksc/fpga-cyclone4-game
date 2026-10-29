@@ -36,3 +36,7 @@ third-party 코드를 옮길 때는 원래 라이선스·저작권 표시를 보
 ## 코어별 주요 진전 관리
 
 [작업·커밋·PR 운영 규칙](docs/development/MILESTONE-WORKFLOW.ko.md)을 따릅니다. 매 작업 호출마다 커밋할 필요는 없으며, 검증된 큰 진전마다 코어별 현황과 공통 교훈을 정리하고 커밋·PR을 만듭니다.
+
+PR 본문과 `docs/progress/pr-NNN.md`는 [양식](.github/PULL_REQUEST_TEMPLATE.md)의 **목표 → 작업내용 → 성과 → 후속작업** 네 항목을 사용합니다. 루트 README에는 프로젝트 목표·현재 상태·진입 링크만 유지하고 PR별 진척은 [별도 기록 폴더](docs/progress/README.md)에 남깁니다.
+
+다른 PC나 새 작업에서는 [재개 안내](docs/development/RESUME.ko.md)부터 읽습니다. 채팅 기억이나 이전 PC의 로컬 자료를 전제로 하지 말고, 소스·도구·원시 입력이 저장소 밖에 있다면 그 의존성을 명시합니다. 문서 변경 뒤에는 `python tools/check_repository_docs.py`로 링크·양식·현재 기준·원문 보존을 확인합니다. 이 검사는 하드웨어 회귀를 대체하지 않습니다.

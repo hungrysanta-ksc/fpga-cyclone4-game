@@ -1,53 +1,27 @@
-# 개발 문서 안내
+# 문서 안내
 
-현재 상태와 과거 실험 기록을 이 안내에서 구분합니다. C번호는 개발 후보이며 앞으로 사용자 제품 버전과 별도로 관리합니다.
+## 현재 작업을 이어갈 때
 
-## 현재 개발·운영
+1. [프로젝트 현황](PROJECT-STATUS.ko.md): 완료 코어, 최신 NES 실기 수치와 미완료 항목.
+2. [재개 안내](development/RESUME.ko.md): 브랜치·환경·로컬 자료·다음 순서.
+3. [NES 인계](../cores/nes/HANDOFF.ko.md): 선택 구성과 보호해야 할 경계.
+4. [PR별 진척](progress/README.md): 과거 판단이 필요한 PR만 선택한다.
 
-- [NES1813 FPGA 묶음 전송·실제 C 복원](nes-packed181-contract.ko.md)
+루트 README와 인계에 실험/PR 결과를 계속 붙이지 않는다. 이전 누적 본문은 [원문 이력](progress/archive/README.md)에 보존한다.
 
-- [NES181 화면 복구·60fps 공동 설계와 실제 전송 예산](nes-cadence181-contract.ko.md)
+## 코어와 빌드
 
-- [NES177 실기 안내](nes-game177-ready.ko.md) · [최소 관측·다음 전송 개선](nes-boundary177-contract.ko.md)
+- [GB/GBC 완료 기준](../cores/gbc/README.md), [C44 빌드](BUILD-C44.ko.md), [호환성](COMPATIBILITY.ko.md), [사용 가이드](USER-GUIDE.ko.md).
+- [NES 현황](../cores/nes/README.md), [현재 재현 범위](../cores/nes/REPRODUCING.ko.md), [실기474 안내](nes-nrom474-trial.ko.md), [실기475 비교](nes-nrom475-hardware.ko.md).
+- [PCE 조사 범위](../cores/pce/README.md).
 
-- [NES176 영상 회고·검증 결과·수정 계획](nes-video-review176.ko.md)
-- [현재 상태](PROJECT-STATUS.ko.md)
-- [GBC 이식 회고와 재사용 경계](development/GBC-PORTING-LESSONS.ko.md)
-- [NES 착수 인계](../cores/nes/HANDOFF.ko.md)
-- [코어별 현황](../cores/README.md)
-- [개발 구조·공통 경계](development/ARCHITECTURE.ko.md)
-- [두 저장소 운영·버전 규칙](distribution/REPOSITORIES.ko.md)
-- [sd2snesHST 0.9.0 공개 계획](distribution/0.9.0-PLAN.ko.md)
-- [GBC 빌드](BUILD-C44.ko.md), [검증 범위](RELEASE-C44.ko.md)
-- [소스·라이선스](DEPENDENCY-REGISTER.ko.md), [공개 정책](REPOSITORY-POLICY.ko.md)
+## 운영과 공통 설계
 
-## 사용자 문서의 원본
+- [기여 규칙](../CONTRIBUTING.md), [PR·기록 운영](development/MILESTONE-WORKFLOW.ko.md), [PR 양식](../.github/PULL_REQUEST_TEMPLATE.md).
+- [공통 구조](development/ARCHITECTURE.ko.md), [포팅 절차](PORTING-PLAYBOOK.ko.md), [GBC 이식 교훈](development/GBC-PORTING-LESSONS.ko.md).
+- [하드웨어 기준](development/FXPAK-HARDWARE-REFERENCE.ko.md), [보드/클록 확인 근거](development/NES-HARDWARE-READINESS-REVIEW.ko.md).
+- [공개 정책](REPOSITORY-POLICY.ko.md), [의존성·라이선스](DEPENDENCY-REGISTER.ko.md), [C44 대응 소스](SOURCE-BUNDLE.ko.md).
 
-[사용 가이드](USER-GUIDE.ko.md)와 [호환성 기록](COMPATIBILITY.ko.md)은 개발 기준 원본입니다. 제품 배포 시 확정 버전으로 정리한 사본을 사용자 저장소에 제공합니다. [배포 저장소 초안](../distribution/sd2snesHST/README.md)은 0.9.0 공개 계획을 검토하기 위한 초안으로 보존합니다. 0.9.0은 공개됐으며 실제 제품 문서는 [배포 저장소](https://github.com/hungrysanta-ksc/sd2snesHST)의 확정본이 기준입니다.
+## 과거 근거 읽기
 
-## 새 코어 조사에 재사용할 문서
-
-- [코어 제안서](../cores/CORE-PROPOSAL.ko.md)
-- [포팅 절차](PORTING-PLAYBOOK.ko.md)
-- [FPGA 방법론 검토](FPGA-METHODOLOGY-REVIEW.ko.md)
-- [인터페이스·클록·리셋](INTERFACE-CLOCK-RESET.ko.md)
-- [시스템 예산](SYSTEM-BUDGET.ko.md)
-- [타이밍·예외 검토](TIMING-EXCEPTIONS.ko.md)
-
-위 수치 문서는 당시 GBC 후보의 분석입니다. 새 코어에 수치·제약을 그대로 복사하지 않습니다.
-
-## 과거 기준선
-
-[초기 실행 계획](EXECUTION-PLAN.ko.md), [초기 검증 표](VERIFICATION-MATRIX.json), C43 설치·빌드·릴리스 문서는 역사적 기록입니다. 이전의 “실기 대기”, 자원 수치, 배포 보류 문구는 당시 상태를 뜻합니다. 원본 기록과 재현 경로를 유지하기 위해 이번 정리에서 파일을 옮기거나 삭제하지 않았습니다.
-
-PR #1에서 보존한 기록과 도구:
-
-- [2026-09-24 상태 원문](PROJECT-STATUS-20260924.ko.md)
-- [확장 STA 경로 감사](P0-STA-COVERAGE.ko.md)
-- [출력 종단·반복 표시 진단](P1-ENDPOINT-BACKLOG.ko.md)
-- [G12S2 실기 기준선 시험](HARDWARE-BASELINE-TEST.ko.md) — 당시 설치판 전용 절차
-- [과거 후보 분석 도구 사용법](G13-AUDIT-TOOLS.ko.md)
-
-## 코어별 주요 진전 관리
-
-[작업·커밋·PR 운영 규칙](development/MILESTONE-WORKFLOW.ko.md)을 따릅니다. 매 작업 호출마다 커밋할 필요는 없으며, 검증된 큰 진전마다 코어별 현황과 공통 교훈을 정리하고 커밋·PR을 만듭니다.
+`docs/nes-*.md`와 `analysis/*.json`은 당시 후보의 상세 계약·검증이다. 파일 숫자가 가장 크다는 이유만으로 현재 기준으로 선택하지 않는다. 먼저 현재 현황/인계가 지목하는 근거를 읽는다. 오래된 문서 속 다음 작업·실기 대기·제약값을 새 실행 지시로 해석하지 않는다. 기존 상세 파일은 링크와 해시 보존을 위해 일괄 이동하지 않았다.
