@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-"""Read482/485 physical DWT/driver counters without hardcoding frame totals.
+"""Read482/485/489 physical DWT/driver counters without hardcoding frame totals.
 
 Phase, driver-op and quiet counters are nested. No same-scene claim is inferred
 from using the same ROM; menu visibility still requires the user's observation.
@@ -77,7 +77,7 @@ def analyse(folder,trial):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--raw',type=Path,required=True)
-    p.add_argument('--trial',type=int,choices=[482,485],default=485);p.add_argument('--baseline-raw',type=Path)
+    p.add_argument('--trial',type=int,choices=[482,485,489],default=485);p.add_argument('--baseline-raw',type=Path)
     p.add_argument('--out',type=Path,required=True);a=p.parse_args();assert not a.out.exists()
     r=analyse(a.raw,a.trial)
     if a.baseline_raw:

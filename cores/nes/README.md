@@ -13,8 +13,7 @@
 - 문양 NROM476의23.84fps는 [별도 회귀 기준](../../analysis/receive477-hardware.json)이다.482/476/164/467 원복과 GBC/save를 보존한다.
 - 60fps·전체 NES/MMC4/5·지속 capture 무손실·전체 CDC/IO 승인은 미완료다.
 
-[487 출력 감사·개발 후보](../../docs/nes-output487-contract.ko.md)는 별도다. 실제 M4 serializer 명령20.31% 절감과 raw compact 표현을 검증했지만 전체 실기 개선은 미측정이며 새 전달본은 없다. 다음은 compact ABI의 실제 ARM·65816 연결이다.
-
+[489 개발 후보](../../docs/nes-output489-contract.ko.md)는 loader timing과 raw 직접 DMA를 연결해 제한 실기 비교본을 준비했다. 같은71개 모델 표시 시간7.83% 감소·관련 timing 통과이며, **실기 FPS 개선은 미확인**이다. [새489 설치·원복](../../docs/nes-mmc489-trial.ko.md) 뒤 실제 단계 비용을 비교한다.
 ## 소스와 기록
 
 - 연결 RTL/firmware: `src/nes`, SNES: `snes/video_probe`, 생성/분석 도구: `tools`.

@@ -5,21 +5,22 @@
   },
   "physical_baseline": "MMC485",
   "physical_evidence": "analysis/hardware486-gameplay485.json",
-  "development_evidence": "analysis/compact488-verification.json",
+  "development_evidence": "analysis/output489-verification.json",
   "merged_PR136": "2d4543ef2442bc798bcec128a4a108fdfc4d5287",
   "branch": "codex/nes-output-budget-487",
   "budget": {
-    "ARM_Flash_tail_B": 140,
+    "ARM_Flash_tail_B": 124,
     "ARM_BSS_B": 18572,
     "RUN_workspace_B": 31848,
     "full_stack_IRQ_proof": false,
     "SNES_existing_body_free_B": 224,
     "SNES_4KiB_layout_is_not_platform_ROM_limit": true,
     "FPGA_remaining_LE_physical485": 154,
-    "FPGA_remaining_LE_candidate488": 121,
-    "FPGA_M9K_candidate488": 51,
-    "SNES_candidate_program_B": 8192,
-    "SNES_candidate_body_B": 4233
+    "SNES_candidate_program_B": 5120,
+    "SNES_candidate_body_B": 4311,
+    "FPGA_remaining_LE_candidate489": 136,
+    "FPGA_M9K_candidate489": 51,
+    "SNES_new_context_B": 8
   },
   "steps": [
     {
@@ -30,27 +31,27 @@
     },
     {
       "id": "S1",
-      "status": "implemented_functional_candidate",
+      "status": "complete_superseded_by489",
       "goal": "ARM compact raw rows/6 planes and paired65816 canonical reconstruction",
-      "gate": "Actual M4 71 canonicalized states/plans and1797B/frame E1 reduction; count0..7 sender and both-bank65816 decoder vectors; Flash+92B vs485/no new global RAM"
+      "gate": "488 canonical route functional but12-frame time unchanged and setup failure; evidence preserved in compact488-verification.json"
     },
     {
       "id": "S2",
-      "status": "functional_split_proof_cost_gate_failed",
+      "status": "complete_bounded_functional_proof",
       "goal": "Actual queue/shared SPI/ROM/tile/65816 validation/DMA/VBlank joint path",
-      "gate": "Actual65816 raw2/12 frames/negative/STOP/pixels PASS; current C/source/ROM/SPI/65816 first boot raw0 PASS; no common physical timeline; final display time essentially unchanged. whole FIT+33LE/+4M9K, related setup-0.101ns"
+      "gate": "489 actual M4 71 canonical states/598 plans;actual65816 71 pixels/rawVRAM/VBlank ACK;synthetic row/bank/STOP/poison;C/RTL boot raw0 and same-source program bus. Not a common physical timeline"
     },
     {
       "id": "S3",
-      "status": "next_structural_review_before_one_future_FIT",
+      "status": "complete",
       "goal": "Inspect loader check_failed reset/control path and compare raw restoration plus VRAM DMA scheduling",
-      "gate": "Prove same-edge CRC/STOP cancellation and1<->2 row/bank/clear/finalACK; require same-start final display gain; no false-path/seed loops; size ROM to chosen code"
+      "gate": "Loader owned-pin/control equivalence and3negative controls;direct raw DMA same-start71 4234.845->3903.397ms;whole Lite15272LE/51M9K;related setup+0.183ns,hold+0.168ns;one selected compile,no waiver/seed loop"
     },
     {
       "id": "S4",
-      "status": "blocked_by_performance_and_timing_gates",
+      "status": "awaiting_user_hardware_trial",
       "goal": "Controlled physical comparison after meaningful integrated change",
-      "gate": "No new ZIP now. After both gates pass, fresh paired marker/logs/restore and same-scene physical comparison; current485 FPS remains8.22 gameplay-inclusive/13.55 idle"
+      "gate": "MMC489-RAWDMA.zip trial02,paired firmware/FPGA;fresh489 marker/ROM/log names;485/482/476/164/467 restores byte-preserved. Request same idle/play scene and3logs,then choose bottleneck using physical ARM/SPI/IRQ/ROM data"
     }
   ],
   "retained": [
@@ -61,8 +62,9 @@
     "VBlank and prior display identity",
     "GBC/save and485/482/476/164/467 restore"
   ],
-  "new_hardware_package": false,
+  "new_hardware_package": true,
   "full_path_acceleration_proven": false,
-  "current_candidate": "488 canonical ABI4882; functional, not selected for hardware",
-  "related_timing_passed": false
+  "current_candidate": "MMC489 ABI4891 limited paired hardware trial ready; physical baseline remains485",
+  "related_timing_passed": true,
+  "development_package": "analysis/output489-package.json"
 }

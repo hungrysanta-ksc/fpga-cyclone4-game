@@ -1,5 +1,7 @@
 # NES488 — compact raw 실제 연결과 전달 보류 판정
 
+후속 [489 계약](nes-output489-contract.ko.md)은 loader timing과 raw 직접 DMA를 개선해 새 비교본을 준비했다. 아래 판정은488 당시의 보존 근거다.
+
 [검증 JSON](../analysis/compact488-verification.json) · [PR137](progress/pr-137.md) · [현재 순서](nes-output487-plan.json). 실제 하드웨어 기준은 **MMC485 대기13.55fps/첫 레벨 플레이 포함8.22fps** 그대로다. 이 후보를 설치본으로 선택하지 않았고 새 ZIP도 만들지 않았다.
 
 ## 연결한 경계
