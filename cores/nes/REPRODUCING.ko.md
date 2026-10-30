@@ -1,8 +1,8 @@
 # NES 재현 범위와 다른 PC 입력
 
-현재 실기는 **MMC493**, 최신 실기 대기 후보는502이며498은 보류 상태다. [현재 인계](HANDOFF.ko.md)·[감사499](../../docs/nes-audit499.ko.md)·[새 계획](../../docs/nes-audit499-plan.json)을 먼저 읽는다. 아래474–485는 과거 입력이며 현재 선택본이 아니다. clone만으로 전체 빌드 입력이 완결되지는 않는다.
+현재 실기는 **MMC502**이며493은 이전 기준,498은 보류 상태다. [현재 인계](HANDOFF.ko.md)·[감사499](../../docs/nes-audit499.ko.md)·[새 계획](../../docs/nes-audit499-plan.json)을 먼저 읽는다. 아래474–485는 과거 입력이며 현재 선택본이 아니다. clone만으로 전체 빌드 입력이 완결되지는 않는다.
 
-## 현재493 재현 입력
+## 이전493 기반 재현 입력
 
 | 영역 | 고정 입력/근거 |
 |---|---|
@@ -13,6 +13,10 @@
 | 보류 후보498 | 별도ARM01/candidate06/live04/board05; [498 검증과 한계](../../analysis/prefetch498-verification.json).493과 혼합 금지 |
 
 `python tools/audit_nes499.py --board <489-board02> --arm <493-src> --raw <494-run01> --out <fresh-json>`은 선택hash와기존로그를 재검사한다. 합성·시뮬레이션·새 실기 성능시험을 실행하지 않는다. 실제 설치 산출물 hash는493 package를 따른다.
+
+## 502 실기 수신503 재현
+
+원본은 `probes/nes-hardware503/run01`의3TXT와receipt.json이다. `check_nes_hardware503_termination.py --arm <capture502-ARM01/src> --raw <run01> --out <fresh-termination01>`은 실제 linked502에서 종료4조건/반례16개를 확인한다. `analyze_nes_hardware503.py --receipt <nes-hardware503> --out <fresh-json>`으로 [503 분석](../../analysis/hardware503-mmc502.json)을 재계산한다. 물리 종료 순간 재생이나 새합성이 아니다. 다음 시험판부터는 RESTORE 폴더를 생략하되 아래502 기존ZIP과제작기록은변경하지않는다.
 
 ## 502 전달본 제작 입력
 

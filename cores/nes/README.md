@@ -4,12 +4,12 @@
 
 ## 현재 게임 실기 기준
 
-- **MMC493 / ARM493-01 / 정상 FPGA489와 동일한 이미지 / SMB3(J) / ABI4891·profile7b**:60.07초575회 최종 표시, **평균9.57fps**. 실행·첫 레벨 플레이·메뉴 복귀 정상,첫 레벨 체감 개선은 작았다는 사용자 보고다.
-- 수신28.97ms / 계획·타일 공급33.05ms / SEAL·최종ACK41.33ms. op/quiet는 단계에 중첩된다. 반복 D0/E0/E8 조회가 wire의44.22%이며 실제 소비·검사 일정을 다음으로 다룬다.
-- 이전489는9.60fps이며 이번과 지속 성능 차이는 확인되지 않았다. 이전485는 플레이 포함8.22fps/대기13.55fps다. 장면·입력이 달라 인과적 개선율·레벨 전용 FPS를 주장하지 않는다. 문양 NROM476의23.84fps는 별도 회귀다.
-- [494 실기 분석](../../docs/nes-hardware494-results.ko.md) · [측정 JSON](../../analysis/hardware494-mmc493.json) · [현재 계획](../../docs/nes-output487-plan.json). 종료SEAL postguard result1/window3/sink2와마지막미완료제외를검증했다.
-- [493 구성](../../docs/nes-boot493-contract.ko.md)·[설치/원복](../../docs/nes-mmc493-trial.ko.md)을 유지한다. 제작 시점 package/model 스냅샷을 덮거나 분석만으로 새 ZIP/합성을 만들지 않는다.
-- 60fps·전체 NES/MMC4/5·지속 capture 무손실·전체 CDC/IO·full stack/IRQ 승인은 미완료다.485/482/476/164/467 원복·GBC/save를 보존한다.
+- **MMC502 / ARM502-01(493 함수 동일) / FPGA502 board01 / SMB3(J) / ABI4891·profile7b**:60.07초636회 최종 표시, **평균10.59fps**. 실행·메뉴 복귀 정상이며 사용자가 확실한 프레임 개선을 보고했다.
+- 수신22.14ms / 계획·타일31.32ms / SEAL·최종ACK40.27ms. op/quiet는 단계 내부 비용이다. 조회를 제외한 관측wire도18.02ms이므로 A2에서 본문 전송·framing·늦은DMA를 함께 검토한다.
+- 이전4939.57fps와 다른 동선이므로 관측+10.61%를 인과적 가속률로 주장하지 않는다. 이번 장면별 시각·영상은 없으며 첫 레벨 전용FPS가 아니다. 문양476의23.84fps는 별도 회귀다.
+- [503 실기 분석](../../docs/nes-hardware503-results.ko.md) · [측정 JSON](../../analysis/hardware503-mmc502.json) · [현재 계획](../../docs/nes-audit499-plan.json). 60초 마지막 SEAL guard 제한과 미완료1건 제외를 실제linked502로 확인했다.
+- [502 구성](../../docs/nes-capture502-contract.ko.md)·[전달본](../../analysis/capture502-package.json)은 불변 스냅샷이다. 다음 시험판부터는 사용자 백업 정책에 따라 RESTORE 폴더를 넣지 않는다. 기존ZIP/백업·GBC/save와 실행상의 STOP/base/menu 복구는 유지한다.
+- 보존history에서 fetch오류0,mask0 거부4/회복4다. 전체 NES/MMC4/5·60fps·capture 무손실·전체 CDC/IO·full stack/IRQ는 미완료다.
 
 ## 소스와 기록
 
