@@ -5,11 +5,11 @@
   },
   "physical_baseline": "MMC489",
   "physical_evidence": "analysis/hardware490-mmc489.json",
-  "development_evidence": "analysis/output489-verification.json",
+  "development_evidence": "analysis/consume491-verification.json",
   "merged_PR136": "2d4543ef2442bc798bcec128a4a108fdfc4d5287",
-  "branch": "codex/nes-output-budget-487",
+  "branch": "codex/nes-consume-schedule-491",
   "budget": {
-    "ARM_Flash_tail_B": 124,
+    "ARM_Flash_tail_B": 148,
     "ARM_BSS_B": 18572,
     "RUN_workspace_B": 31848,
     "full_stack_IRQ_proof": false,
@@ -17,7 +17,7 @@
     "SNES_4KiB_layout_is_not_platform_ROM_limit": true,
     "FPGA_remaining_LE_physical485": 154,
     "SNES_candidate_program_B": 5120,
-    "SNES_candidate_body_B": 4311,
+    "SNES_candidate_body_B": 4425,
     "FPGA_remaining_LE_candidate489": 136,
     "FPGA_M9K_candidate489": 51,
     "SNES_new_context_B": 8
@@ -55,9 +55,15 @@
     },
     {
       "id": "S5",
-      "status": "next",
+      "status": "complete_bounded_491_implementation",
       "goal": "Joint E8 descriptor/E0 consume-credit/ACK and65816 packet/CRC/manifest/VBlank schedule, then D0 source readiness/ROM grants",
-      "gate": "Fixed-input common-start full display comparison;independent checks/STOP/deadline/finalACK/menu preserved;Flash124B/136LE;matching whole Lite only if RTL changes. No measurement-only new installer"
+      "gate": "M4 12guard/8burst/71canonical;CPU71 -7.25%,108units+negative/STOP;C/RTL/65816 first raw0 frame/34ACK/STOP+5124bus;whole Lite same15272LE/51M9K/related timing;not common physical clock"
+    },
+    {
+      "id": "S6",
+      "status": "next",
+      "goal": "Bind E8/E0 source ROM and65816 consumption on common timeline;then D0 readiness",
+      "gate": "Same input/phase,actual ARM work/IRQ/SPI/ROM grant/credit/STOP/final ACK and full display;no physical FPS extrapolation or measurement-only installer"
     }
   ],
   "retained": [
@@ -68,10 +74,11 @@
     "VBlank and prior display identity",
     "GBC/save and485/482/476/164/467 restore"
   ],
-  "new_hardware_package": true,
+  "new_hardware_package": false,
   "full_path_acceleration_proven": false,
-  "current_candidate": "MMC489 hardware load/menu pass;9.60fps gameplay-inclusive;first-level causal gain unproven",
+  "current_candidate": "consume491 development only,retain489 physical installation",
   "related_timing_passed": true,
   "development_package": "analysis/output489-package.json",
-  "physical_same_scene_acceleration_proven": false
+  "physical_same_scene_acceleration_proven": false,
+  "merged_PR137": "29815faa3887a035091e3169ffa0f751dda3de44"
 }

@@ -1,6 +1,6 @@
 # 프로젝트 현황
 
-목표는 **sd2snes Cyclone IV 멀티 코어 확장**이다. PR136 병합 뒤 PR137에서 개발한다. 현재 실기는 MMC489이며, 이전485와 다른 장면의 결과를 분리해 판정한다. [NES 인계](../cores/nes/HANDOFF.ko.md) · [PR별 경과](progress/README.md).
+목표는 **sd2snes Cyclone IV 멀티 코어 확장**이다. PR137 병합 뒤 PR138에서 개발한다. 현재 실기는 MMC489이며, 이전485와 다른 장면의 결과를 분리해 판정한다. [NES 인계](../cores/nes/HANDOFF.ko.md) · [PR별 경과](progress/README.md).
 
 ## 코어별 판정
 
@@ -46,6 +46,8 @@
 | 지속성 | capture 누락/반복·frame p95·NES 실시간 속도·정확 VBlank/ROM 위상 미측정 |
 
 [489 구현](nes-output489-contract.ko.md)은 같은71개 모델7.83% 감소·관련timing 통과 뒤 이번 실기에서 실행·메뉴 복귀까지 확인했다. 모델 개선율을 실기 FPS에 곱하지 않는다. [기존 설치·원복](nes-mmc489-trial.ko.md) · [개발 검증](../analysis/output489-verification.json) · [제작 manifest](../analysis/output489-package.json) · [현재 순서](nes-output487-plan.json). 제작 스냅샷은 유지하며 새로운 실기 근거는490에 둔다. 이번에는 새 합성/전달본이 없다.
+
+[491 개발 후보](nes-consume491-contract.ko.md)는 word 반복 복원·local plan 조회를 통합해 고정71개 CPU/전송 모델7.25%를 줄였고 whole Lite 비용은 동일하다. 실제 공통 ARM/IRQ/ROM 일정 이득은 미입증이며489 설치본을 유지한다. [검증](../analysis/consume491-verification.json) · [PR138](progress/pr-138.md).
 
 [484 계산 절감](nes-game484-planner.ko.md)·[485 소유권 연결](nes-supply485-contract.ko.md)은 기능 검증 근거로 보존한다. [485 package](../analysis/supply485-package.json)의 hardware_verified=false는 제작 시점 스냅샷이다. 485 실기 근거는486,현재489 수신 근거는490이며 ZIP/FPGA를 다시 만들지 않았다. 문양 NROM476의23.84fps와482/476/164/467 원복·GBC/save를 보존한다.
 

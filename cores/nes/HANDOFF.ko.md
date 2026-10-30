@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-PR136 merge2d4543ef2442bc798bcec128a4a108fdfc4d5287의 master 도달 확인 뒤 `codex/nes-output-budget-487` / [PR137](../../docs/progress/pr-137.md)에서 진행한다. 먼저 [489 연결·실기 비교 준비](../../docs/nes-output489-contract.ko.md)·[현재 계획](../../docs/nes-output487-plan.json)을 읽는다. 현재 실기 판정은 [수신490](../../docs/nes-hardware490-results.ko.md)·[측정](../../analysis/hardware490-mmc489.json)을 먼저 읽는다.
+PR137 merge29815faa3887a035091e3169ffa0f751dda3de44의 master 도달 확인 뒤 `codex/nes-consume-schedule-491` / [PR138](../../docs/progress/pr-138.md)에서 진행한다. 개발은 [491 경계](../../docs/nes-consume491-contract.ko.md)·[검증](../../analysis/consume491-verification.json)을 먼저 읽는다. 먼저 [489 연결·실기 비교 준비](../../docs/nes-output489-contract.ko.md)·[현재 계획](../../docs/nes-output487-plan.json)을 읽는다. 현재 실기 판정은 [수신490](../../docs/nes-hardware490-results.ko.md)·[측정](../../analysis/hardware490-mmc489.json)을 먼저 읽는다.
 
 ## 현재 실기 선택
 
@@ -31,6 +31,12 @@ PR136 merge2d4543ef2442bc798bcec128a4a108fdfc4d5287의 master 도달 확인 뒤 
 3. **488 기각 원인 해결·489 제한 시험 준비.** [489 계약](../../docs/nes-output489-contract.ko.md)·[검증](../../analysis/output489-verification.json)·[설치/원복](../../docs/nes-mmc489-trial.ko.md). loader의 무허용 payload 저장과 실제 쓰기 제어를 분리했다. raw는 중간 복사를 없애고 실제 VRAM DMA 순서로 생산·소비하며2B 암묵패턴 cache를 수정 전 무효화한다. 표시 완료 후 ACK를 발행하는 구간에서 확정한다.
 4. 동일12개823.806→757.253ms,71개4234.845→3903.397ms,reset부터도5.78% 개선은 실제65816+wire 모델이다. whole Lite15272LE/51M9K/136LE·5M9K 여유,관련 setup+0.183/hold+0.168ns 통과. ARM Flash124B/새 global0B/SEAL static304B,RUN31848B;SNES program5KiB/body4311B·문맥8B. 논리 RAM 감소를 M9K3개 회수로 계산하지 않는다. full stack/IRQ/reset/CDC/IO는 미완료다.
 5. 새 MMC489-RAWDMA.zip은 로컬 probes/nes-output489/trial02. marker/ROM/로그를489로 바꾸고485/482/476/164/467 원복을 보존했다. 수신490에서 실행·메뉴 복귀/9.60fps를 확인했다. E1 wire2233.34B/표시,조회D0/E0/E8는전체wire44.73%다. 다음은 E8 공급/E0 소비credit·ACK와65816 수신/CRC/manifest/VBlank 일정을 함께 추적·교체하고 그다음D0 source/ROM 대기를 다룬다. Flash124B/136LE 예산과 전체 최종 표시 시간으로 판단하며 분석만을 위한 새 ZIP/합성은 없다.
+
+## 491 개발 후보·다음 관문
+
+[검증](../../analysis/consume491-verification.json):71 CPU/전송 모델7.25% 개선,108word/bank/STOP·M4 12ownership/8burst·71 canonical 상태/계획·공동 C/RTL/65816 첫 화면/34ACK/STOP·5124bus 통과. Source closure는 ROM 내용만 달라졌다. Whole Lite15272LE/51M9K/관련+0.183/+0.168ns 동일,ARM Flash148B/새 global0B·emit stack16B,SNES body4425B/새 RAM0B다.
+
+새 설치본은 없다. 실제 M4/IRQ/source ROM과 공통 시계의 전체 이득이 남아 있어489 설치본/9.60fps를 유지한다. 다음은 E8/E0 trace·source/ROM grant·65816 소비 시각을 한 일정에 연결하고 D0 대기를 비교한다. endpoint query 감소율을 CPU7.25%와 합치지 않는다. 로컬선택 `probes/nes-consume491` candidate01/ARM01/client02/audit01/arm-bursts01,ASCII board01/snes05/units04/phase01/cold01/live01/bootbus01. 재현 의존성과 native DLL 보존은491 계약을 따른다.
 
 ## 소스·보존·재현
 
