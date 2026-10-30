@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-PR137 merge29815faa3887a035091e3169ffa0f751dda3de44의 master 도달 확인 뒤 `codex/nes-consume-schedule-491` / [PR138](../../docs/progress/pr-138.md)에서 진행한다. 먼저 [495 후보 판정](../../docs/nes-status495-contract.ko.md)·[검증](../../analysis/status495-verification.json)·[실기494 분석](../../docs/nes-hardware494-results.ko.md)·[측정](../../analysis/hardware494-mmc493.json)·[현재 계획](../../docs/nes-output487-plan.json)을 읽는다. 현재 정상 동작 기준은493이다.
+PR137 merge29815faa3887a035091e3169ffa0f751dda3de44의 master 도달 확인 뒤 `codex/nes-consume-schedule-491` / [PR138](../../docs/progress/pr-138.md)에서 진행한다. 먼저 [498 구현·검증 범위](../../docs/nes-prefetch498-contract.ko.md)·[498 검증](../../analysis/prefetch498-verification.json)·[495 후보 판정](../../docs/nes-status495-contract.ko.md)·[검증](../../analysis/status495-verification.json)·[실기494 분석](../../docs/nes-hardware494-results.ko.md)·[측정](../../analysis/hardware494-mmc493.json)·[현재 계획](../../docs/nes-output487-plan.json)을 읽는다. 현재 정상 동작 기준은493이다.
 
 ## 현재 실기 선택
 
@@ -22,6 +22,16 @@ PR137 merge29815faa3887a035091e3169ffa0f751dda3de44의 master 도달 확인 뒤 
 493의마지막sink2/window3은SEAL status transfer의전송후guard에서60초제한이전파되는결합signature다. 실제linked493에서정상ACK commit/후guard제한/진짜IO실패3가지를실행해result0/1/3을구분했고오류뒤추가SPI·표시없음을확인했다. 로그16negative와이전489-label12negative를거부한다. trace576=표시575+미완료1,마지막SEAL pending/ACK미공개·failed_transfers/CRC/abort0을요구하며모든error3을허용하지않는다. 실제물리종료순간재현은아니다.
 
 492의5초ready timeout은493에서회복됐다. 새491/492 FPGA·word DMA/MVN은계속보류한다. 493성공만으로492단일원인을확정하지않는다. [492 실패](../../analysis/boot493-hardware492.json)·[493 제작계약](../../docs/nes-boot493-contract.ko.md).493 package/verification의미확인은제작시점스냅샷이며현재실기는494를따른다.
+
+## 최신498: 입력 시작과 이전 표시 소유권 분리
+
+END 수락과 drain은 exporter의 IDLE 시작에서만 확인한다. 진행 중 ROM 접근으로 drain이 내려가도 기존 lease/END로 입력을 유지한다. ARM은 최종 ACK 대기 중 기존 receiver를 COMPLETE까지 채우고, 이전 video/sink identity를 보존하며 old ACK/EA 뒤 다음 step에서만 COMMIT한다. 첫 후보의 연속 drain gate는 실제 공동 실행에서 exporter ABORT→old lease fault를 일으켜 기각했다.
+
+linked M4 정상 수신과5반례, END/lease/exporter4mutant, 고정 MMC3 fixture의 C/RTL/기존65816 두 표시·68ACK·4bulk·STOP을 확인했다. COMMIT12→ACK/EA12→COMMIT13→ACK/EA13 순서다. 첫 RGB는495와 동일하며 두 번째 전체pixel oracle·실제 M4/IRQ 공통시간·물리 메뉴 복귀는 새로 증명하지 않았다. live04의 후처리1frame 기대값은2로 고쳐 저장된 완료 산출물을 재검사했고 원래 실패 기록을 보존했다.
+
+전체 Lite15132LE/14105comb/8394FF/51M9K·잔여276LE,관련setup+.084/hold+.147ns,Flash8B다. 실기493 대비−140LE/+27comb/+2FF로 제어140개 삭제가 아니다. callback은728B stack을 관찰했고 전체 IRQ 중첩은미확인이다. source 보드와 비용 보드의 차이는 loader WRITE next-state의 late blocked 조건식이며512조합+mutant로 동등성을 고정했다.
+
+다음 순서는 같은 실제 M4·IRQ·공유SPI·ROM/65816 일정과 연속캡처의 마지막 표시 시간을 연결하는 것이다. 수신 비용이 SEAL 안으로 이동했으므로 phase를 단순 합산하지 않는다. 새 실기 전달본/60fps 향상은 선택하지 않았고 정상493·9.57fps와 원복을 유지한다.
 
 ## 실험495: 기능·관련 timing 통과, 전달 보류
 

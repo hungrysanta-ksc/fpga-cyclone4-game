@@ -2,11 +2,11 @@
   "schema_version": 1,
   "execution_state": {
     "performance_work": "active",
-    "current_gate": "S9 actual M4 busy-poll/IRQ/source ROM and real tile_bulk206 coalesced chunks on one65816 event ledger;hardware493 retained"
+    "current_gate": "S9 498 bounded receive/old-display ownership implemented;actual M4/IRQ/common final-display time and continuous capture remain open"
   },
   "physical_baseline": "MMC493",
   "physical_evidence": "analysis/hardware494-mmc493.json",
-  "development_evidence": "analysis/status495-verification.json",
+  "development_evidence": "analysis/prefetch498-verification.json",
   "merged_PR136": "2d4543ef2442bc798bcec128a4a108fdfc4d5287",
   "branch": "codex/nes-consume-schedule-491",
   "budget": {
@@ -24,7 +24,11 @@
     "SNES_new_context_B": 8,
     "experimental495_Flash_tail_B": 96,
     "experimental495_remaining_LE": 287,
-    "experimental495_comb_delta": 19
+    "experimental495_comb_delta": 19,
+    "experimental498_Flash_tail_B": 8,
+    "experimental498_remaining_LE": 276,
+    "experimental498_comb_delta_vs493": 27,
+    "experimental498_isolated_callback_stack_B": 728
   },
   "steps": [
     {
@@ -83,11 +87,11 @@
     },
     {
       "id": "S9",
-      "status": "in_progress497_linked_M4_bounded_endpoint",
+      "status": "in_progress498_bounded_joint_ownership_verified",
       "goal": "Connect actual M4 polling/shared SPI/IRQ/source ROM and actual coalesced tile_bulk206 chunks to65816 consumption;then compare next-input receive during display wait",
-      "gate": "493/495 same event ledger/input/start+continuous phases;credit != DMA consume != finalACK;old display identity/receiver lifetime/nonreentrant SPI/STOP/retire retained;budget physical493148FlashB/136LE vs experimental49596FlashB/287LE;no new paired installer before meaningful whole gain and boot boundary proof",
-      "evidence": "analysis/bulk497-verification.json",
-      "remaining": "Actual65816 consume and source/ROM/IRQ common clock; END generation plus drain required for early export (arb_idle alone insufficient); old finalACK/EA before new COMMIT, ARM old identity/nonreentrant service ownership and whole cost."
+      "gate": "493/498 same event ledger/input/start+continuous phases;credit != DMA consume != finalACK;old display identity/receiver lifetime/nonreentrant SPI/STOP/retire retained. Physical493148FlashB/136LE;experimental4988FlashB/276LE,callback728B observed. No whole performance or physical selection from bounded C/RTL tests.",
+      "evidence": "analysis/prefetch498-verification.json",
+      "remaining": "Actual M4/IRQ/shared SPI and65816 common timeline on identical inputs/phases plus sustained capture;full nested stack/IRQ and total frame gain. Source start-only drain/old ACK-EA-COMMIT boundary is implemented,not a physical FPS proof."
     }
   ],
   "retained": [
@@ -100,7 +104,7 @@
   ],
   "new_hardware_package": false,
   "full_path_acceleration_proven": false,
-  "current_candidate": "Physical4939.57fps retained;experimental495 function/related timing pass but near-zero/phase-dependent conditional display gain;not selected",
+  "current_candidate": "Physical4939.57fps retained;experimental498 END/drain start,late COMMIT,old identity;2-frame hostC/RTL/65816 functional and related timing pass,whole physical acceleration unproven",
   "related_timing_passed": true,
   "development_package": null,
   "physical_same_scene_acceleration_proven": false,
