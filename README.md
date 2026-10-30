@@ -11,10 +11,10 @@
 | 코어 | 상태 | 확인된 범위 | 다음 목표 |
 |---|---|---|---|
 | [GB/GBC](cores/gbc/README.md) | **추가 성공·공개 완료** | G13C44 / sd2snesHST 0.9.0, 실기·저장·RTC 등은 호환성 문서 범위 | 검증된 구현·세이브 보존, 회귀 유지 |
-| [NES](cores/nes/README.md) | **개발 중** | 실제 SMB3/MMC482 실기 **평균14.60fps**,877회 표시·메뉴 복귀 정상; 문양 NROM476은23.84fps | 게임의 계획·타일 공급·전송 병목을 줄여 지속60fps |
+| [NES](cores/nes/README.md) | **개발 중** | MMC485 실제 SMB3 **첫 레벨 플레이 포함 평균8.22fps**,대기13.55fps·메뉴 복귀 정상; NROM476은별도23.84fps | 출력·SEAL/전송량과 입력 대기를 함께 줄여 지속60fps |
 | [PC Engine](cores/pce/README.md) | 조사 대기 | 구현·실기 성공 없음 | NES 이후 범위·자원 검토 |
 
-MMC482는 실제 SMB3(J)에서60.06초 실행·877회 최종 표시와 STOP·메뉴 복귀를 확인했습니다. **표시 경로의 실기 성공이며 지속60fps·NES 전체 지원 완료는 아닙니다.** 문양 NROM476 약24fps는 별도 회귀 기준으로 보존하며 다른 장면의 개선율로 비교하지 않습니다. [실기 비용·다음 순서](docs/nes-mmc483-hardware.ko.md) · [측정 근거](analysis/mmc483-hardware482.json) · [상세 현황](docs/PROJECT-STATUS.ko.md)
+MMC485는 각60.07초의 대기814회/13.55fps와 첫 레벨 플레이 포함494회/8.22fps, STOP·메뉴 복귀를 확인했습니다. **8.22fps는 타이틀·월드맵도 포함한 구간 평균이며60fps·NES 전체 지원 완료는 아닙니다.** 장면이 달라 이전482의14.60fps와 직접 개선율을 비교하지 않으며485의 전체 가속은 미입증입니다. 문양 NROM476은 별도 회귀로 보존합니다. [실기 비용·다음 순서](docs/nes-hardware486-results.ko.md) · [측정 근거](analysis/hardware486-gameplay485.json) · [상세 현황](docs/PROJECT-STATUS.ko.md)
 
 ## 여기서 시작하세요
 

@@ -1,6 +1,6 @@
 # 다른 PC·새 작업에서 재개하기
 
-이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고482 실기 기준·485 비교본의 전체 시간 관문을 따른다.
+이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고485 두 조건의 실제 비용·다음 전체 경로 관문을 따른다.
 
 ## 1. 상태를 읽는다
 
@@ -8,7 +8,7 @@
 2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR136](../progress/pr-136.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
-GB/GBC만 추가·공개 완료다. 현재 NES 게임 기준은 MMC482 실기1회60.06초/877최종 표시·평균14.60fps·50ms READY·STOP/base/메뉴 복귀 정상이다. 문양NROM476의23.84fps는 별도 회귀로 보존한다.60fps·전 게임/매퍼·capture/전체 CDC/IO 승인은 미완료다.
+GB/GBC만 추가·공개 완료다. 현재 NES 게임 기준은 MMC485 각60.07초/대기814회13.55fps·첫 레벨 플레이 포함494회8.22fps·정상 로드/STOP/base/메뉴 복귀다. 입력이 다른 이전482의14.60fps와 직접 개선율을 비교하지 않는다. 문양NROM476의23.84fps는 별도 회귀로 보존한다.60fps·전 게임/매퍼·capture/전체 CDC/IO 승인은 미완료다.
 
 ## 2. Git 기준을 확인한다
 
@@ -39,9 +39,9 @@ git log -5 --oneline
 
 ## 4. 개발 재개 후 순서
 
-1. [실기483 분석](../nes-mmc483-hardware.ko.md)·[485 계약](../nes-supply485-contract.ko.md)·[다음 계획](../nes-game484-next-plan.json)을 읽는다. 실기482와 미실기485를 구분한다. 문양476은 별도 원복/회귀다.
+1. [실기486 분석](../nes-hardware486-results.ko.md)·[485 계약](../nes-supply485-contract.ko.md)·[다음 계획](../nes-game484-next-plan.json)을 읽는다. 현재485 두 장면은 합산하지 않는다. 문양476은 별도 원복/회귀다.
 2. G2B는 연결·기능 시험을 통과했다. candidate03/ARM03/armguard07/live02/trial02가 선택이다. 초기 busy-spin 후보는 전달하지 않는다. credit 수령·실제 ACK·staging 해제를 구분한다.
-3. **다음은485 로그 수신(G4→G2C)**이다. [실기 안내](../nes-mmc485-trial.ko.md)의 새3TXT를 실제 ARM/SPI/IRQ/ROM 전체 DWT 비용으로 비교한다. 그 뒤 입력17ms/SEAL18ms를 포함한G3를 정한다. Flash232B/RUN31848B/154LE와 BSS+20B·stack 미증명 범위를 보존한다.
+3. **486 로그 수신·종료 전파 검증 완료.** 다음은 고정 입력의 출력 본문·stale-bank 및 전체 SEAL 비용, 데이터 절감/SPI 여유 공동 비교, D0 readiness 순이다. MCU_RDY는 external_memory_ready이므로 source-ready IRQ로 가정하지 않는다. 새 전달본은 이번에 없으며 Flash232B/RUN31848B/154LE·full stack 미증명을 보존한다.
 4. 독립 검사·STOP·최종 ACK·4credit·메뉴 복귀를 유지한다. RTL이 실제로 바뀔 때만 같은 source의 Lite 전체 비용/관련 timing을 다시 확인한다.
 5. 의미 있는 변경이 검증된 뒤 새 번호·marker·로그·원복으로 동일 ROM/입력 조건의 하드웨어를 비교한다.482 한 회 성공을480의 단일 물리 원인·전 게임/매퍼·60fps 증명으로 승격하지 않는다.
 

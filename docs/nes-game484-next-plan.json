@@ -3,15 +3,15 @@
   "execution_state": {
     "performance_work": "active"
   },
-  "physical_baseline": "MMC482",
-  "physical_evidence": "analysis/mmc483-hardware482.json",
+  "physical_baseline": "MMC485",
+  "physical_evidence": "analysis/hardware486-gameplay485.json",
   "development_candidate": "ARM485 candidate03/ARM03 / FPGA482 byte-identical; trial02",
   "development_evidence": "analysis/supply485-verification.json",
   "merged_PR135": "948a2e9bc6542aaec7737e28f4431cb0c0350f6d",
   "branch": "codex/nes-game-plan-supply-484",
   "budget": {
-    "physical_mean_ms": 68.48346636259977,
-    "physical_60Hz_gap_ms": 51.8167996959331,
+    "physical_mean_ms": 121.59919028340082,
+    "physical_60Hz_gap_ms": 104.93252361673414,
     "candidate_ARM_Flash_tail_bytes": 232,
     "candidate_static_BSS_bytes": 18572,
     "existing_RUN_workspace_bytes": 31848,
@@ -22,7 +22,10 @@
     "new_payload_buffer_bytes": 0,
     "actual_G2_added_Flash_bytes": 400,
     "G2_initial_ceiling_exceeded_bytes": 16,
-    "G2_ceiling_review": "Added64B guard wait to reject live01 busy-spin;400B actual versus384B initial proposal;232B physical Flash remains"
+    "G2_ceiling_review": "Added64B guard wait to reject live01 busy-spin;400B actual versus384B initial proposal;232B physical Flash remains",
+    "current_body_wire_projection_ms": 20.505892423366106,
+    "current_body_B_per_display": 6728.495951417004,
+    "current_SPI_bps": 2625000
   },
   "steps": [
     {
@@ -52,21 +55,22 @@
     },
     {
       "id": "G2C",
-      "status": "physical_time_pending",
-      "goal": "Measure485 DWT whole time with actual ARM/SPI/IRQ/ROM and continuous frames",
-      "gate": "Use485 logs; live C/RTL has no shared M4 clock. First early variant exposed E8 polling; final128us guard wait passes functional join but time benefit is unproven."
+      "status": "measured_two_workloads_speedup_not_established",
+      "goal": "Use actual485 costs to replan whole receive/output/SEAL path",
+      "gate": "Idle13.55fps vs gameplay-inclusive8.22fps; no same-scene482 comparison. Preserve nested-cost accounting and incomplete final-frame classification.",
+      "report": "docs/nes-hardware486-results.ko.md"
     },
     {
       "id": "G3",
-      "status": "pending",
-      "goal": "Reduce remaining input/SEAL costs and establish60Hz continuous capture/display feasibility",
-      "gate": "Receive17.1571ms and SEAL18.4430ms remain; p95/capture/NES speed/ROM phase/full stack/CDC/IO remain open; Quartus Lite whole run only after actual RTL changes"
+      "status": "next_whole_payload_output_budget",
+      "goal": "Compare existing map/HDMA/OAM/manifest encoding and full output/SNES validation/DMA schedule, then source-ready waiting",
+      "gate": "Current2nd-run command body projects20.51ms wire at2.625Mbps; average total121.60ms. Reduce data or validate speed headroom with whole costs, retain independent checks/STOP/finalACK; do not assume MCU_RDY is packet-ready."
     },
     {
       "id": "G4",
-      "status": "trial_ready_waiting_user_hardware",
-      "goal": "Install MMC485-SUPPLY and return new485 logs",
-      "gate": "Compare completed frames,total receive/plan/SEAL and nested SPI/quiet; menu return and same-scene limits; preserve482/476/164/467 restores.",
+      "status": "received_two_runs_load_and_menu_confirmed",
+      "goal": "Two485 raw log sets and second-run video archived/analysed",
+      "gate": "No new hardware package required for counters; old485 package metadata is an immutable construction-time snapshot.",
       "report": "docs/nes-mmc485-trial.ko.md"
     }
   ],
@@ -80,7 +84,7 @@
     "Working482 and476/164/467 restore/GBC/save"
   ],
   "not_proven": [
-    "Candidate hardware time/FPS",
+    "Causal whole-path hardware acceleration on controlled comparable input",
     "Combined supply benefit or transport timing",
     "Physical stack/IRQ bounds",
     "No capture loss or NES real-time speed",
@@ -90,8 +94,11 @@
   ],
   "trial_package": "analysis/supply485-package.json",
   "next_order": [
-    "G4: user485 trial and new raw logs",
-    "G2C: reconcile actual whole-time costs and termination",
-    "G3: choose input/SEAL or supply follow-up from measured result"
-  ]
+    "Fixed-input section-level output body/stale-bank cost audit using current serializer",
+    "Compare output/SEAL data/independent validation/DMA/VBlank and validated SPI headroom jointly",
+    "Trace D0/source-ready wait: deployed MCU_RDY is external_memory_ready, not historical367 source IRQ",
+    "Only claim a candidate speedup after controlled comparable workload; fresh filenames for a later meaningful delivery"
+  ],
+  "current_analysis": "486: two received485 runs and sampled video; no new installer",
+  "selected_workload": "run02 whole60.07s including title/world map and first-level play;8.22fps"
 }

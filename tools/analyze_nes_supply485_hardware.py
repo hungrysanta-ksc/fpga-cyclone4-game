@@ -21,9 +21,19 @@ def analyse(folder,trial):
     expected={'candidate':f'NES-MMC{trial}','board_expected_hex':'7b','board_observed_hex':'7b','board_seen':'1',
               'load_result':'0','file_result':'0','loaded_bytes':'393216','compared_bytes':'393216','verified':'1',
               'verify_error':'0','start_sent':'1','run_passed':'1','run_error':'0','run_first_error':'0','run_stop_error':'0',
-              'run_rom_error':'0','native_receiver_error':'0','native_video_error':'0','native_result':'1',
+              'run_rom_error':'0','native_receiver_error':'0','native_result':'1',
               'stop_ok':'1','base_restored':'1','safe_to_reload':'1','menu_state':'PREPARED_RESET_HELD'}
     for k,v in expected.items():assert g[k]==v,(trial,k,g.get(k))
+    # A deadline inside the resident OBJ writer propagates through slot()==
+    # UINT16_MAX to planner error13. This is not sufficient evidence of OBJ
+    # capacity exhaustion: require the exact preceding deadline/plan-guard
+    # signature, zero transport/receiver errors and a committed unfinished frame.
+    video=int(g['native_video_error'])
+    deadline_OBJ=(video==13 and g['native_result']=='1' and g['plan_error']=='2' and
+                  g['native_sink_error']=='0' and g['sink_window_error']=='0' and
+                  g['trace_aborts']=='0' and g['plan_end']=='0' and
+                  int(g['trace_commits'])==int(g['native_frames'])+1)
+    assert video==0 or deadline_OBJ,('unexpected video failure',video)
     for k,v in {'cost_schema':'474','cost_counter_available':'1','cost_clock_hz':'84000000',
                 'cost_scene_crc32_hex':'5a04eed7','cost_crc_errors':'0','failed_transfers':'0'}.items():
         assert b[k]==v,(trial,k,b.get(k))
@@ -49,7 +59,10 @@ def analyse(folder,trial):
         bins.append({'index':int(i),**dict(zip(columns,values))})
     assert [v['index'] for v in bins]==list(range(12)) and sum(v['frames'] for v in bins)==n
     sent,retired=int(g['sink_window_sent']),int(g['sink_window_retired'])
-    return {'trial':trial,'hardware_run_passed':True,'display':{'completed':n,'seconds':seconds,'fps':n/seconds,
+    return {'trial':trial,'hardware_run_passed':True,
+            'termination_class':'deadline_during_OBJ_emit' if deadline_OBJ else 'deadline',
+            'last_incomplete_frame_displayed':False,
+            'display':{'completed':n,'seconds':seconds,'fps':n/seconds,
             'mean_ms':1000*seconds/n},'DWT_phases_nested':phases,'driver_ops_nested':ops,
             'quiet_nested':quiet,
             'E1_observation':{'driver_calls':ops['E1']['calls'],'software_sent16':sent,'software_retired16':retired,

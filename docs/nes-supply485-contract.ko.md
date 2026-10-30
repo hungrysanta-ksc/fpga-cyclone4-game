@@ -1,5 +1,7 @@
 # NES485 — 첫 BG 발행과 bulk 소비/ACK 소유권
 
+> 후속 실기 수신: [486 분석](nes-hardware486-results.ko.md). 대기13.55fps/첫 레벨 플레이 포함8.22fps, 정상 메뉴 복귀 확인. 아래 미실기/대기 표현은 제작 시점 기록이며 전체 가속은 미입증이다. ZIP·구성 JSON은 제작 당시 그대로 보존했다.
+
 기준은 [484 ARM](nes-game484-planner.ko.md)과 실기에서 동작한 FPGA482/profile7b다. [485 검증](../analysis/supply485-verification.json)·[실기 비교 안내](nes-mmc485-trial.ko.md)를 함께 본다. FPGA/wire/65816 ABI는 바꾸지 않았다. **485의 실제 전체 시간·FPS 개선은 아직 미측정**이며 기존482의14.60fps가 현재 기준이다.
 
 ## 연결한 경로
