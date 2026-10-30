@@ -4,16 +4,13 @@
 
 ## 현재 게임 실기 기준
 
-- MMC485: ARM485-03 / FPGA482 동일 바이트 / 엄격 SMB3(J) ROM, profile7b.
-- 각60.07초: 스테이지 진입 없이 대기814최종 표시/**13.55fps**, 첫 레벨 플레이 포함494최종 표시/**8.22fps**. 모두 정상 로드·STOP/base·메뉴 복귀 확인.
-- 2차 수신31.78ms / 계획·타일 공급40.31ms / SEAL·최종ACK48.33ms. 단계 안의 op/quiet는 중첩이므로 합산하지 않는다.
-- 영상 표본에서1-1/이동/점프/스크롤 확인.8.22fps는 타이틀·월드맵 포함이며 레벨 전용 FPS가 아니다. 두 조건과 이전482의14.60fps를 합산하거나 직접 개선율로 비교하지 않는다.485 전체 가속은 미입증이다.
-- [486 실기 분석·다음 순서](../../docs/nes-hardware486-results.ko.md) · [측정 JSON](../../analysis/hardware486-gameplay485.json) · [현재 계획](../../docs/nes-output487-plan.json). 본문 전송량과 전체 SEAL 비용을 먼저 다룬다. 이번486은 수신 분석만이며 새 전달본은 없다.
-- [485 기능 계약](../../docs/nes-supply485-contract.ko.md)·[package](../../analysis/supply485-package.json)의 제작 시점 플래그는 유지한다. 현재 실기 근거는486이다.
-- 문양 NROM476의23.84fps는 [별도 회귀 기준](../../analysis/receive477-hardware.json)이다.482/476/164/467 원복과 GBC/save를 보존한다.
-- 60fps·전체 NES/MMC4/5·지속 capture 무손실·전체 CDC/IO 승인은 미완료다.
+- **MMC489 / ARM489-02 / FPGA489 / SMB3(J) / ABI4891·profile7b**:60.08초577회 최종 표시, **평균9.60fps**. 실행·첫 레벨 플레이·메뉴 복귀 정상,첫 레벨 체감 개선은 작았다는 사용자 보고다.
+- 수신30.06ms / 계획·타일 공급34.29ms / SEAL·최종ACK38.65ms. op/quiet는 단계에 중첩된다. 반복 D0/E0/E8 조회가 wire의44.73%이며 실제 소비·검사 일정을 다음으로 다룬다.
+- 이전485는 플레이 포함8.22fps/대기13.55fps다. 장면·입력이 달라 인과적 개선율·레벨 전용 FPS를 주장하지 않는다. 문양 NROM476의23.84fps는 별도 회귀다.
+- [490 실기 분석](../../docs/nes-hardware490-results.ko.md) · [측정 JSON](../../analysis/hardware490-mmc489.json) · [현재 계획](../../docs/nes-output487-plan.json). 종료 guard2→video14와 마지막 미완료 프레임 제외를 검증했다.
+- [489 구현](../../docs/nes-output489-contract.ko.md)·[설치/원복](../../docs/nes-mmc489-trial.ko.md)을 유지한다. 제작 시점 package/model 스냅샷을 덮거나 분석만으로 새 ZIP/합성을 만들지 않는다.
+- 60fps·전체 NES/MMC4/5·지속 capture 무손실·전체 CDC/IO·full stack/IRQ 승인은 미완료다.485/482/476/164/467 원복·GBC/save를 보존한다.
 
-[489 개발 후보](../../docs/nes-output489-contract.ko.md)는 loader timing과 raw 직접 DMA를 연결해 제한 실기 비교본을 준비했다. 같은71개 모델 표시 시간7.83% 감소·관련 timing 통과이며, **실기 FPS 개선은 미확인**이다. [새489 설치·원복](../../docs/nes-mmc489-trial.ko.md) 뒤 실제 단계 비용을 비교한다.
 ## 소스와 기록
 
 - 연결 RTL/firmware: `src/nes`, SNES: `snes/video_probe`, 생성/분석 도구: `tools`.

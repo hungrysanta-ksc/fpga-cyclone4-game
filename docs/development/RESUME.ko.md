@@ -1,6 +1,6 @@
 # 다른 PC·새 작업에서 재개하기
 
-이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고485 두 조건의 실제 비용·다음 전체 경로 관문을 따른다.
+이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고489 수신490의 실제 비용·다음 전체 경로 관문을 따른다.
 
 ## 1. 상태를 읽는다
 
@@ -8,7 +8,7 @@
 2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR137](../progress/pr-137.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
-GB/GBC만 추가·공개 완료다. 현재 NES 게임 기준은 MMC485 각60.07초/대기814회13.55fps·첫 레벨 플레이 포함494회8.22fps·정상 로드/STOP/base/메뉴 복귀다. 입력이 다른 이전482의14.60fps와 직접 개선율을 비교하지 않는다. 문양NROM476의23.84fps는 별도 회귀로 보존한다.60fps·전 게임/매퍼·capture/전체 CDC/IO 승인은 미완료다.
+GB/GBC만 추가·공개 완료다. 현재 NES 게임 기준은 MMC489 60.08초577최종 표시/9.60fps·정상 실행/메뉴 복귀다.이전485 각60.07초 대기13.55fps·첫 레벨 플레이 포함8.22fps는 별도 조건이다. 입력이 다른 이전482의14.60fps와 직접 개선율을 비교하지 않는다. 문양NROM476의23.84fps는 별도 회귀로 보존한다.60fps·전 게임/매퍼·capture/전체 CDC/IO 승인은 미완료다.
 
 ## 2. Git 기준을 확인한다
 
@@ -29,7 +29,7 @@ git log -5 --oneline
 |---|---|
 | 문서·JSON 검사 | Python3, Git. 특정 사용자 홈 경로 불필요 |
 | ARM | GNU Arm13.3.Rel1 계열·make·필수 유틸과 대상 config. 기존 빌더의 절대 경로를 먼저 확인 |
-| FPGA | Quartus **Lite**를 기본 사용. 현재482 RTL/bitstream을 유지할 때 변경 없는 전체 합성을 반복하지 않음 |
+| FPGA | Quartus **Lite**를 기본 사용. 현재489 RTL/bitstream을 유지할 때 변경 없는 전체 합성을 반복하지 않음 |
 | Questa | 설치된 Starter FLOAT1좌석으로 순차 실행. 해당 PC의 유효한 권한과 wrapper를 준비하며 원본 signed license는 Git에 저장하지 않음 |
 | 에뮬레이터 | 필요한 경계에서만 Mesen/.NET 준비. 모델/CPU 실행과 전체 실기 시간을 구분 |
 | 로컬 source/로그 | [NES 재현 범위](../../cores/nes/REPRODUCING.ko.md)의 빠진 입력을 먼저 복구. `probes`/`.tools`/Downloads가 clone에 포함된다고 가정하지 않음 |
@@ -41,7 +41,7 @@ git log -5 --oneline
 
 1. [실기486 분석](../nes-hardware486-results.ko.md)·[485 계약](../nes-supply485-contract.ko.md)·[다음 계획](../nes-output487-plan.json)을 읽는다. 현재485 두 장면은 합산하지 않는다. 문양476은 별도 원복/회귀다.
 2. G2B는 연결·기능 시험을 통과했다. candidate03/ARM03/armguard07/live02/trial02가 선택이다. 초기 busy-spin 후보는 전달하지 않는다. credit 수령·실제 ACK·staging 해제를 구분한다.
-3. **489 제한 실기 비교 준비.** [489 계약](../nes-output489-contract.ko.md)·[검증](../../analysis/output489-verification.json)·[설치](../nes-mmc489-trial.ko.md). 같은71개4234.845→3903.397ms는 실제65816+wire 모델,관련 setup+0.183ns·whole15272LE/51M9K 통과다. Flash124B/RUN31848B/136LE·5M9K/SNES program5KiB·문맥8B,full stack/IRQ/CDC/IO 미승인이다. 다음은 사용자 MMC489 대기/플레이3로그이며 실제485의8.22fps를 아직 바꾸지 않는다. 로컬 선택 candidate03/ARM02/client04/board02/trial02와 원본 의존성은 계약을 따른다.
+3. **489 기능 실기 확인·다음 병목 분석 완료.** [수신490](../nes-hardware490-results.ko.md)·[측정](../../analysis/hardware490-mmc489.json),9.60fps/실행·메뉴 정상,첫 레벨 가속 미입증. E8/E0 조회·실제 소비/검사 일정이 다음,그다음D0 source/ROM이다. [489 계약](../nes-output489-contract.ko.md)·[검증](../../analysis/output489-verification.json)·[설치](../nes-mmc489-trial.ko.md). 같은71개4234.845→3903.397ms는 실제65816+wire 모델,관련 setup+0.183ns·whole15272LE/51M9K 통과다. Flash124B/RUN31848B/136LE·5M9K/SNES program5KiB·문맥8B,full stack/IRQ/CDC/IO 미승인이다. 이번에는 새 ZIP/합성 없이489를 유지하고 같은 고정 입력으로 전체 표시 시간을 비교할 구조를 정한다.485의8.22fps와 다른 장면 개선율을 만들지 않는다. 로컬 선택 candidate03/ARM02/client04/board02/trial02와 원본 의존성은 계약을 따른다.
 4. 독립 검사·STOP·최종 ACK·4credit·메뉴 복귀를 유지한다. RTL이 실제로 바뀔 때만 같은 source의 Lite 전체 비용/관련 timing을 다시 확인한다.
 5. 의미 있는 변경이 검증된 뒤 새 번호·marker·로그·원복으로 동일 ROM/입력 조건의 하드웨어를 비교한다.482 한 회 성공을480의 단일 물리 원인·전 게임/매퍼·60fps 증명으로 승격하지 않는다.
 

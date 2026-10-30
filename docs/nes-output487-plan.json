@@ -3,8 +3,8 @@
   "execution_state": {
     "performance_work": "active"
   },
-  "physical_baseline": "MMC485",
-  "physical_evidence": "analysis/hardware486-gameplay485.json",
+  "physical_baseline": "MMC489",
+  "physical_evidence": "analysis/hardware490-mmc489.json",
   "development_evidence": "analysis/output489-verification.json",
   "merged_PR136": "2d4543ef2442bc798bcec128a4a108fdfc4d5287",
   "branch": "codex/nes-output-budget-487",
@@ -49,9 +49,15 @@
     },
     {
       "id": "S4",
-      "status": "awaiting_user_hardware_trial",
+      "status": "complete_received_single_gameplay_inclusive_run",
       "goal": "Controlled physical comparison after meaningful integrated change",
-      "gate": "MMC489-RAWDMA.zip trial02,paired firmware/FPGA;fresh489 marker/ROM/log names;485/482/476/164/467 restores byte-preserved. Request same idle/play scene and3logs,then choose bottleneck using physical ARM/SPI/IRQ/ROM data"
+      "gate": "490 received489:577/60.08s=9.60fps,load/menu normal;different485 inputs,not controlled causal comparison;guard2->video14 and12negative signatures pass"
+    },
+    {
+      "id": "S5",
+      "status": "next",
+      "goal": "Joint E8 descriptor/E0 consume-credit/ACK and65816 packet/CRC/manifest/VBlank schedule, then D0 source readiness/ROM grants",
+      "gate": "Fixed-input common-start full display comparison;independent checks/STOP/deadline/finalACK/menu preserved;Flash124B/136LE;matching whole Lite only if RTL changes. No measurement-only new installer"
     }
   ],
   "retained": [
@@ -64,7 +70,8 @@
   ],
   "new_hardware_package": true,
   "full_path_acceleration_proven": false,
-  "current_candidate": "MMC489 ABI4891 limited paired hardware trial ready; physical baseline remains485",
+  "current_candidate": "MMC489 hardware load/menu pass;9.60fps gameplay-inclusive;first-level causal gain unproven",
   "related_timing_passed": true,
-  "development_package": "analysis/output489-package.json"
+  "development_package": "analysis/output489-package.json",
+  "physical_same_scene_acceleration_proven": false
 }

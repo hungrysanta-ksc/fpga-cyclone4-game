@@ -12,11 +12,11 @@
 ## 현재 작업 범위
 
 - PR136 merge2d4543ef2442bc798bcec128a4a108fdfc4d5287 확인 뒤 PR137/codex/nes-output-budget-487에서 진행한다. 먼저 docs/nes-output489-contract.ko.md + analysis/output489-verification.json + docs/nes-output487-plan.json을 읽는다.487/488 근거와 기각 후보를 보존한다.
-- 현재 개발 선택은489 제한 실기 비교본이다. loader inactive payload 선행 저장은 실제 쓰기/오류/STOP/drain 허용과 분리했으며 owned pins/control 동등성+3negative 통과. raw는 plane/row-major 전송과 실제 strided VRAM DMA,2B implicit-pattern cache+6B frame context를 사용한다. 인증은 변경 전 무효화하고 성공 표시 commit에서 확정한 뒤 ACK를 발행한다. 동일12개823.806->757.253ms,71개4234.845->3903.397ms는 실제65816+wire 모델이며 물리 FPS가 아니다.
+- 현재 개발 선택은489 실기 동작 경로다. loader inactive payload 선행 저장은 실제 쓰기/오류/STOP/drain 허용과 분리했으며 owned pins/control 동등성+3negative 통과. raw는 plane/row-major 전송과 실제 strided VRAM DMA,2B implicit-pattern cache+6B frame context를 사용한다. 인증은 변경 전 무효화하고 성공 표시 commit에서 확정한 뒤 ACK를 발행한다. 동일12개823.806->757.253ms,71개4234.845->3903.397ms는 실제65816+wire 모델이며 물리 FPS가 아니다.
 - Whole Lite1회15272LE/14078comb/8392FF/264800logicalbits/51M9K;136LE·5M9K 여유. 관련 setup+0.183/hold+0.168ns,nominal+0.224/+0.168ns.5KiB ROM이3M9K를 회수한 것은 아니다. ARM Flash124B/새 global0B/RUN31848B/full stack·IRQ 미증명, SNES body4311B/문맥8B. 새 false-path/seed loop 없음, 전체 reset/CDC/IO 미승인 유지.
-- MMC489-RAWDMA.zip은 probes/nes-output489/trial02;현재FPGAboard02/ARM02/client04(시험03과동일) 선택, marker NES MMC3 489.nh1/ROM mmc489.nes/로그 *-mmc489.txt. NEXT 사용자 설치 후 동일 대기/플레이의3로그와 화면·메뉴 복귀 분석. 실제 기준485 대기13.55/플레이 포함8.22fps는 아직 대체하지 않는다. C/RTL boot join은 raw0,raw71 CPU시험과 공통 물리 시계로 합치지 않는다. MCU_RDY는 external_memory_ready이지 source-ready IRQ가 아니다.
+- MMC489-RAWDMA.zip은 probes/nes-output489/trial02;현재FPGAboard02/ARM02/client04(시험03과동일) 선택, marker NES MMC3 489.nh1/ROM mmc489.nes/로그 *-mmc489.txt. 수신490에서 실행·메뉴 복귀/60.08초577회9.60fps 확인,첫 레벨 체감 개선 작음. 먼저 docs/nes-hardware490-results.ko.md + analysis/hardware490-mmc489.json을 읽는다. NEXT E8공급/E0소비credit·ACK/65816검사 일정 공동 추적,그다음D0 source/ROM.485 대기13.55/플레이8.22와 동일 장면 가속은 미입증. C/RTL boot join은 raw0,raw71 CPU시험과 공통 물리 시계로 합치지 않는다. MCU_RDY는 external_memory_ready이지 source-ready IRQ가 아니다.
 - 추가·공개 완료는 GB/GBC G13C44/0.9.0뿐이다. NES60fps는 미완료이며 문양476의23.84fps는 별도 회귀다.
-- 현재 실기 근거는 `analysis/hardware486-gameplay485.json`, 문양 회귀는 `analysis/receive477-hardware.json`, 인계는 `cores/nes/HANDOFF.ko.md`다.2차 video_error13의 deadline/emit 전파는 슬롯1/128 실제 M4 시험으로 검증했으며 진짜 capacity 실패를 포괄 허용하지 않는다.
+- 현재 실기 근거는 `analysis/hardware490-mmc489.json`,이전485는 `analysis/hardware486-gameplay485.json`, 문양 회귀는 `analysis/receive477-hardware.json`, 인계는 `cores/nes/HANDOFF.ko.md`다.2차 video_error13의 deadline/emit 전파는 슬롯1/128 실제 M4 시험으로 검증했으며 진짜 capacity 실패를 포괄 허용하지 않는다.
 - `src/fpga`, `src/firmware-overlay`, `src/renderer`의 검증된 GBC와 사용자 저장·복원물을 보존한다.
 
 ## 문서와 PR

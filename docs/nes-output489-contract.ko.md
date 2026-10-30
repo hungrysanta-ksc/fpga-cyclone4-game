@@ -1,6 +1,6 @@
 # NES489 — loader 허용 경계와 raw 직접 DMA
 
-[검증](../analysis/output489-verification.json) · [전달본 manifest](../analysis/output489-package.json) · [설치/원복](nes-mmc489-trial.ko.md) · [PR137](progress/pr-137.md). **실제 성능 기준은 여전히485 대기13.55fps/플레이 포함8.22fps다.**489는 제한 실기 비교 준비를 마쳤으며 아직 실기 성공·가속·60fps를 주장하지 않는다.
+[검증](../analysis/output489-verification.json) · [전달본 manifest](../analysis/output489-package.json) · [설치/원복](nes-mmc489-trial.ko.md) · [PR137](progress/pr-137.md). **후속 실기 수신490:489 실행·메뉴 복귀 정상,60.08초577회/9.60fps.** [실기 분석490](nes-hardware490-results.ko.md)에서 비용·한계를 확인한다. 아래는 전달 당시의 기능/모델/timing 근거이며 제작 스냅샷은 덮지 않는다. 첫 레벨 가속·60fps는 미입증이다.
 
 ## loader setup 경로
 
