@@ -1,12 +1,16 @@
 # 현재 NES 인계
 
-PR138 merge `7e9699fb5d3ce4617495c204aa04d194cb09798d`와 감사499 head의 master 도달을 확인했다. 현재 `codex/nes-capture-correctness-500` / [PR139](../../docs/progress/pr-139.md)에서 진행한다. 먼저 [500 수집 경계 재현](../../docs/nes-capture500-contract.ko.md) → [검증](../../analysis/capture500-verification.json) → [A1–A4 계획](../../docs/nes-audit499-plan.json)을 읽는다. [감사499](../../docs/nes-audit499.ko.md)의 보류 목록을 유지한다.
+PR138 merge `7e9699fb5d3ce4617495c204aa04d194cb09798d`와 감사499 head의 master 도달을 확인했다. 현재 `codex/nes-capture-correctness-500` / [PR139](../../docs/progress/pr-139.md)에서 진행한다. 먼저 [501 행 복구](../../docs/nes-capture501-contract.ko.md) → [검증](../../analysis/capture501-verification.json) → [A1–A4 계획](../../docs/nes-audit499-plan.json)을 읽는다. [감사499](../../docs/nes-audit499.ko.md)의 보류 목록을 유지한다.
 
-## 현재500 — A1 원인 분리
+## 현재501 — 수집기 수정 후보 검증
 
-실제493 PPU와collector에 기록된mask/주소쓰기·위상을 재생해24조건 중15정상/9거부를 관측했다. 실기의01/04/06과 같은오류가재현됐고23조건raw11776픽셀은별도post-CE 관측과일치했다. 이전행low pending과재개시load/read 불일치가원인인반례다. 실제게임/ROM경쟁·실기오류전체원인·FPS증명은아니다.
+PPUMASK 전환에 한정해 현재/다음 행을 raw로 보존하고, 완전한행·행identity·세대·raw 완료 이후에만 승인한다. 실제 ROM 주소와DATA/physical-logical lane은 계속 검사하되, 재개 직후high-load와low-plane 주소가겹치는 PPU동작은 raw가 보존한다. 기존500의거부9조건이회복됐다.
 
-선택은로컬 `nes-capture500-test03/trace01/phase01`이다. test01 library누락과test02 fixture 오배선은제외·보존했다. 제품RTL/ARM/65816은그대로며A1 전체는미완료다. **다음은완전한raw 행coverage·identity 이후에만불완전fetch를회복하는수정과반례검증**이다. 주소/data-valid/ROM fault·missing pixel·capacity·STOP와최종query/ACK gate는유지한다. A2/498승격/실기전달로넘어가지않는다.
+최종 `equivalence02`는27조건에서 raw15,360픽셀·native197,604이벤트가 정확히일치했다. `guards04`의12반례·조기/다른세대query·STOP도통과했다. 실제CPU/MMC3/PSRAM/ARM/IRQ/SNES 전체경로나실기FPS 증명은아니다. OAM은비어있는fixture다.
+
+Lite `board02`:15,308LE(+36),14,133comb(+55),8,399FF(+7),264,816bit(+16),51M9K(동일),잔여100LE. 관련setup+.077ns/hold+.145ns. 기존제약그대로이며전체CDC/IO승인은아니다. 미채택 `test03/board01`은기능2조건실패,`guards02/11`은fault가실제발생하지않은fixture실패로보존했다.
+
+**다음:** 불필요한세번째raw행의소유권범위와실제493 compact/full CHR전송비용을비교하고source→ARM→65816의raw소비를연결한다. 현재ARM은2행이면384B,3행이면2,048B CHR을span/RLE에넘긴다. 이는실제SPI 증가량이아니다. 필요한행을강제로누락하지않는다. A1은미완료이며493실기9.57fps/원복/ARM·SNES는유지한다. 신규ZIP이나498승격은없다.
 
 ## 현재 실기 선택
 
