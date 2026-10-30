@@ -35,6 +35,10 @@ Whole Lite15121LE/14097comb/8394FF/51M9K, 관련 setup+0.046/hold+0.164ns다. LE
 
 [496 근거](../../docs/nes-schedule496-contract.ko.md):219계획을실제규칙의32묶음으로교정,동일12픽셀·4조건통과.657.420ms는새가속이아닌fixture교정이다. 실제lease RTL에서다음캡처는허용하되export는이전retire까지차단됨을확인했다. stale/STOP·잘못된early-export mutant를검사했다. ARM만앞당겨서는수신겹침이불가능하다. S9는아직진행중이며실제M4 complete485 단일bulkPending/E8/E0·IRQ/ROM 시각을연결해야한다. source export시작과COMMIT 분리·기존identity 보호를함께검토한다.
 
+## 497 실제 M4 대기 연결
+
+[497 검증](../../docs/nes-bulk497-contract.ko.md):linked493의emit/complete485/finish를2bank 묶음 endpoint에연결해36조건·9반례를통과했다.32묶음의모든소비후FINISH,표시ACK 없는retire 거부를확인했다. 소비는지정instruction 지연으로실제65816/IRQ/ROM 공통시간은아직미완료다. reader_drained는arb_idle이므로새export 허용에충분하지않다. generation에묶인END 수락+drain과oldACK/EA 뒤새COMMIT을구분해야한다. 기존493·예산·전달본을유지한다.
+
 ## 다음 작업 순서
 
 1. **493을 정상 실기 기준으로 유지한다.** [설치/원복](../../docs/nes-mmc493-trial.ko.md)·[manifest](../../analysis/boot493-package.json). 사용자가ZIP을설치하고TXT를반환하는방식이다.
