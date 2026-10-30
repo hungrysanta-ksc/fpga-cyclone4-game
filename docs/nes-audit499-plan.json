@@ -5,16 +5,31 @@
   "evidence": "analysis/audit499-verification.json",
   "supersedes_next_work": "docs/nes-output487-plan.json S9 and498 NEXT; historical evidence remains valid in its scope",
   "selected_experimental_candidate": null,
-  "protected": ["independent checks", "STOP cancellation", "old display identity", "final ACK before EA/new COMMIT", "VBlank", "menu/base recovery", "GBC/save SRAM"],
+  "protected": [
+    "independent checks",
+    "STOP cancellation",
+    "old display identity",
+    "final ACK before EA/new COMMIT",
+    "VBlank",
+    "menu/base recovery",
+    "GBC/save SRAM"
+  ],
   "stages": [
     {
       "id": "A1",
-      "status": "next",
+      "status": "in_progress",
       "objective": "Explain and correct capture fetch rejection01/04/06 before optimizing polling again",
-      "inputs": ["actual493 PPU tap/planes/compact/raster/raw-row", "existing179 register/pixel evidence", "493 V3 episode history"],
+      "inputs": [
+        "actual493 PPU tap/planes/compact/raster/raw-row",
+        "existing179 register/pixel evidence",
+        "493 V3 episode history"
+      ],
       "deliverable": "First-failure boundary with low/high/address/PPUMASK/actual pixel and row commit; minimal verified correction if defective",
       "gate": "Normal render stop/restart and split produce reference-equivalent pixels; invalid addresses/ROM fault/missing pixels/STOP remain rejected",
-      "stop_rule": "No bit masking or game/scanline exception. No repeated hundreds-frame full boot simulation; use bounded event replay or targeted existing witness when exact timing is missing."
+      "stop_rule": "No bit masking or game/scanline exception. No repeated hundreds-frame full boot simulation; use bounded event replay or targeted existing witness when exact timing is missing.",
+      "diagnosis_evidence": "analysis/capture500-verification.json",
+      "diagnosis": "500 reproduced01/04/06 in actual493 PPU/collector;24 unique conditions,9 rejected despite exact retained raw pixels",
+      "remaining": "Row-owned recovery implementation,negative guards,and justified whole Lite cost;A1 not complete"
     },
     {
       "id": "A2",
@@ -25,7 +40,12 @@
       "provisional_wire_budget_ms": 12,
       "provisional_wire_budget_B": 3937.5,
       "budget_is_measured": false,
-      "compare": ["retained-base input delta and redundant transfer removal", "RUN-scoped shared SPI setup including70/73", "verified early inactive-VRAM DMA and metadata supply", "ROM grant/tag locality only when wait measured"],
+      "compare": [
+        "retained-base input delta and redundant transfer removal",
+        "RUN-scoped shared SPI setup including70/73",
+        "verified early inactive-VRAM DMA and metadata supply",
+        "ROM grant/tag locality only when wait measured"
+      ],
       "gate": "All mandatory bytes/gaps/ARM/IRQ/ROM/WRAM/VRAM/VBlank terms and old-control deletion listed; no double-counted overlap; whole LE/RAM/Flash/stack budget",
       "stop_rule": "If retained mandatory wire exceeds period or renderer cannot represent gameplay, revise ABI/roles or supported scope instead of another FSM/opcode optimization."
     },
@@ -47,5 +67,8 @@
   ],
   "frozen_work_policy": "See nes-audit499.ko.md: frozen until explicit new evidence, not proven mathematically unoptimizable",
   "new_installer_required_now": false,
-  "MMC4_MMC5_ready": false
+  "MMC4_MMC5_ready": false,
+  "current_branch": "codex/nes-capture-correctness-500",
+  "current_PR": 139,
+  "merged_PR138": "7e9699fb5d3ce4617495c204aa04d194cb09798d"
 }

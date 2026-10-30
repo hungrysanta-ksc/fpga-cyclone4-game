@@ -1,6 +1,6 @@
 # 프로젝트 현황
 
-목표는 **sd2snes Cyclone IV 멀티 코어 확장**이다. PR137 병합 뒤 PR138에서 개발한다. 현재 실기는 MMC493이며 이전489/485와 다른 장면의 결과를 분리해 판정한다. [NES 인계](../cores/nes/HANDOFF.ko.md) · [PR별 경과](progress/README.md).
+목표는 **sd2snes Cyclone IV 멀티 코어 확장**이다. PR138 병합 뒤 PR139에서 A1 수집 정확성을 검토한다. 현재 실기는 MMC493이며 이전489/485와 다른 장면의 결과를 분리해 판정한다. [NES 인계](../cores/nes/HANDOFF.ko.md) · [PR별 경과](progress/README.md).
 
 ## 코어별 판정
 

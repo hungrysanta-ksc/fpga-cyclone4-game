@@ -1,6 +1,12 @@
 # 현재 NES 인계
 
-PR137 merge29815faa3887a035091e3169ffa0f751dda3de44 이후 `codex/nes-consume-schedule-491` / [PR138](../../docs/progress/pr-138.md)에서 진행한다. **먼저 [전체 경로 감사499](../../docs/nes-audit499.ko.md) → [새 계획 A1–A4](../../docs/nes-audit499-plan.json) → [선택 소스·분석](../../analysis/audit499-verification.json)을 읽는다.** 기존487/S9와498 NEXT보다 이 순서가 우선한다. 현재 정상 실기 기준은493이며498은 미선택이다.
+PR138 merge `7e9699fb5d3ce4617495c204aa04d194cb09798d`와 감사499 head의 master 도달을 확인했다. 현재 `codex/nes-capture-correctness-500` / [PR139](../../docs/progress/pr-139.md)에서 진행한다. 먼저 [500 수집 경계 재현](../../docs/nes-capture500-contract.ko.md) → [검증](../../analysis/capture500-verification.json) → [A1–A4 계획](../../docs/nes-audit499-plan.json)을 읽는다. [감사499](../../docs/nes-audit499.ko.md)의 보류 목록을 유지한다.
+
+## 현재500 — A1 원인 분리
+
+실제493 PPU와collector에 기록된mask/주소쓰기·위상을 재생해24조건 중15정상/9거부를 관측했다. 실기의01/04/06과 같은오류가재현됐고23조건raw11776픽셀은별도post-CE 관측과일치했다. 이전행low pending과재개시load/read 불일치가원인인반례다. 실제게임/ROM경쟁·실기오류전체원인·FPS증명은아니다.
+
+선택은로컬 `nes-capture500-test03/trace01/phase01`이다. test01 library누락과test02 fixture 오배선은제외·보존했다. 제품RTL/ARM/65816은그대로며A1 전체는미완료다. **다음은완전한raw 행coverage·identity 이후에만불완전fetch를회복하는수정과반례검증**이다. 주소/data-valid/ROM fault·missing pixel·capacity·STOP와최종query/ACK gate는유지한다. A2/498승격/실기전달로넘어가지않는다.
 
 ## 현재 실기 선택
 

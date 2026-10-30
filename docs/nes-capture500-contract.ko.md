@@ -45,6 +45,8 @@ PPU의 `native_bg_low/high`는 `bgp_en/rendering_enabled`의 실제pattern load 
 
 선택은로컬`nes-capture500-test03`,상세`nes-capture500-trace01`,추가위상`nes-capture500-phase01`이다. `tools/analyze_nes_capture500.py`는각입력·source·stimulus·log hash와결과를확인해공개요약을생성한다. raw waveform/game ROM/license/server log는Git에넣지않는다.
 
+선택/실패입력·동작로그171파일은 `probes/nes-capture500/evidence/{test01,test02,test03,trace01,phase01}`에도byte동일복사했고 `archive01.json`으로고정했다. Temp가정리돼도이로컬보존본을사용할수있다. clone에이비공개자료가포함되지는않는다.
+
 - test01:현재PPU의Intel RAM library를빼먹어elaboration 실패. 동작결과없음.
 - test02:fixture가ROM data-valid 대신PPU ALE/address-valid를연결해baseline부터06으로실패했다. 검사입력의의미를보드와대조해수정하고중단했다. 이결과는제품결함근거에서제외한다.
 - test03부터baseline valid를필수조건으로삼았다. 실패/중단원시로그와기존493/498 자료는보존했다. sandbox의PC식별실패는허가된host wrapper로실행해해소했으며라이선스내용을변경하지않았다.
