@@ -32,7 +32,7 @@
 
 | 항목 | 현재 값/판정 |
 |---|---|
-| FPGA | 기존482:15254LE/14049comb/8392FF/256608bits、154LE 잔여; 새 합성 없음 |
+| FPGA | 실기 선택482:15254LE/14049comb/8392FF/256608bits、154LE 잔여;488 후보는 아래 별도 |
 | Timing | 관련 setup+0.133ns/hold+0.132ns; 전체 reset/CDC/IO 미승인 |
 | ARM485 | text202717/data10040/BSS18572B、firmware212760B·Flash232B 잔여 |
 | RAM/stack | RUN31848B 유지、full stack/IRQ 증명 미완료 |
@@ -41,9 +41,9 @@
 | 게임/매퍼 범위 | SMB3 첫 레벨 기능 실기 확인; 전 MMC3/MMC4/5·60fps·제품 공개 미완료 |
 | 지속성 | capture 누락/반복·frame p95·NES 실시간 속도·정확 VBlank/ROM 위상 미측정 |
 
-[487 출력 감사](nes-output487-contract.ko.md)에서 고정71입력의 실제 M4 serializer를 실행했다. raw2행에도 CHR2048B를 보내는 낭비를 확인했고384B compact 표현의 손실 없는 복원을 모델로 검증했다. 별도 bounded-scan 후보는 상태/계획/출력 packet 동일·소유권12사례 통과, serializer 명령20.31% 감소·Flash+12B/잔여220B다. **전체 시간/FPS 개선은 미측정이며 새 설치본은 없다.**
+[487 출력 감사](nes-output487-contract.ko.md)와 packet 동일 scan 다음으로 [488 compact 실제 연결](nes-compact488-contract.ko.md)을 검증했다. raw2 프레임당 ordinary/SEAL E1 1797B를 줄였고 실제 ARM/65816 검사·DMA·STOP를 통과했지만, 같은12개 최종 표시823.806→823.797ms로 거의 같았다. 후보 whole Lite15287LE/51M9K는 들어가나 관련 setup-0.101ns로 실패했다. ARM Flash140B 잔여·새 global0B, SNES body4233B/program8KiB·새 persistent0B다. **후보를 실기 선택으로 올리지 않았고 새 ZIP은 없다.**
 
-다음은 compact raw ABI를 실제 ARM·65816로 연결하고 code/stack·독립 검사/STOP·실제 SPI/ROM/DMA/VBlank 비용을 확인한다. [현재 순서](nes-output487-plan.json). MCU_RDY는 external_memory_ready이며 source-ready IRQ가 아니다.
+다음은 loader check_failed→byte_hold 제어 경계와 raw 복원+VRAM DMA/ROM 배치를 함께 비교한다. 선택 구조의 성능을 먼저 확인한 뒤 한 번의 whole FIT/관련 timing을 통과해야 전달한다. [현재 순서](nes-output487-plan.json) · [488 검증](../analysis/compact488-verification.json). 실제485의 시간/FPS와 위 표는 그대로이며 MCU_RDY는 source-ready IRQ가 아니다.
 
 [484 계산 절감](nes-game484-planner.ko.md)·[485 소유권 연결](nes-supply485-contract.ko.md)은 기능 검증 근거로 보존한다. [485 package](../analysis/supply485-package.json)의 hardware_verified=false는 제작 시점 스냅샷이다. 현재 실기 근거는486이며 ZIP/FPGA를 다시 만들지 않았다. 문양 NROM476의23.84fps와482/476/164/467 원복·GBC/save를 보존한다.
 

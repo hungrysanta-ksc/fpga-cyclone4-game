@@ -11,8 +11,9 @@
 
 ## 현재 작업 범위
 
-- PR136 merge2d4543ef2442bc798bcec128a4a108fdfc4d5287의 master 도달 확인 뒤 PR137 / codex/nes-output-budget-487에서 진행한다. docs/nes-output487-contract.ko.md와 docs/nes-output487-plan.json을 먼저 읽는다. 실제485 M4 serializer71개를 section별 감사하고 packet 동일 bounded-scan 후보를 검증했다. serializer 명령20.31% 감소는 전체 실기 시간/FPS 개선이 아니다. ARM Flash+12B/잔여220B, 새 상태/버퍼0B, FPGA 그대로다.
-- 다음은 raw 행/6-plane compact ABI의 실제 ARM·65816 연결과 code/stack·독립 검사·STOP·최종 ACK·VBlank 검증이다. 고정 입력71개는 raw2행인데 CHR2048B를 보내며384B로 손실 없이 복원 가능했다. framing 포함1797B/프레임 절감은 모델이며494 실기 플레이에 적용된 값이 아니다. 실제 SPI·ROM·65816 비용을 연결한 뒤 전달한다. 이번487 새 ZIP/합성 없음. MCU_RDY는 external_memory_ready이지 source-ready IRQ가 아니다.
+- PR136 merge2d4543ef2442bc798bcec128a4a108fdfc4d5287 확인 뒤 PR137/codex/nes-output-budget-487에서 진행한다. 먼저 docs/nes-compact488-contract.ko.md + analysis/compact488-verification.json + docs/nes-output487-plan.json을 읽는다. 487 감사/packet 동일 scan 근거는 별도 보존한다.
+- 488 actual ARM/65816 canonical compact는 기능 후보다.71개 canonical 상태/598계획, raw2 E1 1797B/frame 절감, M4 window/CRC·독립 검사·DMA·STOP·최종 ACK 검증은 통과했다. 하지만 같은12개 최종 표시823.806→823.797ms로 실질 개선 없음. whole Lite FIT15287LE/51M9K/121LE·5M9K 여유이나 관련 setup-0.101ns(check_failed→byte_hold[7]) FAIL. ARM Flash140B/RUN31848B/full stack·IRQ 미증명, SNES program8KiB/body4233B·새 persistent0B. 두 관문 통과 전 새 ZIP/실기 승격을 보류하며485를 보존한다.
+- NEXT loader reset/control 경로의 같은-cycle CRC·STOP·복구 증명과 raw 복원+VRAM DMA/ROM 배치를 함께 비교한다. 성능 구조 확정 뒤 같은-source whole FIT는 한 번에 판정한다. false-path/seed 반복이나 과거 direct-VRAM 시간과 현재 canonical 비용의 합성 금지. actual C/RTL/65816 boot join은 raw0, raw2 CPU 시험과 공통 물리 시계가 아니다. MCU_RDY는 external_memory_ready이지 source-ready IRQ가 아니다.
 - 추가·공개 완료는 GB/GBC G13C44/0.9.0뿐이다. NES60fps는 미완료이며 문양476의23.84fps는 별도 회귀다.
 - 현재 실기 근거는 `analysis/hardware486-gameplay485.json`, 문양 회귀는 `analysis/receive477-hardware.json`, 인계는 `cores/nes/HANDOFF.ko.md`다.2차 video_error13의 deadline/emit 전파는 슬롯1/128 실제 M4 시험으로 검증했으며 진짜 capacity 실패를 포괄 허용하지 않는다.
 - `src/fpga`, `src/firmware-overlay`, `src/renderer`의 검증된 GBC와 사용자 저장·복원물을 보존한다.

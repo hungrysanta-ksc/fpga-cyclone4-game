@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-PR136 merge2d4543ef2442bc798bcec128a4a108fdfc4d5287의 master 도달 확인 뒤 `codex/nes-output-budget-487` / [PR137](../../docs/progress/pr-137.md)에서 진행한다. 먼저 [487 출력 감사](../../docs/nes-output487-contract.ko.md)·[현재 계획](../../docs/nes-output487-plan.json)을 읽는다. 실제 하드웨어 기준은 아래485 그대로다.
+PR136 merge2d4543ef2442bc798bcec128a4a108fdfc4d5287의 master 도달 확인 뒤 `codex/nes-output-budget-487` / [PR137](../../docs/progress/pr-137.md)에서 진행한다. 먼저 [488 연결·보류 판정](../../docs/nes-compact488-contract.ko.md)·[현재 계획](../../docs/nes-output487-plan.json)을 읽는다. 실제 하드웨어 기준은 아래485 그대로다.
 
 ## 현재 실기 선택
 
@@ -28,9 +28,9 @@ PR136 merge2d4543ef2442bc798bcec128a4a108fdfc4d5287의 master 도달 확인 뒤 
 
 1. **487 감사 완료.** 기존71입력의 actual M4 serializer와 독립 byte expander가 전체 테이블/두 bank를 대조했다. raw2행인데 CHR2048B 전송이 컸으며 map stale 확장은 유지가 필요했다. [487 근거](../../analysis/output487-verification.json).
 2. **bounded-scan 후보 검증 완료.** 상태·계획·전체 packet71개 동일, serializer 명령20.31% 절감·소유권12사례 통과. ARM+12B/Flash220B·새 상태/버퍼0B, FPGA/SNES ABI 그대로다. 전체 시간/FPS는 미측정이며 이 변경만으로 전달하지 않는다.
-3. **다음은 compact raw ABI 실제 연결.** 사용 행/6plane 표현은 이번 입력에서2048→384B이고 framing 포함1797B 절감 모델이다. ARM pack·SNES canonical 복원/검사/STOP를 연결하고 Flash220B·현재 SNES 배치 여유224B·stack 순증가를 먼저 측정한다.4KiB는 현재 배치이며 SNES ROM 최대 용량이 아니다.
-4. 실제 queue·공유 SPI·ROM/tile·65816 검사/DMA/VBlank·최종 ACK 전체 비용을 확인한다.48.33ms를 모두 ACK polling으로 보거나 즉시 ACK 모델 명령을 물리 시간에 더하지 않는다. 데이터 절감/SPI 여유를 검증한 다음 D0 readiness를 다룬다. MCU_RDY는 external_memory_ready다.
-5. 의미 있는 결합 변경 이후 같은 장면/입력 비교와 새 번호 전달본을 만든다. 현재 플레이 포함8.22fps/평균121.60ms는 그대로이며60fps·capture/p95·full stack/IRQ·MMC4/5는 미완료다.
+3. **488 연결 검증 완료·전달 보류.** [488 계약](../../docs/nes-compact488-contract.ko.md)·[검증](../../analysis/compact488-verification.json). raw1/2 compact→canonical WRAM→독립 검사/기존 DMA를 실제로 연결했다. raw2 E1 1797B/frame 절감·serializer 명령53.57% 감소지만12개 최종 표시823.806→823.797ms로 거의 같다. actual C/RTL/65816 boot은 raw0, raw2 별도12개 검사와 공통 시계로 합치지 않는다.
+4. 후보 비용은 ARM Flash140B 잔여/새 global0B/SEAL static304B, SNES body4233B/program8KiB/새 persistent0B, whole Lite15287LE/51M9K/121LE·5M9K 여유다. 관련 setup-0.101ns로 실패했다. 최악 check_failed→byte_hold[7]의 loader reset/control 경계를 증명하고 raw 복원+VRAM DMA/ROM 배치를 함께 비교한 뒤 한 번의 selected-source FIT/STA로 재판정한다. false-path/seed 반복은 하지 않는다.
+5. 의미 있는 최종 표시 시간 개선과 timing을 모두 통과해야 새 번호/marker/로그/원복 전달본을 만든다. 지금 새 ZIP/실기 요청은 없다. 현재 플레이 포함8.22fps/평균121.60ms,60fps·capture/p95·full stack/IRQ·MMC4/5는 미완료다.
 
 ## 소스·보존·재현
 

@@ -1,6 +1,6 @@
 # NES487 — 출력 본문 감사와 bounded RLE 탐색
 
-PR136 merge `2d4543ef2442bc798bcec128a4a108fdfc4d5287`의 master 도달을 확인하고 `codex/nes-output-budget-487`에서 진행했다. [실기486](nes-hardware486-results.ko.md)은 그대로 두며, [487 검증](../analysis/output487-verification.json)·[다음 관문](nes-output487-plan.json)을 따른다. 새 실기 전달본은 없다.
+PR136 merge `2d4543ef2442bc798bcec128a4a108fdfc4d5287`의 master 도달을 확인하고 `codex/nes-output-budget-487`에서 진행했다. [실기486](nes-hardware486-results.ko.md)은 그대로 두며, [487 검증](../analysis/output487-verification.json)·[다음 관문](nes-output487-plan.json)을 따른다. 새 실기 전달본은 없다. 후속 실제 연결과 전달 보류 판정은 [488 계약](nes-compact488-contract.ko.md)에 있으며, 아래 구현 전 예산/순서는487 당시 근거다.
 
 ## 실제 실행한 범위
 

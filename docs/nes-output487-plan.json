@@ -1,20 +1,68 @@
 {
   "schema_version": 1,
-  "execution_state": {"performance_work": "active"},
+  "execution_state": {
+    "performance_work": "active"
+  },
   "physical_baseline": "MMC485",
   "physical_evidence": "analysis/hardware486-gameplay485.json",
-  "development_evidence": "analysis/output487-verification.json",
+  "development_evidence": "analysis/compact488-verification.json",
   "merged_PR136": "2d4543ef2442bc798bcec128a4a108fdfc4d5287",
   "branch": "codex/nes-output-budget-487",
-  "budget": {"ARM_Flash_tail_B": 220, "ARM_BSS_B": 18572, "RUN_workspace_B": 31848, "full_stack_IRQ_proof": false, "FPGA_remaining_LE_unchanged": 154, "SNES_existing_body_free_B": 224, "SNES_4KiB_layout_is_not_platform_ROM_limit": true},
+  "budget": {
+    "ARM_Flash_tail_B": 140,
+    "ARM_BSS_B": 18572,
+    "RUN_workspace_B": 31848,
+    "full_stack_IRQ_proof": false,
+    "SNES_existing_body_free_B": 224,
+    "SNES_4KiB_layout_is_not_platform_ROM_limit": true,
+    "FPGA_remaining_LE_physical485": 154,
+    "FPGA_remaining_LE_candidate488": 121,
+    "FPGA_M9K_candidate488": 51,
+    "SNES_candidate_program_B": 8192,
+    "SNES_candidate_body_B": 4233
+  },
   "steps": [
-    {"id": "S0", "status": "complete", "goal": "Actual485 serializer section audit and byte-identical bounded-scan candidate", "gate": "71 state/plan/packet/table matches;12 ownership guards;target serializer instructions -20.31%;Flash+12B, no new state"},
-    {"id": "S1", "status": "lossless_model_only_next_implementation", "goal": "ARM compact raw rows/6 planes and paired65816 canonical reconstruction", "gate": "Current71 captures all raw_count2:2048->384B and1797B wire projection saved/frame;not physical gameplay replay. Measure real Flash/stack/client growth and version/size/CRC/count/fault/STOP/finalACK before adoption"},
-    {"id": "S2", "status": "pending", "goal": "Actual queue/shared SPI/ROM/tile/65816 validation/DMA/VBlank joint path", "gate": "Preserve bank identity/credit/independent checks;measure actual extra pack/decode work and full SEAL, not isolated instruction speedup"},
-    {"id": "S3", "status": "pending", "goal": "Compare compact data and validated SPI headroom; then source-ready waiting", "gate": "No automatic SPI increase;deployed MCU_RDY is external_memory_ready, not source-ready IRQ. Whole costs and phase/CRC/ROM/STOP required"},
-    {"id": "S4", "status": "pending", "goal": "Controlled physical comparison after meaningful integrated change", "gate": "Fresh number/marker/logs/restore;no counters-only delivery or60fps claim from instruction counts"}
+    {
+      "id": "S0",
+      "status": "complete",
+      "goal": "Actual485 serializer section audit and byte-identical bounded-scan candidate",
+      "gate": "71 state/plan/packet/table matches;12 ownership guards;target serializer instructions -20.31%;Flash+12B, no new state"
+    },
+    {
+      "id": "S1",
+      "status": "implemented_functional_candidate",
+      "goal": "ARM compact raw rows/6 planes and paired65816 canonical reconstruction",
+      "gate": "Actual M4 71 canonicalized states/plans and1797B/frame E1 reduction; count0..7 sender and both-bank65816 decoder vectors; Flash+92B vs485/no new global RAM"
+    },
+    {
+      "id": "S2",
+      "status": "functional_split_proof_cost_gate_failed",
+      "goal": "Actual queue/shared SPI/ROM/tile/65816 validation/DMA/VBlank joint path",
+      "gate": "Actual65816 raw2/12 frames/negative/STOP/pixels PASS; current C/source/ROM/SPI/65816 first boot raw0 PASS; no common physical timeline; final display time essentially unchanged. whole FIT+33LE/+4M9K, related setup-0.101ns"
+    },
+    {
+      "id": "S3",
+      "status": "next_structural_review_before_one_future_FIT",
+      "goal": "Inspect loader check_failed reset/control path and compare raw restoration plus VRAM DMA scheduling",
+      "gate": "Prove same-edge CRC/STOP cancellation and1<->2 row/bank/clear/finalACK; require same-start final display gain; no false-path/seed loops; size ROM to chosen code"
+    },
+    {
+      "id": "S4",
+      "status": "blocked_by_performance_and_timing_gates",
+      "goal": "Controlled physical comparison after meaningful integrated change",
+      "gate": "No new ZIP now. After both gates pass, fresh paired marker/logs/restore and same-scene physical comparison; current485 FPS remains8.22 gameplay-inclusive/13.55 idle"
+    }
   ],
-  "retained": ["Independent CRC/coverage", "Credit distinct from consumption", "STOP/cold invalidation", "Final ACK before EA/retire", "VBlank and prior display identity", "GBC/save and485/482/476/164/467 restore"],
+  "retained": [
+    "Independent CRC/coverage",
+    "Credit distinct from consumption",
+    "STOP/cold invalidation",
+    "Final ACK before EA/retire",
+    "VBlank and prior display identity",
+    "GBC/save and485/482/476/164/467 restore"
+  ],
   "new_hardware_package": false,
-  "full_path_acceleration_proven": false
+  "full_path_acceleration_proven": false,
+  "current_candidate": "488 canonical ABI4882; functional, not selected for hardware",
+  "related_timing_passed": false
 }

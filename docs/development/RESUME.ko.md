@@ -41,7 +41,7 @@ git log -5 --oneline
 
 1. [실기486 분석](../nes-hardware486-results.ko.md)·[485 계약](../nes-supply485-contract.ko.md)·[다음 계획](../nes-output487-plan.json)을 읽는다. 현재485 두 장면은 합산하지 않는다. 문양476은 별도 원복/회귀다.
 2. G2B는 연결·기능 시험을 통과했다. candidate03/ARM03/armguard07/live02/trial02가 선택이다. 초기 busy-spin 후보는 전달하지 않는다. credit 수령·실제 ACK·staging 해제를 구분한다.
-3. **487 실제 M4 출력 감사/packet 동일 탐색 후보 검증 완료.** [487 계약](../nes-output487-contract.ko.md)을 읽고 compact raw의 ARM·65816 실제 연결부터 진행한다. 고정 입력71개를 실제494플레이 프레임으로 간주하지 않는다. Flash220B/RUN31848B/154LE·SNES 현재 배치224B와 stack 미증명을 유지한다. 새 실기 전달본은 아직 없다.
+3. **488 실제 연결 완료·전달 보류.** [488 계약](../nes-compact488-contract.ko.md)·[검증](../../analysis/compact488-verification.json)을 먼저 읽는다. raw2 E1 1797B/frame 절감이나 최종 표시 시간은 거의 같고 관련 setup-0.101ns로 실패했다. loader check_failed reset/control 경계와 raw 복원+VRAM DMA/ROM 배치를 비교한 뒤 한 번의 selected whole FIT로 판정한다. Flash140B/RUN31848B/121LE·5M9K/SNES program8KiB, full stack·IRQ 미증명이다. 실제485/새 ZIP 없음은 유지한다. raw2 CPU 시험과 raw0 C/RTL boot를 공통 물리 시계로 합치지 않는다.
 4. 독립 검사·STOP·최종 ACK·4credit·메뉴 복귀를 유지한다. RTL이 실제로 바뀔 때만 같은 source의 Lite 전체 비용/관련 timing을 다시 확인한다.
 5. 의미 있는 변경이 검증된 뒤 새 번호·marker·로그·원복으로 동일 ROM/입력 조건의 하드웨어를 비교한다.482 한 회 성공을480의 단일 물리 원인·전 게임/매퍼·60fps 증명으로 승격하지 않는다.
 
