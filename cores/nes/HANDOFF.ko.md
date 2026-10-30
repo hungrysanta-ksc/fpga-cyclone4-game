@@ -1,8 +1,8 @@
 # 현재 NES 인계
 
-PR138 merge `7e9699fb5d3ce4617495c204aa04d194cb09798d`와 감사499 head의 master 도달을 확인했다. 현재 `codex/nes-capture-correctness-500` / [PR139](../../docs/progress/pr-139.md)에서 진행한다. 먼저 [502 행 소유권·소비 비용](../../docs/nes-capture502-contract.ko.md) → [검증](../../analysis/capture502-verification.json) → [A1–A4 계획](../../docs/nes-audit499-plan.json)을 읽는다. 감사499의 보류 목록은 유지한다.
+PR138 merge `7e9699fb5d3ce4617495c204aa04d194cb09798d`와 감사499 head의 master 도달을 확인했다. 현재 `codex/nes-capture-correctness-500` / [PR139](../../docs/progress/pr-139.md)에서 진행한다. 먼저 [502 실기 안내](../../docs/nes-mmc502-trial.ko.md) · [전달본](../../analysis/capture502-package.json) → [502 행 소유권·소비 비용](../../docs/nes-capture502-contract.ko.md) → [검증](../../analysis/capture502-verification.json) → [A1–A4 계획](../../docs/nes-audit499-plan.json)을 읽는다. 감사499의 보류 목록은 유지한다.
 
-## 현재502 — 제한 수집·소비 gate 통과, 실기 미확인
+## 현재502 — 실기 전달본 준비, 결과 대기
 
 501의 행 복구를 유지하고, visible 전환과 다음 행 fetch 전환의 raw 소유권을 나눴다. 기존27조건 중10조건이3→2행으로 줄었고 필요한4행은 모두 보존한다. 정상33/반례12종,raw15,360픽셀/native241,956이벤트 비교가 통과했다. 주소/DATA/ROM·완전한 행/세대·STOP·조기 query 검사는 유지했다.
 
@@ -10,7 +10,9 @@ PR138 merge `7e9699fb5d3ce4617495c204aa04d194cb09798d`와 감사499 head의 mast
 
 Lite board01:15,287LE/14,135comb/8,399FF/264,816bit/51M9K,잔여121LE.501 대비−21LE/+2comb으로 packing 차이이며 제어 삭제가 아니다. 관련setup+.353/hold+.142ns,제약/seed 그대로다. `equivalence01/boundary02/guards01/export501-02/export502-02/arm01/cpu01/cpu02/board01`이 선택 증거다. export501-01의 시험용 선언순서 컴파일 실패는 보존했다.
 
-**다음 순서:** 고유502파일명 제한 전달본과493복구 준비 → 같은 게임 장면의 거부/표시/메뉴 확인 → A2 전체 전송·DMA 예산. 같은 bounded 시험/FIT를 반복하지 않고498/status/FSM 변경을 섞지 않는다. 실기4939.57fps·ARM/SNES 동작·원복을 유지한다. A1 전체완료/새실기FPS/새ZIP은 아직 아니다.
+`MMC502-CAPTURE.zip`은 `probes/nes-capture502/trial01`에 있다. ARM01의781개 함수/주소/크기/명령은493과 같고 파일명만502다. 기존502 fit을 CPF/BI3로 변환하고 실제FatFS/프로그래머로RBF510,856B 일치를 확인했다. GPIO/DONE은 모델이다. installer/로그 이름은502,02-RESTORE493 및이전복구는byte보존했다. [제작검증](../../analysis/capture502-release-verification.json) 참조. programmer01의sandbox DLL 실행실패는02의정상환경시험과구분한다. 새Questa/FIT는없다.
+
+**다음 순서:** 같은 동선의493/502 수집·표시·메뉴 로그를 받고 candidate/profile/ABI부터 확인한다. 단계DWT/SPI와 최종ACK를 비교하되중첩counter를더하지않고 generation차이를전체거부수로세지않는다. 결과로A2전체예산을갱신한다. 변경없는bounded/FIT 재실행이나498/status/FSM 혼합을하지않는다. 실기4939.57fps는유지하며502실기성공/성능/A1전체완료는아직아니다.
 
 ## 현재 실기 선택
 
