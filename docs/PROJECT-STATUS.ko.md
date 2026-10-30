@@ -47,7 +47,7 @@
 
 [489 구현](nes-output489-contract.ko.md)은 같은71개 모델7.83% 감소·관련timing 통과 뒤 이전490 수신에서 실행·메뉴 복귀까지 확인했다. 모델 개선율을 실기 FPS에 곱하지 않는다. [기존 설치·원복](nes-mmc489-trial.ko.md) · [개발 검증](../analysis/output489-verification.json) · [제작 manifest](../analysis/output489-package.json) · [현재 순서](nes-output487-plan.json). 489 제작·모델 스냅샷은 유지하고 기존 실기는490,현재493 수신은494에 둔다.
 
-**493 부팅 회복·지속 가속 미확인이 현재 판정이다.** [493 구성](nes-boot493-contract.ko.md)·[실기494](nes-hardware494-results.ko.md).492의단일원인은미확정이며새word DMA/MVN은계속보류한다. 조회44.22%와비조회wire17.96ms 관측을근거로E0 credit/ACK·E8/D0 공급·packet/framing을함께줄이는범위가다음이다. 이번에는새ZIP/합성없이493을유지한다. 제작당시[검증](../analysis/boot493-verification.json)·[manifest](../analysis/boot493-package.json)의미확인표기는스냅샷으로보존한다. [PR138](progress/pr-138.md).
+**실기는493을 유지하고 실험495는 전달을 보류한다.** [495 계약](nes-status495-contract.ko.md)·[검증](../analysis/status495-verification.json). EB8B 진행응답/마지막E0 fullACK·ROM요청 중복gate 제거는 기능·관련timing을 통과했다. 후보15121LE/14097comb/8394FF/51M9K·Flash96B이며 LE감소151개는packing 결과,comb는19개 증가했다. 같은12frame0.002794ms 단축/4ms위상0.013316ms 회귀로 전체이득은 미확인이다. 실제ARM polling·IRQ/sourceROM과 실제tile묶음의 공통소비일정이 다음이다. 새ZIP/BI3는없고492단일원인·word경로보류는유지한다. [493 제작검증](../analysis/boot493-verification.json)·[manifest](../analysis/boot493-package.json)는스냅샷으로보존하고현재실기는494를따른다. [PR138](progress/pr-138.md).
 
 [484 계산 절감](nes-game484-planner.ko.md)·[485 소유권 연결](nes-supply485-contract.ko.md)은 기능 검증 근거로 보존한다. [485 package](../analysis/supply485-package.json)의 hardware_verified=false는 제작 시점 스냅샷이다. 485 실기 근거는486,이전489는490,현재493은494이며 ZIP/FPGA를 다시 만들지 않았다. 문양 NROM476의23.84fps와482/476/164/467 원복·GBC/save를 보존한다.
 

@@ -1,6 +1,6 @@
 # 다른 PC·새 작업에서 재개하기
 
-이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고489 수신490의 실제 비용·다음 전체 경로 관문을 따른다.
+이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고493 수신494의 실제 비용·495 후보의 전체 경로 관문을 따른다.
 
 ## 1. 상태를 읽는다
 
@@ -41,7 +41,7 @@ git log -5 --oneline
 
 1. [실기486 분석](../nes-hardware486-results.ko.md)·[485 계약](../nes-supply485-contract.ko.md)·[다음 계획](../nes-output487-plan.json)을 읽는다. 현재485 두 장면은 합산하지 않는다. 문양476은 별도 원복/회귀다.
 2. G2B는 연결·기능 시험을 통과했다. candidate03/ARM03/armguard07/live02/trial02가 선택이다. 초기 busy-spin 후보는 전달하지 않는다. credit 수령·실제 ACK·staging 해제를 구분한다.
-3. **493 부팅 회복·전체성능유사,다음은공급/소비·왕복비용이다.** [494 실기분석](../nes-hardware494-results.ko.md)·[측정](../../analysis/hardware494-mmc493.json)·[계획](../nes-output487-plan.json).60.07초575회9.57fps,실제linked493 SEAL postguard result1/window3/sink2·IO구분/16negative·기존12negative 통과.493을유지하며E0 credit/SEAL ACK·65816 검사·E8/D0 공급·packet/framing을같은입력에서함께비교한다. 조회제외wire관측17.96ms/전체32.20ms,Flash148B/136LE 예산.492단일원인미확정·새word FPGA/SNES보류;이번새ZIP/합성없음. 제작스냅샷은[493 계약](../nes-boot493-contract.ko.md),실제기준은494다. GBC/save·493/489 및기존원복을보존한다.
+3. **실기493은9.57fps, 실험495는전체이득미증명으로전달보류다.** [495 계약](../nes-status495-contract.ko.md)·[검증](../../analysis/status495-verification.json)·[494 실기](../nes-hardware494-results.ko.md)·[계획](../nes-output487-plan.json). EB8B/마지막E0 fullACK·ROM요청경계 교체는M4/RTL/기존65816 기능·Lite15121LE/관련timing을 통과했지만 동일12frame 단축0.002794ms/4ms위상0.013316ms 회귀다. 실제M4 busy-poll/IRQ/sourceROM·FPGA 연속tile 묶음과65816을공통일정에연결하는S9부터진행한다. 표시대기중receiver재사용은old identity·retire/STOP·재진입 없는SPI 소유권 검토가선행한다.493 Flash148B/136LE,495 Flash96B/287LE를구분하고새ZIP은만들지않았다.492단일원인미확정·새word경로보류;GBC/save·기존원복·493 제작스냅샷은보존한다.
 4. 독립 검사·STOP·최종 ACK·4credit·메뉴 복귀를 유지한다. RTL이 실제로 바뀔 때만 같은 source의 Lite 전체 비용/관련 timing을 다시 확인한다.
 5. 의미 있는 변경이 검증된 뒤 새 번호·marker·로그·원복으로 동일 ROM/입력 조건의 하드웨어를 비교한다.482 한 회 성공을480의 단일 물리 원인·전 게임/매퍼·60fps 증명으로 승격하지 않는다.
 

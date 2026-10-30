@@ -2,11 +2,11 @@
   "schema_version": 1,
   "execution_state": {
     "performance_work": "active",
-    "current_gate": "Joint supply/consume/status and framing cost on fixed inputs;physical boot recovered493"
+    "current_gate": "S9 actual M4 busy-poll/IRQ/source ROM and real tile_bulk206 coalesced chunks on one65816 event ledger;hardware493 retained"
   },
   "physical_baseline": "MMC493",
   "physical_evidence": "analysis/hardware494-mmc493.json",
-  "development_evidence": "analysis/hardware494-mmc493.json",
+  "development_evidence": "analysis/status495-verification.json",
   "merged_PR136": "2d4543ef2442bc798bcec128a4a108fdfc4d5287",
   "branch": "codex/nes-consume-schedule-491",
   "budget": {
@@ -21,7 +21,10 @@
     "SNES_candidate_body_B": 4311,
     "FPGA_remaining_LE_candidate489": 136,
     "FPGA_M9K_candidate489": 51,
-    "SNES_new_context_B": 8
+    "SNES_new_context_B": 8,
+    "experimental495_Flash_tail_B": 96,
+    "experimental495_remaining_LE": 287,
+    "experimental495_comb_delta": 19
   },
   "steps": [
     {
@@ -74,9 +77,15 @@
     },
     {
       "id": "S8",
-      "status": "next",
+      "status": "complete_bounded495_candidate_not_selected",
       "goal": "Compare joint E0 credit/finalACK,E8/D0 supply,65816 validation and packet/status/framing reduction on fixed inputs",
-      "gate": "493 shows no sustained gain;queries44.22%/14.24ms wire,nonquery observed wire17.96ms,whole104.47ms. Need common whole-path improvement within136LE/148FlashB;retain independent checks/STOP/finalACK/VBlank/menu;no new package for measurement alone"
+      "gate": "EB8 progress+mandatory final E0;12+6 ARM guards,RTL3x3949,ROM2phase/4096fault,joint old65816 first frame34ACK/STOP;Lite15121LE/51M9K,related setup+.046/hold+.164ns,Flash96B. Conditional12frames save.002794ms,4ms phase regresses.013316ms;actual M4 polling and real coalesced chunks absent,no whole gain or installer"
+    },
+    {
+      "id": "S9",
+      "status": "next",
+      "goal": "Connect actual M4 polling/shared SPI/IRQ/source ROM and actual coalesced tile_bulk206 chunks to65816 consumption;then compare next-input receive during display wait",
+      "gate": "493/495 same event ledger/input/start+continuous phases;credit != DMA consume != finalACK;old display identity/receiver lifetime/nonreentrant SPI/STOP/retire retained;budget physical493148FlashB/136LE vs experimental49596FlashB/287LE;no new paired installer before meaningful whole gain and boot boundary proof"
     }
   ],
   "retained": [
@@ -89,9 +98,9 @@
   ],
   "new_hardware_package": false,
   "full_path_acceleration_proven": false,
-  "current_candidate": "MMC493 physical boot/menu pass,575/60.07s=9.57fps;no demonstrated sustained improvement over different489 input;keep known-good489 FPGA/SNES",
+  "current_candidate": "Physical4939.57fps retained;experimental495 function/related timing pass but near-zero/phase-dependent conditional display gain;not selected",
   "related_timing_passed": true,
-  "development_package": "analysis/boot493-package.json",
+  "development_package": null,
   "physical_same_scene_acceleration_proven": false,
   "merged_PR137": "29815faa3887a035091e3169ffa0f751dda3de44"
 }

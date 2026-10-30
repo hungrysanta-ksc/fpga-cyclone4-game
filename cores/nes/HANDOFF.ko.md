@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-PR137 merge29815faa3887a035091e3169ffa0f751dda3de44의 master 도달 확인 뒤 `codex/nes-consume-schedule-491` / [PR138](../../docs/progress/pr-138.md)에서 진행한다. 먼저 [실기494 분석](../../docs/nes-hardware494-results.ko.md)·[측정](../../analysis/hardware494-mmc493.json)·[현재 계획](../../docs/nes-output487-plan.json)을 읽는다. 현재 정상 동작 기준은493이다.
+PR137 merge29815faa3887a035091e3169ffa0f751dda3de44의 master 도달 확인 뒤 `codex/nes-consume-schedule-491` / [PR138](../../docs/progress/pr-138.md)에서 진행한다. 먼저 [495 후보 판정](../../docs/nes-status495-contract.ko.md)·[검증](../../analysis/status495-verification.json)·[실기494 분석](../../docs/nes-hardware494-results.ko.md)·[측정](../../analysis/hardware494-mmc493.json)·[현재 계획](../../docs/nes-output487-plan.json)을 읽는다. 현재 정상 동작 기준은493이다.
 
 ## 현재 실기 선택
 
@@ -23,12 +23,20 @@ PR137 merge29815faa3887a035091e3169ffa0f751dda3de44의 master 도달 확인 뒤 
 
 492의5초ready timeout은493에서회복됐다. 새491/492 FPGA·word DMA/MVN은계속보류한다. 493성공만으로492단일원인을확정하지않는다. [492 실패](../../analysis/boot493-hardware492.json)·[493 제작계약](../../docs/nes-boot493-contract.ko.md).493 package/verification의미확인은제작시점스냅샷이며현재실기는494를따른다.
 
+## 실험495: 기능·관련 timing 통과, 전달 보류
+
+EB8B 진행 응답은 기존 snapshot/CRC를 재사용하고 마지막 E0 전체ACK를 유지한다. ROM 요청의 중복 gate를 제거하되 기존 owner/range/START 오류·STOP 취소·유효 CE/OE edge는 유지했다. M4 기존12/추가6반례, RTL queue3조건 각3949검사, ROM2위상·4096fault, 실제 C/RTL/기존65816 첫표시34ACK·STOP를 통과했다. loaded ROM 상태를 seed한 기능 연결이며 전체384KiB 재적재·공통 물리 시계 증명은 아니다.
+
+Whole Lite15121LE/14097comb/8394FF/51M9K, 관련 setup+0.046/hold+0.164ns다. LE151개 감소는 packing 결과이며 comb는19개 늘어 제어151개 순삭제로 해석하지 않는다. Flash96B 잔여, BSS/RUN/SNES body는 그대로다. **실기493 비용표를 이 후보 값으로 교체하지 않는다.**
+
+동일12프레임 최종표시는0.002794ms 단축,시작4ms 이동은0.013316ms 증가로 유의미한 전체 개선이 없다. 현재 CPU/wire 모델은 실제 M4 busy-poll·IRQ/sourceROM과 실제 연속tile 묶음을 포함하지 않는다. 따라서 후보를 실기 선택하거나 물리 성능이 나빠졌다고 단정하지 않는다. 새BI3/programmer/ZIP 없이493을 유지한다. [상세 판정](../../docs/nes-status495-contract.ko.md).
+
 ## 다음 작업 순서
 
-1. **493을유지하고이번에는새ZIP/합성/Questa를만들지않는다.** [설치/원복](../../docs/nes-mmc493-trial.ko.md)·[manifest](../../analysis/boot493-package.json).사용자가ZIP을설치하고TXT를반환하는방식이며보드·SD연결을다시요구하지않는다.
-2. E0 credit/SEAL ACK·65816 수신/독립검사·E8/D0 공급을같은고정입력의공통일정에서추적한다. 조회wire14.24ms/전체wire32.20ms,quiet는단계에중첩돼합산금지다. MCU_RDY는external_memory_ready이며source-ready IRQ가아니다.
-3. 조회제외관측wire17.96ms도16.67ms보다길다. packet/status/ACK 왕복과framing을함께줄일구조·실제삭제할제어를136LE/Flash148B 예산으로비교한다. 새로운범용FSM·대기상수변경이나검사생략으로대체하지않는다.
-4. actual ARM·SPI·IRQ·ROM·65816 전체시간개선과부팅경계를확인한뒤에만다음번호의paired실기를전달한다. 바뀐RTL에대해서만같은source의Lite whole비용/관련timing을재확인하며실기493원복을함께둔다. 새word 경로는부팅문제를좁히기전재도입하지않는다.
+1. **493을 정상 실기 기준으로 유지한다.** [설치/원복](../../docs/nes-mmc493-trial.ko.md)·[manifest](../../analysis/boot493-package.json). 사용자가ZIP을설치하고TXT를반환하는방식이다.
+2. 실제 M4의 E0/EB busy-poll·128us quiet/IRQ와 실제tile_bulk206의 같은kind·연속slot·2048B 묶음을 기존65816 소비의 같은event ledger에 연결한다. plan당 하나의bulk를 만드는 현재fixture를 실제chunk로 대체한다. source/ROM 공급·저장credit·실제DMA소비·SEAL/최종ACK·VBlank를 구분하고493/495를 동일 입력·시작위상으로 비교한다. MCU_RDY는external_memory_ready다.
+3. 표시대기 중 다음입력 수신 후보는 receiver/video의 실제수명을 확인한다. 현재receiver는 별도workspace이고 consumed()는 COMMITTED→IDLE지만 generation·retire·종료통계는 마지막ACK 뒤에도 참조한다. 이전표시identity를고정하고SPI guard 재진입·STOP·수신중오류를막는범위부터 정한다. 안전성이 입증되기 전receiver를 덮거나 다음계획을 실행하지 않는다.
+4. actual ARM·SPI·IRQ·ROM·65816 전체시간 개선과 부팅경계 확인 뒤에만 다음번호paired 실기를 전달한다. 실기493은Flash148B/136LE, 실험495는Flash96B/287LE 예산이다. 전체 reset/CDC/IO 승인은 별도다. 새word 경로는 부팅문제를 좁히기 전 재도입하지 않는다.
 
 ## 근거·보존·재현
 
