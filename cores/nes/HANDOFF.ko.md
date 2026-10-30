@@ -31,6 +31,10 @@ Whole Lite15121LE/14097comb/8394FF/51M9K, 관련 setup+0.046/hold+0.164ns다. LE
 
 동일12프레임 최종표시는0.002794ms 단축,시작4ms 이동은0.013316ms 증가로 유의미한 전체 개선이 없다. 현재 CPU/wire 모델은 실제 M4 busy-poll·IRQ/sourceROM과 실제 연속tile 묶음을 포함하지 않는다. 따라서 후보를 실기 선택하거나 물리 성능이 나빠졌다고 단정하지 않는다. 새BI3/programmer/ZIP 없이493을 유지한다. [상세 판정](../../docs/nes-status495-contract.ko.md).
 
+## 496 모델·소유권 교정
+
+[496 근거](../../docs/nes-schedule496-contract.ko.md):219계획을실제규칙의32묶음으로교정,동일12픽셀·4조건통과.657.420ms는새가속이아닌fixture교정이다. 실제lease RTL에서다음캡처는허용하되export는이전retire까지차단됨을확인했다. stale/STOP·잘못된early-export mutant를검사했다. ARM만앞당겨서는수신겹침이불가능하다. S9는아직진행중이며실제M4 complete485 단일bulkPending/E8/E0·IRQ/ROM 시각을연결해야한다. source export시작과COMMIT 분리·기존identity 보호를함께검토한다.
+
 ## 다음 작업 순서
 
 1. **493을 정상 실기 기준으로 유지한다.** [설치/원복](../../docs/nes-mmc493-trial.ko.md)·[manifest](../../analysis/boot493-package.json). 사용자가ZIP을설치하고TXT를반환하는방식이다.
