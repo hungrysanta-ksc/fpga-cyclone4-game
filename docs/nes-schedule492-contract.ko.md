@@ -1,5 +1,7 @@
 # NES492 — 실제 ARM·SPI·IRQ·ROM·65816 전체 일정 비교
 
+> **선택 철회:**492 실기는SNES ready5초timeout으로 실행 실패,메뉴 복귀 정상이다. 아래는 제작 당시 기록이며현재 설치 권고가 아니다. [실패·493 분리 계약](nes-boot493-contract.ko.md)·[현재493 설치](nes-mmc493-trial.ko.md)를 따른다.
+
 [491 구현·모델](nes-consume491-contract.ko.md) · [492 연결 검증](../analysis/schedule492-verification.json) · [전달 manifest](../analysis/schedule492-package.json) · [설치/원복](nes-mmc492-trial.ko.md) · [PR138](progress/pr-138.md).
 
 ## 현재 결론

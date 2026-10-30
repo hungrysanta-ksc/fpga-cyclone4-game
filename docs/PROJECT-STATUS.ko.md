@@ -45,9 +45,9 @@
 | 게임/매퍼 범위 | SMB3 첫 레벨 기능 실기 확인; 전 MMC3/MMC4/5·60fps·제품 공개 미완료 |
 | 지속성 | capture 누락/반복·frame p95·NES 실시간 속도·정확 VBlank/ROM 위상 미측정 |
 
-[489 구현](nes-output489-contract.ko.md)은 같은71개 모델7.83% 감소·관련timing 통과 뒤 이번 실기에서 실행·메뉴 복귀까지 확인했다. 모델 개선율을 실기 FPS에 곱하지 않는다. [기존 설치·원복](nes-mmc489-trial.ko.md) · [개발 검증](../analysis/output489-verification.json) · [제작 manifest](../analysis/output489-package.json) · [현재 순서](nes-output487-plan.json). 제작 스냅샷은 유지하며 새로운 실기 근거는490에 둔다. 이번에는 새 합성/전달본이 없다.
+[489 구현](nes-output489-contract.ko.md)은 같은71개 모델7.83% 감소·관련timing 통과 뒤 이번 실기에서 실행·메뉴 복귀까지 확인했다. 모델 개선율을 실기 FPS에 곱하지 않는다. [기존 설치·원복](nes-mmc489-trial.ko.md) · [개발 검증](../analysis/output489-verification.json) · [제작 manifest](../analysis/output489-package.json) · [현재 순서](nes-output487-plan.json). 제작 스냅샷은 유지하며 새로운 실기 근거는490에 둔다. 489 제작 스냅샷은 보존하며 현재493 부팅 분리본은 아래와 같다.
 
-[491 개발 후보](nes-consume491-contract.ko.md)의 word 복원·plan 조회 통합을 [MMC492 전체 일정 비교본](nes-mmc492-trial.ko.md)으로 준비했다. 실제 ARM/IRQ·SPI·ROM 경쟁·65816 최종ACK의 전체 시간을 기존 DWT/elapsed로 판정한다.781 linked함수가491과 같고 whole15272LE/51M9K·관련timing·programmer 전송을 확인했다. **492 실측 FPS·단축·메뉴 복귀는 아직 미확인,위489 실측은 유지한다.** [연결 검증](../analysis/schedule492-verification.json)·[492 manifest](../analysis/schedule492-package.json)·[PR138](progress/pr-138.md).
+**492 실기 실패·493 분리 검증이 현재 관문이다.**492는 game393216B CRC/readback·STOP/base/menu 정상이나SNES ready5초timeout,수신/계획 전0frame·12phase0이다. FPS는없으며 원인미확정이다. [실패 분석](nes-boot493-contract.ko.md)·[실기 근거](../analysis/boot493-hardware492.json).493은 정상489 FPGA/SNES BI3를byte그대로 쓰고491 ARM 조회만 유지했다.781함수 동일·71frame2020packet byte일치,whole15272LE51M9K/Flash148B. 새 word DMA/MVN은 보류하며493 실제 부팅·성능은미확인이다. 우선 첫 화면/메뉴/3로그를확인하고그뒤 전체시간을 비교한다. [설치](nes-mmc493-trial.ko.md)·[연결 검증](../analysis/boot493-verification.json)·[manifest](../analysis/boot493-package.json)·[PR138](progress/pr-138.md).491 모델7.25%를493 실측에 적용하지 않는다.
 
 [484 계산 절감](nes-game484-planner.ko.md)·[485 소유권 연결](nes-supply485-contract.ko.md)은 기능 검증 근거로 보존한다. [485 package](../analysis/supply485-package.json)의 hardware_verified=false는 제작 시점 스냅샷이다. 485 실기 근거는486,현재489 수신 근거는490이며 ZIP/FPGA를 다시 만들지 않았다. 문양 NROM476의23.84fps와482/476/164/467 원복·GBC/save를 보존한다.
 

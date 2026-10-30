@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-"""Read482/485/489/492 physical DWT/driver counters without hardcoding frame totals.
+"""Read482/485/489/492/493 physical DWT/driver counters without hardcoding frame totals.
 
 Phase, driver-op and quiet counters are nested. No same-scene claim is inferred
 from using the same ROM; menu visibility still requires the user's observation.
@@ -36,7 +36,7 @@ def analyse(folder,trial):
     #489 can hit the same runtime deadline at the explicit zero-slot plan
     # callback, which reports14 instead of the resident OBJ slot's13. Keep
     # this exact terminal signature trial-specific; never waive code14 alone.
-    deadline_plan=(trial in (489,492) and video==14 and g['native_result']=='1' and
+    deadline_plan=(trial in (489,492,493) and video==14 and g['native_result']=='1' and
                    g['plan_error']=='2' and g['native_sink_error']=='0' and
                    g['sink_window_error']=='0' and g['trace_aborts']=='0' and
                    g['plan_end']=='0' and g['plan_sent']=='0' and
@@ -87,8 +87,8 @@ def analyse(folder,trial):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--raw',type=Path,required=True)
-    p.add_argument('--trial',type=int,choices=[482,485,489,492],default=485);p.add_argument('--baseline-raw',type=Path)
-    p.add_argument('--baseline-trial',type=int,choices=[482,485,489,492],default=482)
+    p.add_argument('--trial',type=int,choices=[482,485,489,492,493],default=485);p.add_argument('--baseline-raw',type=Path)
+    p.add_argument('--baseline-trial',type=int,choices=[482,485,489,492,493],default=482)
     p.add_argument('--out',type=Path,required=True);a=p.parse_args();assert not a.out.exists()
     r=analyse(a.raw,a.trial)
     if a.baseline_raw:

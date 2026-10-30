@@ -1,11 +1,12 @@
 {
   "schema_version": 1,
   "execution_state": {
-    "performance_work": "active"
+    "performance_work": "active",
+    "current_gate": "Recover physical SNES boot before further performance changes"
   },
   "physical_baseline": "MMC489",
   "physical_evidence": "analysis/hardware490-mmc489.json",
-  "development_evidence": "analysis/schedule492-verification.json",
+  "development_evidence": "analysis/boot493-verification.json",
   "merged_PR136": "2d4543ef2442bc798bcec128a4a108fdfc4d5287",
   "branch": "codex/nes-consume-schedule-491",
   "budget": {
@@ -17,7 +18,7 @@
     "SNES_4KiB_layout_is_not_platform_ROM_limit": true,
     "FPGA_remaining_LE_physical485": 154,
     "SNES_candidate_program_B": 5120,
-    "SNES_candidate_body_B": 4425,
+    "SNES_candidate_body_B": 4311,
     "FPGA_remaining_LE_candidate489": 136,
     "FPGA_M9K_candidate489": 51,
     "SNES_new_context_B": 8
@@ -61,9 +62,15 @@
     },
     {
       "id": "S6",
-      "status": "awaiting_physical492_logs",
+      "status": "physical492_failed_before_receiver",
       "goal": "Bind E8/E0 source ROM and65816 consumption on common timeline;then D0 readiness",
-      "gate": "492 linked into actual491 ARM/SPI/IRQ/source/ROM/65816 path with existing DWT/elapsed/finalACK counters.781 ELF functions equal,same matching whole FIT/STA,programmer/strict parser PASS. Need returned492 logs/user menu confirmation to decide total-time gain;no extrapolated FPS"
+      "gate": "Game393216B load/CRC/readback andSTOP/base/menu pass;SNES ready5000ms timeout,native frames/transactions/wire0,all12phase0;no physical FPS or full-path timing;root cause unresolved"
+    },
+    {
+      "id": "S7",
+      "status": "awaiting_physical493_boot_logs",
+      "goal": "Isolate boot failure with byte-identical hardware489 FPGA/SNES and491 ARM query,then resume total-time comparison",
+      "gate": "781 linkedfunctions exact491;71frames2020ordinary/SEAL packets equal489;whole cost/timing/programmer reused489;need493 first-screen/menu/log3,not a root-cause or speedup claim"
     }
   ],
   "retained": [
@@ -76,9 +83,9 @@
   ],
   "new_hardware_package": true,
   "full_path_acceleration_proven": false,
-  "current_candidate": "MMC492 paired trial ready;physical baseline489 unchanged;full-path improvement unverified",
+  "current_candidate": "MMC493 known-good489 FPGA/SNES +491 ARM query;physical493 boot pending,baseline489 unchanged",
   "related_timing_passed": true,
-  "development_package": "analysis/schedule492-package.json",
+  "development_package": "analysis/boot493-package.json",
   "physical_same_scene_acceleration_proven": false,
   "merged_PR137": "29815faa3887a035091e3169ffa0f751dda3de44"
 }
