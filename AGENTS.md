@@ -11,8 +11,8 @@
 
 ## 현재 작업 범위
 
-- PR136 / codex/nes-game-plan-supply-484. 現485 실기 두 조건을486에서 수신 분석했다. docs/nes-hardware486-results.ko.md와 docs/nes-game484-next-plan.json을 먼저 읽는다. 대기13.55fps/첫 레벨 플레이 포함8.22fps, 로드·STOP·메뉴 복귀 정상이나 전체 가속 미입증이다. 장면이 달라482의14.60fps와 직접 개선율 비교 금지. 이번에는 새 펌웨어/ZIP/합성 없음.
-- 다음은 본문 전송량·map stale-bank 원인과 전체 SEAL48.33ms 공동 감사, 데이터 절감/SPI 여유 검증, D0 readiness 순이다. 현재 MCU_RDY는 external_memory_ready이지 source-ready IRQ가 아니다. Flash232B·154LE·RUN31848B 예산을 유지한다. 독립 검사/STOP/최종 ACK 생략이나 단순 polling/FSM 반복을 피한다.
+- PR136 merge2d4543ef2442bc798bcec128a4a108fdfc4d5287의 master 도달 확인 뒤 PR137 / codex/nes-output-budget-487에서 진행한다. docs/nes-output487-contract.ko.md와 docs/nes-output487-plan.json을 먼저 읽는다. 실제485 M4 serializer71개를 section별 감사하고 packet 동일 bounded-scan 후보를 검증했다. serializer 명령20.31% 감소는 전체 실기 시간/FPS 개선이 아니다. ARM Flash+12B/잔여220B, 새 상태/버퍼0B, FPGA 그대로다.
+- 다음은 raw 행/6-plane compact ABI의 실제 ARM·65816 연결과 code/stack·독립 검사·STOP·최종 ACK·VBlank 검증이다. 고정 입력71개는 raw2행인데 CHR2048B를 보내며384B로 손실 없이 복원 가능했다. framing 포함1797B/프레임 절감은 모델이며494 실기 플레이에 적용된 값이 아니다. 실제 SPI·ROM·65816 비용을 연결한 뒤 전달한다. 이번487 새 ZIP/합성 없음. MCU_RDY는 external_memory_ready이지 source-ready IRQ가 아니다.
 - 추가·공개 완료는 GB/GBC G13C44/0.9.0뿐이다. NES60fps는 미완료이며 문양476의23.84fps는 별도 회귀다.
 - 현재 실기 근거는 `analysis/hardware486-gameplay485.json`, 문양 회귀는 `analysis/receive477-hardware.json`, 인계는 `cores/nes/HANDOFF.ko.md`다.2차 video_error13의 deadline/emit 전파는 슬롯1/128 실제 M4 시험으로 검증했으며 진짜 capacity 실패를 포괄 허용하지 않는다.
 - `src/fpga`, `src/firmware-overlay`, `src/renderer`의 검증된 GBC와 사용자 저장·복원물을 보존한다.

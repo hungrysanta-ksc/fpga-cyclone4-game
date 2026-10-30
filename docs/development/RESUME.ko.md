@@ -5,7 +5,7 @@
 ## 1. 상태를 읽는다
 
 1. [루트 README](../../README.md) → [프로젝트 현황](../PROJECT-STATUS.ko.md).
-2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR136](../progress/pr-136.md).
+2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR137](../progress/pr-137.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
 GB/GBC만 추가·공개 완료다. 현재 NES 게임 기준은 MMC485 각60.07초/대기814회13.55fps·첫 레벨 플레이 포함494회8.22fps·정상 로드/STOP/base/메뉴 복귀다. 입력이 다른 이전482의14.60fps와 직접 개선율을 비교하지 않는다. 문양NROM476의23.84fps는 별도 회귀로 보존한다.60fps·전 게임/매퍼·capture/전체 CDC/IO 승인은 미완료다.
@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-먼저 로컬 변경을 보존한다. 필요할 때 remote를 fetch하고 실제 병합 상태·base·master 도달 관계를 확인한다. PR135는948a2e9bc6542aaec7737e28f4431cb0c0350f6d로 master에 병합됐으며, 현재 브랜치는 `codex/nes-game-plan-supply-484`다. 새 PC에서 무조건 master로 바꾸거나 reset/pull로 덮지 않는다.
+먼저 로컬 변경을 보존한다. 필요할 때 remote를 fetch하고 실제 병합 상태·base·master 도달 관계를 확인한다. PR135는948a2e9bc6542aaec7737e28f4431cb0c0350f6d로 master에 병합됐으며, PR136도2d4543ef2442bc798bcec128a4a108fdfc4d5287로 master 병합을 확인했고 현재 브랜치는 `codex/nes-output-budget-487`다. 새 PC에서 무조건 master로 바꾸거나 reset/pull로 덮지 않는다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -39,9 +39,9 @@ git log -5 --oneline
 
 ## 4. 개발 재개 후 순서
 
-1. [실기486 분석](../nes-hardware486-results.ko.md)·[485 계약](../nes-supply485-contract.ko.md)·[다음 계획](../nes-game484-next-plan.json)을 읽는다. 현재485 두 장면은 합산하지 않는다. 문양476은 별도 원복/회귀다.
+1. [실기486 분석](../nes-hardware486-results.ko.md)·[485 계약](../nes-supply485-contract.ko.md)·[다음 계획](../nes-output487-plan.json)을 읽는다. 현재485 두 장면은 합산하지 않는다. 문양476은 별도 원복/회귀다.
 2. G2B는 연결·기능 시험을 통과했다. candidate03/ARM03/armguard07/live02/trial02가 선택이다. 초기 busy-spin 후보는 전달하지 않는다. credit 수령·실제 ACK·staging 해제를 구분한다.
-3. **486 로그 수신·종료 전파 검증 완료.** 다음은 고정 입력의 출력 본문·stale-bank 및 전체 SEAL 비용, 데이터 절감/SPI 여유 공동 비교, D0 readiness 순이다. MCU_RDY는 external_memory_ready이므로 source-ready IRQ로 가정하지 않는다. 새 전달본은 이번에 없으며 Flash232B/RUN31848B/154LE·full stack 미증명을 보존한다.
+3. **487 실제 M4 출력 감사/packet 동일 탐색 후보 검증 완료.** [487 계약](../nes-output487-contract.ko.md)을 읽고 compact raw의 ARM·65816 실제 연결부터 진행한다. 고정 입력71개를 실제494플레이 프레임으로 간주하지 않는다. Flash220B/RUN31848B/154LE·SNES 현재 배치224B와 stack 미증명을 유지한다. 새 실기 전달본은 아직 없다.
 4. 독립 검사·STOP·최종 ACK·4credit·메뉴 복귀를 유지한다. RTL이 실제로 바뀔 때만 같은 source의 Lite 전체 비용/관련 timing을 다시 확인한다.
 5. 의미 있는 변경이 검증된 뒤 새 번호·marker·로그·원복으로 동일 ROM/입력 조건의 하드웨어를 비교한다.482 한 회 성공을480의 단일 물리 원인·전 게임/매퍼·60fps 증명으로 승격하지 않는다.
 

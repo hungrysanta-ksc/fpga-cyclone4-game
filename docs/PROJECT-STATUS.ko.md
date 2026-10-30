@@ -1,6 +1,6 @@
 # 프로젝트 현황
 
-목표는 **sd2snes Cyclone IV 멀티 코어 확장**이다. PR136에서 개발한다. 현재 실기는 MMC485이며, 두 다른 장면의 결과를 분리해 판정한다. [NES 인계](../cores/nes/HANDOFF.ko.md) · [PR별 경과](progress/README.md).
+목표는 **sd2snes Cyclone IV 멀티 코어 확장**이다. PR136 병합 뒤 PR137에서 개발한다. 현재 실기는 MMC485이며, 두 다른 장면의 결과를 분리해 판정한다. [NES 인계](../cores/nes/HANDOFF.ko.md) · [PR별 경과](progress/README.md).
 
 ## 코어별 판정
 
@@ -26,7 +26,7 @@
 
 2차는 타이틀·월드맵도 포함하므로 레벨 구간만의 FPS가 아니다. 영상 표본에서1-1·이동·점프·스크롤을 확인했다. 두 실행과 이전482(14.60fps)는 입력/장면이 달라 합산하거나 인과적 개선율로 비교하지 않는다.485의 전체 가속은 미입증이다. op/quiet는 단계에 중첩되므로 합산하지 않는다. 마지막 미완료 입력은 표시 수에 넣지 않는다.
 
-2차 종료의 video_error13은 deadline1→emit guard2→OBJ callback 실패 전파와 일치한다. 실제 M4에서 슬롯1/128 상태로 같은13을 재현했고5개 오분류 반례를 거부했다. 물리 종료 순간을 그대로 재생한 증명은 아니다. [실기 분석486](nes-hardware486-results.ko.md) · [측정 JSON](../analysis/hardware486-gameplay485.json) · [진행 순서](nes-game484-next-plan.json).
+2차 종료의 video_error13은 deadline1→emit guard2→OBJ callback 실패 전파와 일치한다. 실제 M4에서 슬롯1/128 상태로 같은13을 재현했고5개 오분류 반례를 거부했다. 물리 종료 순간을 그대로 재생한 증명은 아니다. [실기 분석486](nes-hardware486-results.ko.md) · [측정 JSON](../analysis/hardware486-gameplay485.json) · [진행 순서](nes-output487-plan.json).
 
 ## 현재 비용과 남은 목표
 
@@ -41,7 +41,9 @@
 | 게임/매퍼 범위 | SMB3 첫 레벨 기능 실기 확인; 전 MMC3/MMC4/5·60fps·제품 공개 미완료 |
 | 지속성 | capture 누락/반복·frame p95·NES 실시간 속도·정확 VBlank/ROM 위상 미측정 |
 
-다음은 고정 입력의 map/HDMA/OAM/manifest 본문·stale-bank 업로드 원인, 전체 SEAL의 전송/65816 검사/DMA/VBlank 비용을 함께 감사한다. 데이터 절감과 검증된 SPI 속도 여유를 비교하되 아직 새 속도를 채택하지 않았다. 이후 D0 readiness를 검토한다. 현재 MCU_RDY는 external_memory_ready이므로 source-ready IRQ로 가정하지 않는다.
+[487 출력 감사](nes-output487-contract.ko.md)에서 고정71입력의 실제 M4 serializer를 실행했다. raw2행에도 CHR2048B를 보내는 낭비를 확인했고384B compact 표현의 손실 없는 복원을 모델로 검증했다. 별도 bounded-scan 후보는 상태/계획/출력 packet 동일·소유권12사례 통과, serializer 명령20.31% 감소·Flash+12B/잔여220B다. **전체 시간/FPS 개선은 미측정이며 새 설치본은 없다.**
+
+다음은 compact raw ABI를 실제 ARM·65816로 연결하고 code/stack·독립 검사/STOP·실제 SPI/ROM/DMA/VBlank 비용을 확인한다. [현재 순서](nes-output487-plan.json). MCU_RDY는 external_memory_ready이며 source-ready IRQ가 아니다.
 
 [484 계산 절감](nes-game484-planner.ko.md)·[485 소유권 연결](nes-supply485-contract.ko.md)은 기능 검증 근거로 보존한다. [485 package](../analysis/supply485-package.json)의 hardware_verified=false는 제작 시점 스냅샷이다. 현재 실기 근거는486이며 ZIP/FPGA를 다시 만들지 않았다. 문양 NROM476의23.84fps와482/476/164/467 원복·GBC/save를 보존한다.
 

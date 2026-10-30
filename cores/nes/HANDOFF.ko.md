@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-PR135 merge948a2e9bc6542aaec7737e28f4431cb0c0350f6d의 master 도달 확인 뒤 `codex/nes-game-plan-supply-484` / [PR136](../../docs/progress/pr-136.md)에서 진행한다. 먼저 [실기486 분석](../../docs/nes-hardware486-results.ko.md)·[현재 계획](../../docs/nes-game484-next-plan.json)을 읽는다.
+PR136 merge2d4543ef2442bc798bcec128a4a108fdfc4d5287의 master 도달 확인 뒤 `codex/nes-output-budget-487` / [PR137](../../docs/progress/pr-137.md)에서 진행한다. 먼저 [487 출력 감사](../../docs/nes-output487-contract.ko.md)·[현재 계획](../../docs/nes-output487-plan.json)을 읽는다. 실제 하드웨어 기준은 아래485 그대로다.
 
 ## 현재 실기 선택
 
@@ -26,16 +26,17 @@ PR135 merge948a2e9bc6542aaec7737e28f4431cb0c0350f6d의 master 도달 확인 뒤 
 
 ## 다음 순서와 예산
 
-1. **고정 입력의 본문/출력 감사.** 2차 본문6728.50B/표시의 wire 투영은2.625Mbps에서20.51ms다. source3493.99/output3147.42/plan87.09B를 map/HDMA/OAM/manifest·bank stale 원인으로 분해한다. map_dirty는 변경 granule 수이며 실제 stale-bank 업로드량과 같지 않다.
-2. **전체 SEAL 일정.** ARM 공급/SPI/65816 수신·독립 검사/DMA/VBlank를 분리해48.33ms 원인을 찾는다. quiet/ACK 대기 전체를 낭비로 간주하거나 검사를 생략하지 않는다. 평균 전체121.60ms로60Hz까지104.93ms 부족하다.
-3. 데이터 절감과 검증된 SPI 속도 여유를 공동 비교한다. 속도 변경은 아직 채택하지 않았으며 phase/CDC/CRC/ROM/STOP 관문을 요구한다. Flash232B·LE154는 무제한 실행기 추가 예산이 아니다.
-4. D0 121회/표시의 준비 대기를 추적한다. 현재 MCU_RDY는 external_memory_ready이며 source-ready/progress IRQ가 아니다. 과거367 IRQ를 현재 보드에 배포된 것으로 가정하지 않는다.
-5. 의미 있는 변경 뒤 동일 장면/입력의 통제 비교와 새 번호 전달본을 준비한다. 이번486은 수신 분석만이며 새 펌웨어·ZIP·합성 없음. 단순 계측만 늘린 재시험을 요청하지 않는다.
+1. **487 감사 완료.** 기존71입력의 actual M4 serializer와 독립 byte expander가 전체 테이블/두 bank를 대조했다. raw2행인데 CHR2048B 전송이 컸으며 map stale 확장은 유지가 필요했다. [487 근거](../../analysis/output487-verification.json).
+2. **bounded-scan 후보 검증 완료.** 상태·계획·전체 packet71개 동일, serializer 명령20.31% 절감·소유권12사례 통과. ARM+12B/Flash220B·새 상태/버퍼0B, FPGA/SNES ABI 그대로다. 전체 시간/FPS는 미측정이며 이 변경만으로 전달하지 않는다.
+3. **다음은 compact raw ABI 실제 연결.** 사용 행/6plane 표현은 이번 입력에서2048→384B이고 framing 포함1797B 절감 모델이다. ARM pack·SNES canonical 복원/검사/STOP를 연결하고 Flash220B·현재 SNES 배치 여유224B·stack 순증가를 먼저 측정한다.4KiB는 현재 배치이며 SNES ROM 최대 용량이 아니다.
+4. 실제 queue·공유 SPI·ROM/tile·65816 검사/DMA/VBlank·최종 ACK 전체 비용을 확인한다.48.33ms를 모두 ACK polling으로 보거나 즉시 ACK 모델 명령을 물리 시간에 더하지 않는다. 데이터 절감/SPI 여유를 검증한 다음 D0 readiness를 다룬다. MCU_RDY는 external_memory_ready다.
+5. 의미 있는 결합 변경 이후 같은 장면/입력 비교와 새 번호 전달본을 만든다. 현재 플레이 포함8.22fps/평균121.60ms는 그대로이며60fps·capture/p95·full stack/IRQ·MMC4/5는 미완료다.
 
 ## 소스·보존·재현
 
-- 실제 ARM source는 로컬 `probes/nes-supply485/ARM03/src`, FPGA는 `probes/nes-mmc482/candidate01/board`다. 상세는 [485 계약](../../docs/nes-supply485-contract.ko.md)·[구성 검증](../../analysis/supply485-verification.json)·[package](../../analysis/supply485-package.json)·[재현 범위](REPRODUCING.ko.md)를 따른다. 제작 시점 hardware_verified=false는486 수신 결과로 덮지 않는다.
+- 실제 배포 ARM source는 로컬 `probes/nes-supply485/ARM03/src`, FPGA는 `probes/nes-mmc482/candidate01/board`다. 상세는 [485 계약](../../docs/nes-supply485-contract.ko.md)·[구성 검증](../../analysis/supply485-verification.json)·[package](../../analysis/supply485-package.json)·[재현 범위](REPRODUCING.ko.md)를 따른다. 제작 시점 hardware_verified=false는486 수신 결과로 덮지 않는다.
 - 원시6TXT/receipt/종료 M4 시험/영상 표본은 로컬 `probes/nes-hardware486`에 보존했다. 원본 영상·ROM·원시 로그·도구는 Git에 포함하지 않는다. public JSON은 파일명/크기/해시와 재계산 결과를 제공한다.
+- 487 후보 source는 `probes/nes-output487/ARM01/src`; `audit03`·`candidate-audit01`·`guards01`과 초기 DWARF 실패를 보존했다. 현재 선택 package를 덮지 않는다. recipe/명령은487 계약을 따른다.
 - 분석: `tools/analyze_nes_supply485_hardware.py`, `tools/analyze_nes_hardware486.py`; 종료 전파 검증: `tools/check_nes_hardware486_termination.py`. 개인 의존성은 [재개 안내](../../docs/development/RESUME.ko.md)를 따른다.
 - 이전 [482 실기](../../analysis/mmc483-hardware482.json)·[문양476 원복](../../analysis/receive476-package.json)과23.84fps,480 실패·481 기각, 초기485 busy-spin/harness 실패를 보존한다.
 - GBC164/save와 G13C44/0.9.0,482/476/474/471/467/164 복원물 보존. 상용 ROM을 새로 포함하지 않는다. 사용자 ZIP 설치/TXT 반환 방식이며 SD/보드 연결을 다시 요구하지 않는다.
