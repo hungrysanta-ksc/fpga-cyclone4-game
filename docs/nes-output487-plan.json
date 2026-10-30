@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "execution_state": {"performance_work": "active"},
+  "physical_baseline": "MMC485",
+  "physical_evidence": "analysis/hardware486-gameplay485.json",
+  "development_evidence": "analysis/output487-verification.json",
+  "merged_PR136": "2d4543ef2442bc798bcec128a4a108fdfc4d5287",
+  "branch": "codex/nes-output-budget-487",
+  "budget": {"ARM_Flash_tail_B": 220, "ARM_BSS_B": 18572, "RUN_workspace_B": 31848, "full_stack_IRQ_proof": false, "FPGA_remaining_LE_unchanged": 154, "SNES_existing_body_free_B": 224, "SNES_4KiB_layout_is_not_platform_ROM_limit": true},
+  "steps": [
+    {"id": "S0", "status": "complete", "goal": "Actual485 serializer section audit and byte-identical bounded-scan candidate", "gate": "71 state/plan/packet/table matches;12 ownership guards;target serializer instructions -20.31%;Flash+12B, no new state"},
+    {"id": "S1", "status": "lossless_model_only_next_implementation", "goal": "ARM compact raw rows/6 planes and paired65816 canonical reconstruction", "gate": "Current71 captures all raw_count2:2048->384B and1797B wire projection saved/frame;not physical gameplay replay. Measure real Flash/stack/client growth and version/size/CRC/count/fault/STOP/finalACK before adoption"},
+    {"id": "S2", "status": "pending", "goal": "Actual queue/shared SPI/ROM/tile/65816 validation/DMA/VBlank joint path", "gate": "Preserve bank identity/credit/independent checks;measure actual extra pack/decode work and full SEAL, not isolated instruction speedup"},
+    {"id": "S3", "status": "pending", "goal": "Compare compact data and validated SPI headroom; then source-ready waiting", "gate": "No automatic SPI increase;deployed MCU_RDY is external_memory_ready, not source-ready IRQ. Whole costs and phase/CRC/ROM/STOP required"},
+    {"id": "S4", "status": "pending", "goal": "Controlled physical comparison after meaningful integrated change", "gate": "Fresh number/marker/logs/restore;no counters-only delivery or60fps claim from instruction counts"}
+  ],
+  "retained": ["Independent CRC/coverage", "Credit distinct from consumption", "STOP/cold invalidation", "Final ACK before EA/retire", "VBlank and prior display identity", "GBC/save and485/482/476/164/467 restore"],
+  "new_hardware_package": false,
+  "full_path_acceleration_proven": false
+}
