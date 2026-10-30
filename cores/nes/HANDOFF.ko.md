@@ -1,27 +1,28 @@
 # 현재 NES 인계
 
-PR137 merge29815faa3887a035091e3169ffa0f751dda3de44 이후 `codex/nes-consume-schedule-491` / [PR138](../../docs/progress/pr-138.md)에서 진행한다. **먼저 [전체 경로 감사499](../../docs/nes-audit499.ko.md) → [새 계획 A1–A4](../../docs/nes-audit499-plan.json) → [선택 소스·분석](../../analysis/audit499-verification.json)을 읽는다.** 기존487/S9와498 NEXT보다 이 순서가 우선한다. 현재 정상 실기 기준은493이며498은 미선택이다.
+PR138 merge `7e9699fb5d3ce4617495c204aa04d194cb09798d` 이후 `codex/nes-capture-correctness-500` / [PR139](../../docs/progress/pr-139.md)에서 진행한다. 먼저 [503 실기 분석](../../docs/nes-hardware503-results.ko.md) · [측정 JSON](../../analysis/hardware503-mmc502.json) · [A1–A4 계획](../../docs/nes-audit499-plan.json)을 읽는다. 감사499의 보류 목록은 유지한다.
+
+## 현재502 — 첫 실기 성공, A2 비용 검토로 진행
+
+60.07초636회 최종 표시/**10.59fps**,실행·메뉴 복귀 정상이며 사용자는 확실한 개선을 보고했다. 이전493575회/9.57fps와 동선이 같지 않아 관측+10.61%를 인과율로 쓰지 않는다. 수신22.14/계획·타일31.32/SEAL·최종ACK40.27ms다. 보존history8전이의fetch/compact/raster/ROM 오류는0이며mask0거부4/회복4가 남는다. 전체capture건강·거부율·레벨별FPS는 미증명이다.
+
+마지막637번째 입력의SEAL은60초guard 제한(runtime1/window2/sink2)으로 미완료다. 실제502 ARM의정상/guard/postguard/IO4조건과로그16반례를 확인했고표시636회에더하지않았다. 새FW/ZIP/합성/Questa는없다. 원시로그/receipt/termination01은로컬 `probes/nes-hardware503`에보존했다.
 
 ## 현재 실기 선택
 
 | 항목 | 고정 기준 |
 |---|---|
-| 구현 | MMC493,source commit54bdc1fe8521b742944d59bda20294d59716ad90 |
-| ARM | probes/nes-boot493/ARM01/src,491 query 변경 유지·493 label;SHA256 6e780cecb815066caeaefcf4294d0f20798d72d1e2d294b9bc552a65a12f1ae9 |
-| FPGA | 정상489 board02/SNES byte동일,493 파일명;BI3 SHA256 257b9686fa68ab11712b443728dc24c6ea7b561674a7ad2905ecb36f63349119 |
-| ROM/ABI | 원래 SMB3(J),CRC5a04eed7/profile7b/status3/client4891/4credit |
-| 실기494 수신 | **60.07초575최종표시/9.57fps**,부팅50ms/실행·메뉴정상;첫레벨차이작음 |
-| 단계 | 수신28.97ms/계획·타일33.05ms/SEAL·최종ACK41.33ms,op/quiet 중복합산금지 |
-| FPGA 비용 | Lite15272LE/14078comb/8392FF/264800bits/51M9K,136LE·5M9K잔여;관련setup/hold+0.183/+0.168ns |
-| ARM 비용 | text202801/data10040/BSS18572B,firmware212844B·Flash148B,RUN31848B/full stack·IRQ미증명 |
+| 구현 | MMC502 RTL commit485a946fba53eb0c70b72c5147dcaf4a1f70629c |
+| ARM·SNES | ARM502-01,493에서파일명만변경/781함수동일;493/4891 client 유지 |
+| 보드 | board01 Lite15287LE/14135comb/8399FF/264816bit/51M9K,121LE여유 |
+| 관련 timing | setup+.353ns/hold+.142ns;full reset/CDC/IO 미승인 |
+| MCU | firmware212844B/Flash148B/RUN31848B;fullstack·IRQ 미증명 |
+| 전달/실기 근거 | [package](../../analysis/capture502-package.json) / [503](../../analysis/hardware503-mmc502.json) |
+| 후속 배포 | 사용자 별도백업 보유: 다음 시험판은RESTORE폴더생략,기존ZIP삭제금지 |
 
-이전489는60.08초577회/9.60fps다. 이번과입력·장면이달라소수점차이를개선/회귀율로해석하지않으며지속성능향상은미확인이다. 이전485대기13.55/플레이포함8.22fps,NROM47623.84fps는별도조건이다. 정확한레벨전용FPS/p95/capture무손실/NES실시간속도는미측정이다. 완료수는native최종ACK 진행이며screen_frames는신뢰하지않는다. 실제설치바이너리hash는로그에없어전달본label/profile/ABI로연결한다.
+[502 bounded검증](../../analysis/capture502-verification.json)은정상33/반례12,raw15360pixel/native241956이벤트,필요한4행 보존을확인했다. 한cold source→493M4→65816에서RGB동일·수신−330B/E1−1797B,같은시작두위상ACK−.20347/−16.82504ms는모델경계이며실기개선율이아니다. [제작검증](../../analysis/capture502-release-verification.json)의hardware_verified=false는제작시점기록으로유지한다.
 
-## 종료·부팅 판정
-
-493의마지막sink2/window3은SEAL status transfer의전송후guard에서60초제한이전파되는결합signature다. 실제linked493에서정상ACK commit/후guard제한/진짜IO실패3가지를실행해result0/1/3을구분했고오류뒤추가SPI·표시없음을확인했다. 로그16negative와이전489-label12negative를거부한다. trace576=표시575+미완료1,마지막SEAL pending/ACK미공개·failed_transfers/CRC/abort0을요구하며모든error3을허용하지않는다. 실제물리종료순간재현은아니다.
-
-492의5초ready timeout은493에서회복됐다. 새491/492 FPGA·word DMA/MVN은계속보류한다. 493성공만으로492단일원인을확정하지않는다. [492 실패](../../analysis/boot493-hardware492.json)·[493 제작계약](../../docs/nes-boot493-contract.ko.md).493 package/verification의미확인은제작시점스냅샷이며현재실기는494를따른다.
+**다음 순서:** A2본문/framing·늦은VRAM DMA·계획공급을같은ARM/SPI/IRQ/ROM/VBlank일정으로예산화한다. 조회제외wire18.02ms/전체94.45ms(60Hz까지77.78ms)가남는다. 실제삭제할제어와121LE/Flash148B예산을명시하고중첩op/quiet를합하지않는다. 기존498/status/FSM 미세조정은자동승격하지않는다. mask0거부의전체원인·동일동선재검증은열린항목이지만변경없는FIT/Questa반복으로대체하지않는다.
 
 ## 최신498: 입력 시작과 이전 표시 소유권 분리
 

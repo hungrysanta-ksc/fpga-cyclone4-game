@@ -1,33 +1,74 @@
 {
   "schema_version": 1,
   "audit": 499,
-  "physical_baseline": "MMC493",
+  "physical_baseline": "MMC502",
   "evidence": "analysis/audit499-verification.json",
   "supersedes_next_work": "docs/nes-output487-plan.json S9 and498 NEXT; historical evidence remains valid in its scope",
   "selected_experimental_candidate": null,
-  "protected": ["independent checks", "STOP cancellation", "old display identity", "final ACK before EA/new COMMIT", "VBlank", "menu/base recovery", "GBC/save SRAM"],
+  "protected": [
+    "independent checks",
+    "STOP cancellation",
+    "old display identity",
+    "final ACK before EA/new COMMIT",
+    "VBlank",
+    "menu/base recovery",
+    "GBC/save SRAM"
+  ],
   "stages": [
     {
       "id": "A1",
-      "status": "next",
+      "status": "bounded_correction_and_first_hardware_verified",
       "objective": "Explain and correct capture fetch rejection01/04/06 before optimizing polling again",
-      "inputs": ["actual493 PPU tap/planes/compact/raster/raw-row", "existing179 register/pixel evidence", "493 V3 episode history"],
+      "inputs": [
+        "actual493 PPU tap/planes/compact/raster/raw-row",
+        "existing179 register/pixel evidence",
+        "493 V3 episode history"
+      ],
       "deliverable": "First-failure boundary with low/high/address/PPUMASK/actual pixel and row commit; minimal verified correction if defective",
       "gate": "Normal render stop/restart and split produce reference-equivalent pixels; invalid addresses/ROM fault/missing pixels/STOP remain rejected",
-      "stop_rule": "No bit masking or game/scanline exception. No repeated hundreds-frame full boot simulation; use bounded event replay or targeted existing witness when exact timing is missing."
+      "stop_rule": "No bit masking or game/scanline exception. No repeated hundreds-frame full boot simulation; use bounded event replay or targeted existing witness when exact timing is missing.",
+      "diagnosis_evidence": "analysis/capture500-verification.json",
+      "diagnosis": "500 reproduced01/04/06 in actual493 PPU/collector;24 unique conditions,9 rejected despite exact retained raw pixels",
+      "remaining": "No whole-run loss or same-scene rate proof;retained mask0 rejection episodes need classification if capture-health gate is tightened",
+      "implementation_evidence": "analysis/capture502-verification.json",
+      "bounded_correction_verified": true,
+      "physical_verified": true,
+      "next_order": [
+        "Preserve502 verified working pair;do not repeat unchanged FIT/Questa",
+        "A2 complete byte/DMA/IRQ/ROM/VBlank budget;nonquery observed wire18.02ms exceeds16.67ms",
+        "Keep unmatched-scene caveat and unresolved mask0 history;future trial uses unique filenames and no RESTORE folders"
+      ],
+      "bounded_capture_consumer_gate_passed": true,
+      "physical_evidence": "analysis/hardware503-mmc502.json"
     },
     {
       "id": "A2",
-      "status": "after_A1",
+      "status": "ready_for_budget_review",
       "objective": "Choose a structure with a viable complete bandwidth and critical-path budget",
       "target_period_ms": 16.6666666667,
       "physical_SPI_capacity_B_per_period": 5468.75,
       "provisional_wire_budget_ms": 12,
       "provisional_wire_budget_B": 3937.5,
       "budget_is_measured": false,
-      "compare": ["retained-base input delta and redundant transfer removal", "RUN-scoped shared SPI setup including70/73", "verified early inactive-VRAM DMA and metadata supply", "ROM grant/tag locality only when wait measured"],
+      "compare": [
+        "retained-base input delta and redundant transfer removal",
+        "RUN-scoped shared SPI setup including70/73",
+        "verified early inactive-VRAM DMA and metadata supply",
+        "ROM grant/tag locality only when wait measured"
+      ],
       "gate": "All mandatory bytes/gaps/ARM/IRQ/ROM/WRAM/VRAM/VBlank terms and old-control deletion listed; no double-counted overlap; whole LE/RAM/Flash/stack budget",
-      "stop_rule": "If retained mandatory wire exceeds period or renderer cannot represent gameplay, revise ABI/roles or supported scope instead of another FSM/opcode optimization."
+      "stop_rule": "If retained mandatory wire exceeds period or renderer cannot represent gameplay, revise ABI/roles or supported scope instead of another FSM/opcode optimization.",
+      "current_measured_budget": {
+        "evidence": "analysis/hardware503-mmc502.json",
+        "whole_ms_per_display": 94.4496855345912,
+        "receive_ms": 22.138072364480383,
+        "plan_supply_ms": 31.320579159179392,
+        "seal_ACK_ms": 40.27467619421982,
+        "nonquery_observed_wire_ms": 18.016043126684636,
+        "LE_free": 121,
+        "ARM_Flash_free_B": 148,
+        "nested_counters_must_not_be_added": true
+      }
     },
     {
       "id": "A3",
@@ -40,12 +81,19 @@
       "id": "A4",
       "status": "after_A3",
       "objective": "Matched-scene physical comparison and sustained display verification",
-      "deliverable": "Unique package/log filenames,493 restore, two repeat runs with world-map and first-level segments",
+      "deliverable": "Unique candidate/package/log filenames;no RESTORE folders per user backup policy;matched input and repeated runs when measuring causal speedup",
       "gate": "Load/input/STOP/menu pass; final display intervals, NES progress speed and capture rejects checked independently; full cost and model limitations reported",
       "stop_rule": "No FPS from instruction counts/RPC/partial endpoint model; no small improvement claim from unmatched scenes."
     }
   ],
   "frozen_work_policy": "See nes-audit499.ko.md: frozen until explicit new evidence, not proven mathematically unoptimizable",
   "new_installer_required_now": false,
-  "MMC4_MMC5_ready": false
+  "MMC4_MMC5_ready": false,
+  "current_branch": "codex/nes-capture-correctness-500",
+  "current_PR": 139,
+  "merged_PR138": "7e9699fb5d3ce4617495c204aa04d194cb09798d",
+  "planned_delivery": "No new installer for503 receipt analysis;next trial omits RESTORE",
+  "delivery_verification": "analysis/capture502-release-verification.json",
+  "previous_physical_baseline": "MMC493",
+  "current_physical_evidence": "analysis/hardware503-mmc502.json"
 }

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-"""Read482/485/489/492/493 physical DWT/driver counters without hardcoding frame totals.
+"""Read482/485/489/492/493/502 physical DWT/driver counters without hardcoding frame totals.
 
 Phase, driver-op and quiet counters are nested. No same-scene claim is inferred
 from using the same ROM; menu visibility still requires the user's observation.
@@ -45,8 +45,13 @@ def analyse(folder,trial):
     #493 can expire in runtime transfer's POST guard while polling SEAL ACK.
     #Only this exact conjunction is accepted; transport code3 alone is a fault.
     request=bytes.fromhex(g.get('sink_trace_request_hex',''))
-    deadline_SEAL=(trial==493 and video==0 and g['native_sink_error']=='2' and
-                   g['sink_window_error']=='3' and g['plan_error']=='0' and
+    #502 has the same linked functions as493. Its window2 is the guard/wait
+    #deadline before another status IO, separately exercised by503. Keep the
+    #full SEAL/identity/one-pending conjunction; never waive window2 alone.
+    deadline_window=((trial==493 and g['sink_window_error']=='3') or
+                     (trial==502 and g['sink_window_error']=='2'))
+    deadline_SEAL=(deadline_window and video==0 and g['native_sink_error']=='2' and
+                   g['plan_error']=='0' and
                    g['plan_sent']=='1' and g['plan_end']=='1' and
                    g['trace_aborts']=='0' and g['fault_context_valid']=='0' and
                    g['sink_trace_valid']=='1' and g['sink_trace_ack_valid']=='0' and
@@ -89,7 +94,7 @@ def analyse(folder,trial):
     assert [v['index'] for v in bins]==list(range(12)) and sum(v['frames'] for v in bins)==n
     sent,retired=int(g['sink_window_sent']),int(g['sink_window_retired'])
     return {'trial':trial,'hardware_run_passed':True,
-            'termination_class':('deadline_during_SEAL_status_postguard_signature' if deadline_SEAL else
+            'termination_class':(('deadline_during_SEAL_guard_or_wait_signature' if trial==502 else 'deadline_during_SEAL_status_postguard_signature') if deadline_SEAL else
                                  'deadline_during_plan_emit_signature' if deadline_plan else
                                  'deadline_during_OBJ_emit' if deadline_OBJ else 'deadline'),
             'last_incomplete_frame_displayed':False,
@@ -108,8 +113,8 @@ def analyse(folder,trial):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--raw',type=Path,required=True)
-    p.add_argument('--trial',type=int,choices=[482,485,489,492,493],default=485);p.add_argument('--baseline-raw',type=Path)
-    p.add_argument('--baseline-trial',type=int,choices=[482,485,489,492,493],default=482)
+    p.add_argument('--trial',type=int,choices=[482,485,489,492,493,502],default=485);p.add_argument('--baseline-raw',type=Path)
+    p.add_argument('--baseline-trial',type=int,choices=[482,485,489,492,493,502],default=482)
     p.add_argument('--out',type=Path,required=True);a=p.parse_args();assert not a.out.exists()
     r=analyse(a.raw,a.trial)
     if a.baseline_raw:

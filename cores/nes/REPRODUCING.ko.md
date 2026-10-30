@@ -1,8 +1,8 @@
 # NES 재현 범위와 다른 PC 입력
 
-현재 실기는 **MMC493**, 최신 미선택 후보는498이다. [현재 인계](HANDOFF.ko.md)·[감사499](../../docs/nes-audit499.ko.md)·[새 계획](../../docs/nes-audit499-plan.json)을 먼저 읽는다. 아래474–485는 과거 입력이며 현재 선택본이 아니다. clone만으로 전체 빌드 입력이 완결되지는 않는다.
+현재 실기는 **MMC502**이며493은 이전 기준,498은 보류 상태다. [현재 인계](HANDOFF.ko.md)·[감사499](../../docs/nes-audit499.ko.md)·[새 계획](../../docs/nes-audit499-plan.json)을 먼저 읽는다. 아래474–485는 과거 입력이며 현재 선택본이 아니다. clone만으로 전체 빌드 입력이 완결되지는 않는다.
 
-## 현재493 재현 입력
+## 이전493 기반 재현 입력
 
 | 영역 | 고정 입력/근거 |
 |---|---|
@@ -10,9 +10,21 @@
 | FPGA | 기존489 board02의70 QSF/제약/초기화 입력; [499 재대조 목록](../../analysis/audit499-verification.json) |
 | 65816 | `probes/nes-output489/client04` body4311B/program5120B/ABI4891; [489 계약](../../docs/nes-output489-contract.ko.md) |
 | 실기 | `probes/nes-hardware494/run01` 원본3TXT/receipt 및termination02; [494 원본 요약](../../analysis/hardware494-mmc493.json) |
-| 후보498 | 별도ARM01/candidate06/live04/board05; [498 검증과 한계](../../analysis/prefetch498-verification.json).493과 혼합 금지 |
+| 보류 후보498 | 별도ARM01/candidate06/live04/board05; [498 검증과 한계](../../analysis/prefetch498-verification.json).493과 혼합 금지 |
 
 `python tools/audit_nes499.py --board <489-board02> --arm <493-src> --raw <494-run01> --out <fresh-json>`은 선택hash와기존로그를 재검사한다. 합성·시뮬레이션·새 실기 성능시험을 실행하지 않는다. 실제 설치 산출물 hash는493 package를 따른다.
+
+## 502 실기 수신503 재현
+
+원본은 `probes/nes-hardware503/run01`의3TXT와receipt.json이다. `check_nes_hardware503_termination.py --arm <capture502-ARM01/src> --raw <run01> --out <fresh-termination01>`은 실제 linked502에서 종료4조건/반례16개를 확인한다. `analyze_nes_hardware503.py --receipt <nes-hardware503> --out <fresh-json>`으로 [503 분석](../../analysis/hardware503-mmc502.json)을 재계산한다. 물리 종료 순간 재생이나 새합성이 아니다. 다음 시험판부터는 RESTORE 폴더를 생략하되 아래502 기존ZIP과제작기록은변경하지않는다.
+
+## 502 전달본 제작 입력
+
+502는493 ARM 전체 source에 `release_nes_capture502.py prepare`의3개 label 변경만 적용하고 기존 `build_nes_mmc479_arm.ps1`로 빌드한다.781개 linked함수와32B header 뒤의label 이외bytes가493과같은지검증한다. `.ARG_VERSION`은생성된version cache로동일label변경만허용한다.
+
+FPGA는capture502 board01의기존SOF/FIT/STA·70입력hash를사용한다. Quartus Lite CPF로RBF를내고 `release_nes_capture502.py assemble`로BI3를만든다. 같은회로의FIT/Questa를재실행하지않는다. `test_nes_nrom458_programmer.py`는새BI3/RBF를실제FatFS/programmer와모델GPIO로검사한다. 선택은programmer02이며01의sandbox GCC WinError623은실행환경실패다.
+
+`package_nes_capture502.py`는hash가고정된493 ZIP에서복구파일을복사하고새ARM/BI3·고유502파일명·안내를묶는다. `analysis/capture502-package.json`과제작검증에최종hash가있다. 작업자료는 `probes/nes-capture502/ARM01`, `release01`, `trial01`, `evidence-release`, `release-archive01.json`에보존한다. 원래493/502 private전체입력의복구가필요하며상용ROM/license는Git에없다.
 
 ## 저장소만으로 가능한 것
 

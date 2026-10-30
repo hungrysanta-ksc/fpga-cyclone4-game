@@ -1,14 +1,14 @@
 # 다른 PC·새 작업에서 재개하기
 
-이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고[감사499](../nes-audit499.ko.md)와[새 계획 A1–A4](../nes-audit499-plan.json)를 따른다. 수집 정확성부터 확인하며 기존498 NEXT를 그대로 재개하지 않는다.
+이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고[감사499](../nes-audit499.ko.md)와[새 계획 A1–A4](../nes-audit499-plan.json)를 따른다. 502 수집 수정의 첫 실기 성공을 기준으로 A2 전송·DMA 예산부터 진행하며 기존498 NEXT를 그대로 재개하지 않는다.
 
 ## 1. 상태를 읽는다
 
 1. [루트 README](../../README.md) → [프로젝트 현황](../PROJECT-STATUS.ko.md).
-2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR138](../progress/pr-138.md).
+2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR139](../progress/pr-139.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
-GB/GBC만 추가·공개 완료다. 현재 NES 게임 기준은 MMC493 60.07초575최종표시/9.57fps·부팅/메뉴정상이며첫레벨차이는작다. 이전4899.60fps와다른입력이라지속가속은미확인이다. 이전485대기13.55/플레이8.22fps와NROM47623.84fps는별도조건이다.60fps·전게임/매퍼·capture/전체CDC/IO 승인은미완료다.
+GB/GBC만 추가·공개 완료다. 현재 NES 게임 기준은 MMC502 60.07초636최종표시/10.59fps이며 실행·메뉴 복귀 정상과 체감 개선을 확인했다. 이전4939.57fps와 동선이 달라 인과적 개선율·레벨별FPS는 미확정이다. [503 근거](../nes-hardware503-results.ko.md)를 따른다. 다음 NES 시험판부터 RESTORE 폴더는 생략하며 사용자 백업과 기존 ZIP은 보존한다.60fps·전게임/매퍼·capture/전체CDC/IO 승인은 미완료다.
 
 ## 2. Git 기준을 확인한다
 
@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-먼저 로컬 변경을 보존한다. 필요할 때 remote를 fetch하고 실제 병합 상태·base·master 도달 관계를 확인한다. PR135는948a2e9bc6542aaec7737e28f4431cb0c0350f6d로 master에 병합됐으며, PR136도2d4543ef2442bc798bcec128a4a108fdfc4d5287로 master 병합을 확인했고 PR137도29815faa3887a035091e3169ffa0f751dda3de44로 master 병합을 확인했고 현재 브랜치는 `codex/nes-consume-schedule-491`/PR138이다. 새 PC에서 무조건 master로 바꾸거나 reset/pull로 덮지 않는다.
+먼저 로컬 변경을 보존한다. 필요할 때 remote를 fetch하고 실제 병합 상태·base·master 도달 관계를 확인한다. PR135는948a2e9bc6542aaec7737e28f4431cb0c0350f6d로 master에 병합됐으며, PR136도2d4543ef2442bc798bcec128a4a108fdfc4d5287로 master 병합을 확인했고 PR137도29815faa3887a035091e3169ffa0f751dda3de44로 master 병합을 확인했고 PR138도7e9699fb5d3ce4617495c204aa04d194cb09798d로 master 병합을 확인했고 현재 브랜치는 `codex/nes-capture-correctness-500`/PR139이다. 새 PC에서 무조건 master로 바꾸거나 reset/pull로 덮지 않는다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
