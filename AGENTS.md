@@ -11,9 +11,10 @@
 
 ## 현재 작업 범위
 
-- 현재 PR135에서 MMC482 게임 실기 성공을 수신 분석483으로 확정했다. docs/nes-mmc483-hardware.ko.md와 docs/nes-mmc483-next-plan.json을 먼저 읽는다.60.06초·877최종 표시/평균14.60fps·50ms READY·STOP/base/사용자 메뉴 복귀 정상이다. 다음은 같은482 RTL에서 실제 M4 planner와 E8 공급/대기의 비용 분리·전체 일정 개선이다. 분석만 했으며 새 빌드/합성/전달본은 없다.
-- 추가·공개 완료 코어는 GB/GBC G13C44/0.9.0. NES는 MMC482 실제 SMB3 평균14.60fps로 미완성이다. 문양 NROM476의23.84fps는 별도 회귀 기준으로 보존한다.
-- 현재 게임 실기 근거는 `analysis/mmc483-hardware482.json`, 문양 회귀는 `analysis/receive477-hardware.json`, 인계는 `cores/nes/HANDOFF.ko.md`다.
+- PR136 / codex/nes-game-plan-supply-484. 現485 실기 두 조건을486에서 수신 분석했다. docs/nes-hardware486-results.ko.md와 docs/nes-game484-next-plan.json을 먼저 읽는다. 대기13.55fps/첫 레벨 플레이 포함8.22fps, 로드·STOP·메뉴 복귀 정상이나 전체 가속 미입증이다. 장면이 달라482의14.60fps와 직접 개선율 비교 금지. 이번에는 새 펌웨어/ZIP/합성 없음.
+- 다음은 본문 전송량·map stale-bank 원인과 전체 SEAL48.33ms 공동 감사, 데이터 절감/SPI 여유 검증, D0 readiness 순이다. 현재 MCU_RDY는 external_memory_ready이지 source-ready IRQ가 아니다. Flash232B·154LE·RUN31848B 예산을 유지한다. 독립 검사/STOP/최종 ACK 생략이나 단순 polling/FSM 반복을 피한다.
+- 추가·공개 완료는 GB/GBC G13C44/0.9.0뿐이다. NES60fps는 미완료이며 문양476의23.84fps는 별도 회귀다.
+- 현재 실기 근거는 `analysis/hardware486-gameplay485.json`, 문양 회귀는 `analysis/receive477-hardware.json`, 인계는 `cores/nes/HANDOFF.ko.md`다.2차 video_error13의 deadline/emit 전파는 슬롯1/128 실제 M4 시험으로 검증했으며 진짜 capacity 실패를 포괄 허용하지 않는다.
 - `src/fpga`, `src/firmware-overlay`, `src/renderer`의 검증된 GBC와 사용자 저장·복원물을 보존한다.
 
 ## 문서와 PR
@@ -45,4 +46,4 @@
 - 실기는 사용자가 설치 ZIP을 SD에 복사하고 로그를 돌려주는 방식이다. 알려진 보드나 SD/USB 연결을 다시 요구하지 않는다.
 - 단계 완료·큰 변경·중요한 결과 위주로 간결하게 보고한다. 자세한 진행은 문서에 남기며 이미 허가된 범위의 작업을 반복 확인하지 않는다.
 
-- 단순 NROM은 회귀 fixture이며 게임60fps의 선행 조건이 아니다.480의 공동 기능/픽셀 근거는 실물 SNES 부팅 증명이 아니다. 현재 게임 실기 기준482와 문양476 약24fps 원복을 보존한다.481은 기각이며482 한 회 성공으로480 물리 실패 원인을 단독 확정하지 않는다. 같은480 재시험·계측만 늘리는 전달·근거 없는 FSM/seed/FIT 반복을 피한다.
+- 단순 NROM은 회귀 fixture이며 게임60fps의 선행 조건이 아니다.480의 공동 기능/픽셀 근거는 실물 SNES 부팅 증명이 아니다. 현재 게임 실기485 및 이전482와 문양476 약24fps 원복을 보존한다.481은 기각이며482 한 회 성공으로480 물리 실패 원인을 단독 확정하지 않는다. 같은480 재시험·계측만 늘리는 전달·근거 없는 FSM/seed/FIT 반복을 피한다.

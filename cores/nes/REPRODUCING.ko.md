@@ -1,6 +1,6 @@
 # NES 재현 범위와 다른 PC 입력
 
-최신 기준은 [476/477](HANDOFF.ko.md)다. 476은 아래474 source를 기반으로 `prepare_nes_receive476.py`가 변환한다. 실기 재분석은 `analyze_nes_receive477.py --raw <raw3TXT> --out <fresh-json>`이며 원본 hash는 `analysis/receive477-hardware.json`에 있다. 이전 수백 단계의 절차는 [원문 이력](../../docs/progress/archive/README.md)에 보존했다. 다른 PC의 준비는 [재개 안내](../../docs/development/RESUME.ko.md)에서 시작한다.
+현재 실기는482, 전달 후보는485다. [485 계약](../../docs/nes-supply485-contract.ko.md)의 선택/재현과 [PR136](../../docs/progress/pr-136.md)을 먼저 따른다. 전체482/484 source·ELF,478의71입력/참조,480 transaction과 도구는 로컬 선행 입력이다.485는 `probes/nes-supply485/{candidate03,ARM03,armguard07,executed/live02,trial02}`와 공개 recipe/해시로 묶었다. 아래474/476은 별도 회귀/과거 입력이다. clone만으로 전체 빌드 입력이 완결되지는 않는다. [원문 이력](../../docs/progress/archive/README.md)·[재개 안내](../../docs/development/RESUME.ko.md)를 따른다.
 
 ## 저장소만으로 가능한 것
 
