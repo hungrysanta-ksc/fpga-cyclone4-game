@@ -1,5 +1,7 @@
 # NES493 — 492 실기 부팅 실패와 분리·복구 관문
 
+> **후속 실기494:**493은부팅·메뉴복귀정상,60.07초575표시/9.57fps다. 이전4899.60fps와지속가속은미확인이다. [현재 분석·다음 순서](nes-hardware494-results.ko.md)·[실기 근거](../analysis/hardware494-mmc493.json)를먼저읽는다. 아래의미확인/다음관문은493 제작당시기록이다.492 단일원인은미확정이며새word 경로는계속보류한다.
+
 [실기492 실패](../analysis/boot493-hardware492.json)·[493 연결 검증](../analysis/boot493-verification.json)·[493 manifest](../analysis/boot493-package.json)·[설치/원복](nes-mmc493-trial.ko.md)·[PR138](progress/pr-138.md).
 
 ## 실기 판정

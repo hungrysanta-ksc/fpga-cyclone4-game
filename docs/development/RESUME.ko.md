@@ -8,7 +8,7 @@
 2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR138](../progress/pr-138.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
-GB/GBC만 추가·공개 완료다. 현재 NES 게임 기준은 MMC489 60.08초577최종 표시/9.60fps·정상 실행/메뉴 복귀다.이전485 각60.07초 대기13.55fps·첫 레벨 플레이 포함8.22fps는 별도 조건이다. 입력이 다른 이전482의14.60fps와 직접 개선율을 비교하지 않는다. 문양NROM476의23.84fps는 별도 회귀로 보존한다.60fps·전 게임/매퍼·capture/전체 CDC/IO 승인은 미완료다.
+GB/GBC만 추가·공개 완료다. 현재 NES 게임 기준은 MMC493 60.07초575최종표시/9.57fps·부팅/메뉴정상이며첫레벨차이는작다. 이전4899.60fps와다른입력이라지속가속은미확인이다. 이전485대기13.55/플레이8.22fps와NROM47623.84fps는별도조건이다.60fps·전게임/매퍼·capture/전체CDC/IO 승인은미완료다.
 
 ## 2. Git 기준을 확인한다
 
@@ -41,7 +41,7 @@ git log -5 --oneline
 
 1. [실기486 분석](../nes-hardware486-results.ko.md)·[485 계약](../nes-supply485-contract.ko.md)·[다음 계획](../nes-output487-plan.json)을 읽는다. 현재485 두 장면은 합산하지 않는다. 문양476은 별도 원복/회귀다.
 2. G2B는 연결·기능 시험을 통과했다. candidate03/ARM03/armguard07/live02/trial02가 선택이다. 초기 busy-spin 후보는 전달하지 않는다. credit 수령·실제 ACK·staging 해제를 구분한다.
-3. **492 부팅 실패 분석·493 분리본 준비,실물 부팅 회복부터 확인한다.** [493 계약](../nes-boot493-contract.ko.md)·[실기 실패](../../analysis/boot493-hardware492.json)·[설치](../nes-mmc493-trial.ko.md)·[검증](../../analysis/boot493-verification.json).492는ROM적재/CRC/readback 정상이나5초SNES ready timeout,0frame/phase,STOP/base/menu 정상이다. 원인미확정·492 선택 철회,새SNES word DMA/MVN 보류.493은정상489 FPGA/SNES byte동일+491 ARMquery,781함수/71frame2020packet byte일치,whole15272LE51M9K/Flash148B.493 첫 화면/메뉴/새3로그가 다음이며성능반복보다부팅회복을먼저확인한다. 기준은489의9.60fps이며493실측은없다. [491 모델7.25%](../nes-consume491-contract.ko.md)는493에적용하지않는다. 실제부팅회복후 E8/E0 소비/ACK·D0/source ROM 전체일정으로복귀한다. GBC/save와489/485/482/476/164/467 원복을보존하며불변FPGA의합성/라이선스smoke는반복하지않는다.
+3. **493 부팅 회복·전체성능유사,다음은공급/소비·왕복비용이다.** [494 실기분석](../nes-hardware494-results.ko.md)·[측정](../../analysis/hardware494-mmc493.json)·[계획](../nes-output487-plan.json).60.07초575회9.57fps,실제linked493 SEAL postguard result1/window3/sink2·IO구분/16negative·기존12negative 통과.493을유지하며E0 credit/SEAL ACK·65816 검사·E8/D0 공급·packet/framing을같은입력에서함께비교한다. 조회제외wire관측17.96ms/전체32.20ms,Flash148B/136LE 예산.492단일원인미확정·새word FPGA/SNES보류;이번새ZIP/합성없음. 제작스냅샷은[493 계약](../nes-boot493-contract.ko.md),실제기준은494다. GBC/save·493/489 및기존원복을보존한다.
 4. 독립 검사·STOP·최종 ACK·4credit·메뉴 복귀를 유지한다. RTL이 실제로 바뀔 때만 같은 source의 Lite 전체 비용/관련 timing을 다시 확인한다.
 5. 의미 있는 변경이 검증된 뒤 새 번호·marker·로그·원복으로 동일 ROM/입력 조건의 하드웨어를 비교한다.482 한 회 성공을480의 단일 물리 원인·전 게임/매퍼·60fps 증명으로 승격하지 않는다.
 

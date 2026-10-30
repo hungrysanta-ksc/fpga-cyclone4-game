@@ -4,11 +4,11 @@
 
 ## 현재 게임 실기 기준
 
-- **MMC489 / ARM489-02 / FPGA489 / SMB3(J) / ABI4891·profile7b**:60.08초577회 최종 표시, **평균9.60fps**. 실행·첫 레벨 플레이·메뉴 복귀 정상,첫 레벨 체감 개선은 작았다는 사용자 보고다.
-- 수신30.06ms / 계획·타일 공급34.29ms / SEAL·최종ACK38.65ms. op/quiet는 단계에 중첩된다. 반복 D0/E0/E8 조회가 wire의44.73%이며 실제 소비·검사 일정을 다음으로 다룬다.
-- 이전485는 플레이 포함8.22fps/대기13.55fps다. 장면·입력이 달라 인과적 개선율·레벨 전용 FPS를 주장하지 않는다. 문양 NROM476의23.84fps는 별도 회귀다.
-- [490 실기 분석](../../docs/nes-hardware490-results.ko.md) · [측정 JSON](../../analysis/hardware490-mmc489.json) · [현재 계획](../../docs/nes-output487-plan.json). 종료 guard2→video14와 마지막 미완료 프레임 제외를 검증했다.
-- [489 구현](../../docs/nes-output489-contract.ko.md)·[설치/원복](../../docs/nes-mmc489-trial.ko.md)을 유지한다. 제작 시점 package/model 스냅샷을 덮거나 분석만으로 새 ZIP/합성을 만들지 않는다.
+- **MMC493 / ARM493-01 / 정상 FPGA489와 동일한 이미지 / SMB3(J) / ABI4891·profile7b**:60.07초575회 최종 표시, **평균9.57fps**. 실행·첫 레벨 플레이·메뉴 복귀 정상,첫 레벨 체감 개선은 작았다는 사용자 보고다.
+- 수신28.97ms / 계획·타일 공급33.05ms / SEAL·최종ACK41.33ms. op/quiet는 단계에 중첩된다. 반복 D0/E0/E8 조회가 wire의44.22%이며 실제 소비·검사 일정을 다음으로 다룬다.
+- 이전489는9.60fps이며 이번과 지속 성능 차이는 확인되지 않았다. 이전485는 플레이 포함8.22fps/대기13.55fps다. 장면·입력이 달라 인과적 개선율·레벨 전용 FPS를 주장하지 않는다. 문양 NROM476의23.84fps는 별도 회귀다.
+- [494 실기 분석](../../docs/nes-hardware494-results.ko.md) · [측정 JSON](../../analysis/hardware494-mmc493.json) · [현재 계획](../../docs/nes-output487-plan.json). 종료SEAL postguard result1/window3/sink2와마지막미완료제외를검증했다.
+- [493 구성](../../docs/nes-boot493-contract.ko.md)·[설치/원복](../../docs/nes-mmc493-trial.ko.md)을 유지한다. 제작 시점 package/model 스냅샷을 덮거나 분석만으로 새 ZIP/합성을 만들지 않는다.
 - 60fps·전체 NES/MMC4/5·지속 capture 무손실·전체 CDC/IO·full stack/IRQ 승인은 미완료다.485/482/476/164/467 원복·GBC/save를 보존한다.
 
 ## 소스와 기록

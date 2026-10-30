@@ -2,11 +2,11 @@
   "schema_version": 1,
   "execution_state": {
     "performance_work": "active",
-    "current_gate": "Recover physical SNES boot before further performance changes"
+    "current_gate": "Joint supply/consume/status and framing cost on fixed inputs;physical boot recovered493"
   },
-  "physical_baseline": "MMC489",
-  "physical_evidence": "analysis/hardware490-mmc489.json",
-  "development_evidence": "analysis/boot493-verification.json",
+  "physical_baseline": "MMC493",
+  "physical_evidence": "analysis/hardware494-mmc493.json",
+  "development_evidence": "analysis/hardware494-mmc493.json",
   "merged_PR136": "2d4543ef2442bc798bcec128a4a108fdfc4d5287",
   "branch": "codex/nes-consume-schedule-491",
   "budget": {
@@ -68,9 +68,15 @@
     },
     {
       "id": "S7",
-      "status": "awaiting_physical493_boot_logs",
+      "status": "complete_physical493_boot_recovered",
       "goal": "Isolate boot failure with byte-identical hardware489 FPGA/SNES and491 ARM query,then resume total-time comparison",
-      "gate": "781 linkedfunctions exact491;71frames2020ordinary/SEAL packets equal489;whole cost/timing/programmer reused489;need493 first-screen/menu/log3,not a root-cause or speedup claim"
+      "gate": "Ready50ms/495poll,575 final displays/60.07s=9.57fps,user confirms load/menu;linked deadline vs IO propagation and16negative logs;last unfinishedSEAL excluded;492 root cause unresolved"
+    },
+    {
+      "id": "S8",
+      "status": "next",
+      "goal": "Compare joint E0 credit/finalACK,E8/D0 supply,65816 validation and packet/status/framing reduction on fixed inputs",
+      "gate": "493 shows no sustained gain;queries44.22%/14.24ms wire,nonquery observed wire17.96ms,whole104.47ms. Need common whole-path improvement within136LE/148FlashB;retain independent checks/STOP/finalACK/VBlank/menu;no new package for measurement alone"
     }
   ],
   "retained": [
@@ -81,9 +87,9 @@
     "VBlank and prior display identity",
     "GBC/save and485/482/476/164/467 restore"
   ],
-  "new_hardware_package": true,
+  "new_hardware_package": false,
   "full_path_acceleration_proven": false,
-  "current_candidate": "MMC493 known-good489 FPGA/SNES +491 ARM query;physical493 boot pending,baseline489 unchanged",
+  "current_candidate": "MMC493 physical boot/menu pass,575/60.07s=9.57fps;no demonstrated sustained improvement over different489 input;keep known-good489 FPGA/SNES",
   "related_timing_passed": true,
   "development_package": "analysis/boot493-package.json",
   "physical_same_scene_acceleration_proven": false,

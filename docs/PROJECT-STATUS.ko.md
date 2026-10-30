@@ -1,20 +1,20 @@
 # 프로젝트 현황
 
-목표는 **sd2snes Cyclone IV 멀티 코어 확장**이다. PR137 병합 뒤 PR138에서 개발한다. 현재 실기는 MMC489이며, 이전485와 다른 장면의 결과를 분리해 판정한다. [NES 인계](../cores/nes/HANDOFF.ko.md) · [PR별 경과](progress/README.md).
+목표는 **sd2snes Cyclone IV 멀티 코어 확장**이다. PR137 병합 뒤 PR138에서 개발한다. 현재 실기는 MMC493이며 이전489/485와 다른 장면의 결과를 분리해 판정한다. [NES 인계](../cores/nes/HANDOFF.ko.md) · [PR별 경과](progress/README.md).
 
 ## 코어별 판정
 
 | 코어 | 판정 | 근거·한계 |
 |---|---|---|
 | GB/GBC | 추가 성공·제품 공개 | G13C44 / sd2snesHST0.9.0, [기준선](../cores/gbc/README.md)·[호환성](COMPATIBILITY.ko.md) |
-| NES | 개발 중·제품 미포함 | MMC489 실제 SMB3 첫 레벨 플레이 포함9.60fps,이전485 플레이8.22fps/대기13.55fps, STOP·메뉴 복귀 정상;60fps 미완료 |
+| NES | 개발 중·제품 미포함 | MMC493 실제SMB3 첫 레벨 플레이 포함9.57fps/부팅·메뉴정상;이전4899.60fps와지속가속미확인,60fps미완료 |
 | PC Engine | 조사 대기 | 구현·실기 성공 없음 |
 
 대상은 FXPAK Pro/Mk.III, EP4CE15F17C8, STM32F401RCT6, PSRAM IS66WVE4M16EBLL-70BLI 두 개다. 다른 보드/전체 IO 승인을 뜻하지 않는다.
 
 ## 최신 게임 실기
 
-**MMC489**:60.08초577최종 표시/**9.60fps**,실행·첫 레벨 플레이·메뉴 복귀 정상. 수신30.06ms/계획·타일34.29ms/SEAL·최종ACK38.65ms다. 첫 레벨 체감 개선은 작았으며 정확한 장면별 FPS/동일 입력 가속은 미입증이다. 반복 조회는 wire44.73%이고 다음은 E8/E0 실제 소비·검사 일정을 함께 다룬다. [490 분석](nes-hardware490-results.ko.md) · [측정 JSON](../analysis/hardware490-mmc489.json).
+**MMC493**:60.07초575최종 표시/**9.57fps**,부팅50ms·실행·첫 레벨·메뉴 복귀 정상. 수신28.97ms/계획·타일33.05ms/SEAL·최종ACK41.33ms다. 이전48960.08초577회/9.60fps와 전체평균이비슷하고첫레벨체감차이도작았다. 장면·입력이달라개선/회귀율이나레벨전용FPS는미입증이다. [494 분석](nes-hardware494-results.ko.md)·[측정JSON](../analysis/hardware494-mmc493.json),이전[490](nes-hardware490-results.ko.md). 마지막SEAL의deadline signature를실제linked493과16개반례로검증했으며미완료입력은표시수에서제외한다.
 
 ## 이전485 두 조건
 
@@ -36,19 +36,19 @@
 
 | 항목 | 현재 값/판정 |
 |---|---|
-| FPGA | 실기 선택489:15272LE/14078comb/8392FF/264800bits/51M9K、136LE·5M9K 잔여 |
+| FPGA | 실기493(489 FPGA동일):15272LE/14078comb/8392FF/264800bits/51M9K、136LE·5M9K 잔여 |
 | Timing | 관련 setup+0.183ns/hold+0.168ns; 전체 reset/CDC/IO 미승인 |
-| ARM489 | text202825/data10040/BSS18572B、firmware212868B·Flash124B 잔여 |
+| ARM493 | text202801/data10040/BSS18572B、firmware212844B·Flash148B 잔여 |
 | RAM/stack | RUN31848B 유지、full stack/IRQ 증명 미완료 |
-| 489 평균60Hz 격차 | 87.46ms/표시; 異장면482와 직접 개선율 비교 금지 |
-| SPI 본문 투영 | 489 본문5099.14B/표시→15.54ms,framing/query 별도;전체driver wire32.03ms |
+| 493 평균60Hz 격차 | 87.80ms/표시; 異장면489와 인과적 개선율 비교 금지 |
+| SPI 투영 | 493 본문wire15.79ms;조회 제외관측wire17.96ms;전체driver wire32.20ms,중첩합산금지 |
 | 게임/매퍼 범위 | SMB3 첫 레벨 기능 실기 확인; 전 MMC3/MMC4/5·60fps·제품 공개 미완료 |
 | 지속성 | capture 누락/반복·frame p95·NES 실시간 속도·정확 VBlank/ROM 위상 미측정 |
 
-[489 구현](nes-output489-contract.ko.md)은 같은71개 모델7.83% 감소·관련timing 통과 뒤 이번 실기에서 실행·메뉴 복귀까지 확인했다. 모델 개선율을 실기 FPS에 곱하지 않는다. [기존 설치·원복](nes-mmc489-trial.ko.md) · [개발 검증](../analysis/output489-verification.json) · [제작 manifest](../analysis/output489-package.json) · [현재 순서](nes-output487-plan.json). 제작 스냅샷은 유지하며 새로운 실기 근거는490에 둔다. 489 제작 스냅샷은 보존하며 현재493 부팅 분리본은 아래와 같다.
+[489 구현](nes-output489-contract.ko.md)은 같은71개 모델7.83% 감소·관련timing 통과 뒤 이전490 수신에서 실행·메뉴 복귀까지 확인했다. 모델 개선율을 실기 FPS에 곱하지 않는다. [기존 설치·원복](nes-mmc489-trial.ko.md) · [개발 검증](../analysis/output489-verification.json) · [제작 manifest](../analysis/output489-package.json) · [현재 순서](nes-output487-plan.json). 489 제작·모델 스냅샷은 유지하고 기존 실기는490,현재493 수신은494에 둔다.
 
-**492 실기 실패·493 분리 검증이 현재 관문이다.**492는 game393216B CRC/readback·STOP/base/menu 정상이나SNES ready5초timeout,수신/계획 전0frame·12phase0이다. FPS는없으며 원인미확정이다. [실패 분석](nes-boot493-contract.ko.md)·[실기 근거](../analysis/boot493-hardware492.json).493은 정상489 FPGA/SNES BI3를byte그대로 쓰고491 ARM 조회만 유지했다.781함수 동일·71frame2020packet byte일치,whole15272LE51M9K/Flash148B. 새 word DMA/MVN은 보류하며493 실제 부팅·성능은미확인이다. 우선 첫 화면/메뉴/3로그를확인하고그뒤 전체시간을 비교한다. [설치](nes-mmc493-trial.ko.md)·[연결 검증](../analysis/boot493-verification.json)·[manifest](../analysis/boot493-package.json)·[PR138](progress/pr-138.md).491 모델7.25%를493 실측에 적용하지 않는다.
+**493 부팅 회복·지속 가속 미확인이 현재 판정이다.** [493 구성](nes-boot493-contract.ko.md)·[실기494](nes-hardware494-results.ko.md).492의단일원인은미확정이며새word DMA/MVN은계속보류한다. 조회44.22%와비조회wire17.96ms 관측을근거로E0 credit/ACK·E8/D0 공급·packet/framing을함께줄이는범위가다음이다. 이번에는새ZIP/합성없이493을유지한다. 제작당시[검증](../analysis/boot493-verification.json)·[manifest](../analysis/boot493-package.json)의미확인표기는스냅샷으로보존한다. [PR138](progress/pr-138.md).
 
-[484 계산 절감](nes-game484-planner.ko.md)·[485 소유권 연결](nes-supply485-contract.ko.md)은 기능 검증 근거로 보존한다. [485 package](../analysis/supply485-package.json)의 hardware_verified=false는 제작 시점 스냅샷이다. 485 실기 근거는486,현재489 수신 근거는490이며 ZIP/FPGA를 다시 만들지 않았다. 문양 NROM476의23.84fps와482/476/164/467 원복·GBC/save를 보존한다.
+[484 계산 절감](nes-game484-planner.ko.md)·[485 소유권 연결](nes-supply485-contract.ko.md)은 기능 검증 근거로 보존한다. [485 package](../analysis/supply485-package.json)의 hardware_verified=false는 제작 시점 스냅샷이다. 485 실기 근거는486,이전489는490,현재493은494이며 ZIP/FPGA를 다시 만들지 않았다. 문양 NROM476의23.84fps와482/476/164/467 원복·GBC/save를 보존한다.
 
 과거 원문은 [archive](progress/archive/README.md), 로컬 의존성은 [재개 안내](development/RESUME.ko.md)에 둔다. README는 의미 있는 변화 때만 갱신하고 PR은 목표·작업내용·성과·후속작업을 유지한다.

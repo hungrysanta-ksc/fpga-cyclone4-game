@@ -42,7 +42,27 @@ def analyse(folder,trial):
                    g['plan_end']=='0' and g['plan_sent']=='0' and
                    g['fault_context_valid']=='0' and
                    int(g['trace_begins'])==int(g['trace_ends'])==int(g['trace_commits'])==int(g['native_frames'])+1)
+    #493 can expire in runtime transfer's POST guard while polling SEAL ACK.
+    #Only this exact conjunction is accepted; transport code3 alone is a fault.
+    request=bytes.fromhex(g.get('sink_trace_request_hex',''))
+    deadline_SEAL=(trial==493 and video==0 and g['native_sink_error']=='2' and
+                   g['sink_window_error']=='3' and g['plan_error']=='0' and
+                   g['plan_sent']=='1' and g['plan_end']=='1' and
+                   g['trace_aborts']=='0' and g['fault_context_valid']=='0' and
+                   g['sink_trace_valid']=='1' and g['sink_trace_ack_valid']=='0' and
+                   g['sink_trace_mismatch_hex']=='00' and g['sink_trace_ack_hex']=='0'*24 and
+                   g['sink_window_flags']=='3' and g['sink_window_ack']=='0' and
+                   ((int(g['sink_window_sent'])-int(g['sink_window_retired']))&65535)==1 and
+                   len(request)==16 and request[:2]==b'\x03\x00' and
+                   int.from_bytes(request[4:8],'little')==int(g['native_frames'])+1 and
+                   int.from_bytes(request[8:10],'little')==int(g['trace_generation']) and
+                   request[10:]==b'\x00\x00\xa8\x00\x00\x00' and
+                   b.get('boot_reason')=='1' and b.get('cost_transfer_stops')=='0' and
+                   b.get('failed_transfers')=='0' and b.get('cost_crc_errors')=='0' and
+                   (int(b['cost_op_05'].split(',')[0])&65535)==int(g['sink_window_sent']) and
+                   int(g['trace_begins'])==int(g['trace_ends'])==int(g['trace_commits'])==int(g['native_frames'])+1)
     assert video==0 or deadline_OBJ or deadline_plan,('unexpected video failure',video)
+    assert (g['native_sink_error']=='0' and g['sink_window_error']=='0') or deadline_SEAL,('unexpected sink/window failure',g['native_sink_error'],g['sink_window_error'])
     for k,v in {'cost_schema':'474','cost_counter_available':'1','cost_clock_hz':'84000000',
                 'cost_scene_crc32_hex':'5a04eed7','cost_crc_errors':'0','failed_transfers':'0'}.items():
         assert b[k]==v,(trial,k,b.get(k))
@@ -69,7 +89,8 @@ def analyse(folder,trial):
     assert [v['index'] for v in bins]==list(range(12)) and sum(v['frames'] for v in bins)==n
     sent,retired=int(g['sink_window_sent']),int(g['sink_window_retired'])
     return {'trial':trial,'hardware_run_passed':True,
-            'termination_class':('deadline_during_plan_emit_signature' if deadline_plan else
+            'termination_class':('deadline_during_SEAL_status_postguard_signature' if deadline_SEAL else
+                                 'deadline_during_plan_emit_signature' if deadline_plan else
                                  'deadline_during_OBJ_emit' if deadline_OBJ else 'deadline'),
             'last_incomplete_frame_displayed':False,
             'display':{'completed':n,'seconds':seconds,'fps':n/seconds,
