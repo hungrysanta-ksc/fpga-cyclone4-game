@@ -18,7 +18,7 @@
 
 ## 동일 구성과 비용
 
-492 ARM은491에서 marker/ROM/FPGA 파일명/로그/VERSION의 같은 길이 label만 변경했다. 최종 ELF의 **781개 함수 주소·크기·명령 byte가491과 모두 동일**하다. runtime/planner/sink/window·DWT 계측·fpga programmer·실제 SysTick handler source도 byte/hash로 확인했다. labels는492,wire client ABI는 호환되는4891/profile7b/status3 그대로다.
+492 ARM은491에서 marker/ROM/FPGA 파일명/로그/VERSION의 같은 길이 label만 변경했다. 최종 ELF의 **781개 함수 주소·크기·명령 byte가491과 모두 동일**하다. STM3 생성 header32B 뒤의 전체 payload도 label 치환 외에 byte가 모두 같아 vector/data까지 확인했다. runtime/planner/sink/window·DWT 계측·fpga programmer·실제 SysTick handler source도 byte/hash로 확인했다. labels는492,wire client ABI는 호환되는4891/profile7b/status3 그대로다.
 
 | 비용 | 489 실기 | 491/492 비교본 |
 |---|---:|---:|
@@ -45,4 +45,4 @@
 
 원복은489/485/482/476/164/467 모두 byte/hash 동일하게 포함했다. 상용 ROM/save는 제외하고 자작 NROM 회귀2개만 기존 원복에 보존한다. base와m3nu도489와 같다. GBC/save 원본을 바꾸지 않는다.
 
-로컬 선택은 `probes/nes-schedule492` candidate01/ARM01/assembly01/trial01/parser01,programmer01은 ASCII 실행 폴더에 보존했다. 공개 레시피는 nes_schedule492/assemble/package/test_analysis와 기존 strict hardware 분석기다. 정당한 ROM/491 원본·보드·도구 의존성은 [재현 범위](../cores/nes/REPRODUCING.ko.md)에 따른다. 누락 ELF Python import와 준비되지 않은 출력 경로의 초기 실패도 원시 출력으로 보존한다. 개인 라이선스·원시 로그·실행 파일·설치 ZIP은 Git에 넣지 않는다.
+로컬 선택은 `probes/nes-schedule492` candidate01/ARM01/assembly01/trial02/parser01,programmer01은 ASCII 실행 폴더에 보존했다. 공개 레시피는 nes_schedule492/assemble/package/test_analysis와 기존 strict hardware 분석기다. 정당한 ROM/491 원본·보드·도구 의존성은 [재현 범위](../cores/nes/REPRODUCING.ko.md)에 따른다. 누락 ELF Python import와 준비되지 않은 출력 경로의 초기 실패도 원시 출력으로 보존한다. 개인 라이선스·원시 로그·실행 파일·설치 ZIP은 Git에 넣지 않는다.

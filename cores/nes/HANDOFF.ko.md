@@ -2,6 +2,12 @@
 
 PR137 merge29815faa3887a035091e3169ffa0f751dda3de44의 master 도달 확인 뒤 `codex/nes-consume-schedule-491` / [PR138](../../docs/progress/pr-138.md)에서 진행한다. 개발은 [491 경계](../../docs/nes-consume491-contract.ko.md)·[검증](../../analysis/consume491-verification.json)을 먼저 읽는다. 먼저 [489 연결·실기 비교 준비](../../docs/nes-output489-contract.ko.md)·[현재 계획](../../docs/nes-output487-plan.json)을 읽는다. 현재 실기 판정은 [수신490](../../docs/nes-hardware490-results.ko.md)·[측정](../../analysis/hardware490-mmc489.json)을 먼저 읽는다.
 
+## 현재 전달·다음 관문
+
+[492 계약](../../docs/nes-schedule492-contract.ko.md)·[연결 검증](../../analysis/schedule492-verification.json)·[설치](../../docs/nes-mmc492-trial.ko.md)·[manifest](../../analysis/schedule492-package.json).492는491과781개 linked함수 주소/크기/명령 동일,이름만492다. 같은source-pinned ROM·whole FIT/STA 재사용,programmer/CRC/stream·파서12negative 통과. 로컬선택 `probes/nes-schedule492` candidate01/ARM01/assembly01/trial02/parser01. ELF/source labels·ROM·로그492,clientABI4891/profile7b/status3 그대로다.
+
+NEXT492 실제 실행/3로그/화면·메뉴 복귀 결과. DWT에는 실제IRQ·SPI·ROM대기 영향이 포함되지만 단독IRQ/ROMgrant시간은 분해할 수 없다. 표시시작~STOP elapsed와native 최종ACK 완료 수,세phase/op/quiet를 중첩합산 없이 비교한다.492 전체 단축/FPS는 아직 미확정이고 아래489 실기 기준을 바꾸지 않는다.489/485/482/476/164/467 원복을 byte/hash로 보존했다.
+
 ## 현재 실기 선택
 
 | 항목 | 고정 기준 |
@@ -36,7 +42,7 @@ PR137 merge29815faa3887a035091e3169ffa0f751dda3de44의 master 도달 확인 뒤 
 
 [검증](../../analysis/consume491-verification.json):71 CPU/전송 모델7.25% 개선,108word/bank/STOP·M4 12ownership/8burst·71 canonical 상태/계획·공동 C/RTL/65816 첫 화면/34ACK/STOP·5124bus 통과. Source closure는 ROM 내용만 달라졌다. Whole Lite15272LE/51M9K/관련+0.183/+0.168ns 동일,ARM Flash148B/새 global0B·emit stack16B,SNES body4425B/새 RAM0B다.
 
-새 설치본은 없다. 실제 M4/IRQ/source ROM과 공통 시계의 전체 이득이 남아 있어489 설치본/9.60fps를 유지한다. 다음은 E8/E0 trace·source/ROM grant·65816 소비 시각을 한 일정에 연결하고 D0 대기를 비교한다. endpoint query 감소율을 CPU7.25%와 합치지 않는다. 로컬선택 `probes/nes-consume491` candidate01/ARM01/client02/audit01/arm-bursts01,ASCII board01/snes05/units04/phase01/cold01/live01/bootbus01. 재현 의존성과 native DLL 보존은491 계약을 따른다.
+491 개발 시점에는 설치본을 만들지 않았다. 후속492는 위의 실기 전체 일정 확인용으로 준비했으며 실제 이득/492FPS는 아직 없어489의9.60fps를 실측 기준으로 유지한다. 다음은 E8/E0 trace·source/ROM grant·65816 소비 시각을 한 일정에 연결하고 D0 대기를 비교한다. endpoint query 감소율을 CPU7.25%와 합치지 않는다. 로컬선택 `probes/nes-consume491` candidate01/ARM01/client02/audit01/arm-bursts01,ASCII board01/snes05/units04/phase01/cold01/live01/bootbus01. 재현 의존성과 native DLL 보존은491 계약을 따른다.
 
 ## 소스·보존·재현
 

@@ -1,5 +1,7 @@
 # NES491 — 반복 복원과 실제 공급 경계의 조회 통합
 
+후속 [492 연결/실기 비교](nes-schedule492-contract.ko.md)·[설치](nes-mmc492-trial.ko.md)를 준비했다. 아래는491 개발 검증 시점이며 실측489/492 결과를 혼합하지 않는다.
+
 PR137 merge `29815faa3887a035091e3169ffa0f751dda3de44`가 origin/master에 도달한 것을 확인하고 `codex/nes-consume-schedule-491`에서 시작했다. 현재 실기는 [MMC489/수신490](nes-hardware490-results.ko.md)의9.60fps·실행/메뉴 복귀 정상이다. 새 후보의 물리 FPS는 없다.
 
 ## 교체 경계

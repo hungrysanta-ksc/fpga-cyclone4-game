@@ -44,11 +44,17 @@ def verify(arm,baseline,board,client,programmer,out):
     assert 'nes_trace166.last_display_tick'in runtime and 'if(!s->sink.displayed'in runtime
     assert any(k[0]=='SysTick_Handler'for k in new)
     fw=arm/'obj-nes-100/firmware.stm';assert fw.stat().st_size==212844
+    before=(baseline/'obj-nes-100/firmware.stm').read_bytes();after=fw.read_bytes()
+    assert before[:4]==after[:4]==b'STM3'
+    # Generated STM3 image header updates with the changed payload. Every byte
+    # after it, including vectors/data, differs only by the declared labels.
+    assert before[32:].replace(b'489',b'492')==after[32:]
     r={'passed':True,'candidate':'MMC492','limited_functional_trial_ready':True,'scope':__doc__,
        'physical_acceleration_verified':False,'physical_FPS':None,'baseline':'analysis/hardware490-mmc489.json',
        'implementation':'analysis/consume491-verification.json','client_ABI':'4891','labels':labels,
        'ARM':{'firmware_SHA256':sha(fw),'firmware_B':fw.stat().st_size,'Flash_free_B':148,
               'linked_functions_equal':len(new),'all_function_addresses_sizes_bytes_equal_to491':True,
+              'all_nonheader_bytes_are_label_only_changes':True,'STM3_generated_header_B':32,
               'BSS_B':18572,'RUN_workspace_B':31848,'new_global_RAM_B':0,'new_measurement_overhead':False,
               'configured_clock_hz':84000000,'DWT_includes_IRQ_guard_wait':True,'nested_counters_not_additive':True},
        'connections':{'receive':'actual nes_native165 prepare/poll and D0-D3 through shared SPI',

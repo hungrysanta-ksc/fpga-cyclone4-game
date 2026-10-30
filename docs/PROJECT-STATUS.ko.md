@@ -47,7 +47,7 @@
 
 [489 구현](nes-output489-contract.ko.md)은 같은71개 모델7.83% 감소·관련timing 통과 뒤 이번 실기에서 실행·메뉴 복귀까지 확인했다. 모델 개선율을 실기 FPS에 곱하지 않는다. [기존 설치·원복](nes-mmc489-trial.ko.md) · [개발 검증](../analysis/output489-verification.json) · [제작 manifest](../analysis/output489-package.json) · [현재 순서](nes-output487-plan.json). 제작 스냅샷은 유지하며 새로운 실기 근거는490에 둔다. 이번에는 새 합성/전달본이 없다.
 
-[491 개발 후보](nes-consume491-contract.ko.md)는 word 반복 복원·local plan 조회를 통합해 고정71개 CPU/전송 모델7.25%를 줄였고 whole Lite 비용은 동일하다. 실제 공통 ARM/IRQ/ROM 일정 이득은 미입증이며489 설치본을 유지한다. [검증](../analysis/consume491-verification.json) · [PR138](progress/pr-138.md).
+[491 개발 후보](nes-consume491-contract.ko.md)의 word 복원·plan 조회 통합을 [MMC492 전체 일정 비교본](nes-mmc492-trial.ko.md)으로 준비했다. 실제 ARM/IRQ·SPI·ROM 경쟁·65816 최종ACK의 전체 시간을 기존 DWT/elapsed로 판정한다.781 linked함수가491과 같고 whole15272LE/51M9K·관련timing·programmer 전송을 확인했다. **492 실측 FPS·단축·메뉴 복귀는 아직 미확인,위489 실측은 유지한다.** [연결 검증](../analysis/schedule492-verification.json)·[492 manifest](../analysis/schedule492-package.json)·[PR138](progress/pr-138.md).
 
 [484 계산 절감](nes-game484-planner.ko.md)·[485 소유권 연결](nes-supply485-contract.ko.md)은 기능 검증 근거로 보존한다. [485 package](../analysis/supply485-package.json)의 hardware_verified=false는 제작 시점 스냅샷이다. 485 실기 근거는486,현재489 수신 근거는490이며 ZIP/FPGA를 다시 만들지 않았다. 문양 NROM476의23.84fps와482/476/164/467 원복·GBC/save를 보존한다.
 
