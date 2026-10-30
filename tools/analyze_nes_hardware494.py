@@ -3,6 +3,7 @@
 import argparse,json
 from pathlib import Path
 from analyze_nes_supply485_hardware import analyse,sha,fields
+from audit_nes499 import capture_evidence
 
 ROOT=Path(__file__).resolve().parents[1]
 if __name__=='__main__':
@@ -40,7 +41,11 @@ if __name__=='__main__':
                 'observed_mean_ms_delta':r['display']['mean_ms']-old['display']['mean_ms'],
                 'phase_ms_delta':{k:v['ms_per_completed_display']-old['DWT_phases_nested'][k]['ms_per_completed_display']for k,v in r['DWT_phases_nested'].items()},
                 'interpretation':'Whole-run rate essentially unchanged. Input/scenes differ; lower receive/plan and higher SEAL costs cannot be causally assigned to query removal.'}
-    result={'schema_version':1,'trial':493,'trial_family':'MMC','hardware_run_passed':True,
+    # Functional RUN/menu success does not establish healthy PPU capture.
+    # Keep the original494 receipt immutable; regenerated reports include499.
+    capture=capture_evidence((a.receipt/'run01/nes-game-last-mmc493.txt').read_text(encoding='utf8'))
+    result={'schema_version':2,'trial':493,'trial_family':'MMC','hardware_run_passed':True,
+            'capture_evidence':capture,'current_plan':'docs/nes-audit499-plan.json',
             'selected_rate_scope':'One60.07s run including first-level play; not first-level-only FPS',
             'runs':[r],'other_runs':[],'selected_package':'analysis/boot493-package.json',
             'selected_implementation_commit':'54bdc1fe8521b742944d59bda20294d59716ad90',
@@ -49,8 +54,9 @@ if __name__=='__main__':
             'source_files':receipt,'comparison':comparison,'termination_test':termination,
             'physical_boot_recovered':True,'root_cause_of492_proven':False,'60Hz_achieved':False,
             'new_firmware_or_Quartus':False,'unchanged_candidate_cost_evidence':'analysis/boot493-verification.json',
-            'performance_decision':'Keep493 working ARM-query/known-good489 FPGA pair;9.57fps is not an established improvement over4899.60fps. Hold new word FPGA/SNES;focus supply/consume/status and framing costs together,not another isolated word loop.',
+            'performance_decision':'Keep493 functional baseline;9.57fps is not an established improvement. Capture fetch rejection01/04/06 remains unresolved. Diagnose that boundary before structural transfer/DMA work;menu/CRC success is not capture-health proof.',
             'next_order':['Keep493 working pair/restores;no new installer or unchanged Quartus/Questa runs for this measurement.',
+                          'A1:reproduce low/high fetch rejection with PPU render-stop/restart and address/load timing;do not suppress independent checks or infer rejection duration from episode history.',
                           'Trace E0 credit/SEAL ACK quiet and65816 consume-validation alongside E8/D0 supply on fixed inputs;do not add nested times.',
                           'Evaluate joint status/packet round-trip and framing reduction with actual ARM/SPI/IRQ/ROM/65816 cost and136LE/148FlashB budget. Removing all observed status-query wire alone still leaves nonquery projection over16.67ms.',
                           'Require same-start whole-path improvement and boot boundary proof before another paired physical trial;retain independent CRC/STOP/finalACK/VBlank/menu.'],

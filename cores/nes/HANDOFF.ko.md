@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-PR137 merge29815faa3887a035091e3169ffa0f751dda3de44의 master 도달 확인 뒤 `codex/nes-consume-schedule-491` / [PR138](../../docs/progress/pr-138.md)에서 진행한다. 먼저 [498 구현·검증 범위](../../docs/nes-prefetch498-contract.ko.md)·[498 검증](../../analysis/prefetch498-verification.json)·[495 후보 판정](../../docs/nes-status495-contract.ko.md)·[검증](../../analysis/status495-verification.json)·[실기494 분석](../../docs/nes-hardware494-results.ko.md)·[측정](../../analysis/hardware494-mmc493.json)·[현재 계획](../../docs/nes-output487-plan.json)을 읽는다. 현재 정상 동작 기준은493이다.
+PR137 merge29815faa3887a035091e3169ffa0f751dda3de44 이후 `codex/nes-consume-schedule-491` / [PR138](../../docs/progress/pr-138.md)에서 진행한다. **먼저 [전체 경로 감사499](../../docs/nes-audit499.ko.md) → [새 계획 A1–A4](../../docs/nes-audit499-plan.json) → [선택 소스·분석](../../analysis/audit499-verification.json)을 읽는다.** 기존487/S9와498 NEXT보다 이 순서가 우선한다. 현재 정상 실기 기준은493이며498은 미선택이다.
 
 ## 현재 실기 선택
 
@@ -31,7 +31,7 @@ linked M4 정상 수신과5반례, END/lease/exporter4mutant, 고정 MMC3 fixtur
 
 전체 Lite15132LE/14105comb/8394FF/51M9K·잔여276LE,관련setup+.084/hold+.147ns,Flash8B다. 실기493 대비−140LE/+27comb/+2FF로 제어140개 삭제가 아니다. callback은728B stack을 관찰했고 전체 IRQ 중첩은미확인이다. source 보드와 비용 보드의 차이는 loader WRITE next-state의 late blocked 조건식이며512조합+mutant로 동등성을 고정했다.
 
-다음 순서는 같은 실제 M4·IRQ·공유SPI·ROM/65816 일정과 연속캡처의 마지막 표시 시간을 연결하는 것이다. 수신 비용이 SEAL 안으로 이동했으므로 phase를 단순 합산하지 않는다. 새 실기 전달본/60fps 향상은 선택하지 않았고 정상493·9.57fps와 원복을 유지한다.
+498 당시 다음 순서는 공통 M4·IRQ·ROM/65816 시간 연결이었다. 현재는499의 수집 정확성 우선 계획으로 대체했다. 수신 비용이 SEAL 안으로 이동했으므로 phase를 단순 합산하지 않는다. 새 실기 전달본/60fps 향상은 선택하지 않았고 정상493·9.57fps와 원복을 유지한다.
 
 ## 실험495: 기능·관련 timing 통과, 전달 보류
 
@@ -43,18 +43,18 @@ Whole Lite15121LE/14097comb/8394FF/51M9K, 관련 setup+0.046/hold+0.164ns다. LE
 
 ## 496 모델·소유권 교정
 
-[496 근거](../../docs/nes-schedule496-contract.ko.md):219계획을실제규칙의32묶음으로교정,동일12픽셀·4조건통과.657.420ms는새가속이아닌fixture교정이다. 실제lease RTL에서다음캡처는허용하되export는이전retire까지차단됨을확인했다. stale/STOP·잘못된early-export mutant를검사했다. ARM만앞당겨서는수신겹침이불가능하다. S9는아직진행중이며실제M4 complete485 단일bulkPending/E8/E0·IRQ/ROM 시각을연결해야한다. source export시작과COMMIT 분리·기존identity 보호를함께검토한다.
+[496 근거](../../docs/nes-schedule496-contract.ko.md):219계획을실제규칙의32묶음으로교정,동일12픽셀·4조건통과.657.420ms는새가속이아닌fixture교정이다. 실제lease RTL에서다음캡처는허용하되export는이전retire까지차단됨을확인했다. stale/STOP·잘못된early-export mutant를검사했다. ARM만앞당겨서는수신겹침이불가능하다. S9는499 재계획으로 보류하며 당시에는실제M4 complete485 단일bulkPending/E8/E0·IRQ/ROM 시각을연결해야한다. source export시작과COMMIT 분리·기존identity 보호를함께검토한다.
 
 ## 497 실제 M4 대기 연결
 
 [497 검증](../../docs/nes-bulk497-contract.ko.md):linked493의emit/complete485/finish를2bank 묶음 endpoint에연결해36조건·9반례를통과했다.32묶음의모든소비후FINISH,표시ACK 없는retire 거부를확인했다. 소비는지정instruction 지연으로실제65816/IRQ/ROM 공통시간은아직미완료다. reader_drained는arb_idle이므로새export 허용에충분하지않다. generation에묶인END 수락+drain과oldACK/EA 뒤새COMMIT을구분해야한다. 기존493·예산·전달본을유지한다.
 
-## 다음 작업 순서
+## 다음 작업 순서 — 감사499가 우선
 
-1. **493을 정상 실기 기준으로 유지한다.** [설치/원복](../../docs/nes-mmc493-trial.ko.md)·[manifest](../../analysis/boot493-package.json). 사용자가ZIP을설치하고TXT를반환하는방식이다.
-2. 실제 M4의 E0/EB busy-poll·128us quiet/IRQ와 실제tile_bulk206의 같은kind·연속slot·2048B 묶음을 기존65816 소비의 같은event ledger에 연결한다. plan당 하나의bulk를 만드는 현재fixture를 실제chunk로 대체한다. source/ROM 공급·저장credit·실제DMA소비·SEAL/최종ACK·VBlank를 구분하고493/495를 동일 입력·시작위상으로 비교한다. MCU_RDY는external_memory_ready다.
-3. 표시대기 중 다음입력 수신 후보는 receiver/video의 실제수명을 확인한다. 현재receiver는 별도workspace이고 consumed()는 COMMITTED→IDLE지만 generation·retire·종료통계는 마지막ACK 뒤에도 참조한다. 이전표시identity를고정하고SPI guard 재진입·STOP·수신중오류를막는범위부터 정한다. 안전성이 입증되기 전receiver를 덮거나 다음계획을 실행하지 않는다.
-4. actual ARM·SPI·IRQ·ROM·65816 전체시간 개선과 부팅경계 확인 뒤에만 다음번호paired 실기를 전달한다. 실기493은Flash148B/136LE, 실험495는Flash96B/287LE 예산이다. 전체 reset/CDC/IO 승인은 별도다. 새word 경로는 부팅문제를 좁히기 전 재도입하지 않는다.
+1. **A1 수집 정확성:** 실기493 마지막16전이에서 fetch01/04/06 거부8episode와 회복8episode를 확인했다. low/high·주소·PPUMASK 중단/재개·실제픽셀/row commit 경계를 짧게 재현한다. 메뉴 정상/CRC0과capture 건강을 구분한다. V3 이력으로 전체 거부율·손실시간을 계산하지 않는다.
+2. **A2 구조 예산:** 반복geometry 전송·RUN SPI 설정·늦은metadata/VRAM DMA의 구조를 비교한다. 관측 비조회wire17.959ms는16.667ms를 넘는다. 삭제할제어·Flash/LE/stack과 모든필수byte를 먼저 확정한다. 작은status/FSM 실험 재개 조건은499 보류표를 따른다.
+3. **A3 한 후보 구현:** A1 원인/픽셀을 해결한 뒤 예산이 성립하는 구조 하나를 구현한다.493 기준으로498 차분 채택 여부도 명시한다. 독립검사·STOP·old identity·최종ACK/EA·VBlank 유지.
+4. **A4 전체/실기:** 동일 입력·시작위상과 연속일정을 구분한다. 실제 전체시간·부팅 검증 뒤 새번호 전달본과493 원복으로 두 번 비교한다. 사용자가ZIP 설치 후TXT를 반환한다. 현재 새 실기 설치 요청은 없다.
 
 ## 근거·보존·재현
 
@@ -64,5 +64,5 @@ Whole Lite15121LE/14097comb/8394FF/51M9K, 관련 setup+0.046/hold+0.164ns다. LE
 - 이전489 선택은 `probes/nes-output489` candidate03/ARM02/audit01/client04/assembly01/trial02,ASCII board02/loader01/live01/bootbus01. [489 계약](../../docs/nes-output489-contract.ko.md)·[실기490](../../docs/nes-hardware490-results.ko.md).
 - 이전485는 `probes/nes-supply485/ARM03/src`,FPGA `probes/nes-mmc482/candidate01/board`;[485 계약](../../docs/nes-supply485-contract.ko.md)·[실기486](../../docs/nes-hardware486-results.ko.md)·[재현 의존성](REPRODUCING.ko.md).raw/영상/ROM/도구가clone에포함된다고가정하지않는다.
 - 원본소스·상용ROM·개인save·영상·라이선스·원시로그·패키지바이너리는Git에넣지않는다. 공개JSON에는파일명/크기/hash와파생카운터만둔다. 493/489/485/482/476/164/467 원복·GBC164/G13C44/0.9.0·save를보존한다.
-- 독립CRC/coverage·epoch/generation/token·credit와실제DMA소비의구분·STOP/staleDONE/ACK 차단·최종ACK 뒤commit/EA·base/menu를유지한다. exportCOMMIT 뒤다음capture는이미시작하며표시중receiver를덮지않는다.
+- 독립CRC/coverage·epoch/generation/token·credit와실제DMA소비의구분·STOP/staleDONE/ACK 차단·최종ACK 뒤commit/EA·base/menu를유지한다. 493은exportCOMMIT 뒤다음capture가시작하지만표시중receiver를덮지않는다.498만별도old identity로수신재사용을허용하며아직실기미선택이다.
 - 전체NES/MMC4/5·60fps·지속capture무손실·p95·NES실시간속도·fullstack/IRQ·전체reset/CDC/IO는미완료다. Quartus Lite/Questa Starter FLOAT1좌석순차실행을유지하며변경없는정상시험·license smoke는반복하지않는다.
