@@ -1,0 +1,2330 @@
+{
+  "passed": true,
+  "scope": "Reconcile actual-M4 serializer packets; compare bounded scan and codec model.\n\nRaw-CHR six-plane packing below is a lossless design probe, not a deployed ABI.\nPhysical485 logs do not contain section data and cannot replay these snapshots.\n",
+  "merged_PR136": "2d4543ef2442bc798bcec128a4a108fdfc4d5287",
+  "branch": "codex/nes-output-budget-487",
+  "baseline_firmware_SHA256": "eec710fab1c045ff00ade979dfbfd21dc9c3a19ca391b14b7cca79153a8e0c05",
+  "candidate_firmware_SHA256": "e8062b78ff046d6b7b2f0c5ff25c0d95ef26fca709deb4885adcebf9b8d8492d",
+  "candidate_ELF_SHA256": "60d59d2adc1d503b10c4a0f2152dc3d4ff0e934631ed5c40f0b1a016e10695ba",
+  "baseline_result_SHA256": "8ae860bc7b16b596ae15d1fc3a7fbc9f538910e03200986f998ef04218f3da84",
+  "candidate_result_SHA256": "de96f7f9b0f4b06a3f9611172240c4914a2ffa0d5a32c71f8da5fb0530a8f7aa",
+  "input_SHA256": {
+    "frame905.geometry": "eed71b404708b3cb65b2ea240b81cfa9c1607ec6d4d9a225f76d90e3f49c702b",
+    "frame905.raw": "290dee48ff44d5f378463c060a1b1b5f28ef8b7a9e6ef8c4d22dec9a93338e74",
+    "frame906.geometry": "849018400753cee206f7223cb8f6390858628ed4c2498e63914846b58ff4e496",
+    "frame906.raw": "de576f3b298979b0b87df592c66def436bb3b3c85adb7577278c71a1f26bd82f",
+    "frame907.geometry": "2556907847826569bf51906b7b5057cbada92e3de136d3eebe01154d5a20371e",
+    "frame907.raw": "c14078655ddb87b36d9371b8b077253948dec675cc3abbcbfb0adc3369f2c070",
+    "frame908.geometry": "4bae81016e2a9142ca476ab461a7787498af5ec38d63afad2e73fc7dded1b9c2",
+    "frame908.raw": "226df3edd18bac44bb140d328be98dfc6e7ad83b31b3c6d6d88cde2b52beba4c",
+    "frame909.geometry": "aeabc8495062354c4d376419af75669293a1dd83be345221208b0e80b57731e1",
+    "frame909.raw": "de576f3b298979b0b87df592c66def436bb3b3c85adb7577278c71a1f26bd82f",
+    "frame910.geometry": "ad36c9393819e87c9baa1f42f88391b6d3b8402dda85407925055432fa397682",
+    "frame910.raw": "5f154c2fd1da3209a21b330c1635d64c7d48d2911da5cd438b8aaa14ca7ad834",
+    "frame911.geometry": "5feedc22576a513e4a7f3b2224d3a4f5ad89f5d5456fe302d7bf2d486c4a0abf",
+    "frame911.raw": "226df3edd18bac44bb140d328be98dfc6e7ad83b31b3c6d6d88cde2b52beba4c",
+    "frame912.geometry": "8491cbad1aab2aa89d2719c87ac9563b93c5f6a8d9e00a70c0c555b82363bee9",
+    "frame912.raw": "250397d35060188dbc89c1f73cc7f55e40f7b16090833324c4d9383941a562a3",
+    "frame913.geometry": "16a9d4ed1046939f4646db561b399ec102bc4ba605669f4953c42b2f084efd12",
+    "frame913.raw": "749ea83e9aaf6b0f85675d6166ab17527193cd7230334d73998100474cb9bb77",
+    "frame914.geometry": "3a89f00a4d53a0dc3b812da95e4105a60749abbbf418a3b4392e5303d62dafb4",
+    "frame914.raw": "122f95d61ff7ae61ba1b912729c6f68d25997c9e86ae75826bc6b87b0ad7f9e0",
+    "frame915.geometry": "6d1150c0df0202b6b2a75b0c0a6ba32e7ccb082cf9ef33f04775b784ae871b79",
+    "frame915.raw": "250397d35060188dbc89c1f73cc7f55e40f7b16090833324c4d9383941a562a3",
+    "frame916.geometry": "7cbc29ba24816492b384654398e1a6b037362addb8a6149b76ddcd2e3cb19fb5",
+    "frame916.raw": "4f19ac79dbf82b3ab702492ae7ba00f03ee8c3a7a59e9ab4f404eb8f085fcac9",
+    "frame917.geometry": "d750ea359d3f2717a70a2ecf93dd8a339032d4a08f54a105b065e660317f1585",
+    "frame917.raw": "e3ddd5261a4ea6db5a2d4f4d3747b0039aee331e188ed194e6aabd0121cdd487",
+    "frame918.geometry": "85d4c17d52d92575bcf693d65596a5a459efd353813a133cbd148a0d9b1a2e28",
+    "frame918.raw": "7b5533e96eb77d8a8fa87cf614e3aeb53851d68ec668f07cc15fcdbcaf2d76b5",
+    "frame919.geometry": "617cb7717792ab22694ec743b498a6a9200e9235d8a7a0a0bf73aeca3cb8319a",
+    "frame919.raw": "cfb9cbbd75eaab2b9b73d7e159c309815ade34d3beee6385a5c36eb64ab4e4e1",
+    "frame920.geometry": "e430f08ad86db1966870e539071c81d7c95a069b6f1d11a3d600ff35fc2baf17",
+    "frame920.raw": "030607dd465d1334b2c0d8dfbb2531c77dc5a3dd7b862948e09b24295beda5d1",
+    "frame921.geometry": "1a9aa9899aec4222302829a1d189717805bebb2a4743011a3db845c1012de2d2",
+    "frame921.raw": "d511a1c921bdfb8db58621e08e4c4a69c6ceb087c43bf34e284eb04be6caacfd",
+    "frame922.geometry": "a01c7d92c2185af961d31a8a2f7f0879985d58f9752496ca271e97996c4278df",
+    "frame922.raw": "de576f3b298979b0b87df592c66def436bb3b3c85adb7577278c71a1f26bd82f",
+    "frame923.geometry": "161cd8285fa22571f18b5ad348536354555d830244b767ffb4108a1636818afe",
+    "frame923.raw": "c14078655ddb87b36d9371b8b077253948dec675cc3abbcbfb0adc3369f2c070",
+    "frame924.geometry": "4517fa36bdb37ff20c71d86992e930d1f6b48258d829fa6bb1458e9475d4a7ed",
+    "frame924.raw": "226df3edd18bac44bb140d328be98dfc6e7ad83b31b3c6d6d88cde2b52beba4c",
+    "frame925.geometry": "df8ed71bdbbfb09fce3bbf46f51b41fd755702b114505662c6ba8a4c7bd84585",
+    "frame925.raw": "de99f7bba137e586b6b7fa54152a2a262ce82e31d5523941aeef2e6c235edddd",
+    "frame926.geometry": "d0531c6e2443a9ce3ba1eb6dcc4e552e01c80eb7a4c0344ffa47feb06c66d3b9",
+    "frame926.raw": "77b8ea0f2aba42eb854de394c27dd8705b39287acc7d3815ab4ed3403ad20011",
+    "frame927.geometry": "cf171ce49607e6897d9d7334d2bb3d9f82be334d9777ca6a54862460cf423867",
+    "frame927.raw": "3d8d8c87e75a966356bd78145871953f20e66ce4b319b00a1dfe6706d98781f1",
+    "frame928.geometry": "188388b98dfba6d22f488e9df45e287bb74cd02a42c7af4b946b5a6a79ff8540",
+    "frame928.raw": "a0648554b3586f5cb8c4360f3a7b504db97643f67c8674aee0b93e9a2dee11e7",
+    "frame929.geometry": "ebc92d83ebfd2e9cd9669f4e33266c4ddce77733e18175674f6054b31604d97c",
+    "frame929.raw": "5f154c2fd1da3209a21b330c1635d64c7d48d2911da5cd438b8aaa14ca7ad834",
+    "frame930.geometry": "04adcc00517f7956872acd352911a696d953b7ec986e7a55a6a48df03da43743",
+    "frame930.raw": "122f95d61ff7ae61ba1b912729c6f68d25997c9e86ae75826bc6b87b0ad7f9e0",
+    "frame931.geometry": "fbc1c78235ee0441019b1244ab0a26ee2fcc61e8ecf37e1570322e84e72ae753",
+    "frame931.raw": "250397d35060188dbc89c1f73cc7f55e40f7b16090833324c4d9383941a562a3",
+    "frame932.geometry": "9a56bbc22ceb6b67d63da5c7470a2db408965f863043f859f8ab1671fb17e267",
+    "frame932.raw": "4f19ac79dbf82b3ab702492ae7ba00f03ee8c3a7a59e9ab4f404eb8f085fcac9",
+    "frame933.geometry": "9b48b51e5e5e76d6d3ae5308754a81bf5087212c589e83cd28a02d4b3ab6863e",
+    "frame933.raw": "bef2bfaac98c1917ca7115d7a73e6a6479af14a97e97ce66f6dc9f9af18276b8",
+    "frame934.geometry": "b2483293250cc318cfe5b933fa43369b3906fcc965a8f99de7477f5b6614f957",
+    "frame934.raw": "7b5533e96eb77d8a8fa87cf614e3aeb53851d68ec668f07cc15fcdbcaf2d76b5",
+    "frame935.geometry": "2b3feb2fdedbf323cf486b79f4b2e27926eb32928b1448e0ce18119b0bc5a8a0",
+    "frame935.raw": "cfb9cbbd75eaab2b9b73d7e159c309815ade34d3beee6385a5c36eb64ab4e4e1",
+    "frame936.geometry": "0736c1c2157f0744ef14313a5dcc4a0c06c75010586170a7af280ccdfa557200",
+    "frame936.raw": "c14078655ddb87b36d9371b8b077253948dec675cc3abbcbfb0adc3369f2c070",
+    "frame937.geometry": "a3ed4ab0522c9987b9a37eeaffcc1b543ccb5038ee46ed1d2a45fdcc003e0d2d",
+    "frame937.raw": "e9bb296c3b0c0a17877de97a1e3912563eafb6560484bd2e48ee5647440a3ce0",
+    "frame938.geometry": "9a11f8c78a5e590c9bc756a9de52fc5793f62fc2a4ffa9f6ca9295bba197de88",
+    "frame938.raw": "de576f3b298979b0b87df592c66def436bb3b3c85adb7577278c71a1f26bd82f",
+    "frame939.geometry": "7bddaea446f0a693e40d0317af8e0e50722db980abf38b10868ac0a69560fc87",
+    "frame939.raw": "c14078655ddb87b36d9371b8b077253948dec675cc3abbcbfb0adc3369f2c070",
+    "frame940.geometry": "82cad8e39a44e0ef43ed755063ea05ad09b8ffabd9869ec0c0bb841793f4de6c",
+    "frame940.raw": "226df3edd18bac44bb140d328be98dfc6e7ad83b31b3c6d6d88cde2b52beba4c",
+    "frame941.geometry": "f0e011972ecd7d2329c79b4911d2ad911afebcf6c25852380d9043abd29fdba7",
+    "frame941.raw": "de576f3b298979b0b87df592c66def436bb3b3c85adb7577278c71a1f26bd82f",
+    "frame942.geometry": "f0874d704d864fab19612a117f907a5526c0dc95522fe5a414d3eedbe1564791",
+    "frame942.raw": "5f154c2fd1da3209a21b330c1635d64c7d48d2911da5cd438b8aaa14ca7ad834",
+    "frame943.geometry": "6fd137a9c9cd99872b2fcf5658751e7102bc15072b5f1615652173b8692f0d8e",
+    "frame943.raw": "226df3edd18bac44bb140d328be98dfc6e7ad83b31b3c6d6d88cde2b52beba4c",
+    "frame944.geometry": "aa5e6a0ca5ec6cbde0792f7ccc03801741c2c29e0519e17d31b36569f80cb04a",
+    "frame944.raw": "a0648554b3586f5cb8c4360f3a7b504db97643f67c8674aee0b93e9a2dee11e7",
+    "frame945.geometry": "d4c1a5e7a2d73de004186e0b3110dea4f28ba2b9210b5eda88003354668259c0",
+    "frame945.raw": "5f154c2fd1da3209a21b330c1635d64c7d48d2911da5cd438b8aaa14ca7ad834",
+    "frame946.geometry": "c3a2f08eed594f1bc3fe3e58f1be35d6cf00c5364713e54abe70fab82c622120",
+    "frame946.raw": "2a0814d3f52f05bf214000e1090a587c1d139da5f3e4c8784ab8764de7d293f0",
+    "frame947.geometry": "d3a6bd698c6753fbab157fb99ff560c26f96bdf7c956a7520b83ae2be280384f",
+    "frame947.raw": "b3c3e9524c7c816452f0078398ca8c4b6e964f10307dad72b79e59a3c3e2d5bb",
+    "frame948.geometry": "24411a377b6250b7ee2065eff4c4c97de797f4d4655d117af8393ae78534bf89",
+    "frame948.raw": "4f19ac79dbf82b3ab702492ae7ba00f03ee8c3a7a59e9ab4f404eb8f085fcac9",
+    "frame949.geometry": "974d75c3bcb2a853133371919b0dadf4f67ff29e7ba87334d0efb3eab023cff3",
+    "frame949.raw": "e3ddd5261a4ea6db5a2d4f4d3747b0039aee331e188ed194e6aabd0121cdd487",
+    "frame950.geometry": "4e5625d7d0182181269a6a85cc96a628f033356346ca1cf34e96cf99fa609e02",
+    "frame950.raw": "0e776623117585a73a8ca3bd6ca76e8d6f88f3888658ae5cc609bbc3ec39faf5",
+    "frame951.geometry": "08df82b207e5ffef4dacfbeab85587bd0f6723052c9314ec0a720626a5b31358",
+    "frame951.raw": "4f19ac79dbf82b3ab702492ae7ba00f03ee8c3a7a59e9ab4f404eb8f085fcac9",
+    "frame952.geometry": "40f4d11160a394d68c872e13f91c80596664f6012fad619ba5899f9f1a79b08f",
+    "frame952.raw": "030607dd465d1334b2c0d8dfbb2531c77dc5a3dd7b862948e09b24295beda5d1",
+    "frame953.geometry": "dbc36bdc43913b720291a60cb80970da2a7692f29d513a496beee062cd999cce",
+    "frame953.raw": "e9bb296c3b0c0a17877de97a1e3912563eafb6560484bd2e48ee5647440a3ce0",
+    "frame954.geometry": "8bac31f967c9c82007f48d18b2906de27ec02b1cda55a8e9cf3495640918c51f",
+    "frame954.raw": "de576f3b298979b0b87df592c66def436bb3b3c85adb7577278c71a1f26bd82f",
+    "frame955.geometry": "d99bed4485ec48cf2f6fe9f151255ce6713ba25167da7c1f26eef2a894280888",
+    "frame955.raw": "c14078655ddb87b36d9371b8b077253948dec675cc3abbcbfb0adc3369f2c070",
+    "frame956.geometry": "a0c6da17ed9189d682c6062af8b3427cc731918db50b97b58086432c4ed230a8",
+    "frame956.raw": "226df3edd18bac44bb140d328be98dfc6e7ad83b31b3c6d6d88cde2b52beba4c",
+    "frame957.geometry": "2fbbd391afaf89c7f147534cd6e564b08738988c2280e4180018cd153b4da766",
+    "frame957.raw": "de576f3b298979b0b87df592c66def436bb3b3c85adb7577278c71a1f26bd82f",
+    "frame958.geometry": "5c1998aa8a7d7acffc744bc8f9cfd36781687c7d911c4160b3acdc94bbbab984",
+    "frame958.raw": "5f154c2fd1da3209a21b330c1635d64c7d48d2911da5cd438b8aaa14ca7ad834",
+    "frame959.geometry": "bf39441c017306d94797b9cba6602defb3bab02b06c379f2ef42a0005a7a5b99",
+    "frame959.raw": "226df3edd18bac44bb140d328be98dfc6e7ad83b31b3c6d6d88cde2b52beba4c",
+    "frame960.geometry": "ef6115084e37d845b98ab81d01f2e333d43b7768bdc1b36d8f0912335f1fd7d9",
+    "frame960.raw": "250397d35060188dbc89c1f73cc7f55e40f7b16090833324c4d9383941a562a3",
+    "frame961.geometry": "3cdb984df4ca50f07a27b92a18eb9e60c9378edae42900bd14cbc0d6533ebeb6",
+    "frame961.raw": "766a9878f309d2eaf7ac1216f8b81cffa77d8e766f7fca194d71ebeb88e3299c",
+    "frame962.geometry": "4494511ee20456fbfdf9d3591b2c71101405bb37eeee08f421bb3cb3794a3eec",
+    "frame962.raw": "122f95d61ff7ae61ba1b912729c6f68d25997c9e86ae75826bc6b87b0ad7f9e0",
+    "frame963.geometry": "b7f7f2b620e567a3790a38ea225a0bf101b463b39557129334e00138c4b91e8c",
+    "frame963.raw": "c45923710728285a67f9b57aa3e1ac2350251df6a1d05c008b6a66d8ffdcc56b",
+    "frame964.geometry": "9cc6fbee7db16521b072e0c2247981a609cd106b208a8cfcbeef4f1f0eb66054",
+    "frame964.raw": "713cc7d94b78079988118d31477aa2e2b6977c8d49d8c05114e40982b551c662",
+    "frame965.geometry": "db1aa183ebfa1013ab8f5175ab98ef15cf399a9199a77482c70c1250596ea855",
+    "frame965.raw": "83cfbe51939a4252eb491c604cf2dc4dabeee7e1b1e12ab4e3e2773f5817ff37",
+    "frame966.geometry": "bb7c318a1f1fb75da49444d61c84a2c745fdbfecea350c56541d1c2f5c80ecfb",
+    "frame966.raw": "3693a5d34ac52ff4edf2ce8534e4ca2368095da5eb390de8fa2efc43191af239",
+    "frame967.geometry": "e964df9f51ca3b79fcf62efa2c9c55e700c0cb36725ef50c1f7f09f3d1f4894d",
+    "frame967.raw": "7505735779a57e16941ef2f6e6715d7072aab4a27d0eceef227a3ed3aafbdc93",
+    "frame968.geometry": "7b92d5934449c5e431ffdd68f88e82d80478a2329da49db5e3bd39863cf30a22",
+    "frame968.raw": "030607dd465d1334b2c0d8dfbb2531c77dc5a3dd7b862948e09b24295beda5d1",
+    "frame969.geometry": "d09f4077586f59d0ba7b7f4f862aa7ad31a93937b8b937a74e45698d47cd4be1",
+    "frame969.raw": "7b5533e96eb77d8a8fa87cf614e3aeb53851d68ec668f07cc15fcdbcaf2d76b5",
+    "frame970.geometry": "68fc9d457b93d07c1ad86ba9611f548f24c4bb462574ee5c9b6e1b8cd3fd8416",
+    "frame970.raw": "de576f3b298979b0b87df592c66def436bb3b3c85adb7577278c71a1f26bd82f",
+    "frame971.geometry": "ad0eb93fb5b272533e3b8ee6f99168c47a9cf3882f350c6a6b7939db3d9117d0",
+    "frame971.raw": "c14078655ddb87b36d9371b8b077253948dec675cc3abbcbfb0adc3369f2c070",
+    "frame972.geometry": "65e23760d23cffc0e21e38e7a02b5c27318efcdbda0b5c1dfb56789777665cb0",
+    "frame972.raw": "226df3edd18bac44bb140d328be98dfc6e7ad83b31b3c6d6d88cde2b52beba4c",
+    "frame973.geometry": "41e32183ccf245ea70ef074fa5c3a0633c20a7565a6d0aa2dfb9f9ba445f9410",
+    "frame973.raw": "de99f7bba137e586b6b7fa54152a2a262ce82e31d5523941aeef2e6c235edddd",
+    "frame974.geometry": "99cb3bb9674b3771b200d58a03f4399c89d76224fa1680e7d046690c768a46ce",
+    "frame974.raw": "94ec2b2d9cc23ea7d7f93c5494a4ed35779f73a16b12d0edde62c3a4d4c0ca35",
+    "frame975.geometry": "e36ef652b7c3ae531721a828ae8780b548d09852a69ec1c162d86ac5f1a9183a",
+    "frame975.raw": "be50b9b6e762dc78ec7f8cd31b661c12bb7072b52decd475152dda4a11383ee5"
+  },
+  "actual_M4_state_plans_packets_equal_71": true,
+  "independently_expanded_tables_equal": true,
+  "sections": {
+    "section_packets": {
+      "map": 688,
+      "CGRAM": 284,
+      "OAM": 213,
+      "HDMA": 1065,
+      "manifest": 71
+    },
+    "section_body_B": {
+      "map": 120900,
+      "CGRAM": 19028,
+      "OAM": 4370,
+      "HDMA": 164436,
+      "manifest": 11928
+    },
+    "section_expanded_B": {
+      "map": 121024,
+      "CGRAM": 36352,
+      "OAM": 38624,
+      "HDMA": 242678,
+      "manifest": 11928
+    }
+  },
+  "changed_map_granules": 1082,
+  "uploaded_map_granules": 1891,
+  "serializer_instructions": {
+    "before": 17275495,
+    "after": 13767406,
+    "saved": 3508089,
+    "saved_fraction": 0.203067350602689,
+    "not_hardware_cycles": true
+  },
+  "ARM_candidate": {
+    "text": 202729,
+    "data": 10040,
+    "BSS": 18572,
+    "firmware_B": 212772,
+    "Flash_tail": 220,
+    "new_state_B": 0,
+    "new_buffer_B": 0
+  },
+  "ownership_guard_cases": [
+    {
+      "mode": "normal",
+      "expected_rejection": false,
+      "bulk_submissions": 5,
+      "accepted_E9": 2,
+      "during_emit": [
+        {
+          "accepted_E9": 0,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        }
+      ],
+      "retire_requires_final_grant": true,
+      "E0": 9,
+      "E8": 22,
+      "plan_error": 7,
+      "window_error": 0,
+      "instructions": 275907,
+      "SPI_bytes": 787
+    },
+    {
+      "mode": "normal_final_grant",
+      "expected_rejection": false,
+      "bulk_submissions": 5,
+      "accepted_E9": 0,
+      "during_emit": [
+        {
+          "accepted_E9": 0,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        }
+      ],
+      "retire_requires_final_grant": true,
+      "E0": 9,
+      "E8": 24,
+      "plan_error": 0,
+      "window_error": 0,
+      "instructions": 278885,
+      "SPI_bytes": 834
+    },
+    {
+      "mode": "normal_two_frames",
+      "expected_rejection": false,
+      "bulk_submissions": 7,
+      "accepted_E9": 0,
+      "during_emit": [
+        {
+          "accepted_E9": 0,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        }
+      ],
+      "retire_requires_final_grant": true,
+      "E0": 11,
+      "E8": 37,
+      "plan_error": 0,
+      "window_error": 0,
+      "instructions": 395638,
+      "SPI_bytes": 1216
+    },
+    {
+      "mode": "bad_E8_CRC",
+      "expected_rejection": true,
+      "bulk_submissions": 0,
+      "accepted_E9": 0,
+      "during_emit": [
+        {
+          "accepted_E9": 0,
+          "bulk": 0,
+          "retired": 0
+        }
+      ],
+      "retire_requires_final_grant": false,
+      "E0": 1,
+      "E8": 1,
+      "plan_error": 4,
+      "window_error": 0,
+      "instructions": 12260,
+      "SPI_bytes": 40
+    },
+    {
+      "mode": "wrong_generation",
+      "expected_rejection": true,
+      "bulk_submissions": 0,
+      "accepted_E9": 1,
+      "during_emit": [
+        {
+          "accepted_E9": 0,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 0,
+          "retired": 0
+        }
+      ],
+      "retire_requires_final_grant": false,
+      "E0": 1,
+      "E8": 2,
+      "plan_error": 5,
+      "window_error": 0,
+      "instructions": 14525,
+      "SPI_bytes": 78
+    },
+    {
+      "mode": "same_token_mutation",
+      "expected_rejection": true,
+      "bulk_submissions": 1,
+      "accepted_E9": 1,
+      "during_emit": [
+        {
+          "accepted_E9": 0,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        }
+      ],
+      "retire_requires_final_grant": false,
+      "E0": 1,
+      "E8": 3,
+      "plan_error": 4,
+      "window_error": 0,
+      "instructions": 18510,
+      "SPI_bytes": 121
+    },
+    {
+      "mode": "old_token",
+      "expected_rejection": true,
+      "bulk_submissions": 2,
+      "accepted_E9": 1,
+      "during_emit": [
+        {
+          "accepted_E9": 0,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        }
+      ],
+      "retire_requires_final_grant": false,
+      "E0": 2,
+      "E8": 9,
+      "plan_error": 4,
+      "window_error": 0,
+      "instructions": 79052,
+      "SPI_bytes": 284
+    },
+    {
+      "mode": "bad_ACK",
+      "expected_rejection": true,
+      "bulk_submissions": 1,
+      "accepted_E9": 1,
+      "during_emit": [
+        {
+          "accepted_E9": 0,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        }
+      ],
+      "retire_requires_final_grant": false,
+      "E0": 2,
+      "E8": 8,
+      "plan_error": 5,
+      "window_error": 8,
+      "instructions": 65025,
+      "SPI_bytes": 241
+    },
+    {
+      "mode": "bad_accepted",
+      "expected_rejection": true,
+      "bulk_submissions": 1,
+      "accepted_E9": 1,
+      "during_emit": [
+        {
+          "accepted_E9": 0,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        }
+      ],
+      "retire_requires_final_grant": false,
+      "E0": 2,
+      "E8": 8,
+      "plan_error": 5,
+      "window_error": 5,
+      "instructions": 64951,
+      "SPI_bytes": 241
+    },
+    {
+      "mode": "STOP_after_E9",
+      "expected_rejection": true,
+      "bulk_submissions": 0,
+      "accepted_E9": 1,
+      "during_emit": [
+        {
+          "accepted_E9": 0,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 0,
+          "retired": 0
+        }
+      ],
+      "retire_requires_final_grant": false,
+      "E0": 1,
+      "E8": 1,
+      "plan_error": 2,
+      "window_error": 0,
+      "instructions": 12353,
+      "SPI_bytes": 58
+    },
+    {
+      "mode": "STOP_after_bulk",
+      "expected_rejection": true,
+      "bulk_submissions": 1,
+      "accepted_E9": 1,
+      "during_emit": [
+        {
+          "accepted_E9": 0,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 1,
+          "retired": 0
+        }
+      ],
+      "retire_requires_final_grant": false,
+      "E0": 1,
+      "E8": 2,
+      "plan_error": 2,
+      "window_error": 0,
+      "instructions": 16287,
+      "SPI_bytes": 101
+    },
+    {
+      "mode": "ambiguous_E1",
+      "expected_rejection": true,
+      "bulk_submissions": 1,
+      "accepted_E9": 1,
+      "during_emit": [
+        {
+          "accepted_E9": 0,
+          "bulk": 0,
+          "retired": 0
+        },
+        {
+          "accepted_E9": 1,
+          "bulk": 0,
+          "retired": 0
+        }
+      ],
+      "retire_requires_final_grant": false,
+      "E0": 1,
+      "E8": 2,
+      "plan_error": 5,
+      "window_error": 3,
+      "instructions": 16268,
+      "SPI_bytes": 101
+    }
+  ],
+  "guard_result_SHA256": "f87deb783a52b6ccb0a73f06d9cc79311683ff82d786a831c5cdad9fefb91d2d",
+  "compact_raw_model": {
+    "lossless_snapshots": 71,
+    "synthetic_row_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "rejected_malformed_cases": 4,
+    "ABI_implemented": false,
+    "total_wire_saved_B": 127587,
+    "ARM_SNES_extra_cost": null,
+    "independent_validation_and_STOP_implementation": false
+  },
+  "frames": [
+    {
+      "frame": 905,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": false
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 249643,
+      "target_serializer_instructions_after": 200412
+    },
+    {
+      "frame": 906,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": false
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 249292,
+      "target_serializer_instructions_after": 200477
+    },
+    {
+      "frame": 907,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 239547,
+      "target_serializer_instructions_after": 190732
+    },
+    {
+      "frame": 908,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 240541,
+      "target_serializer_instructions_after": 191726
+    },
+    {
+      "frame": 909,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 242767,
+      "target_serializer_instructions_after": 193952
+    },
+    {
+      "frame": 910,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 242321,
+      "target_serializer_instructions_after": 193506
+    },
+    {
+      "frame": 911,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 239633,
+      "target_serializer_instructions_after": 190818
+    },
+    {
+      "frame": 912,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 243768,
+      "target_serializer_instructions_after": 194953
+    },
+    {
+      "frame": 913,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 241727,
+      "target_serializer_instructions_after": 192912
+    },
+    {
+      "frame": 914,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 243069,
+      "target_serializer_instructions_after": 194254
+    },
+    {
+      "frame": 915,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 245510,
+      "target_serializer_instructions_after": 196695
+    },
+    {
+      "frame": 916,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 241393,
+      "target_serializer_instructions_after": 192578
+    },
+    {
+      "frame": 917,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 241227,
+      "target_serializer_instructions_after": 192412
+    },
+    {
+      "frame": 918,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 241361,
+      "target_serializer_instructions_after": 192546
+    },
+    {
+      "frame": 919,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 243119,
+      "target_serializer_instructions_after": 194304
+    },
+    {
+      "frame": 920,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 243184,
+      "target_serializer_instructions_after": 194369
+    },
+    {
+      "frame": 921,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 241279,
+      "target_serializer_instructions_after": 192464
+    },
+    {
+      "frame": 922,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 242701,
+      "target_serializer_instructions_after": 193886
+    },
+    {
+      "frame": 923,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 242701,
+      "target_serializer_instructions_after": 193886
+    },
+    {
+      "frame": 924,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 241361,
+      "target_serializer_instructions_after": 192546
+    },
+    {
+      "frame": 925,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 243115,
+      "target_serializer_instructions_after": 194300
+    },
+    {
+      "frame": 926,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 241376,
+      "target_serializer_instructions_after": 192561
+    },
+    {
+      "frame": 927,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 241279,
+      "target_serializer_instructions_after": 192464
+    },
+    {
+      "frame": 928,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 243214,
+      "target_serializer_instructions_after": 194399
+    },
+    {
+      "frame": 929,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 241393,
+      "target_serializer_instructions_after": 192578
+    },
+    {
+      "frame": 930,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 242653,
+      "target_serializer_instructions_after": 193838
+    },
+    {
+      "frame": 931,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 245510,
+      "target_serializer_instructions_after": 196695
+    },
+    {
+      "frame": 932,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 241393,
+      "target_serializer_instructions_after": 192578
+    },
+    {
+      "frame": 933,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 240463,
+      "target_serializer_instructions_after": 191648
+    },
+    {
+      "frame": 934,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 240545,
+      "target_serializer_instructions_after": 191730
+    },
+    {
+      "frame": 935,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 241311,
+      "target_serializer_instructions_after": 192496
+    },
+    {
+      "frame": 936,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 242767,
+      "target_serializer_instructions_after": 193952
+    },
+    {
+      "frame": 937,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 242955,
+      "target_serializer_instructions_after": 194140
+    },
+    {
+      "frame": 938,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 244527,
+      "target_serializer_instructions_after": 195712
+    },
+    {
+      "frame": 939,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 242701,
+      "target_serializer_instructions_after": 193886
+    },
+    {
+      "frame": 940,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 240545,
+      "target_serializer_instructions_after": 191730
+    },
+    {
+      "frame": 941,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 243201,
+      "target_serializer_instructions_after": 194386
+    },
+    {
+      "frame": 942,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 242273,
+      "target_serializer_instructions_after": 193458
+    },
+    {
+      "frame": 943,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 240545,
+      "target_serializer_instructions_after": 191730
+    },
+    {
+      "frame": 944,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 242798,
+      "target_serializer_instructions_after": 193983
+    },
+    {
+      "frame": 945,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 241393,
+      "target_serializer_instructions_after": 192578
+    },
+    {
+      "frame": 946,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 242262,
+      "target_serializer_instructions_after": 193447
+    },
+    {
+      "frame": 947,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 244990,
+      "target_serializer_instructions_after": 196175
+    },
+    {
+      "frame": 948,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 242727,
+      "target_serializer_instructions_after": 192248
+    },
+    {
+      "frame": 949,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 240676,
+      "target_serializer_instructions_after": 190405
+    },
+    {
+      "frame": 950,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 242859,
+      "target_serializer_instructions_after": 192396
+    },
+    {
+      "frame": 951,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 245617,
+      "target_serializer_instructions_after": 195426
+    },
+    {
+      "frame": 952,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 245648,
+      "target_serializer_instructions_after": 195457
+    },
+    {
+      "frame": 953,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 243259,
+      "target_serializer_instructions_after": 193068
+    },
+    {
+      "frame": 954,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 246473,
+      "target_serializer_instructions_after": 196274
+    },
+    {
+      "frame": 955,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 246045,
+      "target_serializer_instructions_after": 195854
+    },
+    {
+      "frame": 956,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 243521,
+      "target_serializer_instructions_after": 193282
+    },
+    {
+      "frame": 957,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 245779,
+      "target_serializer_instructions_after": 195540
+    },
+    {
+      "frame": 958,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 244737,
+      "target_serializer_instructions_after": 194546
+    },
+    {
+      "frame": 959,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 243793,
+      "target_serializer_instructions_after": 193602
+    },
+    {
+      "frame": 960,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 247944,
+      "target_serializer_instructions_after": 197753
+    },
+    {
+      "frame": 961,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 245019,
+      "target_serializer_instructions_after": 194828
+    },
+    {
+      "frame": 962,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 245347,
+      "target_serializer_instructions_after": 195044
+    },
+    {
+      "frame": 963,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 245850,
+      "target_serializer_instructions_after": 195515
+    },
+    {
+      "frame": 964,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 245257,
+      "target_serializer_instructions_after": 194970
+    },
+    {
+      "frame": 965,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 244199,
+      "target_serializer_instructions_after": 193856
+    },
+    {
+      "frame": 966,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 243015,
+      "target_serializer_instructions_after": 192728
+    },
+    {
+      "frame": 967,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 246585,
+      "target_serializer_instructions_after": 196298
+    },
+    {
+      "frame": 968,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 245110,
+      "target_serializer_instructions_after": 194775
+    },
+    {
+      "frame": 969,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 243703,
+      "target_serializer_instructions_after": 193368
+    },
+    {
+      "frame": 970,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 245215,
+      "target_serializer_instructions_after": 194816
+    },
+    {
+      "frame": 971,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 244373,
+      "target_serializer_instructions_after": 193942
+    },
+    {
+      "frame": 972,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 243057,
+      "target_serializer_instructions_after": 192626
+    },
+    {
+      "frame": 973,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 244895,
+      "target_serializer_instructions_after": 194416
+    },
+    {
+      "frame": 974,
+      "bank": 1,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 243898,
+      "target_serializer_instructions_after": 193419
+    },
+    {
+      "frame": 975,
+      "bank": 0,
+      "raw_rows": 2,
+      "HDMA_subsection_body_B": {
+        "scroll_and_pad": 23,
+        "raw_CHR": 2048,
+        "mode_enable_lengths": 245
+      },
+      "HDMA_subsection_packets": {
+        "scroll_and_pad": 2,
+        "raw_CHR": 9,
+        "mode_enable_lengths": 4
+      },
+      "equal_to_prior_destination": {
+        "scroll_and_pad": false,
+        "raw_CHR": false,
+        "mode_enable_lengths": true
+      },
+      "raw_compact_model_B": 384,
+      "raw_wire_model_saved_B": 1797,
+      "target_serializer_instructions_before": 241541,
+      "target_serializer_instructions_after": 191062
+    }
+  ],
+  "FPGA_changed": false,
+  "new_Quartus": false,
+  "new_package": false,
+  "hardware_time_FPS_improvement_proven": false,
+  "limits": [
+    "Historical71 captures, not494 physical gameplay frames; no section-attribution from physical logs",
+    "ACK endpoint modeled; no window CRC/E0/IRQ/ROM or actual65816 timing in target serializer counts",
+    "Byte-equivalent scan candidate does not reduce wire volume; no counters-only hardware delivery",
+    "Reuse requires ownership/independent coverage changes; byte equality alone is not permission to omit data",
+    "Compact raw model needs real ARM/FPGA/SNES ABI, budget and STOP/finalACK validation before adoption"
+  ]
+}

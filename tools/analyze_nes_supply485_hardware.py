@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-"""Read482/485 physical DWT/driver counters without hardcoding frame totals.
+"""Read482/485/489 physical DWT/driver counters without hardcoding frame totals.
 
 Phase, driver-op and quiet counters are nested. No same-scene claim is inferred
 from using the same ROM; menu visibility still requires the user's observation.
@@ -33,7 +33,16 @@ def analyse(folder,trial):
                   g['native_sink_error']=='0' and g['sink_window_error']=='0' and
                   g['trace_aborts']=='0' and g['plan_end']=='0' and
                   int(g['trace_commits'])==int(g['native_frames'])+1)
-    assert video==0 or deadline_OBJ,('unexpected video failure',video)
+    #489 can hit the same runtime deadline at the explicit zero-slot plan
+    # callback, which reports14 instead of the resident OBJ slot's13. Keep
+    # this exact terminal signature trial-specific; never waive code14 alone.
+    deadline_plan=(trial==489 and video==14 and g['native_result']=='1' and
+                   g['plan_error']=='2' and g['native_sink_error']=='0' and
+                   g['sink_window_error']=='0' and g['trace_aborts']=='0' and
+                   g['plan_end']=='0' and g['plan_sent']=='0' and
+                   g['fault_context_valid']=='0' and
+                   int(g['trace_begins'])==int(g['trace_ends'])==int(g['trace_commits'])==int(g['native_frames'])+1)
+    assert video==0 or deadline_OBJ or deadline_plan,('unexpected video failure',video)
     for k,v in {'cost_schema':'474','cost_counter_available':'1','cost_clock_hz':'84000000',
                 'cost_scene_crc32_hex':'5a04eed7','cost_crc_errors':'0','failed_transfers':'0'}.items():
         assert b[k]==v,(trial,k,b.get(k))
@@ -60,7 +69,8 @@ def analyse(folder,trial):
     assert [v['index'] for v in bins]==list(range(12)) and sum(v['frames'] for v in bins)==n
     sent,retired=int(g['sink_window_sent']),int(g['sink_window_retired'])
     return {'trial':trial,'hardware_run_passed':True,
-            'termination_class':'deadline_during_OBJ_emit' if deadline_OBJ else 'deadline',
+            'termination_class':('deadline_during_plan_emit_signature' if deadline_plan else
+                                 'deadline_during_OBJ_emit' if deadline_OBJ else 'deadline'),
             'last_incomplete_frame_displayed':False,
             'display':{'completed':n,'seconds':seconds,'fps':n/seconds,
             'mean_ms':1000*seconds/n},'DWT_phases_nested':phases,'driver_ops_nested':ops,
@@ -77,7 +87,7 @@ def analyse(folder,trial):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--raw',type=Path,required=True)
-    p.add_argument('--trial',type=int,choices=[482,485],default=485);p.add_argument('--baseline-raw',type=Path)
+    p.add_argument('--trial',type=int,choices=[482,485,489],default=485);p.add_argument('--baseline-raw',type=Path)
     p.add_argument('--out',type=Path,required=True);a=p.parse_args();assert not a.out.exists()
     r=analyse(a.raw,a.trial)
     if a.baseline_raw:

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "execution_state": {
+    "performance_work": "active"
+  },
+  "physical_baseline": "MMC489",
+  "physical_evidence": "analysis/hardware490-mmc489.json",
+  "development_evidence": "analysis/output489-verification.json",
+  "merged_PR136": "2d4543ef2442bc798bcec128a4a108fdfc4d5287",
+  "branch": "codex/nes-output-budget-487",
+  "budget": {
+    "ARM_Flash_tail_B": 124,
+    "ARM_BSS_B": 18572,
+    "RUN_workspace_B": 31848,
+    "full_stack_IRQ_proof": false,
+    "SNES_existing_body_free_B": 224,
+    "SNES_4KiB_layout_is_not_platform_ROM_limit": true,
+    "FPGA_remaining_LE_physical485": 154,
+    "SNES_candidate_program_B": 5120,
+    "SNES_candidate_body_B": 4311,
+    "FPGA_remaining_LE_candidate489": 136,
+    "FPGA_M9K_candidate489": 51,
+    "SNES_new_context_B": 8
+  },
+  "steps": [
+    {
+      "id": "S0",
+      "status": "complete",
+      "goal": "Actual485 serializer section audit and byte-identical bounded-scan candidate",
+      "gate": "71 state/plan/packet/table matches;12 ownership guards;target serializer instructions -20.31%;Flash+12B, no new state"
+    },
+    {
+      "id": "S1",
+      "status": "complete_superseded_by489",
+      "goal": "ARM compact raw rows/6 planes and paired65816 canonical reconstruction",
+      "gate": "488 canonical route functional but12-frame time unchanged and setup failure; evidence preserved in compact488-verification.json"
+    },
+    {
+      "id": "S2",
+      "status": "complete_bounded_functional_proof",
+      "goal": "Actual queue/shared SPI/ROM/tile/65816 validation/DMA/VBlank joint path",
+      "gate": "489 actual M4 71 canonical states/598 plans;actual65816 71 pixels/rawVRAM/VBlank ACK;synthetic row/bank/STOP/poison;C/RTL boot raw0 and same-source program bus. Not a common physical timeline"
+    },
+    {
+      "id": "S3",
+      "status": "complete",
+      "goal": "Inspect loader check_failed reset/control path and compare raw restoration plus VRAM DMA scheduling",
+      "gate": "Loader owned-pin/control equivalence and3negative controls;direct raw DMA same-start71 4234.845->3903.397ms;whole Lite15272LE/51M9K;related setup+0.183ns,hold+0.168ns;one selected compile,no waiver/seed loop"
+    },
+    {
+      "id": "S4",
+      "status": "complete_received_single_gameplay_inclusive_run",
+      "goal": "Controlled physical comparison after meaningful integrated change",
+      "gate": "490 received489:577/60.08s=9.60fps,load/menu normal;different485 inputs,not controlled causal comparison;guard2->video14 and12negative signatures pass"
+    },
+    {
+      "id": "S5",
+      "status": "next",
+      "goal": "Joint E8 descriptor/E0 consume-credit/ACK and65816 packet/CRC/manifest/VBlank schedule, then D0 source readiness/ROM grants",
+      "gate": "Fixed-input common-start full display comparison;independent checks/STOP/deadline/finalACK/menu preserved;Flash124B/136LE;matching whole Lite only if RTL changes. No measurement-only new installer"
+    }
+  ],
+  "retained": [
+    "Independent CRC/coverage",
+    "Credit distinct from consumption",
+    "STOP/cold invalidation",
+    "Final ACK before EA/retire",
+    "VBlank and prior display identity",
+    "GBC/save and485/482/476/164/467 restore"
+  ],
+  "new_hardware_package": true,
+  "full_path_acceleration_proven": false,
+  "current_candidate": "MMC489 hardware load/menu pass;9.60fps gameplay-inclusive;first-level causal gain unproven",
+  "related_timing_passed": true,
+  "development_package": "analysis/output489-package.json",
+  "physical_same_scene_acceleration_proven": false
+}
