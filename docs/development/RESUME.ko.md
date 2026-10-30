@@ -1,14 +1,14 @@
 # 다른 PC·새 작업에서 재개하기
 
-이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고489 수신490의 실제 비용·다음 전체 경로 관문을 따른다.
+이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고[감사499](../nes-audit499.ko.md)와[새 계획 A1–A4](../nes-audit499-plan.json)를 따른다. 수집 정확성부터 확인하며 기존498 NEXT를 그대로 재개하지 않는다.
 
 ## 1. 상태를 읽는다
 
 1. [루트 README](../../README.md) → [프로젝트 현황](../PROJECT-STATUS.ko.md).
-2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR137](../progress/pr-137.md).
+2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR138](../progress/pr-138.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
-GB/GBC만 추가·공개 완료다. 현재 NES 게임 기준은 MMC489 60.08초577최종 표시/9.60fps·정상 실행/메뉴 복귀다.이전485 각60.07초 대기13.55fps·첫 레벨 플레이 포함8.22fps는 별도 조건이다. 입력이 다른 이전482의14.60fps와 직접 개선율을 비교하지 않는다. 문양NROM476의23.84fps는 별도 회귀로 보존한다.60fps·전 게임/매퍼·capture/전체 CDC/IO 승인은 미완료다.
+GB/GBC만 추가·공개 완료다. 현재 NES 게임 기준은 MMC493 60.07초575최종표시/9.57fps·부팅/메뉴정상이며첫레벨차이는작다. 이전4899.60fps와다른입력이라지속가속은미확인이다. 이전485대기13.55/플레이8.22fps와NROM47623.84fps는별도조건이다.60fps·전게임/매퍼·capture/전체CDC/IO 승인은미완료다.
 
 ## 2. Git 기준을 확인한다
 
@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-먼저 로컬 변경을 보존한다. 필요할 때 remote를 fetch하고 실제 병합 상태·base·master 도달 관계를 확인한다. PR135는948a2e9bc6542aaec7737e28f4431cb0c0350f6d로 master에 병합됐으며, PR136도2d4543ef2442bc798bcec128a4a108fdfc4d5287로 master 병합을 확인했고 현재 브랜치는 `codex/nes-output-budget-487`다. 새 PC에서 무조건 master로 바꾸거나 reset/pull로 덮지 않는다.
+먼저 로컬 변경을 보존한다. 필요할 때 remote를 fetch하고 실제 병합 상태·base·master 도달 관계를 확인한다. PR135는948a2e9bc6542aaec7737e28f4431cb0c0350f6d로 master에 병합됐으며, PR136도2d4543ef2442bc798bcec128a4a108fdfc4d5287로 master 병합을 확인했고 PR137도29815faa3887a035091e3169ffa0f751dda3de44로 master 병합을 확인했고 현재 브랜치는 `codex/nes-consume-schedule-491`/PR138이다. 새 PC에서 무조건 master로 바꾸거나 reset/pull로 덮지 않는다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -41,7 +41,7 @@ git log -5 --oneline
 
 1. [실기486 분석](../nes-hardware486-results.ko.md)·[485 계약](../nes-supply485-contract.ko.md)·[다음 계획](../nes-output487-plan.json)을 읽는다. 현재485 두 장면은 합산하지 않는다. 문양476은 별도 원복/회귀다.
 2. G2B는 연결·기능 시험을 통과했다. candidate03/ARM03/armguard07/live02/trial02가 선택이다. 초기 busy-spin 후보는 전달하지 않는다. credit 수령·실제 ACK·staging 해제를 구분한다.
-3. **489 기능 실기 확인·다음 병목 분석 완료.** [수신490](../nes-hardware490-results.ko.md)·[측정](../../analysis/hardware490-mmc489.json),9.60fps/실행·메뉴 정상,첫 레벨 가속 미입증. E8/E0 조회·실제 소비/검사 일정이 다음,그다음D0 source/ROM이다. [489 계약](../nes-output489-contract.ko.md)·[검증](../../analysis/output489-verification.json)·[설치](../nes-mmc489-trial.ko.md). 같은71개4234.845→3903.397ms는 실제65816+wire 모델,관련 setup+0.183ns·whole15272LE/51M9K 통과다. Flash124B/RUN31848B/136LE·5M9K/SNES program5KiB·문맥8B,full stack/IRQ/CDC/IO 미승인이다. 이번에는 새 ZIP/합성 없이489를 유지하고 같은 고정 입력으로 전체 표시 시간을 비교할 구조를 정한다.485의8.22fps와 다른 장면 개선율을 만들지 않는다. 로컬 선택 candidate03/ARM02/client04/board02/trial02와 원본 의존성은 계약을 따른다.
+3. **실기493은9.57fps, 실험495는전체이득미증명으로전달보류다.** [495 계약](../nes-status495-contract.ko.md)·[검증](../../analysis/status495-verification.json)·[494 실기](../nes-hardware494-results.ko.md)·[계획](../nes-output487-plan.json). EB8B/마지막E0 fullACK·ROM요청경계 교체는M4/RTL/기존65816 기능·Lite15121LE/관련timing을 통과했지만 동일12frame 단축0.002794ms/4ms위상0.013316ms 회귀다. 실제M4 busy-poll/IRQ/sourceROM·FPGA 연속tile 묶음과65816을공통일정에연결하는S9부터진행한다. 표시대기중receiver재사용은old identity·retire/STOP·재진입 없는SPI 소유권 검토가선행한다.493 Flash148B/136LE,495 Flash96B/287LE를구분하고새ZIP은만들지않았다.492단일원인미확정·새word경로보류;GBC/save·기존원복·493 제작스냅샷은보존한다.
 4. 독립 검사·STOP·최종 ACK·4credit·메뉴 복귀를 유지한다. RTL이 실제로 바뀔 때만 같은 source의 Lite 전체 비용/관련 timing을 다시 확인한다.
 5. 의미 있는 변경이 검증된 뒤 새 번호·marker·로그·원복으로 동일 ROM/입력 조건의 하드웨어를 비교한다.482 한 회 성공을480의 단일 물리 원인·전 게임/매퍼·60fps 증명으로 승격하지 않는다.
 

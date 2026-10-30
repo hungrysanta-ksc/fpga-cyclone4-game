@@ -1,15 +1,16 @@
 {
   "schema_version": 1,
   "execution_state": {
-    "performance_work": "active"
+    "performance_work": "active",
+    "current_gate": "Superseded by499 A1 capture-correctness audit plan;historical S1-S9 evidence retained"
   },
-  "physical_baseline": "MMC489",
-  "physical_evidence": "analysis/hardware490-mmc489.json",
-  "development_evidence": "analysis/output489-verification.json",
+  "physical_baseline": "MMC493",
+  "physical_evidence": "analysis/hardware494-mmc493.json",
+  "development_evidence": "analysis/prefetch498-verification.json",
   "merged_PR136": "2d4543ef2442bc798bcec128a4a108fdfc4d5287",
-  "branch": "codex/nes-output-budget-487",
+  "branch": "codex/nes-consume-schedule-491",
   "budget": {
-    "ARM_Flash_tail_B": 124,
+    "ARM_Flash_tail_B": 148,
     "ARM_BSS_B": 18572,
     "RUN_workspace_B": 31848,
     "full_stack_IRQ_proof": false,
@@ -20,7 +21,14 @@
     "SNES_candidate_body_B": 4311,
     "FPGA_remaining_LE_candidate489": 136,
     "FPGA_M9K_candidate489": 51,
-    "SNES_new_context_B": 8
+    "SNES_new_context_B": 8,
+    "experimental495_Flash_tail_B": 96,
+    "experimental495_remaining_LE": 287,
+    "experimental495_comb_delta": 19,
+    "experimental498_Flash_tail_B": 8,
+    "experimental498_remaining_LE": 276,
+    "experimental498_comb_delta_vs493": 27,
+    "experimental498_isolated_callback_stack_B": 728
   },
   "steps": [
     {
@@ -55,9 +63,35 @@
     },
     {
       "id": "S5",
-      "status": "next",
+      "status": "complete_bounded_491_implementation",
       "goal": "Joint E8 descriptor/E0 consume-credit/ACK and65816 packet/CRC/manifest/VBlank schedule, then D0 source readiness/ROM grants",
-      "gate": "Fixed-input common-start full display comparison;independent checks/STOP/deadline/finalACK/menu preserved;Flash124B/136LE;matching whole Lite only if RTL changes. No measurement-only new installer"
+      "gate": "M4 12guard/8burst/71canonical;CPU71 -7.25%,108units+negative/STOP;C/RTL/65816 first raw0 frame/34ACK/STOP+5124bus;whole Lite same15272LE/51M9K/related timing;not common physical clock"
+    },
+    {
+      "id": "S6",
+      "status": "physical492_failed_before_receiver",
+      "goal": "Bind E8/E0 source ROM and65816 consumption on common timeline;then D0 readiness",
+      "gate": "Game393216B load/CRC/readback andSTOP/base/menu pass;SNES ready5000ms timeout,native frames/transactions/wire0,all12phase0;no physical FPS or full-path timing;root cause unresolved"
+    },
+    {
+      "id": "S7",
+      "status": "complete_physical493_boot_recovered",
+      "goal": "Isolate boot failure with byte-identical hardware489 FPGA/SNES and491 ARM query,then resume total-time comparison",
+      "gate": "Ready50ms/495poll,575 final displays/60.07s=9.57fps,user confirms load/menu;linked deadline vs IO propagation and16negative logs;last unfinishedSEAL excluded;492 root cause unresolved"
+    },
+    {
+      "id": "S8",
+      "status": "complete_bounded495_candidate_not_selected",
+      "goal": "Compare joint E0 credit/finalACK,E8/D0 supply,65816 validation and packet/status/framing reduction on fixed inputs",
+      "gate": "EB8 progress+mandatory final E0;12+6 ARM guards,RTL3x3949,ROM2phase/4096fault,joint old65816 first frame34ACK/STOP;Lite15121LE/51M9K,related setup+.046/hold+.164ns,Flash96B. Conditional12frames save.002794ms,4ms phase regresses.013316ms;actual M4 polling and real coalesced chunks absent,no whole gain or installer"
+    },
+    {
+      "id": "S9",
+      "status": "in_progress498_bounded_joint_ownership_verified",
+      "goal": "Connect actual M4 polling/shared SPI/IRQ/source ROM and actual coalesced tile_bulk206 chunks to65816 consumption;then compare next-input receive during display wait",
+      "gate": "493/498 same event ledger/input/start+continuous phases;credit != DMA consume != finalACK;old display identity/receiver lifetime/nonreentrant SPI/STOP/retire retained. Physical493148FlashB/136LE;experimental4988FlashB/276LE,callback728B observed. No whole performance or physical selection from bounded C/RTL tests.",
+      "evidence": "analysis/prefetch498-verification.json",
+      "remaining": "Actual M4/IRQ/shared SPI and65816 common timeline on identical inputs/phases plus sustained capture;full nested stack/IRQ and total frame gain. Source start-only drain/old ACK-EA-COMMIT boundary is implemented,not a physical FPS proof."
     }
   ],
   "retained": [
@@ -68,10 +102,12 @@
     "VBlank and prior display identity",
     "GBC/save and485/482/476/164/467 restore"
   ],
-  "new_hardware_package": true,
+  "new_hardware_package": false,
   "full_path_acceleration_proven": false,
-  "current_candidate": "MMC489 hardware load/menu pass;9.60fps gameplay-inclusive;first-level causal gain unproven",
+  "current_candidate": "Physical4939.57fps retained;experimental498 END/drain start,late COMMIT,old identity;2-frame hostC/RTL/65816 functional and related timing pass,whole physical acceleration unproven",
   "related_timing_passed": true,
-  "development_package": "analysis/output489-package.json",
-  "physical_same_scene_acceleration_proven": false
+  "development_package": null,
+  "physical_same_scene_acceleration_proven": false,
+  "merged_PR137": "29815faa3887a035091e3169ffa0f751dda3de44",
+  "superseded_by": "docs/nes-audit499-plan.json"
 }

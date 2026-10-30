@@ -1,6 +1,18 @@
 # NES 재현 범위와 다른 PC 입력
 
-현재 실기는482, 전달 후보는485다. [485 계약](../../docs/nes-supply485-contract.ko.md)의 선택/재현과 [PR136](../../docs/progress/pr-136.md)을 먼저 따른다. 전체482/484 source·ELF,478의71입력/참조,480 transaction과 도구는 로컬 선행 입력이다.485는 `probes/nes-supply485/{candidate03,ARM03,armguard07,executed/live02,trial02}`와 공개 recipe/해시로 묶었다. 아래474/476은 별도 회귀/과거 입력이다. clone만으로 전체 빌드 입력이 완결되지는 않는다. [원문 이력](../../docs/progress/archive/README.md)·[재개 안내](../../docs/development/RESUME.ko.md)를 따른다.
+현재 실기는 **MMC493**, 최신 미선택 후보는498이다. [현재 인계](HANDOFF.ko.md)·[감사499](../../docs/nes-audit499.ko.md)·[새 계획](../../docs/nes-audit499-plan.json)을 먼저 읽는다. 아래474–485는 과거 입력이며 현재 선택본이 아니다. clone만으로 전체 빌드 입력이 완결되지는 않는다.
+
+## 현재493 재현 입력
+
+| 영역 | 고정 입력/근거 |
+|---|---|
+| ARM | `probes/nes-boot493/ARM01/src` 전체source/obj-nes-100 ELF; [493 제작](../../analysis/boot493-verification.json) |
+| FPGA | 기존489 board02의70 QSF/제약/초기화 입력; [499 재대조 목록](../../analysis/audit499-verification.json) |
+| 65816 | `probes/nes-output489/client04` body4311B/program5120B/ABI4891; [489 계약](../../docs/nes-output489-contract.ko.md) |
+| 실기 | `probes/nes-hardware494/run01` 원본3TXT/receipt 및termination02; [494 원본 요약](../../analysis/hardware494-mmc493.json) |
+| 후보498 | 별도ARM01/candidate06/live04/board05; [498 검증과 한계](../../analysis/prefetch498-verification.json).493과 혼합 금지 |
+
+`python tools/audit_nes499.py --board <489-board02> --arm <493-src> --raw <494-run01> --out <fresh-json>`은 선택hash와기존로그를 재검사한다. 합성·시뮬레이션·새 실기 성능시험을 실행하지 않는다. 실제 설치 산출물 hash는493 package를 따른다.
 
 ## 저장소만으로 가능한 것
 
@@ -9,9 +21,9 @@
 - 공개 자체 진단 생성기/단위 소스/변경 recipe를 읽고 새 수정의 범위를 검토한다.
 - 문서 링크·형식·현재 상태를 `python tools/check_repository_docs.py`로 검사한다. Python3 표준 라이브러리만 필요하다.
 
-**깨끗한 clone만으로 NES474 전체 firmware/FPGA/과거 원시 시험을 재빌드할 수 있는 상태는 아직 아니다.** 이 저장소 정리는 현재 소스·빌드·도구를 승격하거나 새로 검증한 작업이 아니다. 아래 입력을 복구하기 전 실패를 새 회로/라이선스 문제로 진단하지 않는다.
+**깨끗한 clone만으로 현재493 전체 firmware/FPGA/과거 원시 시험을 재빌드할 수 있는 상태는 아직 아니다.** 이 저장소 정리는 현재 소스·빌드·도구를 승격하거나 새로 검증한 작업이 아니다. 아래 입력을 복구하기 전 실패를 새 회로/라이선스 문제로 진단하지 않는다.
 
-## 현재 남아 있는 외부/로컬 입력
+## 과거474/475의 외부·로컬 입력
 
 | 작업 | 필요한 입력 | 저장소의 근거 |
 |---|---|---|

@@ -1,0 +1,60 @@
+{
+  "trial": 492,
+  "hardware_run_passed": false,
+  "failure_class": "SNES_boot_ready_timeout_before_receiver",
+  "user_report": {
+    "execution_failed": true,
+    "menu_return_normal": true
+  },
+  "ROM_load_CRC_readback_passed": true,
+  "loaded_payload_B": 393216,
+  "display_attempt_ms": 5020,
+  "boot_wait_ms": 5000,
+  "boot_polls": 44410,
+  "boot_first_hex": "01480000",
+  "boot_last_hex": "01580000",
+  "boot_stage_observed": 0,
+  "screen_telemetry_trusted": false,
+  "native_transactions": 0,
+  "completed_displays": 0,
+  "physical_FPS": null,
+  "phase_counters_opened": false,
+  "all12_buckets_zero": true,
+  "STOP_base_recovery_passed": true,
+  "strict_performance_parser_rejects_failed_run": true,
+  "source_files": {
+    "nes-progress-mmc492.txt": {
+      "bytes": 51200,
+      "SHA256": "ba8e9fcb701a63132540af59d4ce35ca6401985954f556b2c0a9c6da4a33d6fd"
+    },
+    "nes-budget-mmc492.txt": {
+      "bytes": 4326,
+      "SHA256": "a22ff50c145e98db6fb569c1f568c2ccd3659a15d1bde19e3e505929bbc4fc76"
+    },
+    "nes-game-last-mmc492.txt": {
+      "bytes": 1973,
+      "SHA256": "a4fc4c2eba0d4bf0269f4954ee3d8e946de3a58e02d714c571d8b4db31a8f3d7"
+    }
+  },
+  "cause_proven": false,
+  "limits": [
+    "Ready not observed does not identify CPU PC or prove no CPU instruction executed",
+    "No speed comparison:actual receive/plan/SEAL not entered",
+    "Sampled bus flags and stage0 do not distinguish corrupted reads,missed milestone or bootstrap failure"
+  ],
+  "decision": "Withdraw492 hardware selection;freeze new FPGA/SNES candidate;isolate with byte-identical known-good489 FPGA and retained491 ARM query changes;do not bypass boot gate",
+  "next": "493 physical boot/three logs/menu confirmation;root cause remains open",
+  "logical_ROM_comparison": [
+    {
+      "bytes": 5120,
+      "generated_MIF_matches_ROM": true,
+      "ROM_SHA256": "1dff6b26869ecbbd7a13f6fe366fe28aea1588f38331e6fe46fd8850cf33f399"
+    },
+    {
+      "bytes": 5120,
+      "generated_MIF_matches_ROM": true,
+      "ROM_SHA256": "a2d290ed13edf5ccfdb371dd0cd41edb5ed48366d3ec3f4e533062e9c52d35ef"
+    }
+  ],
+  "logical_ROM_comparison_is_not_hardware_readback": true
+}
