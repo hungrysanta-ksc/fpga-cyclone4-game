@@ -27,7 +27,7 @@
 | ARM509 | firmware212956B/Flash36B/BSS18576B; 전체 IRQ stack 미증명 |
 | 60Hz 평균 격차 | 78.03−16.67=61.36ms/표시 |
 | SPI 투영 | 전체25.41ms/조회 제외16.25ms; 단계와 중첩 합산 금지 |
-| 다음 작업 | [512 결과](nes-transfer512-results.ko.md)를 기준으로 대상 뱅크에서 실제 생략할 수 있는 map 행의 양·검사 시간·RAM 비용 측정 |
+| 다음 작업 | [513 결과](nes-map513-results.ko.md)에 따라 대상 뱅크의 유효한 8B 그룹을 재사용하는 부분 literal 및 Flash·최종 ACK 일정 검증 |
 | 미완료 | 지속60fps·장면별/p95·NES 실시간 속도·capture 무손실·MMC4/5·제품 공개 |
 
 [509 전달본](../analysis/service509-package.json)은 ROM/save/RESTORE 없이 제작한 불변 스냅샷이다. 이번 수신 분석에서 새 firmware·ZIP·합성은 만들지 않았다. [MMC502 실기10.59fps](nes-hardware503-results.ko.md)는 복구·비교 기준으로 보존한다.

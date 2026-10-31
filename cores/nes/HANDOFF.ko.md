@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-output-budget-511`이며 [PR141](../../docs/progress/pr-141.md)에서 작업한다. PR140 병합 커밋은 `ab55afeefd629bbcc37cbcc57c4d35f1a0172f7e`다. [512 네 조합 결과](../../docs/nes-transfer512-results.ko.md)와 [510 실기 분석](../../docs/nes-hardware510-results.ko.md)을 먼저 읽는다.
+현재 브랜치는 `codex/nes-output-budget-511`이며 [PR141](../../docs/progress/pr-141.md)에서 작업한다. PR140 병합 커밋은 `ab55afeefd629bbcc37cbcc57c4d35f1a0172f7e`다. [513 대상 map 조사](../../docs/nes-map513-results.ko.md), [512 네 조합 결과](../../docs/nes-transfer512-results.ko.md)와 [510 실기 분석](../../docs/nes-hardware510-results.ko.md)을 먼저 읽는다.
 
 ## 선택된 실기 기준
 
@@ -13,8 +13,8 @@
 ## 다음 작업 순서
 
 1. MMC509를 유지한다. 512 실험은 원본 93.110ms, map 108.084ms, 입력 93.107ms, 결합 104.755ms의 후반 평균 간격을 측정했다. 입력 RTL은 관련 setup −0.317ns, 결합 Flash는 0B다. 산출물·재현 위치와 제한은 [512](../../docs/nes-transfer512-results.ko.md)에 있다.
-2. 대상 뱅크의 실제 map 행과 예정 데이터를 바이트로 대조한다. 기존 literal DMA를 유지하면서 생략 가능한 전송량과 비교 시간·RAM 비용을 먼저 산출한다.
-3. STOP 시 tentative 이력을 무효화하고 최종 표시 ACK 뒤에만 이력을 공개한다. 실제 ARM·IRQ·ROM·65816의 후반 ACK 간격과 전체 Quartus Lite 관련 타이밍이 모두 개선되는 후보를 검토한다.
+2. 513에서 후반 1,763행 중 대상 뱅크와 같은 행은 0개였다. 전체 행 이력을 추가하지 않는다. 8B 그룹으로 기존 map 패킷의 앞뒤만 줄이는 후보부터 검토한다. [513 예산과 재현 절차](../../docs/nes-map513-results.ko.md)를 따른다.
+3. Flash 여유 36B에 맞게 기존 ARM 코드를 대체하고, 부분 literal의 생략 바이트는 대상 뱅크·행 이력이 유효할 때만 인정한다. cold·STOP은 전체 행으로 복구한다. 실제 ARM·IRQ·ROM·65816의 후반 ACK 간격과 전체 Quartus Lite 관련 타이밍을 검증한다.
 
 ## 재현 위치와 실패 보존
 
