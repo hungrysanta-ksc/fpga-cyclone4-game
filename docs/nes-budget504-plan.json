@@ -1,0 +1,33 @@
+{
+  "experiment": 504,
+  "branch": "codex/nes-bandwidth-dma-budget-504",
+  "PR": null,
+  "merge139": "46c0cc962397b3e757c838164b70b75fe73090a6",
+  "baseline": "MMC502",
+  "evidence": "analysis/budget504-verification.json",
+  "A2_full_60Hz_passed": false,
+  "next_boundary": "Actual65816 nonblocking immutable dirty-prefix early DMA;retain mutable tail and final coverage/CRC/visibility",
+  "allocation": {
+    "additional_SNES_body_max_B": 512,
+    "additional_WRAM_max_B": 8,
+    "additional_M9K": 0,
+    "additional_ARM_execution_code_B": 0,
+    "additional_FPGA_control": 0,
+    "measured": false
+  },
+  "gate": [
+    "Packet complete watermark before early read;never read mutable append tail",
+    "Actual remaining VBlank time;do not block ingress while waiting",
+    "STOP invalidates tentative bank;old active identity/pixels survive;fresh/cold reuse",
+    "Final independent CRC/coverage/semantic checks and VBlank display ACK retained",
+    "Same input/start plus continuous schedule;full ARM/SPI/IRQ/ROM measured before speed claim"
+  ],
+  "not_selected": [
+    "whole7533B previous-input RAM without reclaim",
+    "CRC-only equality shortcut",
+    "status-only/SPI-setup-only60fps claim",
+    "unmodified498 promotion"
+  ],
+  "delivery": "No new installer now;future trial excludes RESTORE",
+  "status": "boundary_and_cost_ledger_reviewed;implementation_and_full60Hz_budget_open"
+}
