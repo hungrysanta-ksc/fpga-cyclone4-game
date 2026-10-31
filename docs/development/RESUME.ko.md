@@ -1,14 +1,14 @@
 # 다른 PC·새 작업에서 재개하기
 
-이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고[감사499](../nes-audit499.ko.md)와[새 계획 A1–A4](../nes-audit499-plan.json)를 따른다. 502 수집 수정의 첫 실기 성공을 기준으로 A2 전송·DMA 예산부터 진행하며 기존498 NEXT를 그대로 재개하지 않는다.
+이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고[감사499](../nes-audit499.ko.md)와[새 계획 A1–A4](../nes-audit499-plan.json)를 따른다. MMC509 실기 측정을 기준으로 A2 출력·전송 예산을 갱신하며 기존498 NEXT를 그대로 재개하지 않는다.
 
 ## 1. 상태를 읽는다
 
 1. [루트 README](../../README.md) → [프로젝트 현황](../PROJECT-STATUS.ko.md).
-2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR139](../progress/pr-139.md).
+2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR140](../progress/pr-140.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
-GB/GBC만 추가·공개 완료다. 현재 NES 게임 기준은 MMC502 60.07초636최종표시/10.59fps이며 실행·메뉴 복귀 정상과 체감 개선을 확인했다. 이전4939.57fps와 동선이 달라 인과적 개선율·레벨별FPS는 미확정이다. [503 근거](../nes-hardware503-results.ko.md)를 따른다. 다음 NES 시험판부터 RESTORE 폴더는 생략하며 사용자 백업과 기존 ZIP은 보존한다.60fps·전게임/매퍼·capture/전체CDC/IO 승인은 미완료다.
+GB/GBC만 추가·공개 완료다. 현재 NES는 MMC509 60.08초770회 최종 표시/**12.82fps**, 실행·메뉴 복귀 정상이며 사용자는 체감 개선이 크지는 않다고 보고했다. 이전502/10.59fps와 동선이 달라 인과적 개선율·레벨별FPS는 미확정이다. [510 근거](../nes-hardware510-results.ko.md)를 따른다. 이후 시험판도 RESTORE 폴더를 생략하고502 백업을 보존한다.
 
 ## 2. Git 기준을 확인한다
 
@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-먼저 로컬 변경을 보존한다. 필요할 때 remote를 fetch하고 실제 병합 상태·base·master 도달 관계를 확인한다. PR135는948a2e9bc6542aaec7737e28f4431cb0c0350f6d로 master에 병합됐으며, PR136도2d4543ef2442bc798bcec128a4a108fdfc4d5287로 master 병합을 확인했고 PR137도29815faa3887a035091e3169ffa0f751dda3de44로 master 병합을 확인했고 PR138도7e9699fb5d3ce4617495c204aa04d194cb09798d로 master 병합을 확인했고 현재 브랜치는 `codex/nes-capture-correctness-500`/PR139이다. 새 PC에서 무조건 master로 바꾸거나 reset/pull로 덮지 않는다.
+먼저 로컬 변경을 보존한다. PR139 merge `46c0cc962397b3e757c838164b70b75fe73090a6` 뒤 `codex/nes-bandwidth-dma-budget-504`/PR140에서 진행 중이다. [509 구현](../nes-service509-contract.ko.md), [510 실기 결과](../nes-hardware510-results.ko.md)를 읽는다. 실기 로그 수신은 끝났고 다음은43.17ms 출력 구간 분리와 A2 본문 예산이다. 새 PC에서 무조건 master로 바꾸거나 reset/pull로 덮지 않는다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -39,11 +39,10 @@ git log -5 --oneline
 
 ## 4. 개발 재개 후 순서
 
-1. [실기486 분석](../nes-hardware486-results.ko.md)·[485 계약](../nes-supply485-contract.ko.md)·[다음 계획](../nes-output487-plan.json)을 읽는다. 현재485 두 장면은 합산하지 않는다. 문양476은 별도 원복/회귀다.
-2. G2B는 연결·기능 시험을 통과했다. candidate03/ARM03/armguard07/live02/trial02가 선택이다. 초기 busy-spin 후보는 전달하지 않는다. credit 수령·실제 ACK·staging 해제를 구분한다.
-3. **실기493은9.57fps, 실험495는전체이득미증명으로전달보류다.** [495 계약](../nes-status495-contract.ko.md)·[검증](../../analysis/status495-verification.json)·[494 실기](../nes-hardware494-results.ko.md)·[계획](../nes-output487-plan.json). EB8B/마지막E0 fullACK·ROM요청경계 교체는M4/RTL/기존65816 기능·Lite15121LE/관련timing을 통과했지만 동일12frame 단축0.002794ms/4ms위상0.013316ms 회귀다. 실제M4 busy-poll/IRQ/sourceROM·FPGA 연속tile 묶음과65816을공통일정에연결하는S9부터진행한다. 표시대기중receiver재사용은old identity·retire/STOP·재진입 없는SPI 소유권 검토가선행한다.493 Flash148B/136LE,495 Flash96B/287LE를구분하고새ZIP은만들지않았다.492단일원인미확정·새word경로보류;GBC/save·기존원복·493 제작스냅샷은보존한다.
-4. 독립 검사·STOP·최종 ACK·4credit·메뉴 복귀를 유지한다. RTL이 실제로 바뀔 때만 같은 source의 Lite 전체 비용/관련 timing을 다시 확인한다.
-5. 의미 있는 변경이 검증된 뒤 새 번호·marker·로그·원복으로 동일 ROM/입력 조건의 하드웨어를 비교한다.482 한 회 성공을480의 단일 물리 원인·전 게임/매퍼·60fps 증명으로 승격하지 않는다.
+1. [510 실기 분석](../nes-hardware510-results.ko.md)으로509와502의 측정·한계를 확인한다. 현재 소스와 [509 패키지](../../analysis/service509-package.json)는 고정한다.
+2. 출력·최종ACK43.17ms를 일반 packet·복원·DMA·독립 검사·VBlank로 분리한다. planner/SEAL 대기 위치 변경과 op/quiet 중첩을 계산 절감으로 중복하지 않는다.
+3. 조회 제외 wire16.25ms와 수신19.88ms를 함께 줄일 본문·프레이밍 후보를 비교한다. 잠정12ms wire, 전체16.67ms, 실제 ARM/IRQ/ROM과 Flash36B/FPGA244LE 잔여를 함께 본다.
+4. 독립 검사·STOP·ACK/EA·VBlank·queue4/bulk2를 유지한다. 변경 없는 FIT를 반복하지 않고, 의미 있는 후보만 고유 이름으로 실기 전달한다. E8/phase/seed 미세조정은 동결한다.
 
 ## 5. 기록을 남긴다
 

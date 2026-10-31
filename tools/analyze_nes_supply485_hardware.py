@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-"""Read482/485/489/492/493/502 physical DWT/driver counters without hardcoding frame totals.
+"""Read482/485/489/492/493/502/509 physical DWT/driver counters without hardcoding frame totals.
 
 Phase, driver-op and quiet counters are nested. No same-scene claim is inferred
 from using the same ROM; menu visibility still requires the user's observation.
@@ -66,8 +66,12 @@ def analyse(folder,trial):
                    b.get('failed_transfers')=='0' and b.get('cost_crc_errors')=='0' and
                    (int(b['cost_op_05'].split(',')[0])&65535)==int(g['sink_window_sent']) and
                    int(g['trace_begins'])==int(g['trace_ends'])==int(g['trace_commits'])==int(g['native_frames'])+1)
+    deadline_ordinary=False
+    if trial==509:
+        from nes_hardware510_signature import ordinary_deadline
+        deadline_ordinary=ordinary_deadline(g,b)
     assert video==0 or deadline_OBJ or deadline_plan,('unexpected video failure',video)
-    assert (g['native_sink_error']=='0' and g['sink_window_error']=='0') or deadline_SEAL,('unexpected sink/window failure',g['native_sink_error'],g['sink_window_error'])
+    assert (g['native_sink_error']=='0' and g['sink_window_error']=='0') or deadline_SEAL or deadline_ordinary,('unexpected sink/window failure',g['native_sink_error'],g['sink_window_error'])
     for k,v in {'cost_schema':'474','cost_counter_available':'1','cost_clock_hz':'84000000',
                 'cost_scene_crc32_hex':'5a04eed7','cost_crc_errors':'0','failed_transfers':'0'}.items():
         assert b[k]==v,(trial,k,b.get(k))
@@ -75,6 +79,7 @@ def analyse(folder,trial):
     assert records and all(a[0]<z[0] and a[2]<=z[2] for a,z in zip(records,records[1:]))
     marks={stage:ms for _,stage,ms in records}
     seconds=(marks['DISPLAY_STOPPED']-marks['DISPLAY_NEXT'])/1000
+    if deadline_ordinary:assert 60<=seconds<=60.2,('not the observed finite-run deadline',seconds)
     n=int(g['native_frames']);assert n>0 and seconds>0
     def bucket(key):
         calls,size,hi,lo,maximum=map(int,b[key].split(','));cycles=(hi<<32)|lo
@@ -94,7 +99,8 @@ def analyse(folder,trial):
     assert [v['index'] for v in bins]==list(range(12)) and sum(v['frames'] for v in bins)==n
     sent,retired=int(g['sink_window_sent']),int(g['sink_window_retired'])
     return {'trial':trial,'hardware_run_passed':True,
-            'termination_class':(('deadline_during_SEAL_guard_or_wait_signature' if trial==502 else 'deadline_during_SEAL_status_postguard_signature') if deadline_SEAL else
+            'termination_class':('deadline_during_ordinary_credit_signature' if deadline_ordinary else
+                                 ('deadline_during_SEAL_guard_or_wait_signature' if trial==502 else 'deadline_during_SEAL_status_postguard_signature') if deadline_SEAL else
                                  'deadline_during_plan_emit_signature' if deadline_plan else
                                  'deadline_during_OBJ_emit' if deadline_OBJ else 'deadline'),
             'last_incomplete_frame_displayed':False,
@@ -113,8 +119,8 @@ def analyse(folder,trial):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--raw',type=Path,required=True)
-    p.add_argument('--trial',type=int,choices=[482,485,489,492,493,502],default=485);p.add_argument('--baseline-raw',type=Path)
-    p.add_argument('--baseline-trial',type=int,choices=[482,485,489,492,493,502],default=482)
+    p.add_argument('--trial',type=int,choices=[482,485,489,492,493,502,509],default=485);p.add_argument('--baseline-raw',type=Path)
+    p.add_argument('--baseline-trial',type=int,choices=[482,485,489,492,493,502,509],default=482)
     p.add_argument('--out',type=Path,required=True);a=p.parse_args();assert not a.out.exists()
     r=analyse(a.raw,a.trial)
     if a.baseline_raw:
