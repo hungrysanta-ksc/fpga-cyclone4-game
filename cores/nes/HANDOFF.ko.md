@@ -1,8 +1,10 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-output-budget-511`이며 [PR141](../../docs/progress/pr-141.md)에서 작업한다. PR140 병합 커밋은 `ab55afeefd629bbcc37cbcc57c4d35f1a0172f7e`다. [516 소비·VBlank 및 전달](../../docs/nes-window516-results.ko.md), [515 ACK 행 이력](../../docs/nes-history515-results.ko.md), [514 부분 DMA 실측](../../docs/nes-trim514-results.ko.md), [513 대상 map 조사](../../docs/nes-map513-results.ko.md), [512 네 조합 결과](../../docs/nes-transfer512-results.ko.md)와 [510 실기 분석](../../docs/nes-hardware510-results.ko.md)을 먼저 읽는다.
+현재 브랜치는 `codex/nes-output-budget-511`이며 [PR141](../../docs/progress/pr-141.md)에서 작업한다. PR140 병합 커밋은 `ab55afeefd629bbcc37cbcc57c4d35f1a0172f7e`다. [517 실기 수신](../../docs/nes-hardware517-results.ko.md), [516 소비·VBlank 및 전달](../../docs/nes-window516-results.ko.md), [515 ACK 행 이력](../../docs/nes-history515-results.ko.md), [514 부분 DMA 실측](../../docs/nes-trim514-results.ko.md), [513 대상 map 조사](../../docs/nes-map513-results.ko.md), [512 네 조합 결과](../../docs/nes-transfer512-results.ko.md)와 [510 실기 분석](../../docs/nes-hardware510-results.ko.md)을 먼저 읽는다.
 
-## 선택된 실기 기준
+## 최신 실기와 비교 기준
+
+MMC516 기능 실기 확인. 10.99fps, 실행·메뉴 복귀 정상. 45~50초에 수신 21.67ms, 계획·공급 45ms, 출력 100.33ms/표시. 원본 세 로그는 `probes/nes-hardware517/run01`에 보존했다. 아래 509 수치는 다른 동선의 비교 기준이다.
 
 **MMC509 /507 FPGA /489 SNES**:60.08초770회 **12.82fps**, 실행·입력 흔적·STOP/base 복구와 사용자 메뉴 복귀 정상. 체감 개선은 작았다. 이전 MMC502는60.07초636회10.59fps이며 복구 기준으로 보존한다. 같은 동선·첫 레벨 전용 비교는 아니다. 원본 로그는 `probes/nes-hardware510/run01`, 선택 증거는 `termination01`/`analysis02.json`이다.
 
@@ -14,7 +16,7 @@
 
 1. MMC509를 유지한다. 512 실험은 원본 93.110ms, map 108.084ms, 입력 93.107ms, 결합 104.755ms의 후반 평균 간격을 측정했다. 입력 RTL은 관련 setup −0.317ns, 결합 Flash는 0B다. 산출물·재현 위치와 제한은 [512](../../docs/nes-transfer512-results.ko.md)에 있다.
 2. 514의 부분 map은 기능·cold 복구·STOP을 통과했지만 후반 평균이 104.826ms로 늘었다. 88개 패킷의 65816 소비 합계가 62.222→210.717ms였다. 생략 바이트를 패킷마다 다시 순회하는 방식은 종료한다.
-3. MMC516은 제한 실기 비교 단계다. 시험판은 `probes/nes-window516/trial02/MMC516-TRIAL.zip`이며 선택된 쌍은 ARM-label01과 fit-both01이다. 사용자 ROM은 mmc516.nes로 복사한다. 실행·첫 레벨 화면·STOP·메뉴 복귀와 새 로그 세 개를 비교한다. [설치 안내](../../docs/nes-mmc516-trial.ko.md)
+3. MMC516 실기는 완료됐다. 45~50초를 장면과 동일시하지 말고 동일 구간·입력에서 OBJ tile 계획, END flush/공급, SEAL 준비·표시 ACK와 NES 게임 상태 진행을 대조한다.
 
 ## 재현 위치와 실패 보존
 

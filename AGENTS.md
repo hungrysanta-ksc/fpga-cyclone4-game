@@ -11,7 +11,9 @@
 
 ## 현재 작업 범위
 
-- 현재 516 / PR141. docs/nes-window516-results.ko.md, analysis/window516-package.json, docs/nes-mmc516-trial.ko.md를 먼저 읽는다. 실기 기준 MMC509 12.82fps 유지. 결합은 같은 두 위상에서 후반 약 93.11→83.26ms. MMC516 trial02 전달 후 실제 SMB3 플레이·메뉴 복귀·새 로그 3개 확인 대기. ROM/save/RESTORE 미포함.
+- 현재 517 / PR141. docs/nes-hardware517-results.ko.md와 analysis/hardware517-mmc516.json을 먼저 읽는다. MMC516 실기 실행·메뉴 복귀 정상, 660표시/60.07초/10.99fps. 동선이 다른 MMC509 12.82fps를 비교 기준으로 보존한다. 45~50초 30표시, OBJ 작업 30.07/표시. 다음은 동일 장면의 OBJ 공급·END·출력과 NES 게임 진행 시각 분리.
+
+- 516 전달 기록 / PR141. docs/nes-window516-results.ko.md, analysis/window516-package.json, docs/nes-mmc516-trial.ko.md를 먼저 읽는다. 실기 기준 MMC509 12.82fps 유지. 결합은 같은 두 위상에서 후반 약 93.11→83.26ms. MMC516 trial02 전달 후 실제 SMB3 플레이·메뉴 복귀·새 로그 3개 확인 대기. ROM/save/RESTORE 미포함.
 
 - 515 기록 / PR141. docs/nes-history515-results.ko.md와 analysis/history515-verification.json을 먼저 읽는다. MMC509 실기 12.82fps 유지. 기본 일정에서 직전 뱅크 행 이력으로 1,856B를 생략했으나 916 최종 ACK는 공통 코드 대조군과 같은 시각이었다. 두 시작 위상의 후반 간격과 제한을 결과 문서에서 확인한다. 다음은 MMC509 section 5 소비·SEAL 준비와 남은 VBlank의 시간 예산이다.
 

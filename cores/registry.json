@@ -25,9 +25,9 @@
     {
       "id": "nes",
       "status": "in_development",
-      "candidate": "MMC509",
+      "candidate": "MMC516",
       "released": false,
-      "implementation_commit": "672cc67f2c9a61c4760af8dde172cd29c2f51db2",
+      "implementation_commit": "0aa4659d9bf266ee5d59c214cce0f4a87ead786b",
       "source_paths": [
         "src/nes",
         "tests/nes-functional",
@@ -36,17 +36,17 @@
       ],
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
-      "verification": "analysis/hardware510-mmc509.json",
+      "verification": "analysis/hardware517-mmc516.json",
       "development_evidence": "analysis/window516-verification.json",
       "plan": "docs/nes-audit499-plan.json",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "hardware_candidate": "MMC509",
-      "paired_candidate": "ARM509-03 / FPGA507 board01 / strict SMB3(J) / unchanged4891 client",
+      "hardware_candidate": "MMC516",
+      "paired_candidate": "ARM-label01 / MMC516 fit-both01 / strict SMB3(J) / 4891 client ABI",
       "status_document": "docs/PROJECT-STATUS.ko.md",
       "progress": "docs/progress/pr-141.md",
       "work_state": "active",
       "historical_registry": "docs/progress/archive/2026-10-29/core-registry.json",
-      "development_candidate": "516: section 5 zero-fill DMA and guarded final VBlank. Local trial prepared; physical performance pending.",
+      "development_candidate": "Measured MMC516 hardware, investigate matched OBJ-heavy scenes.",
       "development_package": "analysis/window516-package.json",
       "regression_baseline": {
         "candidate": "NROM476",
@@ -64,7 +64,7 @@
         "fps": 14.602064602064601,
         "same_scene_and_input_as485": false
       },
-      "performance_selection": "MMC50960.08s770displays12.82fps;user reports slight improvement;50210.59fps was unmatched",
+      "performance_selection": "MMC516: 660/60.07s=10.99fps; MMC509: 770/60.08s=12.82fps, unmatched gameplay.",
       "prior485_baseline": {
         "candidate": "MMC485",
         "verification": "analysis/hardware486-gameplay485.json",
@@ -80,8 +80,8 @@
         "fps": 9.603861517976032,
         "same_scene_and_input_as493": false
       },
-      "development_delivery_verification": "analysis/service509-release.json",
-      "development_trial_guide": "docs/nes-mmc509-trial.ko.md",
+      "development_delivery_verification": "analysis/window516-package.json",
+      "development_trial_guide": "docs/nes-mmc516-trial.ko.md",
       "prior493_baseline": {
         "candidate": "MMC493",
         "verification": "analysis/hardware494-mmc493.json",
@@ -96,6 +96,12 @@
         "package": "analysis/capture502-package.json",
         "fps": 10.58764774429832,
         "matched_scene_with509": false
+      },
+      "prior509_baseline": {
+        "candidate": "MMC509",
+        "verification": "analysis/hardware510-mmc509.json",
+        "fps": 12.82,
+        "matched_scene_with516": false
       }
     },
     {
