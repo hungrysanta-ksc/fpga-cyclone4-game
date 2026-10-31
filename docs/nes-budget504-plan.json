@@ -6,7 +6,7 @@
   "baseline": "MMC502",
   "evidence": "analysis/budget504-verification.json",
   "A2_full_60Hz_passed": false,
-  "next_boundary": "Separate ordinary execution/DMA/independent final checks/VBlank within43.17ms output,then reduce payload/framing alongside19.88ms receive",
+  "next_boundary": "Matched dense OBJ tile scheduling, END/flush and final display vs NES game-state advancement",
   "gate": [
     "Exact span and independent coverage/CRC;STOP/no tentative raw or late COMMIT",
     "COMMIT releases collector while old display identity/immutable ROM lease survives through final ACK/EA",
@@ -62,10 +62,13 @@
     "measured": false
   },
   "next_order": [
-    "Bind existing actual65816 marks to509 ordinary consume/DMA/final-check/VBlank;avoid adding nested waits",
-    "Use16.25ms nonquery wire and temporary12ms wire budget to bound real byte/control removal;charge ARM/IRQ/ROM",
-    "Only implement structurally justified candidate;preserve STOP/independent validation/finalACK/menu and same-start continuous gate"
+    "Keep MMC509 as comparison and MMC502 rollback.",
+    "Reproduce the same first-level sequence; correlate OBJ plans, END/flush, final tile, SEAL and visible ACK.",
+    "Compare an input-matched NES reference to distinguish game logic from missed displays."
   ],
-  "current_physical_baseline": "MMC509",
-  "physical_evidence": "analysis/hardware510-mmc509.json"
+  "current_physical_baseline": "MMC516",
+  "physical_evidence": "analysis/hardware517-mmc516.json",
+  "current_PR": 141,
+  "current_branch": "codex/nes-output-budget-511",
+  "latest_replay_evidence": "analysis/window516-verification.json"
 }
