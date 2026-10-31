@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-먼저 로컬 변경을 보존한다. PR139 merge `46c0cc962397b3e757c838164b70b75fe73090a6`와head의master도달·tree일치를확인했다. 현재 `codex/nes-bandwidth-dma-budget-504`/PR140이며[504 실행 계획](../nes-budget504-plan.json)의불변dirty-prefix 선행DMA 경계부터계속한다. 새PC에서무조건master로바꾸거나reset/pull로덮지않는다.
+먼저 로컬 변경을 보존한다. PR139 merge `46c0cc962397b3e757c838164b70b75fe73090a6`와head의master도달·tree일치를확인했다. 현재 `codex/nes-bandwidth-dma-budget-504`/PR140이며[505 실행 검증](../nes-early505-contract.ko.md)을 읽고 wire본문/준비의존성 후보부터계속한다. 505의 첫frame 이득을 지속warm 개선으로 재해석하거나고립된prefix미세조정을반복하지않는다. 새PC에서무조건master로바꾸거나reset/pull로덮지않는다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 

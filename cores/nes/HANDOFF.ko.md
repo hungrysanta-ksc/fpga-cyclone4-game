@@ -2,11 +2,17 @@
 
 PR139 merge `46c0cc962397b3e757c838164b70b75fe73090a6`와head의master도달·tree일치를확인했다. 현재 `codex/nes-bandwidth-dma-budget-504` / [PR140](../../docs/progress/pr-140.md)다. [504 비용·교체 경계](../../docs/nes-budget504-contract.ko.md) · [실행 계획](../../docs/nes-budget504-plan.json) · [503 실기](../../docs/nes-hardware503-results.ko.md)를 먼저 읽는다.
 
+## 현재505 — 선행 DMA 기능 검증, 실기 승격 보류
+
+[505 계약](../../docs/nes-early505-contract.ko.md)과[검증](../../analysis/early505-verification.json)을 먼저 읽는다. 실제65816의 불변prefix DMA를 추가body205B/WRAM4B로 구현했다. 최종재전송을 삭제하고 STOP/실패의 tentative bank 무효화를 연결했다. 연속12×2위상 RGB·VRAM양동일/6거부/오염boot/4KiB입력정체를 통과했다.
+
+전체12개는약16.6ms 빨라졌지만 첫frame뒤11개는−0.012758/+0.032686ms로 사실상 같다. 고립된 prefix·opcode·위상 미세조정을 반복하지 않는다. 다음은 wire본문/packet준비의존성을 바꾸는 후보를 실제ARM·SPI·IRQ·ROM과 연결해 지속warm 예산으로 판정한다. 실기502/10.59fps·기존메뉴복귀기준은유지한다. 변경ROM Quartus/새전달본은없다. private근거는probes/nes-early505, source/실패/선택raw와archive01을보존했다.
+
 ## 현재504 — A2 비용 분해와 다음 실행 경계
 
 새PC계측은기존65816의픽셀·최종ACK시각을바꾸지않았다. 과거연속12개에서SEAL→upload2.24ms/upload→ACK23.65ms,wait1~3회다. 실제502warm/ARM·IRQ·ROM공통시간이아니다. 조회제외5911.51B/표시이며12mswire예산까지1974.01B부족하다. 전체7533B이력cache는M9K최소7개로남은5개에안맞는다. 공통generation은actual cold332record의Pythonbyte시제품만통과했다.
 
-다음은packet완료뒤불변dirty-list prefix만현재VBlank에들어갈때선행DMA하고,열린tail/SEAL최종검사/ACK를유지하는실행실험이다. 기존cursor초기화·최종재전송을대체하며추가SNESbody512B/WRAM8B/newM9K·ARM실행코드·FPGA제어0을할당했다. 미달성예산이며전체60Hz gate는미통과다. 새FW/합성/전달본없이실기502를유지한다. [504 검증](../../analysis/budget504-verification.json).
+504에서정한실험은packet완료뒤불변dirty-list prefix만현재VBlank에들어갈때선행DMA하고,열린tail/SEAL최종검사/ACK를유지하는실행실험이다. 기존cursor초기화·최종재전송을대체하며추가SNESbody512B/WRAM8B/newM9K·ARM실행코드·FPGA제어0을할당했다. 미달성예산이며전체60Hz gate는미통과다. 새FW/합성/전달본없이실기502를유지한다. [504 검증](../../analysis/budget504-verification.json).
 
 ## 현재502 — 첫 실기 성공, A2 비용 검토로 진행
 
