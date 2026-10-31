@@ -5,7 +5,7 @@
 ## 1. 상태를 읽는다
 
 1. [루트 README](../../README.md) → [프로젝트 현황](../PROJECT-STATUS.ko.md).
-2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR140](../progress/pr-140.md).
+2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR141](../progress/pr-141.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
 GB/GBC만 추가·공개 완료다. 현재 NES는 MMC509 60.08초770회 최종 표시/**12.82fps**, 실행·메뉴 복귀 정상이며 사용자는 체감 개선이 크지는 않다고 보고했다. 이전502/10.59fps와 동선이 달라 인과적 개선율·레벨별FPS는 미확정이다. [510 근거](../nes-hardware510-results.ko.md)를 따른다. 이후 시험판도 RESTORE 폴더를 생략하고502 백업을 보존한다.
@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-먼저 로컬 변경을 보존한다. PR139 merge `46c0cc962397b3e757c838164b70b75fe73090a6` 뒤 `codex/nes-bandwidth-dma-budget-504`/PR140에서 진행 중이다. [509 구현](../nes-service509-contract.ko.md), [510 실기 결과](../nes-hardware510-results.ko.md)를 읽는다. 실기 로그 수신은 끝났고 다음은43.17ms 출력 구간 분리와 A2 본문 예산이다. 새 PC에서 무조건 master로 바꾸거나 reset/pull로 덮지 않는다.
+현재 브랜치는 `codex/nes-output-budget-511`이다. PR140 병합 `ab55afeefd629bbcc37cbcc57c4d35f1a0172f7e`를 기준으로 PR141에서 진행한다. [511 출력 계측과 구현 순서](../nes-output511-results.ko.md)를 확인하고 로컬 변경을 보존한다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -39,10 +39,9 @@ git log -5 --oneline
 
 ## 4. 개발 재개 후 순서
 
-1. [510 실기 분석](../nes-hardware510-results.ko.md)으로509와502의 측정·한계를 확인한다. 현재 소스와 [509 패키지](../../analysis/service509-package.json)는 고정한다.
-2. 출력·최종ACK43.17ms를 일반 packet·복원·DMA·독립 검사·VBlank로 분리한다. planner/SEAL 대기 위치 변경과 op/quiet 중첩을 계산 절감으로 중복하지 않는다.
-3. 조회 제외 wire16.25ms와 수신19.88ms를 함께 줄일 본문·프레이밍 후보를 비교한다. 잠정12ms wire, 전체16.67ms, 실제 ARM/IRQ/ROM과 Flash36B/FPGA244LE 잔여를 함께 본다.
-4. 독립 검사·STOP·ACK/EA·VBlank·queue4/bulk2를 유지한다. 변경 없는 FIT를 반복하지 않고, 의미 있는 후보만 고유 이름으로 실기 전달한다. E8/phase/seed 미세조정은 동결한다.
+1. [510 실기 기준](../nes-hardware510-results.ko.md)과 [511 재생 계측](../nes-output511-results.ko.md)의 장면과 측정 경계를 구분한다.
+2. 일반 map의 목표 WRAM 직접 복원을 구현하고, 입력 공통 generation은 별도로 구현한다.
+3. 두 후보를 각각 켜거나 끈 네 조합에서 같은 입력·시작 시각·ROM 위상으로 초기/후반 표시 간격과 실제 제어·메모리 비용을 비교한다. STOP·독립 검사·최종 ACK·VBlank를 유지한다.
 
 ## 5. 기록을 남긴다
 

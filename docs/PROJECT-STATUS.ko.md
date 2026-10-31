@@ -1,6 +1,6 @@
 # 프로젝트 현황
 
-목표는 **sd2snes Cyclone IV 멀티 코어 확장**이다. NES는 PR140의 MMC509에서 실제 SMB3 전체 평균12.82fps를 확인했고, 다음은 출력·DMA 병목 분리다. [NES 인계](../cores/nes/HANDOFF.ko.md) · [PR별 경과](progress/README.md).
+목표는 **sd2snes Cyclone IV 멀티 코어 확장**이다. NES는 PR140의 MMC509에서 실제 SMB3 전체 평균12.82fps를 확인했고, PR141에서 출력 시간을 분리하고 map 전송·입력 generation 공유를 다음 구현 대상으로 골랐다. [NES 인계](../cores/nes/HANDOFF.ko.md) · [PR별 경과](progress/README.md).
 
 ## 코어별 판정
 
@@ -27,7 +27,7 @@
 | ARM509 | firmware212956B/Flash36B/BSS18576B; 전체 IRQ stack 미증명 |
 | 60Hz 평균 격차 | 78.03−16.67=61.36ms/표시 |
 | SPI 투영 | 전체25.41ms/조회 제외16.25ms; 단계와 중첩 합산 금지 |
-| 다음 작업 | 출력43.17ms에서 일반 packet 소비·DMA·독립 검사·VBlank를 분리하고 본문/프레이밍과 함께 예산화 |
+| 다음 작업 | [511 결과](nes-output511-results.ko.md)를 기준으로 map 직접 복원과 입력 공통 generation을 분리 구현 |
 | 미완료 | 지속60fps·장면별/p95·NES 실시간 속도·capture 무손실·MMC4/5·제품 공개 |
 
 [509 전달본](../analysis/service509-package.json)은 ROM/save/RESTORE 없이 제작한 불변 스냅샷이다. 이번 수신 분석에서 새 firmware·ZIP·합성은 만들지 않았다. [MMC502 실기10.59fps](nes-hardware503-results.ko.md)는 복구·비교 기준으로 보존한다.

@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-bandwidth-dma-budget-504`, [PR140](../../docs/progress/pr-140.md)은 draft다. [MMC509 실기 분석510](../../docs/nes-hardware510-results.ko.md), [측정 JSON](../../analysis/hardware510-mmc509.json), [A2 계획](../../docs/nes-budget504-plan.json)을 먼저 읽는다. 제작 시점의 [509 계약](../../docs/nes-service509-contract.ko.md)은 실기 수신 이전의 불변 기록이다.
+현재 브랜치는 `codex/nes-output-budget-511`이며 [PR141](../../docs/progress/pr-141.md)에서 작업한다. PR140 병합 커밋은 `ab55afeefd629bbcc37cbcc57c4d35f1a0172f7e`다. [511 실행 계측](../../docs/nes-output511-results.ko.md)과 [510 실기 분석](../../docs/nes-hardware510-results.ko.md)을 먼저 읽는다.
 
 ## 선택된 실기 기준
 
@@ -12,9 +12,9 @@
 
 ## 다음 작업 순서
 
-1. 동작한509를 고정하고 약43.17ms 출력 구간을 기존 실제65816 계측으로 일반 packet/복원·DMA·독립 검사·VBlank로 분리한다. quiet·op 시간을 phase에 더하지 않는다.
-2. 입력·출력 본문/프레이밍도 함께 줄일 후보를 비교한다. 조회 제외16.25ms에서 잠정12ms wire 예산까지 약1395B/표시가 부족하다. ARM Flash36B/FPGA244LE·5M9K·실제 IRQ/ROM·4credit/2bulk bank를 함께 본다.
-3. 같은 입력·시작 시각의 연속 비교 후 의미 있는 후보만 고유 이름 실기로 전달한다. 독립 검사·STOP·최종ACK·VBlank·메뉴 복귀는 유지한다.505 고립 prefix DMA와 E8/polling/phase/seed 미세조정은 새 근거 전까지 동결한다.
+1. 일반 map 패킷을 65816에서 목표 WRAM에 한 번 복원한다. 크기·범위·독립 검사·STOP·최종 ACK를 유지한다. 511의 같은 후반 10화면에서 선형 map 압축은 평균 1,046.8B를 절감했다.
+2. 입력 패킷마다 generation을 공유하는 구조를 별도로 연결한다. 별도 COMMIT을 유지하면서 같은 후반 입력에서 평균 519.2B를 절감했다. 구현 시 ARM Flash 36B, FPGA 244LE·5M9K의 여유와 삭제할 코드를 함께 확인한다.
+3. 509 원본, map만, 입력만, 두 변경을 합친 네 일정을 비교한다. 재생에서는 일반 소비 22.66ms와 VBlank 대기 20.00ms가 컸다. 4.77ms의 wire 예산이 초기 두 화면 이후의 최종 ACK 간격을 줄이는지 확인한다. 실기 전체 43.17ms의 세부 항목은 직접 계측되지 않았다.
 
 ## 재현 위치와 실패 보존
 
