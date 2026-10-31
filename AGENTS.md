@@ -11,7 +11,9 @@
 
 ## 현재 작업 범위
 
-- 현재 511. PR140 병합 확인 후 codex/nes-output-budget-511 / PR141. docs/nes-output511-results.ko.md와 analysis/output511-verification.json을 먼저 읽는다. 최신 실기 MMC509 12.82fps. 다음은 map 직접 복원·입력 generation 공유의 분리 구현 및 네 가지 연속 일정 비교다. 재생에서 일반 소비 22.66ms, VBlank 대기 20.00ms. Flash 36B, FPGA 244LE·5M9K 예산 및 독립 검사·STOP·최종 ACK를 유지한다.
+- 현재 512 / PR141. docs/nes-transfer512-results.ko.md와 analysis/transfer512-verification.json을 먼저 읽는다. 실기 MMC509 12.82fps. 입력은 후반 10간격 합 0.030ms 절감·setup −0.317ns, map은 합 149.736ms 회귀, 결합은 116.445ms 회귀·Flash 0B. 두 후보는 보류. 다음은 대상 뱅크의 동일 map 행을 기존 literal DMA에서 실제 생략할 수 있는 양·시간·RAM 예산 조사.
+
+- 511 계측 기록. PR140 병합 확인 후 codex/nes-output-budget-511 / PR141. docs/nes-output511-results.ko.md와 analysis/output511-verification.json을 먼저 읽는다. 최신 실기 MMC509 12.82fps. 다음은 map 직접 복원·입력 generation 공유의 분리 구현 및 네 가지 연속 일정 비교다. 재생에서 일반 소비 22.66ms, VBlank 대기 20.00ms. Flash 36B, FPGA 244LE·5M9K 예산 및 독립 검사·STOP·최종 ACK를 유지한다.
 
 - 이전510: FIRST docs/nes-hardware510-results.ko.md + analysis/hardware510-mmc509.json. PR140, 실기 MMC509 60.08초/770표시/12.82fps·실행/메뉴 정상·체감 소폭. 502 10.59fps 대비 관측 +21.05%, 같은 동선/첫레벨 전용 가속률 아님. 수신19.88/계획14.30/출력43.17ms, 대기 위치 이동·중첩 주의. 마지막771번째 ordinary credit deadline 1/2/2·pending4; 전달 ARM03 5조건/18반례, 새 화면 제외. NEXT 출력 소비·DMA·최종 검사·VBlank 분리 + 남은 입력 본문 예산. 502 백업·STOP/독립 검사/finalACK 보존; 새 ZIP/FIT 없음.
 

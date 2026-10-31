@@ -123,13 +123,13 @@ class Link:
         shutil.copyfile(a.client/'sink165.sfc',a.out/'client.sfc')
         self.log=(a.out/'mesen.log').open('wb');env=dict(os.environ,DOTNET_ROOT='C:/works/dotnet',DOTNET_ROOT_X64='C:/works/dotnet')
         self.process=subprocess.Popen([str(a.mesen),'--testRunner',str(a.out/'capture.lua'),str(a.out/'client.sfc'),'--timeout=1800','--doNotSaveSettings','--enableStdout','--snes.disableFrameSkipping=true','--debug.scriptWindow.allowIoOsAccess=true','--debug.scriptWindow.scriptTimeout=90'],stdout=self.log,stderr=subprocess.STDOUT,env=env,creationflags=subprocess.CREATE_NO_WINDOW)
-    def rpc(self,t,operation='SYNC',*args):
-        self.sequence+=1;seq=self.sequence;p=self.a.out/f'command-{seq}.txt'
-        tmp=self.a.out/'command.tmp';tmp.write_text('\n'.join([str(math.ceil(t)),operation,*args])+'\n',encoding='ascii');tmp.replace(p)
+    def exchange(self,seq,target,operation,args):
+        p=self.a.out/f'command-{seq}.txt'
+        tmp=self.a.out/'command.tmp';tmp.write_text('\n'.join([str(target),operation,*args])+'\n',encoding='ascii');tmp.replace(p)
         reply=self.a.out/f'reply-{seq}.txt';deadline=time.monotonic()+100
         while not reply.exists():
             if self.process.poll()is not None:raise AssertionError(('Mesen exited',self.process.returncode,self.a.out/'mesen.log'))
-            assert time.monotonic()<deadline,('Mesen timeout',seq,t)
+            assert time.monotonic()<deadline,('Mesen timeout',seq,target)
             time.sleep(.001)
         # Windows can briefly retain a sharing lock after the atomic rename.
         # Retry only access-denied, bounded by the same transaction deadline.
@@ -138,6 +138,10 @@ class Link:
             except PermissionError:
                 if time.monotonic()>=deadline:raise
                 time.sleep(.002)
+        return lines
+    def rpc(self,t,operation='SYNC',*args):
+        self.sequence+=1;seq=self.sequence
+        lines=self.exchange(seq,math.ceil(t),operation,args)
         now=int(lines[0])
         if now < math.ceil(t):
             raise ValueError(f'RPC {seq} replied at {now}, before requested clock {math.ceil(t)}')

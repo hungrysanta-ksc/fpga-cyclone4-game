@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-현재 브랜치는 `codex/nes-output-budget-511`이다. PR140 병합 `ab55afeefd629bbcc37cbcc57c4d35f1a0172f7e`를 기준으로 PR141에서 진행한다. [511 출력 계측과 구현 순서](../nes-output511-results.ko.md)를 확인하고 로컬 변경을 보존한다.
+현재 브랜치는 `codex/nes-output-budget-511`이다. PR140 병합 `ab55afeefd629bbcc37cbcc57c4d35f1a0172f7e`를 기준으로 PR141에서 진행한다. [512 실험 결과와 다음 순서](../nes-transfer512-results.ko.md)를 확인하고 로컬 변경을 보존한다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -39,9 +39,9 @@ git log -5 --oneline
 
 ## 4. 개발 재개 후 순서
 
-1. [510 실기 기준](../nes-hardware510-results.ko.md)과 [511 재생 계측](../nes-output511-results.ko.md)의 장면과 측정 경계를 구분한다.
-2. 일반 map의 목표 WRAM 직접 복원을 구현하고, 입력 공통 generation은 별도로 구현한다.
-3. 두 후보를 각각 켜거나 끈 네 조합에서 같은 입력·시작 시각·ROM 위상으로 초기/후반 표시 간격과 실제 제어·메모리 비용을 비교한다. STOP·독립 검사·최종 ACK·VBlank를 유지한다.
+1. [510 실기 기준](../nes-hardware510-results.ko.md)과 [512 네 조합 결과](../nes-transfer512-results.ko.md)를 구분한다. MMC509를 유지하고 새 실기 설치는 보류했다.
+2. 대상 map 뱅크에 이미 저장된 바이트와 예정 전송을 비교해 실제 생략 가능량과 검사 시간·RAM부터 측정한다.
+3. STOP·독립 검사·최종 ACK·VBlank를 유지한다. 후보의 후반 표시 간격과 전체 보드의 타이밍을 함께 확인한다.
 
 ## 5. 기록을 남긴다
 
