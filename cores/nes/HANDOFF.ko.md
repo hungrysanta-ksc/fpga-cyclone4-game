@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-output-budget-511`이며 [PR141](../../docs/progress/pr-141.md)에서 작업한다. PR140 병합 커밋은 `ab55afeefd629bbcc37cbcc57c4d35f1a0172f7e`다. [515 ACK 행 이력](../../docs/nes-history515-results.ko.md), [514 부분 DMA 실측](../../docs/nes-trim514-results.ko.md), [513 대상 map 조사](../../docs/nes-map513-results.ko.md), [512 네 조합 결과](../../docs/nes-transfer512-results.ko.md)와 [510 실기 분석](../../docs/nes-hardware510-results.ko.md)을 먼저 읽는다.
+현재 브랜치는 `codex/nes-output-budget-511`이며 [PR141](../../docs/progress/pr-141.md)에서 작업한다. PR140 병합 커밋은 `ab55afeefd629bbcc37cbcc57c4d35f1a0172f7e`다. [516 소비·VBlank 및 전달](../../docs/nes-window516-results.ko.md), [515 ACK 행 이력](../../docs/nes-history515-results.ko.md), [514 부분 DMA 실측](../../docs/nes-trim514-results.ko.md), [513 대상 map 조사](../../docs/nes-map513-results.ko.md), [512 네 조합 결과](../../docs/nes-transfer512-results.ko.md)와 [510 실기 분석](../../docs/nes-hardware510-results.ko.md)을 먼저 읽는다.
 
 ## 선택된 실기 기준
 
@@ -14,7 +14,7 @@
 
 1. MMC509를 유지한다. 512 실험은 원본 93.110ms, map 108.084ms, 입력 93.107ms, 결합 104.755ms의 후반 평균 간격을 측정했다. 입력 RTL은 관련 setup −0.317ns, 결합 Flash는 0B다. 산출물·재현 위치와 제한은 [512](../../docs/nes-transfer512-results.ko.md)에 있다.
 2. 514의 부분 map은 기능·cold 복구·STOP을 통과했지만 후반 평균이 104.826ms로 늘었다. 88개 패킷의 65816 소비 합계가 62.222→210.717ms였다. 생략 바이트를 패킷마다 다시 순회하는 방식은 종료한다.
-3. 515는 이력 생성·저장·손상·STOP과 두 cold 화면 복구를 검증했다. 기본 일정의 916 ACK는 공통 코드 대조군과 동일했다. 다음은 MMC509에서 section 5 일반 소비·SEAL 준비 시각과 VBlank 잔여 시간을 함께 계측한다.
+3. MMC516은 제한 실기 비교 단계다. 시험판은 `probes/nes-window516/trial02/MMC516-TRIAL.zip`이며 선택된 쌍은 ARM-label01과 fit-both01이다. 사용자 ROM은 mmc516.nes로 복사한다. 실행·첫 레벨 화면·STOP·메뉴 복귀와 새 로그 세 개를 비교한다. [설치 안내](../../docs/nes-mmc516-trial.ko.md)
 
 ## 재현 위치와 실패 보존
 

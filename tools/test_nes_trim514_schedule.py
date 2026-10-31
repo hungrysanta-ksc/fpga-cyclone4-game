@@ -19,12 +19,7 @@ MAP_ORACLE = """
    end
 """
 
-if __name__=="__main__":
-    p=argparse.ArgumentParser(description=__doc__)
-    for name in ("arm","data","fixture","plans","client","mesen","out","calendar","driver503","capture"):
-        p.add_argument("--"+name,type=Path,required=True)
-    p.add_argument("--start-clock",type=int,default=3000000)
-    a=p.parse_args()
+def run_schedule(a, instrument=None):
     a.out=a.out.resolve()
     a.frames,a.cpi,a.spi_us,a.rom_stride,a.rom_phase,a.start=12,2,0,48,0,a.start_clock
     a.candidate=a.capture_gate=True
@@ -39,10 +34,20 @@ if __name__=="__main__":
         text=path.read_text()
         anchor="   local hdma=file('expected-'..pw(8)..'.bin')"
         assert text.count(anchor)==1
-        path.write_text(text.replace(anchor,MAP_ORACLE+anchor),encoding="utf8")
+        text=text.replace(anchor,MAP_ORACLE+anchor)
+        if instrument:text=instrument(text,a)
+        path.write_text(text,encoding="utf8")
     joint.lua_rpc=observe
     joint.run(a)
     report=json.loads((a.out/"joint.json").read_text())
     report["parameters"]["ROM_calendar"]=Calendar(a.calendar).summary
     report["map_WRAM_VRAM_verified"]=12
     (a.out/"joint.json").write_text(json.dumps(report,indent=2)+"\n")
+
+if __name__=="__main__":
+    p=argparse.ArgumentParser(description=__doc__)
+    for name in ("arm","data","fixture","plans","client","mesen","out","calendar","driver503","capture"):
+        p.add_argument("--"+name,type=Path,required=True)
+    p.add_argument("--start-clock",type=int,default=3000000)
+    a=p.parse_args()
+    run_schedule(a)

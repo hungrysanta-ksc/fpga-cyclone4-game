@@ -11,7 +11,7 @@
 | 코어 | 상태 | 확인된 범위 | 다음 목표 |
 |---|---|---|---|
 | [GB/GBC](cores/gbc/README.md) | **추가 성공·공개 완료** | G13C44 / sd2snesHST 0.9.0, 실기·저장·RTC 등은 호환성 문서 범위 | 검증된 구현·세이브 보존, 회귀 유지 |
-| [NES](cores/nes/README.md) | **개발 중** | MMC509 실제 SMB3 **전체 실행 평균 12.82fps**, 실행·메뉴 복귀 정상; NROM476의 23.84fps는 별도 회귀 | 출력 소비·DMA·VBlank 비용과 전송량 개선 → 지속 60fps |
+| [NES](cores/nes/README.md) | **개발 중** | MMC509 실제 SMB3 **전체 실행 평균 12.82fps**, 실행·메뉴 복귀 정상; NROM476의 23.84fps는 별도 회귀 | [MMC516 실기 비교](docs/nes-mmc516-trial.ko.md) → 지속 60fps |
 | [PC Engine](cores/pce/README.md) | 조사 대기 | 구현·실기 성공 없음 | NES 이후 범위·자원 검토 |
 
 MMC509는 60.08초 동안 화면을 770회 표시해 **평균 12.82fps**를 기록했습니다. 실행·메뉴 복귀는 정상이고, 사용자는 프레임 개선이 느껴지지만 크지는 않다고 보고했습니다. 이전 MMC502는 636회·10.59fps였습니다. 같은 동선이 아니므로 관측 차이를 특정 수정의 가속률이나 첫 레벨 전용FPS로 해석하지 않습니다. **60fps는 아직 미완료입니다.** [실기 분석](docs/nes-hardware510-results.ko.md) · [측정 근거](analysis/hardware510-mmc509.json) · [상세 현황](docs/PROJECT-STATUS.ko.md)

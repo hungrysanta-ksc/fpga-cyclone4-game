@@ -17,3 +17,5 @@
 - [PR별 진척](../../docs/progress/README.md) · [이전 문서 원문](../../docs/progress/archive/README.md). 과거 Current/NEXT는 당시 기록이다.
 
 재개 시 수신·출력/SEAL의 실제 바이트와 이미 존재하는 capture/export/표시 중첩을 확인한다. MCU_RDY를 source-ready IRQ로 가정하지 않는다. 자세한 예산·보존·완료 조건은 현재 인계에서 관리한다.
+
+제한 시험판 MMC516은 section 5 소비와 최종 VBlank 대기를 줄였다. 같은 SMB3 첫 레벨에서 사용자 로그와 실제 표시를 확인하는 단계다. [516 결과](../../docs/nes-window516-results.ko.md) · [설치와 로그](../../docs/nes-mmc516-trial.ko.md)

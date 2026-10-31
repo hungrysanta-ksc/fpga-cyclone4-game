@@ -27,7 +27,7 @@
 | ARM509 | firmware212956B/Flash36B/BSS18576B; 전체 IRQ stack 미증명 |
 | 60Hz 평균 격차 | 78.03−16.67=61.36ms/표시 |
 | SPI 투영 | 전체25.41ms/조회 제외16.25ms; 단계와 중첩 합산 금지 |
-| 다음 작업 | [515 결과](nes-history515-results.ko.md)를 기준으로 MMC509의 section 5 소비와 SEAL 준비 시각, VBlank 내 완료 가능 구간을 비교한다. |
+| 다음 작업 | [MMC516 전달](nes-mmc516-trial.ko.md) 후 같은 SMB3 첫 레벨 실기·메뉴 복귀·세 로그를 확인한다. [두 위상 결과](nes-window516-results.ko.md) |
 | 미완료 | 지속60fps·장면별/p95·NES 실시간 속도·capture 무손실·MMC4/5·제품 공개 |
 
 [509 전달본](../analysis/service509-package.json)은 ROM/save/RESTORE 없이 제작한 불변 스냅샷이다. 이번 수신 분석에서 새 firmware·ZIP·합성은 만들지 않았다. [MMC502 실기10.59fps](nes-hardware503-results.ko.md)는 복구·비교 기준으로 보존한다.

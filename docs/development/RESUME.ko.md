@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-현재 브랜치는 `codex/nes-output-budget-511`이다. PR140 병합 `ab55afeefd629bbcc37cbcc57c4d35f1a0172f7e`를 기준으로 PR141에서 진행한다. [515 행 이력 실측과 다음 순서](../nes-history515-results.ko.md)를 확인하고 로컬 변경을 보존한다.
+현재 브랜치는 `codex/nes-output-budget-511`이다. PR140 병합 `ab55afeefd629bbcc37cbcc57c4d35f1a0172f7e`를 기준으로 PR141에서 진행한다. [516 비용 및 SD 전달](../nes-window516-results.ko.md)를 확인하고 로컬 변경을 보존한다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -39,9 +39,9 @@ git log -5 --oneline
 
 ## 4. 개발 재개 후 순서
 
-1. [510 실기 기준](../nes-hardware510-results.ko.md)과 [512 네 조합 결과](../nes-transfer512-results.ko.md)를 구분한다. MMC509를 유지하고 새 실기 설치는 보류했다.
-2. [515 결과](../nes-history515-results.ko.md)에서 두 시작 위상의 후반 표시 간격을 확인한다. MMC509 section 5의 소비와 VBlank 잔여 시간 예산을 다음 비교로 삼는다.
-3. STOP·독립 검사·최종 ACK·VBlank를 유지한다. 후보의 후반 표시 간격과 전체 보드의 타이밍을 함께 확인한다.
+1. MMC509가 현재 실기 기준이다. [510 실기](../nes-hardware510-results.ko.md)와 [516 비교](../nes-window516-results.ko.md)의 시간 범위를 구분한다.
+2. MMC516 SD 전달본은 trial02이고 실제 성능은 미측정이다. [실기 절차](../nes-mmc516-trial.ko.md)에 따라 동일 첫 레벨 동선·메뉴 복귀 및 세 로그를 확인한다.
+3. 516 실기의 표시 수·수신·계획·출력·오류 및 메뉴 복귀를 비교한다. 확인 전까지 하드웨어 기준은 MMC509다.
 
 ## 5. 기록을 남긴다
 

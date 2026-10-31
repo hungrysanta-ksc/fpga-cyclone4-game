@@ -11,7 +11,9 @@
 
 ## 현재 작업 범위
 
-- 현재 515 / PR141. docs/nes-history515-results.ko.md와 analysis/history515-verification.json을 먼저 읽는다. MMC509 실기 12.82fps 유지. 기본 일정에서 직전 뱅크 행 이력으로 1,856B를 생략했으나 916 최종 ACK는 공통 코드 대조군과 같은 시각이었다. 두 시작 위상의 후반 간격과 제한을 결과 문서에서 확인한다. 다음은 MMC509 section 5 소비·SEAL 준비와 남은 VBlank의 시간 예산이다.
+- 현재 516 / PR141. docs/nes-window516-results.ko.md, analysis/window516-package.json, docs/nes-mmc516-trial.ko.md를 먼저 읽는다. 실기 기준 MMC509 12.82fps 유지. 결합은 같은 두 위상에서 후반 약 93.11→83.26ms. MMC516 trial02 전달 후 실제 SMB3 플레이·메뉴 복귀·새 로그 3개 확인 대기. ROM/save/RESTORE 미포함.
+
+- 515 기록 / PR141. docs/nes-history515-results.ko.md와 analysis/history515-verification.json을 먼저 읽는다. MMC509 실기 12.82fps 유지. 기본 일정에서 직전 뱅크 행 이력으로 1,856B를 생략했으나 916 최종 ACK는 공통 코드 대조군과 같은 시각이었다. 두 시작 위상의 후반 간격과 제한을 결과 문서에서 확인한다. 다음은 MMC509 section 5 소비·SEAL 준비와 남은 VBlank의 시간 예산이다.
 
 - 514 기록 / PR141. docs/nes-trim514-results.ko.md와 analysis/trim514-verification.json을 먼저 읽는다. MMC509 실기 12.82fps 유지. 8B 마스크·부분 DMA는 12화면에서 E1·DMA 각각 4,800B 절감, 후반 평균 93.110→104.826ms 회귀. 바이트별 CRC 재순회 후보는 종료한다. 다음은 최종 ACK에서 확정한 독립 뱅크·행 이력의 생성·조회·STOP 비용을 산정한다.
 
