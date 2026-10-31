@@ -138,7 +138,10 @@ class Link:
             except PermissionError:
                 if time.monotonic()>=deadline:raise
                 time.sleep(.002)
-        now=int(lines[0]);self.max_rounding=max(self.max_rounding,now-math.ceil(t))
+        now=int(lines[0])
+        if now < math.ceil(t):
+            raise ValueError(f'RPC {seq} replied at {now}, before requested clock {math.ceil(t)}')
+        self.max_rounding=max(self.max_rounding,now-math.ceil(t))
         for item in (lines[3]if len(lines)>3 else '').split(';'):
             if not item:continue
             token,clock=map(int,item.split(':'));self.future.append((clock,0,token,None))
