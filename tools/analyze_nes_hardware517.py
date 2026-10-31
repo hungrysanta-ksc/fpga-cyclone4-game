@@ -90,7 +90,7 @@ def analyse(a):
     assert g['sink_window_sent']==g['sink_window_retired'] and int(g['sink_window_sent'])==int(b['cost_op_05'].split(',')[0])%65536
     assert g['sink_window_flags']=='2' and g['sink_window_ack']=='1' and g['sink_trace_ack_valid']=='0' and g['sink_trace_ack_hex']=='0'*24
     previous=base['display']
-    return dict(trial=516,physical=True,scope='Single unaligned play session. Five-second bins use ARM frame start; no enemy count, game-state advancement, video or scene timestamps.',
+    return dict(trial=516,trial_family='MMC',hardware_run_passed=True,physical=True,scope='Single unaligned play session. Five-second bins use ARM frame start; no enemy count, game-state advancement, video or scene timestamps.',
                 user_observation='Normal execution and menu return, perceived improvement; slowdown reported in busy enemy scenes.',
                 source_SHA256={f.name:sha(f) for f in files.values()},package_firmware_SHA256=package['firmware_SHA256'],
                 firmware_hash_from_hardware=False,display=dict(completed=n,seconds=elapsed,fps=n/elapsed,mean_ms=elapsed*1000/n),

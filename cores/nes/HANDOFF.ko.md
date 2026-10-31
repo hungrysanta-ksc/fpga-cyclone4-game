@@ -2,6 +2,10 @@
 
 현재 브랜치는 `codex/nes-output-budget-511`이며 [PR141](../../docs/progress/pr-141.md)에서 작업한다. PR140 병합 커밋은 `ab55afeefd629bbcc37cbcc57c4d35f1a0172f7e`다. [517 실기 수신](../../docs/nes-hardware517-results.ko.md), [516 소비·VBlank 및 전달](../../docs/nes-window516-results.ko.md), [515 ACK 행 이력](../../docs/nes-history515-results.ko.md), [514 부분 DMA 실측](../../docs/nes-trim514-results.ko.md), [513 대상 map 조사](../../docs/nes-map513-results.ko.md), [512 네 조합 결과](../../docs/nes-transfer512-results.ko.md)와 [510 실기 분석](../../docs/nes-hardware510-results.ko.md)을 먼저 읽는다.
 
+## 현재 작업
+
+PR141은 master에 병합됐다. [PR142](../../docs/progress/pr-142.md)에서 [518 구간 계측](../../docs/nes-obj518-results.ko.md)과 [519의 53세대 연속 비교](../../docs/nes-dense519-results.ko.md)를 확인한다. 단독 선행을 제외하고 [520의 패킷 내 정렬](../../docs/nes-order520-results.ko.md)로 952의 bulk를 9→5건으로 줄였다. [MMC520 실기 전달본](../../docs/nes-mmc520-trial.ko.md)은 보드 확인 대기 중이다. 다음 실기 시험부터 최종 표시가 확인된 1–40초·40–60초를 따로 비교한다.
+
 ## 최신 실기와 비교 기준
 
 MMC516 기능 실기 확인. 10.99fps, 실행·메뉴 복귀 정상. 45~50초에 수신 21.67ms, 계획·공급 45ms, 출력 100.33ms/표시. 원본 세 로그는 `probes/nes-hardware517/run01`에 보존했다. 아래 509 수치는 다른 동선의 비교 기준이다.
@@ -16,7 +20,7 @@ MMC516 기능 실기 확인. 10.99fps, 실행·메뉴 복귀 정상. 45~50초에
 
 1. MMC509를 유지한다. 512 실험은 원본 93.110ms, map 108.084ms, 입력 93.107ms, 결합 104.755ms의 후반 평균 간격을 측정했다. 입력 RTL은 관련 setup −0.317ns, 결합 Flash는 0B다. 산출물·재현 위치와 제한은 [512](../../docs/nes-transfer512-results.ko.md)에 있다.
 2. 514의 부분 map은 기능·cold 복구·STOP을 통과했지만 후반 평균이 104.826ms로 늘었다. 88개 패킷의 65816 소비 합계가 62.222→210.717ms였다. 생략 바이트를 패킷마다 다시 순회하는 방식은 종료한다.
-3. MMC516 실기는 완료됐다. 45~50초를 장면과 동일시하지 말고 동일 구간·입력에서 OBJ tile 계획, END flush/공급, SEAL 준비·표시 ACK와 NES 게임 상태 진행을 대조한다.
+3. 520의 동일 입력 비교는 완료됐다. 로컬 전달본은 상위 작업 폴더의 `probes/nes-order520/trial01/MMC520-TRIAL.zip`이다. 사용자 실기 로그 3개와 메뉴 복귀를 받은 뒤 1–40초와 40–60초를 분리해 기록한다.
 
 ## 재현 위치와 실패 보존
 
