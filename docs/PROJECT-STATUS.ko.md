@@ -32,7 +32,7 @@
 
 [502 전달본](../analysis/capture502-package.json)과[제작검증](../analysis/capture502-release-verification.json)은불변스냅샷이다. 사용자별도백업에따라 **다음NES시험판부터RESTORE폴더는생략**한다. 기존ZIP/GBC/save는보존하고실행상의STOP/base/menu복구는계속유지한다. 이번수신분석으로새ZIP/합성은만들지않았다.
 
-[506 후보](nes-raw506-contract.ko.md)는 입력 압축과 단일 복원으로 조건부 연속 일정의 첫 프레임 이후 11구간을 2.63% 줄였다. [507](nes-fault507-contract.ko.md)은 오류 공개 시점을 유지하며 관련 setup을 −1.276ns에서 +0.078ns로 회복했다. 전체 Lite는 15164LE/14172comb/8394FF/51M9K이며 새 실기 측정은 없다. 다음은 END 뒤 일반 출력 선행 공급과 bulk 완료 소유권 교체다. 실기 기준 MMC502/10.59fps와 전체60Hz 미달성 판정은 유지한다.
+[509 후보](nes-service509-contract.ko.md)는압축입력·bulk우선일반공급을유지하고Flash36B를회복했다. 실제부팅ROM경쟁과같은기록을적용한연속일정을검증해[MMC509 제한실기확인본](nes-mmc509-trial.ko.md)을준비했다. 첫레벨폐루프/새실기FPS는아직아니며MMC50210.59fps가실기기준이다. 다음은사용자설치·3개로그와같은동선비교다.507 Lite15164LE/51M9K/관련setup+.078·hold+.139ns는동일소스근거를재사용한다.
 
 ## 이전493·489
 

@@ -6,7 +6,7 @@
   "baseline": "MMC502",
   "evidence": "analysis/budget504-verification.json",
   "A2_full_60Hz_passed": false,
-  "next_boundary": "Bind actual ROM arbiter trace to508 common schedule;remove duplicated progress/completion control to restore Flash headroom;keep independent checks and bulk/credit priority.",
+  "next_boundary": "Matched physical502/509 gameplay and receive/plan/SEAL/capture analysis before further A2 payload work",
   "gate": [
     "Exact span and independent coverage/CRC;STOP/no tentative raw or late COMMIT",
     "COMMIT releases collector while old display identity/immutable ROM lease survives through final ACK/EA",
@@ -21,9 +21,9 @@
     "unmodified498 promotion",
     "isolated505 prefix/opcode/phase microtuning"
   ],
-  "delivery": "MMC502 remains selected;508 has zero Flash margin;actual arbiter/full resetCDCIO/new physical test remain open;future trial excludes RESTORE",
-  "status": "508_actual_ARM_interleaving_passed;steady_model_gain5.09percent;Flash0B_blocks_trial",
-  "execution_evidence": "analysis/overlap508-verification.json",
+  "delivery": "MMC509-OVERLAP.zip without ROM/save/RESTORE;physical502 remains baseline;three unique509 logs required",
+  "status": "509_limited_trial_ready;physical_result_pending",
+  "execution_evidence": "analysis/service509-verification.json",
   "historical_505_allocation": {
     "additional_SNES_body_max_B": 512,
     "additional_WRAM_max_B": 8,
@@ -33,9 +33,9 @@
     "measured": false
   },
   "current_candidate": {
-    "experiment": 508,
+    "experiment": 509,
     "wire_version": "2233",
-    "ARM_firmware_added_B": 148,
+    "ARM_firmware_added_B": 112,
     "persistent_RAM_added_B": 4,
     "related_setup_ns": 0.078,
     "related_hold_ns": 0.139,
@@ -43,10 +43,12 @@
     "compression_experiment": 506,
     "FPGA_comb_delta_vs502": 37,
     "FPGA_fitted_LE_delta_vs502": -123,
-    "ARM_firmware_delta_reference": "vs physical502;140B vs506/507",
-    "Flash_remaining_B": 0,
-    "observed_extra_stack_B": 272,
-    "FPGA_experiment": 507
+    "ARM_firmware_delta_reference": "vs physical502;-36B vs508",
+    "Flash_remaining_B": 36,
+    "observed_extra_stack_B": 248,
+    "FPGA_experiment": 507,
+    "ROM_trace": "20-frame paired boot core;8-window replay sensitivity,not matched first-level closed loop",
+    "limited_trial_ready": true
   },
   "historical_508_allocation": {
     "runtime_struct_extra_max_B": 8,
@@ -57,8 +59,8 @@
     "measured": false
   },
   "next_order": [
-    "Actual ROM arbiter request/grant/return trace with shared SPI/IRQ/65816 schedule",
-    "Joint removal of duplicated progress/completion control to restore positive Flash margin;charge BSS and stack",
-    "Same-condition cold/continuous/STOP/finalACK/VBlank validation before unique-name physical package"
+    "Install limitedMMC509 and preserve three logs per run;compare matched502 gameplay",
+    "Check STOP/finalACK/menu,capture errors and first/continuous display intervals;do not sum overlapping counters",
+    "Rebudget actual payload/framing/DMA bottlenecks;freeze isolated E8/phase/seed tuning without new evidence"
   ]
 }

@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-먼저 로컬 변경을 보존한다. PR139 merge `46c0cc962397b3e757c838164b70b75fe73090a6`와head의master도달·tree일치를확인했다. 현재 `codex/nes-bandwidth-dma-budget-504`/PR140이며 [508 계약](../nes-overlap508-contract.ko.md)을 읽는다. END 뒤 bulk 우선/일반 선행 공급과 완료 watermark를 실제 ARM에 연결해 같은12개 일정의 첫 표시 이후6.76%,두 초기 표시 이후5.09% 단축을 확인했다. ROM밀도/CPI는 모형이며 실제 arbiter trace와 새 실기 시험은 미완료다. Flash0B/BSS+4/관측stack+272B라 전달은 보류하고 MMC502를 유지한다.507 관련setup+.078/hold+.139ns는같은FPGA소스근거를재사용하며 전체reset/CDC/IO승인은아니다. 새PC에서무조건master로바꾸거나reset/pull로덮지않는다.
+먼저 로컬 변경을 보존한다. PR139 merge `46c0cc962397b3e757c838164b70b75fe73090a6` 뒤 `codex/nes-bandwidth-dma-budget-504`/PR140에서 진행 중이다. [509 계약](../nes-service509-contract.ko.md)을 읽는다. E8 공유로Flash36B를회복하고508의시간이득을유지했다. 실제부팅ROM경쟁과그기록의연속일정재생을분리검증해제한MMC509전달본을준비했다. 첫레벨폐루프/새실기FPS/전체resetCDCIO승인은아니다. 사용자509로그가다음입력이며실기기준은MMC50210.59fps다. 새PC에서무조건master로바꾸거나reset/pull로덮지않는다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -39,11 +39,10 @@ git log -5 --oneline
 
 ## 4. 개발 재개 후 순서
 
-1. [508 계약](../nes-overlap508-contract.ko.md)의 선택코드/실측 비용/모형 한계를 읽는다. last-opcode 검사를 되살리거나 partial watermark를 최종 표시 ACK로 취급하지 않는다.
-2. 실제 ROM arbiter 요청/허용/반환 trace를 공동 일정에 연결한다. ready bulk·credit을 우선하고 일반 packet은 한 번에 하나만 공급한다.
-3. 기존 진행·완료 제어의 중복을 함께 삭제해 Flash 여유를 회복한다. 현재 BSS+4B/관측stack+272B를 포함해 비교한다.
-4. 초기/연속 일정·STOP·독립 검사·최종 ACK·EA·VBlank를 검증한다. FPGA가 바뀔 때만 일치한 소스의 Quartus Lite 전체 비용/관련 timing을 다시 확인한다. 전체reset/CDC/IO와모형시간의한계를구분한다.
-5. 실기 후보 선정 뒤에만 고유 번호·marker·로그 파일명으로 전달한다. RESTORE 폴더는 생략하고 사용자가 설치/플레이/메뉴 복귀를 확인한다.
+1. [509 계약](../nes-service509-contract.ko.md)과[전달 manifest](../../analysis/service509-package.json)를읽는다. partial watermark와최종표시ACK를구분한다.
+2. 사용자MMC509실기로그3개를받아실행/입력/표시/약60초메뉴복귀를확인한다.가능하면MMC502와같은첫레벨동선으로비교한다.
+3. 수신/계획/SEAL·최종표시·capture오류를초기/연속구간으로분리해A2본문·framing·DMA예산을갱신한다. 모형CPI/SPI평균·부팅ROM재생을실기FPS로환산하지않는다.
+4. 기존독립검사·STOP·ACK/EA·VBlank·queue4/bulk2를유지한다.FPGA소스가바뀔때만대응Lite전체비용/timing을새로검증한다.505 prefix/E8/위상/seed미세조정은새근거전까지동결한다.
 
 ## 5. 기록을 남긴다
 

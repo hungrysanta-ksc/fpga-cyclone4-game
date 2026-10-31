@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-bandwidth-dma-budget-504`, [PR140](../../docs/progress/pr-140.md)은 draft다. PR139 merge `46c0cc962397b3e757c838164b70b75fe73090a6`의 master 반영을 확인한 뒤 시작했다. 현재 판단에는 [508 계약](../../docs/nes-overlap508-contract.ko.md), [검증](../../analysis/overlap508-verification.json), [실행 계획](../../docs/nes-budget504-plan.json)을 먼저 읽는다. 과거 문서의 NEXT를 현재 지시로 적용하지 않는다.
+현재 브랜치는 `codex/nes-bandwidth-dma-budget-504`, [PR140](../../docs/progress/pr-140.md)은 draft다. PR139 merge `46c0cc962397b3e757c838164b70b75fe73090a6`의 master 반영을 확인한 뒤 시작했다. 현재 판단에는 [509 계약](../../docs/nes-service509-contract.ko.md), [검증](../../analysis/service509-verification.json), [실행 계획](../../docs/nes-budget504-plan.json)을 먼저 읽는다. 과거 문서의 NEXT를 현재 지시로 적용하지 않는다.
 
 ## 선택된 실기 기준
 
@@ -8,19 +8,19 @@
 
 보호할 산출물은 `probes/nes-capture502/ARM01`, `trial01/MMC502-CAPTURE.zip`, `probes/nes-output489/client04`와502보드다. GBC164/saveSRAM과 과거 원복 자료는 보존한다. 사용자에게 새 RESTORE 폴더를 전달하지 않지만 런타임 STOP/base/메뉴 복귀는 필수다. SD/보드를 PC에 연결하는 절차를 요청하지 않는다. 사용자가ZIP을 설치하고 로그를 돌려주는 방식이다.
 
-## 현재508 후보와 제한
+## 개발 후보509와 제한 실기 전달
 
-506 입력 압축을 유지하고 END 발행/소비 대기를 분리했다. packet sequence/BUSY를 잡기 전에 ready bulk를 소비까지 우선 처리하며, head가 없는 ROM 대기에 일반 packet 하나를 공급한다. bulk_until과 검증된 retired counter로 last-opcode 의존성을 교체하고 기존 독립 ACK 검사·최종 full identity·STOP·EA·VBlank를 보존한다.
+508의 bulk 우선·credit·일반 선행 공급을 유지하고 E8 공통 검사를합쳤다.34+40 linked ARM검사와12개최종RGB/DMA/ROM배정비교를통과했다.FW212956B/Flash36B/BSS18576B(502대비+4),508대비관측stack24B회복이다.507 FPGA/SNES는불변으로Lite15164LE/51M9K/관련setup+.078·hold+.139ns를재사용한다.
 
-실제 M434개 검사를 통과했다. 같은 시작/ROM위상의 실제M4·489CPU12개 최종 RGB·36144DMA·3280ROM read가 같다. 506/507 대비 첫 표시 뒤11간격1230.609→1147.400ms(−6.76%),두 초기 표시 뒤10간격981.019→931.110ms(−5.09%),SPI145247→140055B다. ROM밀도/CPI는 모형으로 실제 arbiter trace·새 실기 FPS·capture 거부율·새 메뉴 시험은 미완료다.
+실제20frame 부팅 CPU·PPU·MMC3·ROM경쟁에서2386선행read/STOPguard와선택화면동등성을검증했다.8window재생의506→509 연속10간격은981.010→931.092ms다.첫레벨폐루프/실기FPS증명은아니다.
 
-FW212992B로 Flash 여유0B, BSS18576B(+4), runtime444B(+4), 관측 호출 stack+272B다. 새 전역 객체가 없더라도 실제 BSS는 늘었다. Flash0B 후보를 새 전달본으로 승격하지 않는다. FPGA/SNES는 변경하지 않았고507 source hash 전체를 대조했다. 전체 Lite15164LE/14172comb/8394FF/264816bits/51M9K,관련 setup+.078ns/hold+.139ns를 재사용한다. 새 Quartus 실행이나 전체reset/CDC/IO 승인을 뜻하지 않는다.
+`probes/nes-service509/trial01/MMC509-OVERLAP.zip`은ROM/save/RESTORE없이준비했다.ARM03의784실행함수는시험ARM01과같고고유이름만509다.실제FatFS·프로그래머전바이트/STM3CRC/ZIP검증을완료했다.[설치](../../docs/nes-mmc509-trial.ko.md)와[manifest](../../analysis/service509-package.json)를참고한다.새실기실행·메뉴·FPS는아직확인전이다.
 
 ## 다음 작업 순서
 
-1. 실제 ROM arbiter 요청/허용/반환 trace를 같은 일정에 연결해 모델의 허용 밀도와 실제 공급 지연을 구분한다.
-2. 기존 진행·완료 제어의 중복을 삭제해 Flash 여유를 회복한다. BSS와 호출 stack도 함께 비교하고 독립 검사·bulk/credit 우선순위를 유지한다.
-3. 초기/연속 구간과 STOP·최종 ACK·VBlank·유한 queue/bank를 재검증한 뒤 전달 후보를 선정한다. 고유 파일명·로그 marker를 사용하고 RESTORE는 생략한다.
+1. 사용자설치뒤509의3개로그와첫레벨/약60초메뉴복귀를확인한다.가능하면502와같은동선으로비교한다.
+2. 수신·계획·SEAL/최종표시·capture오류를초기/연속구간으로나눠비교한다.모형값을실기성과로바꾸지않는다.
+3. 실제본문/framing/DMA비용으로A2예산을갱신한다.E8/ROM위상/seed미세조정은새근거전까지동결한다.
 
 [505](../../docs/nes-early505-contract.ko.md)의 고립된 prefix DMA는 지속 warm 이득이 없어 동결한다. 기존498·전체7533B 이력cache·status/FSM/seed 미세조정을 자동 재개하지 않는다. 이력은 [PR138](../../docs/progress/pr-138.md), [PR139](../../docs/progress/pr-139.md), [PR140](../../docs/progress/pr-140.md)과 해당 계약에 보존한다.
 
@@ -37,3 +37,5 @@ Questa는 기존 Starter FLOAT1좌석 wrapper로 순서대로 실행한다. Quar
 507 공개 entry는 `tools/nes_fault507.py`, `test_nes_fault507.py`, `trace_nes_fault507_schedule.py`, `analyze_nes_fault507.py`다. 선택 집계는 `probes/nes-fault507/analysis02`, 보관본은 `archive01/evidence.zip`과 파일별 SHA inventory다.
 
 508 entry는 `tools/nes_overlap508.py`, `test_nes_overlap508_arm.py`, `analyze_nes_overlap508.py`이며 공동 일정은 기존 `test_nes_raw506_joint.py`를 사용한다. 선택은 `probes/nes-overlap508/candidate03`(ARM02동일코드)/`ARM02`/`arm-test02`/`analysis01`/Temp `nes-overlap508-joint01`이다. ARM01의 Flash4B 초과를 보존한다. `archive01/evidence.zip`의15889개 파일을 전부 SHA로 검증했으며 license/상용ROM/raw/firmware는 Git에 넣지 않는다.
+
+509 entry는 `tools/*service509*.py`다. 선택 ARM01/ARM03,arm-test01,parity02,analysis01,trial01과Temp rom03/joint01/calendar01·02/assembly01/programmer02를사용한다. private archive01은Temp원본을SHA로보존한다. ARM02 상대경로/rom01·02 harness/프로그램검사01 sandboxDLL 실패도보존하며새라이선스문제로오인하지않는다.
