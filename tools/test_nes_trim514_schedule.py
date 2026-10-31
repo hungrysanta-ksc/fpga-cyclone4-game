@@ -19,16 +19,16 @@ MAP_ORACLE = """
    end
 """
 
-def run_schedule(a, instrument=None, link_type=PipeLink):
+def run_schedule(a, instrument=None, link_type=PipeLink, frames=12):
     a.out=a.out.resolve()
-    a.frames,a.cpi,a.spi_us,a.rom_stride,a.rom_phase,a.start=12,2,0,48,0,a.start_clock
+    a.frames,a.cpi,a.spi_us,a.rom_stride,a.rom_phase,a.start=frames,2,0,48,0,a.start_clock
     a.candidate=a.capture_gate=True
     joint.Link=link_type
     joint.encode=legacy_packets
     emit=joint.lua_rpc
     def observe(args):
         emit(args)
-        for g in range(905,917):
+        for g in range(905,905+a.frames):
             shutil.copyfile(a.capture/f"frame{g}/expected-map.bin",a.out/f"map-{g}.bin")
         path=a.out/"capture.lua"
         text=path.read_text()
@@ -41,7 +41,7 @@ def run_schedule(a, instrument=None, link_type=PipeLink):
     joint.run(a)
     report=json.loads((a.out/"joint.json").read_text())
     report["parameters"]["ROM_calendar"]=Calendar(a.calendar).summary
-    report["map_WRAM_VRAM_verified"]=12
+    report["map_WRAM_VRAM_verified"]=a.frames
     (a.out/"joint.json").write_text(json.dumps(report,indent=2)+"\n")
 
 if __name__=="__main__":

@@ -56,4 +56,6 @@ if __name__ == "__main__":
     for name in ("arm", "data", "fixture", "plans", "client", "mesen", "out", "calendar", "driver503", "capture"):
         p.add_argument("--" + name, type=Path, required=True)
     p.add_argument("--start-clock", type=int, default=3000000)
-    run_schedule(p.parse_args(), instrument, ObjLink)
+    p.add_argument("--frames", type=int, choices=range(1,72), default=12, metavar="1..71")
+    args = p.parse_args()
+    run_schedule(args, instrument, ObjLink, frames=args.frames)
