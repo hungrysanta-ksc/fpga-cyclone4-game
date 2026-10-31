@@ -74,7 +74,7 @@ FAILED = """
    if MODE=='stop_check' then assert(validating and lastStatus==0xe4,'STOP was not observed at check')end
    save_maps()
 """
-def main(a):
+def main(a, *, extra_modes=(), loaded=LOADED, setup=SETUP, modes=None, stop_response="128", bad_witness="bad_crc", opcode=10):
     rows=[]
     for l in (a.trace/'packets.jsonl').read_text().splitlines():
         _,_,b,t=json.loads(l)
@@ -85,7 +85,7 @@ def main(a):
     assert rows[-1][0][0]==3 and rows[-1][0][8:10]==struct.pack('<H',907)
     a.out.mkdir(parents=True,exist_ok=False)
     results={}
-    for mode in ('cold_partial','cold_missing','bad_crc','omitted_corrupt','wrong_section','unaligned','overspan','stop_check','stop_final','normal'):
+    for mode in modes or ('cold_partial','cold_missing',bad_witness,'omitted_corrupt','wrong_section','unaligned','overspan',*extra_modes,'stop_check','stop_final','normal'):
         d=a.out/mode
         d.mkdir()
         fixture=list(rows)
@@ -94,7 +94,7 @@ def main(a):
         frames=2 if mode=='normal' else 3
         if frames==2:
             fixture=[r for r in fixture if int.from_bytes(r[0][8:10],'little')<907]
-        if cold or mode in ('bad_crc','wrong_section','unaligned','overspan'):
+        if cold or mode in (bad_witness,'wrong_section','unaligned','overspan'):
             for i,(packet,tile) in enumerate(fixture):
                 op,section=packet[:2]
                 if cold and section==2 and op in (2,4):
@@ -103,13 +103,13 @@ def main(a):
                     if len(raw)<128:continue
                     p=bytearray(packet[:16])
                     cut=8 if mode=='cold_partial' else 64
-                    p[0]=10 if cut==8 else 2
+                    p[0]=opcode if cut==8 else 2
                     struct.pack_into('<3H',p,10,at+cut,len(raw)-cut,0)
                     fixture[i]=bytes(p)+raw[cut:],tile
                     break
-                if op==10:
+                if op==opcode:
                     p=bytearray(packet)
-                    if mode=='bad_crc':p[14]^=1
+                    if mode==bad_witness:p[14]^=1
                     elif mode=='wrong_section':p[1]=3
                     elif mode=='unaligned':p[10]|=1
                     else:
@@ -129,11 +129,12 @@ def main(a):
             for name in ('vram','wram'):
                 for bank in (0,1):
                     shutil.copyfile(a.out/f'stop_final/{name}-{bank}.bin',d/f'initial-{name}-{bank}.bin')
-        lua=LUA.replace('local function loaded()',SETUP+'\nlocal function loaded()')
-        lua=lua.replace(' if MODE~=',LOADED+'\n if MODE~=',1)
+        lua=LUA.replace('local function loaded()',setup+'\nlocal function loaded()')
+        lua=lua.replace(' if MODE~=',loaded+'\n if MODE~=',1)
         lua=lua.replace('  if COMPACT and packet', "  if MODE=='stop_check' and trigger and validating then return 128 end\n  if COMPACT and packet",1)
         lua=lua.replace("   local hdma=file(",MAP_ORACLE+"   local hdma=file(",1)
         lua=lua.replace("   local screen=emu.getScreenBuffer();local f=assert(io.open(ROOT..'/retained.rgb'",FAILED+"   local screen=emu.getScreenBuffer();local f=assert(io.open(ROOT..'/retained.rgb'")
+        lua=lua.replace("then return 128 end","then return "+stop_response+" end")
         edge=json.loads((a.client/'labels.json').read_text())['edge_byte514']
         for key,val in dict(ROOT=json.dumps(d.as_posix()),MODE=json.dumps(mode),TOTAL=len(fixture),FRAMES=frames,
                             SCHEDULE='"continuous"',START=3000000,FAULT=fault,POISON='false',COMPACT='true',EDGE=edge).items():

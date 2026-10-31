@@ -35,15 +35,15 @@ CHECK = """
 """
 
 
-def client(out):
+def client(out, *, check=CHECK, publish="", opcode=10):
     original_source, original_emit = nes_output489.source, nes_dirty212.emit
 
     def source(template):
         s = original_source(template)
         s = once(s,"checkimm(0x120e,0);c.label('packed_header181')",
-                 "c.emit(0xc9,10,0);c.branch(0xf0,'packed_header181');checkimm(0x120e,0);c.label('packed_header181')")
+                 f"c.emit(0xc9,{opcode},0);c.branch(0xf0,'packed_header181');checkimm(0x120e,0);c.label('packed_header181')")
         s = once(s," c.emit(0xc9,8,0);cond(0xf0,'repeat227')",
-                 " c.emit(0xc9,10,0);cond(0xd0,'ordinary514');checkimm(0x1201,2);c.jump('data');c.label('ordinary514');lda(0x1200);c.emit(0x29,255,0)\n c.emit(0xc9,8,0);cond(0xf0,'repeat227')")
+                 f" c.emit(0xc9,{opcode},0);cond(0xd0,'ordinary514');checkimm(0x1201,2);c.jump('data');c.label('ordinary514');lda(0x1200);c.emit(0x29,255,0)\n c.emit(0xc9,8,0);cond(0xf0,'repeat227')")
         # 1201 is a single byte, followed by sequence, so compare only its low byte.
         s = once(s,"checkimm(0x1201,2)","lda(0x1201);c.emit(0x29,255,0,0xc9,2,0);cond(0xd0,'bad_packet')")
         s = once(s," c.label('fail');sta(0x122a)", " c.label('fail');c.absolute(0x9c,0x1260);sta(0x122a)")
@@ -51,18 +51,18 @@ def client(out):
         s = once(s," c.label('quiet');call(c,'service')"," c.label('quiet');c.absolute(0x9c,0x1260);call(c,'service')")
         s = once(s," c.absolute(0xee,0x1220);lda(0x1228)",
                  """ lda(0x1228);c.branch(0xd0,'no_publish514');c.absolute(0xae,0x1034)
- c.emit(0xe2,0x20,0xa9,1);c.absolute(0x9d,0x1260);c.emit(0xc2,0x20)
+"""+publish+""" c.emit(0xe2,0x20,0xa9,1);c.absolute(0x9d,0x1260);c.emit(0xc2,0x20)
  c.label('no_publish514');c.absolute(0xee,0x1220);lda(0x1228)""")
         # Non-returning failures may abandon a helper call on the stack; the
         # client enters its existing terminal quiet state until reset.
-        return once(s," c.label('service');",CHECK+"\n c.label('service');")
+        return once(s," c.label('service');",check+"\n c.label('service');")
 
     s=inspect.getsource(original_emit)
     s=once(s,"c.label('map_unit212');lda(0x120a);",
-           "c.label('map_unit212');lda(0x1200);c.emit(0x29,255,0,0xc9,10,0);c.branch(0xd0,'full_row514');call(c,'edge514');c.jump('map_checked514')\n c.label('full_row514');lda(0x120a);")
+           f"c.label('map_unit212');lda(0x1200);c.emit(0x29,255,0,0xc9,{opcode},0);c.branch(0xd0,'full_row514');call(c,'edge514');c.jump('map_checked514')\n c.label('full_row514');lda(0x120a);")
     s=once(s,"cond(0xd0,'mark_bad212');imm(64);sta(0x66)","cond(0xd0,'mark_bad212');c.label('map_checked514');imm(64);sta(0x66)")
     s=once(s," c.absolute(0xae,0x60);pos=len(c.data);",
-           """ lda(0x1200);c.emit(0x29,255,0,0xc9,10,0);c.branch(0xd0,'descriptor514')
+           f""" lda(0x1200);c.emit(0x29,255,0,0xc9,{opcode},0);c.branch(0xd0,'descriptor514')
  lda(0x120a);sta(0x62);lda(0x120c);sta(0x64)
  c.label('descriptor514');c.absolute(0xae,0x60);pos=len(c.data);""")
     s=once(s," c.label('coverage212');c.emit", """ c.label('coverage212');c.absolute(0xae,0x1034)
@@ -98,7 +98,7 @@ SEND = """
 """
 
 
-def prepare(arm,out):
+def prepare(arm,out, *, build_client=client):
     out.mkdir(parents=True,exist_ok=False)
     patch=out/"patch"
     patch.mkdir()
@@ -138,7 +138,7 @@ def prepare(arm,out):
         return s[:start]+SEND+s[end:]
     edit("nes_native_sink165.c",sink)
     edit("nes_sink_window184.c",lambda s:once(s,"p[0]!=8&&p[0]!=7","p[0]!=8&&p[0]!=10&&p[0]!=7"))
-    client(out/"client")
+    build_client(out/"client")
     (out/"pins.json").write_text(json.dumps({p.name:sha(p) for p in patch.iterdir()},indent=2))
 
 

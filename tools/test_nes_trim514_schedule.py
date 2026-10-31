@@ -23,9 +23,10 @@ if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
     for name in ("arm","data","fixture","plans","client","mesen","out","calendar","driver503","capture"):
         p.add_argument("--"+name,type=Path,required=True)
+    p.add_argument("--start-clock",type=int,default=3000000)
     a=p.parse_args()
     a.out=a.out.resolve()
-    a.frames,a.cpi,a.spi_us,a.rom_stride,a.rom_phase,a.start=12,2,0,48,0,3000000
+    a.frames,a.cpi,a.spi_us,a.rom_stride,a.rom_phase,a.start=12,2,0,48,0,a.start_clock
     a.candidate=a.capture_gate=True
     joint.Link=PipeLink
     joint.encode=legacy_packets

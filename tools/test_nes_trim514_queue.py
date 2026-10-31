@@ -28,7 +28,7 @@ TB=r"""module trim514_queue_tb;
  task consume_head;begin
   p=starts[retired%4];n=sizes[retired%4];
   if(!ready || fault || len!=n)$fatal(1,"head length");
-  if(stream[p]==10)partials=partials+1;
+  if(stream[p]==@OP@)partials=partials+1;
   for(i=0;i<n;i=i+1)begin @(negedge clk);addr=i;@(posedge clk);#1;
    if(data!==stream[p+i])$fatal(1,"head data");end
   for(i=0;i<12;i=i+1)begin @(negedge clk);wr=1;idx=i;
@@ -61,11 +61,11 @@ def prepare(a):
         _,_,body,_=json.loads(line)
         b=bytes.fromhex(body)
         if b[0]==7:continue
-        count+=1;partials+=b[0]==10
+        count+=1;partials+=b[0]==a.partial_opcode
         stream+=len(b).to_bytes(2,'little')+b+binascii.crc_hqx(b'\xe1'+b,65535).to_bytes(2,'big')
     assert partials and count>partials
     (a.out/'stream.hex').write_text('\n'.join(f'{v:02x}' for v in stream)+'\n')
-    (a.out/'tb.sv').write_text(TB.replace('@LAST@',str(len(stream)-1)).replace('@COUNT@',str(count)).replace('@PARTIAL@',str(partials)))
+    (a.out/'tb.sv').write_text(TB.replace('@OP@',str(a.partial_opcode)).replace('@LAST@',str(len(stream)-1)).replace('@COUNT@',str(count)).replace('@PARTIAL@',str(partials)))
     (a.out/'pins.json').write_text(json.dumps(dict(ordinary=count,partial=partials,RTL_SHA256=sha(a.rtl),trace_SHA256=sha(a.trace/'packets.jsonl'))))
 def run(a):
     for tool,args in [('vlib',['work']),('vlog',['-sv','nes_sink_spi165.sv','tb.sv']),
@@ -78,4 +78,5 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('mode',choices=('prepare','run'))
     for name in ('out','rtl','trace','bin'):p.add_argument('--'+name,type=Path)
+    p.add_argument('--partial-opcode',type=int,default=10)
     a=p.parse_args();(prepare if a.mode=='prepare' else run)(a)

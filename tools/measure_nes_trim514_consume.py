@@ -10,7 +10,7 @@ from pathlib import Path
 from test_nes_output489_snes import LUA
 from test_nes_trim514_schedule import MAP_ORACLE
 
-def run(a,trace,d):
+def run(a,trace,d, *, observer=""):
     d.mkdir(parents=True,exist_ok=False)
     packets=[]
     for line in (trace/'packets.jsonl').read_text().splitlines():
@@ -29,6 +29,7 @@ local function loaded()""").replace(' packet=requests[index];',' loadedAt=st.mas
     s=s.replace('  lastStatus=ack[1]',"""  costs:write(string.format('%d,%d,%d,%d,%d,%d,%d,%d\\n',index,pw(8),pb(0),pb(1),pw(10),pw(12),pw(14),st.masterClock-loadedAt))
   lastStatus=ack[1]""")
     s=s.replace("   local hdma=file(",MAP_ORACLE+"   local hdma=file(",1).replace("f:close();emu.stop(0)","f:close();costs:close();emu.stop(0)")
+    s+='\n'+observer
     for key,value in dict(ROOT=json.dumps(d.as_posix()),MODE='"normal"',TOTAL=len(packets),FRAMES=12,SCHEDULE='"continuous"',
                           START=3000000,FAULT=906,POISON='false',COMPACT='true').items():
         s=s.replace('@'+key+'@',str(value))
