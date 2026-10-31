@@ -11,7 +11,9 @@
 
 ## 현재 작업 범위
 
-- 현재 513 / PR141. docs/nes-map513-results.ko.md와 analysis/map513-verification.json을 먼저 읽는다. MMC509 71화면 중 cold 뒤 동일 행 0/1763. 전체 행 이력은 보류. 8B 그룹으로 기존 map 패킷 양 끝만 줄이면 후반 전송량 −502.38B/화면, wire 환산 −1.531ms. ARM 커널 148B/마스크 192B이며 실제 표시 이득은 미측정. 다음은 Flash 36B 한도에서 기존 코드 대체 및 65816 bank·행 유효성/STOP/최종 ACK와 실제 일정 검증.
+- 현재 514 / PR141. docs/nes-trim514-results.ko.md와 analysis/trim514-verification.json을 먼저 읽는다. MMC509 실기 12.82fps 유지. 8B 마스크·부분 DMA는 12화면에서 E1·DMA 각각 4,800B 절감, 후반 평균 93.110→104.826ms 회귀. 바이트별 CRC 재순회 후보는 종료한다. 다음은 최종 ACK에서 확정한 독립 뱅크·행 이력의 생성·조회·STOP 비용을 산정한다.
+
+- 513 조사 / PR141. docs/nes-map513-results.ko.md와 analysis/map513-verification.json을 먼저 읽는다. MMC509 71화면 중 cold 뒤 동일 행 0/1763. 전체 행 이력은 보류. 8B 그룹으로 기존 map 패킷 양 끝만 줄이면 후반 전송량 −502.38B/화면, wire 환산 −1.531ms. ARM 커널 148B/마스크 192B이며 실제 표시 이득은 미측정. 다음은 Flash 36B 한도에서 기존 코드 대체 및 65816 bank·행 유효성/STOP/최종 ACK와 실제 일정 검증.
 
 - 512 실행 기록 / PR141. docs/nes-transfer512-results.ko.md와 analysis/transfer512-verification.json을 먼저 읽는다. 실기 MMC509 12.82fps. 입력은 후반 10간격 합 0.030ms 절감·setup −0.317ns, map은 합 149.736ms 회귀, 결합은 116.445ms 회귀·Flash 0B. 두 후보는 보류. 다음은 대상 뱅크의 동일 map 행을 기존 literal DMA에서 실제 생략할 수 있는 양·시간·RAM 예산 조사.
 
