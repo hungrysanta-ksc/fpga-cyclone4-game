@@ -1,6 +1,10 @@
 # NES 재현 범위와 다른 PC 입력
 
-현재 실기는 **MMC502**이며493은 이전 기준,498은 보류 상태다. [현재 인계](HANDOFF.ko.md)·[감사499](../../docs/nes-audit499.ko.md)·[새 계획](../../docs/nes-audit499-plan.json)을 먼저 읽는다. 아래474–485는 과거 입력이며 현재 선택본이 아니다. clone만으로 전체 빌드 입력이 완결되지는 않는다.
+현재 실기는 **MMC509**, MMC502는 복구 기준이며498은 보류 상태다. [현재 인계](HANDOFF.ko.md) · [실기 분석510](../../docs/nes-hardware510-results.ko.md) · [계획](../../docs/nes-budget504-plan.json)을 먼저 읽는다. 아래474–502는 역사적 입력이다. clone만으로 전체 빌드 입력이 완결되지는 않는다.
+
+## 509 실기 수신510 재현
+
+원시3TXT와 receipt는 `probes/nes-hardware510/run01` 및 상위 receipt.json에 있다. 실제 전달 `probes/nes-service509/ARM03/src`와 `check_nes_hardware510_termination.py --arm <ARM03/src> --raw <run01> --out <fresh>`로5개 종료 조건/18개 변조 거부를 확인한다. 선택 결과 경로는 `nes-hardware510/termination01/result.json`이다. `analyze_nes_hardware510.py --receipt <nes-hardware510> --baseline <nes-hardware503/run01> --out <fresh-json>`으로510 집계를 재계산한다. 원본 로그/ELF는 Git에 넣지 않는다. [전달 manifest](../../analysis/service509-package.json), [509 구현·보드 근거](../../docs/nes-service509-contract.ko.md)를 따른다.
 
 ## 이전493 기반 재현 입력
 

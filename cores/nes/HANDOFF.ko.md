@@ -1,28 +1,20 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-bandwidth-dma-budget-504`, [PR140](../../docs/progress/pr-140.md)은 draft다. PR139 merge `46c0cc962397b3e757c838164b70b75fe73090a6`의 master 반영을 확인한 뒤 시작했다. 현재 판단에는 [509 계약](../../docs/nes-service509-contract.ko.md), [검증](../../analysis/service509-verification.json), [실행 계획](../../docs/nes-budget504-plan.json)을 먼저 읽는다. 과거 문서의 NEXT를 현재 지시로 적용하지 않는다.
+현재 브랜치는 `codex/nes-bandwidth-dma-budget-504`, [PR140](../../docs/progress/pr-140.md)은 draft다. [MMC509 실기 분석510](../../docs/nes-hardware510-results.ko.md), [측정 JSON](../../analysis/hardware510-mmc509.json), [A2 계획](../../docs/nes-budget504-plan.json)을 먼저 읽는다. 제작 시점의 [509 계약](../../docs/nes-service509-contract.ko.md)은 실기 수신 이전의 불변 기록이다.
 
 ## 선택된 실기 기준
 
-**MMC502 /489 SNES 소비 프로그램**을 유지한다. [503 실기 분석](../../docs/nes-hardware503-results.ko.md):60.07초636최종 표시,10.59fps,실행·메뉴 복귀 정상. 수신22.14ms/계획·타일31.32ms/SEAL·최종ACK40.27ms이며 중첩 counter를 더하지 않는다.493과 동선이 같지 않아 관측 차이를 인과율로 쓰지 않는다. 전체 capture 손실률·레벨별 FPS·60Hz·MMC4/5는 미완료다.
+**MMC509 /507 FPGA /489 SNES**:60.08초770회 **12.82fps**, 실행·입력 흔적·STOP/base 복구와 사용자 메뉴 복귀 정상. 체감 개선은 작았다. 이전 MMC502는60.07초636회10.59fps이며 복구 기준으로 보존한다. 같은 동선·첫 레벨 전용 비교는 아니다. 원본 로그는 `probes/nes-hardware510/run01`, 선택 증거는 `termination01`/`analysis02.json`이다.
 
-보호할 산출물은 `probes/nes-capture502/ARM01`, `trial01/MMC502-CAPTURE.zip`, `probes/nes-output489/client04`와502보드다. GBC164/saveSRAM과 과거 원복 자료는 보존한다. 사용자에게 새 RESTORE 폴더를 전달하지 않지만 런타임 STOP/base/메뉴 복귀는 필수다. SD/보드를 PC에 연결하는 절차를 요청하지 않는다. 사용자가ZIP을 설치하고 로그를 돌려주는 방식이다.
+[MMC509 패키지](../../analysis/service509-package.json)와 `probes/nes-service509/trial01/MMC509-OVERLAP.zip`, ARM03,507 board01,489 client04를 고정한다. 게임 ROM/save/RESTORE는 전달하지 않는다. 사용자가 SD에 설치해3개 로그를 반환하는 절차이며 보드·SD를 PC에 연결하도록 요청하지 않는다.502 ZIP/기존 백업·GBC/save는 변경하지 않는다.
 
-## 개발 후보509와 제한 실기 전달
-
-508의 bulk 우선·credit·일반 선행 공급을 유지하고 E8 공통 검사를합쳤다.34+40 linked ARM검사와12개최종RGB/DMA/ROM배정비교를통과했다.FW212956B/Flash36B/BSS18576B(502대비+4),508대비관측stack24B회복이다.507 FPGA/SNES는불변으로Lite15164LE/51M9K/관련setup+.078·hold+.139ns를재사용한다.
-
-실제20frame 부팅 CPU·PPU·MMC3·ROM경쟁에서2386선행read/STOPguard와선택화면동등성을검증했다.8window재생의506→509 연속10간격은981.010→931.092ms다.첫레벨폐루프/실기FPS증명은아니다.
-
-`probes/nes-service509/trial01/MMC509-OVERLAP.zip`은ROM/save/RESTORE없이준비했다.ARM03의784실행함수는시험ARM01과같고고유이름만509다.실제FatFS·프로그래머전바이트/STM3CRC/ZIP검증을완료했다.[설치](../../docs/nes-mmc509-trial.ko.md)와[manifest](../../analysis/service509-package.json)를참고한다.새실기실행·메뉴·FPS는아직확인전이다.
+수신19.88 / 계획·공급14.30 / 출력·최종ACK43.17ms다. 계획17.02ms 감소에는 bulk 대기를 SEAL로 옮긴 효과가 포함된다. 마지막771번째 ordinary section5 요청은4credit 대기 중60초 제한에 걸려 제외했다. 실제 ARM03로1/2/2·pending4를 재현했고 진짜IO/CRC를 구분했다. 전체 무손실·모든 mapper·60fps는 아니다.
 
 ## 다음 작업 순서
 
-1. 사용자설치뒤509의3개로그와첫레벨/약60초메뉴복귀를확인한다.가능하면502와같은동선으로비교한다.
-2. 수신·계획·SEAL/최종표시·capture오류를초기/연속구간으로나눠비교한다.모형값을실기성과로바꾸지않는다.
-3. 실제본문/framing/DMA비용으로A2예산을갱신한다.E8/ROM위상/seed미세조정은새근거전까지동결한다.
-
-[505](../../docs/nes-early505-contract.ko.md)의 고립된 prefix DMA는 지속 warm 이득이 없어 동결한다. 기존498·전체7533B 이력cache·status/FSM/seed 미세조정을 자동 재개하지 않는다. 이력은 [PR138](../../docs/progress/pr-138.md), [PR139](../../docs/progress/pr-139.md), [PR140](../../docs/progress/pr-140.md)과 해당 계약에 보존한다.
+1. 동작한509를 고정하고 약43.17ms 출력 구간을 기존 실제65816 계측으로 일반 packet/복원·DMA·독립 검사·VBlank로 분리한다. quiet·op 시간을 phase에 더하지 않는다.
+2. 입력·출력 본문/프레이밍도 함께 줄일 후보를 비교한다. 조회 제외16.25ms에서 잠정12ms wire 예산까지 약1395B/표시가 부족하다. ARM Flash36B/FPGA244LE·5M9K·실제 IRQ/ROM·4credit/2bulk bank를 함께 본다.
+3. 같은 입력·시작 시각의 연속 비교 후 의미 있는 후보만 고유 이름 실기로 전달한다. 독립 검사·STOP·최종ACK·VBlank·메뉴 복귀는 유지한다.505 고립 prefix DMA와 E8/polling/phase/seed 미세조정은 새 근거 전까지 동결한다.
 
 ## 재현 위치와 실패 보존
 

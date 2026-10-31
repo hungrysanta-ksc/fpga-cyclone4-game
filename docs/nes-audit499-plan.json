@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "audit": 499,
-  "physical_baseline": "MMC502",
+  "physical_baseline": "MMC509",
   "evidence": "analysis/audit499-verification.json",
   "supersedes_next_work": "docs/nes-output487-plan.json S9 and498 NEXT; historical evidence remains valid in its scope",
   "selected_experimental_candidate": null,
@@ -43,7 +43,7 @@
     },
     {
       "id": "A2",
-      "status": "505_functional_feasibility_passed;isolated_prefix_not_selected;whole60Hz_budget_open",
+      "status": "MMC509_physical_output_receipt;A2_whole60Hz_budget_open",
       "objective": "Choose a structure with a viable complete bandwidth and critical-path budget",
       "target_period_ms": 16.6666666667,
       "physical_SPI_capacity_B_per_period": 5468.75,
@@ -59,15 +59,16 @@
       "gate": "All mandatory bytes/gaps/ARM/IRQ/ROM/WRAM/VRAM/VBlank terms and old-control deletion listed; no double-counted overlap; whole LE/RAM/Flash/stack budget",
       "stop_rule": "If retained mandatory wire exceeds period or renderer cannot represent gameplay, revise ABI/roles or supported scope instead of another FSM/opcode optimization.",
       "current_measured_budget": {
-        "evidence": "analysis/hardware503-mmc502.json",
-        "whole_ms_per_display": 94.4496855345912,
-        "receive_ms": 22.138072364480383,
-        "plan_supply_ms": 31.320579159179392,
-        "seal_ACK_ms": 40.27467619421982,
-        "nonquery_observed_wire_ms": 18.016043126684636,
-        "LE_free": 121,
-        "ARM_Flash_free_B": 148,
-        "nested_counters_must_not_be_added": true
+        "evidence": "analysis/hardware510-mmc509.json",
+        "whole_ms_per_display": 78.02597402597402,
+        "receive_ms": 19.877756478,
+        "plan_supply_ms": 14.301470114,
+        "seal_ACK_ms": 43.16639295,
+        "nonquery_observed_wire_ms": 16.251923314780456,
+        "LE_free": 244,
+        "ARM_Flash_free_B": 36,
+        "nested_counters_must_not_be_added": true,
+        "plan_wait_moved_into_SEAL": true
       },
       "budget_evidence": "analysis/budget504-verification.json",
       "execution_plan": "docs/nes-budget504-plan.json",
@@ -96,9 +97,9 @@
   "current_branch": "codex/nes-bandwidth-dma-budget-504",
   "current_PR": 140,
   "merged_PR138": "7e9699fb5d3ce4617495c204aa04d194cb09798d",
-  "planned_delivery": "No new installer for503 receipt analysis;next trial omits RESTORE",
-  "delivery_verification": "analysis/capture502-release-verification.json",
-  "previous_physical_baseline": "MMC493",
-  "current_physical_evidence": "analysis/hardware503-mmc502.json",
+  "planned_delivery": "509 trial physically tested;retain502 rollback;future trial omits RESTORE",
+  "delivery_verification": "analysis/service509-release.json",
+  "previous_physical_baseline": "MMC502",
+  "current_physical_evidence": "analysis/hardware510-mmc509.json",
   "merged_PR139": "46c0cc962397b3e757c838164b70b75fe73090a6"
 }
