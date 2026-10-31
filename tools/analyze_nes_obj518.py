@@ -43,7 +43,8 @@ def analyze(a):
         assert phase["end_accepted"] <= c["ACK_masterclock"] <= phase["ea"]
         frames.append(dict(generation=g, obj_tiles=demand["obj_tiles"], last_obj_rom_response=phase.get("last_obj_rom_response"),
                            last_obj_bulk_ack=max(obj_acks, default=None), end_accepted=phase["end_accepted"],
-                           seal_ready=c["final_ready_masterclock"], display_ack=c["ACK_masterclock"], ea=phase["ea"],
+                           seal_entered=int(next(r["clock"] for r in rows if r["op"] == "3" and r["event"] == "seal")),
+                           final_ready=c["final_ready_masterclock"], display_ack=c["ACK_masterclock"], ea=phase["ea"],
                            original_display_ack=o["ACK_masterclock"]))
     def warm_interval(field):
         return (frames[-1][field] - frames[1][field]) / 10 * 1000 / MASTER_HZ

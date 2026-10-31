@@ -2,6 +2,10 @@
 
 현재 브랜치는 `codex/nes-output-budget-511`이며 [PR141](../../docs/progress/pr-141.md)에서 작업한다. PR140 병합 커밋은 `ab55afeefd629bbcc37cbcc57c4d35f1a0172f7e`다. [517 실기 수신](../../docs/nes-hardware517-results.ko.md), [516 소비·VBlank 및 전달](../../docs/nes-window516-results.ko.md), [515 ACK 행 이력](../../docs/nes-history515-results.ko.md), [514 부분 DMA 실측](../../docs/nes-trim514-results.ko.md), [513 대상 map 조사](../../docs/nes-map513-results.ko.md), [512 네 조합 결과](../../docs/nes-transfer512-results.ko.md)와 [510 실기 분석](../../docs/nes-hardware510-results.ko.md)을 먼저 읽는다.
 
+## 현재 작업
+
+PR141은 master에 병합됐다. [PR142](../../docs/progress/pr-142.md)에서 [518 검증과 후속 일정](../../docs/nes-obj518-results.ko.md)을 이어간다. 다음 실기 시험부터 최종 표시가 확인된 1–40초·40–60초를 따로 비교한다.
+
 ## 최신 실기와 비교 기준
 
 MMC516 기능 실기 확인. 10.99fps, 실행·메뉴 복귀 정상. 45~50초에 수신 21.67ms, 계획·공급 45ms, 출력 100.33ms/표시. 원본 세 로그는 `probes/nes-hardware517/run01`에 보존했다. 아래 509 수치는 다른 동선의 비교 기준이다.
