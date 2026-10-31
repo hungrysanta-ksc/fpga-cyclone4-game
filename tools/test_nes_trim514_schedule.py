@@ -19,11 +19,11 @@ MAP_ORACLE = """
    end
 """
 
-def run_schedule(a, instrument=None):
+def run_schedule(a, instrument=None, link_type=PipeLink):
     a.out=a.out.resolve()
     a.frames,a.cpi,a.spi_us,a.rom_stride,a.rom_phase,a.start=12,2,0,48,0,a.start_clock
     a.candidate=a.capture_gate=True
-    joint.Link=PipeLink
+    joint.Link=link_type
     joint.encode=legacy_packets
     emit=joint.lua_rpc
     def observe(args):
