@@ -32,7 +32,7 @@
 
 [502 전달본](../analysis/capture502-package.json)과[제작검증](../analysis/capture502-release-verification.json)은불변스냅샷이다. 사용자별도백업에따라 **다음NES시험판부터RESTORE폴더는생략**한다. 기존ZIP/GBC/save는보존하고실행상의STOP/base/menu복구는계속유지한다. 이번수신분석으로새ZIP/합성은만들지않았다.
 
-[506 후보](nes-raw506-contract.ko.md)는 정확한 raw 반복 전송과 ARM 단일 복원을 연결했다. 실제 코드와 명시적 ROM/CPU 모형의 연속 비교에서 첫 프레임 이후11구간이2.63% 줄었지만, 전체 Lite setup−1.276ns로 실기 승격은 보류했다. 실기 기준은 MMC502/10.59fps이며 전체60Hz는 미달성이다. 다음은 loader 오류 전달의 타이밍과 후속 준비·ROM 공급의 겹침 경계다.
+[506 후보](nes-raw506-contract.ko.md)는 입력 압축과 단일 복원으로 조건부 연속 일정의 첫 프레임 이후 11구간을 2.63% 줄였다. [507](nes-fault507-contract.ko.md)은 오류 공개 시점을 유지하며 관련 setup을 −1.276ns에서 +0.078ns로 회복했다. 전체 Lite는 15164LE/14172comb/8394FF/51M9K이며 새 실기 측정은 없다. 다음은 END 뒤 일반 출력 선행 공급과 bulk 완료 소유권 교체다. 실기 기준 MMC502/10.59fps와 전체60Hz 미달성 판정은 유지한다.
 
 ## 이전493·489
 

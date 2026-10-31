@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-먼저 로컬 변경을 보존한다. PR139 merge `46c0cc962397b3e757c838164b70b75fe73090a6`와head의master도달·tree일치를확인했다. 현재 `codex/nes-bandwidth-dma-budget-504`/PR140이며[506 실행 검증](../nes-raw506-contract.ko.md)을 읽고 loader오류전달 타이밍과 후속준비·ROM 공급의 겹침 경계부터계속한다. 506은조건부연속이득을확인했지만setup−1.276ns로실기승격보류다. 505의 첫frame 이득을 지속warm 개선으로 재해석하거나고립된prefix미세조정을반복하지않는다. 새PC에서무조건master로바꾸거나reset/pull로덮지않는다.
+먼저 로컬 변경을 보존한다. PR139 merge `46c0cc962397b3e757c838164b70b75fe73090a6`와head의master도달·tree일치를확인했다. 현재 `codex/nes-bandwidth-dma-budget-504`/PR140이며 [507 계약](../nes-fault507-contract.ko.md)을 읽는다. 506 입력 압축을 유지하면서 SPI 오류 전달을 같은 클록의 비트 식으로 바꾸어 관련 setup +0.078ns/hold +0.139ns를 확보했다. 다음은 END 뒤 일반 출력의 제한된 선행 공급과 bulk 완료 watermark다. 실기 기준은 MMC502이며 전체 reset/CDC/IO·실제 arbiter trace·새 실기 시험은 미완료다. 505의 첫 frame 이득을 지속 warm 개선으로 재해석하지 않는다. 새PC에서무조건master로바꾸거나reset/pull로덮지않는다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -39,11 +39,11 @@ git log -5 --oneline
 
 ## 4. 개발 재개 후 순서
 
-1. [실기486 분석](../nes-hardware486-results.ko.md)·[485 계약](../nes-supply485-contract.ko.md)·[다음 계획](../nes-output487-plan.json)을 읽는다. 현재485 두 장면은 합산하지 않는다. 문양476은 별도 원복/회귀다.
-2. G2B는 연결·기능 시험을 통과했다. candidate03/ARM03/armguard07/live02/trial02가 선택이다. 초기 busy-spin 후보는 전달하지 않는다. credit 수령·실제 ACK·staging 해제를 구분한다.
-3. **실기493은9.57fps, 실험495는전체이득미증명으로전달보류다.** [495 계약](../nes-status495-contract.ko.md)·[검증](../../analysis/status495-verification.json)·[494 실기](../nes-hardware494-results.ko.md)·[계획](../nes-output487-plan.json). EB8B/마지막E0 fullACK·ROM요청경계 교체는M4/RTL/기존65816 기능·Lite15121LE/관련timing을 통과했지만 동일12frame 단축0.002794ms/4ms위상0.013316ms 회귀다. 실제M4 busy-poll/IRQ/sourceROM·FPGA 연속tile 묶음과65816을공통일정에연결하는S9부터진행한다. 표시대기중receiver재사용은old identity·retire/STOP·재진입 없는SPI 소유권 검토가선행한다.493 Flash148B/136LE,495 Flash96B/287LE를구분하고새ZIP은만들지않았다.492단일원인미확정·새word경로보류;GBC/save·기존원복·493 제작스냅샷은보존한다.
-4. 독립 검사·STOP·최종 ACK·4credit·메뉴 복귀를 유지한다. RTL이 실제로 바뀔 때만 같은 source의 Lite 전체 비용/관련 timing을 다시 확인한다.
-5. 의미 있는 변경이 검증된 뒤 새 번호·marker·로그·원복으로 동일 ROM/입력 조건의 하드웨어를 비교한다.482 한 회 성공을480의 단일 물리 원인·전 게임/매퍼·60fps 증명으로 승격하지 않는다.
+1. [507 계약](../nes-fault507-contract.ko.md)의 완료 소유권과 예산을 따른다. `complete485`의 마지막 opcode 검사를 단순 삭제하지 않는다.
+2. 검증된 retired counter로 bulk watermark를 확인하고, 준비된 bulk·credit을 일반 packet보다 우선한다. runtime 추가 최대 8B, Flash 순증 최대 140B 안에서 기존 blocking 제어를 교체한다.
+3. 독립 검사·STOP·세대/sequence wrap·미래 완료 거부·최종 ACK·EA·VBlank를 검증한다. 실제 arbiter trace와 긴 연속 일정으로 추가 이득을 확인한다.
+4. 변경된 소스와 일치한 Quartus Lite 전체 비용/관련 timing을 확인한다. 전체 reset·CDC·IO 미승인과 조건부 모델 시간을 구분한다.
+5. 실기 전달 후보를 선정하면 고유 번호·marker·로그 파일명을 사용한다. RESTORE 폴더는 포함하지 않는다. 사용자가 설치해 실행·플레이·메뉴 복귀를 확인하는 절차를 유지한다.
 
 ## 5. 기록을 남긴다
 
