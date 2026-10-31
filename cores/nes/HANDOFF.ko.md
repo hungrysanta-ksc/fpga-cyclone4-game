@@ -1,6 +1,12 @@
 # 현재 NES 인계
 
-PR138 merge `7e9699fb5d3ce4617495c204aa04d194cb09798d` 이후 `codex/nes-capture-correctness-500` / [PR139](../../docs/progress/pr-139.md)에서 진행한다. 먼저 [503 실기 분석](../../docs/nes-hardware503-results.ko.md) · [측정 JSON](../../analysis/hardware503-mmc502.json) · [A1–A4 계획](../../docs/nes-audit499-plan.json)을 읽는다. 감사499의 보류 목록은 유지한다.
+PR139 merge `46c0cc962397b3e757c838164b70b75fe73090a6`와head의master도달·tree일치를확인했다. 현재 `codex/nes-bandwidth-dma-budget-504` / [PR140](../../docs/progress/pr-140.md)다. [504 비용·교체 경계](../../docs/nes-budget504-contract.ko.md) · [실행 계획](../../docs/nes-budget504-plan.json) · [503 실기](../../docs/nes-hardware503-results.ko.md)를 먼저 읽는다.
+
+## 현재504 — A2 비용 분해와 다음 실행 경계
+
+새PC계측은기존65816의픽셀·최종ACK시각을바꾸지않았다. 과거연속12개에서SEAL→upload2.24ms/upload→ACK23.65ms,wait1~3회다. 실제502warm/ARM·IRQ·ROM공통시간이아니다. 조회제외5911.51B/표시이며12mswire예산까지1974.01B부족하다. 전체7533B이력cache는M9K최소7개로남은5개에안맞는다. 공통generation은actual cold332record의Pythonbyte시제품만통과했다.
+
+다음은packet완료뒤불변dirty-list prefix만현재VBlank에들어갈때선행DMA하고,열린tail/SEAL최종검사/ACK를유지하는실행실험이다. 기존cursor초기화·최종재전송을대체하며추가SNESbody512B/WRAM8B/newM9K·ARM실행코드·FPGA제어0을할당했다. 미달성예산이며전체60Hz gate는미통과다. 새FW/합성/전달본없이실기502를유지한다. [504 검증](../../analysis/budget504-verification.json).
 
 ## 현재502 — 첫 실기 성공, A2 비용 검토로 진행
 

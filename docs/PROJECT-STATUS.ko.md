@@ -1,6 +1,6 @@
 # 프로젝트 현황
 
-목표는 **sd2snes Cyclone IV 멀티 코어 확장**이다. PR139에서수집경계를수정한MMC502의첫실기성공을확인했다. [NES 인계](../cores/nes/HANDOFF.ko.md) · [PR별 경과](progress/README.md).
+목표는 **sd2snes Cyclone IV 멀티 코어 확장**이다. PR139에서수집경계를수정한MMC502의첫실기성공을확인했고,병합뒤PR140에서A2비용을검토한다. [NES 인계](../cores/nes/HANDOFF.ko.md) · [PR별 경과](progress/README.md).
 
 ## 코어별 판정
 
@@ -31,6 +31,8 @@
 | 미완료 | 지속60fps·장면별/p95·NES실시간속도·capture무손실·MMC4/5·제품공개 |
 
 [502 전달본](../analysis/capture502-package.json)과[제작검증](../analysis/capture502-release-verification.json)은불변스냅샷이다. 사용자별도백업에따라 **다음NES시험판부터RESTORE폴더는생략**한다. 기존ZIP/GBC/save는보존하고실행상의STOP/base/menu복구는계속유지한다. 이번수신분석으로새ZIP/합성은만들지않았다.
+
+[504 비용 분해](nes-budget504-contract.ko.md)에서기존65816 업로드가최종SEAL뒤에몰리는구조와입력wire부족을분리했다. 다음은불변dirty-prefix의비차단선행DMA 경계실행시험이며전체60Hz예산은아직미통과다. 현재실기·FPGA비용은변경없다.
 
 ## 이전493·489
 
