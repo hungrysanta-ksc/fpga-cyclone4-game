@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR143 / 525. MMC524 실기 715/60.08초, 11.90fps. 전반 12.31fps / 후반 11.00fps. 실행·메뉴 복귀 정상. docs/nes-hardware525-results.ko.md와 docs/nes-idle524-results.ko.md를 먼저 읽는다. 다음은 동일 입력 map 64B 분할·최종 표시 도달 시각이다.
+- PR144 / 526. docs/nes-map526-results.ko.md와 analysis/map526-verification.json을 먼저 읽는다. 254 후보는 952·954에서 map 192–256B를 먼저 보냈으나 두 위상 모두 최종 새 VBlank 대기 1회가 남았다. MMC524 유지. 다음은 ARM 첫 map 확정·SPI 발행 시각과 tile 경쟁을 같은 일정에서 비교한다.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 

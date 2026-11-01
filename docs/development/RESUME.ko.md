@@ -5,7 +5,7 @@
 ## 1. 상태를 읽는다
 
 1. [루트 README](../../README.md) → [프로젝트 현황](../PROJECT-STATUS.ko.md).
-2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR143](../progress/pr-143.md).
+2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR144](../progress/pr-144.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
 GB/GBC는 추가·공개 완료다. NES의 현재 실기 MMC524는 실행·메뉴 복귀 정상, 60.08초에 715회 표시(11.90fps)다. [525 실기 기록](../nes-hardware525-results.ko.md)을 먼저 확인한다.
@@ -40,7 +40,7 @@ git log -5 --oneline
 ## 4. 개발 재개 후 순서
 
 1. MMC524 실기의 구간별 기준은 전반 12.31fps, 후반 11.00fps다.
-2. [524 검증](../nes-idle524-results.ko.md)에서 952·954의 최종 VBlank 대기를 확인한 뒤 수락된 map의 64B 분할을 대조한다.
+2. [526 검증](../nes-map526-results.ko.md)을 기준으로 ARM의 첫 map 확정과 큐 도착을 구분하고, tile ROM·credit을 포함한 두 위상에서 앞선 공급을 비교한다.
 3. 다음 전달본에서 1–40초와 40–60초를 따로 집계하고, 같은 동선인지 함께 기록한다.
 
 ## 5. 기록을 남긴다

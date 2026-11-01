@@ -24,7 +24,7 @@ def head_delays(events,packets):
     return dict(mean=sum(delays)/len(delays),p99=delays[ceil(len(delays)*.99)-1],max=delays[-1])
 
 
-def idle_transfers(events, packets):
+def idle_transfers(events, packets, *, map_rows=False):
     by_generation = defaultdict(list)
     loads = {int(r["index"]):int(r["clock"]) for r in events if r["event"]=="load"}
     for pos, r in enumerate(events):
@@ -47,7 +47,13 @@ def idle_transfers(events, packets):
             next_index=index,next_arrival=arrival,next_load=loads[index],
             overlapping_next_ready_ms=ms(max(0,finish-max(ticks,arrival)))))
     for rs in by_generation.values():
-        assert [r["cursor"] for r in rs]==list(range(0,8*len(rs),8))
+        if map_rows:
+            offsets=[r["cursor"]-65536 for r in rs if r["cursor"]>=65536]
+            assert len(offsets)==len(set(offsets))
+            assert all(0<=offset<4096 and offset%64==0 for offset in offsets)
+            assert all(r["bytes"]==64 for r in rs if r["cursor"]>=65536)
+        else:
+            assert [r["cursor"] for r in rs]==list(range(0,8*len(rs),8))
     count = sum(map(len,by_generation.values()))
     for event in ("ppu_dma","ppu_last"):
         assert sum(r["event"]==event and r["op"]=="-1" and int(r["g"])>=905 for r in events)==count
