@@ -82,7 +82,7 @@ def analyze(a):
         targets={}
         for g in (952,954):
             f=s['frames'][g-905]
-            assert f==old['targets'][str(g)]['candidate_frame'] and f['final_waits']==1
+            assert json.loads(json.dumps(f))==old['targets'][str(g)]['candidate_frame'] and f['final_waits']==1
             assert f['display_VBlanks']==prev527['phases'][i]['variants']['frontier']['frames'][g-951]['display_VBlanks']-1
             targets[g]=dict(gap_ms=f['gap_ms'],VBlanks=f['display_VBlanks'],ACK=f['ack'],final_waits=f['final_waits'])
         s.pop('frames')

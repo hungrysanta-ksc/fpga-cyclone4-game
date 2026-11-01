@@ -2,6 +2,8 @@
 
 목표는 sd2snes Cyclone IV 멀티 코어 확장이다. NES의 최신 실기는 MMC524이며 MMC520을 직전 비교 기준으로 보존한다. [NES 인계](../cores/nes/HANDOFF.ko.md)
 
+다음 실기 전달본은 MMC529다. 528의 시뮬레이션 표시 시각을 유지하면서 ARM Flash 여유 744B를 확보했다. [검증 결과](nes-flash529-results.ko.md) · [설치와 비교 순서](nes-mmc529-trial.ko.md)
+
 ## 코어별 판정
 
 | 코어 | 판정 | 근거·한계 |

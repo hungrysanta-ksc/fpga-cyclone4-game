@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR144 / 528. docs/nes-quiet528-results.ko.md와 analysis/quiet528-verification.json부터 읽는다. END 대기 중 후속 map을 발행해 두 위상 모두 527 대비 952·954 표시 간격이 한 VBlank 줄었다. 최종 검사는 5,594–7,898클록 늦고 Flash는 500B 초과다. MMC524 실기 유지. 다음은 528 Flash 회수와 같은 두 위상 재검증 후 실기 비교, 이후 raw·tile DMA 비용 검토.
+- PR144 / 529. docs/nes-flash529-results.ko.md와 docs/nes-mmc529-trial.ko.md부터 읽는다. 528의 강제 링크 옛 loader probe 제거로 Flash 1,244B 회수(744B 여유). 두 위상에서 53화면 ACK·RGB·ROM 일정 동일, 952/954 간격 8/7 VBlank. MMC529 사용자 실기 대기. 다음은 MMC524와 1–40초/40–60초·메뉴 복귀 비교.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 
