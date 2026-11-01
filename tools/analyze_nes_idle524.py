@@ -24,7 +24,11 @@ def head_delays(events,packets):
     return dict(mean=sum(delays)/len(delays),p99=delays[ceil(len(delays)*.99)-1],max=delays[-1])
 
 
-def idle_transfers(events, packets, *, map_rows=False):
+def map_offsets(rows):
+    return [r['cursor']-65536+j for r in rows if r['cursor']>=65536 for j in range(0,r['bytes'],64)]
+
+
+def idle_transfers(events, packets, *, map_rows=False,map_chunk=64):
     by_generation = defaultdict(list)
     loads = {int(r["index"]):int(r["clock"]) for r in events if r["event"]=="load"}
     for pos, r in enumerate(events):
@@ -48,10 +52,10 @@ def idle_transfers(events, packets, *, map_rows=False):
             overlapping_next_ready_ms=ms(max(0,finish-max(ticks,arrival)))))
     for rs in by_generation.values():
         if map_rows:
-            offsets=[r["cursor"]-65536 for r in rs if r["cursor"]>=65536]
+            offsets=map_offsets(rs)
             assert len(offsets)==len(set(offsets))
             assert all(0<=offset<4096 and offset%64==0 for offset in offsets)
-            assert all(r["bytes"]==64 for r in rs if r["cursor"]>=65536)
+            assert all(0<r["bytes"]<=map_chunk and r["bytes"]%64==0 for r in rs if r["cursor"]>=65536)
         else:
             assert [r["cursor"] for r in rs]==list(range(0,8*len(rs),8))
     count = sum(map(len,by_generation.values()))

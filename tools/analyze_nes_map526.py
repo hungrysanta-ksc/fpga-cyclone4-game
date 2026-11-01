@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 from analyze_nes_dense519 import ROOT, consumed_tiles, interval, measure, ms, read, seal_waits
-from analyze_nes_idle524 import head_delays, idle_transfers
+from analyze_nes_idle524 import head_delays, idle_transfers, map_offsets
 from analyze_nes_prefix523 import packet_trace, verified_visible_dma
 from analyze_nes_transfer512 import fpga
 from prepare_nes_dense519 import tiles
@@ -13,7 +13,7 @@ from run_nes_scroll229 import sha
 from test_nes_service509_schedule import Calendar
 
 
-def run_cost(folder, key, reference, plans, calendar, oracle):
+def run_cost(folder, key, reference, plans, calendar, oracle, *, map_chunk=64):
     rows,res=measure(folder,plans,reference["firmware"],calendar)
     assert res["parameters"]==reference["parameters"] and res["last_status"]==1
     assert not (folder/"map-error.txt").exists() and res["max_bulk_banks"]<=2
@@ -21,7 +21,7 @@ def run_cost(folder, key, reference, plans, calendar, oracle):
     events,packets,keys,_=packet_trace(folder)
     assert [(r["event"],r["value"]) for r in events if r["g"]=="0"]==[("ppu_dma","2048")]*2
     events=[r for r in events if int(r["g"])>=905]
-    idle=idle_transfers(events,packets,map_rows=key!="524")
+    idle=idle_transfers(events,packets,map_rows=key!="524",map_chunk=map_chunk)
     details=[]
     previous_frame=None
     for f in rows:
@@ -43,7 +43,7 @@ def run_cost(folder, key, reference, plans, calendar, oracle):
             display_VBlanks=frame-previous_frame if previous_frame is not None else None,
             seal_waits=len(waits),final_waits=final_waits,pre_final_PPU_B=upload_B,wait_ms=sum(w["ms"] for w in waits),
             final_branch=[(r["event"],int(r["line"])) for r in trace if r["event"] in ("borrow516","fresh516","final212")],
-            early_B=sum(r["bytes"] for r in granted),map_offsets=[r["cursor"]-65536 for r in granted if r["cursor"]>=65536],
+            early_B=sum(r["bytes"] for r in granted),map_offsets=map_offsets(granted),
             first_map_ACK=first_map,grants_before_first_map=sum(first_map is None or r["grant"]<first_map for r in granted),
             first_map_push=first_map_push,grants_before_map_push=sum(first_map_push is None or r["grant"]<first_map_push for r in granted),
             overlap_ms=sum(r["overlapping_next_ready_ms"] for r in granted)))
