@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-[PR147](../../docs/progress/pr-147.md)의 [545 짧은 반복 DMA와 연속 표시 비용](../../docs/nes-repeat545-results.ko.md)을 먼저 읽는다. 실기 기준은 [MMC540](../../docs/nes-hardware541-results.ko.md)이다.
+[PR147](../../docs/progress/pr-147.md)의 [546 헤더 복사와 957 빔 판정](../../docs/nes-header546-results.ko.md)을 먼저 읽는다. 실기 기준은 [MMC540](../../docs/nes-hardware541-results.ko.md)이다.
 
 ## 최신 실기와 비교 기준
 
@@ -19,7 +19,7 @@ MMC540은 60.08초에 803회 표시(13.37fps), 실행·메뉴 복귀 정상이�
 ## 다음 작업 순서
 
 1. MMC540을 유지한다. 542 행 진행 후보는 53장당 1 VBlank만 단축하고 밀집 구간은 그대로였다. 543 map 뒤 무조건 drain은 같은 집계 대조군보다 마지막 ACK가 두 위상 모두 약 16.65ms 늦어져 기각했다. 추가 raw 명령 단축·무조건 drain 반복은 하지 않는다.
-2. 545는 전체 53장 마지막 ACK를 두 위상 모두 앞당겨 별도 조합 후보로 보존한다. 밀집 30/30 VBlank와 957의 247/248행 진입을 기준으로 다음 변경을 비교한다. [545 결과와 다음 측정](../../docs/nes-repeat545-results.ko.md)
+2. 545·546의 두 위상 누적 이득을 대조군으로 보존한다. 957 실제 빔 판정에 부족한 1,463클록과 같은 뱅크의 raw 행 256B 일치를 기준으로 최종 ACK 이력·검사 비용을 검토한다. [측정과 예산](../../docs/nes-header546-results.ko.md)
 3. 다음 전달본은 `prepare_nes_windows541.py`의 완료 [5,40)/[40,55), 합계 [5,55)를 포함한다. 계측만 바꾼 대조군에서도 한 위상에 1 VBlank 변화가 났으므로 같은 집계 대조군을 반드시 분리한다. 두 위상 밀집 VBlank 수와 마지막 ACK가 함께 줄기 전에는 새 ZIP을 만들지 않는다.
 
 512·514의 제외 근거는 [전송 형식 비교](../../docs/nes-transfer512-results.ko.md)와 [해당 PR 기록](../../docs/progress/pr-141.md)에 남아 있다.

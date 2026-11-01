@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR147 / 545. docs/nes-repeat545-results.ko.md FIRST. MMC540 실기 13.37fps. 545는 65816 +8B·64B STOP·동일 바이트 op4 DMA. 53장 마지막 ACK가 같은 집계 대조군 대비 −66.574/−66.551ms이나 밀집 30/30VB는 원본과 같음. 조합 후보로 보존. 다음은 957 마지막 큐 head·SEAL 이후 DMA, 247/248→246행. 두 위상·집계 [5,40)/[40,55)·새 head/독립 검사/최종 ACK/메뉴 유지.
+- PR147 / 546. docs/nes-header546-results.ko.md FIRST. MMC540 실기 13.37fps, 545·546 조합 비교용. 546 16B MVN 4952B, 545 대비 최종 ACK −16.64/−33.29ms, 밀집 30/30VB. 957 latch 248행 h=98 두 위상, 1463clocks 부족. 다음은 동일 뱅크 직전 최종 ACK 대비 raw 64B 행 4개 일치의 안전한 생략 예산. cold/STOP/부분쓰기 재검증, 246행 검사·독립 검사·메뉴 유지.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 
