@@ -9,7 +9,7 @@ from test_nes_trim514_schedule import run_schedule
 from trace_nes_obj518 import ObjLink
 
 
-def observe(s,a):
+def observe(s,a,grant_observer=None):
     labels=json.loads((a.client/'labels.json').read_text())
     s=instrument(s,a)
     anchor=" if not packet then return end\n local st=emu.getState()"
@@ -20,6 +20,8 @@ def observe(s,a):
   return
  end
  local st=emu.getState()""")
+    if grant_observer:
+        return grant_observer(s,labels)
     return once(s,'local function loaded()',f"""emu.addMemoryCallback(function()
  local i=word(0x1252);local bank=word(0x1034)
  assert(not packet and word(0x1228)==1 and bank~=word(0x1032) and i+8<word(0x1250),'idle owner')

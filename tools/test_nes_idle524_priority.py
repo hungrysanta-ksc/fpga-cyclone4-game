@@ -62,7 +62,7 @@ emu.addMemoryCallback(function() if stopping and not quiet then quiet=true;quiet
 """
 
 
-def case(a,g,name,client=None,line=-1):
+def case(a,g,name,client=None,line=-1,edit_fixture=None):
     client=client or a.client
     folder=a.out/(f"{g}-{name}" + (f"-line{line}" if line>=0 else ""))
     folder.mkdir()
@@ -147,6 +147,8 @@ local function loaded()
                 FRAMES=g-904-int(stops),SCHEDULE='"continuous"',START=3000000,FAULT=g,
                 MODE=json.dumps("bad_version" if name=="bad_manifest" else "normal"),POISON='false',COMPACT='true',PRIORITY=labels['priority524'],
                 GRANT=labels['grant524'],QUIET=labels['quiet'])
+    if edit_fixture:
+        s=edit_fixture(s,labels)
     for key,value in fields.items():
         s=s.replace("@"+key+"@",str(value))
     s=s.replace('emu.addMemoryCallback(', 'memory524(').replace('emu.addEventCallback(', 'event524(')
