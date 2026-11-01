@@ -11,6 +11,8 @@
 
 ## 현재 작업 범위
 
+- PR143 / 523. MMC520을 실기 기준으로 유지한다. `docs/nes-prefix523-results.ko.md`와 `analysis/prefix523-verification.json`을 먼저 읽는다. 패킷 ACK 직전만 검사한 경우 952·954에서 선행 DMA가 0건이었다. 다음은 큐 대기 중 새 head·STOP을 우선한 선행 실행이며, 밀집 최종 표시가 앞당겨진 뒤 실기에 전달한다.
+
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 
 - 521 실기 / PR142. docs/nes-hardware521-results.ko.md와 analysis/hardware521-mmc520.json을 먼저 읽는다. MMC520 실기 718표시/60.07초/11.95fps, 실행·메뉴 복귀 정상. 1–40초 12.08fps / 40–60초 11.60fps. 다음은 OBJ 소비 이후 출력·VBlank·ACK 비용 분리.
