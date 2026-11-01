@@ -41,7 +41,7 @@ git log -5 --oneline
 
 1. [541 실기 분석](../nes-hardware541-results.ko.md)의 장면 차이와 원본 로그 해시를 보존한다.
 2. 다음 전달본에 `prepare_nes_windows541.py`의 표시 완료 [5,40)/[40,55) 집계를 포함하고 linked ARM 경계 검사를 통과시킨다.
-3. [544 실제 수락·credit·VBlank 결과](../nes-front544-results.ko.md)를 따른다. raw 행 명령·무조건 map drain·BG 확정 시점의 발행 조절은 반복하지 않는다. 다음은 section5 동일 바이트 short repeat의 65816 복원 대조 시험이다. 같은 집계 대조군 및 원본 MMC540, 두 시작 위상을 유지한다. 새 실기 ZIP은 없다.
+3. [545 동일 바이트 반복 DMA](../nes-repeat545-results.ko.md)를 따른다. MMC540과 같은 집계 대조군, 545 조합 후보를 구분한다. 957의 246행 진입을 검증하고 두 위상 밀집 표시와 최종 ACK를 함께 비교한다.
 
 ## 5. 기록을 남긴다
 

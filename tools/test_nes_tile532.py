@@ -12,6 +12,9 @@ from test_nes_map526_schedule import observer
 
 
 def tile_observer(s,labels,map_limit='128'):
+    if 'length545' in labels:
+        from observe_nes_repeat545 import observe
+        s=observe(s)
     if 'normal_length532' in labels:
         s=once(s,'assert(n==64 and off%64==0 and accepted526[off] and not copied526[off])',
                f'''assert(n>=64 and n%64==0 and n<={map_limit} and off%64==0)
