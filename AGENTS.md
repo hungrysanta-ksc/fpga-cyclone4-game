@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- 현재 517 / PR141. docs/nes-hardware517-results.ko.md와 analysis/hardware517-mmc516.json을 먼저 읽는다. MMC516 실기 실행·메뉴 복귀 정상, 660표시/60.07초/10.99fps. 동선이 다른 MMC509 12.82fps를 비교 기준으로 보존한다. 45~50초 30표시, OBJ 작업 30.07/표시. 다음은 동일 장면의 OBJ 공급·END·출력과 NES 게임 진행 시각 분리.
+- 현재 521 / PR142. docs/nes-hardware521-results.ko.md와 analysis/hardware521-mmc520.json을 먼저 읽는다. MMC520 실기 718표시/60.07초/11.95fps, 실행·메뉴 복귀 정상. 1–40초 12.08fps / 40–60초 11.60fps. 다음은 OBJ 소비 이후 출력·VBlank·ACK 비용 분리.
 
 - 516 전달 기록 / PR141. docs/nes-window516-results.ko.md, analysis/window516-package.json, docs/nes-mmc516-trial.ko.md를 먼저 읽는다. 실기 기준 MMC509 12.82fps 유지. 결합은 같은 두 위상에서 후반 약 93.11→83.26ms. MMC516 trial02 전달 후 실제 SMB3 플레이·메뉴 복귀·새 로그 3개 확인 대기. ROM/save/RESTORE 미포함.
 

@@ -78,8 +78,9 @@ def main():
     require(nes["hardware_candidate"] == family + trial, "Hardware candidate/evidence mismatch")
     if family == "MMC":
         require(measured.get("hardware_run_passed") is True, "MMC evidence has no passed hardware run")
-    completed = sum(x["display"]["completed"] for x in measured["runs"])
-    seconds = sum(x["display"]["seconds"] for x in measured["runs"])
+    runs = measured["runs"] if "runs" in measured else [measured]
+    completed = sum(x["display"]["completed"] for x in runs)
+    seconds = sum(x["display"]["seconds"] for x in runs)
     fps = f"{completed / seconds:.2f}"
     for name in ["README.md", "docs/PROJECT-STATUS.ko.md", "cores/nes/HANDOFF.ko.md"]:
         require(fps in (ROOT / name).read_text(encoding="utf-8"), f"Measured FPS absent: {name}")

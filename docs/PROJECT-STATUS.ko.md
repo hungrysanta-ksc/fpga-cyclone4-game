@@ -1,20 +1,20 @@
 # 프로젝트 현황
 
-목표는 sd2snes Cyclone IV 멀티 코어 확장이다. NES의 최신 실기는 MMC516이며 MMC509를 비교 기준으로 보존한다. [NES 인계](../cores/nes/HANDOFF.ko.md)
+목표는 sd2snes Cyclone IV 멀티 코어 확장이다. NES의 최신 실기는 MMC520이며 MMC509를 비교 기준으로 보존한다. [NES 인계](../cores/nes/HANDOFF.ko.md)
 
 ## 코어별 판정
 
 | 코어 | 판정 | 근거·한계 |
 |---|---|---|
 | GB/GBC | 추가 성공·제품 공개 | G13C44/sd2snesHST0.9.0,[기준선](../cores/gbc/README.md)·[호환성](COMPATIBILITY.ko.md) |
-| NES | 개발 중·제품 미포함 | MMC516 실제 SMB3 전체 평균 10.99fps, MMC509 12.82fps(다른 동선). 실행·메뉴 복귀 정상 |
+| NES | 개발 중·제품 미포함 | MMC520 실제 SMB3 11.95fps, 1–40초 12.08fps / 40–60초 11.60fps. 실행·메뉴 복귀 정상 |
 | PC Engine | 조사 대기 | 구현·실기 성공 없음 |
 
 대상은FXPAK Pro/Mk.III,EP4CE15F17C8,STM32F401RCT6,PSRAM IS66WVE4M16EBLL-70BLI 두개다. 다른보드/전체IO승인을뜻하지않는다.
 
 ## 최신 게임 실기
 
-MMC516은 60.07초·660회 표시, 사용자 확인으로 실행·메뉴 복귀 정상이다. 45~50초는 30회였고, END 추가·flush와 출력 시간이 함께 늘었다. MMC509는 60.08초·770회였다. 서로 다른 플레이이므로 이 수치로 같은 장면의 가속률을 산출하지 않는다. [MMC516 수신](nes-hardware517-results.ko.md) · [MMC509 수신](nes-hardware510-results.ko.md)
+MMC520은 60.07초·718회 표시했다. 이전 MMC516은 60.07초·660회였다. 마지막 5초에 OBJ 타일 공급과 출력 대기가 집중됐다. [520 실기 분석](nes-hardware521-results.ko.md)
 
 ## 현재 비용과 다음 목표
 
@@ -22,10 +22,10 @@ MMC516은 60.07초·660회 표시, 사용자 확인으로 실행·메뉴 복귀 
 |---|---|
 | FPGA507 | 15164LE/14172comb/8394FF/264816bits/51M9K, 잔여244LE·5M9K |
 | 관련 timing | setup+0.078ns/hold+0.139ns; 전체 reset/CDC/IO 미승인 |
-| ARM509 | firmware212956B/Flash36B/BSS18576B; 전체 IRQ stack 미증명 |
-| MMC516의 60Hz 평균 격차 | 91.02−16.67=74.35ms/표시 |
-| MMC516 단계 평균 | 수신 19.85 / 계획·공급 16.45 / 출력·최종 ACK 54.10ms/표시 |
-| 다음 작업 | 같은 SMB3 구간에서 OBJ 공급·END 대기와 출력 지연을 분리한다. [측정](nes-hardware517-results.ko.md) |
+| ARM520 | firmware 212,992B / Flash 여유 0B / BSS 18,588B |
+| MMC520의 60Hz 평균 격차 | 83.66−16.67 ≈ 67.0ms/표시 |
+| MMC520 단계 평균 | 수신 19.99 / 계획·공급 15.51 / 출력·최종 ACK 47.54ms/표시 |
+| 다음 작업 | 동일 입력에서 마지막 OBJ 소비 이후 SEAL·VBlank·최종 ACK를 분리한다. [실기 근거](nes-hardware521-results.ko.md) |
 | 미완료 | 지속60fps·장면별/p95·NES 실시간 속도·capture 무손실·MMC4/5·제품 공개 |
 
 [509 전달본](../analysis/service509-package.json)은 ROM/save/RESTORE 없이 제작한 불변 스냅샷이다. 이번 수신 분석에서 새 firmware·ZIP·합성은 만들지 않았다. [MMC502 실기10.59fps](nes-hardware503-results.ko.md)는 복구·비교 기준으로 보존한다.
