@@ -8,6 +8,7 @@ from nes_raw506 import once, sha
 from nes_transfer512 import compact_reports
 
 FIELD = 'display_1_40_60'
+TRIMMED_FIELD = 'display_5_40_55'
 def patch(src,out):
     assert sha(src/'obj-nes-100/firmware.stm')==json.loads((Path(__file__).resolve().parents[1]/'analysis/window516-package.json').read_text())['firmware_SHA256']
     out.mkdir(parents=True,exist_ok=False)
@@ -25,12 +26,15 @@ def windows(budget,elapsed_ms):
     from analyze_nes_supply485_hardware import fields
     b=fields(budget)
     # Old frame-start bins straddle 1s, and cannot reconstruct completion time.
-    if FIELD not in b:return None
+    if FIELD in b and TRIMMED_FIELD in b:raise ValueError('ambiguous window layout')
+    field = TRIMMED_FIELD if TRIMMED_FIELD in b else FIELD
+    if field not in b:return None
     if b.get('tick_ms')!='10':raise ValueError('unexpected tick rate')
-    counts=b[FIELD].split(',')
+    counts=b[field].split(',')
     if len(counts)!=2 or any(not c.isascii() or not c.isdecimal() for c in counts):raise ValueError('invalid display window counts')
     if elapsed_ms<60000:raise ValueError('incomplete 60-second observation')
-    return [dict(start_s=start,end_s=end,displays=int(n),fps=int(n)/(end-start)) for n,(start,end) in zip(counts,[(1,40),(40,60)])]
+    bounds = [(5,40),(40,55)] if field == TRIMMED_FIELD else [(1,40),(40,60)]
+    return [dict(start_s=start,end_s=end,displays=int(n),fps=int(n)/(end-start)) for n,(start,end) in zip(counts,bounds)]
 
 def duration_ms(progress):
     marks = re.findall(r"\bseq=(\d+) stage=(\w+).*?elapsed_ms=(\d+)", progress)

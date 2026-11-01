@@ -344,6 +344,8 @@ class Runtime(ARM):
         elif op>=0xe0:self.clock=self.link.accept(tx,self.clock)
         self.wire_B[hex(op)]=self.wire_B.get(hex(op),0)+n
         self.events.append(dict(generation=self.generation,event='SPI',opcode=hex(op),packet_opcode=tx[1]if op==0xe1 else None,bytes=n,start=start,clock=self.clock))
+        if getattr(self.a,'trace_credit',False) and op in (0xe0,0xe8):
+            self.events[-1]['reply']=bytes(rx).hex()
         if op==0xea:
             self.start_token=(self.start_token+len(self.packets))&65535;self.generation+=1;self.begin_input()
         assert len(rx)==n;u.mem_write(u.reg_read(UC_ARM_REG_R2),rx);ret(1)

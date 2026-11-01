@@ -1,22 +1,22 @@
 # 프로젝트 현황
 
-목표는 sd2snes Cyclone IV 멀티 코어 확장이다. 최신 NES 실기 기준은 MMC533이며 MMC529와 비교한다. [NES 인계](../cores/nes/HANDOFF.ko.md)
+목표는 sd2snes Cyclone IV 멀티 코어 확장이다. 최신 NES 실기 기준은 MMC540이며 MMC533과 비교한다. [NES 인계](../cores/nes/HANDOFF.ko.md)
 
-MMC533은 60.07초에 735회 표시(12.24fps), 실행·메뉴 복귀 정상이다. MMC529 대비 1–40초는 11.82→11.97fps, 40–60초는 11.60→12.65fps였다. [실기 결과](nes-hardware534-results.ko.md)
+MMC540은 60.08초에 803회 표시(13.37fps), 실행·메뉴 복귀 정상이다. MMC533 대비 1–40초는 11.97→12.85fps, 40–60초는 12.65→14.35fps였다. 마지막 5초는 정적인 레벨 클리어 장면이므로 후반 증가율을 전투 성능 개선율로 해석하지 않는다. [실기 결과](nes-hardware541-results.ko.md)
 
 ## 코어별 판정
 
 | 코어 | 판정 | 근거·한계 |
 |---|---|---|
 | GB/GBC | 추가 성공·제품 공개 | G13C44/sd2snesHST0.9.0,[기준선](../cores/gbc/README.md)·[호환성](COMPATIBILITY.ko.md) |
-| NES | 개발 중·제품 미포함 | MMC533 실제 SMB3 12.24fps, 전반 11.97fps / 후반 12.65fps |
+| NES | 개발 중·제품 미포함 | MMC540 실제 SMB3 13.37fps, 전반 12.85fps / 후반 14.35fps(클리어 포함) |
 | PC Engine | 조사 대기 | 구현·실기 성공 없음 |
 
 대상은FXPAK Pro/Mk.III,EP4CE15F17C8,STM32F401RCT6,PSRAM IS66WVE4M16EBLL-70BLI 두개다. 다른보드/전체IO승인을뜻하지않는다.
 
 ## 최신 게임 실기
 
-MMC524 대비 45–55초에는 최대 표시 간격이 160/210→100/100ms로 줄었고, 40–45초에는 100→180ms로 늘었다. [529 실기 분석](nes-hardware530-results.ko.md)
+MMC540은 60.08초에 803회 표시(13.37fps), 실행·메뉴 복귀 정상이다. MMC533 대비 1–40초는 11.97→12.85fps, 40–60초는 12.65→14.35fps였다. 마지막 5초는 정적인 레벨 클리어 장면이므로 후반 증가율을 전투 성능 개선율로 해석하지 않는다. 다음 시험부터 5–55초로 집계한다. [541 분석](nes-hardware541-results.ko.md)
 
 ## 현재 비용과 다음 목표
 
@@ -24,10 +24,10 @@ MMC524 대비 45–55초에는 최대 표시 간격이 160/210→100/100ms로 �
 |---|---|
 | FPGA507 | 15164LE/14172comb/8394FF/264816bits/51M9K, 잔여244LE·5M9K |
 | 관련 timing | setup+0.078ns/hold+0.139ns; 전체 reset/CDC/IO 미승인 |
-| ARM524 | firmware 212,992B / Flash 여유 0B / BSS 18,588B |
-| MMC533의 60Hz 평균 격차 | 81.73−16.67 ≈ 65.06ms/표시 |
-| MMC533 단계 평균 | 수신 19.95 / 계획·공급 16.17 / 출력·최종 ACK 44.97ms/표시 |
-| 다음 작업 | 동일 입력에서 map 64B 분할과 최종 표시 검사 도달 시각을 비교한다. [실기 근거](nes-hardware525-results.ko.md) |
+| ARM540 전달본 | firmware 212,428B / Flash 여유 564B / BSS 18,592B |
+| MMC540의 60Hz 평균 격차 | 74.82−16.67 ≈ 58.15ms/표시 |
+| MMC540 단계 평균 | 수신 18.86 / 계획·공급 14.51 / 출력·최종 ACK 40.84ms/표시 |
+| 다음 작업 | MMC540 출력·최종 ACK의 잔여 DMA/VBlank를 분리하고 다음 시험은 5–40초·40–55초로 비교한다. [전달본 검증](nes-trial540-results.ko.md) |
 | 미완료 | 지속60fps·장면별/p95·NES 실시간 속도·capture 무손실·MMC4/5·제품 공개 |
 
 [509 전달본](../analysis/service509-package.json)은 ROM/save/RESTORE 없이 제작한 불변 스냅샷이다. 이번 수신 분석에서 새 firmware·ZIP·합성은 만들지 않았다. [MMC502 실기10.59fps](nes-hardware503-results.ko.md)는 복구·비교 기준으로 보존한다.

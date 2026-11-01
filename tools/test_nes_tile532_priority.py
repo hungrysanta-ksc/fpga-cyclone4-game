@@ -51,7 +51,7 @@ local function activeImage()""")
     return s
 
 
-def prepare(trace,out,merge):
+def prepare(trace,out,merge,*,map_first=False):
     # Preserve payload/addresses and assign ordinary sequences in offered order.
     # In the merge fixture keep bulk tokens in the original order as well.
     out.mkdir()
@@ -61,7 +61,11 @@ def prepare(trace,out,merge):
             records=[(row.copy(),bytearray.fromhex(row[2])) for row in source if int.from_bytes(bytes.fromhex(row[2])[8:10],'little')==g]
             if g>=906:
                 tiles=[r for r in records if r[1][0]==7]
-                if merge and g==906:
+                if map_first:
+                    count=2 if g==906 else 1
+                    take=[r for r in records if r[1][:2]==b'\x02\x02'][:count]
+                    assert len(take)==count
+                elif merge and g==906:
                     first,second=(next(r for r in tiles if r[1][1]==0 and int.from_bytes(r[1][10:12],'little')==off) for off in (1312,1328))
                     map_row=next(r for r in records if r[1][:2]==b'\x02\x02')
                     take=[first,map_row,second]
@@ -81,6 +85,7 @@ if __name__=='__main__':
     for n in ('trace','client','mesen','out'):p.add_argument('--'+n,type=Path,required=True)
     p.add_argument('--beam-only',action='store_true')
     p.add_argument('--interior-only',action='store_true')
+    p.add_argument('--map-first-guards',action='store_true',help='Put actual map packets first for the map-specific fault injections.')
     a=p.parse_args();a.out=a.out.resolve();a.out.mkdir(parents=True,exist_ok=False)
     if a.beam_only:
         paced=a.out/'paced';build(paced,pace_beam)
@@ -107,12 +112,15 @@ if __name__=='__main__':
                 if r['grant']:assert r['size']==(80 if group=='merge' else 128 if g==906 else 16)
                 results.append(dict(group=group,**r));print(results[-1],flush=True)
     a.trace=trace
+    if a.map_first_guards:
+        a.trace=root/'map-negative-trace'
+        prepare(trace,a.trace,False,map_first=True)
     for g in (906,907):
         for duplicate in (False,True):
             a.out=root/('duplicate' if duplicate else 'missing');a.out.mkdir(exist_ok=True)
             def missing(s,l):
                 s=map_fixture(s,l,duplicate)
-                return width(s) if 'normal_length532' in l else s
+                return width(s,json.loads((a.client/'build.json').read_text())['map_chunk_B']) if 'normal_length532' in l else s
             r=case(a,g,'bad_manifest',edit_fixture=missing)
             results.append(dict(group='duplicate' if duplicate else 'missing',**r))
     (root/'result.json').write_text(json.dumps(results,indent=2)+'\n')

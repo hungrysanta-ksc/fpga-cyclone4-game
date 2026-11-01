@@ -35,8 +35,8 @@ class MapRows:
         # range after synchronous MDMAEN returns. Coverage lives separately.
         c.emit(0x98);c.long(0xdf,0x7e4004);c.branch(0xf0,'whole526')
         for address in (0x7e4000,0x7e4002):
-            c.long(0xbf,address);c.emit(0x18,0x69,cls.map_chunk,0);c.long(0x9f,address)
-        c.long(0xbf,0x7e4004);c.emit(0x38,0xe9,cls.map_chunk,0);c.long(0x9f,0x7e4004)
+            c.long(0xbf,address);c.emit(0x18,0x69,*cls.map_chunk.to_bytes(2,'little'));c.long(0x9f,address)
+        c.long(0xbf,0x7e4004);c.emit(0x38,0xe9,*cls.map_chunk.to_bytes(2,'little'));c.long(0x9f,0x7e4004)
         c.branch(0x80,'retired526')
         c.label('whole526');c.emit(0x8a,0x18,0x69,8,0);c.absolute(0xcd,0x1250)
         c.branch(0xf0,'pop526');c.absolute(0x8d,0x1252);c.branch(0x80,'retired526')

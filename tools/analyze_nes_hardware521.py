@@ -59,9 +59,10 @@ def analyse(raw, trial=520):
         524: (520, "hardware521-mmc520.json", "Normal play and menu return. Modest improvement felt through late play, with less slowdown when many enemies appeared."),
         529: (524, "hardware525-mmc524.json", "Normal execution and menu return. The user followed a similar playthrough."),
         533: (529, "hardware530-mmc529.json", "Normal execution and menu return. The user played a similar first-level route to MMC529."),
+        540: (533, "hardware534-mmc533.json", "Normal execution and menu return. Similar first-level route; the user tentatively felt a small improvement. The user clarified that the final five seconds showed level clear with almost no motion."),
     }[trial]
     old = json.loads((ROOT/"analysis"/evidence).read_text())
-    return dict(trial=trial, trial_family="MMC", hardware_run_passed=True, physical=True,
+    result = dict(trial=trial, trial_family="MMC", hardware_run_passed=True, physical=True,
                 user_observation=observation,
                 source_SHA256={p.name:sha(p) for p in files.values()},
                 display=dict(completed=n,seconds=elapsed/1000,fps=n*1000/elapsed,mean_ms=elapsed/n),
@@ -71,12 +72,39 @@ def analyse(raw, trial=520):
                               outstanding=pending, runtime_result=int(g["native_result"]), errors={
                                   k:int(g[k]) for k in ("plan_error","sink_window_error","native_sink_error")}),
                 capture=capture_evidence(game))
+    if trial == 540:
+        result["comparison"] = dict(
+            reference=evidence,
+            reference_SHA256=sha(ROOT/"analysis"/evidence),
+            overall_fps_change_percent=100*(result["display"]["fps"]/old["display"]["fps"]-1),
+            windows=[dict(start_s=c["start_s"], end_s=c["end_s"],
+                          previous_displays=p["displays"], current_displays=c["displays"],
+                          previous_fps=p["fps"], current_fps=c["fps"],
+                          fps_change_percent=100*(c["fps"]/p["fps"]-1))
+                     for p,c in zip(old["completion_windows"],split)],
+            phase_delta_ms_per_display={k:phases[k]["ms_per_display"]-old["phases"][k]["ms_per_display"]
+                                        for k in phases},
+            frame_start_bin_counts=[dict(start_s=c["start_s"], previous=p["displays"],current=c["displays"])
+                                    for p,c in zip(old["frame_start_bins"],bins)],
+            late_scene_groups=[dict(start_s=start,end_s=end,
+                                    previous=sum(r["displays"] for r in old["frame_start_bins"] if start<=r["start_s"]<end),
+                                    current=sum(r["displays"] for r in bins if start<=r["start_s"]<end),
+                                    basis="FRAME_START_NOT_DISPLAY_COMPLETION_OR_SCENE")
+                               for start,end in ((5,40),(40,55),(5,55),(55,60))],
+            limitations=["Similar unsynchronized gameplay; observational change, not an isolated causal speedup.",
+                         "5-second bins group completed work by frame start, not display completion or scene.",
+                         "DWT phases include IRQ and waits; operation and polling costs are nested.",
+                         "No per-frame p95, pixel identity, capture-loss rate or pure VBlank wait is measured."])
+        assert (g["native_result"],g["sink_window_error"],g["native_sink_error"],g["plan_error"]) == ("1","3","2","0")
+        assert pending == 0 and g["sink_trace_mismatch_hex"] == "00"
+        result["terminal"]["interpretation"] = "60-second deadline with SEAL transfer-boundary failure; 804th input is not a completed display. This does not classify arbitrary window error 3 as benign."
+    return result
 
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--raw", type=Path, required=True)
     p.add_argument("--out", type=Path, required=True)
-    p.add_argument("--trial", type=int, choices=(520,524,529,533), default=520)
+    p.add_argument("--trial", type=int, choices=(520,524,529,533,540), default=520)
     a = p.parse_args()
     a.out.write_text(json.dumps(analyse(a.raw, a.trial), indent=2)+"\n", encoding="utf8", newline="\n")

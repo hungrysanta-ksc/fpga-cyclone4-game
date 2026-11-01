@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR145 / MMC533 실기. docs/nes-hardware534-results.ko.md와 analysis/hardware534-mmc533.json을 먼저 읽는다. MMC533은 60.07초에 735회 표시(12.24fps), 실행·메뉴 복귀 정상이다. MMC529 대비 1–40초는 11.82→11.97fps, 40–60초는 11.60→12.65fps였다.
+- PR146 / 541 실기. docs/nes-hardware541-results.ko.md와 analysis/hardware541-mmc540.json FIRST. MMC540 803/60.08초 13.37fps·실행/메뉴 정상. 1–40초 12.85/40–60초 14.35fps지만 마지막5초는 정적 클리어로 후반 전투 개선율 아님. 다음 시험부터 표시 완료 [5,40)/[40,55), 합계 [5,55): prepare_nes_windows541.py 및 check_nes_windows518.py --layout trimmed 적용. 기존540 ZIP불변, 출력·최종ACK40.84ms 후속 분리. Lite/STOP/독립검사/첫BG ROM구간 유지.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 
