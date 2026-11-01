@@ -11,12 +11,12 @@ import replay_nes_map527 as replay
 from test_nes_map526_schedule import observer
 
 
-def tile_observer(s,labels):
+def tile_observer(s,labels,map_limit='128'):
     if 'normal_length532' in labels:
         s=once(s,'assert(n==64 and off%64==0 and accepted526[off] and not copied526[off])',
-               '''assert((n==64 or n==128) and off%64==0)
+               f'''assert(n>=64 and n%64==0 and n<={map_limit} and off%64==0)
   for j=off,off+n-1,64 do assert(accepted526[j] and not copied526[j])end''')
-        s=once(s,'word(0x4004+i)>=64','n==math.min(128,word(0x4004+i))')
+        s=once(s,'word(0x4004+i)>=64',f'n==math.min({map_limit},word(0x4004+i))')
         s=once(s,'pending526={off=off','pending526={n=n,off=off')
         s=once(s,'for j=0,63 do','for j=0,p.n-1 do')
         s=once(s,'copied526[p.off]=true','for j=p.off,p.off+p.n-1,64 do copied526[j]=true end')
@@ -69,10 +69,12 @@ if __name__=='__main__':
         p.add_argument('--'+n,type=Path,required=n in ('client','mesen','out'))
     p.add_argument('--start-clock',type=int)
     a=p.parse_args();a.map526=True;joint.Runtime=OutputRuntime
+    limit=json.loads((a.client/'build.json').read_text())['map_chunk_B']
+    assert limit in (64,128,256)
     if a.trace:
         a.frames=53
-        replay.observer=lambda s,l:tile_observer(observer(s,l),l)
+        replay.observer=lambda s,l:tile_observer(observer(s,l),l,str(limit))
         replay.run(a)
     else:
         labels=json.loads((a.client/'labels.json').read_text())
-        run_schedule(a,lambda s,args:tile_observer(instrument(s,args),labels),CheckedLink,frames=53)
+        run_schedule(a,lambda s,args:tile_observer(instrument(s,args),labels,str(limit)),CheckedLink,frames=53)

@@ -235,6 +235,7 @@ def breakdown(g,events,cpu,samples,packets,arrivals):
 def summarize(rows):
     keys=rows[0]['ms']
     late=[r for r in rows if r['miss_clocks'] is not None]
+    final_waits=[r['ms']['final_blank_wait'] for r in rows if r['ms']['final_blank_wait']]
     return dict(frames=len(rows),call_ms=mean(r['call_ms'] for r in rows),
                 means={k:mean(r['ms'][k] for r in rows) for k in keys},
                 pre_load_means={k:mean(r['pre_load_ms'].get(k,0) for r in rows) for k in ('bulk','map','section5','other','no_head')},
@@ -243,7 +244,7 @@ def summarize(rows):
                 late_beam_frames=len(late),
                 conditional_crossings={k:sum(r['last_blank_command_clocks'].get(k,0)>=r['miss_clocks'] for r in late) for k in KINDS},
                 raw_already_complete_no_empty_blank=sum(r['raw_room'] is not None and r['raw_room']['total_upper_clocks']==0 for r in late),
-                mean_wait_when_taken=mean(r['ms']['final_blank_wait'] for r in rows if r['ms']['final_blank_wait']))
+                mean_wait_when_taken=mean(final_waits) if final_waits else None)
 
 
 def analyze(a):

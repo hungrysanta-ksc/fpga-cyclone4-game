@@ -51,7 +51,7 @@ local function activeImage()""")
     return s
 
 
-def prepare(trace,out,merge):
+def prepare(trace,out,merge,*,map_first=False):
     # Preserve payload/addresses and assign ordinary sequences in offered order.
     # In the merge fixture keep bulk tokens in the original order as well.
     out.mkdir()
@@ -61,7 +61,11 @@ def prepare(trace,out,merge):
             records=[(row.copy(),bytearray.fromhex(row[2])) for row in source if int.from_bytes(bytes.fromhex(row[2])[8:10],'little')==g]
             if g>=906:
                 tiles=[r for r in records if r[1][0]==7]
-                if merge and g==906:
+                if map_first:
+                    count=2 if g==906 else 1
+                    take=[r for r in records if r[1][:2]==b'\x02\x02'][:count]
+                    assert len(take)==count
+                elif merge and g==906:
                     first,second=(next(r for r in tiles if r[1][1]==0 and int.from_bytes(r[1][10:12],'little')==off) for off in (1312,1328))
                     map_row=next(r for r in records if r[1][:2]==b'\x02\x02')
                     take=[first,map_row,second]
@@ -112,7 +116,7 @@ if __name__=='__main__':
             a.out=root/('duplicate' if duplicate else 'missing');a.out.mkdir(exist_ok=True)
             def missing(s,l):
                 s=map_fixture(s,l,duplicate)
-                return width(s) if 'normal_length532' in l else s
+                return width(s,json.loads((a.client/'build.json').read_text())['map_chunk_B']) if 'normal_length532' in l else s
             r=case(a,g,'bad_manifest',edit_fixture=missing)
             results.append(dict(group='duplicate' if duplicate else 'missing',**r))
     (root/'result.json').write_text(json.dumps(results,indent=2)+'\n')

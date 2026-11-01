@@ -47,9 +47,9 @@ class SmallTiles(LateMapRows):
         # A tile no longer fits. Give the still-eligible map tail this blank.
         c.emit(0xc2,0x20);c.absolute(0xad,0x1250);c.emit(0x38,0xe9,8,0,0xaa,0xe2,0x20)
         c.long(0xbf,0x7e4001);c.emit(0x29,0x70,0xc9,0x50);c.branch(0xd0,defer)
-        if cls.map_chunk==128:c.emit(0xc2,0x20)
+        if cls.map_chunk>64:c.emit(0xc2,0x20)
         cls.map_length(c,'fallback_length532')
-        if cls.map_chunk==128:c.emit(0xe2,0x20)
+        if cls.map_chunk>64:c.emit(0xe2,0x20)
         c.label('map_beam_ok526')
 
 
@@ -114,8 +114,8 @@ def merge_emitter():
     return ns['emit']
 
 
-def build(out,before_beam=None,paired=False,interior=False):
-    policy=InteriorTiles if interior else PairedMap if paired else SmallTiles
+def build(out,before_beam=None,paired=False,interior=False,policy=None):
+    policy=policy or (InteriorTiles if interior else PairedMap if paired else SmallTiles)
     emitter=prefix.emit
     if interior:
         s=inspect.getsource(emitter)
