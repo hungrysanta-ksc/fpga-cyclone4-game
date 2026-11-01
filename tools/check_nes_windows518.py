@@ -15,7 +15,9 @@ def run(a):
         assert 0<n<6144 and m.u.mem_read(base+n,1)==b'\0'
         return bytes(m.u.mem_read(base,n)).decode('ascii')
     assert [w['displays'] for w in windows(report(),60000)]==[0,0]
-    ticks=[0,99,100,3999,4000,5999,6000,6011]
+    trimmed = a.layout == 'trimmed'
+    ticks=([0,99,100,499,500,3999,4000,5499,5500,5999,6000,6011] if trimmed
+           else [0,99,100,3999,4000,5999,6000,6011])
     before=0
     for tick in ticks:
         m.call('nes_budget210_frame',[before])
@@ -23,7 +25,8 @@ def run(a):
     m.call('nes_budget210_frame',[6012]) # unfinished frame
     out=report();result=windows(out,60070)
     assert [w['displays'] for w in result]==[2,2]
-    assert result[0]['fps']==2/39 and result[1]['fps']==2/20
+    assert result[0]['fps']==2/(35 if trimmed else 39) and result[1]['fps']==2/(15 if trimmed else 20)
+    assert [(r['start_s'],r['end_s']) for r in result]==([(5,40),(40,55)] if trimmed else [(1,40),(40,60)])
     # The old per-frame-start bins and the new completion windows use different boundaries.
     assert sum(int(line.split('=')[1].split(',')[0],16) for line in out.splitlines()
                if line.startswith('b') and len(line)>4 and line[1:3].isdigit() and line[3]=='=')==len(ticks)
@@ -31,7 +34,9 @@ def run(a):
     m.call('nes_budget210_reset',[])
     assert all(w['displays']==0 for w in windows(report(),60000))
     assert windows('bin_ticks=500\n',60000) is None
-    for invalid,time in [(out,59990),(out.replace('display_1_40_60=2,2','display_1_40_60=2,-1'),60000)]:
+    field='display_5_40_55' if trimmed else 'display_1_40_60'
+    for invalid,time in [(out,59990),(out.replace(field+'=2,2',field+'=2,-1'),60000),
+                         (out+'\n'+('display_1_40_60' if trimmed else 'display_5_40_55')+'=2,2\n',60000)]:
         try:windows(invalid,time)
         except ValueError:continue
         raise AssertionError('Invalid observation accepted')
@@ -44,8 +49,9 @@ def run(a):
     blob=a.arm/'obj-nes-100/firmware.stm'
     return dict(firmware_SHA256=sha(blob),firmware_B=blob.stat().st_size,Flash_free_B=0x34000-blob.stat().st_size,
                 BSS_B=int((a.arm.parent/'size.log').read_text().splitlines()[-1].split()[2]),test_ticks=ticks,
-                accepted=result,reset=True,unfinished_excluded=True,legacy_bins_preserved=True,legacy_window_result=None)
+                layout=a.layout,accepted=result,reset=True,unfinished_excluded=True,legacy_bins_preserved=True,legacy_window_result=None)
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for n in ('arm','out'):p.add_argument('--'+n,type=Path,required=True)
+    p.add_argument('--layout',choices=('legacy','trimmed'),default='legacy')
     a=p.parse_args();r=run(a);a.out.write_text(json.dumps(r,indent=2)+'\n',encoding='utf8',newline='\n');print(r)

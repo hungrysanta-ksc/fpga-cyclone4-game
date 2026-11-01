@@ -4,11 +4,11 @@
 
 ## 현재 작업
 
-[PR146](../../docs/progress/pr-146.md)의 [539 일정 비교](../../docs/nes-first539-results.ko.md)와 [MMC540 전달본](../../docs/nes-trial540-results.ko.md)을 먼저 읽는다. 실기 기준은 [MMC533](../../docs/nes-hardware534-results.ko.md)이다.
+[PR146](../../docs/progress/pr-146.md)의 [539 일정 비교](../../docs/nes-first539-results.ko.md)와 [MMC540 전달본](../../docs/nes-trial540-results.ko.md)을 먼저 읽는다. 실기 기준은 [MMC540](../../docs/nes-hardware541-results.ko.md)이다.
 
 ## 최신 실기와 비교 기준
 
-MMC533은 60.07초에 735회 표시(12.24fps), 실행·메뉴 복귀 정상이다. MMC529 대비 1–40초는 11.82→11.97fps, 40–60초는 11.60→12.65fps였다.
+MMC540은 60.08초에 803회 표시(13.37fps), 실행·메뉴 복귀 정상이다. MMC533 대비 1–40초는 11.97→12.85fps, 40–60초는 12.65→14.35fps였다. 마지막 5초는 정적인 레벨 클리어 장면이므로 후반 증가율을 전투 성능 개선율로 해석하지 않는다.
 
 **MMC509 /507 FPGA /489 SNES**:60.08초770회 **12.82fps**, 실행·입력 흔적·STOP/base 복구와 사용자 메뉴 복귀 정상. 체감 개선은 작았다. 이전 MMC502는60.07초636회10.59fps이며 복구 기준으로 보존한다. 같은 동선·첫 레벨 전용 비교는 아니다. 원본 로그는 `probes/nes-hardware510/run01`, 선택 증거는 `termination01`/`analysis02.json`이다.
 
@@ -18,9 +18,9 @@ MMC533은 60.07초에 735회 표시(12.24fps), 실행·메뉴 복귀 정상이�
 
 ## 다음 작업 순서
 
-1. MMC533을 기준으로 원본 로그 해시·구간 정의를 보존한다.
-2. MMC540을 같은 첫 레벨 동선으로 시험한 사용자 로그를 받는다. 선택 코드는 539 ARM01 및 538 client04, 전달 라벨은 trial540/ARM01, ZIP은 trial540/trial02다. 게임은 기존 mmc533.nes를 mmc540.nes로 복사한다.
-3. 후속 출력 변경은 같은 입력의 최종 표시·ACK와 1–40초·40–60초 실기 구간을 함께 비교한다.
+1. [541 실기 분석](../../docs/nes-hardware541-results.ko.md)을 기준으로 MMC540과 533의 장면 차이를 보존한다. 마지막 5초 클리어 장면을 전투 개선으로 해석하지 않는다.
+2. 다음 전달본에 `prepare_nes_windows541.py` 집계 변경을 포함한다. 표시 완료 [5,40)/[40,55), 전체 [5,55), 시작·마지막 5초 제외다. 기존 MMC540 ZIP은 불변이다.
+3. MMC540 선택 539 ARM01/538 client04의 잔여 출력 DMA와 VBlank 병목을 두 시작 위상에서 분리한다. 독립 검사·STOP·최종 ACK·메뉴 복귀와 첫 BG ROM 구간을 유지한다.
 
 512·514의 제외 근거는 [전송 형식 비교](../../docs/nes-transfer512-results.ko.md)와 [해당 PR 기록](../../docs/progress/pr-141.md)에 남아 있다.
 
