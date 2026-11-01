@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR145 / MMC533 실기. docs/nes-hardware534-results.ko.md와 analysis/hardware534-mmc533.json을 먼저 읽는다. MMC533은 60.07초에 735회 표시(12.24fps), 실행·메뉴 복귀 정상이다. MMC529 대비 1–40초는 11.82→11.97fps, 40–60초는 11.60→12.65fps였다.
+- PR146 / 535. docs/nes-map535-results.ko.md와 analysis/map535-verification.json을 먼저 읽는다. 네 행 선행 DMA는 922에서 한 VBlank를 절약했으나 밀집 구간은 두 위상 모두 같았다. 실기 기준 MMC533 유지. 다음은 910·951의 map 수락·유휴 VBlank와 최종 검사선 예산이다.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 

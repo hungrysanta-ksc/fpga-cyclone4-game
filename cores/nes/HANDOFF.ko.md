@@ -1,10 +1,10 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-output-budget-531`이며 PR144 병합 `bbacb9fa4ddc43cf1ecb97609c49afdcb96f3b55`에서 분기했다.
+현재 브랜치는 `codex/nes-mmc533-output-535`이며 PR145 병합 `2cd841eb8c64bc26a5e96b3ba1ac289265d2ea03`에서 분기했다.
 
 ## 현재 작업
 
-[PR145](../../docs/progress/pr-145.md)의 [MMC533 실기 결과](../../docs/nes-hardware534-results.ko.md)와 [532 동기화 비교](../../docs/nes-tile532-results.ko.md)를 먼저 읽는다.
+[PR146](../../docs/progress/pr-146.md)의 [535 고정 입력·연속 일정](../../docs/nes-map535-results.ko.md)을 먼저 읽는다. 실기 기준은 [MMC533](../../docs/nes-hardware534-results.ko.md)이다.
 
 ## 최신 실기와 비교 기준
 
@@ -19,7 +19,7 @@ MMC533은 60.07초에 735회 표시(12.24fps), 실행·메뉴 복귀 정상이�
 ## 다음 작업 순서
 
 1. MMC533을 기준으로 원본 로그 해시·구간 정의를 보존한다.
-2. 532의 동일 입력 시험에서 사용한 952·954와 실기 후반의 작업량 차이를 구분한다.
+2. 535는 922를 개선했지만 밀집 구간 표시 간격이 줄지 않았다. 910·951에서 다음 map이 수락될 때 남은 빈 큐·빔 시간을 비교한다.
 3. 후속 출력 변경은 같은 입력의 최종 표시·ACK와 1–40초·40–60초 실기 구간을 함께 비교한다.
 
 512·514의 제외 근거는 [전송 형식 비교](../../docs/nes-transfer512-results.ko.md)와 [해당 PR 기록](../../docs/progress/pr-141.md)에 남아 있다.

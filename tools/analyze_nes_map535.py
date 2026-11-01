@@ -8,6 +8,8 @@ from pathlib import Path
 from analyze_nes_map526 import ROOT,Calendar,ms,read,run_cost,sha,tiles
 from analyze_nes_output531 import WARM,DENSE,breakdown,csv_groups,summarize
 from analyze_nes_quiet528 import packet_content
+from analyze_nes_transfer512 import fpga
+from verify_nes_trial533 import timing
 
 
 def profile(folder):
@@ -77,6 +79,7 @@ def analyze(a):
             proof['delta_ACK_ms']=ms(proof['candidate']['ACK']-proof['reference']['ACK'])
             fixed[g]=proof
         phases.append(dict(start=schedules[i]['candidate']['parameters']['start'],variants=variants,fixed=fixed,
+                           dense_VBlank_change=sum(cost['display'][g-905]['display_VBlanks']-control['display'][g-905]['display_VBlanks'] for g in DENSE),
                            dense_ms_change=cost['dense_ms']-control['dense_ms'],last_ACK_ms_change=ms(cost['final_ack']-control['final_ack'])))
     edges=read(a.edges/'edges.json')
     assert [(r['line'],r['size']) for r in edges]==[(254,256),(255,0),(256,0),(233,0)]
@@ -85,17 +88,25 @@ def analyze(a):
     assert len(guards)==22 and len(maps)==12
     for r in maps:
         assert r['size']==((256 if r['generation']==906 else 64) if r['grant'] else 0)
-    return dict(phases=phases,physical_baseline=read(ROOT/'analysis/hardware534-mmc533.json')['display'],
+    cost=fpga(a.board)
+    raw,worst,ucp=timing(a.board)
+    old_raw,_,old_ucp=timing(a.reference_board)
+    assert sha(a.reference_board/'output_files/board.sof')==release['SOF_SHA256']
+    assert sha(a.board/'sink-program.hex')==sha(a.client/'sink-program.hex')
+    assert [n for n,h in release['inputs'].items() if sha(a.board/n)!=h]==['sink-program.hex']
+    board=dict(cost=cost,SOF=sha(a.board/'output_files/board.sof'),raw_worst_ns=worst,
+               equal_raw_summary=raw==old_raw,equal_unconstrained=ucp==old_ucp)
+    return dict(phases=phases,board=board,physical_baseline=read(ROOT/'analysis/hardware534-mmc533.json')['display'],
                 original_body_B=(a.baseline_client/'body.bin').stat().st_size,body_B=(a.client/'body.bin').stat().st_size,
                 full_map_STOP_head=maps,other_guard_cases=len(guards),edges=edges,
-                comparison_passed=all(p['dense_ms_change']<0 and p['last_ACK_ms_change']<0 and
+                comparison_passed=all(p['dense_VBlank_change']<0 and p['dense_ms_change']<0 and p['last_ACK_ms_change']<0 and
                     all(p['variants']['535']['display'][g-905]['final_waits']==0 for g in (952,954)) for p in phases))
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser()
     for name in ('baseline','candidate','audit','target910','target922','target951'):p.add_argument('--'+name,nargs=2,type=Path,required=True)
-    for name in ('client','baseline-client','fixture','calendar','edges','guards','map-guards','out'):
+    for name in ('client','baseline-client','fixture','calendar','edges','guards','map-guards','board','reference-board','out'):
         p.add_argument('--'+name,type=Path,required=True)
     a=p.parse_args()
     a.out.write_text(json.dumps(analyze(a),indent=2)+'\n',newline='\n')

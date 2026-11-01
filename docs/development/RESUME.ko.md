@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-현재 브랜치는 `codex/nes-output-budget-531`이며 PR144 병합에서 분기했다. 최신 실기 기준은 MMC533이다.
+현재 브랜치는 `codex/nes-mmc533-output-535`이며 PR145 병합에서 분기했다. 최신 실기 기준은 MMC533이다. [현재 PR](../progress/pr-146.md)
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -40,7 +40,7 @@ git log -5 --oneline
 ## 4. 개발 재개 후 순서
 
 1. MMC533의 완료 표시 기준은 전반 467회, 후반 253회다.
-2. [MMC533 실기 분석](../nes-hardware534-results.ko.md)에서 입력·출력 작업량과 표시 간격을 구분한다.
+2. [535 비교](../nes-map535-results.ko.md)의 910·951에서 map 수락 시각과 마지막 유휴 VBlank를 검토한다. 952·954의 최종 대기 0회를 유지한다.
 3. 다음 전달본에서 1–40초와 40–60초를 따로 집계하고, 같은 동선인지 함께 기록한다.
 
 ## 5. 기록을 남긴다
