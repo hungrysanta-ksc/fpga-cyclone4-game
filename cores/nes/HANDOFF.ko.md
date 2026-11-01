@@ -1,14 +1,14 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-output-budget-511`이며 [PR141](../../docs/progress/pr-141.md)에서 작업한다. PR140 병합 커밋은 `ab55afeefd629bbcc37cbcc57c4d35f1a0172f7e`다. [517 실기 수신](../../docs/nes-hardware517-results.ko.md), [516 소비·VBlank 및 전달](../../docs/nes-window516-results.ko.md), [515 ACK 행 이력](../../docs/nes-history515-results.ko.md), [514 부분 DMA 실측](../../docs/nes-trim514-results.ko.md), [513 대상 map 조사](../../docs/nes-map513-results.ko.md), [512 네 조합 결과](../../docs/nes-transfer512-results.ko.md)와 [510 실기 분석](../../docs/nes-hardware510-results.ko.md)을 먼저 읽는다.
+현재 브랜치는 `codex/nes-obj-window-518`이며 PR141 병합 `de09a59199db500940c9b1b57b38043d99a7f15c`에서 분기했다. PR142에서 MMC520의 실기 결과까지 확인했다.
 
 ## 현재 작업
 
-PR141은 master에 병합됐다. [PR142](../../docs/progress/pr-142.md)에서 [518 구간 계측](../../docs/nes-obj518-results.ko.md)과 [519의 53세대 연속 비교](../../docs/nes-dense519-results.ko.md)를 확인한다. 단독 선행을 제외하고 [520의 패킷 내 정렬](../../docs/nes-order520-results.ko.md)로 952의 bulk를 9→5건으로 줄였다. [MMC520 실기 전달본](../../docs/nes-mmc520-trial.ko.md)은 보드 확인 대기 중이다. 다음 실기 시험부터 최종 표시가 확인된 1–40초·40–60초를 따로 비교한다.
+[PR142](../../docs/progress/pr-142.md)의 [MMC520 실기 결과](../../docs/nes-hardware521-results.ko.md)를 먼저 읽는다. 같은 개조판의 다음 실행과 비교할 표시 구간 기준은 1–40초와 40–60초다.
 
 ## 최신 실기와 비교 기준
 
-MMC516 기능 실기 확인. 10.99fps, 실행·메뉴 복귀 정상. 45~50초에 수신 21.67ms, 계획·공급 45ms, 출력 100.33ms/표시. 원본 세 로그는 `probes/nes-hardware517/run01`에 보존했다. 아래 509 수치는 다른 동선의 비교 기준이다.
+MMC520은 11.95fps로 실행·메뉴 복귀가 확인됐다. 이전 MMC516은 10.99fps였으며 플레이 동선은 일치하지 않는다. 원본 세 로그는 상위 작업 폴더의 `probes/nes-hardware521/run01`에 보존했다.
 
 **MMC509 /507 FPGA /489 SNES**:60.08초770회 **12.82fps**, 실행·입력 흔적·STOP/base 복구와 사용자 메뉴 복귀 정상. 체감 개선은 작았다. 이전 MMC502는60.07초636회10.59fps이며 복구 기준으로 보존한다. 같은 동선·첫 레벨 전용 비교는 아니다. 원본 로그는 `probes/nes-hardware510/run01`, 선택 증거는 `termination01`/`analysis02.json`이다.
 
@@ -20,7 +20,7 @@ MMC516 기능 실기 확인. 10.99fps, 실행·메뉴 복귀 정상. 45~50초에
 
 1. MMC509를 유지한다. 512 실험은 원본 93.110ms, map 108.084ms, 입력 93.107ms, 결합 104.755ms의 후반 평균 간격을 측정했다. 입력 RTL은 관련 setup −0.317ns, 결합 Flash는 0B다. 산출물·재현 위치와 제한은 [512](../../docs/nes-transfer512-results.ko.md)에 있다.
 2. 514의 부분 map은 기능·cold 복구·STOP을 통과했지만 후반 평균이 104.826ms로 늘었다. 88개 패킷의 65816 소비 합계가 62.222→210.717ms였다. 생략 바이트를 패킷마다 다시 순회하는 방식은 종료한다.
-3. 520의 동일 입력 비교는 완료됐다. 로컬 전달본은 상위 작업 폴더의 `probes/nes-order520/trial01/MMC520-TRIAL.zip`이다. 사용자 실기 로그 3개와 메뉴 복귀를 받은 뒤 1–40초와 40–60초를 분리해 기록한다.
+3. 520의 실기 수신이 완료됐다. 마지막 5초는 약 8fps, 출력·최종 ACK 78.25ms/표시였다. 동일 입력에서 OBJ 소비 완료 뒤 출력 경로를 분리해 검증한다.
 
 ## 재현 위치와 실패 보존
 

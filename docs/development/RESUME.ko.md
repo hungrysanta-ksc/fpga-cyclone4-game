@@ -8,7 +8,7 @@
 2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR142](../progress/pr-142.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
-GB/GBC는 추가·공개 완료다. NES의 현재 실기 기준 MMC516은 실행·메뉴 복귀 정상, 60.07초에 660회 표시(10.99fps)다. MMC509는 다른 동선에서 12.82fps였다. [실기 기록](../nes-hardware517-results.ko.md)과 [다음 시험의 구간 기준](../nes-obj518-results.ko.md)을 구분한다. 이후 전달본은 RESTORE를 생략하고 기존 백업을 보존한다.
+GB/GBC는 추가·공개 완료다. NES의 현재 실기 기준 MMC520은 실행·메뉴 복귀 정상, 60.07초에 718회 표시(11.95fps)다. [521 실기 기록](../nes-hardware521-results.ko.md)을 먼저 확인한다. 이후 전달본은 RESTORE를 생략한다.
 
 ## 2. Git 기준을 확인한다
 
@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-현재 브랜치는 `codex/nes-output-budget-511`이다. PR140 병합 `ab55afeefd629bbcc37cbcc57c4d35f1a0172f7e`를 기준으로 PR141에서 진행한다. [517 최신 실기와 다음 비교](../nes-hardware517-results.ko.md)를 확인하고 로컬 변경을 보존한다.
+현재 브랜치는 `codex/nes-obj-window-518`이며 PR141 병합 `de09a59199db500940c9b1b57b38043d99a7f15c`에서 분기했다. PR142에서 MMC520의 실기 결과까지 확인했다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -39,8 +39,8 @@ git log -5 --oneline
 
 ## 4. 개발 재개 후 순서
 
-1. MMC516의 실행·메뉴 복귀와 10.99fps 실기 수신은 완료했다. [MMC509 비교](../nes-hardware517-results.ko.md)를 확인한다.
-2. [518](../nes-obj518-results.ko.md)의 고정 입력·보드 설정을 사용한다. [520 비교](../nes-order520-results.ko.md)에서 952의 bulk 9→5건을 확인했다. [MMC520 실기 절차](../nes-mmc520-trial.ko.md)에 따라 실행·메뉴 복귀·밀집 구간 체감을 확인한다.
+1. MMC520의 첫 구간별 실기 기준은 전반 12.08fps, 후반 11.60fps다.
+2. 마지막 5초의 출력 대기를 동일 입력의 OBJ 소비·SEAL·VBlank·최종 ACK 시각과 비교한다.
 3. 다음 전달본에서 1–40초와 40–60초를 따로 집계하고, 같은 동선인지 함께 기록한다.
 
 ## 5. 기록을 남긴다
