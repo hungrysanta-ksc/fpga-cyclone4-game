@@ -85,6 +85,7 @@ if __name__=='__main__':
     for n in ('trace','client','mesen','out'):p.add_argument('--'+n,type=Path,required=True)
     p.add_argument('--beam-only',action='store_true')
     p.add_argument('--interior-only',action='store_true')
+    p.add_argument('--map-first-guards',action='store_true',help='Put actual map packets first for the map-specific fault injections.')
     a=p.parse_args();a.out=a.out.resolve();a.out.mkdir(parents=True,exist_ok=False)
     if a.beam_only:
         paced=a.out/'paced';build(paced,pace_beam)
@@ -111,6 +112,9 @@ if __name__=='__main__':
                 if r['grant']:assert r['size']==(80 if group=='merge' else 128 if g==906 else 16)
                 results.append(dict(group=group,**r));print(results[-1],flush=True)
     a.trace=trace
+    if a.map_first_guards:
+        a.trace=root/'map-negative-trace'
+        prepare(trace,a.trace,False,map_first=True)
     for g in (906,907):
         for duplicate in (False,True):
             a.out=root/('duplicate' if duplicate else 'missing');a.out.mkdir(exist_ok=True)

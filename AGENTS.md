@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR146 / 536. docs/nes-frontier536-results.ko.md와 analysis/frontier536-verification.json을 먼저 읽는다. 910은 두 번째 map 발행, 951은 section 5 head 서비스가 유휴 DMA 기회를 가렸다. 결합은 마지막 ACK 약 33ms 단축, 밀집 31→33 VBlank. 실기 MMC533 유지. 다음은 954·955의 직전 표시→SEAL head 지연 분리.
+- PR146 / 537. docs/nes-phase537-results.ko.md와 analysis/phase537-verification.json을 먼저 읽는다. 첫 BG 전에 추가 map을 보내면 954·955의 ROM 허용 구간을 놓친다. 추가 map 제한으로 복구했으나 밀집 구간은 두 위상 모두 기준과 같은 31 VBlank다. MMC533에서 951은 SEAL head 이후 남은 map·tile DMA와 VBlank 잔여 시간을, 952는 SEAL head 전 6 VBlank 중 마지막 OBJ 공급·END 발행 시각을 대조한다. 첫 BG 공급 구간과 952·954 최종 대기 0회를 유지한다.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 

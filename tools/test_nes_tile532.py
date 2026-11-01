@@ -69,6 +69,7 @@ if __name__=='__main__':
         p.add_argument('--'+n,type=Path,required=n in ('client','mesen','out'))
     p.add_argument('--start-clock',type=int)
     p.add_argument('--trace-credit',action='store_true')
+    p.add_argument('--trace-rom',action='store_true')
     a=p.parse_args();a.map526=True;joint.Runtime=OutputRuntime
     limit=json.loads((a.client/'build.json').read_text())['map_chunk_B']
     assert limit in (64,128,256)

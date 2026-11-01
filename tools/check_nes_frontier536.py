@@ -27,7 +27,7 @@ class CreditEndpoint(MapEndpoint):
         return bytes(reply)
 
 
-def offer(src,mode):
+def offer(src,mode,*,early=None,count=0,first=False,expect_deferred=False):
     m=ARM(src,mode)
     with (src/'obj-nes-100/sd2snes.elf').open('rb') as f:
         die=next(d for cu in ELFFile(f).get_dwarf_info().iter_CUs() for d in cu.iter_DIEs()
@@ -37,11 +37,18 @@ def offer(src,mode):
     rt=0x20001000
     m.w,m.s,m.p=[rt+layout[n] for n in ('transport','sink','plan')]
     m.endpoint=CreditEndpoint(mode);m.setup();m.endpoint.calls.clear()
+    if early is not None:
+        m.put(m.p,'nes_plan200','early',int(early),1)
+        m.put(m.p,'nes_plan200','count',count,1)
     for n,address in [('video',m.video),('resident',m.resident)]:
         m.u.mem_write(rt+layout[n],address.to_bytes(4,'little'))
     m.put(m.s,'nes_native_sink165','plan',m.p,4)
-    cursor={'sentinel':128,'end':64}.get(mode,8)
+    cursor=0 if first else {'sentinel':128,'end':64}.get(mode,8)
     m.put(m.s,'nes_native_sink165','map_next',cursor,1)
+    if first:
+        # Here the test asks for an inherited bank with rows 8..10 dirty.
+        # The reset fixture otherwise marks every row stale for a cold bank.
+        m.u.mem_write(m.resident+m.layout['nes_resident211']['map_stale'],bytes(16))
     m.put(m.video,'nes_native_video165','map_dirty',7<<8,8)
     data=bytes(range(256))*16;m.u.mem_write(m.video+m.layout['nes_native_video165']['map'],data)
     if mode in ('refreshed','full','bad_identity'):
@@ -59,6 +66,9 @@ def offer(src,mode):
     if mode=='STOP':m.endpoint.mode='STOP_after_E9';m.endpoint.accepted=1
     ok=m.call('offer527',[rt])
     calls=[bytes.fromhex(x) for x in m.endpoint.calls]
+    if expect_deferred:
+        assert ok==1 and not calls and m.get(m.s,'nes_native_sink165','map_next',1)==cursor
+        return dict(mode=mode,ok=ok,early=early,count=count,first=first,deferred=True)
     maps=[b[1:-2] for b in calls if b[0]==0xe1 and b[1] in (2,4)]
     assert bool(ok)==(mode not in ('bad_identity','STOP','bad_E8_CRC','ambiguous_E1')),mode
     assert len(maps)==int(mode in ('normal','refreshed','ambiguous_E1')),mode

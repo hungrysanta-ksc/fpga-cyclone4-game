@@ -43,6 +43,8 @@ class ObjLink(PipeLink):
     def next_rom(self, request):
         g, kind = self.owners.popleft()
         response = super().next_rom(request)
+        if getattr(self.a,'trace_rom',False) and g in (954,955):
+            self.phases[g].setdefault('rom_service',[]).append([kind,request,self.allocations[-1]['grant'],response])
         if kind == 1:
             phase = self.phases[g]
             phase.setdefault("first_obj_rom_request", request)
