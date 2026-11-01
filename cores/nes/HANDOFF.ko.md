@@ -18,8 +18,8 @@ MMC529는 11.79fps로 실행·메뉴 복귀가 확인됐다. MMC524 대비 1–4
 
 ## 다음 작업 순서
 
-1. [532 결과](../../docs/nes-tile532-results.ko.md)의 작은 tile 우선·128B map 소비기와 ARM을 다음 보드 합성 기준으로 삼는다. MMC529가 현재 실기 기준이다.
-2. 선택 이미지의 Quartus Lite 전체 보드 FIT·STA, 실제 loader Flash 여유, STOP·최종 ACK와 base 복구를 확인한다.
+1. [532 결과](../../docs/nes-tile532-results.ko.md)의 작은 tile 우선·128B map 소비기와 ARM이 MMC533에 들어 있다. MMC529가 현재 실기 기준이다.
+2. [MMC533 전달 검증](../../docs/nes-trial533-results.ko.md)에서 FIT·STA 동등 조건과 Flash·복구 검사를 완료했다. MMC533 첫 레벨 실기 로그를 기다린다.
 3. 새 파일명으로 전달한 뒤 비슷한 첫 레벨 동선에서 1–40초와 40–60초의 표시 횟수·메뉴 복귀를 따로 확인한다.
 
 512·514의 제외 근거는 [전송 형식 비교](../../docs/nes-transfer512-results.ko.md)와 [해당 PR 기록](../../docs/progress/pr-141.md)에 남아 있다.

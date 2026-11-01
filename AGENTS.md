@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR145 / 532. docs/nes-tile532-results.ko.md와 analysis/tile532-verification.json부터 읽는다. MMC529 실기 유지. 같은 두 시작 위상에서 작은 tile 우선·최대 128B map 선택이 952·954의 최종 대기를 모두 1→0으로 줄였다. 다음은 선택 소비기의 전체 보드 FIT·STA와 전달 경로 확인이다.
+- PR145 / MMC533. docs/nes-trial533-results.ko.md, docs/nes-mmc533-trial.ko.md와 analysis/trial533-package.json을 먼저 읽는다. MMC529 제한 실기 기준으로 FIT·STA 무회귀, Flash 572B 여유, STOP·최종 ACK·메뉴 복구 경계를 확인했다. 다음은 MMC533 3개 로그 및 실제 메뉴 복귀를 확인해 1–40초·40–60초를 비교하는 일이다.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 
