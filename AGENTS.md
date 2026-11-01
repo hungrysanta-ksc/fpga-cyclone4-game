@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR144 / 526. docs/nes-map526-results.ko.md와 analysis/map526-verification.json을 먼저 읽는다. 254 후보는 952·954에서 map 192–256B를 먼저 보냈으나 두 위상 모두 최종 새 VBlank 대기 1회가 남았다. MMC524 유지. 다음은 ARM 첫 map 확정·SPI 발행 시각과 tile 경쟁을 같은 일정에서 비교한다.
+- PR144 / 527. docs/nes-map527-results.ko.md와 analysis/map527-verification.json을 먼저 읽는다. ARM 행 확정 발행이 952·954에서 39–53ms 빨랐으나 두 위상 모두 최종 VBlank 1회, Flash 388B 초과다. 실기는 MMC524 유지. 다음은 SEAL 잔여 DMA·246번 검사선 비용과 기존 E8의 빈 기회에서 후속 확정 행 공급, 954의 마지막 OBJ ROM 응답을 함께 비교한다.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 

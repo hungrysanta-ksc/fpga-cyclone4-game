@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-현재 브랜치는 `codex/nes-output-tail-522`이며 PR142 병합 `9db5fda9c987253e0a688dba349ab334ea43b692`에서 분기했다. PR143에서 비활성 VRAM 명령 선행 처리의 비용을 검토한다.
+현재 브랜치는 `codex/nes-map-prefix-526`이며 PR143 병합 `ddaa251f0816a9d6aaee53738bc2e135c4882249`에서 분기했다. PR144의 526·527 비교와 MMC524 실기 결과를 구분한다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -40,7 +40,7 @@ git log -5 --oneline
 ## 4. 개발 재개 후 순서
 
 1. MMC524 실기의 구간별 기준은 전반 12.31fps, 후반 11.00fps다.
-2. [526 검증](../nes-map526-results.ko.md)을 기준으로 ARM의 첫 map 확정과 큐 도착을 구분하고, tile ROM·credit을 포함한 두 위상에서 앞선 공급을 비교한다.
+2. [527 검증](../nes-map527-results.ko.md)을 기준으로 SEAL 잔여 DMA와 246번 주사선까지 필요한 클록을 분리한다. 후속 확정 행을 공급할 때 두 위상의 최종 대기, 954의 OBJ ROM 응답 및 Flash를 대조한다.
 3. 다음 전달본에서 1–40초와 40–60초를 따로 집계하고, 같은 동선인지 함께 기록한다.
 
 ## 5. 기록을 남긴다
