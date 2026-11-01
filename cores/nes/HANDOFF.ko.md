@@ -1,14 +1,14 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-map-prefix-526`이며 PR143의 master 병합 `ddaa251f0816a9d6aaee53738bc2e135c4882249`에서 분기했다.
+현재 브랜치는 `codex/nes-output-budget-531`이며 PR144 병합 `bbacb9fa4ddc43cf1ecb97609c49afdcb96f3b55`에서 분기했다.
 
 ## 현재 작업
 
-[PR144](../../docs/progress/pr-144.md)의 [MMC529 실기 결과](../../docs/nes-hardware530-results.ko.md)와 [동일 입력 검증](../../docs/nes-flash529-results.ko.md)을 먼저 읽는다.
+[PR145](../../docs/progress/pr-145.md)의 [MMC533 실기 결과](../../docs/nes-hardware534-results.ko.md)와 [532 동기화 비교](../../docs/nes-tile532-results.ko.md)를 먼저 읽는다.
 
 ## 최신 실기와 비교 기준
 
-MMC529는 11.79fps로 실행·메뉴 복귀가 확인됐다. MMC524 대비 1–40초는 12.31→11.82fps, 40–60초는 11.00→11.60fps였다. 두 실행의 장면별 작업량에는 차이가 있다.
+MMC533은 60.07초에 735회 표시(12.24fps), 실행·메뉴 복귀 정상이다. MMC529 대비 1–40초는 11.82→11.97fps, 40–60초는 11.60→12.65fps였다.
 
 **MMC509 /507 FPGA /489 SNES**:60.08초770회 **12.82fps**, 실행·입력 흔적·STOP/base 복구와 사용자 메뉴 복귀 정상. 체감 개선은 작았다. 이전 MMC502는60.07초636회10.59fps이며 복구 기준으로 보존한다. 같은 동선·첫 레벨 전용 비교는 아니다. 원본 로그는 `probes/nes-hardware510/run01`, 선택 증거는 `termination01`/`analysis02.json`이다.
 
@@ -18,9 +18,11 @@ MMC529는 11.79fps로 실행·메뉴 복귀가 확인됐다. MMC524 대비 1–4
 
 ## 다음 작업 순서
 
-1. MMC509를 유지한다. 512 실험은 원본 93.110ms, map 108.084ms, 입력 93.107ms, 결합 104.755ms의 후반 평균 간격을 측정했다. 입력 RTL은 관련 setup −0.317ns, 결합 Flash는 0B다. 산출물·재현 위치와 제한은 [512](../../docs/nes-transfer512-results.ko.md)에 있다.
-2. 514의 부분 map은 기능·cold 복구·STOP을 통과했지만 후반 평균이 104.826ms로 늘었다. 88개 패킷의 65816 소비 합계가 62.222→210.717ms였다. 생략 바이트를 패킷마다 다시 순회하는 방식은 종료한다.
-3. MMC529 실기를 기준으로 같은 map·OBJ 공급량의 SEAL에서 raw·tile DMA와 마지막 VBlank 대기를 비교한다.
+1. MMC533을 기준으로 원본 로그 해시·구간 정의를 보존한다.
+2. 532의 동일 입력 시험에서 사용한 952·954와 실기 후반의 작업량 차이를 구분한다.
+3. 후속 출력 변경은 같은 입력의 최종 표시·ACK와 1–40초·40–60초 실기 구간을 함께 비교한다.
+
+512·514의 제외 근거는 [전송 형식 비교](../../docs/nes-transfer512-results.ko.md)와 [해당 PR 기록](../../docs/progress/pr-141.md)에 남아 있다.
 
 ## 재현 위치와 실패 보존
 

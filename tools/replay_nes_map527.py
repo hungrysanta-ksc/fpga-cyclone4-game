@@ -15,7 +15,7 @@ from test_nes_map526_schedule import observer
 from trace_nes_tail522 import CLOCKED_INPUT
 
 
-def run(a):
+def run(a, *, edit_script=None, compare_trace=None):
     a.out=a.out.resolve();a.out.mkdir(parents=True,exist_ok=False)
     assert sha(a.trace/'client.sfc')==sha(a.client/'sink165.sfc')
     shutil.copyfile(a.trace/'client.sfc',a.out/'client.sfc')
@@ -44,7 +44,8 @@ def run(a):
     s=s[:start]+releases+"\nlocal function unhex(b)return (b:gsub('..',function(c)return string.char(tonumber(c,16))end))end\n"+CLOCKED_INPUT+s[end:]
     s=once(s,'emu.addMemoryCallback(function()rpc()end,emu.callbackType.exec,0x7e0000,0x7effff)','')
     start=s.index('emu.addEventCallback(function()\n if sequence==1');end=s.index('end,emu.eventType.endFrame)',start)+len('end,emu.eventType.endFrame)')
-    path.write_text(s[:start]+s[end:],encoding='utf8',newline='\n')
+    script=s[:start]+s[end:]
+    path.write_text(edit_script(script) if edit_script else script,encoding='utf8',newline='\n')
     with (a.out/'mesen.log').open('wb') as log:
         subprocess.run([str(a.mesen),'--testRunner',str(path),str(a.out/'client.sfc'),'--timeout=1800',
                         '--doNotSaveSettings','--enableStdout','--snes.disableFrameSkipping=true',
@@ -53,9 +54,15 @@ def run(a):
                        stdout=log,stderr=subprocess.STDOUT,timeout=1850,check=True,creationflags=subprocess.CREATE_NO_WINDOW)
     result=json.loads((a.out/'result.json').read_text())
     assert result['passed'] and result['commits']==a.frames and not (a.out/'map-error.txt').exists()
-    assert list(csv.DictReader((a.out/'window.csv').open()))==rows
+    with (a.out/'window.csv').open() as f:
+        actual=list(csv.DictReader(f))
+    if compare_trace:
+        proof=compare_trace(rows,actual)
+    else:
+        assert actual==rows
+        proof=dict(matched_events=len(rows))
     for g in range(first,last):assert sha(a.out/f'frame-{g}.rgb')==sha(a.trace/f'frame-{g}.rgb')
-    (a.out/'audit.json').write_text(json.dumps(dict(frames=a.frames,matched_events=len(rows),trace=sha(a.out/'window.csv')))+'\n')
+    (a.out/'audit.json').write_text(json.dumps(dict(frames=a.frames,**proof,trace=sha(a.out/'window.csv')))+'\n')
 
 
 if __name__=='__main__':

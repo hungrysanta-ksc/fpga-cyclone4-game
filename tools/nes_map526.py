@@ -10,6 +10,7 @@ from nes_idle524 import arbitrate, packet
 
 class MapRows:
     late_beam = None
+    map_chunk = 64
 
     @staticmethod
     def select(c):
@@ -28,14 +29,14 @@ class MapRows:
         c.label('row526');c.emit(0xa0,64,0)
         c.label('selected526')
 
-    @staticmethod
-    def retire(c):
+    @classmethod
+    def retire(cls,c):
         # X and Y survive service and arbitration. Only mutate the selected
         # range after synchronous MDMAEN returns. Coverage lives separately.
         c.emit(0x98);c.long(0xdf,0x7e4004);c.branch(0xf0,'whole526')
         for address in (0x7e4000,0x7e4002):
-            c.long(0xbf,address);c.emit(0x18,0x69,64,0);c.long(0x9f,address)
-        c.long(0xbf,0x7e4004);c.emit(0x38,0xe9,64,0);c.long(0x9f,0x7e4004)
+            c.long(0xbf,address);c.emit(0x18,0x69,cls.map_chunk,0);c.long(0x9f,address)
+        c.long(0xbf,0x7e4004);c.emit(0x38,0xe9,cls.map_chunk,0);c.long(0x9f,0x7e4004)
         c.branch(0x80,'retired526')
         c.label('whole526');c.emit(0x8a,0x18,0x69,8,0);c.absolute(0xcd,0x1250)
         c.branch(0xf0,'pop526');c.absolute(0x8d,0x1252);c.branch(0x80,'retired526')
