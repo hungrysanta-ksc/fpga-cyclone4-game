@@ -5,7 +5,6 @@ from pathlib import Path
 import replay_nes_map527 as replay
 from test_nes_map526_schedule import observer
 from test_nes_tile532 import tile_observer
-from trace_nes_output531 import instrument
 from nes_raw506 import sha
 
 if __name__=='__main__':
