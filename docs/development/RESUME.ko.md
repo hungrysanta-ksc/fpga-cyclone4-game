@@ -40,7 +40,7 @@ git log -5 --oneline
 ## 4. 개발 재개 후 순서
 
 1. MMC533의 완료 표시 기준은 전반 467회, 후반 253회다.
-2. [537 결과](../nes-phase537-results.ko.md)에서 첫 BG의 ROM 허용 구간을 확인한다. MMC533에서 951은 SEAL head 이후 남은 map·tile DMA와 VBlank 잔여 시간을, 952는 SEAL head 전 6 VBlank 중 마지막 OBJ 공급·END 발행 시각을 대조한다. 첫 BG 공급 구간과 952·954 최종 대기 0회를 유지한다.
+2. [538의 DMA·OBJ 비교](../nes-seal538-results.ko.md)에서 951의 한 VBlank 절감과 913 첫 BG의 0.126ms 부족을 확인한다. 913 공급을 고치고 두 위상에서 30개 첫 BG 구간과 마지막 ACK를 재검증한다.
 3. 다음 전달본에서 1–40초와 40–60초를 따로 집계하고, 같은 동선인지 함께 기록한다.
 
 ## 5. 기록을 남긴다

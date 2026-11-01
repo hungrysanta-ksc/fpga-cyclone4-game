@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-[PR146](../../docs/progress/pr-146.md)의 [537 입력·ROM·SEAL 비교](../../docs/nes-phase537-results.ko.md)를 먼저 읽는다. 실기 기준은 [MMC533](../../docs/nes-hardware534-results.ko.md)이다.
+[PR146](../../docs/progress/pr-146.md)의 [538 DMA·OBJ·표시 비교](../../docs/nes-seal538-results.ko.md)를 먼저 읽는다. 실기 기준은 [MMC533](../../docs/nes-hardware534-results.ko.md)이다.
 
 ## 최신 실기와 비교 기준
 
@@ -19,7 +19,7 @@ MMC533은 60.07초에 735회 표시(12.24fps), 실행·메뉴 복귀 정상이�
 ## 다음 작업 순서
 
 1. MMC533을 기준으로 원본 로그 해시·구간 정의를 보존한다.
-2. MMC533에서 951은 SEAL head 이후 남은 map·tile DMA와 VBlank 잔여 시간을, 952는 SEAL head 전 6 VBlank 중 마지막 OBJ 공급·END 발행 시각을 대조한다. 첫 BG 공급 구간과 952·954 최종 대기 0회를 유지한다.
+2. 538의 951 이득을 유지하고 위상 2의 913 입력 시작·첫 E9 발행을 앞당긴다. 30개 첫 BG 공급 구간과 952·954 최종 대기 0회를 다시 확인한다.
 3. 후속 출력 변경은 같은 입력의 최종 표시·ACK와 1–40초·40–60초 실기 구간을 함께 비교한다.
 
 512·514의 제외 근거는 [전송 형식 비교](../../docs/nes-transfer512-results.ko.md)와 [해당 PR 기록](../../docs/progress/pr-141.md)에 남아 있다.
