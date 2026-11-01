@@ -8,7 +8,7 @@
 2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR144](../progress/pr-144.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
-GB/GBC는 추가·공개 완료다. NES의 현재 실기 MMC524는 실행·메뉴 복귀 정상, 60.08초에 715회 표시(11.90fps)다. [525 실기 기록](../nes-hardware525-results.ko.md)을 먼저 확인한다.
+GB/GBC는 추가·공개 완료다. NES의 최신 MMC529 실기는 60.07초에 708회 표시(11.79fps), 실행·메뉴 복귀 정상이다. [실기 기록](../nes-hardware530-results.ko.md)
 
 ## 2. Git 기준을 확인한다
 
@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-현재 브랜치는 `codex/nes-map-prefix-526`이며 PR143 병합 `ddaa251f0816a9d6aaee53738bc2e135c4882249`에서 분기했다. MMC529는 실기 전달 단계이고 마지막 실측은 MMC524다.
+현재 브랜치는 `codex/nes-map-prefix-526`이며 PR143 병합 `ddaa251f0816a9d6aaee53738bc2e135c4882249`에서 분기했다. MMC529의 실기 기록과 시뮬레이션 검증을 구분한다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -39,8 +39,8 @@ git log -5 --oneline
 
 ## 4. 개발 재개 후 순서
 
-1. MMC524 실기의 구간별 기준은 전반 12.31fps, 후반 11.00fps다.
-2. [MMC529 설치·시험](../nes-mmc529-trial.ko.md)에 따라 받은 세 로그에서 실행·종료 원인과 두 표시 구간을 분석한다. 설치물과 시뮬레이션 비교 기준은 [529 검증](../nes-flash529-results.ko.md)에서 확인한다.
+1. MMC529의 실기 구간별 기준은 전반 11.82fps, 후반 11.60fps다.
+2. MMC524와 비교한 [실기 기록](../nes-hardware530-results.ko.md)을 읽고 동일 작업량에서 raw·tile DMA와 최종 VBlank 대기를 분리한다.
 3. 다음 전달본에서 1–40초와 40–60초를 따로 집계하고, 같은 동선인지 함께 기록한다.
 
 ## 5. 기록을 남긴다

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-"""Reconcile an MMC520 or MMC524 physical run with its two completion windows and frame-start bins."""
+"""Reconcile a physical MMC run with its two completion windows and frame-start bins."""
 import argparse
 import json
 from pathlib import Path
@@ -57,6 +57,7 @@ def analyse(raw, trial=520):
     previous, evidence, observation = {
         520: (516, "hardware517-mmc516.json", "Normal play and menu return. Early play clearly improved, late play felt similar."),
         524: (520, "hardware521-mmc520.json", "Normal play and menu return. Modest improvement felt through late play, with less slowdown when many enemies appeared."),
+        529: (524, "hardware525-mmc524.json", "Normal execution and menu return. The user followed a similar playthrough."),
     }[trial]
     old = json.loads((ROOT/"analysis"/evidence).read_text())
     return dict(trial=trial, trial_family="MMC", hardware_run_passed=True, physical=True,
@@ -75,6 +76,6 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--raw", type=Path, required=True)
     p.add_argument("--out", type=Path, required=True)
-    p.add_argument("--trial", type=int, choices=(520,524), default=520)
+    p.add_argument("--trial", type=int, choices=(520,524,529), default=520)
     a = p.parse_args()
     a.out.write_text(json.dumps(analyse(a.raw, a.trial), indent=2)+"\n", encoding="utf8", newline="\n")
