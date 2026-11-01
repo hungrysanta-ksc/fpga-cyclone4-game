@@ -1,10 +1,10 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-map-prefix-526`이며 PR143의 master 병합 `ddaa251f0816a9d6aaee53738bc2e135c4882249`에서 분기했다.
+현재 브랜치는 `codex/nes-output-budget-531`이며 PR144 병합 `bbacb9fa4ddc43cf1ecb97609c49afdcb96f3b55`에서 분기했다.
 
 ## 현재 작업
 
-[PR144](../../docs/progress/pr-144.md)의 [MMC529 실기 결과](../../docs/nes-hardware530-results.ko.md)와 [동일 입력 검증](../../docs/nes-flash529-results.ko.md)을 먼저 읽는다.
+[PR145](../../docs/progress/pr-145.md)의 [출력 비용 분리](../../docs/nes-output531-results.ko.md)와 [MMC529 실기 기록](../../docs/nes-hardware530-results.ko.md)을 먼저 읽는다.
 
 ## 최신 실기와 비교 기준
 
@@ -20,7 +20,7 @@ MMC529는 11.79fps로 실행·메뉴 복귀가 확인됐다. MMC524 대비 1–4
 
 1. MMC509를 유지한다. 512 실험은 원본 93.110ms, map 108.084ms, 입력 93.107ms, 결합 104.755ms의 후반 평균 간격을 측정했다. 입력 RTL은 관련 setup −0.317ns, 결합 Flash는 0B다. 산출물·재현 위치와 제한은 [512](../../docs/nes-transfer512-results.ko.md)에 있다.
 2. 514의 부분 map은 기능·cold 복구·STOP을 통과했지만 후반 평균이 104.826ms로 늘었다. 88개 패킷의 65816 소비 합계가 62.222→210.717ms였다. 생략 바이트를 패킷마다 다시 순회하는 방식은 종료한다.
-3. MMC529 실기를 기준으로 같은 map·OBJ 공급량의 SEAL에서 raw·tile DMA와 마지막 VBlank 대기를 비교한다.
+3. [531 결과](../../docs/nes-output531-results.ko.md)에 따라 952는 이미 수락된 작은 tile의 선택·병합, 954는 남은 map·OBJ의 선행 공급을 비교한다. 246번 검사선과 독립 검사·STOP을 유지한다.
 
 ## 재현 위치와 실패 보존
 

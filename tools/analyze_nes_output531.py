@@ -122,6 +122,10 @@ def breakdown(g,events,cpu,samples,packets,arrivals):
         active=hi-lo-sum(overlap(lo,hi,a,b) for a,b in first_half)
         dma=[(v,z) for v,z in zip(transfers,ends) if lo<=v['clock']<hi]
         assert dma and all(v['clock']<z['clock']<hi for v,z in dma)
+        advance,=[x['clock'] for x in samples if x['event']=='raw_done' and lo<=x['clock']<hi]
+        assert advance>dma[-1][1]['clock']  # Common command advance, also reached after normal DMA.
+        raw_entry=[x['clock'] for x in samples if x['event']=='raw_enter' and lo<=x['clock']<hi]
+        assert bool(raw_entry)==(k=='raw')
         used+=len(dma)
         span=sum(z['clock']-v['clock'] for v,z in dma)
         n=sum(v['value'] for v,z in dma)
@@ -162,25 +166,35 @@ def breakdown(g,events,cpu,samples,packets,arrivals):
     # Coverage of the actual compact raw bytes at ordinary packet ACKs.
     hd=packets[one(seal,'load')['index']-1]
     raw_size=int.from_bytes(hd[26:28],'little')-1121-249 if int.from_bytes(hd[38:40],'little') else 0
-    obtained=set();raw_ready=None
+    obtained=set();raw_ready=None;raw_rows={}
     for r in cpu:
         if r['event']!='ack' or r['section']!=5 or r['op'] not in (2,4,5):continue
         b=packets[r['index']-1];offset=int.from_bytes(b[10:12],'little')
         size=int.from_bytes(b[12:14] if b[0]==2 else b[14:16],'little')
         obtained.update(range(max(1121,offset),min(1121+raw_size,offset+size)))
+        if raw_size in (192,384):
+            for at in range(1121,1121+raw_size,64):
+                if at not in raw_rows and all(p in obtained for p in range(at,at+64)):raw_rows[at]=r['clock']
         if raw_size and len(obtained)==raw_size and raw_ready is None:raw_ready=r
     assert not raw_size or raw_ready is not None
     first_dma=next(r for r in samples if r['event']=='dma')
     frame=next(r['frame'] for r in seal if r['event']=='ppu_dma')
     cutoff=arrivals[one(seal,'load')['index']-1]
     gaps=[];grants=[];grant=None;coverage=defaultdict(dict)
+    early_dma=Counter()
     for r in cpu:
         if r['event']=='idle524':
             assert grant is None
-            grant=r['clock']
-        elif r['event']=='ppu_last' and r['op']==-1:
+            grant=r
+            dma_start=None
+        elif r['event']=='ppu_dma' and r['op']==-1:
             assert grant is not None
-            grants.append((grant,r['clock']))
+            dma_start=r['clock']
+        elif r['event']=='ppu_last' and r['op']==-1:
+            assert grant is not None and dma_start is not None
+            grants.append((grant['clock'],r['clock']))
+            k='map' if grant['value']>=65536 else 'tile'
+            early_dma[k]+=overlap(start,load,dma_start,r['clock'])
             grant=None
         if r['event']!='ack' or r['op'] in (1,3):continue
         idx=r['index']
@@ -194,7 +208,9 @@ def breakdown(g,events,cpu,samples,packets,arrivals):
         for pos in range(offset,offset+size,unit):
             coverage[sec][pos]=r['clock']
     assert grant is None
+    assert sum(early_dma.values())<=pre['no_head']
     raw_room=opportunity(raw_ready['clock'],cutoff,261,first_dma,frame,gaps,grants) if raw_ready else None
+    raw_row_rooms=[opportunity(t,cutoff,261,first_dma,frame,gaps,grants) for _,t in sorted(raw_rows.items())]
     bank=cmds[-1]['bank']
     bases=(0xc000,0x8000,0xa000) if bank else (0,0x4000,0x6000)
     for item in rows:
@@ -205,13 +221,14 @@ def breakdown(g,events,cpu,samples,packets,arrivals):
         item['first_unit_room']=opportunity(receipts[0],cutoff,254 if sec==2 else 232,first_dma,frame,gaps,grants)
         item['whole_command_room']=opportunity(max(receipts),cutoff,254 if sec==2 else 232,first_dma,frame,gaps,grants)
     return dict(g=g,call_ms=ms(end-start),ms={k:ms(v) for k,v in account.items()},
-                pre_load_ms={k:ms(v) for k,v in pre.items()},commands=rows,seal_bytes=dict(byte_count),
+                pre_load_ms={k:ms(v) for k,v in pre.items()},
+                pre_load_idle_DMA_ms={k:ms(early_dma[k]) for k in ('tile','map')},commands=rows,seal_bytes=dict(byte_count),
                 decision=decision,final_credit=credit,miss_clocks=miss,
                 last_blank_command_clocks=dict(late_tail),last_blank_DMA_clocks=dict(late_writes),
                 catch_up_ms=ms(miss) if miss else None,
                 raw_ready_to_load_ms=ms(load-raw_ready['clock']) if raw_ready else None,
                 raw_ready_line=raw_ready['line'] if raw_ready else None,
-                raw_room=raw_room,
+                raw_room=raw_room,raw_row_rooms=raw_row_rooms,
                 idle_grants_after_raw=sum(raw_ready['clock']<=r['clock']<load and r['event']=='idle524' for r in cpu) if raw_ready else None)
 
 
@@ -221,6 +238,7 @@ def summarize(rows):
     return dict(frames=len(rows),call_ms=mean(r['call_ms'] for r in rows),
                 means={k:mean(r['ms'][k] for r in rows) for k in keys},
                 pre_load_means={k:mean(r['pre_load_ms'].get(k,0) for r in rows) for k in ('bulk','map','section5','other','no_head')},
+                pre_load_idle_DMA_means={k:mean(r['pre_load_idle_DMA_ms'][k] for r in rows) for k in ('tile','map')},
                 decisions=dict(Counter(r['decision'] for r in rows)),
                 late_beam_frames=len(late),
                 conditional_crossings={k:sum(r['last_blank_command_clocks'].get(k,0)>=r['miss_clocks'] for r in late) for k in KINDS},
@@ -235,7 +253,7 @@ def analyze(a):
     assert hw['source_SHA256'][a.budget.name]==sha(a.budget)
     calls,_,high,low,_=map(int,budget['cost_phase_02'].split(','))
     freq=int(budget['cost_clock_hz'])
-    physical=(high*2**32+low)*1000/freq/calls
+    physical=(high*2**32+low)*1000/(freq*calls)
     assert calls==hw['display']['completed'] and physical==hw['phases']['output_final_ack']['ms_per_display']
     poll=list(map(int,budget['cost_poll_2'].split(',')))
     phases=[]
