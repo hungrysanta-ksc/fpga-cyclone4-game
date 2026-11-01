@@ -62,8 +62,14 @@ def check(src,mode):
     assert not m.get(m.s,'nes_native_sink165','displayed')
     assert m.get(m.resident,'nes_resident211','open')==1
     assert ep.polls==({'normal':3,'wrap':3,'empty':0,'timeout':8,'bad_identity':3,'bad_status':3}.get(mode,1))
+    if not m.after_drain:
+        assert m.get(m.s,'nes_native_sink165','state')==3
+        calls=list(ep.calls)
+        assert m.call('nes_sink212_seal',[m.s,m.video,m.resident])==0
+        assert ep.calls==calls and m.map_called==1  # No retry after ambiguous/faulted completion.
     return dict(case=mode,polls=ep.polls,ordinary_checkpoint=m.after_drain,
-                window_error=m.get(m.w,'nes_sink_window184','error'),final_commit=False)
+                window_error=m.get(m.w,'nes_sink_window184','error'),final_commit=False,
+                rejected_retry_blocked=not m.after_drain)
 
 
 if __name__=='__main__':

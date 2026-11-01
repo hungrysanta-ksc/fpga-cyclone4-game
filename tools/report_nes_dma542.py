@@ -17,6 +17,10 @@ if __name__=='__main__':
         base.append(dict(phase=phase,per_frame=rows,mean_ms={
             k:mean(r[k] for r in rows.values()) for k in ('output_to_head_ms','SEAL_to_ACK_ms','checks_ms','serviced_VBlank_wait_ms','other_setup_control_ms','final_wait_ms')},
             mean_DMA_ms=mean(sum(r['DMA_ms'].values()) for r in rows.values())))
+        steady=[r for g,r in rows.items() if g>=907]
+        base[-1]['after_first_two']=dict(frames=[907,957],mean_ms={
+            k:mean(r[k] for r in steady) for k in ('output_to_head_ms','SEAL_to_ACK_ms','checks_ms','serviced_VBlank_wait_ms','other_setup_control_ms','final_wait_ms')},
+            mean_DMA_ms=mean(sum(r['DMA_ms'].values()) for r in steady))
     for tag,client,guard in [('raw','client03','01'),('reg','client04','02'),('cursor','client05','03')]:
         result=read(a.private/f'{tag}-analysis.json')
         build=read(a.private/client/'build.json')
@@ -57,4 +61,4 @@ if __name__=='__main__':
              next='Test one existing checked map queue drain before later ordinary traffic. Charge all added E0/ARM/IRQ time; no timer sleep or DMA-completion assumption.',
              future_windows=dict(counter='display_5_40_55',seconds=[[5,40],[40,55]],evidence='analysis/windows541-verification.json'),
              scope='Actual linked ARM and 65816 with shared SPI, SysTick and 2-slot timing; repeated boot ROM calendar. No new physical FPS/menu/FIT claim.')
-    a.out.write_text(json.dumps(out,indent=2)+'\n')
+    a.out.write_text(json.dumps(out,indent=2)+'\n',encoding='utf8',newline='\n')

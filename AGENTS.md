@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR146 / 541 실기. docs/nes-hardware541-results.ko.md와 analysis/hardware541-mmc540.json FIRST. MMC540 803/60.08초 13.37fps·실행/메뉴 정상. 1–40초 12.85/40–60초 14.35fps지만 마지막5초는 정적 클리어로 후반 전투 개선율 아님. 다음 시험부터 표시 완료 [5,40)/[40,55), 합계 [5,55): prepare_nes_windows541.py 및 check_nes_windows518.py --layout trimmed 적용. 기존540 ZIP불변, 출력·최종ACK40.84ms 후속 분리. Lite/STOP/독립검사/첫BG ROM구간 유지.
+- PR147 / 542–543. docs/nes-dma542-results.ko.md + docs/nes-drain543-results.ko.md FIRST. PR146 merge526e2d7 확인, codex/nes-mmc540-dma-542. MMC54013.37fps 유지/새ZIP없음. 첫 두 화면 뒤 SEAL DMA약1.05ms·VBlank서비스약10.9ms; raw cursor15B·53장1VB절감이나 밀집30VB동일,543무조건map drain은두위상ACK+16.65ms로기각. 다음은951/957 map수락·credit·실제VBlank 겹침과기존beam/service정보의발행조절·삭제예산. raw opcode/무조건drain반복금지. 다음완료[5,40)/[40,55)집계+동일집계대조군필수(집계단독위상변화확인). STOP/새head/독립검사/952954대기0/첫BG/메뉴보존.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 

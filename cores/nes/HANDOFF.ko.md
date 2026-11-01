@@ -1,10 +1,10 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-mmc533-output-535`이며 PR145 병합 `2cd841eb8c64bc26a5e96b3ba1ac289265d2ea03`에서 분기했다.
+현재 브랜치는 `codex/nes-mmc540-dma-542`이며 PR146 병합 `526e2d7c689c6e429144f9dbb91e0b8deff75c62`의 master 도달·tree 일치를 확인하고 분기했다.
 
 ## 현재 작업
 
-[PR146](../../docs/progress/pr-146.md)의 [539 일정 비교](../../docs/nes-first539-results.ko.md)와 [MMC540 전달본](../../docs/nes-trial540-results.ko.md)을 먼저 읽는다. 실기 기준은 [MMC540](../../docs/nes-hardware541-results.ko.md)이다.
+[PR147](../../docs/progress/pr-147.md)의 [542 비용 분리](../../docs/nes-dma542-results.ko.md)와 [543 drain 기각·다음 순서](../../docs/nes-drain543-results.ko.md)를 먼저 읽는다. 실기 기준은 [MMC540](../../docs/nes-hardware541-results.ko.md)이며 새 전달본은 없다.
 
 ## 최신 실기와 비교 기준
 
@@ -18,9 +18,9 @@ MMC540은 60.08초에 803회 표시(13.37fps), 실행·메뉴 복귀 정상이�
 
 ## 다음 작업 순서
 
-1. [541 실기 분석](../../docs/nes-hardware541-results.ko.md)을 기준으로 MMC540과 533의 장면 차이를 보존한다. 마지막 5초 클리어 장면을 전투 개선으로 해석하지 않는다.
-2. 다음 전달본에 `prepare_nes_windows541.py` 집계 변경을 포함한다. 표시 완료 [5,40)/[40,55), 전체 [5,55), 시작·마지막 5초 제외다. 기존 MMC540 ZIP은 불변이다.
-3. MMC540 선택 539 ARM01/538 client04의 잔여 출력 DMA와 VBlank 병목을 두 시작 위상에서 분리한다. 독립 검사·STOP·최종 ACK·메뉴 복귀와 첫 BG ROM 구간을 유지한다.
+1. MMC540을 유지한다. 542 행 진행 후보는 53장당 1 VBlank만 단축하고 밀집 구간은 그대로였다. 543 map 뒤 무조건 drain은 같은 집계 대조군보다 마지막 ACK가 두 위상 모두 약 16.65ms 늦어져 기각했다. 추가 raw 명령 단축·무조건 drain 반복은 하지 않는다.
+2. [543 후속 순서](../../docs/nes-drain543-results.ko.md)에 따라 951·957의 마지막 유효 VBlank에서 map 수락·큐 점유·credit 반환을 고정하고, 기존 beam/service 정보를 활용한 발행 조절의 정보·삭제 예산부터 정한다. STOP·새 head·독립 검사·952/954 최종 대기 0회·첫 BG ROM 구간을 유지한다.
+3. 다음 전달본은 `prepare_nes_windows541.py`의 완료 [5,40)/[40,55), 합계 [5,55)를 포함한다. 계측만 바꾼 대조군에서도 한 위상에 1 VBlank 변화가 났으므로 같은 집계 대조군을 반드시 분리한다. 두 위상 밀집 VBlank 수와 마지막 ACK가 함께 줄기 전에는 새 ZIP을 만들지 않는다.
 
 512·514의 제외 근거는 [전송 형식 비교](../../docs/nes-transfer512-results.ko.md)와 [해당 PR 기록](../../docs/progress/pr-141.md)에 남아 있다.
 
