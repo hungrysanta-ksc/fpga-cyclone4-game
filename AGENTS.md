@@ -11,7 +11,9 @@
 
 ## 현재 작업 범위
 
-- 현재 521 / PR142. docs/nes-hardware521-results.ko.md와 analysis/hardware521-mmc520.json을 먼저 읽는다. MMC520 실기 718표시/60.07초/11.95fps, 실행·메뉴 복귀 정상. 1–40초 12.08fps / 40–60초 11.60fps. 다음은 OBJ 소비 이후 출력·VBlank·ACK 비용 분리.
+- 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
+
+- 521 실기 / PR142. docs/nes-hardware521-results.ko.md와 analysis/hardware521-mmc520.json을 먼저 읽는다. MMC520 실기 718표시/60.07초/11.95fps, 실행·메뉴 복귀 정상. 1–40초 12.08fps / 40–60초 11.60fps. 다음은 OBJ 소비 이후 출력·VBlank·ACK 비용 분리.
 
 - 516 전달 기록 / PR141. docs/nes-window516-results.ko.md, analysis/window516-package.json, docs/nes-mmc516-trial.ko.md를 먼저 읽는다. 실기 기준 MMC509 12.82fps 유지. 결합은 같은 두 위상에서 후반 약 93.11→83.26ms. MMC516 trial02 전달 후 실제 SMB3 플레이·메뉴 복귀·새 로그 3개 확인 대기. ROM/save/RESTORE 미포함.
 
