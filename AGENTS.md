@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR143 / 525. MMC524 실기 715/60.08초, 11.90fps. 전반 12.31fps / 후반 11.00fps. 실행·메뉴 복귀 정상. docs/nes-hardware525-results.ko.md와 docs/nes-idle524-results.ko.md를 먼저 읽는다. 다음은 동일 입력 map 64B 분할·최종 표시 도달 시각이다.
+- PR144 / 530. MMC529 실기 결과 docs/nes-hardware530-results.ko.md와 analysis/hardware530-mmc529.json부터 읽는다. 708/60.07초, 11.79fps, 실행·메뉴 복귀 정상. MMC524 대비 1–40초 12.31→11.82fps, 40–60초 11.00→11.60fps. 다음은 동일 작업량에서 raw·tile DMA와 최종 대기 비교.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 
