@@ -9,7 +9,7 @@ from nes_raw506 import once
 from nes_window516 import build, emit_final516
 
 
-def emit(c, before_beam=None):
+def emit(c, before_beam=None, before_start=None):
     emit_final516(c)
     def load(a): c.absolute(0xad,a)
     def save(a): c.absolute(0x8d,a)
@@ -28,13 +28,16 @@ def emit(c, before_beam=None):
     # credit is granted here. A later packet must recheck the beam.
     if before_beam:
         before_beam(c)
-    c.emit(0xe2,0x20);load(0x4212);c.branch(0x10,'skip8_523')
-    load(0x213f);load(0x213f);c.emit(0x89,0x40);c.branch(0xd0,'skip8_523')
-    load(0x2137);load(0x213f);c.emit(0x89,0x40);c.branch(0xf0,'skip8_523')
-    load(0x213d);c.emit(0xeb);load(0x213d);c.emit(0x29,1);c.branch(0xd0,'skip8_523')
-    c.emit(0xeb,0xc9,225);c.branch(0x90,'skip8_523')
-    c.emit(0xc9,233);c.branch(0xb0,'skip8_523')
-    load(0x4212);c.branch(0x10,'skip8_523')
+    defer = 'defer_beam' if before_start else 'skip8_523'
+    c.emit(0xe2,0x20);load(0x4212);c.branch(0x10,defer)
+    load(0x213f);load(0x213f);c.emit(0x89,0x40);c.branch(0xd0,defer)
+    load(0x2137);load(0x213f);c.emit(0x89,0x40);c.branch(0xf0,defer)
+    load(0x213d);c.emit(0xeb);load(0x213d);c.emit(0x29,1);c.branch(0xd0,defer)
+    c.emit(0xeb,0xc9,225);c.branch(0x90,defer)
+    c.emit(0xc9,233);c.branch(0xb0,defer)
+    load(0x4212);c.branch(0x10,defer)
+    if before_start:
+        c.branch(0x80,'beam_ok');c.label(defer);c.emit(0xc2,0x20,0x38,0x60);c.label('beam_ok')
     c.emit(0xc2,0x20);c.label('check523');call(c,'service');load(0x1236);c.branch(0xd0,'stop523')
     c.absolute(0xae,0x1252)
     c.label('issue523')
@@ -43,7 +46,10 @@ def emit(c, before_beam=None):
     c.emit(0xa9,0x7f,0);save(0x4304)
     c.long(0xbf,0x7e4004);save(0x4305)
     c.long(0xbf,0x7e4002);c.emit(0x4a);save(0x2116)
-    c.emit(0xe2,0x20);c.store(0x2115,0x80);c.store(0x420b,1);c.emit(0xc2,0x20)
+    c.emit(0xe2,0x20);c.store(0x2115,0x80)
+    if before_start:
+        before_start(c)
+    c.store(0x420b,1);c.emit(0xc2,0x20)
     load(0x1252);c.emit(0x18,0x69,8,0);save(0x1252)
     call(c,'service');load(0x1236);c.branch(0xd0,'stop523')
     c.label('skip8_523');c.emit(0xc2,0x20)

@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR143 / 523. MMC520을 실기 기준으로 유지한다. `docs/nes-prefix523-results.ko.md`와 `analysis/prefix523-verification.json`을 먼저 읽는다. 패킷 ACK 직전만 검사한 경우 952·954에서 선행 DMA가 0건이었다. 다음은 큐 대기 중 새 head·STOP을 우선한 선행 실행이며, 밀집 최종 표시가 앞당겨진 뒤 실기에 전달한다.
+- PR143 / 524. `docs/nes-idle524-results.ko.md`와 `analysis/idle524-verification.json`을 먼저 읽는다. 양 위상에서 952는 4건·128B, 954는 2건·160B를 큐 대기 중에 전송했다. 밀집 평균 개선은 523 대비 0.003/3.328ms. MMC520 실기 기준 유지, MMC524 실기 결과 수신 후 1–40초·40–60초를 분리한다.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 

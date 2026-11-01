@@ -127,13 +127,13 @@ def trace_pair(original, candidate, plans, calendar, oracle):
                 overlapping_next_ready_ms=ms(sum(p["overlapping_next_ready"] for p in issued)))
 
 
-def firmware_checks(old_src, new_src, folder):
+def firmware_checks(old_src, new_src, folder, label=b"523"):
     old, new = [src/"obj-nes-100" for src in (old_src,new_src)]
     old_hash, new_hash = [sha(d/"firmware.stm") for d in (old,new)]
     old_functions, new_functions = [funcs(d/"sd2snes.elf") for d in (old,new)]
     assert old_functions == new_functions
     before, after = [(d/"firmware.stm").read_bytes() for d in (old,new)]
-    assert len(before) == len(after) == 212992 and before[32:].replace(b"520",b"523") == after[32:]
+    assert len(before) == len(after) == 212992 and before[32:].replace(b"520",label) == after[32:]
     checks = read(folder/"response01/result.json")
     assert checks["passed"] and checks["candidate_SHA256"] == new_hash and checks["baseline_SHA256"] == old_hash
     windows = read(folder/"window01.json")
