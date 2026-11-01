@@ -83,6 +83,12 @@ def rejected_edge(s,labels,*,tile=False):
     if not tile:
         s=map_fixture(s,labels)
     else:
+        # The ARM can interleave an accepted map before this tile. Arm the
+        # tile-only beam fixture when both eligible command positions are tiles.
+        s=once(s,'and word(0x1252)+8<word(0x1250) then',
+               '''and word(0x1252)+8<word(0x1250)
+  and (word(0x4000+word(0x1252))&0x7000)~=0x5000
+  and (word(0x4000+word(0x1250)-8)&0x7000)~=0x5000 then''')
         s=once(s,'held=index;initial=word(0x1252);owner=activeImage()',
                '''held=index;initial=word(0x1252);owner=activeImage()
   assert((word(0x4000+initial)&0x7000)~=0x5000 and
@@ -133,6 +139,7 @@ if __name__=='__main__':
     for name in ('mesen','client','trace','out'):
         p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--late-map',action='store_true')
+    p.add_argument('--tile-trace',type=Path,help='Directed input with two eligible tile commands in frame 906 for the line-233 negative test')
     a=p.parse_args();a.out=a.out.resolve();a.out.mkdir(parents=True,exist_ok=False)
     results=[]
     for g in (906,907):
@@ -149,7 +156,9 @@ if __name__=='__main__':
         edges=[case(a,906,'late_stop',paced,254,map_fixture)]
         for line in (255,256):
             edges.append(case(a,906,'stop',paced,line,rejected_edge))
-        edges.append(case(a,906,'stop',paced,233,lambda s,l:rejected_edge(s,l,tile=True)))
+        tile_args=argparse.Namespace(**vars(a))
+        tile_args.trace=a.tile_trace or a.trace
+        edges.append(case(tile_args,906,'stop',paced,233,lambda s,l:rejected_edge(s,l,tile=True)))
         for edge,line,kind in zip(edges,(254,255,256,233),('map','map','map','tile')):
             edge.update(sample_line=line,command=kind)
         (a.out/'edges.json').write_text(json.dumps(edges,indent=2)+'\n',newline='\n')
