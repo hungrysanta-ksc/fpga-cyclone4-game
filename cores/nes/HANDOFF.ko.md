@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-[PR147](../../docs/progress/pr-147.md)의 [542 비용 분리](../../docs/nes-dma542-results.ko.md)와 [543 drain 기각·다음 순서](../../docs/nes-drain543-results.ko.md)를 먼저 읽는다. 실기 기준은 [MMC540](../../docs/nes-hardware541-results.ko.md)이며 새 전달본은 없다.
+[PR147](../../docs/progress/pr-147.md)의 [544 map 수락·credit·VBlank 비교](../../docs/nes-front544-results.ko.md)를 먼저 읽는다. 실기 기준은 [MMC540](../../docs/nes-hardware541-results.ko.md)이며 새 전달본은 없다.
 
 ## 최신 실기와 비교 기준
 
@@ -19,7 +19,7 @@ MMC540은 60.08초에 803회 표시(13.37fps), 실행·메뉴 복귀 정상이�
 ## 다음 작업 순서
 
 1. MMC540을 유지한다. 542 행 진행 후보는 53장당 1 VBlank만 단축하고 밀집 구간은 그대로였다. 543 map 뒤 무조건 drain은 같은 집계 대조군보다 마지막 ACK가 두 위상 모두 약 16.65ms 늦어져 기각했다. 추가 raw 명령 단축·무조건 drain 반복은 하지 않는다.
-2. [543 후속 순서](../../docs/nes-drain543-results.ko.md)에 따라 951·957의 마지막 유효 VBlank에서 map 수락·큐 점유·credit 반환을 고정하고, 기존 beam/service 정보를 활용한 발행 조절의 정보·삭제 예산부터 정한다. STOP·새 head·독립 검사·952/954 최종 대기 0회·첫 BG ROM 구간을 유지한다.
+2. 544는 새 tile 뒤 안전한 map 선행 발행까지 연결했지만 밀집 구간은 원본과 같은 30/30 VBlank였다. 다음은 951·957의 동일 바이트 short repeat를 기존 고정 source DMA로 복원하는 대조 시험이다. 이미 DMA인 1,100B zero fill은 제외한다. [CPU 계측·11B 예산·승격 기준](../../docs/nes-front544-results.ko.md)을 따른다.
 3. 다음 전달본은 `prepare_nes_windows541.py`의 완료 [5,40)/[40,55), 합계 [5,55)를 포함한다. 계측만 바꾼 대조군에서도 한 위상에 1 VBlank 변화가 났으므로 같은 집계 대조군을 반드시 분리한다. 두 위상 밀집 VBlank 수와 마지막 ACK가 함께 줄기 전에는 새 ZIP을 만들지 않는다.
 
 512·514의 제외 근거는 [전송 형식 비교](../../docs/nes-transfer512-results.ko.md)와 [해당 PR 기록](../../docs/progress/pr-141.md)에 남아 있다.

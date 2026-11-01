@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-현재 브랜치는 `codex/nes-mmc540-dma-542`이며 PR146 병합 `526e2d7c689c6e429144f9dbb91e0b8deff75c62`를 확인하고 분기했다. 최신 실기 기준은 MMC540이다. [현재 PR](../progress/pr-146.md)
+현재 브랜치는 `codex/nes-mmc540-dma-542`이며 PR146 병합 `526e2d7c689c6e429144f9dbb91e0b8deff75c62`를 확인하고 분기했다. 최신 실기 기준은 MMC540이다. [현재 PR](../progress/pr-147.md)
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -41,7 +41,7 @@ git log -5 --oneline
 
 1. [541 실기 분석](../nes-hardware541-results.ko.md)의 장면 차이와 원본 로그 해시를 보존한다.
 2. 다음 전달본에 `prepare_nes_windows541.py`의 표시 완료 [5,40)/[40,55) 집계를 포함하고 linked ARM 경계 검사를 통과시킨다.
-3. [542 비용 분리](../nes-dma542-results.ko.md)와 [543 기각·후속 순서](../nes-drain543-results.ko.md)를 따른다. raw 행 명령 단축·무조건 map drain은 반복하지 않는다. map 수락/credit과 실제 VBlank의 겹침을 먼저 검증하며, 집계만 바꾼 대조군을 별도로 둔다. 새 실기 ZIP은 아직 없다.
+3. [544 실제 수락·credit·VBlank 결과](../nes-front544-results.ko.md)를 따른다. raw 행 명령·무조건 map drain·BG 확정 시점의 발행 조절은 반복하지 않는다. 다음은 section5 동일 바이트 short repeat의 65816 복원 대조 시험이다. 같은 집계 대조군 및 원본 MMC540, 두 시작 위상을 유지한다. 새 실기 ZIP은 없다.
 
 ## 5. 기록을 남긴다
 
