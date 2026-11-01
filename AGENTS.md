@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR146 / 538. docs/nes-seal538-results.ko.md와 analysis/seal538-verification.json을 먼저 읽는다. MMC533 ARM + 538 raw 서비스 직접 호출은 두 위상 모두 밀집 31→30 VBlank, 957 ACK 66.554 / 49.918ms 단축. 위상 2의 913 첫 BG가 직전 표시 기준 한 ROM 구간 밀려 실기 기준은 MMC533이다. 다음은 913의 입력→첫 E9를 약 0.126ms 이상 앞당기고 30개 첫 BG·951·952·954·957을 재검증한다.
+- PR146 / 539–540. docs/nes-first539-results.ko.md와 docs/nes-trial540-results.ko.md를 먼저 읽는다. 539 행 주소 비교 ARM + 538 client04를 선택했다. 두 위상 모두 첫 BG 30개 구간·951 한 VBlank·952/954 최종 대기 0회, 밀집 31→30 VBlank, 957 ACK 183.037/166.375ms 단축. Lite FIT·관련 timing·전체 STA 무회귀 PASS. MMC540 labels/ZIP은 probes/nes-trial540/trial02, ROM/RESTORE 제외. 실기 기준 MMC533 12.24fps. 다음은 사용자 MMC540 로그의 1–40초/40–60초·메뉴 복귀 비교.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 

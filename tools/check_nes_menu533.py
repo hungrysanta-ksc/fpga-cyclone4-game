@@ -6,7 +6,7 @@ from pathlib import Path
 from check_nes_game478 import Machine,ELFFile,UC_HOOK_CODE,UC_ARM_REG_R0,UC_ARM_REG_LR,UC_ARM_REG_PC,sha
 
 
-def check(src):
+def check(src,trial='533'):
     m=Machine(src,bytes(128))
     with (src/'obj-nes-100/sd2snes.elf').open('rb') as f:
         data={s.name:s['st_value'] for s in ELFFile(f).get_section_by_name('.symtab').iter_symbols()
@@ -35,7 +35,7 @@ def check(src):
         assert calls.count(('save_report','RETURN_READY_RESET_RELEASED'))==ok
         assert calls.count(('nes_checkpoint112','MENU_PREPARED'))==(mode in ('normal','checkpoint'))
         rows[mode]=dict(prepared=ok,released=ok,calls=list(calls))
-    for fname,valid in [('NES MMC3 533.nh1',1),('/folder/NES MMC3 533.nh1',1),('NES MMC3 529.nh1',0),('NES MMC3 533.nes',0)]:
+    for fname,valid in [(f'NES MMC3 {trial}.nh1',1),(f'/folder/NES MMC3 {trial}.nh1',1),('NES MMC3 529.nh1',0),(f'NES MMC3 {trial}.nes',0)]:
         addr=0x20012000
         m.u.mem_write(addr,fname.encode()+b'\0')
         assert m.call('nes_menu_diagnostic_marker',[addr])==valid
@@ -46,5 +46,6 @@ if __name__=='__main__':
     p=argparse.ArgumentParser()
     p.add_argument('--arm',required=True,type=Path)
     p.add_argument('--out',required=True,type=Path)
+    p.add_argument('--trial',default='533')
     a=p.parse_args()
-    a.out.write_text(json.dumps(check(a.arm),indent=2)+'\n')
+    a.out.write_text(json.dumps(check(a.arm,a.trial),indent=2)+'\n')

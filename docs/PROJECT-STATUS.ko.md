@@ -16,7 +16,7 @@ MMC533은 60.07초에 735회 표시(12.24fps), 실행·메뉴 복귀 정상이�
 
 ## 최신 게임 실기
 
-MMC524 대비 45–55초에는 최대 표시 간격이 160/210→100/100ms로 줄었고, 40–45초에는 100→180ms로 늘었다. [529 실기 분석](nes-hardware530-results.ko.md)
+MMC533은 실행과 메뉴 복귀가 정상이며 60.07초에 735회 표시했다. MMC529 대비 1–40초는 11.82→11.97fps, 40–60초는 11.60→12.65fps였다. MMC540은 같은 동선의 사용자 시험을 기다린다. [533 실기 분석](nes-hardware534-results.ko.md)
 
 ## 현재 비용과 다음 목표
 
@@ -24,10 +24,10 @@ MMC524 대비 45–55초에는 최대 표시 간격이 160/210→100/100ms로 �
 |---|---|
 | FPGA507 | 15164LE/14172comb/8394FF/264816bits/51M9K, 잔여244LE·5M9K |
 | 관련 timing | setup+0.078ns/hold+0.139ns; 전체 reset/CDC/IO 미승인 |
-| ARM524 | firmware 212,992B / Flash 여유 0B / BSS 18,588B |
+| ARM540 전달본 | firmware 212,428B / Flash 여유 564B / BSS 18,592B |
 | MMC533의 60Hz 평균 격차 | 81.73−16.67 ≈ 65.06ms/표시 |
 | MMC533 단계 평균 | 수신 19.95 / 계획·공급 16.17 / 출력·최종 ACK 44.97ms/표시 |
-| 다음 작업 | 동일 입력에서 map 64B 분할과 최종 표시 검사 도달 시각을 비교한다. [실기 근거](nes-hardware525-results.ko.md) |
+| 다음 작업 | MMC540을 MMC533과 같은 첫 레벨 동선으로 실행해 1–40초·40–60초 표시 간격과 메뉴 복귀를 비교한다. [전달본 검증](nes-trial540-results.ko.md) |
 | 미완료 | 지속60fps·장면별/p95·NES 실시간 속도·capture 무손실·MMC4/5·제품 공개 |
 
 [509 전달본](../analysis/service509-package.json)은 ROM/save/RESTORE 없이 제작한 불변 스냅샷이다. 이번 수신 분석에서 새 firmware·ZIP·합성은 만들지 않았다. [MMC502 실기10.59fps](nes-hardware503-results.ko.md)는 복구·비교 기준으로 보존한다.
