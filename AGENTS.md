@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR145 / MMC533. docs/nes-trial533-results.ko.md, docs/nes-mmc533-trial.ko.md와 analysis/trial533-package.json을 먼저 읽는다. MMC529 제한 실기 기준으로 FIT·STA 무회귀, Flash 572B 여유, STOP·최종 ACK·메뉴 복구 경계를 확인했다. 다음은 MMC533 3개 로그 및 실제 메뉴 복귀를 확인해 1–40초·40–60초를 비교하는 일이다.
+- PR145 / MMC533 실기. docs/nes-hardware534-results.ko.md와 analysis/hardware534-mmc533.json을 먼저 읽는다. MMC533은 60.07초에 735회 표시(12.24fps), 실행·메뉴 복귀 정상이다. MMC529 대비 1–40초는 11.82→11.97fps, 40–60초는 11.60→12.65fps였다.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 
