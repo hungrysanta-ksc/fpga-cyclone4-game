@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-[PR144](../../docs/progress/pr-144.md)의 [ARM 첫 map 발행 비교](../../docs/nes-map527-results.ko.md), [65816의 64B 선행 전송](../../docs/nes-map526-results.ko.md), [MMC524 실기 기록](../../docs/nes-hardware525-results.ko.md)을 읽는다.
+[PR144](../../docs/progress/pr-144.md)의 [528 후속 map·SEAL DMA 비교](../../docs/nes-quiet528-results.ko.md)와 [MMC524 실기 기록](../../docs/nes-hardware525-results.ko.md)을 먼저 읽는다.
 
 ## 최신 실기와 비교 기준
 
@@ -20,7 +20,7 @@ MMC524는 11.90fps로 실행·메뉴 복귀가 확인됐다. 직전 MMC520은 11
 
 1. MMC509를 유지한다. 512 실험은 원본 93.110ms, map 108.084ms, 입력 93.107ms, 결합 104.755ms의 후반 평균 간격을 측정했다. 입력 RTL은 관련 setup −0.317ns, 결합 Flash는 0B다. 산출물·재현 위치와 제한은 [512](../../docs/nes-transfer512-results.ko.md)에 있다.
 2. 514의 부분 map은 기능·cold 복구·STOP을 통과했지만 후반 평균이 104.826ms로 늘었다. 88개 패킷의 65816 소비 합계가 62.222→210.717ms였다. 생략 바이트를 패킷마다 다시 순회하는 방식은 종료한다.
-3. 527에서 첫 map은 최대 52.6ms 빨라졌으나 최종 VBlank 대기 1회가 남았다. MMC524를 유지하고 SEAL의 남은 DMA·246번 검사선, 후속 확정 행 공급, 954의 마지막 OBJ ROM 응답을 두 위상에서 비교한다. 행 확정 후보는 Flash 388B를 회수해야 실기에 전달할 수 있다.
+3. 528의 두 위상에서 밀집 구간은 113.142/113.150ms로 개선됐다. Flash 500B를 회수하고 같은 일정·독립 검사를 통과한 이미지로 MMC524와 실기 비교한다. 최종 VBlank 한 번을 더 줄이려면 raw·tile DMA와 246번 검사선까지 남은 5,594–7,898클록을 검토한다.
 
 ## 재현 위치와 실패 보존
 

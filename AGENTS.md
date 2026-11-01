@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR144 / 527. docs/nes-map527-results.ko.md와 analysis/map527-verification.json을 먼저 읽는다. ARM 행 확정 발행이 952·954에서 39–53ms 빨랐으나 두 위상 모두 최종 VBlank 1회, Flash 388B 초과다. 실기는 MMC524 유지. 다음은 SEAL 잔여 DMA·246번 검사선 비용과 기존 E8의 빈 기회에서 후속 확정 행 공급, 954의 마지막 OBJ ROM 응답을 함께 비교한다.
+- PR144 / 528. docs/nes-quiet528-results.ko.md와 analysis/quiet528-verification.json부터 읽는다. END 대기 중 후속 map을 발행해 두 위상 모두 527 대비 952·954 표시 간격이 한 VBlank 줄었다. 최종 검사는 5,594–7,898클록 늦고 Flash는 500B 초과다. MMC524 실기 유지. 다음은 528 Flash 회수와 같은 두 위상 재검증 후 실기 비교, 이후 raw·tile DMA 비용 검토.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 
