@@ -44,7 +44,7 @@ def fill_source(s):
     s=base.once(s,"c.branch(0xd0,'literal1814')","cond(0xd0,'literal1814')")
     return base.once(s,anchor,code+anchor)
 
-def build(out, *, emitter=emit_final516, entry="wait_final516", fill=False, gate=True):
+def build(out, *, emitter=emit_final516, entry="wait_final516", fill=False, gate=True, packet_edit=None, upload_edit=None):
     original=base.emit_upload489
     src=inspect.getsource(original)
     anchor="    ns=dict(nes_dirty212.__dict__);"
@@ -52,10 +52,17 @@ def build(out, *, emitter=emit_final516, entry="wait_final516", fill=False, gate
     s=once(s,' client.emit_extra(c)',' emit_final516(c)\\n client.emit_extra(c)')
 """+anchor)
     src=base.once(src,'ns.update(emit_raw_dma489=', 'ns.update(emit_final516=emit_final516,emit_raw_dma489=')
-    ns=dict(base.__dict__,emit_final516=emitter)
+    if upload_edit:
+        src=base.once(src,anchor,'    s=upload_edit(s)\n'+anchor)
+    ns=dict(base.__dict__,emit_final516=emitter,upload_edit=upload_edit)
     exec(compile(src,'window516-uploader','exec'),ns)
     source=base.source
-    if fill:base.source=lambda template:fill_source(source(template))
+    if fill or packet_edit:
+        def transform(template):
+            text=source(template)
+            if fill:text=fill_source(text)
+            return packet_edit(text) if packet_edit else text
+        base.source=transform
     if gate:base.emit_upload489=ns['emit_upload489']
     try:result=base.build(out)
     finally:base.emit_upload489,base.source=original,source

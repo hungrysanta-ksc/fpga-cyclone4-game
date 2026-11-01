@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-"""Reconcile one MMC520 physical run with its two completion windows and frame-start bins."""
+"""Reconcile an MMC520 or MMC524 physical run with its two completion windows and frame-start bins."""
 import argparse
 import json
 from pathlib import Path
@@ -11,18 +11,18 @@ from nes_windows518 import duration_ms, windows
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def analyse(raw):
-    files = {k: raw / f"nes-{k}-mmc520.txt" for k in ("progress", "game-last", "budget")}
+def analyse(raw, trial=520):
+    files = {k: raw / f"nes-{k}-mmc{trial}.txt" for k in ("progress", "game-last", "budget")}
     progress, game, budget = [files[k].read_text(encoding="utf-8-sig") for k in files]
     g, b = fields(game), fields(budget)
-    required = dict(candidate="NES-MMC520", loaded_bytes="393216", compared_bytes="393216",
+    required = dict(candidate=f"NES-MMC{trial}", loaded_bytes="393216", compared_bytes="393216",
                     board_expected_hex="7b", board_observed_hex="7b", board_seen="1", verified="1",
                     verify_error="0", run_passed="1", start_sent="1", stop_ok="1", base_restored="1",
                     safe_to_reload="1", run_error="0", run_rom_error="0", fault_context_valid="0",
                     native_receiver_error="0", native_video_error="0")
     for key, value in required.items():
         assert g[key] == value, key
-    assert all(line.startswith("MMC520 seq=") for line in progress.splitlines() if line.strip())
+    assert all(line.startswith(f"MMC{trial} seq=") for line in progress.splitlines() if line.strip())
     assert b["bin_basis"] == "FRAME_START_NOT_SCENE" and b["bin_ticks"] == "500"
     assert b["cost_scene_crc32_hex"] == "5a04eed7" and b["cost_clock_hz"] == "84000000"
     assert b["cost_counter_available"] == "1"
@@ -54,13 +54,17 @@ def analyse(raw):
     assert commits == int(g["trace_ends"]) == int(g["trace_begins"]) == n+1
     assert int(g["trace_aborts"]) == 0 and eas == n == phases["output_final_ack"]["calls"]
     assert b["open"] == "1" and g["native_result"] == "1" and 0 <= pending <= 4
-    old = json.loads((ROOT/"analysis/hardware517-mmc516.json").read_text())
-    return dict(trial=520, trial_family="MMC", hardware_run_passed=True, physical=True,
-                user_observation="Normal play and menu return. Early play clearly improved, late play felt similar.",
+    previous, evidence, observation = {
+        520: (516, "hardware517-mmc516.json", "Normal play and menu return. Early play clearly improved, late play felt similar."),
+        524: (520, "hardware521-mmc520.json", "Normal play and menu return. Modest improvement felt through late play, with less slowdown when many enemies appeared."),
+    }[trial]
+    old = json.loads((ROOT/"analysis"/evidence).read_text())
+    return dict(trial=trial, trial_family="MMC", hardware_run_passed=True, physical=True,
+                user_observation=observation,
                 source_SHA256={p.name:sha(p) for p in files.values()},
                 display=dict(completed=n,seconds=elapsed/1000,fps=n*1000/elapsed,mean_ms=elapsed/n),
                 completion_windows=split, first_second_displays=outside, frame_start_bins=bins,
-                phases=phases, previous_MMC516=old["display"], matched_playthrough=False,
+                phases=phases, **{f"previous_MMC{previous}": old["display"]}, matched_playthrough=False,
                 terminal=dict(commits=commits, retires_EA=eas, last_display_s=int(g["profile_last_display_tick"])/100,
                               outstanding=pending, runtime_result=int(g["native_result"]), errors={
                                   k:int(g[k]) for k in ("plan_error","sink_window_error","native_sink_error")}),
@@ -71,5 +75,6 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--raw", type=Path, required=True)
     p.add_argument("--out", type=Path, required=True)
+    p.add_argument("--trial", type=int, choices=(520,524), default=520)
     a = p.parse_args()
-    a.out.write_text(json.dumps(analyse(a.raw), indent=2)+"\n", encoding="utf8", newline="\n")
+    a.out.write_text(json.dumps(analyse(a.raw, a.trial), indent=2)+"\n", encoding="utf8", newline="\n")
