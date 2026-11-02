@@ -59,7 +59,7 @@ def group(source,early):
  c.label('group538')""")
 
 
-def raw_emitter():
+def raw_emitter(prepare=None):
     def edit(source):
         return once(source,"    lda(0x76);sta(0x2116);imm(64);",
                     """    c.emit(0x46,0x78);c.branch(0x90,'write547')
@@ -75,6 +75,9 @@ def raw_emitter():
             mark('checked_service547');call(c,'service');c.emit(0xad,0x36,0x12,0x60)
         mark('charges547')
         for size in (2656,3264,384,864,512,1120):c.word(size)
+        if prepare is not None:
+            prepare(c)
+            return
         mark('prepare547')
         c.emit(0x64,0x78);c.absolute(0xad,0x1258);c.emit(0xc9,0x80,1);c.branch(0xd0,'exit547')
         # Save old eligibility in $125c (already decoded by compact489).

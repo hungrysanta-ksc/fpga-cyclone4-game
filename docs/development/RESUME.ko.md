@@ -41,7 +41,7 @@ git log -5 --oneline
 
 1. [541 실기 분석](../nes-hardware541-results.ko.md)의 장면 차이와 원본 로그 해시를 보존한다.
 2. 다음 전달본에 `prepare_nes_windows541.py`의 표시 완료 [5,40)/[40,55) 집계를 포함하고 linked ARM 경계 검사를 통과시킨다.
-3. [547의 957 표시 및 전체 시간](../nes-history547-results.ko.md)을 따른다. 뱅크별 이력을 반복 패킷의 값·범위에 결합하고 같은 ARM 집계·두 위상에서 546과 547에 대조한다.
+3. [548의 수신 증명·표시 시간](../nes-receipt548-results.ko.md)을 따른다. 같은 집계 ARM과 두 위상에서 952의 SEAL 전 공급과 957 최종 대기를 함께 본다.
 
 ## 5. 기록을 남긴다
 

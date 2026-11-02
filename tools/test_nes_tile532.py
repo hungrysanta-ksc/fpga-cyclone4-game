@@ -15,6 +15,9 @@ def tile_observer(s,labels,map_limit='128'):
     if 'length545' in labels:
         from observe_nes_repeat545 import observe
         s=observe(s)
+        if 'generic548' in labels:
+            s=once(s,'or (pb(0)==5 and pw(16)==0)',
+                   'or (pb(0)==5 and pw(12)==2 and pw(14)>=242 and pb(16)==pb(17))')
     if 'normal_length532' in labels:
         s=once(s,'assert(n==64 and off%64==0 and accepted526[off] and not copied526[off])',
                f'''assert(n>=64 and n%64==0 and n<={map_limit} and off%64==0)

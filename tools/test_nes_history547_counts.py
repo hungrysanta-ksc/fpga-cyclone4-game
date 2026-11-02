@@ -38,7 +38,7 @@ def payload(prefix,mask,count,gen):
     return prefix+raw+tail,prefix+(packed if count<=2 else raw)+tail
 
 
-def run(args,out,client,candidate):
+def run(args,out,client,candidate,*,make_payload=payload,encode=None,probe=history):
     out.mkdir()
     requests=[]
     captured=[json.loads(s) for s in (args.trace/'packets.jsonl').read_text().splitlines()]
@@ -46,12 +46,12 @@ def run(args,out,client,candidate):
         g=905+i
         frame=[(bytearray.fromhex(b),tile) for _,_,b,tile in captured if int.from_bytes(bytes.fromhex(b)[8:10],'little')==g]
         seal,=[b for b,_ in frame if b[0]==3]
-        image,wire=payload((args.trace/f'expected-{g}.bin').read_bytes()[:1121],int.from_bytes(seal[34:36],'little'),count,g)
+        image,wire=make_payload((args.trace/f'expected-{g}.bin').read_bytes()[:1121],int.from_bytes(seal[34:36],'little'),count,g)
         struct.pack_into('<H',seal,26,len(wire));struct.pack_into('<H',seal,38,count)
         frame=[(b,t) for b,t in frame if b[0]!=3 and b[1]!=5]
-        for at in range(0,len(wire),240):
-            data=wire[at:at+240]
-            b=bytearray(seal[:16])+data;b[0:2]=bytes([2,5]);struct.pack_into('<3H',b,10,at,len(data),0)
+        sections=encode(wire,count,g) if encode else [(2,at,wire[at:at+240],0) for at in range(0,len(wire),240)]
+        for op,at,data,expanded in sections:
+            b=bytearray(seal[:16])+data;b[0:2]=bytes([op,5]);struct.pack_into('<3H',b,10,at,len(data),expanded)
             frame.append((b,None))
         frame.append((seal,None))
         for seq,(b,tile) in enumerate(frame):
@@ -62,7 +62,7 @@ def run(args,out,client,candidate):
     (out/'requests.bin').write_bytes(b''.join(requests));shutil.copyfile(client/'sink165.sfc',out/'client.sfc')
     source=once(LUA,'   local hdma=file(',MAP_ORACLE+'   local hdma=file(')
     if candidate:
-        source='local function verify526(f)return f end\n'+history(source,json.loads((client/'labels.json').read_text()))
+        source='local function verify526(f)return f end\n'+probe(source,json.loads((client/'labels.json').read_text()))
     for key,val in dict(ROOT=json.dumps(out.as_posix()),MODE='"normal"',SCHEDULE='"continuous"',START=3000000,
                         POISON='true',FAULT=0,COMPACT='true',TOTAL=len(requests),FRAMES=len(COUNTS)).items():
         source=source.replace('@'+key+'@',str(val))
