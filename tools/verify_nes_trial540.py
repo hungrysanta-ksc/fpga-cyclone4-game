@@ -11,7 +11,14 @@ from verify_nes_trial533 import ROOT, read, sha, timing, fpga, funcs
 
 
 def verify(a, trial=540):
-    if trial==551:
+    if trial==558:
+        schedule='end557'
+        measured=read(ROOT/'analysis/end557-verification.json')
+        assert measured['trial_gate'] and not measured['gate']
+        selected_firmware=measured['selected_ARM_SHA256']
+        choice='556 with verified bank admission'
+        previous=551
+    elif trial==551:
         schedule='upload550'
         measured=read(ROOT/'analysis/upload550-verification.json')
         assert measured['gate']
@@ -45,7 +52,15 @@ def verify(a, trial=540):
     baseline,_,baseline_ucp=timing(a.reference)
     assert summary==baseline and unconstrained==baseline_ucp
     for view in ('implementation','nominal'):
-        assert Counter((a.board/f'{view}-paths204.tsv').read_text().splitlines())==Counter((a.reference/f'{view}-paths204.tsv').read_text().splitlines())
+        if trial==558:
+            import csv
+            def path_costs(board):
+                with (board/f'{view}-paths204.tsv').open() as f:
+                    return Counter(tuple(r[k] for k in ('corner','from_clock','to_clock','kind','slack','delay')) for r in csv.DictReader(f,delimiter='\t'))
+            assert measured['board']['sof']==sha(a.board/'output_files/board.sof')
+            assert measured['board'][view]['group_minima_equal'] and path_costs(a.board)==path_costs(a.reference)
+        else:
+            assert Counter((a.board/f'{view}-paths204.tsv').read_text().splitlines())==Counter((a.reference/f'{view}-paths204.tsv').read_text().splitlines())
     original=a.selected/'obj-nes-100'
     obj=a.arm/'obj-nes-100'
     digest=sha(obj/'firmware.stm')
@@ -60,7 +75,7 @@ def verify(a, trial=540):
     window=read(a.checks/'windows.json')
     assert window['firmware_SHA256']==digest and [x['displays'] for x in window['accepted']]==[2,2]
     assert window['reset'] and window['unfinished_excluded']
-    if trial==551:
+    if trial in (551,558):
         assert [(r['start_s'],r['end_s']) for r in window['accepted']]==[(5,40),(40,55)]
         transport=read(a.checks/'transport.json')
         assert transport['firmware']==digest
@@ -87,6 +102,6 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for n in ('board','reference','client','arm','selected','checks','out'):
         p.add_argument('--'+n,type=Path,required=True)
-    p.add_argument('--trial',type=int,choices=(540,551),default=540)
+    p.add_argument('--trial',type=int,choices=(540,551,558),default=540)
     a=p.parse_args()
     a.out.write_text(json.dumps(verify(a,a.trial),indent=2)+'\n',newline='\n')

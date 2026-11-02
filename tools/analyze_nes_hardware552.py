@@ -9,29 +9,29 @@ from analyze_nes_hardware521 import ROOT, fields, sha, windows, duration_ms
 from analyze_nes_phase537 import csv_groups, one, ms
 
 
-def inputs(folder):
-    paths={k:folder/f'nes-{k}-mmc551.txt' for k in ('game-last','budget','progress')}
+def inputs(folder,trial=551):
+    paths={k:folder/f'nes-{k}-mmc{trial}.txt' for k in ('game-last','budget','progress')}
     g,b=(fields(paths[k].read_text(encoding='utf-8-sig')) for k in ('game-last','budget'))
     p=paths['progress'].read_text(encoding='utf-8-sig')
-    assert all(l.startswith('MMC551 seq=') for l in p.splitlines() if l.strip())
+    assert all(l.startswith(f'MMC{trial} seq=') for l in p.splitlines() if l.strip())
     assert all(g[k]=='1' for k in ('verified','end_accepted','start_sent','stop_ok','base_restored','safe_to_reload'))
-    assert g['candidate']=='NES-MMC551' and g['menu_state']=='PREPARED_RESET_HELD'
+    assert g['candidate']==f'NES-MMC{trial}' and g['menu_state']=='PREPARED_RESET_HELD'
     assert g['loaded_bytes']==g['compared_bytes']=='393216' and g['run_rom_error']==g['verify_error']=='0'
     return g,b,p,{p.name:sha(p) for p in paths.values()}
 
 
-def performance(raw,old):
-    g,b,p,pins=inputs(raw)
+def performance(raw,old,trial=551):
+    g,b,p,pins=inputs(raw,trial)
     elapsed=duration_ms(p)
     n=int(g['native_frames'])
     assert g['run_passed']==g['native_result']=='1' and b['boot_reason']=='1'
     assert int(g['trace_commits'])==int(g['trace_ends'])==int(b['cost_op_08'].split(',')[0])==n
     assert int(g['trace_begins'])==n+1 and g['trace_aborts']=='0'
-    assert g['sink_window_sent']==g['sink_window_retired'] and g['native_receiver_error']=='24'
+    assert g['sink_window_sent']==g['sink_window_retired'] and g['native_receiver_error']=={551:'24',558:'27'}[trial]
     assert g['native_sink_error']==g['native_video_error']==g['plan_error']==g['sink_window_error']=='0'
     assert b['cost_scene_crc32_hex']=='5a04eed7' and b['cost_counter_available']=='1'
     assert b['cost_crc_errors']==b['cost_transfer_stops']==b['failed_transfers']=='0'
-    split=windows((raw/'nes-budget-mmc551.txt').read_text(encoding='utf-8-sig'),elapsed)
+    split=windows((raw/f'nes-budget-mmc{trial}.txt').read_text(encoding='utf-8-sig'),elapsed)
     cols=b['columns'].split(',')
     rows=[dict(zip(cols,[int(x,16) for x in b[f'b{i:02}'].split(',')],strict=True)) for i in range(12)]
     assert sum(x['frames'] for x in rows)==n

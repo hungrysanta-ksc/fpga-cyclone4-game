@@ -51,7 +51,7 @@ local function activeImage()""")
     return s
 
 
-def prepare(trace,out,merge,*,map_first=False):
+def prepare(trace,out,merge,*,map_first=False,two_tiles=False):
     # Preserve payload/addresses and assign ordinary sequences in offered order.
     # In the merge fixture keep bulk tokens in the original order as well.
     out.mkdir()
@@ -70,7 +70,7 @@ def prepare(trace,out,merge,*,map_first=False):
                     map_row=next(r for r in records if r[1][:2]==b'\x02\x02')
                     take=[first,map_row,second]
                     tokens=[bytes(r[1][16:20]) for r in tiles]
-                else:take=[tiles[0]]
+                else:take=tiles[:2] if two_tiles else [tiles[0]]
                 records=records[:1]+take+[r for r in records[1:] if r not in take]
                 if merge and g==906:
                     for r,token in zip((r for r in records if r[1][0]==7),tokens):r[1][16:20]=token

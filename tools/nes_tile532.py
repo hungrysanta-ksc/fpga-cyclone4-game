@@ -97,7 +97,7 @@ class InteriorTiles(PairedMap):
         c.label('retire_regular532');super().retire(c)
 
 
-def merge_emitter():
+def merge_emitter(edit=None):
     s=inspect.getsource(nes_dirty212.emit)
     anchor="c.label('append212');lda(0x1250);cond(0xf0,'append_new212');c.emit(0x38,0xe9,8,0,0xaa)"
     s=once(s,anchor,anchor+"""
@@ -109,6 +109,8 @@ def merge_emitter():
  c.emit(0x8a,0x38,0xe9,8,0,0xaa)
  c.label('merge532')""")
     s=once(s," lda(0x78);c.long(0x9f,0x7e4004);"," c.label('merge_written532');lda(0x78);c.long(0x9f,0x7e4004);")
+    if edit is not None:
+        s=edit(s)
     ns=dict(vars(nes_dirty212))
     exec(compile(s,'tile532-append','exec'),ns)
     return ns['emit']

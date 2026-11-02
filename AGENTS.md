@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR147 / 552. docs/nes-hardware552-results.ko.md FIRST. MMC551 실기 822/60.08s, 13.68fps. 5–40초 458·40–55초 214. 별도 시작 TIMEOUT(stage0, 44,425 polls), 원인 미확정·메뉴 복귀 정상. 다음 빌드의 미측정 통계 제외 수정은 성능 후보와 분리. 두 mode 표 병합은 밀집 28/28VB·위상2 마지막 ACK 회귀로 제외. 다음은 957 후반 map 3개 발행 순서, 953 대조.
+- PR148 / 559. docs/nes-hardware559-results.ko.md FIRST. MMC558 실기 기준. 2회 성공, 로그 1세트. 5–55초 13.72fps. 다음은 두 뱅크 모델의 952 SEAL 전 공급과 DMA·최종 표시 대기 분리.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 
