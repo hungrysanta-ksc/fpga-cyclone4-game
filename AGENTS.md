@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR148 / 557–558. docs/nes-end557-results.ko.md FIRST. 이후 성능은 test_nes_banks557.py의 두 host plan RAM과 독립 RTL 재생을 사용한다. 954 E9는 OBJ보다 약 24ms 먼저 수락. 추가 E8 미채택. 대조 MMC551 대비 밀집 28→26VB 양쪽. MMC558 ZIP은 556 ARM/client 라벨 빌드, 실기 결과 대기.
+- PR148 / 559. docs/nes-hardware559-results.ko.md FIRST. MMC558 실기 기준. 2회 성공, 로그 1세트. 5–55초 13.72fps. 다음은 두 뱅크 모델의 952 SEAL 전 공급과 DMA·최종 표시 대기 분리.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 
