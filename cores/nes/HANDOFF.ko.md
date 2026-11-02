@@ -1,10 +1,10 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-mmc551-map-supply-553`이다. PR147 병합 `2211a8081decb5ef1dd84566a8cd69a19a660c34`의 master 반영과 tree 일치를 확인하고 분기했다.
+현재 브랜치는 `codex/nes-mmc558-supply-560`이다. PR148 병합 `c12cd861d926524e74c121b0fe03c3e5e5a5a527`에서 분기했다.
 
 ## 현재 작업
 
-[PR148](../../docs/progress/pr-148.md)의 [557 뱅크 소유권과 전체 비용](../../docs/nes-end557-results.ko.md)을 먼저 읽는다. 실기 기준은 MMC558이다. [두 구간 실측](../../docs/nes-hardware559-results.ko.md)을 확인한다. 이후 952의 6 VB 구간은 수정한 두 뱅크 모델로 조사한다.
+[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [952의 OBJ별 ROM 허가와 표시 시간](../../docs/nes-supply560-results.ko.md)을 먼저 읽는다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
 
 ## 최신 실기와 비교 기준
 

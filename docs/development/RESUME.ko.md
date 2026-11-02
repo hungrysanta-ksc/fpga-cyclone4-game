@@ -5,7 +5,7 @@
 ## 1. 상태를 읽는다
 
 1. [루트 README](../../README.md) → [프로젝트 현황](../PROJECT-STATUS.ko.md).
-2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR148](../progress/pr-148.md).
+2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR149](../progress/pr-149.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
 GB/GBC는 추가·공개 완료다. MMC540은 60.08초에 803회 표시(13.37fps), 실행·메뉴 복귀 정상이다. MMC533 대비 1–40초는 11.97→12.85fps, 40–60초는 12.65→14.35fps였다. 마지막 5초는 정적인 레벨 클리어 장면이므로 후반 증가율을 전투 성능 개선율로 해석하지 않는다. [실기 기록](../nes-hardware541-results.ko.md)
@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-현재 PR148은 PR147 병합 커밋 `2211a8081decb5ef1dd84566a8cd69a19a660c34`에서 분기했다. 최신 실기는 MMC558이다. [557 모델 수정 및 MMC558 실기 진입](../nes-end557-results.ko.md)
+PR149는 PR148 병합 커밋 `c12cd861d926524e74c121b0fe03c3e5e5a5a527`에서 분기했다. 최신 실기는 MMC558이다. [952 ROM 공급 비교](../nes-supply560-results.ko.md)
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 

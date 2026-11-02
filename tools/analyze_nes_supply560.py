@@ -6,7 +6,7 @@ from pathlib import Path
 from analyze_nes_phase537 import Calendar, csv_groups, ms, one, read, sha
 from analyze_nes_map553 import map_times
 from analyze_nes_seal538 import inspect_run
-from analyze_nes_supply549 import compare
+from analyze_nes_supply549 import compare, timeline
 
 
 def frame952(folder, plans, calendar):
@@ -25,23 +25,53 @@ def frame952(folder, plans, calendar):
     masks = {int.from_bytes(q[2:4],'little'):q[7] for q in records if q[6]==1}
     assert len(masks)==len(phase['obj_plans'])==len(set(r['slot'] for r in phase['obj_plans']))
     rows = []
+    long_run = []
     at = 0
     for plan in phase['obj_plans']:
         slot = plan['slot']
         n = 2*masks[slot].bit_count()
         group = obj[at:at+n]
         assert len(group)==n and group[0][1]>=plan['accepted_clock']
+        if 39<=slot<=50:
+            long_run.extend(group)
         rows.append(dict(slot=slot, reads=n, E9_ms=since(plan['accepted_clock']),
                          request_ms=since(group[0][1]), grant_ms=since(group[0][2]),
                          done_ms=since(group[-1][3])))
         at += n
     assert at==len(obj)
+    # Keep the observed inter-read service gaps. Walk backward to find the
+    # latest legal first request for all 112 reads in the preceding window.
+    assert len(long_run)==112
+    gaps = [b[1]-a[3] for a,b in zip(long_run,long_run[1:])]
+    assert min(gaps)>=0
+    target = int(long_run[0][2]*8//calendar.period)-1
+    cycle = (target//8)*calendar.period
+    latest = float('inf')
+    left = len(long_run)
+    for g,r in reversed(calendar.pairs):
+        grant,reply = g+cycle,r+cycle
+        if int(grant*8//calendar.period)!=target or reply>latest:
+            continue
+        left-=1
+        if not left:
+            break
+        latest = grant-gaps[left-1]
+    assert not left
+    deadline = dict(latest_request_ms=since(grant),actual_request_ms=since(long_run[0][1]),
+                    required_advance_ms=ms(long_run[0][1]-grant))
     mark = {e:since(one(events,e)['clock']) for e in ('source_begin','planner_enter','bg_map_frozen','end_enter')}
     mark.update({e:since(one(seal,e)['clock']) for e in ('load','final212','reveal','ack')})
     mark['wait169_ms'] = [since(r['clock']) for r in seal if r['event']=='wait169']
     mark['BG_ROM_ms'] = [since(bg[0][2]), since(bg[-1][3])]
     mark['last_OBJ_ACK_ms'] = since(max(r['clock'] for r in cpu[952] if r['op']==7 and r['section']==1 and r['event']=='ack'))
-    return dict(marks=mark, OBJ_slots=rows, E9_bytes=[r['bytes'] for r in events if r.get('opcode')=='0xe9'])
+    packets = [json.loads(line) for line in (folder/'packets.jsonl').read_text().splitlines()]
+    bg_ack = max((r for r in cpu[952] if r['op']==7 and r['section']==0 and r['event']=='ack'),key=lambda r:r['index'])
+    _, pushed, header, payload = packets[bg_ack['index']-1]
+    assert bytes.fromhex(header)[:2]==bytes([7,0]) and len(bytes.fromhex(payload))==48
+    mark['BG48_packet_push_ms'] = since(pushed)
+    mark['BG48_packet_ACK_ms'] = since(bg_ack['clock'])
+    return dict(marks=mark, OBJ_slots=rows, ROM_windows=timeline(folder,calendar)['rom_windows'],long_run_deadline=deadline,
+                E9_bytes=[r['bytes'] for r in events if r.get('opcode')=='0xe9'])
 
 
 def analyze(a):
@@ -49,6 +79,10 @@ def analyze(a):
     guards = read(a.guards)
     fw = a.arm/'obj-nes-100/firmware.stm'
     assert guards['firmware']==sha(fw)
+    menu = read(a.menu)
+    assert menu['firmware']==sha(fw) and menu['marker_cases']==4
+    root=Path(__file__).resolve().parents[1]
+    physical=read(root/'analysis/trial558-verification.json')
     phases = []
     for i in (1,2):
         base = a.traces/f'nes-end557-banks-base{i}'
@@ -78,13 +112,15 @@ def analyze(a):
                            timing_gate=intervals(952)<6 and intervals(953)<=5 and intervals(954)<=5
                            and not any(cost['waits'].values()) and not waits957 and early957>=2
                            and not later and all(v<0 for v in delta.values())))
-    return dict(phases=phases,guards=guards,firmware=sha(fw),firmware_bytes=fw.stat().st_size,
-                Flash_free_B=212992-fw.stat().st_size, client=sha(a.client/'sink165.sfc'))
+    return dict(phases=phases,guards=guards,menu=menu,firmware=sha(fw),firmware_bytes=fw.stat().st_size,
+                Flash_free_B=physical['Flash_B']+physical['free_Flash_B']-fw.stat().st_size,
+                client=sha(a.client/'sink165.sfc'),reused_board=dict(SOF=physical['SOF_SHA256'],
+                cost=physical['board'],raw_worst_ns=physical['raw_worst_ns']))
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
-    for k in ('arm','traces','guards','calendar','plans','client','out'):
+    for k in ('arm','traces','guards','menu','calendar','plans','client','out'):
         p.add_argument('--'+k,type=Path,required=True)
     a=p.parse_args()
     a.out.write_text(json.dumps(analyze(a),indent=2)+'\n')
