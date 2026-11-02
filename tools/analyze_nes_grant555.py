@@ -63,6 +63,19 @@ def ledger(folder, audit):
     return rows
 
 
+def map_admission(folder):
+    cpu = csv_groups(folder/'window.csv')[954]
+    for i,(_,push,h,_) in enumerate(map(json.loads,(folder/'packets.jsonl').read_text().splitlines()),1):
+        b = bytes.fromhex(h)
+        if b[:2]!=bytes((2,2)) or int.from_bytes(b[8:10],'little')!=954 or int.from_bytes(b[10:12],'little')!=2432:
+            continue
+        assert int.from_bytes(b[12:14],'little')==192
+        events = [r for r in cpu if r['index']==i]
+        load,ack = (one(events,k) for k in ('load','ack'))
+        return dict(index=i,push=push,load=load,ack=ack,push_to_load=load['clock']-push,load_to_ack=ack['clock']-load['clock'])
+    raise AssertionError('missing 954 map packet at offset 2432')
+
+
 def analyze(args):
     phases = []
     for phase in (1,2):
@@ -87,7 +100,7 @@ def analyze(args):
             maps = map_times(folder)['maps']
             seal957 = [r for r in csv_groups(folder/'window.csv')[957] if r['op']==3]
             final957 = one(seal957,'final212')['clock']
-            variants[mode] = dict(trace_folder=folder.name,audit_folder=audit.name,cost=cost, schedule954=schedule, commands954=ledger(folder,audit),
+            variants[mode] = dict(trace_folder=folder.name,audit_folder=audit.name,cost=cost, schedule954=schedule, commands954=ledger(folder,audit),map2432=map_admission(folder),
                 replay=replay, early957=sum(r['push_minus_last_tile_ACK_ms']<0 for r in maps),
                 wait957=sum(r['event']=='wait169' and r['clock']>=final957 for r in seal957))
             if phase==2 and mode!='cut':

@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-[PR148](../../docs/progress/pr-148.md)의 [554 패킷별 비용과 954 DMA 마감](../../docs/nes-prelude554-results.ko.md)을 먼저 읽는다. MMC551 실기를 기준으로 553과 554 제한 선행 일정을 분리해 비교한다.
+[PR148](../../docs/progress/pr-148.md)의 [555 map DMA와 두 시작 위상](../../docs/nes-grant555-results.ko.md)을 먼저 읽는다. 954의 map 오프셋 2,432에서 ARM 발행과 65816 수락을 나눠 위상 2의 256행 ACK를 앞당긴다. 실기 기준은 MMC551이다.
 
 ## 최신 실기와 비교 기준
 

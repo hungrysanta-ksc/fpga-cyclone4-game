@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-현재 PR148은 PR147 병합 커밋 `2211a8081decb5ef1dd84566a8cd69a19a660c34`에서 분기했다. 최신 실기는 MMC551이다. [554 비교](../nes-prelude554-results.ko.md)
+현재 PR148은 PR147 병합 커밋 `2211a8081decb5ef1dd84566a8cd69a19a660c34`에서 분기했다. 최신 실기는 MMC551이다. [555 비교 및 다음 측정](../nes-grant555-results.ko.md)
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 

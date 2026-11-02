@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR148 / 554. docs/nes-prelude554-results.ko.md FIRST. 954 전 18개 패킷 계측. HDMA 앞 END 우선은 SEAL 5→4VB 양쪽 성공, 표시 6/6·밀집 28/28로 동일. 최종 DMA 대기 1/1, 249h388 / 248h1076. 다음은 +1104/+1168B 이전 전송과 246행 여유, 953·957·최종 ACK 대조. MMC551 실기 유지.
+- PR148 / 555. docs/nes-grant555-results.ko.md FIRST. 512B map은 954 표시 5/6VB·밀집 27/28VB, 마지막 ACK −83.525/−33.825ms. 2,432번 map의 ACK 252/256행. 다음은 192B 발행과 실제 수락을 분리해 2위상 254행 허용선 전에 완료. OAM 전면 보류는 OBJ ROM 지연. MMC551 실기 유지.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 
