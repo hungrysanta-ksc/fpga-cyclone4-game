@@ -9,6 +9,23 @@ from check_nes_owner562 import pin_model
 from nes_raw506 import once,sha
 
 
+def bank_testbench(bench, board):
+    tb=(bench/'close561_tb.sv').read_text()
+    top=(board/'nes_direct206.sv').read_text()
+    # Use the fitted direct path's fault synchronizers and both local
+    # reset releases. Unrelated SPI/plan/lease faults stay deasserted.
+    circuit=top[top.index(' reg hf,nf;'):top.index(' wire pw,pr,ps')]
+    circuit=re.sub(r'\b(hf|nf|hr|nr|hc|nc)\b',lambda m:m[1]+'565',circuit)
+    circuit=circuit.replace('host_clk','hc').replace('nes_clk','nc')
+    defs=' wire host_fault,nes_fault; wire transport_fault=0,spi_fault=0,batch_fault=0,lease_fault=0,core_fault=0;\n'
+    defs+=' wire bulk_fault=bf,tile_fault=tf,consume_error=bad_token,command_error=cmd_error;\n'
+    tb=once(tb,' nes_tile_bulk206 bulk(',defs+circuit+' nes_tile_bulk206 bulk(')
+    tb=once(tb,'.stop(stop),.source_fault(tf)',".stop(1'b0),.source_fault(cancel)")
+    tb=once(tb,'.reset(reset),.stop(stop),.fault(bf)',".reset(hr565),.stop(hc565),.fault(1'b0)")
+    tb=once(tb,'if(tf||bf||bad_token)', 'if(tf||(bf&&!cancel)||bad_token)')
+    return tb
+
+
 def run(a):
     bench=Path(__file__).resolve().parents[1]/'tests/nes-functional'
     a.out.mkdir(parents=True,exist_ok=False)
@@ -51,19 +68,7 @@ def run(a):
         (d/'boot.sv').write_text(boot)
         for i in (1,2):
             (d/f'reads{i}.txt').write_text((bench/f'owner562-reads{i}.txt').read_text())
-        tb=(bench/'close561_tb.sv').read_text()
-        top=(board/'nes_direct206.sv').read_text()
-        # Use the fitted direct path's fault synchronizers and both local
-        # reset releases. Unrelated SPI/plan/lease faults stay deasserted.
-        circuit=top[top.index(' reg hf,nf;'):top.index(' wire pw,pr,ps')]
-        circuit=re.sub(r'\b(hf|nf|hr|nr|hc|nc)\b',lambda m:m[1]+'565',circuit)
-        circuit=circuit.replace('host_clk','hc').replace('nes_clk','nc')
-        defs=' wire host_fault,nes_fault; wire transport_fault=0,spi_fault=0,batch_fault=0,lease_fault=0,core_fault=0;\n'
-        defs+=' wire bulk_fault=bf,tile_fault=tf,consume_error=bad_token,command_error=cmd_error;\n'
-        tb=once(tb,' nes_tile_bulk206 bulk(',defs+circuit+' nes_tile_bulk206 bulk(')
-        tb=once(tb,'.stop(stop),.source_fault(tf)',".stop(1'b0),.source_fault(cancel)")
-        tb=once(tb,'.reset(reset),.stop(stop),.fault(bf)',".reset(hr565),.stop(hc565),.fault(1'b0)")
-        tb=once(tb,'if(tf||bf||bad_token)', 'if(tf||(bf&&!cancel)||bad_token)')
+        tb=bank_testbench(bench,board)
         tb=once(tb,'  plan(1,27,9);wait(req);repeat(25)@(negedge nc);',
                 '  plan(1,27,9);wait(req);repeat(25)@(negedge nc);reuse565();')
         tb=once(tb,' initial begin\n  #120000;', (bench/'reuse565.svh').read_text()+'\n initial begin\n  #120000;')

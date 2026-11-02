@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [565 PSRAM 샘플과 취소된 뱅크 재사용](../../docs/nes-reuse565-results.ko.md)을 먼저 읽는다. 다음은 실제 STOP·재시작에서 이전 토큰 쓰기가 끝나는 경계를 확인하는 것이다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
+[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [566 STOP·재시작과 소비 ACK](../../docs/nes-drain566-results.ko.md)를 먼저 읽는다. 다음은 core reset 해제와 84MHz native records valid 사이의 STA 회귀를 확인하는 것이다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
 
 ## 최신 실기와 비교 기준
 
