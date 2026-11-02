@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-[PR148](../../docs/progress/pr-148.md)의 [556 수락·표시 및 전체 비용](../../docs/nes-admit556-results.ko.md)을 먼저 읽는다. 192B 수락은 두 위상에서 앞당겼다. 다음은 마지막 OBJ를 같은 ROM 구간에 넣기 위한 E8 credit·E9 발행 시각 비교다. 실기 기준은 MMC551이다.
+[PR148](../../docs/progress/pr-148.md)의 [557 뱅크 소유권과 전체 비용](../../docs/nes-end557-results.ko.md)을 먼저 읽는다. 실기 기준은 MMC551이다. [MMC558](../../docs/nes-mmc558-trial.ko.md) 실기 로그를 5–40초·40–55초로 비교한다. 이후 952의 6 VB 구간은 수정한 두 뱅크 모델로 조사한다.
 
 ## 최신 실기와 비교 기준
 

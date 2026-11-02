@@ -32,14 +32,15 @@ def timeline(folder,audit):
                 mark_to_append=clocks['append212']-clocks['mark212'],DMA_to_accepted=clocks['accepted']-clocks['DMA_start'])
 
 
-def obj_deadline(folder,cal):
+def obj_deadline(folder,cal,*,queued=False):
     previous=one([r for r in csv_groups(folder/'window.csv')[953] if r['op']==3],'reveal')['clock']
     target=int(previous*8//cal.period)+4
     cycle=target//8
     grants=[(g+cycle*cal.period,r+cycle*cal.period) for g,r in cal.pairs
             if int((g+cycle*cal.period)*8//cal.period)==target]
     obj=read(folder/'obj-phases.json')['954']
-    reads=[r for r in obj['rom_service'] if r[1]>=obj['end_accepted']]
+    reads=(obj['rom_service'][-18:] if queued else [r for r in obj['rom_service'] if r[1]>=obj['end_accepted']])
+    assert reads[0][1]>=obj['end_accepted']
     assert len(reads)==18 and all(row[0]==1 for row in reads)
     gaps=[b[1]-a[3] for a,b in zip(reads,reads[1:])]
     assert min(gaps)>=0

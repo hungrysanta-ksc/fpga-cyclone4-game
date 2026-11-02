@@ -11,7 +11,7 @@ from package_nes_window516 import ROOT, read, sha, encode, decode
 
 
 def package(a, trial=540):
-    previous={540:533,551:540}[trial]
+    previous={540:533,551:540,558:551}[trial]
     evidence=ROOT/f'analysis/trial{trial}-verification.json'
     verified=read(evidence)
     assert verified['candidate']==f'MMC{trial}' and verified['timing_criterion']=='matched-mmc529'
@@ -65,6 +65,6 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('arm','board','prior','quartus','out'):
         p.add_argument('--'+name,type=Path,required=True)
-    p.add_argument('--trial',type=int,choices=(540,551),default=540)
+    p.add_argument('--trial',type=int,choices=(540,551,558),default=540)
     a=p.parse_args()
     package(a,a.trial)

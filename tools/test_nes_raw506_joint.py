@@ -163,6 +163,8 @@ class Link:
             else:
                 assert self.jobs and self.jobs[0]['token']==index,('consume owner',index,self.jobs)
                 self.jobs.pop(0);self.producer_clock=max(self.producer_clock,clock)
+                if not (self.jobs or self.todo or self.flight or self.end) and hasattr(self,'credit_edge557'):
+                    self.credit_edge557(clock,'bulk_consume')
         self.advance(t)
         return t
     def next_rom(self,t):
@@ -189,11 +191,16 @@ class Link:
                     if len(self.jobs)==2:return
                     self.open=dict(kind=kind,slot=slot,gen=gen,data=b'')
                 self.open['data']+=payload;self.flight=None
+                if not (self.jobs or self.todo or self.end) and hasattr(self,'credit_edge557'):
+                    self.credit_edge557(max(self.producer_clock,done),'tile_complete')
                 self.producer_clock=max(self.producer_clock,done)+math.ceil((2*len(payload)+8)*MASTER/ARM_HZ)
                 self.max_banks=max(self.max_banks,len(self.jobs)+1)
             if not self.todo:return
             q,arrived=self.todo[0];gen,slot,tag,kind,mask=struct.unpack_from('<HHHBB',q)
             if arrived>now:return
+            if hasattr(self,'decode557'):
+                arrived=self.decode557(q,arrived,now)
+                if arrived>now:return
             if kind==3:
                 if self.open:self.publish()
                 self.todo.pop(0);self.end=True;continue
@@ -232,7 +239,8 @@ class Link:
         elif op==0xe9:
             n=int.from_bytes(tx[1:3],'little');assert len(tx)==n+8 and tx[-1]==0xa5
             assert crc(tx[:n+6],8,7,0)==tx[n+6] and crc(tx[4:4+n],16,0x1021,65535)==int.from_bytes(tx[n+4:n+6],'big')
-            assert not self.todo and not self.flight,('plan credit',len(self.todo),self.flight)
+            if hasattr(self,'seal557'):self.seal557(tx,t)
+            else:assert not self.todo and not self.flight,('plan credit',len(self.todo),self.flight)
             body=tx[4:4+n];at=0;count=0
             while at<len(body):
                 plans=self.plansets[self.generation]
@@ -332,6 +340,8 @@ class Runtime(ARM):
         elif op==0xd1:
             b=self.packets[self.index];assert n==len(b)+3;rx=b'\0'+b+crc(b,16,0x1021,65535).to_bytes(2,'big')
         elif op in (0xd2,0xd3):rx=self.status()
+        elif op in (0xe8,0xe9) and hasattr(self.link,'snapshot557'):
+            rx=self.link.snapshot557(tx,start)
         else:rx=self.link.response(tx)
         self.clock+=n*8*MASTER/2625000+self.driver_extra.get(op,self.a.spi_us*MASTER/1000000)
         self.clock=self.link.rpc(self.clock)

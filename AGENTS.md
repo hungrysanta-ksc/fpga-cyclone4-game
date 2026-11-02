@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR148 / 556. docs/nes-admit556-results.ko.md FIRST. 954 map2432 ACK 229/225행, E1 준비 6783→906clk. 최종 OBJ ROM 18/8회 유출, 결합 표시 6/6VB, 마지막 ACK −216.452/−216.297ms vs555. 다음은 최종 E8 credit·E9 발행과 1652/511clk 예산. MMC551 실기 유지.
+- PR148 / 557–558. docs/nes-end557-results.ko.md FIRST. 이후 성능은 test_nes_banks557.py의 두 host plan RAM과 독립 RTL 재생을 사용한다. 954 E9는 OBJ보다 약 24ms 먼저 수락. 추가 E8 미채택. 대조 MMC551 대비 밀집 28→26VB 양쪽. MMC558 ZIP은 556 ARM/client 라벨 빌드, 실기 결과 대기.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 
