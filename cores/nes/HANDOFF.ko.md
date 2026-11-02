@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [조기 공개와 보드 STA](../../docs/nes-close561-results.ko.md)를 먼저 읽는다. 두 위상 모두 952가 5 VBlank로 줄었고 실기 전달 전 기존 음수 setup·recovery의 회귀를 해소해야 한다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
+[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [RUN 소유권과 보드 STA](../../docs/nes-owner562-results.ko.md)를 먼저 읽는다. 562가 561의 952 표시 5 VBlank를 유지했다. 다음 회로 경계는 메모리 클록 감시기와 reader 주소 전달이다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
 
 ## 최신 실기와 비교 기준
 
