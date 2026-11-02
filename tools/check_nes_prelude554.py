@@ -26,7 +26,7 @@ class Pending(Mixed):
         return bytes(result)
 
 
-def case(src,mode,cutoff):
+def case(src,mode,cutoff,oam_cutoff=False):
     m=ARM(src,'normal');e=m.endpoint=Pending();m.setup()
     # Model only the empty final map iterator. Real ready/credit/guard,
     # END framing, ordinary packet building and queue checks execute on ARM.
@@ -47,7 +47,7 @@ def case(src,mode,cutoff):
     if mode in ('bad_E8_CRC','ambiguous_E1'):e.mode=mode
     if mode=='STOP':
         e.mode='STOP_after_E9';e.accepted=1  # activates the existing guard injection
-    ok=bool(send(4))
+    ok=bool(send(3 if oam_cutoff else 4))
     if mode in ('bad_E8_CRC','ambiguous_E1','STOP'):
         assert not ok
         before=len(e.calls);assert not send(5) and len(e.calls)==before
@@ -58,7 +58,7 @@ def case(src,mode,cutoff):
             assert [bytes.fromhex(t)[1] for t in e.calls if t.startswith('e1')]==[2,7,2]
         if mode=='END_first':e.held=False
         elif cutoff:e.countdown=3
-        assert send(5)
+        assert send(4 if oam_cutoff else 5)
         if mode=='END_first' or cutoff:
             sent=[bytes.fromhex(t)[0] for t in e.calls if t[:2] in ('e1','e9')]
             assert sent[-2:]==[0xe9,0xe1]
@@ -77,6 +77,7 @@ if __name__=='__main__':
     p=argparse.ArgumentParser()
     for k in ('arm','out'):p.add_argument('--'+k,type=Path,required=True)
     p.add_argument('--cutoff',action='store_true')
+    p.add_argument('--oam-cutoff',action='store_true')
     a=p.parse_args()
-    rows=[case(a.arm,mode,a.cutoff) for mode in ('quiet','END_first','tile','STOP','bad_E8_CRC','ambiguous_E1')]
+    rows=[case(a.arm,mode,a.cutoff or a.oam_cutoff,a.oam_cutoff) for mode in ('quiet','END_first','tile','STOP','bad_E8_CRC','ambiguous_E1')]
     a.out.write_text(json.dumps(dict(sha=sha(a.arm/'obj-nes-100/firmware.stm'),rows=rows),indent=2)+'\n')

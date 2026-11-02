@@ -53,18 +53,24 @@ local function loaded()""")
 if __name__=='__main__':
     p=argparse.ArgumentParser()
     for n in ('trace','client','mesen','out'):p.add_argument('--'+n,type=Path,required=True)
+    p.add_argument('--tile-first',action='store_true',help='Offer two disjoint tiles first for the tile-only late-beam case.')
     a=p.parse_args();a.out=a.out.resolve();a.out.mkdir(parents=True,exist_ok=False)
     labels=json.loads((a.client/'labels.json').read_text())
     limit=json.loads((a.client/'build.json').read_text())['map_chunk_B']
-    assert limit in (128,256)
+    assert limit in (128,256,512)
     body=(a.client/'body.bin').read_bytes()
     read_pc=0x7e2000+body.index(bytes.fromhex('ad1242'),labels['prefix523']-0x7e2000)
     rows=[]
     for line,kind in ((254,'map'),(255,'map'),(256,'map'),(233,'tile')):
         sub=argparse.Namespace(**vars(a));sub.out=a.out/f'line{line}';sub.out.mkdir()
+        if kind=='tile' and a.tile_first:
+            from test_nes_tile532_priority import prepare
+            sub.trace=a.out/'tile-trace'
+            prepare(a.trace,sub.trace,False,two_tiles=True)
         name='late_stop' if line==254 else 'stop'
         r=case(sub,906,name,edit_fixture=lambda s,l:gate(s,l,line,kind,read_pc,limit))
         assert r['size']==(limit if line==254 else 0)
-        if r['grant']:assert line<=r['start_line']<=line+2
+        if r['grant']:
+            assert line<=r['start_line']<=line+2 and r['start_line']<=r['end_line']<262
         rows.append(dict(line=line,kind=kind,**r))
     (a.out/'edges.json').write_text(json.dumps(rows,indent=2)+'\n')
