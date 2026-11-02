@@ -32,15 +32,19 @@ def vectors(folder,plans):
     return [(t-vectors[0][0],p) for t,p in vectors]
 
 
-def run(a):
-    bench=Path(__file__).resolve().parents[1]/'tests/nes-functional'
-    a.out.mkdir(parents=True,exist_ok=False)
+def pin_model(bench):
     model=(bench/'rom_boot_model.sv').read_text()
     for small,full in [('65535','262143'),('32767','131071'),("24'h10000","24'h40000"),
                        ("24'h208000","24'h220000"),('a[15:0]','a[17:0]'),('a[14:0]','a[16:0]')]:
         assert small in model
         model=model.replace(small,full)
-    (a.out/'pins.sv').write_text(model,newline='\n')
+    return model
+
+
+def run(a):
+    bench=Path(__file__).resolve().parents[1]/'tests/nes-functional'
+    a.out.mkdir(parents=True,exist_ok=False)
+    (a.out/'pins.sv').write_text(pin_model(bench),newline='\n')
     stimuli=[(bench/f'owner562-reads{i}.txt').read_text(encoding='ascii') for i in (1,2)]
     if a.traces is not None:
         for i,s in enumerate(stimuli,1):
