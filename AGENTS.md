@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR147 / 548. docs/nes-receipt548-results.ko.md FIRST. MMC540 실기 13.37fps. 수신 증명 36B·본문4956B, 384B 재비교 삭제, cold/STOP/부분 복원 확인. 957 두 위상 246행 h=624·대기0, 전체 ACK 546 대비 −65.17ms, 밀집 30/30VB. 다음은 952 직전 표시→SEAL head 6VB 공급 일정. 독립 검사·246행·메뉴·같은 집계 유지.
+- PR147 / 549. docs/nes-supply549-results.ko.md FIRST. 실기 MMC540. 548 대비 세 행 ARM은 밀집 30→29VB·마지막 ACK −33.27ms·957 대기 0/0. 연속 OBJ까지 유지하면 952 SEAL 6→5VB·밀집 28/28, 957 대기 0/1. 다음은 위상 2의 957에서 246행 마감 281클록 초과를 분리 검증한다.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 

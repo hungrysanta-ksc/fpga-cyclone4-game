@@ -83,7 +83,7 @@ def obj_952(events, obj, prev, cpu):
                 OBJ_reads=obj['obj_rom_reads'])
 
 
-def inspect_run(folder, plans, cal, base, expected_firmware, expected_client, *, omitted_raw_B=0):
+def inspect_run(folder, plans, cal, base, expected_firmware, expected_client, *, omitted_raw_B=0, first_bg_limit=1):
     joint=read(folder/'joint.json')
     ref=read(base/'joint.json')
     assert joint['passed'] and joint['commits']==joint['map_WRAM_VRAM_verified']==53 and joint['last_status']==1
@@ -116,7 +116,13 @@ def inspect_run(folder, plans, cal, base, expected_firmware, expected_client, *,
             continue
         assert [q[6] for q in qs[:2]]==[2,0]
         first=next(r for r in events if r['generation']==g and r.get('opcode')=='0xe9')
-        assert first['bytes']==8+sum(len(wire_plan(q)) for q in qs[:2])
+        assert 1<=first_bg_limit<=3
+        allowed=[]
+        for count in range(1,min(first_bg_limit,len(qs)-1)+1):
+            if qs[count][6]!=0:
+                break
+            allowed.append(8+sum(len(wire_plan(q)) for q in qs[:count+1]))
+        assert first['bytes'] in allowed
         request=first['clock']+75
         grant,response=cal.select(request)
         cycle,offset=divmod(request,cal.period)
