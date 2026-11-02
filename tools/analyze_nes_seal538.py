@@ -83,13 +83,14 @@ def obj_952(events, obj, prev, cpu):
                 OBJ_reads=obj['obj_rom_reads'])
 
 
-def inspect_run(folder, plans, cal, base, expected_firmware, expected_client):
+def inspect_run(folder, plans, cal, base, expected_firmware, expected_client, *, omitted_raw_B=0):
     joint=read(folder/'joint.json')
     ref=read(base/'joint.json')
     assert joint['passed'] and joint['commits']==joint['map_WRAM_VRAM_verified']==53 and joint['last_status']==1
     assert joint['firmware_SHA256']==expected_firmware and joint['client_SHA256']==expected_client
     assert joint['parameters']==ref['parameters'] and joint['parameters']['ROM_calendar']==cal.summary
-    assert joint['vram_DMA_B']==ref['vram_DMA_B'] and joint['ROM_read_allocations']==ref['ROM_read_allocations']
+    assert omitted_raw_B>=0 and joint['vram_DMA_B']+omitted_raw_B==ref['vram_DMA_B']
+    assert joint['ROM_read_allocations']==ref['ROM_read_allocations']
     assert joint['max_bulk_banks']<=2 and not any((folder/f).exists() for f in ('map-error.txt','callback-error.txt'))
     assert consumed_tiles(folder)==consumed_tiles(base)
     other,raw=contents(folder)

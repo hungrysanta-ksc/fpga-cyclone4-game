@@ -46,13 +46,15 @@ def group_upload(source, early_final=False):
 
 nes_prefix523_original = nes_prefix523.upload
 
-def raw_service_inline():
+def raw_service_inline(edit=None):
     source=inspect.getsource(nes_output489.emit_raw_dma489)
     check="call(c,'raw_service489');cond(0x90,'raw_return489')"
     assert source.count(check)==2
     source=source.replace(check,"call(c,'service');lda(0x1236);cond(0xd0,'raw_stop489')")
     source=once(source,"    c.label('raw_service489');call(c,'service');lda(0x1236);c.branch(0xd0,'raw_stop489');c.emit(0x38,0x60)\n","")
     source=once(source,"c.emit(0xc2,0x20,0x18,0x60)","c.emit(0xc2,0x20,0x18);c.jump('raw_return489')")
+    if edit is not None:
+        source=edit(source)
     namespace=dict(vars(nes_output489))
     exec(compile(source,'seal538-raw-service','exec'),namespace)
     return namespace['emit_raw_dma489']

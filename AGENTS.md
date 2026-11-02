@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR147 / 546. docs/nes-header546-results.ko.md FIRST. MMC540 실기 13.37fps, 545·546 조합 비교용. 546 16B MVN 4952B, 545 대비 최종 ACK −16.64/−33.29ms, 밀집 30/30VB. 957 latch 248행 h=98 두 위상, 1463clocks 부족. 다음은 동일 뱅크 직전 최종 ACK 대비 raw 64B 행 4개 일치의 안전한 생략 예산. cold/STOP/부분쓰기 재검증, 246행 검사·독립 검사·메뉴 유지.
+- PR147 / 547. docs/nes-history547-results.ko.md FIRST. MMC540 실기 13.37fps. 공통 반환 4950B, 뱅크별 SNES WRAM 384B. 957은 4행 생략·246행 h=868/1102·최종 대기 0/0회, 전체 ACK는 546 대비 +18.04/+34.69ms. 밀집 30/30VB. 다음은 실제 수신 반복 패킷의 전체 행 범위와 값을 뱅크별 ACK에 결합해 warm 1.93ms 비교를 줄이는 것. 174/174 오프라인 근거. STOP/부분·형식 변경 복원, 독립 검사·246행·메뉴·같은 집계 유지.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 
