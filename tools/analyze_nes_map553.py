@@ -67,6 +67,8 @@ def analyze(a):
             audit=read(a.traces/f'nes-map553-{kind}-audit{i}'/'audit.json')
             m=inspect_run(folder,a.plans,cal,physical,sha(src/'obj-nes-100/firmware.stm'),prior['client'],first_bg_limit=3)
             assert audit['frames']==53 and audit['trace']==m['pins']['window.csv']
+            if kind=='base':
+                assert all(m['pins'][n]==reference['pins'][n] for n in ('events.json','packets.jsonl','window.csv'))
             by_kind[kind]=dict(cost=m,maps=map_times(folder),audit=audit,beam957=last_frame(folder)['beam'],
                 tails={g:tail(folder,g) for g in (951,953,957)})
         row=by_kind['map'];m=row['cost']

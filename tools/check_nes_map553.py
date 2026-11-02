@@ -3,7 +3,7 @@
 import argparse
 import json
 from pathlib import Path
-from test_nes_overlap508_arm import ARM, Mixed, sha
+from test_nes_overlap508_arm import ARM, Mixed, sha, crc
 
 
 class SlowTile(Mixed):
@@ -16,6 +16,12 @@ class SlowTile(Mixed):
         if tx[0]==0xe1:
             self.before.append((tx[1],tx[2],self.sent-self.retired,any(b[0]==7 for _,b in self.pending)))
         result=super().exchange(tx,clock)
+        if tx[0]==0xe8 and self.mode=='changed_descriptor':
+            r=bytearray(result)
+            assert r[6]
+            r[8]^=16  # Same token and valid response CRC, different descriptor.
+            r[19]=crc(r[1:19],8,7,0)
+            return bytes(r)
         if tx[0]==0xe1:
             self.pending[-1]=(clock+90000,self.pending[-1][1])
         return result
@@ -56,5 +62,5 @@ if __name__=='__main__':
     for name in ('arm','base','out'):p.add_argument('--'+name,type=Path,required=True)
     a=p.parse_args()
     rows=[case(a.base,patched=False),*(case(a.arm,prefix=k) for k in (0,1,2)),case(a.arm,section=3),
-          case(a.arm,fault='STOP_after_bulk'),case(a.arm,fault='bad_accepted')]
+          case(a.arm,fault='STOP_after_bulk'),case(a.arm,fault='changed_descriptor'),case(a.arm,fault='bad_accepted')]
     a.out.write_text(json.dumps(dict(sha=sha(a.arm/'obj-nes-100/firmware.stm'),rows=rows),indent=2)+'\n')
