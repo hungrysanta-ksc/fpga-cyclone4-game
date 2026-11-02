@@ -5,7 +5,7 @@ from pathlib import Path
 from nes_raw506 import sha, once
 
 
-def prepare(arm,out):
+def prepare(arm,out,cutoff=False):
     assert sha(arm/'obj-nes-100/firmware.stm')=='1eba4ecf90ab8834e937f6d4667d214ca5a065223fb6bf88ddb4d2c207db7af1'
     name='nes_plan_service200.c'
     source=(arm/name).read_text()
@@ -35,11 +35,21 @@ static bool drive554(struct nes_plan200 *p,bool allow_payload){
   if(p->count)return true;
  }''')
     out.mkdir(parents=True,exist_ok=False)
+    if cutoff:
+        # Start waiting before the first HDMA packet; once E9 is on the wire,
+        # HDMA has the same normal progress policy as the other ordinary data.
+        source=once(source,'drive554(p,mode!=NES_FINAL553)','drive554(p,mode!=NES_FINAL553 && mode!=NES_HDMA554)')
+        h='nes_plan_service200.h'
+        (out/h).write_text(once((arm/h).read_text(),'NES_MAP553};','NES_MAP553,NES_HDMA554};'),newline='\n')
+        sink='nes_native_sink165.c'
+        (out/sink).write_text(once((arm/sink).read_text(),'NES_MAP553:NES_ORDINARY553',
+                                   'NES_MAP553:section==5?NES_HDMA554:NES_ORDINARY553'),newline='\n')
     (out/name).write_text(source,newline='\n')
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for k in ('arm','out'):p.add_argument('--'+k,type=Path,required=True)
+    p.add_argument('--cutoff',action='store_true')
     a=p.parse_args()
-    prepare(a.arm,a.out)
+    prepare(a.arm,a.out,a.cutoff)

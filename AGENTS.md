@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR148 / 553. docs/nes-map553-results.ko.md FIRST. MMC551 실기 기준 13.68fps. 957 map 2/3 선행·두 위상 마지막 ACK 단축, 밀집 28/28VB 유지로 ZIP 보류. 다음은 954의 마지막 tile ACK 뒤 18패킷 준비·발행 및 SEAL 232행, 953 대조. STOP·독립 검사·최종 ACK 유지.
+- PR148 / 554. docs/nes-prelude554-results.ko.md FIRST. 954 전 18개 패킷 계측. HDMA 앞 END 우선은 SEAL 5→4VB 양쪽 성공, 표시 6/6·밀집 28/28로 동일. 최종 DMA 대기 1/1, 249h388 / 248h1076. 다음은 +1104/+1168B 이전 전송과 246행 여유, 953·957·최종 ACK 대조. MMC551 실기 유지.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 

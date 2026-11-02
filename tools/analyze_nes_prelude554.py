@@ -2,6 +2,7 @@
 """Reconcile the same 18 immutable outputs with both coupled timelines."""
 import argparse
 from bisect import bisect_right
+from collections import Counter
 import hashlib
 import json
 from pathlib import Path
@@ -13,7 +14,7 @@ from analyze_nes_supply549 import compare
 from analyze_nes_upload550 import last_frame
 
 
-def packet_schedule(folder):
+def packet_schedule(folder,cal):
     events=[r for r in read(folder/'events.json') if r['generation']==954]
     cpu=csv_groups(folder/'window.csv')
     prev=one([r for r in cpu[953] if r['op']==3],'reveal')
@@ -22,11 +23,19 @@ def packet_schedule(folder):
     assert all(frozen['matches_capture'].values()) and len(frozen['last_writes'])==6
     prepare=one(events,'prepare_enter')['clock']
     assert frozen['clock']==prepare and max(frozen['last_writes'].values())<=prepare
-    end=read(folder/'obj-phases.json')['954']['end_accepted']
+    phase=read(folder/'obj-phases.json')['954']
+    end=phase['end_accepted']
+    final_reads=[x for x in phase['rom_service'] if x[1]>=end]
+    assert len(final_reads)==18
+    grants=Counter(int(x[2]*8//cal.period-prev['clock']*8//cal.period) for x in final_reads)
     last=max(r['clock'] for r in cpu[954] if r['event']=='ack' and r['op']==7)
     head=one([r for r in cpu[954] if r['op']==3],'load')
     reveal=one([r for r in cpu[954] if r['op']==3],'reveal')
     waits=[r for r in cpu[954] if r['op']==3 and r['event']=='wait169']
+    final=one([r for r in cpu[954] if r['op']==3],'final212')['clock']
+    commands=[r['value'] for r in cpu[954] if r['op']==3 and r['event']=='ppu_dma' and r['clock']<final]
+    beam=[dict(event=r['event'],line=r['line'],h=r['h'],credit=r['bytes'] if r['event']=='final_credit' else None)
+          for r in csv_groups(folder/'seal528.csv')[954] if r['event'] in ('final_credit','latch') and r['clock']>=final]
     ready=[r for r in events if r['event']=='ready554']
     wire=[r for r in events if r['event']=='wire554']
     spi=[r for r in events if r.get('opcode')=='0xe1']
@@ -66,6 +75,9 @@ def packet_schedule(folder):
         end_accept_ms=rel(end),last_tile_ACK_ms=rel(last),SEAL_load_ms=rel(head['clock']),SEAL_line=head['line'],
         first_wait_line=waits[0]['line'] if waits else None,display_ms=rel(reveal['clock']),display_line=reveal['line'],
         before_head=head['frame']-prev['frame'],display_VB=reveal['frame']-prev['frame'],
+        DMA_before_final_B=commands,frame_PPU_DMA_B=sum(r['value'] for r in cpu[954] if r['event']=='ppu_dma'),
+        final_gate=beam,
+        final_ROM_windows=grants,last_ROM_response_ms=rel(final_reads[-1][3]),
         early_counts={k:sum(r[k] for r in rows) for k in ('before_END','before_last_tile_ack')})
 
 
@@ -79,30 +91,41 @@ def analyze(a):
         base=a.traces/f'nes-prelude554-base{i}'
         assert all(sha(base/n)==old['pins'][n] for n in ('window.csv','packets.jsonl','seal528.csv'))
         both={}
-        for mode,arm in [('base',a.base),('early',a.arm)]:
+        for mode,arm in [('base',a.base),('early',a.arm),('cut',a.cut)]:
             f=a.traces/f'nes-prelude554-{mode}{i}'
             m=inspect_run(f,a.plans,cal,base,sha(arm/'obj-nes-100/firmware.stm'),client,first_bg_limit=3)
             audit=read(a.traces/f'nes-prelude554-{mode}-audit{i}'/'audit.json')
             assert audit['frames']==53 and audit['trace']==m['pins']['window.csv']
-            both[mode]=dict(cost=m,schedule=packet_schedule(f),maps957=map_times(f),
+            both[mode]=dict(cost=m,schedule=packet_schedule(f,cal),maps957=map_times(f),
                             beam957=last_frame(f)['beam'],replay=audit)
-        ref=both['base'];new=both['early']
+        ref=both['base']
         assert not ref['schedule']['early_counts']['before_last_tile_ack']
-        d=compare(new['cost'],ref['cost'])
-        diffs={k:new['cost']['dense_frames'][k]['display_ms']-ref['cost']['dense_frames'][k]['display_ms'] for k in (953,954)}
-        later=[g for g,b in new['cost']['BG'].items() if b['relative_window']>ref['cost']['BG'][g]['relative_window']]
-        safe=(new['cost']['dense_frames'][952]['before_head']<=5 and not any(new['cost']['waits'].values()) and
-              not new['beam957']['waits'] and sum(r['push_minus_last_tile_ACK_ms']<0 for r in new['maps957']['maps'])>=2)
-        gate=(safe and not later and all(v<0 for v in d.values()) and new['schedule']['before_head']<ref['schedule']['before_head']
-              and new['schedule']['display_VB']<ref['schedule']['display_VB']
-              and sum(new['cost']['dense_frames'][953][k] for k in ('before_head','after_head'))<=sum(ref['cost']['dense_frames'][953][k] for k in ('before_head','after_head')))
-        rows.append(dict(phase=i,variants=both,delta=d,display_gap_delta_ms=diffs,later_first_BG=later,gate=gate))
-    return dict(phases=rows,gate=all(p['gate'] for p in rows),guards=read(a.checks/'guards.json'),
-                flash_B=(a.arm/'obj-nes-100/firmware.stm').stat().st_size,scope='Two matched 53-capture simulations, fixed CPI/ROM grant calendar. Physical FPS unmeasured.')
+        for mode in ('early','cut'):
+            new=both[mode]
+            d=compare(new['cost'],ref['cost'])
+            later=[g for g,b in new['cost']['BG'].items() if b['relative_window']>ref['cost']['BG'][g]['relative_window']]
+            safe=(new['cost']['dense_frames'][952]['before_head']<=5 and not any(new['cost']['waits'].values()) and
+                  not new['beam957']['waits'] and sum(r['push_minus_last_tile_ACK_ms']<0 for r in new['maps957']['maps'])>=2)
+            intervals=lambda r:sum(r['cost']['dense_frames'][953][k] for k in ('before_head','after_head'))
+            new.update(delta=d,later_first_BG=later,gate=safe and not later and all(v<0 for v in d.values())
+                       and new['schedule']['before_head']<ref['schedule']['before_head']
+                       and new['schedule']['display_VB']<ref['schedule']['display_VB'] and intervals(new)<=intervals(ref))
+        rows.append(dict(phase=i,variants=both))
+    guards={}
+    for name,arm,prefix in [('early',a.arm,''),('cut',a.cut,'cut-')]:
+        image=arm/'obj-nes-100/firmware.stm'
+        bundle={k:read(a.checks/(prefix+k+'.json')) for k in ('guards','map','credit','menu','window','reports')}
+        assert sha(image)==bundle['guards']['sha']==bundle['map']['sha']==bundle['credit']['sha']==bundle['menu']['firmware']==bundle['window']['firmware_SHA256']==bundle['reports']['after']['firmware']
+        guards[name]=bundle
+    stopped=read(a.traces/'nes-prelude554-stop02'/'result.json')
+    assert len(stopped)==3 and all(r['commits']==49 and r['status']==228 for r in stopped)
+    return dict(phases=rows,gate={m:all(p['variants'][m]['gate'] for p in rows) for m in ('early','cut')},
+                guards=guards,staged_STOP=stopped,
+                scope='Two matched 53-capture simulations, fixed CPI/ROM grant calendar. Physical FPS unmeasured.')
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
-    for k in ('base','arm','traces','plans','checks','out'):p.add_argument('--'+k,type=Path,required=True)
+    for k in ('base','arm','cut','traces','plans','checks','out'):p.add_argument('--'+k,type=Path,required=True)
     a=p.parse_args()
     a.out.write_text(json.dumps(analyze(a),indent=2)+'\n',newline='\n')

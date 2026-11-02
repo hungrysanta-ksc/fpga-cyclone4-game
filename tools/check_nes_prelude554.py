@@ -26,7 +26,7 @@ class Pending(Mixed):
         return bytes(result)
 
 
-def case(src,mode):
+def case(src,mode,cutoff):
     m=ARM(src,'normal');e=m.endpoint=Pending();m.setup()
     # Model only the empty final map iterator. Real ready/credit/guard,
     # END framing, ordinary packet building and queue checks execute on ARM.
@@ -57,8 +57,9 @@ def case(src,mode):
         if mode=='tile':
             assert [bytes.fromhex(t)[1] for t in e.calls if t.startswith('e1')]==[2,7,2]
         if mode=='END_first':e.held=False
+        elif cutoff:e.countdown=3
         assert send(5)
-        if mode=='END_first':
+        if mode=='END_first' or cutoff:
             sent=[bytes.fromhex(t)[0] for t in e.calls if t[:2] in ('e1','e9')]
             assert sent[-2:]==[0xe9,0xe1]
         else:
@@ -75,6 +76,7 @@ def case(src,mode):
 if __name__=='__main__':
     p=argparse.ArgumentParser()
     for k in ('arm','out'):p.add_argument('--'+k,type=Path,required=True)
+    p.add_argument('--cutoff',action='store_true')
     a=p.parse_args()
-    rows=[case(a.arm,mode) for mode in ('quiet','END_first','tile','STOP','bad_E8_CRC','ambiguous_E1')]
+    rows=[case(a.arm,mode,a.cutoff) for mode in ('quiet','END_first','tile','STOP','bad_E8_CRC','ambiguous_E1')]
     a.out.write_text(json.dumps(dict(sha=sha(a.arm/'obj-nes-100/firmware.stm'),rows=rows),indent=2)+'\n')
