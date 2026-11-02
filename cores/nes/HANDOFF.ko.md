@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [RUN 소유권과 보드 STA](../../docs/nes-owner562-results.ko.md)를 먼저 읽는다. 562가 561의 952 표시 5 VBlank를 유지했다. 다음 회로 경계는 메모리 클록 감시기와 reader 주소 전달이다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
+[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [클록 정지 시험과 주소 캡처 예산](../../docs/nes-guard563-results.ko.md)을 먼저 읽는다. 563의 다음 병목은 SPI 명령 인자 수신의 setup이다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
 
 ## 최신 실기와 비교 기준
 
