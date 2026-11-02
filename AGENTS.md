@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR148 / 555. docs/nes-grant555-results.ko.md FIRST. 512B map은 954 표시 5/6VB·밀집 27/28VB, 마지막 ACK −83.525/−33.825ms. 2,432번 map의 ACK 252/256행. 다음은 192B 발행과 실제 수락을 분리해 2위상 254행 허용선 전에 완료. OAM 전면 보류는 OBJ ROM 지연. MMC551 실기 유지.
+- PR148 / 556. docs/nes-admit556-results.ko.md FIRST. 954 map2432 ACK 229/225행, E1 준비 6783→906clk. 최종 OBJ ROM 18/8회 유출, 결합 표시 6/6VB, 마지막 ACK −216.452/−216.297ms vs555. 다음은 최종 E8 credit·E9 발행과 1652/511clk 예산. MMC551 실기 유지.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 

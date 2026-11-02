@@ -9,8 +9,9 @@ from package_nes_window516 import ROOT,read,sha
 if __name__=='__main__':
     p=argparse.ArgumentParser()
     for n in ('reference','client','out'):p.add_argument('--'+n,type=Path,required=True)
+    p.add_argument('--reference-trial',type=int,choices=(533,551),default=533)
     a=p.parse_args()
-    ref=read(ROOT/'analysis/trial533-verification.json')
+    ref=read(ROOT/f'analysis/trial{a.reference_trial}-verification.json')
     assert sha(a.reference/'output_files/board.sof')==ref['SOF_SHA256']
     rom=(a.client/'sink165.sfc').read_bytes()
     assert len(rom)==32768 and bytes.fromhex((a.client/'sink-program.hex').read_text())==rom[:5056]+rom[-64:]
