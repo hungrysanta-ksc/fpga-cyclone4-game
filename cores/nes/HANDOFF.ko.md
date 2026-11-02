@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-[PR147](../../docs/progress/pr-147.md)의 [549 공급 일정과 957 마감](../../docs/nes-supply549-results.ko.md)을 먼저 읽는다. 비교 기준은 세 행 ARM과 548 수신 증명이다. 연속 OBJ 후보는 952의 목표를 달성했지만 두 번째 위상의 957에서 한 번 기다린다. 실기 기준은 [MMC540](../../docs/nes-hardware541-results.ko.md)이다.
+[PR147](../../docs/progress/pr-147.md)의 [550 측정·MMC551 보드 검증](../../docs/nes-upload550-results.ko.md)을 먼저 읽는다. 실기 기준은 [MMC540](../../docs/nes-hardware541-results.ko.md) 13.37fps다. 다음은 [MMC551](../../docs/nes-mmc551-trial.ko.md)의 첫 레벨 5–40초·40–55초 완료 수와 메뉴 복귀 확인이다.
 
 ## 최신 실기와 비교 기준
 

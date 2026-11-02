@@ -41,7 +41,7 @@ git log -5 --oneline
 
 1. [541 실기 분석](../nes-hardware541-results.ko.md)의 장면 차이와 원본 로그 해시를 보존한다.
 2. 다음 전달본에 `prepare_nes_windows541.py`의 표시 완료 [5,40)/[40,55) 집계를 포함하고 linked ARM 경계 검사를 통과시킨다.
-3. [549의 952 공급과 957 마감](../nes-supply549-results.ko.md)을 따른다. 세 행 후보를 대조군으로 고정하고 연속 OBJ 후보의 957 최종 검사에서 남은 281클록을 확인한다.
+3. [550·551 검증과 재현 경로](../nes-upload550-results.ko.md), [새 실기 시험 방법](../nes-mmc551-trial.ko.md)을 따른다. MMC551의 5–40초·40–55초 로그를 받으면 기존 실기 기준 MMC540과 대조한다.
 
 ## 5. 기록을 남긴다
 
