@@ -33,7 +33,7 @@ def contents(folder):
     return ordinary,image
 
 
-def ledger(folder,audit):
+def ledger(folder,audit,targets=((910,1216),(951,2560))):
     cpu=csv_groups(folder/'window.csv');beam=csv_groups(folder/'seal528.csv')
     probes=csv_groups(audit/'selector536.csv')
     records=[json.loads(l) for l in (folder/'packets.jsonl').read_text().splitlines()]
@@ -53,7 +53,7 @@ def ledger(folder,audit):
         assert sent==bisect_right(pushes,r['start']) and done==bisect_right(retired,r['start'])
         status.append((r['start'],r['clock'],sent,done))
     result={}
-    for g,offset in ((910,1216),(951,2560)):
+    for g,offset in targets:
         group=[r for r in events if r['generation']==g];start=one(group,'source_begin')['clock']
         def rel(t):return ms(t-start)
         c=cpu[g];seal=one([r for r in c if r['op']==3],'load')

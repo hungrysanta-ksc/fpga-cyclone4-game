@@ -10,10 +10,23 @@ import zlib
 from verify_nes_trial533 import ROOT, read, sha, timing, fpga, funcs
 
 
-def verify(a):
-    measured=read(ROOT/'analysis/first539-verification.json')
-    assert measured['gate']['row']
-    prior=read(ROOT/'analysis/trial533-verification.json')
+def verify(a, trial=540):
+    if trial==551:
+        schedule='upload550'
+        measured=read(ROOT/'analysis/upload550-verification.json')
+        assert measured['gate']
+        selected_firmware=measured['ARM_SHA256']
+        choice='upload550'
+        previous=540
+    else:
+        assert trial==540
+        schedule='first539'
+        measured=read(ROOT/'analysis/first539-verification.json')
+        assert measured['gate']['row']
+        selected_firmware=measured['phases'][0]['row']['ARM_SHA256']
+        choice='row'
+        previous=533
+    prior=read(ROOT/f'analysis/trial{previous}-verification.json')
     assert sha(a.reference/'output_files/board.sof')==prior['SOF_SHA256']
     pins=read(a.board/'inputs535.json')
     assert len(pins)==73 and all(sha(a.board/n)==h for n,h in pins.items())
@@ -36,17 +49,22 @@ def verify(a):
     original=a.selected/'obj-nes-100'
     obj=a.arm/'obj-nes-100'
     digest=sha(obj/'firmware.stm')
-    assert sha(original/'firmware.stm')==measured['phases'][0]['row']['ARM_SHA256']
+    assert sha(original/'firmware.stm')==selected_firmware
     functions=funcs(obj/'sd2snes.elf')
     assert functions==funcs(original/'sd2snes.elf')
     image=(obj/'firmware.stm').read_bytes()
     source=(original/'firmware.stm').read_bytes()
-    assert image[32:]==source[32:].replace(b'533',b'540')
+    assert image[32:]==source[32:].replace(str(previous).encode(),str(trial).encode())
     size,crc,inverse=struct.unpack_from('<III',image,8)
     assert image[:4]==b'STM3' and len(image)==size+512<=0x34000 and crc==zlib.crc32(image[512:]) and crc^inverse==0xffffffff
     window=read(a.checks/'windows.json')
     assert window['firmware_SHA256']==digest and [x['displays'] for x in window['accepted']]==[2,2]
     assert window['reset'] and window['unfinished_excluded']
+    if trial==551:
+        assert [(r['start_s'],r['end_s']) for r in window['accepted']]==[(5,40),(40,55)]
+        transport=read(a.checks/'transport.json')
+        assert transport['firmware']==digest
+        assert transport['rows']==read(ROOT/'analysis/supply549-verification.json')['builds']['suffix']['first_batch_guards']
     credit=read(a.checks/'credit.json')
     assert credit['sha']==digest and credit['rows']==read(ROOT/'analysis/tile532-verification.json')['credit']['rows']
     menu=read(a.checks/'menu.json')
@@ -55,19 +73,20 @@ def verify(a):
     for name in ('none','program','done','busy','token'):
         r=read(a.checks/f'base-{name}/result.json')
         assert r['passed'] and r['firmware_sha256']==digest and r['safe_return']==r['base_restored']==int(name=='none')
-        assert r['config_paths']==['/sd2snes/fpga_mmc540.bi3','/sd2snes/fpga_base.bi3']
+        assert r['config_paths']==[f'/sd2snes/fpga_mmc{trial}.bi3','/sd2snes/fpga_base.bi3']
         recover[name]=r['safe_return']
-    return dict(candidate='MMC540',physical_verified=False,timing_criterion='matched-mmc529',selected='row',
+    return dict(candidate=f'MMC{trial}',physical_verified=False,timing_criterion='matched-mmc529',selected=choice,
                 firmware_SHA256=digest,identical_functions=len(functions),Flash_B=len(image),free_Flash_B=0x34000-len(image),
                 BSS_B=window['BSS_B'],SOF_SHA256=sha(a.board/'output_files/board.sof'),board=cost,
                 inputs=pins,raw_worst_ns=worst,unconstrained=unconstrained,raw_summary_rows=len(summary),
                 reports=fitted['report_SHA256'],base_return=recover,menu=menu,windows=window,credit=credit,
-                timing_evidence_SHA256=sha(ROOT/'analysis/first539-verification.json'))
+                timing_evidence_SHA256=sha(ROOT/f'analysis/{schedule}-verification.json'))
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for n in ('board','reference','client','arm','selected','checks','out'):
         p.add_argument('--'+n,type=Path,required=True)
+    p.add_argument('--trial',type=int,choices=(540,551),default=540)
     a=p.parse_args()
-    a.out.write_text(json.dumps(verify(a),indent=2)+'\n',newline='\n')
+    a.out.write_text(json.dumps(verify(a,a.trial),indent=2)+'\n',newline='\n')

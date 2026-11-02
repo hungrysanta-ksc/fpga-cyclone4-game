@@ -5,7 +5,7 @@
 ## 1. 상태를 읽는다
 
 1. [루트 README](../../README.md) → [프로젝트 현황](../PROJECT-STATUS.ko.md).
-2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR146](../progress/pr-146.md).
+2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR147](../progress/pr-147.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
 GB/GBC는 추가·공개 완료다. MMC540은 60.08초에 803회 표시(13.37fps), 실행·메뉴 복귀 정상이다. MMC533 대비 1–40초는 11.97→12.85fps, 40–60초는 12.65→14.35fps였다. 마지막 5초는 정적인 레벨 클리어 장면이므로 후반 증가율을 전투 성능 개선율로 해석하지 않는다. [실기 기록](../nes-hardware541-results.ko.md)
@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-현재 브랜치는 `codex/nes-mmc533-output-535`이며 PR145 병합에서 분기했다. 최신 실기 기준은 MMC540이다. [현재 PR](../progress/pr-146.md)
+현재 브랜치는 `codex/nes-mmc540-dma-542`이며 PR146 병합 `526e2d7c689c6e429144f9dbb91e0b8deff75c62`를 확인하고 분기했다. 최신 실기 기준은 MMC540이다. [현재 PR](../progress/pr-147.md)
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -41,7 +41,7 @@ git log -5 --oneline
 
 1. [541 실기 분석](../nes-hardware541-results.ko.md)의 장면 차이와 원본 로그 해시를 보존한다.
 2. 다음 전달본에 `prepare_nes_windows541.py`의 표시 완료 [5,40)/[40,55) 집계를 포함하고 linked ARM 경계 검사를 통과시킨다.
-3. MMC540의 출력·최종 ACK 병목을 같은 입력·두 시작 위상에서 분리한다. 실기는 동일 동선의 5–55초를 비교한다.
+3. [552 실기 성공·실패 분리와 출력 비교](../nes-hardware552-results.ko.md)를 따른다. MMC551의 두 구간 완료 수를 이후 기준으로 유지하고 부팅 실패는 별도 집계한다.
 
 ## 5. 기록을 남긴다
 

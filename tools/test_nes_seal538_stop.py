@@ -13,7 +13,7 @@ from test_nes_output489_snes import LUA
 from test_nes_trim514_schedule import MAP_ORACLE
 
 
-def exercise(args, gen, label):
+def exercise(args, gen, label, *, edit_packet_case=None):
     out = args.out/f'{gen}-{label}'
     out.mkdir()
     frames = gen-904
@@ -31,19 +31,22 @@ def exercise(args, gen, label):
         for stem in ('expected','map'):
             shutil.copyfile(args.trace/f'{stem}-{g}.bin',out/f'{stem}-{g}.bin')
     shutil.copyfile(args.client/'sink165.sfc',out/'client.sfc')
-    address = json.loads((args.client/'labels.json').read_text())[label]
-    script = once(LUA,'local function loaded()',f"""local armed538,stopped538=false,false
-emu.addMemoryCallback(function()
- if packet and pb(0)==3 and pw(8)==FAULT then armed538=true end
-end,emu.callbackType.exec,{address})
-emu.addMemoryCallback(function()
- if packet and pb(0)==3 and pw(8)==FAULT then assert(not stopped538,'DMA after STOP') end
-end,emu.callbackType.write,0x420b)
-local function loaded()""")
-    script = once(script,"if MODE=='stop_final'and rd(0x1025)==2 then return 128 end",
-                  "if armed538 then stopped538=true;return 128 end")
+    if edit_packet_case is not None:
+        script = edit_packet_case(LUA)
+    else:
+        address = json.loads((args.client/'labels.json').read_text())[label]
+        script = once(LUA,'local function loaded()',f"""local armed538,stopped538=false,false
+    emu.addMemoryCallback(function()
+     if packet and pb(0)==3 and pw(8)==FAULT then armed538=true end
+    end,emu.callbackType.exec,{address})
+    emu.addMemoryCallback(function()
+     if packet and pb(0)==3 and pw(8)==FAULT then assert(not stopped538,'DMA after STOP') end
+    end,emu.callbackType.write,0x420b)
+    local function loaded()""")
+        script = once(script,"if MODE=='stop_final'and rd(0x1025)==2 then return 128 end",
+                      "if armed538 then stopped538=true;return 128 end")
+        script = once(script,"assert(lastStatus==0xe4,'STOP status')","assert(armed538 and stopped538 and lastStatus==0xe4,'STOP status')")
     script = once(script,"   local hdma=file(",MAP_ORACLE+"   local hdma=file(")
-    script = once(script,"assert(lastStatus==0xe4,'STOP status')","assert(armed538 and stopped538 and lastStatus==0xe4,'STOP status')")
     for key,value in dict(ROOT=json.dumps(out.as_posix()),MODE='"stop_final"',SCHEDULE='"continuous"',
                           START=3000000,FAULT=gen,COMPACT='true',POISON='false',TOTAL=len(packets),FRAMES=frames).items():
         script=script.replace('@'+key+'@',str(value))
