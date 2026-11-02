@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR147 / MMC551 제한 실기 전달. docs/nes-upload550-results.ko.md FIRST. MMC540 실기 13.37fps. 550 두 위상 952 SEAL 5/5VB, 957 최종 대기 0/0, CMP 245/246, 밀집 28/28. releases/MMC551-TRIAL.zip 및 docs/nes-mmc551-trial.ko.md. 다음은 첫 레벨 5–40초·40–55초와 메뉴 복귀 로그 대조.
+- PR147 / 552. docs/nes-hardware552-results.ko.md FIRST. MMC551 실기 822/60.08s, 13.68fps. 5–40초 458·40–55초 214. 별도 시작 TIMEOUT(stage0, 44,425 polls), 원인 미확정·메뉴 복귀 정상. 다음 빌드의 미측정 통계 제외 수정은 성능 후보와 분리. 두 mode 표 병합은 밀집 28/28VB·위상2 마지막 ACK 회귀로 제외. 다음은 957 후반 map 3개 발행 순서, 953 대조.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 

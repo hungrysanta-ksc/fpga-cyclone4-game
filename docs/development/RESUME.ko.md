@@ -41,7 +41,7 @@ git log -5 --oneline
 
 1. [541 실기 분석](../nes-hardware541-results.ko.md)의 장면 차이와 원본 로그 해시를 보존한다.
 2. 다음 전달본에 `prepare_nes_windows541.py`의 표시 완료 [5,40)/[40,55) 집계를 포함하고 linked ARM 경계 검사를 통과시킨다.
-3. [550·551 검증과 재현 경로](../nes-upload550-results.ko.md), [새 실기 시험 방법](../nes-mmc551-trial.ko.md)을 따른다. MMC551의 5–40초·40–55초 로그를 받으면 기존 실기 기준 MMC540과 대조한다.
+3. [552 실기 성공·실패 분리와 출력 비교](../nes-hardware552-results.ko.md)를 따른다. MMC551의 두 구간 완료 수를 이후 기준으로 유지하고 부팅 실패는 별도 집계한다.
 
 ## 5. 기록을 남긴다
 
