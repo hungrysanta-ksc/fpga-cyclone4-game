@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [952의 OBJ별 ROM 허가와 표시 시간](../../docs/nes-supply560-results.ko.md)을 먼저 읽는다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
+[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [조기 공개와 보드 STA](../../docs/nes-close561-results.ko.md)를 먼저 읽는다. 두 위상 모두 952가 5 VBlank로 줄었고 실기 전달 전 기존 음수 setup·recovery의 회귀를 해소해야 한다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
 
 ## 최신 실기와 비교 기준
 

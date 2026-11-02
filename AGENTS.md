@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR149 / 560. docs/nes-supply560-results.ko.md와 docs/progress/pr-149.md를 먼저 읽는다. MMC558 실기 기준은 5–55초 13.72fps다. 952의 슬롯별 ROM 공급, 48B BG 소비와 표시 일정을 두 시작 위상에서 구분한다.
+- PR149 / 561. docs/nes-close561-results.ko.md와 docs/progress/pr-149.md를 먼저 읽는다. 실기는 MMC558 5–55초 13.72fps다. 조기 공개 모델에서 952 6→5 VBlank, 다음은 전체 STA의 음수 6항목 회귀 해소다.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 

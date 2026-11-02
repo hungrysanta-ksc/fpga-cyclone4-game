@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-PR149는 PR148 병합 커밋 `c12cd861d926524e74c121b0fe03c3e5e5a5a527`에서 분기했다. 최신 실기는 MMC558이다. [952 ROM 공급 비교](../nes-supply560-results.ko.md)
+PR149는 PR148 병합 커밋 `c12cd861d926524e74c121b0fe03c3e5e5a5a527`에서 분기했다. 최신 실기는 MMC558이다. [561 타일 조기 공개와 STA](../nes-close561-results.ko.md)에서 검증 결과와 남은 경로를 확인한다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
