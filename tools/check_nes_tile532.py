@@ -23,6 +23,7 @@ class Window(Endpoint):
         if tx[0]==0xe8:
             self.polls+=1
             r=bytearray(20);r[1:4]=bytes([0xd7,4,int(self.polls>10)])
+            if self.end:r[3:6]=b'\x02\x00\x01'
         elif tx[0]==0xe0:
             if self.mode!='busy':self.retired=self.sent
             used=(self.sent-self.retired)&65535
@@ -51,7 +52,7 @@ class Window(Endpoint):
         return bytes(r)
 
 
-def check(src,mode):
+def check(src,mode,deferred=False):
     m=ARM(src,mode);ep=Window(mode);m.endpoint=ep
     with (src/'obj-nes-100/sd2snes.elf').open('rb') as f:
         d=next(d for cu in ELFFile(f).get_dwarf_info().iter_CUs() for d in cu.iter_DIEs()
@@ -73,6 +74,9 @@ def check(src,mode):
     m.put(m.s,'nes_native_sink165','plan',m.p,4)
     m.put(m.resident,'nes_resident211','map_upload',0x5555,8)
     ok=m.call('nes_plan200_end',[m.p])
+    if ok and deferred and not ep.end:
+        assert m.get(m.p,'nes_plan200','count') and not m.get(m.p,'nes_plan200','finished')
+        ok=m.call('nes_plan200_progress',[m.p,1])
     assert bool(ok)==ep.end==(mode in ('normal','busy'))
     assert ep.writes==(list(range(0,1024,128)) if mode=='normal' else [0] if mode=='ambiguous_E1' else [])
     if mode=='normal':assert ep.sent==4 and not m.get(m.p,'nes_plan200','bulk_pending')
@@ -83,5 +87,6 @@ def check(src,mode):
 if __name__=='__main__':
     p=argparse.ArgumentParser()
     for n in ('arm','out'):p.add_argument('--'+n,type=Path,required=True)
-    a=p.parse_args();rows=[check(a.arm,k) for k in ('normal','busy','bad_crc','bad_identity','STOP_after_refresh','ambiguous_E1')]
+    p.add_argument('--deferred-end',action='store_true')
+    a=p.parse_args();rows=[check(a.arm,k,a.deferred_end) for k in ('normal','busy','bad_crc','bad_identity','STOP_after_refresh','ambiguous_E1')]
     a.out.write_text(json.dumps(dict(sha=sha(a.arm/'obj-nes-100/firmware.stm'),rows=rows),indent=2)+'\n')
