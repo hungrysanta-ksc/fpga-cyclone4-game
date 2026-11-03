@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [566 STOP·재시작과 소비 ACK](../../docs/nes-drain566-results.ko.md)를 먼저 읽는다. 다음은 core reset 해제와 84MHz native records valid 사이의 STA 회귀를 확인하는 것이다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
+[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [567 mailbox reset과 전체 보드 결과](../../docs/nes-mailbox567-results.ko.md)를 먼저 읽는다. 다음은 양방향 후보의 loader 대상 setup −0.024ns와 0°C epoch 캡처 회귀 0.034ns다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
 
 ## 최신 실기와 비교 기준
 
