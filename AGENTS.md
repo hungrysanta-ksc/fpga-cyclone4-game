@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR149 / 570. docs/nes-gate570-results.ko.md와 docs/progress/pr-149.md를 먼저 읽는다. board05는 마지막 E9 고장 수락 차단·WNS 회귀 0개. recovery TNS 6개 악화, 미제약 출력 setup/hold 각각 MMC558+3. 다음은 SNES 10핀과 버스 해제. 실기 기준 MMC558 5–55초 13.72fps.
+- PR149 / 571. docs/nes-bus571-results.ko.md와 docs/progress/pr-149.md를 먼저 읽는다. 570 board05는 전체 WNS 대조군, 571 A는 SNES 핀 대조군이다. 다음은 loader pending→start 및 168MHz recovery. 실기 기준 MMC558 5–55초 13.72fps.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 

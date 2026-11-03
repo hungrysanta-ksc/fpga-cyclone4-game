@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [570 메모리 허가·고장 차단](../../docs/nes-gate570-results.ko.md)을 먼저 읽는다. board05의 추가 미제약 SNES 출력·버스 해제와 recovery TNS가 다음 작업이다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
+실기 기준은 MMC558이다. 570의 추가 SNES 출력 경로를 확인했고 571 A에서 없앴다. 다음은 loader START와 메모리 recovery다. [PR149](../../docs/progress/pr-149.md) · [571 전체 비교](../../docs/nes-bus571-results.ko.md) · [MMC558 실측](../../docs/nes-hardware559-results.ko.md)
 
 ## 최신 실기와 비교 기준
 
