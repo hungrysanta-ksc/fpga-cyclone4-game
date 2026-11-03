@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [569 plan 소유권·전체 타이밍](../../docs/nes-plan569-results.ko.md)을 먼저 읽는다. 다음은 569 board01의 168MHz 시작 허가 setup과 host fault recovery다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
+[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [570 메모리 허가·고장 차단](../../docs/nes-gate570-results.ko.md)을 먼저 읽는다. board05의 추가 미제약 SNES 출력·버스 해제와 recovery TNS가 다음 작업이다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
 
 ## 최신 실기와 비교 기준
 
