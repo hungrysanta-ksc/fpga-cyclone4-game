@@ -1,0 +1,3929 @@
+{
+  "boards": {
+    "MMC558": {
+      "counts": {
+        "legacy_raw_control": 447,
+        "raw_diagnostic_pin": 3,
+        "single_bit_first": 42,
+        "held_mailbox": 165,
+        "held_rom_address": 63,
+        "gray_first": 96,
+        "reset_release_chain": 152,
+        "raw_reset_input_sampler": 18,
+        "raw_reset_guarded_state": 3
+      },
+      "negative_rows": 989,
+      "groups": [
+        {
+          "check": "recovery",
+          "kind": "raw_reset_guarded_state",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_sink_bridge165:sink|host_ready",
+          "rows": 3,
+          "worst_ns": -7.11,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "host_ready"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "raw_reset_input_sampler",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_sink_bridge165:sink|idle_ss[*]",
+          "rows": 6,
+          "worst_ns": -6.695,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "idle_ss[0]"
+            ],
+            [
+              "release_reset[1]",
+              "idle_ss[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "raw_reset_input_sampler",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_sink_bridge165:sink|idle_write[*]",
+          "rows": 6,
+          "worst_ns": -6.695,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "idle_write[0]"
+            ],
+            [
+              "release_reset[1]",
+              "idle_write[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "raw_reset_input_sampler",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "sink_rom_fault[*]",
+          "rows": 6,
+          "worst_ns": -7.167,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "sink_rom_fault[0]"
+            ],
+            [
+              "release_reset[1]",
+              "sink_rom_fault[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_diag_clock_guard127:clock_guard|ref_qualified",
+          "target_family": "nes_live_joint:core|nes_domain_reset124:memory_release|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -5.66,
+          "pairs": [
+            [
+              "ref_qualified",
+              "release_reset[0]"
+            ],
+            [
+              "ref_qualified",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_diag_startup_guard:startup|done",
+          "target_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "rows": 2,
+          "worst_ns": -5.038,
+          "pairs": [
+            [
+              "done",
+              "release_reset[0]"
+            ],
+            [
+              "done",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_diag_startup_guard:startup|done",
+          "target_family": "nes_live_joint:core|nes_domain_reset124:init_release|release_reset[*]",
+          "rows": 2,
+          "worst_ns": -4.615,
+          "pairs": [
+            [
+              "done",
+              "release_reset[0]"
+            ],
+            [
+              "done",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|hf",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_domain_reset124:ncancel|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -3.997,
+          "pairs": [
+            [
+              "hf",
+              "release_reset[0]"
+            ],
+            [
+              "hf",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|hf",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_domain_reset124:ncancel|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -4.354,
+          "pairs": [
+            [
+              "hf",
+              "release_reset[0]"
+            ],
+            [
+              "hf",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|host_failed",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_domain_reset124:scancel|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -4.066,
+          "pairs": [
+            [
+              "host_failed",
+              "release_reset[0]"
+            ],
+            [
+              "host_failed",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nf",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_domain_reset124:hcancel|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -6.962,
+          "pairs": [
+            [
+              "nf",
+              "release_reset[0]"
+            ],
+            [
+              "nf",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nf",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_domain_reset124:hcancel|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -8.48,
+          "pairs": [
+            [
+              "nf",
+              "release_reset[0]"
+            ],
+            [
+              "nf",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nf",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_domain_reset124:hcancel|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -8.178,
+          "pairs": [
+            [
+              "nf",
+              "release_reset[0]"
+            ],
+            [
+              "nf",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_dac162:audio|dac_release[*]",
+          "rows": 6,
+          "worst_ns": -7.207,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "dac_release[0]"
+            ],
+            [
+              "release_reset[1]",
+              "dac_release[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_domain_reset124:hrelease|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -7.167,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "release_reset[0]"
+            ],
+            [
+              "release_reset[1]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[*]",
+          "rows": 6,
+          "worst_ns": -7.167,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "sr[0]"
+            ],
+            [
+              "release_reset[1]",
+              "sr[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[*]",
+          "rows": 6,
+          "worst_ns": -7.167,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "dr[0]"
+            ],
+            [
+              "release_reset[1]",
+              "dr[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_sink_bridge165:sink|nes_domain_reset124:release_local|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -7.173,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "release_reset[0]"
+            ],
+            [
+              "release_reset[1]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:memory_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "rows": 2,
+          "worst_ns": -2.317,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "release_reset[0]"
+            ],
+            [
+              "release_reset[1]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:memory_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_domain_reset124:init_release|release_reset[*]",
+          "rows": 2,
+          "worst_ns": -2.063,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "release_reset[0]"
+            ],
+            [
+              "release_reset[1]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:memory_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|source_reset[*]",
+          "rows": 2,
+          "worst_ns": -2.046,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "source_reset[0]"
+            ],
+            [
+              "release_reset[1]",
+              "source_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_local_memory:local_memory|init_done",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|memory_reset[*]",
+          "rows": 6,
+          "worst_ns": -5.624,
+          "pairs": [
+            [
+              "init_done",
+              "memory_reset[0]"
+            ],
+            [
+              "init_done",
+              "memory_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|check_failed",
+          "target_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "rows": 2,
+          "worst_ns": -5.243,
+          "pairs": [
+            [
+              "check_failed",
+              "release_reset[0]"
+            ],
+            [
+              "check_failed",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|check_failed",
+          "target_family": "nes_live_joint:core|nes_domain_reset124:init_release|release_reset[*]",
+          "rows": 2,
+          "worst_ns": -4.694,
+          "pairs": [
+            [
+              "check_failed",
+              "release_reset[0]"
+            ],
+            [
+              "check_failed",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|check_failed",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|memory_reset[*]",
+          "rows": 2,
+          "worst_ns": -0.59,
+          "pairs": [
+            [
+              "check_failed",
+              "memory_reset[0]"
+            ],
+            [
+              "check_failed",
+              "memory_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|check_failed",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|source_reset[*]",
+          "rows": 2,
+          "worst_ns": -4.794,
+          "pairs": [
+            [
+              "check_failed",
+              "source_reset[0]"
+            ],
+            [
+              "check_failed",
+              "source_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|check_failed",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_source_epoch207:content_lifetime|nes_domain_reset124:release_ready|release_reset[*]",
+          "rows": 4,
+          "worst_ns": -6.852,
+          "pairs": [
+            [
+              "check_failed",
+              "release_reset[0]"
+            ],
+            [
+              "check_failed",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|phase[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_source_epoch207:content_lifetime|nes_domain_reset124:release_ready|release_reset[*]",
+          "rows": 2,
+          "worst_ns": -6.476,
+          "pairs": [
+            [
+              "phase[5]",
+              "release_reset[0]"
+            ],
+            [
+              "phase[5]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|check_enable",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|memory_reset[*]",
+          "rows": 2,
+          "worst_ns": -0.218,
+          "pairs": [
+            [
+              "check_enable",
+              "memory_reset[0]"
+            ],
+            [
+              "check_enable",
+              "memory_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|check_enable",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|source_reset[*]",
+          "rows": 2,
+          "worst_ns": -4.71,
+          "pairs": [
+            [
+              "check_enable",
+              "source_reset[0]"
+            ],
+            [
+              "check_enable",
+              "source_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_domain_reset124:observer_release|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -2.98,
+          "pairs": [
+            [
+              "power_release[3]",
+              "release_reset[0]"
+            ],
+            [
+              "power_release[3]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_domain_reset124:status_release|release_reset[*]",
+          "rows": 4,
+          "worst_ns": -0.886,
+          "pairs": [
+            [
+              "power_release[3]",
+              "release_reset[0]"
+            ],
+            [
+              "power_release[3]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_live_joint:core|nes_diag_clock_guard127:clock_guard|nes_domain_reset124:mem_release|release_reset[*]",
+          "rows": 4,
+          "worst_ns": -0.933,
+          "pairs": [
+            [
+              "power_release[3]",
+              "release_reset[0]"
+            ],
+            [
+              "power_release[3]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_live_joint:core|nes_diag_clock_guard127:clock_guard|nes_domain_reset124:ref_release|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -4.019,
+          "pairs": [
+            [
+              "power_release[3]",
+              "release_reset[0]"
+            ],
+            [
+              "power_release[3]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -5.841,
+          "pairs": [
+            [
+              "power_release[3]",
+              "release_reset[0]"
+            ],
+            [
+              "power_release[3]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_live_joint:core|nes_domain_reset124:init_release|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -5.398,
+          "pairs": [
+            [
+              "power_release[3]",
+              "release_reset[0]"
+            ],
+            [
+              "power_release[3]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_live_joint:core|nes_domain_reset124:memory_release|release_reset[*]",
+          "rows": 4,
+          "worst_ns": -1.878,
+          "pairs": [
+            [
+              "power_release[3]",
+              "release_reset[0]"
+            ],
+            [
+              "power_release[3]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|memory_reset[*]",
+          "rows": 4,
+          "worst_ns": -1.736,
+          "pairs": [
+            [
+              "power_release[3]",
+              "memory_reset[0]"
+            ],
+            [
+              "power_release[3]",
+              "memory_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|source_reset[*]",
+          "rows": 6,
+          "worst_ns": -5.405,
+          "pairs": [
+            [
+              "power_release[3]",
+              "source_reset[0]"
+            ],
+            [
+              "power_release[3]",
+              "source_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "gray_first",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_source_epoch207:content_lifetime|gray[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_source_epoch207:content_lifetime|epoch_meta[*]",
+          "rows": 96,
+          "worst_ns": -4.603,
+          "pairs": [
+            [
+              "gray[0]",
+              "epoch_meta[0]"
+            ],
+            [
+              "gray[10]",
+              "epoch_meta[10]"
+            ],
+            [
+              "gray[11]",
+              "epoch_meta[11]"
+            ],
+            [
+              "gray[12]",
+              "epoch_meta[12]"
+            ],
+            [
+              "gray[13]",
+              "epoch_meta[13]"
+            ],
+            [
+              "gray[14]",
+              "epoch_meta[14]"
+            ],
+            [
+              "gray[15]",
+              "epoch_meta[15]"
+            ],
+            [
+              "gray[16]",
+              "epoch_meta[16]"
+            ],
+            [
+              "gray[17]",
+              "epoch_meta[17]"
+            ],
+            [
+              "gray[18]",
+              "epoch_meta[18]"
+            ],
+            [
+              "gray[19]",
+              "epoch_meta[19]"
+            ],
+            [
+              "gray[1]",
+              "epoch_meta[1]"
+            ],
+            [
+              "gray[20]",
+              "epoch_meta[20]"
+            ],
+            [
+              "gray[21]",
+              "epoch_meta[21]"
+            ],
+            [
+              "gray[22]",
+              "epoch_meta[22]"
+            ],
+            [
+              "gray[23]",
+              "epoch_meta[23]"
+            ],
+            [
+              "gray[24]",
+              "epoch_meta[24]"
+            ],
+            [
+              "gray[25]",
+              "epoch_meta[25]"
+            ],
+            [
+              "gray[26]",
+              "epoch_meta[26]"
+            ],
+            [
+              "gray[27]",
+              "epoch_meta[27]"
+            ],
+            [
+              "gray[28]",
+              "epoch_meta[28]"
+            ],
+            [
+              "gray[29]",
+              "epoch_meta[29]"
+            ],
+            [
+              "gray[2]",
+              "epoch_meta[2]"
+            ],
+            [
+              "gray[30]",
+              "epoch_meta[30]"
+            ],
+            [
+              "gray[31]",
+              "epoch_meta[31]"
+            ],
+            [
+              "gray[3]",
+              "epoch_meta[3]"
+            ],
+            [
+              "gray[4]",
+              "epoch_meta[4]"
+            ],
+            [
+              "gray[5]",
+              "epoch_meta[5]"
+            ],
+            [
+              "gray[6]",
+              "epoch_meta[6]"
+            ],
+            [
+              "gray[7]",
+              "epoch_meta[7]"
+            ],
+            [
+              "gray[8]",
+              "epoch_meta[8]"
+            ],
+            [
+              "gray[9]",
+              "epoch_meta[9]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "held_mailbox",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:control|held[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:control|received[*]",
+          "rows": 48,
+          "worst_ns": -4.585,
+          "pairs": [
+            [
+              "held[0]",
+              "received[0]"
+            ],
+            [
+              "held[10]",
+              "received[10]"
+            ],
+            [
+              "held[11]",
+              "received[11]"
+            ],
+            [
+              "held[12]",
+              "received[12]"
+            ],
+            [
+              "held[13]",
+              "received[13]"
+            ],
+            [
+              "held[14]",
+              "received[14]"
+            ],
+            [
+              "held[15]",
+              "received[15]"
+            ],
+            [
+              "held[1]",
+              "received[1]"
+            ],
+            [
+              "held[2]",
+              "received[2]"
+            ],
+            [
+              "held[3]",
+              "received[3]"
+            ],
+            [
+              "held[4]",
+              "received[4]"
+            ],
+            [
+              "held[5]",
+              "received[5]"
+            ],
+            [
+              "held[6]",
+              "received[6]"
+            ],
+            [
+              "held[7]",
+              "received[7]"
+            ],
+            [
+              "held[8]",
+              "received[8]"
+            ],
+            [
+              "held[9]",
+              "received[9]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "held_mailbox",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:rearm|held[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:rearm|received[*]",
+          "rows": 3,
+          "worst_ns": -4.304,
+          "pairs": [
+            [
+              "held[0]",
+              "received[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "held_mailbox",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|held[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|received[*]",
+          "rows": 87,
+          "worst_ns": -4.465,
+          "pairs": [
+            [
+              "held[10]",
+              "received[10]"
+            ],
+            [
+              "held[11]",
+              "received[11]"
+            ],
+            [
+              "held[12]",
+              "received[12]"
+            ],
+            [
+              "held[13]",
+              "received[13]"
+            ],
+            [
+              "held[14]",
+              "received[14]"
+            ],
+            [
+              "held[15]",
+              "received[15]"
+            ],
+            [
+              "held[16]",
+              "received[16]"
+            ],
+            [
+              "held[17]",
+              "received[17]"
+            ],
+            [
+              "held[18]",
+              "received[18]"
+            ],
+            [
+              "held[19]",
+              "received[19]"
+            ],
+            [
+              "held[20]",
+              "received[20]"
+            ],
+            [
+              "held[21]",
+              "received[21]"
+            ],
+            [
+              "held[22]",
+              "received[22]"
+            ],
+            [
+              "held[23]",
+              "received[23]"
+            ],
+            [
+              "held[24]",
+              "received[24]"
+            ],
+            [
+              "held[25]",
+              "received[25]"
+            ],
+            [
+              "held[26]",
+              "received[26]"
+            ],
+            [
+              "held[27]",
+              "received[27]"
+            ],
+            [
+              "held[28]",
+              "received[28]"
+            ],
+            [
+              "held[29]",
+              "received[29]"
+            ],
+            [
+              "held[30]",
+              "received[30]"
+            ],
+            [
+              "held[31]",
+              "received[31]"
+            ],
+            [
+              "held[32]",
+              "received[32]"
+            ],
+            [
+              "held[33]",
+              "received[33]"
+            ],
+            [
+              "held[4]",
+              "received[4]"
+            ],
+            [
+              "held[6]",
+              "received[6]"
+            ],
+            [
+              "held[7]",
+              "received[7]"
+            ],
+            [
+              "held[8]",
+              "received[8]"
+            ],
+            [
+              "held[9]",
+              "received[9]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "held_mailbox",
+          "source_family": "nes_live_joint:core|nes_native_mailbox165:native_records|held[*]",
+          "target_family": "nes_live_joint:core|nes_native_mailbox165:native_records|received[*]",
+          "rows": 27,
+          "worst_ns": -3.967,
+          "pairs": [
+            [
+              "held[53]",
+              "received[53]"
+            ],
+            [
+              "held[54]",
+              "received[54]"
+            ],
+            [
+              "held[55]",
+              "received[55]"
+            ],
+            [
+              "held[56]",
+              "received[56]"
+            ],
+            [
+              "held[57]",
+              "received[57]"
+            ],
+            [
+              "held[58]",
+              "received[58]"
+            ],
+            [
+              "held[61]",
+              "received[61]"
+            ],
+            [
+              "held[62]",
+              "received[62]"
+            ],
+            [
+              "held[63]",
+              "received[63]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "held_rom_address",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|address_hold[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|check_response_address[*]",
+          "rows": 57,
+          "worst_ns": -4.669,
+          "pairs": [
+            [
+              "address_hold[10]",
+              "check_response_address[10]"
+            ],
+            [
+              "address_hold[11]",
+              "check_response_address[11]"
+            ],
+            [
+              "address_hold[12]",
+              "check_response_address[12]"
+            ],
+            [
+              "address_hold[13]",
+              "check_response_address[13]"
+            ],
+            [
+              "address_hold[14]",
+              "check_response_address[14]"
+            ],
+            [
+              "address_hold[15]",
+              "check_response_address[15]"
+            ],
+            [
+              "address_hold[16]",
+              "check_response_address[16]"
+            ],
+            [
+              "address_hold[17]",
+              "check_response_address[17]"
+            ],
+            [
+              "address_hold[18]",
+              "check_response_address[18]"
+            ],
+            [
+              "address_hold[19]",
+              "check_response_address[19]"
+            ],
+            [
+              "address_hold[21]",
+              "check_response_address[21]"
+            ],
+            [
+              "address_hold[2]",
+              "check_response_address[2]"
+            ],
+            [
+              "address_hold[3]",
+              "check_response_address[3]"
+            ],
+            [
+              "address_hold[4]",
+              "check_response_address[4]"
+            ],
+            [
+              "address_hold[5]",
+              "check_response_address[5]"
+            ],
+            [
+              "address_hold[6]",
+              "check_response_address[6]"
+            ],
+            [
+              "address_hold[7]",
+              "check_response_address[7]"
+            ],
+            [
+              "address_hold[8]",
+              "check_response_address[8]"
+            ],
+            [
+              "address_hold[9]",
+              "check_response_address[9]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "held_rom_address",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|address_hold[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|chip",
+          "rows": 3,
+          "worst_ns": -4.678,
+          "pairs": [
+            [
+              "address_hold[1]",
+              "chip"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "held_rom_address",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|address_hold[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|lane",
+          "rows": 3,
+          "worst_ns": -4.639,
+          "pairs": [
+            [
+              "address_hold[0]",
+              "lane"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "legacy_raw_control",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_native_mailbox165:native_prepared|held[*]",
+          "rows": 51,
+          "worst_ns": -6.774,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "held[0]"
+            ],
+            [
+              "release_reset[1]",
+              "held[10]"
+            ],
+            [
+              "release_reset[1]",
+              "held[11]"
+            ],
+            [
+              "release_reset[1]",
+              "held[12]"
+            ],
+            [
+              "release_reset[1]",
+              "held[13]"
+            ],
+            [
+              "release_reset[1]",
+              "held[14]"
+            ],
+            [
+              "release_reset[1]",
+              "held[15]"
+            ],
+            [
+              "release_reset[1]",
+              "held[16]"
+            ],
+            [
+              "release_reset[1]",
+              "held[1]"
+            ],
+            [
+              "release_reset[1]",
+              "held[2]"
+            ],
+            [
+              "release_reset[1]",
+              "held[3]"
+            ],
+            [
+              "release_reset[1]",
+              "held[4]"
+            ],
+            [
+              "release_reset[1]",
+              "held[5]"
+            ],
+            [
+              "release_reset[1]",
+              "held[6]"
+            ],
+            [
+              "release_reset[1]",
+              "held[7]"
+            ],
+            [
+              "release_reset[1]",
+              "held[8]"
+            ],
+            [
+              "release_reset[1]",
+              "held[9]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "legacy_raw_control",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_native_mailbox165:native_prepared|request",
+          "rows": 3,
+          "worst_ns": -5.189,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "request"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "legacy_raw_control",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_native_mailbox165:native_records|acknowledge",
+          "rows": 3,
+          "worst_ns": -5.595,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "acknowledge"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "legacy_raw_control",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_native_mailbox165:native_records|valid",
+          "rows": 3,
+          "worst_ns": -7.081,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "valid"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "legacy_raw_control",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_native_spi165:native_spi|ack_valid",
+          "rows": 3,
+          "worst_ns": -5.183,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "ack_valid"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "legacy_raw_control",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_native_spi165:native_spi|encoding",
+          "rows": 3,
+          "worst_ns": -5.505,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "encoding"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "legacy_raw_control",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_native_spi165:native_spi|held[*]",
+          "rows": 288,
+          "worst_ns": -6.844,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "held[0]"
+            ],
+            [
+              "release_reset[1]",
+              "held[10]"
+            ],
+            [
+              "release_reset[1]",
+              "held[11]"
+            ],
+            [
+              "release_reset[1]",
+              "held[12]"
+            ],
+            [
+              "release_reset[1]",
+              "held[13]"
+            ],
+            [
+              "release_reset[1]",
+              "held[14]"
+            ],
+            [
+              "release_reset[1]",
+              "held[15]"
+            ],
+            [
+              "release_reset[1]",
+              "held[16]"
+            ],
+            [
+              "release_reset[1]",
+              "held[17]"
+            ],
+            [
+              "release_reset[1]",
+              "held[18]"
+            ],
+            [
+              "release_reset[1]",
+              "held[19]"
+            ],
+            [
+              "release_reset[1]",
+              "held[1]"
+            ],
+            [
+              "release_reset[1]",
+              "held[20]"
+            ],
+            [
+              "release_reset[1]",
+              "held[21]"
+            ],
+            [
+              "release_reset[1]",
+              "held[22]"
+            ],
+            [
+              "release_reset[1]",
+              "held[23]"
+            ],
+            [
+              "release_reset[1]",
+              "held[24]"
+            ],
+            [
+              "release_reset[1]",
+              "held[25]"
+            ],
+            [
+              "release_reset[1]",
+              "held[26]"
+            ],
+            [
+              "release_reset[1]",
+              "held[27]"
+            ],
+            [
+              "release_reset[1]",
+              "held[28]"
+            ],
+            [
+              "release_reset[1]",
+              "held[29]"
+            ],
+            [
+              "release_reset[1]",
+              "held[2]"
+            ],
+            [
+              "release_reset[1]",
+              "held[30]"
+            ],
+            [
+              "release_reset[1]",
+              "held[31]"
+            ],
+            [
+              "release_reset[1]",
+              "held[32]"
+            ],
+            [
+              "release_reset[1]",
+              "held[33]"
+            ],
+            [
+              "release_reset[1]",
+              "held[34]"
+            ],
+            [
+              "release_reset[1]",
+              "held[35]"
+            ],
+            [
+              "release_reset[1]",
+              "held[36]"
+            ],
+            [
+              "release_reset[1]",
+              "held[37]"
+            ],
+            [
+              "release_reset[1]",
+              "held[38]"
+            ],
+            [
+              "release_reset[1]",
+              "held[39]"
+            ],
+            [
+              "release_reset[1]",
+              "held[3]"
+            ],
+            [
+              "release_reset[1]",
+              "held[40]"
+            ],
+            [
+              "release_reset[1]",
+              "held[41]"
+            ],
+            [
+              "release_reset[1]",
+              "held[42]"
+            ],
+            [
+              "release_reset[1]",
+              "held[43]"
+            ],
+            [
+              "release_reset[1]",
+              "held[44]"
+            ],
+            [
+              "release_reset[1]",
+              "held[45]"
+            ],
+            [
+              "release_reset[1]",
+              "held[46]"
+            ],
+            [
+              "release_reset[1]",
+              "held[47]"
+            ],
+            [
+              "release_reset[1]",
+              "held[48]"
+            ],
+            [
+              "release_reset[1]",
+              "held[49]"
+            ],
+            [
+              "release_reset[1]",
+              "held[4]"
+            ],
+            [
+              "release_reset[1]",
+              "held[50]"
+            ],
+            [
+              "release_reset[1]",
+              "held[51]"
+            ],
+            [
+              "release_reset[1]",
+              "held[52]"
+            ],
+            [
+              "release_reset[1]",
+              "held[53]"
+            ],
+            [
+              "release_reset[1]",
+              "held[54]"
+            ],
+            [
+              "release_reset[1]",
+              "held[55]"
+            ],
+            [
+              "release_reset[1]",
+              "held[56]"
+            ],
+            [
+              "release_reset[1]",
+              "held[57]"
+            ],
+            [
+              "release_reset[1]",
+              "held[58]"
+            ],
+            [
+              "release_reset[1]",
+              "held[59]"
+            ],
+            [
+              "release_reset[1]",
+              "held[5]"
+            ],
+            [
+              "release_reset[1]",
+              "held[60]"
+            ],
+            [
+              "release_reset[1]",
+              "held[61]"
+            ],
+            [
+              "release_reset[1]",
+              "held[62]"
+            ],
+            [
+              "release_reset[1]",
+              "held[63]"
+            ],
+            [
+              "release_reset[1]",
+              "held[64]"
+            ],
+            [
+              "release_reset[1]",
+              "held[65]"
+            ],
+            [
+              "release_reset[1]",
+              "held[66]"
+            ],
+            [
+              "release_reset[1]",
+              "held[67]"
+            ],
+            [
+              "release_reset[1]",
+              "held[68]"
+            ],
+            [
+              "release_reset[1]",
+              "held[69]"
+            ],
+            [
+              "release_reset[1]",
+              "held[6]"
+            ],
+            [
+              "release_reset[1]",
+              "held[70]"
+            ],
+            [
+              "release_reset[1]",
+              "held[71]"
+            ],
+            [
+              "release_reset[1]",
+              "held[72]"
+            ],
+            [
+              "release_reset[1]",
+              "held[73]"
+            ],
+            [
+              "release_reset[1]",
+              "held[74]"
+            ],
+            [
+              "release_reset[1]",
+              "held[75]"
+            ],
+            [
+              "release_reset[1]",
+              "held[76]"
+            ],
+            [
+              "release_reset[1]",
+              "held[77]"
+            ],
+            [
+              "release_reset[1]",
+              "held[78]"
+            ],
+            [
+              "release_reset[1]",
+              "held[79]"
+            ],
+            [
+              "release_reset[1]",
+              "held[7]"
+            ],
+            [
+              "release_reset[1]",
+              "held[80]"
+            ],
+            [
+              "release_reset[1]",
+              "held[81]"
+            ],
+            [
+              "release_reset[1]",
+              "held[82]"
+            ],
+            [
+              "release_reset[1]",
+              "held[83]"
+            ],
+            [
+              "release_reset[1]",
+              "held[84]"
+            ],
+            [
+              "release_reset[1]",
+              "held[85]"
+            ],
+            [
+              "release_reset[1]",
+              "held[86]"
+            ],
+            [
+              "release_reset[1]",
+              "held[87]"
+            ],
+            [
+              "release_reset[1]",
+              "held[88]"
+            ],
+            [
+              "release_reset[1]",
+              "held[89]"
+            ],
+            [
+              "release_reset[1]",
+              "held[8]"
+            ],
+            [
+              "release_reset[1]",
+              "held[90]"
+            ],
+            [
+              "release_reset[1]",
+              "held[91]"
+            ],
+            [
+              "release_reset[1]",
+              "held[92]"
+            ],
+            [
+              "release_reset[1]",
+              "held[93]"
+            ],
+            [
+              "release_reset[1]",
+              "held[94]"
+            ],
+            [
+              "release_reset[1]",
+              "held[95]"
+            ],
+            [
+              "release_reset[1]",
+              "held[9]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "legacy_raw_control",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_native_spi165:native_spi|position[*]",
+          "rows": 12,
+          "worst_ns": -6.48,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "position[0]"
+            ],
+            [
+              "release_reset[1]",
+              "position[1]"
+            ],
+            [
+              "release_reset[1]",
+              "position[2]"
+            ],
+            [
+              "release_reset[1]",
+              "position[3]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "legacy_raw_control",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_native_spi165:native_spi|total[*]",
+          "rows": 12,
+          "worst_ns": -6.844,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "total[0]"
+            ],
+            [
+              "release_reset[1]",
+              "total[1]"
+            ],
+            [
+              "release_reset[1]",
+              "total[2]"
+            ],
+            [
+              "release_reset[1]",
+              "total[3]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "legacy_raw_control",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|check_failed",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|address_hold[*]",
+          "rows": 21,
+          "worst_ns": -4.479,
+          "pairs": [
+            [
+              "check_failed",
+              "address_hold[0]"
+            ],
+            [
+              "check_failed",
+              "address_hold[10]"
+            ],
+            [
+              "check_failed",
+              "address_hold[11]"
+            ],
+            [
+              "check_failed",
+              "address_hold[12]"
+            ],
+            [
+              "check_failed",
+              "address_hold[13]"
+            ],
+            [
+              "check_failed",
+              "address_hold[14]"
+            ],
+            [
+              "check_failed",
+              "address_hold[15]"
+            ],
+            [
+              "check_failed",
+              "address_hold[16]"
+            ],
+            [
+              "check_failed",
+              "address_hold[17]"
+            ],
+            [
+              "check_failed",
+              "address_hold[18]"
+            ],
+            [
+              "check_failed",
+              "address_hold[19]"
+            ],
+            [
+              "check_failed",
+              "address_hold[1]"
+            ],
+            [
+              "check_failed",
+              "address_hold[21]"
+            ],
+            [
+              "check_failed",
+              "address_hold[2]"
+            ],
+            [
+              "check_failed",
+              "address_hold[3]"
+            ],
+            [
+              "check_failed",
+              "address_hold[4]"
+            ],
+            [
+              "check_failed",
+              "address_hold[5]"
+            ],
+            [
+              "check_failed",
+              "address_hold[6]"
+            ],
+            [
+              "check_failed",
+              "address_hold[7]"
+            ],
+            [
+              "check_failed",
+              "address_hold[8]"
+            ],
+            [
+              "check_failed",
+              "address_hold[9]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "legacy_raw_control",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|check_failed",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|request_toggle",
+          "rows": 1,
+          "worst_ns": -4.431,
+          "pairs": [
+            [
+              "check_failed",
+              "request_toggle"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "legacy_raw_control",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|check_failed",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|source_busy",
+          "rows": 1,
+          "worst_ns": -4.482,
+          "pairs": [
+            [
+              "check_failed",
+              "source_busy"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "legacy_raw_control",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|phase[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|address_hold[*]",
+          "rows": 42,
+          "worst_ns": -4.393,
+          "pairs": [
+            [
+              "phase[5]",
+              "address_hold[0]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[10]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[11]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[12]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[13]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[14]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[15]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[16]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[17]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[18]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[19]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[1]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[21]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[2]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[3]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[4]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[5]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[6]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[7]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[8]"
+            ],
+            [
+              "phase[5]",
+              "address_hold[9]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "legacy_raw_control",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|phase[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|request_toggle",
+          "rows": 2,
+          "worst_ns": -4.359,
+          "pairs": [
+            [
+              "phase[5]",
+              "request_toggle"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "legacy_raw_control",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|phase[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|source_busy",
+          "rows": 2,
+          "worst_ns": -4.457,
+          "pairs": [
+            [
+              "phase[5]",
+              "source_busy"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "raw_diagnostic_pin",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_screen_status151:screen_status|snapshot[*]",
+          "rows": 3,
+          "worst_ns": -7.081,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "snapshot[31]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|hf",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|h_to_n[*]",
+          "rows": 3,
+          "worst_ns": -4.119,
+          "pairs": [
+            [
+              "hf",
+              "h_to_n[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_domain_reset124:hcancel|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:control|up_dst[*]",
+          "rows": 3,
+          "worst_ns": -4.398,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "up_dst[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_domain_reset124:ncancel|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:control|up_src[*]",
+          "rows": 3,
+          "worst_ns": -4.036,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "up_src[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:control|acknowledge",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:control|ack_sync[*]",
+          "rows": 3,
+          "worst_ns": -4.13,
+          "pairs": [
+            [
+              "acknowledge",
+              "ack_sync[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:control|request",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:control|req_sync[*]",
+          "rows": 3,
+          "worst_ns": -4.483,
+          "pairs": [
+            [
+              "request",
+              "req_sync[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:rearm|acknowledge",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:rearm|ack_sync[*]",
+          "rows": 3,
+          "worst_ns": -4.179,
+          "pairs": [
+            [
+              "acknowledge",
+              "ack_sync[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:rearm|request",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:rearm|req_sync[*]",
+          "rows": 3,
+          "worst_ns": -4.55,
+          "pairs": [
+            [
+              "request",
+              "req_sync[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_domain_reset124:hcancel|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|up_src[*]",
+          "rows": 3,
+          "worst_ns": -4.339,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "up_src[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_domain_reset124:scancel|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|up_dst[*]",
+          "rows": 3,
+          "worst_ns": -4.152,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "up_dst[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|acknowledge",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|ack_sync[*]",
+          "rows": 3,
+          "worst_ns": -4.322,
+          "pairs": [
+            [
+              "acknowledge",
+              "ack_sync[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|request",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|req_sync[*]",
+          "rows": 3,
+          "worst_ns": -3.981,
+          "pairs": [
+            [
+              "request",
+              "req_sync[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nf",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|errors_h[*]",
+          "rows": 3,
+          "worst_ns": -4.542,
+          "pairs": [
+            [
+              "nf",
+              "errors_h[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nf",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|n_to_h[*]",
+          "rows": 3,
+          "worst_ns": -4.023,
+          "pairs": [
+            [
+              "nf",
+              "n_to_h[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_screen_status151:screen_status|active_sync[*]",
+          "rows": 3,
+          "worst_ns": -6.568,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "active_sync[0]"
+            ]
+          ]
+        }
+      ],
+      "chains": 67,
+      "chain_min_ns": {
+        "gray_first": {
+          "setup": 42.3,
+          "hold": 0.195
+        },
+        "reset_release_chain": {
+          "setup": 4.295,
+          "hold": 0.187
+        },
+        "single_bit_first": {
+          "setup": 9.503,
+          "hold": 0.261
+        }
+      },
+      "held_budget_min_ns": {
+        "held_mailbox": 19.341,
+        "held_rom_address": 7.224
+      },
+      "raw_SOF": "46bcec9bb331aa1fbe6b75950b6d96887b683fc747d338713c490a3e51cb3ebf",
+      "raw_STA": "187c2ff04b21ad37b32182b14c2a25709141eb0f0d56649a0d5d4be693443596",
+      "raw_fit": {
+        "LE": 15164,
+        "comb": 14172,
+        "FF": 8394,
+        "RAM_bits": 264816,
+        "M9K": 51,
+        "implementation_setup_ns": 0.078,
+        "setup_endpoints": [
+          "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|fault",
+          "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|check_failed"
+        ],
+        "implementation_hold_ns": 0.139,
+        "nominal_setup_ns": 0.078,
+        "nominal_hold_ns": 0.139,
+        "report_SHA256": {
+          "output_files/board.fit.summary": "a853b38e4adc791b7d0853ab808a13a14d97cb6d603cf07afff8d375a0e0a057",
+          "output_files/board.fit.rpt": "8d4b0a7c6d7d9de569fcfab22357b915b19f0f2be504791df6e6e17e3e8a6608",
+          "implementation-paths204.tsv": "996afff94fb92567661e1e1d41e1babad19ea98967ee6d7f2b30c75bdae8e102",
+          "nominal-paths204.tsv": "1f98fb5fbd1ada03dd60f3329b0419a8dc3343a857806171486720451ada21fe",
+          "nes_native_spi165.sv": "6b40c341d7d4d46413e3074dd14bc21df70e11dfc7fd1d147669054ab82b8639",
+          "sink-program.hex": "65e64a40fc858cb828ef7a0803f9cac0e4f8cf727c20ed737486383082ecfac7"
+        }
+      },
+      "raw_worst": {
+        "Setup": -7.081,
+        "Hold": 0.139,
+        "Recovery": -8.48,
+        "Removal": 0.487,
+        "Minimum Pulse Width": 2.627
+      },
+      "reports": {
+        "boundary575-negative.tsv": "2560241a9169e6d0a9e9cf5701e605903df7c5341f564941ba3004805ded005a",
+        "boundary575-counts.tsv": "e1e38dc3ae8abeac06981a0c02f164a65ecdbdb1d9017468fe3886dda8580dd1",
+        "boundary575-clocks.rpt": "7e06bc3bc7fb19765b58f7ff018ecd28a7dac49ac16959f9145a3ebdf2c9bd40",
+        "boundary575-transfers.rpt": "eddd1fe53fa0c2318a4f9129285dc10bf69f7dcbe9612ef1cf23650537aede68",
+        "boundary575-topology.tsv": "7bcc45cadc80026c0d903b58d2cdc594820f54f0f196da84cadc2f933fa48120",
+        "boundary575-chains.tsv": "977490296d34d49525a80f6ffd7c0d40abcbac611f65d254368d572863abed30",
+        "boundary575-held-budget.tsv": "6944f183f76c7ccf592e84c49166002626528211b27c560ad6731fe566bcd8dd"
+      },
+      "constraints": {
+        "board.qsf": "e9834a4b5af8a3e9880994a431bf61cd9ebe1951fdb6bf9867b8ba10290b781b",
+        "board.sdc": "1396fada466d9d9d93f96056f4e33bc8810b0137b842550fc33ef75453f2d371",
+        "nominal204.sdc": "d345ca34d9cc9999c5fa2aa0f96da4bdd6c8d35c6b39c234cf6c2f17772a8c48",
+        "cdc181.sdc": "6c7714aba71438c2442c4c68837d60fae53db69c0c6987b57b67960b1ab0c31a"
+      }
+    },
+    "572": {
+      "counts": {
+        "raw_diagnostic_pin": 3,
+        "single_bit_first": 45,
+        "held_mailbox": 168,
+        "held_rom_address": 63,
+        "gray_first": 96,
+        "reset_release_chain": 149,
+        "raw_reset_input_sampler": 18,
+        "raw_reset_guarded_state": 3
+      },
+      "negative_rows": 545,
+      "groups": [
+        {
+          "check": "recovery",
+          "kind": "raw_reset_guarded_state",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_sink_bridge165:sink|host_ready",
+          "rows": 3,
+          "worst_ns": -6.046,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "host_ready"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "raw_reset_input_sampler",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_sink_bridge165:sink|idle_ss[*]",
+          "rows": 6,
+          "worst_ns": -6.046,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "idle_ss[0]"
+            ],
+            [
+              "release_reset[1]",
+              "idle_ss[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "raw_reset_input_sampler",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_sink_bridge165:sink|idle_write[*]",
+          "rows": 6,
+          "worst_ns": -6.046,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "idle_write[0]"
+            ],
+            [
+              "release_reset[1]",
+              "idle_write[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "raw_reset_input_sampler",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "sink_rom_fault[*]",
+          "rows": 6,
+          "worst_ns": -6.578,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "sink_rom_fault[0]"
+            ],
+            [
+              "release_reset[1]",
+              "sink_rom_fault[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_diag_clock_guard127:clock_guard|ref_fault",
+          "target_family": "nes_live_joint:core|nes_clock_release563:memory_release|release_pipe[*]",
+          "rows": 6,
+          "worst_ns": -4.983,
+          "pairs": [
+            [
+              "ref_fault",
+              "release_pipe[0]"
+            ],
+            [
+              "ref_fault",
+              "release_pipe[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_diag_startup_guard:startup|done",
+          "target_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "rows": 4,
+          "worst_ns": -4.404,
+          "pairs": [
+            [
+              "done",
+              "release_reset[0]"
+            ],
+            [
+              "done",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_diag_startup_guard:startup|done",
+          "target_family": "nes_live_joint:core|nes_domain_reset124:init_release|release_reset[*]",
+          "rows": 2,
+          "worst_ns": -4.181,
+          "pairs": [
+            [
+              "done",
+              "release_reset[0]"
+            ],
+            [
+              "done",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|hf",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_domain_reset124:ncancel|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -4.428,
+          "pairs": [
+            [
+              "hf",
+              "release_reset[0]"
+            ],
+            [
+              "hf",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_domain_reset124:hcancel|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_domain_reset124:nrelease|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -4.358,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "release_reset[0]"
+            ],
+            [
+              "release_reset[1]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|hf",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_domain_reset124:ncancel|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -4.398,
+          "pairs": [
+            [
+              "hf",
+              "release_reset[0]"
+            ],
+            [
+              "hf",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nf",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_domain_reset124:hcancel|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -7.646,
+          "pairs": [
+            [
+              "nf",
+              "release_reset[0]"
+            ],
+            [
+              "nf",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|host_failed",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_domain_reset124:scancel|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -4.375,
+          "pairs": [
+            [
+              "host_failed",
+              "release_reset[0]"
+            ],
+            [
+              "host_failed",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|source_failed",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_domain_reset124:hcancel|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -5.119,
+          "pairs": [
+            [
+              "source_failed",
+              "release_reset[0]"
+            ],
+            [
+              "source_failed",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|source_failed",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|dr[*]",
+          "rows": 6,
+          "worst_ns": -5.355,
+          "pairs": [
+            [
+              "source_failed",
+              "dr[0]"
+            ],
+            [
+              "source_failed",
+              "dr[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_dac162:audio|dac_release[*]",
+          "rows": 6,
+          "worst_ns": -6.577,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "dac_release[0]"
+            ],
+            [
+              "release_reset[1]",
+              "dac_release[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_domain_reset124:hcancel|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -7.019,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "release_reset[0]"
+            ],
+            [
+              "release_reset[1]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_domain_reset124:hrelease|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -6.57,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "release_reset[0]"
+            ],
+            [
+              "release_reset[1]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_native_mailbox165:native_prepared|sr[*]",
+          "rows": 6,
+          "worst_ns": -7.034,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "sr[0]"
+            ],
+            [
+              "release_reset[1]",
+              "sr[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_native_mailbox165:native_records|dr[*]",
+          "rows": 6,
+          "worst_ns": -6.582,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "dr[0]"
+            ],
+            [
+              "release_reset[1]",
+              "dr[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_sink_bridge165:sink|nes_domain_reset124:release_local|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -6.046,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "release_reset[0]"
+            ],
+            [
+              "release_reset[1]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|fault",
+          "target_family": "nes_live_joint:core|nes_domain_reset124:init_release|release_reset[*]",
+          "rows": 2,
+          "worst_ns": -4.222,
+          "pairs": [
+            [
+              "fault",
+              "release_reset[0]"
+            ],
+            [
+              "fault",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|fault",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|memory_reset[*]",
+          "rows": 1,
+          "worst_ns": -0.427,
+          "pairs": [
+            [
+              "fault",
+              "memory_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|fault",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|source_reset[*]",
+          "rows": 2,
+          "worst_ns": -4.507,
+          "pairs": [
+            [
+              "fault",
+              "source_reset[0]"
+            ],
+            [
+              "fault",
+              "source_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_loader:loader|loaded_bytes[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_source_epoch207:content_lifetime|nes_domain_reset124:release_ready|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -4.491,
+          "pairs": [
+            [
+              "loaded_bytes[8]",
+              "release_reset[0]"
+            ],
+            [
+              "loaded_bytes[8]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|check_enable",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|source_reset[*]",
+          "rows": 2,
+          "worst_ns": -4.494,
+          "pairs": [
+            [
+              "check_enable",
+              "source_reset[0]"
+            ],
+            [
+              "check_enable",
+              "source_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|fault",
+          "target_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "rows": 2,
+          "worst_ns": -1.967,
+          "pairs": [
+            [
+              "fault",
+              "release_reset[0]"
+            ],
+            [
+              "fault",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|fault",
+          "target_family": "nes_live_joint:core|nes_domain_reset124:init_release|release_reset[*]",
+          "rows": 2,
+          "worst_ns": -1.989,
+          "pairs": [
+            [
+              "fault",
+              "release_reset[0]"
+            ],
+            [
+              "fault",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_spi_check:control|fault",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|source_reset[*]",
+          "rows": 2,
+          "worst_ns": -2.085,
+          "pairs": [
+            [
+              "fault",
+              "source_reset[0]"
+            ],
+            [
+              "fault",
+              "source_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_domain_reset124:observer_release|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -2.936,
+          "pairs": [
+            [
+              "power_release[3]",
+              "release_reset[0]"
+            ],
+            [
+              "power_release[3]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_domain_reset124:status_release|release_reset[*]",
+          "rows": 2,
+          "worst_ns": -0.5,
+          "pairs": [
+            [
+              "power_release[3]",
+              "release_reset[0]"
+            ],
+            [
+              "power_release[3]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_live_joint:core|nes_clock_release563:memory_release|release_pipe[*]",
+          "rows": 2,
+          "worst_ns": -0.332,
+          "pairs": [
+            [
+              "power_release[3]",
+              "release_pipe[0]"
+            ],
+            [
+              "power_release[3]",
+              "release_pipe[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_live_joint:core|nes_diag_clock_guard127:clock_guard|nes_domain_reset124:mem_release|release_reset[*]",
+          "rows": 2,
+          "worst_ns": -0.566,
+          "pairs": [
+            [
+              "power_release[3]",
+              "release_reset[0]"
+            ],
+            [
+              "power_release[3]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_live_joint:core|nes_diag_clock_guard127:clock_guard|nes_domain_reset124:ref_release|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -2.734,
+          "pairs": [
+            [
+              "power_release[3]",
+              "release_reset[0]"
+            ],
+            [
+              "power_release[3]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -6.128,
+          "pairs": [
+            [
+              "power_release[3]",
+              "release_reset[0]"
+            ],
+            [
+              "power_release[3]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_live_joint:core|nes_domain_reset124:init_release|release_reset[*]",
+          "rows": 6,
+          "worst_ns": -5.941,
+          "pairs": [
+            [
+              "power_release[3]",
+              "release_reset[0]"
+            ],
+            [
+              "power_release[3]",
+              "release_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|memory_reset[*]",
+          "rows": 4,
+          "worst_ns": -2.606,
+          "pairs": [
+            [
+              "power_release[3]",
+              "memory_reset[0]"
+            ],
+            [
+              "power_release[3]",
+              "memory_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "recovery",
+          "kind": "reset_release_chain",
+          "source_family": "power_release[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|source_reset[*]",
+          "rows": 6,
+          "worst_ns": -6.159,
+          "pairs": [
+            [
+              "power_release[3]",
+              "source_reset[0]"
+            ],
+            [
+              "power_release[3]",
+              "source_reset[1]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "gray_first",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_source_epoch207:content_lifetime|gray[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_source_epoch207:content_lifetime|epoch_meta[*]",
+          "rows": 96,
+          "worst_ns": -4.606,
+          "pairs": [
+            [
+              "gray[0]",
+              "epoch_meta[0]"
+            ],
+            [
+              "gray[10]",
+              "epoch_meta[10]"
+            ],
+            [
+              "gray[11]",
+              "epoch_meta[11]"
+            ],
+            [
+              "gray[12]",
+              "epoch_meta[12]"
+            ],
+            [
+              "gray[13]",
+              "epoch_meta[13]"
+            ],
+            [
+              "gray[14]",
+              "epoch_meta[14]"
+            ],
+            [
+              "gray[15]",
+              "epoch_meta[15]"
+            ],
+            [
+              "gray[16]",
+              "epoch_meta[16]"
+            ],
+            [
+              "gray[17]",
+              "epoch_meta[17]"
+            ],
+            [
+              "gray[18]",
+              "epoch_meta[18]"
+            ],
+            [
+              "gray[19]",
+              "epoch_meta[19]"
+            ],
+            [
+              "gray[1]",
+              "epoch_meta[1]"
+            ],
+            [
+              "gray[20]",
+              "epoch_meta[20]"
+            ],
+            [
+              "gray[21]",
+              "epoch_meta[21]"
+            ],
+            [
+              "gray[22]",
+              "epoch_meta[22]"
+            ],
+            [
+              "gray[23]",
+              "epoch_meta[23]"
+            ],
+            [
+              "gray[24]",
+              "epoch_meta[24]"
+            ],
+            [
+              "gray[25]",
+              "epoch_meta[25]"
+            ],
+            [
+              "gray[26]",
+              "epoch_meta[26]"
+            ],
+            [
+              "gray[27]",
+              "epoch_meta[27]"
+            ],
+            [
+              "gray[28]",
+              "epoch_meta[28]"
+            ],
+            [
+              "gray[29]",
+              "epoch_meta[29]"
+            ],
+            [
+              "gray[2]",
+              "epoch_meta[2]"
+            ],
+            [
+              "gray[30]",
+              "epoch_meta[30]"
+            ],
+            [
+              "gray[31]",
+              "epoch_meta[31]"
+            ],
+            [
+              "gray[3]",
+              "epoch_meta[3]"
+            ],
+            [
+              "gray[4]",
+              "epoch_meta[4]"
+            ],
+            [
+              "gray[5]",
+              "epoch_meta[5]"
+            ],
+            [
+              "gray[6]",
+              "epoch_meta[6]"
+            ],
+            [
+              "gray[7]",
+              "epoch_meta[7]"
+            ],
+            [
+              "gray[8]",
+              "epoch_meta[8]"
+            ],
+            [
+              "gray[9]",
+              "epoch_meta[9]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "held_mailbox",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:control|held[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|batch_length[*]",
+          "rows": 30,
+          "worst_ns": -4.509,
+          "pairs": [
+            [
+              "held[10]",
+              "batch_length[5]"
+            ],
+            [
+              "held[11]",
+              "batch_length[6]"
+            ],
+            [
+              "held[12]",
+              "batch_length[7]"
+            ],
+            [
+              "held[13]",
+              "batch_length[8]"
+            ],
+            [
+              "held[14]",
+              "batch_length[9]"
+            ],
+            [
+              "held[5]",
+              "batch_length[0]"
+            ],
+            [
+              "held[6]",
+              "batch_length[1]"
+            ],
+            [
+              "held[7]",
+              "batch_length[2]"
+            ],
+            [
+              "held[8]",
+              "batch_length[3]"
+            ],
+            [
+              "held[9]",
+              "batch_length[4]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "held_mailbox",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:control|held[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|reader",
+          "rows": 3,
+          "worst_ns": -4.339,
+          "pairs": [
+            [
+              "held[15]",
+              "reader"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "held_mailbox",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:control|held[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|remaining[*]",
+          "rows": 15,
+          "worst_ns": -4.549,
+          "pairs": [
+            [
+              "held[0]",
+              "remaining[0]"
+            ],
+            [
+              "held[1]",
+              "remaining[1]"
+            ],
+            [
+              "held[2]",
+              "remaining[2]"
+            ],
+            [
+              "held[3]",
+              "remaining[3]"
+            ],
+            [
+              "held[4]",
+              "remaining[4]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "held_mailbox",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:rearm|held[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:rearm|received[*]",
+          "rows": 3,
+          "worst_ns": -4.372,
+          "pairs": [
+            [
+              "held[0]",
+              "received[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "held_mailbox",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|held[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|received[*]",
+          "rows": 90,
+          "worst_ns": -3.958,
+          "pairs": [
+            [
+              "held[10]",
+              "received[10]"
+            ],
+            [
+              "held[11]",
+              "received[11]"
+            ],
+            [
+              "held[12]",
+              "received[12]"
+            ],
+            [
+              "held[13]",
+              "received[13]"
+            ],
+            [
+              "held[14]",
+              "received[14]"
+            ],
+            [
+              "held[15]",
+              "received[15]"
+            ],
+            [
+              "held[16]",
+              "received[16]"
+            ],
+            [
+              "held[17]",
+              "received[17]"
+            ],
+            [
+              "held[18]",
+              "received[18]"
+            ],
+            [
+              "held[19]",
+              "received[19]"
+            ],
+            [
+              "held[20]",
+              "received[20]"
+            ],
+            [
+              "held[21]",
+              "received[21]"
+            ],
+            [
+              "held[22]",
+              "received[22]"
+            ],
+            [
+              "held[23]",
+              "received[23]"
+            ],
+            [
+              "held[24]",
+              "received[24]"
+            ],
+            [
+              "held[25]",
+              "received[25]"
+            ],
+            [
+              "held[26]",
+              "received[26]"
+            ],
+            [
+              "held[27]",
+              "received[27]"
+            ],
+            [
+              "held[28]",
+              "received[28]"
+            ],
+            [
+              "held[29]",
+              "received[29]"
+            ],
+            [
+              "held[30]",
+              "received[30]"
+            ],
+            [
+              "held[31]",
+              "received[31]"
+            ],
+            [
+              "held[32]",
+              "received[32]"
+            ],
+            [
+              "held[33]",
+              "received[33]"
+            ],
+            [
+              "held[4]",
+              "received[4]"
+            ],
+            [
+              "held[5]",
+              "received[5]"
+            ],
+            [
+              "held[6]",
+              "received[6]"
+            ],
+            [
+              "held[7]",
+              "received[7]"
+            ],
+            [
+              "held[8]",
+              "received[8]"
+            ],
+            [
+              "held[9]",
+              "received[9]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "held_mailbox",
+          "source_family": "nes_live_joint:core|nes_native_mailbox165:native_records|held[*]",
+          "target_family": "nes_live_joint:core|nes_native_mailbox165:native_records|received[*]",
+          "rows": 27,
+          "worst_ns": -3.969,
+          "pairs": [
+            [
+              "held[53]",
+              "received[53]"
+            ],
+            [
+              "held[54]",
+              "received[54]"
+            ],
+            [
+              "held[55]",
+              "received[55]"
+            ],
+            [
+              "held[56]",
+              "received[56]"
+            ],
+            [
+              "held[57]",
+              "received[57]"
+            ],
+            [
+              "held[58]",
+              "received[58]"
+            ],
+            [
+              "held[61]",
+              "received[61]"
+            ],
+            [
+              "held[62]",
+              "received[62]"
+            ],
+            [
+              "held[63]",
+              "received[63]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "held_rom_address",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|address_hold[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|check_response_address[*]",
+          "rows": 57,
+          "worst_ns": -4.561,
+          "pairs": [
+            [
+              "address_hold[10]",
+              "check_response_address[10]"
+            ],
+            [
+              "address_hold[11]",
+              "check_response_address[11]"
+            ],
+            [
+              "address_hold[12]",
+              "check_response_address[12]"
+            ],
+            [
+              "address_hold[13]",
+              "check_response_address[13]"
+            ],
+            [
+              "address_hold[14]",
+              "check_response_address[14]"
+            ],
+            [
+              "address_hold[15]",
+              "check_response_address[15]"
+            ],
+            [
+              "address_hold[16]",
+              "check_response_address[16]"
+            ],
+            [
+              "address_hold[17]",
+              "check_response_address[17]"
+            ],
+            [
+              "address_hold[18]",
+              "check_response_address[18]"
+            ],
+            [
+              "address_hold[19]",
+              "check_response_address[19]"
+            ],
+            [
+              "address_hold[21]",
+              "check_response_address[21]"
+            ],
+            [
+              "address_hold[2]",
+              "check_response_address[2]"
+            ],
+            [
+              "address_hold[3]",
+              "check_response_address[3]"
+            ],
+            [
+              "address_hold[4]",
+              "check_response_address[4]"
+            ],
+            [
+              "address_hold[5]",
+              "check_response_address[5]"
+            ],
+            [
+              "address_hold[6]",
+              "check_response_address[6]"
+            ],
+            [
+              "address_hold[7]",
+              "check_response_address[7]"
+            ],
+            [
+              "address_hold[8]",
+              "check_response_address[8]"
+            ],
+            [
+              "address_hold[9]",
+              "check_response_address[9]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "held_rom_address",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|address_hold[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|chip",
+          "rows": 3,
+          "worst_ns": -3.968,
+          "pairs": [
+            [
+              "address_hold[1]",
+              "chip"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "held_rom_address",
+          "source_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|address_hold[*]",
+          "target_family": "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|lane",
+          "rows": 3,
+          "worst_ns": -3.948,
+          "pairs": [
+            [
+              "address_hold[0]",
+              "lane"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "raw_diagnostic_pin",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_screen_status151:screen_status|snapshot[*]",
+          "rows": 3,
+          "worst_ns": -5.695,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "snapshot[31]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_diag_clock_guard127:clock_guard|ref_qualified",
+          "target_family": "nes_live_joint:core|nes_diag_clock_guard127:clock_guard|ref_ok_mem[*]",
+          "rows": 3,
+          "worst_ns": -4.457,
+          "pairs": [
+            [
+              "ref_qualified",
+              "ref_ok_mem[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|hf",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|h_to_n[*]",
+          "rows": 3,
+          "worst_ns": -4.467,
+          "pairs": [
+            [
+              "hf",
+              "h_to_n[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_domain_reset124:hcancel|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:control|up_dst[*]",
+          "rows": 3,
+          "worst_ns": -4.541,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "up_dst[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_domain_reset124:ncancel|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:control|up_src[*]",
+          "rows": 3,
+          "worst_ns": -4.624,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "up_src[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:control|acknowledge",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:control|ack_sync[*]",
+          "rows": 3,
+          "worst_ns": -3.981,
+          "pairs": [
+            [
+              "acknowledge",
+              "ack_sync[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:control|request",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:control|req_sync[*]",
+          "rows": 3,
+          "worst_ns": -4.534,
+          "pairs": [
+            [
+              "request",
+              "req_sync[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:rearm|acknowledge",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:rearm|ack_sync[*]",
+          "rows": 3,
+          "worst_ns": -3.981,
+          "pairs": [
+            [
+              "acknowledge",
+              "ack_sync[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:rearm|request",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nes_native_mailbox206:rearm|req_sync[*]",
+          "rows": 3,
+          "worst_ns": -4.428,
+          "pairs": [
+            [
+              "request",
+              "req_sync[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_plan_batch206:transport|nf",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|errors_h[*]",
+          "rows": 3,
+          "worst_ns": -4.599,
+          "pairs": [
+            [
+              "nf",
+              "errors_h[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_domain_reset124:scancel|release_reset[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|up_dst[*]",
+          "rows": 3,
+          "worst_ns": -4.211,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "up_dst[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|acknowledge",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|ack_sync[*]",
+          "rows": 3,
+          "worst_ns": -4.572,
+          "pairs": [
+            [
+              "acknowledge",
+              "ack_sync[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|dr[*]",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|up_src[*]",
+          "rows": 3,
+          "worst_ns": -4.224,
+          "pairs": [
+            [
+              "dr[1]",
+              "up_src[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|request",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|nes_tile_bulk206:bulk|nes_native_mailbox206:tiles|req_sync[*]",
+          "rows": 3,
+          "worst_ns": -3.968,
+          "pairs": [
+            [
+              "request",
+              "req_sync[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_direct206:direct_path|nf",
+          "target_family": "nes_live_joint:core|nes_direct206:direct_path|n_to_h[*]",
+          "rows": 3,
+          "worst_ns": -4.449,
+          "pairs": [
+            [
+              "nf",
+              "n_to_h[0]"
+            ]
+          ]
+        },
+        {
+          "check": "setup",
+          "kind": "single_bit_first",
+          "source_family": "nes_live_joint:core|nes_domain_reset124:core_release|release_reset[*]",
+          "target_family": "nes_screen_status151:screen_status|active_sync[*]",
+          "rows": 3,
+          "worst_ns": -4.361,
+          "pairs": [
+            [
+              "release_reset[1]",
+              "active_sync[0]"
+            ]
+          ]
+        }
+      ],
+      "chains": 70,
+      "chain_min_ns": {
+        "gray_first": {
+          "setup": 41.768,
+          "hold": 0.195
+        },
+        "reset_release_chain": {
+          "setup": 4.297,
+          "hold": 0.187
+        },
+        "single_bit_first": {
+          "setup": 4.298,
+          "hold": 0.268
+        }
+      },
+      "held_budget_min_ns": {
+        "held_mailbox": 19.837,
+        "held_rom_address": 7.341
+      },
+      "raw_SOF": "9d8c0a9f31604d57eadd3b7b9224f1ef0846b4ca9b4eb4f4bd2f0e52d2dc354b",
+      "raw_STA": "0fb8b36a35dad02076ae96a43bcbe72c444978cc81734e6a17183677f27f6505",
+      "raw_fit": {
+        "LE": 15297,
+        "comb": 14195,
+        "FF": 8390,
+        "RAM_bits": 264816,
+        "M9K": 51,
+        "implementation_setup_ns": 0.286,
+        "setup_endpoints": [
+          "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|owner_valid",
+          "nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|remaining[4]"
+        ],
+        "implementation_hold_ns": 0.145,
+        "nominal_setup_ns": 0.286,
+        "nominal_hold_ns": 0.145,
+        "report_SHA256": {
+          "output_files/board.fit.summary": "c8a0373e14b943828c37043d61226c5560e7fdaebcbc8f9dd6c2ac22ac0b0cbd",
+          "output_files/board.fit.rpt": "365765f5bf72415a0f89d9b4c1277acb465b10eb40b14662470dbf982966c7cd",
+          "implementation-paths204.tsv": "b1bd20508a088ceb30673b6b77ddc6933b6628962b0e2ce35bd0358d1d170a73",
+          "nominal-paths204.tsv": "c7289b0e2705eb1474ed26a30b3de3ab1a25d4546fcd1d81bc28ec4f9be35b93",
+          "nes_native_spi165.sv": "6b40c341d7d4d46413e3074dd14bc21df70e11dfc7fd1d147669054ab82b8639",
+          "sink-program.hex": "65e64a40fc858cb828ef7a0803f9cac0e4f8cf727c20ed737486383082ecfac7"
+        }
+      },
+      "raw_worst": {
+        "Setup": -5.695,
+        "Hold": 0.145,
+        "Recovery": -7.646,
+        "Removal": 0.468,
+        "Minimum Pulse Width": 2.631
+      },
+      "reports": {
+        "boundary575-negative.tsv": "06694c7383266920aa616bb30035774853b2fae0b6bb789ba7dfd8f98097e814",
+        "boundary575-counts.tsv": "5ee3f934b5fbbd728ea00bcae478eea3e7a24b9447fbc7b6ef6f9159979703c1",
+        "boundary575-clocks.rpt": "7e06bc3bc7fb19765b58f7ff018ecd28a7dac49ac16959f9145a3ebdf2c9bd40",
+        "boundary575-transfers.rpt": "55db248455d4079208b4e5afdcab8196f2bfa8ea53c1f9243c7a2b767a3d10a5",
+        "boundary575-topology.tsv": "33f622f79b85e43d033b4f865a0c373fe95bb30184eb9097fadfa1f01f961eb7",
+        "boundary575-chains.tsv": "712a1f8e8fba4b0e23487cf22ef8ef2923815d57c4d22423a35c1355a5a21663",
+        "boundary575-held-budget.tsv": "7b653d8d80b6d7cabad8aaa2401f7a6c8ffb048b1625613c26bfc67885df5464"
+      },
+      "constraints": {
+        "board.qsf": "e9834a4b5af8a3e9880994a431bf61cd9ebe1951fdb6bf9867b8ba10290b781b",
+        "board.sdc": "1396fada466d9d9d93f96056f4e33bc8810b0137b842550fc33ef75453f2d371",
+        "nominal204.sdc": "d345ca34d9cc9999c5fa2aa0f96da4bdd6c8d35c6b39c234cf6c2f17772a8c48",
+        "cdc181.sdc": "6c7714aba71438c2442c4c68837d60fae53db69c0c6987b57b67960b1ab0c31a"
+      }
+    }
+  },
+  "tests": {
+    "phases": [
+      {
+        "mailbox": [
+          [
+            "0",
+            "32",
+            "64",
+            "271",
+            "35817",
+            "23808"
+          ],
+          [
+            "1",
+            "16",
+            "64",
+            "1400",
+            "141337",
+            "90908"
+          ]
+        ],
+        "ROM": [
+          [
+            "64",
+            "320",
+            "11911",
+            "11904"
+          ]
+        ],
+        "reset_commands": 32
+      },
+      {
+        "mailbox": [
+          [
+            "0",
+            "32",
+            "64",
+            "271",
+            "35861",
+            "23808"
+          ],
+          [
+            "1",
+            "16",
+            "64",
+            "1403",
+            "141527",
+            "90908"
+          ]
+        ],
+        "ROM": [
+          [
+            "64",
+            "320",
+            "12047",
+            "11904"
+          ]
+        ],
+        "reset_commands": 32
+      }
+    ],
+    "RTL": {
+      "nes_native_mailbox206.sv": "f4159daba5b55ab89701fd2acbd5bf4ca15111824a73e146f90770b62028b04f",
+      "nes_rom_physical.sv": "1e47406e1ecbfbb8607834709a29b4a1b6a2397b3c55c416d5a7d86bc9058c1f",
+      "nes_rom_boot.sv": "f8127ee2ce7faf66e3826d472db9159b058ecd832fe502380ca4115d31761b64",
+      "nes_rom_loader.sv": "af2d0674be533bb514f9f85b364145a184e9b5778ad6de797bdcac2cede69c9c"
+    },
+    "test": "6d48c3ebecbfa4b9050f2da7ce430a9299d0f381c39aa873e7269f51bfd002a1",
+    "logs": {
+      "compile.log": "ee0ec35969268f4567df56af036bf913ef719adf1781c2e1090c5505add56130",
+      "lib.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "phase0.log": "038abc424ceddfaecad33eafa20ed67dfb0c2ab537ca62642ba70e94468c7799",
+      "phase1.log": "b99194fbba51e53a77953172ce315cab7655dc1d91979d7771ade58fa49cd30c"
+    }
+  },
+  "selected": "572 START only",
+  "new_FIT": false,
+  "board_constraints_changed": false,
+  "new_physical_run": false,
+  "preserved_schedule_reference": "analysis/start572-verification.json",
+  "next": [
+    "Exact CDC scope with physical settling and held-data bounds, compare both boards under the same proposed constraints; preserve raw STA.",
+    "Review raw diagnostic bus_drive snapshot and guarded reset samplers before exceptions.",
+    "Retain immediate STOP/fault cancellation and verify first capture/cache/plan and continuous display before any release."
+  ],
+  "scope": "Worst negative path per destination per clock pair, across three corners; not all combinational paths or unconstrained IO. Held-data budget is a temporary STA measurement of listed paths, not a new accepted board constraint or physical signoff."
+}

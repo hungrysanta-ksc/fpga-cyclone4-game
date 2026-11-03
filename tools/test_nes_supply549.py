@@ -15,6 +15,16 @@ class SupplyLink(CheckedLink):
             # The parent independently compares every encoded byte and consumes END.
             plans = self.plansets[self.generation]
             start, stop = self.plan_at, min(len(plans),self.plan_at+tx[3])
+            if getattr(self.a,'long_run_first',False):
+                group = plans[start:start+16]
+                if len(group)==16 and all(wire_plan(q)[0]==0x81 for q in group):
+                    slots = sorted(group[:15],key=lambda q:q[2])
+                    cut = 14
+                    while cut and slots[cut][2]==slots[cut-1][2]+1:
+                        cut -= 1
+                    if (1<=cut<=7 and slots[cut-1][2]<slots[cut][2]
+                            and group[15][2]==slots[-1][2]+1 and tx[3]==16-cut):
+                        plans[start:start+16] = slots[cut:]+group[15:]+slots[:cut]
             if self.a.keep_run and 1<=tx[3]<=7:
                 # Encoder sorts up to 15 original compact records before
                 # it divides a sparse prefix from the adjacent suffix.
@@ -49,6 +59,7 @@ if __name__=='__main__':
         p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--start-clock',type=int,required=True)
     p.add_argument('--keep-run',action='store_true')
+    p.add_argument('--long-run-first',action='store_true')
     a=p.parse_args()
     a.map526=a.trace_rom=a.trace_credit=True
     joint.Runtime=OutputRuntime
