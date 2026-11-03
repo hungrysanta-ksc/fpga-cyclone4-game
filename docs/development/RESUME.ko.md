@@ -1,14 +1,14 @@
 # 다른 PC·새 작업에서 재개하기
 
-이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고[감사499](../nes-audit499.ko.md)와[새 계획 A1–A4](../nes-audit499-plan.json)를 따른다. MMC577 실기 측정을 기준으로 A2 출력·전송 예산을 갱신하며 기존498 NEXT를 그대로 재개하지 않는다.
+이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. 현재 PC를 계속 사용한다. 마지막 회고499 이후의 진행을 [579 회고](../nes-retrospective579.ko.md)로 재평가했다. 실행 순서는 [579 계획](../nes-retrospective579-plan.json) 하나를 기준으로 삼으며 499/504의 오래된 NEXT를 그대로 재개하지 않는다.
 
 ## 1. 상태를 읽는다
 
 1. [루트 README](../../README.md) → [프로젝트 현황](../PROJECT-STATUS.ko.md).
-2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR149](../progress/pr-149.md).
+2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR150](../progress/pr-150.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
-GB/GBC는 추가·공개 완료다. MMC540은 60.08초에 803회 표시(13.37fps), 실행·메뉴 복귀 정상이다. MMC533 대비 1–40초는 11.97→12.85fps, 40–60초는 12.65→14.35fps였다. 마지막 5초는 정적인 레벨 클리어 장면이므로 후반 증가율을 전투 성능 개선율로 해석하지 않는다. [실기 기록](../nes-hardware541-results.ko.md)
+GB/GBC는 추가·공개 완료, NES는 MMC577 실기13.95fps/5–55초13.86fps다. 실행·메뉴 복귀 정상이며 전체60Hz·capture무손실·외부IO sign-off는 미완료다. [578 실기 기록](../nes-hardware578-results.ko.md)
 
 ## 2. Git 기준을 확인한다
 
@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-PR149는 PR148 병합 커밋 `c12cd861d926524e74c121b0fe03c3e5e5a5a527`에서 분기했다. 실측 기준은 MMC577이다. 실행·메뉴 복귀 정상, 5–55초 13.86fps. [578 실기 분석](../nes-hardware578-results.ko.md). [577 적재/IO 감사와 전달 판정](../nes-gate577-results.ko.md) · [설치/로그 안내](../nes-mmc577-trial.ko.md)
+PR150 문서 브랜치는 PR149 병합6094a7cff6995981bea4f55be7f4ce6e27a81e06에서 분기했다. 제품 구현은 시작하지 않았다. 선택 산출물과 실측은 MMC577을 유지한다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -35,13 +35,14 @@ PR149는 PR148 병합 커밋 `c12cd861d926524e74c121b0fe03c3e5e5a5a527`에서 �
 | 로컬 source/로그 | [NES 재현 범위](../../cores/nes/REPRODUCING.ko.md)의 빠진 입력을 먼저 복구. `probes`/`.tools`/Downloads가 clone에 포함된다고 가정하지 않음 |
 | 실기 | 사용자가 ZIP을 SD에 복사하고 TXT를 반환한다. 보드·SD를 PC에 연결하라고 다시 요구하지 않음 |
 
-기존 PC의 경로와 라이선스를 다른 PC에서 그대로 사용할 수 있다는 뜻이 아니다. 라이선스 키/host ID/서버 로그, ROM·개인 save·영상은 별도 관리한다. 현재 저장소만으로 전체 NES474 재빌드가 가능한 것은 아니며, **현재 판단/다음 순서와 그 이식성 부채를 저장소에 남긴 상태**다.
+기존 PC의 경로와 라이선스를 다른 PC에서 그대로 사용할 수 있다는 뜻이 아니다. 라이선스 키/host ID/서버 로그, ROM·개인 save·영상은 별도 관리한다. 현재 선택 MMC577의 clean-clone 전체 재빌드가 완료된 것은 아니며, **현재 판단/다음 순서와 그 이식성 부채를 저장소에 남긴 상태**다.
 
 ## 4. 개발 재개 후 순서
 
-1. [577 결과](../nes-gate577-results.ko.md)의 순서대로 [578 분석](../nes-hardware578-results.ko.md) 뒤 출력·최종 ACK의 DMA/VBlank 비용 분리부터 진행한다. epoch 국소 배치·직렬화 FIT 반복을 재개하지 않는다. [541 실기 분석](../nes-hardware541-results.ko.md)의 장면 차이와 원본 로그 해시도 보존한다.
-2. 다음 전달본에 `prepare_nes_windows541.py`의 표시 완료 [5,40)/[40,55) 집계를 포함하고 linked ARM 경계 검사를 통과시킨다.
-3. [552 실기 성공·실패 분리와 출력 비교](../nes-hardware552-results.ko.md)를 따른다. [MMC577 실기 두 구간](../nes-hardware578-results.ko.md)의 완료 수를 이후 기준으로 유지하고 부팅 실패는 별도 집계한다.
+1. [579 계획](../nes-retrospective579-plan.json)의 R1 전체 비용표와 선택577 manifest부터 확인한다. 기존 자료 재분석 한 차례·꼭 필요한 누락 계측 한 차례로 한정하고 결측을 숨기지 않는다.
+2. R2에서 본문 전송 감소·전체 critical path·실제 삭제·자원 예산을 함께 통과한 후보만 R3 구현으로 진행한다. 양수 timer/epoch/seed 및 국소 DMA/poll 반복은 재개하지 않는다.
+3. R4는 의미 있는 후보만 실기 전달한다. 5–40/40–55초 완료 집계와 독립 검사·STOP·최종ACK·VBlank·메뉴복귀를 유지하며 시작 실패는 별도 보존한다.
+4. 각 단계 완료 때 579 계획의 상태·증거·예산·다음 한 단계를 함께 갱신한다. 오래된 계획의 미완료 상태를 방치하지 않는다.
 
 ## 5. 기록을 남긴다
 

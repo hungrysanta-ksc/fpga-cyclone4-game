@@ -11,7 +11,7 @@
 | 코어 | 상태 | 확인된 범위 | 다음 목표 |
 |---|---|---|---|
 | [GB/GBC](cores/gbc/README.md) | **추가 성공·공개 완료** | G13C44 / sd2snesHST 0.9.0, 실기·저장·RTC 등은 호환성 문서 범위 | 검증된 구현·세이브 보존, 회귀 유지 |
-| [NES](cores/nes/README.md) | **개발 중** | MMC577 SMB3 13.95fps, 5–55초 13.86fps · 실행·메뉴 복귀 성공 | 출력·최종 ACK의 DMA/VBlank 대기 분리 → 지속 60fps |
+| [NES](cores/nes/README.md) | **개발 중** | MMC577 SMB3 13.95fps, 5–55초 13.86fps · 실행·메뉴 복귀 성공 | [전체 전송·처리 예산과 구조 확정](docs/nes-retrospective579.ko.md) → 지속 60fps |
 | [PC Engine](cores/pce/README.md) | 조사 대기 | 구현·실기 성공 없음 | NES 이후 범위·자원 검토 |
 
 MMC577 실기에서 실행과 메뉴 복귀가 정상이고 개선 체감이 보고됐다. 한 실행은 60.08초에 838화면(13.95fps), 5–55초 13.86fps다. MMC558 대비 5–40초는 13.66→13.77fps, 40–55초는 13.87→14.07fps로 소폭 증가했다. 동일 장면의 인과적 가속률은 아니다. [실기 비교](docs/nes-hardware578-results.ko.md)
