@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-현재 브랜치는 codex/nes-whole-budget-580 / PR151이다. PR150 병합 `588fa177ed1a82056a5cc86813506c3f2024cc70` 확인 뒤 분기했다. [581 본문·순서 조사](../../docs/nes-body581-results.ko.md), [580 전체 비용표](../../docs/nes-whole580-results.ko.md), [선택 manifest](../../analysis/whole580-manifest.json)를 먼저 읽는다.
+현재 브랜치는 codex/nes-whole-budget-580 / PR151이다. PR150 병합 `588fa177ed1a82056a5cc86813506c3f2024cc70` 확인 뒤 분기했다. [582 ABI 예산](../../docs/nes-abi582-results.ko.md), [581 본문·순서 조사](../../docs/nes-body581-results.ko.md), [580 전체 비용표](../../docs/nes-whole580-results.ko.md), [선택 manifest](../../analysis/whole580-manifest.json)를 먼저 읽는다.
 
 ## 현재 작업
 
@@ -19,7 +19,7 @@ MMC577 실기에서 실행과 메뉴 복귀가 정상이고 개선 체감이 보
 ## 다음 작업 순서
 
 1. R1은580 전체비용표와581 제한 조사로 결측을 명시하고 마감했다. 53개 입력·106D1경계·3378E1 publish/load/ACK와 map/palette/OAM 복원을 대조했다. 물리 ROM/capture/입력 지연·대표 장면·clean-clone 전체실행은 여전히 미완료다. 같은 분석을 반복하지 않는다.
-2. 다음 R2: 입력 section/block와 더 작은 map 변경 단위의 소비 ABI를 함께 비교한다. 581의reuse+재포장 가정도 밀집4118.8/4122B로 잠정3937.5B를 넘는다. base/skip/CRC/coverage·STOP/cold·실제삭제·RAM포트/Flash/LE 예산을 포함하고,514/515 생략바이트 재순회나 국소DMA/poll로 우회하지 않는다.
+2. R2의582 A/B/C는 제품 미선정이다. C의 밀집 평균wire11.81ms에도 직렬IO16.45ms,95420.81ms로 나머지 처리 예산을 입증하지 못했다. 다음은951/954의 유효한base주소와 소비/credit/plan 응답을 같은 transaction에 결합해 기존 호출을 실제 대체할 한 설계다. producer 이력/독립 검사·STOP/cold·실제 삭제·RAM포트/Flash/LE 예산을 넣고582packet/poll 변형이나514 재순회로 우회하지 않는다.
 3. R3: 후보 하나만 구현·동일입력/두위상·대표장면 검증. 같은 가설 두 변형에 종단 이득이 없으면 새 증거 전까지 보류한다. 안정성 보완은 성능과 별도 판정한다.
 4. R4: 의미 있는 후보만 고유파일명/RESTORE없이 실기. 5–40/40–55초, STOP·독립검사·최종ACK·VBlank·메뉴 유지. 외부IO/capture/지속60fps는 별도 미완료다.
 
