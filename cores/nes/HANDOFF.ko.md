@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-실기 MMC558과 개발 기준 572 START 단독을 유지한다. 575에서 남은 STA를 CDC 첫 단·유지 데이터·진단·reset으로 분류했다. 새 FIT/RTL 변경은 없다. [PR149](../../docs/progress/pr-149.md) · [575 결과와 다음 제약/진단 경계](../../docs/nes-boundary575-results.ko.md) · [MMC558 실측](../../docs/nes-hardware559-results.ko.md)
+실기 MMC558, 조건부 개발 후보 576이다. 진단·host reset을 수정하고 정확 CDC 제약으로 내부 STA를 통과했다. 단일 FIT 15,260LE·51M9K, 최소 setup +0.045ns이며 외부 IO와 실기 검증은 남는다. 두 위상 표시·ACK 동일. [PR149](../../docs/progress/pr-149.md) · [576 결과와 다음 gate](../../docs/nes-cdc576-results.ko.md) · [MMC558 실측](../../docs/nes-hardware559-results.ko.md)
 
 ## 최신 실기와 비교 기준
 
@@ -18,10 +18,10 @@ MMC558 실기에서 두 번 모두 실행과 메뉴 복귀에 성공했다. 저�
 
 ## 다음 작업 순서
 
-1. 검증된 CDC 첫 단과 held-data의 모든 비트·정확한 끝점·물리 지연 예산을 확정해 MMC558/572를 동일한 제약으로 비교한다. 원래 raw STA를 보존한다. 573/574 epoch 배치·직렬화 반복은 종료한다.
-2. 진단 snapshot[31]의 raw bus_drive와 reset sampler/host_ready를 별도로 검증한다. 물리 OE와 STOP의 즉시 차단을 유지하고 blanket 예외를 추가하지 않는다.
-3. 실제 남은 같은 클록 데이터/정상 reset 해제 위반에 한해 RTL을 수정하고 범위 확정 뒤 전체 FIT한다. STOP·두 슬롯·첫 capture/cache/plan 및 두 위상 952·957과 마지막 ACK를 확인한 뒤 전달을 판정한다.
-4. 전달 시 완료 [5,40)/[40,55), 합계 [5,55) 집계를 유지하고 RESTORE를 제외한다. 실기 MMC558과 같은 동선으로 비교한다.
+1. 576의 168MHz load_end→remaining[0] setup +0.045ns 경로를 실제 적재/START 의미와 대조한다. 572보다 작아진 여유를 seed 반복으로 해결하지 않는다.
+2. 정확 CDC 제약·다음 동기화 단 검사와 외부 IO 미제약 54input/57output을 구분한다. raw STA와 최종 STA를 모두 보존하고, 기존 제한 실기 기준에 따라 전달 여부를 판정한다.
+3. STOP·두 슬롯·독립 검사·최종 ACK·VBlank 및 952·957 최종 대기 0회를 유지한다. 고정 도착 재생을 새 전체 공동 실행이나 실기 성능으로 해석하지 않는다.
+4. 전달 시 파일명을 갱신하고 완료 [5,40)/[40,55), 합계 [5,55) 집계와 RESTORE 제외를 유지한다. 보드·SD 연결을 요청하지 않고 사용자가 설치한다.
 
 512·514의 제외 근거는 [전송 형식 비교](../../docs/nes-transfer512-results.ko.md)와 [해당 PR 기록](../../docs/progress/pr-141.md)에 남아 있다.
 

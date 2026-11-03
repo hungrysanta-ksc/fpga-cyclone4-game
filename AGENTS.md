@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR149 / 575. docs/nes-boundary575-results.ko.md와 docs/progress/pr-149.md를 먼저 읽는다. 실기 MMC558, 개발 572 START 단독. 575는 기존 배치 CDC/reset 감사: setup375행 모두 NES 교차, chain70개 양수, held-data 임시 예산 통과. RTL/보드SDC/SOF 변경·새FIT 없음. 다음은 정확한 CDC 제약의 MMC558/572 동일 비교와 진단 snapshot/reset sampler 경계. epoch 배치·직렬화 반복/blanket 예외 금지.
+- PR149 / 576. docs/nes-cdc576-results.ko.md와 docs/progress/pr-149.md를 먼저 읽는다. 실기 MMC558, 개발 후보 576(572 START+진단 2단+공유 host reset). 단일 FIT15260LE/51M9K; 동일 정확 CDC 정책에서 음수 내부 STA0, setup+.045/hold+.140/recovery+2.364ns. 77chain/231finitepair 검증; raw STA 별도 보존/외부IO54in57out 미제약. STOP/두 슬롯/고장/두 위상53표시·952957최종대기0·ACK 동일. host 최초수락+23.808ns. 다음168MHz load_end→remaining[0] 여유와 외부IO/제한 전달 gate; epoch/seed반복 금지.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 
