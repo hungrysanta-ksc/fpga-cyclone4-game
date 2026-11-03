@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-실기는 MMC558, 다음 개발 기준은 572 START 단독이다. 0°C epoch 첫 단과 STOP 뒤 첫 generation을 함께 확인한다. [PR149](../../docs/progress/pr-149.md) · [572 비교](../../docs/nes-start572-results.ko.md) · [MMC558 실측](../../docs/nes-hardware559-results.ko.md)
+실기 MMC558과 개발 기준 572 START 단독을 유지한다. STOP 뒤 첫 수락을 확인했다. 다음은 초기화 중 32비트 identity 전송 비용이다. [PR149](../../docs/progress/pr-149.md) · [573 결과](../../docs/nes-epoch573-results.ko.md) · [MMC558 실측](../../docs/nes-hardware559-results.ko.md)
 
 ## 최신 실기와 비교 기준
 
