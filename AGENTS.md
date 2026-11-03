@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR149 / 578 실기. docs/nes-hardware578-results.ko.md와 analysis/hardware578-mmc577.json FIRST. MMC577 실행·메뉴 정상, 838/60.08초13.95fps; 완료5–40초482/13.77fps,40–55초211/14.07fps,합13.86fps(558대비+1.02%,동일장면인과율아님). 수신19.89/계획14.83/출력36.37ms. 839번째ordinary section2미완료·pending1/window3/sink2/result1;838EA만표시집계. 576FPGA/ARM577고정,새ZIP/FIT없음. NEXT 출력공급/DMA/SEAL후VBlank분리·같은작업량두위상;양수timer/epoch/seed반복금지. 외부IO미완료.
+- PR150 / 579 회고·계획만. PR149 master병합6094a7cff6995981bea4f55be7f4ce6e27a81e06 확인. docs/nes-retrospective579.ko.md + docs/nes-retrospective579-plan.json FIRST;499/504의현재NEXT를대체. 실기MMC577 13.95fps/5–55초13.86fps고정. 조회D0/E0/E8제외관측wire18.18ms(현재작업량투영),60Hz전체예산미통과. R0완료/다음R1기존자료전체비용표→R2구조·실제삭제예산→R3한후보→R4실기. R2전국소DMA/poll구현금지. STOP·독립검사·최종ACK·VBlank·메뉴보존;양수timer/epoch/seed반복금지. 이번제품소스/합성/시뮬레이션/ZIP변경없음.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 

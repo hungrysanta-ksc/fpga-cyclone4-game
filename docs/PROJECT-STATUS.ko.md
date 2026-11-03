@@ -27,7 +27,7 @@ MMC577 실기에서 실행과 메뉴 복귀가 정상이고 개선 체감이 보
 | ARM577 전달본 | firmware 212,908B / Flash 여유 84B / BSS 18,592B |
 | MMC577의 60Hz 평균 격차 | 71.69−16.67 ≈ 55.03ms/표시 |
 | MMC577 단계 평균 | 수신 19.89 / 계획·공급 14.83 / 출력·최종 ACK 36.37ms/표시 |
-| 다음 작업 | 두 뱅크 일정에서 952의 SEAL 전 공급과 실제 DMA·최종 대기를 나눠 본다. [실기 비교](nes-hardware578-results.ko.md) |
+| 다음 작업 | [579 보완 계획](nes-retrospective579-plan.json): 전체 비용표→본문 전송·역할/삭제 예산→한 후보. 조회 제외 wire 관측 투영18.18ms; 추가 국소 구현 전60Hz예산 검토 |
 | 미완료 | 지속60fps·장면별/p95·NES 실시간 속도·capture 무손실·MMC4/5·제품 공개 |
 
 [509 전달본](../analysis/service509-package.json)은 ROM/save/RESTORE 없이 제작한 불변 스냅샷이다. 이번 수신 분석에서 새 firmware·ZIP·합성은 만들지 않았다. [MMC502 실기10.59fps](nes-hardware503-results.ko.md)는 복구·비교 기준으로 보존한다.
