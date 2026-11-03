@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-현재 브랜치는 codex/nes-whole-budget-580 / PR151이다. PR150 병합 `588fa177ed1a82056a5cc86813506c3f2024cc70` 확인 뒤 분기했다. [584 transport 비용](../../docs/nes-transport584-results.ko.md), [583 행·진행 응답](../../docs/nes-row583-results.ko.md), [582 ABI 예산](../../docs/nes-abi582-results.ko.md), [581 본문·순서 조사](../../docs/nes-body581-results.ko.md), [580 전체 비용표](../../docs/nes-whole580-results.ko.md), [선택 manifest](../../analysis/whole580-manifest.json)를 먼저 읽는다.
+현재 브랜치는 codex/nes-whole-budget-580 / PR151이다. PR150 병합 `588fa177ed1a82056a5cc86813506c3f2024cc70` 확인 뒤 분기했다. [585 교체·RAM 예산](../../docs/nes-ownership585-results.ko.md), [584 transport 비용](../../docs/nes-transport584-results.ko.md), [583 행·진행 응답](../../docs/nes-row583-results.ko.md), [582 ABI 예산](../../docs/nes-abi582-results.ko.md), [581 본문·순서 조사](../../docs/nes-body581-results.ko.md), [580 전체 비용표](../../docs/nes-whole580-results.ko.md), [선택 manifest](../../analysis/whole580-manifest.json)를 먼저 읽는다.
 
 ## 현재 작업
 
@@ -19,7 +19,7 @@ MMC577 실기에서 실행과 메뉴 복귀가 정상이고 개선 체감이 보
 ## 다음 작업 순서
 
 1. R1은580 전체비용표와581 제한 조사로 결측을 명시하고 마감했다. 53개 입력·106D1경계·3378E1 publish/load/ACK와 map/palette/OAM 복원을 대조했다. 물리 ROM/capture/입력 지연·대표 장면·clean-clone 전체실행은 여전히 미완료다. 같은 분석을 반복하지 않는다.
-2. R2의 584 transport 단독 후보는 보류했다. 실제 M4 호출 86–120→57–71회와 18개 거절을 확인했지만 전송량 +841–919B, Flash +444B(한도 360B 초과), 255/256B payload의 259B driver 비호환이 남았다. IRQ·ROM·65816·2슬롯은 모델/미실행이다. 다음은 section/row decoder·공통 진행 직접 소비·SPI RX 소유권을 함께 바꿀 실제 삭제 예산이다. Flash 순증가 84B 이내, E9 suffix·259B 한도·RAM/IRQ stack·생산자 이력·독립 검사를 먼저 확인하고, 성립한 한 후보만 구현한다. 현재577은 표시 ACK/EA 뒤 다음 입력 poll을 실행하며 과거498의 overlap을 가정하지 않는다. padding/poll 미세조정과 불변 FIT는 반복하지 않는다.
+2. 585에서 교체 예산을 확정했다. 기존1434B packet과166B 응답 adapter를 교체하되1112B 의미검사를 유지한다. 248B rowkernel과584 초과를 반영한 나머지 새 코드 상한은992B이며 순삭제 실측이 아니다. 기존 prefix+2297B raw shadow+140B stale+259B RX+8B scratch 예약은2708B이고 caller/IRQ/독립 검사 전2144B가 남는다. 참조106개에서 밀집675B 순 생략을 유지했다. 다음 한 번은 section/row·공통 응답 직접 소비·RX·history의 bounded ARM 전체 링크 비용 시험이다. Flash212992B와 실제 stack/identity/손상검사를 넘으면 역할/범위를 수정한다. E9 suffix·259B 한도·STOP·최종ACK를 유지하며 새 전체FIT/실기 전달은 아직 아니다.
 3. R3: 후보 하나만 구현·동일입력/두위상·대표장면 검증. 같은 가설 두 변형에 종단 이득이 없으면 새 증거 전까지 보류한다. 안정성 보완은 성능과 별도 판정한다.
 4. R4: 의미 있는 후보만 고유파일명/RESTORE없이 실기. 5–40/40–55초, STOP·독립검사·최종ACK·VBlank·메뉴 유지. 외부IO/capture/지속60fps는 별도 미완료다.
 
