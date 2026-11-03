@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-현재 브랜치는 codex/nes-whole-budget-580이다. PR150 병합 `588fa177ed1a82056a5cc86813506c3f2024cc70` 확인 뒤 분기했다. [580 전체 비용표](../../docs/nes-whole580-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 먼저 읽는다.
+현재 브랜치는 codex/nes-whole-budget-580 / PR151이다. PR150 병합 `588fa177ed1a82056a5cc86813506c3f2024cc70` 확인 뒤 분기했다. [581 본문·순서 조사](../../docs/nes-body581-results.ko.md), [580 전체 비용표](../../docs/nes-whole580-results.ko.md), [선택 manifest](../../analysis/whole580-manifest.json)를 먼저 읽는다.
 
 ## 현재 작업
 
@@ -18,8 +18,8 @@ MMC577 실기에서 실행과 메뉴 복귀가 정상이고 개선 체감이 보
 
 ## 다음 작업 순서
 
-1. R1: 580에서 기존53개·두 위상의104간격 비용 합계와577 산출물 고정을 완료했다. 다음은 한 차례의 제한된 section별 바이트·실제 변경량·generation/준비/SEAL/ACK 연결 및 누락 계측 비용 확인이다. 물리 ROM/capture/입력 지연 결측은 숨기지 않는다. D2 로그 start 오류는 실행 상태를 바꾸지 않고 수정했으며 원본 자료는 보존한다. 전체 R1은 진행 중이다.
-2. R2: 조회 제외5963.90B/18.18ms 관측 투영을 기준으로 반복 본문 제거·출력 이력 구조의 전송/시간/실제삭제·자원 예산을 비교한다. 전체예산이 성립하기 전에 국소DMA/poll 후보를 구현하지 않는다.
+1. R1은580 전체비용표와581 제한 조사로 결측을 명시하고 마감했다. 53개 입력·106D1경계·3378E1 publish/load/ACK와 map/palette/OAM 복원을 대조했다. 물리 ROM/capture/입력 지연·대표 장면·clean-clone 전체실행은 여전히 미완료다. 같은 분석을 반복하지 않는다.
+2. 다음 R2: 입력 section/block와 더 작은 map 변경 단위의 소비 ABI를 함께 비교한다. 581의reuse+재포장 가정도 밀집4118.8/4122B로 잠정3937.5B를 넘는다. base/skip/CRC/coverage·STOP/cold·실제삭제·RAM포트/Flash/LE 예산을 포함하고,514/515 생략바이트 재순회나 국소DMA/poll로 우회하지 않는다.
 3. R3: 후보 하나만 구현·동일입력/두위상·대표장면 검증. 같은 가설 두 변형에 종단 이득이 없으면 새 증거 전까지 보류한다. 안정성 보완은 성능과 별도 판정한다.
 4. R4: 의미 있는 후보만 고유파일명/RESTORE없이 실기. 5–40/40–55초, STOP·독립검사·최종ACK·VBlank·메뉴 유지. 외부IO/capture/지속60fps는 별도 미완료다.
 

@@ -39,7 +39,7 @@ PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole
 
 ## 4. 개발 재개 후 순서
 
-1. [579 계획](../nes-retrospective579-plan.json)의 R1 기존자료 분석은580에서 완료했다. 다음은 선택 fixture의 section별 바이트/변경량과 generation/준비/SEAL/ACK 연결을 확인하는 한 차례의 제한 조사다. 계측 overhead를 산정하고 물리 ROM/capture/입력 지연 결측을 숨기지 않는다. 전체분석/같은FIT를 다시 돌리지 않는다.
+1. [579 계획](../nes-retrospective579-plan.json)의 R1은580 전체비용표와 [581 제한 조사](../nes-body581-results.ko.md)로 마감했다. 원본278개는로컬 `probes/nes-body581/evidence01.zip`, 공개 Git에는 해시·비용·순서만 있다. 물리 ROM/capture/입력 지연·대표장면·clean-clone 전체실행 결측을 유지하고 같은 분석/FIT를 반복하지 않는다.
 2. R2에서 본문 전송 감소·전체 critical path·실제 삭제·자원 예산을 함께 통과한 후보만 R3 구현으로 진행한다. 양수 timer/epoch/seed 및 국소 DMA/poll 반복은 재개하지 않는다.
 3. R4는 의미 있는 후보만 실기 전달한다. 5–40/40–55초 완료 집계와 독립 검사·STOP·최종ACK·VBlank·메뉴복귀를 유지하며 시작 실패는 별도 보존한다.
 4. 각 단계 완료 때 579 계획의 상태·증거·예산·다음 한 단계를 함께 갱신한다. 오래된 계획의 미완료 상태를 방치하지 않는다.

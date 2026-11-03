@@ -11,6 +11,8 @@
 
 ## 현재 작업 범위
 
+- 581 / PR151 samebranch. FIRST docs/nes-body581-results.ko.md + docs/nes-retrospective579-plan.json. R1 마감(물리capture/NES진행/입력지연·밀집ROM/대표장면결측명시),다음R2 결합ABI·실제삭제·RAM포트예산. 53sealed입력/106D1경계/3378E1 publish-load-ACK 대조. 입력map1914→2571.88B,출력map96.8%같지만whole packet재사용0;reuse+재포장밀집4118.8/4122B>3937.5B(새검사/조회/gap전). inputsection/block+map소비 공동교체우선,514/515 재순회/국소poll재개금지. 순삭제0/FW·RTL·SDC·FIT·전체sim·ZIP없음/MMC577유지. analysis/body581-verification.json;로컬278파일evidence01.zip해시공개.
+
 - 580 / PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인. codex/nes-whole-budget-580. FIRST docs/nes-whole580-results.ko.md + docs/nes-retrospective579-plan.json. R1 기존자료 분석완료/누락계측전. MMC577 고정,75FPGA입력/414ARM파일 manifest,104간격 합계일치. 907–957 평균70.477/71.125ms,SEAL뒤DMA .993/.996ms,출력→SEAL21.632/21.669ms는 모델. D2 final start 로그덮어쓰기만수정/8조건 state동일;raw불변/SPI전체span null. NEXT 한차례 section본문·변경량·generation/준비/SEAL/ACK 연결 및 계측비용;R2 전체예산전 국소최적화금지. 제품RTL/FW/SDC/새FIT/전체sim/ZIP없음. 579가아래역사NEXT보다우선.
 
 - PR150 / 579 회고·계획만. PR149 master병합6094a7cff6995981bea4f55be7f4ce6e27a81e06 확인. docs/nes-retrospective579.ko.md + docs/nes-retrospective579-plan.json FIRST;499/504의현재NEXT를대체. 실기MMC577 13.95fps/5–55초13.86fps고정. 조회D0/E0/E8제외관측wire18.18ms(현재작업량투영),60Hz전체예산미통과. R0완료/다음R1기존자료전체비용표→R2구조·실제삭제예산→R3한후보→R4실기. R2전국소DMA/poll구현금지. STOP·독립검사·최종ACK·VBlank·메뉴보존;양수timer/epoch/seed반복금지. 이번제품소스/합성/시뮬레이션/ZIP변경없음.
