@@ -1,5 +1,7 @@
 # 584: 실제 ARM transport 교체의 비용 판정
 
+> 587 연결 감사: 이 문서의 입력4packet source는 시험 모델이다. 고정 MMC577 RTL은256B 단일 sealed block+96bit mailbox다. 기능 결과의 범위는 유지하며 모델 생산 일정·버퍼 여유를 보드에 승계하지 않는다. [실제 연결과 다음 판정](nes-ownership587-results.ko.md)
+
 **transport만 바꾸는 후보는 채택하지 않는다.** 링크된 MMC577 ARM 코드에서 D0/D2/E0/E8 호출을 제거했지만, 시험 전송량이 증가했고 Flash는 배포 한도를 360B 초과했다. 255–256B 입력 payload도 기존 SPI 드라이버 한도와 맞지 않는다. 실기 기준은 MMC577 그대로이며 새 ZIP은 없다.
 
 [검증·해시·비용](../analysis/transport584-verification.json) · [현재 계획](nes-retrospective579-plan.json) · [앞선 583 조사](nes-row583-results.ko.md)

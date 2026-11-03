@@ -1,5 +1,7 @@
 # 586: section 수신·공통 응답·shared RX의 실제 ARM 결합
 
+> 587 연결 감사: 이 문서의 입력4packet source는 시험 모델이다. 고정 MMC577 RTL은256B 단일 sealed block+96bit mailbox다. 기능 결과의 범위는 유지하며 모델 생산 일정·버퍼 여유를 보드에 승계하지 않는다. [실제 연결과 다음 판정](nes-ownership587-results.ko.md)
+
 **이 결합안은 채택하지 않는다.** 585에서 정한 필수 경계를 실제 ARM에 연결했지만 최종 펌웨어가 213852B로 212992B 한도를 **860B 초과**했다. 출력 이력·planner 변경·retained-bank 손상 검사를 추가하기 전의 결과다. 이 나머지 작업과 FPGA/전체 FIT로 확대하지 않고 585의 비용 중단 기준을 적용한다.
 
 [검증·비용 JSON](../analysis/combined586-verification.json) · [585 교체 예산](nes-ownership585-results.ko.md) · [현재 계획](nes-retrospective579-plan.json)
