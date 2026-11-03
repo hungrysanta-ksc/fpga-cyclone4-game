@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-현재 브랜치는 codex/nes-whole-budget-580 / PR151이다. PR150 병합 `588fa177ed1a82056a5cc86813506c3f2024cc70` 확인 뒤 분기했다. [589 실제 source 결과](../../docs/nes-source589-results.ko.md), [588 source 예산](../../docs/nes-source588-results.ko.md), [587 검사 소유권](../../docs/nes-ownership587-results.ko.md), [586 실제 ARM 결합](../../docs/nes-combined586-results.ko.md), [585 교체·RAM 예산](../../docs/nes-ownership585-results.ko.md), [584 transport 비용](../../docs/nes-transport584-results.ko.md), [583 행·진행 응답](../../docs/nes-row583-results.ko.md), [582 ABI 예산](../../docs/nes-abi582-results.ko.md), [581 본문·순서 조사](../../docs/nes-body581-results.ko.md), [580 전체 비용표](../../docs/nes-whole580-results.ko.md), [선택 manifest](../../analysis/whole580-manifest.json)를 먼저 읽는다.
+현재 브랜치는 codex/nes-whole-budget-580 / PR151이다. PR150 병합 `588fa177ed1a82056a5cc86813506c3f2024cc70` 확인 뒤 분기했다. [590 역할·요청 비용](../../docs/nes-roles590-results.ko.md), [589 실제 source 결과](../../docs/nes-source589-results.ko.md), [588 source 예산](../../docs/nes-source588-results.ko.md), [587 검사 소유권](../../docs/nes-ownership587-results.ko.md), [586 실제 ARM 결합](../../docs/nes-combined586-results.ko.md), [585 교체·RAM 예산](../../docs/nes-ownership585-results.ko.md), [584 transport 비용](../../docs/nes-transport584-results.ko.md), [583 행·진행 응답](../../docs/nes-row583-results.ko.md), [582 ABI 예산](../../docs/nes-abi582-results.ko.md), [581 본문·순서 조사](../../docs/nes-body581-results.ko.md), [580 전체 비용표](../../docs/nes-whole580-results.ko.md), [선택 manifest](../../analysis/whole580-manifest.json)를 먼저 읽는다.
 
 ## 현재 작업
 
@@ -19,7 +19,7 @@ MMC577 실기에서 실행과 메뉴 복귀가 정상이고 개선 체감이 보
 ## 다음 작업 순서
 
 1. R1은580 전체비용표와581 제한 조사로 결측을 명시하고 마감했다. 53개 입력·106D1경계·3378E1 publish/load/ACK와 map/palette/OAM 복원을 대조했다. 물리 ROM/capture/입력 지연·대표 장면·clean-clone 전체실행은 여전히 미완료다. 같은 분석을 반복하지 않는다.
-2. 589 실제 RTL은 source RAM·canonicalCRC·69bit byte mailbox·host 단일256B/D0–D3를 연결해53입력282packet·STOP/클록정지/오류8조건을 통과했다. 하지만 같은 경계LiteMAP1668→4014LE(+2346)로 실패해 ARM 확장을 중단했다. RAM은 M9K로 추론됐고 generic source의 주소/폭/복귀 제어가 커졌다. FSM 속성/opcode/seed 반복은 하지 않는다. 다음은 ARM이 row 재사용을 결정하고 FPGA가 고정행 요약·요청범위·canonicalCRC를 공급하는 역할의 비용 조사다. 추가SPI/driver·cold/요약불일치 전체행복구·ARM Flash/이력/stack·독립검사/epoch/credit/CDC/STOP·nonmap/출력잔여를53입력에서 함께 계산한 뒤에만 구현을 결정한다. 요약hash는 독립검사 대체가 아니다. R3/실기후보 미선정,MMC577 유지. [589 결과](../../docs/nes-source589-results.ko.md)
+2. [590 역할 비용 조사](../../docs/nes-roles590-results.ko.md): ARM이 8B 행 CRC32+양끝 값으로 same/shift를 판정하고 FPGA는 고정행·CRC만 공급하는 안을 53입력/20참조조건으로 검토했다. 묶음 HELLO/REQUEST/확인·nonmap 포함 dense I/O14.066→6.775ms, warm13.294→6.520ms; one repair+8.716ms와 계산/IRQ/ROM은 별도다. 기존577 M4 CRC32 256update가 일치하며 이미 링크된 표를 재사용할 수 있다. 같은 CRC16 요약+최종검사의 blindspot 반례를 보존했다. 다음은 8B안의 old packet/BEGIN/nonmap·source/host 실제 삭제표와 짝지은 전체 ARM link/local MAP 비용 gate다. 순Flash≤84B·순LE<0·scratch≤1M9K를 입증한 경우만 실제 두 위상/첫BG/마지막ACK 결합으로 간다. 16B/행별왕복/589범용FSM은 재개하지 않는다. 새RTL·FW·합성·표시시간 증거는 없으며 MMC577/R3미선정/README/ZIP을 유지한다.
 3. R3: 후보 하나만 구현·동일입력/두위상·대표장면 검증. 같은 가설 두 변형에 종단 이득이 없으면 새 증거 전까지 보류한다. 안정성 보완은 성능과 별도 판정한다.
 4. R4: 의미 있는 후보만 고유파일명/RESTORE없이 실기. 5–40/40–55초, STOP·독립검사·최종ACK·VBlank·메뉴 유지. 외부IO/capture/지속60fps는 별도 미완료다.
 

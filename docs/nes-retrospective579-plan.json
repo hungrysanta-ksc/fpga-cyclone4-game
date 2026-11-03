@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-whole-budget-580",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 589,
-  "current_evidence": "analysis/source589-verification.json",
+  "current_step": 590,
+  "current_evidence": "analysis/roles590-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -82,10 +82,10 @@
     },
     {
       "id": "R2",
-      "status": "source_area_failed_role_reselection_required",
+      "status": "role_cost_audit_complete_target_deletion_unproven",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "One R2 role/protocol cost audit before more implementation: compare ARM-owned row reuse decision with FPGA fixed-row summary/request-range/canonicalCRC supply against pinned577. Must actually delete589 frame-base/three-shift/generic block/return control, price all SPI requests/replies/driver, cold and mismatched-summary full-row fallback, ARM Flash/history/stack, CRC integrity/epoch/credit/CDC/STOP and nonmap+output residual costs on53inputs. Summary hashes are not independent integrity substitutes or collision-free. No589 FSM/opcode/seed tuning, ARM expansion, wholeFIT or ZIP. If no whole budget, reconsider role/support scope rather than another source adapter.",
+      "next_single_gate": "Bounded R2 paired deletion feasibility for8B CRC32+edges and one request bitmap, NOT product selection: map exact old ARM packet/BEGIN/semantics and source/host byte-format control to replacement while retaining577nonmap; reuse existingCRC32 table. One actual fullARM link and sameboundary LiteMAP cost check only with explicit deletion ledger; netFlash<=84B/netLE<0/scratch<=1M9K. Fail either=>stop fullpath expansion. Pass=>immutablequery/cold/repair/STOP/clockstop and actualARM/IRQ/ROM/65816 two-phase retiming including firstBG and finalACK/EA. Whole60Hz budget still required beforeR3/FIT/ZIP; no16BtripleCRC/per-rowrequests/589generic/FSM/opcode/seed loops.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -128,7 +128,8 @@
         "584 transport-only with old record parser",
         "586 new section admission wrapping old logical_record control; history expansion stopped on Flash gate",
         "587 treating logical_record1136B as free deletion or modeled4packet source buffer as deployed577",
-        "589 generic FPGA row/base+section source execution: actual functionalPASS, sameboundaryLE+2346; no ARM expansion or isolated FSM tuning"
+        "589 generic FPGA row/base+section source execution: actual functionalPASS, sameboundaryLE+2346; no ARM expansion or isolated FSM tuning",
+        "590 threeCRC16B summaries and per-row roundtrips; replace with ARM candidate hashing over one8B summary. No cached digest as sole retained-RAM integrity check."
       ],
       "587_result": "Check ownership complete: actual linked586 455value cases,4admission counterexamples,22META/END/COMMIT controls and2query-CRC reference counterexamples PASS.6hash-pinned board files show single256B source block+96bit mailbox, not prior4packet producer model.213852-1136 leaves only276B under cap before replacement semantics/history;2124B RAM before callers/IRQ/integrity. Direct-executor-only rescue unpriced/rejected as selection basis; no new firmware/RTL/timing.",
       "587_evidence": [
@@ -149,16 +150,25 @@
       ],
       "input_feasibility_budgets": {
         "source_mailbox_host_region_LE_max": 1581,
-        "additional_M9K_max": 3,
-        "ARM_direct_replacement_arithmetic_B_max": 2630,
+        "additional_M9K_max": 1,
+        "ARM_direct_replacement_arithmetic_B_max": 1518,
         "firmware_B_max": 212992,
-        "measured_new_cost": false
+        "measured_new_cost": false,
+        "ceiling_scope": "590 retains logical_record semantics;1434B packet replacement+84B only IF fully deleted. Earlier2630B bound not applicable.",
+        "net_LE_target": "negative vs pinned577 same boundary; not merely lower than rejected589",
+        "ARM_state_scratch_design_ceiling_B": 160
       },
       "589_result": "Actual source3072x8 RAM/canonicalCRC/frozen586 blocks/69bit byte mailbox/host single256B D0-D3:53inputs282packets+8STOP/clockpause/POP/stalePREPARE guards PASS. Equal-boundary LiteMAP final1668->4014LE(+2346),1311->3517comb(+2206),794->1370FF,2048->26624RAMbits. RAM inferredM9K, not FF fallback. Source main state not FSM extracted; generic return/width/address selection costs remain. REJECT589/stopARMexpansion; no wholeFIT/STA/newFPS/ZIP.",
       "589_evidence": [
         "analysis/source589-verification.json",
         "analysis/source589-archive.json",
         "docs/nes-source589-results.ko.md"
+      ],
+      "590_result": "53pinned exact map reconstructions/20reference guards; sameCRC16 row/fullstream collision counterexample. Existing577M4 CRC32 function256updatesPASS,20B+already-linked1024Btable,6instructions/update notcycles. ARM same/shift decisions using8B wholeCRC32+edges;FPGA oneCRC32/nohistory. DenseIO14.066->6.775,warm13.294->6.520,cold13.223->12.353ms includesHELLO/REQUEST/D0confirm andretainednonmap;repair+8.716ms. Newdriver usesD3mean sensitivity;actual compute/IRQ/ROM/firstBG/ACK/newarea unknown. No product/RTL/link/MAP/FIT/ZIP change.",
+      "590_evidence": [
+        "analysis/roles590-verification.json",
+        "docs/nes-roles590-results.ko.md",
+        "tools/analyze_nes_roles590.py"
       ]
     },
     {
