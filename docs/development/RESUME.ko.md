@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [585 결과](../nes-ownership585-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 실제 ARM transport 제한 시험·전체 링크 비용을 확인했다. 예산 초과 후보를 보류했으며 제품 선택은 바꾸지 않았다. 선택 산출물과 실측은 MMC577을 유지한다.
+PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [586 결과](../nes-combined586-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 실제 ARM transport 제한 시험·전체 링크 비용을 확인했다. 예산 초과 후보를 보류했으며 제품 선택은 바꾸지 않았다. 선택 산출물과 실측은 MMC577을 유지한다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -40,7 +40,7 @@ PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole
 ## 4. 개발 재개 후 순서
 
 1. [579 계획](../nes-retrospective579-plan.json)의 R1은580 전체비용표와 [581 제한 조사](../nes-body581-results.ko.md)로 마감했다. 원본278개는로컬 `probes/nes-body581/evidence01.zip`, 공개 Git에는 해시·비용·순서만 있다. 물리 ROM/capture/입력 지연·대표장면·clean-clone 전체실행 결측을 유지하고 같은 분석/FIT를 반복하지 않는다.
-2. [585 R2 결과](../nes-ownership585-results.ko.md): 585에서 교체 예산을 확정했다. 기존1434B packet과166B 응답 adapter를 교체하되1112B 의미검사를 유지한다. 248B rowkernel과584 초과를 반영한 나머지 새 코드 상한은992B이며 순삭제 실측이 아니다. 기존 prefix+2297B raw shadow+140B stale+259B RX+8B scratch 예약은2708B이고 caller/IRQ/독립 검사 전2144B가 남는다. 참조106개에서 밀집675B 순 생략을 유지했다. 다음 한 번은 section/row·공통 응답 직접 소비·RX·history의 bounded ARM 전체 링크 비용 시험이다. Flash212992B와 실제 stack/identity/손상검사를 넘으면 역할/범위를 수정한다. E9 suffix·259B 한도·STOP·최종ACK를 유지하며 새 전체FIT/실기 전달은 아직 아니다.
+2. [586 R2 결과](../nes-combined586-results.ko.md): 586의 결합 ARM 시험은 기능 검사를 통과했지만 FW213852B로860B 초과했다. section/row·공통 응답 직접 소비·shared RX만으로 넘었으므로 출력 history/planner/retained-bank 검사 확장은 중단했다. 선택patch02/ARM02/test03은 비배포용이다. 다음은 검사 소유권 결정: 기존 encoded BEGIN/logical_record 제어를 실제 삭제하되 의미·required-tag·canonicalCRC·COMMIT·STOP·최종ACK 조건을 section/값 실행기에 대응시킨다. 기존 검사1112B를 공짜 삭제로 세거나 같은 adapter를 다시 구현하지 않는다. source expected 생산·history/손상검사·실제 stack·wire/조회·FPGA 전체 예산이 안 맞으면 C 역할/지원 범위를 재선택한다. MMC577/실기13.95fps 유지, 새ZIP/FIT없음.
 3. R4는 의미 있는 후보만 실기 전달한다. 5–40/40–55초 완료 집계와 독립 검사·STOP·최종ACK·VBlank·메뉴복귀를 유지하며 시작 실패는 별도 보존한다.
 4. 각 단계 완료 때 579 계획의 상태·증거·예산·다음 한 단계를 함께 갱신한다. 오래된 계획의 미완료 상태를 방치하지 않는다.
 
