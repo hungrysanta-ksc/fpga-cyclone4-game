@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "review": 579,
+  "date": "2026-11-03",
+  "canonical": true,
+  "physical_baseline": "MMC577",
+  "evidence": "analysis/retrospective579.json",
+  "hardware_evidence": "analysis/hardware578-mmc577.json",
+  "package": "analysis/trial577-package.json",
+  "review_document": "docs/nes-retrospective579.ko.md",
+  "supersedes_execution_order": [
+    "docs/nes-audit499-plan.json",
+    "docs/nes-budget504-plan.json",
+    "PR149 NEXT: immediately optimize another output wait"
+  ],
+  "preserve_historical_evidence": true,
+  "implementation_started": false,
+  "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
+  "branch": "codex/nes-retrospective-579",
+  "protected": [
+    "MMC577 selected artifacts",
+    "independent CRC/coverage/identity",
+    "STOP and partial transfer invalidation",
+    "final ACK before history publication and EA",
+    "VBlank",
+    "menu/base recovery",
+    "GBC/save SRAM"
+  ],
+  "current_budget": {
+    "period_ms": 16.666666666666668,
+    "SPI_Hz": 2625000,
+    "wire_capacity_B": 5468.75,
+    "provisional_wire_ms": 12,
+    "provisional_wire_B": 3937.5,
+    "observed_nonquery_B_per_display": 5963.899761336515,
+    "observed_nonquery_wire_ms": 18.175694510739856,
+    "LE_free": 148,
+    "Flash_free_B": 84,
+    "M9K_free": 5,
+    "whole_60Hz_passed": false,
+    "full_IO_signoff": false
+  },
+  "stages": [
+    {
+      "id": "R0",
+      "status": "complete",
+      "scope": "Retrospective and plan only; no product changes",
+      "deliverable": "Current evidence and one canonical plan"
+    },
+    {
+      "id": "R1",
+      "status": "next",
+      "objective": "Reconcile current577 same-workload source/ARM/SPI/IRQ/ROM/two-slot/65816/DMA/display critical path",
+      "reuse": [
+        "542 decomposition methods",
+        "latest verified53-frame two-phase traces",
+        "577 physical counters and artifact hashes"
+      ],
+      "deliverable": [
+        "One selected input/source/tool manifest",
+        "Non-overlapping whole time and byte ledger",
+        "Representative scene coverage and explicitly measured/modelled/unknown fields",
+        "Capture/NES advancement/input latency measurement gaps"
+      ],
+      "gate": "Totals reconcile, no hidden unknown terms; unresolved measurements have bounded method before R2 feasibility signoff",
+      "limit": "One existing-data pass then at most one targeted instrumentation pass; report unresolved boundary instead of more blind runs"
+    },
+    {
+      "id": "R2",
+      "status": "after_R1",
+      "objective": "Select a throughput-feasible structural candidate before implementation",
+      "compare": [
+        "Retained base/geometry delta and redundant input-body removal",
+        "Output history-based transfer omission with no duplicate bytewise reconstruction/check loop",
+        "ROM/early-DMA scheduling only as a combined full-cost term"
+      ],
+      "deliverable": [
+        "Cold/warm/dense transfer bytes including mandatory polls and gaps",
+        "Critical path and overlap ownership",
+        "Actual old code/control deletion list",
+        "Flash/LE/RAM/port/stack and invalidation costs"
+      ],
+      "gate": "Credible provisional12ms wire plus remaining non-overlappable path within16.667ms; budget estimates explicitly not measurements",
+      "stop_rule": "If no candidate fits, revise ABI/roles or document unsupported scope; no immediate opcode/poll/DMA microtuning substitute"
+    },
+    {
+      "id": "R3",
+      "status": "after_R2",
+      "objective": "Implement exactly one chosen replacement against frozen577",
+      "gate": [
+        "Same workload and two start phases plus representative-scene steady interval distribution",
+        "Cold/reuse/missing/duplicate/corruption/STOP/partial transfer/finalACK/VBlank/menu protection",
+        "Actual ARM and65816; quantify modeled ROM/CPI components",
+        "One whole Lite FIT/STA for justified RTL changes; same RTL reuses prior build"
+      ],
+      "stop_rule": "After two unsuccessful variants of one hypothesis, freeze pending new evidence"
+    },
+    {
+      "id": "R4",
+      "status": "after_R3",
+      "objective": "Deliver only meaningful candidates and measure hardware",
+      "gate": [
+        "Unique filenames, no RESTORE/ROM/save",
+        "Completion windows[5,40),[40,55)",
+        "A/B repeats only when needed for causal claims",
+        "Show game advancement/capture/input latency separately from finalACK FPS"
+      ],
+      "sustained60_gate": "Representative dense scenes sustain new-generation display cadence and bounded latency with capture health; no duplicated-frame or partial-model FPS claim"
+    }
+  ],
+  "separate_workstreams": {
+    "performance": "whole throughput and latency",
+    "correctness_timing": "fix proven defects with bounded affected-boundary verification; not counted as FPS gain",
+    "product_signoff": "externalIO and long-run/startup reliability remain explicit, not rerun for each unchanged artifact"
+  },
+  "frozen": [
+    "IsolatedFSM/opcode/seed loops",
+    "Arbitrary extra slack on already positive loader timer",
+    "Epoch serialization without new failure",
+    "Existing firstBG/chunk features redescribed as new",
+    "Repeated full-byte map recheck compression",
+    "Unchanged384KiB/fullboot/wholeFIT repeats"
+  ],
+  "decision_cadence": "Every completed stage updates this plan status, selected evidence, budget and next single gate; README only meaningful product/evidence changes",
+  "MMC4_MMC5_implementation": false,
+  "clean_clone_rebuild_complete": false,
+  "new_installer_required_now": false
+}
