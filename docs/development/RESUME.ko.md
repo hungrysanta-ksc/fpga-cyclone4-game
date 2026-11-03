@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 진행한다. [580 결과](../nes-whole580-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)가 최신이다. 기존자료 분석과 로그 오류 수정만 했으며 제품 구현은 시작하지 않았다. 선택 산출물과 실측은 MMC577을 유지한다.
+PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [583 결과](../nes-row583-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 독립 M4 커널·응답 참조·비용 검증까지 진행했으며 제품 구현은 시작하지 않았다. 선택 산출물과 실측은 MMC577을 유지한다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -40,7 +40,7 @@ PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole
 ## 4. 개발 재개 후 순서
 
 1. [579 계획](../nes-retrospective579-plan.json)의 R1은580 전체비용표와 [581 제한 조사](../nes-body581-results.ko.md)로 마감했다. 원본278개는로컬 `probes/nes-body581/evidence01.zip`, 공개 Git에는 해시·비용·순서만 있다. 물리 ROM/capture/입력 지연·대표장면·clean-clone 전체실행 결측을 유지하고 같은 분석/FIT를 반복하지 않는다.
-2. [582 R2 예산](../nes-abi582-results.ko.md)의 A/B/C는 제품 미선정이다. 다음은951/954의base주소와 소비/credit/plan 진행 응답의 공동 계약이다. 실제 독립 호출 대체·검사·producer이력·포트·순삭제 예산을 포함한다.582packet/poll 변형을 반복하지 않으며 전체 gate를 통과한 후보만 R3로 진행한다.
+2. [583 R2 결과](../nes-row583-results.ko.md): 행좌표재사용·M4커널248B/104stack은검증했지만제품미선정이다. 다음은실제577ARM문맥에서source-ready·유한queue·consumed/plan/IRQ를묶은transport교체의실제호출삭제/netlink Flash·stack·RAM이다. source COMMIT/표시ACK이력을구분하고oldEA→newCOMMIT·STOP/late응답을검증한다. C조회3회가정10.507ms를달성시간으로쓰지않고유지검사/생산자이력이예산에안맞으면역할·범위를수정한다. 작은codec/poll변형·불변전체FIT는반복하지않는다.
 3. R4는 의미 있는 후보만 실기 전달한다. 5–40/40–55초 완료 집계와 독립 검사·STOP·최종ACK·VBlank·메뉴복귀를 유지하며 시작 실패는 별도 보존한다.
 4. 각 단계 완료 때 579 계획의 상태·증거·예산·다음 한 단계를 함께 갱신한다. 오래된 계획의 미완료 상태를 방치하지 않는다.
 
