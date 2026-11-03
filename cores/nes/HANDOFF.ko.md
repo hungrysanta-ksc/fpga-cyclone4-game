@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-실기 MMC558, 조건부 개발 후보 576이다. 진단·host reset을 수정하고 정확 CDC 제약으로 내부 STA를 통과했다. 단일 FIT 15,260LE·51M9K, 최소 setup +0.045ns이며 외부 IO와 실기 검증은 남는다. 두 위상 표시·ACK 동일. [PR149](../../docs/progress/pr-149.md) · [576 결과와 다음 gate](../../docs/nes-cdc576-results.ko.md) · [MMC558 실측](../../docs/nes-hardware559-results.ko.md)
+실측 기준은 MMC558이며 **MMC577 제한 전달본을 준비했다**. 576 FPGA를 유지하고 ARM558의 식별자·로그명만 갱신했다. 적재 8,320조합×두 위상, 메뉴/base 복구·집계·프로그래머 검증을 통과했다. 전체 외부 IO sign-off는 아니다. [PR149](../../docs/progress/pr-149.md) · [577 결과](../../docs/nes-gate577-results.ko.md) · [설치 안내](../../docs/nes-mmc577-trial.ko.md) · [패키지 해시](../../analysis/trial577-package.json)
 
 ## 최신 실기와 비교 기준
 
@@ -18,10 +18,10 @@ MMC558 실기에서 두 번 모두 실행과 메뉴 복귀에 성공했다. 저�
 
 ## 다음 작업 순서
 
-1. 576의 168MHz load_end→remaining[0] setup +0.045ns 경로를 실제 적재/START 의미와 대조한다. 572보다 작아진 여유를 seed 반복으로 해결하지 않는다.
-2. 정확 CDC 제약·다음 동기화 단 검사와 외부 IO 미제약 54input/57output을 구분한다. raw STA와 최종 STA를 모두 보존하고, 기존 제한 실기 기준에 따라 전달 여부를 판정한다.
-3. STOP·두 슬롯·독립 검사·최종 ACK·VBlank 및 952·957 최종 대기 0회를 유지한다. 고정 도착 재생을 새 전체 공동 실행이나 실기 성능으로 해석하지 않는다.
-4. 전달 시 파일명을 갱신하고 완료 [5,40)/[40,55), 합계 [5,55) 집계와 RESTORE 제외를 유지한다. 보드·SD 연결을 요청하지 않고 사용자가 설치한다.
+1. 사용자가 MMC577을 설치하고 반환할 nes-progress-mmc577.txt / nes-budget-mmc577.txt / nes-game-last-mmc577.txt를 확인한다. 시작 실패는 재실행 전 로그를 보존한다.
+2. MMC558과 같은 동선의 완료 [5,40)/[40,55), 합계 [5,55)로 비교한다. 실기 확인 전 성능 향상·메뉴 복귀 성공으로 기록하지 않는다.
+3. 576 SOF와 ARM577(558 함수 동일)을 고정하고 실제 새 증거로 다음 병목을 고른다. 양수 timer 경로, epoch/seed 반복은 하지 않는다. 외부 IO의 완전한 전기적 검증은 별도 미완료로 보존한다.
+4. 전달 ZIP은 probes/nes-gate577/trial01/MMC577-TRIAL.zip이며 RESTORE·ROM·세이브를 제외했다. 보드·SD 연결을 요청하지 않고 사용자가 설치한다.
 
 512·514의 제외 근거는 [전송 형식 비교](../../docs/nes-transfer512-results.ko.md)와 [해당 PR 기록](../../docs/progress/pr-141.md)에 남아 있다.
 

@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR149 / 576. docs/nes-cdc576-results.ko.md와 docs/progress/pr-149.md를 먼저 읽는다. 실기 MMC558, 개발 후보 576(572 START+진단 2단+공유 host reset). 단일 FIT15260LE/51M9K; 동일 정확 CDC 정책에서 음수 내부 STA0, setup+.045/hold+.140/recovery+2.364ns. 77chain/231finitepair 검증; raw STA 별도 보존/외부IO54in57out 미제약. STOP/두 슬롯/고장/두 위상53표시·952957최종대기0·ACK 동일. host 최초수락+23.808ns. 다음168MHz load_end→remaining[0] 여유와 외부IO/제한 전달 gate; epoch/seed반복 금지.
+- PR149 / 577. docs/nes-gate577-results.ko.md와 docs/nes-mmc577-trial.ko.md를 먼저 읽는다. MMC577 제한 전달 준비: FPGA576 SOF 동일, ARM558 함수792개 동일/라벨만577. Flash212908B/여유84B/BSS18592. 각위상 loader8320조합/쓰기7308/END130+blocked130 PASS, 정상/오류 base복구·5–40/40–55 집계·새BI3 실제programmer PASS. 내부STA+.045/+.140/+2.364ns 유지; 외부IO54in57out 미완료/SNESraw+3.272ns 명시. ZIP probes/nes-gate577/trial01/MMC577-TRIAL.zip, RESTORE/ROM 없음. 실측기준MMC55814.01fps/5–55초13.72fps. 다음사용자577실기로그 비교; 양수timer/epoch/seed 반복 금지.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 
