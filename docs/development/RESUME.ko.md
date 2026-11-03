@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [583 결과](../nes-row583-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 독립 M4 커널·응답 참조·비용 검증까지 진행했으며 제품 구현은 시작하지 않았다. 선택 산출물과 실측은 MMC577을 유지한다.
+PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [584 결과](../nes-transport584-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 실제 ARM transport 제한 시험·전체 링크 비용을 확인했다. 예산 초과 후보를 보류했으며 제품 선택은 바꾸지 않았다. 선택 산출물과 실측은 MMC577을 유지한다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -40,7 +40,7 @@ PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole
 ## 4. 개발 재개 후 순서
 
 1. [579 계획](../nes-retrospective579-plan.json)의 R1은580 전체비용표와 [581 제한 조사](../nes-body581-results.ko.md)로 마감했다. 원본278개는로컬 `probes/nes-body581/evidence01.zip`, 공개 Git에는 해시·비용·순서만 있다. 물리 ROM/capture/입력 지연·대표장면·clean-clone 전체실행 결측을 유지하고 같은 분석/FIT를 반복하지 않는다.
-2. [583 R2 결과](../nes-row583-results.ko.md): 행좌표재사용·M4커널248B/104stack은검증했지만제품미선정이다. 다음은실제577ARM문맥에서source-ready·유한queue·consumed/plan/IRQ를묶은transport교체의실제호출삭제/netlink Flash·stack·RAM이다. source COMMIT/표시ACK이력을구분하고oldEA→newCOMMIT·STOP/late응답을검증한다. C조회3회가정10.507ms를달성시간으로쓰지않고유지검사/생산자이력이예산에안맞으면역할·범위를수정한다. 작은codec/poll변형·불변전체FIT는반복하지않는다.
+2. [584 R2 결과](../nes-transport584-results.ko.md): R2의 584 transport 단독 후보는 보류했다. 실제 M4 호출 86–120→57–71회와 18개 거절을 확인했지만 전송량 +841–919B, Flash +444B(한도 360B 초과), 255/256B payload의 259B driver 비호환이 남았다. IRQ·ROM·65816·2슬롯은 모델/미실행이다. 다음은 section/row decoder·공통 진행 직접 소비·SPI RX 소유권을 함께 바꿀 실제 삭제 예산이다. Flash 순증가 84B 이내, E9 suffix·259B 한도·RAM/IRQ stack·생산자 이력·독립 검사를 먼저 확인하고, 성립한 한 후보만 구현한다. 현재577은 표시 ACK/EA 뒤 다음 입력 poll을 실행하며 과거498의 overlap을 가정하지 않는다. padding/poll 미세조정과 불변 FIT는 반복하지 않는다.
 3. R4는 의미 있는 후보만 실기 전달한다. 5–40/40–55초 완료 집계와 독립 검사·STOP·최종ACK·VBlank·메뉴복귀를 유지하며 시작 실패는 별도 보존한다.
 4. 각 단계 완료 때 579 계획의 상태·증거·예산·다음 한 단계를 함께 갱신한다. 오래된 계획의 미완료 상태를 방치하지 않는다.
 

@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-현재 브랜치는 codex/nes-whole-budget-580 / PR151이다. PR150 병합 `588fa177ed1a82056a5cc86813506c3f2024cc70` 확인 뒤 분기했다. [583 행·진행 응답](../../docs/nes-row583-results.ko.md), [582 ABI 예산](../../docs/nes-abi582-results.ko.md), [581 본문·순서 조사](../../docs/nes-body581-results.ko.md), [580 전체 비용표](../../docs/nes-whole580-results.ko.md), [선택 manifest](../../analysis/whole580-manifest.json)를 먼저 읽는다.
+현재 브랜치는 codex/nes-whole-budget-580 / PR151이다. PR150 병합 `588fa177ed1a82056a5cc86813506c3f2024cc70` 확인 뒤 분기했다. [584 transport 비용](../../docs/nes-transport584-results.ko.md), [583 행·진행 응답](../../docs/nes-row583-results.ko.md), [582 ABI 예산](../../docs/nes-abi582-results.ko.md), [581 본문·순서 조사](../../docs/nes-body581-results.ko.md), [580 전체 비용표](../../docs/nes-whole580-results.ko.md), [선택 manifest](../../analysis/whole580-manifest.json)를 먼저 읽는다.
 
 ## 현재 작업
 
@@ -19,7 +19,7 @@ MMC577 실기에서 실행과 메뉴 복귀가 정상이고 개선 체감이 보
 ## 다음 작업 순서
 
 1. R1은580 전체비용표와581 제한 조사로 결측을 명시하고 마감했다. 53개 입력·106D1경계·3378E1 publish/load/ACK와 map/palette/OAM 복원을 대조했다. 물리 ROM/capture/입력 지연·대표 장면·clean-clone 전체실행은 여전히 미완료다. 같은 분석을 반복하지 않는다.
-2. R2의583은같은행±1이동으로951749→23/954755→75word를확인했다. M4커널248B/104stack/1537행·17거절통과지만제품미연결/순삭제0이다. 다음은실제577ARM의source-ready·유한queue·consumed/plan·IRQ를잇는제한transport교체시험: ACK+FETCH/공통응답의실제D0/D2/E0/E8삭제수와netlink Flash/stack/RAM을검증한다. C의조회3회가정IO10.507ms는실측이아니며기존조회시36.994ms다. source COMMIT base와displayACK이력을분리하되oldEA→newCOMMIT·STOP를유지한다. C유지검사/생산자이력이맞지않으면역할/범위를재검토하며행codec·padding/poll변형·전체FIT반복은보류한다.
+2. R2의 584 transport 단독 후보는 보류했다. 실제 M4 호출 86–120→57–71회와 18개 거절을 확인했지만 전송량 +841–919B, Flash +444B(한도 360B 초과), 255/256B payload의 259B driver 비호환이 남았다. IRQ·ROM·65816·2슬롯은 모델/미실행이다. 다음은 section/row decoder·공통 진행 직접 소비·SPI RX 소유권을 함께 바꿀 실제 삭제 예산이다. Flash 순증가 84B 이내, E9 suffix·259B 한도·RAM/IRQ stack·생산자 이력·독립 검사를 먼저 확인하고, 성립한 한 후보만 구현한다. 현재577은 표시 ACK/EA 뒤 다음 입력 poll을 실행하며 과거498의 overlap을 가정하지 않는다. padding/poll 미세조정과 불변 FIT는 반복하지 않는다.
 3. R3: 후보 하나만 구현·동일입력/두위상·대표장면 검증. 같은 가설 두 변형에 종단 이득이 없으면 새 증거 전까지 보류한다. 안정성 보완은 성능과 별도 판정한다.
 4. R4: 의미 있는 후보만 고유파일명/RESTORE없이 실기. 5–40/40–55초, STOP·독립검사·최종ACK·VBlank·메뉴 유지. 외부IO/capture/지속60fps는 별도 미완료다.
 
