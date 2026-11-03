@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-현재 브랜치는 codex/nes-whole-budget-580 / PR151이다. PR150 병합 `588fa177ed1a82056a5cc86813506c3f2024cc70` 확인 뒤 분기했다. [587 검사 소유권](../../docs/nes-ownership587-results.ko.md), [586 실제 ARM 결합](../../docs/nes-combined586-results.ko.md), [585 교체·RAM 예산](../../docs/nes-ownership585-results.ko.md), [584 transport 비용](../../docs/nes-transport584-results.ko.md), [583 행·진행 응답](../../docs/nes-row583-results.ko.md), [582 ABI 예산](../../docs/nes-abi582-results.ko.md), [581 본문·순서 조사](../../docs/nes-body581-results.ko.md), [580 전체 비용표](../../docs/nes-whole580-results.ko.md), [선택 manifest](../../analysis/whole580-manifest.json)를 먼저 읽는다.
+현재 브랜치는 codex/nes-whole-budget-580 / PR151이다. PR150 병합 `588fa177ed1a82056a5cc86813506c3f2024cc70` 확인 뒤 분기했다. [588 source 예산](../../docs/nes-source588-results.ko.md), [587 검사 소유권](../../docs/nes-ownership587-results.ko.md), [586 실제 ARM 결합](../../docs/nes-combined586-results.ko.md), [585 교체·RAM 예산](../../docs/nes-ownership585-results.ko.md), [584 transport 비용](../../docs/nes-transport584-results.ko.md), [583 행·진행 응답](../../docs/nes-row583-results.ko.md), [582 ABI 예산](../../docs/nes-abi582-results.ko.md), [581 본문·순서 조사](../../docs/nes-body581-results.ko.md), [580 전체 비용표](../../docs/nes-whole580-results.ko.md), [선택 manifest](../../analysis/whole580-manifest.json)를 먼저 읽는다.
 
 ## 현재 작업
 
@@ -19,7 +19,7 @@ MMC577 실기에서 실행과 메뉴 복귀가 정상이고 개선 체감이 보
 ## 다음 작업 순서
 
 1. R1은580 전체비용표와581 제한 조사로 결측을 명시하고 마감했다. 53개 입력·106D1경계·3378E1 publish/load/ACK와 map/palette/OAM 복원을 대조했다. 물리 ROM/capture/입력 지연·대표 장면·clean-clone 전체실행은 여전히 미완료다. 같은 분석을 반복하지 않는다.
-2. 587에서 검사 소유권 결정을 마쳤다. 실제586 ARM 값455개·수락 경계4조건·control22조건을 확인했다. 고정 MMC577은 입력256B 단일 sealed block+96bit mailbox이며584/586의4packet source는 모델이다. 기존 logical_record1136B 전부 삭제 가정에도 Flash276B만 남아 대체 검사·history 비용은 미확보다. 전체 C 확장을 보류하고 다음은 MMC577의 기존 D0/D1/D2/D3·출력을 유지한 입력 교체 예산이다. 586 section/row 형식을 유지하며 source export/mailbox/host 생산기와 ARM 직접 수락·값 실행을 함께 비교한다. query index 전진 시 canonicalCRC·단일 block 대기·취소/포트/CDC·순 링크 비용·남은 출력 시간을 먼저 가격화한다. 4packet 모델 시간이나 ARM 단독 통과를 제품 근거로 삼지 않는다. R3/FIT/새ZIP 미선정, MMC577 유지. [587 결과](../../docs/nes-ownership587-results.ko.md)
+2. 588에서 고정53입력의 source RAM 참조가586 block/packet·독립 복원과 일치했다. 단일256B block과STOP/COMMIT/epoch8조건을 확인했지만 RTL 실행은 아니다. 밀집 I/O14.066→4.156ms는 wire+driver 가능성이며 실제 종단 이득이 아니다. 기존 비입력 항은두위상59.983/59.989ms다. 다음은 고정입력형식의 R2 원형을 source부터 한 번 검증한다. base/scratch·canonicalCRC·8B beat·host seal·D0–D3·취소/재시작을 실제 clock/포트에서 연결하고 같은영역1581LE/추가3M9K를 확인한다. 초과하면 중단한다. 통과할 때만 ARM old packet/logical 직접 교체2630B 산술예산·전체212992B 링크/RAM/IRQ를 확인한 뒤 실제두위상 연속 일정을 실행한다. 출력history/공통응답은 추가하지 않는다. R3/60Hz/실기미선정,MMC577유지. [588 결과](../../docs/nes-source588-results.ko.md)
 3. R3: 후보 하나만 구현·동일입력/두위상·대표장면 검증. 같은 가설 두 변형에 종단 이득이 없으면 새 증거 전까지 보류한다. 안정성 보완은 성능과 별도 판정한다.
 4. R4: 의미 있는 후보만 고유파일명/RESTORE없이 실기. 5–40/40–55초, STOP·독립검사·최종ACK·VBlank·메뉴 유지. 외부IO/capture/지속60fps는 별도 미완료다.
 
