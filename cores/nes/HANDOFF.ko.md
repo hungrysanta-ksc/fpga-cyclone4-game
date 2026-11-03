@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-실기 기준은 MMC558이다. 570의 추가 SNES 출력 경로를 확인했고 571 A에서 없앴다. 다음은 loader START와 메모리 recovery다. [PR149](../../docs/progress/pr-149.md) · [571 전체 비교](../../docs/nes-bus571-results.ko.md) · [MMC558 실측](../../docs/nes-hardware559-results.ko.md)
+실기는 MMC558, 다음 개발 기준은 572 START 단독이다. 0°C epoch 첫 단과 STOP 뒤 첫 generation을 함께 확인한다. [PR149](../../docs/progress/pr-149.md) · [572 비교](../../docs/nes-start572-results.ko.md) · [MMC558 실측](../../docs/nes-hardware559-results.ko.md)
 
 ## 최신 실기와 비교 기준
 
