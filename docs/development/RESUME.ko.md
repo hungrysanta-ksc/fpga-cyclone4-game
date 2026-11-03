@@ -1,6 +1,6 @@
 # 다른 PC·새 작업에서 재개하기
 
-이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고[감사499](../nes-audit499.ko.md)와[새 계획 A1–A4](../nes-audit499-plan.json)를 따른다. MMC509 실기 측정을 기준으로 A2 출력·전송 예산을 갱신하며 기존498 NEXT를 그대로 재개하지 않는다.
+이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. **성능 개발은 재개했으며 현재 PC를 계속 사용한다.** PC 이전 작업을 우선하지 않고[감사499](../nes-audit499.ko.md)와[새 계획 A1–A4](../nes-audit499-plan.json)를 따른다. MMC577 실기 측정을 기준으로 A2 출력·전송 예산을 갱신하며 기존498 NEXT를 그대로 재개하지 않는다.
 
 ## 1. 상태를 읽는다
 
@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-PR149는 PR148 병합 커밋 `c12cd861d926524e74c121b0fe03c3e5e5a5a527`에서 분기했다. 실측 기준은 MMC558, 새 제한 전달본은 MMC577이다. [577 적재/IO 감사와 전달 판정](../nes-gate577-results.ko.md) · [설치/로그 안내](../nes-mmc577-trial.ko.md)
+PR149는 PR148 병합 커밋 `c12cd861d926524e74c121b0fe03c3e5e5a5a527`에서 분기했다. 실측 기준은 MMC577이다. 실행·메뉴 복귀 정상, 5–55초 13.86fps. [578 실기 분석](../nes-hardware578-results.ko.md). [577 적재/IO 감사와 전달 판정](../nes-gate577-results.ko.md) · [설치/로그 안내](../nes-mmc577-trial.ko.md)
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -29,7 +29,7 @@ PR149는 PR148 병합 커밋 `c12cd861d926524e74c121b0fe03c3e5e5a5a527`에서 �
 |---|---|
 | 문서·JSON 검사 | Python3, Git. 특정 사용자 홈 경로 불필요 |
 | ARM | GNU Arm13.3.Rel1 계열·make·필수 유틸과 대상 config. 기존 빌더의 절대 경로를 먼저 확인 |
-| FPGA | Quartus **Lite**를 기본 사용. 현재489 RTL/bitstream을 유지할 때 변경 없는 전체 합성을 반복하지 않음 |
+| FPGA | Quartus **Lite**를 기본 사용. 선택576 RTL/bitstream을 유지할 때 변경 없는 전체 합성을 반복하지 않음 |
 | Questa | 설치된 Starter FLOAT1좌석으로 순차 실행. 해당 PC의 유효한 권한과 wrapper를 준비하며 원본 signed license는 Git에 저장하지 않음 |
 | 에뮬레이터 | 필요한 경계에서만 Mesen/.NET 준비. 모델/CPU 실행과 전체 실기 시간을 구분 |
 | 로컬 source/로그 | [NES 재현 범위](../../cores/nes/REPRODUCING.ko.md)의 빠진 입력을 먼저 복구. `probes`/`.tools`/Downloads가 clone에 포함된다고 가정하지 않음 |
@@ -39,9 +39,9 @@ PR149는 PR148 병합 커밋 `c12cd861d926524e74c121b0fe03c3e5e5a5a527`에서 �
 
 ## 4. 개발 재개 후 순서
 
-1. [577 결과](../nes-gate577-results.ko.md)의 순서대로 사용자 MMC577 실기 로그와 5–40초/40–55초 비교부터 진행한다. epoch 국소 배치·직렬화 FIT 반복을 재개하지 않는다. [541 실기 분석](../nes-hardware541-results.ko.md)의 장면 차이와 원본 로그 해시도 보존한다.
+1. [577 결과](../nes-gate577-results.ko.md)의 순서대로 [578 분석](../nes-hardware578-results.ko.md) 뒤 출력·최종 ACK의 DMA/VBlank 비용 분리부터 진행한다. epoch 국소 배치·직렬화 FIT 반복을 재개하지 않는다. [541 실기 분석](../nes-hardware541-results.ko.md)의 장면 차이와 원본 로그 해시도 보존한다.
 2. 다음 전달본에 `prepare_nes_windows541.py`의 표시 완료 [5,40)/[40,55) 집계를 포함하고 linked ARM 경계 검사를 통과시킨다.
-3. [552 실기 성공·실패 분리와 출력 비교](../nes-hardware552-results.ko.md)를 따른다. [MMC558 실기 두 구간](../nes-hardware559-results.ko.md)의 완료 수를 이후 기준으로 유지하고 부팅 실패는 별도 집계한다.
+3. [552 실기 성공·실패 분리와 출력 비교](../nes-hardware552-results.ko.md)를 따른다. [MMC577 실기 두 구간](../nes-hardware578-results.ko.md)의 완료 수를 이후 기준으로 유지하고 부팅 실패는 별도 집계한다.
 
 ## 5. 기록을 남긴다
 
