@@ -1,0 +1,5603 @@
+{
+  "stage": 580,
+  "baseline": "MMC577",
+  "new_firmware": false,
+  "new_FIT": false,
+  "new_simulation": false,
+  "logger_regression": {
+    "passed": true,
+    "cases": [
+      {
+        "final_D2": false,
+        "phase": 0,
+        "RPC_overshoot": 0,
+        "original_start": 3447001,
+        "fixed_start": 3447001,
+        "end": 3447563,
+        "capture_ready": 42
+      },
+      {
+        "final_D2": false,
+        "phase": 0,
+        "RPC_overshoot": 512,
+        "original_start": 3447513,
+        "fixed_start": 3447513,
+        "end": 3448587,
+        "capture_ready": 42
+      },
+      {
+        "final_D2": false,
+        "phase": 178684,
+        "RPC_overshoot": 0,
+        "original_start": 3447001,
+        "fixed_start": 3447001,
+        "end": 3447563,
+        "capture_ready": 42
+      },
+      {
+        "final_D2": false,
+        "phase": 178684,
+        "RPC_overshoot": 512,
+        "original_start": 3447513,
+        "fixed_start": 3447513,
+        "end": 3448587,
+        "capture_ready": 42
+      },
+      {
+        "final_D2": true,
+        "phase": 0,
+        "RPC_overshoot": 0,
+        "original_start": 3573680,
+        "fixed_start": 3447001,
+        "end": 3447563,
+        "capture_ready": 3901040
+      },
+      {
+        "final_D2": true,
+        "phase": 0,
+        "RPC_overshoot": 512,
+        "original_start": 3573680,
+        "fixed_start": 3447513,
+        "end": 3448587,
+        "capture_ready": 3901040
+      },
+      {
+        "final_D2": true,
+        "phase": 178684,
+        "RPC_overshoot": 0,
+        "original_start": 3752364,
+        "fixed_start": 3447001,
+        "end": 3447563,
+        "capture_ready": 4079724
+      },
+      {
+        "final_D2": true,
+        "phase": 178684,
+        "RPC_overshoot": 512,
+        "original_start": 3752364,
+        "fixed_start": 3447513,
+        "end": 3448587,
+        "capture_ready": 4079724
+      }
+    ],
+    "source_sha256": "f6b404439228f952d7a788d648a67dc29c52599a7a1dbf038e1a4c100e86fda8",
+    "scope": "Real hook body with mocked boundaries; all state/RPC/write effects equal except final D2 logged start."
+  },
+  "retained_budget": {
+    "LE": 15260,
+    "LE_free": 148,
+    "comb": 14191,
+    "FF": 8407,
+    "M9K": 51,
+    "M9K_free": 5,
+    "ARM_Flash_free_B": 84,
+    "ARM_BSS_B": 18592,
+    "source": "analysis/retrospective579.json; selected576/577, no new synthesis/build",
+    "full_IO_signoff": false,
+    "whole_60Hz_passed": false
+  },
+  "phases": [
+    {
+      "phase": 1,
+      "groups": {
+        "both_banks_initialized": {
+          "ACK": {
+            "n": 51,
+            "mean": 70.47740112084487,
+            "p95_nearest_rank": 83.58212346521476,
+            "maximum": 83.69805997707716
+          },
+          "reveal": {
+            "n": 51,
+            "mean": 70.47740112084487,
+            "p95_nearest_rank": 83.58212346521476,
+            "maximum": 83.69619754315167
+          },
+          "mean_terms": {
+            "previous_ACK_to_source_ms": 0.5525398822794099,
+            "source_to_planner_ms": 22.125701988661184,
+            "planner_to_output_ms": 14.992138133144174,
+            "output_to_SEAL_head_ms": 21.632450430238695,
+            "SEAL_checks_ms": 2.353535840667507,
+            "SEAL_VBlank_service_ms": 6.614476082473804,
+            "SEAL_DMA_ms": 0.9932268828913013,
+            "SEAL_other_ms": 1.2133318804887983
+          },
+          "nonquery_wire_B": {
+            "n": 51,
+            "mean": 6597.35294117647,
+            "p95_nearest_rank": 7385,
+            "maximum": 7557
+          },
+          "final_wait_generations": [],
+          "nested_ROM_wait_mean_ms": 1.5628230843557895
+        },
+        "dense_regression": {
+          "ACK": {
+            "n": 5,
+            "mean": 83.15676218096972,
+            "p95_nearest_rank": 83.58212346521476,
+            "maximum": 83.58212346521476
+          },
+          "reveal": {
+            "n": 5,
+            "mean": 83.15713466775483,
+            "p95_nearest_rank": 83.58212346521476,
+            "maximum": 83.58212346521476
+          },
+          "mean_terms": {
+            "previous_ACK_to_source_ms": 0.5522906495540474,
+            "source_to_planner_ms": 23.174177757092604,
+            "planner_to_output_ms": 17.685825433573623,
+            "output_to_SEAL_head_ms": 27.589132411679874,
+            "SEAL_checks_ms": 2.3482870636456994,
+            "SEAL_VBlank_service_ms": 9.643831860955153,
+            "SEAL_DMA_ms": 0.9211411952132469,
+            "SEAL_other_ms": 1.2420758092554771
+          },
+          "nonquery_wire_B": {
+            "n": 5,
+            "mean": 7082.6,
+            "p95_nearest_rank": 7452,
+            "maximum": 7452
+          },
+          "final_wait_generations": [],
+          "nested_ROM_wait_mean_ms": 15.940795460429053
+        }
+      },
+      "frames": {
+        "906": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.4345408351304447,
+            "source_to_planner_ms": 21.960758147635225,
+            "planner_to_output_ms": 79.76200463350125,
+            "output_to_SEAL_head_ms": 50.88168569298986,
+            "SEAL_checks_ms": 2.3584932015574416,
+            "SEAL_VBlank_service_ms": 9.911593986424347,
+            "SEAL_DMA_ms": 0.6914285948420265,
+            "SEAL_other_ms": 1.2851725302915566
+          },
+          "ACK_interval_ms": 167.28567762237216,
+          "reveal_interval_ms": 167.28567762237216,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 1760,
+          "operation_wire_B": {
+            "0xe8": 5820,
+            "0xd0": 152,
+            "0xd1": 3209,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 2220,
+            "0xe1": 5902,
+            "0xe9": 693,
+            "0xea": 7,
+            "0x70": 32,
+            "0x73": 32
+          },
+          "nonquery_wire_B": 10003,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 79.89918667190157,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 8
+          }
+        },
+        "907": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.46756260829294416,
+            "source_to_planner_ms": 21.75364533452292,
+            "planner_to_output_ms": 13.349749725935007,
+            "output_to_SEAL_head_ms": 18.226004999506067,
+            "SEAL_checks_ms": 2.353464629958591,
+            "SEAL_VBlank_service_ms": 8.41475584049967,
+            "SEAL_DMA_ms": 0.6719661603205472,
+            "SEAL_other_ms": 1.2174730570996168
+          },
+          "ACK_interval_ms": 66.45462235613536,
+          "reveal_interval_ms": 66.45462235613536,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 1712,
+          "operation_wire_B": {
+            "0xe8": 580,
+            "0xd0": 152,
+            "0xd1": 3209,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1500,
+            "0xe1": 1836,
+            "0xe9": 73,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 5269,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 31.67030246756241,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 2
+          }
+        },
+        "908": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5276788541056525,
+            "source_to_planner_ms": 21.710097715462656,
+            "planner_to_output_ms": 13.422719696086977,
+            "output_to_SEAL_head_ms": 19.54996063036019,
+            "SEAL_checks_ms": 2.354768333706441,
+            "SEAL_VBlank_service_ms": 7.145879607056241,
+            "SEAL_DMA_ms": 0.8799069081026678,
+            "SEAL_other_ms": 1.1217439533288958
+          },
+          "ACK_interval_ms": 66.71275569820972,
+          "reveal_interval_ms": 66.71275569820972,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2256,
+          "operation_wire_B": {
+            "0xe8": 520,
+            "0xd0": 152,
+            "0xd1": 3197,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1440,
+            "0xe1": 2427,
+            "0xe9": 43,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 5818,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.73881249956191,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "909": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5855051217605225,
+            "source_to_planner_ms": 21.95021054285804,
+            "planner_to_output_ms": 13.095678297079747,
+            "output_to_SEAL_head_ms": 24.015287423162857,
+            "SEAL_checks_ms": 2.3527196563883903,
+            "SEAL_VBlank_service_ms": 2.5578667532822603,
+            "SEAL_DMA_ms": 1.0756487136727608,
+            "SEAL_other_ms": 1.1656042722744304
+          },
+          "ACK_interval_ms": 66.79852078047901,
+          "reveal_interval_ms": 66.79852078047901,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2768,
+          "operation_wire_B": {
+            "0xe8": 480,
+            "0xd0": 152,
+            "0xd1": 3203,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1180,
+            "0xe1": 3546,
+            "0xe9": 43,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6959,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 34.78040668288331,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "910": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.4523209327833805,
+            "source_to_planner_ms": 21.736145334524345,
+            "planner_to_output_ms": 13.265117182136546,
+            "output_to_SEAL_head_ms": 19.795053342043957,
+            "SEAL_checks_ms": 2.354954577098991,
+            "SEAL_VBlank_service_ms": 6.71165313732582,
+            "SEAL_DMA_ms": 1.1378540067844742,
+            "SEAL_other_ms": 1.1788275531454833
+          },
+          "ACK_interval_ms": 66.631926065843,
+          "reveal_interval_ms": 66.631926065843,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2928,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3203,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1460,
+            "0xe1": 3376,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6744,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 33.58820349339624,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "911": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.4427249677589272,
+            "source_to_planner_ms": 21.73843104881352,
+            "planner_to_output_ms": 14.80686971168001,
+            "output_to_SEAL_head_ms": 15.21543847334633,
+            "SEAL_checks_ms": 2.354488968617616,
+            "SEAL_VBlank_service_ms": 9.657557998986091,
+            "SEAL_DMA_ms": 0.6989714522403031,
+            "SEAL_other_ms": 1.1706328438732816
+          },
+          "ACK_interval_ms": 66.08511546531608,
+          "reveal_interval_ms": 66.08511546531608,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 1792,
+          "operation_wire_B": {
+            "0xe8": 200,
+            "0xd0": 152,
+            "0xd1": 3203,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1640,
+            "0xe1": 2133,
+            "0xe9": 29,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 5516,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 31.064101124156597,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "912": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.4799562217929713,
+            "source_to_planner_ms": 21.929305752416333,
+            "planner_to_output_ms": 14.553328278227543,
+            "output_to_SEAL_head_ms": 20.621445559932617,
+            "SEAL_checks_ms": 2.3577482279872415,
+            "SEAL_VBlank_service_ms": 4.7501377269887906,
+            "SEAL_DMA_ms": 1.1390645888360496,
+            "SEAL_other_ms": 1.23237252850362
+          },
+          "ACK_interval_ms": 67.06335888468517,
+          "reveal_interval_ms": 67.06335888468517,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2944,
+          "operation_wire_B": {
+            "0xe8": 200,
+            "0xd0": 152,
+            "0xd1": 3197,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1440,
+            "0xe1": 3279,
+            "0xe9": 29,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6672,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 33.74652544352295,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "913": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6531478099891629,
+            "source_to_planner_ms": 21.765216734534015,
+            "planner_to_output_ms": 13.001702061467975,
+            "output_to_SEAL_head_ms": 20.6322104243505,
+            "SEAL_checks_ms": 2.3570032544170414,
+            "SEAL_VBlank_service_ms": 5.789003370632918,
+            "SEAL_DMA_ms": 1.1165291383374947,
+            "SEAL_other_ms": 1.2220360202170928
+          },
+          "ACK_interval_ms": 66.53684881394621,
+          "reveal_interval_ms": 66.53684881394621,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2880,
+          "operation_wire_B": {
+            "0xe8": 160,
+            "0xd0": 152,
+            "0xd1": 3209,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1480,
+            "0xe1": 3102,
+            "0xe9": 29,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6491,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 33.293397472962184,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "914": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5329658141298012,
+            "source_to_planner_ms": 21.74100244883192,
+            "planner_to_output_ms": 14.356552982121308,
+            "output_to_SEAL_head_ms": 24.789197236854527,
+            "SEAL_checks_ms": 2.3630561646749175,
+            "SEAL_VBlank_service_ms": 0.35898413914020366,
+            "SEAL_DMA_ms": 0.9459301907616573,
+            "SEAL_other_ms": 1.4212233285493614
+          },
+          "ACK_interval_ms": 66.5089123050637,
+          "reveal_interval_ms": 66.5089123050637,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2432,
+          "operation_wire_B": {
+            "0xe8": 480,
+            "0xd0": 152,
+            "0xd1": 3203,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1200,
+            "0xe1": 3204,
+            "0xe9": 64,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6622,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 34.01074255718282,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "915": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5650416029772526,
+            "source_to_planner_ms": 21.935424800023753,
+            "planner_to_output_ms": 13.895511583741648,
+            "output_to_SEAL_head_ms": 27.413056978219377,
+            "SEAL_checks_ms": 2.3022476970073296,
+            "SEAL_VBlank_service_ms": 14.76844917734431,
+            "SEAL_DMA_ms": 1.0349545324005767,
+            "SEAL_other_ms": 1.2646857571110521
+          },
+          "ACK_interval_ms": 83.17937212882529,
+          "reveal_interval_ms": 83.17937212882529,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2672,
+          "operation_wire_B": {
+            "0xe8": 460,
+            "0xd0": 152,
+            "0xd1": 3197,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 2280,
+            "0xe1": 3803,
+            "0xe9": 57,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 7224,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 41.62636383888952,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "916": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.41334404165187477,
+            "source_to_planner_ms": 21.721645305976004,
+            "planner_to_output_ms": 14.16944424925678,
+            "output_to_SEAL_head_ms": 18.206958725194234,
+            "SEAL_checks_ms": 2.3522540479070155,
+            "SEAL_VBlank_service_ms": 7.43949231541138,
+            "SEAL_DMA_ms": 1.062611676194258,
+            "SEAL_other_ms": 1.1793862833231334
+          },
+          "ACK_interval_ms": 66.54513664491468,
+          "reveal_interval_ms": 66.54513664491468,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2736,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3197,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1520,
+            "0xe1": 2954,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6316,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.511424386492976,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "917": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.636639221438944,
+            "source_to_planner_ms": 22.007805752371574,
+            "planner_to_output_ms": 15.677899704823897,
+            "output_to_SEAL_head_ms": 20.529356785126904,
+            "SEAL_checks_ms": 2.3545820903138908,
+            "SEAL_VBlank_service_ms": 3.0755302628750987,
+            "SEAL_DMA_ms": 0.9439746351398818,
+            "SEAL_other_ms": 1.1675598278962058
+          },
+          "ACK_interval_ms": 66.3933482799864,
+          "reveal_interval_ms": 66.3933482799864,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2432,
+          "operation_wire_B": {
+            "0xe8": 520,
+            "0xd0": 152,
+            "0xd1": 3215,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1220,
+            "0xe1": 2763,
+            "0xe9": 57,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6202,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.85985332559397,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "918": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.45505024904835745,
+            "source_to_planner_ms": 21.75447863928198,
+            "planner_to_output_ms": 15.456090181435368,
+            "output_to_SEAL_head_ms": 19.904262244769956,
+            "SEAL_checks_ms": 2.358027593076067,
+            "SEAL_VBlank_service_ms": 4.517985338175165,
+            "SEAL_DMA_ms": 0.9191111422344513,
+            "SEAL_other_ms": 1.1751026852944824
+          },
+          "ACK_interval_ms": 66.54010807331584,
+          "reveal_interval_ms": 66.54010807331584,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2368,
+          "operation_wire_B": {
+            "0xe8": 540,
+            "0xd0": 152,
+            "0xd1": 3203,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1260,
+            "0xe1": 2721,
+            "0xe9": 57,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6132,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.9229105888607,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "919": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6237649656014951,
+            "source_to_planner_ms": 21.777978639272014,
+            "planner_to_output_ms": 14.186968058747286,
+            "output_to_SEAL_head_ms": 21.783692429412994,
+            "SEAL_checks_ms": 2.3591450534313667,
+            "SEAL_VBlank_service_ms": 3.7687281699463506,
+            "SEAL_DMA_ms": 1.2522074498101994,
+            "SEAL_other_ms": 1.1791069182343084
+          },
+          "ACK_interval_ms": 66.93159168445601,
+          "reveal_interval_ms": 66.93159168445601,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 3248,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3209,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1340,
+            "0xe1": 3712,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 7086,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 34.175285516750435,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "920": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.4856090963619505,
+            "source_to_planner_ms": 22.083424799950816,
+            "planner_to_output_ms": 15.521566371706648,
+            "output_to_SEAL_head_ms": 22.19843457774684,
+            "SEAL_checks_ms": 2.3620318260158926,
+            "SEAL_VBlank_service_ms": 1.4526984618903183,
+            "SEAL_DMA_ms": 1.0826328408933872,
+            "SEAL_other_ms": 1.2306963379706697
+          },
+          "ACK_interval_ms": 66.41709431253653,
+          "reveal_interval_ms": 66.41709431253653,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2784,
+          "operation_wire_B": {
+            "0xe8": 200,
+            "0xd0": 152,
+            "0xd1": 3233,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1200,
+            "0xe1": 3735,
+            "0xe9": 43,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 7178,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 34.17908183960605,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "921": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.554526416942941,
+            "source_to_planner_ms": 21.825502448774717,
+            "planner_to_output_ms": 15.367661610093839,
+            "output_to_SEAL_head_ms": 18.46838761827792,
+            "SEAL_checks_ms": 2.359517540216467,
+            "SEAL_VBlank_service_ms": 5.671670033326393,
+            "SEAL_DMA_ms": 0.9339174919421797,
+            "SEAL_other_ms": 1.1679323146813059
+          },
+          "ACK_interval_ms": 66.34911547425577,
+          "reveal_interval_ms": 66.34911547425577,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2400,
+          "operation_wire_B": {
+            "0xe8": 200,
+            "0xd0": 152,
+            "0xd1": 3221,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1440,
+            "0xe1": 2763,
+            "0xe9": 43,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6178,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.28976353876075,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "922": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5523485867026079,
+            "source_to_planner_ms": 21.756240544040537,
+            "planner_to_output_ms": 14.56952917219329,
+            "output_to_SEAL_head_ms": 24.272105989981213,
+            "SEAL_checks_ms": 2.3657566938668935,
+            "SEAL_VBlank_service_ms": 0.9048635227043732,
+            "SEAL_DMA_ms": 0.8463830974436605,
+            "SEAL_other_ms": 1.227809565386144
+          },
+          "ACK_interval_ms": 66.49503717231872,
+          "reveal_interval_ms": 66.49503717231872,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2176,
+          "operation_wire_B": {
+            "0xe8": 440,
+            "0xd0": 152,
+            "0xd1": 3203,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1180,
+            "0xe1": 3354,
+            "0xe9": 64,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6772,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 34.04109841598687,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "923": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6097267957064891,
+            "source_to_planner_ms": 21.976591466646706,
+            "planner_to_output_ms": 14.0367496787521,
+            "output_to_SEAL_head_ms": 24.006326704546165,
+            "SEAL_checks_ms": 2.3627767995860927,
+            "SEAL_VBlank_service_ms": 1.510247670188281,
+            "SEAL_DMA_ms": 0.8559746321599876,
+            "SEAL_other_ms": 1.2104889298789903
+          },
+          "ACK_interval_ms": 66.56888267746481,
+          "reveal_interval_ms": 66.5670202435393,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2176,
+          "operation_wire_B": {
+            "0xe8": 460,
+            "0xd0": 152,
+            "0xd1": 3203,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1180,
+            "0xe1": 3354,
+            "0xe9": 64,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6788,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 34.15018112086351,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "924": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.7610502702127848,
+            "source_to_planner_ms": 21.85205006780675,
+            "planner_to_output_ms": 13.961855231387052,
+            "output_to_SEAL_head_ms": 17.598311873497707,
+            "SEAL_checks_ms": 2.355327063884091,
+            "SEAL_VBlank_service_ms": 7.978853180236298,
+            "SEAL_DMA_ms": 0.8881016173748696,
+            "SEAL_other_ms": 1.1298455409048225
+          },
+          "ACK_interval_ms": 66.52539484530438,
+          "reveal_interval_ms": 66.52725727922987,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2288,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1540,
+            "0xe1": 2698,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6090,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 31.93171834023981,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "925": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5695002507006125,
+            "source_to_planner_ms": 21.855859591609036,
+            "planner_to_output_ms": 14.235063296750955,
+            "output_to_SEAL_head_ms": 21.684696296964606,
+            "SEAL_checks_ms": 2.359424418520192,
+            "SEAL_VBlank_service_ms": 3.8266498650294136,
+            "SEAL_DMA_ms": 1.2615196194377014,
+            "SEAL_other_ms": 1.1724952777987818
+          },
+          "ACK_interval_ms": 66.9652086168113,
+          "reveal_interval_ms": 66.9633461828858,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 3248,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1360,
+            "0xe1": 3712,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 7104,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 34.33919851811543,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "926": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6718309264528992,
+            "source_to_planner_ms": 22.070329561845774,
+            "planner_to_output_ms": 14.023188564604522,
+            "output_to_SEAL_head_ms": 18.8983311388828,
+            "SEAL_checks_ms": 2.3536508733511408,
+            "SEAL_VBlank_service_ms": 6.100402322976587,
+            "SEAL_DMA_ms": 1.081887867323187,
+            "SEAL_other_ms": 1.1929820509792863
+          },
+          "ACK_interval_ms": 66.39260330641619,
+          "reveal_interval_ms": 66.3944657403417,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2800,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1480,
+            "0xe1": 2996,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6404,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.61230697096053,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "927": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6956072388073309,
+            "source_to_planner_ms": 21.854931020181883,
+            "planner_to_output_ms": 13.946617136177913,
+            "output_to_SEAL_head_ms": 17.856861260206983,
+            "SEAL_checks_ms": 2.3540233601362406,
+            "SEAL_VBlank_service_ms": 7.579454224912736,
+            "SEAL_DMA_ms": 0.913058231976575,
+            "SEAL_other_ms": 1.1237926306469461
+          },
+          "ACK_interval_ms": 66.32434510304661,
+          "reveal_interval_ms": 66.32434510304661,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2352,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1500,
+            "0xe1": 2740,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6132,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 31.941172353281694,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "928": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.43853716559554207,
+            "source_to_planner_ms": 21.898764353501644,
+            "planner_to_output_ms": 14.213015677745235,
+            "output_to_SEAL_head_ms": 21.800668906048113,
+            "SEAL_checks_ms": 2.358679444949992,
+            "SEAL_VBlank_service_ms": 3.8266498650294136,
+            "SEAL_DMA_ms": 1.2521143281139244,
+            "SEAL_other_ms": 1.1882328444692603
+          },
+          "ACK_interval_ms": 66.97666258545313,
+          "reveal_interval_ms": 66.97666258545313,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 3248,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3239,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1360,
+            "0xe1": 3710,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 7114,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 34.36967470859129,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "929": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6745805391543863,
+            "source_to_planner_ms": 22.066139085662915,
+            "planner_to_output_ms": 14.005283802733093,
+            "output_to_SEAL_head_ms": 18.216842878069798,
+            "SEAL_checks_ms": 2.3536508733511408,
+            "SEAL_VBlank_service_ms": 6.8054266854747665,
+            "SEAL_DMA_ms": 1.0834709361598622,
+            "SEAL_other_ms": 1.1783619446641083
+          },
+          "ACK_interval_ms": 66.38375674527008,
+          "reveal_interval_ms": 66.38375674527008,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2800,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1480,
+            "0xe1": 2954,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6362,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.38474124089391,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "930": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.8874948246703991,
+            "source_to_planner_ms": 21.852669115424277,
+            "planner_to_output_ms": 14.03798777398715,
+            "output_to_SEAL_head_ms": 25.31343980648001,
+            "SEAL_checks_ms": 2.364918598600418,
+            "SEAL_VBlank_service_ms": 16.395937063142842,
+            "SEAL_DMA_ms": 0.898810612446497,
+            "SEAL_other_ms": 1.3682370833688748
+          },
+          "ACK_interval_ms": 83.11949487812046,
+          "reveal_interval_ms": 83.11949487812046,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2304,
+          "operation_wire_B": {
+            "0xe8": 480,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 2380,
+            "0xe1": 3144,
+            "0xe9": 64,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6586,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 40.33532392367393,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "931": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5982360546842161,
+            "source_to_planner_ms": 22.04418670471756,
+            "planner_to_output_ms": 14.901804467299996,
+            "output_to_SEAL_head_ms": 23.414911345459533,
+            "SEAL_checks_ms": 2.363801138245118,
+            "SEAL_VBlank_service_ms": 1.0205206694779485,
+            "SEAL_DMA_ms": 1.1602963355867542,
+            "SEAL_other_ms": 1.2205460730766924
+          },
+          "ACK_interval_ms": 66.72430278854782,
+          "reveal_interval_ms": 66.72244035462232,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2992,
+          "operation_wire_B": {
+            "0xe8": 220,
+            "0xd0": 152,
+            "0xd1": 3221,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1200,
+            "0xe1": 3803,
+            "0xe9": 29,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 7204,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 34.416164544481745,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "932": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5166766812572202,
+            "source_to_planner_ms": 22.046758133284797,
+            "planner_to_output_ms": 14.050117135981226,
+            "output_to_SEAL_head_ms": 18.051677413801983,
+            "SEAL_checks_ms": 2.354209603528791,
+            "SEAL_VBlank_service_ms": 7.177540983789748,
+            "SEAL_DMA_ms": 1.0619598243203328,
+            "SEAL_other_ms": 1.1797587701082335
+          },
+          "ACK_interval_ms": 66.43869854607233,
+          "reveal_interval_ms": 66.44056097999783,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2736,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3221,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1480,
+            "0xe1": 2954,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6356,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.366455526608256,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "933": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5713396423230811,
+            "source_to_planner_ms": 21.9025262582564,
+            "planner_to_output_ms": 14.203063296811766,
+            "output_to_SEAL_head_ms": 17.44167580979961,
+            "SEAL_checks_ms": 2.356630767631941,
+            "SEAL_VBlank_service_ms": 7.837308201898267,
+            "SEAL_DMA_ms": 0.8691047913347655,
+            "SEAL_other_ms": 1.1204402495810455
+          },
+          "ACK_interval_ms": 66.30208901763687,
+          "reveal_interval_ms": 66.30208901763687,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2224,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3239,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1560,
+            "0xe1": 2574,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 5978,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 31.69944086541879,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "934": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.46957988023229874,
+            "source_to_planner_ms": 22.069853371370144,
+            "planner_to_output_ms": 13.983045707537258,
+            "output_to_SEAL_head_ms": 16.696384218641914,
+            "SEAL_checks_ms": 2.3527196563883903,
+            "SEAL_VBlank_service_ms": 8.993041574367545,
+            "SEAL_DMA_ms": 0.8380021447789086,
+            "SEAL_other_ms": 1.1292868107271725
+          },
+          "ACK_interval_ms": 66.53191336404363,
+          "reveal_interval_ms": 66.53191336404363,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2160,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1600,
+            "0xe1": 2532,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 5924,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 31.653415423804905,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "935": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.4937322341186013,
+            "source_to_planner_ms": 22.118948609442505,
+            "planner_to_output_ms": 14.052879040737883,
+            "output_to_SEAL_head_ms": 18.82193405813467,
+            "SEAL_checks_ms": 2.3539302384399656,
+            "SEAL_VBlank_service_ms": 6.746108164947578,
+            "SEAL_DMA_ms": 1.0834709361598625,
+            "SEAL_other_ms": 1.1783619446641083
+          },
+          "ACK_interval_ms": 66.84936522664518,
+          "reveal_interval_ms": 66.84936522664518,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2800,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3239,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1480,
+            "0xe1": 2996,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6416,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.64887839953184,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "936": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.45919900650861967,
+            "source_to_planner_ms": 21.853121496375795,
+            "planner_to_output_ms": 14.295444248646668,
+            "output_to_SEAL_head_ms": 20.62902025542883,
+            "SEAL_checks_ms": 2.359238175127642,
+            "SEAL_VBlank_service_ms": 4.689887989498852,
+            "SEAL_DMA_ms": 1.2106751732715404,
+            "SEAL_other_ms": 1.1791069182343084
+          },
+          "ACK_interval_ms": 66.67569326309226,
+          "reveal_interval_ms": 66.67569326309226,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 3120,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1340,
+            "0xe1": 3523,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6915,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 33.504794064504026,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "937": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.4174739149401492,
+            "source_to_planner_ms": 22.11723432373078,
+            "planner_to_output_ms": 14.628569515834345,
+            "output_to_SEAL_head_ms": 20.796410980637624,
+            "SEAL_checks_ms": 2.359796905305292,
+            "SEAL_VBlank_service_ms": 3.824880552800188,
+            "SEAL_DMA_ms": 1.1135492440566939,
+            "SEAL_other_ms": 1.2700868154950034
+          },
+          "ACK_interval_ms": 66.52800225280008,
+          "reveal_interval_ms": 66.52800225280008,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2864,
+          "operation_wire_B": {
+            "0xe8": 140,
+            "0xd0": 152,
+            "0xd1": 3239,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1360,
+            "0xe1": 3328,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6732,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 33.31456693728124,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "938": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5050698489709387,
+            "source_to_planner_ms": 22.070353371369887,
+            "planner_to_output_ms": 15.940304466067124,
+            "output_to_SEAL_head_ms": 23.766763311517675,
+            "SEAL_checks_ms": 2.3483429366634647,
+            "SEAL_VBlank_service_ms": 16.176914833503993,
+            "SEAL_DMA_ms": 1.1843217332257094,
+            "SEAL_other_ms": 1.269341841924803
+          },
+          "ACK_interval_ms": 83.26141234324359,
+          "reveal_interval_ms": 83.26141234324359,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 3056,
+          "operation_wire_B": {
+            "0xe8": 220,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 2260,
+            "0xe1": 4134,
+            "0xe9": 29,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 7557,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 41.27295552969955,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "939": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6644237626204283,
+            "source_to_planner_ms": 22.06923432375227,
+            "planner_to_output_ms": 15.461352085284279,
+            "output_to_SEAL_head_ms": 20.79246272527332,
+            "SEAL_checks_ms": 2.3537439950474157,
+            "SEAL_VBlank_service_ms": 2.7588233738437546,
+            "SEAL_DMA_ms": 1.0021756953117695,
+            "SEAL_other_ms": 1.2676656513918527
+          },
+          "ACK_interval_ms": 66.36988161252509,
+          "reveal_interval_ms": 66.36988161252509,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2560,
+          "operation_wire_B": {
+            "0xe8": 220,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1240,
+            "0xe1": 3354,
+            "0xe9": 29,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6761,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 33.13483242831203,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "940": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5108105902790612,
+            "source_to_planner_ms": 22.07104384755905,
+            "planner_to_output_ms": 14.58864094448165,
+            "output_to_SEAL_head_ms": 16.66064294847011,
+            "SEAL_checks_ms": 2.3539302384399656,
+            "SEAL_VBlank_service_ms": 8.126171703743381,
+            "SEAL_DMA_ms": 0.8431238380740347,
+            "SEAL_other_ms": 1.1747301985093823
+          },
+          "ACK_interval_ms": 66.32909430955664,
+          "reveal_interval_ms": 66.32909430955664,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2160,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1520,
+            "0xe1": 2532,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 5940,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 31.21719198975682,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "941": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.44690948735401137,
+            "source_to_planner_ms": 21.85385959161249,
+            "planner_to_output_ms": 14.815206152791337,
+            "output_to_SEAL_head_ms": 21.79131988467967,
+            "SEAL_checks_ms": 2.3537439950474157,
+            "SEAL_VBlank_service_ms": 3.3111281544509006,
+            "SEAL_DMA_ms": 1.0248042675065996,
+            "SEAL_other_ms": 1.1757545371684075
+          },
+          "ACK_interval_ms": 66.77272607061083,
+          "reveal_interval_ms": 66.77272607061083,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2656,
+          "operation_wire_B": {
+            "0xe8": 140,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1300,
+            "0xe1": 3670,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 7062,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 33.89354791739302,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "942": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6290244889040126,
+            "source_to_planner_ms": 22.0689486094671,
+            "planner_to_output_ms": 14.591283801619486,
+            "output_to_SEAL_head_ms": 19.83922757420147,
+            "SEAL_checks_ms": 2.3572826195058663,
+            "SEAL_VBlank_service_ms": 4.866912334117666,
+            "SEAL_DMA_ms": 1.0802116767902366,
+            "SEAL_other_ms": 1.1859048020623848
+          },
+          "ACK_interval_ms": 66.61879590666823,
+          "reveal_interval_ms": 66.61879590666823,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2800,
+          "operation_wire_B": {
+            "0xe8": 140,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1360,
+            "0xe1": 3248,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6640,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.83505452476795,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "943": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.41655245127790785,
+            "source_to_planner_ms": 22.071377180891748,
+            "planner_to_output_ms": 14.592617134950284,
+            "output_to_SEAL_head_ms": 16.679725952804635,
+            "SEAL_checks_ms": 2.355606428972916,
+            "SEAL_VBlank_service_ms": 8.159043662528463,
+            "SEAL_DMA_ms": 0.8416338909336344,
+            "SEAL_other_ms": 1.1674667061999309
+          },
+          "ACK_interval_ms": 66.28402340855952,
+          "reveal_interval_ms": 66.28402340855952,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2160,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1540,
+            "0xe1": 2532,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 5940,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 31.326247848268835,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "944": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6859685837119395,
+            "source_to_planner_ms": 21.902169115399936,
+            "planner_to_output_ms": 14.817991867071756,
+            "output_to_SEAL_head_ms": 21.193957074242583,
+            "SEAL_checks_ms": 2.3590519317350918,
+            "SEAL_VBlank_service_ms": 3.593100650771662,
+            "SEAL_DMA_ms": 1.2357249095695206,
+            "SEAL_other_ms": 1.1803175002858837
+          },
+          "ACK_interval_ms": 66.96828163278838,
+          "reveal_interval_ms": 66.96828163278838,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 3184,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3239,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1320,
+            "0xe1": 3627,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 7031,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 33.848827745581936,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "945": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6541649940803668,
+            "source_to_planner_ms": 22.06968670470379,
+            "planner_to_output_ms": 14.619164753947455,
+            "output_to_SEAL_head_ms": 18.239647863295115,
+            "SEAL_checks_ms": 2.3531852648697655,
+            "SEAL_VBlank_service_ms": 6.196690156924958,
+            "SEAL_DMA_ms": 1.0564656442401064,
+            "SEAL_other_ms": 1.1759407805609576
+          },
+          "ACK_interval_ms": 66.36494616262252,
+          "reveal_interval_ms": 66.36494616262252,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2736,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1420,
+            "0xe1": 2954,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6346,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.05757366535786,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "946": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.44670472731904215,
+            "source_to_planner_ms": 22.11954396258118,
+            "planner_to_output_ms": 16.191971343522628,
+            "output_to_SEAL_head_ms": 19.857138565192468,
+            "SEAL_checks_ms": 2.3540233601362406,
+            "SEAL_VBlank_service_ms": 3.278256195665818,
+            "SEAL_DMA_ms": 1.0649397186011333,
+            "SEAL_other_ms": 1.3735450200565509
+          },
+          "ACK_interval_ms": 66.68612289307507,
+          "reveal_interval_ms": 66.68612289307507,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2720,
+          "operation_wire_B": {
+            "0xe8": 220,
+            "0xd0": 152,
+            "0xd1": 3239,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1280,
+            "0xe1": 3121,
+            "0xe9": 43,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6570,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.77186986751863,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "947": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.45002483619497213,
+            "source_to_planner_ms": 21.926550182851976,
+            "planner_to_output_ms": 16.25384607373704,
+            "output_to_SEAL_head_ms": 23.103117505600387,
+            "SEAL_checks_ms": 2.365570450474343,
+            "SEAL_VBlank_service_ms": 0.06863069015469003,
+            "SEAL_DMA_ms": 1.1556402507730033,
+            "SEAL_other_ms": 1.2727873446869788
+          },
+          "ACK_interval_ms": 66.59616733447339,
+          "reveal_interval_ms": 66.59616733447339,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2976,
+          "operation_wire_B": {
+            "0xe8": 220,
+            "0xd0": 152,
+            "0xd1": 3245,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1120,
+            "0xe1": 3946,
+            "0xe9": 43,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 7385,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 34.58134302309254,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "948": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5423274783033447,
+            "source_to_planner_ms": 22.42744872522183,
+            "planner_to_output_ms": 15.554784009331817,
+            "output_to_SEAL_head_ms": 21.183767734938243,
+            "SEAL_checks_ms": 2.3584932015574416,
+            "SEAL_VBlank_service_ms": 2.086484726738107,
+            "SEAL_DMA_ms": 1.182366177603934,
+            "SEAL_other_ms": 1.2370286133173711
+          },
+          "ACK_interval_ms": 66.57270066701209,
+          "reveal_interval_ms": 66.57270066701209,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 3056,
+          "operation_wire_B": {
+            "0xe8": 380,
+            "0xd0": 152,
+            "0xd1": 3321,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1180,
+            "0xe1": 3009,
+            "0xe9": 78,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6559,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.86590424883939,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 8
+          }
+        },
+        "949": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.4603961280906824,
+            "source_to_planner_ms": 22.440520153916545,
+            "planner_to_output_ms": 15.410940364714564,
+            "output_to_SEAL_head_ms": 30.19693720754424,
+            "SEAL_checks_ms": 2.354302725225066,
+            "SEAL_VBlank_service_ms": 9.917274409897123,
+            "SEAL_DMA_ms": 0.5808000196673022,
+            "SEAL_other_ms": 1.1630899864750048
+          },
+          "ACK_interval_ms": 82.52426099553053,
+          "reveal_interval_ms": 82.52426099553053,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 1472,
+          "operation_wire_B": {
+            "0xe8": 1180,
+            "0xd0": 152,
+            "0xd1": 3322,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1800,
+            "0xe1": 2295,
+            "0xe9": 99,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 5883,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 38.65001200730127,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 7
+          }
+        },
+        "950": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6020061165145196,
+            "source_to_planner_ms": 22.48613920173128,
+            "planner_to_output_ms": 16.73609039649106,
+            "output_to_SEAL_head_ms": 22.7686298968734,
+            "SEAL_checks_ms": 2.3636148948525677,
+            "SEAL_VBlank_service_ms": 16.450133890374904,
+            "SEAL_DMA_ms": 0.9761947420510388,
+            "SEAL_other_ms": 1.315250838188388
+          },
+          "ACK_interval_ms": 83.69805997707716,
+          "reveal_interval_ms": 83.69619754315167,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2496,
+          "operation_wire_B": {
+            "0xe8": 480,
+            "0xd0": 152,
+            "0xd1": 3332,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 2340,
+            "0xe1": 2845,
+            "0xe9": 83,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6427,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 39.534096008288806,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 5
+          }
+        },
+        "951": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.42835350501143343,
+            "source_to_planner_ms": 22.99797672691041,
+            "planner_to_output_ms": 16.509849225817458,
+            "output_to_SEAL_head_ms": 23.20182056386493,
+            "SEAL_checks_ms": 2.3256212427723595,
+            "SEAL_VBlank_service_ms": 15.511467191922698,
+            "SEAL_DMA_ms": 1.0573968612028566,
+            "SEAL_other_ms": 1.1627174996899048
+          },
+          "ACK_interval_ms": 83.19520281719205,
+          "reveal_interval_ms": 83.19520281719205,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2720,
+          "operation_wire_B": {
+            "0xe8": 360,
+            "0xd0": 160,
+            "0xd1": 3450,
+            "0xd2": 128,
+            "0xd3": 8,
+            "0xe0": 2220,
+            "0xe1": 3351,
+            "0xe9": 110,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 7070,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 40.2580994099372,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 12
+          }
+        },
+        "952": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.42785337892443,
+            "source_to_planner_ms": 23.273589554607444,
+            "planner_to_output_ms": 18.06449310095152,
+            "output_to_SEAL_head_ms": 29.518443098955903,
+            "SEAL_checks_ms": 2.3540233601362406,
+            "SEAL_VBlank_service_ms": 7.2658203518584665,
+            "SEAL_DMA_ms": 1.081329137145537,
+            "SEAL_other_ms": 1.3743831153230261
+          },
+          "ACK_interval_ms": 83.35993509790256,
+          "reveal_interval_ms": 83.36179753182806,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2784,
+          "operation_wire_B": {
+            "0xe8": 840,
+            "0xd0": 160,
+            "0xd1": 3462,
+            "0xd2": 128,
+            "0xd3": 8,
+            "0xe0": 1780,
+            "0xe1": 3636,
+            "0xe9": 179,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 7452,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 42.03967326699197,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 27.62739141172119,
+            "ROM_grant_to_response_union_ms": 0.04842328206301061,
+            "ROM_reads": 208,
+            "OBJ_plans": 16
+          }
+        },
+        "953": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6290695406829956,
+            "source_to_planner_ms": 23.29006574529585,
+            "planner_to_output_ms": 16.37032132743208,
+            "output_to_SEAL_head_ms": 29.788903431570578,
+            "SEAL_checks_ms": 2.355140820491541,
+            "SEAL_VBlank_service_ms": 8.354692346402281,
+            "SEAL_DMA_ms": 0.6567873238277189,
+            "SEAL_other_ms": 1.1724021561025069
+          },
+          "ACK_interval_ms": 82.61738269180555,
+          "reveal_interval_ms": 82.61738269180555,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 1696,
+          "operation_wire_B": {
+            "0xe8": 1140,
+            "0xd0": 160,
+            "0xd1": 3462,
+            "0xd2": 128,
+            "0xd3": 8,
+            "0xe0": 1660,
+            "0xe1": 2407,
+            "0xe9": 146,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6190,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 38.777548795528894,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 12
+          }
+        },
+        "954": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6219517615996851,
+            "source_to_planner_ms": 23.03707196550097,
+            "planner_to_output_ms": 19.098431030997403,
+            "output_to_SEAL_head_ms": 27.173307398287537,
+            "SEAL_checks_ms": 2.3524402912995654,
+            "SEAL_VBlank_service_ms": 9.048076496866083,
+            "SEAL_DMA_ms": 0.9659513554607867,
+            "SEAL_other_ms": 1.2848931652027316
+          },
+          "ACK_interval_ms": 83.58212346521476,
+          "reveal_interval_ms": 83.58212346521476,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2496,
+          "operation_wire_B": {
+            "0xe8": 900,
+            "0xd0": 160,
+            "0xd1": 3450,
+            "0xd2": 128,
+            "0xd3": 8,
+            "0xe0": 1680,
+            "0xe1": 3563,
+            "0xe9": 196,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 7368,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 41.465055398735174,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 26.305249568008453,
+            "ROM_grant_to_response_union_ms": 0.06332275346701387,
+            "ROM_reads": 272,
+            "OBJ_plans": 12
+          }
+        },
+        "955": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6542250615516924,
+            "source_to_planner_ms": 23.272184793148348,
+            "planner_to_output_ms": 18.38603248266966,
+            "output_to_SEAL_head_ms": 28.263187565720415,
+            "SEAL_checks_ms": 2.354209603528791,
+            "SEAL_VBlank_service_ms": 8.039102917726236,
+            "SEAL_DMA_ms": 0.8442412984293349,
+            "SEAL_other_ms": 1.2159831099592164
+          },
+          "ACK_interval_ms": 83.0291668327337,
+          "reveal_interval_ms": 83.0291668327337,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2160,
+          "operation_wire_B": {
+            "0xe8": 900,
+            "0xd0": 160,
+            "0xd1": 3450,
+            "0xd2": 128,
+            "0xd3": 8,
+            "0xe0": 1640,
+            "0xe1": 3503,
+            "0xe9": 205,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 7333,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 41.091515110282366,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 25.77133632241562,
+            "ROM_grant_to_response_union_ms": 0.06704762131801469,
+            "ROM_reads": 288,
+            "OBJ_plans": 14
+          }
+        },
+        "956": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.47271800140934295,
+            "source_to_planner_ms": 23.20118479310219,
+            "planner_to_output_ms": 17.49642374099783,
+            "output_to_SEAL_head_ms": 28.784740383604017,
+            "SEAL_checks_ms": 2.3533715082623154,
+            "SEAL_VBlank_service_ms": 8.81564474296363,
+            "SEAL_DMA_ms": 0.5635725058564235,
+            "SEAL_other_ms": 1.223712210750043
+          },
+          "ACK_interval_ms": 82.9113678869458,
+          "reveal_interval_ms": 82.9113678869458,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 1440,
+          "operation_wire_B": {
+            "0xe8": 1060,
+            "0xd0": 160,
+            "0xd1": 3428,
+            "0xd2": 128,
+            "0xd3": 8,
+            "0xe0": 1760,
+            "0xe1": 2614,
+            "0xe9": 107,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6324,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 39.34466108598199,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 8
+          }
+        },
+        "957": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6682273167456779,
+            "source_to_planner_ms": 22.995333870583984,
+            "planner_to_output_ms": 17.828227045755444,
+            "output_to_SEAL_head_ms": 23.602884870649856,
+            "SEAL_checks_ms": 2.2800847332938745,
+            "SEAL_VBlank_service_ms": 14.01574650635332,
+            "SEAL_DMA_ms": 0.9432296615696817,
+            "SEAL_other_ms": 1.3227936955866648
+          },
+          "ACK_interval_ms": 83.6565277005385,
+          "reveal_interval_ms": 83.6565277005385,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2432,
+          "operation_wire_B": {
+            "0xe8": 380,
+            "0xd0": 160,
+            "0xd1": 3428,
+            "0xd2": 128,
+            "0xd3": 8,
+            "0xe0": 2120,
+            "0xe1": 3641,
+            "0xe9": 115,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 7343,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 40.802923152590715,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 9
+          }
+        }
+      },
+      "wire_B": {
+        "0x70": 632,
+        "0x73": 632,
+        "0xe0": 83720,
+        "0xd0": 8112,
+        "0xd1": 172588,
+        "0xd2": 6416,
+        "0xd3": 424,
+        "0xe1": 171401,
+        "0xe8": 27600,
+        "0xe9": 3954,
+        "0xea": 371
+      },
+      "unchanged_replay": {
+        "commits": 53,
+        "last_ACK_masterclock": 87545284,
+        "VRAM_DMA_B": 114352
+      },
+      "historical_logger": {
+        "invalid_D2_start_records": [
+          {
+            "generation": 905,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 3573680,
+            "clock": 3447679.693904806
+          },
+          {
+            "generation": 906,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 7504728,
+            "clock": 7203838.567957182
+          },
+          {
+            "generation": 907,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 11078408,
+            "clock": 10792778.999132868
+          },
+          {
+            "generation": 908,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 12507880,
+            "clock": 12220401.916218027
+          },
+          {
+            "generation": 909,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 13937352,
+            "clock": 13659535.710204193
+          },
+          {
+            "generation": 910,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 15366824,
+            "clock": 15086725.694991833
+          },
+          {
+            "generation": 911,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 16796296,
+            "clock": 16517602.849840539
+          },
+          {
+            "generation": 912,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 18225768,
+            "clock": 17941848.35268852
+          },
+          {
+            "generation": 913,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 19655240,
+            "clock": 19382374.6919764
+          },
+          {
+            "generation": 914,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 21084712,
+            "clock": 20808247.715127133
+          },
+          {
+            "generation": 915,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 22514184,
+            "clock": 22241477.334108766
+          },
+          {
+            "generation": 916,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 24301024,
+            "clock": 24020091.327162668
+          },
+          {
+            "generation": 917,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 25730496,
+            "clock": 25460243.089672595
+          },
+          {
+            "generation": 918,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 27159968,
+            "clock": 26876733.68770264
+          },
+          {
+            "generation": 919,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 28589440,
+            "clock": 28309967.049088422
+          },
+          {
+            "generation": 920,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 30018912,
+            "clock": 29751058.783635497
+          },
+          {
+            "generation": 921,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 31448384,
+            "clock": 31173392.016640924
+          },
+          {
+            "generation": 922,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 32877856,
+            "clock": 32596873.5837479
+          },
+          {
+            "generation": 923,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 34307328,
+            "clock": 34030833.40240017
+          },
+          {
+            "generation": 924,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 35736800,
+            "clock": 35461118.426506095
+          },
+          {
+            "generation": 925,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 37166272,
+            "clock": 36885881.0114503
+          },
+          {
+            "generation": 926,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 38595744,
+            "clock": 38330910.934185036
+          },
+          {
+            "generation": 927,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 40025216,
+            "clock": 39752717.18417255
+          },
+          {
+            "generation": 928,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 41454688,
+            "clock": 41172617.24752718
+          },
+          {
+            "generation": 929,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 42884160,
+            "clock": 42619762.68154964
+          },
+          {
+            "generation": 930,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 44313632,
+            "clock": 44045473.826503836
+          },
+          {
+            "generation": 931,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 46100472,
+            "clock": 45828543.87394451
+          },
+          {
+            "generation": 932,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 47529944,
+            "clock": 47259901.38291357
+          },
+          {
+            "generation": 933,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 48959416,
+            "clock": 48684894.06198585
+          },
+          {
+            "generation": 934,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 50388888,
+            "clock": 50110295.89481789
+          },
+          {
+            "generation": 935,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 51818360,
+            "clock": 51540740.38282105
+          },
+          {
+            "generation": 936,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 53247832,
+            "clock": 52970088.22344795
+          },
+          {
+            "generation": 937,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 54677304,
+            "clock": 54406864.743975684
+          },
+          {
+            "generation": 938,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 56106776,
+            "clock": 55836534.19071308
+          },
+          {
+            "generation": 939,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 57893616,
+            "clock": 57628178.03033376
+          },
+          {
+            "generation": 940,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 59323088,
+            "clock": 59050331.02026649
+          },
+          {
+            "generation": 941,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 60752560,
+            "clock": 60468914.74401146
+          },
+          {
+            "generation": 942,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 62182032,
+            "clock": 61911526.261867166
+          },
+          {
+            "generation": 943,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 63611504,
+            "clock": 63337760.61257695
+          },
+          {
+            "generation": 944,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 65040976,
+            "clock": 64763548.60394054
+          },
+          {
+            "generation": 945,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 66470448,
+            "clock": 66204761.41588018
+          },
+          {
+            "generation": 946,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 67899920,
+            "clock": 67626681.80566841
+          },
+          {
+            "generation": 947,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 69329392,
+            "clock": 69054820.60992141
+          },
+          {
+            "generation": 948,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 70758864,
+            "clock": 70497878.75992906
+          },
+          {
+            "generation": 949,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 72188336,
+            "clock": 71926018.30257773
+          },
+          {
+            "generation": 950,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 73975176,
+            "clock": 73702282.57379122
+          },
+          {
+            "generation": 951,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 75762016,
+            "clock": 75507069.0222612
+          },
+          {
+            "generation": 952,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 77548856,
+            "clock": 77299520.85168089
+          },
+          {
+            "generation": 953,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 79335696,
+            "clock": 79094198.18728116
+          },
+          {
+            "generation": 954,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 81122536,
+            "clock": 80862795.4846762
+          },
+          {
+            "generation": 955,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 82909376,
+            "clock": 82663200.11836828
+          },
+          {
+            "generation": 956,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 84696216,
+            "clock": 84440792.97828664
+          },
+          {
+            "generation": 957,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 86483056,
+            "clock": 86221106.49377997
+          }
+        ],
+        "SPI_end_monotonic": true,
+        "explanation": "Final D2 start was overwritten with next capture start. Clock/capture readiness unchanged; complete SPI span unknown, byte counts and outer partition retained."
+      },
+      "parameters": {
+        "CPI": 2,
+        "SPI_extra_us": 0,
+        "ROM_safe_slot_stride": 48,
+        "ROM_phase": 0,
+        "start": 3000000,
+        "capture_gate": true,
+        "driver503_SHA256": "c3757df3cd5734200ead28d54f6849b1b5f68cac77c0acb9fd6750e58949fbdc",
+        "driver_extra_us": {
+          "0xd0": 49.91813965717866,
+          "0xd1": 49.25658301352539,
+          "0xd2": 49.91848490075173,
+          "0xd3": 49.905976676384846,
+          "0xe0": 48.10347755956609,
+          "0xe1": 49.78286503309517,
+          "0xe8": 48.130323927913714,
+          "0xe9": 49.45460026683087,
+          "0xea": 50.39278227014075
+        },
+        "ROM_calendar": {
+          "period_masterclocks": 2858928,
+          "boot_frames": [
+            12,
+            19
+          ],
+          "transactions": 2386,
+          "latencies": [
+            5
+          ],
+          "trace_SHA256": "30cf094ddc128baf8836d2155ef48c84b03669433acb724b5b24d4292e667f52",
+          "anchor_SHA256": "4bc3df46e51ffb312af5400d9814ed32179910180863393a10c514c6dea5e714"
+        }
+      },
+      "scope": "506 real linked M4 runtime /489 CPU rendezvous with explicit hardware models.\n\nSPI wire, finite queues and ROM qualified windows share Mesen master time.\nUnicorn instruction CPI and ROM safe-slot density are sensitivity parameters,\nnot measured cycles or an execution of the NES/PSRAM RTL. Fixed captures and\ntile bytes are replayed; outer SD/menu/controller hardware is not emulated.\n",
+      "physical_timing": false,
+      "full_ROM_RTL": false,
+      "ARM_instructions": 83237623,
+      "SysTick_instructions": 29919,
+      "IRQ_lateness_masterclocks": 17118.60158539191,
+      "evidence": {
+        "joint.json": "21d0b1dded167a48a250df1ad168129b4ec06691f12ecb96cdd2ca70596b74ce",
+        "packets.jsonl": "5dd7c15e341b134108def10e2124bdf9557083d4654bdfa9ca217b6e3827e484",
+        "window.csv": "4d902e3b9e8abdec5e6e8400d901bb940e336cca279c92895ead20c35a9a99b9",
+        "seal528.csv": "8d8eb50915fcf725cd40ce07641fa04f7b19d5d0af6667acb4854b6e55777eaa",
+        "obj-phases.json": "fdc8e99c419dd75777b71cdbd0ad8ff980681a571269e986fec8d4e667af6432",
+        "events.json": "4f5013879be8f1ff1f8d7dca351148b418279e7af41e66ff8be8b100bf4cd6cd"
+      },
+      "replay": {
+        "client.sfc": "179fb2cfd3ba2bcdcd672f1a377d24225c41ef8e7903938163fa98ab82138539",
+        "arrivals.tsv": "389269c8e077ef75e177c233d978cba2dc453697ebb583305c02f9717c631b2e",
+        "window.csv": "4d902e3b9e8abdec5e6e8400d901bb940e336cca279c92895ead20c35a9a99b9",
+        "result.json": "f8f6d465c115daaf463ac35b14d0c4e5e1e6de3e5602a71d8afb65838f7af068",
+        "audit.json": "e6024e1191c7594c4a1d40701e4bd3b4b5bd2ae089d5f727eb91ee66bbdae0d7",
+        "bank561.csv": "89843f7f4ac868adfc6ad5b62681b54bf3461af99d0071c4020f1f1ba8950b3e"
+      }
+    },
+    {
+      "phase": 2,
+      "groups": {
+        "both_banks_initialized": {
+          "ACK": {
+            "n": 51,
+            "mean": 71.12455856572838,
+            "p95_nearest_rank": 83.36375308744984,
+            "maximum": 83.70923458063017
+          },
+          "reveal": {
+            "n": 51,
+            "mean": 71.12455856572838,
+            "p95_nearest_rank": 83.36189065352434,
+            "maximum": 83.70923458063017
+          },
+          "mean_terms": {
+            "previous_ACK_to_source_ms": 0.5538863846875658,
+            "source_to_planner_ms": 22.0794442266401,
+            "planner_to_output_ms": 14.996471811357797,
+            "output_to_SEAL_head_ms": 21.668565473879255,
+            "SEAL_checks_ms": 2.353986841823976,
+            "SEAL_VBlank_service_ms": 7.269552523371921,
+            "SEAL_DMA_ms": 0.9956955208003961,
+            "SEAL_other_ms": 1.2069557831673792
+          },
+          "nonquery_wire_B": {
+            "n": 51,
+            "mean": 6597.980392156863,
+            "p95_nearest_rank": 7401,
+            "maximum": 7541
+          },
+          "final_wait_generations": [
+            931
+          ],
+          "nested_ROM_wait_mean_ms": 1.579735627723385
+        },
+        "dense_regression": {
+          "ACK": {
+            "n": 5,
+            "mean": 83.12085445488609,
+            "p95_nearest_rank": 83.36375308744984,
+            "maximum": 83.36375308744984
+          },
+          "reveal": {
+            "n": 5,
+            "mean": 83.12085445488609,
+            "p95_nearest_rank": 83.36189065352434,
+            "maximum": 83.36189065352434
+          },
+          "mean_terms": {
+            "previous_ACK_to_source_ms": 0.6210697537086303,
+            "source_to_planner_ms": 23.13223614400776,
+            "planner_to_output_ms": 17.685830195478445,
+            "output_to_SEAL_head_ms": 27.325723801488248,
+            "SEAL_checks_ms": 2.3491065345729196,
+            "SEAL_VBlank_service_ms": 9.925841605954425,
+            "SEAL_DMA_ms": 0.8503500817049764,
+            "SEAL_other_ms": 1.2306963379706697
+          },
+          "nonquery_wire_B": {
+            "n": 5,
+            "mean": 7085.8,
+            "p95_nearest_rank": 7452,
+            "maximum": 7452
+          },
+          "final_wait_generations": [],
+          "nested_ROM_wait_mean_ms": 16.113303402778527
+        }
+      },
+      "frames": {
+        "906": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6280600422497649,
+            "source_to_planner_ms": 21.746478653587648,
+            "planner_to_output_ms": 79.71791570839461,
+            "output_to_SEAL_head_ms": 50.83860685904201,
+            "SEAL_checks_ms": 2.3571894978095913,
+            "SEAL_VBlank_service_ms": 10.028461715249497,
+            "SEAL_DMA_ms": 0.6932910287675269,
+            "SEAL_other_ms": 1.2814476624405557
+          },
+          "ACK_interval_ms": 167.2914511675412,
+          "reveal_interval_ms": 167.2914511675412,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 1760,
+          "operation_wire_B": {
+            "0xe8": 5780,
+            "0xd0": 152,
+            "0xd1": 3209,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 2260,
+            "0xe1": 5902,
+            "0xe9": 693,
+            "0xea": 7,
+            "0x70": 24,
+            "0x73": 24
+          },
+          "nonquery_wire_B": 9987,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 79.89913297916486,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 8
+          }
+        },
+        "907": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5578084172668983,
+            "source_to_planner_ms": 21.967924828571274,
+            "planner_to_output_ms": 13.349749725935007,
+            "output_to_SEAL_head_ms": 18.288751666592436,
+            "SEAL_checks_ms": 2.354488968617616,
+            "SEAL_VBlank_service_ms": 8.037426727193287,
+            "SEAL_DMA_ms": 0.6775534620970485,
+            "SEAL_other_ms": 1.2123513638044907
+          },
+          "ACK_interval_ms": 66.44605516007806,
+          "reveal_interval_ms": 66.44419272615256,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 1712,
+          "operation_wire_B": {
+            "0xe8": 580,
+            "0xd0": 152,
+            "0xd1": 3209,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1480,
+            "0xe1": 1836,
+            "0xe9": 73,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 5285,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 31.561246609050478,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 2
+          }
+        },
+        "908": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.4354535893952951,
+            "source_to_planner_ms": 21.710097715462656,
+            "planner_to_output_ms": 13.208440202038618,
+            "output_to_SEAL_head_ms": 19.70933310900437,
+            "SEAL_checks_ms": 2.3545820903138908,
+            "SEAL_VBlank_service_ms": 7.291428818334097,
+            "SEAL_DMA_ms": 0.8759026751628419,
+            "SEAL_other_ms": 1.1238857523432213
+          },
+          "ACK_interval_ms": 66.709123952055,
+          "reveal_interval_ms": 66.71098638598049,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2256,
+          "operation_wire_B": {
+            "0xe8": 520,
+            "0xd0": 152,
+            "0xd1": 3197,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1440,
+            "0xe1": 2427,
+            "0xe9": 43,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 5818,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.73881249956191,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "909": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.49460207939134354,
+            "source_to_planner_ms": 21.73595485833354,
+            "planner_to_output_ms": 13.309957791128102,
+            "output_to_SEAL_head_ms": 24.295017456053923,
+            "SEAL_checks_ms": 2.3521609262107406,
+            "SEAL_VBlank_service_ms": 2.346108015952864,
+            "SEAL_DMA_ms": 1.0758349570653107,
+            "SEAL_other_ms": 1.1744508334205572
+          },
+          "ACK_interval_ms": 66.78408691755638,
+          "reveal_interval_ms": 66.78222448363088,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2768,
+          "operation_wire_B": {
+            "0xe8": 480,
+            "0xd0": 152,
+            "0xd1": 3203,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1200,
+            "0xe1": 3546,
+            "0xe9": 43,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6943,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 34.88946254139524,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "910": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.44112811809744185,
+            "source_to_planner_ms": 21.950424828572704,
+            "planner_to_output_ms": 13.265117182136546,
+            "output_to_SEAL_head_ms": 19.851124343414916,
+            "SEAL_checks_ms": 2.3540233601362406,
+            "SEAL_VBlank_service_ms": 6.458920853635415,
+            "SEAL_DMA_ms": 1.1378540067844742,
+            "SEAL_other_ms": 1.1783619446641083
+          },
+          "ACK_interval_ms": 66.63695463744185,
+          "reveal_interval_ms": 66.63881707136736,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2928,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3203,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1460,
+            "0xe1": 3376,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6760,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 33.58820349339624,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "911": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5724973611178178,
+            "source_to_planner_ms": 21.736145334523822,
+            "planner_to_output_ms": 14.592590217168878,
+            "output_to_SEAL_head_ms": 15.312195310289693,
+            "SEAL_checks_ms": 2.3540233601362406,
+            "SEAL_VBlank_service_ms": 9.656533660327066,
+            "SEAL_DMA_ms": 0.7008338861658036,
+            "SEAL_other_ms": 1.167746071288756
+          },
+          "ACK_interval_ms": 66.09256520101808,
+          "reveal_interval_ms": 66.09070276709258,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 1792,
+          "operation_wire_B": {
+            "0xe8": 200,
+            "0xd0": 152,
+            "0xd1": 3203,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1620,
+            "0xe1": 2133,
+            "0xe9": 29,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 5516,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 30.955045265644575,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "912": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.45022302054689634,
+            "source_to_planner_ms": 21.715026258369537,
+            "planner_to_output_ms": 14.767607772274342,
+            "output_to_SEAL_head_ms": 20.61234701383201,
+            "SEAL_checks_ms": 2.356537645935666,
+            "SEAL_VBlank_service_ms": 4.777515505693647,
+            "SEAL_DMA_ms": 1.1390645888360496,
+            "SEAL_other_ms": 1.23200004171852
+          },
+          "ACK_interval_ms": 67.05032184720666,
+          "reveal_interval_ms": 67.05218428113217,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2944,
+          "operation_wire_B": {
+            "0xe8": 200,
+            "0xd0": 152,
+            "0xd1": 3197,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1440,
+            "0xe1": 3279,
+            "0xe9": 29,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6656,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 33.74652544352295,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "913": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.42217215217479315,
+            "source_to_planner_ms": 21.97949622858081,
+            "planner_to_output_ms": 13.001702061467975,
+            "output_to_SEAL_head_ms": 20.69202193349341,
+            "SEAL_checks_ms": 2.359424418520192,
+            "SEAL_VBlank_service_ms": 5.729312363320631,
+            "SEAL_DMA_ms": 1.1128973921827687,
+            "SEAL_other_ms": 1.2300444860967445
+          },
+          "ACK_interval_ms": 66.52707103583732,
+          "reveal_interval_ms": 66.52707103583732,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2880,
+          "operation_wire_B": {
+            "0xe8": 160,
+            "0xd0": 152,
+            "0xd1": 3209,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1480,
+            "0xe1": 3102,
+            "0xe9": 29,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6507,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 33.293397472962184,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "914": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5260950475186348,
+            "source_to_planner_ms": 21.74100244883192,
+            "planner_to_output_ms": 14.14227348807451,
+            "output_to_SEAL_head_ms": 24.96322791919733,
+            "SEAL_checks_ms": 2.3608212439643173,
+            "SEAL_VBlank_service_ms": 0.415322765386591,
+            "SEAL_DMA_ms": 0.9477926246871576,
+            "SEAL_other_ms": 1.4210370851568113
+          },
+          "ACK_interval_ms": 66.51757262281727,
+          "reveal_interval_ms": 66.51757262281727,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2432,
+          "operation_wire_B": {
+            "0xe8": 500,
+            "0xd0": 152,
+            "0xd1": 3203,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1180,
+            "0xe1": 3204,
+            "0xe9": 64,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6622,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 34.01076940355107,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "915": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5447754602279044,
+            "source_to_planner_ms": 21.721145305976954,
+            "planner_to_output_ms": 14.109791077788444,
+            "output_to_SEAL_head_ms": 27.423824707948672,
+            "SEAL_checks_ms": 2.30448261771793,
+            "SEAL_VBlank_service_ms": 14.795454469264067,
+            "SEAL_DMA_ms": 1.0386794002515776,
+            "SEAL_other_ms": 1.2590984553345508
+          },
+          "ACK_interval_ms": 83.1972514945101,
+          "reveal_interval_ms": 83.1972514945101,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2672,
+          "operation_wire_B": {
+            "0xe8": 460,
+            "0xd0": 152,
+            "0xd1": 3197,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 2300,
+            "0xe1": 3803,
+            "0xe9": 57,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 7224,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 41.73541969740153,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "916": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6303496295473487,
+            "source_to_planner_ms": 21.721454829786413,
+            "planner_to_output_ms": 13.953069517118205,
+            "output_to_SEAL_head_ms": 18.413993484927673,
+            "SEAL_checks_ms": 2.356630767631941,
+            "SEAL_VBlank_service_ms": 7.20948172561208,
+            "SEAL_DMA_ms": 1.0619598243203328,
+            "SEAL_other_ms": 1.1796656484119585
+          },
+          "ACK_interval_ms": 66.52660542735595,
+          "reveal_interval_ms": 66.52660542735595,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2736,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3197,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1500,
+            "0xe1": 2954,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6316,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.402368527980954,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "917": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.590501121090116,
+            "source_to_planner_ms": 21.79352625832478,
+            "planner_to_output_ms": 15.892179198870693,
+            "output_to_SEAL_head_ms": 20.768908648638952,
+            "SEAL_checks_ms": 2.3567238893282165,
+            "SEAL_VBlank_service_ms": 2.9053038020843616,
+            "SEAL_DMA_ms": 0.9479788680797077,
+            "SEAL_other_ms": 1.1635555949563798
+          },
+          "ACK_interval_ms": 66.4186773813732,
+          "reveal_interval_ms": 66.4168149474477,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2432,
+          "operation_wire_B": {
+            "0xe8": 520,
+            "0xd0": 152,
+            "0xd1": 3215,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1240,
+            "0xe1": 2763,
+            "0xe9": 57,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6186,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.968909184105996,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "918": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5741689350253281,
+            "source_to_planner_ms": 21.968758133328777,
+            "planner_to_output_ms": 15.456090181435368,
+            "output_to_SEAL_head_ms": 19.952569897777497,
+            "SEAL_checks_ms": 2.3575619845946916,
+            "SEAL_VBlank_service_ms": 4.114302784822952,
+            "SEAL_DMA_ms": 0.9209735761599518,
+            "SEAL_other_ms": 1.1721227910136818
+          },
+          "ACK_interval_ms": 66.51654828415825,
+          "reveal_interval_ms": 66.51841071808374,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2368,
+          "operation_wire_B": {
+            "0xe8": 520,
+            "0xd0": 152,
+            "0xd1": 3203,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1260,
+            "0xe1": 2721,
+            "0xe9": 57,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6148,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.81382788398043,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "919": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6076164208805014,
+            "source_to_planner_ms": 21.777978639272014,
+            "planner_to_output_ms": 13.97268856470049,
+            "output_to_SEAL_head_ms": 21.99046755732693,
+            "SEAL_checks_ms": 2.359610661912742,
+            "SEAL_VBlank_service_ms": 3.797130287310232,
+            "SEAL_DMA_ms": 1.2522074498101994,
+            "SEAL_other_ms": 1.1794794050194084
+          },
+          "ACK_interval_ms": 66.93717898623251,
+          "reveal_interval_ms": 66.93717898623251,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 3248,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3209,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1340,
+            "0xe1": 3712,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 7086,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 34.175285516750435,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "920": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.46387324986445555,
+            "source_to_planner_ms": 21.86914530590402,
+            "planner_to_output_ms": 15.735845865753445,
+            "output_to_SEAL_head_ms": 22.191488941791633,
+            "SEAL_checks_ms": 2.364266746726493,
+            "SEAL_VBlank_service_ms": 1.4817524311281247,
+            "SEAL_DMA_ms": 1.080863528664162,
+            "SEAL_other_ms": 1.2308825813632196
+          },
+          "ACK_interval_ms": 66.41811865119556,
+          "reveal_interval_ms": 66.41811865119556,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2784,
+          "operation_wire_B": {
+            "0xe8": 200,
+            "0xd0": 152,
+            "0xd1": 3233,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1220,
+            "0xe1": 3735,
+            "0xe9": 43,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 7162,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 34.288137698118064,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "921": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6687092624581082,
+            "source_to_planner_ms": 22.039781942821516,
+            "planner_to_output_ms": 15.367661610093839,
+            "output_to_SEAL_head_ms": 18.27597607697376,
+            "SEAL_checks_ms": 2.357934471379792,
+            "SEAL_VBlank_service_ms": 5.530497541773462,
+            "SEAL_DMA_ms": 0.9304719891800038,
+            "SEAL_other_ms": 1.1715640608360316
+          },
+          "ACK_interval_ms": 66.34259695551651,
+          "reveal_interval_ms": 66.34259695551651,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2400,
+          "operation_wire_B": {
+            "0xe8": 200,
+            "0xd0": 152,
+            "0xd1": 3221,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1440,
+            "0xe1": 2763,
+            "0xe9": 43,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6194,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.28976353876075,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "922": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.626734207403809,
+            "source_to_planner_ms": 21.756240544040537,
+            "planner_to_output_ms": 14.35524967814649,
+            "output_to_SEAL_head_ms": 24.083559640564815,
+            "SEAL_checks_ms": 2.3605418788754924,
+            "SEAL_VBlank_service_ms": 1.2496931640107738,
+            "SEAL_DMA_ms": 0.8501079652946613,
+            "SEAL_other_ms": 1.2260402531569186
+          },
+          "ACK_interval_ms": 66.5081673314935,
+          "reveal_interval_ms": 66.506304897568,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2176,
+          "operation_wire_B": {
+            "0xe8": 440,
+            "0xd0": 152,
+            "0xd1": 3203,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1160,
+            "0xe1": 3354,
+            "0xe9": 64,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6772,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 33.93204255747485,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "923": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5234025892704647,
+            "source_to_planner_ms": 21.76231197260008,
+            "planner_to_output_ms": 14.251029172798725,
+            "output_to_SEAL_head_ms": 24.01238000879312,
+            "SEAL_checks_ms": 2.364080503333943,
+            "SEAL_VBlank_service_ms": 1.5664931747383932,
+            "SEAL_DMA_ms": 0.8481524096728859,
+            "SEAL_other_ms": 1.2175661787958918
+          },
+          "ACK_interval_ms": 66.5454160100035,
+          "reveal_interval_ms": 66.547278443929,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2176,
+          "operation_wire_B": {
+            "0xe8": 460,
+            "0xd0": 152,
+            "0xd1": 3203,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1180,
+            "0xe1": 3354,
+            "0xe9": 64,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6772,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 34.15018112086351,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "924": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.48162752291007066,
+            "source_to_planner_ms": 22.066329561853376,
+            "planner_to_output_ms": 13.961855231387052,
+            "output_to_SEAL_head_ms": 17.364813846799805,
+            "SEAL_checks_ms": 2.354954577098991,
+            "SEAL_VBlank_service_ms": 8.30049551917022,
+            "SEAL_DMA_ms": 0.8859598183605442,
+            "SEAL_other_ms": 1.1290074456383474
+          },
+          "ACK_interval_ms": 66.54504352321841,
+          "reveal_interval_ms": 66.54504352321841,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2288,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1540,
+            "0xe1": 2698,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6106,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 31.93171834023981,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "925": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.4766368909744032,
+            "source_to_planner_ms": 21.855859591609036,
+            "planner_to_output_ms": 14.020783802704331,
+            "output_to_SEAL_head_ms": 22.00506243160849,
+            "SEAL_checks_ms": 2.3584932015574416,
+            "SEAL_VBlank_service_ms": 3.828139812169814,
+            "SEAL_DMA_ms": 1.2522074498101994,
+            "SEAL_other_ms": 1.1803175002858837
+          },
+          "ACK_interval_ms": 66.9775006807196,
+          "reveal_interval_ms": 66.9775006807196,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 3248,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1340,
+            "0xe1": 3712,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 7104,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 34.23014265960341,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "926": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.4150958348633675,
+            "source_to_planner_ms": 21.85605006779915,
+            "planner_to_output_ms": 14.237491868174912,
+            "output_to_SEAL_head_ms": 18.921679450083367,
+            "SEAL_checks_ms": 2.3531852648697655,
+            "SEAL_VBlank_service_ms": 6.340190690884764,
+            "SEAL_DMA_ms": 1.0833778144635873,
+            "SEAL_other_ms": 1.1838561247443344
+          },
+          "ACK_interval_ms": 66.39092711588324,
+          "reveal_interval_ms": 66.39092711588324,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2800,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1480,
+            "0xe1": 2996,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6388,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.61230697096053,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "927": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5668640811521122,
+            "source_to_planner_ms": 22.069210514228505,
+            "planner_to_output_ms": 13.946640945701677,
+            "output_to_SEAL_head_ms": 18.069011177283052,
+            "SEAL_checks_ms": 2.355606428972916,
+            "SEAL_VBlank_service_ms": 7.289659506104872,
+            "SEAL_DMA_ms": 0.9149206659020754,
+            "SEAL_other_ms": 1.1214645882400707
+          },
+          "ACK_interval_ms": 66.33337790758529,
+          "reveal_interval_ms": 66.33337790758529,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2352,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1520,
+            "0xe1": 2740,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6148,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.050228211793716,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "928": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.664358460645684,
+            "source_to_planner_ms": 21.898764353501644,
+            "planner_to_output_ms": 13.99873618369861,
+            "output_to_SEAL_head_ms": 21.99380859345709,
+            "SEAL_checks_ms": 2.358865688342542,
+            "SEAL_VBlank_service_ms": 3.592169433808912,
+            "SEAL_DMA_ms": 1.2580741166755256,
+            "SEAL_other_ms": 1.1847873417070847
+          },
+          "ACK_interval_ms": 66.9495641718371,
+          "reveal_interval_ms": 66.9495641718371,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 3248,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3239,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1340,
+            "0xe1": 3710,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 7114,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 34.26061885007927,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "929": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6458253420175283,
+            "source_to_planner_ms": 21.85185959161629,
+            "planner_to_output_ms": 14.219563296779716,
+            "output_to_SEAL_head_ms": 18.20453140714937,
+            "SEAL_checks_ms": 2.353557751654866,
+            "SEAL_VBlank_service_ms": 6.8270309190105705,
+            "SEAL_DMA_ms": 1.081608502234362,
+            "SEAL_other_ms": 1.1818074474262839
+          },
+          "ACK_interval_ms": 66.36578425788899,
+          "reveal_interval_ms": 66.36578425788899,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2800,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1480,
+            "0xe1": 2954,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6346,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.38474124089391,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "930": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6624326208679957,
+            "source_to_planner_ms": 22.0669486094709,
+            "planner_to_output_ms": 14.03798777398715,
+            "output_to_SEAL_head_ms": 25.31090611366846,
+            "SEAL_checks_ms": 2.364825476904143,
+            "SEAL_VBlank_service_ms": 16.423501085240247,
+            "SEAL_DMA_ms": 0.898810612446497,
+            "SEAL_other_ms": 1.3700995172943753
+          },
+          "ACK_interval_ms": 83.13551180987976,
+          "reveal_interval_ms": 83.13551180987976,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2304,
+          "operation_wire_B": {
+            "0xe8": 480,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 2380,
+            "0xe1": 3144,
+            "0xe9": 64,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6602,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 40.33532392367393,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "931": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5716268893592477,
+            "source_to_planner_ms": 21.829907210670935,
+            "planner_to_output_ms": 15.116083961346622,
+            "output_to_SEAL_head_ms": 23.16327288231474,
+            "SEAL_checks_ms": 2.364546111815318,
+            "SEAL_VBlank_service_ms": 16.46345029294223,
+            "SEAL_DMA_ms": 1.355106924194097,
+            "SEAL_other_ms": 1.1985693527557877
+          },
+          "ACK_interval_ms": 82.06256362539898,
+          "reveal_interval_ms": 82.06256362539898,
+          "final_wait_count": 1,
+          "final_wait_ms": 15.155835433848395,
+          "post_SEAL_DMA_B": 3504,
+          "operation_wire_B": {
+            "0xe8": 200,
+            "0xd0": 152,
+            "0xd1": 3221,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 2320,
+            "0xe1": 3803,
+            "0xe9": 29,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 7220,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 40.41420991627462,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "932": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6023934321279255,
+            "source_to_planner_ms": 21.83038340114622,
+            "planner_to_output_ms": 14.052212374073177,
+            "output_to_SEAL_head_ms": 18.298039102765802,
+            "SEAL_checks_ms": 2.355327063884091,
+            "SEAL_VBlank_service_ms": 8.359255309519757,
+            "SEAL_DMA_ms": 1.0620529460166077,
+            "SEAL_other_ms": 1.1805968653747088
+          },
+          "ACK_interval_ms": 67.7402604949083,
+          "reveal_interval_ms": 67.7402604949083,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2736,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3221,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1580,
+            "0xe1": 2954,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6340,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.911734819168366,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "933": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5342561460221624,
+            "source_to_planner_ms": 21.9025262582564,
+            "planner_to_output_ms": 14.200968058719816,
+            "output_to_SEAL_head_ms": 17.432617505522018,
+            "SEAL_checks_ms": 2.3538371167436907,
+            "SEAL_VBlank_service_ms": 7.893926193233479,
+            "SEAL_DMA_ms": 0.8691047913347655,
+            "SEAL_other_ms": 1.1199746410996705
+          },
+          "ACK_interval_ms": 66.307210710932,
+          "reveal_interval_ms": 66.307210710932,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2224,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3239,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1560,
+            "0xe1": 2574,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 5978,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 31.69944086541879,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "934": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.42756516682567425,
+            "source_to_planner_ms": 22.07194860946209,
+            "planner_to_output_ms": 13.983045707537258,
+            "output_to_SEAL_head_ms": 16.729040201647134,
+            "SEAL_checks_ms": 2.3533715082623154,
+            "SEAL_VBlank_service_ms": 8.994345278115397,
+            "SEAL_DMA_ms": 0.8380021447789086,
+            "SEAL_other_ms": 1.1293799324234475
+          },
+          "ACK_interval_ms": 66.52669854905223,
+          "reveal_interval_ms": 66.52669854905223,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2160,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1600,
+            "0xe1": 2532,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 5940,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 31.653415423804905,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "935": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5670927823295113,
+            "source_to_planner_ms": 21.90257387730393,
+            "planner_to_output_ms": 14.054974278829834,
+            "output_to_SEAL_head_ms": 19.16529957167228,
+            "SEAL_checks_ms": 2.3554201855803663,
+            "SEAL_VBlank_service_ms": 6.542078528409008,
+            "SEAL_DMA_ms": 1.081608502234362,
+            "SEAL_other_ms": 1.1799450135007836
+          },
+          "ACK_interval_ms": 66.84899273986007,
+          "reveal_interval_ms": 66.84899273986007,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2800,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3239,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1520,
+            "0xe1": 2996,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6400,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.86699011655588,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "936": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6511214071218705,
+            "source_to_planner_ms": 21.853121496375795,
+            "planner_to_output_ms": 14.293349010554717,
+            "output_to_SEAL_head_ms": 20.623480929835797,
+            "SEAL_checks_ms": 2.358027593076067,
+            "SEAL_VBlank_service_ms": 4.5182647032639895,
+            "SEAL_DMA_ms": 1.2069503054205395,
+            "SEAL_other_ms": 1.1825524209964842
+          },
+          "ACK_interval_ms": 66.68686786664526,
+          "reveal_interval_ms": 66.68686786664526,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 3120,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1340,
+            "0xe1": 3523,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6915,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 33.504794064504026,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "937": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5981026643808823,
+            "source_to_planner_ms": 22.11932956182273,
+            "planner_to_output_ms": 14.628569515834345,
+            "output_to_SEAL_head_ms": 20.827587529448664,
+            "SEAL_checks_ms": 2.361100609053142,
+            "SEAL_VBlank_service_ms": 3.5934731375567623,
+            "SEAL_DMA_ms": 1.1120592969162937,
+            "SEAL_other_ms": 1.273066709775804
+          },
+          "ACK_interval_ms": 66.51328902478862,
+          "reveal_interval_ms": 66.51328902478862,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2864,
+          "operation_wire_B": {
+            "0xe8": 140,
+            "0xd0": 152,
+            "0xd1": 3239,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1340,
+            "0xe1": 3328,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6748,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 33.20551107876922,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "938": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5233259386853866,
+            "source_to_planner_ms": 21.85397863923131,
+            "planner_to_output_ms": 15.942399704159074,
+            "output_to_SEAL_head_ms": 23.792094646577738,
+            "SEAL_checks_ms": 2.3573757412021417,
+            "SEAL_VBlank_service_ms": 16.369862988185837,
+            "SEAL_DMA_ms": 1.18599792375866,
+            "SEAL_other_ms": 1.2684106249620528
+          },
+          "ACK_interval_ms": 83.2934462067622,
+          "reveal_interval_ms": 83.2934462067622,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 3056,
+          "operation_wire_B": {
+            "0xe8": 220,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 2260,
+            "0xe1": 4134,
+            "0xe9": 29,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 7541,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 41.27295552969955,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "939": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.4319141138250313,
+            "source_to_planner_ms": 22.07132956184422,
+            "planner_to_output_ms": 15.4615425614737,
+            "output_to_SEAL_head_ms": 20.361895103019805,
+            "SEAL_checks_ms": 2.3554201855803663,
+            "SEAL_VBlank_service_ms": 3.395496411276069,
+            "SEAL_DMA_ms": 1.1988487178446126,
+            "SEAL_other_ms": 1.269248720228528
+          },
+          "ACK_interval_ms": 66.54569537509234,
+          "reveal_interval_ms": 66.54383294116683,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 3072,
+          "operation_wire_B": {
+            "0xe8": 200,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1280,
+            "0xe1": 3354,
+            "0xe9": 29,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6777,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 33.2438614404558,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "940": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6726528274955407,
+            "source_to_planner_ms": 21.854669115420474,
+            "planner_to_output_ms": 14.5907361825736,
+            "output_to_SEAL_head_ms": 16.660373325208592,
+            "SEAL_checks_ms": 2.3540233601362406,
+            "SEAL_VBlank_service_ms": 7.9848129687978995,
+            "SEAL_DMA_ms": 0.8412614041485343,
+            "SEAL_other_ms": 1.1762201456497827
+          },
+          "ACK_interval_ms": 66.13474932943066,
+          "reveal_interval_ms": 66.13661176335617,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2160,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1520,
+            "0xe1": 2532,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 5924,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 31.21719198975682,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "941": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5886505439834844,
+            "source_to_planner_ms": 21.85385959161249,
+            "planner_to_output_ms": 14.813110914699386,
+            "output_to_SEAL_head_ms": 21.558366126474578,
+            "SEAL_checks_ms": 2.3536508733511408,
+            "SEAL_VBlank_service_ms": 3.3939133424393937,
+            "SEAL_DMA_ms": 1.2213841683431677,
+            "SEAL_other_ms": 1.1760339022572326
+          },
+          "ACK_interval_ms": 66.95896946316087,
+          "reveal_interval_ms": 66.95896946316087,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 3168,
+          "operation_wire_B": {
+            "0xe8": 140,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1300,
+            "0xe1": 3670,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 7062,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 33.89354791739302,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "942": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5848554863154508,
+            "source_to_planner_ms": 22.07104384755905,
+            "planner_to_output_ms": 14.591283801619486,
+            "output_to_SEAL_head_ms": 19.89443149787286,
+            "SEAL_checks_ms": 2.357934471379792,
+            "SEAL_VBlank_service_ms": 4.663907036238122,
+            "SEAL_DMA_ms": 1.0808635286641617,
+            "SEAL_other_ms": 1.1848804634033596
+          },
+          "ACK_interval_ms": 66.42920013305228,
+          "reveal_interval_ms": 66.42920013305228,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2800,
+          "operation_wire_B": {
+            "0xe8": 140,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1340,
+            "0xe1": 3248,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6656,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.725998666255926,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "943": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5036076200562357,
+            "source_to_planner_ms": 21.855002448753176,
+            "planner_to_output_ms": 14.594712373042235,
+            "output_to_SEAL_head_ms": 16.722768264640315,
+            "SEAL_checks_ms": 2.354861455402716,
+            "SEAL_VBlank_service_ms": 8.242573824087156,
+            "SEAL_DMA_ms": 0.8416338909336344,
+            "SEAL_other_ms": 1.167746071288756
+          },
+          "ACK_interval_ms": 66.28290594820422,
+          "reveal_interval_ms": 66.28290594820422,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2160,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1540,
+            "0xe1": 2532,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 5924,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 31.326247848268835,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "944": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6290998139054618,
+            "source_to_planner_ms": 21.902169115399936,
+            "planner_to_output_ms": 14.815896628979806,
+            "output_to_SEAL_head_ms": 21.35395812259941,
+            "SEAL_checks_ms": 2.354116481832516,
+            "SEAL_VBlank_service_ms": 3.51310911367142,
+            "SEAL_DMA_ms": 1.236097396354621,
+            "SEAL_other_ms": 1.1807831087672587
+          },
+          "ACK_interval_ms": 66.98522978151043,
+          "reveal_interval_ms": 66.98522978151043,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 3184,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3239,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1320,
+            "0xe1": 3627,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 7031,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 33.848827745581936,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "945": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.4485147424683381,
+            "source_to_planner_ms": 22.06949622851437,
+            "planner_to_output_ms": 14.619164753947455,
+            "output_to_SEAL_head_ms": 18.24155207625427,
+            "SEAL_checks_ms": 2.3530921431734906,
+            "SEAL_VBlank_service_ms": 6.395411856775851,
+            "SEAL_DMA_ms": 1.0618667026240576,
+            "SEAL_other_ms": 1.1718434259248567
+          },
+          "ACK_interval_ms": 66.3609419296827,
+          "reveal_interval_ms": 66.35907949575719,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2736,
+          "operation_wire_B": {
+            "0xe8": 120,
+            "0xd0": 152,
+            "0xd1": 3227,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1420,
+            "0xe1": 2954,
+            "0xe9": 14,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 6362,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.05757366535924,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "946": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.4077192715450328,
+            "source_to_planner_ms": 21.9031692304093,
+            "planner_to_output_ms": 16.194066581640943,
+            "output_to_SEAL_head_ms": 20.189836321942632,
+            "SEAL_checks_ms": 2.3531852648697655,
+            "SEAL_VBlank_service_ms": 3.1922117483076993,
+            "SEAL_DMA_ms": 1.0705270203776347,
+            "SEAL_other_ms": 1.3679577182800498
+          },
+          "ACK_interval_ms": 66.67867315737305,
+          "reveal_interval_ms": 66.68053559129856,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2720,
+          "operation_wire_B": {
+            "0xe8": 220,
+            "0xd0": 152,
+            "0xd1": 3239,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1300,
+            "0xe1": 3121,
+            "0xe9": 43,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6554,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.880925726030654,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "947": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.4833607208317115,
+            "source_to_planner_ms": 21.926550182851976,
+            "planner_to_output_ms": 16.251750835618726,
+            "output_to_SEAL_head_ms": 23.129798554165024,
+            "SEAL_checks_ms": 2.364732355207868,
+            "SEAL_VBlank_service_ms": 16.673998448220054,
+            "SEAL_DMA_ms": 1.150052948996502,
+            "SEAL_other_ms": 1.2215704117357176
+          },
+          "ACK_interval_ms": 83.20181445762758,
+          "reveal_interval_ms": 83.19995202370208,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2960,
+          "operation_wire_B": {
+            "0xe8": 220,
+            "0xd0": 152,
+            "0xd1": 3245,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 2300,
+            "0xe1": 3946,
+            "0xe9": 43,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 7401,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 41.01563867530175,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 0
+          }
+        },
+        "948": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5351153212081093,
+            "source_to_planner_ms": 22.213169231168266,
+            "planner_to_output_ms": 15.556879247450132,
+            "output_to_SEAL_head_ms": 20.92489111590022,
+            "SEAL_checks_ms": 2.355233942187816,
+            "SEAL_VBlank_service_ms": 2.588131304571642,
+            "SEAL_DMA_ms": 1.182086812515109,
+            "SEAL_other_ms": 1.2342349624291205
+          },
+          "ACK_interval_ms": 66.58974193743042,
+          "reveal_interval_ms": 66.59160437135591,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 3056,
+          "operation_wire_B": {
+            "0xe8": 380,
+            "0xd0": 152,
+            "0xd1": 3321,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1200,
+            "0xe1": 3009,
+            "0xe9": 78,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6559,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 32.974960107351414,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 8
+          }
+        },
+        "949": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5878652262929092,
+            "source_to_planner_ms": 22.226431136059343,
+            "planner_to_output_ms": 15.625219858768128,
+            "output_to_SEAL_head_ms": 30.344172880549518,
+            "SEAL_checks_ms": 2.3521609262107406,
+            "SEAL_VBlank_service_ms": 9.654857469794115,
+            "SEAL_DMA_ms": 0.5809862630598522,
+            "SEAL_other_ms": 1.163276229867555
+          },
+          "ACK_interval_ms": 82.53496999060216,
+          "reveal_interval_ms": 82.53496999060216,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 1472,
+          "operation_wire_B": {
+            "0xe8": 1160,
+            "0xd0": 152,
+            "0xd1": 3322,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 1780,
+            "0xe1": 2295,
+            "0xe9": 99,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 5883,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 38.43187344390898,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 7
+          }
+        },
+        "950": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5276276565983775,
+            "source_to_planner_ms": 22.27185970767772,
+            "planner_to_output_ms": 16.738185634609376,
+            "output_to_SEAL_head_ms": 22.980043403830848,
+            "SEAL_checks_ms": 2.3614730958382424,
+            "SEAL_VBlank_service_ms": 16.53636458112557,
+            "SEAL_DMA_ms": 0.972283630807488,
+            "SEAL_other_ms": 1.3213968701425396
+          },
+          "ACK_interval_ms": 83.70923458063017,
+          "reveal_interval_ms": 83.70923458063017,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2496,
+          "operation_wire_B": {
+            "0xe8": 480,
+            "0xd0": 152,
+            "0xd1": 3332,
+            "0xd2": 120,
+            "0xd3": 8,
+            "0xe0": 2380,
+            "0xe1": 2845,
+            "0xe9": 83,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6411,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 39.75220772531285,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 5
+          }
+        },
+        "951": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6847279068915614,
+            "source_to_planner_ms": 23.214351459082284,
+            "planner_to_output_ms": 16.293474493645583,
+            "output_to_SEAL_head_ms": 22.85763240239746,
+            "SEAL_checks_ms": 2.326831824823935,
+            "SEAL_VBlank_service_ms": 15.569575130398311,
+            "SEAL_DMA_ms": 1.062984162979358,
+            "SEAL_other_ms": 1.2110476600566404
+          },
+          "ACK_interval_ms": 83.22062504027514,
+          "reveal_interval_ms": 83.22062504027514,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2736,
+          "operation_wire_B": {
+            "0xe8": 340,
+            "0xd0": 160,
+            "0xd1": 3450,
+            "0xd2": 128,
+            "0xd3": 8,
+            "0xe0": 2200,
+            "0xe1": 3351,
+            "0xe9": 110,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 7086,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 40.03996084654491,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 12
+          }
+        },
+        "952": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5812083922069463,
+            "source_to_planner_ms": 23.05950053675024,
+            "planner_to_output_ms": 18.280867833123395,
+            "output_to_SEAL_head_ms": 28.25130180462007,
+            "SEAL_checks_ms": 2.3537439950474157,
+            "SEAL_VBlank_service_ms": 8.328804514837826,
+            "SEAL_DMA_ms": 1.0098116744063212,
+            "SEAL_other_ms": 1.3750349671969513
+          },
+          "ACK_interval_ms": 83.24027371818916,
+          "reveal_interval_ms": 83.24027371818916,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2592,
+          "operation_wire_B": {
+            "0xe8": 880,
+            "0xd0": 160,
+            "0xd1": 3462,
+            "0xd2": 128,
+            "0xd3": 8,
+            "0xe0": 1720,
+            "0xe1": 3636,
+            "0xe9": 179,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 7452,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 41.930671101216454,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 28.00970253577829,
+            "ROM_grant_to_response_union_ms": 0.04842328206301061,
+            "ROM_reads": 208,
+            "OBJ_plans": 16
+          }
+        },
+        "953": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6128456703852102,
+            "source_to_planner_ms": 23.075786251242288,
+            "planner_to_output_ms": 16.37032132743208,
+            "output_to_SEAL_head_ms": 30.008884044242848,
+            "SEAL_checks_ms": 2.354861455402716,
+            "SEAL_VBlank_service_ms": 8.4425992276859,
+            "SEAL_DMA_ms": 0.6606984350712698,
+            "SEAL_other_ms": 1.1692360184291561
+          },
+          "ACK_interval_ms": 82.69523242989146,
+          "reveal_interval_ms": 82.69523242989146,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 1696,
+          "operation_wire_B": {
+            "0xe8": 1140,
+            "0xd0": 160,
+            "0xd1": 3462,
+            "0xd2": 128,
+            "0xd3": 8,
+            "0xe0": 1680,
+            "0xe1": 2407,
+            "0xe9": 146,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6174,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 38.88660465404091,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 12
+          }
+        },
+        "954": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.5907021388511681,
+            "source_to_planner_ms": 23.253446697672846,
+            "planner_to_output_ms": 18.882080108349637,
+            "output_to_SEAL_head_ms": 26.920046429391757,
+            "SEAL_checks_ms": 2.354488968617616,
+            "SEAL_VBlank_service_ms": 9.33647439022982,
+            "SEAL_DMA_ms": 0.8003809794838004,
+            "SEAL_other_ms": 1.2261333748531937
+          },
+          "ACK_interval_ms": 83.36375308744984,
+          "reveal_interval_ms": 83.36189065352434,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2048,
+          "operation_wire_B": {
+            "0xe8": 860,
+            "0xd0": 160,
+            "0xd1": 3450,
+            "0xd2": 128,
+            "0xd3": 8,
+            "0xe0": 1680,
+            "0xe1": 3563,
+            "0xe9": 196,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 7384,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 41.24688998897463,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 26.091255909968453,
+            "ROM_grant_to_response_union_ms": 0.06332275346701387,
+            "ROM_reads": 272,
+            "OBJ_plans": 12
+          }
+        },
+        "955": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6358646602082656,
+            "source_to_planner_ms": 23.058095775291143,
+            "planner_to_output_ms": 18.602407214841534,
+            "output_to_SEAL_head_ms": 28.59075432678911,
+            "SEAL_checks_ms": 2.355606428972916,
+            "SEAL_VBlank_service_ms": 7.951754766620267,
+            "SEAL_DMA_ms": 0.7178751565841323,
+            "SEAL_other_ms": 1.1720296693174068
+          },
+          "ACK_interval_ms": 83.08438799862478,
+          "reveal_interval_ms": 83.08625043255027,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 1840,
+          "operation_wire_B": {
+            "0xe8": 940,
+            "0xd0": 160,
+            "0xd1": 3450,
+            "0xd2": 128,
+            "0xd3": 8,
+            "0xe0": 1620,
+            "0xe1": 3503,
+            "0xe9": 205,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 7333,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 41.20062466153089,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 26.465558568145898,
+            "ROM_grant_to_response_union_ms": 0.06704762131801469,
+            "ROM_reads": 288,
+            "OBJ_plans": 14
+          }
+        },
+        "956": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.6717936065465335,
+            "source_to_planner_ms": 22.986905299048626,
+            "planner_to_output_ms": 17.498709455312504,
+            "output_to_SEAL_head_ms": 29.225273387500607,
+            "SEAL_checks_ms": 2.354954577098991,
+            "SEAL_VBlank_service_ms": 8.556021453748874,
+            "SEAL_DMA_ms": 0.5633862624638735,
+            "SEAL_other_ms": 1.223060358876118
+          },
+          "ACK_interval_ms": 83.08010440059613,
+          "reveal_interval_ms": 83.08010440059613,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 1440,
+          "operation_wire_B": {
+            "0xe8": 1060,
+            "0xd0": 160,
+            "0xd1": 3428,
+            "0xd2": 128,
+            "0xd3": 8,
+            "0xe0": 1760,
+            "0xe1": 2614,
+            "0xe9": 107,
+            "0xea": 7,
+            "0x70": 8,
+            "0x73": 8
+          },
+          "nonquery_wire_B": 6308,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 39.34466108598199,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 8
+          }
+        },
+        "957": {
+          "terms": {
+            "previous_ACK_to_source_ms": 0.551644057889505,
+            "source_to_planner_ms": 23.209613364637548,
+            "planner_to_output_ms": 17.61394755170188,
+            "output_to_SEAL_head_ms": 24.14242687398717,
+            "SEAL_checks_ms": 2.2965672735345533,
+            "SEAL_VBlank_service_ms": 13.628639614938061,
+            "SEAL_DMA_ms": 0.8424719862001095,
+            "SEAL_other_ms": 1.1193227892257454
+          },
+          "ACK_interval_ms": 83.40463351211457,
+          "reveal_interval_ms": 83.40463351211457,
+          "final_wait_count": 0,
+          "final_wait_ms": 0.0,
+          "post_SEAL_DMA_B": 2176,
+          "operation_wire_B": {
+            "0xe8": 380,
+            "0xd0": 160,
+            "0xd1": 3428,
+            "0xd2": 128,
+            "0xd3": 8,
+            "0xe0": 2100,
+            "0xe1": 3641,
+            "0xe9": 115,
+            "0xea": 7,
+            "0x70": 16,
+            "0x73": 16
+          },
+          "nonquery_wire_B": 7359,
+          "nested_resource": {
+            "SPI_call_span_union_ms": null,
+            "SPI_valid_span_subset_union_ms": 40.69386729407869,
+            "SPI_missing_start_count": 1,
+            "ROM_request_to_grant_union_ms": 0.0,
+            "ROM_grant_to_response_union_ms": 0.0,
+            "ROM_reads": 0,
+            "OBJ_plans": 9
+          }
+        }
+      },
+      "wire_B": {
+        "0x70": 640,
+        "0x73": 640,
+        "0xe0": 85900,
+        "0xd0": 8112,
+        "0xd1": 172588,
+        "0xd2": 6416,
+        "0xd3": 424,
+        "0xe1": 171401,
+        "0xe8": 27140,
+        "0xe9": 3954,
+        "0xea": 371
+      },
+      "unchanged_replay": {
+        "commits": 53,
+        "last_ACK_masterclock": 88254606,
+        "VRAM_DMA_B": 114352
+      },
+      "historical_logger": {
+        "invalid_D2_start_records": [
+          {
+            "generation": 905,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 3931048,
+            "clock": 3626320.22799719
+          },
+          {
+            "generation": 906,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 7504728,
+            "clock": 7203732.693628026
+          },
+          {
+            "generation": 907,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 11078408,
+            "clock": 10799783.37189676
+          },
+          {
+            "generation": 908,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 12507880,
+            "clock": 12218701.169122571
+          },
+          {
+            "generation": 909,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 13937352,
+            "clock": 13653183.733223524
+          },
+          {
+            "generation": 910,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 15366824,
+            "clock": 15090979.442844076
+          },
+          {
+            "generation": 911,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 16796296,
+            "clock": 16520390.006830798
+          },
+          {
+            "generation": 912,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 18225768,
+            "clock": 17936767.625660263
+          },
+          {
+            "generation": 913,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 19655240,
+            "clock": 19381896.103925806
+          },
+          {
+            "generation": 914,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 21084712,
+            "clock": 20807770.149803776
+          },
+          {
+            "generation": 915,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 22514184,
+            "clock": 22236295.933670882
+          },
+          {
+            "generation": 916,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 24301024,
+            "clock": 24024992.01519942
+          },
+          {
+            "generation": 917,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 25730496,
+            "clock": 25454492.030164175
+          },
+          {
+            "generation": 918,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 27159968,
+            "clock": 26884280.171099316
+          },
+          {
+            "generation": 919,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 28589440,
+            "clock": 28309500.222401045
+          },
+          {
+            "generation": 920,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 30018912,
+            "clock": 29745989.817970455
+          },
+          {
+            "generation": 921,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 31448384,
+            "clock": 31180468.491649453
+          },
+          {
+            "generation": 922,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 32877856,
+            "clock": 32598353.18395659
+          },
+          {
+            "generation": 923,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 34307328,
+            "clock": 34024541.2549607
+          },
+          {
+            "generation": 924,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 35736800,
+            "clock": 35459379.32713695
+          },
+          {
+            "generation": 925,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 37166272,
+            "clock": 36883968.559814624
+          },
+          {
+            "generation": 926,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 38595744,
+            "clock": 38321140.82581336
+          },
+          {
+            "generation": 927,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 40025216,
+            "clock": 39754864.27133511
+          },
+          {
+            "generation": 928,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 41454688,
+            "clock": 41177971.272904366
+          },
+          {
+            "generation": 929,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 42884160,
+            "clock": 42614464.959381655
+          },
+          {
+            "generation": 930,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 44313632,
+            "clock": 44044778.24331351
+          },
+          {
+            "generation": 931,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 46100472,
+            "clock": 45823250.242685474
+          },
+          {
+            "generation": 932,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 47887312,
+            "clock": 47586399.205910906
+          },
+          {
+            "generation": 933,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 49316784,
+            "clock": 49041355.609649085
+          },
+          {
+            "generation": 934,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 50746256,
+            "clock": 50466761.53339005
+          },
+          {
+            "generation": 935,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 52175728,
+            "clock": 51894969.82829139
+          },
+          {
+            "generation": 936,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 53605200,
+            "clock": 53331458.19304881
+          },
+          {
+            "generation": 937,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 55034672,
+            "clock": 54768232.15675844
+          },
+          {
+            "generation": 938,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 56464144,
+            "clock": 56189496.14273987
+          },
+          {
+            "generation": 939,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 58250984,
+            "clock": 57981044.357363954
+          },
+          {
+            "generation": 940,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 59680456,
+            "clock": 59410840.81103861
+          },
+          {
+            "generation": 941,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 61109928,
+            "clock": 60829420.95523826
+          },
+          {
+            "generation": 942,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 62539400,
+            "clock": 62272039.6321846
+          },
+          {
+            "generation": 943,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 63968872,
+            "clock": 63692418.18113814
+          },
+          {
+            "generation": 944,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 65398344,
+            "clock": 65119693.2179031
+          },
+          {
+            "generation": 945,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 66827816,
+            "clock": 66558074.60948944
+          },
+          {
+            "generation": 946,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 68257288,
+            "clock": 67978886.3654529
+          },
+          {
+            "generation": 947,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 69686760,
+            "clock": 69413020.57378311
+          },
+          {
+            "generation": 948,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 71473600,
+            "clock": 71207249.72349161
+          },
+          {
+            "generation": 949,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 72903072,
+            "clock": 72638647.8520936
+          },
+          {
+            "generation": 950,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 74689912,
+            "clock": 74410806.98839885
+          },
+          {
+            "generation": 951,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 76476752,
+            "clock": 76232141.38400203
+          },
+          {
+            "generation": 952,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 78263592,
+            "clock": 78013722.36003591
+          },
+          {
+            "generation": 953,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 80050432,
+            "clock": 79802187.60382807
+          },
+          {
+            "generation": 954,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 81837272,
+            "clock": 81581338.46700634
+          },
+          {
+            "generation": 955,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 83624112,
+            "clock": 83368125.64805679
+          },
+          {
+            "generation": 956,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 85410952,
+            "clock": 85151574.44022892
+          },
+          {
+            "generation": 957,
+            "event": "SPI",
+            "opcode": "0xd2",
+            "packet_opcode": null,
+            "bytes": 8,
+            "start": 87197792,
+            "clock": 86937936.74239668
+          }
+        ],
+        "SPI_end_monotonic": true,
+        "explanation": "Final D2 start was overwritten with next capture start. Clock/capture readiness unchanged; complete SPI span unknown, byte counts and outer partition retained."
+      },
+      "parameters": {
+        "CPI": 2,
+        "SPI_extra_us": 0,
+        "ROM_safe_slot_stride": 48,
+        "ROM_phase": 0,
+        "start": 3178684,
+        "capture_gate": true,
+        "driver503_SHA256": "c3757df3cd5734200ead28d54f6849b1b5f68cac77c0acb9fd6750e58949fbdc",
+        "driver_extra_us": {
+          "0xd0": 49.91813965717866,
+          "0xd1": 49.25658301352539,
+          "0xd2": 49.91848490075173,
+          "0xd3": 49.905976676384846,
+          "0xe0": 48.10347755956609,
+          "0xe1": 49.78286503309517,
+          "0xe8": 48.130323927913714,
+          "0xe9": 49.45460026683087,
+          "0xea": 50.39278227014075
+        },
+        "ROM_calendar": {
+          "period_masterclocks": 2858928,
+          "boot_frames": [
+            12,
+            19
+          ],
+          "transactions": 2386,
+          "latencies": [
+            5
+          ],
+          "trace_SHA256": "30cf094ddc128baf8836d2155ef48c84b03669433acb724b5b24d4292e667f52",
+          "anchor_SHA256": "4bc3df46e51ffb312af5400d9814ed32179910180863393a10c514c6dea5e714"
+        }
+      },
+      "scope": "506 real linked M4 runtime /489 CPU rendezvous with explicit hardware models.\n\nSPI wire, finite queues and ROM qualified windows share Mesen master time.\nUnicorn instruction CPI and ROM safe-slot density are sensitivity parameters,\nnot measured cycles or an execution of the NES/PSRAM RTL. Fixed captures and\ntile bytes are replayed; outer SD/menu/controller hardware is not emulated.\n",
+      "physical_timing": false,
+      "full_ROM_RTL": false,
+      "ARM_instructions": 83875466,
+      "SysTick_instructions": 30071,
+      "IRQ_lateness_masterclocks": 17640.26301319152,
+      "evidence": {
+        "joint.json": "fea1f422849f416e525621f0c300d32a55bbe2ddaeaeb6d9a0d3da692182cfb5",
+        "packets.jsonl": "d365c5c1d8157526ddb6b35cc2b576f3620317d0f416b69cda963f6e3a4efcd4",
+        "window.csv": "b4fedfe92a7cfe35b81ea97a5a59caafdaaed95c5e9acd997501368f3d410f9f",
+        "seal528.csv": "156fdfd4471ef42e86bc6988af4f0d24b99d0a6c372610ad16d5b22f413b8cd8",
+        "obj-phases.json": "7e8377d8a1b49ebc6e21e3a8441c3f0546baadc4f1bf6dffec5f0df3836d67a7",
+        "events.json": "5fdd11817a96499cd90855524cb58dcfd801b09e60f9400c6c0db2f1a50cce7c"
+      },
+      "replay": {
+        "client.sfc": "179fb2cfd3ba2bcdcd672f1a377d24225c41ef8e7903938163fa98ab82138539",
+        "arrivals.tsv": "08eef827c69f1c94faa72e6456b9fe82ec1cf7cf310bb62f421e1cc71ab09ecf",
+        "window.csv": "b4fedfe92a7cfe35b81ea97a5a59caafdaaed95c5e9acd997501368f3d410f9f",
+        "result.json": "db2c4544f9fc6d5991f14347b2d287e44cf615c1a8ffa307cbadf8d534f7b7e3",
+        "audit.json": "72dccd30f55e4070242b816448849fb27f9c64cd949a850388c994433fc156cf",
+        "bank561.csv": "d313b48ad02fade75ab7e3f1ccb1a07a5f481cb268c89d97c4482329ac145658"
+      }
+    }
+  ],
+  "physical": {
+    "evidence": "analysis/hardware578-mmc577.json",
+    "DWT_ms_per_display": {
+      "receive": 19.890575633594725,
+      "plan_supply": 14.829782773610638,
+      "output_final_ack": 36.365553173656096,
+      "unattributed_or_different_boundary_ms": 0.6085991589953323
+    },
+    "wire_projection": {
+      "SPI_Hz": 2625000,
+      "period_ms": 16.666666666666668,
+      "full_period_capacity_B": 5468.75,
+      "completed_displays": 838,
+      "operation_bytes": {
+        "D0": 168144,
+        "D1": 2701859,
+        "D2": 100016,
+        "D3": 6712,
+        "E0": 1516420,
+        "E1": 2090319,
+        "E8": 507860,
+        "E9": 73776,
+        "EA": 5866,
+        "70": 9600,
+        "73": 9600,
+        "OTHER": 0
+      },
+      "total_wire_B": 7190172,
+      "runtime_wire_B": 7170972,
+      "service_70_73_B": 19200,
+      "all_wire_B_per_display": 8580.157517899761,
+      "all_wire_ms_per_display": 26.14905148312308,
+      "excluding_D0_E0_E8_B_per_display": 5963.899761336515,
+      "excluding_D0_E0_E8_ms_per_display": 18.175694510739856,
+      "D1_E1_E9_transaction_B_per_display": 5806.627684964201,
+      "provisional_12ms_B": 3937.5,
+      "reduction_to_12ms_B_per_display": 2026.3997613365154,
+      "reduction_to_12ms_pct": 33.97776358471856,
+      "reduction_to_zero_gap_period_B": 495.14976133651544,
+      "status": "observational same-workload projection; not universal lower bound or prediction",
+      "caveats": [
+        "All-operation totals include service 70/73 absent from native_wire_bytes.",
+        "D1/E1/E9 counters count complete transactions, not payload-only bytes.",
+        "One incomplete input and unsynchronized scene distribution are included.",
+        "Neither phase costs nor polling costs are added to wire times."
+      ]
+    },
+    "source_SHA256": {
+      "nes-game-last-mmc577.txt": "6e3b0c750ea47ff1acac59a16f6806f66e35accfa69438232a36cf0f56b73075",
+      "nes-budget-mmc577.txt": "360760966ed3acb7ac348a205d419799de2c071fdd878cb944db021edeb0cf0b",
+      "nes-progress-mmc577.txt": "c4c05cabdd6f6044460815f0aaa748fcb82cc3474303c398554b7359433aa340"
+    }
+  },
+  "accounting": "8 disjoint wall-time terms sum exactly to ACK interval for each of104 warm/second-bank cases; SPI/ROM/DWT resource times are nested and not added.",
+  "uncertainty": [
+    {
+      "id": "U1",
+      "topic": "Physical receive, capture and input payload distribution",
+      "known": "Aggregate bytes/cost and four retained capture transitions",
+      "missing": "Per-frame canonical/encoded section bytes, capture counts and physical game/input latency",
+      "method": "One bounded diagnostic pass reusing existing counters/buffers or separate diagnostic build; bind same trace to reference NES progress; record overhead."
+    },
+    {
+      "id": "U2",
+      "topic": "ROM grant timing and ARM cycle model",
+      "known": "Same53 inputs, CPI2, measured503 per-op overhead, repeated boot frames12..19 calendar",
+      "missing": "Actual first-level dense-ROM calendar and physical instruction/IRQ latency",
+      "method": "Targeted timestamp/owner trace for selected sparse and dense windows; compare uninstrumented timestamps before using model as feasibility gate."
+    },
+    {
+      "id": "U3",
+      "topic": "Physical output partitions",
+      "known": "Aggregate36.37ms and exact CPU replay partitions",
+      "missing": "Physical per-frame SEAL acceptance/DMA/VBlank/ACK decomposition",
+      "method": "Reuse CPU interval logger for current trace; add only missing bounded phase marks to diagnostic build, not an always-on large trace."
+    },
+    {
+      "id": "U4",
+      "topic": "Fresh execution source closure",
+      "known": "Current source/artifact and recorded trace hashes",
+      "missing": "Single-command fresh co-simulation fixture/toolchain restoration",
+      "method": "Restore only selected fixture/calendar/source inputs from existing private snapshots; do not recreate all historical candidates."
+    }
+  ],
+  "next": "R1 existing-data pass complete. One targeted missing-data pass remains before R2 feasibility approval; no structural candidate selected.",
+  "interpretation": "Post-SEAL DMA averages about1ms in this replay. Early output/pre-SEAL and source transfer dominate; these are model results, not physical577 DMA measurements."
+}

@@ -348,8 +348,8 @@ class Runtime(ARM):
         if op==0xd2:
             assert int.from_bytes(tx[2:4],'big')==((self.start_token+self.index)&65535);self.index+=1
             if self.index==len(self.packets):
-                start=(math.floor((self.clock-self.a.rom_phase)/PERIOD)+1)*PERIOD+self.a.rom_phase
-                self.next_capture_ready=start+240*341*4
+                capture_start=(math.floor((self.clock-self.a.rom_phase)/PERIOD)+1)*PERIOD+self.a.rom_phase
+                self.next_capture_ready=capture_start+240*341*4
         elif op==0xd3:assert tx[4]==1;self.prepared=True
         elif op>=0xe0:self.clock=self.link.accept(tx,self.clock)
         self.wire_B[hex(op)]=self.wire_B.get(hex(op),0)+n

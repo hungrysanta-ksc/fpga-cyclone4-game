@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-PR150 문서 브랜치는 PR149 병합6094a7cff6995981bea4f55be7f4ce6e27a81e06에서 분기했다. 제품 구현은 시작하지 않았다. 선택 산출물과 실측은 MMC577을 유지한다.
+PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 진행한다. [580 결과](../nes-whole580-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)가 최신이다. 기존자료 분석과 로그 오류 수정만 했으며 제품 구현은 시작하지 않았다. 선택 산출물과 실측은 MMC577을 유지한다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -39,7 +39,7 @@ PR150 문서 브랜치는 PR149 병합6094a7cff6995981bea4f55be7f4ce6e27a81e06�
 
 ## 4. 개발 재개 후 순서
 
-1. [579 계획](../nes-retrospective579-plan.json)의 R1 전체 비용표와 선택577 manifest부터 확인한다. 기존 자료 재분석 한 차례·꼭 필요한 누락 계측 한 차례로 한정하고 결측을 숨기지 않는다.
+1. [579 계획](../nes-retrospective579-plan.json)의 R1 기존자료 분석은580에서 완료했다. 다음은 선택 fixture의 section별 바이트/변경량과 generation/준비/SEAL/ACK 연결을 확인하는 한 차례의 제한 조사다. 계측 overhead를 산정하고 물리 ROM/capture/입력 지연 결측을 숨기지 않는다. 전체분석/같은FIT를 다시 돌리지 않는다.
 2. R2에서 본문 전송 감소·전체 critical path·실제 삭제·자원 예산을 함께 통과한 후보만 R3 구현으로 진행한다. 양수 timer/epoch/seed 및 국소 DMA/poll 반복은 재개하지 않는다.
 3. R4는 의미 있는 후보만 실기 전달한다. 5–40/40–55초 완료 집계와 독립 검사·STOP·최종ACK·VBlank·메뉴복귀를 유지하며 시작 실패는 별도 보존한다.
 4. 각 단계 완료 때 579 계획의 상태·증거·예산·다음 한 단계를 함께 갱신한다. 오래된 계획의 미완료 상태를 방치하지 않는다.
