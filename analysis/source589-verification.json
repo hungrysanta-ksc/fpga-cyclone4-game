@@ -1,0 +1,731 @@
+{
+  "stage": 589,
+  "functional_passed": true,
+  "frames": 53,
+  "packets": 282,
+  "guards": 8,
+  "input_scope": "Pinned captured query values, latency3..5 source edges, real paired-clock source/mailbox/host SPI pins. Not actual collector/ROM/ARM/65816.",
+  "test_clock": {
+    "source_period_ns": 45.454,
+    "host_period_ns": 11.904,
+    "host_phase_ns": 3.5,
+    "SPI_bit_period_ns": 380.952380952
+  },
+  "costs": {
+    "reference": {
+      "LE": 1668,
+      "comb": 1311,
+      "FF": 794,
+      "RAM_bits": 2048
+    },
+    "candidate": {
+      "LE": 4014,
+      "comb": 3517,
+      "FF": 1370,
+      "RAM_bits": 26624
+    }
+  },
+  "delta": {
+    "LE": 2346,
+    "comb": 2206,
+    "FF": 576,
+    "RAM_bits": 24576
+  },
+  "hierarchy": {
+    "reference": {
+      "|nes_native_export203:oldpath.source|": {
+        "comb_inclusive": 818,
+        "FF_inclusive": 240,
+        "RAM_bits": 0
+      },
+      "|nes_native_mailbox165:oldpath.records|": {
+        "comb_inclusive": 39,
+        "FF_inclusive": 208,
+        "RAM_bits": 0
+      },
+      "|nes_native_mailbox165:prepared|": {
+        "comb_inclusive": 6,
+        "FF_inclusive": 42,
+        "RAM_bits": 0
+      },
+      "|nes_native_spi165:oldpath.spi|": {
+        "comb_inclusive": 448,
+        "FF_inclusive": 304,
+        "RAM_bits": 2048
+      }
+    },
+    "candidate": {
+      "|nes_native_mailbox165:newpath.records|": {
+        "comb_inclusive": 11,
+        "FF_inclusive": 154,
+        "RAM_bits": 0
+      },
+      "|nes_native_mailbox165:prepared|": {
+        "comb_inclusive": 7,
+        "FF_inclusive": 42,
+        "RAM_bits": 0
+      },
+      "|nes_native_spi589:newpath.spi|": {
+        "comb_inclusive": 423,
+        "FF_inclusive": 273,
+        "RAM_bits": 2048
+      },
+      "|nes_packet589:newpath.packer|": {
+        "comb_inclusive": 108,
+        "FF_inclusive": 94,
+        "RAM_bits": 0
+      },
+      "|nes_source589:newpath.source|": {
+        "comb_inclusive": 2966,
+        "FF_inclusive": 807,
+        "RAM_bits": 24576
+      }
+    }
+  },
+  "extracted_state_machines": {
+    "reference": [
+      "|nes_region589|nes_native_export203:oldpath.source|state"
+    ],
+    "candidate": [
+      "|nes_region589|nes_packet589:newpath.packer|back",
+      "|nes_region589|nes_packet589:newpath.packer|state",
+      "|nes_region589|nes_source589:newpath.source|control_kind"
+    ]
+  },
+  "warnings": {
+    "reference": [
+      "10230",
+      "10270",
+      "10335",
+      "13024",
+      "13410",
+      "15610",
+      "18236",
+      "21074"
+    ],
+    "candidate": [
+      "10230",
+      "10335",
+      "13024",
+      "13410",
+      "14284",
+      "14285",
+      "14320",
+      "18236"
+    ]
+  },
+  "RAM": "Source3072x8 single-port M9K +host256x8 simple-dual M9K inferred; physical block packing/FIT not measured",
+  "stats": [
+    {
+      "generation": 905,
+      "source_ticks": 265822,
+      "queries": 2786,
+      "query_wait_ticks": 13924,
+      "RAM_writes": 4409,
+      "canonical_crc_bytes": 4320,
+      "mailbox_blocked_ticks": 196871
+    },
+    {
+      "generation": 906,
+      "source_ticks": 136876,
+      "queries": 2779,
+      "query_wait_ticks": 13886,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 39305
+    },
+    {
+      "generation": 907,
+      "source_ticks": 132769,
+      "queries": 2779,
+      "query_wait_ticks": 13886,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 35397
+    },
+    {
+      "generation": 908,
+      "source_ticks": 135627,
+      "queries": 2779,
+      "query_wait_ticks": 13887,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 35894
+    },
+    {
+      "generation": 909,
+      "source_ticks": 136804,
+      "queries": 2779,
+      "query_wait_ticks": 13886,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 39006
+    },
+    {
+      "generation": 910,
+      "source_ticks": 133481,
+      "queries": 2779,
+      "query_wait_ticks": 13887,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 36473
+    },
+    {
+      "generation": 911,
+      "source_ticks": 135090,
+      "queries": 2779,
+      "query_wait_ticks": 13887,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 35393
+    },
+    {
+      "generation": 912,
+      "source_ticks": 136620,
+      "queries": 2779,
+      "query_wait_ticks": 13887,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 38946
+    },
+    {
+      "generation": 913,
+      "source_ticks": 136934,
+      "queries": 2780,
+      "query_wait_ticks": 13891,
+      "RAM_writes": 4395,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 39646
+    },
+    {
+      "generation": 914,
+      "source_ticks": 141695,
+      "queries": 2779,
+      "query_wait_ticks": 13885,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 43925
+    },
+    {
+      "generation": 915,
+      "source_ticks": 138820,
+      "queries": 2779,
+      "query_wait_ticks": 13887,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 38946
+    },
+    {
+      "generation": 916,
+      "source_ticks": 131281,
+      "queries": 2779,
+      "query_wait_ticks": 13885,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 34273
+    },
+    {
+      "generation": 917,
+      "source_ticks": 140664,
+      "queries": 2783,
+      "query_wait_ticks": 13906,
+      "RAM_writes": 4396,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 42734
+    },
+    {
+      "generation": 918,
+      "source_ticks": 140354,
+      "queries": 2779,
+      "query_wait_ticks": 13886,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 40484
+    },
+    {
+      "generation": 919,
+      "source_ticks": 140651,
+      "queries": 2780,
+      "query_wait_ticks": 13889,
+      "RAM_writes": 4395,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 43054
+    },
+    {
+      "generation": 920,
+      "source_ticks": 140194,
+      "queries": 2780,
+      "query_wait_ticks": 13890,
+      "RAM_writes": 4395,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 42733
+    },
+    {
+      "generation": 921,
+      "source_ticks": 136800,
+      "queries": 2782,
+      "query_wait_ticks": 13901,
+      "RAM_writes": 4395,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 39574
+    },
+    {
+      "generation": 922,
+      "source_ticks": 143463,
+      "queries": 2779,
+      "query_wait_ticks": 13886,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 43345
+    },
+    {
+      "generation": 923,
+      "source_ticks": 131281,
+      "queries": 2779,
+      "query_wait_ticks": 13886,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 34273
+    },
+    {
+      "generation": 924,
+      "source_ticks": 136163,
+      "queries": 2779,
+      "query_wait_ticks": 13887,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 38590
+    },
+    {
+      "generation": 925,
+      "source_ticks": 146958,
+      "queries": 2780,
+      "query_wait_ticks": 13891,
+      "RAM_writes": 4395,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 46943
+    },
+    {
+      "generation": 926,
+      "source_ticks": 134600,
+      "queries": 2780,
+      "query_wait_ticks": 13891,
+      "RAM_writes": 4395,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 37321
+    },
+    {
+      "generation": 927,
+      "source_ticks": 140194,
+      "queries": 2780,
+      "query_wait_ticks": 13891,
+      "RAM_writes": 4395,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 42766
+    },
+    {
+      "generation": 928,
+      "source_ticks": 142851,
+      "queries": 2780,
+      "query_wait_ticks": 13893,
+      "RAM_writes": 4395,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 45218
+    },
+    {
+      "generation": 929,
+      "source_ticks": 133481,
+      "queries": 2779,
+      "query_wait_ticks": 13887,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 34273
+    },
+    {
+      "generation": 930,
+      "source_ticks": 138606,
+      "queries": 2779,
+      "query_wait_ticks": 13885,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 40793
+    },
+    {
+      "generation": 931,
+      "source_ticks": 142927,
+      "queries": 2779,
+      "query_wait_ticks": 13887,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 45052
+    },
+    {
+      "generation": 932,
+      "source_ticks": 133481,
+      "queries": 2779,
+      "query_wait_ticks": 13885,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 34273
+    },
+    {
+      "generation": 933,
+      "source_ticks": 137726,
+      "queries": 2780,
+      "query_wait_ticks": 13889,
+      "RAM_writes": 4395,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 40302
+    },
+    {
+      "generation": 934,
+      "source_ticks": 133481,
+      "queries": 2779,
+      "query_wait_ticks": 13886,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 36473
+    },
+    {
+      "generation": 935,
+      "source_ticks": 142851,
+      "queries": 2780,
+      "query_wait_ticks": 13889,
+      "RAM_writes": 4395,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 45254
+    },
+    {
+      "generation": 936,
+      "source_ticks": 135627,
+      "queries": 2779,
+      "query_wait_ticks": 13886,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 35894
+    },
+    {
+      "generation": 937,
+      "source_ticks": 142839,
+      "queries": 2783,
+      "query_wait_ticks": 13905,
+      "RAM_writes": 4396,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 44721
+    },
+    {
+      "generation": 938,
+      "source_ticks": 144536,
+      "queries": 2779,
+      "query_wait_ticks": 13886,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 46537
+    },
+    {
+      "generation": 939,
+      "source_ticks": 133481,
+      "queries": 2779,
+      "query_wait_ticks": 13886,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 34273
+    },
+    {
+      "generation": 940,
+      "source_ticks": 133695,
+      "queries": 2779,
+      "query_wait_ticks": 13887,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 36143
+    },
+    {
+      "generation": 941,
+      "source_ticks": 139893,
+      "queries": 2779,
+      "query_wait_ticks": 13886,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 42137
+    },
+    {
+      "generation": 942,
+      "source_ticks": 132769,
+      "queries": 2779,
+      "query_wait_ticks": 13887,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 35396
+    },
+    {
+      "generation": 943,
+      "source_ticks": 135895,
+      "queries": 2779,
+      "query_wait_ticks": 13887,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 36143
+    },
+    {
+      "generation": 944,
+      "source_ticks": 140651,
+      "queries": 2780,
+      "query_wait_ticks": 13893,
+      "RAM_writes": 4395,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 43018
+    },
+    {
+      "generation": 945,
+      "source_ticks": 133481,
+      "queries": 2779,
+      "query_wait_ticks": 13887,
+      "RAM_writes": 4394,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 36473
+    },
+    {
+      "generation": 946,
+      "source_ticks": 146355,
+      "queries": 2780,
+      "query_wait_ticks": 13889,
+      "RAM_writes": 4395,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 46409
+    },
+    {
+      "generation": 947,
+      "source_ticks": 141121,
+      "queries": 2783,
+      "query_wait_ticks": 13907,
+      "RAM_writes": 4396,
+      "canonical_crc_bytes": 4306,
+      "mailbox_blocked_ticks": 43004
+    },
+    {
+      "generation": 948,
+      "source_ticks": 137948,
+      "queries": 2803,
+      "query_wait_ticks": 14006,
+      "RAM_writes": 4450,
+      "canonical_crc_bytes": 4362,
+      "mailbox_blocked_ticks": 39889
+    },
+    {
+      "generation": 949,
+      "source_ticks": 143589,
+      "queries": 2804,
+      "query_wait_ticks": 14013,
+      "RAM_writes": 4445,
+      "canonical_crc_bytes": 4355,
+      "mailbox_blocked_ticks": 45132
+    },
+    {
+      "generation": 950,
+      "source_ticks": 144058,
+      "queries": 2809,
+      "query_wait_ticks": 14036,
+      "RAM_writes": 4458,
+      "canonical_crc_bytes": 4369,
+      "mailbox_blocked_ticks": 43737
+    },
+    {
+      "generation": 951,
+      "source_ticks": 151371,
+      "queries": 2839,
+      "query_wait_ticks": 14186,
+      "RAM_writes": 4534,
+      "canonical_crc_bytes": 4446,
+      "mailbox_blocked_ticks": 52486
+    },
+    {
+      "generation": 952,
+      "source_ticks": 152448,
+      "queries": 2840,
+      "query_wait_ticks": 14191,
+      "RAM_writes": 4535,
+      "canonical_crc_bytes": 4446,
+      "mailbox_blocked_ticks": 53343
+    },
+    {
+      "generation": 953,
+      "source_ticks": 150729,
+      "queries": 2843,
+      "query_wait_ticks": 14206,
+      "RAM_writes": 4536,
+      "canonical_crc_bytes": 4446,
+      "mailbox_blocked_ticks": 51302
+    },
+    {
+      "generation": 954,
+      "source_ticks": 160921,
+      "queries": 2839,
+      "query_wait_ticks": 14187,
+      "RAM_writes": 4534,
+      "canonical_crc_bytes": 4446,
+      "mailbox_blocked_ticks": 61517
+    },
+    {
+      "generation": 955,
+      "source_ticks": 148232,
+      "queries": 2839,
+      "query_wait_ticks": 14187,
+      "RAM_writes": 4534,
+      "canonical_crc_bytes": 4446,
+      "mailbox_blocked_ticks": 49648
+    },
+    {
+      "generation": 956,
+      "source_ticks": 148726,
+      "queries": 2833,
+      "query_wait_ticks": 14157,
+      "RAM_writes": 4520,
+      "canonical_crc_bytes": 4432,
+      "mailbox_blocked_ticks": 50376
+    },
+    {
+      "generation": 957,
+      "source_ticks": 153705,
+      "queries": 2833,
+      "query_wait_ticks": 14156,
+      "RAM_writes": 4520,
+      "canonical_crc_bytes": 4432,
+      "mailbox_blocked_ticks": 52566
+    }
+  ],
+  "groups": {
+    "cold": {
+      "source_ticks": {
+        "mean": 265822,
+        "minimum": 265822,
+        "maximum": 265822
+      },
+      "queries": {
+        "mean": 2786,
+        "minimum": 2786,
+        "maximum": 2786
+      },
+      "query_wait_ticks": {
+        "mean": 13924,
+        "minimum": 13924,
+        "maximum": 13924
+      },
+      "RAM_writes": {
+        "mean": 4409,
+        "minimum": 4409,
+        "maximum": 4409
+      },
+      "canonical_crc_bytes": {
+        "mean": 4320,
+        "minimum": 4320,
+        "maximum": 4320
+      },
+      "mailbox_blocked_ticks": {
+        "mean": 196871,
+        "minimum": 196871,
+        "maximum": 196871
+      }
+    },
+    "warm": {
+      "source_ticks": {
+        "mean": 140155.23529411765,
+        "minimum": 131281,
+        "maximum": 160921
+      },
+      "queries": {
+        "mean": 2789.156862745098,
+        "minimum": 2779,
+        "maximum": 2843
+      },
+      "query_wait_ticks": {
+        "mean": 13936.941176470587,
+        "minimum": 13885,
+        "maximum": 14206
+      },
+      "RAM_writes": {
+        "mean": 4416.431372549019,
+        "minimum": 4394,
+        "maximum": 4536
+      },
+      "canonical_crc_bytes": {
+        "mean": 4327.9607843137255,
+        "minimum": 4306,
+        "maximum": 4446
+      },
+      "mailbox_blocked_ticks": {
+        "mean": 41794.07843137255,
+        "minimum": 34273,
+        "maximum": 61517
+      }
+    },
+    "dense": {
+      "source_ticks": {
+        "mean": 152740.2,
+        "minimum": 148232,
+        "maximum": 160921
+      },
+      "queries": {
+        "mean": 2840,
+        "minimum": 2839,
+        "maximum": 2843
+      },
+      "query_wait_ticks": {
+        "mean": 14191.4,
+        "minimum": 14186,
+        "maximum": 14206
+      },
+      "RAM_writes": {
+        "mean": 4534.6,
+        "minimum": 4534,
+        "maximum": 4536
+      },
+      "canonical_crc_bytes": {
+        "mean": 4446,
+        "minimum": 4446,
+        "maximum": 4446
+      },
+      "mailbox_blocked_ticks": {
+        "mean": 53659.2,
+        "minimum": 49648,
+        "maximum": 61517
+      }
+    }
+  },
+  "selection": "REJECT current generic source controller on area; stop ARM expansion as planned",
+  "comparison_boundary": "Both local MAP wrappers include unchanged17bit PREPARE mailbox; differs from wholeFIT1433LE ledger. Never subtract local MAP from wholeFIT.",
+  "key_limit": "LocalMAP delta is not a placed whole-board deficit. It gives no credible route within148LE whole margin.",
+  "state_machine_limit": "Source uses state<=ret/query_ret/byte_ret; not extracted as FSM. Return dispatch/variable address/width selection remains. No isolated FSM/seed/opcode iteration approved.",
+  "new_ARM": false,
+  "new_whole_FIT": false,
+  "new_STA": false,
+  "new_physical_FPS": false,
+  "new_package": false,
+  "evidence": {
+    "reference": {
+      "map.log": "c1db96ab08d83b2d7c97c8f6f659f7daccef8dfff63d4f618ae110ef088a7682",
+      "output_files/region.map.rpt": "2bfebb10368015e5ee9fa4efa8ce3e658c3f5d3b38b6018651cf764dc07ea65b",
+      "output_files/region.map.summary": "bd9472345225455311af32fe336173da809de2841a07563c5f2db04b257b4eef"
+    },
+    "candidate": {
+      "map.log": "58adc0ad704678dd9bb9fac85e704f4a9e5b883fbb93e627a561e5dfb88aa0fc",
+      "output_files/region.map.rpt": "94ee30bd6a65dd72f04a7224dfa9b6f630d2a3d606559017938ceb2904e4c038",
+      "output_files/region.map.summary": "31272e9d9a8845921d581c98ade59ae44a0b18ff4df83df2f4bc13fe73624465"
+    }
+  },
+  "tool_pins": {
+    "rtl/nes_source589.sv": "54b9b983653f87617ccbff7dc0bf075dfb78d4774138ae8a0dfd662f02c80a17",
+    "tools/check_nes_source589.py": "20adb6d0a3e53d748fe74a885b3f3d8e65000d48f0247aa08194db456d588bee",
+    "tools/analyze_nes_source589.py": "82371eb3ce71fbfc8d4f05a8a1ec5a5741f08740eac0c6aaec4dc05a479f88c5"
+  },
+  "inputs": {
+    "nes_native_export203.sv": "8a55236576b5ffe3dac9c3662800f76417d5d7b707ebf27c0b79e4abc00d7c92",
+    "nes_native_mailbox165.sv": "3f2d2c4c979e1bdab9f640c6be4049a46ee7537fc670347b832bc039f16c53be",
+    "nes_native_spi165.sv": "6b40c341d7d4d46413e3074dd14bc21df70e11dfc7fd1d147669054ab82b8639",
+    "nes_native_spi589.sv": "003aa8c1862e98b2402cdda339d91f48d3ce680def5836e5605248ca55970450",
+    "nes_region589.sv": "494d19a4728be4b7a30a84410971d330ddc0465c4f440fa7025f02f4ff0c454b",
+    "nes_source589.sv": "54b9b983653f87617ccbff7dc0bf075dfb78d4774138ae8a0dfd662f02c80a17",
+    "source589_tb.sv": "7acdedcb3df11469f4e24fa411c85fed787700100e490eab4ac0f414195274fb"
+  },
+  "next_gate": "R2 role/protocol re-selection: compare fixed-row summary/request with ARM-owned reuse decision against baseline577; account all request/CDC/CRC/cold-fallback/Flash/output residual costs before another implementation. Do not grow589 or tune FSM attributes."
+}

@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [588 결과](../nes-source588-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 실제 ARM transport 제한 시험·전체 링크 비용을 확인했다. 예산 초과 후보를 보류했으며 제품 선택은 바꾸지 않았다. 선택 산출물과 실측은 MMC577을 유지한다.
+PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [589 결과](../nes-source589-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 실제 ARM transport 제한 시험·전체 링크 비용을 확인했다. 예산 초과 후보를 보류했으며 제품 선택은 바꾸지 않았다. 선택 산출물과 실측은 MMC577을 유지한다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -40,7 +40,7 @@ PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole
 ## 4. 개발 재개 후 순서
 
 1. [579 계획](../nes-retrospective579-plan.json)의 R1은580 전체비용표와 [581 제한 조사](../nes-body581-results.ko.md)로 마감했다. 원본278개는로컬 `probes/nes-body581/evidence01.zip`, 공개 Git에는 해시·비용·순서만 있다. 물리 ROM/capture/입력 지연·대표장면·clean-clone 전체실행 결측을 유지하고 같은 분석/FIT를 반복하지 않는다.
-2. [588 R2 결과](../nes-source588-results.ko.md): 588에서 고정53입력의 source RAM 참조가586 block/packet·독립 복원과 일치했다. 단일256B block과STOP/COMMIT/epoch8조건을 확인했지만 RTL 실행은 아니다. 밀집 I/O14.066→4.156ms는 wire+driver 가능성이며 실제 종단 이득이 아니다. 기존 비입력 항은두위상59.983/59.989ms다. 다음은 고정입력형식의 R2 원형을 source부터 한 번 검증한다. base/scratch·canonicalCRC·8B beat·host seal·D0–D3·취소/재시작을 실제 clock/포트에서 연결하고 같은영역1581LE/추가3M9K를 확인한다. 초과하면 중단한다. 통과할 때만 ARM old packet/logical 직접 교체2630B 산술예산·전체212992B 링크/RAM/IRQ를 확인한 뒤 실제두위상 연속 일정을 실행한다. 출력history/공통응답은 추가하지 않는다. R3/60Hz/실기미선정,MMC577유지.
+2. [589 R2 결과](../nes-source589-results.ko.md): 589 실제 RTL은 source RAM·canonicalCRC·69bit byte mailbox·host 단일256B/D0–D3를 연결해53입력282packet·STOP/클록정지/오류8조건을 통과했다. 하지만 같은 경계LiteMAP1668→4014LE(+2346)로 실패해 ARM 확장을 중단했다. RAM은 M9K로 추론됐고 generic source의 주소/폭/복귀 제어가 커졌다. FSM 속성/opcode/seed 반복은 하지 않는다. 다음은 ARM이 row 재사용을 결정하고 FPGA가 고정행 요약·요청범위·canonicalCRC를 공급하는 역할의 비용 조사다. 추가SPI/driver·cold/요약불일치 전체행복구·ARM Flash/이력/stack·독립검사/epoch/credit/CDC/STOP·nonmap/출력잔여를53입력에서 함께 계산한 뒤에만 구현을 결정한다. 요약hash는 독립검사 대체가 아니다. R3/실기후보 미선정,MMC577 유지.
 3. R4는 의미 있는 후보만 실기 전달한다. 5–40/40–55초 완료 집계와 독립 검사·STOP·최종ACK·VBlank·메뉴복귀를 유지하며 시작 실패는 별도 보존한다.
 4. 각 단계 완료 때 579 계획의 상태·증거·예산·다음 한 단계를 함께 갱신한다. 오래된 계획의 미완료 상태를 방치하지 않는다.
 
