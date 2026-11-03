@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [568 loader·epoch 결과](../../docs/nes-end568-results.ko.md)를 먼저 읽는다. 567 기준과 568 A에서 plan descriptor가 수신되는 실제 에지와 새 hold 위반을 비교하는 것이 다음 작업이다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
+[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [569 plan 소유권·전체 타이밍](../../docs/nes-plan569-results.ko.md)을 먼저 읽는다. 다음은 569 board01의 168MHz 시작 허가 setup과 host fault recovery다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
 
 ## 최신 실기와 비교 기준
 

@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR149 / 568. docs/nes-end568-results.ko.md와 docs/progress/pr-149.md를 먼저 읽는다. 실기 MMC558 5–55초 13.72fps, 설계 기준 567 board03. 다음은 568 A의 plan descriptor held→received hold와 실제 캡처·STOP 소유권이다. loader 거부 식 단독 변경은 종료했다.
+- PR149 / 569. docs/nes-plan569-results.ko.md와 docs/progress/pr-149.md를 먼저 읽는다. 실기는 MMC558 5–55초 13.72fps. 569 board01에서 plan hold와 loader 대상 setup 회복, 전체 STA 회귀 8개. 다음은 memory_release의 허가와 plan.hcancel의 즉시 차단이다.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 
