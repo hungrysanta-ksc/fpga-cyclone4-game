@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-실기 MMC558과 개발 기준 572 START 단독을 유지한다. STOP 뒤 첫 수락을 확인했다. 다음은 초기화 중 32비트 identity 전송 비용이다. [PR149](../../docs/progress/pr-149.md) · [573 결과](../../docs/nes-epoch573-results.ko.md) · [MMC558 실측](../../docs/nes-hardware559-results.ko.md)
+실기 MMC558과 개발 기준 572 START 단독을 유지한다. 574 직렬 identity는 첫 캡처·cache·plan을 유지했지만 전체 STA 회귀로 기각했다. [PR149](../../docs/progress/pr-149.md) · [574 결과와 재개 조건](../../docs/nes-serial574-results.ko.md) · [MMC558 실측](../../docs/nes-hardware559-results.ko.md)
 
 ## 최신 실기와 비교 기준
 
@@ -18,9 +18,10 @@ MMC558 실기에서 두 번 모두 실행과 메뉴 복귀에 성공했다. 저�
 
 ## 다음 작업 순서
 
-1. MMC540을 유지한다. 542 행 진행 후보는 53장당 1 VBlank만 단축하고 밀집 구간은 그대로였다. 543 map 뒤 무조건 drain은 같은 집계 대조군보다 마지막 ACK가 두 위상 모두 약 16.65ms 늦어져 기각했다. 추가 raw 명령 단축·무조건 drain 반복은 하지 않는다.
-2. [554 결과](../../docs/nes-prelude554-results.ko.md)의 954 남은 DMA 실행·선행 기회를 확인한다. 953과 957 및 두 위상의 최종 ACK를 대조한다.
-3. 다음 전달본은 `prepare_nes_windows541.py`의 완료 [5,40)/[40,55), 합계 [5,55)를 포함한다. 계측만 바꾼 대조군에서도 한 위상에 1 VBlank 변화가 났으므로 같은 집계 대조군을 반드시 분리한다. 두 위상 밀집 VBlank 수와 마지막 ACK가 함께 줄기 전에는 새 ZIP을 만들지 않는다.
+1. 572의 위반 endpoint를 같은 클록 데이터·독립 클록 CDC 첫 단·비동기 reset assertion/동기 해제로 분리한다. 실제 top·소유권과 초기 사용 시각을 대조한다. 573 비트 배치와 574 직렬화 반복은 종료한다.
+2. 실제 결함 수정과 제약 오류를 구분한다. 제약 변경은 endpoint·안정 유지·취소 증거를 갖춘 뒤 MMC558/572에 동일하게 적용해 비교하고 이전 raw STA를 남긴다. blanket false path를 추가하지 않는다.
+3. STOP·두 슬롯·첫 capture/cache/plan, 두 위상 952·957의 5 VBlank·최종 대기 0회와 마지막 ACK를 유지한다. 전체 STA gate와 실기 기준은 자동으로 완화하지 않는다.
+4. 전달 시 완료 [5,40)/[40,55), 합계 [5,55) 집계를 유지하고 RESTORE를 제외한다. 실기 MMC558과 같은 동선으로 비교한다.
 
 512·514의 제외 근거는 [전송 형식 비교](../../docs/nes-transfer512-results.ko.md)와 [해당 PR 기록](../../docs/progress/pr-141.md)에 남아 있다.
 
