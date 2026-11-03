@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [567 mailbox reset과 전체 보드 결과](../../docs/nes-mailbox567-results.ko.md)를 먼저 읽는다. 다음은 양방향 후보의 loader 대상 setup −0.024ns와 0°C epoch 캡처 회귀 0.034ns다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
+[PR149의 결정과 후속 작업](../../docs/progress/pr-149.md), [568 loader·epoch 결과](../../docs/nes-end568-results.ko.md)를 먼저 읽는다. 567 기준과 568 A에서 plan descriptor가 수신되는 실제 에지와 새 hold 위반을 비교하는 것이 다음 작업이다. 실기 기준은 [MMC558 두 구간 실측](../../docs/nes-hardware559-results.ko.md)이다.
 
 ## 최신 실기와 비교 기준
 

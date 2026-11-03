@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR149 / 567. docs/nes-mailbox567-results.ko.md와 docs/progress/pr-149.md를 먼저 읽는다. 실기는 MMC558 5–55초 13.72fps. 다음 후보는 양방향 로컬 reset(board03)이다. loader check_failed → reject_state[2]와 0°C source epoch 캡처를 확인한다.
+- PR149 / 568. docs/nes-end568-results.ko.md와 docs/progress/pr-149.md를 먼저 읽는다. 실기 MMC558 5–55초 13.72fps, 설계 기준 567 board03. 다음은 568 A의 plan descriptor held→received hold와 실제 캡처·STOP 소유권이다. loader 거부 식 단독 변경은 종료했다.
 
 - 현재 522 / PR143. docs/nes-tail522-results.ko.md와 analysis/tail522-verification.json을 먼저 읽는다. MMC520 유지. 두 위상의 53개 RGB·표시 ACK 재현. 다음은 닫힌 VRAM 명령 선행 실행, 필요 시 수락된 map 분할 및 STOP·VBlank·전체 일정 검증.
 
