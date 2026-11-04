@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- [598 collector·출력 비용](docs/nes-boundary598-results.ko.md). 598의 collector 요약은 53입력·1,537그룹에서 일치하고 905/906의 D0를 11/10회 줄였다. 결합 MAP은 4,910 LE로 새 경계 상한보다 907 LE 크다. [599 출력 실측](docs/nes-output599-results.ko.md)에서 상속 CRC만으로 두 위상의 기준 최종 ACK보다 12.077–15.995 ms 늦었다. [600 실제 SPI·ROM 비용](docs/nes-wire600-results.ko.md)에서 562/558 B를 줄였지만 필수 조회를 포함한 wire 하한은 16.808/17.030 ms였다. 다음은 954의 tile ROM 272회 중 두 위상에서 최소 261/250회를 입력 시작 전에 준비하거나 안전하게 재사용할 수 있는지 tag·mapper 이력으로 판정하는 일이다.
+- [598 collector·출력 비용](docs/nes-boundary598-results.ko.md). 598의 collector 요약은 53입력·1,537그룹에서 일치하고 905/906의 D0를 11/10회 줄였다. 결합 MAP은 4,910 LE로 새 경계 상한보다 907 LE 크다. [599 출력 실측](docs/nes-output599-results.ko.md)에서 상속 CRC만으로 두 위상의 기준 최종 ACK보다 12.077–15.995 ms 늦었다. [600 실제 SPI·ROM 비용](docs/nes-wire600-results.ko.md)에서 562/558 B를 줄였지만 필수 조회를 포함한 wire 하한은 16.808/17.030 ms였다. 601에서 현재 PPU 캡처를 재사용해 952·954의 208/272개 요청을 모두 충족했다. 두 위상의 낙관 표시 간격은 31.443–31.900 ms다. [601 검증](docs/nes-snoop601-results.ko.md) 다음은 D1 수신·ARM 복원·D2 credit 반환을 호출별로 나눠, 필수 wire 47/120 B와 표시 전 버스 완료 9.946–10.350 ms 초과를 함께 줄일 수 있는 중첩 구간을 확인하는 일이다.
 
 - [597 결합 예산·핀 전송](docs/nes-region597-results.ko.md). 597은 595 핀 경로에서 묶음 전송으로 905·906 각각 97거래·698 B를 줄였다. 결합 진단은 2,625 LE로 809 LE 초과, 외부 생산 비용을 0으로 둬도 1,909 LE다. 다음은 MMC577 collector가 값을 확정하는 시점과 기존 SPI 페이지를 기준으로 중복 source 본체를 통째로 대체할 경계를 정하고, 입력 절감 뒤 남는 출력·최종 ACK 시간도 함께 예산화하는 일이다.
 

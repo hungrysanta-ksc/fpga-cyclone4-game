@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-whole-budget-580",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 600,
-  "current_evidence": "analysis/wire600-verification.json",
+  "current_step": 601,
+  "current_evidence": "analysis/snoop601-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -85,7 +85,7 @@
       "status": "ARM594_Flash_and_cold_pass_FPGA_gate_open",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "Freeze MMC577. Audit mapper-qualified tile tags and causal availability across previous display/current capture. At 954 only 11/22 of 272 ROM grants remain from the anchored source start to the next display deadline. Price misses, invalidation, cache ports and SPI/ARM cost before building any lookahead or delivery.",
+      "next_single_gate": "Price D1 receive, ARM decode and D2 credit, then measure causally available overlap and net wire reduction on both dense frames before integrating a cache. Bus needs 9.946..10.350 ms advance even with zero ROM misses; wire needs another 47/120 B.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -224,6 +224,11 @@
       "600_evidence": [
         "analysis/wire600-verification.json",
         "docs/nes-wire600-results.ko.md"
+      ],
+      "601_result": "Current captured physical CHR bytes hit 208/208 and 272/272; previous output only 96/64. Isolated 166 LE, 38400 bits. Optimistic display intervals still 31.443..31.900 ms. No board integration.",
+      "601_evidence": [
+        "analysis/snoop601-verification.json",
+        "docs/nes-snoop601-results.ko.md"
       ]
     },
     {
