@@ -11,6 +11,8 @@
 
 ## 현재 작업 범위
 
+- [593 전체 ARM 결과](docs/nes-receiver593-results.ko.md). 593 ARM04에서 cold 905는 CPI 2 기준 17.984 ms로 MMC577보다 2.105 ms 단축됐다. 전체 Flash는 213,140 B로 한도보다 148 B 크다. 같은 ELF에서 53입력·27수신 조건·3표시 ACK 조건을 검증했다. 다음은 실행 코드 배치와 순회수 가능량 검토다. 실기 기준 MMC577.
+
 - [592 교체 경계](docs/nes-boundary592-results.ko.md) · 592는 실제 591 M4의 53입력을 재실행했다. 교체 범위 4,796 B→3,028 B 이하, cold 905는 새 문법의 71 B 절감 뒤에도 CPI 2 기준 54,767명령 순절감이 필요하다. 둘 다 설계 상한이며 실제 삭제는 0 B다. 다음은 같은 전체 링크·cold에서 동시 판정하는 ARM 교체 한 건이다. 실패 시 코드 배치·지원 범위를 재검토하고 FPGA/두 위상/실기판은 보류한다. MMC577·독립 검사·STOP·최종 ACK·메뉴를 유지한다.
 
 - 591 / PR151 samebranch. FIRST docs/nes-roles591-results.ko.md + docs/nes-retrospective579-plan.json. SELECTpatch02/ARM02/test03/analysis03. Actual577M4 oldmapcodec/BEGIN/packet replaced8Bsummary+bitmap+D4/CRC16/repair;53input+18guardsPASS(single sealed Python endpoint,NOTFPGA). WholeFW214760(+1852),cap+1768 FAIL;BSSsame18592/receiver+40B/native_frames31904/gap4888beforecalleeIRQ. packet1434->2724,logical1112->960,request320,digest76,newlibgccpopcount40 allcharged. MAP_ACCEPT+D0 necessary afterrowEND so repair cannot race nonmap;590dense6.775 correctedactual-callIO7.121;CPI2inputcold20.089->21.609/warm20.186->15.866/dense21.162->16.241 NOTcycles/fulltimeline. STOPresetcuts/false summaryrepair/RAMcorruption checked;finalACK/EA unchangedruntime consumedfixture only. REJECT591/noFPGAimplementation/MAP/FIT/twophase/ZIP becauseARMgatefailed;MMC577/READMEunchanged. NEXT actualoldnonmap/record+newphaseidentitycontrol deletion/wholeFlash budget before anynewprototype;no591adapter/CRC/helper/opcode/seedtuning or589generic revival. Quartus notmeasured!=zeroarea.
