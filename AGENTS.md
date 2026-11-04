@@ -11,6 +11,8 @@
 
 ## 현재 작업 범위
 
+- [595 D4 source·SPI 결과](docs/nes-region595-results.ko.md). 594 ARM과 실제 입력 RTL을 연결했다. Lite 동일 경계 3,041 LE로 1,816 LE 선별 상한을 초과했다. 다음은 D4 명령 CDC·주소·CRC·패킷 묶음의 삭제/전송 예산이다. MMC577 유지.
+
 - [594 ARM 동시 통과](docs/nes-report594-results.ko.md). 594 전체 ARM이 212,064 B로 링크돼 928 B가 남았다. 같은 ELF에서 cold 905는 17.984 ms(CPI 2), 53입력·27수신 조건·3표시 ACK 조건을 통과했다. 종료 보고 때만 서식을 복원하며 기존 로그와 바이트가 같다. 다음은 실제 고정 행·nonmap FPGA와 D4 요청·CRC·STOP 경계를 검증하는 일이다. 실기 기준 MMC577.
 
 - [593 전체 ARM 결과](docs/nes-receiver593-results.ko.md). 593 ARM04에서 cold 905는 CPI 2 기준 17.984 ms로 MMC577보다 2.105 ms 단축됐다. 전체 Flash는 213,140 B로 한도보다 148 B 크다. 같은 ELF에서 53입력·27수신 조건·3표시 ACK 조건을 검증했다. 다음은 실행 코드 배치와 순회수 가능량 검토다. 실기 기준 MMC577.

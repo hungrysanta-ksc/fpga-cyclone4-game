@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [594 ARM 결과](../nes-report594-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 실제 ARM transport 제한 시험·전체 링크 비용을 확인했다. 594에서 전체 ARM 예산을 통과했고 FPGA 연결을 준비한다. 선택 산출물과 실측은 MMC577을 유지한다.
+PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [595 D4 FPGA 결과](../nes-region595-results.ko.md), [594 ARM 결과](../nes-report594-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 실제 ARM transport 제한 시험·전체 링크 비용을 확인했다. 594 ARM과 연결한 595 FPGA는 같은 경계의 Lite MAP 예산을 넘었다. 선택 산출물과 실측은 MMC577을 유지한다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -40,7 +40,7 @@ PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole
 ## 4. 개발 재개 후 순서
 
 1. [579 계획](../nes-retrospective579-plan.json)의 R1은580 전체비용표와 [581 제한 조사](../nes-body581-results.ko.md)로 마감했다. 원본278개는로컬 `probes/nes-body581/evidence01.zip`, 공개 Git에는 해시·비용·순서만 있다. 물리 ROM/capture/입력 지연·대표장면·clean-clone 전체실행 결측을 유지하고 같은 분석/FIT를 반복하지 않는다.
-2. [594 ARM 결과](../nes-report594-results.ko.md). 594 전체 ARM이 212,064 B로 링크돼 928 B가 남았다. 같은 ELF에서 cold 905는 17.984 ms(CPI 2), 53입력·27수신 조건·3표시 ACK 조건을 통과했다. 종료 보고 때만 서식을 복원하며 기존 로그와 바이트가 같다. 다음은 실제 고정 행·nonmap FPGA와 D4 요청·CRC·STOP 경계를 검증하는 일이다.
+2. [594 ARM 결과](../nes-report594-results.ko.md). 594 전체 ARM이 212,064 B로 링크돼 928 B가 남았다. 같은 ELF에서 cold 905는 17.984 ms(CPI 2), 53입력·27수신 조건·3표시 ACK 조건을 통과했다. 종료 보고 때만 서식을 복원하며 기존 로그와 바이트가 같다. 595에서 이 ARM과 FPGA를 연결했다. 다음은 한 페이지의 D4 명령·데이터 소유권을 보존하며 회로와 전송량을 함께 줄일 수 있는지 예산을 다시 잡는 일이다.
 3. R4는 의미 있는 후보만 실기 전달한다. 5–40/40–55초 완료 집계와 독립 검사·STOP·최종ACK·VBlank·메뉴복귀를 유지하며 시작 실패는 별도 보존한다.
 4. 각 단계 완료 때 579 계획의 상태·증거·예산·다음 한 단계를 함께 갱신한다. 오래된 계획의 미완료 상태를 방치하지 않는다.
 

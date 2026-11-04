@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-whole-budget-580",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 594,
-  "current_evidence": "analysis/report594-verification.json",
+  "current_step": 595,
+  "current_evidence": "analysis/region595-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -85,7 +85,7 @@
       "status": "ARM594_Flash_and_cold_pass_FPGA_gate_open",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "Connect actual FPGA fixed rows, typed nonmap, CRC and D4 ownership to the selected 594 receiver. Check repair/STOP and same-boundary Quartus Lite resources before full board and both phase first-BG/final-ACK runs.",
+      "next_single_gate": "Budget concrete NES-side CRC/address/control deletion and D4 CDC/page ownership together with typed-block packing and transaction counts before another candidate. Screen <=1816 local LE before full FIT/STA and two phases.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -194,6 +194,11 @@
       "594_evidence": [
         "analysis/report594-verification.json",
         "docs/nes-report594-results.ko.md"
+      ],
+      "595_result": "594 ARM + real D0-D4 source/pins. 3041 LE vs 1668 reference, 2308 comb, 1278 FF, 2048 RAM bits. Cold905 202 transactions/4402 SPI bytes. Test04 cold/warm 905/906, 29-row CRC repair, partial D1/STOP cold recovery, three final ACK/EA cases passed. Test03 full53 incomplete (RPC timeout). Local area screen failed; no whole-board or timing promotion.",
+      "595_evidence": [
+        "analysis/region595-verification.json",
+        "docs/nes-region595-results.ko.md"
       ]
     },
     {
