@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-whole-budget-580",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 603,
-  "current_evidence": "analysis/palette603-verification.json",
+  "current_step": 604,
+  "current_evidence": "analysis/rows604-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -85,7 +85,7 @@
       "status": "ARM594_Flash_and_cold_pass_FPGA_gate_open",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "Implement source row-run generation and linked ARM checked expansion using fixed MMC577 protections. Compare first block seal, first BG and total costs against 600 on both dense traces; separate original vs short D2, bounded count/order/map checks, partial/STOP and ACK.",
+      "next_single_gate": "Trace when the first E9 BG tags and slots are determined in current D1; test a cancelable prefetch against the preceding ROM-window deadline and account for shared SPI, cold, and STOP before any Flash or installer work.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -239,6 +239,14 @@
       "603_evidence": [
         "analysis/palette603-verification.json",
         "docs/nes-palette603-results.ko.md"
+      ],
+      "604_result": "Real FPGA input + linked M4: both dense frames save 278 B with 8 B D2 and first E9 advances 1.668 ms. First ROM grant identical at both phases; another 9.220..10.007 ms needed for even one earlier grant. +35 standalone MAP LE, full Flash 112 B over. No release.",
+      "604_evidence": [
+        "analysis/rows604-verification.json",
+        "analysis/rows604-budget.json",
+        "analysis/rows604-map.json",
+        "analysis/rows604-fragmented.json",
+        "docs/nes-rows604-results.ko.md"
       ]
     },
     {
