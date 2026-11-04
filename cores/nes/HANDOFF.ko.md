@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-현재 브랜치는 codex/nes-whole-budget-580 / PR151이다. PR150 병합 `588fa177ed1a82056a5cc86813506c3f2024cc70` 확인 뒤 분기했다. [593 실제 교체](../../docs/nes-receiver593-results.ko.md), [591 실제 ARM·예산](../../docs/nes-roles591-results.ko.md), [590 역할·요청 비용](../../docs/nes-roles590-results.ko.md), [589 실제 source 결과](../../docs/nes-source589-results.ko.md), [588 source 예산](../../docs/nes-source588-results.ko.md), [587 검사 소유권](../../docs/nes-ownership587-results.ko.md), [586 실제 ARM 결합](../../docs/nes-combined586-results.ko.md), [585 교체·RAM 예산](../../docs/nes-ownership585-results.ko.md), [584 transport 비용](../../docs/nes-transport584-results.ko.md), [583 행·진행 응답](../../docs/nes-row583-results.ko.md), [582 ABI 예산](../../docs/nes-abi582-results.ko.md), [581 본문·순서 조사](../../docs/nes-body581-results.ko.md), [580 전체 비용표](../../docs/nes-whole580-results.ko.md), [선택 manifest](../../analysis/whole580-manifest.json)를 먼저 읽는다.
+현재 브랜치는 codex/nes-whole-budget-580 / PR151이다. PR150 병합 `588fa177ed1a82056a5cc86813506c3f2024cc70` 확인 뒤 분기했다. [594 ARM 결과](../../docs/nes-report594-results.ko.md), [591 실제 ARM·예산](../../docs/nes-roles591-results.ko.md), [590 역할·요청 비용](../../docs/nes-roles590-results.ko.md), [589 실제 source 결과](../../docs/nes-source589-results.ko.md), [588 source 예산](../../docs/nes-source588-results.ko.md), [587 검사 소유권](../../docs/nes-ownership587-results.ko.md), [586 실제 ARM 결합](../../docs/nes-combined586-results.ko.md), [585 교체·RAM 예산](../../docs/nes-ownership585-results.ko.md), [584 transport 비용](../../docs/nes-transport584-results.ko.md), [583 행·진행 응답](../../docs/nes-row583-results.ko.md), [582 ABI 예산](../../docs/nes-abi582-results.ko.md), [581 본문·순서 조사](../../docs/nes-body581-results.ko.md), [580 전체 비용표](../../docs/nes-whole580-results.ko.md), [선택 manifest](../../analysis/whole580-manifest.json)를 먼저 읽는다.
 
 ## 현재 작업
 
@@ -19,7 +19,7 @@ MMC577 실기에서 실행과 메뉴 복귀가 정상이고 개선 체감이 보
 ## 다음 작업 순서
 
 1. R1은580 전체비용표와581 제한 조사로 결측을 명시하고 마감했다. 53개 입력·106D1경계·3378E1 publish/load/ACK와 map/palette/OAM 복원을 대조했다. 물리 ROM/capture/입력 지연·대표 장면·clean-clone 전체실행은 여전히 미완료다. 같은 분석을 반복하지 않는다.
-2. [593 전체 ARM 결과](../../docs/nes-receiver593-results.ko.md). 593 ARM04에서 cold 905는 CPI 2 기준 17.984 ms로 MMC577보다 2.105 ms 단축됐다. 전체 Flash는 213,140 B로 한도보다 148 B 크다. 같은 ELF에서 53입력·27수신 조건·3표시 ACK 조건을 검증했다. 다음은 실행 코드 배치와 순회수 가능량 검토다.
+2. [594 ARM 결과](../../docs/nes-report594-results.ko.md). 594 전체 ARM이 212,064 B로 링크돼 928 B가 남았다. 같은 ELF에서 cold 905는 17.984 ms(CPI 2), 53입력·27수신 조건·3표시 ACK 조건을 통과했다. 종료 보고 때만 서식을 복원하며 기존 로그와 바이트가 같다. 다음은 실제 고정 행·nonmap FPGA와 D4 요청·CRC·STOP 경계를 검증하는 일이다.
 3. R3: 후보 하나만 구현·동일입력/두위상·대표장면 검증. 같은 가설 두 변형에 종단 이득이 없으면 새 증거 전까지 보류한다. 안정성 보완은 성능과 별도 판정한다.
 4. R4: 의미 있는 후보만 고유파일명/RESTORE없이 실기. 5–40/40–55초, STOP·독립검사·최종ACK·VBlank·메뉴 유지. 외부IO/capture/지속60fps는 별도 미완료다.
 
