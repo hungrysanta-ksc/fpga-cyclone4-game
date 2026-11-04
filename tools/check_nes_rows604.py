@@ -191,7 +191,7 @@ def exercise(d,src,a,link,candidate):
     return frames
 
 
-def simulate(a,name,src,candidate):
+def simulate(a,name,src,candidate,exercise_frames=exercise):
     d=a.out/name;d.mkdir()
     bench(d,a,candidate)
     with socket.socket() as server:
@@ -205,7 +205,7 @@ def simulate(a,name,src,candidate):
             try:
                 with server.accept()[0] as sock,sock.makefile('rwb') as io:
                     sock.settimeout(120);assert io.readline().strip()==b'READY'
-                    link=Link(io);frames=exercise(d,src,a,link,candidate)
+                    link=Link(io);frames=exercise_frames(d,src,a,link,candidate)
                     assert link.request('quit')=='BYE'
                 assert process.wait(timeout=20)==0
             finally:
