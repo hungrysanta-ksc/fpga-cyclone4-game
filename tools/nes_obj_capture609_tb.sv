@@ -5,7 +5,7 @@ module nes_obj_capture609_tb;
  reg [15:0] capture_gen=0,release_gen=0,query_gen=0;
  reg [16:0] sample_address=0,query_address=0;
  reg [7:0] sample_data=0;
- wire start_ready,sample_ready,response,hit;
+ wire start_ready,sample_ready,query_ready,response,hit;
  wire [7:0] data;
  nes_obj_capture609 dut(.*);
  task tick; begin @(posedge clk); #1; end endtask
@@ -27,15 +27,17 @@ module nes_obj_capture609_tb;
  integer keep_addr,keep_v,old_addr,old_v,old_gen;
  reg kept=0,previous=0,closed=0;
  initial begin
-  tick;reset=0;
+  tick;reset=0;repeat(2)tick;
   // Abort an uncommitted byte and reject an occupied bank and wrong-generation release.
   launch(1);sample=1;sample_address=31;sample_data=84;tick;sample=0;stop=1;tick;stop=0;
-  ask(1,31,84,0);launch(3);finish_capture;ask(3,31,84,0);release_g(3);
+  repeat(2)tick;ask(1,31,84,0);launch(3);finish_capture;ask(3,31,84,0);release_g(3);
   launch(5);put(31,84);finish_capture;release_g(3);ask(5,31,84,1);
   capture_gen=7;#1;if(start_ready)$fatal(1,"reclaim");ask(7,31,84,0);
-  ask(5,31,84,1);stop=1;#1;if(hit||response)$fatal(1,"STOP");tick;stop=0;ask(5,31,84,0);
+  ask(5,31,84,1);stop=1;#1;if(hit||response)$fatal(1,"STOP");
+  stop=0;#1;if(hit||response||query_ready)$fatal(1,"short STOP");
+  repeat(2)tick;ask(5,31,84,0);
   // Losing immutable identity and a too-early sample must both fall back.
-  launch(6);put(42,99);finish_capture;immutable=0;tick;immutable=1;ask(6,42,99,0);
+  launch(6);put(42,99);finish_capture;immutable=0;tick;immutable=1;repeat(2)tick;ask(6,42,99,0);
   capture_gen=8;start=1;tick;start=0;sample=1;tick;sample=0;repeat(128)tick;
   put(42,99);finish_capture;ask(8,42,99,0);
   f=$fopen("stim.tsv","r");if(!f)$fatal(1,"fixture");
@@ -50,8 +52,12 @@ module nes_obj_capture609_tb;
     end else if(op==1&&k==1)begin
      if(previous)begin
       sample=1;sample_address=a;sample_data=v;
-      ask(old_gen,old_addr,old_v,1);sample=0;
-      ask(old_gen,old_addr,old_v,1);conc=conc+1;
+      query=1;query_gen=old_gen;query_address=old_addr;#1;
+      if(query_ready||!sample_ready)$fatal(1,"capture priority");
+      tick;if(response)$fatal(1,"early query");sample=0;#1;
+      if(!query_ready)$fatal(1,"port not returned at commit");
+      tick;query=0;if(!hit||data!==old_v[7:0])$fatal(1,"overlap");
+      conc=conc+1;
      end else put(a,v);
      fills=fills+1;
     end else if(op==2)begin

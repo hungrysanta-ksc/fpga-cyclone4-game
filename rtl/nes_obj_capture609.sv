@@ -7,7 +7,7 @@ module nes_obj_capture609 (
  input wire [15:0] capture_gen, release_gen,
  input wire sample, input wire [16:0] sample_address, input wire [7:0] sample_data,
  input wire query, input wire [15:0] query_gen, input wire [16:0] query_address,
- output wire start_ready, sample_ready, response, hit, output wire [7:0] data
+ output wire start_ready, sample_ready, query_ready, response, hit, output wire [7:0] data
 );
  (* ramstyle="M9K" *) reg [21:0] directory[0:255];
  (* ramstyle="M9K" *) reg [7:0] bytes[0:4095];
@@ -17,40 +17,51 @@ module nes_obj_capture609 (
  reg [6:0] clear_index;
  reg [16:0] wr_addr;
  reg [7:0] wr_data;
- reg [21:0] old, found;
+ reg [21:0] entry;
  reg [7:0] fetched;
  reg [3:0] lane;
  reg [5:0] tag;
  reg replied, eligible, reply_bank;
- reg [15:0] reply_gen;
- wire live=!reset&&!stop&&immutable;
+ // Latch even a STOP pulse while the NES clock is stopped. On restart,
+ // clear both owners before any new request can observe the old directory.
+ wire kill=reset||stop||!immutable;
+ reg [1:0] drain;
+ always @(posedge clk or posedge kill)
+  if(kill) drain<=2'b11;
+  else drain<={drain[0],1'b0};
+ wire live=!kill&&!drain[1];
  assign start_ready=live&&!capturing&&!held[capture_gen[0]];
  assign sample_ready=live&&capturing&&!clearing&&!pending;
  wire take=sample&&sample_ready;
- wire [7:0] write_line={bank,clearing?clear_index:(pending?wr_addr[10:4]:sample_address[10:4])};
- wire [15:0] mask=(old[21:16]==wr_addr[16:11]?old[15:0]:16'b0)|(16'h1<<wr_addr[3:0]);
+ // An accepted strobe reserves the next edge for committing its sample.
+ // That edge has no capture read, so a held query waits at most one edge.
+ assign query_ready=live&&!take;
+ wire lookup=query&&query_ready;
+ wire [7:0] write_line={bank,clearing?clear_index:wr_addr[10:4]};
+ wire [7:0] read_line=take?{bank,sample_address[10:4]}:{query_gen[0],query_address[10:4]};
+ wire [15:0] mask=(entry[21:16]==wr_addr[16:11]?entry[15:0]:16'b0)|(16'h1<<wr_addr[3:0]);
  wire owns=held[query_gen[0]]&&owner[query_gen[0]]==query_gen;
+ wire retire=release_bank&&held[release_gen[0]]&&owner[release_gen[0]]==release_gen;
  assign response=live&&replied;
- assign hit=response&&eligible&&held[reply_bank]&&owner[reply_bank]==reply_gen&&
-            !(release_bank&&release_gen==reply_gen)&&found[21:16]==tag&&found[lane];
+ assign hit=response&&eligible&&held[reply_bank]&&!(retire&&release_gen[0]==reply_bank)&&
+            entry[21:16]==tag&&entry[lane];
  assign data=fetched;
  always @(posedge clk) begin
   if(live&&capturing&&clearing) directory[write_line]<=0;
   else if(live&&pending) directory[write_line]<={wr_addr[16:11],mask};
-  else if(take) old<=directory[write_line];
+  if(take||(lookup&&owns)) entry<=directory[read_line];
   if(live&&pending) bytes[{bank,wr_addr[10:0]}]<=wr_data;
   if(take) begin wr_addr<=sample_address; wr_data<=sample_data; end
-  if(query&&live&&owns) begin
-   found<=directory[{query_gen[0],query_address[10:4]}];
+  if(lookup&&owns) begin
    fetched<=bytes[{query_gen[0],query_address[10:0]}];
    tag<=query_address[16:11]; lane<=query_address[3:0];
   end
   if(!live) begin
    held<=0; capturing<=0; pending<=0; clearing<=0; replied<=0; eligible<=0; bad<=0;
   end else begin
-   replied<=query; eligible<=query&&owns; reply_gen<=query_gen; reply_bank<=query_gen[0];
+   replied<=lookup; eligible<=lookup&&owns; reply_bank<=query_gen[0];
    pending<=take;
-   if(release_bank&&held[release_gen[0]]&&owner[release_gen[0]]==release_gen)
+   if(retire)
     held[release_gen[0]]<=0;
    if(start&&start_ready) begin
     capturing<=1; bank<=capture_gen[0]; owner[capture_gen[0]]<=capture_gen;
