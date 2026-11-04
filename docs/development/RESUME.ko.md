@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [591 결과](../nes-roles591-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 실제 ARM transport 제한 시험·전체 링크 비용을 확인했다. 예산 초과 후보를 보류했으며 제품 선택은 바꾸지 않았다. 선택 산출물과 실측은 MMC577을 유지한다.
+PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [592 교체 경계](../nes-boundary592-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 실제 ARM transport 제한 시험·전체 링크 비용을 확인했다. 예산 초과 후보를 보류했으며 제품 선택은 바꾸지 않았다. 선택 산출물과 실측은 MMC577을 유지한다.
 
 474 구현 고정 commit은 `06c71479e82a4fa1d76cddb810ea751b71d89880`,475 결과는 `06b4b579fc28c8aa9d750f7e772f6d146efeb2e5`다. 현재 문서 commit이 더 최신이어도 이 선택 산출물의 hash는 바뀌지 않는다. 병합 후 새 구현 작업은 사용자 지시에 따라 새 `codex/` 브랜치/PR에서 시작한다.
 
@@ -40,7 +40,7 @@ PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole
 ## 4. 개발 재개 후 순서
 
 1. [579 계획](../nes-retrospective579-plan.json)의 R1은580 전체비용표와 [581 제한 조사](../nes-body581-results.ko.md)로 마감했다. 원본278개는로컬 `probes/nes-body581/evidence01.zip`, 공개 Git에는 해시·비용·순서만 있다. 물리 ROM/capture/입력 지연·대표장면·clean-clone 전체실행 결측을 유지하고 같은 분석/FIT를 반복하지 않는다.
-2. [591 실제 ARM·예산](../nes-roles591-results.ko.md): 8B 요약·묶음요청을 실제577 ARM packet/BEGIN/mapcodec 교체로 구현해 53입력/18조건을 통과했다. 단일 sealed source는 Python 모델이다. MAP_ACCEPT 왕복과 단계 D0가 필요해 dense 입력I/O는590의6.775→7.121ms로 정정했다. 전체FW214760B는 한도1768B 초과이며 cold도 계산 포함 회귀했다. 첫 ARM gate 실패로 새FPGA구현/Quartus MAP/두위상 첫BG·마지막ACK 시험은 실행하지 않았다. 다음은 old nonmap/record+new phase/identity 완료 제어의 실제 삭제와 전체Flash 예산 확정이다. 새adapter·CRC/helper/opcode/seed 미세조정이나589범용FPGA로 돌아가지 않는다. MMC577/독립검사/STOP/최종ACK·EA/메뉴/README를 유지한다.
+2. [592 삭제·cold 예산](../nes-boundary592-results.ko.md): 592는 실제 591 M4의 53입력을 재실행했다. 교체 범위 4,796 B→3,028 B 이하, cold 905는 새 문법의 71 B 절감 뒤에도 CPI 2 기준 54,767명령 순절감이 필요하다. 둘 다 설계 상한이며 실제 삭제는 0 B다. 다음은 같은 전체 링크·cold에서 동시 판정하는 ARM 교체 한 건이다. 실패 시 코드 배치·지원 범위를 재검토하고 FPGA/두 위상/실기판은 보류한다.
 3. R4는 의미 있는 후보만 실기 전달한다. 5–40/40–55초 완료 집계와 독립 검사·STOP·최종ACK·VBlank·메뉴복귀를 유지하며 시작 실패는 별도 보존한다.
 4. 각 단계 완료 때 579 계획의 상태·증거·예산·다음 한 단계를 함께 갱신한다. 오래된 계획의 미완료 상태를 방치하지 않는다.
 
