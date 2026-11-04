@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-whole-budget-580",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 599,
-  "current_evidence": "analysis/output599-verification.json",
+  "current_step": 600,
+  "current_evidence": "analysis/wire600-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -85,7 +85,7 @@
       "status": "ARM594_Flash_and_cold_pass_FPGA_gate_open",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "Keep MMC577 nonmap checks and compressed packets. Before integrating sparse map DMA with the existing scheduler, identify actual transactions saving at least 429/518 further wire B on 952/954 and price the remaining polls/driver/ROM/VBlank on both phases.",
+      "next_single_gate": "Freeze MMC577. Audit mapper-qualified tile tags and causal availability across previous display/current capture. At 954 only 11/22 of 272 ROM grants remain from the anchored source start to the next display deadline. Price misses, invalidation, cache ports and SPI/ARM cost before building any lookahead or delivery.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -219,6 +219,11 @@
       "599_evidence": [
         "analysis/output599-verification.json",
         "docs/nes-output599-results.ko.md"
+      ],
+      "600_result": "Dense D1 pin replay plus linked MMC577 receiver saved 562/558 B on 952/954. With 8 B map and essential credit/retirement replies wire alone is 5515/5588 B over a 5468.75 B budget. Optimistic rescheduled ROM/VBlank intervals 33.366..33.977 ms. No product selection.",
+      "600_evidence": [
+        "analysis/wire600-verification.json",
+        "docs/nes-wire600-results.ko.md"
       ]
     },
     {

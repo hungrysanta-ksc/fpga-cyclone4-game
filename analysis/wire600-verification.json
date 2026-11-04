@@ -1,0 +1,346 @@
+{
+  "stage": 600,
+  "wire_capacity_B": 5468.75,
+  "ARM": {
+    "legacy": {
+      "firmware_B": 212908,
+      "firmware_sha256": "fa17749244d4733fae40144345d068747d0e04b65676ae6e0afc22367ce430e2",
+      "free_Flash_B": 84
+    },
+    "shared": {
+      "firmware_B": 212916,
+      "firmware_sha256": "cc420baa2ac6e5fab1fef8269fe4f3912d0a580901f676d99d589f46bf234a8d",
+      "free_Flash_B": 76
+    }
+  },
+  "receiver": {
+    "952": {
+      "legacy": {
+        "wire": {
+          "0xd0": 160,
+          "0xd1": 3462,
+          "0xd2": 128,
+          "0xd3": 8
+        },
+        "calls": {
+          "0xd0": 20,
+          "0xd1": 16,
+          "0xd2": 16,
+          "0xd3": 1
+        },
+        "receive_instructions": 298300,
+        "pins_sha256": "7e4e4ad128682e56287e57e9534db4db2408ad79ddd7240128f1604d85e2ac80"
+      },
+      "shared": {
+        "wire": {
+          "0xd0": 152,
+          "0xd1": 2916,
+          "0xd2": 120,
+          "0xd3": 8
+        },
+        "calls": {
+          "0xd0": 19,
+          "0xd1": 15,
+          "0xd2": 15,
+          "0xd3": 1
+        },
+        "receive_instructions": 289721,
+        "pins_sha256": "0cc3bd5a303e3b285be11c151174a08f7153eb5e47ff9ec0dbb9b12a62eeb653"
+      }
+    },
+    "954": {
+      "legacy": {
+        "wire": {
+          "0xd0": 160,
+          "0xd1": 3450,
+          "0xd2": 128,
+          "0xd3": 8
+        },
+        "calls": {
+          "0xd0": 20,
+          "0xd1": 16,
+          "0xd2": 16,
+          "0xd3": 1
+        },
+        "receive_instructions": 297818,
+        "pins_sha256": "a8ae617785ad2e137fd4858da23e9a87f658a08b6525ec28bf937aa5b22b83cd"
+      },
+      "shared": {
+        "wire": {
+          "0xd0": 152,
+          "0xd1": 2908,
+          "0xd2": 120,
+          "0xd3": 8
+        },
+        "calls": {
+          "0xd0": 19,
+          "0xd1": 15,
+          "0xd2": 15,
+          "0xd3": 1
+        },
+        "receive_instructions": 289263,
+        "pins_sha256": "c456140e20ff6e15314f8b6332afa0abcfe42c0c7a1a201992f477ff57560b92"
+      }
+    }
+  },
+  "guards": {
+    "952": [
+      "corrupt_D1_no_POP",
+      "abort_then_late_COMMIT",
+      "wrong_generation",
+      "future_token"
+    ],
+    "954": [
+      "corrupt_D1_no_POP",
+      "abort_then_late_COMMIT",
+      "wrong_generation",
+      "future_token"
+    ]
+  },
+  "modeled_peripheral_display_guards": {
+    "952": [
+      {
+        "mode": "normal",
+        "displayed": 1,
+        "EA": true,
+        "receiver_state": 0
+      },
+      {
+        "mode": "wrong_final_ACK",
+        "displayed": 0,
+        "EA": false,
+        "receiver_state": 4
+      },
+      {
+        "mode": "STOP_at_EA",
+        "displayed": 1,
+        "EA": true,
+        "receiver_state": 4
+      }
+    ],
+    "954": [
+      {
+        "mode": "normal",
+        "displayed": 1,
+        "EA": true,
+        "receiver_state": 0
+      },
+      {
+        "mode": "wrong_final_ACK",
+        "displayed": 0,
+        "EA": false,
+        "receiver_state": 4
+      },
+      {
+        "mode": "STOP_at_EA",
+        "displayed": 1,
+        "EA": true,
+        "receiver_state": 4
+      }
+    ]
+  },
+  "phases": [
+    {
+      "phase": 1,
+      "generation": 952,
+      "old_partial_B": 5897,
+      "new_partial_B": 5335,
+      "extra_saved_B": 562,
+      "target_B": 429,
+      "E1_packets": 31,
+      "credit_E0_min": 8,
+      "pre_EA_E8_min": 1,
+      "wire_floor_B": 5515,
+      "wire_floor_ms": 16.80761904761905,
+      "floor_shortfall_B": 47,
+      "E0_observed": 89,
+      "E8_observed": 42,
+      "observer_B": 32,
+      "old_poll_count_scenario_B": 7987,
+      "old_poll_count_wire_ms": 24.341333333333335,
+      "old_poll_count_wire_plus_mean_driver_ms": 34.87201848908062,
+      "baseline_SPI_B": 10232,
+      "baseline_ACK_interval_ms": 83.35993509790256,
+      "baseline_display_interval_ms": 83.36179753182806,
+      "baseline_ROM_reads": 208,
+      "baseline_ROM_request_wait_union_ms": 27.62739141172119,
+      "baseline_SEAL_VBlank_service_ms": 7.2658203518584665,
+      "baseline_post_SEAL_DMA_ms": 1.081329137145537,
+      "baseline_final_waits": 0,
+      "relaxed_calendar": {
+        "ROM_grants_from_source_before_deadline": 179,
+        "ROM_reads_due": 208,
+        "latest_ROM_release_for_one_period": 76827828,
+        "release_advance_needed_ms": 19.556455522708482,
+        "start_masterclock": 3000000,
+        "source_begin": 76833953.12339528,
+        "previous_reveal": 76821834,
+        "previous_ACK": 76824764,
+        "receiver_ready_ms": 19.124286172686745,
+        "ROM_release": 77247847.31461711,
+        "ROM_last_response": 77539253,
+        "ROM_wait_ms": 13.519672581456701,
+        "pre_display_bus_end": 77393403.34156886,
+        "VBlank_wait_ms": 0.0,
+        "earliest_reveal_scenario": 77539253,
+        "interval_ms": 33.40363710996443
+      }
+    },
+    {
+      "phase": 1,
+      "generation": 954,
+      "old_partial_B": 5986,
+      "new_partial_B": 5428,
+      "extra_saved_B": 558,
+      "target_B": 518,
+      "E1_packets": 27,
+      "credit_E0_min": 7,
+      "pre_EA_E8_min": 1,
+      "wire_floor_B": 5588,
+      "wire_floor_ms": 17.03009523809524,
+      "floor_shortfall_B": 120,
+      "E0_observed": 84,
+      "E8_observed": 45,
+      "observer_B": 16,
+      "old_poll_count_scenario_B": 8024,
+      "old_poll_count_wire_ms": 24.45409523809524,
+      "old_poll_count_wire_plus_mean_driver_ms": 34.68952251769605,
+      "baseline_SPI_B": 10108,
+      "baseline_ACK_interval_ms": 83.58212346521476,
+      "baseline_display_interval_ms": 83.58212346521476,
+      "baseline_ROM_reads": 272,
+      "baseline_ROM_request_wait_union_ms": 26.305249568008453,
+      "baseline_SEAL_VBlank_service_ms": 9.048076496866083,
+      "baseline_post_SEAL_DMA_ms": 0.9659513554607867,
+      "baseline_final_waits": 0,
+      "relaxed_calendar": {
+        "ROM_grants_from_source_before_deadline": 11,
+        "ROM_reads_due": 272,
+        "latest_ROM_release_for_one_period": 80390316,
+        "release_advance_needed_ms": 19.820123221103454,
+        "start_masterclock": 3000000,
+        "source_begin": 80402861.82715476,
+        "previous_reveal": 80386614,
+        "previous_ACK": 80389504,
+        "receiver_ready_ms": 19.089000458400786,
+        "ROM_release": 80815998.17749316,
+        "ROM_last_response": 81116249,
+        "ROM_wait_ms": 13.916610196436727,
+        "pre_display_bus_end": 80966856.0224472,
+        "VBlank_wait_ms": 0.0,
+        "earliest_reveal_scenario": 81116249,
+        "interval_ms": 33.972424430812254
+      }
+    },
+    {
+      "phase": 2,
+      "generation": 952,
+      "old_partial_B": 5897,
+      "new_partial_B": 5335,
+      "extra_saved_B": 562,
+      "target_B": 429,
+      "E1_packets": 31,
+      "credit_E0_min": 8,
+      "pre_EA_E8_min": 1,
+      "wire_floor_B": 5515,
+      "wire_floor_ms": 16.80761904761905,
+      "floor_shortfall_B": 47,
+      "E0_observed": 86,
+      "E8_observed": 44,
+      "observer_B": 32,
+      "old_poll_count_scenario_B": 7967,
+      "old_poll_count_wire_ms": 24.280380952380952,
+      "old_poll_count_wire_plus_mean_driver_ms": 34.76301632330536,
+      "baseline_SPI_B": 10212,
+      "baseline_ACK_interval_ms": 83.24027371818916,
+      "baseline_display_interval_ms": 83.24027371818916,
+      "baseline_ROM_reads": 208,
+      "baseline_ROM_request_wait_union_ms": 28.00970253577829,
+      "baseline_SEAL_VBlank_service_ms": 8.328804514837826,
+      "baseline_post_SEAL_DMA_ms": 1.0098116744063212,
+      "baseline_final_waits": 0,
+      "relaxed_calendar": {
+        "ROM_grants_from_source_before_deadline": 195,
+        "ROM_reads_due": 208,
+        "latest_ROM_release_for_one_period": 77543316,
+        "release_advance_needed_ms": 19.710834874650025,
+        "start_masterclock": 3178684,
+        "source_begin": 77552756.77072811,
+        "previous_reveal": 77537384,
+        "previous_ACK": 77540274,
+        "receiver_ready_ms": 19.124286172686745,
+        "ROM_release": 77966650.96194994,
+        "ROM_last_response": 78253997,
+        "ROM_wait_ms": 13.330651958500852,
+        "pre_display_bus_end": 78112206.98890169,
+        "VBlank_wait_ms": 0.0,
+        "earliest_reveal_scenario": 78253997,
+        "interval_ms": 33.366109066365595
+      }
+    },
+    {
+      "phase": 2,
+      "generation": 954,
+      "old_partial_B": 5986,
+      "new_partial_B": 5428,
+      "extra_saved_B": 558,
+      "target_B": 518,
+      "E1_packets": 27,
+      "credit_E0_min": 7,
+      "pre_EA_E8_min": 1,
+      "wire_floor_B": 5588,
+      "wire_floor_ms": 17.03009523809524,
+      "floor_shortfall_B": 120,
+      "E0_observed": 84,
+      "E8_observed": 43,
+      "observer_B": 32,
+      "old_poll_count_scenario_B": 8000,
+      "old_poll_count_wire_ms": 24.38095238095238,
+      "old_poll_count_wire_plus_mean_driver_ms": 34.52011901269736,
+      "baseline_SPI_B": 10084,
+      "baseline_ACK_interval_ms": 83.36375308744984,
+      "baseline_display_interval_ms": 83.36189065352434,
+      "baseline_ROM_reads": 272,
+      "baseline_ROM_request_wait_union_ms": 26.091255909968453,
+      "baseline_SEAL_VBlank_service_ms": 9.33647439022982,
+      "baseline_post_SEAL_DMA_ms": 0.8003809794838004,
+      "baseline_final_waits": 0,
+      "relaxed_calendar": {
+        "ROM_grants_from_source_before_deadline": 22,
+        "ROM_reads_due": 272,
+        "latest_ROM_release_for_one_period": 81105060,
+        "release_advance_needed_ms": 19.782727566400784,
+        "start_masterclock": 3178684,
+        "source_begin": 81116802.67050709,
+        "previous_reveal": 81101226,
+        "previous_ACK": 81104116,
+        "receiver_ready_ms": 19.089000458400786,
+        "ROM_release": 81529939.02084549,
+        "ROM_last_response": 81830969,
+        "ROM_wait_ms": 13.952888390784095,
+        "pre_display_bus_end": 81680796.86579953,
+        "VBlank_wait_ms": 0.0,
+        "earliest_reveal_scenario": 81830969,
+        "interval_ms": 33.97745300241111
+      }
+    }
+  ],
+  "new_display_interval_ms": null,
+  "whole_board_FIT": null,
+  "physical": false,
+  "scope": "D1 and destructive protocol pin tests, linked receivers on ready source, 582/599 map packet sizes. Fixed MMC577 E0-only retirement and pre-EA E8. Retimed optimistic ROM and VBlank calendar, no coupled new display or hardware timing.",
+  "evidence": {
+    "analysis/whole580-manifest.json": "5f372bf6ebdd693fe700ff625d7abe02456dad1dc8584bb86a224a358e98493b",
+    "analysis/whole580-verification.json": "f2f35a69758fe4b3591f6316e8854e6ecd568c6846a4e5c9626f6f1f4a398d7c",
+    "analysis/abi582-verification.json": "86f712e20e09cd851eb5e4f1d39a055a1e3e50bb31b8386f1ce7b469e75eca77",
+    "analysis/body581-verification.json": "47063d868e6d0f9dd9b171b1d10c49fe6b5c454d654b253b92c61ca62d707ea0",
+    "tools/check_nes_wire600.py": "0c3501985d5a46c0efbb72977cacb1d9bca90bf3f378369aefe45c454050f143",
+    "tools/analyze_nes_wire600.py": "ed0f9622e8b7f4c1c5b4c85a57b8cb37dbac3d1f8434d4478ad6162a762eb418",
+    "tools/test_nes_transfer512_spi.py": "3e3a28774cc5520e97d51951817d8464425d38ab7b78b4c38becad4fb46af972",
+    "tools/nes_transfer512.py": "56424e620d68d946f221812466ad3af84efab70f7f9b7422caf79cd0f52b62d8"
+  },
+  "RTL": {
+    "legacy": "6b40c341d7d4d46413e3074dd14bc21df70e11dfc7fd1d147669054ab82b8639",
+    "shared": "21c86b0e703930967f69e82bb6f7b0e33e1c84289abf08e90f5b0bc6ec1110fb"
+  }
+}
