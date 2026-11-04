@@ -21,11 +21,11 @@ def sources(d):
     assert sha(d/name)=='3f2d2c4c979e1bdab9f640c6be4049a46ee7537fc670347b832bc039f16c53be'
     for f in RTL:shutil.copyfile(ROOT/'rtl'/f,d/f)
 
-def mapping(out):
+def mapping(out, build_sources=sources):
     # Reference and target use the same unconstrained region pins/device/clock boundary.
     with tempfile.TemporaryDirectory(prefix='nes595map-') as tmp:
         d=Path(tmp)
-        sources(d)
+        build_sources(d)
         qsf=['set_global_assignment -name FAMILY "Cyclone IV E"',
              'set_global_assignment -name DEVICE EP4CE15F17C8',
              'set_global_assignment -name TOP_LEVEL_ENTITY nes_region595',
@@ -80,7 +80,7 @@ class Input(Receiver):
 class Runtime(Display):
     def input_exchange(self,tx):return self.link.spi(tx)
 
-def exercise(d,a,link):
+def exercise(d,a,link,normal_only=False):
     with zipfile.ZipFile(a.archive) as z:
         pins=json.loads((ROOT/'analysis/body581-verification.json').read_text())['inputs']
         import hashlib
@@ -108,6 +108,8 @@ def exercise(d,a,link):
         print('normal',g,r,flush=True)
         with (a.out/'frames.jsonl').open('a',encoding='ascii') as journal:
             journal.write(json.dumps(frames[-1])+'\n')
+    if normal_only:
+        return dict(frames=frames,ELF=sha(a.arm/'obj-nes-100/sd2snes.elf'),RTL={n:sha(d/n) for n in RTL})
     m=fresh();begin(905,True)
     before=link.stats()
     repair=m.collect(samples[905][2])
@@ -153,12 +155,13 @@ def exercise(d,a,link):
                 cold_recovery=cold,display=display,ELF=sha(a.arm/'obj-nes-100/sd2snes.elf'),
                 RTL={n:sha(d/n) for n in RTL},scope='Actual ARM and SPI pin RTL, immutable query fixture; display peer and ROM service modeled.')
 
-def simulate(a):
+def simulate(a, build_sources=sources, instrument=None, runner=exercise, link_type=Link):
     expected=json.loads((ROOT/'analysis/report594-verification.json').read_text())
     assert sha(a.arm/'obj-nes-100/sd2snes.elf')==expected['input_test']['pins']['sd2snes.elf']
     with tempfile.TemporaryDirectory(prefix='nes595sim-') as tmp, socket.socket() as listener:
-        d=Path(tmp);sources(d)
+        d=Path(tmp);build_sources(d)
         for n in ('nes_region595_tb.sv','nes_region595_rpc.tcl'):shutil.copy(ROOT/'tools'/n,d/n)
+        if instrument:instrument(d,a.out)
         def run(exe,args,log):
             with (a.out/log).open('wb') as f:subprocess.run([str(Q/exe),*args],cwd=d,stdout=f,stderr=subprocess.STDOUT,timeout=120,check=True)
         run('vlib.exe',['work'],'vlib.log')
@@ -171,13 +174,13 @@ def simulate(a):
                 with listener.accept()[0] as sock,sock.makefile('rwb') as io:
                     sock.settimeout(120);sock.setsockopt(socket.IPPROTO_TCP,socket.TCP_NODELAY,1)
                     assert io.readline().strip()==b'READY'
-                    link=Link(io);result=exercise(d,a,link)
+                    link=link_type(io);result=runner(d,a,link)
                     assert link.request('quit')=='BYE'
                 assert proc.wait(timeout=30)==0
             finally:
                 if proc.poll() is None:proc.kill();proc.wait()
         (a.out/'result.json').write_bytes((json.dumps(result,indent=2)+'\n').encode())
-        print('PASS',len(result['frames']),result['repair'],result['display'],flush=True)
+        print('PASS',len(result['frames']),result.get('repair'),result.get('display'),flush=True)
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('mode',choices=('map','sim'))
