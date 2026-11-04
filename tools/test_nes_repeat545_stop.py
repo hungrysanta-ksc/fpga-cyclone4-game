@@ -7,16 +7,17 @@ from nes_raw506 import once
 from test_nes_seal538_stop import exercise
 
 
-def inject(source, address, length, boundary):
+def inject(source, address, length, boundary, section=5):
+    base={3:0x6000, 5:0x6500}[section]
     source=once(source, 'local function loaded()', f"""local fill545={{done=0,stop=false}}
 local function target545()
- return packet and pw(8)==FAULT and pb(0)==4 and pb(1)==5 and pw(14)=={length} and pb(16)==pb(17)
+ return packet and pw(8)==FAULT and pb(0)==4 and pb(1)=={section} and pw(14)=={length} and pb(16)==pb(17)
 end
 emu.addMemoryCallback(function()
  if not target545() then return end
  fill545.armed=true
  if not fill545.saved then
-  fill545.base=0x10000+word(0x1020)+0x6500+pw(10)
+  fill545.base=0x10000+word(0x1020)+{base}+pw(10)
   fill545.saved={{}}
   for i=0,{length}-1 do fill545.saved[i]=rd(fill545.base+i) end
  end
@@ -42,14 +43,15 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     for name in ('client','trace','mesen','out'):
         parser.add_argument('--'+name, type=Path, required=True)
+    parser.add_argument('--palette',action='store_true',help='exercise 608 palette WRAM on both banks')
     args=parser.parse_args()
     args.out=args.out.resolve()
     args.out.mkdir(parents=True,exist_ok=False)
     address=json.loads((args.client/'labels.json').read_text())['zero_chunk516']
     rows=[]
-    for gen,length in ((906,194),(907,66)):
+    for gen,length in (((906,152),(907,96)) if args.palette else ((906,194),(907,66))):
         for boundary in [*range(0,length,64),length]:
             def edit(source):
-                return inject(source,address,length,boundary)
+                return inject(source,address,length,boundary,3 if args.palette else 5)
             rows.append(exercise(args,gen,f'fill{length}-stop{boundary}',edit_packet_case=edit))
     (args.out/'result.json').write_text(json.dumps(rows,indent=2)+'\n')
