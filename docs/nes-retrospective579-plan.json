@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-whole-budget-580",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 601,
-  "current_evidence": "analysis/snoop601-verification.json",
+  "current_step": 602,
+  "current_evidence": "analysis/overlap602-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -85,7 +85,7 @@
       "status": "ARM594_Flash_and_cold_pass_FPGA_gate_open",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "Price D1 receive, ARM decode and D2 credit, then measure causally available overlap and net wire reduction on both dense frames before integrating a cache. Bus needs 9.946..10.350 ms advance even with zero ROM misses; wire needs another 47/120 B.",
+      "next_single_gate": "Classify actual D1/E1/E9 bodies by origin and consume deadline. Could at least another 175/261 pre-display bytes be removed or legally advanced on both timelines even with zero receiver overhead? Include remaining 5.144..5.587 ms realistic paired shortfall and prior EA/STOP/ACK ownership before integration.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -229,6 +229,11 @@
       "601_evidence": [
         "analysis/snoop601-verification.json",
         "docs/nes-snoop601-results.ko.md"
+      ],
+      "602_result": "Actual duplicate D1 never advances before D2. Short checked POP with post-D0 saves 60 B on each dense generation; 954 still 60 B short. Paired overlap ceiling plus short POP saves 4.802/4.763 ms. No VBlank gain over 601; linked image 4 B over. No product selection.",
+      "602_evidence": [
+        "analysis/overlap602-verification.json",
+        "docs/nes-overlap602-results.ko.md"
       ]
     },
     {
