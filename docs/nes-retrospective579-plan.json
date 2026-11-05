@@ -3,10 +3,10 @@
   "review": 579,
   "date": "2026-11-03",
   "canonical": true,
-  "physical_baseline": "MMC577",
+  "physical_baseline": "MMC613",
   "evidence": "analysis/retrospective579.json",
-  "hardware_evidence": "analysis/hardware578-mmc577.json",
-  "package": "analysis/trial577-package.json",
+  "hardware_evidence": "analysis/hardware614-mmc613.json",
+  "package": "analysis/trial613-package.json",
   "review_document": "docs/nes-retrospective579.ko.md",
   "supersedes_execution_order": [
     "docs/nes-audit499-plan.json",
@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-whole-budget-580",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 613,
-  "current_evidence": "analysis/trial613-package.json",
+  "current_step": 614,
+  "current_evidence": "analysis/hardware614-mmc613.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -38,11 +38,12 @@
     "provisional_wire_B": 3937.5,
     "observed_nonquery_B_per_display": 5963.899761336515,
     "observed_nonquery_wire_ms": 18.175694510739856,
-    "LE_free": 148,
-    "Flash_free_B": 84,
-    "M9K_free": 5,
+    "LE_free": 76,
+    "Flash_free_B": 0,
+    "M9K_free": 0,
     "whole_60Hz_passed": false,
-    "full_IO_signoff": false
+    "full_IO_signoff": false,
+    "observed_nonquery_source": "MMC577, retrospective579"
   },
   "stages": [
     {
@@ -82,10 +83,10 @@
     },
     {
       "id": "R2",
-      "status": "trial613_delivered_60Hz_open",
+      "status": "MMC613_hardware_measured_60Hz_open",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "MMC613 전달본의 실기 로그를 기다린다. MMC577과 같은 동선의 5–40초·40–55초를 비교하고 실행 실패는 성공과 분리한다. 실행/입력/STOP/약60초 메뉴 복귀와 출력·최종 ACK 비용을 확인한 뒤 다음 병목을 결정한다. 로그 수신 전 같은 RTL·ARM 일정의 반복 최적화/FIT는 하지 않는다. 현재 실기 기준은 MMC577이다.",
+      "next_single_gate": "MMC613을 실기 기준으로 삼는다. 같은 map·OBJ 작업량에서 출력 발행·65816 수락/DMA·마지막 VBlank와 ACK를 대조해 31.63 ms 중 줄일 시간을 구분한다. STOP·독립 검사·최종 ACK·메뉴 복귀를 유지한다.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -325,7 +326,7 @@
     },
     {
       "id": "R4",
-      "status": "awaiting_user_MMC613_logs",
+      "status": "MMC613_one_successful_playthrough",
       "objective": "Deliver only meaningful candidates and measure hardware",
       "gate": [
         "Unique filenames, no RESTORE/ROM/save",
@@ -333,7 +334,8 @@
         "A/B repeats only when needed for causal claims",
         "Show game advancement/capture/input latency separately from finalACK FPS"
       ],
-      "sustained60_gate": "Representative dense scenes sustain new-generation display cadence and bounded latency with capture health; no duplicated-frame or partial-model FPS claim"
+      "sustained60_gate": "Representative dense scenes sustain new-generation display cadence and bounded latency with capture health; no duplicated-frame or partial-model FPS claim",
+      "evidence": "analysis/hardware614-mmc613.json"
     }
   ],
   "separate_workstreams": {

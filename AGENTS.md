@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- 최신은 [MMC613 전달본](docs/nes-trial613-results.ko.md)과 [현재 계획](docs/nes-retrospective579-plan.json)이다. 실제608 ROM을612 보드에 넣은 전체 FIT/STA와 새613 ARM 경로·집계·복구 검사를 통과했다. 76 LE·M9K0·Flash0 여유이며 ROM/RESTORE 없는 ZIP을 준비했다. MMC613 전달본의 실기 로그를 기다린다. MMC577과 같은 동선의 5–40초·40–55초를 비교하고 실행 실패는 성공과 분리한다. 실행/입력/STOP/약60초 메뉴 복귀와 출력·최종 ACK 비용을 확인한 뒤 다음 병목을 결정한다. 로그 수신 전 같은 RTL·ARM 일정의 반복 최적화/FIT는 하지 않는다. 현재 실기 기준은 MMC577이다.
+- 최신은 [MMC613 전달본](docs/nes-trial613-results.ko.md)과 [현재 계획](docs/nes-retrospective579-plan.json)이다. 실제608 ROM을612 보드에 넣은 전체 FIT/STA와 새613 ARM 경로·집계·복구 검사를 통과했다. 76 LE·M9K0·Flash0 여유이며 ROM/RESTORE 없는 ZIP을 준비했다. MMC613을 실기 기준으로 삼는다. 같은 map·OBJ 작업량에서 출력 발행·65816 수락/DMA·마지막 VBlank와 ACK를 대조해 31.63 ms 중 줄일 시간을 구분한다. STOP·독립 검사·최종 ACK·메뉴 복귀를 유지한다.
 
 - [597 결합 예산·핀 전송](docs/nes-region597-results.ko.md). 597은 595 핀 경로에서 묶음 전송으로 905·906 각각 97거래·698 B를 줄였다. 결합 진단은 2,625 LE로 809 LE 초과, 외부 생산 비용을 0으로 둬도 1,909 LE다. 다음은 MMC577 collector가 값을 확정하는 시점과 기존 SPI 페이지를 기준으로 중복 source 본체를 통째로 대체할 경계를 정하고, 입력 절감 뒤 남는 출력·최종 ACK 시간도 함께 예산화하는 일이다.
 

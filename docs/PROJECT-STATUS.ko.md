@@ -1,6 +1,6 @@
 # 프로젝트 현황
 
-목표는 sd2snes Cyclone IV 멀티 코어 확장이다. 최신 NES 실기 기준은 MMC577이며 MMC558과 비교한다. [NES 인계](../cores/nes/HANDOFF.ko.md)
+목표는 sd2snes Cyclone IV 멀티 코어 확장이다. 최신 NES 실기 기준은 MMC613이며 MMC577과 비교한다. [NES 인계](../cores/nes/HANDOFF.ko.md)
 
 시작 실패는 성능 집계에서 제외하고 자연 재발 시 두 실행의 로그 서명을 비교한다.
 
@@ -9,25 +9,25 @@
 | 코어 | 판정 | 근거·한계 |
 |---|---|---|
 | GB/GBC | 추가 성공·제품 공개 | G13C44/sd2snesHST0.9.0,[기준선](../cores/gbc/README.md)·[호환성](COMPATIBILITY.ko.md) |
-| NES | 개발 중·제품 미포함 | MMC577 SMB3 13.95fps, 5–55초 13.86fps · 실행·메뉴 복귀 성공 |
+| NES | 개발 중·제품 미포함 | MMC613 SMB3 16.20fps, 5–55초 15.66fps · 실행·메뉴 복귀 성공 |
 | PC Engine | 조사 대기 | 구현·실기 성공 없음 |
 
 대상은FXPAK Pro/Mk.III,EP4CE15F17C8,STM32F401RCT6,PSRAM IS66WVE4M16EBLL-70BLI 두개다. 다른보드/전체IO승인을뜻하지않는다.
 
 ## 최신 게임 실기
 
-MMC577 실기에서 실행과 메뉴 복귀가 정상이고 개선 체감이 보고됐다. 한 실행은 60.08초에 838화면(13.95fps), 5–55초 13.86fps다. MMC558 대비 5–40초는 13.66→13.77fps, 40–55초는 13.87→14.07fps로 소폭 증가했다. 동일 장면의 인과적 가속률은 아니다. [실기 비교](nes-hardware578-results.ko.md)
+MMC613 실기에서 60.08초에 973화면을 표시했고 실행과 메뉴 복귀를 확인했다. MMC577 대비 5–40초는 13.77→15.97fps, 40–55초는 14.07→14.93fps였다. 두 구간을 합치면 13.86→15.66fps다. [실기 비교](nes-hardware614-results.ko.md)
 
 ## 현재 비용과 다음 목표
 
 | 항목 | 값과 판정 |
 |---|---|
-| MMC577 전체 보드 | 15260LE/14191comb/8407FF/264816bits/51M9K, 잔여148LE·5M9K |
-| 관련 timing | 정확 CDC 정책의 내부 setup+0.045/hold+0.140/recovery+2.364ns; 외부 IO 미완료 |
-| ARM577 전달본 | firmware 212,908B / Flash 여유 84B / BSS 18,592B |
-| MMC577의 60Hz 평균 격차 | 71.69−16.67 ≈ 55.03ms/표시 |
-| MMC577 단계 평균 | 수신 19.89 / 계획·공급 14.83 / 출력·최종 ACK 36.37ms/표시 |
-| 다음 작업 | [579 보완 계획](nes-retrospective579-plan.json): 전체 비용표→본문 전송·역할/삭제 예산→한 후보. 조회 제외 wire 관측 투영18.18ms; 추가 국소 구현 전60Hz예산 검토 |
+| MMC613 전체 보드 | 15,332 LE, 조합 논리 14,359, FF 8,474, M9K 56/56. 여유 76 LE |
+| 전체 STA 최소 slack | setup +0.487 / hold +0.163 / recovery +1.652 / removal +0.490 ns. 외부 IO 검증 진행 중 |
+| ARM613 전달본 | Flash 212,992 B, 여유 0 B, BSS 18,592 B |
+| 60Hz 평균 격차 | 61.75 − 16.67 ≈ 45.08 ms/표시 |
+| MMC613 단계 평균 | 수신 18.82 / 계획·공급 10.65 / 출력·최종 ACK 31.63 ms/표시 |
+| 다음 작업 | 같은 작업량에서 출력 발행·DMA·최종 VBlank 대기 분리 |
 | 미완료 | 지속60fps·장면별/p95·NES 실시간 속도·capture 무손실·MMC4/5·제품 공개 |
 
 [509 전달본](../analysis/service509-package.json)은 ROM/save/RESTORE 없이 제작한 불변 스냅샷이다. 이번 수신 분석에서 새 firmware·ZIP·합성은 만들지 않았다. [MMC502 실기10.59fps](nes-hardware503-results.ko.md)는 복구·비교 기준으로 보존한다.
