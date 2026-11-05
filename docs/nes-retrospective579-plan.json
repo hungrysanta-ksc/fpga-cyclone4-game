@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-whole-budget-580",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 610,
-  "current_evidence": "analysis/pace610-verification.json",
+  "current_step": 611,
+  "current_evidence": "analysis/board611-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -82,10 +82,10 @@
     },
     {
       "id": "R2",
-      "status": "pace610_schedule_pass_BG_history_and_board_integration_open",
+      "status": "board611_time_FIT_pass_ROM_OE_STA_fail",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "610의 OBJ 조건 ARM과 608 팔레트 단독을 유지한다. 기존 BG 한 줄 이력을 보존하는 실제 보드 캡처·해제·source 경계를 연결하고, 추가 319 LE·M9K 0개 예산과 912·931·939의 기존 적중을 포함한 두 위상 대조를 먼저 통과시킨다. 952·957 표시·최종 ACK·STOP 조건까지 통과한 RTL에 전체 Lite FIT·STA를 한 번 적용한다. 단순 발행 간격·위상 상수 조절은 보류한다.",
+      "next_single_gate": "611의 BG 48회·OBJ 1,200회 적중과 ARM610·SNES608을 유지한다. 전체 FIT 79 LE·M9K 0·Flash 0 여유 안에서 reading_active→ROM_OE의 −0.629ns IO 경로를 구조적으로 개선한다. STOP 즉시 차단·loader/실행 ROM·base 복구를 검증한 뒤 전체 STA와 두 위상의 표시·최종 ACK·957 대기 0회를 확인한다. seed 반복·IO 제약 완화·통과 전 ZIP 전달은 하지 않는다.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -291,6 +291,11 @@
         "analysis/pace610-serial.json",
         "analysis/pace610-map.json",
         "analysis/pace610-bulk.json"
+      ],
+      "611_result": "Actual collector/source capture and retirement, pre-START scrub, preserved48BG+1200OBJ hits. Fair two-phase dense24->23VB, finalACK -33.052/-33.080ms,957wait0. WholeFIT15329LE/79free,56M9K/0free. ReviewedSTA setup -0.629ns reading_active->ROM_OE; no hardware selection.",
+      "611_evidence": [
+        "docs/nes-board611-results.ko.md",
+        "analysis/board611-verification.json"
       ]
     },
     {
