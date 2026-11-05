@@ -6,7 +6,7 @@ from pathlib import Path
 
 from check_nes_map527 import ARM,sha
 from check_nes_game478 import UC_HOOK_CODE
-from check_nes_supply485_arm import UC_ARM_REG_R0,UC_ARM_REG_R1,UC_ARM_REG_PC,UC_ARM_REG_LR
+from check_nes_supply485_arm import UC_ARM_REG_R0,UC_ARM_REG_R1,UC_ARM_REG_R2,UC_ARM_REG_R3,UC_ARM_REG_PC,UC_ARM_REG_LR
 
 
 def check(src,rows,stop_at):
@@ -31,6 +31,9 @@ def check(src,rows,stop_at):
         u.reg_write(UC_ARM_REG_R0,int(section==3))
         u.reg_write(UC_ARM_REG_PC,u.reg_read(UC_ARM_REG_LR))
     def pause(u,pc,size,user):
+        # Credit/drain progress may also call this helper before the palette.
+        # Count only the explicit quiet calls between palette and OAM.
+        if spans!=[3] or u.reg_read(UC_ARM_REG_R2)!=0 or u.reg_read(UC_ARM_REG_R3)!=0:return
         pauses.append(pc)
         if len(pauses)==stop_at:
             m.endpoint.mode='STOP_after_E9';m.endpoint.accepted=1
