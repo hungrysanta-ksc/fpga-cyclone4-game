@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-budget-615",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 615,
-  "current_evidence": "analysis/output615-verification.json",
+  "current_step": 616,
+  "current_evidence": "analysis/map616-beam-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -86,7 +86,7 @@
       "status": "MMC613_hardware_measured_60Hz_open",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "952 final latch <=246 on both starts by moving eligible accepted work earlier; 957 zero waits, dense interval and last ACK gates; then 954/955 map supply vs upload VBlank.",
+      "next_single_gate": "616의 252번 후보에서 954·955의 map 발행·65816 수락과 업로드 VBlank를 대조한다. 두 위상의 952 표시 4 VBlank·957 최종 대기 0회와 STOP·독립 검사·최종 ACK·메뉴 복귀를 유지한다. 실기 비교 기준은 MMC613이다.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -310,7 +310,8 @@
         "docs/nes-mmc613-trial.ko.md",
         "analysis/trial613-package.json",
         "analysis/trial613-archive.json"
-      ]
+      ],
+      "616_result": "Paired 53-frame runs, identical map and tile work. 1152B grant with beam sample <=252, 952 display 5->4 VBlank, 951-955 23->22, last ACK -33.608/-33.499ms; 957 final waits 0. No new physical FPS or board fit."
     },
     {
       "id": "R3",

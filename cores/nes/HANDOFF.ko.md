@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-PR151 병합 후 [615 출력 비용 분해](../../docs/nes-output615-results.ko.md)에서 같은 작업량을 검증했다. 다음은 952 검사선을 먼저 당기는 실험이다.
+[616의 952 선행 DMA](../../docs/nes-map616-results.ko.md)에서 두 위상의 4 VBlank 목표를 달성했다. 616의 252번 후보에서 954·955의 map 발행·65816 수락과 업로드 VBlank를 대조한다. 두 위상의 952 표시 4 VBlank·957 최종 대기 0회와 STOP·독립 검사·최종 ACK·메뉴 복귀를 유지한다. 실기 비교 기준은 MMC613이다.
 
 최신은 [MMC613 전달본](../../docs/nes-trial613-results.ko.md)·[설치 안내](../../docs/nes-mmc613-trial.ko.md)·[manifest](../../analysis/trial613-package.json)다. 실제608 ROM을612 보드에 연결한 전체 FIT/STA, 새 ARM613 marker·집계·복구·프로그래머 검사를 통과했다. ZIP은 probes/nes-trial613/trial01/MMC613-TRIAL.zip, 근거는 archive01에 있다. 실기 로그는 614에서 확인했다.
 
