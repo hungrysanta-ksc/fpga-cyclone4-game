@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-whole-budget-580",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 612,
-  "current_evidence": "analysis/oe612-verification.json",
+  "current_step": 613,
+  "current_evidence": "analysis/trial613-package.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -82,10 +82,10 @@
     },
     {
       "id": "R2",
-      "status": "oe612_whole_FIT_STA_pass_limited_hardware_candidate",
+      "status": "trial613_delivered_60Hz_open",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "612 보드·610 ARM·608 SNES를 제한 실기 전달 후보로 고정한다. 새 파일명·로그 marker의 전체 링크와 산출물 해시를 확인하고 RESTORE 없는 전달본을 준비한다. 5–40초·40–55초와 실행/STOP/메뉴 복귀를 비교하며 실기 확인 전 MMC577 기준·FPS를 갱신하지 않는다. Flash 0·M9K 0·76 LE 여유를 유지하고 변경된 경계만 재검증한다.",
+      "next_single_gate": "MMC613 전달본의 실기 로그를 기다린다. MMC577과 같은 동선의 5–40초·40–55초를 비교하고 실행 실패는 성공과 분리한다. 실행/입력/STOP/약60초 메뉴 복귀와 출력·최종 ACK 비용을 확인한 뒤 다음 병목을 결정한다. 로그 수신 전 같은 RTL·ARM 일정의 반복 최적화/FIT는 하지 않는다. 현재 실기 기준은 MMC577이다.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -302,11 +302,18 @@
         "docs/nes-oe612-results.ko.md",
         "analysis/oe612-verification.json",
         "analysis/oe612-archive.json"
+      ],
+      "613_result": "Bound actual608 SNES ROM into612 FPGA, new wholeFIT/STA same costs/slacks. ARM613 relabel:792 functions byte-identical to610,212992B/free0. ROM5120B aperture,programmer,windows,menu/base recovery PASS. MMC613 ZIP noROM/noRESTORE; awaits physical logs.",
+      "613_evidence": [
+        "docs/nes-trial613-results.ko.md",
+        "docs/nes-mmc613-trial.ko.md",
+        "analysis/trial613-package.json",
+        "analysis/trial613-archive.json"
       ]
     },
     {
       "id": "R3",
-      "status": "after_R2",
+      "status": "bounded_candidate613_validated_60Hz_not_claimed",
       "objective": "Implement exactly one chosen replacement against frozen577",
       "gate": [
         "Same workload and two start phases plus representative-scene steady interval distribution",
@@ -318,7 +325,7 @@
     },
     {
       "id": "R4",
-      "status": "after_R3",
+      "status": "awaiting_user_MMC613_logs",
       "objective": "Deliver only meaningful candidates and measure hardware",
       "gate": [
         "Unique filenames, no RESTORE/ROM/save",
@@ -348,5 +355,6 @@
   "new_installer_required_now": false,
   "retrospective_PR": 150,
   "PR": 151,
-  "bounded_prototype_started": true
+  "bounded_prototype_started": true,
+  "candidate_manifest": "analysis/trial613-package.json"
 }
