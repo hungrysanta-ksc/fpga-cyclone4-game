@@ -12,7 +12,7 @@ from nes_raw506 import once, sha
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def prepare(a):
+def prepare(a, generations=range(905,917)):
     a.out.mkdir(parents=True, exist_ok=False)
     shutil.copyfile(a.rtl, a.out / "nes_native_spi165.sv")
     tb = (ROOT / "tests/nes-functional/native_spi165_tb.sv").read_text()
@@ -32,19 +32,19 @@ def prepare(a):
     (a.out / "tb.sv").write_text(tb)
     with a.records.open() as f:
         events = list(csv.DictReader(f))
-    for g in range(905,917):
+    for g in generations:
         records = [row["word"] for row in events if int(row["generation"]) == g]
         (a.out / f"records-{g}.hex").write_text("\n".join(records)+"\n")
 
 
-def run(a):
+def run(a, generations=range(905,917)):
     def tool(name, *args):
         with (a.out / (name+"-"+str(len(list(a.out.glob("*.log"))))+".log")).open("wb") as log:
             subprocess.run([str(a.bin / (name+".exe")),*args],cwd=a.out,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=150)
     tool("vlib","work")
     tool("vlog","-sv","nes_native_spi165.sv","tb.sv")
     frames = []
-    for g in range(905,917):
+    for g in generations:
         rec = a.out / f"records-{g}.hex"
         shutil.copyfile(rec,a.out / "records.hex")
         tool("vsim","-c","-quiet","-do","onerror {quit -code 1}; onbreak {quit -code 1}; run -all; quit -code 0",

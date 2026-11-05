@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-"""Reconcile MMC577 physical logs; retain incomplete terminal output separately."""
+"""Reconcile MMC577 and MMC613 physical logs; retain incomplete terminal output separately."""
 import argparse
 import json
 import struct
@@ -10,9 +10,13 @@ from nes_windows518 import windows, duration_ms
 from analyze_nes_supply485_hardware import sha
 
 
-def analyze(raw):
-    g,b,p,pins=inputs(raw,577)
-    reference=ROOT/'analysis/hardware559-mmc558.json'
+def analyze(raw, trial=577):
+    baseline, reference_name, last_tick, kind, section = {
+        577: (558, 'hardware559-mmc558.json', 5996, 2, 2),
+        613: (577, 'hardware578-mmc577.json', 5993, 3, 0),
+    }[trial]
+    g,b,p,pins=inputs(raw,trial)
+    reference=ROOT/'analysis'/reference_name
     old=json.loads(reference.read_text(encoding='utf8'))
     for key in ('run_error','run_rom_error','run_stop_error','fault_context_valid',
                 'native_receiver_error','native_video_error','plan_error','trace_aborts'):
@@ -23,7 +27,7 @@ def analyze(raw):
     assert b['cost_phase_and_op_are_nested']=='1'
     assert all(b[k]=='0' for k in ('cost_crc_errors','cost_transfer_stops','failed_transfers'))
     n=int(g['native_frames']);elapsed=duration_ms(p)
-    split=windows((raw/'nes-budget-mmc577.txt').read_text(encoding='utf-8-sig'),elapsed)
+    split=windows((raw/f'nes-budget-mmc{trial}.txt').read_text(encoding='utf-8-sig'),elapsed)
     phases={}
     for i,name in enumerate(('receive','plan_supply','output_final_ack')):
         calls,_,hi,lo,maximum=map(int,b[f'cost_phase_{i:02}'].split(','))
@@ -31,13 +35,13 @@ def analyze(raw):
     commits=int(g['trace_commits']);ea=int(b['cost_op_08'].split(',')[0])
     assert commits==int(g['trace_ends'])==int(g['trace_begins'])==n+1
     assert ea==n==phases['output_final_ack']['calls']
-    assert int(g['profile_last_display_tick'])==5996 and b['open']=='1'
+    assert int(g['profile_last_display_tick'])==last_tick and b['open']=='1'
     pending=(int(g['sink_window_sent'])-int(g['sink_window_retired']))&65535
     assert pending==1
     assert (g['native_sink_error'],g['sink_window_error'],g['sink_trace_ack_valid'],
             g['sink_trace_mismatch_hex'])==('2','3','0','00')
     request=bytes.fromhex(g['sink_trace_request_hex'])
-    assert len(request)==16 and request[:2]==bytes([2,2])
+    assert len(request)==16 and request[:2]==bytes([kind,section])
     assert struct.unpack_from('<I',request,4)[0]==n+1
     assert struct.unpack_from('<H',request,8)[0]==int(g['trace_generation'])
     assert bytes.fromhex(g['sink_trace_ack_hex'])==bytes(12)
@@ -59,22 +63,23 @@ def analyze(raw):
                 for src in (old['frame_start_bins'],bins)]
         matched.append(dict(start_s=lo,end_s=hi,old=counts[0],new=counts[1]))
     trimmed=sum(r['displays'] for r in split)/50
-    return dict(trial=577,trial_family='MMC',physical=True,hardware_run_passed=True,
+    return dict(trial=trial,trial_family='MMC',physical=True,hardware_run_passed=True,
         logged_runs=1,user_report=dict(menu_return=True,perception='FPS felt improved'),
-        source_SHA256=pins,reference='analysis/hardware559-mmc558.json',
-        reference_SHA256=sha(reference),package='analysis/trial577-package.json',
+        source_SHA256=pins,reference=f'analysis/{reference_name}',
+        reference_SHA256=sha(reference),package=f'analysis/trial{trial}-package.json',
         display=dict(completed=n,seconds=elapsed/1000,fps=n*1000/elapsed,mean_ms=elapsed/n),
         completion_windows=split,completion_comparison=periods,trimmed_fps=trimmed,
         trimmed_change_pct=100*(trimmed/old['trimmed_fps']-1),
         frame_start_bins=bins,matched_start_bins=matched,
-        start_bin_work_per_frame={'558':old['start_bin_work_per_frame']['558'],'577':work},
+        start_bin_work_per_frame={str(baseline):old['start_bin_work_per_frame'][str(baseline)],str(trial):work},
         phases=phases,phase_delta_ms={k:v['ms_per_display']-old['phases'][k]['ms_per_display']
                                     for k,v in phases.items()},
         terminal=dict(runtime_result=1,commits=commits,retires_EA=ea,pending=pending,
-            request_hex=request.hex(),request_kind=2,section=2,serial=n+1,
+            request_hex=request.hex(),request_kind=kind,section=section,serial=n+1,
             window_error=3,sink_error=2,receiver_error=0,video_error=0,
-            last_display_s=59.96,stop_ok=True,base_restored=True,menu_state=g['menu_state'],
-            interpretation='Consistent with transfer/post-transfer deadline during unfinished ordinary output; physical failing instruction not recorded. Not a blanket waiver for window error 3.'),
+            last_display_s=last_tick/100,stop_ok=True,base_restored=True,menu_state=g['menu_state'],
+            interpretation=('SEAL pending at timed shutdown; no per-instruction timeout trace.' if trial == 613 else
+                            'Consistent with transfer/post-transfer deadline during unfinished ordinary output; physical failing instruction not recorded. Not a blanket waiver for window error 3.')),
         boot=dict(polls=int(b['boot_polls']),ticks=int(b['boot_ticks'])),
         limitations=['One unsynchronized playthrough per comparison; not an isolated causal speedup.',
                      'Start bins are not completion bins or scene identities; maxgap is a 10ms quantized maximum, not p95.',
@@ -86,7 +91,8 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--raw',type=Path,required=True)
     p.add_argument('--out',type=Path,required=True)
+    p.add_argument('--trial', type=int, choices=(577, 613), default=577)
     a=p.parse_args()
-    result=analyze(a.raw)
+    result=analyze(a.raw,a.trial)
     a.out.write_text(json.dumps(result,indent=2)+'\n',encoding='utf8',newline='\n')
     print(json.dumps({k:result[k] for k in ('display','completion_comparison','phases','phase_delta_ms')}))

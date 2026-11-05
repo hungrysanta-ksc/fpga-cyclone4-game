@@ -3,10 +3,10 @@
   "review": 579,
   "date": "2026-11-03",
   "canonical": true,
-  "physical_baseline": "MMC577",
+  "physical_baseline": "MMC613",
   "evidence": "analysis/retrospective579.json",
-  "hardware_evidence": "analysis/hardware578-mmc577.json",
-  "package": "analysis/trial577-package.json",
+  "hardware_evidence": "analysis/hardware614-mmc613.json",
+  "package": "analysis/trial613-package.json",
   "review_document": "docs/nes-retrospective579.ko.md",
   "supersedes_execution_order": [
     "docs/nes-audit499-plan.json",
@@ -16,12 +16,16 @@
   "preserve_historical_evidence": true,
   "implementation_started": false,
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
-  "branch": "codex/nes-retrospective-579",
+  "branch": "codex/nes-whole-budget-580",
+  "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
+  "current_step": 614,
+  "current_evidence": "analysis/hardware614-mmc613.json",
+  "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
     "independent CRC/coverage/identity",
     "STOP and partial transfer invalidation",
-    "final ACK before history publication and EA",
+    "final display ACK before display-bank history publication and EA; source input-COMMIT base uses a separate identity",
     "VBlank",
     "menu/base recovery",
     "GBC/save SRAM"
@@ -34,11 +38,12 @@
     "provisional_wire_B": 3937.5,
     "observed_nonquery_B_per_display": 5963.899761336515,
     "observed_nonquery_wire_ms": 18.175694510739856,
-    "LE_free": 148,
-    "Flash_free_B": 84,
-    "M9K_free": 5,
+    "LE_free": 76,
+    "Flash_free_B": 0,
+    "M9K_free": 0,
     "whole_60Hz_passed": false,
-    "full_IO_signoff": false
+    "full_IO_signoff": false,
+    "observed_nonquery_source": "MMC577, retrospective579"
   },
   "stages": [
     {
@@ -49,7 +54,18 @@
     },
     {
       "id": "R1",
-      "status": "next",
+      "status": "complete_with_explicit_unknowns",
+      "completed": "580 full ledger plus581 bounded section/change/packet audit: sealed53 captures,106 D1 packet-size sequences,3378 E1 publish/load/ACK intervals; target-bank map/palette/OAM reconstruction; no new hardware-time claim",
+      "next_single_gate": "R2 combined input section/block and output map ABI/deletion/ownership budget; no more unchanged-data or speculative timing runs",
+      "product_changes": false,
+      "targeted_measurement_pass_used": true,
+      "targeted_pass_kind": "One bounded offline fixture/packet/ownership audit; no target instrumentation or fresh whole simulation",
+      "remaining_unknowns": [
+        "Physical generation-bound capture rejection/count, NES advancement and input latency",
+        "Physical dense first-level ROM grants and actual per-frame MCU cycles",
+        "Cold/raw0/1/3-7 patch, nonzero exceptions, palette64 and video-certified representative-scene coverage",
+        "Clean-clone full execution closure"
+      ],
       "objective": "Reconcile current577 same-workload source/ARM/SPI/IRQ/ROM/two-slot/65816/DMA/display critical path",
       "reuse": [
         "542 decomposition methods",
@@ -67,7 +83,11 @@
     },
     {
       "id": "R2",
-      "status": "after_R1",
+      "status": "MMC613_hardware_measured_60Hz_open",
+      "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
+      "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
+      "next_single_gate": "MMC613을 실기 기준으로 삼는다. 같은 map·OBJ 작업량에서 출력 발행·65816 수락/DMA·마지막 VBlank와 ACK를 대조해 31.63 ms 중 줄일 시간을 구분한다. STOP·독립 검사·최종 ACK·메뉴 복귀를 유지한다.",
+      "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
         "Retained base/geometry delta and redundant input-body removal",
@@ -81,11 +101,220 @@
         "Flash/LE/RAM/port/stack and invalidation costs"
       ],
       "gate": "Credible provisional12ms wire plus remaining non-overlappable path within16.667ms; budget estimates explicitly not measurements",
-      "stop_rule": "If no candidate fits, revise ABI/roles or document unsupported scope; no immediate opcode/poll/DMA microtuning substitute"
+      "stop_rule": "If no candidate fits, revise ABI/roles or document unsupported scope; no immediate opcode/poll/DMA microtuning substitute",
+      "583_result": "Same-row33 +/-1 reduces951749->23/954755->75/957754->31 literal words. Standalone M4 kernel248B/104stack/1537rows+17atomic rejects; no product link/net deletion. Coherent50B output snapshot reference6normal20rejects. Variable2DMA FETCH +3query optimistic C IO10.507/10.517ms,95411.589/11.638ms; old-query sensitivity36.994/36.880ms. No achieved IRQ/query/timing/area claim.",
+      "583_evidence": [
+        "analysis/row583-verification.json",
+        "analysis/row583-arm.json",
+        "analysis/row583-progress.json",
+        "docs/nes-row583-results.ko.md"
+      ],
+      "584_result": "Actual linked577 transport replacement, ARM02/test07: four paired bounded951/954 runs; calls86..120->57..71 but wire+841..919B, firmware+444B/cap+360B, BSS+84B, observed stack+256B.18rejections including mirrored259B driver cap;255/256B payload incompatible. Model consumption/final display, no actualIRQ/ROM/65816/two-slot RTL. Reject transport-only candidate;R3 false.",
+      "584_evidence": [
+        "analysis/transport584-verification.json",
+        "docs/nes-transport584-results.ko.md"
+      ],
+      "current_runtime_correction": "Selected577 input poll follows final displayACK/EA/consumed; source can capture after final input ACK but ARM receive/display overlap is not currently connected. Historical498 overlap is not current evidence.",
+      "585_result": "Actual object/DWARF/stack inventory:1434B packet envelope and166B plan adapter replacement minus248B rowkernel and360B excess leaves992B new-code ceiling, not net saving. Full8948B history fails4928/4852B gap before callees/IRQ. Hybrid existing-prefix+2297B shadow+140B stale+259B RX+8B scratch reserves2708B, leaves2144B before callers/IRQ/identity/integrity.106 trace reconstructions retain675B dense net wire omission vs707.2B exact reference; mask-only bank-corruption counterexample. E9 cut1..5 padded-inplace corruption shown. Combined254B input53 reconstructions pass; no new target timing/build/FIT.",
+      "585_evidence": [
+        "analysis/ownership585-verification.json",
+        "docs/nes-ownership585-results.ko.md"
+      ],
+      "586_result": "Actual combinedARM patch02/ARM02/test03: section/row+canonicalCRC uses old logical_record semantics; direct50B plan fields and259B sharedRX.53 sequential inputs,15parser rejects,4source/output slices,18transport rejects,3argument guards,7actualE9suffix cuts and4creditpressure PASS. FW213852=+944vs577/+500vs584;860B over cap BEFORE history/planner/retained-bank integrity. BSS18940,832B observed slice stack not fullIRQ. Reject adapter composition, stop planned history expansion; no new FPGA/FIT/physical timing.",
+      "586_evidence": [
+        "analysis/combined586-verification.json",
+        "docs/nes-combined586-results.ko.md"
+      ],
+      "stopped_boundaries": [
+        "584 transport-only with old record parser",
+        "586 new section admission wrapping old logical_record control; history expansion stopped on Flash gate",
+        "587 treating logical_record1136B as free deletion or modeled4packet source buffer as deployed577",
+        "589 generic FPGA row/base+section source execution: actual functionalPASS, sameboundaryLE+2346; no ARM expansion or isolated FSM tuning",
+        "590 threeCRC16B summaries and per-row roundtrips; replace with ARM candidate hashing over one8B summary. No cached digest as sole retained-RAM integrity check.",
+        "591 8B summary/typed-phase plus retained577nonmap composition: fullARM+1852B/cap+1768; FPGA and retimed schedule not started after firstgate failure."
+      ],
+      "587_result": "Check ownership complete: actual linked586 455value cases,4admission counterexamples,22META/END/COMMIT controls and2query-CRC reference counterexamples PASS.6hash-pinned board files show single256B source block+96bit mailbox, not prior4packet producer model.213852-1136 leaves only276B under cap before replacement semantics/history;2124B RAM before callers/IRQ/integrity. Direct-executor-only rescue unpriced/rejected as selection basis; no new firmware/RTL/timing.",
+      "587_evidence": [
+        "analysis/ownership587-verification.json",
+        "docs/nes-ownership587-results.ko.md"
+      ],
+      "selected_source_boundary": {
+        "input_packet_slots": 1,
+        "block_B": 256,
+        "mailbox_bits": 96,
+        "transport_crc": "host compressed pack_byte",
+        "new_canonical_expected_crc": "not implemented; must count accepted logical query indices once"
+      },
+      "588_result": "53pinned inputs match586 blocks/packets and independent restore. SourceRAM row/base serialized reference +8STOP/commit/epoch guards, single256B stalls. Dense wire+503driver14.066->4.156ms is optimistic I/O only, NOT achieved timing. Old noninput terms still59.983/59.989ms. FIT peers1433LE+148headroom=>1581LE region ceiling; source3M9K budget; ARM oldpacket1434+logical1112+84=>2630B replacement ceiling. All new net link/LE/clock costs unmeasured, R3false.",
+      "588_evidence": [
+        "analysis/source588-verification.json",
+        "docs/nes-source588-results.ko.md"
+      ],
+      "input_feasibility_budgets": {
+        "source_mailbox_host_region_LE_max": 1581,
+        "additional_M9K_max": 1,
+        "ARM_direct_replacement_arithmetic_B_max": 1518,
+        "firmware_B_max": 212992,
+        "measured_new_cost": true,
+        "ceiling_scope": "590 retains logical_record semantics;1434B packet replacement+84B only IF fully deleted. Earlier2630B bound not applicable.",
+        "net_LE_target": "negative vs pinned577 same boundary; not merely lower than rejected589",
+        "ARM_state_scratch_design_ceiling_B": 160,
+        "591_firmware_B": 214760,
+        "591_Flash_excess_B": 1768,
+        "591_FPGA_cost": null,
+        "591_map_accept_required": true
+      },
+      "589_result": "Actual source3072x8 RAM/canonicalCRC/frozen586 blocks/69bit byte mailbox/host single256B D0-D3:53inputs282packets+8STOP/clockpause/POP/stalePREPARE guards PASS. Equal-boundary LiteMAP final1668->4014LE(+2346),1311->3517comb(+2206),794->1370FF,2048->26624RAMbits. RAM inferredM9K, not FF fallback. Source main state not FSM extracted; generic return/width/address selection costs remain. REJECT589/stopARMexpansion; no wholeFIT/STA/newFPS/ZIP.",
+      "589_evidence": [
+        "analysis/source589-verification.json",
+        "analysis/source589-archive.json",
+        "docs/nes-source589-results.ko.md"
+      ],
+      "590_result": "53pinned exact map reconstructions/20reference guards; sameCRC16 row/fullstream collision counterexample. Existing577M4 CRC32 function256updatesPASS,20B+already-linked1024Btable,6instructions/update notcycles. ARM same/shift decisions using8B wholeCRC32+edges;FPGA oneCRC32/nohistory. DenseIO14.066->6.775,warm13.294->6.520,cold13.223->12.353ms includesHELLO/REQUEST/D0confirm andretainednonmap;repair+8.716ms. Newdriver usesD3mean sensitivity;actual compute/IRQ/ROM/firstBG/ACK/newarea unknown. No product/RTL/link/MAP/FIT/ZIP change.",
+      "590_evidence": [
+        "analysis/roles590-verification.json",
+        "docs/nes-roles590-results.ko.md",
+        "tools/analyze_nes_roles590.py"
+      ],
+      "591_result": "Actual wholeARM patch02/ARM02/test03: old mapcodec/BEGIN/packet replaced8Bsummary+bitmap request/freshCRC16/repair;53inputs18guardsPASS againstsingle sealedPythonendpoint. MandatoryMAP_ACCEPT/D0 andphase polls correct590denseIO6.775->7.121ms. WholeFW214760=+1852vs577/+1768overcap;BSS18592same/receiver+40B/704teststacknotfullIRQ. CPI2inputsensitivitycold20.089->21.609,warm20.186->15.866,dense21.162->16.241ms;NOTactualcycles/IRQ/ROM/fulltimeline. REJECT591 firstARMgate: NO FPGAimplementation/QuartusMAP/two-phase firstBG-finalACK/ZIP.",
+      "591_evidence": [
+        "analysis/roles591-verification.json",
+        "docs/nes-roles591-results.ko.md"
+      ],
+      "592_result": "591 ELF replay 53/53, 5255 tag pairs and 8 reference negatives. Envelope 4796->3028 required; actual deleted 0. With 71 B less wire, cold CPI2 needs >=54767 fewer instructions of total377344. No replacement build, no new RTL/MAP/full timeline.",
+      "592_evidence": [
+        "analysis/boundary592-verification.json",
+        "docs/nes-boundary592-results.ko.md"
+      ],
+      "593_result": "ARM04/test06/ack06. Complete image 213140 B, 1620 B smaller than591, cap exceeded by148 B. 53 inputs, 27 receiver cases, 3 full-runtime ACK/EA cases. Cold905 map read exactly1914 B once, 234153 actual ARM instructions; CPI2 input17.983517 ms vs577 20.088858. Joint gate false.",
+      "593_evidence": [
+        "analysis/receiver593-verification.json",
+        "docs/nes-receiver593-results.ko.md"
+      ],
+      "594_result": "ARM01/test01/ack01/reports04: 212064 B, 928 B free, net -1076 B relative to593. Cold905 17.983517ms CPI2 vs577 20.088858. 53 input / 27 receive / 3 ACK unchanged. 16 post-session formats, exact report bytes, +744 B observed report stack. Physical baseline MMC577.",
+      "594_evidence": [
+        "analysis/report594-verification.json",
+        "docs/nes-report594-results.ko.md"
+      ],
+      "595_result": "594 ARM + real D0-D4 source/pins. 3041 LE vs 1668 reference, 2308 comb, 1278 FF, 2048 RAM bits. Cold905 202 transactions/4402 SPI bytes. Test04 cold/warm 905/906, 29-row CRC repair, partial D1/STOP cold recovery, three final ACK/EA cases passed. Test03 full53 incomplete (RPC timeout). Local area screen failed; no whole-board or timing promotion.",
+      "595_evidence": [
+        "analysis/region595-verification.json",
+        "docs/nes-region595-results.ko.md"
+      ],
+      "596_result": "53 reference inputs: single/reserved/tight 32/6/5 nonmap pages each, fixed -78 transactions/-546 B before variable D0. Same-boundary CDC/CRC+address/joint MAP 2761/2993/2708 LE. Joint diagnostic lacks CDC interlock and packed pages; 892 LE above screen. Packed ARM guards with modeled peers passed. MMC577 retained.",
+      "596_evidence": [
+        "analysis/pages596-verification.json",
+        "docs/nes-pages596-budget.ko.md"
+      ],
+      "597_result": "Packed producer on original 595 CDC saves 97 transactions/698 B each on 905/906. Wide-path reductions and packing on the diagnostic CDC cost 2625 LE (+809 vs screen); free header/status/compare oracle still 1909 LE with added input pins. No product selection or board timing claim.",
+      "597_evidence": [
+        "analysis/region597-verification.json",
+        "docs/nes-region597-results.ko.md"
+      ],
+      "598_result": "53 compact BG captures/1537 summaries and canonical CRCs; 594 SPI 905/906 save 11/10 D0 vs matched rescan; repair29, STOP and ACK guards. Matched collector+region 3855 original,4739 rescan,4910 cached; allowance4003. Old dense non-input 59.983/59.989ms. Minimum input + retained output 5812/6230 B on 952/954.",
+      "598_evidence": [
+        "analysis/boundary598-verification.json",
+        "docs/nes-boundary598-results.ko.md"
+      ],
+      "599_result": "ARM producer + real 65816 retained-byte CRC and map DMA. Four exact VRAM results; corrupt/STOP rejection and full map recovery after partial DMA. Inherited CRC alone finished 12.077..15.995 ms later than the frozen final display ACK. Retire whole-range per-frame CRC. New full final ACK not run.",
+      "599_evidence": [
+        "analysis/output599-verification.json",
+        "docs/nes-output599-results.ko.md"
+      ],
+      "600_result": "Dense D1 pin replay plus linked MMC577 receiver saved 562/558 B on 952/954. With 8 B map and essential credit/retirement replies wire alone is 5515/5588 B over a 5468.75 B budget. Optimistic rescheduled ROM/VBlank intervals 33.366..33.977 ms. No product selection.",
+      "600_evidence": [
+        "analysis/wire600-verification.json",
+        "docs/nes-wire600-results.ko.md"
+      ],
+      "601_result": "Current captured physical CHR bytes hit 208/208 and 272/272; previous output only 96/64. Isolated 166 LE, 38400 bits. Optimistic display intervals still 31.443..31.900 ms. No board integration.",
+      "601_evidence": [
+        "analysis/snoop601-verification.json",
+        "docs/nes-snoop601-results.ko.md"
+      ],
+      "602_result": "Actual duplicate D1 never advances before D2. Short checked POP with post-D0 saves 60 B on each dense generation; 954 still 60 B short. Paired overlap ceiling plus short POP saves 4.802/4.763 ms. No VBlank gain over 601; linked image 4 B over. No product selection.",
+      "602_evidence": [
+        "analysis/overlap602-verification.json",
+        "docs/nes-overlap602-results.ko.md"
+      ],
+      "603_result": "Current-input CGRAM recipe is 54 vs 344 wire B, but independent 65816 reconstruction + WRAM CRC takes 258030 clocks, missing the old palette ACK by 8.585..8.708 ms. No earlier VBlank or product selection. Self-contained input row runs price at 282 B on both dense traces.",
+      "603_evidence": [
+        "analysis/palette603-verification.json",
+        "docs/nes-palette603-results.ko.md"
+      ],
+      "604_result": "Real FPGA input + linked M4: both dense frames save 278 B with 8 B D2 and first E9 advances 1.668 ms. First ROM grant identical at both phases; another 9.220..10.007 ms needed for even one earlier grant. +35 standalone MAP LE, full Flash 112 B over. No release.",
+      "604_evidence": [
+        "analysis/rows604-verification.json",
+        "analysis/rows604-budget.json",
+        "analysis/rows604-map.json",
+        "analysis/rows604-fragmented.json",
+        "docs/nes-rows604-results.ko.md"
+      ],
+      "605_result": "Immutable-tag selector matches first 3 BG tags for 952/954 on D1 token 5. 17 B SPI, 0.410..0.419 ms extra; first 48 B ready earlier but all ROM data advance only 0.121..0.145 ms in relaxed replay. Even omniscient selection after confirmed prefixes yields at most 8/272 B by 60Hz on 954. No board candidate.",
+      "605_evidence": [
+        "analysis/prefix605-trace.json",
+        "analysis/prefix605-verification.json",
+        "docs/nes-prefix605-results.ko.md"
+      ],
+      "606_result": "954 128-line/kind lookup retains all 272 bytes by dot 71326. Six tentative blocks can replace negative polls on both traces with a 2.235-ms maximum previous ACK poll gap. First E9 still at 16.852 ms after EA. Even fully hidden input + compact map + bulk grouping reaches 16.162 ms with mean mandatory drivers before remaining checks/DMA.",
+      "606_evidence": [
+        "analysis/overlap606-verification.json",
+        "analysis/overlap606-trace.json",
+        "docs/nes-overlap606-results.ko.md"
+      ],
+      "607_result": "Recent two slots, MMC577 firmware 212976 B. Identical plan and state on 71 inputs; 53 displays per phase with dense interval 25 to 24 VBlanks and final ACK earlier by 17.799/50.809 ms. More wire B at 952/954. Frame 957 still five VBlanks, final wait 0 to 1. MMC577 remains selected.",
+      "607_evidence": [
+        "analysis/planner607-recent-verification.json",
+        "analysis/planner607-comparison.json",
+        "analysis/planner607-trace.json",
+        "docs/nes-planner607-results.ko.md"
+      ],
+      "608_result": "Palette only restores zero final waits on 957, dense 24/24 VBlanks. Combined gives 24/25, final ACK 1.127/17.749 ms later than 607. No physical selection or new FIT.",
+      "608_evidence": [
+        "docs/nes-quiet608-results.ko.md",
+        "analysis/quiet608-run.json",
+        "analysis/quiet608-palette.json",
+        "analysis/quiet608-both.json",
+        "analysis/quiet608-builds.json",
+        "analysis/quiet608-guards.json",
+        "analysis/quiet608-credit.json",
+        "analysis/quiet608-menu.json"
+      ],
+      "609_result": "96 late OBJ bytes all captured. Last OBJ supply ~26/15ms earlier, but 952 display 5 to 6 VB. Dense 24/24 unchanged, final ACK +0.221/-32.963ms vs palette608, 957 waits zero. Shared read and short-STOP RTL 229LE/38400bits, 81LE above standalone addition allowance; no whole FIT.",
+      "609_evidence": [
+        "analysis/obj609-verification.json",
+        "docs/nes-obj609-results.ko.md"
+      ],
+      "610_result": "OBJ-only overlap: two phases 952 6->5 VB, dense 24->23, final ACK -49.917/-16.670 ms vs609, 957 final waits 0/0. Same-source MAP 1244->1073 LE, +5M9K, provisional319LE/0M9K spare. ARM212992B/free0. Old48BG hits and board capture lifecycle not integrated; MMC577 retained.",
+      "610_evidence": [
+        "docs/nes-pace610-results.ko.md",
+        "analysis/pace610-verification.json",
+        "analysis/pace610-builds.json",
+        "analysis/pace610-serial.json",
+        "analysis/pace610-map.json",
+        "analysis/pace610-bulk.json"
+      ],
+      "611_result": "Actual collector/source capture and retirement, pre-START scrub, preserved48BG+1200OBJ hits. Fair two-phase dense24->23VB, finalACK -33.052/-33.080ms,957wait0. WholeFIT15329LE/79free,56M9K/0free. ReviewedSTA setup -0.629ns reading_active->ROM_OE; no hardware selection.",
+      "611_evidence": [
+        "docs/nes-board611-results.ko.md",
+        "analysis/board611-verification.json"
+      ],
+      "612_result": "OE direct async owner and dedicated CE registers: same-cycle CHECK/RUN and stopped-clock cancellation pass. WholeFIT15332LE/76free,56M9K. WholeSTA +0.487/+0.163/+1.652/+0.490ns, ROM_OE +0.592ns at unchanged12ns. Unchanged611 schedules revalidated, BG48/OBJ1200,957wait0. No new hardware FPS or package.",
+      "612_evidence": [
+        "docs/nes-oe612-results.ko.md",
+        "analysis/oe612-verification.json",
+        "analysis/oe612-archive.json"
+      ],
+      "613_result": "Bound actual608 SNES ROM into612 FPGA, new wholeFIT/STA same costs/slacks. ARM613 relabel:792 functions byte-identical to610,212992B/free0. ROM5120B aperture,programmer,windows,menu/base recovery PASS. MMC613 ZIP noROM/noRESTORE; awaits physical logs.",
+      "613_evidence": [
+        "docs/nes-trial613-results.ko.md",
+        "docs/nes-mmc613-trial.ko.md",
+        "analysis/trial613-package.json",
+        "analysis/trial613-archive.json"
+      ]
     },
     {
       "id": "R3",
-      "status": "after_R2",
+      "status": "bounded_candidate613_validated_60Hz_not_claimed",
       "objective": "Implement exactly one chosen replacement against frozen577",
       "gate": [
         "Same workload and two start phases plus representative-scene steady interval distribution",
@@ -97,7 +326,7 @@
     },
     {
       "id": "R4",
-      "status": "after_R3",
+      "status": "MMC613_one_successful_playthrough",
       "objective": "Deliver only meaningful candidates and measure hardware",
       "gate": [
         "Unique filenames, no RESTORE/ROM/save",
@@ -105,7 +334,8 @@
         "A/B repeats only when needed for causal claims",
         "Show game advancement/capture/input latency separately from finalACK FPS"
       ],
-      "sustained60_gate": "Representative dense scenes sustain new-generation display cadence and bounded latency with capture health; no duplicated-frame or partial-model FPS claim"
+      "sustained60_gate": "Representative dense scenes sustain new-generation display cadence and bounded latency with capture health; no duplicated-frame or partial-model FPS claim",
+      "evidence": "analysis/hardware614-mmc613.json"
     }
   ],
   "separate_workstreams": {
@@ -125,5 +355,8 @@
   "MMC4_MMC5_implementation": false,
   "clean_clone_rebuild_complete": false,
   "new_installer_required_now": false,
-  "PR": 150
+  "retrospective_PR": 150,
+  "PR": 151,
+  "bounded_prototype_started": true,
+  "candidate_manifest": "analysis/trial613-package.json"
 }
