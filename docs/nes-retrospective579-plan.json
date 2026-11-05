@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-whole-budget-580",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 611,
-  "current_evidence": "analysis/board611-verification.json",
+  "current_step": 612,
+  "current_evidence": "analysis/oe612-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -82,10 +82,10 @@
     },
     {
       "id": "R2",
-      "status": "board611_time_FIT_pass_ROM_OE_STA_fail",
+      "status": "oe612_whole_FIT_STA_pass_limited_hardware_candidate",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "611의 BG 48회·OBJ 1,200회 적중과 ARM610·SNES608을 유지한다. 전체 FIT 79 LE·M9K 0·Flash 0 여유 안에서 reading_active→ROM_OE의 −0.629ns IO 경로를 구조적으로 개선한다. STOP 즉시 차단·loader/실행 ROM·base 복구를 검증한 뒤 전체 STA와 두 위상의 표시·최종 ACK·957 대기 0회를 확인한다. seed 반복·IO 제약 완화·통과 전 ZIP 전달은 하지 않는다.",
+      "next_single_gate": "612 보드·610 ARM·608 SNES를 제한 실기 전달 후보로 고정한다. 새 파일명·로그 marker의 전체 링크와 산출물 해시를 확인하고 RESTORE 없는 전달본을 준비한다. 5–40초·40–55초와 실행/STOP/메뉴 복귀를 비교하며 실기 확인 전 MMC577 기준·FPS를 갱신하지 않는다. Flash 0·M9K 0·76 LE 여유를 유지하고 변경된 경계만 재검증한다.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -296,6 +296,12 @@
       "611_evidence": [
         "docs/nes-board611-results.ko.md",
         "analysis/board611-verification.json"
+      ],
+      "612_result": "OE direct async owner and dedicated CE registers: same-cycle CHECK/RUN and stopped-clock cancellation pass. WholeFIT15332LE/76free,56M9K. WholeSTA +0.487/+0.163/+1.652/+0.490ns, ROM_OE +0.592ns at unchanged12ns. Unchanged611 schedules revalidated, BG48/OBJ1200,957wait0. No new hardware FPS or package.",
+      "612_evidence": [
+        "docs/nes-oe612-results.ko.md",
+        "analysis/oe612-verification.json",
+        "analysis/oe612-archive.json"
       ]
     },
     {

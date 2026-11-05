@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- 최신 단계는 [611 보드 연결](docs/nes-board611-results.ko.md)과 [현재 계획](docs/nes-retrospective579-plan.json)이다. BG 48회·OBJ 1,200회, 두 위상 밀집 24→23 VB·마지막 ACK 약33ms 단축·957 대기0을 확인했다. 실제 보드 FIT는 15,329 LE/79 여유·56 M9K/0 여유, ARM Flash 여유0이다. ROM_OE setup −0.629ns가 남아 MMC577을 유지한다. 611의 BG 48회·OBJ 1,200회 적중과 ARM610·SNES608을 유지한다. 전체 FIT 79 LE·M9K 0·Flash 0 여유 안에서 reading_active→ROM_OE의 −0.629ns IO 경로를 구조적으로 개선한다. STOP 즉시 차단·loader/실행 ROM·base 복구를 검증한 뒤 전체 STA와 두 위상의 표시·최종 ACK·957 대기 0회를 확인한다. seed 반복·IO 제약 완화·통과 전 ZIP 전달은 하지 않는다.
+- 최신 단계는 [612 보드 타이밍](docs/nes-oe612-results.ko.md)과 [현재 계획](docs/nes-retrospective579-plan.json)이다. ROM_OE +0.592ns·전체 FIT/STA 통과, 76 LE·M9K0·Flash0 여유이며 611 시간·BG48·957 대기0을 유지한다. 612 보드·610 ARM·608 SNES를 제한 실기 전달 후보로 고정한다. 새 파일명·로그 marker의 전체 링크와 산출물 해시를 확인하고 RESTORE 없는 전달본을 준비한다. 5–40초·40–55초와 실행/STOP/메뉴 복귀를 비교하며 실기 확인 전 MMC577 기준·FPS를 갱신하지 않는다. Flash 0·M9K 0·76 LE 여유를 유지하고 변경된 경계만 재검증한다.
 
 - [597 결합 예산·핀 전송](docs/nes-region597-results.ko.md). 597은 595 핀 경로에서 묶음 전송으로 905·906 각각 97거래·698 B를 줄였다. 결합 진단은 2,625 LE로 809 LE 초과, 외부 생산 비용을 0으로 둬도 1,909 LE다. 다음은 MMC577 collector가 값을 확정하는 시점과 기존 SPI 페이지를 기준으로 중복 source 본체를 통째로 대체할 경계를 정하고, 입력 절감 뒤 남는 출력·최종 ACK 시간도 함께 예산화하는 일이다.
 
