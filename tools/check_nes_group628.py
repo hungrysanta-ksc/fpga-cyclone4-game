@@ -12,6 +12,16 @@ from test_nes_output489_snes import LUA
 from test_nes_trim514_schedule import MAP_ORACLE
 
 
+SAVE_MAPS="""
+ local f=assert(io.open(ROOT..'/stopped-maps.bin','wb'))
+ for _,bank in ipairs({0,1}) do for _,vram in ipairs({false,true}) do
+  local buf={};local at=vram and (0x6000+bank*0x4000) or (0x15000+bank*0x8000)
+  for i=0,4095 do buf[#buf+1]=string.char(emu.read(at+i,vram and emu.memType.snesVideoRam or emu.memType.snesWorkRam)) end
+  f:write(table.concat(buf))
+ end end
+ f:close()"""
+
+
 def inject(s,labels,kind):
     cold=kind=='cold'
     condition='pb(0)==2 and pb(1)==2 and pw(10)>=2048' if cold else 'pb(0)==9 and pw(14)>=128'
@@ -52,18 +62,11 @@ local function loaded()""") if kind=='stop' else once(s,'local function loaded()
     checks=f"""assert(touched628 and lastStatus=={status},'expected injected fault')
  for i=0,6,2 do assert(word(0x14d0+i)==0,'bank receipt survived fault')end"""
     if kind=='stop':
-        checks+="""
- local f=assert(io.open(ROOT..'/stopped-maps.bin','wb'))
- for _,bank in ipairs({0,1}) do for _,vram in ipairs({false,true}) do
-  local buf={};local at=vram and (0x6000+bank*0x4000) or (0x15000+bank*0x8000)
-  for i=0,4095 do buf[#buf+1]=string.char(emu.read(at+i,vram and emu.memType.snesVideoRam or emu.memType.snesWorkRam)) end
-  f:write(table.concat(buf))
- end end
- f:close()"""
+        checks+=SAVE_MAPS
     return once(s,"assert(lastStatus==0xe4,'STOP status')",checks)
 
 
-def recover(args):
+def recover(args, *, receipt_tags=True):
     out=args.out/'restart'
     out.mkdir()
     for src in (args.out/'906-cold').glob('*.bin'):
@@ -90,8 +93,11 @@ end end
 for i=0,7 do emu.write(0x14d0+i,0xa5,emu.memType.snesWorkRam) end
 local function loaded()""")
     s=once(s,'   local hdma=file(',MAP_ORACLE+'   local hdma=file(')
-    s=once(s,'packet=requests[index];','''if index==1 then for i=0,6,2 do assert(word(0x14d0+i)==0,'cold tag')end end
+    if receipt_tags:
+        s=once(s,'packet=requests[index];','''if index==1 then for i=0,6,2 do assert(word(0x14d0+i)==0,'cold tag')end end
  packet=requests[index];''')
+    else:
+        s=once(s,'for i=0,7 do emu.write(0x14d0+i,0xa5,emu.memType.snesWorkRam) end','')
     for k,v in dict(ROOT=json.dumps(out.as_posix()),MODE='"normal"',SCHEDULE='"continuous"',START=3000000,
                     FAULT=0,COMPACT='true',POISON='false',TOTAL=count,FRAMES=2).items():
         s=s.replace('@'+k+'@',str(v))
