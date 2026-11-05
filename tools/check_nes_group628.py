@@ -66,7 +66,7 @@ local function loaded()""") if kind=='stop' else once(s,'local function loaded()
     return once(s,"assert(lastStatus==0xe4,'STOP status')",checks)
 
 
-def recover(args, *, receipt_tags=True):
+def recover(args, *, receipt_tags=True, prepare_script=None):
     out=args.out/'restart'
     out.mkdir()
     for src in (args.out/'906-cold').glob('*.bin'):
@@ -98,6 +98,8 @@ local function loaded()""")
  packet=requests[index];''')
     else:
         s=once(s,'for i=0,7 do emu.write(0x14d0+i,0xa5,emu.memType.snesWorkRam) end','')
+    if prepare_script is not None:
+        s=prepare_script(out,s)
     for k,v in dict(ROOT=json.dumps(out.as_posix()),MODE='"normal"',SCHEDULE='"continuous"',START=3000000,
                     FAULT=0,COMPACT='true',POISON='false',TOTAL=count,FRAMES=2).items():
         s=s.replace('@'+k+'@',str(v))

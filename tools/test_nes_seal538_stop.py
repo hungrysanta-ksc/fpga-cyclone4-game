@@ -13,12 +13,12 @@ from test_nes_output489_snes import LUA
 from test_nes_trim514_schedule import MAP_ORACLE
 
 
-def exercise(args, gen, label, *, edit_packet_case=None, idle_witness=None,reject_status=0xe4):
+def exercise(args, gen, label, *, edit_packet_case=None, idle_witness=None,reject_status=0xe4,packet_trace=None):
     out = args.out/f'{gen}-{label}'
     out.mkdir()
     frames = gen-904
     packets = []
-    for line in (args.trace/'packets.jsonl').read_text().splitlines():
+    for line in (packet_trace or args.trace/'packets.jsonl').read_text().splitlines():
         _, _, body, payload = json.loads(line)
         record = bytes.fromhex(body)
         if int.from_bytes(record[8:10],'little') > gen:

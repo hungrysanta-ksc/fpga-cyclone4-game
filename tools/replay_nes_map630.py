@@ -53,19 +53,23 @@ def schedule(rows,events,mode):
         result.append((round(now),h[:2]+rows[slot][1][2:4]+h[4:],bulk))
     return rows[:start]+result
 
+def bound_observer(a,args):
+    s=(a.trace/'capture.lua').read_text()
+    s=once(s,'local ROOT='+json.dumps(a.trace.resolve().as_posix()),'local ROOT='+json.dumps(args.out.as_posix()))
+    s=once(s,"MODE=='normal'and 53 or","MODE=='normal'and 47 or")
+    s=once(s,'checkedMem527(function()rpc()end','emu.addMemoryCallback(function()rpc()end')
+    s=once(s,'checkedEvent527(function()\n if sequence==1','emu.addEventCallback(function()\n if sequence==1')
+    old=read(a.base_client/'labels.json');new=read(a.client/'labels.json')
+    pcs={v:new[k] for k,v in old.items()}
+    s=re.sub(r'\b(82[0-9]{5})\b',lambda m:str(pcs.get(int(m[1]),int(m[1]))),s)
+    return s,new
+
 def run(a):
     a.frames=47
     events=[e for e in read(a.trace/'events.json') if e['generation']==951]
     cutoff=deadlines(a.trace)[951]['previous_cutoff']
     def observe(_,args,unused):
-        s=(a.trace/'capture.lua').read_text()
-        s=once(s,'local ROOT='+json.dumps(a.trace.resolve().as_posix()),'local ROOT='+json.dumps(args.out.as_posix()))
-        s=once(s,"MODE=='normal'and 53 or","MODE=='normal'and 47 or")
-        s=once(s,'checkedMem527(function()rpc()end','emu.addMemoryCallback(function()rpc()end')
-        s=once(s,'checkedEvent527(function()\n if sequence==1','emu.addEventCallback(function()\n if sequence==1')
-        old=read(a.base_client/'labels.json');new=read(a.client/'labels.json')
-        pcs={v:new[k] for k,v in old.items()}
-        s=re.sub(r'\b(82[0-9]{5})\b',lambda m:str(pcs.get(int(m[1]),int(m[1]))),s)
+        s,new=bound_observer(a,args)
         s=once(s,'(pb(0)==2 or pb(0)==4) then','(pb(0)==2 or pb(0)==4 or pb(0)==9) then')
         if a.mode=='readybase':
             hooks=''

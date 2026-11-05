@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR152 / 630은 [진행·다음 작업](docs/progress/pr-152.md), [951 map·OAM·SEAL 마감](docs/nes-map630-results.ko.md)을 먼저 읽는다. 621 유지, 시간 대조군 625 tables-bg. 오른쪽 map 672B 절감과 팔레트·OAM 선행도 4 VBlank였다. 마지막 OBJ 뒤 명령을 즉시 제공해도 기존 65816의 SEAL 수락이 마감보다 1.201 / 1.448ms 늦었다. 다음은 후반 24개 명령의 반복 검사·완료와 OAM·HDMA 반복 복원을 함께 줄일 예산이다. 독립 검사·STOP·cold 복구·246번 검사선·최종 ACK를 유지한다. 보드 준비 616B, 실기 MMC613.
+- PR152 / 631은 [진행·다음 작업](docs/progress/pr-152.md), [951 후반 소비·부분 DMA](docs/nes-tail631-results.ko.md)를 먼저 읽는다. 621 유지, 시간 대조군 625 tables-bg. OAM·HDMA 묶음은 후반 head 24→21, 즉시 공급에서 SEAL 수락 약 1.3ms 단축. 세 map 선행의 상한에서도 목표 VBlank에 400 / 384B만 DMA해 951 표시는 4회였다. 다음은 실제 625 발행 시각 기준 SEAL 뒤 HDMA 형식·tile/map coverage의 선행 확인 가능 시간이다. 독립 검사·STOP·cold 복구·246번 검사선·최종 ACK 유지. 보드 준비 616B, 실기 MMC613.
 
 - 최신은 [MMC613 전달본](docs/nes-trial613-results.ko.md)과 [현재 계획](docs/nes-retrospective579-plan.json)이다. 실제608 ROM을612 보드에 넣은 전체 FIT/STA와 새613 ARM 경로·집계·복구 검사를 통과했다. 76 LE·M9K0·Flash0 여유이며 ROM/RESTORE 없는 ZIP을 준비했다. MMC613을 실기 기준으로 삼는다. 같은 map·OBJ 작업량에서 출력 발행·65816 수락/DMA·마지막 VBlank와 ACK를 대조해 31.63 ms 중 줄일 시간을 구분한다. STOP·독립 검사·최종 ACK·메뉴 복귀를 유지한다.
 
