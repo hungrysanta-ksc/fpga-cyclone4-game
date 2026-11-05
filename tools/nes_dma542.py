@@ -28,8 +28,8 @@ def raw_emitter(register_rows=False,reuse_pad=True):
     lda(0x1238);c.branch(0xd0,'raw_ready542');c.label('raw_slow542');c.emit(0xc2,0x20)
     call(c,'service');lda(0x1236);c.branch(0xd0,'raw_stop489')
     c.label('raw_ready542');c.emit(0xc2,0x20,0x38,0x60)""")
-    source=once(source,"imm(0x93be);sta(0x4302);imm(0);sta(0x4304)",
-                "imm(0x93be);sta(0x4302);c.absolute(0x9c,0x4304)")
+    source=once(source,"imm(0x8000+PROGRAM_BYTES489-66);sta(0x4302);imm(0);sta(0x4304)",
+                "imm(0x8000+PROGRAM_BYTES489-66);sta(0x4302);c.absolute(0x9c,0x4304)")
     if not reuse_pad:
         # Control: keep MMC540's exact full service at every row. Isolate the
         # register cursor from the optional pad-latch shortcut.
