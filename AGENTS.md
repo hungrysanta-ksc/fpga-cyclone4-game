@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR152 / 616: read docs/nes-map616-results.ko.md and analysis/map616-beam-verification.json. MMC613 physical, 616B coupled schedule. 616의 252번 후보에서 954·955의 map 발행·65816 수락과 업로드 VBlank를 대조한다. 두 위상의 952 표시 4 VBlank·957 최종 대기 0회와 STOP·독립 검사·최종 ACK·메뉴 복귀를 유지한다. 실기 비교 기준은 MMC613이다.
+- PR152 / 619: [진행·다음 작업](docs/progress/pr-152.md), [두 위상의 619 검증](docs/nes-tile619-results.ko.md)을 먼저 읽는다. 실기 MMC613, 보드 준비 616B, 일정 비교 618 ARM03 + 619 검사 단독. 다음은 954의 두 번째 plan에서 확정 BG를 직전 ROM 허용 구간에 공급하는 시험이다. 952 표시 4 VBlank·955 map 선행·957 최종 대기 0회와 STOP·새 패킷 우선·독립 검사·최종 ACK·246번 검사선·메뉴 복귀를 유지한다.
 
 - 최신은 [MMC613 전달본](docs/nes-trial613-results.ko.md)과 [현재 계획](docs/nes-retrospective579-plan.json)이다. 실제608 ROM을612 보드에 넣은 전체 FIT/STA와 새613 ARM 경로·집계·복구 검사를 통과했다. 76 LE·M9K0·Flash0 여유이며 ROM/RESTORE 없는 ZIP을 준비했다. MMC613을 실기 기준으로 삼는다. 같은 map·OBJ 작업량에서 출력 발행·65816 수락/DMA·마지막 VBlank와 ACK를 대조해 31.63 ms 중 줄일 시간을 구분한다. STOP·독립 검사·최종 ACK·메뉴 복귀를 유지한다.
 
