@@ -24,9 +24,9 @@ def budget(src, sizes):
     return data
 
 
-def edge(src,count,mode,previous=1):
+def edge(src,count,mode,previous=1,history_field='defer_first',history_value=1):
     m=ARM(src,'normal');m.setup()
-    for field,value,size in [('early',1,1),('sent',previous,2),('defer_first',1,1)]:
+    for field,value,size in [('early',1,1),('sent',previous,2),(history_field,history_value,1)]:
         m.put(m.p,'nes_plan200',field,value,size)
     m.endpoint.accepted=previous
     exchange=m.endpoint.exchange
