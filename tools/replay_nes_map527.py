@@ -15,10 +15,11 @@ from test_nes_map526_schedule import observer
 from trace_nes_tail522 import CLOCKED_INPUT
 
 
-def run(a, *, edit_script=None, compare_trace=None):
+def run(a, *, edit_script=None, compare_trace=None, source_client=None):
     a.out=a.out.resolve();a.out.mkdir(parents=True,exist_ok=False)
-    assert sha(a.trace/'client.sfc')==sha(a.client/'sink165.sfc')
-    shutil.copyfile(a.trace/'client.sfc',a.out/'client.sfc')
+    expected_client=source_client if source_client is not None else a.client
+    assert sha(a.trace/'client.sfc')==sha(expected_client/'sink165.sfc')
+    shutil.copyfile(a.client/'sink165.sfc',a.out/'client.sfc')
     first,last=905,905+a.frames
     for g in range(first,last):
         for n in (f'map-{g}.bin',f'expected-{g}.bin'):

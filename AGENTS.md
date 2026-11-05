@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR152 / 625: [진행·다음 작업](docs/progress/pr-152.md), [625 검증](docs/nes-seal625-results.ko.md)을 먼저 읽는다. 621 유지. tables-bg는 T + 624 대비 955 표시가 5 / 4→4 / 4, 마지막 ACK가 16.628 / 0.156ms 앞섰다. 922·923 회복과 957 최종 대기 0회 유지. 955의 후반 384B 중 192B만 선행했으므로 다음은 map 수락 순서와 1,152B DMA의 시작 주소를 분리 검증한다. 957 위상 2의 16B tile은 한 VBlank 일찍 끝났다. STOP·새 패킷 우선·독립 검사·최종 ACK·246번 검사선·메뉴 복귀를 유지한다. 보드 준비 616B, 실기 MMC613.
+- PR152 / 626: [진행·다음 작업](docs/progress/pr-152.md), [626 검증](docs/nes-map626-results.ko.md)을 먼저 읽는다. 621 유지, 시간 대조군 625 tables-bg. 626의 최종 map 선택 뒤 1,344B 전송은 955 잔여 map 512→320B, 마지막 ACK −0.006 / +0.173ms, 밀집 20 / 20 VBlank다. 다음은 951의 직전 마감 뒤 섹션 5 일곱 패킷과 SEAL 발행을 추적한다. STOP·새 head 우선·독립 검사·246번 검사선·922·923·952·954·955·957 최종 ACK·메뉴 복귀를 유지한다. 보드 준비 616B, 실기 MMC613.
 
 - 최신은 [MMC613 전달본](docs/nes-trial613-results.ko.md)과 [현재 계획](docs/nes-retrospective579-plan.json)이다. 실제608 ROM을612 보드에 넣은 전체 FIT/STA와 새613 ARM 경로·집계·복구 검사를 통과했다. 76 LE·M9K0·Flash0 여유이며 ROM/RESTORE 없는 ZIP을 준비했다. MMC613을 실기 기준으로 삼는다. 같은 map·OBJ 작업량에서 출력 발행·65816 수락/DMA·마지막 VBlank와 ACK를 대조해 31.63 ms 중 줄일 시간을 구분한다. STOP·독립 검사·최종 ACK·메뉴 복귀를 유지한다.
 
