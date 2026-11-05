@@ -270,6 +270,11 @@ class Runtime(ARM):
                         self.layout['nes_native_runtime165']={'size':d.attributes['DW_AT_byte_size'].value,**{c.attributes['DW_AT_name'].value.decode():member_offset(c)for c in d.iter_children()if c.tag=='DW_TAG_member'}}
         at=(self.static_end+15)&~15
         for field,kind in [('state','nes_native165'),('video','nes_native_video165'),('resident','nes_resident211'),('rt','nes_native_runtime165')]:
+            if field=='rt' and getattr(self,'linked_runtime_storage',False):
+                address=self.data_symbols['native_runtime165']
+                assert 0x20000000<=address and address+self.layout[kind]['size']<=self.static_end
+                self.rt=address
+                continue
             setattr(self,field,at);at=(at+self.layout[kind]['size']+7)&~7
         self.lut=at;self.workspace_end=at+128;assert self.workspace_end<0x2000fe00
         pal=struct.pack('<64H',*map(int,re.search(r'\{(.*?)\}',(a.arm/'nes_palette165.inc').read_text(),re.S)[1].split(',')))
