@@ -4,6 +4,8 @@
 
 ## 현재 작업
 
+PR151 병합 후 [615 출력 비용 분해](../../docs/nes-output615-results.ko.md)에서 같은 작업량을 검증했다. 다음은 952 검사선을 먼저 당기는 실험이다.
+
 최신은 [MMC613 전달본](../../docs/nes-trial613-results.ko.md)·[설치 안내](../../docs/nes-mmc613-trial.ko.md)·[manifest](../../analysis/trial613-package.json)다. 실제608 ROM을612 보드에 연결한 전체 FIT/STA, 새 ARM613 marker·집계·복구·프로그래머 검사를 통과했다. ZIP은 probes/nes-trial613/trial01/MMC613-TRIAL.zip, 근거는 archive01에 있다. 실기 로그는 614에서 확인했다.
 
 실측 기준은 **MMC613**이다. [최신 실기 결과](../../docs/nes-hardware614-results.ko.md)와 [후속 계획](../../docs/nes-retrospective579-plan.json)을 먼저 확인한다.
