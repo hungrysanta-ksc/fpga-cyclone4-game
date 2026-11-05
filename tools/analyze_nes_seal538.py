@@ -83,7 +83,7 @@ def obj_952(events, obj, prev, cpu):
                 OBJ_reads=obj['obj_rom_reads'])
 
 
-def inspect_run(folder, plans, cal, base, expected_firmware, expected_client, *, omitted_raw_B=0, first_bg_limit=1, first_bg_requests=None):
+def inspect_run(folder, plans, cal, base, expected_firmware, expected_client, *, omitted_raw_B=0, first_bg_limit=1, first_bg_requests=None, request_log_offsets=None):
     joint=read(folder/'joint.json')
     ref=read(base/'joint.json')
     assert joint['passed'] and joint['commits']==joint['map_WRAM_VRAM_verified']==53 and joint['last_status']==1
@@ -130,7 +130,8 @@ def inspect_run(folder, plans, cal, base, expected_firmware, expected_client, *,
         prior_grant=(cycle-(preceding<0))*cal.period+cal.starts[preceding]
         if 'rom_service' in phases[str(g)]:
             actual=phases[str(g)]['rom_service'][0]
-            assert actual[0]==0 and abs(actual[1]-request)<0.001 and actual[2:]==[grant,response]
+            offset=(request_log_offsets or {}).get(g,0)
+            assert actual[0]==0 and abs(actual[1]+offset-request)<0.001 and actual[2:]==[grant,response]
         prev=(one([r for r in cpu[g-1] if r['op']==3],'reveal')['clock']
               if g>905 else joint['parameters']['start'])
         # Count periodic ROM frame windows relative to the previous displayed screen.

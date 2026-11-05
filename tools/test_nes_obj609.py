@@ -43,6 +43,7 @@ def lanes(q):
 if __name__=='__main__':
     p=argparse.ArgumentParser(add_help=False)
     p.add_argument('--samples',required=True,type=Path)
+    p.add_argument('--bg-dispatch-clocks',type=int,choices=(0,1),default=0)
     args,rest=p.parse_known_args()
     sys.argv[1:]=rest
     frames=capture(args.samples)
@@ -81,7 +82,12 @@ if __name__=='__main__':
 
     actual=ObjLink.next_rom
     def owner(link,t):
-        link.obj_request609=link.owners[0][1]==1
+        g,kind=link.owners[0]
+        link.obj_request609=kind==1
+        if kind==0 and args.bg_dispatch_clocks:
+            if link.phases[g].get('first_BG561')==t:
+                link.phases[g]['first_BG561']=t+args.bg_dispatch_clocks
+            t+=args.bg_dispatch_clocks
         return actual(link,t)
 
     with patch.object(ObjLink,'accept',enqueue),patch.object(ObjLink,'next_rom',owner),patch.object(TraceLink,'next_rom',supply):

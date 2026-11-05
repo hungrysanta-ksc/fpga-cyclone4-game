@@ -40,7 +40,8 @@ def phase(a,i,candidate):
     obj=read(run/'obj-phases.json')
     requests={int(g):p['first_BG561'] for g,p in obj.items() if 'first_BG561' in p}
     metrics=inspect_run(run,a.plans,Calendar(a.calendar),base,sha(fw),
-                        sha(a.client/'sink165.sfc'),first_bg_limit=3,first_bg_requests=requests)
+                        sha(a.client/'sink165.sfc'),first_bg_limit=3,first_bg_requests=requests,
+                        request_log_offsets=getattr(a,'request_log_offsets',None))
     before=read(ROOT/'analysis/close561-verification.json')['phases'][i-1]['early']
     result={}
     for label,path,data in [('control',base,before),('candidate',run,metrics)]:
