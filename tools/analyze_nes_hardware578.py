@@ -8,19 +8,24 @@ from analyze_nes_hardware552 import ROOT, inputs
 from analyze_nes_hardware559 import start_windows
 from nes_windows518 import windows, duration_ms
 from analyze_nes_supply485_hardware import sha
+from decode_nes_minreject180 import decode
 
 
 def analyze(raw, trial=577):
     baseline, reference_name, last_tick, kind, section = {
         577: (558, 'hardware559-mmc558.json', 5996, 2, 2),
         613: (577, 'hardware578-mmc577.json', 5993, 3, 0),
+        643: (613, 'hardware614-mmc613.json', 5997, 3, 0),
     }[trial]
     g,b,p,pins=inputs(raw,trial)
     reference=ROOT/'analysis'/reference_name
     old=json.loads(reference.read_text(encoding='utf8'))
     for key in ('run_error','run_rom_error','run_stop_error','fault_context_valid',
-                'native_receiver_error','native_video_error','plan_error','trace_aborts'):
+                'native_video_error','plan_error','trace_aborts'):
         assert g[key]=='0',key
+    receiver_error = 21 if trial == 643 else 0
+    window_error = 2 if trial == 643 else 3
+    assert int(g['native_receiver_error']) == receiver_error
     assert g['run_passed']==g['native_result']=='1'
     assert b['boot_reason']=='1' and b['cost_scene_crc32_hex']=='5a04eed7'
     assert b['cost_clock_hz']=='84000000' and b['cost_counter_available']=='1'
@@ -39,7 +44,7 @@ def analyze(raw, trial=577):
     pending=(int(g['sink_window_sent'])-int(g['sink_window_retired']))&65535
     assert pending==1
     assert (g['native_sink_error'],g['sink_window_error'],g['sink_trace_ack_valid'],
-            g['sink_trace_mismatch_hex'])==('2','3','0','00')
+            g['sink_trace_mismatch_hex'])==('2',str(window_error),'0','00')
     request=bytes.fromhex(g['sink_trace_request_hex'])
     assert len(request)==16 and request[:2]==bytes([kind,section])
     assert struct.unpack_from('<I',request,4)[0]==n+1
@@ -63,7 +68,7 @@ def analyze(raw, trial=577):
                 for src in (old['frame_start_bins'],bins)]
         matched.append(dict(start_s=lo,end_s=hi,old=counts[0],new=counts[1]))
     trimmed=sum(r['displays'] for r in split)/50
-    return dict(trial=trial,trial_family='MMC',physical=True,hardware_run_passed=True,
+    result = dict(trial=trial,trial_family='MMC',physical=True,hardware_run_passed=True,
         logged_runs=1,user_report=dict(menu_return=True,perception='FPS felt improved'),
         source_SHA256=pins,reference=f'analysis/{reference_name}',
         reference_SHA256=sha(reference),package=f'analysis/trial{trial}-package.json',
@@ -76,22 +81,27 @@ def analyze(raw, trial=577):
                                     for k,v in phases.items()},
         terminal=dict(runtime_result=1,commits=commits,retires_EA=ea,pending=pending,
             request_hex=request.hex(),request_kind=kind,section=section,serial=n+1,
-            window_error=3,sink_error=2,receiver_error=0,video_error=0,
+            window_error=window_error,sink_error=2,receiver_error=receiver_error,video_error=0,
             last_display_s=last_tick/100,stop_ok=True,base_restored=True,menu_state=g['menu_state'],
-            interpretation=('SEAL pending at timed shutdown; no per-instruction timeout trace.' if trial == 613 else
+            interpretation=('SEAL pending at timed shutdown; no per-instruction timeout trace.' if trial in (613,643) else
                             'Consistent with transfer/post-transfer deadline during unfinished ordinary output; physical failing instruction not recorded. Not a blanket waiver for window error 3.')),
         boot=dict(polls=int(b['boot_polls']),ticks=int(b['boot_ticks'])),
         limitations=['One unsynchronized playthrough per comparison; not an isolated causal speedup.',
                      'Start bins are not completion bins or scene identities; maxgap is a 10ms quantized maximum, not p95.',
                      'DWT phases include IRQ and wait; polling and operation costs overlap those phases.',
                      'No per-frame DMA/VBlank split, capture-loss rate or full electrical IO sign-off.'])
+    if trial == 643:
+        result['package'] = 'analysis/reject643-package.json'
+        result['capture_history'] = decode((raw/'nes-game-last-mmc643.txt').read_text(encoding='utf-8-sig'))
+        assert b['plan_valid'] == '0'
+    return result
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--raw',type=Path,required=True)
     p.add_argument('--out',type=Path,required=True)
-    p.add_argument('--trial', type=int, choices=(577, 613), default=577)
+    p.add_argument('--trial', type=int, choices=(577, 613, 643), default=577)
     a=p.parse_args()
     result=analyze(a.raw,a.trial)
     a.out.write_text(json.dumps(result,indent=2)+'\n',encoding='utf8',newline='\n')

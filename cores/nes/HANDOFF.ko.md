@@ -1,18 +1,14 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-output-budget-615` / [PR152](../../docs/progress/pr-152.md)이다. MMC643 스테이지 선택 수정판의 실기 로그를 기다린다. [실기 판독·수정](../../docs/nes-hardware643-results.ko.md) · [설치 안내](../../docs/nes-mmc643-trial.ko.md)
+현재 브랜치는 `codex/nes-output-budget-615` / [PR152](../../docs/progress/pr-152.md)이다. MMC643은 빈 캡처 거부 뒤 세 번 회복하고 60초 완주·메뉴 복귀에 성공했다. [실기 결과](../../docs/nes-hardware644-results.ko.md) · [설치 안내](../../docs/nes-mmc643-trial.ko.md)
 
 ## 현재 작업
 
-MMC642에서 앞 화면 표시 중 다음 빈 캡처의 폐기가 lease fault를 일으키는 경로를 찾았다. 643은 폐기만 표시 반환 뒤로 미룬다. START 전환 통과와 1-1 플레이를 확인하고, 실패하면 E8 마스크와 다음 캡처의 REJECT를 함께 읽는다. 부팅 timeout은 독립 추적한다. 실기 성능 기준은 MMC613이다.
-
-최신은 [MMC613 전달본](../../docs/nes-trial613-results.ko.md)·[설치 안내](../../docs/nes-mmc613-trial.ko.md)·[manifest](../../analysis/trial613-package.json)다. 실제608 ROM을612 보드에 연결한 전체 FIT/STA, 새 ARM613 marker·집계·복구·프로그래머 검사를 통과했다. ZIP은 probes/nes-trial613/trial01/MMC613-TRIAL.zip, 근거는 archive01에 있다. 실기 로그는 614에서 확인했다.
-
-실측 기준은 **MMC613**이다. [최신 실기 결과](../../docs/nes-hardware614-results.ko.md)와 [후속 계획](../../docs/nes-retrospective579-plan.json)을 먼저 확인한다.
+MMC643을 실기 기준으로 사용한다. 같은 map·OBJ 작업량에서 출력·최종 ACK 29.51 ms의 발행·DMA·VBlank 대기를 분리한다. stage 0 부팅 timeout은 별도로 추적한다.
 
 ## 최신 실기와 비교 기준
 
-MMC613 실기에서 60.08초에 973화면을 표시했고 실행과 메뉴 복귀를 확인했다. MMC577 대비 5–40초는 13.77→15.97fps, 40–55초는 14.07→14.93fps였다. 두 구간을 합치면 13.86→15.66fps다. [실기 비교](../../docs/nes-hardware614-results.ko.md)
+MMC643 실기에서 60.33초에 1,152화면을 표시하고 메뉴로 복귀했다. MMC613 대비 5–40초는 15.97→18.17fps, 40–55초는 14.93→18.67fps였다. [실기 비교](../../docs/nes-hardware644-results.ko.md)
 
 **MMC509 /507 FPGA /489 SNES**:60.08초770회 **12.82fps**, 실행·입력 흔적·STOP/base 복구와 사용자 메뉴 복귀 정상. 체감 개선은 작았다. 이전 MMC502는60.07초636회10.59fps이며 복구 기준으로 보존한다. 같은 동선·첫 레벨 전용 비교는 아니다. 원본 로그는 `probes/nes-hardware510/run01`, 선택 증거는 `termination01`/`analysis02.json`이다.
 
