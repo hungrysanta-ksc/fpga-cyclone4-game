@@ -48,10 +48,19 @@ def check(src,policy,case):
         else:raise AssertionError(op)
         return bytes(r)
     m.endpoint.exchange=send
+    if policy=="service":
+        # Runtime removes the speculative map callback immediately after END.
+        m.put(m.p,"nes_plan200","quiet_map",m.guard485|1,4)
     ok=m.call("nes_plan200_end",[m.p])
+    if policy=="service":m.put(m.p,"nes_plan200","quiet_map",0,4)
     entry_ops=list(ops)
-    if policy=="handoff":
+    if policy in ("handoff","service"):
         assert ok and not ops and m.get(m.p,"nes_plan200","count")==1
+    if case=="STOP_deferred":
+        # The prior plan was accepted, then the guard dropped while END
+        # was framed but had not yet used the checked E9 grant.
+        m.endpoint.mode="STOP_after_E9"
+        m.endpoint.accepted=1
     if ok:ok=m.call("nes_plan200_progress",[m.p,1])
     success=case in ("ok","busy","repeat")
     assert bool(ok)==bool(end)==success
@@ -59,9 +68,9 @@ def check(src,policy,case):
         assert not m.get(m.p,"nes_plan200","bulk_pending")
         assert ops.count(0xe1)==ops.count(0xe9)==1
         assert not m.call("nes_plan200_retire",[m.p])
-        if policy=="grant" and case=="ok":assert ops[:3]==[0xe8,0xe1,0xe9]
+        if policy in ("grant","service") and case=="ok":assert ops[:3]==[0xe8,0xe1,0xe9]
         else:assert ops[:3]==[0xe8,0xe1,0xe8]
-        if policy=="grant" and case=="repeat":assert ops[3]==0xe9
+        if policy in ("grant","service") and case=="repeat":assert ops[3]==0xe9
     else:
         assert not m.get(m.s,"nes_native_sink165","displayed")
         before=list(ops);assert not m.call("nes_plan200_progress",[m.p,1]) and before==ops
@@ -72,5 +81,7 @@ if __name__=="__main__":
     p=argparse.ArgumentParser()
     p.add_argument("--arm",type=Path,required=True);p.add_argument("--policy",required=True);p.add_argument("--out",type=Path,required=True)
     a=p.parse_args()
-    rows=[check(a.arm,a.policy,c) for c in ("ok","busy","repeat","CRC","wrong_generation","mutated","STOP","ambiguous")]
+    cases=["ok","busy","repeat","CRC","wrong_generation","mutated","STOP","ambiguous"]
+    if a.policy=="service":cases.append("STOP_deferred")
+    rows=[check(a.arm,a.policy,c) for c in cases]
     a.out.write_text(json.dumps(dict(firmware=sha(a.arm/"obj-nes-100/firmware.stm"),rows=rows),indent=2)+"\n")
