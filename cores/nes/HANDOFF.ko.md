@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-MMC643이 실기 기준이다. 655의 모든 후보가 양쪽 954·955의 3 VBlank, 954 SEAL 여유 1.658 / 1.592 ms와 654의 957 ACK 클록을 지켰다. 단일 M9K 주소 순회는 98 LE·6 LAB를 회수해 331 LE·30 LAB 부족이며, 추론 RAM 4개인 mask는 281 LE·31 LAB 부족이다. 최종 FIT 성공 후보가 없어 STA와 실기 전달은 보류했다. 654의 ARM과 655 walk의 단일 M9K·RAM 주소 진행을 기준으로, literal 출력·헤더·CRC 순회·원본 복구 제어를 포함한 순삭제 예산을 잡는다. 전체 보드에서 최소 331 LE·30 LAB를 줄일 구조를 실제로 연결한 뒤 두 위상·전체 FIT·STA를 다시 확인한다. stage 0 부팅 timeout은 별도로 추적한다. [655 비교와 재현](../../docs/nes-search655-results.ko.md)
+실기 기준은 MMC643, ARM은 654 combined, FPGA의 다음 비교 기준은 656 ingress다. 655 대비 전체 보드에서 231 LE·13 LAB를 회수했고 955 첫 일곱 블록 준비 합을 27.738 µs 줄였다. 656 ingress를 기준으로 남은 100 LE·17 LAB를 줄일 삭제 예산을 먼저 잡는다. 96비트 ordinary/source record의 생성·보관·전송과 SPI 수락 제어를 한 경계에서 검토한다. 대체 비용에는 CDC·원본 복구·STOP을 포함한다. 같은 두 위상과 보드 전체 FIT를 다시 통과한 후보에만 STA와 실기 전달을 진행한다. stage 0 부팅 timeout은 별도로 추적한다. [656 비교와 재현](../../docs/nes-stream656-results.ko.md)
 
 ## 최신 실기와 비교 기준
 

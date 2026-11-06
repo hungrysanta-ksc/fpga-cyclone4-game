@@ -12,7 +12,8 @@ def check(a):
     def submit(token,block):
         addr=0x2001b000;m.u.mem_write(addr,bytes(block))
         return m.call("nes_native165_packet",[m.state,token,addr,len(block)])
-    rows=(a.guards/"blocks.txt").read_text().splitlines()
+    rows=[row for row in (a.guards/"blocks.txt").read_text().splitlines() if row.startswith("RAW ")]
+    assert len(rows)==2
     recovery=[bytes.fromhex(r.split()[1])[:-2] for r in rows]
     for corrupt in ("start","generation","count","duplicate","short"):
         reset();bad=bytearray(recovery[0]);token=65535
