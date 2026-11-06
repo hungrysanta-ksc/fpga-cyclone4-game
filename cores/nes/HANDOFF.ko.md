@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-MMC643이 실기 기준이다. 650 packed는 954 마감과 3 VBlank를 양쪽에서 지켰고 955는 3 / 4회였다. 다음은 위상 2의 END→출력 진입 1.306 ms 차이를 마지막 tile·ROM·credit으로 분리하는 작업이다. 압축 FPGA 송신기는 참조 모델이며 ARM Flash는 280 B 초과다. stage 0 부팅 timeout은 별도로 추적한다. [650 비용과 판정](../../docs/nes-geometry650-results.ko.md)
+MMC643이 실기 기준이다. 651 grant는 타일과 동시에 확인한 plan credit으로 END를 발행해 두 위상 모두 954·955를 3 VBlank에 표시했다. MMC643 대비 957 ACK는 82.961 / 82.787 ms 빨랐다. 다음은 ARM Flash 324 B 절감, 압축 송신기의 실제 FPGA 연결과 Quartus Lite FIT·STA다. 실제 송신기 준비 시간을 반영해 954 SEAL 여유 146 / 11 µs, 951 공개선, 957 대기 0회와 복구를 다시 검증한다. stage 0 부팅 timeout은 별도로 추적한다. [651 비용과 판정](../../docs/nes-end651-results.ko.md)
 
 ## 최신 실기와 비교 기준
 
