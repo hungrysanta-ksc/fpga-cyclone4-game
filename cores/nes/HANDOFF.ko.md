@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-실기 기준은 MMC643, ARM은 654 combined다. 657 port는 96비트 record의 53,603개 발행·수락과 두 위상 954·955의 3 VBlank를 유지했다. 656 대비 전체 보드에서 83 LE·3 LAB를 회수했다. 남은 FIT 부족분은 17 LE·14 LAB다. 먼저 657 port의 불변 CHR-ROM BG에 한해 loader 사전 변환·PSRAM→SNES 직접 DMA를 연결한다. 같은 타일과 두 위상에서 954·955·957, PSRAM 경쟁·실제 VBlank·STOP·최종 ACK·전체 FIT를 비교한다. 병행 이득을 가정하지 않고, 다음으로 공통 RAM을 쓰는 FPGA→SNES 변경 스트림이 기존 record·SPI를 대체할 순삭제 예산을 산정한다. [658 참고 구현과 적용 범위](../../docs/nes-reference658-results.ko.md) stage 0 부팅 timeout은 별도 추적한다. [657 전체 결과와 재현](../../docs/nes-record657-results.ko.md)
+실기 기준은 MMC643, ARM은 654 combined다. 659의 PSRAM 직접 DMA는 954·955 첫 타일 중 4 B에서 막혔고 전체 보드에서 303 LE·30 LAB가 부족했다. 657 port를 유지한다. 다음은 적재 시 사전 변환한 BG를 허가 한 번당 16비트로 읽어 기존 staging에 채우고, 기존 묶음 DMA를 유지하는 비교다. 954·955 원본 읽기 160/144→80/72회 가능성, 양 위상의 표시·최종 ACK·STOP·VBlank와 실제 교체 후 전체 FIT로 판단한다. 657 자체의 부족분은 17 LE·14 LAB다. stage 0 부팅 timeout은 별도로 추적한다. [659 전체 결과](../../docs/nes-bg659-results.ko.md)
 
 ## 최신 실기와 비교 기준
 
