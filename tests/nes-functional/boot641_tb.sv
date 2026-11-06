@@ -12,6 +12,10 @@ module boot641_tb;
   .SPI_SS(ss197),.SPI_SCK(sck197),.SPI_MOSI(mosi197),.receive_write(),
   .selected(selected197),.miso(miso197));
  reg [7:0] accumulated;
+ reg [7:0] expected_order=0,v;
+ task probe_e0;
+  begin197();byte197('he0,v);repeat(19)byte197(0,v);end197();
+ endtask
  task vector_reads;
   @(negedge host);rd_n=0;romsel_n=0;addr='hfffc;repeat(8)@(negedge host);
   addr='hfffd;repeat(8)@(negedge host);rd_n=1;romsel_n=1;
@@ -19,22 +23,31 @@ module boot641_tb;
  task spi73(input [7:0] stage,input [7:0] expected);
   begin197();byte197('h73,rx197[0]);for(int i=1;i<8;i++)byte197(0,rx197[i]);end197();
   accumulated=accumulated|rx197[4]; // screen146 combines pin samples across polls.
-  if(rx197[1]!=='he6 || rx197[2]!==stage || rx197[3]!==0 || rx197[7]!==3 ||
+  if(rx197[1]!=='he6 || rx197[2]!==stage || rx197[3]!==expected_order || rx197[7]!==3 ||
      accumulated!==expected)$fatal(1,"73 stage=%h flags=%h",rx197[2],accumulated);
  endtask
  task boot_case(input integer which);
   reset=1;active=0;rd_n=1;wr_n=1;romsel_n=1;addr=0;accumulated=0;
   repeat(8)@(negedge host);reset=0;
+`ifdef WITNESS642
+  expected_order=0;
+  if(which==2)begin probe_e0();probe_e0();end
+  if(which==1)begin
+   probe_e0();addr='h7000;din=0;wr_n=0;repeat(8)@(negedge host);wr_n=1;repeat(8)@(negedge host);
+   expected_order='h15; // write before active and first vector, vector after first E0.
+  end
+  if(which==2)expected_order='h0f;
+`endif
   if(which==1)vector_reads(); // Completed before observer active.
   @(negedge host);active=1;
   if(which==2)vector_reads(); // Positive control for both reset vector sticky bits.
   @(negedge host);addr='h001234;rd_n=0;
   repeat(8)@(negedge host);spi73(0,which==2?'h4f:'h48);
   romsel_n=0;repeat(8)@(negedge host);spi73(0,which==2?'h5f:'h58);
-  $display("BOOT case=%0d stage=0 accumulated=%02h",which,accumulated);
+  $display("BOOT case=%0d stage=0 accumulated=%02h order=%02h",which,accumulated,rx197[3]);
   if(which==2)begin
    @(negedge host);rd_n=1;romsel_n=1;addr='h7000;din=3;wr_n=0;
-   repeat(8)@(negedge host);wr_n=1;repeat(8)@(negedge host);spi73(3,'h5f);
+   repeat(8)@(negedge host);wr_n=1;repeat(8)@(negedge host);expected_order=0;spi73(3,'h5f);
   end
  endtask
  initial begin

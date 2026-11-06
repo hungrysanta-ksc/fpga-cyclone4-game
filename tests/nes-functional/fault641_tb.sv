@@ -3,7 +3,8 @@
 module fault641_tb;
  reg host=0, nes=0, reset=1;
  always #5.952 host=!host;
- always #22.727 nes=!nes;
+ reg halt_nes=0, core_error_in=0, input_error=0, sink_error=0;
+ always #22.727 if(!halt_nes)nes=!nes;
  `include "spi200_bus.svh"
  reg capture_begin=0, owned=0, release_frame=0;
  reg [15:0] gen=31;
@@ -26,10 +27,13 @@ module fault641_tb;
  reg response=0;
  reg [21:0] reply_addr=0;
  always @(posedge nes)begin response<=request;if(request)reply_addr<=rom_addr;end
- nes_direct206 dut(.nes_clk(nes),.host_clk(host),.reset(reset),.transport_fault(1'b0),
+ nes_direct206 dut(.nes_clk(nes),.host_clk(host),.reset(reset),.transport_fault(input_error||sink_error),
+`ifdef WITNESS642
+  .input_error(input_error),.sink_error(sink_error),
+`endif
   .lease_valid(lease),.lease_fault(lease_fault),.retire_permitted(permitted),.captured_generation(captured_gen),
   .captured_epoch(epoch),.live_epoch(32'd1),.source_ready(1'b1),.source_is_rom(1'b1),.source_writing(1'b0),
-  .reader_drained(drained),.retire_commit(retire),.retire_generation(retired_gen),.core_fault(1'b0),
+  .reader_drained(drained),.retire_commit(retire),.retire_generation(retired_gen),.core_fault(core_error_in),
   .qualified_slot(1'b1),.core_safe(1'b1),.core_request(1'b0),.core_address(22'd0),
   .cap_start(1'b0),.cap_seal(1'b0),.cap_sample(1'b0),.cap_generation(16'd0),.cap_address(17'd0),.cap_data(8'd0),
   .mem_ready(1'b1),.mem_response(response),.mem_error(1'b0),.mem_response_address(reply_addr),.mem_data(8'd0),
@@ -88,8 +92,16 @@ module fault641_tb;
   fork
    batch('h83,which==2 ? 31 : 32,which==1);
    if(which==3)begin wait(dut.endpoint.accepted==2);write_bus('h6050,'ha5);end
+   if(which==4)begin wait(dut.endpoint.accepted==2);halt_nes=1;core_error_in=1;end
+   if(which==5)begin wait(dut.endpoint.accepted==2);input_error=1;sink_error=1;end
+   if(which==6)begin wait(dut.endpoint.accepted==2);halt_nes=1;end
   join
-  status197();
+  fork
+   status197();
+   if(which==6)begin
+    wait(dut.endpoint.bits==7 && !ss197);@(posedge sck197);@(posedge host);#1;core_error_in=1;
+   end
+  join
   for(int i=0;i<20;i++)reply[159-8*i-:8]=rx197[i];
   $display("E8 case=%0d reply=%040h",which,reply);
   if(which==0) begin
@@ -110,14 +122,33 @@ module fault641_tb;
     tx[5]=c;tx[6]='ha5;begin197();foreach(tx[i])byte197(tx[i],v);end197();
    end
    status197();if(lease!==0 || first!=0 || rx197[3]!==1 || rx197[5]!==0)$fatal(1,"retire");
+`ifdef WITNESS642
+  end else begin : check_origin
+   reg [7:0] host_mask,nes_mask;
+   host_mask=(which==1)?8:(which==3)?64:(which==5)?3:0;
+   nes_mask=(which==2)?1:(which==4||which==6)?128:0;
+   if(rx197[14]!==host_mask || rx197[15]!==nes_mask || rx197[3]!==8'h80 ||
+      rx197[5]!==2 || rx197[6]!==0 || hf!==1 || retire!==0 ||
+      (which<=3 && first!=which))$fatal(1,"wrong first cause case %0d",which);
+   // A later external fault and a cancellation echo must not overwrite the evidence.
+   sink_error=1;status197();
+   if(rx197[14]!==host_mask || rx197[15]!==nes_mask)$fatal(1,"overwritten origin");
+  end
+`else
   end else if(first!=which || reply!==160'h00d7048000020000000000000000000000000057 ||
               hf!==1 || !lease || retire)$fatal(1,"fault signature or ownership");
+`endif
+  halt_nes=0;core_error_in=0;input_error=0;sink_error=0;
   scenario=-1;reset=1;addr='h6040;rd_n=0;repeat(8)@(negedge nes);
   if(lease!==0 || oe!==1 || dir!==0 || dut.chunk_ready!==0 || retire!==0)$fatal(1,"STOP exposes ownership");
   rd_n=1;
  endtask
  initial begin
   run_case(0);run_case(1);run_case(2);run_case(3);run_case(0);
+`ifdef WITNESS642
+  run_case(4);run_case(5);run_case(6);run_case(0);
+  $display("PASS642 FINISH first-cause, stopped NES, simultaneous host faults, STOP and rearm");
+`endif
   $display("PASS641 three first faults same E8; normal consume/EA before and after STOP");$finish;
  end
  initial begin #5000000;$fatal(1,"641 watchdog");end

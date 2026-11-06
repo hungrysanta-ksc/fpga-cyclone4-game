@@ -1,10 +1,10 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-output-budget-615` / [PR152](../../docs/progress/pr-152.md)이다. 638 결합 후보를 MMC639로 전달했다. [639 검증](../../docs/nes-trial639-results.ko.md) · [실기 설치 안내](../../docs/nes-mmc639-trial.ko.md)
+현재 브랜치는 `codex/nes-output-budget-615` / [PR152](../../docs/progress/pr-152.md)이다. MMC642 진단판의 실기 로그를 기다린다. [642 검증·판독](../../docs/nes-witness642-results.ko.md) · [실기 설치 안내](../../docs/nes-mmc642-trial.ko.md)
 
 ## 현재 작업
 
-MMC639 1차의 E8 응답 전체를 세 가지 최초 오류로 재현했다. 다음 순서는 취소 전 최초 오류 보존 → 기존 ARM 로그로 원인 판독 → STOP·전체 보드 타이밍 확인이다. 2차는 부팅 관측기 활성화 전후의 reset vector와 첫 단계 쓰기를 별도로 추적한다. 실기 성능 기준은 MMC613이다. [641 재현·재개 지점](../../docs/nes-fault641-results.ko.md)
+MMC642가 조기 종료되면 같은 실행의 세 로그를 맞춘다. FINISH는 plan_reply_hex의 byte 14·15, stage 0은 boot_first/last_hex 및 startup pre/post reason으로 구분한다. 두 원인 및 MMC551을 독립 추적한다. 실기 성능 기준은 MMC613이다. [641 대조](../../docs/nes-fault641-results.ko.md)
 
 최신은 [MMC613 전달본](../../docs/nes-trial613-results.ko.md)·[설치 안내](../../docs/nes-mmc613-trial.ko.md)·[manifest](../../analysis/trial613-package.json)다. 실제608 ROM을612 보드에 연결한 전체 FIT/STA, 새 ARM613 marker·집계·복구·프로그래머 검사를 통과했다. ZIP은 probes/nes-trial613/trial01/MMC613-TRIAL.zip, 근거는 archive01에 있다. 실기 로그는 614에서 확인했다.
 

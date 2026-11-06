@@ -19,7 +19,11 @@ def main():
     reply = bytes.fromhex(fields["plan_reply_hex"])
     trace = args.sim_log.read_text(errors="replace")
     assert "PASS641" in trace and trace.count("reply=" + reply.hex()) == 3
-    cpu = ARM(args.src, "normal")
+    replay(args.src, fields, reply)
+
+
+def replay(src, fields, reply):
+    cpu = ARM(src, "normal")
     cpu.setup()
     gen, sent = int(fields["plan_generation"]), int(fields["plan_sent"])
     cpu.put(cpu.s, "nes_native_sink165", "generation", gen, 2)
@@ -58,7 +62,7 @@ def main():
     assert saved[10:] == reply
     assert cpu.call("nes_plan200_retire", [cpu.p]) == 0
     assert transfers[before_finish:] == [0xe8] and not cpu.get(cpu.p, "nes_plan200", "finished")
-    print("PASS641 MMC639 ELF: emitted blank+BG and END; FINISH phase=2 reason=4 gen=32 sent=2; one FINISH E8, no EA")
+    print("PASS linked ARM: emitted blank+BG and END; FINISH phase=2 reason=4 gen=32 sent=2; one FINISH E8, no EA")
 
 
 if __name__ == "__main__":

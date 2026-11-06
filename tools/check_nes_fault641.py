@@ -20,6 +20,26 @@ def evidence(name):
     return json.loads((ROOT / "analysis" / name).read_text(encoding="utf-8"))
 
 
+def simulate(args, pins, defines=()):
+    sources = ["nes_" + module + ".sv" for module in MODULES]
+    for name in sources:
+        assert digest(args.board / name) == pins[name], name
+        shutil.copyfile(args.board / name, args.out / name)
+    benches = ["fault641_tb", "boot641_tb"]
+    for name in ["spi200_bus.svh", *(name + ".sv" for name in benches)]:
+        shutil.copyfile(ROOT / "tests/nes-functional" / name, args.out / name)
+    commands = [("vlib", "vlib", ["work"]),
+                ("vlog", "vlog", ["-sv", *defines, *sources, *(name + ".sv" for name in benches)])]
+    for bench in benches:
+        commands.append(("vsim", bench, ["-c", bench, "-gSPI_HALF=190.476", "-do",
+                        "onbreak {quit -code 1}; onerror {quit -code 1}; run -all; quit -code 0"]))
+    for tool, label, params in commands:
+        with (args.out / (label + ".log")).open("wb") as log:
+            subprocess.run([args.bin / (tool + ".exe"), *params], cwd=args.out,
+                           stdout=log, stderr=subprocess.STDOUT, check=True, timeout=150)
+    return [(args.out / (name + ".log")).read_text(errors="replace") for name in benches]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("board", "out", "bin"):
@@ -29,26 +49,9 @@ def main():
     package = evidence("trial639-package.json")
     assert digest(args.board / "output_files/board.sof") == package["board"]["SHA"]["board.sof"]
     pins = evidence("trial613-package.json")["inputs"] | evidence("export636-verification.json")["board_changes"]
-    sources = ["nes_" + module + ".sv" for module in MODULES]
-    for name in sources:
-        assert digest(args.board / name) == pins[name], name
-        shutil.copyfile(args.board / name, args.out / name)
-    benches = ["fault641_tb", "boot641_tb"]
-    for name in ["spi200_bus.svh", *(name + ".sv" for name in benches)]:
-        shutil.copyfile(ROOT / "tests/nes-functional" / name, args.out / name)
-    commands = [("vlib", "vlib", ["work"]),
-                ("vlog", "vlog", ["-sv", *sources, *(name + ".sv" for name in benches)])]
-    for bench in benches:
-        commands.append(("vsim", bench, ["-c", bench, "-gSPI_HALF=190.476", "-do",
-                        "onbreak {quit -code 1}; onerror {quit -code 1}; run -all; quit -code 0"]))
-    for tool, label, params in commands:
-        with (args.out / (label + ".log")).open("wb") as log:
-            subprocess.run([args.bin / (tool + ".exe"), *params], cwd=args.out,
-                           stdout=log, stderr=subprocess.STDOUT, check=True, timeout=150)
-    log = (args.out / "fault641_tb.log").read_text(errors="replace")
+    log, boot = simulate(args, pins)
     signature = evidence("hardware640-mmc639.json")["runs"][0]["fields"]["plan_reply_hex"]
     assert log.count("reply=" + signature) == 3 and "PASS641" in log
-    boot = (args.out / "boot641_tb.log").read_text(errors="replace")
     assert "PASS641 SPI73" in boot
     log += boot
     print("\n".join(line for line in log.splitlines()
