@@ -29,7 +29,7 @@
 
 ## 검증 경계
 
-실제 exporter·mailbox·host SPI·RAM을 거친 905–957의 901개 D1 payload와 wire CRC를 655 walk 및 독립 packer와 대조했다. 53화면의 D1 블록 합(wire CRC 포함)은 79,392 B이고 955 첫 7블록은 500 B다. 후보별 RAM 준비 클록을 **각 후보의** 두 연속 일정에 반영했다. 같은 시작 master clock 7,288,416 / 7,467,100과 ARM CPI 2, IRQ, 공유 SPI 드라이버 비용, ROM 공급 달력, 두 staging 슬롯과 실제 65816을 사용한다. 이는 실기 FPS 또는 배치 후 STA 측정과 구분한다.
+실제 exporter·mailbox·host SPI·RAM을 거친 905–957의 901개 D1 payload와 wire CRC를 655 walk 및 독립 packer와 대조했다. 53화면의 D1 payload 합(블록별 wire CRC 2 B 제외)은 79,392 B이고 955 첫 7블록은 500 B다. 후보별 RAM 준비 클록을 **각 후보의** 두 연속 일정에 반영했다. 같은 시작 master clock 7,288,416 / 7,467,100과 ARM CPI 2, IRQ, 공유 SPI 드라이버 비용, ROM 공급 달력, 두 staging 슬롯과 실제 65816을 사용한다. 이는 실기 FPS 또는 배치 후 STA 측정과 구분한다.
 
 원본 99셀과 3셀 tail, 네 참조 거리·동률·32셀 상한, 마지막 19셀, 16비트 token wrap, 준비 중 D0, 부분 D1, stale D2, D3 CRC·길이·인자 오류, 8셀 상태의 lease 취소/E002를 확인했다. 검색·literal 쓰기·헤더·원본 4셀 출력·최종 CRC의 중간 STOP 후 D0 길이·token·읽기 소유권을 확인하고, 다른 map의 80셀을 cold로 다시 읽어 바이트와 CRC를 대조했다. 동일한 ARM에서 독립 decode·END 보류 중 STOP·최종 ACK·메뉴 및 base 정상 복구·네 실패 차단을 검증했다.
 

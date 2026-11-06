@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-실기 기준은 MMC643, ARM은 654 combined, FPGA의 다음 비교 기준은 656 ingress다. 655 대비 전체 보드에서 231 LE·13 LAB를 회수했고 955 첫 일곱 블록 준비 합을 27.738 µs 줄였다. 656 ingress를 기준으로 남은 100 LE·17 LAB를 줄일 삭제 예산을 먼저 잡는다. 96비트 ordinary/source record의 생성·보관·전송과 SPI 수락 제어를 한 경계에서 검토한다. 대체 비용에는 CDC·원본 복구·STOP을 포함한다. 같은 두 위상과 보드 전체 FIT를 다시 통과한 후보에만 STA와 실기 전달을 진행한다. stage 0 부팅 timeout은 별도로 추적한다. [656 비교와 재현](../../docs/nes-stream656-results.ko.md)
+실기 기준은 MMC643, ARM은 654 combined다. 657 port는 96비트 record의 53,603개 발행·수락과 두 위상 954·955의 3 VBlank를 유지했다. 656 대비 전체 보드에서 83 LE·3 LAB를 회수했다. 657 port를 기준으로 한 record를 기존 M9K의 여유 주소에 쓰는 NES·host 포트 분리를 검토한다. commit 전 STOP 폐기, bundled CDC, 원본 복구·SPI 수락을 포함해 최소 17 LE·14 LAB를 회수해야 한다. 현재 밀도를 적용한 설계 예산은 약 221 LE다. 실제 dual-clock 포트와 지연을 두 위상에 연결하고 전체 FIT 성공 후 STA를 확인한다. stage 0 부팅 timeout은 별도 추적한다. [657 전체 결과와 재현](../../docs/nes-record657-results.ko.md)
 
 ## 최신 실기와 비교 기준
 
