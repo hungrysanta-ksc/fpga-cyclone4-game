@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-실기 기준은 MMC643, ARM은 654 combined다. 657 port는 96비트 record의 53,603개 발행·수락과 두 위상 954·955의 3 VBlank를 유지했다. 656 대비 전체 보드에서 83 LE·3 LAB를 회수했다. 657 port를 기준으로 한 record를 기존 M9K의 여유 주소에 쓰는 NES·host 포트 분리를 검토한다. commit 전 STOP 폐기, bundled CDC, 원본 복구·SPI 수락을 포함해 최소 17 LE·14 LAB를 회수해야 한다. 현재 밀도를 적용한 설계 예산은 약 221 LE다. 실제 dual-clock 포트와 지연을 두 위상에 연결하고 전체 FIT 성공 후 STA를 확인한다. stage 0 부팅 timeout은 별도 추적한다. [657 전체 결과와 재현](../../docs/nes-record657-results.ko.md)
+실기 기준은 MMC643, ARM은 654 combined다. 657 port는 96비트 record의 53,603개 발행·수락과 두 위상 954·955의 3 VBlank를 유지했다. 656 대비 전체 보드에서 83 LE·3 LAB를 회수했다. 남은 FIT 부족분은 17 LE·14 LAB다. 먼저 657 port의 불변 CHR-ROM BG에 한해 loader 사전 변환·PSRAM→SNES 직접 DMA를 연결한다. 같은 타일과 두 위상에서 954·955·957, PSRAM 경쟁·실제 VBlank·STOP·최종 ACK·전체 FIT를 비교한다. 병행 이득을 가정하지 않고, 다음으로 공통 RAM을 쓰는 FPGA→SNES 변경 스트림이 기존 record·SPI를 대체할 순삭제 예산을 산정한다. [658 참고 구현과 적용 범위](../../docs/nes-reference658-results.ko.md) stage 0 부팅 timeout은 별도 추적한다. [657 전체 결과와 재현](../../docs/nes-record657-results.ko.md)
 
 ## 최신 실기와 비교 기준
 
