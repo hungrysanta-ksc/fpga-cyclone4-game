@@ -2,18 +2,26 @@
 `timescale 1ns/1ps
 module fault641_tb;
  reg host=0, nes=0, reset=1;
- always #5.952 host=!host;
+ parameter real HOST_PHASE=0, NES_HALF=22.727;
+ initial begin #(HOST_PHASE);forever #5.952 host=!host;end
  reg halt_nes=0, core_error_in=0, input_error=0, sink_error=0;
- always #22.727 if(!halt_nes)nes=!nes;
+ always #(NES_HALF) if(!halt_nes)nes=!nes;
  `include "spi200_bus.svh"
  reg capture_begin=0, owned=0, release_frame=0;
  reg [15:0] gen=31;
  wire lease, lease_fault, permitted, drained, retire;
  wire [15:0] captured_gen, retired_gen;
  wire [31:0] epoch;
+ wire export_drop;
+ reg reject_geometry=0;
+ wire [3:0] export_reason;
+`ifndef REJECT643
+ assign export_drop=0;
+ assign export_reason=0;
+`endif
  nes_capture_lease201 owner(.clk(nes),.reset(reset),.stop(1'b0),.capture_begin(capture_begin),
-  .frame_owned(owned),.geometry_valid(owned),.frame_generation(gen),.export_release(release_frame),
-  .export_error(4'd0),.source_ready(1'b1),.source_is_rom(1'b1),.source_writing(1'b0),.live_epoch(32'd1),
+  .frame_owned(owned),.geometry_valid(owned && !reject_geometry),.frame_generation(gen),.export_release(release_frame||export_drop),
+  .export_error(export_reason),.source_ready(1'b1),.source_is_rom(1'b1),.source_writing(1'b0),.live_epoch(32'd1),
   .reader_drained(drained),.retire_commit(retire),.retire_generation(retired_gen),.lease_valid(lease),
   .retire_permitted(permitted),.captured_epoch(epoch),.captured_generation(captured_gen),.fault(lease_fault),
   .waiting_display(),.release_frame(),.export_permitted());
@@ -143,6 +151,9 @@ module fault641_tb;
   if(lease!==0 || oe!==1 || dir!==0 || dut.chunk_ready!==0 || retire!==0)$fatal(1,"STOP exposes ownership");
   rd_n=1;
  endtask
+`ifdef REJECT643
+ `include "reject643.svh"
+`else
  initial begin
   run_case(0);run_case(1);run_case(2);run_case(3);run_case(0);
 `ifdef WITNESS642
@@ -151,5 +162,6 @@ module fault641_tb;
 `endif
   $display("PASS641 three first faults same E8; normal consume/EA before and after STOP");$finish;
  end
+`endif
  initial begin #5000000;$fatal(1,"641 watchdog");end
 endmodule

@@ -1,10 +1,10 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-output-budget-615` / [PR152](../../docs/progress/pr-152.md)이다. MMC642 진단판의 실기 로그를 기다린다. [642 검증·판독](../../docs/nes-witness642-results.ko.md) · [실기 설치 안내](../../docs/nes-mmc642-trial.ko.md)
+현재 브랜치는 `codex/nes-output-budget-615` / [PR152](../../docs/progress/pr-152.md)이다. MMC643 스테이지 선택 수정판의 실기 로그를 기다린다. [실기 판독·수정](../../docs/nes-hardware643-results.ko.md) · [설치 안내](../../docs/nes-mmc643-trial.ko.md)
 
 ## 현재 작업
 
-MMC642가 조기 종료되면 같은 실행의 세 로그를 맞춘다. FINISH는 plan_reply_hex의 byte 14·15, stage 0은 boot_first/last_hex 및 startup pre/post reason으로 구분한다. 두 원인 및 MMC551을 독립 추적한다. 실기 성능 기준은 MMC613이다. [641 대조](../../docs/nes-fault641-results.ko.md)
+MMC642에서 앞 화면 표시 중 다음 빈 캡처의 폐기가 lease fault를 일으키는 경로를 찾았다. 643은 폐기만 표시 반환 뒤로 미룬다. START 전환 통과와 1-1 플레이를 확인하고, 실패하면 E8 마스크와 다음 캡처의 REJECT를 함께 읽는다. 부팅 timeout은 독립 추적한다. 실기 성능 기준은 MMC613이다.
 
 최신은 [MMC613 전달본](../../docs/nes-trial613-results.ko.md)·[설치 안내](../../docs/nes-mmc613-trial.ko.md)·[manifest](../../analysis/trial613-package.json)다. 실제608 ROM을612 보드에 연결한 전체 FIT/STA, 새 ARM613 marker·집계·복구·프로그래머 검사를 통과했다. ZIP은 probes/nes-trial613/trial01/MMC613-TRIAL.zip, 근거는 archive01에 있다. 실기 로그는 614에서 확인했다.
 

@@ -22,22 +22,38 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("base_arm", "arm", "board", "checks", "sim", "rom", "programmer", "prior", "out"):
         parser.add_argument("--" + name.replace("_", "-"), required=True, type=Path)
+    parser.add_argument("--reject643", type=Path, help="Require the 643 paired exporter/lease regression and package 643")
     a = parser.parse_args()
-    base = evidence("trial639-package.json")
+    previous, trial = ("642", "643") if a.reject643 else ("639", "642")
+    base = evidence("witness642-package.json" if a.reject643 else "trial639-package.json")
+    paired = {}
+    if a.reject643:
+        for name in ("nes_native_export203.sv", "nes_live_joint.sv"):
+            assert digest(a.board/name) == digest(a.reject643/"defer"/name)
+        for mode in ("baseline", "defer"):
+            for gen in (32, 97):
+                for phase in range(12):
+                    name = f"{mode}/g{gen}-p{phase}.log"
+                    path = a.reject643/name
+                    text = path.read_text(errors="replace")
+                    assert f"PASS643 gen={gen} STOP" in text
+                    if mode == "baseline" and phase == 8:
+                        assert "WIRE643 00d70480000200000000000000000024000000c1" in text
+                    paired[name] = digest(path)
     old, new = [p / "obj-nes-100" for p in (a.base_arm, a.arm)]
     fw = (new / "firmware.stm").read_bytes()
     fw_sha = digest(new / "firmware.stm")
     assert digest(old / "firmware.stm") == base["firmware_SHA256"] and digest(old / "sd2snes.elf") == base["ELF"]
     functions = funcs(new / "sd2snes.elf")
     assert len(functions) == base["identical_functions"] and functions == funcs(old / "sd2snes.elf")
-    assert (old / "firmware.stm").read_bytes()[32:].replace(b"639", b"642") == fw[32:]
+    assert (old / "firmware.stm").read_bytes()[32:].replace(previous.encode(), trial.encode()) == fw[32:]
     size, crc, inv = struct.unpack_from("<III", fw, 8)
     assert fw.startswith(b"STM3") and size + 512 == len(fw) <= 212992
     assert zlib.crc32(fw[512:]) == crc and crc ^ inv == 0xffffffff
-    image = "sd2snes/fpga_mmc642.bi3"
-    marker = "NES MMC3 642.nh1"
-    logs = [s.replace("639", "642") for s in base["logs"]]
-    rom_name = base["required_ROM"]["path"].replace("639", "642")
+    image = f"sd2snes/fpga_mmc{trial}.bi3"
+    marker = f"NES MMC3 {trial}.nh1"
+    logs = [s.replace(previous, trial) for s in base["logs"]]
+    rom_name = base["required_ROM"]["path"].replace(previous, trial)
     for name in [marker, *("/" + s for s in [image, rom_name, *logs])]:
         assert name.encode() + b"\0" in fw
 
@@ -78,28 +94,30 @@ def main():
     bi3 = (a.board / Path(image).name).read_bytes()
     assert programmer["passed"] and programmer["image_sha256"] == hashlib.sha256(bi3).hexdigest()
     assert programmer["rbf_sha256"] == hashlib.sha256(raw).hexdigest() and encode(raw) == bi3 and decode(bi3) == raw
-    assert "was successful" in (a.board / "cpf642.log").read_text()
-    prefix = "01-MMC642-SD-ROOT/"
+    assert "was successful" in (a.board / f"cpf{trial}.log").read_text()
+    prefix = f"01-MMC{trial}-SD-ROOT/"
     files = {prefix + marker: b"", prefix + image: bi3, prefix + "sd2snes/firmware.stm": fw,
-             "README-KO.txt": (ROOT / "docs/nes-mmc642-trial.ko.md").read_bytes(),
-             prefix + "sd2snes/nes/ROM-NOT-INCLUDED.txt": b"Copy your own mmc639.nes to mmc642.nes. CRC32 5a04eed7.\n"}
+             "README-KO.txt": (ROOT / f"docs/nes-mmc{trial}-trial.ko.md").read_bytes(),
+             prefix + "sd2snes/nes/ROM-NOT-INCLUDED.txt": f"Copy your own mmc{previous}.nes to mmc{trial}.nes. CRC32 5a04eed7.\n".encode()}
     assert digest(a.prior) == base["ZIP_SHA256"]
     with zipfile.ZipFile(a.prior) as archive:
         for name in ("sd2snes/fpga_base.bi3", "sd2snes/m3nu.bin"):
-            key = "01-MMC639-SD-ROOT/" + name
+            key = f"01-MMC{previous}-SD-ROOT/" + name
             data = archive.read(key)
             assert hashlib.sha256(data).hexdigest() == base["files"][key]
             files[prefix + name] = data
-    result = dict(candidate="MMC642", baseline="MMC639", physical_verified=False, board=board,
+    result = dict(candidate="MMC"+trial, baseline="MMC"+previous, physical_verified=False, board=board,
                   firmware_SHA256=fw_sha, ELF=digest(new / "sd2snes.elf"), identical_functions=len(functions),
                   Flash_B=len(fw), Flash_free_B=212992-len(fw), recovery= recover, programmer=programmer,
                   E8_replies=replies, boot_stage0_order=["00","15","0f"], ROM_read=client,
                   log_SHA256={f:digest(a.sim / f) for f in ("vlog.log","fault641_tb.log","boot641_tb.log")},
                   required_ROM={**base["required_ROM"], "path":rom_name}, logs=logs, RESTORE_included=False,
                   files={k:hashlib.sha256(v).hexdigest() for k,v in files.items()})
+    if paired:
+        result["reject643_log_SHA256"] = paired
     files["manifest.json"] = (json.dumps(result, indent=2) + "\n").encode()
     a.out.mkdir(exist_ok=False, parents=True)
-    path = a.out / "MMC642-TRIAL.zip"
+    path = a.out / f"MMC{trial}-TRIAL.zip"
     with zipfile.ZipFile(path, "x", zipfile.ZIP_DEFLATED) as archive:
         for name, data in files.items():
             archive.writestr(name, data)

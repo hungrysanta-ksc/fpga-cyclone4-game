@@ -11,10 +11,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("base", "board", "out", "bin", "src"):
         parser.add_argument("--" + name, required=True, type=Path)
+    parser.add_argument("--prior642", type=Path, help="MMC642 board for the 643 deferred-discard regression")
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
     derived = args.out / "reference"
-    prepare(args.base, derived)
+    if args.prior642:
+        from prepare_nes_reject643 import materialize
+        materialize(args.base, args.prior642, derived)
+    else:
+        prepare(args.base, derived)
     for path in derived.rglob("*"):
         if path.is_file():
             assert digest(path) == digest(args.board / path.relative_to(derived)), path.name
