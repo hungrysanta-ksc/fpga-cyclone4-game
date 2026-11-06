@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-MMC639 두 실행 모두 중단됐다. [세대 32 FPGA fault·별도 부팅 timeout](../../docs/nes-hardware640-results.ko.md)을 분리 조사한다. 실기 성능 기준은 MMC613이다.
+MMC639 1차의 E8 응답 전체를 세 가지 최초 오류로 재현했다. 다음 순서는 취소 전 최초 오류 보존 → 기존 ARM 로그로 원인 판독 → STOP·전체 보드 타이밍 확인이다. 2차는 부팅 관측기 활성화 전후의 reset vector와 첫 단계 쓰기를 별도로 추적한다. 실기 성능 기준은 MMC613이다. [641 재현·재개 지점](../../docs/nes-fault641-results.ko.md)
 
 최신은 [MMC613 전달본](../../docs/nes-trial613-results.ko.md)·[설치 안내](../../docs/nes-mmc613-trial.ko.md)·[manifest](../../analysis/trial613-package.json)다. 실제608 ROM을612 보드에 연결한 전체 FIT/STA, 새 ARM613 marker·집계·복구·프로그래머 검사를 통과했다. ZIP은 probes/nes-trial613/trial01/MMC613-TRIAL.zip, 근거는 archive01에 있다. 실기 로그는 614에서 확인했다.
 
