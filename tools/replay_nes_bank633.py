@@ -52,9 +52,10 @@ def schedule(commands, pushes, mode):
     return kept, removed, cost
 
 
-def run(a, *, schedule_offers=schedule, edit_after=None, timing_metadata=None):
+def run(a, *, schedule_offers=schedule, edit_after=None, timing_metadata=None,
+        source_client=None, real_observer=None):
     a.frames=47
-    a.base_client=a.client
+    a.base_client=source_client or a.client
     commands=packets(a.trace)
     pushes=[e for e in read(a.trace/'events.json') if e['generation']==951 and e.get('opcode')=='0xe1']
     kept, removed, cost=schedule_offers(commands[951],pushes,a.mode)
@@ -62,7 +63,9 @@ def run(a, *, schedule_offers=schedule, edit_after=None, timing_metadata=None):
     bank=csv_groups(a.trace/'seal528.csv')
     assert one(bank[949],'final_credit')['bank']==one(bank[951],'final_credit')['bank']!=one(bank[950],'final_credit')['bank']
     def observe(_,args,unused):
-        s,_=bound_observer(a,args)
+        s,labels=bound_observer(a,args)
+        if real_observer:
+            return real_observer(s,labels)
         if a.mode=='control':
             return s
         for section,size,skip in ((3,512,0),(4,544,112)):
@@ -107,7 +110,8 @@ local finished522=false""")
     def compare(before,after):
         if a.mode=='control' and timing_metadata is None:
             assert before==after
-        assert [r for r in before if int(r['g'])<=950]==[r for r in after if int(r['g'])<=950]
+        if not real_observer:
+            assert [r for r in before if int(r['g'])<=950]==[r for r in after if int(r['g'])<=950]
         w=csv_groups(a.out/'window.csv')
         seal=[r for r in w[951] if r['op']==3]
         prior=one([r for r in w[950] if r['op']==3],'reveal')
@@ -127,7 +131,7 @@ local finished522=false""")
                     seal=one(seal,'load')['clock'],upload=one(seal,'upload165_entry')['clock'],
                     previous=prior['clock'],client=sha(a.client/'sink165.sfc'),offers=sha(a.out/'arrivals.tsv'))
     with patch.object(replay,'observe',observe):
-        replay.run(a,edit_script=edit,compare_trace=compare)
+        replay.run(a,edit_script=edit,compare_trace=compare,source_client=a.base_client)
 
 
 if __name__=='__main__':

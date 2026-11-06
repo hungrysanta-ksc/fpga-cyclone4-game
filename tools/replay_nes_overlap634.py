@@ -105,11 +105,13 @@ def ledger(trace, policy):
                 capture953_ready_recorded=following['capture_ready'])
 
 
-def run(a):
+def run(a, *, change_offers=None, extra_after=None, source_client=None, real_observer=None):
     meta=ledger(a.trace,a.policy)
     base_schedule=bank.schedule
     def schedule(commands,pushes,mode):
         kept,removed,cost=base_schedule(commands,pushes,mode)
+        if change_offers:
+            kept=change_offers(kept,commands)
         offers=[(t-meta['shift'],h,b) for t,h,b in kept]
         assert offers[0][0]>meta['ea']
         return offers,removed,cost
@@ -139,6 +141,7 @@ def run(a):
                 else:
                     index=first_retired+seq+1-sum(i<seq for i in omissions)
                     gates[index]=pending
+                saved-=(extra_after or {}).get(seq,0)
                 pending=[];seq+=1;last_offer=t
         assert seq==30
         entries=[f"[{idx}]={{"+','.join('{%d,%d}'%row for row in items)+'}' for idx,items in gates.items()]
@@ -162,7 +165,8 @@ def run(a):
         script=once(script,'  sent=sent+1','  step634=1;sent=sent+1')
         return once(script,'sent,target522,now,sent-retired','sent,target522+delay634,now,sent-retired')
     bank.run(a,schedule_offers=schedule,edit_after=guard_feedback if a.feedback else None,
-             timing_metadata=dict(overlap=meta,feedback=a.feedback))
+             timing_metadata=dict(overlap=meta,feedback=a.feedback),
+             source_client=source_client,real_observer=real_observer)
 
 
 if __name__=='__main__':
