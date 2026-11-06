@@ -5,7 +5,7 @@
 ## 1. 상태를 읽는다
 
 1. [루트 README](../../README.md) → [프로젝트 현황](../PROJECT-STATUS.ko.md).
-2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR151](../progress/pr-151.md). 회고 기준은 [PR150](../progress/pr-150.md).
+2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [현재 PR152](../progress/pr-152.md). MMC613 실기 기준은 [PR151](../progress/pr-151.md)이다. 회고 기준은 [PR150](../progress/pr-150.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
 GB/GBC는 추가·공개 완료, NES는 MMC613 실기16.20fps/5–55초15.66fps다. 실행·메뉴 복귀 정상이며 전체60Hz·capture무손실·외부IO sign-off는 미완료다. [614 실기 기록](../nes-hardware614-results.ko.md)

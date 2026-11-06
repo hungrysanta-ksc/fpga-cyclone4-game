@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-현재 브랜치는 codex/nes-whole-budget-580 / PR151이다. PR150 병합 `588fa177ed1a82056a5cc86813506c3f2024cc70` 확인 뒤 분기했다. [598 collector·출력 비용](../../docs/nes-boundary598-results.ko.md), [597 결합 예산·핀 전송](../../docs/nes-region597-results.ko.md), [596 페이지·회로 예산](../../docs/nes-pages596-budget.ko.md), [595 D4 FPGA 결과](../../docs/nes-region595-results.ko.md), [594 ARM 결과](../../docs/nes-report594-results.ko.md), [591 실제 ARM·예산](../../docs/nes-roles591-results.ko.md), [590 역할·요청 비용](../../docs/nes-roles590-results.ko.md), [589 실제 source 결과](../../docs/nes-source589-results.ko.md), [588 source 예산](../../docs/nes-source588-results.ko.md), [587 검사 소유권](../../docs/nes-ownership587-results.ko.md), [586 실제 ARM 결합](../../docs/nes-combined586-results.ko.md), [585 교체·RAM 예산](../../docs/nes-ownership585-results.ko.md), [584 transport 비용](../../docs/nes-transport584-results.ko.md), [583 행·진행 응답](../../docs/nes-row583-results.ko.md), [582 ABI 예산](../../docs/nes-abi582-results.ko.md), [581 본문·순서 조사](../../docs/nes-body581-results.ko.md), [580 전체 비용표](../../docs/nes-whole580-results.ko.md), [선택 manifest](../../analysis/whole580-manifest.json)를 먼저 읽는다.
+현재 작업은 `codex/nes-output-budget-615` / [PR152 진행표](../../docs/progress/pr-152.md)다. [636 전체 일정·보드 결과](../../docs/nes-export636-results.ko.md)에서 재개한다. 실기에서 검증한 최신판은 MMC613이며 636은 개발 후보이다.
 
 ## 현재 작업
 
