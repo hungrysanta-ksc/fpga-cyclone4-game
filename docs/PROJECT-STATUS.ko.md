@@ -1,6 +1,6 @@
 # 프로젝트 현황
 
-목표는 sd2snes Cyclone IV 멀티 코어 확장이다. NES 실기 측정 기준은 MMC613이다. 새 MMC639 전달본의 사용자 실행·메뉴 복귀와 두 구간 로그를 기다린다. [MMC639 설치 안내](nes-mmc639-trial.ko.md) [NES 인계](../cores/nes/HANDOFF.ko.md)
+목표는 sd2snes Cyclone IV 멀티 코어 확장이다. NES 실기 측정 기준은 MMC613이다. MMC639 실기 2회에서 메뉴 복귀에 성공했지만 한 번은 20화면 뒤, 한 번은 첫 화면 전에 중단됐다. [실패 분석](nes-hardware640-results.ko.md) [MMC639 설치 안내](nes-mmc639-trial.ko.md) [NES 인계](../cores/nes/HANDOFF.ko.md)
 
 시작 실패는 성능 집계에서 제외하고 자연 재발 시 두 실행의 로그 서명을 비교한다.
 

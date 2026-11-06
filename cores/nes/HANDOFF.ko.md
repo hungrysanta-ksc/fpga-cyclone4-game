@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-MMC639 실기 로그를 받은 뒤 실행·입력·약 60초 후 메뉴 복귀와 5–40초·40–55초의 표시 간격을 MMC613 실기와 비교한다.
+MMC639 두 실행 모두 중단됐다. [세대 32 FPGA fault·별도 부팅 timeout](../../docs/nes-hardware640-results.ko.md)을 분리 조사한다. 실기 성능 기준은 MMC613이다.
 
 최신은 [MMC613 전달본](../../docs/nes-trial613-results.ko.md)·[설치 안내](../../docs/nes-mmc613-trial.ko.md)·[manifest](../../analysis/trial613-package.json)다. 실제608 ROM을612 보드에 연결한 전체 FIT/STA, 새 ARM613 marker·집계·복구·프로그래머 검사를 통과했다. ZIP은 probes/nes-trial613/trial01/MMC613-TRIAL.zip, 근거는 archive01에 있다. 실기 로그는 614에서 확인했다.
 
