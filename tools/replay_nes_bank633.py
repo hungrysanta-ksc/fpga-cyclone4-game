@@ -52,12 +52,12 @@ def schedule(commands, pushes, mode):
     return kept, removed, cost
 
 
-def run(a):
+def run(a, *, schedule_offers=schedule, edit_after=None, timing_metadata=None):
     a.frames=47
     a.base_client=a.client
     commands=packets(a.trace)
     pushes=[e for e in read(a.trace/'events.json') if e['generation']==951 and e.get('opcode')=='0xe1']
-    kept, removed, cost=schedule(commands[951],pushes,a.mode)
+    kept, removed, cost=schedule_offers(commands[951],pushes,a.mode)
     cutoff=deadlines(a.trace)[951]['previous_cutoff']
     bank=csv_groups(a.trace/'seal528.csv')
     assert one(bank[949],'final_credit')['bank']==one(bank[951],'final_credit')['bank']!=one(bank[950],'final_credit')['bank']
@@ -101,11 +101,13 @@ local function loaded()""")
         s=once(s,'local finished522=false',"""local queue633=assert(io.open(ROOT..'/queue.csv','w'))
 queue633:write('index,offer,admit,depth\\n')
 local finished522=false""")
-        return once(s,'  frames[sent]=g-905;',"""  if g==951 then queue633:write(string.format('%d,%d,%d,%d\\n',sent,target522,now,sent-retired));queue633:flush() end
+        s=once(s,'  frames[sent]=g-905;',"""  if g==951 then queue633:write(string.format('%d,%d,%d,%d\\n',sent,target522,now,sent-retired));queue633:flush() end
   frames[sent]=g-905;""")
+        return edit_after(s) if edit_after else s
     def compare(before,after):
-        if a.mode=='control':
+        if a.mode=='control' and timing_metadata is None:
             assert before==after
+        assert [r for r in before if int(r['g'])<=950]==[r for r in after if int(r['g'])<=950]
         w=csv_groups(a.out/'window.csv')
         seal=[r for r in w[951] if r['op']==3]
         prior=one([r for r in w[950] if r['op']==3],'reveal')
@@ -120,7 +122,7 @@ local finished522=false""")
                 assert start['op']==end['op']==-1 and start['clock']<=end['clock']
                 maps.append(dict(frame=start['frame'],start=start['clock'],end=end['clock'],line=start['line'],
                                  end_line=end['line'],offset=e['value']-65536,size=start['value']))
-        return dict(mode=a.mode,removed=removed,schedule_credit_ms=ms(cost),goal=goal,cutoff=cutoff,
+        return dict(**(timing_metadata or {}),mode=a.mode,removed=removed,schedule_credit_ms=ms(cost),goal=goal,cutoff=cutoff,
                     maps=maps,interval=show['frame']-prior['frame'],show=show,ack=one(seal,'ack')['clock'],
                     seal=one(seal,'load')['clock'],upload=one(seal,'upload165_entry')['clock'],
                     previous=prior['clock'],client=sha(a.client/'sink165.sfc'),offers=sha(a.out/'arrivals.tsv'))

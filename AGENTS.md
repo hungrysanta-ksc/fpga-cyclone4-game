@@ -11,7 +11,7 @@
 
 ## 현재 작업 범위
 
-- PR152 / 633은 [진행·다음 작업](docs/progress/pr-152.md), [951 팔레트·OAM 생략 재생](docs/nes-bank633-results.ko.md)을 먼저 읽는다. 621 유지, 시간 대조군 625 tables-bg. 951 빈 큐에 map 1,152 B가 마감 전 완료되고 ACK가 0.687 / 0.647 ms 빨라졌으나 표시는 양쪽 4회였다. 다음은 950 표시 대기 중 951 입력·첫 BG 준비와 뱅크 소유권이다. 보드 준비 616B, 실기 MMC613.
+- PR152 / 634는 [진행·다음 작업](docs/progress/pr-152.md), [950 표시와 951 입력 중첩](docs/nes-overlap634-results.ko.md)을 먼저 읽는다. 621 유지, 대조군 625 tables-bg. 입력 7블록 선행만으로 951은 4 / 4회, 633의 무료 재사용을 합치면 3 / 3회였다. 화면 공개는 246 / 247번 선, ARM 링크는 Flash 120 B 초과. 다음은 실제 팔레트·OAM 뱅크 이력 확인 비용과 위상 2 마감이다. 보드 준비 616B, 실기 MMC613.
 
 - 최신은 [MMC613 전달본](docs/nes-trial613-results.ko.md)과 [현재 계획](docs/nes-retrospective579-plan.json)이다. 실제608 ROM을612 보드에 넣은 전체 FIT/STA와 새613 ARM 경로·집계·복구 검사를 통과했다. 76 LE·M9K0·Flash0 여유이며 ROM/RESTORE 없는 ZIP을 준비했다. MMC613을 실기 기준으로 삼는다. 같은 map·OBJ 작업량에서 출력 발행·65816 수락/DMA·마지막 VBlank와 ACK를 대조해 31.63 ms 중 줄일 시간을 구분한다. STOP·독립 검사·최종 ACK·메뉴 복귀를 유지한다.
 
