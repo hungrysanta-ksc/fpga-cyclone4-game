@@ -1,10 +1,10 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-output-budget-615` / [PR152](../../docs/progress/pr-152.md)이다. MMC643은 빈 캡처 거부 뒤 세 번 회복하고 60초 완주·메뉴 복귀에 성공했다. [실기 결과](../../docs/nes-hardware644-results.ko.md) · [설치 안내](../../docs/nes-mmc643-trial.ko.md)
+현재 브랜치는 `codex/nes-output-profile-645` / [PR153](../../docs/progress/pr-153.md)이다. PR152는 master의 9e53907에 병합됐다. MMC643은 빈 캡처 거부 뒤 세 번 회복하고 60초 완주·메뉴 복귀에 성공했다. [실기 결과](../../docs/nes-hardware644-results.ko.md) · [설치 안내](../../docs/nes-mmc643-trial.ko.md)
 
 ## 현재 작업
 
-MMC643을 실기 기준으로 사용한다. 같은 map·OBJ 작업량에서 출력·최종 ACK 29.51 ms의 발행·DMA·VBlank 대기를 분리한다. stage 0 부팅 timeout은 별도로 추적한다.
+MMC643을 실기 기준으로 사용한다. 다음 측정은 955 후반 열 패킷의 데이터 확정 시각과 SEAL 발행이다. 직전 업로드 VBlank와의 정렬 목표는 1.70–2.04 ms다. 954와 두 위상의 957 마지막 ACK를 대조하고 stage 0 부팅 timeout은 별도로 추적한다. [645 비용표·다음 실험](../../docs/nes-output645-results.ko.md)
 
 ## 최신 실기와 비교 기준
 
