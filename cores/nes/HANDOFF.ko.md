@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-MMC643이 실기 기준이다. 649 세 후보 모두 955 입력 7블록을 954 ACK 전에 회복했지만 648의 954 표시 간격 3 VBlank를 잃었고 955도 4회였다. 다음은 954 SEAL 기한을 고정한 첫 일곱 블록의 wire·ARM 비용 절감 대조다. stage 0 부팅 timeout은 별도로 추적한다. [649 입력·표시 일정과 판정](../../docs/nes-receive649-results.ko.md)
+MMC643이 실기 기준이다. 650 packed는 954 마감과 3 VBlank를 양쪽에서 지켰고 955는 3 / 4회였다. 다음은 위상 2의 END→출력 진입 1.306 ms 차이를 마지막 tile·ROM·credit으로 분리하는 작업이다. 압축 FPGA 송신기는 참조 모델이며 ARM Flash는 280 B 초과다. stage 0 부팅 timeout은 별도로 추적한다. [650 비용과 판정](../../docs/nes-geometry650-results.ko.md)
 
 ## 최신 실기와 비교 기준
 
