@@ -270,6 +270,11 @@ class Runtime(ARM):
                         self.layout['nes_native_runtime165']={'size':d.attributes['DW_AT_byte_size'].value,**{c.attributes['DW_AT_name'].value.decode():member_offset(c)for c in d.iter_children()if c.tag=='DW_TAG_member'}}
         at=(self.static_end+15)&~15
         for field,kind in [('state','nes_native165'),('video','nes_native_video165'),('resident','nes_resident211'),('rt','nes_native_runtime165')]:
+            if field=='rt' and getattr(self,'linked_runtime_storage',False):
+                address=self.data_symbols['native_runtime165']
+                assert 0x20000000<=address and address+self.layout[kind]['size']<=self.static_end
+                self.rt=address
+                continue
             setattr(self,field,at);at=(at+self.layout[kind]['size']+7)&~7
         self.lut=at;self.workspace_end=at+128;assert self.workspace_end<0x2000fe00
         pal=struct.pack('<64H',*map(int,re.search(r'\{(.*?)\}',(a.arm/'nes_palette165.inc').read_text(),re.S)[1].split(',')))
@@ -296,10 +301,11 @@ class Runtime(ARM):
         self.u.hook_add(UC_HOOK_MEM_READ,dwt,begin=0xe0001004,end=0xe0001007)
         self.begin_input()
         assert self.call('nes_runtime165_begin',[self.rt,self.state,self.video,self.lut,self.spi|1,self.ticks_cb|1,self.service_cb|1,0,6000,self.resident,1,1])==1
-    def begin_input(self):
+    def begin_input(self, generation=None):
+        self.input_generation=self.generation if generation is None else generation
         self.index=0;self.prepared=False
-        if self.generation>=905+self.a.frames:return
-        g=self.generation;geom=(self.a.data/f'frame{g}.geometry').read_bytes();raw=(self.a.data/f'frame{g}.raw').read_bytes()
+        if self.input_generation>=905+self.a.frames:return
+        g=self.input_generation;geom=(self.a.data/f'frame{g}.geometry').read_bytes();raw=(self.a.data/f'frame{g}.raw').read_bytes()
         self.packets,_,_=(encode if self.a.candidate else old_encode)(geom,raw,g)
         if self.a.capture_gate and g>905:
             # Actual201 ownership releases capture on input COMMIT, while
@@ -307,6 +313,19 @@ class Runtime(ARM):
             self.source_ready=self.next_capture_ready
         else:self.source_ready=self.clock
         self.clock=self.link.rpc(self.clock,'BEGIN',str(g));self.events.append(dict(generation=g,event='source_begin',clock=self.clock,capture_ready=self.source_ready))
+    def offer_input(self):
+        # END must have drained the old tile reader. The output generation and
+        # its committed capture cache stay owned until the actual ACK and EA.
+        upcoming=self.generation+1
+        if (self.input_generation!=self.generation or upcoming>=905+self.a.frames
+                or self.index!=len(self.packets) or not self.prepared
+                or self.clock<self.next_capture_ready or not self.link.end
+                or self.link.todo or self.link.flight or self.link.open or self.link.jobs):
+            return
+        self.start_token=(self.start_token+len(self.packets))&65535
+        self.begin_input(upcoming)
+        self.events[-1]['previous_output']=self.link.generation
+
     def status(self):
         if self.live and self.clock<self.source_ready:
             b=bytearray(8);b[1]=0xd6;b[3:5]=self.start_token.to_bytes(2,'big');b[7]=crc(b[1:7],8,7,0);return bytes(b)
@@ -336,7 +355,10 @@ class Runtime(ARM):
         if at!=self.spi:return
         n=u.reg_read(UC_ARM_REG_R3);tx=bytes(u.mem_read(u.reg_read(UC_ARM_REG_R1),n));op=tx[0]
         self.clock=self.link.rpc(self.clock);start=self.clock
-        if op==0xd0:rx=self.status()
+        if op==0xd0:
+            if getattr(self.a,'early_export',False):
+                self.offer_input()
+            rx=self.status()
         elif op==0xd1:
             b=self.packets[self.index];assert n==len(b)+3;rx=b'\0'+b+crc(b,16,0x1021,65535).to_bytes(2,'big')
         elif op in (0xd2,0xd3):rx=self.status()
@@ -347,17 +369,30 @@ class Runtime(ARM):
         self.clock=self.link.rpc(self.clock)
         if op==0xd2:
             assert int.from_bytes(tx[2:4],'big')==((self.start_token+self.index)&65535);self.index+=1
-            if self.index==len(self.packets):
+            if self.index==len(self.packets) and (not getattr(self.a,'early_export',False) or getattr(self.a,'commit_pop_bound',False)):
                 capture_start=(math.floor((self.clock-self.a.rom_phase)/PERIOD)+1)*PERIOD+self.a.rom_phase
                 self.next_capture_ready=capture_start+240*341*4
-        elif op==0xd3:assert tx[4]==1;self.prepared=True
+        elif op==0xd3:
+            assert tx[4]==1 and self.input_generation==self.generation==self.link.generation
+            self.prepared=True
+            if getattr(self.a,'early_export',False) and not getattr(self.a,'commit_pop_bound',False):
+                # D3 authorizes the following COMMIT enqueue/release. The analyzer
+                # bounds it separately using the final D2 pop of that COMMIT.
+                capture_start=(math.floor((self.clock-self.a.rom_phase)/PERIOD)+1)*PERIOD+self.a.rom_phase
+                self.next_capture_ready=capture_start+240*341*4
         elif op>=0xe0:self.clock=self.link.accept(tx,self.clock)
         self.wire_B[hex(op)]=self.wire_B.get(hex(op),0)+n
         self.events.append(dict(generation=self.generation,event='SPI',opcode=hex(op),packet_opcode=tx[1]if op==0xe1 else None,bytes=n,start=start,clock=self.clock))
+        if getattr(self.a,'early_export',False) and op in (0xd0,0xd1,0xd2,0xd3):
+            self.events[-1]['input_generation']=self.input_generation
         if getattr(self.a,'trace_credit',False) and op in (0xe0,0xe8):
             self.events[-1]['reply']=bytes(rx).hex()
         if op==0xea:
-            self.start_token=(self.start_token+len(self.packets))&65535;self.generation+=1;self.begin_input()
+            self.generation+=1
+            if self.input_generation!=self.generation:
+                assert self.input_generation==self.generation-1
+                self.start_token=(self.start_token+len(self.packets))&65535
+                self.begin_input()
         assert len(rx)==n;u.mem_write(u.reg_read(UC_ARM_REG_R2),rx);ret(1)
     def interrupt(self):
         self.pending_irq=False;self.irq=True;context=self.u.context_save();before=self.instructions

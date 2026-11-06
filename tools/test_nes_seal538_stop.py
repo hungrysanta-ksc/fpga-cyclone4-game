@@ -13,12 +13,12 @@ from test_nes_output489_snes import LUA
 from test_nes_trim514_schedule import MAP_ORACLE
 
 
-def exercise(args, gen, label, *, edit_packet_case=None):
+def exercise(args, gen, label, *, edit_packet_case=None, idle_witness=None,reject_status=0xe4,packet_trace=None):
     out = args.out/f'{gen}-{label}'
     out.mkdir()
     frames = gen-904
     packets = []
-    for line in (args.trace/'packets.jsonl').read_text().splitlines():
+    for line in (packet_trace or args.trace/'packets.jsonl').read_text().splitlines():
         _, _, body, payload = json.loads(line)
         record = bytes.fromhex(body)
         if int.from_bytes(record[8:10],'little') > gen:
@@ -59,7 +59,8 @@ def exercise(args, gen, label, *, edit_packet_case=None):
                        env=dict(os.environ,DOTNET_ROOT='C:/works/dotnet',DOTNET_ROOT_X64='C:/works/dotnet'),
                        creationflags=subprocess.CREATE_NO_WINDOW,check=True)
     result=json.loads((out/'result.json').read_text())
-    assert result['passed'] and result['last_status']==0xe4 and result['commits']==frames-1
+    idle=idle_witness is not None and (out/idle_witness).is_file()
+    assert result['passed'] and result['last_status']==(0 if idle else reject_status) and result['commits']==frames-1
     assert sha(out/'retained.rgb')==sha(args.trace/f'frame-{gen-1}.rgb')
     return dict(generation=gen,boundary=label,status=result['last_status'],commits=result['commits'])
 

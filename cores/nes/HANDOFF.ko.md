@@ -1,16 +1,14 @@
 # 현재 NES 인계
 
-현재 브랜치는 codex/nes-whole-budget-580 / PR151이다. PR150 병합 `588fa177ed1a82056a5cc86813506c3f2024cc70` 확인 뒤 분기했다. [598 collector·출력 비용](../../docs/nes-boundary598-results.ko.md), [597 결합 예산·핀 전송](../../docs/nes-region597-results.ko.md), [596 페이지·회로 예산](../../docs/nes-pages596-budget.ko.md), [595 D4 FPGA 결과](../../docs/nes-region595-results.ko.md), [594 ARM 결과](../../docs/nes-report594-results.ko.md), [591 실제 ARM·예산](../../docs/nes-roles591-results.ko.md), [590 역할·요청 비용](../../docs/nes-roles590-results.ko.md), [589 실제 source 결과](../../docs/nes-source589-results.ko.md), [588 source 예산](../../docs/nes-source588-results.ko.md), [587 검사 소유권](../../docs/nes-ownership587-results.ko.md), [586 실제 ARM 결합](../../docs/nes-combined586-results.ko.md), [585 교체·RAM 예산](../../docs/nes-ownership585-results.ko.md), [584 transport 비용](../../docs/nes-transport584-results.ko.md), [583 행·진행 응답](../../docs/nes-row583-results.ko.md), [582 ABI 예산](../../docs/nes-abi582-results.ko.md), [581 본문·순서 조사](../../docs/nes-body581-results.ko.md), [580 전체 비용표](../../docs/nes-whole580-results.ko.md), [선택 manifest](../../analysis/whole580-manifest.json)를 먼저 읽는다.
+현재 브랜치는 `codex/nes-output-budget-615` / [PR152](../../docs/progress/pr-152.md)이다. MMC643은 빈 캡처 거부 뒤 세 번 회복하고 60초 완주·메뉴 복귀에 성공했다. [실기 결과](../../docs/nes-hardware644-results.ko.md) · [설치 안내](../../docs/nes-mmc643-trial.ko.md)
 
 ## 현재 작업
 
-최신은 [MMC613 전달본](../../docs/nes-trial613-results.ko.md)·[설치 안내](../../docs/nes-mmc613-trial.ko.md)·[manifest](../../analysis/trial613-package.json)다. 실제608 ROM을612 보드에 연결한 전체 FIT/STA, 새 ARM613 marker·집계·복구·프로그래머 검사를 통과했다. ZIP은 probes/nes-trial613/trial01/MMC613-TRIAL.zip, 근거는 archive01에 있다. 실기 로그는 614에서 확인했다.
-
-실측 기준은 **MMC613**이다. [최신 실기 결과](../../docs/nes-hardware614-results.ko.md)와 [후속 계획](../../docs/nes-retrospective579-plan.json)을 먼저 확인한다.
+MMC643을 실기 기준으로 사용한다. 같은 map·OBJ 작업량에서 출력·최종 ACK 29.51 ms의 발행·DMA·VBlank 대기를 분리한다. stage 0 부팅 timeout은 별도로 추적한다.
 
 ## 최신 실기와 비교 기준
 
-MMC613 실기에서 60.08초에 973화면을 표시했고 실행과 메뉴 복귀를 확인했다. MMC577 대비 5–40초는 13.77→15.97fps, 40–55초는 14.07→14.93fps였다. 두 구간을 합치면 13.86→15.66fps다. [실기 비교](../../docs/nes-hardware614-results.ko.md)
+MMC643 실기에서 60.33초에 1,152화면을 표시하고 메뉴로 복귀했다. MMC613 대비 5–40초는 15.97→18.17fps, 40–55초는 14.93→18.67fps였다. [실기 비교](../../docs/nes-hardware644-results.ko.md)
 
 **MMC509 /507 FPGA /489 SNES**:60.08초770회 **12.82fps**, 실행·입력 흔적·STOP/base 복구와 사용자 메뉴 복귀 정상. 체감 개선은 작았다. 이전 MMC502는60.07초636회10.59fps이며 복구 기준으로 보존한다. 같은 동선·첫 레벨 전용 비교는 아니다. 원본 로그는 `probes/nes-hardware510/run01`, 선택 증거는 `termination01`/`analysis02.json`이다.
 

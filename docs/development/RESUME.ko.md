@@ -5,7 +5,7 @@
 ## 1. 상태를 읽는다
 
 1. [루트 README](../../README.md) → [프로젝트 현황](../PROJECT-STATUS.ko.md).
-2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [PR151](../progress/pr-151.md). 회고 기준은 [PR150](../progress/pr-150.md).
+2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → [현재 PR152](../progress/pr-152.md). MMC613 실기 기준은 [PR151](../progress/pr-151.md)이다. 회고 기준은 [PR150](../progress/pr-150.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
 GB/GBC는 추가·공개 완료, NES는 MMC613 실기16.20fps/5–55초15.66fps다. 실행·메뉴 복귀 정상이며 전체60Hz·capture무손실·외부IO sign-off는 미완료다. [614 실기 기록](../nes-hardware614-results.ko.md)
@@ -18,6 +18,8 @@ git remote -v
 git branch --show-current
 git log -5 --oneline
 ```
+
+현재 브랜치는 `codex/nes-output-budget-615`다. [PR152](../progress/pr-152.md)의 616 결과와 954·955 후속 검증을 먼저 확인한다. 아래 PR150·151 설명은 이전 작업 기록이다.
 
 PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [598 collector·출력 비용](../nes-boundary598-results.ko.md), [597 결합 예산·핀 전송](../nes-region597-results.ko.md), [596 페이지·회로 예산](../nes-pages596-budget.ko.md), [595 D4 FPGA 결과](../nes-region595-results.ko.md), [594 ARM 결과](../nes-report594-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 실제 ARM transport 제한 시험·전체 링크 비용을 확인했다. 594 ARM과 연결한 595 FPGA는 같은 경계의 Lite MAP 예산을 넘었다. 선택 산출물과 실측은 MMC577을 유지한다.
 

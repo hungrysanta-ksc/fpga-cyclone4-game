@@ -5,8 +5,9 @@ from check_nes_wire600 import ROOT,read,sha
 if __name__=='__main__':
  p=argparse.ArgumentParser()
  for n in ('board','client','out','bin'):p.add_argument('--'+n,type=Path,required=True)
+ p.add_argument('--client-sha',default=read(ROOT/'analysis/oe612-verification.json')['client_SHA'])
  a=p.parse_args();a.out.mkdir(parents=True,exist_ok=False)
- assert sha(a.client/'sink165.sfc')==read(ROOT/'analysis/oe612-verification.json')['client_SHA']
+ assert sha(a.client/'sink165.sfc')==a.client_sha
  for n in ('sink-program.hex','nes_sink_bus165.sv'):shutil.copy(a.board/n,a.out/n)
  rom=(a.client/'sink165.sfc').read_bytes();expected=rom[:5056]+rom[-64:]
  (a.out/'expected.hex').write_text(''.join(f'{b:02x}\n' for b in expected),newline='\n')

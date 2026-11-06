@@ -62,7 +62,7 @@ def emit_raw_dma489(c):
     lda(0x76);c.emit(0x38);c.absolute(0xed,0x1240);c.emit(0x18,0x69,8,0);sta(0x76);c.absolute(0xce,0x66);c.branch(0xd0,'raw_pair489')
     lda(0x125c);c.emit(0xc9,1,0);c.branch(0xf0,'raw_return489')
     # Plane6=1, plane7=0 for used rows; all other bytes remain zero.
-    imm(0x1808);sta(0x4300);imm(0x93be);sta(0x4302);imm(0);sta(0x4304)
+    imm(0x1808);sta(0x4300);imm(0x8000+PROGRAM_BYTES489-66);sta(0x4302);imm(0);sta(0x4304)
     c.emit(0xe2,0x20);c.store(0x2115,1);c.emit(0xc2,0x20);lda(0x1240);sta(0x68)
     c.label('raw_high489');call(c,'raw_service489');cond(0x90,'raw_return489')
     lda(0x76);sta(0x2116);imm(32);sta(0x4305);c.emit(0xe2,0x20);c.store(0x420b,1);c.emit(0xc2,0x20)
@@ -110,9 +110,12 @@ def emit_upload489(c,prefix='upload165'):
     exec(compile(s,'compact489-upload','exec'),ns)
     return ns['emit_upload'](c,prefix)
 
+PROGRAM_BYTES489 = 5120
+
 def source(s):
     s=original_source(s).replace('0x71,0x22','0x91,0x48')
-    s=once(s,'compact=rom[:4096];compact[0xfc0:0x1000]=rom[0x7fc0:]','compact=rom[:5120];compact[0x13c0:0x1400]=rom[0x7fc0:]')
+    n=PROGRAM_BYTES489
+    s=once(s,'compact=rom[:4096];compact[0xfc0:0x1000]=rom[0x7fc0:]',f'compact=rom[:{n}];compact[{n-64:#x}:{n:#x}]=rom[0x7fc0:]')
     s=once(s,"call(c,'validate181');cond(0x90,'bad_packet')", "call(c,'compact489');lda(0x1236);cond(0xd0,'stop_packet');cond(0x90,'bad_packet');call(c,'validate181');cond(0x90,'bad_packet')")
     s=once(s," call(c,'maps181')"," c.absolute(0x9c,0x125a);call(c,'maps181');call(c,'raw_boot489')")
     s=once(s," lda(0x1240);sta(0x1242)", """ lda(0x1240);sta(0x1242);c.branch(0xf0,'raw_commit_done489')
@@ -129,8 +132,9 @@ def build(out):
         def getsource(fn):
             s=inspect.getsource(fn)
             if fn is nes_bulk195.build:
-                s=s.replace('0xf60','0x1360').replace('0xfc0','0x13c0').replace('0x1000','0x1400')
-                s=s.replace('len(compact)==4096','len(compact)==5120').replace('program_bytes=4096','program_bytes=5120').replace('body_capacity=3936,body_free=3936-','body_capacity=4960,body_free=4960-').replace('compact4096_approved=True','compact4096_approved=False')
+                n=PROGRAM_BYTES489
+                s=s.replace('0xf60',hex(n-160)).replace('0xfc0',hex(n-64)).replace('0x1000',hex(n))
+                s=s.replace('len(compact)==4096',f'len(compact)=={n}').replace('program_bytes=4096',f'program_bytes={n}').replace('body_capacity=3936,body_free=3936-',f'body_capacity={n-160},body_free={n-160}-').replace('compact4096_approved=True','compact4096_approved=False')
             if fn is nes_dirty212.build:
                 s=once(s,'from nes_dirty212 import emit,emit_upload;from nes_client181 import call,OFFSETS,LIMITS','from nes_dirty212 import emit;from nes_output489 import emit_upload489 as emit_upload;from nes_client181 import call,OFFSETS,LIMITS')
             return s
@@ -140,7 +144,7 @@ def build(out):
     try:r=prior.build(out)
     finally:prior.source=original_source;nes_dirty212.inspect=oldinspect;prior.inspect=oldpriorinspect
     r.update(candidate='compact489',sink_version='4891',seal_version='4891',new_SNES_context_bytes_used=8,new_frame_buffer_B=0,temporary_ARM_BG_workspace_B=384,program_ROM_growth_B=1024,new_persistent_RAM_B=2,new_frame_context_B=6,scope=__doc__)
-    assert (out/'sink165.sfc').read_bytes()[0x13be]==255 and (out/'sink165.sfc').read_bytes()[0x7fd6]==0
+    assert (out/'sink165.sfc').read_bytes()[PROGRAM_BYTES489-66]==255 and (out/'sink165.sfc').read_bytes()[0x7fd6]==0
     (out/'build.json').write_text(json.dumps(r,indent=2)+'\n',encoding='utf8')
     return r
 

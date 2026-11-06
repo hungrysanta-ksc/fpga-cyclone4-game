@@ -13,6 +13,8 @@ from nes_raw506 import once
 
 
 class SmallTiles(LateMapRows):
+    map_last_line = 254
+
     @classmethod
     def map_length(cls,c,label):
         c.emit(0xa0,64,0)
@@ -42,7 +44,7 @@ class SmallTiles(LateMapRows):
     @classmethod
     def late_beam(cls,c,defer):
         c.emit(0xc9,233);c.branch(0x90,'map_beam_ok526')
-        c.emit(0xc9,255);c.branch(0xb0,defer)
+        c.emit(0xc9,cls.map_last_line+1);c.branch(0xb0,defer)
         c.long(0xbf,0x7e4001);c.emit(0x29,0x70,0xc9,0x50);c.branch(0xf0,'map_beam_ok526')
         # A tile no longer fits. Give the still-eligible map tail this blank.
         c.emit(0xc2,0x20);c.absolute(0xad,0x1250);c.emit(0x38,0xe9,8,0,0xaa,0xe2,0x20)

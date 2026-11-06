@@ -18,10 +18,10 @@ def width(s,limit=128):
     return s
 
 
-def gate(s,l,line,kind,read_pc,limit=128):
+def gate(s,l,line,kind,read_pc,limit=128, last_map_line=254):
     # Hold the empty poll's VBlank flag LOW until the first half of the
     # requested real line. Never fabricate a VBlank or a latched coordinate.
-    if line==254:
+    if line==last_map_line:
         s=width(map_fixture(s,l),limit)
         s=once(s,'and mapTail() then',f'and mapTail() and word(0x4004+word(0x1250)-8)>={limit} then')
     else:

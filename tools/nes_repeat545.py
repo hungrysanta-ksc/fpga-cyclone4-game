@@ -39,7 +39,7 @@ def build(out):
          patch.object(nes_prefix523, 'upload', lambda s: nes_seal538.group_upload(s, True)), \
          patch.object(nes_output489, 'emit_raw_dma489', nes_seal538.raw_service_inline()):
         result = nes_tile532.build(out, paired=True)
-    assert result['body_bytes'] <= 4960
+    assert result['body_bytes'] <= result['body_capacity']
     result.update(candidate='repeat545', minimum_uniform_op4=64, maximum_chunk=64)
     (out/'build.json').write_text(json.dumps(result, indent=2)+'\n')
     return result
