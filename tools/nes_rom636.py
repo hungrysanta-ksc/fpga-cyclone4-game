@@ -49,13 +49,16 @@ def pack(body, prefix):
     return bytes(out)
 
 
-def build(base,out):
+def build(base,out,*,edit_body=None):
     selected=json.loads(Path('analysis/reuse635-verification.json').read_text())
     assert sha(base/'sink165.sfc')==selected['phases'][0]['runs']['idle_short']['client']
     rom=(base/'sink165.sfc').read_bytes()
     info=json.loads((base/'build.json').read_text())
     length=info['body_bytes']
     body=rom[96:96+length]
+    if edit_body is not None:
+        body=edit_body(body,json.loads((base/'labels.json').read_text()))
+        assert len(body)==length
     for prefix in range(length//128*128,0,-128):
         stream=pack(body,prefix)
         if BOOT+prefix+len(stream)<=STORED:break

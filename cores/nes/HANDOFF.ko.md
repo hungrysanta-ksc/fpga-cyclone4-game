@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-현재 작업은 `codex/nes-output-budget-615` / [PR152 진행표](../../docs/progress/pr-152.md)다. [636 전체 일정·보드 결과](../../docs/nes-export636-results.ko.md)에서 재개한다. 실기에서 검증한 최신판은 MMC613이며 636은 개발 후보이다.
+현재 작업은 `codex/nes-output-budget-615` / [PR152 진행표](../../docs/progress/pr-152.md)다. [637 선행 DMA·953 ROM 대기 결과](../../docs/nes-dma637-results.ko.md)에서 재개한다. 개발 대조군은 636이다. 실기에서 검증한 최신판은 MMC613이며 636은 개발 후보이다.
 
 ## 현재 작업
 
