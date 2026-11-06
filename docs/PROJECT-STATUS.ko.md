@@ -1,6 +1,6 @@
 # 프로젝트 현황
 
-목표는 sd2snes Cyclone IV 멀티 코어 확장이다. 최신 NES 실기 기준은 MMC613이며 MMC577과 비교한다. [NES 인계](../cores/nes/HANDOFF.ko.md)
+목표는 sd2snes Cyclone IV 멀티 코어 확장이다. NES 실기 측정 기준은 MMC613이다. 새 MMC639 전달본의 사용자 실행·메뉴 복귀와 두 구간 로그를 기다린다. [MMC639 설치 안내](nes-mmc639-trial.ko.md) [NES 인계](../cores/nes/HANDOFF.ko.md)
 
 시작 실패는 성능 집계에서 제외하고 자연 재발 시 두 실행의 로그 서명을 비교한다.
 
@@ -24,6 +24,7 @@ MMC613 실기에서 60.08초에 973화면을 표시했고 실행과 메뉴 복�
 |---|---|
 | MMC613 전체 보드 | 15,332 LE, 조합 논리 14,359, FF 8,474, M9K 56/56. 여유 76 LE |
 | 전체 STA 최소 slack | setup +0.487 / hold +0.163 / recovery +1.652 / removal +0.490 ns. 외부 IO 검증 진행 중 |
+| MMC639 시험판 | 638 결합·선두 map ROM. 15,351 LE, 57 LE 여유, ARM Flash 212,932 B, 60 B 여유. [검증](nes-trial639-results.ko.md) |
 | ARM613 전달본 | Flash 212,992 B, 여유 0 B, BSS 18,592 B |
 | 60Hz 평균 격차 | 61.75 − 16.67 ≈ 45.08 ms/표시 |
 | MMC613 단계 평균 | 수신 18.82 / 계획·공급 10.65 / 출력·최종 ACK 31.63 ms/표시 |

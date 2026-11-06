@@ -11,7 +11,7 @@
 | 코어 | 상태 | 확인된 범위 | 다음 목표 |
 |---|---|---|---|
 | [GB/GBC](cores/gbc/README.md) | **추가 성공·공개 완료** | G13C44 / sd2snesHST 0.9.0, 실기·저장·RTC 등은 호환성 문서 범위 | 검증된 구현·세이브 보존, 회귀 유지 |
-| [NES](cores/nes/README.md) | **개발 중** | MMC613 SMB3 16.20fps, 5–55초 15.66fps · 실행·메뉴 복귀 성공 | [전체 전송·처리 예산과 구조 확정](docs/nes-retrospective579.ko.md) → 지속 60fps |
+| [NES](cores/nes/README.md) | **개발 중** | MMC613 SMB3 16.20fps, 5–55초 15.66fps · 실행·메뉴 복귀 성공 | [MMC639 실기 시험](docs/nes-mmc639-trial.ko.md) → MMC613과 구간별 비교 |
 | [PC Engine](cores/pce/README.md) | 조사 대기 | 구현·실기 성공 없음 | NES 이후 범위·자원 검토 |
 
 MMC613 실기에서 60.08초에 973화면을 표시했고 실행과 메뉴 복귀를 확인했다. MMC577 대비 5–40초는 13.77→15.97fps, 40–55초는 14.07→14.93fps였다. 두 구간을 합치면 13.86→15.66fps다. [실기 비교](docs/nes-hardware614-results.ko.md)

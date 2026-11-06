@@ -1,10 +1,10 @@
 # 현재 NES 인계
 
-현재 작업은 `codex/nes-output-budget-615` / [PR152 진행표](../../docs/progress/pr-152.md)다. [638의 953 ROM 공급 검증과 실기 준비 조건](../../docs/nes-front638-results.ko.md)에서 재개한다. 네 일정에서 통과한 개발 후보는 638 결합, 비교 대조군은 637의 두 블록 후보, 실기 기준은 MMC613이다.
+현재 브랜치는 `codex/nes-output-budget-615` / [PR152](../../docs/progress/pr-152.md)이다. 638 결합 후보를 MMC639로 전달했다. [639 검증](../../docs/nes-trial639-results.ko.md) · [실기 설치 안내](../../docs/nes-mmc639-trial.ko.md)
 
 ## 현재 작업
 
-[616의 952 선행 DMA](../../docs/nes-map616-results.ko.md)에서 두 위상의 4 VBlank 목표를 달성했다. 616의 252번 후보에서 954·955의 map 발행·65816 수락과 업로드 VBlank를 대조한다. 두 위상의 952 표시 4 VBlank·957 최종 대기 0회와 STOP·독립 검사·최종 ACK·메뉴 복귀를 유지한다. 실기 비교 기준은 MMC613이다.
+MMC639 실기 로그를 받은 뒤 실행·입력·약 60초 후 메뉴 복귀와 5–40초·40–55초의 표시 간격을 MMC613 실기와 비교한다.
 
 최신은 [MMC613 전달본](../../docs/nes-trial613-results.ko.md)·[설치 안내](../../docs/nes-mmc613-trial.ko.md)·[manifest](../../analysis/trial613-package.json)다. 실제608 ROM을612 보드에 연결한 전체 FIT/STA, 새 ARM613 marker·집계·복구·프로그래머 검사를 통과했다. ZIP은 probes/nes-trial613/trial01/MMC613-TRIAL.zip, 근거는 archive01에 있다. 실기 로그는 614에서 확인했다.
 
