@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-MMC643이 실기 기준이다. 651 grant는 타일과 동시에 확인한 plan credit으로 END를 발행해 두 위상 모두 954·955를 3 VBlank에 표시했다. MMC643 대비 957 ACK는 82.961 / 82.787 ms 빨랐다. 다음은 ARM Flash 324 B 절감, 압축 송신기의 실제 FPGA 연결과 Quartus Lite FIT·STA다. 실제 송신기 준비 시간을 반영해 954 SEAL 여유 146 / 11 µs, 951 공개선, 957 대기 0회와 복구를 다시 검증한다. stage 0 부팅 timeout은 별도로 추적한다. [651 비용과 판정](../../docs/nes-end651-results.ko.md)
+MMC643이 실기 기준이다. 652는 Flash를 880 B 줄여 556 B 여유를 확보했다. 보드 소유권에 맞춰 802개 D1의 실제 RAM 준비 시간을 반영해도 954·955는 두 위상 모두 3 VBlank였고, 954 SEAL 여유는 122.15 / 11.34 µs였다. 951 공개선 240 / 239, 957 추가 대기 0회, 밀집 평균 53.280 / 53.283 ms와 MMC643 대비 마지막 ACK 82.957 / 82.787 ms 단축을 확인했다. 보드 전체 FIT는 695 LE·53 LAB 부족으로 실패해 실기 전달을 보류한다. 652의 ARM 절감과 FPGA 자율 준비 일정을 유지하고, exporter의 기존 map record 조립과 호스트의 셀 재복원·CRC 제어를 함께 대체한다. 전체 보드에서 695 LE·53 LAB 이상을 줄인 뒤 같은 두 일정과 독립 검사·STOP·메뉴 복귀를 재실행하고 Quartus Lite 전체 FIT·STA를 확인한다. stage 0 부팅 timeout은 별도로 추적한다. [652 비교와 재현](../../docs/nes-sender652-results.ko.md)
 
 ## 최신 실기와 비교 기준
 
