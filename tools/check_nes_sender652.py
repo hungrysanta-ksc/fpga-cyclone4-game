@@ -8,18 +8,19 @@ import subprocess
 from check_nes_fault641 import ROOT,digest
 from nes_geometry650 import encode
 
-def prepare(a):
+def prepare(a, *, encoder=encode, codec="nes_geometry_sender652.sv", bench=None):
     a.out.mkdir(parents=True,exist_ok=False)
-    names=["nes_geometry_sender652.sv","nes_native_spi165.sv","nes_native_export203.sv","nes_native_mailbox165.sv"]
+    names=[codec,"nes_native_spi165.sv","nes_native_export203.sv","nes_native_mailbox165.sv"]
     for name in names:shutil.copyfile(a.board/name,a.out/name)
     source=(ROOT/"tests/nes-functional/native_spi165_tb.sv").read_text()
     tasks=source[source.index(" function automatic [7:0] c8"):source.index(" always @(posedge clk)if(!reset")]
     tb=(Path(__file__).with_name("sender652_tb.sv")).read_text().replace("// SPI_TASKS",tasks.replace("tx[","spi_tx["))
+    if bench:tb=bench(tb)
     (a.out/"tb.sv").write_text(tb)
     with (a.out/"scenes.txt").open("w") as sc:
         for gen in range(905,958):
             raw=(a.data/f"frame{gen}.raw").read_bytes()
-            packets,counts,arrays=encode((a.data/f"frame{gen}.geometry").read_bytes(),raw,gen)
+            packets,counts,arrays=encoder((a.data/f"frame{gen}.geometry").read_bytes(),raw,gen)
             lines=[]
             for k,values in enumerate([*arrays,[],raw]):
                 if len(values):lines.extend([f"@{2048*k:x}",*(f"{x:016x}" for x in values)])
@@ -35,7 +36,7 @@ def prepare(a):
     rows=(a.out/"blocks.txt").read_text().splitlines()
     for gen in range(905,958):
         actual=[]
-        expect=encode((a.data/f"frame{gen}.geometry").read_bytes(),(a.data/f"frame{gen}.raw").read_bytes(),gen)[0]
+        expect=encoder((a.data/f"frame{gen}.geometry").read_bytes(),(a.data/f"frame{gen}.raw").read_bytes(),gen)[0]
         for r in rows:
             g,i,cycles,codec,b=r.split()
             if int(g)!=gen:continue
