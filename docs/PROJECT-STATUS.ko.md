@@ -1,6 +1,6 @@
 # 프로젝트 현황
 
-목표는 sd2snes Cyclone IV 멀티 코어 확장이다. NES 실기 측정 기준은 MMC643이다. [실기 결과](nes-hardware644-results.ko.md) · [설치 안내](nes-mmc643-trial.ko.md) · [NES 인계](../cores/nes/HANDOFF.ko.md)
+목표는 sd2snes Cyclone IV 멀티 코어 확장이다. NES 실기 측정 기준은 MMC662다. [실기 결과](nes-hardware663-results.ko.md) · [설치 안내](nes-mmc662-trial.ko.md) · [NES 인계](../cores/nes/HANDOFF.ko.md)
 
 시작 실패는 성능 집계에서 제외하고 자연 재발 시 두 실행의 로그 서명을 비교한다.
 
@@ -9,24 +9,24 @@
 | 코어 | 판정 | 근거·한계 |
 |---|---|---|
 | GB/GBC | 추가 성공·제품 공개 | G13C44/sd2snesHST0.9.0,[기준선](../cores/gbc/README.md)·[호환성](COMPATIBILITY.ko.md) |
-| NES | 개발 중·제품 미포함 | MMC643 SMB3 19.09fps, 5–55초 18.32fps · 실행·메뉴 복귀 성공 |
+| NES | 개발 중·제품 미포함 | MMC662 SMB3 20.29fps, 5–55초 19.96fps · 실행·메뉴 복귀 성공 |
 | PC Engine | 조사 대기 | 구현·실기 성공 없음 |
 
 대상은FXPAK Pro/Mk.III,EP4CE15F17C8,STM32F401RCT6,PSRAM IS66WVE4M16EBLL-70BLI 두개다. 다른보드/전체IO승인을뜻하지않는다.
 
 ## 최신 게임 실기
 
-MMC643 실기에서 60.33초에 1,152화면을 표시하고 메뉴로 복귀했다. MMC613 대비 5–40초는 15.97→18.17fps, 40–55초는 14.93→18.67fps였다. [실기 비교](nes-hardware644-results.ko.md)
+MMC662 실기에서 60.32초에 1,224화면을 표시하고 메뉴로 복귀했다. MMC643 대비 5–40초는 18.17→19.49fps, 40–55초는 18.67→21.07fps였다. 플레이 작업량 차이가 있어 구현만의 개선율과는 구분한다. [실기 비교](nes-hardware663-results.ko.md)
 
 ## 현재 비용과 다음 목표
 
 | 항목 | 값과 판정 |
 |---|---|
-| MMC643 전체 보드 | 15,354 LE, 조합 논리 14,301, FF 8,500, M9K 56/56. 여유 54 LE |
-| 전체 STA 최소 slack | setup +0.333 / hold +0.144 / recovery +1.256 / removal +0.496 ns. 외부 IO 검증 진행 중 |
-| ARM643 전달본 | Flash 212,932 B, 여유 60 B. [검증](../analysis/reject643-package.json) |
-| 60Hz 평균 격차 | 전체 실행 평균 52.37 − 16.67 ≈ 35.70 ms/표시 |
-| MMC643 단계 평균 | 수신 10.75 / 계획·공급 11.35 / 출력·최종 ACK 29.51 ms/표시 |
+| MMC662 / 661 전체 보드 | 15,324 LE, 조합 논리 14,418, FF 8,386, M9K 56/56. 여유 84 LE·1 LAB |
+| 전체 STA 최소 slack | setup +0.511 / hold +0.149 / recovery +1.828 / removal +0.393 ns. 외부 IO 검증 진행 중 |
+| ARM662 전달본 | Flash 212,508 B, 여유 484 B. [검증](../analysis/trial662-package.json) |
+| 60Hz 평균 격차 | 전체 실행 평균 49.28 − 16.67 ≈ 32.61 ms/표시 |
+| MMC662 단계 평균 | 수신 10.66 / 계획·공급 11.32 / 출력·최종 ACK 26.51 ms/표시 |
 | 다음 작업 | 같은 작업량에서 출력 발행·DMA·최종 VBlank 대기 분리 |
 | 미완료 | 지속60fps·장면별/p95·NES 실시간 속도·capture 무손실·MMC4/5·제품 공개 |
 

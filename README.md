@@ -11,12 +11,12 @@
 | 코어 | 상태 | 확인된 범위 | 다음 목표 |
 |---|---|---|---|
 | [GB/GBC](cores/gbc/README.md) | **추가 성공·공개 완료** | G13C44 / sd2snesHST 0.9.0, 실기·저장·RTC 등은 호환성 문서 범위 | 검증된 구현·세이브 보존, 회귀 유지 |
-| [NES](cores/nes/README.md) | **개발 중** | MMC643 SMB3 19.09fps, 5–55초 18.32fps · 실행·메뉴 복귀 성공 | [MMC662 전달본](docs/nes-mmc662-trial.ko.md)의 제한 SMB3 실기 비교 |
+| [NES](cores/nes/README.md) | **개발 중** | MMC662 SMB3 20.29fps, 5–55초 19.96fps · 실행·메뉴 복귀 성공 | 같은 map·OBJ 작업량에서 출력·최종 ACK 26.51ms 분해 |
 | [PC Engine](cores/pce/README.md) | 조사 대기 | 구현·실기 성공 없음 | NES 이후 범위·자원 검토 |
 
-MMC643 실기에서 60.33초에 1,152화면을 표시하고 메뉴로 복귀했다. MMC613 대비 5–40초는 15.97→18.17fps, 40–55초는 14.93→18.67fps였다. [실기 비교](docs/nes-hardware644-results.ko.md)
+MMC662 실기에서 60.32초에 1,224화면을 표시하고 메뉴로 복귀했다. MMC643 대비 5–40초는 18.17→19.49fps, 40–55초는 18.67→21.07fps였다. 플레이 작업량 차이가 있어 구현만의 개선율과는 구분한다. [실기 비교](docs/nes-hardware663-results.ko.md)
 
-첫·마지막 5초를 제외한 완료 표시는 MMC613 대비 783→916회(+17.0%)다. 가장 큰 비용은 출력·최종 ACK(표시당 29.51ms)다. [현재 NES 작업](cores/nes/HANDOFF.ko.md)
+첫·마지막 5초를 제외한 완료 표시는 MMC643 대비 916→998회(+9.0%)다. 가장 큰 비용은 출력·최종 ACK(표시당 26.51ms)다. [현재 NES 작업](cores/nes/HANDOFF.ko.md)
 
 ## 여기서 시작하세요
 
