@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-실기 기준은 MMC643, 개발 기준은 660 owner·654 combined ARM이다. 954·955는 PSRAM 허가 80/72회, 양 위상 3/3 VBlank이며 957 ACK는 657보다 33.044 / 16.408 ms 빠르다. 전체 FIT는 15,331/15,408 LE·963/963 LAB·56/56 M9K로 성공했다. 다음은 168 MHz PSRAM reader setup −1.038 ns와 84 MHz setup −0.159 ns를 개선하고 동일 일정·STOP·복구를 재검증한 뒤 실기로 넘기는 것이다. stage 0 부팅 timeout은 별도로 추적한다. [660 재현·결과](../../docs/nes-word660-results.ko.md)
+실기 기준은 MMC643, 개발 기준은 661 mux·654 combined ARM·637 client다. 두 위상 모두 954·955는 3 VBlank, 957 ACK는 657보다 33.044 / 16.408 ms 빠르다. 168 / 84 MHz setup은 +0.511 / +0.616 ns이고, 15,324 LE·962 LAB·56 M9K에서 전체 FIT·STA를 통과했다. 다음은 제한 SMB3 실기 전달본·로그 이름을 고정해 같은 동선의 5–40초·40–55초 및 메뉴 복귀를 확인하는 단계다. stage 0 부팅 timeout은 별도로 추적한다. [661 재현·검증](../../docs/nes-reader661-results.ko.md)
 
 ## 최신 실기와 비교 기준
 

@@ -6,12 +6,12 @@
 
 ## 현재 진행 상황
 
-2026-11-06 기준 **추가·공개 완료된 코어는 GB/GBC이며, NES는 개발 중입니다.**
+2026-11-07 기준 **추가·공개 완료된 코어는 GB/GBC이며, NES는 개발 중입니다.**
 
 | 코어 | 상태 | 확인된 범위 | 다음 목표 |
 |---|---|---|---|
 | [GB/GBC](cores/gbc/README.md) | **추가 성공·공개 완료** | G13C44 / sd2snesHST 0.9.0, 실기·저장·RTC 등은 호환성 문서 범위 | 검증된 구현·세이브 보존, 회귀 유지 |
-| [NES](cores/nes/README.md) | **개발 중** | MMC643 SMB3 19.09fps, 5–55초 18.32fps · 실행·메뉴 복귀 성공 | 같은 작업량에서 출력·최종 ACK 대기 단축 |
+| [NES](cores/nes/README.md) | **개발 중** | MMC643 SMB3 19.09fps, 5–55초 18.32fps · 실행·메뉴 복귀 성공 | 전체 FIT·STA를 통과한 [661 후보](docs/nes-reader661-results.ko.md)의 제한 SMB3 실기 비교 |
 | [PC Engine](cores/pce/README.md) | 조사 대기 | 구현·실기 성공 없음 | NES 이후 범위·자원 검토 |
 
 MMC643 실기에서 60.33초에 1,152화면을 표시하고 메뉴로 복귀했다. MMC613 대비 5–40초는 15.97→18.17fps, 40–55초는 14.93→18.67fps였다. [실기 비교](docs/nes-hardware644-results.ko.md)
