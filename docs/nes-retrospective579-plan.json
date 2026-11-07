@@ -3,10 +3,10 @@
   "review": 579,
   "date": "2026-11-03",
   "canonical": true,
-  "physical_baseline": "MMC613",
+  "physical_baseline": "MMC662",
   "evidence": "analysis/retrospective579.json",
-  "hardware_evidence": "analysis/hardware614-mmc613.json",
-  "package": "analysis/trial639-package.json",
+  "hardware_evidence": "analysis/hardware663-mmc662.json",
+  "package": "analysis/trial662-package.json",
   "review_document": "docs/nes-retrospective579.ko.md",
   "supersedes_execution_order": [
     "docs/nes-audit499-plan.json",
@@ -14,12 +14,12 @@
     "PR149 NEXT: immediately optimize another output wait"
   ],
   "preserve_historical_evidence": true,
-  "implementation_started": false,
+  "implementation_started": true,
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
-  "branch": "codex/nes-output-budget-615",
+  "branch": "codex/nes-output-budget-664",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 639,
-  "current_evidence": "analysis/trial639-package.json",
+  "current_step": 667,
+  "current_evidence": "analysis/hardware667-mmc666.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -38,12 +38,18 @@
     "provisional_wire_B": 3937.5,
     "observed_nonquery_B_per_display": 5963.899761336515,
     "observed_nonquery_wire_ms": 18.175694510739856,
-    "LE_free": 76,
-    "Flash_free_B": 0,
+    "LE_free": 84,
+    "Flash_free_B": 484,
     "M9K_free": 0,
     "whole_60Hz_passed": false,
     "full_IO_signoff": false,
-    "observed_nonquery_source": "MMC577, retrospective579"
+    "observed_nonquery_source": "MMC577, retrospective579",
+    "current_physical_ms_per_display": {
+      "receive": 10.662471356598195,
+      "plan_supply": 11.321123852318705,
+      "output_final_ack": 26.510250816993462
+    },
+    "current_physical_source": "MMC662 / hardware663; older wire fields retain explicit MMC577 provenance."
   },
   "stages": [
     {
@@ -357,8 +363,18 @@
   "clean_clone_rebuild_complete": false,
   "new_installer_required_now": false,
   "retrospective_PR": 150,
-  "PR": 152,
+  "PR": 154,
   "bounded_prototype_started": true,
   "candidate_manifest": "analysis/trial639-package.json",
-  "merged_PR151": "a3582cd"
+  "merged_PR151": "a3582cd",
+  "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
+  "current_followup": {
+    "candidate": "MMC666 hardware start/STOP/menu passed; mixed FPS with different workloads",
+    "next": "Match dense map/OBJ workload before attributing output delay changes; preserve both-phase 952 3-VBlank, 957 zero final wait, independent checks, capture recovery and STOP/final ACK/menu. No new implementation in hardware667.",
+    "evidence": "analysis/hardware667-mmc666.json",
+    "hardware_baseline": "MMC662",
+    "limited_delivery_gate": true,
+    "external_IO_signoff": false,
+    "new_hardware_test": true
+  }
 }

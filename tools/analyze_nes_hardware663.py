@@ -75,7 +75,7 @@ def analyze(raw, baseline):
     assert times[-1][0] == "MENU_PREPARED"
     endpoints = dict(times)
     trimmed = sum(w["displays"] for w in split)/50
-    return dict(trial=662, physical=True, hardware_run_passed=True, logged_runs=1,
+    return dict(trial=662, trial_family="MMC", physical=True, hardware_run_passed=True, logged_runs=1,
                 user_report=dict(start_success=True,menu_return=True,perception="FPS felt improved"),
                 source_SHA256=pins,reference="analysis/hardware644-mmc643.json",
                 reference_SHA256=digest(ROOT/"analysis/hardware644-mmc643.json"),package="analysis/trial662-package.json",
