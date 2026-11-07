@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-실기 기준은 MMC643, ARM은 654 combined다. 659의 PSRAM 직접 DMA는 954·955 첫 타일 중 4 B에서 막혔고 전체 보드에서 303 LE·30 LAB가 부족했다. 657 port를 유지한다. 다음은 적재 시 사전 변환한 BG를 허가 한 번당 16비트로 읽어 기존 staging에 채우고, 기존 묶음 DMA를 유지하는 비교다. 954·955 원본 읽기 160/144→80/72회 가능성, 양 위상의 표시·최종 ACK·STOP·VBlank와 실제 교체 후 전체 FIT로 판단한다. 657 자체의 부족분은 17 LE·14 LAB다. stage 0 부팅 timeout은 별도로 추적한다. [659 전체 결과](../../docs/nes-bg659-results.ko.md)
+실기 기준은 MMC643, 개발 기준은 660 owner·654 combined ARM이다. 954·955는 PSRAM 허가 80/72회, 양 위상 3/3 VBlank이며 957 ACK는 657보다 33.044 / 16.408 ms 빠르다. 전체 FIT는 15,331/15,408 LE·963/963 LAB·56/56 M9K로 성공했다. 다음은 168 MHz PSRAM reader setup −1.038 ns와 84 MHz setup −0.159 ns를 개선하고 동일 일정·STOP·복구를 재검증한 뒤 실기로 넘기는 것이다. stage 0 부팅 timeout은 별도로 추적한다. [660 재현·결과](../../docs/nes-word660-results.ko.md)
 
 ## 최신 실기와 비교 기준
 
