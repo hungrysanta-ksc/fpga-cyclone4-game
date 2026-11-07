@@ -49,16 +49,20 @@ def pack(body, prefix):
     return bytes(out)
 
 
-def build(base,out,*,edit_body=None):
+def build(base,out,*,edit_body=None,allow_extension=False):
     selected=json.loads(Path('analysis/reuse635-verification.json').read_text())
     assert sha(base/'sink165.sfc')==selected['phases'][0]['runs']['idle_short']['client']
     rom=(base/'sink165.sfc').read_bytes()
     info=json.loads((base/'build.json').read_text())
-    length=info['body_bytes']
+    original_length=length=info['body_bytes']
     body=rom[96:96+length]
     if edit_body is not None:
         body=edit_body(body,json.loads((base/'labels.json').read_text()))
-        assert len(body)==length
+        if allow_extension:
+            assert original_length<=len(body)<=0x1900
+            length=len(body)
+        else:
+            assert len(body)==length
     for prefix in range(length//128*128,0,-128):
         stream=pack(body,prefix)
         if BOOT+prefix+len(stream)<=STORED:break
@@ -66,7 +70,7 @@ def build(base,out,*,edit_body=None):
     first=0x8000+BOOT
     limit=first+prefix+len(stream)
     c=Code(0x8000)
-    cut=rom.index(b'\xc2\x20\xa9'+(length-1).to_bytes(2,'little')+b'\xa2\x60\x80')
+    cut=rom.index(b'\xc2\x20\xa9'+(original_length-1).to_bytes(2,'little')+b'\xa2\x60\x80')
     c.emit(*rom[:cut],0xc2,0x30)
     def immediate(op,value):c.emit(op);c.word(value)
     def bad_if(branch):

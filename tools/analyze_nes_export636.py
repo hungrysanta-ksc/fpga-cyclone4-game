@@ -9,7 +9,7 @@ from pathlib import Path
 from analyze_nes_dma542 import csv_groups, one, read, sha, ms, partition
 
 
-def run(folder,reference):
+def run(folder,reference,*,expected_bg_hits=48):
     j=read(folder/'joint.json')
     assert j['passed'] and j['commits']==j['map_WRAM_VRAM_verified']==53 and j['last_status']==1
     assert j['max_bulk_banks']<=2
@@ -18,7 +18,7 @@ def run(folder,reference):
     costs=partition(folder)
     obj=read(folder/'obj-phases.json')
     cache=Counter(r[5] for v in obj.values() for r in v.get('cache611',[]))
-    assert cache['BG_hit']==48 and cache['OBJ_capture']==1200
+    assert cache['BG_hit']==expected_bg_hits and cache['OBJ_capture']==1200
     previous=None
     rows={}
     early=Counter()
