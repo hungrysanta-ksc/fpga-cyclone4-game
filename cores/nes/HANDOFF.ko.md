@@ -4,7 +4,9 @@
 
 ## 현재 작업
 
-실기 기준은 MMC643, 개발 기준은 661 mux·654 combined ARM·637 client다. 두 위상 모두 954·955는 3 VBlank, 957 ACK는 657보다 33.044 / 16.408 ms 빠르다. 168 / 84 MHz setup은 +0.511 / +0.616 ns이고, 15,324 LE·962 LAB·56 M9K에서 전체 FIT·STA를 통과했다. 다음은 제한 SMB3 실기 전달본·로그 이름을 고정해 같은 동선의 5–40초·40–55초 및 메뉴 복귀를 확인하는 단계다. stage 0 부팅 timeout은 별도로 추적한다. [661 재현·검증](../../docs/nes-reader661-results.ko.md)
+실기 기준은 MMC643이다. MMC662-TRIAL.zip에 661 mux 보드·654 combined와 함수가 같은 MMC662 ARM·637 client를 묶어 전달했다. 파일은 작업 폴더의 `probes/nes-trial662/trial01/MMC662-TRIAL.zip`, 전달 복사본은 `C:/Users/mohallo/Downloads/MMC662-TRIAL.zip`이다. SHA256은 `7a5907b7c72415e9309f9de79abc8d4122930d6eda3ca5f349589f9bca4836cb`이다. [MMC662 설치·동선](../../docs/nes-mmc662-trial.ko.md) · [패키지 증거](../../analysis/trial662-package.json)
+
+다음은 반환한 MMC662 세 로그로 5–40초·40–55초를 MMC643의 18.17 / 18.67 fps와 비교하고 스테이지 진입·STOP·메뉴 복귀를 확인하는 것이다. 두 위상 954·955의 3 VBlank와 957 ACK, 전체 FIT 및 168 / 84 MHz setup +0.511 / +0.616 ns는 661에서 검증했다. stage 0 부팅 timeout은 별도로 추적한다. [661 검증](../../docs/nes-reader661-results.ko.md)
 
 ## 최신 실기와 비교 기준
 
