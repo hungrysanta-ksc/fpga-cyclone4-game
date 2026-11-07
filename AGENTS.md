@@ -13,7 +13,7 @@
 
 - 실기 기준은 MMC662다. `analysis/hardware663-mmc662.json`과 `cores/nes/HANDOFF.ko.md`를 먼저 확인한다. PR153은 master `9a1aa775871ea6d5f19eedc9dc97e3e05f339a31`에 병합됐다.
 - 후속 브랜치는 `codex/nes-output-budget-664`다. 같은 map·OBJ 작업량에서 ARM 발행·65816 수락·DMA·VBlank를 분리하고 두 시작 위상의 밀집 표시 간격과 마지막 ACK를 함께 판정한다. 상세 근거는 `docs/nes-output664-results.ko.md`에 둔다.
-- 665에서 664 all의 914 추가 대기를 제거했다. `docs/nes-entry665-results.ko.md`와 `analysis/entry665-verification.json`이 현재 후보 근거다. 두 위상·STOP/timeout·ROM 결합 전체 Lite FIT/STA 통과 후 다음 단계는 고정 후보의 실기 비교이며, 새로운 최적화를 섞지 않는다. 실기 기준은 여전히 MMC662다.
+- 665에서 664 all의 914 추가 대기를 제거했다. `docs/nes-entry665-results.ko.md`와 `analysis/entry665-verification.json`이 현재 후보 근거다. MMC666 실기 분석은 `docs/nes-hardware667-results.ko.md`다. 실행·복귀 성공, 초반 +0.73%·후반 −8.23%이나 작업량이 달라 속도 개선·회귀를 확정하지 않는다. 다음은 출력 작업량을 맞춘 비교이며 실기 비교 기준은 MMC662다.
 - 실기 평균 출력·최종 ACK 26.51ms를 특정 재생 장면의 단계 비용과 동일시하거나 비율로 분배하지 않는다. 실제 링크 M4·65816, CPI/IRQ/SPI 모델, 반복 ROM 허용 달력과 물리 로그의 범위를 구분한다.
 - 이전 Current/FIRST/NEXT 누적은 [664 시작 전 원문](docs/progress/archive/AGENTS-before664.md)에 바이트 그대로 보존했다. 그 안의 '현재'는 당시 기록이며 새 실행 지시가 아니다.
 - 검증된 GBC와 사용자 세이브·백업을 보존한다. 새 실기 전달 전에는 MMC662 파일을 덮지 않는다.

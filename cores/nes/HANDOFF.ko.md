@@ -4,11 +4,13 @@
 
 ## 현재 작업
 
-**MMC666 실기 전달 준비 완료·피드백 대기.** 665 보드·65816과 664 all ARM을 묶고 설치/로그 표기를 666으로 변경했다. ARM 함수 798개는 동일하고 Flash 212,496B(여유 496B)다. 새 ROM 5KiB 읽기·STOP/reset, 실제 programmer/FatFS 전체 바이트, 메뉴·base 복구·5–40초/40–55초 집계를 통과했다. [설치·플레이 안내](../../docs/nes-mmc666-trial.ko.md) · [패키지 검증](../../analysis/trial666-package.json). ZIP은 `probes/nes-trial666/trial01/MMC666-TRIAL.zip`과 `C:/Users/mohallo/Downloads/MMC666-TRIAL.zip`, SHA256 `67dfd6e294542c188463b889cd27f98587ae6db4fc582e52b43075f9304d4b56`다. ROM·세이브·RESTORE는 제외했다. MMC662와 같은 첫 레벨 동선, 스테이지 진입·자동 STOP·메뉴 복귀의 로그를 기다린다. 실기 성능 기준은 계속 MMC662이며 새 최적화를 섞지 않는다.
+**MMC666 실기 피드백 분석 완료.** 실행·STOP·메뉴 복귀 성공. MMC662 대비 5–40초 19.49→19.63fps, 40–55초 21.07→19.33fps, 5–55초 19.96→19.54fps다. 후반 map·OBJ·출력 바이트 증가 때문에 구현만의 개선·회귀로 판정하지 않는다. [667 실기 비교](../../docs/nes-hardware667-results.ko.md) · [분석 JSON](../../analysis/hardware667-mmc666.json). 다음에는 출력 작업량을 맞춘 고정 재생에서 발행·수락·DMA·VBlank 병목을 비교한다. MMC662 성능 비교 기준과 MMC666 기능 성공 산출물을 모두 유지한다.
+
+MMC666은 665 보드·65816과 664 all ARM의 이름 변경 구성이다. ARM 함수 798개 동일, Flash 212,496B(여유 496B). [설치 안내](../../docs/nes-mmc666-trial.ko.md) · [패키지 검증](../../analysis/trial666-package.json). ZIP `probes/nes-trial666/trial01/MMC666-TRIAL.zip`, SHA256 `67dfd6e294542c188463b889cd27f98587ae6db4fc582e52b43075f9304d4b56`. ROM·세이브·RESTORE 제외.
 
 실기 기준은 MMC662다. MMC662-TRIAL.zip에 661 mux 보드·654 combined와 함수가 같은 MMC662 ARM·637 client를 묶어 전달했다. 파일은 작업 폴더의 `probes/nes-trial662/trial01/MMC662-TRIAL.zip`, 전달 복사본은 `C:/Users/mohallo/Downloads/MMC662-TRIAL.zip`이다. SHA256은 `7a5907b7c72415e9309f9de79abc8d4122930d6eda3ca5f349589f9bca4836cb`이다. [MMC662 설치·동선](../../docs/nes-mmc662-trial.ko.md) · [패키지 증거](../../analysis/trial662-package.json)
 
-[665 VBlank 진입·DMA 설정](../../docs/nes-entry665-results.ko.md): 664 all ARM을 유지하고 65816의 채널 설정을 대기 앞으로 옮겼다. 두 위상 106화면에서 914 추가 대기를 제거하고 952 3 VBlank·밀집 15회·957 최종 대기 0회를 유지했다. MMC662 대비 밀집 평균 −3.323/−3.327ms, 957 ACK −16.880/−16.652ms다. 664 대비 위상 1 밀집 평균 +0.000968ms는 별도 공개하며 VBlank 횟수 회귀는 없다. 246번 검사선·독립 검사·최종 ACK 바이트는 그대로이고 STOP/timeout 10조건이 통과했다. 전체 Lite FIT는 15,324 LE·962 LAB·56 M9K, STA 최솟값은 MMC662와 동일하다. ARM 여유 496B, 물리 ROM 5KiB·여유 11B다. 선택은 `probes/nes-output664/all/src` ARM + `probes/nes-entry665/client02` + ASCII Temp `nes-entry665-board01`; [검증 JSON](../../analysis/entry665-verification.json). 이 구성을 MMC666으로 전달 준비했으며, 실기 피드백과 비교를 기다린다. README의 MMC662 실기 기준은 유지한다.
+[665 VBlank 진입·DMA 설정](../../docs/nes-entry665-results.ko.md): 664 all ARM을 유지하고 65816의 채널 설정을 대기 앞으로 옮겼다. 두 위상 106화면에서 914 추가 대기를 제거하고 952 3 VBlank·밀집 15회·957 최종 대기 0회를 유지했다. MMC662 대비 밀집 평균 −3.323/−3.327ms, 957 ACK −16.880/−16.652ms다. 664 대비 위상 1 밀집 평균 +0.000968ms는 별도 공개하며 VBlank 횟수 회귀는 없다. 246번 검사선·독립 검사·최종 ACK 바이트는 그대로이고 STOP/timeout 10조건이 통과했다. 전체 Lite FIT는 15,324 LE·962 LAB·56 M9K, STA 최솟값은 MMC662와 동일하다. ARM 여유 496B, 물리 ROM 5KiB·여유 11B다. 선택은 `probes/nes-output664/all/src` ARM + `probes/nes-entry665/client02` + ASCII Temp `nes-entry665-board01`; [검증 JSON](../../analysis/entry665-verification.json). 이 구성을 MMC666으로 전달 준비했으며, 실기 피드백의 혼합 결과는 667에 별도로 기록했다. README의 MMC662 실기 기준은 유지한다.
 
 ## 최신 실기와 비교 기준
 
