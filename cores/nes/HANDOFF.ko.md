@@ -6,7 +6,9 @@
 
 **668 두 후보 검증 완료·둘 다 기각, MMC666 유지.** [668 비용·결과·다음 순서](../../docs/nes-output668-results.ko.md) · [검증 JSON](../../analysis/output668-verification.json). 같은 map/OBJ의 실제 ARM·65816 재생에서 반복 탐색은 약 0.75→0.14–0.18ms로 줄었지만, 위상 1의 선행 DMA가 감소해 마지막 ACK가 0.215ms 늦어졌다. map 소비 완료를 기다리는 결합 후보는 911의 업로드 VBlank를 하나 놓쳐 마지막 ACK가 16.849/16.640ms 늦어졌다. 안전 검사는 통과했으나 시간 조건은 실패했다.
 
-다음은 954·957의 수락 범위·명령 병합·빈 큐 DMA 기회를 함께 검토한다. 911 SEAL 수락189/검사 완료214번 선의 기존 여유, 951 공개선·952 3회 이하·957 추가 대기0회·STOP·독립 검사·메뉴 복귀와 두 위상의 밀집 평균·마지막 ACK 동시 개선을 요구한다. 단독 탐색/일괄 drain/위상별 고정 지연 반복은 보류한다.
+**669 소스 재검토로 다음 순서를 보완했다.** [직접 공급·주사선 예산 계획](../../docs/nes-reference669-plan.ko.md) · [소스/선택본 대조](../../analysis/reference669-review.json). sd2snes+의 CHR 사전 변환은 반영했으나 map 직접 공급은 미반영이다. 먼저 ARM descriptor+기존 저장 공급과 NES run+SNES 변환의 SPI 생략·변환·RAM 포트·실제 삭제 예산표를 만든다. 16KiB mailbox를 추가하거나 NES 원본을 SNES map과 같은 데이터로 가정하지 않는다. 954·957 수락 범위·병합·주사선 예산은 별도 비교 후 결합한다.
+
+911 SEAL 수락189/검사 완료214번 선의 기존 여유, 951 공개선·952 3회 이하·957 추가 대기0회·STOP·독립 검사·캡처 회복·메뉴 복귀와 두 위상의 밀집 평균·마지막 ACK 동시 개선을 요구한다. 단독 탐색/일괄 drain/위상별 고정 지연 반복과 659 작은 타일 직접 PSRAM DMA 재시도는 새 근거 전까지 보류한다. 이번669는 소스·계획 검토이며 새 기능·속도·합성 검증은 아니다.
 
 선택 산출물은 `probes/nes-trial666/arm01/src` ARM, `probes/nes-entry665/client02` 65816, ASCII Temp `nes-entry665-board01`이다. MMC666 패키지 SHA256 `67dfd6e294542c188463b889cd27f98587ae6db4fc582e52b43075f9304d4b56`, [패키지 근거](../../analysis/trial666-package.json). Flash 212,496B·여유496B, data/BSS10,040/19,544B, 전체15,324LE·962LAB·56M9K. 새 ZIP은 만들지 않았다. ROM/save/RESTORE 제외·사용자 SD 설치 방식은 유지한다.
 

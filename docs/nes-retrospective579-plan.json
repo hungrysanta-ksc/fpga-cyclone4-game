@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-budget-668",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 668,
-  "current_evidence": "analysis/output668-verification.json",
+  "current_step": 669,
+  "current_evidence": "analysis/reference669-review.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -49,7 +49,10 @@
       "plan_supply": 11.344217083967084,
       "output_final_ack": 26.841249824499823
     },
-    "current_physical_source": "MMC666 / hardware667; older wire fields retain explicit MMC577 provenance."
+    "current_physical_source": "MMC666 / hardware667; older wire fields retain explicit MMC577 provenance.",
+    "LAB_free": 1,
+    "physical_SNES_ROM_free_B": 11,
+    "budget_review": "No new669 savings measured; resource figures are selected665/666."
   },
   "stages": [
     {
@@ -89,10 +92,10 @@
     },
     {
       "id": "R2",
-      "status": "trial639_delivered_60Hz_open",
+      "status": "reopened_reference669_budget_next",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "MMC639 실기에서 5–40초·40–55초와 메뉴 복귀를 MMC613과 비교한다.",
+      "next_single_gate": "669 S1/S2 direct-supply transformation and net deletion ledger",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -317,23 +320,26 @@
         "analysis/trial613-package.json",
         "analysis/trial613-archive.json"
       ],
-      "616_result": "Paired 53-frame runs, identical map and tile work. 1152B grant with beam sample <=252, 952 display 5->4 VBlank, 951-955 23->22, last ACK -33.608/-33.499ms; 957 final waits 0. No new physical FPS or board fit."
+      "616_result": "Paired 53-frame runs, identical map and tile work. 1152B grant with beam sample <=252, 952 display 5->4 VBlank, 951-955 23->22, last ACK -33.608/-33.499ms; 957 final waits 0. No new physical FPS or board fit.",
+      "status_before669": "trial639_delivered_60Hz_open"
     },
     {
       "id": "R3",
-      "status": "bounded_candidate638_validated_trial639_60Hz_open",
-      "objective": "Implement exactly one chosen replacement against frozen577",
+      "status": "held_until669_budget_selection",
+      "objective": "Implement one budget-qualified replacement against selected MMC666; frozen577 remains historical evidence",
       "gate": [
         "Same workload and two start phases plus representative-scene steady interval distribution",
         "Cold/reuse/missing/duplicate/corruption/STOP/partial transfer/finalACK/VBlank/menu protection",
         "Actual ARM and65816; quantify modeled ROM/CPI components",
         "One whole Lite FIT/STA for justified RTL changes; same RTL reuses prior build"
       ],
-      "stop_rule": "After two unsuccessful variants of one hypothesis, freeze pending new evidence"
+      "stop_rule": "After two unsuccessful variants of one hypothesis, freeze pending new evidence",
+      "status_before669": "bounded_candidate638_validated_trial639_60Hz_open",
+      "next_single_gate": "669 S4 only after S1-S3 pass; selected product remains MMC666"
     },
     {
       "id": "R4",
-      "status": "awaiting_user_MMC639_logs",
+      "status": "MMC666_feedback_complete_no_new_delivery",
       "objective": "Deliver only meaningful candidates and measure hardware",
       "gate": [
         "Unique filenames, no RESTORE/ROM/save",
@@ -342,7 +348,10 @@
         "Show game advancement/capture/input latency separately from finalACK FPS"
       ],
       "sustained60_gate": "Representative dense scenes sustain new-generation display cadence and bounded latency with capture health; no duplicated-frame or partial-model FPS claim",
-      "evidence": "analysis/hardware614-mmc613.json"
+      "evidence": "analysis/hardware667-mmc666.json",
+      "previous_evidence": "analysis/hardware614-mmc613.json",
+      "status_before669": "awaiting_user_MMC639_logs",
+      "next_single_gate": "669 S5 only after both-phase timing, safety and whole resource gates"
     }
   ],
   "separate_workstreams": {
@@ -369,13 +378,54 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "MMC666 retained; 668 linear/drain rejected at whole timing gate",
-    "next": "Track accepted map extent, merge and empty queue eligibility in954/957; protect911 SEAL189/validation214-line deadline. No isolated scan/drain/phase-specific delay variants. Require dense interval and957 final ACK improvement in both starts plus STOP/independent checks/menu.",
-    "evidence": "analysis/output668-verification.json",
+    "candidate": "MMC666 retained; 668 linear/drain rejected; 669 source review only",
+    "next": "Budget direct FPGA-to-SNES supply before implementation: compare ARM-produced descriptor with retained payload vs NES run with SNES conversion. Price actual D1/E1 omission, transformation, query/CRC/cold recovery, RAM-port/CDC ownership and net deletion. Separately compare accepted map extent/merge/scanline work budget in954/957.",
+    "document": "docs/nes-reference669-plan.ko.md",
+    "evidence": "analysis/reference669-review.json",
+    "timing_reference": "analysis/output668-verification.json",
     "hardware_baseline": "MMC666",
+    "steps": [
+      {
+        "id": "S1",
+        "status": "next",
+        "deliverable": "Same-work cold905/906,911 and951-957 baseline/A/B byte and non-overlapping whole-time ledger; producer and representation per payload; no free conversion or direct-copy assumption."
+      },
+      {
+        "id": "S2",
+        "status": "pending_S1",
+        "deliverable": "Exact old code/RTL deletion, net Flash/LE/LAB/M9K/WRAM/stack, existing4KiB bulk+1KiB queue ownership/ports/CDC; retain independent expected and separate storage credit from final displayACK."
+      },
+      {
+        "id": "S3",
+        "status": "pending_budget",
+        "deliverable": "Separately compare direct supply and scanline-aware receive/merge/DMA schedule, then combine only justified candidates; no blanket drain or phase constants."
+      },
+      {
+        "id": "S4",
+        "status": "pending_selection",
+        "deliverable": "One actual linked candidate versus baseline and common-code control; both start phases with same work and ROM calendar, independent bytes/guards and whole Lite FIT/STA if RTL changes."
+      },
+      {
+        "id": "S5",
+        "status": "pending_all_gates",
+        "deliverable": "Unique installer/log names, no RESTORE; physical5-40s/40-55s and stage entry/STOP/menu."
+      }
+    ],
+    "protected": [
+      "911 SEAL189/validation214-line margin",
+      "951 reveal<=246",
+      "952 interval<=3 VBlank",
+      "954/955 no selected-baseline VBlank regression",
+      "957 final_wait=0",
+      "both-phase dense mean and957 lastACK improvement",
+      "independent identity/CRC/coverage, STOP, cold/partial recovery, capture recovery, menu"
+    ],
+    "stop_rule": "If direct-supply candidates cannot fit transformation/time/net-resource budgets, record failing terms and resume bounded map extent/merge plan. Do not rerun659 direct PSRAM DMA or668 isolated scan/drain without new evidence.",
     "limited_delivery_gate": false,
     "external_IO_signoff": false,
-    "new_hardware_test": false
+    "new_hardware_test": false,
+    "new_simulation": false,
+    "new_synthesis": false
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6"
 }

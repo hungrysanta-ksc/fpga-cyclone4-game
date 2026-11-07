@@ -14,7 +14,8 @@
 - 사용자 지정 개발·실기 기준은 MMC666이다. `analysis/hardware667-mmc666.json`과 `cores/nes/HANDOFF.ko.md`를 먼저 확인한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다.
 - 현재 브랜치는 `codex/nes-output-budget-668`, PR155다. `docs/nes-output668-results.ko.md`와 `analysis/output668-verification.json`이 현재 검증 근거다. 두 ARM 후보는 기능 통과·종단 시간 실패로 기각했고 MMC666을 유지한다.
 - 반복 탐색만 줄이면 map 선행 DMA가 감소할 수 있다. 일괄 map drain은 911의 업로드 VBlank 회귀를 만들었다. 같은 단독 탐색/drain/위상별 고정 지연 변형은 새 근거 전까지 보류한다.
-- 다음은 954·957의 수락 map 범위·명령 병합·빈 큐 시점을 함께 검토한다. 911 발행 마감과 951 공개선·952 3회 이하·957 추가 대기0회, 두 위상의 밀집 평균·마지막 ACK를 함께 판정한다.
+- 669에서 sd2snes+ 소스를 다시 대조했다. `docs/nes-reference669-plan.ko.md`와 `analysis/reference669-review.json`을 읽는다. CHR 사전 변환·2B 공급은 반영됐지만 map 직접 공급은 미반영이다. 다음은 ARM descriptor+기존 저장 공급과 NES run+SNES 변환의 실제 SPI 생략·변환·RAM 포트·순삭제 예산표다. 16KiB mailbox 추가·659 직접 PSRAM DMA 반복은 제외한다.
+- 위 예산과 별개로 954·957 수락 범위·명령 병합·주사선 작업 예산을 비교한다. 911 발행 마감과 951 공개선·952 3회 이하·957 추가 대기0회, 두 위상의 밀집 평균·마지막 ACK를 함께 판정한다. 실행 순서는 579 계획의 current_followup을 따른다.
 - 실기 평균 출력·최종 ACK26.84ms를 고정 재생의 비율로 나누지 않는다. 실제 링크 M4·65816, CPI/IRQ/SPI 모델, 반복 ROM 달력과 실기 로그의 범위를 구분한다.
 - 이전 Current/FIRST/NEXT 누적은 [664 시작 전 원문](docs/progress/archive/AGENTS-before664.md)에 바이트 그대로 보존했다. 그 안의 '현재'는 당시 기록이며 새 실행 지시가 아니다.
 - 검증된 GBC와 사용자 세이브·백업을 보존한다. 새 실기 전달 전에는 MMC662·MMC666 파일을 덮지 않는다.

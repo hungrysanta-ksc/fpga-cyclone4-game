@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-현재 브랜치는 `codex/nes-output-budget-668` / PR155다. [668 결과·후속 경계](../nes-output668-results.ko.md)를 먼저 읽는다. 두 후보는 기각했으며 MMC666을 유지한다. [665 VBlank 진입·선택 후보](../nes-entry665-results.ko.md), [664 출력 비용](../nes-output664-results.ko.md)과 현재 인계의 다음 작업을 먼저 확인한다. 아래 PR150–152 설명은 이전 작업 기록이다.
+현재 브랜치는 `codex/nes-output-budget-668` / PR155다. [669 sd2snes+ 재검토·실행 순서](../nes-reference669-plan.ko.md)를 먼저 읽는다. 직접 공급의 변환·SPI·RAM 포트·순삭제 예산표부터 시작하며 [668 두 후보](../nes-output668-results.ko.md)는 기각한 채 MMC666을 유지한다. [665 VBlank 진입·선택 후보](../nes-entry665-results.ko.md), [664 출력 비용](../nes-output664-results.ko.md)과 현재 인계를 확인한다. 아래 PR150–152 설명은 이전 작업 기록이다.
 
 PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [598 collector·출력 비용](../nes-boundary598-results.ko.md), [597 결합 예산·핀 전송](../nes-region597-results.ko.md), [596 페이지·회로 예산](../nes-pages596-budget.ko.md), [595 D4 FPGA 결과](../nes-region595-results.ko.md), [594 ARM 결과](../nes-report594-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 실제 ARM transport 제한 시험·전체 링크 비용을 확인했다. 594 ARM과 연결한 595 FPGA는 같은 경계의 Lite MAP 예산을 넘었다. 선택 산출물과 실측은 MMC577을 유지한다.
 
