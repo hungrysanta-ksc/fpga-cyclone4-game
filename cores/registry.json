@@ -25,9 +25,9 @@
     {
       "id": "nes",
       "status": "in_development",
-      "candidate": "MMC662",
+      "candidate": "MMC666",
       "released": false,
-      "implementation_commit": "ba2a00256ce5d25173053d940460b15b9c603ac6",
+      "implementation_commit": "0a32c704d4be6785a7a5a2203167cb9ad252e0ed",
       "source_paths": [
         "src/nes",
         "tests/nes-functional",
@@ -36,17 +36,17 @@
       ],
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
-      "verification": "analysis/hardware663-mmc662.json",
-      "development_evidence": "analysis/hardware667-mmc666.json",
+      "verification": "analysis/hardware667-mmc666.json",
+      "development_evidence": "analysis/output668-verification.json",
       "plan": "docs/nes-retrospective579-plan.json",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "hardware_candidate": "MMC662",
-      "paired_candidate": "661 mux FPGA / MMC662 ARM (654 combined functions) / 637 client",
+      "hardware_candidate": "MMC666",
+      "paired_candidate": "665 FPGA/65816 / MMC666 ARM (664 all functions)",
       "status_document": "docs/PROJECT-STATUS.ko.md",
-      "progress": "docs/progress/pr-154.md",
-      "work_state": "trial666_hardware_feedback_analyzed_workload_differs",
+      "progress": "docs/progress/pr-155.md",
+      "work_state": "output668_two_candidates_rejected_keep_MMC666",
       "historical_registry": "docs/progress/archive/2026-10-29/core-registry.json",
-      "development_candidate": "MMC666: 665 board/65816 + relabeled 664-all ARM; physical start/STOP/menu passed. Trimmed 19.54fps vs MMC662 19.96fps with substantially more map/OBJ work; no matched-work speed conclusion.",
+      "development_candidate": "668 linear and map-drain: correctness passes, no both-phase dense/last-ACK gain. MMC666 selected.",
       "development_package": "analysis/trial666-package.json",
       "regression_baseline": {
         "candidate": "NROM476",
@@ -55,8 +55,8 @@
         "fps": 23.838854669552187,
         "same_scene_as_MMC482": false
       },
-      "development_implementation_commit": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
-      "hardware_package": "analysis/trial662-package.json",
+      "development_implementation_commit": "0a32c704d4be6785a7a5a2203167cb9ad252e0ed",
+      "hardware_package": "analysis/trial666-package.json",
       "previous_game_baseline": {
         "candidate": "MMC482",
         "verification": "analysis/mmc483-hardware482.json",
@@ -64,7 +64,7 @@
         "fps": 14.602064602064601,
         "same_scene_and_input_as485": false
       },
-      "performance_selection": "MMC662: 1224/60.32s; 5-40s 682/35, 40-55s 316/15; trimmed 19.96fps. +8.95% observational vs MMC643; workloads differ.",
+      "performance_selection": "MMC666 selected by user after PR154: 1221/60.32s, 5-40s 687/35 and 40-55s 290/15, trimmed 19.54fps; different workloads versus MMC662, no causal FPS gain claim.",
       "prior485_baseline": {
         "candidate": "MMC485",
         "verification": "analysis/hardware486-gameplay485.json",
@@ -122,6 +122,12 @@
         "verification": "analysis/hardware578-mmc577.json",
         "hardware_package": "analysis/trial577-package.json",
         "performance_selection": "MMC577: 838/60.08s; completion windows 482/35s and 211/15s = 13.86fps trimmed. +1.02% observational vs558."
+      },
+      "prior662_baseline": {
+        "candidate": "MMC662",
+        "verification": "analysis/hardware663-mmc662.json",
+        "hardware_package": "analysis/trial662-package.json",
+        "performance_selection": "MMC662: 1224/60.32s; 5-40s 682/35, 40-55s 316/15; trimmed 19.96fps. +8.95% observational vs MMC643; workloads differ."
       }
     },
     {

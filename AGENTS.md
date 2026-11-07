@@ -11,12 +11,13 @@
 
 ## 현재 작업 범위
 
-- 실기 기준은 MMC662다. `analysis/hardware663-mmc662.json`과 `cores/nes/HANDOFF.ko.md`를 먼저 확인한다. PR153은 master `9a1aa775871ea6d5f19eedc9dc97e3e05f339a31`에 병합됐다.
-- 후속 브랜치는 `codex/nes-output-budget-664`다. 같은 map·OBJ 작업량에서 ARM 발행·65816 수락·DMA·VBlank를 분리하고 두 시작 위상의 밀집 표시 간격과 마지막 ACK를 함께 판정한다. 상세 근거는 `docs/nes-output664-results.ko.md`에 둔다.
-- 665에서 664 all의 914 추가 대기를 제거했다. `docs/nes-entry665-results.ko.md`와 `analysis/entry665-verification.json`이 현재 후보 근거다. MMC666 실기 분석은 `docs/nes-hardware667-results.ko.md`다. 실행·복귀 성공, 초반 +0.73%·후반 −8.23%이나 작업량이 달라 속도 개선·회귀를 확정하지 않는다. 다음은 출력 작업량을 맞춘 비교이며 실기 비교 기준은 MMC662다.
-- 실기 평균 출력·최종 ACK 26.51ms를 특정 재생 장면의 단계 비용과 동일시하거나 비율로 분배하지 않는다. 실제 링크 M4·65816, CPI/IRQ/SPI 모델, 반복 ROM 허용 달력과 물리 로그의 범위를 구분한다.
+- 사용자 지정 개발·실기 기준은 MMC666이다. `analysis/hardware667-mmc666.json`과 `cores/nes/HANDOFF.ko.md`를 먼저 확인한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다.
+- 현재 브랜치는 `codex/nes-output-budget-668`, PR155다. `docs/nes-output668-results.ko.md`와 `analysis/output668-verification.json`이 현재 검증 근거다. 두 ARM 후보는 기능 통과·종단 시간 실패로 기각했고 MMC666을 유지한다.
+- 반복 탐색만 줄이면 map 선행 DMA가 감소할 수 있다. 일괄 map drain은 911의 업로드 VBlank 회귀를 만들었다. 같은 단독 탐색/drain/위상별 고정 지연 변형은 새 근거 전까지 보류한다.
+- 다음은 954·957의 수락 map 범위·명령 병합·빈 큐 시점을 함께 검토한다. 911 발행 마감과 951 공개선·952 3회 이하·957 추가 대기0회, 두 위상의 밀집 평균·마지막 ACK를 함께 판정한다.
+- 실기 평균 출력·최종 ACK26.84ms를 고정 재생의 비율로 나누지 않는다. 실제 링크 M4·65816, CPI/IRQ/SPI 모델, 반복 ROM 달력과 실기 로그의 범위를 구분한다.
 - 이전 Current/FIRST/NEXT 누적은 [664 시작 전 원문](docs/progress/archive/AGENTS-before664.md)에 바이트 그대로 보존했다. 그 안의 '현재'는 당시 기록이며 새 실행 지시가 아니다.
-- 검증된 GBC와 사용자 세이브·백업을 보존한다. 새 실기 전달 전에는 MMC662 파일을 덮지 않는다.
+- 검증된 GBC와 사용자 세이브·백업을 보존한다. 새 실기 전달 전에는 MMC662·MMC666 파일을 덮지 않는다.
 
 ## 문서와 PR
 

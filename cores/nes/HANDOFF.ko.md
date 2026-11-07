@@ -1,20 +1,18 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-output-budget-664` / [PR154](../../docs/progress/pr-154.md)다. PR153은 master `9a1aa775871ea6d5f19eedc9dc97e3e05f339a31`에 병합됐다. 실기 기준은 MMC662이며 [실기 결과](../../docs/nes-hardware663-results.ko.md)와 [설치 안내](../../docs/nes-mmc662-trial.ko.md)를 유지한다.
+현재 브랜치는 `codex/nes-output-budget-668` / [PR155](../../docs/progress/pr-155.md)다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 사용자 지정 개발·실기 기준은 MMC666이며 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
 
 ## 현재 작업
 
-**MMC666 실기 피드백 분석 완료.** 실행·STOP·메뉴 복귀 성공. MMC662 대비 5–40초 19.49→19.63fps, 40–55초 21.07→19.33fps, 5–55초 19.96→19.54fps다. 후반 map·OBJ·출력 바이트 증가 때문에 구현만의 개선·회귀로 판정하지 않는다. [667 실기 비교](../../docs/nes-hardware667-results.ko.md) · [분석 JSON](../../analysis/hardware667-mmc666.json). 다음에는 출력 작업량을 맞춘 고정 재생에서 발행·수락·DMA·VBlank 병목을 비교한다. MMC662 성능 비교 기준과 MMC666 기능 성공 산출물을 모두 유지한다.
+**668 두 후보 검증 완료·둘 다 기각, MMC666 유지.** [668 비용·결과·다음 순서](../../docs/nes-output668-results.ko.md) · [검증 JSON](../../analysis/output668-verification.json). 같은 map/OBJ의 실제 ARM·65816 재생에서 반복 탐색은 약 0.75→0.14–0.18ms로 줄었지만, 위상 1의 선행 DMA가 감소해 마지막 ACK가 0.215ms 늦어졌다. map 소비 완료를 기다리는 결합 후보는 911의 업로드 VBlank를 하나 놓쳐 마지막 ACK가 16.849/16.640ms 늦어졌다. 안전 검사는 통과했으나 시간 조건은 실패했다.
 
-MMC666은 665 보드·65816과 664 all ARM의 이름 변경 구성이다. ARM 함수 798개 동일, Flash 212,496B(여유 496B). [설치 안내](../../docs/nes-mmc666-trial.ko.md) · [패키지 검증](../../analysis/trial666-package.json). ZIP `probes/nes-trial666/trial01/MMC666-TRIAL.zip`, SHA256 `67dfd6e294542c188463b889cd27f98587ae6db4fc582e52b43075f9304d4b56`. ROM·세이브·RESTORE 제외.
+다음은 954·957의 수락 범위·명령 병합·빈 큐 DMA 기회를 함께 검토한다. 911 SEAL 수락189/검사 완료214번 선의 기존 여유, 951 공개선·952 3회 이하·957 추가 대기0회·STOP·독립 검사·메뉴 복귀와 두 위상의 밀집 평균·마지막 ACK 동시 개선을 요구한다. 단독 탐색/일괄 drain/위상별 고정 지연 반복은 보류한다.
 
-실기 기준은 MMC662다. MMC662-TRIAL.zip에 661 mux 보드·654 combined와 함수가 같은 MMC662 ARM·637 client를 묶어 전달했다. 파일은 작업 폴더의 `probes/nes-trial662/trial01/MMC662-TRIAL.zip`, 전달 복사본은 `C:/Users/mohallo/Downloads/MMC662-TRIAL.zip`이다. SHA256은 `7a5907b7c72415e9309f9de79abc8d4122930d6eda3ca5f349589f9bca4836cb`이다. [MMC662 설치·동선](../../docs/nes-mmc662-trial.ko.md) · [패키지 증거](../../analysis/trial662-package.json)
-
-[665 VBlank 진입·DMA 설정](../../docs/nes-entry665-results.ko.md): 664 all ARM을 유지하고 65816의 채널 설정을 대기 앞으로 옮겼다. 두 위상 106화면에서 914 추가 대기를 제거하고 952 3 VBlank·밀집 15회·957 최종 대기 0회를 유지했다. MMC662 대비 밀집 평균 −3.323/−3.327ms, 957 ACK −16.880/−16.652ms다. 664 대비 위상 1 밀집 평균 +0.000968ms는 별도 공개하며 VBlank 횟수 회귀는 없다. 246번 검사선·독립 검사·최종 ACK 바이트는 그대로이고 STOP/timeout 10조건이 통과했다. 전체 Lite FIT는 15,324 LE·962 LAB·56 M9K, STA 최솟값은 MMC662와 동일하다. ARM 여유 496B, 물리 ROM 5KiB·여유 11B다. 선택은 `probes/nes-output664/all/src` ARM + `probes/nes-entry665/client02` + ASCII Temp `nes-entry665-board01`; [검증 JSON](../../analysis/entry665-verification.json). 이 구성을 MMC666으로 전달 준비했으며, 실기 피드백의 혼합 결과는 667에 별도로 기록했다. README의 MMC662 실기 기준은 유지한다.
+선택 산출물은 `probes/nes-trial666/arm01/src` ARM, `probes/nes-entry665/client02` 65816, ASCII Temp `nes-entry665-board01`이다. MMC666 패키지 SHA256 `67dfd6e294542c188463b889cd27f98587ae6db4fc582e52b43075f9304d4b56`, [패키지 근거](../../analysis/trial666-package.json). Flash 212,496B·여유496B, data/BSS10,040/19,544B, 전체15,324LE·962LAB·56M9K. 새 ZIP은 만들지 않았다. ROM/save/RESTORE 제외·사용자 SD 설치 방식은 유지한다.
 
 ## 최신 실기와 비교 기준
 
-MMC662 실기에서 60.32초에 1,224화면(20.29fps)을 표시하고 메뉴로 복귀했다. MMC643 대비 5–40초는 18.17→19.49fps, 40–55초는 18.67→21.07fps였다. 플레이 작업량 차이가 있어 구현만의 개선율과는 구분한다. [실기 비교](../../docs/nes-hardware663-results.ko.md)
+MMC666은 60.32초에 1,221회(20.24fps), 5–40초19.63fps·40–55초19.33fps·5–55초19.54fps다. 출력·최종 ACK는26.84ms이며 map/OBJ 작업량이 달라 MMC662 대비 구현 가속을 단정하지 않는다. 실행·STOP·캡처 회복·메뉴 복귀를 확인했다. [실기 비교](../../docs/nes-hardware667-results.ko.md)
 
 **MMC509 /507 FPGA /489 SNES**:60.08초770회 **12.82fps**, 실행·입력 흔적·STOP/base 복구와 사용자 메뉴 복귀 정상. 체감 개선은 작았다. 이전 MMC502는60.07초636회10.59fps이며 복구 기준으로 보존한다. 같은 동선·첫 레벨 전용 비교는 아니다. 원본 로그는 `probes/nes-hardware510/run01`, 선택 증거는 `termination01`/`analysis02.json`이다.
 
