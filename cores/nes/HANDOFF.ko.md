@@ -1,12 +1,12 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-output-profile-645` / [PR153](../../docs/progress/pr-153.md)이다. PR152는 master의 9e53907에 병합됐다. MMC662는 60초 완주·STOP·base 복구·메뉴 복귀에 성공했고 새 실기 기준으로 삼는다. [실기 결과](../../docs/nes-hardware663-results.ko.md) · [설치 안내](../../docs/nes-mmc662-trial.ko.md)
+현재 브랜치는 `codex/nes-output-budget-664` / [PR154](../../docs/progress/pr-154.md)다. PR153은 master `9a1aa775871ea6d5f19eedc9dc97e3e05f339a31`에 병합됐다. 실기 기준은 MMC662이며 [실기 결과](../../docs/nes-hardware663-results.ko.md)와 [설치 안내](../../docs/nes-mmc662-trial.ko.md)를 유지한다.
 
 ## 현재 작업
 
 실기 기준은 MMC662다. MMC662-TRIAL.zip에 661 mux 보드·654 combined와 함수가 같은 MMC662 ARM·637 client를 묶어 전달했다. 파일은 작업 폴더의 `probes/nes-trial662/trial01/MMC662-TRIAL.zip`, 전달 복사본은 `C:/Users/mohallo/Downloads/MMC662-TRIAL.zip`이다. SHA256은 `7a5907b7c72415e9309f9de79abc8d4122930d6eda3ca5f349589f9bca4836cb`이다. [MMC662 설치·동선](../../docs/nes-mmc662-trial.ko.md) · [패키지 증거](../../analysis/trial662-package.json)
 
-다음은 같은 map·OBJ 작업량에서 출력·최종 ACK 26.51ms를 ARM 발행·65816 수락·선행/잔여 DMA·마지막 VBlank로 나누는 것이다. MMC643 대비 5–55초는 18.32→19.96fps지만 후반 map 작업량 감소가 있어 인과적 개선율로 단정하지 않는다. 두 위상 954·955의 3 VBlank와 957 ACK, 전체 FIT 및 168 / 84 MHz setup +0.511 / +0.616 ns는 661에서 검증했다. stage 0 부팅 timeout은 별도로 추적한다. [661 검증](../../docs/nes-reader661-results.ko.md)
+[664 비용 분해·후속 순서](../../docs/nes-output664-results.ko.md): 원본·prefix·all을 두 위상 총 318화면으로 검증했다. all은 밀집 16→15 VBlank, 952 4→3회, 957 ACK −0.026/−16.639ms다. 다만 위상 1의 914가 246번 선 경계에서 최종 대기 1회를 추가해 `release_ready=false`다. 다음은 all을 고정하고 914의 VBlank 진입·DMA 설정·raw 묶음·최종 credit 검사에서 약 238 master clocks(11µs)를 줄이는 것이다. 246번 선을 늦추거나 위상별 상수 대기를 추가하지 않는다. 951 공개선·952 3회·957 추가 대기 0회·최종 ACK·독립 검사·STOP·캡처 회복·메뉴 복귀를 유지한다. Flash 여유 496B, data/BSS 증가 없음. 보드·65816은 661/637 그대로이며 새 ZIP은 없다.
 
 ## 최신 실기와 비교 기준
 
