@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-budget-668",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 687,
-  "current_evidence": "analysis/pair687-verification.json",
+  "current_step": 688,
+  "current_evidence": "analysis/owner688-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -380,10 +380,10 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "687은 인접 map의 조회를 두 패킷 단위로 공유하되 준비된 bulk의 완료 처리를 우선했다. 955 마지막 map 검사 완료를 위상1/2에서 593.930/1043.522µs 앞당겨 두 위상 모두 1152B 선행 DMA를 회복했다. 7블록 수신·957 마지막384B 선행·952 표시3회·957 최종대기0회를 유지했고, MMC666 대비 밀집 평균은 −0.044959/−0.001378ms, 마지막ACK는 −0.167340/−0.407501ms다. 그러나 위상1의951 공개가247선으로 기존246선 제한을 넘어서 후보 채택은 보류하고 실기 기준MMC666을 유지한다.",
-    "next": "687의전송후map소유권 갱신·bulk우선권과686의7블록수신·685의957 마지막384B 선행DMA를 유지한다. 먼저951의실제map/tile 소비ACK·빈큐DMA 시작과공개까지의비용을대조해247→246선을회복할삭제예산을잡는다. map생산기에서추정한bulk상태만으로허가하지말고, plan progress가실제E8 빈응답을검증한경로와조회없이complete485만수행한경로를구분해공유허가를전달하는구조를검토한다. 기존map_pair 문맥·중복판단을재사용하고추가정적RAM없이Flash212992B이하를지킨다. 위상2의955는빠른수락에도선행map320B가줄었으므로,128B map과1344/1536B범위가빈큐가되는시각을함께확인한다. 248/252 DMA허용선·246 공개선을늘리거나고정지연/프레임번호분기로통과시키지않는다. 새소유권관측은runpy 실제실행경계에서첫화면부터연결됐음을확인한후전체재생한다. 두위상951공개선·952표시3회·957최종대기0회·7블록·첫BG ROM창·밀집평균·마지막ACK를모두통과한뒤전체Lite FIT/STA와고유파일명전달로간다. 실기비교는5–40초·40–55초와RESTORE제외를유지한다.",
-    "document": "docs/nes-pair687-results.ko.md",
-    "evidence": "analysis/pair687-verification.json",
+    "candidate": "688에서 실제 E8 빈 응답의 조회 허가와 receipt-only 완료를 구분해 951 공개를 위상1 247→236선, 위상2 236선으로 회복했다. 955 선행 DMA 1536/1152B와 7블록 수신, 952 표시3회·957 최종대기0회를 유지했다. MMC666 대비 밀집 평균 −0.051906/−0.001248ms, 마지막 ACK −0.188944/−0.385896ms로 두 위상 모두 개선했다. Flash 212984B/free8B·추가 RAM0B다. 다만 680 RTL+685 ROM의 첫 전체 Lite FIT는 969/963 LAB로 6 LAB 부족해 실패했고 STA·새 설치본은 없다. 실기 기준 MMC666을 유지한다.",
+    "next": "다음은 688 ARM과 685 CPU의 통과 바이너리를 고정하고, 680 E0 진행 공개에 추가된 bus 주소 비교·ack/stop 무효화·SPI flags 선택을 기존 601C 최종 ACK/queue 상태 판정과 공동 처리할 수 있는지 검토한다. 삭제할 비교기·상태 조건과 CDC 소유권을 먼저 특정하고 최소 6 LAB의 전체 배치 부족을 없애야 한다. LE 단독 감소를 성공 기준으로 삼지 않는다. 새 패킷/STOP 우선·실제 DMA 완료 뒤에만 진행 공개·기존 최종 ACK identity를 유지한다. 구조 변경 뒤 해당 RTL guard와 두 위상 전체 일정, 한 번의 전체 FIT·STA 순으로 검증한다. 8B Flash와 packed ROM 13B 여유를 비용 없이 쓰지 않는다. 회로 경계 변경이 불필요하다면 통과 ARM/CPU를 다시 미세 조정하지 않는다.",
+    "document": "docs/nes-owner688-results.ko.md",
+    "evidence": "analysis/owner688-verification.json",
     "timing_reference": "analysis/output668-verification.json",
     "hardware_baseline": "MMC666",
     "steps": [
@@ -491,6 +491,11 @@
         "id": "S3o",
         "status": "pair687_DMA_and_timing_gain_publication951_guard_failed_keep_MMC666",
         "deliverable": "687은 인접 map의 조회를 두 패킷 단위로 공유하되 준비된 bulk의 완료 처리를 우선했다. 955 마지막 map 검사 완료를 위상1/2에서 593.930/1043.522µs 앞당겨 두 위상 모두 1152B 선행 DMA를 회복했다. 7블록 수신·957 마지막384B 선행·952 표시3회·957 최종대기0회를 유지했고, MMC666 대비 밀집 평균은 −0.044959/−0.001378ms, 마지막ACK는 −0.167340/−0.407501ms다. 그러나 위상1의951 공개가247선으로 기존246선 제한을 넘어서 후보 채택은 보류하고 실기 기준MMC666을 유지한다."
+      },
+      {
+        "id": "S3p",
+        "status": "owner688_timing_guards_pass_whole_FIT_6LAB_short_keep_MMC666",
+        "deliverable": "688에서 실제 E8 빈 응답의 조회 허가와 receipt-only 완료를 구분해 951 공개를 위상1 247→236선, 위상2 236선으로 회복했다. 955 선행 DMA 1536/1152B와 7블록 수신, 952 표시3회·957 최종대기0회를 유지했다. MMC666 대비 밀집 평균 −0.051906/−0.001248ms, 마지막 ACK −0.188944/−0.385896ms로 두 위상 모두 개선했다. Flash 212984B/free8B·추가 RAM0B다. 다만 680 RTL+685 ROM의 첫 전체 Lite FIT는 969/963 LAB로 6 LAB 부족해 실패했고 STA·새 설치본은 없다. 실기 기준 MMC666을 유지한다."
       }
     ],
     "protected": [
@@ -502,12 +507,12 @@
       "both-phase dense mean and957 lastACK improvement",
       "independent identity/CRC/coverage, STOP, cold/partial recovery, capture recovery, menu"
     ],
-    "stop_rule": "687의전송후map소유권 갱신·bulk우선권과686의7블록수신·685의957 마지막384B 선행DMA를 유지한다. 먼저951의실제map/tile 소비ACK·빈큐DMA 시작과공개까지의비용을대조해247→246선을회복할삭제예산을잡는다. map생산기에서추정한bulk상태만으로허가하지말고, plan progress가실제E8 빈응답을검증한경로와조회없이complete485만수행한경로를구분해공유허가를전달하는구조를검토한다. 기존map_pair 문맥·중복판단을재사용하고추가정적RAM없이Flash212992B이하를지킨다. 위상2의955는빠른수락에도선행map320B가줄었으므로,128B map과1344/1536B범위가빈큐가되는시각을함께확인한다. 248/252 DMA허용선·246 공개선을늘리거나고정지연/프레임번호분기로통과시키지않는다. 새소유권관측은runpy 실제실행경계에서첫화면부터연결됐음을확인한후전체재생한다. 두위상951공개선·952표시3회·957최종대기0회·7블록·첫BG ROM창·밀집평균·마지막ACK를모두통과한뒤전체Lite FIT/STA와고유파일명전달로간다. 실기비교는5–40초·40–55초와RESTORE제외를유지한다.",
+    "stop_rule": "다음은 688 ARM과 685 CPU의 통과 바이너리를 고정하고, 680 E0 진행 공개에 추가된 bus 주소 비교·ack/stop 무효화·SPI flags 선택을 기존 601C 최종 ACK/queue 상태 판정과 공동 처리할 수 있는지 검토한다. 삭제할 비교기·상태 조건과 CDC 소유권을 먼저 특정하고 최소 6 LAB의 전체 배치 부족을 없애야 한다. LE 단독 감소를 성공 기준으로 삼지 않는다. 새 패킷/STOP 우선·실제 DMA 완료 뒤에만 진행 공개·기존 최종 ACK identity를 유지한다. 구조 변경 뒤 해당 RTL guard와 두 위상 전체 일정, 한 번의 전체 FIT·STA 순으로 검증한다. 8B Flash와 packed ROM 13B 여유를 비용 없이 쓰지 않는다. 회로 경계 변경이 불필요하다면 통과 ARM/CPU를 다시 미세 조정하지 않는다.",
     "limited_delivery_gate": false,
     "external_IO_signoff": false,
     "new_hardware_test": false,
-    "new_simulation": "687: three candidates x106 matched linked frames;42 map +23 SEAL +56 receive +5 menu/4marker guards. Same685 CPU, modeled SPI/IRQ/ROM. No physical test.",
-    "new_synthesis": "기존951 공개선 보호조건이 실패했으므로 새 Quartus Lite MAP/FIT/STA와 설치본은 만들지 않았다. 이번 변경은 ARM뿐이고65816/RTL은685와 동일하다. 그렇더라도680의E0진행회로와685 ROM을 포함한 전체보드FIT는 아직 미검증이며MMC666의기존FIT/STA를 새 후보의 통과 근거로 옮기지 않는다. Flash 여유4B도 후속 구현의 제한이다.",
+    "new_simulation": "688: same binary x106 matched linked frames;41 map +6 owner +23 SEAL +56 receive +5 menu/4marker guards. Same685 CPU, modeled SPI/IRQ/ROM. No physical test.",
+    "new_synthesis": "688: first full680 RTL+685 CPU board compile;969 LAB required/963 available, FIT failed, STA not run. No seed or constraints changes.",
     "budget_670": {
       "reference_reconstructions": 106,
       "reference_fault_rejections": 318,
@@ -919,6 +924,20 @@
       "map_stack_delta_B": 8,
       "request_gate": false,
       "next": "687의전송후map소유권 갱신·bulk우선권과686의7블록수신·685의957 마지막384B 선행DMA를 유지한다. 먼저951의실제map/tile 소비ACK·빈큐DMA 시작과공개까지의비용을대조해247→246선을회복할삭제예산을잡는다. map생산기에서추정한bulk상태만으로허가하지말고, plan progress가실제E8 빈응답을검증한경로와조회없이complete485만수행한경로를구분해공유허가를전달하는구조를검토한다. 기존map_pair 문맥·중복판단을재사용하고추가정적RAM없이Flash212992B이하를지킨다. 위상2의955는빠른수락에도선행map320B가줄었으므로,128B map과1344/1536B범위가빈큐가되는시각을함께확인한다. 248/252 DMA허용선·246 공개선을늘리거나고정지연/프레임번호분기로통과시키지않는다. 새소유권관측은runpy 실제실행경계에서첫화면부터연결됐음을확인한후전체재생한다. 두위상951공개선·952표시3회·957최종대기0회·7블록·첫BG ROM창·밀집평균·마지막ACK를모두통과한뒤전체Lite FIT/STA와고유파일명전달로간다. 실기비교는5–40초·40–55초와RESTORE제외를유지한다."
+    },
+    "budget_688": {
+      "Flash_B": 212984,
+      "free_B": 8,
+      "new_static_RAM_B": 0,
+      "request_gate": true,
+      "whole_FIT": false,
+      "LAB_required": 969,
+      "LAB_available": 963,
+      "LE": 15321,
+      "M9K": 56,
+      "STA_executed": false,
+      "board_evidence": "analysis/owner688-board.json",
+      "next": "다음은 688 ARM과 685 CPU의 통과 바이너리를 고정하고, 680 E0 진행 공개에 추가된 bus 주소 비교·ack/stop 무효화·SPI flags 선택을 기존 601C 최종 ACK/queue 상태 판정과 공동 처리할 수 있는지 검토한다. 삭제할 비교기·상태 조건과 CDC 소유권을 먼저 특정하고 최소 6 LAB의 전체 배치 부족을 없애야 한다. LE 단독 감소를 성공 기준으로 삼지 않는다. 새 패킷/STOP 우선·실제 DMA 완료 뒤에만 진행 공개·기존 최종 ACK identity를 유지한다. 구조 변경 뒤 해당 RTL guard와 두 위상 전체 일정, 한 번의 전체 FIT·STA 순으로 검증한다. 8B Flash와 packed ROM 13B 여유를 비용 없이 쓰지 않는다. 회로 경계 변경이 불필요하다면 통과 ARM/CPU를 다시 미세 조정하지 않는다."
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6"
