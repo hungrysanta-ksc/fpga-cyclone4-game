@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-현재 브랜치는 `codex/nes-output-budget-668` / PR155다. [677 map 공급·DMA 결과](../nes-map677-results.ko.md)를 먼저 읽는다. 677 map 구간 우선 후보가 두 위상 모두952 표시3회와 선행 map1536/1152B를 회복했다. 밀집 평균은−0.04455/−0.05386ms지만957 마지막 ACK는+0.48395/−0.17609ms여서MMC666을 유지한다. 676의 타일 이득 일부를 사용했으며 큰 plan 묶음과911/951/957·STOP·독립 검사·메뉴 경계는 유지했다. Flash212724B/free268B,추가staticRAM0B·기존보드/65816동일. 예약 단독은952 두 위상4회로 기각했다. 다음은956의 누적 표시 지연0.3475ms와957 자체ACK 지연 약0.1364ms를 함께 줄인다. 952의3회·선행 map·큰 묶음을 유지하면서 이미 수락된 map과 후속 tile의 준비·credit·수락·빈 큐 DMA 선택을 연결한다. 고정 대기/위상/예약 수 반복은 보류하고 실제 DMA 진행 공개가 필요하면identity·STOP/CDC·Flash/LE 예산부터 정한다. 아래PR150–152는과거기록이다.
+현재 브랜치는 `codex/nes-output-budget-668` / PR155다. [678 전환·수신 예산 결과](../nes-handoff678-results.ko.md)를 먼저 읽는다. 678 수정본은 빈 D0가 7블록 수신 예산을 소모하지 않도록 하고 END 발행 중 map→tile 전환을 연결했다. 952는 두 위상3회·큰묶음·보호조건을 유지했고, 밀집 평균은−0.04567/−0.05654ms다. 마지막ACK는+0.01043/−0.18270ms로 동시개선은 미달해 MMC666을 유지한다. 다음은956의 실제 DMA 진행 공개·identity·STOP 경계와 삭제 예산을 먼저 정한다. 선행 조회34/35회가 모두 빈 D0였고956 선행map은128B로 남았으므로, 같은 조회/고정대기/위상별상수 변형은 보류한다. 선택보드84LE·1LAB·0M9K, ARM192B(678)/496B(MMC666), SNES ROM11B 안의 전체비용을 판정한 뒤에만 구현한다. 아래PR150–152는 과거기록이다.
 
 PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [598 collector·출력 비용](../nes-boundary598-results.ko.md), [597 결합 예산·핀 전송](../nes-region597-results.ko.md), [596 페이지·회로 예산](../nes-pages596-budget.ko.md), [595 D4 FPGA 결과](../nes-region595-results.ko.md), [594 ARM 결과](../nes-report594-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 실제 ARM transport 제한 시험·전체 링크 비용을 확인했다. 594 ARM과 연결한 595 FPGA는 같은 경계의 Lite MAP 예산을 넘었다. 선택 산출물과 실측은 MMC577을 유지한다.
 
