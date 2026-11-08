@@ -4,7 +4,9 @@
 
 ## 현재 작업
 
-**674 BG 쌍 선행 전송: 기능 통과·시간 회귀, MMC666 유지.** [결과·다음 경계](../../docs/nes-bg674-results.ko.md) · [검증 JSON](../../analysis/bg674-verification.json). 두 위상106화면의 출력·최종 ACK는 일치하지만952는3→4/5회,밀집 평균+9.903/+13.230ms,957 마지막ACK+49.911/+66.333ms다. 911 마감·951 공개선·957 최종대기0회와STOP/메뉴 경계는 유지했다. 957은plan bank 허가가 있어도zero tile소비를 기다려E9가늦고,954는반복pair의plan bank 대기로계산이멈춘다. 다음은첫zero소비+BG grant의실제두slot/bank 검증과954 준비경로 예산을 함께 다룬다. 새ZIP/FIT없음.
+**675 초기 허가 결합: 기능 통과·시간 회귀, MMC666 유지.** [결과·다음 경계](../../docs/nes-bg675-results.ko.md) · [검증 JSON](../../analysis/bg675-verification.json). 675 첫 zero 소비+BG grant는 실제 RTL/ARM 기능과 후속 큰 묶음을 통과했지만952가3→5/4회로 회귀했다. 밀집 평균+6.702/+3.311ms,957 마지막ACK+33.763/+16.926ms로MMC666을 유지한다. 마지막 tile ACK는약10ms 빨라졌으나 기존 map drain 뒤40회 대기가새로걸려ordinary 요청공백0.094→6.561ms,선행map DMA1536→192/768B다. 다음은952 map drain 뒤 대기를 실제 DMA 진행·큐 유휴 기회·다음 입력 수신으로 나눠,도착순서에따라40회 대기가붙는조건을대체할경계를검증한다. tile이득과map 선행1536B·SEAL마감을함께회복하는후보하나를두위상으로대조한다. 첫pair크기/고정위상/대기횟수만의반복조정은보류한다. 새FIT/ZIP없음.
+
+**이전674 BG 쌍 선행 전송: 기능 통과·시간 회귀, MMC666 유지.** [결과·다음 경계](../../docs/nes-bg674-results.ko.md) · [검증 JSON](../../analysis/bg674-verification.json). 두 위상106화면의 출력·최종 ACK는 일치하지만952는3→4/5회,밀집 평균+9.903/+13.230ms,957 마지막ACK+49.911/+66.333ms다. 911 마감·951 공개선·957 최종대기0회와STOP/메뉴 경계는 유지했다. 957은plan bank 허가가 있어도zero tile소비를 기다려E9가늦고,954는반복pair의plan bank 대기로계산이멈춘다. 다음은첫zero소비+BG grant의실제두slot/bank 검증과954 준비경로 예산을 함께 다룬다. 새ZIP/FIT없음.
 
 **이전673 확정·credit·ROM 마감 분해 완료, MMC666 유지.** [결과·예산](../../docs/nes-ready673-results.ko.md) · [계측 JSON](../../analysis/ready673-budget.json). 두 위상106화면의 모든 ACK/출력 바이트가 원본과 같다. 957은 준비된 BG의 묶음 대기7.41ms,954는 마지막 BG 생성이 이전 ROM 창보다2.38–2.64ms 늦다. ordinary 조립0.106ms만 줄이거나 현재 ROM 응답을 고정한 credit 절감으로는 이전246선에 못 들어간다. 다음은957 조기 BG 인계와954 계산 선행 예산을 각각 확인하고 immutable ordinary와 결합한다. 보호 조건 모두 유지, 새제품/FIT/ZIP 없음. 기존672의 마지막 ROM 응답에 캐시 공급이 포함됐음을673에서 정정했다.
 

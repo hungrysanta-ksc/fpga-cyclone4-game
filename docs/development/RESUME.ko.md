@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-현재 브랜치는 `codex/nes-output-budget-668` / PR155다. [674 BG 쌍 실제 전송 결과](../nes-bg674-results.ko.md)를 먼저 읽는다. 두 위상106화면 기능은 통과했지만952와 밀집 시간이 회귀해 MMC666을 유지한다. 다음은 첫 zero tile의 조기 소비와 BG grant의 두 slot/bank·STOP 실제 경계를 검증하고954 준비 경로 예산과 결합한다. 작은 묶음 숫자·고정위상·선택기 단독 변형은 보류한다. 새RTL/FIT/ZIP 없음. 아래PR150–152는 과거 기록이다.
+현재 브랜치는 `codex/nes-output-budget-668` / PR155다. [675 초기 허가·큰 묶음 결과](../nes-bg675-results.ko.md)를 먼저 읽는다. 675 첫 zero 소비+BG grant는 실제 RTL/ARM 기능과 후속 큰 묶음을 통과했지만952가3→5/4회로 회귀했다. 밀집 평균+6.702/+3.311ms,957 마지막ACK+33.763/+16.926ms로MMC666을 유지한다. 마지막 tile ACK는약10ms 빨라졌으나 기존 map drain 뒤40회 대기가새로걸려ordinary 요청공백0.094→6.561ms,선행map DMA1536→192/768B다. 다음은952 map drain 뒤 대기를 실제 DMA 진행·큐 유휴 기회·다음 입력 수신으로 나눠,도착순서에따라40회 대기가붙는조건을대체할경계를검증한다. tile이득과map 선행1536B·SEAL마감을함께회복하는후보하나를두위상으로대조한다. 첫pair크기/고정위상/대기횟수만의반복조정은보류한다. 새RTL/FIT/ZIP없음. 아래PR150–152는과거기록이다.
 
 PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [598 collector·출력 비용](../nes-boundary598-results.ko.md), [597 결합 예산·핀 전송](../nes-region597-results.ko.md), [596 페이지·회로 예산](../nes-pages596-budget.ko.md), [595 D4 FPGA 결과](../nes-region595-results.ko.md), [594 ARM 결과](../nes-report594-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 실제 ARM transport 제한 시험·전체 링크 비용을 확인했다. 594 ARM과 연결한 595 FPGA는 같은 경계의 Lite MAP 예산을 넘었다. 선택 산출물과 실측은 MMC577을 유지한다.
 
