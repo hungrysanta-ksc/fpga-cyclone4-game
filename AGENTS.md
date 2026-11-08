@@ -12,11 +12,11 @@
 ## 현재 작업 범위
 
 - 사용자 지정 개발·실기 기준은 MMC666이다. `analysis/hardware667-mmc666.json`과 `cores/nes/HANDOFF.ko.md`를 먼저 확인한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다.
-- 현재 브랜치는 `codex/nes-output-budget-668`, PR155다. 최신685 근거는 아래에 연결한다. `docs/nes-output668-results.ko.md`와 `analysis/output668-verification.json`의 이전 두 ARM 후보는 기능 통과·종단 시간 실패로 기각했고 MMC666을 유지한다.
+- 현재 브랜치는 `codex/nes-output-budget-668`, PR155다. 최신686 근거는 아래에 연결한다. `docs/nes-output668-results.ko.md`와 `analysis/output668-verification.json`의 이전 두 ARM 후보는 기능 통과·종단 시간 실패로 기각했고 MMC666을 유지한다.
 - 반복 탐색만 줄이면 map 선행 DMA가 감소할 수 있다. 일괄 map drain은 911의 업로드 VBlank 회귀를 만들었다. 같은 단독 탐색/drain/위상별 고정 지연 변형은 새 근거 전까지 보류한다.
 - 670에서669 계획의 거래·복원·소유권·삭제 예산표를 작성했다. `docs/nes-supply670-results.ko.md`와 `analysis/supply670-budget.json`을 읽는다. 실제plan slot으로106개 map 참조복원 일치, descriptor 가정의 밀집 E1절감1417.2B(4.319ms wire)이나 새 target 시간은 미검증이다. D1/E0 삭제0, 순삭제0B/0LE. COMMIT 뒤 collector 재읽기A0는 기각, 별도snapshot은tile RAM을 공짜로 쓸 수 없어 미선택이다.
 - 671 B 제한 시험은 실제 비용 실패로 기각했다. `docs/nes-supply671-results.ko.md`·`analysis/supply671-verification.json`을 읽는다. 전체링크 ARM 생산기/509개65816 command/45개소유권 모델 검사 통과지만 source DMA·CRC42.58ms,954/955 행복원·검사88.99/85.17ms로 wire절감3.21/3.24ms를 초과한다. ARM 자원링크212748B/free244,새문맥300B미할당. 새RTL/종단일정/FIT/ZIP 없음. 후속672 수락 범위 비교도 시간 게이트에서 기각됐다. 같은 LUT/CRC 미세조정은 보류한다.
-- 현재685는 `docs/nes-complete685-results.ko.md`·`analysis/complete685-sealed-verification.json`을 읽는다. 685는 수락된 map1536B를 VBlank 잔여 시간 안에서 한 번에 끝내957의 마지막384B를 선행 DMA했다. SEAL 뒤 중복 E0도 줄여 두 위상 모두 밀집 평균−0.038571/−0.049764ms,957 마지막ACK−0.183357/−0.396326ms로 MMC666보다 빨라졌다. 952 표시3회·957 최종대기0회와 보호조건은 유지했지만 위상2의7번째 입력 검사 완료가955 ACK보다0.081864ms 늦어 전체 채택은 보류한다. 실기 기준은MMC666이다. 다음은579 current_followup을 따른다.
+- 현재686은 `docs/nes-seal686-results.ko.md`·`analysis/seal686-verification.json`을 읽는다. 686은 SEAL 성공 뒤 첫 E0 전에 입력을 시작하도록 소유권을 옮겨 진입 대기를154.389→4.810µs로 줄였다. 두 위상 모두7블록 마감을+1.305946/+0.171500ms로 회복하고957 마지막384B 선행·952 표시3회·957 최종대기0회·보호조건을 유지했다. MMC666 대비 마지막ACK는−0.188944/−0.385896ms지만 밀집 평균은+0.062596/−0.047082ms여서 동시 개선은 미달이다. 위상1의955 마지막map이253선에수락돼1152B 선행 DMA를 놓쳤으므로 MMC666을 유지한다. 다음은579 current_followup을 따른다.
 - 실기 평균 출력·최종 ACK26.84ms를 고정 재생의 비율로 나누지 않는다. 실제 링크 M4·65816, CPI/IRQ/SPI 모델, 반복 ROM 달력과 실기 로그의 범위를 구분한다.
 - 이전 Current/FIRST/NEXT 누적은 [664 시작 전 원문](docs/progress/archive/AGENTS-before664.md)에 바이트 그대로 보존했다. 그 안의 '현재'는 당시 기록이며 새 실행 지시가 아니다.
 - 검증된 GBC와 사용자 세이브·백업을 보존한다. 새 실기 전달 전에는 MMC662·MMC666 파일을 덮지 않는다.
