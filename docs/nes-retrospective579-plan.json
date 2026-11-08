@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-budget-668",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 673,
-  "current_evidence": "analysis/ready673-budget.json",
+  "current_step": 674,
+  "current_evidence": "analysis/bg674-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -92,10 +92,10 @@
     },
     {
       "id": "R2",
-      "status": "ready673_budget_complete_early_BG_handoff_next",
+      "status": "bg674_pair_timing_rejected_first_zero_and_BG_grant_next",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "First bound957 ready BG batch handoff within remaining0.881ms ROM window including E8/E9/decode/16reads. Separately bring954 last BG computation at least2.641ms earlier plus real transfer/read costs. Combine with validated immutable ordinary scheduling, preserve bulk/new-packet/STOP priority, then require both-start whole-path dense and957 ACK improvement. No selector-only or0.106ms packet assembly microtuning.",
+      "next_single_gate": "Verify first-zero early consumption together with checked E8 writable-bank+pending-tile grant for BG on actual two bulk slots/two plan banks and STOP. Preserve large subsequent batches; no blocking pair-size sweep. Separately bound954 planner/resident/other-callback residual5.971ms and earlier input/planner start. Then compare whole two-phase dense and957 ACK with911/951/952/957 protections.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -326,7 +326,7 @@
     },
     {
       "id": "R3",
-      "status": "held_after672_timing_rejection",
+      "status": "held_after674_timing_rejection",
       "objective": "Implement one budget-qualified replacement against selected MMC666; frozen577 remains historical evidence",
       "gate": [
         "Same workload and two start phases plus representative-scene steady interval distribution",
@@ -380,10 +380,10 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "MMC666 retained;673 read-only readiness budget complete",
-    "next": "First bound957 ready BG batch handoff within remaining0.881ms ROM window including E8/E9/decode/16reads. Separately bring954 last BG computation at least2.641ms earlier plus real transfer/read costs. Combine with validated immutable ordinary scheduling, preserve bulk/new-packet/STOP priority, then require both-start whole-path dense and957 ACK improvement. No selector-only or0.106ms packet assembly microtuning.",
-    "document": "docs/nes-ready673-results.ko.md",
-    "evidence": "analysis/ready673-budget.json",
+    "candidate": "MMC666 retained;674 pair flush functional pass but timing regression",
+    "next": "Verify first-zero early consumption together with checked E8 writable-bank+pending-tile grant for BG on actual two bulk slots/two plan banks and STOP. Preserve large subsequent batches; no blocking pair-size sweep. Separately bound954 planner/resident/other-callback residual5.971ms and earlier input/planner start. Then compare whole two-phase dense and957 ACK with911/951/952/957 protections.",
+    "document": "docs/nes-bg674-results.ko.md",
+    "evidence": "analysis/bg674-verification.json",
     "timing_reference": "analysis/output668-verification.json",
     "hardware_baseline": "MMC666",
     "steps": [
@@ -413,6 +413,11 @@
         "deliverable": "Independent readiness/assembly/credit/ROM/cache split;957 ready BG is batched7.41ms,954 last BG caller2.38-2.64ms past prior ROM close. Next bounded early BG and immutable ordinary joint schedule."
       },
       {
+        "id": "S3b",
+        "status": "674_pair_implemented_rejected_timing",
+        "deliverable": "Warm BG pair via real E8/E9;106 same-work frames. Ready grant waits zero tile,954 plan calls stall; preserveMMC666. First-zero+BG grant ownership next."
+      },
+      {
         "id": "S4",
         "status": "pending_selection",
         "deliverable": "Only a budget-qualified candidate: same-work two starts, independent bytes/guards, whole Lite FIT/STA whenever ROM contents or RTL change."
@@ -432,11 +437,11 @@
       "both-phase dense mean and957 lastACK improvement",
       "independent identity/CRC/coverage, STOP, cold/partial recovery, capture recovery, menu"
     ],
-    "stop_rule": "Unchanged last external ROM already misses prior246 by0.094-0.229ms. Even ideal-credit/zero ordinary costs retaining SEAL wire+observed checks need2.298-2.428ms. Budget ROM supply together with ordinary; do not claim early ordinary alone meets the target.",
+    "stop_rule": "Do not repeat synchronous small-pair variants: E8 plan writable is not bulk capacity, zero consumption delays957 and multiple plan banks block954. Extend END grant to BG only after real ownership/backpressure/STOP proof; neither prepared data nor early E9 alone is a timing success.",
     "limited_delivery_gate": false,
     "external_IO_signoff": false,
     "new_hardware_test": false,
-    "new_simulation": "Read-only106 actual linked ARM/65816 captures, per-byte immutable data and function/credit clocks; all original ACKs/bytes and four timing guards retained. No new fault injection, physical or closed-loop ROM RTL run.",
+    "new_simulation": "106 actual linked ARM/65816 outputs match; new pair STOP/CRC/count7 cases,routing12,SEAL5,menu5+marker4.9523->4/5VB fails. No physical or closed-loop ROM RTL run.",
     "new_synthesis": false,
     "budget_670": {
       "reference_reconstructions": 106,
@@ -507,6 +512,31 @@
         2.332931277
       ],
       "actual_timing_improvement": false
+    },
+    "budget_674": {
+      "selected": "MMC666",
+      "candidate_selected": false,
+      "replay_captures": 106,
+      "Flash_B": 212524,
+      "Flash_free_B": 468,
+      "extra_static_RAM_B": 0,
+      "dense_delta_ms": [
+        9.90332477979512,
+        13.229501400364057
+      ],
+      "last_ACK_delta_ms": [
+        49.91080803930779,
+        66.33291229910391
+      ],
+      "interval952_VBlank": [
+        4,
+        5
+      ],
+      "final_wait957": [
+        0,
+        0
+      ],
+      "new_FIT_STA": false
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6"

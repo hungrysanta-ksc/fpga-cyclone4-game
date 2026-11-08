@@ -12,11 +12,11 @@
 ## 현재 작업 범위
 
 - 사용자 지정 개발·실기 기준은 MMC666이다. `analysis/hardware667-mmc666.json`과 `cores/nes/HANDOFF.ko.md`를 먼저 확인한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다.
-- 현재 브랜치는 `codex/nes-output-budget-668`, PR155다. 최신673 근거는 아래에 연결한다. `docs/nes-output668-results.ko.md`와 `analysis/output668-verification.json`의 이전 두 ARM 후보는 기능 통과·종단 시간 실패로 기각했고 MMC666을 유지한다.
+- 현재 브랜치는 `codex/nes-output-budget-668`, PR155다. 최신674 근거는 아래에 연결한다. `docs/nes-output668-results.ko.md`와 `analysis/output668-verification.json`의 이전 두 ARM 후보는 기능 통과·종단 시간 실패로 기각했고 MMC666을 유지한다.
 - 반복 탐색만 줄이면 map 선행 DMA가 감소할 수 있다. 일괄 map drain은 911의 업로드 VBlank 회귀를 만들었다. 같은 단독 탐색/drain/위상별 고정 지연 변형은 새 근거 전까지 보류한다.
 - 670에서669 계획의 거래·복원·소유권·삭제 예산표를 작성했다. `docs/nes-supply670-results.ko.md`와 `analysis/supply670-budget.json`을 읽는다. 실제plan slot으로106개 map 참조복원 일치, descriptor 가정의 밀집 E1절감1417.2B(4.319ms wire)이나 새 target 시간은 미검증이다. D1/E0 삭제0, 순삭제0B/0LE. COMMIT 뒤 collector 재읽기A0는 기각, 별도snapshot은tile RAM을 공짜로 쓸 수 없어 미선택이다.
 - 671 B 제한 시험은 실제 비용 실패로 기각했다. `docs/nes-supply671-results.ko.md`·`analysis/supply671-verification.json`을 읽는다. 전체링크 ARM 생산기/509개65816 command/45개소유권 모델 검사 통과지만 source DMA·CRC42.58ms,954/955 행복원·검사88.99/85.17ms로 wire절감3.21/3.24ms를 초과한다. ARM 자원링크212748B/free244,새문맥300B미할당. 새RTL/종단일정/FIT/ZIP 없음. 후속672 수락 범위 비교도 시간 게이트에서 기각됐다. 같은 LUT/CRC 미세조정은 보류한다.
-- 현재673은 `docs/nes-ready673-results.ko.md`·`analysis/ready673-budget.json`을 읽는다. MMC666 읽기 전용106화면의 모든 바이트·ACK와911/951/952/957 보호 조건이 동일하다. ordinary 조립은0.106ms, 현재 ROM 시각을 고정한 낙관 결합도 이전246선에2.298–2.428ms 부족하다. 957 마지막 BG는 ROM 창 전에 준비됐지만 묶음 대기7.41ms,954 마지막 BG는 ROM 창 뒤2.38–2.64ms에야 생긴다. 다음은957 조기 BG 묶음 인계 비용과954 BG 계산 의존성을 제한 검증한 뒤 immutable ordinary 일정과 결합한다. 실기/합성 개선은 없고 MMC666 유지. 672 선택기 단독 변형과 조립 미세조정은 보류한다. 실행 순서는579 current_followup을 따른다.
+- 현재674는 `docs/nes-bg674-results.ko.md`·`analysis/bg674-verification.json`을 읽는다. 실제 BG 두 개 조기 flush 후보는106화면/안전 경계를 통과했지만952가3→4/5회로 회귀해 기각했다. 밀집+9.903/+13.230ms,마지막ACK+49.911/+66.333ms. MMC666 유지. E8이plan writable+zero tile을 보고해도 BG flush는zero소비를 기다린다. 다음은첫zero 조기소비와 BG grant의 실제 두slot/bank·STOP 경계를 검증하고,954 잔여5.971ms/입력시작 경로를 함께 예산화한다. pair 크기/고정위상 변형은 보류한다. 579 current_followup을 따른다.
 - 실기 평균 출력·최종 ACK26.84ms를 고정 재생의 비율로 나누지 않는다. 실제 링크 M4·65816, CPI/IRQ/SPI 모델, 반복 ROM 달력과 실기 로그의 범위를 구분한다.
 - 이전 Current/FIRST/NEXT 누적은 [664 시작 전 원문](docs/progress/archive/AGENTS-before664.md)에 바이트 그대로 보존했다. 그 안의 '현재'는 당시 기록이며 새 실행 지시가 아니다.
 - 검증된 GBC와 사용자 세이브·백업을 보존한다. 새 실기 전달 전에는 MMC662·MMC666 파일을 덮지 않는다.

@@ -4,7 +4,9 @@
 
 ## 현재 작업
 
-**673 확정·credit·ROM 마감 분해 완료, MMC666 유지.** [결과·예산](../../docs/nes-ready673-results.ko.md) · [계측 JSON](../../analysis/ready673-budget.json). 두 위상106화면의 모든 ACK/출력 바이트가 원본과 같다. 957은 준비된 BG의 묶음 대기7.41ms,954는 마지막 BG 생성이 이전 ROM 창보다2.38–2.64ms 늦다. ordinary 조립0.106ms만 줄이거나 현재 ROM 응답을 고정한 credit 절감으로는 이전246선에 못 들어간다. 다음은957 조기 BG 인계와954 계산 선행 예산을 각각 확인하고 immutable ordinary와 결합한다. 보호 조건 모두 유지, 새제품/FIT/ZIP 없음. 기존672의 마지막 ROM 응답에 캐시 공급이 포함됐음을673에서 정정했다.
+**674 BG 쌍 선행 전송: 기능 통과·시간 회귀, MMC666 유지.** [결과·다음 경계](../../docs/nes-bg674-results.ko.md) · [검증 JSON](../../analysis/bg674-verification.json). 두 위상106화면의 출력·최종 ACK는 일치하지만952는3→4/5회,밀집 평균+9.903/+13.230ms,957 마지막ACK+49.911/+66.333ms다. 911 마감·951 공개선·957 최종대기0회와STOP/메뉴 경계는 유지했다. 957은plan bank 허가가 있어도zero tile소비를 기다려E9가늦고,954는반복pair의plan bank 대기로계산이멈춘다. 다음은첫zero소비+BG grant의실제두slot/bank 검증과954 준비경로 예산을 함께 다룬다. 새ZIP/FIT없음.
+
+**이전673 확정·credit·ROM 마감 분해 완료, MMC666 유지.** [결과·예산](../../docs/nes-ready673-results.ko.md) · [계측 JSON](../../analysis/ready673-budget.json). 두 위상106화면의 모든 ACK/출력 바이트가 원본과 같다. 957은 준비된 BG의 묶음 대기7.41ms,954는 마지막 BG 생성이 이전 ROM 창보다2.38–2.64ms 늦다. ordinary 조립0.106ms만 줄이거나 현재 ROM 응답을 고정한 credit 절감으로는 이전246선에 못 들어간다. 다음은957 조기 BG 인계와954 계산 선행 예산을 각각 확인하고 immutable ordinary와 결합한다. 보호 조건 모두 유지, 새제품/FIT/ZIP 없음. 기존672의 마지막 ROM 응답에 캐시 공급이 포함됐음을673에서 정정했다.
 
 **이전672 수락 범위 선택: 기능 통과·시간 실패, MMC666 유지.** [결과·재현](../../docs/nes-extent672-results.ko.md) · [검증 JSON](../../analysis/extent672-verification.json). 두 위상106개 화면과 STOP/새 패킷·독립 coverage·부분 DMA 뒤 cold 복구·최종 ACK 취소를 통과했다. 954 위상2 선행 map384→1344B지만 밀집 평균은+0.022200/+0.036262ms,957 마지막ACK는+0.004563/−0.045630ms다. 911 마감·951 공개선·952 3회·957 최종대기0회 유지. ROM 여유42B지만 시간 실패로 새 FIT/ZIP은 없다. 다음은MMC666 마지막 tile·ordinary의 의미상 확정→실제 준비/credit/수락을 묶어 이전 VBlank 마감 예산부터 세운다. 선택기 단독 변형을 반복하지 않는다.
 
