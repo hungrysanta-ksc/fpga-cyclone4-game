@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-현재 브랜치는 `codex/nes-output-budget-668` / PR155다. [679 진행 공개 경계·예산](../nes-progress679-results.ko.md)을 먼저 읽는다. 679에서956의 패딩1100B가1.460/1.475ms를 차지하고 VBlank 내64B 확인13/7회 모두 후속tile이 이미 대기함을 확인했다. 새 패킷 우선 조건의 내부 DMA 기회는0회다. 실제 map DMA 뒤 E0 예약bit3로 전달하는 비차단 event 경계를 정했으며,기존ACK/최종ACK와 분리한다. 678 수신예산·9523회·큰묶음은후속기준으로유지한다. 새구현/재생/FIT없음,두위상동시개선미증명으로MMC666유지. 다음은동일host write경로의진행event·E1/STOP무효화·E0전체identity검사를제한구현하고전체ARM링크/실제ROMpacking·cold비용을확인한다. ARM의유용한작업중진짜빈큐를확보하지못하면관측기만제품에넣지않는다. 순증84LE·1LAB·0M9K/ARM192B/SNES body192B상한을지키며,두위상911/951/952/957·밀집평균·마지막ACK통과후에만전체LiteFIT/STA를실행한다.
+현재 브랜치는 `codex/nes-output-budget-668` / PR155다. [680 진행 연결·인접 map 결과](../nes-progress680-results.ko.md)를 먼저 읽는다. 680에서 실제ARM·FPGA·65816 E0진행비트를 연결하고 고정 인접map 선택을 검증했다. 956선행map128→512B와911마감·9523회·957최종대기0회·큰묶음을 두위상에서 유지했다. 밀집평균−0.046784/−0.054662ms지만 마지막ACK+0.010430/−0.213062ms라 동시개선 실패,MMC666유지. ARM212828B/free164,body5948B/packedROMfree16,staticRAM추가0. 전체보드MAP+35comb/+3FF/0RAM이나 실제84LE·1LAB 배치예산은 미확정이며 시간탈락으로FIT/STA·ZIP없다. 다음은956 남은map512B·tile과957 최종map384B를 다음E1/credit·ROM·VBlank로 나누고,실제 생산작업 재배치·삭제 예산부터 잡는다. 빈D0·고정대기·위상/크기상수·더긴scan 반복은 보류하며,두위상 종단조건 통과후에만 전체LiteFIT/STA를 진행한다.
 
 PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [598 collector·출력 비용](../nes-boundary598-results.ko.md), [597 결합 예산·핀 전송](../nes-region597-results.ko.md), [596 페이지·회로 예산](../nes-pages596-budget.ko.md), [595 D4 FPGA 결과](../nes-region595-results.ko.md), [594 ARM 결과](../nes-report594-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 실제 ARM transport 제한 시험·전체 링크 비용을 확인했다. 594 ARM과 연결한 595 FPGA는 같은 경계의 Lite MAP 예산을 넘었다. 선택 산출물과 실측은 MMC577을 유지한다.
 

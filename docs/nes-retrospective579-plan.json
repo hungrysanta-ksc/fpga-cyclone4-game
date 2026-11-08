@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-budget-668",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 679,
-  "current_evidence": "analysis/progress679-budget.json",
+  "current_step": 680,
+  "current_evidence": "analysis/progress680-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -52,7 +52,7 @@
     "current_physical_source": "MMC666 / hardware667; older wire fields retain explicit MMC577 provenance.",
     "LAB_free": 1,
     "physical_SNES_ROM_free_B": 11,
-    "budget_review": "679:physical baseline caps unchanged;678 ARM experimental free192B. Same5792B body repack prefix896->128 gives11->207B physical spare;not new executable/boot/FIT proof."
+    "budget_review": "680:fullARM212828/free164;body5948/free36,packedROM5120/free16,coldpoll+22.496619ms. WholeMAP+35comb/+3FF/0RAM,notFIT84LE/1LAB proof. No newFIT/STA because both-start timegate fails."
   },
   "stages": [
     {
@@ -92,10 +92,10 @@
     },
     {
       "id": "R2",
-      "status": "progress679_boundary_budget_complete_target_implementation_pending",
+      "status": "progress680_actual_event_and_neighbor_map_joint_timing_rejected",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "Prototype the nonblocking E0 bit3 actual map-DMA event through the existing host write path; prove E1/ACK/STOP clear priority and complete empty-queue identity. Full ARM link <=212992B and body<=5984B plus exact packed ROM/boot checks first. Couple only to useful ARM work creating a genuinely empty queue; do not bypass new-packet priority or wait for the bit. Then both-start full timing/protections, followed by one whole Lite FIT/STA. No observation-only product or delay/phase sweeps.",
+      "next_single_gate": "KeepMMC666 and freeze680 actual E0 event/fixed-neighbor map as evidence,not product. Budget956remaining512B+blocked tile and957remaining384B map against actual next E1/credit/ROM and finalVBlank; preserve MMC666 phase1 956640B+tile16B baseline. Explain useful producer-work relocation and net code/control deletion before another implementation. Do not repeat emptyD0/fixed delays/phase or chunk-size sweeps/longer scans. Both-start911/951/952/957 and dense+lastACK must pass before one wholeLiteFIT/STA. No observation-only delivery.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -326,7 +326,7 @@
     },
     {
       "id": "R3",
-      "status": "progress679_boundary_budget_complete_target_implementation_pending",
+      "status": "progress680_actual_event_and_neighbor_map_joint_timing_rejected",
       "objective": "Implement one budget-qualified replacement against selected MMC666; frozen577 remains historical evidence",
       "gate": [
         "Same workload and two start phases plus representative-scene steady interval distribution",
@@ -336,7 +336,7 @@
       ],
       "stop_rule": "After two unsuccessful variants of one hypothesis, freeze pending new evidence",
       "status_before669": "bounded_candidate638_validated_trial639_60Hz_open",
-      "next_single_gate": "Prototype the nonblocking E0 bit3 actual map-DMA event through the existing host write path; prove E1/ACK/STOP clear priority and complete empty-queue identity. Full ARM link <=212992B and body<=5984B plus exact packed ROM/boot checks first. Couple only to useful ARM work creating a genuinely empty queue; do not bypass new-packet priority or wait for the bit. Then both-start full timing/protections, followed by one whole Lite FIT/STA. No observation-only product or delay/phase sweeps."
+      "next_single_gate": "KeepMMC666 and freeze680 actual E0 event/fixed-neighbor map as evidence,not product. Budget956remaining512B+blocked tile and957remaining384B map against actual next E1/credit/ROM and finalVBlank; preserve MMC666 phase1 956640B+tile16B baseline. Explain useful producer-work relocation and net code/control deletion before another implementation. Do not repeat emptyD0/fixed delays/phase or chunk-size sweeps/longer scans. Both-start911/951/952/957 and dense+lastACK must pass before one wholeLiteFIT/STA. No observation-only delivery."
     },
     {
       "id": "R4",
@@ -380,10 +380,10 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "MMC666 retained;679 DMA progress boundary/budget review on678 credit",
-    "next": "Prototype the nonblocking E0 bit3 actual map-DMA event through the existing host write path; prove E1/ACK/STOP clear priority and complete empty-queue identity. Full ARM link <=212992B and body<=5984B plus exact packed ROM/boot checks first. Couple only to useful ARM work creating a genuinely empty queue; do not bypass new-packet priority or wait for the bit. Then both-start full timing/protections, followed by one whole Lite FIT/STA. No observation-only product or delay/phase sweeps.",
-    "document": "docs/nes-progress679-results.ko.md",
-    "evidence": "analysis/progress679-budget.json",
+    "candidate": "MMC666 retained;680 actual E0 event+fixed-neighbor map failed both-start lastACK gate",
+    "next": "KeepMMC666 and freeze680 actual E0 event/fixed-neighbor map as evidence,not product. Budget956remaining512B+blocked tile and957remaining384B map against actual next E1/credit/ROM and finalVBlank; preserve MMC666 phase1 956640B+tile16B baseline. Explain useful producer-work relocation and net code/control deletion before another implementation. Do not repeat emptyD0/fixed delays/phase or chunk-size sweeps/longer scans. Both-start911/951/952/957 and dense+lastACK must pass before one wholeLiteFIT/STA. No observation-only delivery.",
+    "document": "docs/nes-progress680-results.ko.md",
+    "evidence": "analysis/progress680-verification.json",
     "timing_reference": "analysis/output668-verification.json",
     "hardware_baseline": "MMC666",
     "steps": [
@@ -443,6 +443,11 @@
         "deliverable": "956fill1.460/1.475ms;13/7eligible64B guards all have queued follower. Reject priority-bypassing fill and unbounded fence. Specify E0 bit3 nonblocking actual map-DMA event, existing identity/snapshot, hard84LE/1LAB/ARM192B/body192B caps. Samebody pack11->207B spare,boot verification open."
       },
       {
+        "id": "S3h",
+        "status": "680_actual_feedback_and_empty_queue_DMA_connected_but_both_last_ACK_failed",
+        "deliverable": "680에서 실제ARM·FPGA·65816 E0진행비트를 연결하고 고정 인접map 선택을 검증했다. 956선행map128→512B와911마감·9523회·957최종대기0회·큰묶음을 두위상에서 유지했다. 밀집평균−0.046784/−0.054662ms지만 마지막ACK+0.010430/−0.213062ms라 동시개선 실패,MMC666유지. ARM212828B/free164,body5948B/packedROMfree16,staticRAM추가0. 전체보드MAP+35comb/+3FF/0RAM이나 실제84LE·1LAB 배치예산은 미확정이며 시간탈락으로FIT/STA·ZIP없다."
+      },
+      {
         "id": "S4",
         "status": "pending_selection",
         "deliverable": "Only a budget-qualified candidate: same-work two starts, independent bytes/guards, whole Lite FIT/STA whenever ROM contents or RTL change."
@@ -462,12 +467,12 @@
       "both-phase dense mean and957 lastACK improvement",
       "independent identity/CRC/coverage, STOP, cold/partial recovery, capture recovery, menu"
     ],
-    "stop_rule": "Input and multi handoff variants rejected; new credit defect corrected and END boundary tested, but final joint gate still fails. Freeze bounded-D0 and phase/size variants; budget actual DMA progress with identity and whole deletion cost.",
+    "stop_rule": "KeepMMC666 and freeze680 actual E0 event/fixed-neighbor map as evidence,not product. Budget956remaining512B+blocked tile and957remaining384B map against actual next E1/credit/ROM and finalVBlank; preserve MMC666 phase1 956640B+tile16B baseline. Explain useful producer-work relocation and net code/control deletion before another implementation. Do not repeat emptyD0/fixed delays/phase or chunk-size sweeps/longer scans. Both-start911/951/952/957 and dense+lastACK must pass before one wholeLiteFIT/STA. No observation-only delivery.",
     "limited_delivery_gate": false,
     "external_IO_signoff": false,
     "new_hardware_test": false,
-    "new_simulation": "318 matched linked M4/65816 frames;53 large plan banks unchanged,2bulk slots. input911 fails,multi phase1ACK ties,credit allprotections pass but phase1ACK+10.43us. Per-binary prior guards plus15/15/18 handoff cases and9 actual receive-credit cases;old empty debit6 independently reproduced.",
-    "new_synthesis": false,
+    "new_simulation": "212 valid paired M4/65816 frames:106event-only+106fixed-neighbor.53scan8 diagnostic frames not eligible for lateworst deadline. Initial106missing-feedback frames excluded. ARM10new+18old,credit9,CPU14neighbor+4finalcancel+5beam,actualRTL2phases;menu5+4marker mocks.",
+    "new_synthesis": "Two matched-ROM whole board Lite MAP runs:14390comb/8389FF/305264bits vs14355/8386/same. No wholeFIT/STA; physical baseline remainsMMC666.",
     "budget_670": {
       "reference_reconstructions": 106,
       "reference_fault_rejections": 318,
@@ -682,6 +687,35 @@
       "new_FIT_STA": false,
       "simultaneous_improvement_proven": false,
       "next": "Prototype the nonblocking E0 bit3 actual map-DMA event through the existing host write path; prove E1/ACK/STOP clear priority and complete empty-queue identity. Full ARM link <=212992B and body<=5984B plus exact packed ROM/boot checks first. Couple only to useful ARM work creating a genuinely empty queue; do not bypass new-packet priority or wait for the bit. Then both-start full timing/protections, followed by one whole Lite FIT/STA. No observation-only product or delay/phase sweeps."
+    },
+    "budget_680": {
+      "evidence": "analysis/progress680-verification.json",
+      "Flash_B": 212828,
+      "Flash_free_B": 164,
+      "body_B": 5948,
+      "body_free_B": 36,
+      "packed_ROM_free_B": 16,
+      "new_static_RAM_B": 0,
+      "new_DMA_stack_B": 3,
+      "MAP_comb_delta": 35,
+      "MAP_FF_delta": 3,
+      "MAP_RAM_delta": 0,
+      "FIT_STA": false,
+      "map956_ahead_B": [
+        512,
+        512
+      ],
+      "dense_delta_ms": [
+        -0.0467843402085677,
+        -0.0546624357134462
+      ],
+      "last_ACK_delta_ms": [
+        0.010429629982802285,
+        -0.21306244107724667
+      ],
+      "all_protected": true,
+      "selected": false,
+      "next": "KeepMMC666 and freeze680 actual E0 event/fixed-neighbor map as evidence,not product. Budget956remaining512B+blocked tile and957remaining384B map against actual next E1/credit/ROM and finalVBlank; preserve MMC666 phase1 956640B+tile16B baseline. Explain useful producer-work relocation and net code/control deletion before another implementation. Do not repeat emptyD0/fixed delays/phase or chunk-size sweeps/longer scans. Both-start911/951/952/957 and dense+lastACK must pass before one wholeLiteFIT/STA. No observation-only delivery."
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6"
