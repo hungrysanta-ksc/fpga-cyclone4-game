@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-budget-668",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 675,
-  "current_evidence": "analysis/bg675-verification.json",
+  "current_step": 676,
+  "current_evidence": "analysis/idle676-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -92,10 +92,10 @@
     },
     {
       "id": "R2",
-      "status": "bg675_initial_grant_timing_rejected_map_tail_boundary_next",
+      "status": "idle676_two_candidates_timing_rejected_map_acceptance_budget_next",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "Separate952 map-drain wait into actual map DMA/idle-queue opportunity and next-input reception. Replace obj_next arrival-order-dependent40 waits with a justified boundary, retaining675 tile gain and larger batches. Recover1536B map-ahead andSEAL deadline; one two-phase candidate with all protections. No pair-size/phase/fixed-wait-count sweep.",
+      "next_single_gate": "Budget952 map offsets2048..3392 readiness/bulk priority/credit/acceptance and real empty-queue DMA against original last-map ACK33.125/33.405ms. Need recover1344B ahead (data-only lower bound0.501ms plus setup/checks). Post-map bounded input occurs outside VBlank. Freeze fixed-wait/pair/phase variants; any actual DMA-progress exposure first needs read-event/CDC/STOP/resource budget distinct from E0 receipt.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -326,7 +326,7 @@
     },
     {
       "id": "R3",
-      "status": "held_after675_timing_rejection",
+      "status": "held_after676_timing_rejection",
       "objective": "Implement one budget-qualified replacement against selected MMC666; frozen577 remains historical evidence",
       "gate": [
         "Same workload and two start phases plus representative-scene steady interval distribution",
@@ -336,7 +336,7 @@
       ],
       "stop_rule": "After two unsuccessful variants of one hypothesis, freeze pending new evidence",
       "status_before669": "bounded_candidate638_validated_trial639_60Hz_open",
-      "next_single_gate": "On unchanged MMC666, establish semantic readiness of last BG/OBJ and section5 ordinary independently of preparation-call timestamps. Bound ROM->plan/bulk credit->tile acceptance and data-ready->prepare->SPI/queue acceptance jointly against prior VBlank/246 reveal. No more selector-only/blanket-drain/phase-constant variants without a combined deadline budget."
+      "next_single_gate": "Budget952 map offsets2048..3392 readiness/bulk priority/credit/acceptance and real empty-queue DMA against original last-map ACK33.125/33.405ms. Need recover1344B ahead (data-only lower bound0.501ms plus setup/checks). Post-map bounded input occurs outside VBlank. Freeze fixed-wait/pair/phase variants; any actual DMA-progress exposure first needs read-event/CDC/STOP/resource budget distinct from E0 receipt."
     },
     {
       "id": "R4",
@@ -380,10 +380,10 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "MMC666 retained;675 initial BG grant functional pass but952 timing regression",
-    "next": "Separate952 map-drain wait into actual map DMA/idle-queue opportunity and next-input reception. Replace obj_next arrival-order-dependent40 waits with a justified boundary, retaining675 tile gain and larger batches. Recover1536B map-ahead andSEAL deadline; one two-phase candidate with all protections. No pair-size/phase/fixed-wait-count sweep.",
-    "document": "docs/nes-bg675-results.ko.md",
-    "evidence": "analysis/bg675-verification.json",
+    "candidate": "MMC666 retained;676 input-only and combined final plan grant functional pass but952 stays4VB",
+    "next": "Budget952 map offsets2048..3392 readiness/bulk priority/credit/acceptance and real empty-queue DMA against original last-map ACK33.125/33.405ms. Need recover1344B ahead (data-only lower bound0.501ms plus setup/checks). Post-map bounded input occurs outside VBlank. Freeze fixed-wait/pair/phase variants; any actual DMA-progress exposure first needs read-event/CDC/STOP/resource budget distinct from E0 receipt.",
+    "document": "docs/nes-idle676-results.ko.md",
+    "evidence": "analysis/idle676-verification.json",
     "timing_reference": "analysis/output668-verification.json",
     "hardware_baseline": "MMC666",
     "steps": [
@@ -423,6 +423,11 @@
         "deliverable": "TileACK about10ms earlier but map-tail40 waits now fire;tail0.094->6.561ms,earlymap1536->192/768B. Fix ownership/event boundary,not pair-size sweep."
       },
       {
+        "id": "S3d",
+        "status": "676_input_and_final_bank_grant_rejected_timing",
+        "deliverable": "40 fixed waits replaced by one real D0/D1/CRC/restore/D2/D0 input poll; final13-record writable bank retained with held tile. END5.939/6.153->1.142ms;tail6.561->0.716ms,but0DMA during callback and192B map-ahead.9524/4VB; keepMMC666."
+      },
+      {
         "id": "S4",
         "status": "pending_selection",
         "deliverable": "Only a budget-qualified candidate: same-work two starts, independent bytes/guards, whole Lite FIT/STA whenever ROM contents or RTL change."
@@ -442,11 +447,11 @@
       "both-phase dense mean and957 lastACK improvement",
       "independent identity/CRC/coverage, STOP, cold/partial recovery, capture recovery, menu"
     ],
-    "stop_rule": "675 confirms independent plan credit and held tile ownership, but arrival-dependent map tail wait regresses952. Do not repeat early-pair constants or delete wait/receive/STOP costs arithmetically. Require actual two-phase total-time gains.",
+    "stop_rule": "Both676 variants fail952 and total timing. Freeze fixed-wait/pair/phase variants; require quantified map-admission/real-DMA boundary before another whole replay.",
     "limited_delivery_gate": false,
     "external_IO_signoff": false,
     "new_hardware_test": false,
-    "new_simulation": "106 linked ARM/65816 frames same work/bytes/pixels;15 fitted RTL source pins,2 sequential host phases,4 ordered receipts and STOP/restart.12 ARM cases+END9+routing12+SEAL5+menu5/marker4.952 protection failed.",
+    "new_simulation": "212 same-work linked ARM/65816 frames; actual fitted RTL15 source pins and2 host phases with16 ordered receipts,13-record final grant,STOP/cold. Input13+initialgrant12+END9+finalgrant7+routing12+menu5/marker4 guards.952 protection failed.",
     "new_synthesis": false,
     "budget_670": {
       "reference_reconstructions": 106,
@@ -568,6 +573,33 @@
         6.561556924911942,
         6.561366448722522
       ]
+    },
+    "budget_676": {
+      "input_Flash_B": 212704,
+      "combined_Flash_B": 212688,
+      "combined_free_B": 304,
+      "extra_static_RAM_B": 0,
+      "board_changed": false,
+      "client_changed": false,
+      "LE": 15324,
+      "LAB": 962,
+      "M9K": 56,
+      "extra_DMA_feedback": false,
+      "selected": false,
+      "combined_dense_delta_ms": [
+        3.27240815313975,
+        3.2821114338916004
+      ],
+      "combined_last_ACK_delta_ms": [
+        16.947776235268613,
+        16.710781518248687
+      ],
+      "map_ahead_B": [
+        192,
+        192
+      ],
+      "input_callback_ms": 0.6215113468138543,
+      "input_callback_DMA_starts": 0
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6"
