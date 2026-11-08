@@ -35,4 +35,3 @@ if __name__=='__main__':
     a.report.write_text(json.dumps(dict(stage=683,location='WORKSPACE/probes/nes-pair683/'+a.out.name,
         files=len(files),bytes=archive.stat().st_size,SHA256=digest(archive),manifest_SHA256=digest(a.out/'manifest.json'),
         all_extracted_bytes_verified=True,private=True,license_files_included=False),indent=2)+'\n',newline='\n')
-
