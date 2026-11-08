@@ -4,7 +4,9 @@
 
 ## 현재 작업
 
-**671 실제 커널 비용 실패, MMC666 유지.** [결과·다음 단계](../../docs/nes-supply671-results.ko.md) · [검증](../../analysis/supply671-verification.json). 실제 전체링크 ARM 생산기와65816 변환/독립CRC를 실행했다. source42.58ms,954/955 행88.99/85.17ms로 wire절감3.21/3.24ms보다 크다. ARM 자원링크free244B지만 제품 callback·문맥·source RTL은 미연결이다. 509개CPU command와45개소유권 모델 검사 범위만 통과했다. 다음은기존변환·검사를 유지한954/957의 수락범위·병합·주사선 일정 비교다. 새제품/실기ZIP은 없다.
+**672 수락 범위 선택: 기능 통과·시간 실패, MMC666 유지.** [결과·재현](../../docs/nes-extent672-results.ko.md) · [검증 JSON](../../analysis/extent672-verification.json). 두 위상106개 화면과 STOP/새 패킷·독립 coverage·부분 DMA 뒤 cold 복구·최종 ACK 취소를 통과했다. 954 위상2 선행 map384→1344B지만 밀집 평균은+0.022200/+0.036262ms,957 마지막ACK는+0.004563/−0.045630ms다. 911 마감·951 공개선·952 3회·957 최종대기0회 유지. ROM 여유42B지만 시간 실패로 새 FIT/ZIP은 없다. 다음은MMC666 마지막 tile·ordinary의 의미상 확정→실제 준비/credit/수락을 묶어 이전 VBlank 마감 예산부터 세운다. 선택기 단독 변형을 반복하지 않는다.
+
+**이전671 실제 커널 비용 실패.** [결과·다음 단계](../../docs/nes-supply671-results.ko.md) · [검증](../../analysis/supply671-verification.json). 실제 전체링크 ARM 생산기와65816 변환/독립CRC를 실행했다. source42.58ms,954/955 행88.99/85.17ms로 wire절감3.21/3.24ms보다 크다. ARM 자원링크free244B지만 제품 callback·문맥·source RTL은 미연결이다. 509개CPU command와45개소유권 모델 검사 범위만 통과했다. 그 후672에서 수락범위 선택을 실제 비교했다. 새제품/실기ZIP은 없다.
 
 **이전670 비용표.** [참조 복원·소유권](../../docs/nes-supply670-results.ko.md) · [근거](../../analysis/supply670-budget.json). 106개 참조 map 일치와 일괄 descriptor의 바이트 절감 가정을 확인했다. 그 뒤671에서 행별 반복 header와 실제 CPU 비용을 포함하자 시간 게이트에 실패했다. COMMIT 뒤 collector 재읽기 기각과 저장 credit/최종 표시 ACK 분리는 유지한다.
 
