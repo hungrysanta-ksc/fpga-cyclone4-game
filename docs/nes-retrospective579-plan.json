@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-budget-668",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 678,
-  "current_evidence": "analysis/handoff678-verification.json",
+  "current_step": 679,
+  "current_evidence": "analysis/progress679-budget.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -52,7 +52,7 @@
     "current_physical_source": "MMC666 / hardware667; older wire fields retain explicit MMC577 provenance.",
     "LAB_free": 1,
     "physical_SNES_ROM_free_B": 11,
-    "budget_review": "No new669 savings measured; resource figures are selected665/666."
+    "budget_review": "679:physical baseline caps unchanged;678 ARM experimental free192B. Same5792B body repack prefix896->128 gives11->207B physical spare;not new executable/boot/FIT proof."
   },
   "stages": [
     {
@@ -92,10 +92,10 @@
     },
     {
       "id": "R2",
-      "status": "handoff678_protected_pass_phase1_ACK_still_late",
+      "status": "progress679_boundary_budget_complete_target_implementation_pending",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "Retain empty-STATUS credit fix and9523/3VB/large banks. Budget actual956 DMA-progress publication and identity/STOP/ownership boundary before more RTL. New callbacks34/35 perform0READ and956earlymap remains128B; no more query-size/fixed-wait/phase sweeps. Existing ACK writes fault on empty queue and must not become DMA retirement. Whole caps84LE/1LAB/0M9K,ARM192B(678) or496B(MMC666),SNES packedROM11B; no free mailbox/CRC/control or FIT claim.",
+      "next_single_gate": "Prototype the nonblocking E0 bit3 actual map-DMA event through the existing host write path; prove E1/ACK/STOP clear priority and complete empty-queue identity. Full ARM link <=212992B and body<=5984B plus exact packed ROM/boot checks first. Couple only to useful ARM work creating a genuinely empty queue; do not bypass new-packet priority or wait for the bit. Then both-start full timing/protections, followed by one whole Lite FIT/STA. No observation-only product or delay/phase sweeps.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -326,7 +326,7 @@
     },
     {
       "id": "R3",
-      "status": "handoff678_protected_pass_phase1_ACK_still_late",
+      "status": "progress679_boundary_budget_complete_target_implementation_pending",
       "objective": "Implement one budget-qualified replacement against selected MMC666; frozen577 remains historical evidence",
       "gate": [
         "Same workload and two start phases plus representative-scene steady interval distribution",
@@ -336,7 +336,7 @@
       ],
       "stop_rule": "After two unsuccessful variants of one hypothesis, freeze pending new evidence",
       "status_before669": "bounded_candidate638_validated_trial639_60Hz_open",
-      "next_single_gate": "Retain empty-STATUS credit fix and9523/3VB/large banks. Budget actual956 DMA-progress publication and identity/STOP/ownership boundary before more RTL. New callbacks34/35 perform0READ and956earlymap remains128B; no more query-size/fixed-wait/phase sweeps. Existing ACK writes fault on empty queue and must not become DMA retirement. Whole caps84LE/1LAB/0M9K,ARM192B(678) or496B(MMC666),SNES packedROM11B; no free mailbox/CRC/control or FIT claim."
+      "next_single_gate": "Prototype the nonblocking E0 bit3 actual map-DMA event through the existing host write path; prove E1/ACK/STOP clear priority and complete empty-queue identity. Full ARM link <=212992B and body<=5984B plus exact packed ROM/boot checks first. Couple only to useful ARM work creating a genuinely empty queue; do not bypass new-packet priority or wait for the bit. Then both-start full timing/protections, followed by one whole Lite FIT/STA. No observation-only product or delay/phase sweeps."
     },
     {
       "id": "R4",
@@ -380,10 +380,10 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "MMC666 retained;678 fixes empty input credit,957earlyDMA recovers but phase1ACK+10.43us",
-    "next": "Retain empty-STATUS credit fix and9523/3VB/large banks. Budget actual956 DMA-progress publication and identity/STOP/ownership boundary before more RTL. New callbacks34/35 perform0READ and956earlymap remains128B; no more query-size/fixed-wait/phase sweeps. Existing ACK writes fault on empty queue and must not become DMA retirement. Whole caps84LE/1LAB/0M9K,ARM192B(678) or496B(MMC666),SNES packedROM11B; no free mailbox/CRC/control or FIT claim.",
-    "document": "docs/nes-handoff678-results.ko.md",
-    "evidence": "analysis/handoff678-verification.json",
+    "candidate": "MMC666 retained;679 DMA progress boundary/budget review on678 credit",
+    "next": "Prototype the nonblocking E0 bit3 actual map-DMA event through the existing host write path; prove E1/ACK/STOP clear priority and complete empty-queue identity. Full ARM link <=212992B and body<=5984B plus exact packed ROM/boot checks first. Couple only to useful ARM work creating a genuinely empty queue; do not bypass new-packet priority or wait for the bit. Then both-start full timing/protections, followed by one whole Lite FIT/STA. No observation-only product or delay/phase sweeps.",
+    "document": "docs/nes-progress679-results.ko.md",
+    "evidence": "analysis/progress679-budget.json",
     "timing_reference": "analysis/output668-verification.json",
     "hardware_baseline": "MMC666",
     "steps": [
@@ -436,6 +436,11 @@
         "id": "S3f",
         "status": "678_credit_bug_fixed_and957_map_recovered_but_both_ACK_gate_failed",
         "deliverable": "Empty D0 no longer spends geometry credit;911 returns7beforeoldACK. END/FLUSH handoff exercised,957map512->1664B phase1.956earlymap128B persists;lastACK+10.43/-182.70us.KeepMMC666."
+      },
+      {
+        "id": "S3g",
+        "status": "679_boundary_budget_complete_no_new_target_implementation",
+        "deliverable": "956fill1.460/1.475ms;13/7eligible64B guards all have queued follower. Reject priority-bypassing fill and unbounded fence. Specify E0 bit3 nonblocking actual map-DMA event, existing identity/snapshot, hard84LE/1LAB/ARM192B/body192B caps. Samebody pack11->207B spare,boot verification open."
       },
       {
         "id": "S4",
@@ -670,6 +675,13 @@
       "all_protected": true,
       "input_handoff_READ_blocks": 0,
       "next": "Retain empty-STATUS credit fix and9523/3VB/large banks. Budget actual956 DMA-progress publication and identity/STOP/ownership boundary before more RTL. New callbacks34/35 perform0READ and956earlymap remains128B; no more query-size/fixed-wait/phase sweeps. Existing ACK writes fault on empty queue and must not become DMA retirement. Whole caps84LE/1LAB/0M9K,ARM192B(678) or496B(MMC666),SNES packedROM11B; no free mailbox/CRC/control or FIT claim."
+    },
+    "budget_679": {
+      "evidence": "analysis/progress679-budget.json",
+      "new_replay": false,
+      "new_FIT_STA": false,
+      "simultaneous_improvement_proven": false,
+      "next": "Prototype the nonblocking E0 bit3 actual map-DMA event through the existing host write path; prove E1/ACK/STOP clear priority and complete empty-queue identity. Full ARM link <=212992B and body<=5984B plus exact packed ROM/boot checks first. Couple only to useful ARM work creating a genuinely empty queue; do not bypass new-packet priority or wait for the bit. Then both-start full timing/protections, followed by one whole Lite FIT/STA. No observation-only product or delay/phase sweeps."
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6"

@@ -27,7 +27,7 @@
 | ARM666 전달본 | Flash 212,496 B, 여유 496 B. [검증](../analysis/trial666-package.json) |
 | 60Hz 평균 격차 | 전체 실행 평균 49.40 − 16.67 ≈ 32.73 ms/표시 |
 | MMC666 단계 평균 | 수신 10.44 / 계획·공급 11.34 / 출력·최종 ACK 26.84 ms/표시 |
-| 다음 작업 | [678 결과](nes-handoff678-results.ko.md): 빈 조회의 수신 예산 차감 수정,9523/3회 유지·957 선행map1664/1664B. 마지막ACK +0.01043/−0.18270ms로 미달. 다음은956 DMA 진행 공개와 전체 삭제 예산. MMC666 유지 |
+| 다음 작업 | [679 경계·예산](nes-progress679-results.ko.md):956 패딩 중 새 패킷 우선 DMA 기회0회. E0 bit3 실제DMA event 계약,84LE/1LAB·ARM192B 상한. 동일body 재압축 여유11→207B는 부팅 비용 미검증. 제한 구현·전체 자원 확인 뒤 두 위상 시간 게이트. MMC666 유지 |
 | 미완료 | 지속60fps·장면별/p95·NES 실시간 속도·capture 무손실·MMC4/5·제품 공개 |
 
 [509 전달본](../analysis/service509-package.json)은 ROM/save/RESTORE 없이 제작한 불변 스냅샷이다. 668 ARM 후보는 검증 뒤 기각했고 새 ZIP·합성은 만들지 않았다. [MMC502 실기10.59fps](nes-hardware503-results.ko.md)는 복구·비교 기준으로 보존한다.
