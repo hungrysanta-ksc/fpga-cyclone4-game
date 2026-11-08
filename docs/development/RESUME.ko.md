@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-현재 브랜치는 `codex/nes-output-budget-668` / PR155다. [683 map 인계 결과](../nes-pair683-results.ko.md)를 먼저 읽는다. 683은 planner에서 선행 발행한192B map의 경계를 최종 출력으로 넘겨, 두 위상 모두956·957의 map1024→map1216→BG48B 순서를 구현했다. 입력7블록·첫BG ROM창·952 표시3회·957 최종대기0회·보호조건은 유지했다. 그러나 밀집 평균은MMC666 대비−0.011845/−0.036634ms,957 마지막ACK는+0.485257/−0.009405ms로 동시 개선에 실패했다. 실기 선택본은MMC666이다. 실행 순서는579 계획의current_followup을 따른다.
+현재 브랜치는 `codex/nes-output-budget-668` / PR155다. [684 BG 완료 발행](../nes-bg684-results.ko.md)를 먼저 읽는다. 684는 BG 완료 직후 OBJ 계산 전에 확정 map192B를 발행해683의 연속 순서를 유지했다. 두 위상 모두956의384B와957의1152B 선행 DMA를 회복하고7블록·첫BG ROM창·952 표시3회·957 최종대기0회·보호조건을 유지했다. MMC666 대비 밀집 평균은−0.007412/−0.035144ms,957 마지막ACK는+0.010430/−0.213994ms다. 위상1의224클록 지연 때문에 동시 개선은 미달이며 실기는MMC666을 유지한다. 실행 순서는579 계획의current_followup을 따른다.
 
 PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [598 collector·출력 비용](../nes-boundary598-results.ko.md), [597 결합 예산·핀 전송](../nes-region597-results.ko.md), [596 페이지·회로 예산](../nes-pages596-budget.ko.md), [595 D4 FPGA 결과](../nes-region595-results.ko.md), [594 ARM 결과](../nes-report594-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 실제 ARM transport 제한 시험·전체 링크 비용을 확인했다. 594 ARM과 연결한 595 FPGA는 같은 경계의 Lite MAP 예산을 넘었다. 선택 산출물과 실측은 MMC577을 유지한다.
 

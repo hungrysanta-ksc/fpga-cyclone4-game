@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-budget-668",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 683,
-  "current_evidence": "analysis/pair683-verification.json",
+  "current_step": 684,
+  "current_evidence": "analysis/bg684-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -380,10 +380,10 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "683은 planner에서 선행 발행한192B map의 경계를 최종 출력으로 넘겨, 두 위상 모두956·957의 map1024→map1216→BG48B 순서를 구현했다. 입력7블록·첫BG ROM창·952 표시3회·957 최종대기0회·보호조건은 유지했다. 그러나 밀집 평균은MMC666 대비−0.011845/−0.036634ms,957 마지막ACK는+0.485257/−0.009405ms로 동시 개선에 실패했다. 실기 선택본은MMC666이다.",
-    "next": "683의경계기록은검증된비교후보로보존하되실기기준은MMC666을유지한다. 다음은BG loop 완료 직후,OBJ 계산 전에map1216의실제최종쓰기·발행가능시각을계측한다. planner 도중아직확정되지않은행을보내지않고,확정된후속map을앞당겨두map의연속발행을지키면서BG48B와후속ordinary 소비를VBlank보다앞에놓을수있는지비교한다. 956의1100B padding 소비ACK를기존첫선행DMA보다0.680/0.386ms,957 위상1의마지막map3392 ACK를기존1152B DMA시각보다0.192ms 앞당길예산이필요하다. 고정대기·위상·DMA크기변형을반복하지않는다. 두위상의7블록(현재최소여유75µs)·첫BG ROM창·큰묶음·9523회·957최종대기0회·독립검사·STOP·최종ACK·메뉴복귀를유지하고,Flash48B/packedROM0B안에서실제삭제예산을먼저확인한다. 기존call673의부모호출·immutable·END시각으로수정경계가실제목표패킷에적용됨을확인한후종단재생한다. 밀집평균과957마지막ACK가두위상모두개선된뒤에만전체Lite FIT/STA와새실기전달을진행한다.",
-    "document": "docs/nes-pair683-results.ko.md",
-    "evidence": "analysis/pair683-verification.json",
+    "candidate": "684는 BG 완료 직후 OBJ 계산 전에 확정 map192B를 발행해683의 연속 순서를 유지했다. 두 위상 모두956의384B와957의1152B 선행 DMA를 회복하고7블록·첫BG ROM창·952 표시3회·957 최종대기0회·보호조건을 유지했다. MMC666 대비 밀집 평균은−0.007412/−0.035144ms,957 마지막ACK는+0.010430/−0.213994ms다. 위상1의224클록 지연 때문에 동시 개선은 미달이며 실기는MMC666을 유지한다.",
+    "next": "684의 BG 완료 map 발행·7블록·큰 묶음을 비교 기준으로 보존한다. 957 마지막map3200/3392의384B는 두 위상 모두 기존384B/1152B 선행 DMA 전에 수락됐다. 후속OBJ288B 수락이249/253선에 들어와 다음 빈큐 기회를 닫는 실제 경계와 E0 진행 공개/ARM bulk 허가를 먼저 대조한다. 수신ACK와 전체DMA완료를 혼동하지 않고 STOP·새패킷 우선을 유지하며, 마지막384B를 앞선 VBlank로 옮길 수 있는지 순비용으로 판단한다. 추가 전송 대기나 위상별 상수는 넣지 않는다. 위상1의남은224클록은VBlank대기반환+264와반환뒤−40의합이며678/680에서도같았다. SEAL을더앞당기는것만으로이값을줄인다고계상하거나10µs만맞추는고정지연탐색은반복하지않는다. ARM여유0B·packedROM0B이므로공동완료/허가에서실제로삭제할코드와조건을먼저정한다. 911/951/952/957·독립검사·STOP·메뉴복귀와두위상종단시간을통과한후에만전체Lite FIT/STA·새실기전달로간다.",
+    "document": "docs/nes-bg684-results.ko.md",
+    "evidence": "analysis/bg684-verification.json",
     "timing_reference": "analysis/output668-verification.json",
     "hardware_baseline": "MMC666",
     "steps": [
@@ -471,6 +471,11 @@
         "id": "S3k",
         "status": "pair683_handoff_order_verified_early_DMA_tradeoff_failed_keep_MMC666",
         "deliverable": "683은 planner에서 선행 발행한192B map의 경계를 최종 출력으로 넘겨, 두 위상 모두956·957의 map1024→map1216→BG48B 순서를 구현했다. 입력7블록·첫BG ROM창·952 표시3회·957 최종대기0회·보호조건은 유지했다. 그러나 밀집 평균은MMC666 대비−0.011845/−0.036634ms,957 마지막ACK는+0.485257/−0.009405ms로 동시 개선에 실패했다. 실기 선택본은MMC666이다."
+      },
+      {
+        "id": "S3l",
+        "status": "bg684_preOBJ_map_verified_phase1_ACK224_clocks_late_keep_MMC666",
+        "deliverable": "684는 BG 완료 직후 OBJ 계산 전에 확정 map192B를 발행해683의 연속 순서를 유지했다. 두 위상 모두956의384B와957의1152B 선행 DMA를 회복하고7블록·첫BG ROM창·952 표시3회·957 최종대기0회·보호조건을 유지했다. MMC666 대비 밀집 평균은−0.007412/−0.035144ms,957 마지막ACK는+0.010430/−0.213994ms다. 위상1의224클록 지연 때문에 동시 개선은 미달이며 실기는MMC666을 유지한다."
       }
     ],
     "protected": [
@@ -482,12 +487,12 @@
       "both-phase dense mean and957 lastACK improvement",
       "independent identity/CRC/coverage, STOP, cold/partial recovery, capture recovery, menu"
     ],
-    "stop_rule": "다음은 955 최종 ACK 전 956 geometry7블록 수신을 회복하고, 첫 zero/BG 공급이 기존 ROM 허용 구간을 놓치지 않도록 발행·credit 예산을 확정한다. 957의 마지막384B만 옮겨 offset1024의 map384B를 밀어내지 않도록 수락된 전체 범위와 VBlank 여유를 함께 판정한다. 같은 고정 대기·크기/위상 상수·선택 순서 반복은 보류하며, 두 위상 종단 개선 뒤에만 전체 Lite FIT/STA를 진행한다.",
+    "stop_rule": "7블록 수신·첫 BG ROM 구간·BG 완료 map 연속 발행을 유지한다. 이미 수락된 마지막384B의 실제 DMA 완료/후속 OBJ 허가 경계와 삭제 예산을 먼저 확인한다. 678/680/684에서 반복된224클록을 맞추려는 고정 대기·위상 상수·선택 순서 변형은 보류한다. 두 위상 종단 시간과 보호조건 통과 뒤에만 전체 Lite FIT/STA·새 전달로 진행한다.",
     "limited_delivery_gate": false,
     "external_IO_signoff": false,
     "new_hardware_test": false,
-    "new_simulation": "424 matched M4/65816 frames; fixed SPI/ROM calendars, both starts, independent exact work/pixels/large batches. Actual CPU late160B and larger/post252 rejection, STOP/cold/map/finalACK guards; linked ARM progress/credit/menu guards.",
-    "new_synthesis": "두 위상 종단 시간 게이트 실패로 새 Quartus Lite 합성/FIT/STA와 설치본은 만들지 않았다. 680 RTL·681 client02가 같다는 사실을 전체 보드 배치/타이밍 통과로 대신하지 않는다. 기존MMC666 실기·GBC·save·ZIP은 유지한다.",
+    "new_simulation": "684: 106 matched linked M4/65816 frames at both starts; unchanged work/pixels/large E9 batches. 33 map/BG boundary and50 input guards plus5 menu/base and4 marker cases. No new RTL/CPU code or physical hardware run.",
+    "new_synthesis": "전체 시간 게이트 미달로 새 Quartus Lite FIT/STA와 설치본은 만들지 않았다. RTL과65816은683과 동일하며 기존680/681 근거를 hash로 연결한다. 동일 소스라는 사실을 새 전체 보드 FIT/STA 통과로 대신하지 않는다.",
     "budget_670": {
       "reference_reconstructions": 106,
       "reference_fault_rejections": 318,
@@ -858,6 +863,14 @@
       "new_static_RAM_B": 0,
       "request_gate": false,
       "next": "683의경계기록은검증된비교후보로보존하되실기기준은MMC666을유지한다. 다음은BG loop 완료 직후,OBJ 계산 전에map1216의실제최종쓰기·발행가능시각을계측한다. planner 도중아직확정되지않은행을보내지않고,확정된후속map을앞당겨두map의연속발행을지키면서BG48B와후속ordinary 소비를VBlank보다앞에놓을수있는지비교한다. 956의1100B padding 소비ACK를기존첫선행DMA보다0.680/0.386ms,957 위상1의마지막map3392 ACK를기존1152B DMA시각보다0.192ms 앞당길예산이필요하다. 고정대기·위상·DMA크기변형을반복하지않는다. 두위상의7블록(현재최소여유75µs)·첫BG ROM창·큰묶음·9523회·957최종대기0회·독립검사·STOP·최종ACK·메뉴복귀를유지하고,Flash48B/packedROM0B안에서실제삭제예산을먼저확인한다. 기존call673의부모호출·immutable·END시각으로수정경계가실제목표패킷에적용됨을확인한후종단재생한다. 밀집평균과957마지막ACK가두위상모두개선된뒤에만전체Lite FIT/STA와새실기전달을진행한다."
+    },
+    "budget_684": {
+      "Flash_B": 212992,
+      "free_B": 0,
+      "new_static_RAM_B": 0,
+      "request_gate": false,
+      "remaining_phase1_ACK_clocks": 224,
+      "next": "684의 BG 완료 map 발행·7블록·큰 묶음을 비교 기준으로 보존한다. 957 마지막map3200/3392의384B는 두 위상 모두 기존384B/1152B 선행 DMA 전에 수락됐다. 후속OBJ288B 수락이249/253선에 들어와 다음 빈큐 기회를 닫는 실제 경계와 E0 진행 공개/ARM bulk 허가를 먼저 대조한다. 수신ACK와 전체DMA완료를 혼동하지 않고 STOP·새패킷 우선을 유지하며, 마지막384B를 앞선 VBlank로 옮길 수 있는지 순비용으로 판단한다. 추가 전송 대기나 위상별 상수는 넣지 않는다. 위상1의남은224클록은VBlank대기반환+264와반환뒤−40의합이며678/680에서도같았다. SEAL을더앞당기는것만으로이값을줄인다고계상하거나10µs만맞추는고정지연탐색은반복하지않는다. ARM여유0B·packedROM0B이므로공동완료/허가에서실제로삭제할코드와조건을먼저정한다. 911/951/952/957·독립검사·STOP·메뉴복귀와두위상종단시간을통과한후에만전체Lite FIT/STA·새실기전달로간다."
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6"
