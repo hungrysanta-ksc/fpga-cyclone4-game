@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-budget-668",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 672,
-  "current_evidence": "analysis/extent672-verification.json",
+  "current_step": 673,
+  "current_evidence": "analysis/ready673-budget.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -92,10 +92,10 @@
     },
     {
       "id": "R2",
-      "status": "extent672_functional_pass_timing_rejected_joint_readiness_next",
+      "status": "ready673_budget_complete_early_BG_handoff_next",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "On unchanged MMC666, establish semantic readiness of last BG/OBJ and section5 ordinary independently of preparation-call timestamps. Bound ROM->plan/bulk credit->tile acceptance and data-ready->prepare->SPI/queue acceptance jointly against prior VBlank/246 reveal. No more selector-only/blanket-drain/phase-constant variants without a combined deadline budget.",
+      "next_single_gate": "First bound957 ready BG batch handoff within remaining0.881ms ROM window including E8/E9/decode/16reads. Separately bring954 last BG computation at least2.641ms earlier plus real transfer/read costs. Combine with validated immutable ordinary scheduling, preserve bulk/new-packet/STOP priority, then require both-start whole-path dense and957 ACK improvement. No selector-only or0.106ms packet assembly microtuning.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -380,10 +380,10 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "MMC666 retained;672 late accepted-extent selection failed both-phase timing gate",
-    "next": "On unchanged MMC666, establish semantic readiness of last BG/OBJ and section5 ordinary independently of preparation-call timestamps. Bound ROM->plan/bulk credit->tile acceptance and data-ready->prepare->SPI/queue acceptance jointly against prior VBlank/246 reveal. No more selector-only/blanket-drain/phase-constant variants without a combined deadline budget.",
-    "document": "docs/nes-extent672-results.ko.md",
-    "evidence": "analysis/extent672-verification.json",
+    "candidate": "MMC666 retained;673 read-only readiness budget complete",
+    "next": "First bound957 ready BG batch handoff within remaining0.881ms ROM window including E8/E9/decode/16reads. Separately bring954 last BG computation at least2.641ms earlier plus real transfer/read costs. Combine with validated immutable ordinary scheduling, preserve bulk/new-packet/STOP priority, then require both-start whole-path dense and957 ACK improvement. No selector-only or0.106ms packet assembly microtuning.",
+    "document": "docs/nes-ready673-results.ko.md",
+    "evidence": "analysis/ready673-budget.json",
     "timing_reference": "analysis/output668-verification.json",
     "hardware_baseline": "MMC666",
     "steps": [
@@ -408,6 +408,11 @@
         "deliverable": "954 phase2 early map384->1344B; dense mean worsens both starts. Next bound joint tile/ordinary/SEAL readiness, not grant-size microtuning."
       },
       {
+        "id": "S3a",
+        "status": "673_budget_complete_no_candidate_selected",
+        "deliverable": "Independent readiness/assembly/credit/ROM/cache split;957 ready BG is batched7.41ms,954 last BG caller2.38-2.64ms past prior ROM close. Next bounded early BG and immutable ordinary joint schedule."
+      },
+      {
         "id": "S4",
         "status": "pending_selection",
         "deliverable": "Only a budget-qualified candidate: same-work two starts, independent bytes/guards, whole Lite FIT/STA whenever ROM contents or RTL change."
@@ -427,11 +432,11 @@
       "both-phase dense mean and957 lastACK improvement",
       "independent identity/CRC/coverage, STOP, cold/partial recovery, capture recovery, menu"
     ],
-    "stop_rule": "672 larger accepted-map grant increases954 phase2 early DMA by960B but dense15VB unchanged. Freeze selector-only variants; require joint late-tile/ordinary readiness budget before implementation, whole FIT or ZIP.",
+    "stop_rule": "Unchanged last external ROM already misses prior246 by0.094-0.229ms. Even ideal-credit/zero ordinary costs retaining SEAL wire+observed checks need2.298-2.428ms. Budget ROM supply together with ordinary; do not claim early ordinary alone meets the target.",
     "limited_delivery_gate": false,
     "external_IO_signoff": false,
     "new_hardware_test": false,
-    "new_simulation": "106 linked ARM/65816 captures; head/tail priority, missing/duplicate validation, late-beam STOP, partial cold recovery and final-ACK cancellation guards. No new physical or full ROM RTL run.",
+    "new_simulation": "Read-only106 actual linked ARM/65816 captures, per-byte immutable data and function/credit clocks; all original ACKs/bytes and four timing guards retained. No new fault injection, physical or closed-loop ROM RTL run.",
     "new_synthesis": false,
     "budget_670": {
       "reference_reconstructions": 106,
@@ -487,6 +492,21 @@
       "observed_SNES_stack_B": 11,
       "whole_FIT_STA": false,
       "ROM_changed_requires_new_board_before_selection": true
+    },
+    "budget_673": {
+      "selected": "MMC666",
+      "new_product": false,
+      "replay_captures": 106,
+      "all_baseline_ACKs_equal": true,
+      "all_protected": true,
+      "packet_assembly_ms": 0.105571428,
+      "ideal_current_ROM_remaining_ms": [
+        2.385079427,
+        2.428287894,
+        2.298103762,
+        2.332931277
+      ],
+      "actual_timing_improvement": false
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6"
