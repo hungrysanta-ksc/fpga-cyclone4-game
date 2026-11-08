@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-현재 브랜치는 `codex/nes-output-budget-668` / PR155다. [680 진행 연결·인접 map 결과](../nes-progress680-results.ko.md)를 먼저 읽는다. 680에서 실제ARM·FPGA·65816 E0진행비트를 연결하고 고정 인접map 선택을 검증했다. 956선행map128→512B와911마감·9523회·957최종대기0회·큰묶음을 두위상에서 유지했다. 밀집평균−0.046784/−0.054662ms지만 마지막ACK+0.010430/−0.213062ms라 동시개선 실패,MMC666유지. ARM212828B/free164,body5948B/packedROMfree16,staticRAM추가0. 전체보드MAP+35comb/+3FF/0RAM이나 실제84LE·1LAB 배치예산은 미확정이며 시간탈락으로FIT/STA·ZIP없다. 다음은956 남은map512B·tile과957 최종map384B를 다음E1/credit·ROM·VBlank로 나누고,실제 생산작업 재배치·삭제 예산부터 잡는다. 빈D0·고정대기·위상/크기상수·더긴scan 반복은 보류하며,두위상 종단조건 통과후에만 전체LiteFIT/STA를 진행한다.
+현재 브랜치는 `codex/nes-output-budget-668` / PR155다. [681 DMA·발행 비교](../nes-late681-results.ko.md)를 먼저 읽는다. 681은 네 후보·424화면을 비교했다. 최종 map 우선 결합은952 표시3회·957 최종대기0회·큰묶음·보호조건을 유지하지만, 밀집 평균−0.004619/−0.036969ms에 비해 마지막ACK+0.062392/+0.083996ms로 동시 개선에 실패했다. MMC666을 유지하며 새FIT/STA·실기ZIP은 없다. 다음은 955 최종 ACK 전 956 geometry7블록 수신을 회복하고, 첫 zero/BG 공급이 기존 ROM 허용 구간을 놓치지 않도록 발행·credit 예산을 확정한다. 957의 마지막384B만 옮겨 offset1024의 map384B를 밀어내지 않도록 수락된 전체 범위와 VBlank 여유를 함께 판정한다. 같은 고정 대기·크기/위상 상수·선택 순서 반복은 보류하며, 두 위상 종단 개선 뒤에만 전체 Lite FIT/STA를 진행한다.
 
 PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [598 collector·출력 비용](../nes-boundary598-results.ko.md), [597 결합 예산·핀 전송](../nes-region597-results.ko.md), [596 페이지·회로 예산](../nes-pages596-budget.ko.md), [595 D4 FPGA 결과](../nes-region595-results.ko.md), [594 ARM 결과](../nes-report594-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 실제 ARM transport 제한 시험·전체 링크 비용을 확인했다. 594 ARM과 연결한 595 FPGA는 같은 경계의 Lite MAP 예산을 넘었다. 선택 산출물과 실측은 MMC577을 유지한다.
 
