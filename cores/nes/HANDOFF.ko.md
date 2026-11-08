@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-**현재688: 688: 951 공개선·두 위상 시간 통과, 전체 FIT 6 LAB 부족** [결과](../../docs/nes-owner688-results.ko.md) · [검증](../../analysis/owner688-verification.json) · [보드](../../analysis/owner688-board.json). 688에서 실제 E8 빈 응답의 조회 허가와 receipt-only 완료를 구분해 951 공개를 위상1 247→236선, 위상2 236선으로 회복했다. 955 선행 DMA 1536/1152B와 7블록 수신, 952 표시3회·957 최종대기0회를 유지했다. MMC666 대비 밀집 평균 −0.051906/−0.001248ms, 마지막 ACK −0.188944/−0.385896ms로 두 위상 모두 개선했다. Flash 212984B/free8B·추가 RAM0B다. 다만 680 RTL+685 ROM의 첫 전체 Lite FIT는 969/963 LAB로 6 LAB 부족해 실패했고 STA·새 설치본은 없다. 실기 기준 MMC666을 유지한다.
+**현재689: 689: 688 일정 유지, E0·queue 통합으로 전체 FIT·기존 제약 STA 통과** [결과](../../docs/nes-status689-results.ko.md) · [검증](../../analysis/status689-verification.json). 689D는 688의 ARM·685의 65816 바이너리를 그대로 유지하면서 6 LAB 부족을 해소했다. 전체 Quartus Lite FIT는 15295 LE·963/963 LAB·56/56 M9K로 통과했고, 기존 제약의 최악 setup/hold/recovery/removal은 +0.104/+0.137/+1.460/+0.488ns다. 같은 두 위상106화면 재생은 688과 클록 단위로 일치했다. 실기 기준은 MMC666이며 새 설치본·실물 시험은 아직 없다.
 
 **이전678: 수신 예산 수정·957 DMA 회복, 전체 채택 미달.** [결과·다음 경계](../../docs/nes-handoff678-results.ko.md) · [검증](../../analysis/handoff678-verification.json). 678 수정본은 빈 D0가 7블록 수신 예산을 소모하지 않도록 하고 END 발행 중 map→tile 전환을 연결했다. 952는 두 위상3회·큰묶음·보호조건을 유지했고, 밀집 평균은−0.04567/−0.05654ms다. 마지막ACK는+0.01043/−0.18270ms로 동시개선은 미달해 MMC666을 유지한다. 다음은956의 실제 DMA 진행 공개·identity·STOP 경계와 삭제 예산을 먼저 정한다. 선행 조회34/35회가 모두 빈 D0였고956 선행map은128B로 남았으므로, 같은 조회/고정대기/위상별상수 변형은 보류한다. 선택보드84LE·1LAB·0M9K, ARM192B(678)/496B(MMC666), SNES ROM11B 안의 전체비용을 판정한 뒤에만 구현한다. 새FIT/ZIP은 없다.
 
