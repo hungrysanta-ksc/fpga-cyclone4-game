@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-budget-668",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 676,
-  "current_evidence": "analysis/idle676-verification.json",
+  "current_step": 677,
+  "current_evidence": "analysis/map677-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -92,10 +92,10 @@
     },
     {
       "id": "R2",
-      "status": "idle676_two_candidates_timing_rejected_map_acceptance_budget_next",
+      "status": "map677_recovers952_but_whole_gate_failed",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "Budget952 map offsets2048..3392 readiness/bulk priority/credit/acceptance and real empty-queue DMA against original last-map ACK33.125/33.405ms. Need recover1344B ahead (data-only lower bound0.501ms plus setup/checks). Post-map bounded input occurs outside VBlank. Freeze fixed-wait/pair/phase variants; any actual DMA-progress exposure first needs read-event/CDC/STOP/resource budget distinct from E0 receipt.",
+      "next_single_gate": "Retain677 run9523/3VB and large plan banks; budget956 incoming display delay0.347530ms plus957 own ACK delay0.136423ms. Couple already accepted map and subsequent tile readiness/credit/admission/real idle DMA. Preserve tile gain explicitly as a tradeoff, not same timing. Freeze fixed-wait/phase/reservation-count variants; if actual DMA progress is needed, first budget identity/STOP/CDC/Flash/LE.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -326,7 +326,7 @@
     },
     {
       "id": "R3",
-      "status": "held_after676_timing_rejection",
+      "status": "held_after677_phase1_last_ACK_regression",
       "objective": "Implement one budget-qualified replacement against selected MMC666; frozen577 remains historical evidence",
       "gate": [
         "Same workload and two start phases plus representative-scene steady interval distribution",
@@ -336,7 +336,7 @@
       ],
       "stop_rule": "After two unsuccessful variants of one hypothesis, freeze pending new evidence",
       "status_before669": "bounded_candidate638_validated_trial639_60Hz_open",
-      "next_single_gate": "Budget952 map offsets2048..3392 readiness/bulk priority/credit/acceptance and real empty-queue DMA against original last-map ACK33.125/33.405ms. Need recover1344B ahead (data-only lower bound0.501ms plus setup/checks). Post-map bounded input occurs outside VBlank. Freeze fixed-wait/pair/phase variants; any actual DMA-progress exposure first needs read-event/CDC/STOP/resource budget distinct from E0 receipt."
+      "next_single_gate": "Retain677 run9523/3VB and large plan banks; budget956 incoming display delay0.347530ms plus957 own ACK delay0.136423ms. Couple already accepted map and subsequent tile readiness/credit/admission/real idle DMA. Preserve tile gain explicitly as a tradeoff, not same timing. Freeze fixed-wait/phase/reservation-count variants; if actual DMA progress is needed, first budget identity/STOP/CDC/Flash/LE."
     },
     {
       "id": "R4",
@@ -380,10 +380,10 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "MMC666 retained;676 input-only and combined final plan grant functional pass but952 stays4VB",
-    "next": "Budget952 map offsets2048..3392 readiness/bulk priority/credit/acceptance and real empty-queue DMA against original last-map ACK33.125/33.405ms. Need recover1344B ahead (data-only lower bound0.501ms plus setup/checks). Post-map bounded input occurs outside VBlank. Freeze fixed-wait/pair/phase variants; any actual DMA-progress exposure first needs read-event/CDC/STOP/resource budget distinct from E0 receipt.",
-    "document": "docs/nes-idle676-results.ko.md",
-    "evidence": "analysis/idle676-verification.json",
+    "candidate": "MMC666 retained;677 run recovers952 but phase1 lastACK regresses0.484ms",
+    "next": "Retain677 run9523/3VB and large plan banks; budget956 incoming display delay0.347530ms plus957 own ACK delay0.136423ms. Couple already accepted map and subsequent tile readiness/credit/admission/real idle DMA. Preserve tile gain explicitly as a tradeoff, not same timing. Freeze fixed-wait/phase/reservation-count variants; if actual DMA progress is needed, first budget identity/STOP/CDC/Flash/LE.",
+    "document": "docs/nes-map677-results.ko.md",
+    "evidence": "analysis/map677-verification.json",
     "timing_reference": "analysis/output668-verification.json",
     "hardware_baseline": "MMC666",
     "steps": [
@@ -428,6 +428,11 @@
         "deliverable": "40 fixed waits replaced by one real D0/D1/CRC/restore/D2/D0 input poll; final13-record writable bank retained with held tile. END5.939/6.153->1.142ms;tail6.561->0.716ms,but0DMA during callback and192B map-ahead.9524/4VB; keepMMC666."
       },
       {
+        "id": "S3e",
+        "status": "677_recovers952_but_not_both_last_ACK",
+        "deliverable": "Reserve-only leaves0 earlymap/4VB. Checked bulk completion then warm map-run priority recovers1536/1152B and3/3VB; dense improves44.5/53.9us but lastACK+483.95/-176.09us. KeepMMC666."
+      },
+      {
         "id": "S4",
         "status": "pending_selection",
         "deliverable": "Only a budget-qualified candidate: same-work two starts, independent bytes/guards, whole Lite FIT/STA whenever ROM contents or RTL change."
@@ -447,11 +452,11 @@
       "both-phase dense mean and957 lastACK improvement",
       "independent identity/CRC/coverage, STOP, cold/partial recovery, capture recovery, menu"
     ],
-    "stop_rule": "Both676 variants fail952 and total timing. Freeze fixed-wait/pair/phase variants; require quantified map-admission/real-DMA boundary before another whole replay.",
+    "stop_rule": "677 reserve and run show credit/producer changes shift DMA opportunities. No fixed waits/phase/reservation sweeps; require joint956/957 accepted-map and next-tile budget.",
     "limited_delivery_gate": false,
     "external_IO_signoff": false,
     "new_hardware_test": false,
-    "new_simulation": "212 same-work linked ARM/65816 frames; actual fitted RTL15 source pins and2 host phases with16 ordered receipts,13-record final grant,STOP/cold. Input13+initialgrant12+END9+finalgrant7+routing12+menu5/marker4 guards.952 protection failed.",
+    "new_simulation": "212 matched linked ARM/65816 frames,all53 plan-bank count/first/decoded sequences preserved,2 bulk slots;reserve18/run13 guard cases plus initial12/finalbank7/END9/idle13/routing12/menu5+marker4 per binary. Run9523/3VB and all protections pass;phase1 lastACK fails.",
     "new_synthesis": false,
     "budget_670": {
       "reference_reconstructions": 106,
@@ -600,6 +605,34 @@
       ],
       "input_callback_ms": 0.6215113468138543,
       "input_callback_DMA_starts": 0
+    },
+    "budget_677": {
+      "reserve_Flash_B": 212732,
+      "run_Flash_B": 212724,
+      "run_free_B": 268,
+      "extra_static_RAM_B": 0,
+      "progress_stack_B": 32,
+      "board_changed": false,
+      "client_changed": false,
+      "selected": false,
+      "run_dense_delta_ms": [
+        -0.044549419497968756,
+        -0.05386158912547501
+      ],
+      "run_last_ACK_delta_ms": [
+        0.48395345554128105,
+        -0.17609312765606358
+      ],
+      "map_ahead952_B": [
+        1536,
+        1152
+      ],
+      "display952_VBlank": [
+        3,
+        3
+      ],
+      "all_protected": true,
+      "phase1_956_reveal_delay_ms": 0.34753017049837615
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6"
