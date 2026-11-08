@@ -4,7 +4,7 @@
 
 ## 현재 작업
 
-**현재689: 689: 688 일정 유지, E0·queue 통합으로 전체 FIT·기존 제약 STA 통과** [결과](../../docs/nes-status689-results.ko.md) · [검증](../../analysis/status689-verification.json). 689D는 688의 ARM·685의 65816 바이너리를 그대로 유지하면서 6 LAB 부족을 해소했다. 전체 Quartus Lite FIT는 15295 LE·963/963 LAB·56/56 M9K로 통과했고, 기존 제약의 최악 setup/hold/recovery/removal은 +0.104/+0.137/+1.460/+0.488ns다. 같은 두 위상106화면 재생은 688과 클록 단위로 일치했다. 실기 기준은 MMC666이며 새 설치본·실물 시험은 아직 없다.
+**689 검증: 688 일정 유지, E0·queue 통합으로 전체 FIT·기존 제약 STA 통과** [결과](../../docs/nes-status689-results.ko.md) · [검증](../../analysis/status689-verification.json). 689D는 688의 ARM·685의 65816 바이너리를 그대로 유지하면서 6 LAB 부족을 해소했다. 전체 Quartus Lite FIT는 15295 LE·963/963 LAB·56/56 M9K로 통과했고, 기존 제약의 최악 setup/hold/recovery/removal은 +0.104/+0.137/+1.460/+0.488ns다. 같은 두 위상106화면 재생은 688과 클록 단위로 일치했다. 실기 기준은 MMC666이다. **현재 MMC690 전달 완료·실기 대기**: [설치 안내](../../docs/nes-mmc690-trial.ko.md) · [패키지 검증](../../analysis/trial690-package.json). MMC690 전달본을 준비했다. 689D 보드·685 CPU는 고정하고 688 ARM의 메뉴/ROM/로그 이름만 변경했다. 799개 함수의 주소·크기·명령 바이트가 동일하며 Flash212984B/free8B다. 실제 프로그래머·ROM읽기·STOP·메뉴/base·5–40/40–55초 집계를 검증했다. 실물 결과 전까지 기준은 MMC666이다.
 
 **이전678: 수신 예산 수정·957 DMA 회복, 전체 채택 미달.** [결과·다음 경계](../../docs/nes-handoff678-results.ko.md) · [검증](../../analysis/handoff678-verification.json). 678 수정본은 빈 D0가 7블록 수신 예산을 소모하지 않도록 하고 END 발행 중 map→tile 전환을 연결했다. 952는 두 위상3회·큰묶음·보호조건을 유지했고, 밀집 평균은−0.04567/−0.05654ms다. 마지막ACK는+0.01043/−0.18270ms로 동시개선은 미달해 MMC666을 유지한다. 다음은956의 실제 DMA 진행 공개·identity·STOP 경계와 삭제 예산을 먼저 정한다. 선행 조회34/35회가 모두 빈 D0였고956 선행map은128B로 남았으므로, 같은 조회/고정대기/위상별상수 변형은 보류한다. 선택보드84LE·1LAB·0M9K, ARM192B(678)/496B(MMC666), SNES ROM11B 안의 전체비용을 판정한 뒤에만 구현한다. 새FIT/ZIP은 없다.
 

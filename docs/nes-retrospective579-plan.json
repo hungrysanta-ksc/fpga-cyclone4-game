@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-budget-668",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 689,
-  "current_evidence": "analysis/status689-verification.json",
+  "current_step": 690,
+  "current_evidence": "analysis/trial690-package.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -376,14 +376,14 @@
   "retrospective_PR": 150,
   "PR": 155,
   "bounded_prototype_started": true,
-  "candidate_manifest": "analysis/trial666-package.json",
+  "candidate_manifest": "analysis/trial690-package.json",
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "689D는 688의 ARM·685의 65816 바이너리를 그대로 유지하면서 6 LAB 부족을 해소했다. 전체 Quartus Lite FIT는 15295 LE·963/963 LAB·56/56 M9K로 통과했고, 기존 제약의 최악 setup/hold/recovery/removal은 +0.104/+0.137/+1.460/+0.488ns다. 같은 두 위상106화면 재생은 688과 클록 단위로 일치했다. 실기 기준은 MMC666이며 새 설치본·실물 시험은 아직 없다.",
-    "next": "다음은689D보드와 고정688 ARM·685 CPU를 묶어 고유 설치/로그 이름의 제한 실기 전달본을 준비한다. 새 기능이나 같은 발행/seed 미세 조정은 더하지 않는다. package hash·실제 programmer/loader·STOP/base/menu 경계를 확인하고 MMC666과 같은 첫 레벨 동선에서5–40초·40–55초를 비교한다. RESTORE는 제외한다. 새 실기 결과 전까지 제품·FPS 기준은MMC666을 유지하며, LAB여유0·setup0.104ns·Flash8B와 외부 IO 미완료 범위를 전달 문서에 남긴다.",
-    "document": "docs/nes-status689-results.ko.md",
-    "evidence": "analysis/status689-verification.json",
+    "candidate": "MMC690 전달본을 준비했다. 689D 보드·685 CPU는 고정하고 688 ARM의 메뉴/ROM/로그 이름만 변경했다. 799개 함수의 주소·크기·명령 바이트가 동일하며 Flash212984B/free8B다. 실제 프로그래머·ROM읽기·STOP·메뉴/base·5–40/40–55초 집계를 검증했다. 실물 결과 전까지 기준은 MMC666이다.",
+    "next": "MMC690을 MMC666과 같은 첫 레벨 동선으로 실행하고 5–40초·40–55초 완료 표시와 map·OBJ 작업량을 비교한다. 스테이지 진입·약60초 자동STOP·메뉴 복귀를 확인한다. 시작 실패/조기 종료는 별도 보존한다. 반환 로그 전에는 고정 보드·ARM·CPU를 추가 최적화하지 않는다. RESTORE는 제외하며 기존 백업/ROM/save는 보존한다.",
+    "document": "docs/nes-mmc690-trial.ko.md",
+    "evidence": "analysis/trial690-package.json",
     "timing_reference": "analysis/output668-verification.json",
     "hardware_baseline": "MMC666",
     "steps": [
@@ -454,12 +454,12 @@
       },
       {
         "id": "S4",
-        "status": "pending_selection",
+        "status": "689D_whole_FIT_STA_and_two_start_schedule_passed",
         "deliverable": "Only a budget-qualified candidate: same-work two starts, independent bytes/guards, whole Lite FIT/STA whenever ROM contents or RTL change."
       },
       {
         "id": "S5",
-        "status": "pending_all_gates",
+        "status": "MMC690_packaged_awaiting_hardware_feedback",
         "deliverable": "Unique installer/log names, no RESTORE; physical5-40s/40-55s and stage entry/STOP/menu."
       },
       {
@@ -958,6 +958,25 @@
       "setup_ns": 0.104,
       "external_IO_signoff": false,
       "next": "다음은689D보드와 고정688 ARM·685 CPU를 묶어 고유 설치/로그 이름의 제한 실기 전달본을 준비한다. 새 기능이나 같은 발행/seed 미세 조정은 더하지 않는다. package hash·실제 programmer/loader·STOP/base/menu 경계를 확인하고 MMC666과 같은 첫 레벨 동선에서5–40초·40–55초를 비교한다. RESTORE는 제외한다. 새 실기 결과 전까지 제품·FPS 기준은MMC666을 유지하며, LAB여유0·setup0.104ns·Flash8B와 외부 IO 미완료 범위를 전달 문서에 남긴다."
+    },
+    "delivery690": {
+      "package": "analysis/trial690-package.json",
+      "ZIP_SHA256": "d55ce6113b32cf97f589e9666e69b6c29bcd16ecbdbb115753218c3d32cf7cec",
+      "Flash_free_B": 8,
+      "LAB_free": 0,
+      "setup_ns": 0.104,
+      "physical_verified": false,
+      "window_s": [
+        [
+          5,
+          40
+        ],
+        [
+          40,
+          55
+        ]
+      ],
+      "RESTORE": false
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6"
