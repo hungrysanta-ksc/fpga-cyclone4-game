@@ -4,7 +4,9 @@
 
 ## 현재 작업
 
-**670 직접 공급 비용표 완료, 제품 선택은 보류.** [거래·복원·소유권·다음 시험](../../docs/nes-supply670-results.ko.md) · [프레임별 근거](../../analysis/supply670-budget.json). 두 위상106개 map이 실제plan slot과 descriptor 참조복원으로 일치했다. 밀집 map E1은1846.4→429.2B 가정(1417.2B/4.319ms wire 절감)이다. D1/E0 삭제·검증된 순삭제는0이며 새65816/ARM/포트 시간은 미측정이다. COMMIT 뒤 캡처 재읽기는 기각했다. 다음은B의 WRAM 원본복사·변환/CRC/행복사/lookup 초기화·실제ARM 생성 비용을907/911/953/954/955로 제한 시험하고, source 단일포트·D2의 두 소비자 완료·STOP 예산을 확인한다. 전체 연결/FIT/실기 전달 전에 이 비용을 닫는다.
+**671 실제 커널 비용 실패, MMC666 유지.** [결과·다음 단계](../../docs/nes-supply671-results.ko.md) · [검증](../../analysis/supply671-verification.json). 실제 전체링크 ARM 생산기와65816 변환/독립CRC를 실행했다. source42.58ms,954/955 행88.99/85.17ms로 wire절감3.21/3.24ms보다 크다. ARM 자원링크free244B지만 제품 callback·문맥·source RTL은 미연결이다. 509개CPU command와45개소유권 모델 검사 범위만 통과했다. 다음은기존변환·검사를 유지한954/957의 수락범위·병합·주사선 일정 비교다. 새제품/실기ZIP은 없다.
+
+**이전670 비용표.** [참조 복원·소유권](../../docs/nes-supply670-results.ko.md) · [근거](../../analysis/supply670-budget.json). 106개 참조 map 일치와 일괄 descriptor의 바이트 절감 가정을 확인했다. 그 뒤671에서 행별 반복 header와 실제 CPU 비용을 포함하자 시간 게이트에 실패했다. COMMIT 뒤 collector 재읽기 기각과 저장 credit/최종 표시 ACK 분리는 유지한다.
 
 **668 두 후보 검증 완료·둘 다 기각, MMC666 유지.** [668 비용·결과·다음 순서](../../docs/nes-output668-results.ko.md) · [검증 JSON](../../analysis/output668-verification.json). 같은 map/OBJ의 실제 ARM·65816 재생에서 반복 탐색은 약 0.75→0.14–0.18ms로 줄었지만, 위상 1의 선행 DMA가 감소해 마지막 ACK가 0.215ms 늦어졌다. map 소비 완료를 기다리는 결합 후보는 911의 업로드 VBlank를 하나 놓쳐 마지막 ACK가 16.849/16.640ms 늦어졌다. 안전 검사는 통과했으나 시간 조건은 실패했다.
 

@@ -15,7 +15,7 @@
 - 현재 브랜치는 `codex/nes-output-budget-668`, PR155다. `docs/nes-output668-results.ko.md`와 `analysis/output668-verification.json`이 현재 검증 근거다. 두 ARM 후보는 기능 통과·종단 시간 실패로 기각했고 MMC666을 유지한다.
 - 반복 탐색만 줄이면 map 선행 DMA가 감소할 수 있다. 일괄 map drain은 911의 업로드 VBlank 회귀를 만들었다. 같은 단독 탐색/drain/위상별 고정 지연 변형은 새 근거 전까지 보류한다.
 - 670에서669 계획의 거래·복원·소유권·삭제 예산표를 작성했다. `docs/nes-supply670-results.ko.md`와 `analysis/supply670-budget.json`을 읽는다. 실제plan slot으로106개 map 참조복원 일치, descriptor 가정의 밀집 E1절감1417.2B(4.319ms wire)이나 새 target 시간은 미검증이다. D1/E0 삭제0, 순삭제0B/0LE. COMMIT 뒤 collector 재읽기A0는 기각, 별도snapshot은tile RAM을 공짜로 쓸 수 없어 미선택이다.
-- 다음은 B의 COMMIT 전 SNES WRAM 복사에 필요한 실제65816 변환/CRC/행복사/lookup 무효화와 ARM descriptor 생성·링크 비용을907/911/953/954/955로 제한 시험한다. source 단일포트·두 소비자 D2·순환대기·STOP 비용도 닫아야 한다. 예산 전 제품 연결/전체FIT/ZIP 금지. 근거 부족으로 기존source/queue 전체를 삭제 예산에 넣지 않는다. 16KiB mailbox 추가·659 직접 PSRAM DMA 반복은 제외한다.
+- 671 B 제한 시험은 실제 비용 실패로 기각했다. `docs/nes-supply671-results.ko.md`·`analysis/supply671-verification.json`을 읽는다. 전체링크 ARM 생산기/509개65816 command/45개소유권 모델 검사 통과지만 source DMA·CRC42.58ms,954/955 행복원·검사88.99/85.17ms로 wire절감3.21/3.24ms를 초과한다. ARM 자원링크212748B/free244,새문맥300B미할당. 새RTL/종단일정/FIT/ZIP 없음. 다음은MMC666의954/957 수락 범위·병합·주사선 예산 비교다. 같은 LUT/CRC 미세조정은 보류한다.
 - 위 예산과 별개로 954·957 수락 범위·명령 병합·주사선 작업 예산을 비교한다. 911 발행 마감과 951 공개선·952 3회 이하·957 추가 대기0회, 두 위상의 밀집 평균·마지막 ACK를 함께 판정한다. 실행 순서는 579 계획의 current_followup을 따른다.
 - 실기 평균 출력·최종 ACK26.84ms를 고정 재생의 비율로 나누지 않는다. 실제 링크 M4·65816, CPI/IRQ/SPI 모델, 반복 ROM 달력과 실기 로그의 범위를 구분한다.
 - 이전 Current/FIRST/NEXT 누적은 [664 시작 전 원문](docs/progress/archive/AGENTS-before664.md)에 바이트 그대로 보존했다. 그 안의 '현재'는 당시 기록이며 새 실행 지시가 아니다.
