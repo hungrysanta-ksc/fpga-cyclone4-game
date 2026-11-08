@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-budget-668",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 684,
-  "current_evidence": "analysis/bg684-verification.json",
+  "current_step": 685,
+  "current_evidence": "analysis/complete685-sealed-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -380,10 +380,10 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "684는 BG 완료 직후 OBJ 계산 전에 확정 map192B를 발행해683의 연속 순서를 유지했다. 두 위상 모두956의384B와957의1152B 선행 DMA를 회복하고7블록·첫BG ROM창·952 표시3회·957 최종대기0회·보호조건을 유지했다. MMC666 대비 밀집 평균은−0.007412/−0.035144ms,957 마지막ACK는+0.010430/−0.213994ms다. 위상1의224클록 지연 때문에 동시 개선은 미달이며 실기는MMC666을 유지한다.",
-    "next": "684의 BG 완료 map 발행·7블록·큰 묶음을 비교 기준으로 보존한다. 957 마지막map3200/3392의384B는 두 위상 모두 기존384B/1152B 선행 DMA 전에 수락됐다. 후속OBJ288B 수락이249/253선에 들어와 다음 빈큐 기회를 닫는 실제 경계와 E0 진행 공개/ARM bulk 허가를 먼저 대조한다. 수신ACK와 전체DMA완료를 혼동하지 않고 STOP·새패킷 우선을 유지하며, 마지막384B를 앞선 VBlank로 옮길 수 있는지 순비용으로 판단한다. 추가 전송 대기나 위상별 상수는 넣지 않는다. 위상1의남은224클록은VBlank대기반환+264와반환뒤−40의합이며678/680에서도같았다. SEAL을더앞당기는것만으로이값을줄인다고계상하거나10µs만맞추는고정지연탐색은반복하지않는다. ARM여유0B·packedROM0B이므로공동완료/허가에서실제로삭제할코드와조건을먼저정한다. 911/951/952/957·독립검사·STOP·메뉴복귀와두위상종단시간을통과한후에만전체Lite FIT/STA·새실기전달로간다.",
-    "document": "docs/nes-bg684-results.ko.md",
-    "evidence": "analysis/bg684-verification.json",
+    "candidate": "685는 수락된 map1536B를 VBlank 잔여 시간 안에서 한 번에 끝내957의 마지막384B를 선행 DMA했다. SEAL 뒤 중복 E0도 줄여 두 위상 모두 밀집 평균−0.038571/−0.049764ms,957 마지막ACK−0.183357/−0.396326ms로 MMC666보다 빨라졌다. 952 표시3회·957 최종대기0회와 보호조건은 유지했지만 위상2의7번째 입력 검사 완료가955 ACK보다0.081864ms 늦어 전체 채택은 보류한다. 실기 기준은MMC666이다.",
+    "next": "685의 BG 완료 map·큰 묶음·1536B 완료 DMA를 보존한다. 다음은 SEAL E1 성공 뒤 첫 E0보다 먼저 bounded7 입력을 시작하는 소유권 경계 하나를 검토한다. 측정된 첫 E0와 진입 비용0.154389ms 대비 필요한 선행량은 위상2 0.081864ms다. 이 차이는 가능 예산이며 성공 시간이 아니다. E1 수락 오류·STOP·부분 입력·CRC/POP 실패 때 입력 중단과 cold 복구를 유지하고, 이전 최종ACK 전체 identity를 확인하기 전 새 COMMIT/EA/표시 공개를 금지한다. 일반 출력 credit 우선권은 그대로 두고 Flash4B 안에서 기존 대기 제어를 대체한다. 두 시작 위상106화면에서7블록·첫BG ROM창·911/951/952/957과 밀집/마지막ACK를 다시 함께 통과해야 한다. 그 뒤에만 전체 Lite FIT/STA·새 전달을 진행한다. 고정 지연·위상 상수·DMA 크기 반복 탐색은 하지 않는다.",
+    "document": "docs/nes-complete685-results.ko.md",
+    "evidence": "analysis/complete685-sealed-verification.json",
     "timing_reference": "analysis/output668-verification.json",
     "hardware_baseline": "MMC666",
     "steps": [
@@ -476,6 +476,11 @@
         "id": "S3l",
         "status": "bg684_preOBJ_map_verified_phase1_ACK224_clocks_late_keep_MMC666",
         "deliverable": "684는 BG 완료 직후 OBJ 계산 전에 확정 map192B를 발행해683의 연속 순서를 유지했다. 두 위상 모두956의384B와957의1152B 선행 DMA를 회복하고7블록·첫BG ROM창·952 표시3회·957 최종대기0회·보호조건을 유지했다. MMC666 대비 밀집 평균은−0.007412/−0.035144ms,957 마지막ACK는+0.010430/−0.213994ms다. 위상1의224클록 지연 때문에 동시 개선은 미달이며 실기는MMC666을 유지한다."
+      },
+      {
+        "id": "S3m",
+        "status": "complete685_time_improved_input7_phase2_82us_late_keep_MMC666",
+        "deliverable": "685는 수락된 map1536B를 VBlank 잔여 시간 안에서 한 번에 끝내957의 마지막384B를 선행 DMA했다. SEAL 뒤 중복 E0도 줄여 두 위상 모두 밀집 평균−0.038571/−0.049764ms,957 마지막ACK−0.183357/−0.396326ms로 MMC666보다 빨라졌다. 952 표시3회·957 최종대기0회와 보호조건은 유지했지만 위상2의7번째 입력 검사 완료가955 ACK보다0.081864ms 늦어 전체 채택은 보류한다. 실기 기준은MMC666이다."
       }
     ],
     "protected": [
@@ -487,12 +492,12 @@
       "both-phase dense mean and957 lastACK improvement",
       "independent identity/CRC/coverage, STOP, cold/partial recovery, capture recovery, menu"
     ],
-    "stop_rule": "7블록 수신·첫 BG ROM 구간·BG 완료 map 연속 발행을 유지한다. 이미 수락된 마지막384B의 실제 DMA 완료/후속 OBJ 허가 경계와 삭제 예산을 먼저 확인한다. 678/680/684에서 반복된224클록을 맞추려는 고정 대기·위상 상수·선택 순서 변형은 보류한다. 두 위상 종단 시간과 보호조건 통과 뒤에만 전체 Lite FIT/STA·새 전달로 진행한다.",
+    "stop_rule": "685의 BG 완료 map·큰 묶음·1536B 완료 DMA를 보존한다. 다음은 SEAL E1 성공 뒤 첫 E0보다 먼저 bounded7 입력을 시작하는 소유권 경계 하나를 검토한다. 측정된 첫 E0와 진입 비용0.154389ms 대비 필요한 선행량은 위상2 0.081864ms다. 이 차이는 가능 예산이며 성공 시간이 아니다. E1 수락 오류·STOP·부분 입력·CRC/POP 실패 때 입력 중단과 cold 복구를 유지하고, 이전 최종ACK 전체 identity를 확인하기 전 새 COMMIT/EA/표시 공개를 금지한다. 일반 출력 credit 우선권은 그대로 두고 Flash4B 안에서 기존 대기 제어를 대체한다. 두 시작 위상106화면에서7블록·첫BG ROM창·911/951/952/957과 밀집/마지막ACK를 다시 함께 통과해야 한다. 그 뒤에만 전체 Lite FIT/STA·새 전달을 진행한다. 고정 지연·위상 상수·DMA 크기 반복 탐색은 하지 않는다.",
     "limited_delivery_gate": false,
     "external_IO_signoff": false,
     "new_hardware_test": false,
-    "new_simulation": "684: 106 matched linked M4/65816 frames at both starts; unchanged work/pixels/large E9 batches. 33 map/BG boundary and50 input guards plus5 menu/base and4 marker cases. No new RTL/CPU code or physical hardware run.",
-    "new_synthesis": "전체 시간 게이트 미달로 새 Quartus Lite FIT/STA와 설치본은 만들지 않았다. RTL과65816은683과 동일하며 기존680/681 근거를 hash로 연결한다. 동일 소스라는 사실을 새 전체 보드 FIT/STA 통과로 대신하지 않는다.",
+    "new_simulation": "685: CPU-only and CPU+ARM each106 matched frames;56 input/33BG and5menu+4marker guards; real65816 beam/STOP/cold/finalACK. No whole RTL/physical/FIT.",
+    "new_synthesis": "7블록 선행 수신 게이트가 미달이므로 새 Quartus Lite MAP/FIT/STA와 설치본은 만들지 않았다. RTL680과 새685 ROM을 묶은 보드 입력은 준비·해시 고정만 했다. 기존 MMC666 보드의15324LE/962LAB/56M9K와STA를 새 후보 통과로 옮겨 쓰지 않는다.",
     "budget_670": {
       "reference_reconstructions": 106,
       "reference_fault_rejections": 318,
@@ -871,6 +876,17 @@
       "request_gate": false,
       "remaining_phase1_ACK_clocks": 224,
       "next": "684의 BG 완료 map 발행·7블록·큰 묶음을 비교 기준으로 보존한다. 957 마지막map3200/3392의384B는 두 위상 모두 기존384B/1152B 선행 DMA 전에 수락됐다. 후속OBJ288B 수락이249/253선에 들어와 다음 빈큐 기회를 닫는 실제 경계와 E0 진행 공개/ARM bulk 허가를 먼저 대조한다. 수신ACK와 전체DMA완료를 혼동하지 않고 STOP·새패킷 우선을 유지하며, 마지막384B를 앞선 VBlank로 옮길 수 있는지 순비용으로 판단한다. 추가 전송 대기나 위상별 상수는 넣지 않는다. 위상1의남은224클록은VBlank대기반환+264와반환뒤−40의합이며678/680에서도같았다. SEAL을더앞당기는것만으로이값을줄인다고계상하거나10µs만맞추는고정지연탐색은반복하지않는다. ARM여유0B·packedROM0B이므로공동완료/허가에서실제로삭제할코드와조건을먼저정한다. 911/951/952/957·독립검사·STOP·메뉴복귀와두위상종단시간을통과한후에만전체Lite FIT/STA·새실기전달로간다."
+    },
+    "budget_685": {
+      "Flash_B": 212988,
+      "free_B": 4,
+      "CPU_body_free_B": 0,
+      "packed_free_B": 13,
+      "new_static_RAM_B": 0,
+      "request_gate": false,
+      "phase2_input_deficit_ms": 0.08186376183400536,
+      "post_SEAL_poll_ms": 0.15438919175920449,
+      "next": "685의 BG 완료 map·큰 묶음·1536B 완료 DMA를 보존한다. 다음은 SEAL E1 성공 뒤 첫 E0보다 먼저 bounded7 입력을 시작하는 소유권 경계 하나를 검토한다. 측정된 첫 E0와 진입 비용0.154389ms 대비 필요한 선행량은 위상2 0.081864ms다. 이 차이는 가능 예산이며 성공 시간이 아니다. E1 수락 오류·STOP·부분 입력·CRC/POP 실패 때 입력 중단과 cold 복구를 유지하고, 이전 최종ACK 전체 identity를 확인하기 전 새 COMMIT/EA/표시 공개를 금지한다. 일반 출력 credit 우선권은 그대로 두고 Flash4B 안에서 기존 대기 제어를 대체한다. 두 시작 위상106화면에서7블록·첫BG ROM창·911/951/952/957과 밀집/마지막ACK를 다시 함께 통과해야 한다. 그 뒤에만 전체 Lite FIT/STA·새 전달을 진행한다. 고정 지연·위상 상수·DMA 크기 반복 탐색은 하지 않는다."
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6"
