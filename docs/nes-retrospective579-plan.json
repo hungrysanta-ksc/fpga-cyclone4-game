@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
-    "next": "현재716: 기존 map·plan 순서를 유지하고 불필요한 일반 BG/OBJ descriptor 생성을 실제 ARM에서 제거했다. A/B 각각106화면의 동일 작업·픽셀·독립검사와STOP/최종ACK/메뉴 검사를 통과했다. B는 planner 약1ms와908/934/940/943의1VBlank씩을 두위상 모두 줄였고957ACK는약65.88ms 빨라졌다. 그러나952–957은18회 그대로,밀집평균−0.031/+0.109ms,951공개248/247선,정상Flash213008B로16B초과해미채택이다. 707D·기존694/704 ARM·기존65816 유지. B 계산커널은보존하고951공개회귀·954마지막tile 준비/credit/소비를먼저분해한다. 남은ROM구간차이2.35ms와반복tag/key검사삭제예산을대조한뒤후보를정한다. 고정위상대기·검사완화·전체BG-first는금지한다. 원본정상Flash여유8B·경계1116B·추가정적RAM≤4B·FPGA/65816증가0. 두위상보호조건·18VB미만·밀집평균·957ACK동시개선필수.",
+    "next": "현재717: 716B의 계산 절감을 유지하고 ready tile 앞의 패딩 전체 drain만 제거했다. 후보106화면과 관측기 대조106화면,독립검사·STOP·최종ACK·메뉴경계를 통과했다. 대조군의전체클록/바이트/ARM명령은716B와동일하다.954 tile준비는약1.6ms·SEAL은0.56/0.61ms앞당겼지만대기의약1.04/1.09ms가큐로이동했다.952–957은18회그대로,951공개248/248선,정상Flash213000B로8B초과해미채택이다. 밀집평균원본대비−0.033/−0.019ms,957ACK−65.879/−66.373ms(대부분716B기여). 707D·기존694/704 ARM·기존65816 유지. 951은빠른ordinary가빈큐VBlank를점유한경계다. 다음은기존map receipt·bounded 다음입력·실제E0 DMA진행을연결할소유권/예산검증이다.954 마지막BG전탐색전체삭제상한1.159ms는남은ROM구간차이2.35ms보다작으므로탐색단독반복을중단한다. 원본정상Flash여유8B,717후보8B초과.새RTL/65816증가0·정적RAM≤4B.기존679/680/685의진행조회/map drain중복금지,고정대기/검사완화금지.입력이없거나7블록완료인경우도검증한다.두위상보호조건과18VB미만·밀집/957ACK동시개선필수.",
     "document": "docs/nes-bg707-results.ko.md",
     "evidence": "analysis/bg707-verification.json",
     "timing_reference": "analysis/bg707-verification.json",
@@ -561,6 +561,11 @@
         "id": "lazy716",
         "status": "complete_two_variants_rejected_keep_B_calculation_kernel",
         "deliverable": "A/B each106same-work/pixel frames. B planner~1ms faster;908/934/940/943 each3->2VB bothphases;957ACK -65.878572/-65.887977ms. Dense952-95718VBunchanged;951248/247line and normalFlash213008(16over) fail. No RTL/65816/FIT/installer changes. See docs/nes-lazy716-results.ko.md and analysis/lazy716-verification.json."
+      },
+      {
+        "id": "tail717",
+        "status": "complete_policy_and_observer_control_rejected_resource_public_line",
+        "deliverable": "717 candidate106 plus716B observercontrol106 exact clocks/instructions/bytes.954 preparation-1.60/-1.63ms,SEAL-0.559/-0.615ms vs716B but queue+1.04/+1.09ms.951248/248line,normalFlash213000(8over),dense18VBunchanged. All independent/STOP/menu guards pass. Last-BG search optimistic deletion ceiling9541.159ms/9550.730ms insufficient alone. See docs/nes-tail717-results.ko.md."
       }
     ],
     "protected": [
