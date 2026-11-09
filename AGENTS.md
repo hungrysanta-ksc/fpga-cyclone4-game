@@ -11,8 +11,8 @@
 
 ## 현재 작업 범위
 
-- 사용자 지정 개발·실기 기준은 MMC666이다. `analysis/hardware667-mmc666.json`과 `cores/nes/HANDOFF.ko.md`를 먼저 확인한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다.
-- 현재 브랜치는 `codex/nes-output-budget-668`, PR155다. 최신689 근거는 아래에 연결한다. `docs/nes-output668-results.ko.md`와 `analysis/output668-verification.json`의 이전 두 ARM 후보는 기능 통과·종단 시간 실패로 기각했고 MMC666을 유지한다.
+- 현재 개발·실기 기준은 MMC690이며 MMC666 대조군을 보존한다. `analysis/hardware691-mmc690.json`과 `cores/nes/HANDOFF.ko.md`를 먼저 확인한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다.
+- PR155 병합 기준은 `c5a25a448e856ce9eddeb86d90965d2ae804a966`, 현재 `codex/nes-output-longrun-692` / PR156. [706 실기·남은 안정성](docs/nes-hardware706-results.ko.md)과579 current_followup부터 읽는다. 706 실기: MMC704 1차는 기존690과 같은 stage0 5초 준비 timeout,705 1차는193:230 배경 CHR21E161 deadline2(age2)로 서로 다르다. 704 2차는 정상60초·메뉴 복귀,5–55초19.04fps(700대비−10.10%,작업량 증가로인과미확정)다. 705 2차는298.56초·5957표시·사용자종료/메뉴복귀,스페이드 클리어를 사용자 확인했다. 그러나 여러 장면의 반복 타일 깨짐과 최대430ms 표시 공백이 남아 전체 안정성은 미승인이다. 먼저705 초기 배경CHR 오류를699/703B 실제CPU·mapper·PSRAM 일정으로 재현한다. 이어 여러 장면의 타일 깨짐을 캡처/scroll/CHR-bank→ARM map/tile→실제VRAM/표시bank 일관성으로 분리한다. 별도704 stage0 timeout은 SNES첫fetch·WRAM복원·ready공개로 추적한다. 독립 검사·STOP·최종ACK·메뉴와스페이드수정을유지하고,안정성확인전추가속도최적화·새ZIP은보류한다. 오류무시·timeout완화·근거없는재시도는금지한다.
 - 반복 탐색만 줄이면 map 선행 DMA가 감소할 수 있다. 일괄 map drain은 911의 업로드 VBlank 회귀를 만들었다. 같은 단독 탐색/drain/위상별 고정 지연 변형은 새 근거 전까지 보류한다.
 - 670에서669 계획의 거래·복원·소유권·삭제 예산표를 작성했다. `docs/nes-supply670-results.ko.md`와 `analysis/supply670-budget.json`을 읽는다. 실제plan slot으로106개 map 참조복원 일치, descriptor 가정의 밀집 E1절감1417.2B(4.319ms wire)이나 새 target 시간은 미검증이다. D1/E0 삭제0, 순삭제0B/0LE. COMMIT 뒤 collector 재읽기A0는 기각, 별도snapshot은tile RAM을 공짜로 쓸 수 없어 미선택이다.
 - 671 B 제한 시험은 실제 비용 실패로 기각했다. `docs/nes-supply671-results.ko.md`·`analysis/supply671-verification.json`을 읽는다. 전체링크 ARM 생산기/509개65816 command/45개소유권 모델 검사 통과지만 source DMA·CRC42.58ms,954/955 행복원·검사88.99/85.17ms로 wire절감3.21/3.24ms를 초과한다. ARM 자원링크212748B/free244,새문맥300B미할당. 새RTL/종단일정/FIT/ZIP 없음. 후속672 수락 범위 비교도 시간 게이트에서 기각됐다. 같은 LUT/CRC 미세조정은 보류한다.

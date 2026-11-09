@@ -1,0 +1,35 @@
+{
+  "stage": 697,
+  "source": "user clarification after returned MMC696 logs",
+  "trial": "MMC696",
+  "world": 1,
+  "route": [
+    "clear level1",
+    "clear level2",
+    "move downward on world map",
+    "enter spade bonus game"
+  ],
+  "scene": "slot-machine bonus game",
+  "failure_boundary": "entry, user-reported",
+  "image_role": "location reference, not fault-time trace",
+  "reproduced": false,
+  "fault_root_cause_confirmed": false,
+  "private_location": "WORKSPACE/probes/nes-hardware697/location01",
+  "files": {
+    "user-location.ko.txt": "45f3574d5336befeb1618c45cebddb40f5c53d57ebdae0f2780281e8d197fa2d",
+    "world1-spade-location.png": "73e46164639ce114a21f075e54962e33898e524e196f018cea387702b0953618"
+  },
+  "user_access_constraint": "Bonus stage is normally inaccessible until prerequisite levels are cleared; user requests a cheat or equivalent shortcut for reproduction.",
+  "reproduction_setup": {
+    "method": "Inspect RAM/progression or prepare a verified pre-entry save state on the exact SMB3(J) CRC32 5a04eed7 ROM",
+    "implemented": false,
+    "verified_cheat_address": null,
+    "rules": [
+      "Use disposable emulator state; preserve original ROM and user saves",
+      "Prefer minimum map progress/position edit; retain actual bonus-entry code",
+      "Disable recurring cheat writes before entry and record all modified bytes",
+      "Compare CHR mapping, sprite/OAM state and request timing; shortcut may alter failure conditions",
+      "Carry deterministic pre-entry state and inputs into actual RTL reproduction; emulator-only behavior is not FPGA validation"
+    ]
+  }
+}

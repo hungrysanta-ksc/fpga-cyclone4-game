@@ -1,8 +1,12 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-output-budget-668` / [PR155](../../docs/progress/pr-155.md)다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 사용자 지정 개발·실기 기준은 MMC666이며 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
+PR155 병합 `c5a25a448e856ce9eddeb86d90965d2ae804a966` 확인 뒤 현재 브랜치는 `codex/nes-output-longrun-692` / PR156이다. 다음 개발 기준은 MMC690이고 MMC666 대조군은 보존한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 이전 대조군 MMC666은 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
 
 ## 현재 작업
+
+**현재706 실기:** 706 실기: MMC704 1차는 기존690과 같은 stage0 5초 준비 timeout,705 1차는193:230 배경 CHR21E161 deadline2(age2)로 서로 다르다. 704 2차는 정상60초·메뉴 복귀,5–55초19.04fps(700대비−10.10%,작업량 증가로인과미확정)다. 705 2차는298.56초·5957표시·사용자종료/메뉴복귀,스페이드 클리어를 사용자 확인했다. 그러나 여러 장면의 반복 타일 깨짐과 최대430ms 표시 공백이 남아 전체 안정성은 미승인이다. [실패 분리·FPS·화면 정확성](../../docs/nes-hardware706-results.ko.md). 먼저705 초기 배경CHR 오류를699/703B 실제CPU·mapper·PSRAM 일정으로 재현한다. 이어 여러 장면의 타일 깨짐을 캡처/scroll/CHR-bank→ARM map/tile→실제VRAM/표시bank 일관성으로 분리한다. 별도704 stage0 timeout은 SNES첫fetch·WRAM복원·ready공개로 추적한다. 독립 검사·STOP·최종ACK·메뉴와스페이드수정을유지하고,안정성확인전추가속도최적화·새ZIP은보류한다. 오류무시·timeout완화·근거없는재시도는금지한다.
+
+**이전694–696:** 694 통합 검증과 MMC695(60초)/MMC696(장시간) 전달본 준비 완료. packed 부팅·generation wrap·STOP/종료·106화면 공동 재생·전체 Lite FIT/STA 통과. MMC690 대비 위상1 밀집 +0.010728ms/906 대기1회로 엄격한 시간 무회귀는 미달이며 성능 후보로 채택하지 않는다. 기존60초 구현은 보존하고 장시간 기능판을 분리했다. 전체 보드 비용/STA는689D와 동일,Flash 여유695=8B/696=52B. 장시간 실기는 미검증. [결과·재현](../../docs/nes-longrun694-results.ko.md) · [설치·종료·로그 안내](../../docs/nes-mmc695-696-trial.ko.md) · [패키지](../../analysis/trial695-package.json). MMC695를 같은 첫 레벨5–40/40–55초 대조로,MMC696을 장시간·L+R+Start+Select 종료·메뉴 복귀 시험에 사용한다. 자연 발생한 부팅/장시간 실패를 분리 보존한다. 이후692의951 마지막tile ACK→SEAL12.448/11.849ms를 준비·credit·수락으로 나눠 두 위상 밀집간격·957 마지막ACK가 함께 개선되는 최소 후보를 검증한다. 고정지연·위상상수·seed 탐색은 보류한다.
 
 **현재691 실기 확인:** MMC690 두 실기 중1차는 첫 표시 전5초 준비 timeout,2차는1250/60.35초(20.71fps) 실행·메뉴 복귀 성공이다. 5–40초19.97fps(+1.75%),40–55초19.40fps(+0.34%),5–55초19.80fps(+1.33%)다. 출력·최종ACK25.56ms,후반은사실상동일하며map/OBJ작업량차이로구현만의가속은미확정이다. [결과](../../docs/nes-hardware691-results.ko.md) · [분석](../../analysis/hardware691-mmc690.json). MMC690의 출력·최종 ACK25.56ms를 같은 map·OBJ 작업량의 ARM발행·65816수락·DMA·마지막VBlank로 나누고 두 위상의 밀집 간격·마지막ACK를 함께 줄일 경계를 정한다. MMC666 대조군·독립 검사·STOP·캡처 회복·메뉴 복귀·951공개선·952표시3회·957최종대기0회를 유지한다. 551/639/690의 stage0 부팅 실패는 별도 안정성 항목으로 첫fetch·WRAM복원·준비공개 경계를 확인하며, 원인이나 재현 없이 재시도/대기/STA조건을 바꾸지 않는다. 자연 재발 로그를 보존한다.
 

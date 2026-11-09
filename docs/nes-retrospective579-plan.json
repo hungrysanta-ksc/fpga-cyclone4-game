@@ -3,7 +3,7 @@
   "review": 579,
   "date": "2026-11-03",
   "canonical": true,
-  "physical_baseline": "MMC666",
+  "physical_baseline": "MMC690",
   "evidence": "analysis/retrospective579.json",
   "hardware_evidence": "analysis/hardware691-mmc690.json",
   "package": "analysis/trial666-package.json",
@@ -16,10 +16,10 @@
   "preserve_historical_evidence": true,
   "implementation_started": true,
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
-  "branch": "codex/nes-output-budget-668",
+  "branch": "codex/nes-output-longrun-692",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 691,
-  "current_evidence": "analysis/hardware691-mmc690.json",
+  "current_step": 706,
+  "current_evidence": "analysis/hardware706-mmc704-705.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -38,21 +38,21 @@
     "provisional_wire_B": 3937.5,
     "observed_nonquery_B_per_display": 5963.899761336515,
     "observed_nonquery_wire_ms": 18.175694510739856,
-    "LE_free": 84,
-    "Flash_free_B": 496,
+    "LE_free": 113,
+    "Flash_free_B": 8,
     "M9K_free": 0,
     "whole_60Hz_passed": false,
     "full_IO_signoff": false,
     "observed_nonquery_source": "MMC577, retrospective579",
     "current_physical_ms_per_display": {
-      "receive": 10.43636969111969,
-      "plan_supply": 11.344217083967084,
-      "output_final_ack": 26.841249824499823
+      "receive": 10.643825,
+      "plan_supply": 11.250196,
+      "output_final_ack": 25.561433695238094
     },
-    "current_physical_source": "MMC666 / hardware667; older wire fields retain explicit MMC577 provenance.",
-    "LAB_free": 1,
-    "physical_SNES_ROM_free_B": 11,
-    "budget_review": "680:fullARM212828/free164;body5948/free36,packedROM5120/free16,coldpoll+22.496619ms. WholeMAP+35comb/+3FF/0RAM,notFIT84LE/1LAB proof. No newFIT/STA because both-start timegate fails."
+    "current_physical_source": "MMC690 / hardware691; older wire fields retain explicit MMC577 provenance.",
+    "LAB_free": 0,
+    "physical_SNES_ROM_free_B": 13,
+    "budget_review": "692: unchanged689D/688/685; Flash8B,0LAB,0M9K,body0B/packed13B. No new target/FIT."
   },
   "stages": [
     {
@@ -374,18 +374,18 @@
   "clean_clone_rebuild_complete": false,
   "new_installer_required_now": false,
   "retrospective_PR": 150,
-  "PR": 155,
+  "PR": 156,
   "bounded_prototype_started": true,
   "candidate_manifest": "analysis/trial690-package.json",
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "MMC690 두 실기 중1차는 첫 표시 전5초 준비 timeout,2차는1250/60.35초(20.71fps) 실행·메뉴 복귀 성공이다. 5–40초19.97fps(+1.75%),40–55초19.40fps(+0.34%),5–55초19.80fps(+1.33%)다. 출력·최종ACK25.56ms,후반은사실상동일하며map/OBJ작업량차이로구현만의가속은미확정이다.",
-    "next": "MMC690의 출력·최종 ACK25.56ms를 같은 map·OBJ 작업량의 ARM발행·65816수락·DMA·마지막VBlank로 나누고 두 위상의 밀집 간격·마지막ACK를 함께 줄일 경계를 정한다. MMC666 대조군·독립 검사·STOP·캡처 회복·메뉴 복귀·951공개선·952표시3회·957최종대기0회를 유지한다. 551/639/690의 stage0 부팅 실패는 별도 안정성 항목으로 첫fetch·WRAM복원·준비공개 경계를 확인하며, 원인이나 재현 없이 재시도/대기/STA조건을 바꾸지 않는다. 자연 재발 로그를 보존한다.",
-    "document": "docs/nes-hardware691-results.ko.md",
-    "evidence": "analysis/hardware691-mmc690.json",
-    "timing_reference": "analysis/output668-verification.json",
-    "hardware_baseline": "MMC666",
+    "candidate": "706 실기: MMC704 1차는 기존690과 같은 stage0 5초 준비 timeout,705 1차는193:230 배경 CHR21E161 deadline2(age2)로 서로 다르다. 704 2차는 정상60초·메뉴 복귀,5–55초19.04fps(700대비−10.10%,작업량 증가로인과미확정)다. 705 2차는298.56초·5957표시·사용자종료/메뉴복귀,스페이드 클리어를 사용자 확인했다. 그러나 여러 장면의 반복 타일 깨짐과 최대430ms 표시 공백이 남아 전체 안정성은 미승인이다.",
+    "next": "먼저705 초기 배경CHR 오류를699/703B 실제CPU·mapper·PSRAM 일정으로 재현한다. 이어 여러 장면의 타일 깨짐을 캡처/scroll/CHR-bank→ARM map/tile→실제VRAM/표시bank 일관성으로 분리한다. 별도704 stage0 timeout은 SNES첫fetch·WRAM복원·ready공개로 추적한다. 독립 검사·STOP·최종ACK·메뉴와스페이드수정을유지하고,안정성확인전추가속도최적화·새ZIP은보류한다. 오류무시·timeout완화·근거없는재시도는금지한다.",
+    "document": "docs/nes-hardware706-results.ko.md",
+    "evidence": "analysis/hardware706-mmc704-705.json",
+    "timing_reference": "analysis/output692-verification.json",
+    "hardware_baseline": "MMC690",
     "steps": [
       {
         "id": "S1",
@@ -501,6 +501,56 @@
         "id": "S3q",
         "status": "status689_schedule_identical_full_FIT_STA_pass_keep_MMC666_until_hardware",
         "deliverable": "689D는 688의 ARM·685의 65816 바이너리를 그대로 유지하면서 6 LAB 부족을 해소했다. 전체 Quartus Lite FIT는 15295 LE·963/963 LAB·56/56 M9K로 통과했고, 기존 제약의 최악 setup/hold/recovery/removal은 +0.104/+0.137/+1.460/+0.488ns다. 같은 두 위상106화면 재생은 688과 클록 단위로 일치했다. 실기 기준은 MMC666이며 새 설치본·실물 시험은 아직 없다."
+      },
+      {
+        "id": "S692",
+        "status": "matched_work_cost_and_existing_longrun_boundaries_verified",
+        "deliverable": "104warm costs reconciled;799identical functions;7injected guard cases. Next implement long-session lifecycle, then951 tail candidate. No new target binary."
+      },
+      {
+        "id": "S693",
+        "status": "prototype_functional_pass_joint_schedule_rollover_boot_and_board_gate_open",
+        "deliverable": "693 장시간판 patch04/arm03+client02의 실제 ARM16·65816서비스12·기존 screen RTL·메뉴5/marker4·base5 검사가 통과했다. Flash212940B/free52B(−44),BSS+8B,CPU6020B(+36)/packedfree25B. 고정 플레이/화면무갱신 제한 없이 L+R+Start+Select→기존 STOP/base/menu를 연결했다. 정상60초판은 보존하며 새FIT·종단시간·설치본은 아직 없다."
+      },
+      {
+        "id": "S694_695",
+        "status": "limited_hardware_delivery_prepared",
+        "deliverable": "694 통합 검증과 MMC695(60초)/MMC696(장시간) 전달본 준비 완료. packed 부팅·generation wrap·STOP/종료·106화면 공동 재생·전체 Lite FIT/STA 통과. MMC690 대비 위상1 밀집 +0.010728ms/906 대기1회로 엄격한 시간 무회귀는 미달이며 성능 후보로 채택하지 않는다. 기존60초 구현은 보존하고 장시간 기능판을 분리했다. 전체 보드 비용/STA는689D와 동일,Flash 여유695=8B/696=52B. 장시간 실기는 미검증."
+      },
+      {
+        "id": "S697",
+        "status": "hardware_long_run_PPU_deadline_fault_root_cause_open",
+        "deliverable": "697 실기 분석: MMC695 60.35초/1207화면·20.00fps,5–55초19.34fps이며 실행·메뉴 복귀 정상. 같은690 코드라 FPS 차이는 작업량과 구분한다. MMC696은851.36초/19453화면 뒤 스테이지 진입 중 PPU ROM deadline 오류2로 종료;192선/262dot sprite fetch,물리0x21fbe7 요청 중 응답 없음(age1). STOP/base/menu 복귀 성공,종료 조합 실기는 미검증. 최초 오류 회로는 확인했으나 늦은 요청/경쟁/응답 지연의 근본 원인은 미확정."
+      },
+      {
+        "id": "S699",
+        "status": "minimal_fix_functional_schedule_FIT_STA_pass_physical_pending",
+        "deliverable": "699: sprite ALE 요청만 기존 mapper write preview로 바꾸는2개 RTL 최소 수정. 실제 T65의 원본 ROM 명령24조건은 기존 오류2→정상 소비, 실제 arbiter/fill24·중간 STOP24도 통과했다. 두 위상106화면 모델 재생은 선택694와 표시·최종ACK가 클록 단위 동일. 전체 Lite15349LE(+54)/963LAB/56M9K,setup/hold/recovery/removal +0.536/+0.152/+1.332/+0.481ns. ARM·65816·RAM 불변. 단일 클록 늦은 강제 쓰기9조건은 의도대로 오류를 유지한다. 새 실기는 미검증."
+      },
+      {
+        "id": "S700_701",
+        "status": "limited_hardware_delivery_prepared_physical_pending",
+        "deliverable": "700/701 전달 준비 완료: 699 CHR 수정 보드에 MMC700(60초)·MMC701(장시간)을 결합했다. ARM 799개 함수는 각695/696 기준과 동일하며 Flash 여유8/52B다. 정상 packed ROM 보드는 별도 전체 FIT·STA를 통과했고 두 판 모두15349LE/963LAB/56M9K, setup/hold/recovery/removal +0.536/+0.152/+1.332/+0.481ns다. 프로그래머·ROM bus·marker·로그·STOP/base/menu 검증 통과. RESTORE·게임 ROM 제외. 수정 후 실기는 대기 중이다."
+      },
+      {
+        "id": "S702",
+        "status": "physical_stability_failed_test_horizon_gap_confirmed",
+        "deliverable": "702 실기: MMC700 정상60초·메뉴 복귀,5–55초21.18fps이나작업량감소로성능가속미확정;일회성타일깨짐은원인미확정. MMC701은263.31초뒤같은스페이드진입에서CPU PRG deadline1(192선/265dot,03FB34,age2)로종료,STOP/base/menu성공. 이전696의PPU deadline2와다르다. 699시험은step59에서끝나후속읽기를누락했다. step79로연장하니24조건중6개가다음CHR상위비트deadline2로실패했다. 실기CPU1과정확한재현은아직없다."
+      },
+      {
+        "id": "S703",
+        "status": "exact_CPU_reproduction_minimal_boundary_fix_functional_and_limited_board_gate_passed_physical_pending",
+        "deliverable": "703B는 MMC701의 CPU deadline1 문맥과 PPU 상태를 각각 64비트 전체 일치로 재현한 뒤, 비소비 mapper preview 유지와 CHR low/high 선행 hint로 수정했다. 실제 T65·PSRAM 경쟁 36조건과 STOP 36조건, 두 sprite CHR 144바이트 독립 검사를 통과했다. 두 위상 표시·마지막 ACK는 699와 동일하다. 전체 Lite FIT 15348LE/963LAB/56M9K, setup +0.137ns로 기존 제약 STA를 통과했지만 699보다 setup 여유는 줄었다. 실기 해결 확인은 남는다."
+      },
+      {
+        "id": "S704_705",
+        "status": "delivery_verified_physical_feedback_pending",
+        "deliverable": "MMC704(60초)·MMC705(장시간) 전달본을 준비했다. 두 판 모두703B CPU·CHR 수정 보드이며 ARM은700/701의 설치·로그 이름만 변경했다. 각799개 함수 바이트 동일,Flash212984/212940B(여유8/52B)다. 정상판 별도 전체 Lite FIT·기존 제약 STA도703B와 동일한15348LE/963LAB/56M9K 및 +0.137/+0.157/+1.412/+0.482ns다. 프로그래머·marker·ROM bus·STOP/base/menu·시간제한 검사를 통과했으며 실기 안정성은 확인 대기다."
+      },
+      {
+        "id": "S706",
+        "status": "physical_bonus_passed_startup_BG_fault_and_repeated_pixel_issue_open",
+        "deliverable": "706 실기: MMC704 1차는 기존690과 같은 stage0 5초 준비 timeout,705 1차는193:230 배경 CHR21E161 deadline2(age2)로 서로 다르다. 704 2차는 정상60초·메뉴 복귀,5–55초19.04fps(700대비−10.10%,작업량 증가로인과미확정)다. 705 2차는298.56초·5957표시·사용자종료/메뉴복귀,스페이드 클리어를 사용자 확인했다. 그러나 여러 장면의 반복 타일 깨짐과 최대430ms 표시 공백이 남아 전체 안정성은 미승인이다."
       }
     ],
     "protected": [
@@ -512,12 +562,12 @@
       "both-phase dense mean and957 lastACK improvement",
       "independent identity/CRC/coverage, STOP, cold/partial recovery, capture recovery, menu"
     ],
-    "stop_rule": "다음은689D보드와 고정688 ARM·685 CPU를 묶어 고유 설치/로그 이름의 제한 실기 전달본을 준비한다. 새 기능이나 같은 발행/seed 미세 조정은 더하지 않는다. package hash·실제 programmer/loader·STOP/base/menu 경계를 확인하고 MMC666과 같은 첫 레벨 동선에서5–40초·40–55초를 비교한다. RESTORE는 제외한다. 새 실기 결과 전까지 제품·FPS 기준은MMC666을 유지하며, LAB여유0·setup0.104ns·Flash8B와 외부 IO 미완료 범위를 전달 문서에 남긴다.",
-    "limited_delivery_gate": true,
+    "stop_rule": "60초 MMC695는 MMC690 실행 코드를 보존한다. MMC696은 장시간 기능 시험으로만 전달하며 위상1 밀집+10.728us와906 내부대기 증가를 공개했다. 성능 후보의 두 위상 동시개선 게이트는 완화하지 않는다. 외부IO/실기 장시간 승인 미완료,새실기결과 전MMC690 기준 유지. 고정지연/위상상수/seed 반복 금지.",
+    "limited_delivery_gate": false,
     "external_IO_signoff": false,
-    "new_hardware_test": false,
-    "new_simulation": "689: 106 linked frames cycle-identical688; actual serial equivalence at two phases/two SPI rates;256 loader opcodes,34 accepted/66 rejected bulk cases per phase; unchanged ARM/CPU guards inherited by hash.",
-    "new_synthesis": "689D whole Lite FIT15295LE/963LAB/56M9K;setup+.104 hold+.137 recovery+1.460 removal+.488ns. Existing IO constraints only; no added waiver or seed change.",
+    "new_hardware_test": true,
+    "new_simulation": "None. Decode12physical logs and inspect exact shipped sources;705 BG deadline not yet reproduced.",
+    "new_synthesis": "None. 703B/704 wholeFIT/STA evidence retained; no product or constraint changes.",
     "budget_670": {
       "reference_reconstructions": 106,
       "reference_fault_rejections": 318,
@@ -986,7 +1036,122 @@
       "output_final_ACK_ms": 25.561433695238094,
       "startup_cause": null,
       "causal_speedup_proven": false
+    },
+    "longrun_delivery": {
+      "required": true,
+      "normal_seconds": 60,
+      "long_seconds": null,
+      "implemented": true,
+      "delivered": true,
+      "RESTORE": false,
+      "logs_separate": true,
+      "implementation_scope": "695 normal control and696 selected694 integration; hardware697 received",
+      "whole_path_passed": false,
+      "exit_buttons": "L+R+Start+Select",
+      "verification": "analysis/trial695-package.json",
+      "long_play_confirmed_s": 851.36,
+      "explicit_exit_hardware_passed": false,
+      "hardware_fault_open": true
+    },
+    "budget_693": {
+      "Flash_B": 212940,
+      "Flash_free_B": 52,
+      "ARM_BSS_delta_B": 8,
+      "CPU_body_B": 6020,
+      "CPU_body_delta_B": 36,
+      "packed_ROM_free_B": 25,
+      "whole_FIT_STA": false,
+      "physical_longrun": false,
+      "selected": "patch04/arm03+client02",
+      "next": "선택693의 packed reset loader/보드ROM초기값을 연결하고 실제 input→plan→receipt→SNES 세대65535→0 및 DMA/SEAL 취소 경계를 검증한다. 다음으로 실제 ARM·IRQ·SPI·ROM·65816 두 위상 공동 일정에서7블록/911/951/9523회/957최종대기0회·밀집간격·마지막ACK 무회귀와 전체 Lite FIT/STA를 확인한다. 통과 후60초/장시간판 고유 설치·로그 이름으로 함께 전달하며 RESTORE는 제외한다. 이어692의951 tail12.448/11.849ms를 준비·credit·수락으로 나눠 최소 성능 후보를 검증한다. 실기 기준MMC690/대조군MMC666 유지; 고정지연·위상상수 반복 탐색은 보류한다."
+    },
+    "budget_694": {
+      "verification": "analysis/longrun694-verification.json",
+      "strict_all_time_no_regression": false,
+      "performance_selected": false,
+      "protected_intervals_last_ACK": true,
+      "whole_FIT_STA_no_regression": true,
+      "decision": "separate long-mode feature; normal unchanged"
+    },
+    "delivery695": {
+      "package": "analysis/trial695-package.json",
+      "guide": "docs/nes-mmc695-696-trial.ko.md",
+      "variants": [
+        "MMC695 60sec",
+        "MMC696 long"
+      ],
+      "RESTORE": false,
+      "physical_verified": false
+    },
+    "hardware697": {
+      "evidence": "analysis/hardware697-mmc695-696.json",
+      "normal_pass": true,
+      "long_run_s": 851.36,
+      "long_user_exit_tested": false,
+      "long_run_pass": false,
+      "fault": "PPU ROM sample deadline2;line192,dot262,sprite fetch",
+      "root_cause": null,
+      "next": "출력 최적화에 앞서 선택696 RTL의 sprite fetch257–264dot에서 주소/ALE/mapper tag·CPU/PPU/tile request/grant/response를 같은 시간축으로 연결해 재현한다. 캐시 miss/CHR bank변경/경쟁 읽기를 분리하고 원인 확인 후 최소 수정한다. sample deadline·독립 검사·STOP·최종ACK·메뉴 복귀를 완화하지 않는다. 안정성 수정 후692 출력 병목을 재개한다. 다음 전달도60초/장시간 별도 이름·RESTORE 제외를 유지한다.",
+      "scene": {
+        "evidence": "analysis/hardware697-location.json",
+        "route": [
+          "clear level1",
+          "clear level2",
+          "move downward on world map",
+          "enter spade bonus game"
+        ],
+        "user_reported": true,
+        "reproduced": false,
+        "shortcut_required": true,
+        "shortcut_implemented": false
+      }
+    },
+    "budget_699": {
+      "verification": "analysis/bonus699-verification.json",
+      "LE": 15349,
+      "LE_delta": 54,
+      "LE_free": 59,
+      "LAB_free": 0,
+      "M9K_free": 0,
+      "Flash_delta": 0,
+      "RAM_delta": 0,
+      "CPU_ROM_delta": 0,
+      "physical": false
+    },
+    "budget_703": {
+      "LE": 15348,
+      "LE_free": 60,
+      "LAB": 963,
+      "LAB_free": 0,
+      "M9K": 56,
+      "M9K_free": 0,
+      "FF": 8377,
+      "RAM_bits": 305264,
+      "ARM_Flash_delta": 0,
+      "ARM_RAM_delta": 0,
+      "SNES_ROM_delta": 0,
+      "full_IO_signoff": false,
+      "physical_fix_verified": false
+    },
+    "delivery704": {
+      "package": "analysis/trial704-package.json",
+      "archive": "analysis/trial704-archive.json",
+      "instructions": "docs/nes-mmc704-705-trial.ko.md",
+      "normal": "MMC704",
+      "long": "MMC705",
+      "RESTORE": false,
+      "physical": false
+    },
+    "hardware706": {
+      "evidence": "analysis/hardware706-mmc704-705.json",
+      "logs": 12,
+      "runs": 4,
+      "bonus_success": true,
+      "user_exit": true,
+      "full_stability": false,
+      "pixel_corruption_multiple_scenes": true
     }
   },
-  "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6"
+  "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",
+  "merged_PR155": "c5a25a448e856ce9eddeb86d90965d2ae804a966"
 }
