@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
-    "next": "707D·기존ARM/65816 유지.710 E1 hint 안전성/Flash/전체FITSTA 통과지만두위상밀집간격회귀/LE34LAB1증가로미채택.더이상hint조건·seed·고정지연변형반복금지.같은작업량의마지막수락패킷과선행DMA가능VBlank를맞춰두위상실제한번단축에필요한시간·삭제예산부터확정.필수CRC/identity/STOP/최종ACK는절감대상제외.",
+    "next": "707D·기존ARM/65816 유지.711 수신마감 시험에서SEAL/후반단독은무효,전체15.75ms선행은조건부이나생산/ROM7–15ms미지급·951뒤간격3회. 다음은실제map최종쓰기/주소CHR확정과BG/OBJ공급을묶어생산→발행소유권대체예산부터확인.기존선행수신/발행기능중복계산금지.정상Flash+8B/장시간+52B,보드/CPU우선변경0,순삭제입증0.951–955평균과957ACK외952–957합계18VBlank도감소해야지속개선채택.필수검사/STOP/최종ACK유지;실제ARM/SPI/IRQ/ROM재생없이제품화금지.",
     "document": "docs/nes-bg707-results.ko.md",
     "evidence": "analysis/bg707-verification.json",
     "timing_reference": "analysis/bg707-verification.json",
@@ -1178,7 +1178,7 @@
       "schedule": "cycle identical to703B in both starts; separate actualCPU/PSRAM boundary and linkedARM/65816 replay",
       "physical_verified": false
     },
-    "stage": 710,
+    "stage": 711,
     "708_result": {
       "proof": "analysis/tail708-verification.json",
       "report": "docs/nes-tail708-results.ko.md",
@@ -1250,6 +1250,29 @@
         8,
         7
       ],
+      "new_hardware": false
+    },
+    "711_result": {
+      "proof": "analysis/deadline711-budget.json",
+      "report": "docs/nes-deadline711-results.ko.md",
+      "archive": "analysis/deadline711-archive.json",
+      "selected": false,
+      "unchanged_target": true,
+      "completed_runs": 22,
+      "CPU_frames": 1166,
+      "conditional_first_sample_us": 15750,
+      "prior_failed_sample_us": 15500,
+      "global_minimum_proven": false,
+      "after951_intervals_VBlank": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "new_ARM_or_ROM_schedule": false,
+      "whole_FIT_STA": "707D unchanged inherited",
       "new_hardware": false
     }
   },
