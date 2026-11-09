@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-longrun-692",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 703,
-  "current_evidence": "analysis/bonus703-verification.json",
+  "current_step": 704,
+  "current_evidence": "analysis/trial704-package.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -380,10 +380,10 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "703B는 MMC701의 CPU deadline1 문맥과 PPU 상태를 각각 64비트 전체 일치로 재현한 뒤, 비소비 mapper preview 유지와 CHR low/high 선행 hint로 수정했다. 실제 T65·PSRAM 경쟁 36조건과 STOP 36조건, 두 sprite CHR 144바이트 독립 검사를 통과했다. 두 위상 표시·마지막 ACK는 699와 동일하다. 전체 Lite FIT 15348LE/963LAB/56M9K, setup +0.137ns로 기존 제약 STA를 통과했지만 699보다 setup 여유는 줄었다. 실기 해결 확인은 남는다.",
-    "next": "선택703B와 검증된 ARM·65816을 새 파일명의 60초판/장시간판으로 묶어 전달 검증한다. RESTORE는 제외하고 스페이드 진입·장시간·종료 조합·STOP·메뉴 복귀를 실기 확인한다. MMC700 일회성 타일 깨짐은 별도 미해결이다. 안정성 확인 전 출력 속도 최적화는 보류한다. 오류/timeout 완화 금지,60LE·LAB/M9K0 예산 유지.",
-    "document": "docs/nes-bonus703-results.ko.md",
-    "evidence": "analysis/bonus703-verification.json",
+    "candidate": "MMC704(60초)·MMC705(장시간) 전달본을 준비했다. 두 판 모두703B CPU·CHR 수정 보드이며 ARM은700/701의 설치·로그 이름만 변경했다. 각799개 함수 바이트 동일,Flash212984/212940B(여유8/52B)다. 정상판 별도 전체 Lite FIT·기존 제약 STA도703B와 동일한15348LE/963LAB/56M9K 및 +0.137/+0.157/+1.412/+0.482ns다. 프로그래머·marker·ROM bus·STOP/base/menu·시간제한 검사를 통과했으며 실기 안정성은 확인 대기다.",
+    "next": "MMC704 첫 레벨5–40/40–55초·타일 깨짐·자동 복귀,MMC705 스페이드 안내/회전/월드맵 복귀·장시간·종료 조합·STOP·메뉴를 확인한다. 실행마다 새 세 로그를 보존한다. RESTORE는 제외했다. 실기 성공 전 CPU 오류를 닫지 않고 일회성 타일 깨짐은 별도 추적한다. 안정성 확인 전 출력 속도 최적화는 보류한다.",
+    "document": "docs/nes-trial704-results.ko.md",
+    "evidence": "analysis/trial704-package.json",
     "timing_reference": "analysis/output692-verification.json",
     "hardware_baseline": "MMC690",
     "steps": [
@@ -541,6 +541,11 @@
         "id": "S703",
         "status": "exact_CPU_reproduction_minimal_boundary_fix_functional_and_limited_board_gate_passed_physical_pending",
         "deliverable": "703B는 MMC701의 CPU deadline1 문맥과 PPU 상태를 각각 64비트 전체 일치로 재현한 뒤, 비소비 mapper preview 유지와 CHR low/high 선행 hint로 수정했다. 실제 T65·PSRAM 경쟁 36조건과 STOP 36조건, 두 sprite CHR 144바이트 독립 검사를 통과했다. 두 위상 표시·마지막 ACK는 699와 동일하다. 전체 Lite FIT 15348LE/963LAB/56M9K, setup +0.137ns로 기존 제약 STA를 통과했지만 699보다 setup 여유는 줄었다. 실기 해결 확인은 남는다."
+      },
+      {
+        "id": "S704_705",
+        "status": "delivery_verified_physical_feedback_pending",
+        "deliverable": "MMC704(60초)·MMC705(장시간) 전달본을 준비했다. 두 판 모두703B CPU·CHR 수정 보드이며 ARM은700/701의 설치·로그 이름만 변경했다. 각799개 함수 바이트 동일,Flash212984/212940B(여유8/52B)다. 정상판 별도 전체 Lite FIT·기존 제약 STA도703B와 동일한15348LE/963LAB/56M9K 및 +0.137/+0.157/+1.412/+0.482ns다. 프로그래머·marker·ROM bus·STOP/base/menu·시간제한 검사를 통과했으며 실기 안정성은 확인 대기다."
       }
     ],
     "protected": [
@@ -556,8 +561,8 @@
     "limited_delivery_gate": true,
     "external_IO_signoff": false,
     "new_hardware_test": false,
-    "new_simulation": "Exact701 CPU/PPU contexts in6 old cases; selectedB normal36/36,CHR144,STOP36/36; actualARM/65816 two53-frame schedules clock-identical using priorROM calendar, not simultaneous wholeNES/PSRAM.",
-    "new_synthesis": "703B fullLite FIT15348LE/963LAB/56M9K; setup/hold/recovery/removal +0.137/+0.157/+1.412/+0.482ns; setup margin below699 +0.536ns; externalIO fullsignoff open. RejectedA setup-.021ns and12/36nextsprite failures preserved.",
+    "new_simulation": "Actual programmer and ROM bus/STOP/reset for both variants; ARM marker/recovery/time-window/longrun guards. Inherit unchanged703 CPU/CHR andtwo-phase schedules, no repeated wholeframe model.",
+    "new_synthesis": "MMC704 normal packedROM fullLite FIT15348LE/963LAB/56M9K; STA +.137/+.157/+1.412/+.482ns identical703B. MMC705 uses pinned703B SOF; full externalIO signoff still open.",
     "budget_670": {
       "reference_reconstructions": 106,
       "reference_fault_rejections": 318,
@@ -1122,6 +1127,15 @@
       "SNES_ROM_delta": 0,
       "full_IO_signoff": false,
       "physical_fix_verified": false
+    },
+    "delivery704": {
+      "package": "analysis/trial704-package.json",
+      "archive": "analysis/trial704-archive.json",
+      "instructions": "docs/nes-mmc704-705-trial.ko.md",
+      "normal": "MMC704",
+      "long": "MMC705",
+      "RESTORE": false,
+      "physical": false
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",

@@ -23,7 +23,7 @@ PR155 병합 후 개발 기준은 MMC690이며, 다음 수치는 보존 대조�
 
 MMC695는 같은 MMC690 실행 코드로60초·메뉴 복귀에 성공했다(5–55초19.34fps). MMC696은851.36초 장시간 플레이 후192선/262dot의스프라이트 ROM읽기 마감을 놓쳐 종료됐고 STOP·메뉴 복귀는 성공했다. 종료 조합은 미검증이다. [697 분석·재현 우선순위](nes-hardware697-results.ko.md)
 
-703B는 MMC701의 CPU deadline1 문맥과 PPU 상태를 각각 64비트 전체 일치로 재현한 뒤, 비소비 mapper preview 유지와 CHR low/high 선행 hint로 수정했다. 실제 T65·PSRAM 경쟁 36조건과 STOP 36조건, 두 sprite CHR 144바이트 독립 검사를 통과했다. 두 위상 표시·마지막 ACK는 699와 동일하다. 전체 Lite FIT 15348LE/963LAB/56M9K, setup +0.137ns로 기존 제약 STA를 통과했지만 699보다 setup 여유는 줄었다. 실기 해결 확인은 남는다. [최신 수정 검증·다음 순서](nes-bonus703-results.ko.md)
+MMC704(60초)·MMC705(장시간) 전달본을 준비했다. 두 판 모두703B CPU·CHR 수정 보드이며 ARM은700/701의 설치·로그 이름만 변경했다. 각799개 함수 바이트 동일,Flash212984/212940B(여유8/52B)다. 정상판 별도 전체 Lite FIT·기존 제약 STA도703B와 동일한15348LE/963LAB/56M9K 및 +0.137/+0.157/+1.412/+0.482ns다. 프로그래머·marker·ROM bus·STOP/base/menu·시간제한 검사를 통과했으며 실기 안정성은 확인 대기다. [새 전달본·다음 순서](nes-trial704-results.ko.md)
 
 ## 현재 비용과 다음 목표
 
