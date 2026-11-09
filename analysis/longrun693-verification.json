@@ -1,0 +1,668 @@
+{
+  "stage": 693,
+  "baseline": "MMC690",
+  "normal_firmware": "71e4f00670d26599872c2c294e2f5f8c793a4b2b5aacc2b22e53425e44f7ea5d",
+  "normal_unchanged": true,
+  "ARM": {
+    "firmware": "ce45b6801e91f0f3b6fa87b9fb4e9c15651ed96e80b2cf3da869ae1507203e23",
+    "ELF": "90f6b063e7b73b22eb4521a8510f02139082d180ad10f74ea823f393df4024d1",
+    "Flash_B": 212940,
+    "Flash_free_B": 52,
+    "Flash_delta_B": -44,
+    "data_B": 10040,
+    "BSS_B": 19552,
+    "BSS_delta_B": 8,
+    "compiled_sources": {
+      "nes_budget210.c": "b9552d6122f0a6bd0505c16823d1b748250ead2e95cfed8382e7e57227889d61",
+      "nes_budget210.h": "41dfbae1b7feff437fd2284b44008bbb23f3787f5fd6bb187ba4f0f807b0828c",
+      "nes_native_runtime165.c": "ce83ae11d1e9b1c84d1f8a32333fb819b52c6f537ef5cd9d0ff01dc90f4a54ab",
+      "nes_native_runtime165.h": "ee70d134e81c590a6248e75aea8dbd24ecdb9e2e6c596d6f7f3be245e8603371",
+      "nes_runtime_board165.inc": "7c677556dba1b22421f63d14f182e8e9cdedfa2bc551b62a51b1db57c72a510e"
+    },
+    "guards": {
+      "passed": true,
+      "firmware": "ce45b6801e91f0f3b6fa87b9fb4e9c15651ed96e80b2cf3da869ae1507203e23",
+      "cases": [
+        {
+          "case": "past60",
+          "result": 0,
+          "ops": [
+            208
+          ],
+          "passed": true
+        },
+        {
+          "case": "one_hour_idle_injected",
+          "result": 0,
+          "ops": [
+            208
+          ],
+          "passed": true
+        },
+        {
+          "case": "tick_wrap",
+          "result": 0,
+          "ops": [
+            208
+          ],
+          "passed": true
+        },
+        {
+          "case": "no_frame499",
+          "result": 0,
+          "ops": [
+            208
+          ],
+          "passed": true
+        },
+        {
+          "case": "no_frame500_allowed",
+          "result": 0,
+          "ops": [
+            208
+          ],
+          "passed": true
+        },
+        {
+          "case": "stopped_tick",
+          "result": 6,
+          "ops": [],
+          "passed": true
+        },
+        {
+          "case": "normal",
+          "result": 0,
+          "board_ops": [
+            112,
+            115
+          ],
+          "passed": true
+        },
+        {
+          "case": "user",
+          "result": 8,
+          "board_ops": [
+            112,
+            115
+          ],
+          "passed": true
+        },
+        {
+          "case": "bad_status",
+          "result": 2,
+          "board_ops": [
+            112,
+            115,
+            "fail"
+          ],
+          "passed": true
+        },
+        {
+          "case": "fault_wins",
+          "result": 2,
+          "board_ops": [],
+          "passed": true
+        },
+        {
+          "case": "credit_wrap",
+          "passed": true
+        },
+        {
+          "case": "credit_wrap_stale",
+          "passed": true
+        },
+        {
+          "case": "user_during_pending_SEAL",
+          "passed": true,
+          "board_ops": [
+            112,
+            115,
+            224,
+            112,
+            115
+          ],
+          "retired": 0
+        },
+        {
+          "case": "user_before_first_display",
+          "passed": true,
+          "error": 0,
+          "scope": "Actual terminal classification; frame loop and counters stubbed"
+        },
+        {
+          "case": "user_after_display",
+          "passed": true,
+          "error": 0,
+          "scope": "Actual terminal classification; frame loop and counters stubbed"
+        },
+        {
+          "case": "service_fault_not_user",
+          "passed": true,
+          "error": 4,
+          "scope": "Actual terminal classification; frame loop and counters stubbed"
+        }
+      ],
+      "statistics": [
+        {
+          "elapsed": 500,
+          "epoch": 0,
+          "bin": 1
+        },
+        {
+          "elapsed": 3999,
+          "epoch": 0,
+          "bin": 7
+        },
+        {
+          "elapsed": 4000,
+          "epoch": 0,
+          "bin": 8
+        },
+        {
+          "elapsed": 5499,
+          "epoch": 0,
+          "bin": 10
+        },
+        {
+          "elapsed": 5500,
+          "epoch": 0,
+          "bin": 11
+        },
+        {
+          "elapsed": 5999,
+          "epoch": 0,
+          "bin": 11
+        },
+        {
+          "elapsed": 6000,
+          "epoch": 6000,
+          "bin": 0
+        },
+        {
+          "elapsed": 360000,
+          "epoch": 360000,
+          "bin": 0
+        }
+      ],
+      "first_windows": [
+        2,
+        2
+      ],
+      "scope": "Linked M4 long-session guards, real status decode, and rolling statistics. Clock/status injected; no physical hour-long run or full joint schedule.",
+      "Flash_B": 212940
+    }
+  },
+  "CPU": {
+    "client": "7a1667e2b2c6a4883f3c1b3a80cb896e577b4476310b7cd9e2e4f190f89a80dd",
+    "body": "f7973584dbd091976de76808f1444c25c770da5005f3426bc22b69ac5700b74d",
+    "body_B": 6020,
+    "body_delta_B": 36,
+    "stored_B": 5120,
+    "stored_free_B": 25,
+    "new_persistent_WRAM_B": 0,
+    "pack_roundtrip": true,
+    "tests": {
+      "passed": true,
+      "scope": "Execute the exact long-play service bytes on a native65816; modeled bus/pad.",
+      "client": "7a1667e2b2c6a4883f3c1b3a80cb896e577b4476310b7cd9e2e4f190f89a80dd",
+      "body": "f7973584dbd091976de76808f1444c25c770da5005f3426bc22b69ac5700b74d",
+      "cases": [
+        {
+          "case": "none",
+          "mask": 0,
+          "passed": true,
+          "stage": 90,
+          "samples": 2,
+          "pad_bytes": 2,
+          "ACK": 0,
+          "DMA": 0
+        },
+        {
+          "case": "ordinary",
+          "mask": 53007,
+          "passed": true,
+          "stage": 90,
+          "samples": 2,
+          "pad_bytes": 2,
+          "ACK": 0,
+          "DMA": 0
+        },
+        {
+          "case": "combo",
+          "mask": 12336,
+          "passed": true,
+          "stage": 126,
+          "samples": 2,
+          "pad_bytes": 2,
+          "ACK": 0,
+          "DMA": 0
+        },
+        {
+          "case": "extra",
+          "mask": 65535,
+          "passed": true,
+          "stage": 126,
+          "samples": 2,
+          "pad_bytes": 2,
+          "ACK": 0,
+          "DMA": 0
+        },
+        {
+          "case": "missing4",
+          "mask": 12320,
+          "passed": true,
+          "stage": 90,
+          "samples": 2,
+          "pad_bytes": 2,
+          "ACK": 0,
+          "DMA": 0
+        },
+        {
+          "case": "missing5",
+          "mask": 12304,
+          "passed": true,
+          "stage": 90,
+          "samples": 2,
+          "pad_bytes": 2,
+          "ACK": 0,
+          "DMA": 0
+        },
+        {
+          "case": "missing12",
+          "mask": 8240,
+          "passed": true,
+          "stage": 90,
+          "samples": 2,
+          "pad_bytes": 2,
+          "ACK": 0,
+          "DMA": 0
+        },
+        {
+          "case": "missing13",
+          "mask": 4144,
+          "passed": true,
+          "stage": 90,
+          "samples": 2,
+          "pad_bytes": 2,
+          "ACK": 0,
+          "DMA": 0
+        },
+        {
+          "case": "blank",
+          "mask": 12336,
+          "passed": true,
+          "stage": 90,
+          "samples": 1,
+          "pad_bytes": 0,
+          "ACK": 0,
+          "DMA": 0
+        },
+        {
+          "case": "busy",
+          "mask": 12336,
+          "passed": true,
+          "stage": 90,
+          "samples": 1,
+          "pad_bytes": 0,
+          "ACK": 0,
+          "DMA": 0
+        },
+        {
+          "case": "second_busy",
+          "mask": 12336,
+          "passed": true,
+          "stage": 90,
+          "samples": 2,
+          "pad_bytes": 0,
+          "ACK": 0,
+          "DMA": 0
+        },
+        {
+          "case": "stop",
+          "mask": 12336,
+          "passed": true,
+          "stage": 90,
+          "samples": 2,
+          "pad_bytes": 2,
+          "ACK": 0,
+          "DMA": 0
+        }
+      ]
+    }
+  },
+  "RTL": {
+    "passed": true,
+    "RTL": "3aeb5a9067133c9ce5200f7390a51af62ee6ab20e29f802c72cbb3df100edc05",
+    "bench": "b24edaebac2e86f8be761b69ed930e3a6842b5f0063dd281d7f840fd83cb9d84",
+    "log": "87584c7180ae3ffa7422b729ab8b1715700982fa5cba290bae8dda908e83de0c",
+    "new_RTL": false
+  },
+  "menu": {
+    "firmware": "ce45b6801e91f0f3b6fa87b9fb4e9c15651ed96e80b2cf3da869ae1507203e23",
+    "rows": {
+      "normal": {
+        "prepared": 1,
+        "released": 1,
+        "calls": [
+          [
+            "nes_return_failed",
+            null
+          ],
+          [
+            "nes_return_log_allow",
+            null
+          ],
+          [
+            "save_report",
+            "PREPARED_RESET_HELD"
+          ],
+          [
+            "nes_return_log_allow",
+            null
+          ],
+          [
+            "nes_return_failed",
+            null
+          ],
+          [
+            "nes_checkpoint112",
+            "MENU_PREPARED"
+          ],
+          [
+            "save_report",
+            "RETURN_READY_RESET_RELEASED"
+          ],
+          [
+            "nes_diag_leave",
+            null
+          ]
+        ]
+      },
+      "base": {
+        "prepared": 0,
+        "released": 0,
+        "calls": []
+      },
+      "menu": {
+        "prepared": 0,
+        "released": 0,
+        "calls": []
+      },
+      "latched": {
+        "prepared": 0,
+        "released": 0,
+        "calls": [
+          [
+            "nes_return_failed",
+            null
+          ]
+        ]
+      },
+      "checkpoint": {
+        "prepared": 0,
+        "released": 0,
+        "calls": [
+          [
+            "nes_return_failed",
+            null
+          ],
+          [
+            "nes_return_log_allow",
+            null
+          ],
+          [
+            "save_report",
+            "PREPARED_RESET_HELD"
+          ],
+          [
+            "nes_return_log_allow",
+            null
+          ],
+          [
+            "nes_return_failed",
+            null
+          ],
+          [
+            "nes_checkpoint112",
+            "MENU_PREPARED"
+          ]
+        ]
+      }
+    },
+    "marker_cases": 4
+  },
+  "recovery": {
+    "none": {
+      "passed": true,
+      "fault": "none",
+      "safe_return": 1,
+      "base_restored": 1,
+      "recovery_attempted": 1,
+      "verified": 0,
+      "calls": {
+        "snes_reset": 1,
+        "nes_diag_sd_handoff113": 1,
+        "nes_checkpoint_begin112": 1,
+        "nes_cf86_enter094": 1,
+        "nes_checkpoint112": 10,
+        "nes_css_begin108": 1,
+        "nes_menu_entry_only113": 1,
+        "nes_menu_base_only116": 3,
+        "nes_diag_progress": 2,
+        "nes_diag_fpga_pgm": 2,
+        "configured": 2,
+        "nes_return_spi_ready": 1,
+        "nes_cf86_arm094": 1,
+        "slow_begin": 1,
+        "nes_game149_transfer": 4,
+        "nes_cf86_monitoring094": 1,
+        "nes_return_failed": 4,
+        "nes_cf86_failed094": 3,
+        "nes_cf86_check094": 1,
+        "slow_end": 1,
+        "nes_cf86_finish094": 1,
+        "nes_diag_sd_failed": 1,
+        "fpga_test": 1,
+        "nes_menu_diagnostic_pending": 1,
+        "nes_diag_leave": 1
+      },
+      "config_paths": [
+        "/sd2snes/fpga_mmc690.bi3",
+        "/sd2snes/fpga_base.bi3"
+      ],
+      "firmware_sha256": "ce45b6801e91f0f3b6fa87b9fb4e9c15651ed96e80b2cf3da869ae1507203e23",
+      "scope": "actual menu cleanup ARM machine code; base-only diagnostic skips payload; programmer/DONE/SPI/token/guard are modeled; no hardware recovery or reset electrical proof"
+    },
+    "program": {
+      "passed": true,
+      "fault": "program",
+      "safe_return": 0,
+      "base_restored": 0,
+      "recovery_attempted": 1,
+      "verified": 0,
+      "calls": {
+        "snes_reset": 1,
+        "nes_diag_sd_handoff113": 1,
+        "nes_checkpoint_begin112": 1,
+        "nes_cf86_enter094": 1,
+        "nes_checkpoint112": 6,
+        "nes_css_begin108": 1,
+        "nes_menu_entry_only113": 1,
+        "nes_menu_base_only116": 3,
+        "nes_diag_progress": 3,
+        "nes_diag_fpga_pgm": 2,
+        "configured": 1,
+        "nes_return_spi_ready": 1,
+        "nes_cf86_arm094": 1,
+        "slow_begin": 1,
+        "nes_game149_transfer": 4,
+        "nes_cf86_monitoring094": 1,
+        "nes_return_failed": 3,
+        "nes_cf86_failed094": 3,
+        "nes_cf86_check094": 1,
+        "slow_end": 1,
+        "nes_cf86_finish094": 1,
+        "nes_diag_sd_failed": 1,
+        "nes_cf86_fail094": 1
+      },
+      "config_paths": [
+        "/sd2snes/fpga_mmc690.bi3",
+        "/sd2snes/fpga_base.bi3"
+      ],
+      "firmware_sha256": "ce45b6801e91f0f3b6fa87b9fb4e9c15651ed96e80b2cf3da869ae1507203e23",
+      "scope": "actual menu cleanup ARM machine code; base-only diagnostic skips payload; programmer/DONE/SPI/token/guard are modeled; no hardware recovery or reset electrical proof"
+    },
+    "done": {
+      "passed": true,
+      "fault": "done",
+      "safe_return": 0,
+      "base_restored": 0,
+      "recovery_attempted": 1,
+      "verified": 0,
+      "calls": {
+        "snes_reset": 1,
+        "nes_diag_sd_handoff113": 1,
+        "nes_checkpoint_begin112": 1,
+        "nes_cf86_enter094": 1,
+        "nes_checkpoint112": 6,
+        "nes_css_begin108": 1,
+        "nes_menu_entry_only113": 1,
+        "nes_menu_base_only116": 3,
+        "nes_diag_progress": 3,
+        "nes_diag_fpga_pgm": 2,
+        "configured": 2,
+        "nes_return_spi_ready": 1,
+        "nes_cf86_arm094": 1,
+        "slow_begin": 1,
+        "nes_game149_transfer": 4,
+        "nes_cf86_monitoring094": 1,
+        "nes_return_failed": 3,
+        "nes_cf86_failed094": 3,
+        "nes_cf86_check094": 1,
+        "slow_end": 1,
+        "nes_cf86_finish094": 1,
+        "nes_diag_sd_failed": 1,
+        "nes_cf86_fail094": 1
+      },
+      "config_paths": [
+        "/sd2snes/fpga_mmc690.bi3",
+        "/sd2snes/fpga_base.bi3"
+      ],
+      "firmware_sha256": "ce45b6801e91f0f3b6fa87b9fb4e9c15651ed96e80b2cf3da869ae1507203e23",
+      "scope": "actual menu cleanup ARM machine code; base-only diagnostic skips payload; programmer/DONE/SPI/token/guard are modeled; no hardware recovery or reset electrical proof"
+    },
+    "busy": {
+      "passed": true,
+      "fault": "busy",
+      "safe_return": 0,
+      "base_restored": 0,
+      "recovery_attempted": 1,
+      "verified": 0,
+      "calls": {
+        "snes_reset": 1,
+        "nes_diag_sd_handoff113": 1,
+        "nes_checkpoint_begin112": 1,
+        "nes_cf86_enter094": 1,
+        "nes_checkpoint112": 7,
+        "nes_css_begin108": 1,
+        "nes_menu_entry_only113": 1,
+        "nes_menu_base_only116": 3,
+        "nes_diag_progress": 3,
+        "nes_diag_fpga_pgm": 2,
+        "configured": 2,
+        "nes_return_spi_ready": 1,
+        "nes_cf86_arm094": 1,
+        "slow_begin": 1,
+        "nes_game149_transfer": 4,
+        "nes_cf86_monitoring094": 1,
+        "nes_return_failed": 3,
+        "nes_cf86_failed094": 3,
+        "nes_cf86_check094": 1,
+        "slow_end": 1,
+        "nes_cf86_finish094": 1,
+        "nes_diag_sd_failed": 1,
+        "nes_cf86_fail094": 1
+      },
+      "config_paths": [
+        "/sd2snes/fpga_mmc690.bi3",
+        "/sd2snes/fpga_base.bi3"
+      ],
+      "firmware_sha256": "ce45b6801e91f0f3b6fa87b9fb4e9c15651ed96e80b2cf3da869ae1507203e23",
+      "scope": "actual menu cleanup ARM machine code; base-only diagnostic skips payload; programmer/DONE/SPI/token/guard are modeled; no hardware recovery or reset electrical proof"
+    },
+    "token": {
+      "passed": true,
+      "fault": "token",
+      "safe_return": 0,
+      "base_restored": 0,
+      "recovery_attempted": 1,
+      "verified": 0,
+      "calls": {
+        "snes_reset": 1,
+        "nes_diag_sd_handoff113": 1,
+        "nes_checkpoint_begin112": 1,
+        "nes_cf86_enter094": 1,
+        "nes_checkpoint112": 9,
+        "nes_css_begin108": 1,
+        "nes_menu_entry_only113": 1,
+        "nes_menu_base_only116": 3,
+        "nes_diag_progress": 3,
+        "nes_diag_fpga_pgm": 2,
+        "configured": 2,
+        "nes_return_spi_ready": 1,
+        "nes_cf86_arm094": 1,
+        "slow_begin": 1,
+        "nes_game149_transfer": 4,
+        "nes_cf86_monitoring094": 1,
+        "nes_return_failed": 4,
+        "nes_cf86_failed094": 3,
+        "nes_cf86_check094": 1,
+        "slow_end": 1,
+        "nes_cf86_finish094": 1,
+        "nes_diag_sd_failed": 1,
+        "fpga_test": 1,
+        "nes_cf86_fail094": 1
+      },
+      "config_paths": [
+        "/sd2snes/fpga_mmc690.bi3",
+        "/sd2snes/fpga_base.bi3"
+      ],
+      "firmware_sha256": "ce45b6801e91f0f3b6fa87b9fb4e9c15651ed96e80b2cf3da869ae1507203e23",
+      "scope": "actual menu cleanup ARM machine code; base-only diagnostic skips payload; programmer/DONE/SPI/token/guard are modeled; no hardware recovery or reset electrical proof"
+    }
+  },
+  "lifecycle": {
+    "mode": "no fixed play or display-idle duration; begin limit=0",
+    "watchdog_no_retired_frame_ms": null,
+    "stopped_tick_step_limit": 4194304,
+    "existing_transaction_guards_retained": true,
+    "user_exit_buttons": "L+R+Start+Select",
+    "user_screen_stage": 126,
+    "runtime_result": 8,
+    "final_ACK_fabricated": false,
+    "logs": "schema693; bounded ~60second epoch bins; first5-40/40-55 windows retained; cumulative32bit diagnostic counters remain modulo32; physical elapsed uses existing progress checkpoints",
+    "normal_names_unchanged": true
+  },
+  "board": {
+    "logic_unchanged": true,
+    "ROM_initialization_changed": true,
+    "new_FIT_STA": false,
+    "whole_resource_cost_pending": true
+  },
+  "open": [
+    "actual packed reset loader boot/time and board ROM init integration",
+    "whole actual ARM/65816 shared schedule and two start phases",
+    "full generation rollover through input/plan/receipt/SNES; CPU user exit during each DMA/SEAL boundary",
+    "unique60s/long labels, packaging and physical long play"
+  ],
+  "installer_created": false,
+  "physical_longrun": false,
+  "scope": "Actual linked M4 guards/status/queue cancellation/format and native65816 service; same screen RTL bus/SPI simulation and existing linked base/menu fixtures. Tests are linked by interface values, not one shared physical/full-pipeline clock. No new performance or physical-hour claim.",
+  "tool_pins": {
+    "prepare_nes_longrun693.py": "9e604233dec3cd311c1b6828bb16f36fca550f48862810253a48344a33345612",
+    "check_nes_longrun693.py": "d7080336630b30498b2482ac3bf62c57054476bbe260ae1785615c421647fd23",
+    "check_nes_longrun693_cpu.py": "aef4f9fc7880d141ee2d199ddc8d79412d4a75c6dbbd903e90030835b1c4fe5c",
+    "check_nes_longrun693_rtl.py": "80c0e81271accd6045c0a8ed9952d5c194d2097155212857b01cd9d745ff3e62",
+    "analyze_nes_longrun693.py": "170d9442933df7af990a03ace663f29205fd9bfd3ed7559625a59a712c66a122"
+  }
+}
