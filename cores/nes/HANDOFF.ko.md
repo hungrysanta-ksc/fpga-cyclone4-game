@@ -1,8 +1,10 @@
 # 현재 NES 인계
 
-현재 브랜치는 `codex/nes-output-budget-668` / [PR155](../../docs/progress/pr-155.md)다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 사용자 지정 개발·실기 기준은 MMC666이며 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
+PR155 병합 `c5a25a448e856ce9eddeb86d90965d2ae804a966` 확인 뒤 현재 브랜치는 `codex/nes-output-longrun-692`다. 다음 개발 기준은 MMC690이고 MMC666 대조군은 보존한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 사용자 지정 개발·실기 기준은 MMC666이며 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
 
 ## 현재 작업
+
+**현재692:** 692는 MMC690의 두 위상 동일 작업량을 재분해했다. 밀집 출력25.835/25.883ms 중 첫E1→SEAL17.235/17.217ms, 업로드대기4.649/4.684ms, 마지막VBlank대기0회다. 기존ARM의60초/tick wrap/누적step7경계 시험 통과. 새성능후보·새FIT·장시간판 설치본은 아직 없다. [결과·다음 순서](../../docs/nes-output692-results.ko.md) · [검증](../../analysis/output692-verification.json). 장시간판의 명시적 정상 종료→STOP/base/menu, 진행 기반 정지 감시, 유한 장시간 로그를 먼저 구현·전체 링크 검증한다. 다음 실기부터60초 비교판과 시간 제한 없는 장시간판을 고유 설치/로그 이름으로 함께 전달하고RESTORE는 제외한다. 이어951의 마지막tile ACK→SEAL tail12.448/11.849ms를 실제 의미확정·준비·credit·수락으로 나눠 최소 후보를 두 위상 비교한다. MMC690 기준·MMC666 대조군,911/951/952/957·7블록·독립검사·STOP·캡처회복·메뉴복귀를 유지한다.
 
 **현재691 실기 확인:** MMC690 두 실기 중1차는 첫 표시 전5초 준비 timeout,2차는1250/60.35초(20.71fps) 실행·메뉴 복귀 성공이다. 5–40초19.97fps(+1.75%),40–55초19.40fps(+0.34%),5–55초19.80fps(+1.33%)다. 출력·최종ACK25.56ms,후반은사실상동일하며map/OBJ작업량차이로구현만의가속은미확정이다. [결과](../../docs/nes-hardware691-results.ko.md) · [분석](../../analysis/hardware691-mmc690.json). MMC690의 출력·최종 ACK25.56ms를 같은 map·OBJ 작업량의 ARM발행·65816수락·DMA·마지막VBlank로 나누고 두 위상의 밀집 간격·마지막ACK를 함께 줄일 경계를 정한다. MMC666 대조군·독립 검사·STOP·캡처 회복·메뉴 복귀·951공개선·952표시3회·957최종대기0회를 유지한다. 551/639/690의 stage0 부팅 실패는 별도 안정성 항목으로 첫fetch·WRAM복원·준비공개 경계를 확인하며, 원인이나 재현 없이 재시도/대기/STA조건을 바꾸지 않는다. 자연 재발 로그를 보존한다.
 

@@ -3,7 +3,7 @@
   "review": 579,
   "date": "2026-11-03",
   "canonical": true,
-  "physical_baseline": "MMC666",
+  "physical_baseline": "MMC690",
   "evidence": "analysis/retrospective579.json",
   "hardware_evidence": "analysis/hardware691-mmc690.json",
   "package": "analysis/trial666-package.json",
@@ -16,10 +16,10 @@
   "preserve_historical_evidence": true,
   "implementation_started": true,
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
-  "branch": "codex/nes-output-budget-668",
+  "branch": "codex/nes-output-longrun-692",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 691,
-  "current_evidence": "analysis/hardware691-mmc690.json",
+  "current_step": 692,
+  "current_evidence": "analysis/output692-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -38,21 +38,21 @@
     "provisional_wire_B": 3937.5,
     "observed_nonquery_B_per_display": 5963.899761336515,
     "observed_nonquery_wire_ms": 18.175694510739856,
-    "LE_free": 84,
-    "Flash_free_B": 496,
+    "LE_free": 113,
+    "Flash_free_B": 8,
     "M9K_free": 0,
     "whole_60Hz_passed": false,
     "full_IO_signoff": false,
     "observed_nonquery_source": "MMC577, retrospective579",
     "current_physical_ms_per_display": {
-      "receive": 10.43636969111969,
-      "plan_supply": 11.344217083967084,
-      "output_final_ack": 26.841249824499823
+      "receive": 10.643825,
+      "plan_supply": 11.250196,
+      "output_final_ack": 25.561433695238094
     },
-    "current_physical_source": "MMC666 / hardware667; older wire fields retain explicit MMC577 provenance.",
-    "LAB_free": 1,
-    "physical_SNES_ROM_free_B": 11,
-    "budget_review": "680:fullARM212828/free164;body5948/free36,packedROM5120/free16,coldpoll+22.496619ms. WholeMAP+35comb/+3FF/0RAM,notFIT84LE/1LAB proof. No newFIT/STA because both-start timegate fails."
+    "current_physical_source": "MMC690 / hardware691; older wire fields retain explicit MMC577 provenance.",
+    "LAB_free": 0,
+    "physical_SNES_ROM_free_B": 13,
+    "budget_review": "692: unchanged689D/688/685; Flash8B,0LAB,0M9K,body0B/packed13B. No new target/FIT."
   },
   "stages": [
     {
@@ -380,12 +380,12 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "MMC690 두 실기 중1차는 첫 표시 전5초 준비 timeout,2차는1250/60.35초(20.71fps) 실행·메뉴 복귀 성공이다. 5–40초19.97fps(+1.75%),40–55초19.40fps(+0.34%),5–55초19.80fps(+1.33%)다. 출력·최종ACK25.56ms,후반은사실상동일하며map/OBJ작업량차이로구현만의가속은미확정이다.",
-    "next": "MMC690의 출력·최종 ACK25.56ms를 같은 map·OBJ 작업량의 ARM발행·65816수락·DMA·마지막VBlank로 나누고 두 위상의 밀집 간격·마지막ACK를 함께 줄일 경계를 정한다. MMC666 대조군·독립 검사·STOP·캡처 회복·메뉴 복귀·951공개선·952표시3회·957최종대기0회를 유지한다. 551/639/690의 stage0 부팅 실패는 별도 안정성 항목으로 첫fetch·WRAM복원·준비공개 경계를 확인하며, 원인이나 재현 없이 재시도/대기/STA조건을 바꾸지 않는다. 자연 재발 로그를 보존한다.",
-    "document": "docs/nes-hardware691-results.ko.md",
-    "evidence": "analysis/hardware691-mmc690.json",
-    "timing_reference": "analysis/output668-verification.json",
-    "hardware_baseline": "MMC666",
+    "candidate": "692는 MMC690의 두 위상 동일 작업량을 재분해했다. 밀집 출력25.835/25.883ms 중 첫E1→SEAL17.235/17.217ms, 업로드대기4.649/4.684ms, 마지막VBlank대기0회다. 기존ARM의60초/tick wrap/누적step7경계 시험 통과. 새성능후보·새FIT·장시간판 설치본은 아직 없다.",
+    "next": "장시간판의 명시적 정상 종료→STOP/base/menu, 진행 기반 정지 감시, 유한 장시간 로그를 먼저 구현·전체 링크 검증한다. 다음 실기부터60초 비교판과 시간 제한 없는 장시간판을 고유 설치/로그 이름으로 함께 전달하고RESTORE는 제외한다. 이어951의 마지막tile ACK→SEAL tail12.448/11.849ms를 실제 의미확정·준비·credit·수락으로 나눠 최소 후보를 두 위상 비교한다. MMC690 기준·MMC666 대조군,911/951/952/957·7블록·독립검사·STOP·캡처회복·메뉴복귀를 유지한다.",
+    "document": "docs/nes-output692-results.ko.md",
+    "evidence": "analysis/output692-verification.json",
+    "timing_reference": "analysis/output692-verification.json",
+    "hardware_baseline": "MMC690",
     "steps": [
       {
         "id": "S1",
@@ -501,6 +501,11 @@
         "id": "S3q",
         "status": "status689_schedule_identical_full_FIT_STA_pass_keep_MMC666_until_hardware",
         "deliverable": "689D는 688의 ARM·685의 65816 바이너리를 그대로 유지하면서 6 LAB 부족을 해소했다. 전체 Quartus Lite FIT는 15295 LE·963/963 LAB·56/56 M9K로 통과했고, 기존 제약의 최악 setup/hold/recovery/removal은 +0.104/+0.137/+1.460/+0.488ns다. 같은 두 위상106화면 재생은 688과 클록 단위로 일치했다. 실기 기준은 MMC666이며 새 설치본·실물 시험은 아직 없다."
+      },
+      {
+        "id": "S692",
+        "status": "matched_work_cost_and_existing_longrun_boundaries_verified",
+        "deliverable": "104warm costs reconciled;799identical functions;7injected guard cases. Next implement long-session lifecycle, then951 tail candidate. No new target binary."
       }
     ],
     "protected": [
@@ -986,7 +991,17 @@
       "output_final_ACK_ms": 25.561433695238094,
       "startup_cause": null,
       "causal_speedup_proven": false
+    },
+    "longrun_delivery": {
+      "required": true,
+      "normal_seconds": 60,
+      "long_seconds": null,
+      "implemented": false,
+      "delivered": false,
+      "RESTORE": false,
+      "logs_separate": true
     }
   },
-  "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6"
+  "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",
+  "merged_PR155": "c5a25a448e856ce9eddeb86d90965d2ae804a966"
 }
