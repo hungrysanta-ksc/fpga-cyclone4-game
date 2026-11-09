@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
-    "next": "707D·기존ARM/65816 유지.708 후반 발행 순서2개·중복초기화 제거는 시간/주사선/Flash 실패로 기각,조건부scroll은Flash 초과로미재생.다음 E1 응답/E0 snapshot 공유의 실제삭제credit조회와독립검사경계·8/52B Flash·86LE/1LAB/0M9K 예산부터검증.두위상밀집간격·마지막ACK 동시개선,911/951/952/957·7블록·STOP/메뉴 유지.반복깨짐/stage0는관찰만.",
+    "next": "707D·기존ARM/65816 유지.709 E1 상태응답 공유는Flash/조회 감소,안전조건PASS지만두위상밀집간격·마지막ACK 동시개선실패/A setup−0.269ns/B965LAB/C964LAB로미채택.새retired미제시응답의실제검사횟수·비용을먼저계측해비신뢰힌트로CRC불필요순회제외예산검토.상태변경은항상CRC/counter/identity검사,필수E0/최종ACK유지.실제회로삭제구조·86LE/1LAB/0M9K예산이있을때만후보하나진행.현재후보/seed/고정지연변형반복금지.",
     "document": "docs/nes-bg707-results.ko.md",
     "evidence": "analysis/bg707-verification.json",
     "timing_reference": "analysis/bg707-verification.json",
@@ -1178,7 +1178,7 @@
       "schedule": "cycle identical to703B in both starts; separate actualCPU/PSRAM boundary and linkedARM/65816 replay",
       "physical_verified": false
     },
-    "stage": 708,
+    "stage": 709,
     "708_result": {
       "proof": "analysis/tail708-verification.json",
       "report": "docs/nes-tail708-results.ko.md",
@@ -1188,6 +1188,29 @@
       "separate_credit_candidate_Flash_B": 213008,
       "normal_initialized_Flash_B": 213008,
       "next_implemented": false
+    },
+    "709_result": {
+      "proof": "analysis/credit709-verification.json",
+      "report": "docs/nes-credit709-results.ko.md",
+      "archive": "analysis/credit709-archive.json",
+      "selected": false,
+      "Flash_delta_B": -52,
+      "normal_Flash_B": 212932,
+      "long_Flash_B": 212888,
+      "E0_saved_transactions": [
+        185,
+        215
+      ],
+      "dense_delta_ms": [
+        -0.0151788365,
+        0.0429663507
+      ],
+      "last_ACK_delta_ms": [
+        0.0216042335,
+        -0.0094052913
+      ],
+      "safety_schedule_preserved": true,
+      "next_hint_implemented": false
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",
