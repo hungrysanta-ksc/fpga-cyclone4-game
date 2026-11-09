@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-longrun-692",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 698,
-  "current_evidence": "analysis/bonus698-verification.json",
+  "current_step": 700,
+  "current_evidence": "analysis/trial700-package.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -380,10 +380,10 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "699: sprite ALE 요청만 기존 mapper write preview로 바꾸는2개 RTL 최소 수정. 실제 T65의 원본 ROM 명령24조건은 기존 오류2→정상 소비, 실제 arbiter/fill24·중간 STOP24도 통과했다. 두 위상106화면 모델 재생은 선택694와 표시·최종ACK가 클록 단위 동일. 전체 Lite15349LE(+54)/963LAB/56M9K,setup/hold/recovery/removal +0.536/+0.152/+1.332/+0.481ns. ARM·65816·RAM 불변. 단일 클록 늦은 강제 쓰기9조건은 의도대로 오류를 유지한다. 새 실기는 미검증.",
-    "next": "699 보드와 정상60초/장시간 ARM·65816을 새 이름으로 결합하고 프로그래머·packed ROM·로그명을 검증한다. 정상판 ROM이 다르면 그 보드 구성도 별도 결합 검증한다. RESTORE 제외. 실기 스페이드 안내→회전 진입·스테이지 이동·종료 조합·메뉴 복귀와 첫 레벨5–40/40–55초·장시간을 분리 확인한다. 실기 해소 전 오류를 닫지 않으며, 이후692의951 출력 병목을 +54LE/여유59LE·LAB/M9K0 예산에서 재개한다.",
-    "document": "docs/nes-bonus699-results.ko.md",
-    "evidence": "analysis/bonus699-verification.json",
+    "candidate": "700/701 전달 준비 완료: 699 CHR 수정 보드에 MMC700(60초)·MMC701(장시간)을 결합했다. ARM 799개 함수는 각695/696 기준과 동일하며 Flash 여유8/52B다. 정상 packed ROM 보드는 별도 전체 FIT·STA를 통과했고 두 판 모두15349LE/963LAB/56M9K, setup/hold/recovery/removal +0.536/+0.152/+1.332/+0.481ns다. 프로그래머·ROM bus·marker·로그·STOP/base/menu 검증 통과. RESTORE·게임 ROM 제외. 수정 후 실기는 대기 중이다.",
+    "next": "MMC700의 같은 첫 레벨5–40/40–55초·자동 복귀, MMC701의 스페이드 안내→회전 진입·장시간 스테이지 이동·L+R+Start+Select 종료·메뉴 복귀를 확인한다. 실기 해소 전 CHR 오류를 닫지 않고 부팅 timeout은 분리한다. 이후692의951 출력 병목을 여유59LE·LAB/M9K0 예산에서 재개한다.",
+    "document": "docs/nes-trial700-results.ko.md",
+    "evidence": "analysis/trial700-package.json",
     "timing_reference": "analysis/output692-verification.json",
     "hardware_baseline": "MMC690",
     "steps": [
@@ -526,6 +526,11 @@
         "id": "S699",
         "status": "minimal_fix_functional_schedule_FIT_STA_pass_physical_pending",
         "deliverable": "699: sprite ALE 요청만 기존 mapper write preview로 바꾸는2개 RTL 최소 수정. 실제 T65의 원본 ROM 명령24조건은 기존 오류2→정상 소비, 실제 arbiter/fill24·중간 STOP24도 통과했다. 두 위상106화면 모델 재생은 선택694와 표시·최종ACK가 클록 단위 동일. 전체 Lite15349LE(+54)/963LAB/56M9K,setup/hold/recovery/removal +0.536/+0.152/+1.332/+0.481ns. ARM·65816·RAM 불변. 단일 클록 늦은 강제 쓰기9조건은 의도대로 오류를 유지한다. 새 실기는 미검증."
+      },
+      {
+        "id": "S700_701",
+        "status": "limited_hardware_delivery_prepared_physical_pending",
+        "deliverable": "700/701 전달 준비 완료: 699 CHR 수정 보드에 MMC700(60초)·MMC701(장시간)을 결합했다. ARM 799개 함수는 각695/696 기준과 동일하며 Flash 여유8/52B다. 정상 packed ROM 보드는 별도 전체 FIT·STA를 통과했고 두 판 모두15349LE/963LAB/56M9K, setup/hold/recovery/removal +0.536/+0.152/+1.332/+0.481ns다. 프로그래머·ROM bus·marker·로그·STOP/base/menu 검증 통과. RESTORE·게임 ROM 제외. 수정 후 실기는 대기 중이다."
       }
     ],
     "protected": [
@@ -541,8 +546,8 @@
     "limited_delivery_gate": true,
     "external_IO_signoff": false,
     "new_hardware_test": false,
-    "new_simulation": "699 actual T65 24+arbiter24+mid-read STOP24; two53-frame model schedules unchanged694; original pulse late9 still rejected",
-    "new_synthesis": "699 full Lite FIT15349LE/963LAB/56M9K; setup.536 hold.152 recovery1.332 removal.481ns; unchanged SDC/seed, external IO signoff remains open",
+    "new_simulation": "700/701 exact ROM bus5120B each+STOP/reset; new labeled ARM marker/base/exit/windows checks; prior699 schedule evidence inherited without rerun",
+    "new_synthesis": "700 normal-ROM full Lite FIT/STA passes, same699 timing and area;701 unchanged699 SOF",
     "budget_670": {
       "reference_reconstructions": 106,
       "reference_fault_rejections": 318,
