@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-PR156 병합 `4ee65ac300c3b5eca73848bd0b408c1bc63b6800` 확인 뒤 현재 브랜치는 `codex/nes-bg-deadline-707` / 새 PR 준비 중이다. 다음 개발 기준은 MMC690이고 MMC666 대조군은 보존한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 이전 대조군 MMC666은 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
+PR156 병합 `4ee65ac300c3b5eca73848bd0b408c1bc63b6800` 확인 뒤 현재 브랜치는 `codex/nes-bg-deadline-707` / PR157 draft이다. 다음 개발 기준은 MMC690이고 MMC666 대조군은 보존한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 이전 대조군 MMC666은 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
 
 **현재707D:** 배경 CHR의 렌더 시작·$2007 read 종료 경계를 재현해 PPU 한 파일로 수정했다. 367경계·fine-Y3072조건, 전체 Lite FIT15322LE/962LAB/56M9K 및 STA(+0.362/+0.145/+1.594/+0.483ns)를 통과했다. 두 위상106화면의 표시·최종ACK는703B와 동일하다. 새 실기/설치본은 없다. 다음은951의 마지막tile ACK 뒤17패킷2351B·11.873/12.451ms를 기존ABI의 발행·credit 일정으로 줄이는 비교다. 646/647 단독회귀 후보를 반복하지 않는다. 반복깨짐·stage0 timeout은 관찰로 보존한다. [결과·다음 순서](../../docs/nes-bg707-results.ko.md)
 

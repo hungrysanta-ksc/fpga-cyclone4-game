@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-bg-deadline-707",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 706,
-  "current_evidence": "analysis/hardware706-mmc704-705.json",
+  "current_step": 707,
+  "current_evidence": "analysis/bg707-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -374,17 +374,17 @@
   "clean_clone_rebuild_complete": false,
   "new_installer_required_now": false,
   "retrospective_PR": 150,
-  "PR": null,
+  "PR": 157,
   "bounded_prototype_started": true,
   "candidate_manifest": "analysis/trial690-package.json",
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "706 실기: MMC704 1차는 기존690과 같은 stage0 5초 준비 timeout,705 1차는193:230 배경 CHR21E161 deadline2(age2)로 서로 다르다. 704 2차는 정상60초·메뉴 복귀,5–55초19.04fps(700대비−10.10%,작업량 증가로인과미확정)다. 705 2차는298.56초·5957표시·사용자종료/메뉴복귀,스페이드 클리어를 사용자 확인했다. 그러나 여러 장면의 반복 타일 깨짐과 최대430ms 표시 공백이 남아 전체 안정성은 미승인이다.",
+    "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
     "next": "707D 유지.951 마지막tile ACK 뒤17패킷2351B/11.873·12.451ms를 확정시각·SPI빈구간·bulk/credit으로 분리해 기존ABI 발행후보 비교. 두 위상 밀집간격·957ACK 함께개선,911/951/952/957·7블록·STOP·독립검사 유지.646/647 단독회귀 반복금지.반복깨짐/stage0는관찰만.",
-    "document": "docs/nes-hardware706-results.ko.md",
-    "evidence": "analysis/hardware706-mmc704-705.json",
-    "timing_reference": "analysis/output692-verification.json",
+    "document": "docs/nes-bg707-results.ko.md",
+    "evidence": "analysis/bg707-verification.json",
+    "timing_reference": "analysis/bg707-verification.json",
     "hardware_baseline": "MMC690",
     "steps": [
       {
@@ -565,9 +565,9 @@
     "stop_rule": "60초 MMC695는 MMC690 실행 코드를 보존한다. MMC696은 장시간 기능 시험으로만 전달하며 위상1 밀집+10.728us와906 내부대기 증가를 공개했다. 성능 후보의 두 위상 동시개선 게이트는 완화하지 않는다. 외부IO/실기 장시간 승인 미완료,새실기결과 전MMC690 기준 유지. 고정지연/위상상수/seed 반복 금지.",
     "limited_delivery_gate": false,
     "external_IO_signoff": false,
-    "new_hardware_test": true,
-    "new_simulation": "None. Decode12physical logs and inspect exact shipped sources;705 BG deadline not yet reproduced.",
-    "new_synthesis": "None. 703B/704 wholeFIT/STA evidence retained; no product or constraint changes.",
+    "new_hardware_test": false,
+    "new_simulation": "367 boundary cases plus3072 fine-Y reference cases; actual T65/arbiter/PSRAM and separate two-start106frame linkedARM/65816 replay",
+    "new_synthesis": "Selected707D wholeLite15322LE/962LAB/56M9K, setup+.362/hold+.145/recovery+1.594/removal+.483ns; constraints/pins/seed unchanged",
     "budget_670": {
       "reference_reconstructions": 106,
       "reference_fault_rejections": 318,
@@ -1177,7 +1177,8 @@
       },
       "schedule": "cycle identical to703B in both starts; separate actualCPU/PSRAM boundary and linkedARM/65816 replay",
       "physical_verified": false
-    }
+    },
+    "stage": 707
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",
   "merged_PR155": "c5a25a448e856ce9eddeb86d90965d2ae804a966",
