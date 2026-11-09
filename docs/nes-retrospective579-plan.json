@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-longrun-692",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 695,
-  "current_evidence": "analysis/trial695-package.json",
+  "current_step": 697,
+  "current_evidence": "analysis/hardware697-mmc695-696.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -380,10 +380,10 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "694 통합 검증과 MMC695(60초)/MMC696(장시간) 전달본 준비 완료. packed 부팅·generation wrap·STOP/종료·106화면 공동 재생·전체 Lite FIT/STA 통과. MMC690 대비 위상1 밀집 +0.010728ms/906 대기1회로 엄격한 시간 무회귀는 미달이며 성능 후보로 채택하지 않는다. 기존60초 구현은 보존하고 장시간 기능판을 분리했다. 전체 보드 비용/STA는689D와 동일,Flash 여유695=8B/696=52B. 장시간 실기는 미검증.",
-    "next": "MMC695를 같은 첫 레벨5–40/40–55초 대조로,MMC696을 장시간·L+R+Start+Select 종료·메뉴 복귀 시험에 사용한다. 자연 발생한 부팅/장시간 실패를 분리 보존한다. 이후692의951 마지막tile ACK→SEAL12.448/11.849ms를 준비·credit·수락으로 나눠 두 위상 밀집간격·957 마지막ACK가 함께 개선되는 최소 후보를 검증한다. 고정지연·위상상수·seed 탐색은 보류한다.",
-    "document": "docs/nes-longrun694-results.ko.md",
-    "evidence": "analysis/longrun694-verification.json",
+    "candidate": "697 실기 분석: MMC695 60.35초/1207화면·20.00fps,5–55초19.34fps이며 실행·메뉴 복귀 정상. 같은690 코드라 FPS 차이는 작업량과 구분한다. MMC696은851.36초/19453화면 뒤 스테이지 진입 중 PPU ROM deadline 오류2로 종료;192선/262dot sprite fetch,물리0x21fbe7 요청 중 응답 없음(age1). STOP/base/menu 복귀 성공,종료 조합 실기는 미검증. 최초 오류 회로는 확인했으나 늦은 요청/경쟁/응답 지연의 근본 원인은 미확정.",
+    "next": "출력 최적화에 앞서 선택696 RTL의 sprite fetch257–264dot에서 주소/ALE/mapper tag·CPU/PPU/tile request/grant/response를 같은 시간축으로 연결해 재현한다. 캐시 miss/CHR bank변경/경쟁 읽기를 분리하고 원인 확인 후 최소 수정한다. sample deadline·독립 검사·STOP·최종ACK·메뉴 복귀를 완화하지 않는다. 안정성 수정 후692 출력 병목을 재개한다. 다음 전달도60초/장시간 별도 이름·RESTORE 제외를 유지한다.",
+    "document": "docs/nes-hardware697-results.ko.md",
+    "evidence": "analysis/hardware697-mmc695-696.json",
     "timing_reference": "analysis/output692-verification.json",
     "hardware_baseline": "MMC690",
     "steps": [
@@ -516,6 +516,11 @@
         "id": "S694_695",
         "status": "limited_hardware_delivery_prepared",
         "deliverable": "694 통합 검증과 MMC695(60초)/MMC696(장시간) 전달본 준비 완료. packed 부팅·generation wrap·STOP/종료·106화면 공동 재생·전체 Lite FIT/STA 통과. MMC690 대비 위상1 밀집 +0.010728ms/906 대기1회로 엄격한 시간 무회귀는 미달이며 성능 후보로 채택하지 않는다. 기존60초 구현은 보존하고 장시간 기능판을 분리했다. 전체 보드 비용/STA는689D와 동일,Flash 여유695=8B/696=52B. 장시간 실기는 미검증."
+      },
+      {
+        "id": "S697",
+        "status": "hardware_long_run_PPU_deadline_fault_root_cause_open",
+        "deliverable": "697 실기 분석: MMC695 60.35초/1207화면·20.00fps,5–55초19.34fps이며 실행·메뉴 복귀 정상. 같은690 코드라 FPS 차이는 작업량과 구분한다. MMC696은851.36초/19453화면 뒤 스테이지 진입 중 PPU ROM deadline 오류2로 종료;192선/262dot sprite fetch,물리0x21fbe7 요청 중 응답 없음(age1). STOP/base/menu 복귀 성공,종료 조합 실기는 미검증. 최초 오류 회로는 확인했으나 늦은 요청/경쟁/응답 지연의 근본 원인은 미확정."
       }
     ],
     "protected": [
@@ -530,7 +535,7 @@
     "stop_rule": "60초 MMC695는 MMC690 실행 코드를 보존한다. MMC696은 장시간 기능 시험으로만 전달하며 위상1 밀집+10.728us와906 내부대기 증가를 공개했다. 성능 후보의 두 위상 동시개선 게이트는 완화하지 않는다. 외부IO/실기 장시간 승인 미완료,새실기결과 전MMC690 기준 유지. 고정지연/위상상수/seed 반복 금지.",
     "limited_delivery_gate": true,
     "external_IO_signoff": false,
-    "new_hardware_test": false,
+    "new_hardware_test": true,
     "new_simulation": "694: native reset/ROM bus/two-bank plan wrap+STOP; separate actual M4/native65816 106-frame schedules plus generation wrap, exit during DMA and menu/base boundaries. SPI/IRQ/ROM models, not whole FPGA co-simulation.",
     "new_synthesis": "694 full Lite FIT and STA: same689D 15295LE/963LAB/56M9K; setup.104 hold.137 recovery1.460 removal.488ns; unchanged external IO incomplete scope.",
     "budget_670": {
@@ -1007,13 +1012,16 @@
       "normal_seconds": 60,
       "long_seconds": null,
       "implemented": true,
-      "delivered": false,
+      "delivered": true,
       "RESTORE": false,
       "logs_separate": true,
-      "implementation_scope": "prototype arm03/client02, not delivered or whole-path qualified",
+      "implementation_scope": "695 normal control and696 selected694 integration; hardware697 received",
       "whole_path_passed": false,
       "exit_buttons": "L+R+Start+Select",
-      "verification": "analysis/longrun693-verification.json"
+      "verification": "analysis/trial695-package.json",
+      "long_play_confirmed_s": 851.36,
+      "explicit_exit_hardware_passed": false,
+      "hardware_fault_open": true
     },
     "budget_693": {
       "Flash_B": 212940,
@@ -1044,6 +1052,16 @@
       ],
       "RESTORE": false,
       "physical_verified": false
+    },
+    "hardware697": {
+      "evidence": "analysis/hardware697-mmc695-696.json",
+      "normal_pass": true,
+      "long_run_s": 851.36,
+      "long_user_exit_tested": false,
+      "long_run_pass": false,
+      "fault": "PPU ROM sample deadline2;line192,dot262,sprite fetch",
+      "root_cause": null,
+      "next": "출력 최적화에 앞서 선택696 RTL의 sprite fetch257–264dot에서 주소/ALE/mapper tag·CPU/PPU/tile request/grant/response를 같은 시간축으로 연결해 재현한다. 캐시 miss/CHR bank변경/경쟁 읽기를 분리하고 원인 확인 후 최소 수정한다. sample deadline·독립 검사·STOP·최종ACK·메뉴 복귀를 완화하지 않는다. 안정성 수정 후692 출력 병목을 재개한다. 다음 전달도60초/장시간 별도 이름·RESTORE 제외를 유지한다."
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",
