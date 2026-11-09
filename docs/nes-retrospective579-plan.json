@@ -380,10 +380,10 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "698: 실제 SMB3(J) RAM0075/0079의 한 번 좌표 변경 후 정상 A 입력으로 스페이드 회전 게임 진입. 선택696 PPU/MMC3/70ns reader의 24경계 중 늦은 CHR bank 전환12조건에서 실기와 ROM·PPU 문맥64bit 전체 일치. 옛 bank 읽기의 선행 수락이 새 주소 마감을 소모하며 tile 경쟁 없이 재현된다. STOP24조건 통과; 실제 CPU 전체·14분 이력 재생이나 생산 수정·새 FIT/실기는 아니다.",
-    "next": "sprite 주소 확정·mapper preview·옛 CHR 요청 수락을 묶는 최소 수정부터 검토한다. 실제 CPU 쓰기 안정 구간·plan 경쟁을 추가 연결하고 유효/dummy sprite, bank 유지/변경, STOP 전후에 물리 tag·독립 sample 마감을 유지한다. 검사 생략/무조건 읽기 취소/timeout 완화는 채택하지 않는다. 24경계 회귀 후 최종 ACK·메뉴 복귀·두 위상 표시·전체 Lite 비용을 검증한다. 안정성 수정 후692 출력 병목을 재개하며60초/장시간 별도 파일·RESTORE 제외를 유지한다.",
-    "document": "docs/nes-bonus698-results.ko.md",
-    "evidence": "analysis/bonus698-verification.json",
+    "candidate": "699: sprite ALE 요청만 기존 mapper write preview로 바꾸는2개 RTL 최소 수정. 실제 T65의 원본 ROM 명령24조건은 기존 오류2→정상 소비, 실제 arbiter/fill24·중간 STOP24도 통과했다. 두 위상106화면 모델 재생은 선택694와 표시·최종ACK가 클록 단위 동일. 전체 Lite15349LE(+54)/963LAB/56M9K,setup/hold/recovery/removal +0.536/+0.152/+1.332/+0.481ns. ARM·65816·RAM 불변. 단일 클록 늦은 강제 쓰기9조건은 의도대로 오류를 유지한다. 새 실기는 미검증.",
+    "next": "699 보드와 정상60초/장시간 ARM·65816을 새 이름으로 결합하고 프로그래머·packed ROM·로그명을 검증한다. 정상판 ROM이 다르면 그 보드 구성도 별도 결합 검증한다. RESTORE 제외. 실기 스페이드 안내→회전 진입·스테이지 이동·종료 조합·메뉴 복귀와 첫 레벨5–40/40–55초·장시간을 분리 확인한다. 실기 해소 전 오류를 닫지 않으며, 이후692의951 출력 병목을 +54LE/여유59LE·LAB/M9K0 예산에서 재개한다.",
+    "document": "docs/nes-bonus699-results.ko.md",
+    "evidence": "analysis/bonus699-verification.json",
     "timing_reference": "analysis/output692-verification.json",
     "hardware_baseline": "MMC690",
     "steps": [
@@ -521,6 +521,11 @@
         "id": "S697",
         "status": "hardware_long_run_PPU_deadline_fault_root_cause_open",
         "deliverable": "697 실기 분석: MMC695 60.35초/1207화면·20.00fps,5–55초19.34fps이며 실행·메뉴 복귀 정상. 같은690 코드라 FPS 차이는 작업량과 구분한다. MMC696은851.36초/19453화면 뒤 스테이지 진입 중 PPU ROM deadline 오류2로 종료;192선/262dot sprite fetch,물리0x21fbe7 요청 중 응답 없음(age1). STOP/base/menu 복귀 성공,종료 조합 실기는 미검증. 최초 오류 회로는 확인했으나 늦은 요청/경쟁/응답 지연의 근본 원인은 미확정."
+      },
+      {
+        "id": "S699",
+        "status": "minimal_fix_functional_schedule_FIT_STA_pass_physical_pending",
+        "deliverable": "699: sprite ALE 요청만 기존 mapper write preview로 바꾸는2개 RTL 최소 수정. 실제 T65의 원본 ROM 명령24조건은 기존 오류2→정상 소비, 실제 arbiter/fill24·중간 STOP24도 통과했다. 두 위상106화면 모델 재생은 선택694와 표시·최종ACK가 클록 단위 동일. 전체 Lite15349LE(+54)/963LAB/56M9K,setup/hold/recovery/removal +0.536/+0.152/+1.332/+0.481ns. ARM·65816·RAM 불변. 단일 클록 늦은 강제 쓰기9조건은 의도대로 오류를 유지한다. 새 실기는 미검증."
       }
     ],
     "protected": [
@@ -535,9 +540,9 @@
     "stop_rule": "60초 MMC695는 MMC690 실행 코드를 보존한다. MMC696은 장시간 기능 시험으로만 전달하며 위상1 밀집+10.728us와906 내부대기 증가를 공개했다. 성능 후보의 두 위상 동시개선 게이트는 완화하지 않는다. 외부IO/실기 장시간 승인 미완료,새실기결과 전MMC690 기준 유지. 고정지연/위상상수/seed 반복 금지.",
     "limited_delivery_gate": true,
     "external_IO_signoff": false,
-    "new_hardware_test": true,
-    "new_simulation": "694: native reset/ROM bus/two-bank plan wrap+STOP; separate actual M4/native65816 106-frame schedules plus generation wrap, exit during DMA and menu/base boundaries. SPI/IRQ/ROM models, not whole FPGA co-simulation.",
-    "new_synthesis": "694 full Lite FIT and STA: same689D 15295LE/963LAB/56M9K; setup.104 hold.137 recovery1.460 removal.488ns; unchanged external IO incomplete scope.",
+    "new_hardware_test": false,
+    "new_simulation": "699 actual T65 24+arbiter24+mid-read STOP24; two53-frame model schedules unchanged694; original pulse late9 still rejected",
+    "new_synthesis": "699 full Lite FIT15349LE/963LAB/56M9K; setup.536 hold.152 recovery1.332 removal.481ns; unchanged SDC/seed, external IO signoff remains open",
     "budget_670": {
       "reference_reconstructions": 106,
       "reference_fault_rejections": 318,
@@ -1075,6 +1080,18 @@
         "shortcut_required": true,
         "shortcut_implemented": false
       }
+    },
+    "budget_699": {
+      "verification": "analysis/bonus699-verification.json",
+      "LE": 15349,
+      "LE_delta": 54,
+      "LE_free": 59,
+      "LAB_free": 0,
+      "M9K_free": 0,
+      "Flash_delta": 0,
+      "RAM_delta": 0,
+      "CPU_ROM_delta": 0,
+      "physical": false
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",
