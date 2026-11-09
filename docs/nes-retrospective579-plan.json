@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-longrun-692",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 700,
-  "current_evidence": "analysis/trial700-package.json",
+  "current_step": 702,
+  "current_evidence": "analysis/hardware702-mmc700-701.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -380,10 +380,10 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "700/701 전달 준비 완료: 699 CHR 수정 보드에 MMC700(60초)·MMC701(장시간)을 결합했다. ARM 799개 함수는 각695/696 기준과 동일하며 Flash 여유8/52B다. 정상 packed ROM 보드는 별도 전체 FIT·STA를 통과했고 두 판 모두15349LE/963LAB/56M9K, setup/hold/recovery/removal +0.536/+0.152/+1.332/+0.481ns다. 프로그래머·ROM bus·marker·로그·STOP/base/menu 검증 통과. RESTORE·게임 ROM 제외. 수정 후 실기는 대기 중이다.",
-    "next": "MMC700의 같은 첫 레벨5–40/40–55초·자동 복귀, MMC701의 스페이드 안내→회전 진입·장시간 스테이지 이동·L+R+Start+Select 종료·메뉴 복귀를 확인한다. 실기 해소 전 CHR 오류를 닫지 않고 부팅 timeout은 분리한다. 이후692의951 출력 병목을 여유59LE·LAB/M9K0 예산에서 재개한다.",
-    "document": "docs/nes-trial700-results.ko.md",
-    "evidence": "analysis/trial700-package.json",
+    "candidate": "702 실기: MMC700 정상60초·메뉴 복귀,5–55초21.18fps이나작업량감소로성능가속미확정;일회성타일깨짐은원인미확정. MMC701은263.31초뒤같은스페이드진입에서CPU PRG deadline1(192선/265dot,03FB34,age2)로종료,STOP/base/menu성공. 이전696의PPU deadline2와다르다. 699시험은step59에서끝나후속읽기를누락했다. step79로연장하니24조건중6개가다음CHR상위비트deadline2로실패했다. 실기CPU1과정확한재현은아직없다.",
+    "next": "701 CPU03FB34와CHR두plane·다음sprite의공유reader 수락/응답/캐시 일정을연속검증한다. 원본699대조·실제CPU·ROM경쟁으로양쪽마감을함께통과하는최소수정뒤두위상출력·전체FIT/STA·메뉴를검증한다. 타일깨짐은별도미해결로추적하고안정성전속도최적화·새실기ZIP은보류한다. 오류/timeout완화금지,59LE·LAB/M9K0예산유지.",
+    "document": "docs/nes-hardware702-results.ko.md",
+    "evidence": "analysis/hardware702-mmc700-701.json",
     "timing_reference": "analysis/output692-verification.json",
     "hardware_baseline": "MMC690",
     "steps": [
@@ -531,6 +531,11 @@
         "id": "S700_701",
         "status": "limited_hardware_delivery_prepared_physical_pending",
         "deliverable": "700/701 전달 준비 완료: 699 CHR 수정 보드에 MMC700(60초)·MMC701(장시간)을 결합했다. ARM 799개 함수는 각695/696 기준과 동일하며 Flash 여유8/52B다. 정상 packed ROM 보드는 별도 전체 FIT·STA를 통과했고 두 판 모두15349LE/963LAB/56M9K, setup/hold/recovery/removal +0.536/+0.152/+1.332/+0.481ns다. 프로그래머·ROM bus·marker·로그·STOP/base/menu 검증 통과. RESTORE·게임 ROM 제외. 수정 후 실기는 대기 중이다."
+      },
+      {
+        "id": "S702",
+        "status": "physical_stability_failed_test_horizon_gap_confirmed",
+        "deliverable": "702 실기: MMC700 정상60초·메뉴 복귀,5–55초21.18fps이나작업량감소로성능가속미확정;일회성타일깨짐은원인미확정. MMC701은263.31초뒤같은스페이드진입에서CPU PRG deadline1(192선/265dot,03FB34,age2)로종료,STOP/base/menu성공. 이전696의PPU deadline2와다르다. 699시험은step59에서끝나후속읽기를누락했다. step79로연장하니24조건중6개가다음CHR상위비트deadline2로실패했다. 실기CPU1과정확한재현은아직없다."
       }
     ],
     "protected": [
@@ -543,11 +548,11 @@
       "independent identity/CRC/coverage, STOP, cold/partial recovery, capture recovery, menu"
     ],
     "stop_rule": "60초 MMC695는 MMC690 실행 코드를 보존한다. MMC696은 장시간 기능 시험으로만 전달하며 위상1 밀집+10.728us와906 내부대기 증가를 공개했다. 성능 후보의 두 위상 동시개선 게이트는 완화하지 않는다. 외부IO/실기 장시간 승인 미완료,새실기결과 전MMC690 기준 유지. 고정지연/위상상수/seed 반복 금지.",
-    "limited_delivery_gate": true,
+    "limited_delivery_gate": false,
     "external_IO_signoff": false,
-    "new_hardware_test": false,
-    "new_simulation": "700/701 exact ROM bus5120B each+STOP/reset; new labeled ARM marker/base/exit/windows checks; prior699 schedule evidence inherited without rerun",
-    "new_synthesis": "700 normal-ROM full Lite FIT/STA passes, same699 timing and area;701 unchanged699 SOF",
+    "new_hardware_test": true,
+    "new_simulation": "Extended699 T65/arbiter step59->79:18/24 pass,6 nextCHR plane failures. Exact701 CPU fault not reproduced.",
+    "new_synthesis": "None; existing699 FIT/STA retained, no hardware change",
     "budget_670": {
       "reference_reconstructions": 106,
       "reference_fault_rejections": 318,

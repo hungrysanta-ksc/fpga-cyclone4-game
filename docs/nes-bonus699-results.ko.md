@@ -1,5 +1,7 @@
 # 699: sprite 주소 수락 경계 수정
 
+> 702 실기 후 범위 정정: 아래24조건 시험은step59의 첫CHR 소비까지만 진행했다. step79로연장하자24조건중6개에서다음CHR상위비트오류가발생했다. MMC701도같은스페이드진입에서CPU deadline1로종료됐다. 첫CHR바이트 통과를전체장면안전성으로확대하지않는다. [702 근거·미해결 항목](nes-hardware702-results.ko.md)
+
 **sprite ALE의 읽기 요청에 기존 mapper write preview를 연결했다. 실제 T65가 대상 ROM 명령을 실행하는 24조건은 수정 전 동일 오류2, 수정 후 정상 CHR 소비로 바뀌었다.** mapper의 뱅크 확정 시점·실제 sample 마감·독립 물리주소 검사는 그대로다. 선택 보드는 `699 board01`, ARM·65816은 선택694 그대로이며 새 설치본·수정 후 실기 결과는 아직 없다.
 
 [자동 검증](../analysis/bonus699-verification.json) · [원본 보존](../analysis/bonus699-archive.json) · [698 재현](nes-bonus698-results.ko.md) · [수정 생성기](../tools/prepare_nes_bonus699.py)
