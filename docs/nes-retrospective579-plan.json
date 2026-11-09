@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
-    "next": "현재717: 716B의 계산 절감을 유지하고 ready tile 앞의 패딩 전체 drain만 제거했다. 후보106화면과 관측기 대조106화면,독립검사·STOP·최종ACK·메뉴경계를 통과했다. 대조군의전체클록/바이트/ARM명령은716B와동일하다.954 tile준비는약1.6ms·SEAL은0.56/0.61ms앞당겼지만대기의약1.04/1.09ms가큐로이동했다.952–957은18회그대로,951공개248/248선,정상Flash213000B로8B초과해미채택이다. 밀집평균원본대비−0.033/−0.019ms,957ACK−65.879/−66.373ms(대부분716B기여). 707D·기존694/704 ARM·기존65816 유지. 951은빠른ordinary가빈큐VBlank를점유한경계다. 다음은기존map receipt·bounded 다음입력·실제E0 DMA진행을연결할소유권/예산검증이다.954 마지막BG전탐색전체삭제상한1.159ms는남은ROM구간차이2.35ms보다작으므로탐색단독반복을중단한다. 원본정상Flash여유8B,717후보8B초과.새RTL/65816증가0·정적RAM≤4B.기존679/680/685의진행조회/map drain중복금지,고정대기/검사완화금지.입력이없거나7블록완료인경우도검증한다.두위상보호조건과18VB미만·밀집/957ACK동시개선필수.",
+    "next": "718에서 716B 계산 절감과 717 패딩 drain 제거를 유지한 A/B를 구현하고 총 212화면을 검증했다. A는 정상 Flash140B 여유지만 951은248선이고 717 대비 마지막ACK가49–50ms 늦다. B는 실제 map DMA 진행을 기다려 951 선행map256→1792B·공개248→236선을 두 위상에서 회복했으며 정상Flash100B 여유다. 그러나 911 표시가2→3VBlank, 밀집952–957은18회, 원본 대비 밀집평균+0.083/+0.095ms·957ACK−0.034/+16.574ms로 미채택이다. 두 슬롯·독립검사·STOP·최종ACK·메뉴 경계와952표시3회·957대기0회·7블록은 유지했다. 주사선만 낮아져도 다음 VBlank일 수 있어911/951 회차 검사를 보강했다. 707D·기존694/704 ARM·기존65816 유지. 다음은 951과911의 map receipt/DMA·남은ordinary 전송/소비를 같은 VBlank 마감에 맞춰 기다려도 되는 조건을 확정한다. E0 진행 이력은 현재 DMA 시작 허가가 아니다. 입력 없음에서 무조건 기다리거나 빈 D0/E0를 반복하는 정책은 보류한다. 908/934/940/943의716B 이득을 보존하고, 기존 OAM 대기를 실제 DMA 기회로 대체할 때만 삭제한다. B 정상100B 여유는 기존 OAM100B 복원 시 소진되는 산술예산이다. 필요 시 새로운 상태 공개는 전체 ARM/65816/FPGA 교체·삭제 예산부터 검토한다. 911원본2회·951≤246선/간격무회귀·9523회·957대기0 및 밀집18회미만·평균·마지막ACK 동시개선을 두 위상에서 확인한다. 고정위상/지연/검사완화 금지.",
     "document": "docs/nes-bg707-results.ko.md",
     "evidence": "analysis/bg707-verification.json",
     "timing_reference": "analysis/bg707-verification.json",
@@ -566,6 +566,11 @@
         "id": "tail717",
         "status": "complete_policy_and_observer_control_rejected_resource_public_line",
         "deliverable": "717 candidate106 plus716B observercontrol106 exact clocks/instructions/bytes.954 preparation-1.60/-1.63ms,SEAL-0.559/-0.615ms vs716B but queue+1.04/+1.09ms.951248/248line,normalFlash213000(8over),dense18VBunchanged. All independent/STOP/menu guards pass. Last-BG search optimistic deletion ceiling9541.159ms/9550.730ms insufficient alone. See docs/nes-tail717-results.ko.md."
+      },
+      {
+        "id": "idle718",
+        "status": "complete_A_B_rejected_despite_B_951_recovery",
+        "deliverable": "A/B each106samework/pixel frames. B951236/236line andmap1792B, normalFlash212892B/free100. But9112->3VB; dense18unchanged, mean+0.082934/+0.094910ms,957ACK-0.033896/+16.574172ms vsoriginal. A951248/248 and717ACK+49.195/+50.357ms. Keep707D/originalARM/65816; protect beam AND VBlank ordinal. No installer/newRTL/FIT."
       }
     ],
     "protected": [
@@ -1193,7 +1198,7 @@
       "schedule": "cycle identical to703B in both starts; separate actualCPU/PSRAM boundary and linkedARM/65816 replay",
       "physical_verified": false
     },
-    "stage": 714,
+    "stage": 718,
     "708_result": {
       "proof": "analysis/tail708-verification.json",
       "report": "docs/nes-tail708-results.ko.md",
@@ -1506,6 +1511,12 @@
       },
       "new_FIT_STA": false,
       "new_installer": false
+    },
+    "718_result": {
+      "selected": false,
+      "document": "docs/nes-idle718-results.ko.md",
+      "evidence": "analysis/idle718-verification.json",
+      "complete_CPU_frames": 212
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",
