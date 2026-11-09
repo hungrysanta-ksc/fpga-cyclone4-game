@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "697 실기 분석: MMC695 60.35초/1207화면·20.00fps,5–55초19.34fps이며 실행·메뉴 복귀 정상. 같은690 코드라 FPS 차이는 작업량과 구분한다. MMC696은851.36초/19453화면 뒤 스테이지 진입 중 PPU ROM deadline 오류2로 종료;192선/262dot sprite fetch,물리0x21fbe7 요청 중 응답 없음(age1). STOP/base/menu 복귀 성공,종료 조합 실기는 미검증. 최초 오류 회로는 확인했으나 늦은 요청/경쟁/응답 지연의 근본 원인은 미확정.",
-    "next": "재현 장면은 월드1의 1·2레벨 클리어 후 아래쪽 스페이드 슬롯머신 보너스 게임 진입이다. 출력 최적화에 앞서 선택696 RTL의 sprite fetch257–264dot에서 주소/ALE/mapper tag·CPU/PPU/tile request/grant/response를 같은 시간축으로 연결해 재현한다. 캐시 miss/CHR bank변경/경쟁 읽기를 분리하고 원인 확인 후 최소 수정한다. sample deadline·독립 검사·STOP·최종ACK·메뉴 복귀를 완화하지 않는다. 안정성 수정 후692 출력 병목을 재개한다. 다음 전달도60초/장시간 별도 이름·RESTORE 제외를 유지한다.",
+    "next": "먼저 동일 ROM에서 치트/최소 RAM 진행 상태 수정 또는 검증된 진입 직전 세이브로 접근 동선을 준비한다. 주소는 검증 전 추정하지 않고,진입 전 반복 치트를 해제하며 원본 ROM·사용자 세이브를 보존한다. 재현 장면은 월드1의 1·2레벨 클리어 후 아래쪽 스페이드 슬롯머신 보너스 게임 진입이다. 출력 최적화에 앞서 선택696 RTL의 sprite fetch257–264dot에서 주소/ALE/mapper tag·CPU/PPU/tile request/grant/response를 같은 시간축으로 연결해 재현한다. 캐시 miss/CHR bank변경/경쟁 읽기를 분리하고 원인 확인 후 최소 수정한다. sample deadline·독립 검사·STOP·최종ACK·메뉴 복귀를 완화하지 않는다. 안정성 수정 후692 출력 병목을 재개한다. 다음 전달도60초/장시간 별도 이름·RESTORE 제외를 유지한다.",
     "document": "docs/nes-hardware697-results.ko.md",
     "evidence": "analysis/hardware697-mmc695-696.json",
     "timing_reference": "analysis/output692-verification.json",
@@ -1071,7 +1071,9 @@
           "enter spade bonus game"
         ],
         "user_reported": true,
-        "reproduced": false
+        "reproduced": false,
+        "shortcut_required": true,
+        "shortcut_implemented": false
       }
     }
   },
