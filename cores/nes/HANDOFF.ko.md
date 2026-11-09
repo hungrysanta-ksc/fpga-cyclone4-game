@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-PR155 병합 `c5a25a448e856ce9eddeb86d90965d2ae804a966` 확인 뒤 현재 브랜치는 `codex/nes-output-longrun-692`다. 다음 개발 기준은 MMC690이고 MMC666 대조군은 보존한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 사용자 지정 개발·실기 기준은 MMC666이며 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
+PR155 병합 `c5a25a448e856ce9eddeb86d90965d2ae804a966` 확인 뒤 현재 브랜치는 `codex/nes-output-longrun-692` / PR156이다. 다음 개발 기준은 MMC690이고 MMC666 대조군은 보존한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 이전 대조군 MMC666은 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
 
 ## 현재 작업
 
