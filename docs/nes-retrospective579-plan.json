@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-longrun-692",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 693,
-  "current_evidence": "analysis/longrun693-verification.json",
+  "current_step": 695,
+  "current_evidence": "analysis/trial695-package.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -380,10 +380,10 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "693 장시간판 patch04/arm03+client02의 실제 ARM16·65816서비스12·기존 screen RTL·메뉴5/marker4·base5 검사가 통과했다. Flash212940B/free52B(−44),BSS+8B,CPU6020B(+36)/packedfree25B. 고정 플레이/화면무갱신 제한 없이 L+R+Start+Select→기존 STOP/base/menu를 연결했다. 정상60초판은 보존하며 새FIT·종단시간·설치본은 아직 없다.",
-    "next": "선택693의 packed reset loader/보드ROM초기값을 연결하고 실제 input→plan→receipt→SNES 세대65535→0 및 DMA/SEAL 취소 경계를 검증한다. 다음으로 실제 ARM·IRQ·SPI·ROM·65816 두 위상 공동 일정에서7블록/911/951/9523회/957최종대기0회·밀집간격·마지막ACK 무회귀와 전체 Lite FIT/STA를 확인한다. 통과 후60초/장시간판 고유 설치·로그 이름으로 함께 전달하며 RESTORE는 제외한다. 이어692의951 tail12.448/11.849ms를 준비·credit·수락으로 나눠 최소 성능 후보를 검증한다. 실기 기준MMC690/대조군MMC666 유지; 고정지연·위상상수 반복 탐색은 보류한다.",
-    "document": "docs/nes-longrun693-results.ko.md",
-    "evidence": "analysis/longrun693-verification.json",
+    "candidate": "694 통합 검증과 MMC695(60초)/MMC696(장시간) 전달본 준비 완료. packed 부팅·generation wrap·STOP/종료·106화면 공동 재생·전체 Lite FIT/STA 통과. MMC690 대비 위상1 밀집 +0.010728ms/906 대기1회로 엄격한 시간 무회귀는 미달이며 성능 후보로 채택하지 않는다. 기존60초 구현은 보존하고 장시간 기능판을 분리했다. 전체 보드 비용/STA는689D와 동일,Flash 여유695=8B/696=52B. 장시간 실기는 미검증.",
+    "next": "MMC695를 같은 첫 레벨5–40/40–55초 대조로,MMC696을 장시간·L+R+Start+Select 종료·메뉴 복귀 시험에 사용한다. 자연 발생한 부팅/장시간 실패를 분리 보존한다. 이후692의951 마지막tile ACK→SEAL12.448/11.849ms를 준비·credit·수락으로 나눠 두 위상 밀집간격·957 마지막ACK가 함께 개선되는 최소 후보를 검증한다. 고정지연·위상상수·seed 탐색은 보류한다.",
+    "document": "docs/nes-longrun694-results.ko.md",
+    "evidence": "analysis/longrun694-verification.json",
     "timing_reference": "analysis/output692-verification.json",
     "hardware_baseline": "MMC690",
     "steps": [
@@ -511,6 +511,11 @@
         "id": "S693",
         "status": "prototype_functional_pass_joint_schedule_rollover_boot_and_board_gate_open",
         "deliverable": "693 장시간판 patch04/arm03+client02의 실제 ARM16·65816서비스12·기존 screen RTL·메뉴5/marker4·base5 검사가 통과했다. Flash212940B/free52B(−44),BSS+8B,CPU6020B(+36)/packedfree25B. 고정 플레이/화면무갱신 제한 없이 L+R+Start+Select→기존 STOP/base/menu를 연결했다. 정상60초판은 보존하며 새FIT·종단시간·설치본은 아직 없다."
+      },
+      {
+        "id": "S694_695",
+        "status": "limited_hardware_delivery_prepared",
+        "deliverable": "694 통합 검증과 MMC695(60초)/MMC696(장시간) 전달본 준비 완료. packed 부팅·generation wrap·STOP/종료·106화면 공동 재생·전체 Lite FIT/STA 통과. MMC690 대비 위상1 밀집 +0.010728ms/906 대기1회로 엄격한 시간 무회귀는 미달이며 성능 후보로 채택하지 않는다. 기존60초 구현은 보존하고 장시간 기능판을 분리했다. 전체 보드 비용/STA는689D와 동일,Flash 여유695=8B/696=52B. 장시간 실기는 미검증."
       }
     ],
     "protected": [
@@ -522,12 +527,12 @@
       "both-phase dense mean and957 lastACK improvement",
       "independent identity/CRC/coverage, STOP, cold/partial recovery, capture recovery, menu"
     ],
-    "stop_rule": "693 후보는 packed부팅·세대 전체wrap/취소·두 위상 공동일정·보드ROM통합/FIT·기존STA 무회귀를 통과하기 전에는 전달하지 않는다. 정상60초MMC690과 장시간 후보를 구분하고, 새 성능/실기 통과를 경계 단독검사에서 추정하지 않는다. 고정지연·위상상수·seed 반복 탐색은 하지 않는다. 외부IO 미완료 범위와 Flash/LAB/M9K 여유를 계속 명시한다.",
-    "limited_delivery_gate": false,
+    "stop_rule": "60초 MMC695는 MMC690 실행 코드를 보존한다. MMC696은 장시간 기능 시험으로만 전달하며 위상1 밀집+10.728us와906 내부대기 증가를 공개했다. 성능 후보의 두 위상 동시개선 게이트는 완화하지 않는다. 외부IO/실기 장시간 승인 미완료,새실기결과 전MMC690 기준 유지. 고정지연/위상상수/seed 반복 금지.",
+    "limited_delivery_gate": true,
     "external_IO_signoff": false,
     "new_hardware_test": false,
-    "new_simulation": "693: linked M4 16 cases/native65816 service12/unchanged screen RTL/menu5+marker4/base5; not a joint schedule or packed reset boot.",
-    "new_synthesis": "No693 FIT/STA;689D logic reused but ROM initialization changes. Prior689 evidence retained,not a new whole-board result.",
+    "new_simulation": "694: native reset/ROM bus/two-bank plan wrap+STOP; separate actual M4/native65816 106-frame schedules plus generation wrap, exit during DMA and menu/base boundaries. SPI/IRQ/ROM models, not whole FPGA co-simulation.",
+    "new_synthesis": "694 full Lite FIT and STA: same689D 15295LE/963LAB/56M9K; setup.104 hold.137 recovery1.460 removal.488ns; unchanged external IO incomplete scope.",
     "budget_670": {
       "reference_reconstructions": 106,
       "reference_fault_rejections": 318,
@@ -1021,6 +1026,24 @@
       "physical_longrun": false,
       "selected": "patch04/arm03+client02",
       "next": "선택693의 packed reset loader/보드ROM초기값을 연결하고 실제 input→plan→receipt→SNES 세대65535→0 및 DMA/SEAL 취소 경계를 검증한다. 다음으로 실제 ARM·IRQ·SPI·ROM·65816 두 위상 공동 일정에서7블록/911/951/9523회/957최종대기0회·밀집간격·마지막ACK 무회귀와 전체 Lite FIT/STA를 확인한다. 통과 후60초/장시간판 고유 설치·로그 이름으로 함께 전달하며 RESTORE는 제외한다. 이어692의951 tail12.448/11.849ms를 준비·credit·수락으로 나눠 최소 성능 후보를 검증한다. 실기 기준MMC690/대조군MMC666 유지; 고정지연·위상상수 반복 탐색은 보류한다."
+    },
+    "budget_694": {
+      "verification": "analysis/longrun694-verification.json",
+      "strict_all_time_no_regression": false,
+      "performance_selected": false,
+      "protected_intervals_last_ACK": true,
+      "whole_FIT_STA_no_regression": true,
+      "decision": "separate long-mode feature; normal unchanged"
+    },
+    "delivery695": {
+      "package": "analysis/trial695-package.json",
+      "guide": "docs/nes-mmc695-696-trial.ko.md",
+      "variants": [
+        "MMC695 60sec",
+        "MMC696 long"
+      ],
+      "RESTORE": false,
+      "physical_verified": false
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",
