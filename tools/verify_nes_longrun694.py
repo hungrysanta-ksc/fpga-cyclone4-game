@@ -52,7 +52,7 @@ def run(a):
         'decision':'Long-mode feature candidate only. Keep MMC690 normal unchanged. Phase1 dense +10.728us and added906 final wait are explicit overhead; no display interval VBlank loss or final957 ACK regression. This is not a clean performance improvement.',
         'scope':'Boundary RTL and separate actual M4/native65816 schedule with modeled SPI/IRQ and ROM calendar; not whole FPGA co-simulation or physical long play. Existing IO constraints only; unconstrained external IO remains open.',
         'source_pins':{p.name:sha(p) for p in Path('tools').glob('*longrun694*.py')}}
-    a.out.write_text(json.dumps(report,indent=2)+'\n')
+    a.out.write_text(json.dumps(report,indent=2)+'\n',encoding='utf8',newline='\n')
     print('PASS694 functional/full FIT/STA/protected intervals; strict timing no-regression:',strict)
 
 if __name__=='__main__':

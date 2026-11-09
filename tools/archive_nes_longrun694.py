@@ -37,9 +37,9 @@ def run(a):
     result={'stage':694,'location':'WORKSPACE/probes/nes-longrun694/'+a.out.name,'files':len(files),'bytes':archive.stat().st_size,
         'SHA256':sha(archive),'manifest_SHA256':sha(a.out/'manifest.json'),'all_extracted_bytes_verified':True,'private':True,
         'license_files_included':False,'full_inventory':'manifest.json inside private archive directory',
-        'selected':'694 arm01/client01/board01/step1+2/wrap03/boot02/bus01/plan01/exit02/stop01;695 arm695/arm696/checks01/trial01',
+        'selected':'694 arm01/client01/board01/step1+2/wrap03/boot02/bus01/plan01/exit02/stop01;695 arm695/arm696/checks02/trial02 (canonical LF reports)',
         'failed_and_intermediate_evidence_preserved':True}
-    a.report.write_text(json.dumps(result,indent=2)+'\n');print('PASS694 archive',len(files),archive.stat().st_size)
+    a.report.write_text(json.dumps(result,indent=2)+'\n',encoding='utf8',newline='\n');print('PASS694 archive',len(files),archive.stat().st_size)
 
 if __name__=='__main__':
     p=argparse.ArgumentParser()

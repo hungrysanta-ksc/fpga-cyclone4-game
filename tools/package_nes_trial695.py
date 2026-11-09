@@ -79,7 +79,7 @@ def run(a):
         assert z.testzip() is None and set(z.namelist())==set(files)
         assert all(z.read(n)==b for n,b in files.items())
     report.update(ZIP_SHA256=sha(archive),ZIP_bytes=archive.stat().st_size)
-    a.report.write_text(json.dumps(report,indent=2)+'\n')
+    a.report.write_text(json.dumps(report,indent=2)+'\n',encoding='utf8',newline='\n')
     print('PASS695/696 dual package:',archive.resolve(),report['ZIP_SHA256'])
 
 if __name__=='__main__':

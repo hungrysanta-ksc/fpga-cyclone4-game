@@ -50,7 +50,7 @@ ARM은 정지 tick 감시의 갱신을 매 내부 guard에서 실제 `step` 경�
 
 PSRAM reader·word 경로·ROM IO 보고도 양의 slack이다. 기존 unconstrained input54/output56–57 및 경로 수는 그대로다. 외부IO 전체 sign-off로 확대하지 않는다. 실제227 programmer/FatFS에서 새BI3를 풀어RBF 전 바이트와 일치하는지 검사했다. GPIO/DONE은 모델이며 물리 재설정은 아직 아니다.
 
-전달 ZIP은 `WORKSPACE/probes/nes-trial695/trial01/MMC695-60SEC-MMC696-LONG.zip`이다. SHA256 `66ed0fbc3b4ff74a1a08e0dc49567b35ce1d5b0a609ce0b4e364ecb9631adb76`. 게임·RESTORE·세이브를 넣지 않았고 base/menu는 정상 복귀에 필요하여 포함했다. 각각 이름을 갱신한 ARM의 함수 주소·크기·명령 바이트가 원래 선택본과 일치하고 firmware CRC·Flash 한도·marker·로그·ROM경로와ZIP 재읽기를 검증했다. 로그696은schema693의 유한 epoch 통계이며 첫55초 집계는 보존한다.
+전달 ZIP은 `WORKSPACE/probes/nes-trial695/trial02/MMC695-60SEC-MMC696-LONG.zip`이다. SHA256 `da2e226520a3f3b96423e5ccc4eb8b216c64354f6259e4aba0954fc26dad89ea`. 게임·RESTORE·세이브를 넣지 않았고 base/menu는 정상 복귀에 필요하여 포함했다. 공개 검증 JSON은 Git에서도 동일 hash가 유지되도록 LF로 정규화했다. 이전CRLF 보고·trial01은 보존하고 최종은trial02다. 실행 바이너리는 동일하다. 각각 이름을 갱신한 ARM의 함수 주소·크기·명령 바이트가 원래 선택본과 일치하고 firmware CRC·Flash 한도·marker·로그·ROM경로와ZIP 재읽기를 검증했다. 로그696은schema693의 유한 epoch 통계이며 첫55초 집계는 보존한다.
 
 ## 재현과 다음 순서
 
