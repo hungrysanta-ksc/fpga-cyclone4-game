@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
-    "next": "707D·기존ARM/65816 유지.712 실제 행 완료·두 위상106화면은 원본과 동일. 현재 emit/flush ROM대기 SPI유휴0.04–0.17ms는192B map0.693ms보다작아 대기삽입단독보류. 두페이지cursor+행완료frontier와기존map/plan공동발행1108B교체,최대1116B·RAM+4B·RTL/65816변경0.957 최소3개192B거래를앞당기는실제ARM블로킹/SPI/credit/tile비용을먼저지급;954/955는BG생산1.624/0.347ms+E8/E9/decode/ROM허가선행이필요.순삭제입증0/후보미선택.두위상951–955평균·957ACK와952–957합계18VBlank동시감소,기존911/951/952/957·7블록·STOP·독립검사·cold·메뉴보호를채택조건으로한다.시간예산미충족이면입력복원/BG생산경계재설계;고정위상/단독flush반복금지.",
+    "next": "707D·기존694/704 ARM·기존65816 유지.713 실제 두페이지frontier와map/tile공동발행A/B는자원통과(1102/1114B,+4RAM,전체Flash-52/-40B)이나미채택. A952=4회, B위상2는954=4회/911마감실패;모두952–957합계19회. B위상1은918관측beam253h0/DMA254h198 448B로기존252선검사실패,동일시각재현.판정완화금지·실기깨짐원인단정금지. 행완료즉시발행/첫BG만대기/3행교대변형반복보류. 다음은952/954의필요BG묶음생산·실제ROM시작과수락map연속DMA마감을함께지급;918은별도최소latch/완료선확인. 두위상911/951/952/957·7블록·STOP·독립검사·cold·메뉴를보호하고952–957합계18VBlank·밀집평균·957ACK동시개선해야채택.",
     "document": "docs/nes-bg707-results.ko.md",
     "evidence": "analysis/bg707-verification.json",
     "timing_reference": "analysis/bg707-verification.json",
@@ -1178,7 +1178,7 @@
       "schedule": "cycle identical to703B in both starts; separate actualCPU/PSRAM boundary and linkedARM/65816 replay",
       "physical_verified": false
     },
-    "stage": 712,
+    "stage": 713,
     "708_result": {
       "proof": "analysis/tail708-verification.json",
       "report": "docs/nes-tail708-results.ko.md",
@@ -1347,6 +1347,101 @@
       },
       "whole_FIT_STA": "707D unchanged inherited",
       "new_hardware": false
+    },
+    "713_result": {
+      "proof": "analysis/rows713-verification.json",
+      "report": "docs/nes-rows713-results.ko.md",
+      "archive": "analysis/rows713-archive.json",
+      "selected": false,
+      "changed_target": "experimental ARM only; selected original unchanged",
+      "complete_CPU_frames": 159,
+      "variants": {
+        "a": {
+          "replacement_B": 1102,
+          "normal_Flash_B": 212932,
+          "long_Flash_B": 212888,
+          "RAM_delta_B": 4,
+          "phases": {
+            "1": {
+              "gate": false,
+              "delta": {
+                "dense_ms": 3.4394126032393615,
+                "last_ACK_ms": -16.618032308758767,
+                "after951_VBlank": 1,
+                "after951_mean_ms": 2.877274171505576
+              },
+              "protected": {
+                "deadline911": true,
+                "public951": true,
+                "interval952": false,
+                "wait957": true,
+                "seven_blocks": true
+              },
+              "last_completed_generation": null
+            },
+            "2": {
+              "gate": false,
+              "delta": {
+                "dense_ms": 3.4453165187832013,
+                "last_ACK_ms": -16.654349770306023,
+                "after951_VBlank": 1,
+                "after951_mean_ms": 2.7687873953451856
+              },
+              "protected": {
+                "deadline911": true,
+                "public951": true,
+                "interval952": false,
+                "wait957": true,
+                "seven_blocks": true
+              },
+              "last_completed_generation": null
+            }
+          }
+        },
+        "b": {
+          "replacement_B": 1114,
+          "normal_Flash_B": 212944,
+          "long_Flash_B": 212900,
+          "RAM_delta_B": 4,
+          "phases": {
+            "1": {
+              "gate": false,
+              "delta": null,
+              "protected": null,
+              "last_completed_generation": 917
+            },
+            "2": {
+              "gate": false,
+              "delta": {
+                "dense_ms": 3.392721384727075,
+                "last_ACK_ms": 0.26660741643538344,
+                "after951_VBlank": 1,
+                "after951_mean_ms": 2.818747185396731
+              },
+              "protected": {
+                "deadline911": false,
+                "public951": true,
+                "interval952": true,
+                "wait957": true,
+                "seven_blocks": true
+              },
+              "last_completed_generation": null
+            }
+          }
+        }
+      },
+      "diagnostic": {
+        "message": "...mohallo\\AppData\\Local\\Temp\\nes-rows713-diag1\\capture.lua:94: BEAM713 g=918 saved=253/0/69 current=254/198/69 elapsed=1562 bytes=448 length=448",
+        "exact_packet_and_CPU_trace_reproduction": true,
+        "pins": {
+          "capture.lua": "5efd56d6c4213411cf8920dc3e0d2fb1fd438e16593f4d71fd56a1702c9929f3",
+          "map-error.txt": "98cbfb6156294be11fa073548140d7df905cf8b292870ed478caed7729e66fe4",
+          "window.csv": "f79eceabc7248f7e6c1dd283612f0b9e4318ab13f06b518dfc3f085639b96dec",
+          "packets.jsonl": "3acfe8b6c96d148684ba4374a255d650ed3a48476158997c06b2b33af2b93147"
+        }
+      },
+      "new_FIT_STA": false,
+      "new_installer": false
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",
