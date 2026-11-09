@@ -18,8 +18,8 @@
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
   "branch": "codex/nes-output-longrun-692",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 704,
-  "current_evidence": "analysis/trial704-package.json",
+  "current_step": 706,
+  "current_evidence": "analysis/hardware706-mmc704-705.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -380,10 +380,10 @@
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "MMC704(60초)·MMC705(장시간) 전달본을 준비했다. 두 판 모두703B CPU·CHR 수정 보드이며 ARM은700/701의 설치·로그 이름만 변경했다. 각799개 함수 바이트 동일,Flash212984/212940B(여유8/52B)다. 정상판 별도 전체 Lite FIT·기존 제약 STA도703B와 동일한15348LE/963LAB/56M9K 및 +0.137/+0.157/+1.412/+0.482ns다. 프로그래머·marker·ROM bus·STOP/base/menu·시간제한 검사를 통과했으며 실기 안정성은 확인 대기다.",
-    "next": "MMC704 첫 레벨5–40/40–55초·타일 깨짐·자동 복귀,MMC705 스페이드 안내/회전/월드맵 복귀·장시간·종료 조합·STOP·메뉴를 확인한다. 실행마다 새 세 로그를 보존한다. RESTORE는 제외했다. 실기 성공 전 CPU 오류를 닫지 않고 일회성 타일 깨짐은 별도 추적한다. 안정성 확인 전 출력 속도 최적화는 보류한다.",
-    "document": "docs/nes-trial704-results.ko.md",
-    "evidence": "analysis/trial704-package.json",
+    "candidate": "706 실기: MMC704 1차는 기존690과 같은 stage0 5초 준비 timeout,705 1차는193:230 배경 CHR21E161 deadline2(age2)로 서로 다르다. 704 2차는 정상60초·메뉴 복귀,5–55초19.04fps(700대비−10.10%,작업량 증가로인과미확정)다. 705 2차는298.56초·5957표시·사용자종료/메뉴복귀,스페이드 클리어를 사용자 확인했다. 그러나 여러 장면의 반복 타일 깨짐과 최대430ms 표시 공백이 남아 전체 안정성은 미승인이다.",
+    "next": "먼저705 초기 배경CHR 오류를699/703B 실제CPU·mapper·PSRAM 일정으로 재현한다. 이어 여러 장면의 타일 깨짐을 캡처/scroll/CHR-bank→ARM map/tile→실제VRAM/표시bank 일관성으로 분리한다. 별도704 stage0 timeout은 SNES첫fetch·WRAM복원·ready공개로 추적한다. 독립 검사·STOP·최종ACK·메뉴와스페이드수정을유지하고,안정성확인전추가속도최적화·새ZIP은보류한다. 오류무시·timeout완화·근거없는재시도는금지한다.",
+    "document": "docs/nes-hardware706-results.ko.md",
+    "evidence": "analysis/hardware706-mmc704-705.json",
     "timing_reference": "analysis/output692-verification.json",
     "hardware_baseline": "MMC690",
     "steps": [
@@ -546,6 +546,11 @@
         "id": "S704_705",
         "status": "delivery_verified_physical_feedback_pending",
         "deliverable": "MMC704(60초)·MMC705(장시간) 전달본을 준비했다. 두 판 모두703B CPU·CHR 수정 보드이며 ARM은700/701의 설치·로그 이름만 변경했다. 각799개 함수 바이트 동일,Flash212984/212940B(여유8/52B)다. 정상판 별도 전체 Lite FIT·기존 제약 STA도703B와 동일한15348LE/963LAB/56M9K 및 +0.137/+0.157/+1.412/+0.482ns다. 프로그래머·marker·ROM bus·STOP/base/menu·시간제한 검사를 통과했으며 실기 안정성은 확인 대기다."
+      },
+      {
+        "id": "S706",
+        "status": "physical_bonus_passed_startup_BG_fault_and_repeated_pixel_issue_open",
+        "deliverable": "706 실기: MMC704 1차는 기존690과 같은 stage0 5초 준비 timeout,705 1차는193:230 배경 CHR21E161 deadline2(age2)로 서로 다르다. 704 2차는 정상60초·메뉴 복귀,5–55초19.04fps(700대비−10.10%,작업량 증가로인과미확정)다. 705 2차는298.56초·5957표시·사용자종료/메뉴복귀,스페이드 클리어를 사용자 확인했다. 그러나 여러 장면의 반복 타일 깨짐과 최대430ms 표시 공백이 남아 전체 안정성은 미승인이다."
       }
     ],
     "protected": [
@@ -558,11 +563,11 @@
       "independent identity/CRC/coverage, STOP, cold/partial recovery, capture recovery, menu"
     ],
     "stop_rule": "60초 MMC695는 MMC690 실행 코드를 보존한다. MMC696은 장시간 기능 시험으로만 전달하며 위상1 밀집+10.728us와906 내부대기 증가를 공개했다. 성능 후보의 두 위상 동시개선 게이트는 완화하지 않는다. 외부IO/실기 장시간 승인 미완료,새실기결과 전MMC690 기준 유지. 고정지연/위상상수/seed 반복 금지.",
-    "limited_delivery_gate": true,
+    "limited_delivery_gate": false,
     "external_IO_signoff": false,
-    "new_hardware_test": false,
-    "new_simulation": "Actual programmer and ROM bus/STOP/reset for both variants; ARM marker/recovery/time-window/longrun guards. Inherit unchanged703 CPU/CHR andtwo-phase schedules, no repeated wholeframe model.",
-    "new_synthesis": "MMC704 normal packedROM fullLite FIT15348LE/963LAB/56M9K; STA +.137/+.157/+1.412/+.482ns identical703B. MMC705 uses pinned703B SOF; full externalIO signoff still open.",
+    "new_hardware_test": true,
+    "new_simulation": "None. Decode12physical logs and inspect exact shipped sources;705 BG deadline not yet reproduced.",
+    "new_synthesis": "None. 703B/704 wholeFIT/STA evidence retained; no product or constraint changes.",
     "budget_670": {
       "reference_reconstructions": 106,
       "reference_fault_rejections": 318,
@@ -1136,6 +1141,15 @@
       "long": "MMC705",
       "RESTORE": false,
       "physical": false
+    },
+    "hardware706": {
+      "evidence": "analysis/hardware706-mmc704-705.json",
+      "logs": 12,
+      "runs": 4,
+      "bonus_success": true,
+      "user_exit": true,
+      "full_stability": false,
+      "pixel_corruption_multiple_scenes": true
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",
