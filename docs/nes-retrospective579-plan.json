@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
-    "next": "707D·기존ARM/65816 유지.709 E1 상태응답 공유는Flash/조회 감소,안전조건PASS지만두위상밀집간격·마지막ACK 동시개선실패/A setup−0.269ns/B965LAB/C964LAB로미채택.새retired미제시응답의실제검사횟수·비용을먼저계측해비신뢰힌트로CRC불필요순회제외예산검토.상태변경은항상CRC/counter/identity검사,필수E0/최종ACK유지.실제회로삭제구조·86LE/1LAB/0M9K예산이있을때만후보하나진행.현재후보/seed/고정지연변형반복금지.",
+    "next": "707D·기존ARM/65816 유지.710 E1 hint 안전성/Flash/전체FITSTA 통과지만두위상밀집간격회귀/LE34LAB1증가로미채택.더이상hint조건·seed·고정지연변형반복금지.같은작업량의마지막수락패킷과선행DMA가능VBlank를맞춰두위상실제한번단축에필요한시간·삭제예산부터확정.필수CRC/identity/STOP/최종ACK는절감대상제외.",
     "document": "docs/nes-bg707-results.ko.md",
     "evidence": "analysis/bg707-verification.json",
     "timing_reference": "analysis/bg707-verification.json",
@@ -1178,7 +1178,7 @@
       "schedule": "cycle identical to703B in both starts; separate actualCPU/PSRAM boundary and linkedARM/65816 replay",
       "physical_verified": false
     },
-    "stage": 709,
+    "stage": 710,
     "708_result": {
       "proof": "analysis/tail708-verification.json",
       "report": "docs/nes-tail708-results.ko.md",
@@ -1211,6 +1211,46 @@
       ],
       "safety_schedule_preserved": true,
       "next_hint_implemented": false
+    },
+    "710_result": {
+      "proof": "analysis/credit710-verification.json",
+      "report": "docs/nes-credit710-results.ko.md",
+      "archive": "analysis/credit710-archive.json",
+      "selected": false,
+      "Flash_delta_B": -48,
+      "normal_Flash_B": 212936,
+      "long_Flash_B": 212892,
+      "E0_saved_transactions": [
+        219,
+        180
+      ],
+      "unchanged_E1_skipped": [
+        260,
+        258
+      ],
+      "dense_delta_ms": [
+        0.037695662652126316,
+        0.05056508107733748
+      ],
+      "last_ACK_delta_ms": [
+        -16.62874130383039,
+        -0.00940529132377706
+      ],
+      "FIT_LE": 15356,
+      "FIT_LAB": 963,
+      "FIT_M9K": 56,
+      "STA_ns": {
+        "setup": 0.381,
+        "hold": 0.145,
+        "recovery": 1.412,
+        "removal": 0.483
+      },
+      "safety_schedule_preserved": true,
+      "cold906_phase1_VBlank": [
+        8,
+        7
+      ],
+      "new_hardware": false
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",

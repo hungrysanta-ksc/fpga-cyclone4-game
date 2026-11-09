@@ -2,7 +2,7 @@
 
 PR156 병합 `4ee65ac300c3b5eca73848bd0b408c1bc63b6800` 확인 뒤 현재 브랜치는 `codex/nes-bg-deadline-707` / PR157 draft이다. 다음 개발 기준은 MMC690이고 MMC666 대조군은 보존한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 이전 대조군 MMC666은 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
 
-**현재709:** E1 응답에 기존 E0 snapshot/CRC를 공유하는 ARM·RTL을 실제 연결했으나 미채택이다. 선택적 검사 후보는 Flash52B·E0 185/215회(3700/4300B)를 줄이고 두 위상106화면의911/951/952/957·7블록·독립검사/최종ACK를 유지했다. 밀집 평균−0.015179/+0.042966ms·957 ACK+0.021604/−0.009405ms로 동시 개선 실패. A는15330LE/962LAB이나setup−0.269ns,B/C는965/964LAB로FIT실패. 실제 RTL 응답·STOP·ARM23+종료16검사 통과.707D·기존ARM/65816 유지,새실기/ZIP없음. 다음은 새retired를 주지 않는 응답의 검사 횟수·비용부터 계측해 비신뢰 힌트로 불필요한CRC를 건너뛸 예산을 검토하고,86LE/1LAB/0M9K 안의 실제 제어 삭제 구조가 있을 때만 진행한다. 현재후보/seed/지연변형 반복금지. [결과·다음 순서](../../docs/nes-credit709-results.ko.md)
+**현재710:** 새 credit가 없는 E1 응답을 비신뢰 retired 힌트로 생략하고, 실제 상태 공개는 전체 CRC/counter/identity 검사 뒤로 옮겼다. 검사260/258회·E0 219/180회 감소,Flash48B 감소(정상212936/장시간212892),ARM40+종료16검사·실제RTL 두속도×두위상/중간reset8조건 통과. snapshot reset 제어 삭제 후보는15356LE/963LAB/56M9K,setup/hold/recovery/removal +0.381/+0.145/+1.412/+0.483ns로전체FIT/STA통과지만기준보다34LE/1LAB증가. 두위상밀집평균 +0.037696/+0.050565ms,마지막ACK −16.628741/−0.009405ms로동시개선실패;위상1큰ACK이득은cold906의1VBlank단축이며밀집개선아님.911/951/952/957·7블록·STOP/독립검사/최종ACK유지. **707D·기존ARM/65816유지**,새실기/ZIP없음. E1 미세변형은보류하고마지막패킷수락→선행DMA/VBlank의실제임계이동예산부터확정한다. [결과·후속순서](../../docs/nes-credit710-results.ko.md)
 
 
 ## 현재 작업
