@@ -72,6 +72,7 @@ def analyze(a):
                 protected=protected,simultaneous_gate=protected and r['dense_mean_ms']<base['dense_mean_ms'] and r['last_ACK']<base['last_ACK'],
                 same_packets_pixels=True,original_905_950_exact=True,queue_credits=4,bulk_slots=2,pins=r['pins'],
                 new_ARM=False,new_ROM_service=False,new_FPGA=False)
+            runs[tag]['credit_scope']='Receiver admission is bounded to4heads/2bulk; offers are precomputed. Delayed admission does not rerun ARM credit queries or charge a fresh SPI transaction after credit returns. This is an optimistic availability bound, not a legal full bus schedule.'
             runs[tag]['after_first_interval_mean_ms']=sum(metrics[str(g)]['interval_ms'] for g in range(952,958))/6
             runs[tag]['after_first_interval_VBlank']=[metrics[str(g)]['interval_VBlank'] for g in range(952,958)]
             if tag=='control':assert r['last_ACK']==base['last_ACK'] and abs(r['dense_mean_ms']-base['dense_mean_ms'])<1e-10
@@ -108,7 +109,7 @@ def analyze(a):
                 first_admit_before_source_begin_ms=ms(max(0,marks['source_begin']-admission[ix[0]])),
                 prepared_earlier_count=sum(x>0 for x in prep),max_measured_preparation_advance_ms=max(prep,default=0),
                 source_supply=rom,SEAL_measured_ready=rows[-1]['prepared'],SEAL_offer=offers[ix[-1]]['offer'],
-                unmodeled='ARM instruction execution, D1/D2/E0/E9/EA/IRQ and ROM retiming; E1 durations alone are preserved.')
+                unmodeled='ARM instruction execution, D1/D2/E0/E9/EA/IRQ, credit-stalled SPI rescheduling and ROM retiming; original E1 durations are retained in offer times only.')
         phases[phase]=dict(baseline=baseline,runs=runs,all15750_unpaid_producer_cost=debt,
             baseline_pins=base['pins'],actual_full_path_baseline_only=True)
     both={tag:all(p['runs'][tag]['simultaneous_gate'] and p['runs'][tag]['all_951_957_one_VBlank_earlier'] for p in phases.values()) for tag in tags}
