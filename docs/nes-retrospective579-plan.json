@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
-    "next": "707D·기존ARM/65816 유지.711 수신마감 시험에서SEAL/후반단독은무효,전체15.75ms선행은조건부이나생산/ROM7–15ms미지급·951뒤간격3회. 다음은실제map최종쓰기/주소CHR확정과BG/OBJ공급을묶어생산→발행소유권대체예산부터확인.기존선행수신/발행기능중복계산금지.정상Flash+8B/장시간+52B,보드/CPU우선변경0,순삭제입증0.951–955평균과957ACK외952–957합계18VBlank도감소해야지속개선채택.필수검사/STOP/최종ACK유지;실제ARM/SPI/IRQ/ROM재생없이제품화금지.",
+    "next": "707D·기존ARM/65816 유지.712 실제 행 완료·두 위상106화면은 원본과 동일. 현재 emit/flush ROM대기 SPI유휴0.04–0.17ms는192B map0.693ms보다작아 대기삽입단독보류. 두페이지cursor+행완료frontier와기존map/plan공동발행1108B교체,최대1116B·RAM+4B·RTL/65816변경0.957 최소3개192B거래를앞당기는실제ARM블로킹/SPI/credit/tile비용을먼저지급;954/955는BG생산1.624/0.347ms+E8/E9/decode/ROM허가선행이필요.순삭제입증0/후보미선택.두위상951–955평균·957ACK와952–957합계18VBlank동시감소,기존911/951/952/957·7블록·STOP·독립검사·cold·메뉴보호를채택조건으로한다.시간예산미충족이면입력복원/BG생산경계재설계;고정위상/단독flush반복금지.",
     "document": "docs/nes-bg707-results.ko.md",
     "evidence": "analysis/bg707-verification.json",
     "timing_reference": "analysis/bg707-verification.json",
@@ -1178,7 +1178,7 @@
       "schedule": "cycle identical to703B in both starts; separate actualCPU/PSRAM boundary and linkedARM/65816 replay",
       "physical_verified": false
     },
-    "stage": 711,
+    "stage": 712,
     "708_result": {
       "proof": "analysis/tail708-verification.json",
       "report": "docs/nes-tail708-results.ko.md",
@@ -1272,6 +1272,79 @@
         3
       ],
       "new_ARM_or_ROM_schedule": false,
+      "whole_FIT_STA": "707D unchanged inherited",
+      "new_hardware": false
+    },
+    "712_result": {
+      "proof": "analysis/ready712-budget.json",
+      "report": "docs/nes-ready712-results.ko.md",
+      "archive": "analysis/ready712-archive.json",
+      "selected": false,
+      "unchanged_target": true,
+      "final_CPU_frames": 106,
+      "preliminary_CPU_frames": 106,
+      "all_clocks_pixels_work_identical": true,
+      "dense_delta_ms": [
+        0,
+        0
+      ],
+      "last_ACK_delta_ms": [
+        0,
+        0
+      ],
+      "after951_VBlank": [
+        18,
+        18
+      ],
+      "replacement_budget": {
+        "functions_B": {
+          "map527": 364,
+          "nes_sink527_early": 104,
+          "nes_plan527_map_credit": 70,
+          "offer527": 16,
+          "quiet528": 56,
+          "drive554": 236,
+          "nes_plan200_progress": 262
+        },
+        "gross_boundary_B": 1108,
+        "proven_net_deletion_B": 0,
+        "normal_growth_limit_B": 8,
+        "long_growth_limit_B": 52,
+        "normal_replacement_ceiling_B": 1116,
+        "preferred_replacement_ceiling_B": 1108,
+        "RAM_growth_ceiling_B": 4,
+        "new_packet_buffer_B": 0,
+        "new_RTL_LE": 0,
+        "new_SNES_ROM_B": 0,
+        "new_SPI_transactions_preferred": 0,
+        "retained": "poll/CRC/counter/descriptor identity, complete485 actual bulk receipt, wire packet validation, final SEAL coverage and display ACK/EA; no deletion credit for these functions"
+      },
+      "decision": {
+        "selected_implementation": false,
+        "confirmed_replacement_boundary": true,
+        "existing_wait_insertion_funded": false,
+        "reason": "Existing emit/flush ROM-wait SPI holes cannot fund one unchanged 192B map packet. A new row order must pay blocking SPI and preserve tile production/ROM deadlines; no net timing win is yet established.",
+        "pre_supply957_minimum": {
+          "method": "Move unchanged 192B map E1 service only; excludes preparation, other SPI/IRQ and remaining DMA",
+          "packet_SPI_ms": 0.6928304840807142,
+          "necessary_packet_count": 3,
+          "required_shift_ms": [
+            1.8852697600535602,
+            1.922006269235792
+          ]
+        },
+        "earlier_BG_production_ms": {
+          "954": [
+            1.6233145517889067,
+            1.5490403001440693
+          ],
+          "955": [
+            0.3469085610472724,
+            0.2708009760725856
+          ]
+        },
+        "runtime_pump_savings_not_equal_ROM_wait": true
+      },
       "whole_FIT_STA": "707D unchanged inherited",
       "new_hardware": false
     }
