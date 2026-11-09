@@ -1,6 +1,6 @@
 # 프로젝트 현황
 
-목표는 sd2snes Cyclone IV 멀티 코어 확장이다. NES 실기 측정 기준은 MMC662다. [실기 결과](nes-hardware663-results.ko.md) · [설치 안내](nes-mmc662-trial.ko.md) · [NES 인계](../cores/nes/HANDOFF.ko.md)
+목표는 sd2snes Cyclone IV 멀티 코어 확장이다. NES 개발·실기 기준은 MMC666이다. [실기 결과](nes-hardware667-results.ko.md) · [설치 안내](nes-mmc666-trial.ko.md) · [NES 인계](../cores/nes/HANDOFF.ko.md)
 
 시작 실패는 성능 집계에서 제외하고 자연 재발 시 두 실행의 로그 서명을 비교한다.
 
@@ -9,30 +9,31 @@
 | 코어 | 판정 | 근거·한계 |
 |---|---|---|
 | GB/GBC | 추가 성공·제품 공개 | G13C44/sd2snesHST0.9.0,[기준선](../cores/gbc/README.md)·[호환성](COMPATIBILITY.ko.md) |
-| NES | 개발 중·제품 미포함 | MMC662 SMB3 20.29fps, 5–55초 19.96fps · 실행·메뉴 복귀 성공 |
+| NES | 개발 중·제품 미포함 | MMC666 SMB3 20.24fps, 5–55초 19.54fps · 실행·메뉴 복귀 성공 |
 | PC Engine | 조사 대기 | 구현·실기 성공 없음 |
 
 대상은FXPAK Pro/Mk.III,EP4CE15F17C8,STM32F401RCT6,PSRAM IS66WVE4M16EBLL-70BLI 두개다. 다른보드/전체IO승인을뜻하지않는다.
 
 ## 최신 게임 실기
 
-MMC666도 실행·STOP·메뉴 복귀 성공. 5–40초 19.63fps·40–55초 19.33fps·5–55초 19.54fps다. MMC662보다 초반 +0.73%, 후반 −8.23%이며 후반 map·OBJ 작업량이 크게 증가해 구현의 개선·회귀를 단정하지 않는다. [667 분석](nes-hardware667-results.ko.md). 아래 MMC662는 비교 기준으로 유지한다.
+MMC690 두 실기 중1차는 첫 표시 전5초 준비 timeout,2차는1250/60.35초(20.71fps) 실행·메뉴 복귀 성공이다. 5–40초19.97fps(+1.75%),40–55초19.40fps(+0.34%),5–55초19.80fps(+1.33%)다. 출력·최종ACK25.56ms,후반은사실상동일하며map/OBJ작업량차이로구현만의가속은미확정이다. [두 실행 분석](nes-hardware691-results.ko.md)
 
-MMC662 실기에서 60.32초에 1,224화면을 표시하고 메뉴로 복귀했다. MMC643 대비 5–40초는 18.17→19.49fps, 40–55초는 18.67→21.07fps였다. 플레이 작업량 차이가 있어 구현만의 개선율과는 구분한다. [실기 비교](nes-hardware663-results.ko.md)
+
+현재 개발 기준은 MMC666이다. 실기에서 60.32초에 1,221화면(20.24fps)을 표시하고 메뉴로 복귀했다. 5–40초 19.63fps, 40–55초 19.33fps, 5–55초 19.54fps다. MMC662보다 초반은 소폭 상승하고 후반은 하락했으나 map·OBJ 작업량이 크게 달라 구현만의 개선·회귀를 확정하지 않는다. [분석](nes-hardware667-results.ko.md)
 
 ## 현재 비용과 다음 목표
 
 | 항목 | 값과 판정 |
 |---|---|
-| MMC662 / 661 전체 보드 | 15,324 LE, 조합 논리 14,418, FF 8,386, M9K 56/56. 여유 84 LE·1 LAB |
+| MMC666 / 665 전체 보드 | 15,324 LE, 조합 논리 14,418, FF 8,386, M9K 56/56. 여유 84 LE·1 LAB |
 | 전체 STA 최소 slack | setup +0.511 / hold +0.149 / recovery +1.828 / removal +0.393 ns. 외부 IO 검증 진행 중 |
-| ARM662 전달본 | Flash 212,508 B, 여유 484 B. [검증](../analysis/trial662-package.json) |
-| 60Hz 평균 격차 | 전체 실행 평균 49.28 − 16.67 ≈ 32.61 ms/표시 |
-| MMC662 단계 평균 | 수신 10.66 / 계획·공급 11.32 / 출력·최종 ACK 26.51 ms/표시 |
-| 다음 작업 | 같은 작업량에서 출력 발행·DMA·최종 VBlank 대기 분리 |
+| ARM666 전달본 | Flash 212,496 B, 여유 496 B. [검증](../analysis/trial666-package.json) |
+| 60Hz 평균 격차 | 전체 실행 평균 49.40 − 16.67 ≈ 32.73 ms/표시 |
+| MMC666 단계 평균 | 수신 10.44 / 계획·공급 11.34 / 출력·최종 ACK 26.84 ms/표시 |
+| 다음 작업 | [691 실기 분석](nes-hardware691-results.ko.md): MMC690 출력25.56ms·후반 병목과stage0 부팅 실패를 분리 |
 | 미완료 | 지속60fps·장면별/p95·NES 실시간 속도·capture 무손실·MMC4/5·제품 공개 |
 
-[509 전달본](../analysis/service509-package.json)은 ROM/save/RESTORE 없이 제작한 불변 스냅샷이다. 이번 수신 분석에서 새 firmware·ZIP·합성은 만들지 않았다. [MMC502 실기10.59fps](nes-hardware503-results.ko.md)는 복구·비교 기준으로 보존한다.
+[509 전달본](../analysis/service509-package.json)은 ROM/save/RESTORE 없이 제작한 불변 스냅샷이다. 668 ARM 후보는 검증 뒤 기각했고 새 ZIP·합성은 만들지 않았다. [MMC502 실기10.59fps](nes-hardware503-results.ko.md)는 복구·비교 기준으로 보존한다.
 
 ## 이전493·489
 

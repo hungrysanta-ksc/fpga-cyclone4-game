@@ -25,9 +25,9 @@
     {
       "id": "nes",
       "status": "in_development",
-      "candidate": "MMC662",
+      "candidate": "MMC666",
       "released": false,
-      "implementation_commit": "ba2a00256ce5d25173053d940460b15b9c603ac6",
+      "implementation_commit": "0a32c704d4be6785a7a5a2203167cb9ad252e0ed",
       "source_paths": [
         "src/nes",
         "tests/nes-functional",
@@ -36,18 +36,18 @@
       ],
       "document": "cores/nes/README.md",
       "handoff": "cores/nes/HANDOFF.ko.md",
-      "verification": "analysis/hardware663-mmc662.json",
-      "development_evidence": "analysis/hardware667-mmc666.json",
+      "verification": "analysis/hardware691-mmc690.json",
+      "development_evidence": "analysis/hardware691-mmc690.json",
       "plan": "docs/nes-retrospective579-plan.json",
       "reproduction_document": "cores/nes/REPRODUCING.ko.md",
-      "hardware_candidate": "MMC662",
-      "paired_candidate": "661 mux FPGA / MMC662 ARM (654 combined functions) / 637 client",
+      "hardware_candidate": "MMC690",
+      "paired_candidate": "665 FPGA/65816 / MMC666 ARM (664 all functions)",
       "status_document": "docs/PROJECT-STATUS.ko.md",
-      "progress": "docs/progress/pr-154.md",
-      "work_state": "trial666_hardware_feedback_analyzed_workload_differs",
+      "progress": "docs/progress/pr-155.md",
+      "work_state": "hardware691_two_runs_analyzed_small_gain_startup_timeout_unresolved",
       "historical_registry": "docs/progress/archive/2026-10-29/core-registry.json",
-      "development_candidate": "MMC666: 665 board/65816 + relabeled 664-all ARM; physical start/STOP/menu passed. Trimmed 19.54fps vs MMC662 19.96fps with substantially more map/OBJ work; no matched-work speed conclusion.",
-      "development_package": "analysis/trial666-package.json",
+      "development_candidate": "MMC690 두 실기 중1차는 첫 표시 전5초 준비 timeout,2차는1250/60.35초(20.71fps) 실행·메뉴 복귀 성공이다. 5–40초19.97fps(+1.75%),40–55초19.40fps(+0.34%),5–55초19.80fps(+1.33%)다. 출력·최종ACK25.56ms,후반은사실상동일하며map/OBJ작업량차이로구현만의가속은미확정이다.",
+      "development_package": "analysis/trial690-package.json",
       "regression_baseline": {
         "candidate": "NROM476",
         "verification": "analysis/receive477-hardware.json",
@@ -55,8 +55,8 @@
         "fps": 23.838854669552187,
         "same_scene_as_MMC482": false
       },
-      "development_implementation_commit": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
-      "hardware_package": "analysis/trial662-package.json",
+      "development_implementation_commit": "0a32c704d4be6785a7a5a2203167cb9ad252e0ed",
+      "hardware_package": "analysis/trial690-package.json",
       "previous_game_baseline": {
         "candidate": "MMC482",
         "verification": "analysis/mmc483-hardware482.json",
@@ -64,7 +64,7 @@
         "fps": 14.602064602064601,
         "same_scene_and_input_as485": false
       },
-      "performance_selection": "MMC662: 1224/60.32s; 5-40s 682/35, 40-55s 316/15; trimmed 19.96fps. +8.95% observational vs MMC643; workloads differ.",
+      "performance_selection": "Latest measured MMC690 successful run20.71fps/trimmed19.80fps; first of two launches timed out before any frame, both menus restored. MMC666 remains matched-work comparison control; no causal acceleration or startup failure rate claim.",
       "prior485_baseline": {
         "candidate": "MMC485",
         "verification": "analysis/hardware486-gameplay485.json",
@@ -80,8 +80,8 @@
         "fps": 9.603861517976032,
         "same_scene_and_input_as493": false
       },
-      "development_delivery_verification": "analysis/trial666-package.json",
-      "development_trial_guide": "docs/nes-mmc666-trial.ko.md",
+      "development_delivery_verification": "analysis/trial690-package.json",
+      "development_trial_guide": "docs/nes-mmc690-trial.ko.md",
       "prior493_baseline": {
         "candidate": "MMC493",
         "verification": "analysis/hardware494-mmc493.json",
@@ -122,6 +122,12 @@
         "verification": "analysis/hardware578-mmc577.json",
         "hardware_package": "analysis/trial577-package.json",
         "performance_selection": "MMC577: 838/60.08s; completion windows 482/35s and 211/15s = 13.86fps trimmed. +1.02% observational vs558."
+      },
+      "prior662_baseline": {
+        "candidate": "MMC662",
+        "verification": "analysis/hardware663-mmc662.json",
+        "hardware_package": "analysis/trial662-package.json",
+        "performance_selection": "MMC662: 1224/60.32s; 5-40s 682/35, 40-55s 316/15; trimmed 19.96fps. +8.95% observational vs MMC643; workloads differ."
       }
     },
     {

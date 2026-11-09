@@ -5,10 +5,10 @@
 ## 1. 상태를 읽는다
 
 1. [루트 README](../../README.md) → [프로젝트 현황](../PROJECT-STATUS.ko.md).
-2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → 현재 브랜치/PR은 인계 문서를 따른다. MMC662 실기 기준은 [PR153](../progress/pr-153.md)이다. 회고 기준은 [PR150](../progress/pr-150.md).
+2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → 현재 브랜치/PR은 인계 문서를 따른다. MMC666 개발 기준은 [PR154](../progress/pr-154.md)이다. 회고 기준은 [PR150](../progress/pr-150.md).
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
-GB/GBC는 추가·공개 완료, NES는 MMC662 실기20.29fps/5–55초19.96fps다. 실행·메뉴 복귀 정상이며 전체60Hz·capture무손실·외부IO sign-off는 미완료다. [663 실기 기록](../nes-hardware663-results.ko.md)
+GB/GBC는 추가·공개 완료, NES는 MMC666 실기20.24fps/5–55초19.54fps다. 실행·메뉴 복귀 정상이며 전체60Hz·capture무손실·외부IO sign-off는 미완료다. [667 실기 기록](../nes-hardware667-results.ko.md)
 
 ## 2. Git 기준을 확인한다
 
@@ -19,7 +19,7 @@ git branch --show-current
 git log -5 --oneline
 ```
 
-현재 브랜치는 `codex/nes-output-budget-664`다. [665 VBlank 진입·선택 후보](../nes-entry665-results.ko.md), [664 출력 비용](../nes-output664-results.ko.md)과 현재 인계의 다음 작업을 먼저 확인한다. 아래 PR150–152 설명은 이전 작업 기록이다.
+현재 브랜치는 `codex/nes-output-budget-668` / PR155다. [689 결과](../nes-status689-results.ko.md)를 먼저 읽는다. 689D는 688의 ARM·685의 65816 바이너리를 그대로 유지하면서 6 LAB 부족을 해소했다. 전체 Quartus Lite FIT는 15295 LE·963/963 LAB·56/56 M9K로 통과했고, 기존 제약의 최악 setup/hold/recovery/removal은 +0.104/+0.137/+1.460/+0.488ns다. 같은 두 위상106화면 재생은 688과 클록 단위로 일치했다. MMC690 전달본 준비와 패키지 검증이 끝났으며 [설치 안내](../nes-mmc690-trial.ko.md)·[패키지](../../analysis/trial690-package.json)를 따른다. [691 실기 분석](../nes-hardware691-results.ko.md)을 확인한다. MMC690 두 실기 중1차는 첫 표시 전5초 준비 timeout,2차는1250/60.35초(20.71fps) 실행·메뉴 복귀 성공이다. 5–40초19.97fps(+1.75%),40–55초19.40fps(+0.34%),5–55초19.80fps(+1.33%)다. 출력·최종ACK25.56ms,후반은사실상동일하며map/OBJ작업량차이로구현만의가속은미확정이다. MMC690의 출력·최종 ACK25.56ms를 같은 map·OBJ 작업량의 ARM발행·65816수락·DMA·마지막VBlank로 나누고 두 위상의 밀집 간격·마지막ACK를 함께 줄일 경계를 정한다. MMC666 대조군·독립 검사·STOP·캡처 회복·메뉴 복귀·951공개선·952표시3회·957최종대기0회를 유지한다. 551/639/690의 stage0 부팅 실패는 별도 안정성 항목으로 첫fetch·WRAM복원·준비공개 경계를 확인하며, 원인이나 재현 없이 재시도/대기/STA조건을 바꾸지 않는다. 자연 재발 로그를 보존한다. RESTORE는 제외하며 기존 백업/ROM/save는 보존한다.
 
 PR150 병합588fa177ed1a82056a5cc86813506c3f2024cc70 확인 뒤 `codex/nes-whole-budget-580`에서 R1을 마감하고 R2를 진행한다. [598 collector·출력 비용](../nes-boundary598-results.ko.md), [597 결합 예산·핀 전송](../nes-region597-results.ko.md), [596 페이지·회로 예산](../nes-pages596-budget.ko.md), [595 D4 FPGA 결과](../nes-region595-results.ko.md), [594 ARM 결과](../nes-report594-results.ko.md)와 [선택 manifest](../../analysis/whole580-manifest.json)를 읽는다. R1 감사 뒤 R2의 실제 ARM transport 제한 시험·전체 링크 비용을 확인했다. 594 ARM과 연결한 595 FPGA는 같은 경계의 Lite MAP 예산을 넘었다. 선택 산출물과 실측은 MMC577을 유지한다.
 

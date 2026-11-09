@@ -3,10 +3,10 @@
   "review": 579,
   "date": "2026-11-03",
   "canonical": true,
-  "physical_baseline": "MMC662",
+  "physical_baseline": "MMC666",
   "evidence": "analysis/retrospective579.json",
-  "hardware_evidence": "analysis/hardware663-mmc662.json",
-  "package": "analysis/trial662-package.json",
+  "hardware_evidence": "analysis/hardware691-mmc690.json",
+  "package": "analysis/trial666-package.json",
   "review_document": "docs/nes-retrospective579.ko.md",
   "supersedes_execution_order": [
     "docs/nes-audit499-plan.json",
@@ -16,10 +16,10 @@
   "preserve_historical_evidence": true,
   "implementation_started": true,
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
-  "branch": "codex/nes-output-budget-664",
+  "branch": "codex/nes-output-budget-668",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 667,
-  "current_evidence": "analysis/hardware667-mmc666.json",
+  "current_step": 691,
+  "current_evidence": "analysis/hardware691-mmc690.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -39,17 +39,20 @@
     "observed_nonquery_B_per_display": 5963.899761336515,
     "observed_nonquery_wire_ms": 18.175694510739856,
     "LE_free": 84,
-    "Flash_free_B": 484,
+    "Flash_free_B": 496,
     "M9K_free": 0,
     "whole_60Hz_passed": false,
     "full_IO_signoff": false,
     "observed_nonquery_source": "MMC577, retrospective579",
     "current_physical_ms_per_display": {
-      "receive": 10.662471356598195,
-      "plan_supply": 11.321123852318705,
-      "output_final_ack": 26.510250816993462
+      "receive": 10.43636969111969,
+      "plan_supply": 11.344217083967084,
+      "output_final_ack": 26.841249824499823
     },
-    "current_physical_source": "MMC662 / hardware663; older wire fields retain explicit MMC577 provenance."
+    "current_physical_source": "MMC666 / hardware667; older wire fields retain explicit MMC577 provenance.",
+    "LAB_free": 1,
+    "physical_SNES_ROM_free_B": 11,
+    "budget_review": "680:fullARM212828/free164;body5948/free36,packedROM5120/free16,coldpoll+22.496619ms. WholeMAP+35comb/+3FF/0RAM,notFIT84LE/1LAB proof. No newFIT/STA because both-start timegate fails."
   },
   "stages": [
     {
@@ -89,10 +92,10 @@
     },
     {
       "id": "R2",
-      "status": "trial639_delivered_60Hz_open",
+      "status": "progress680_actual_event_and_neighbor_map_joint_timing_rejected",
       "582_result": "Three reference alternatives, no product selection. C dense mean wire11.807/11.829ms, serial IO16.454/16.485ms using503 driver averages and optimistic E0 batching;954 IO20.813/20.643ms. Base integrity/producer history/RAM ports/net Flash/LE remain unproven.",
       "basis": "581: initialized input map1914 canonical ->2571.88 recordB; output map96.8% equal bytes but0 whole equal packets. Reuse+ideal repack dense4118.8/4122B exceeds provisional3937.5B before new protocol/polls/gaps.",
-      "next_single_gate": "MMC639 실기에서 5–40초·40–55초와 메뉴 복귀를 MMC613과 비교한다.",
+      "next_single_gate": "KeepMMC666 and freeze680 actual E0 event/fixed-neighbor map as evidence,not product. Budget956remaining512B+blocked tile and957remaining384B map against actual next E1/credit/ROM and finalVBlank; preserve MMC666 phase1 956640B+tile16B baseline. Explain useful producer-work relocation and net code/control deletion before another implementation. Do not repeat emptyD0/fixed delays/phase or chunk-size sweeps/longer scans. Both-start911/951/952/957 and dense+lastACK must pass before one wholeLiteFIT/STA. No observation-only delivery.",
       "R3_selected": false,
       "objective": "Select a throughput-feasible structural candidate before implementation",
       "compare": [
@@ -317,23 +320,27 @@
         "analysis/trial613-package.json",
         "analysis/trial613-archive.json"
       ],
-      "616_result": "Paired 53-frame runs, identical map and tile work. 1152B grant with beam sample <=252, 952 display 5->4 VBlank, 951-955 23->22, last ACK -33.608/-33.499ms; 957 final waits 0. No new physical FPS or board fit."
+      "616_result": "Paired 53-frame runs, identical map and tile work. 1152B grant with beam sample <=252, 952 display 5->4 VBlank, 951-955 23->22, last ACK -33.608/-33.499ms; 957 final waits 0. No new physical FPS or board fit.",
+      "status_before669": "trial639_delivered_60Hz_open",
+      "672_result": "106 actual ARM/65816 captures and directed STOP/cold/coverage/beam guards pass; dense mean+0.022200/+0.036262ms, lastACK+0.004563/-0.045630ms. Preserve MMC666."
     },
     {
       "id": "R3",
-      "status": "bounded_candidate638_validated_trial639_60Hz_open",
-      "objective": "Implement exactly one chosen replacement against frozen577",
+      "status": "progress680_actual_event_and_neighbor_map_joint_timing_rejected",
+      "objective": "Implement one budget-qualified replacement against selected MMC666; frozen577 remains historical evidence",
       "gate": [
         "Same workload and two start phases plus representative-scene steady interval distribution",
         "Cold/reuse/missing/duplicate/corruption/STOP/partial transfer/finalACK/VBlank/menu protection",
         "Actual ARM and65816; quantify modeled ROM/CPI components",
         "One whole Lite FIT/STA for justified RTL changes; same RTL reuses prior build"
       ],
-      "stop_rule": "After two unsuccessful variants of one hypothesis, freeze pending new evidence"
+      "stop_rule": "After two unsuccessful variants of one hypothesis, freeze pending new evidence",
+      "status_before669": "bounded_candidate638_validated_trial639_60Hz_open",
+      "next_single_gate": "KeepMMC666 and freeze680 actual E0 event/fixed-neighbor map as evidence,not product. Budget956remaining512B+blocked tile and957remaining384B map against actual next E1/credit/ROM and finalVBlank; preserve MMC666 phase1 956640B+tile16B baseline. Explain useful producer-work relocation and net code/control deletion before another implementation. Do not repeat emptyD0/fixed delays/phase or chunk-size sweeps/longer scans. Both-start911/951/952/957 and dense+lastACK must pass before one wholeLiteFIT/STA. No observation-only delivery."
     },
     {
       "id": "R4",
-      "status": "awaiting_user_MMC639_logs",
+      "status": "MMC666_feedback_complete_no_new_delivery",
       "objective": "Deliver only meaningful candidates and measure hardware",
       "gate": [
         "Unique filenames, no RESTORE/ROM/save",
@@ -342,7 +349,10 @@
         "Show game advancement/capture/input latency separately from finalACK FPS"
       ],
       "sustained60_gate": "Representative dense scenes sustain new-generation display cadence and bounded latency with capture health; no duplicated-frame or partial-model FPS claim",
-      "evidence": "analysis/hardware614-mmc613.json"
+      "evidence": "analysis/hardware667-mmc666.json",
+      "previous_evidence": "analysis/hardware614-mmc613.json",
+      "status_before669": "awaiting_user_MMC639_logs",
+      "next_single_gate": "669 S5 only after both-phase timing, safety and whole resource gates"
     }
   ],
   "separate_workstreams": {
@@ -356,25 +366,627 @@
     "Epoch serialization without new failure",
     "Existing firstBG/chunk features redescribed as new",
     "Repeated full-byte map recheck compression",
-    "Unchanged384KiB/fullboot/wholeFIT repeats"
+    "Unchanged384KiB/fullboot/wholeFIT repeats",
+    "671 SNES software map conversion/CRC LUT candidate: measured target-cost rejection; no isolated loop/CRC/FIT retry without a different independently checked boundary"
   ],
   "decision_cadence": "Every completed stage updates this plan status, selected evidence, budget and next single gate; README only meaningful product/evidence changes",
   "MMC4_MMC5_implementation": false,
   "clean_clone_rebuild_complete": false,
   "new_installer_required_now": false,
   "retrospective_PR": 150,
-  "PR": 154,
+  "PR": 155,
   "bounded_prototype_started": true,
-  "candidate_manifest": "analysis/trial639-package.json",
+  "candidate_manifest": "analysis/trial690-package.json",
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "MMC666 hardware start/STOP/menu passed; mixed FPS with different workloads",
-    "next": "Match dense map/OBJ workload before attributing output delay changes; preserve both-phase 952 3-VBlank, 957 zero final wait, independent checks, capture recovery and STOP/final ACK/menu. No new implementation in hardware667.",
-    "evidence": "analysis/hardware667-mmc666.json",
-    "hardware_baseline": "MMC662",
+    "candidate": "MMC690 두 실기 중1차는 첫 표시 전5초 준비 timeout,2차는1250/60.35초(20.71fps) 실행·메뉴 복귀 성공이다. 5–40초19.97fps(+1.75%),40–55초19.40fps(+0.34%),5–55초19.80fps(+1.33%)다. 출력·최종ACK25.56ms,후반은사실상동일하며map/OBJ작업량차이로구현만의가속은미확정이다.",
+    "next": "MMC690의 출력·최종 ACK25.56ms를 같은 map·OBJ 작업량의 ARM발행·65816수락·DMA·마지막VBlank로 나누고 두 위상의 밀집 간격·마지막ACK를 함께 줄일 경계를 정한다. MMC666 대조군·독립 검사·STOP·캡처 회복·메뉴 복귀·951공개선·952표시3회·957최종대기0회를 유지한다. 551/639/690의 stage0 부팅 실패는 별도 안정성 항목으로 첫fetch·WRAM복원·준비공개 경계를 확인하며, 원인이나 재현 없이 재시도/대기/STA조건을 바꾸지 않는다. 자연 재발 로그를 보존한다.",
+    "document": "docs/nes-hardware691-results.ko.md",
+    "evidence": "analysis/hardware691-mmc690.json",
+    "timing_reference": "analysis/output668-verification.json",
+    "hardware_baseline": "MMC666",
+    "steps": [
+      {
+        "id": "S1",
+        "status": "complete_reference106_and_wire_ledger",
+        "deliverable": "Same-work cold905/906,911 and951-957 baseline/A/B byte and non-overlapping whole-time ledger; producer and representation per payload; no free conversion or direct-copy assumption."
+      },
+      {
+        "id": "S2",
+        "status": "boundary_and_deletion_ledger_complete_target_cost_gate_open",
+        "deliverable": "Exact old code/RTL deletion, net Flash/LE/LAB/M9K/WRAM/stack, existing4KiB bulk+1KiB queue ownership/ports/CDC; retain independent expected and separate storage credit from final displayACK."
+      },
+      {
+        "id": "S2a",
+        "status": "complete_rejected_actual_target_kernel_cost",
+        "deliverable": "Actual full-linked ARM producer,50965816 commands and45ownership-model rejections. SNES source42.58ms and954/955 row88.99/85.17ms exceed savings3.21/3.24ms. Resource-only ARM212748B/free244. No whole-path integration/RTL/FIT."
+      },
+      {
+        "id": "S3",
+        "status": "672_larger_extent_implemented_functional_pass_timing_rejected",
+        "deliverable": "954 phase2 early map384->1344B; dense mean worsens both starts. Next bound joint tile/ordinary/SEAL readiness, not grant-size microtuning."
+      },
+      {
+        "id": "S3a",
+        "status": "673_budget_complete_no_candidate_selected",
+        "deliverable": "Independent readiness/assembly/credit/ROM/cache split;957 ready BG is batched7.41ms,954 last BG caller2.38-2.64ms past prior ROM close. Next bounded early BG and immutable ordinary joint schedule."
+      },
+      {
+        "id": "S3b",
+        "status": "674_pair_implemented_rejected_timing",
+        "deliverable": "Warm BG pair via real E8/E9;106 same-work frames. Ready grant waits zero tile,954 plan calls stall; preserveMMC666. First-zero+BG grant ownership next."
+      },
+      {
+        "id": "S3c",
+        "status": "675_initial_grant_implemented_functional_pass_timing_rejected",
+        "deliverable": "TileACK about10ms earlier but map-tail40 waits now fire;tail0.094->6.561ms,earlymap1536->192/768B. Fix ownership/event boundary,not pair-size sweep."
+      },
+      {
+        "id": "S3d",
+        "status": "676_input_and_final_bank_grant_rejected_timing",
+        "deliverable": "40 fixed waits replaced by one real D0/D1/CRC/restore/D2/D0 input poll; final13-record writable bank retained with held tile. END5.939/6.153->1.142ms;tail6.561->0.716ms,but0DMA during callback and192B map-ahead.9524/4VB; keepMMC666."
+      },
+      {
+        "id": "S3e",
+        "status": "677_recovers952_but_not_both_last_ACK",
+        "deliverable": "Reserve-only leaves0 earlymap/4VB. Checked bulk completion then warm map-run priority recovers1536/1152B and3/3VB; dense improves44.5/53.9us but lastACK+483.95/-176.09us. KeepMMC666."
+      },
+      {
+        "id": "S3f",
+        "status": "678_credit_bug_fixed_and957_map_recovered_but_both_ACK_gate_failed",
+        "deliverable": "Empty D0 no longer spends geometry credit;911 returns7beforeoldACK. END/FLUSH handoff exercised,957map512->1664B phase1.956earlymap128B persists;lastACK+10.43/-182.70us.KeepMMC666."
+      },
+      {
+        "id": "S3g",
+        "status": "679_boundary_budget_complete_no_new_target_implementation",
+        "deliverable": "956fill1.460/1.475ms;13/7eligible64B guards all have queued follower. Reject priority-bypassing fill and unbounded fence. Specify E0 bit3 nonblocking actual map-DMA event, existing identity/snapshot, hard84LE/1LAB/ARM192B/body192B caps. Samebody pack11->207B spare,boot verification open."
+      },
+      {
+        "id": "S3h",
+        "status": "680_actual_feedback_and_empty_queue_DMA_connected_but_both_last_ACK_failed",
+        "deliverable": "680에서 실제ARM·FPGA·65816 E0진행비트를 연결하고 고정 인접map 선택을 검증했다. 956선행map128→512B와911마감·9523회·957최종대기0회·큰묶음을 두위상에서 유지했다. 밀집평균−0.046784/−0.054662ms지만 마지막ACK+0.010430/−0.213062ms라 동시개선 실패,MMC666유지. ARM212828B/free164,body5948B/packedROMfree16,staticRAM추가0. 전체보드MAP+35comb/+3FF/0RAM이나 실제84LE·1LAB 배치예산은 미확정이며 시간탈락으로FIT/STA·ZIP없다."
+      },
+      {
+        "id": "S3i",
+        "status": "681_four_candidates_independent_pass_whole_timing_rejected",
+        "deliverable": "681은 네 후보·424화면을 비교했다. 최종 map 우선 결합은952 표시3회·957 최종대기0회·큰묶음·보호조건을 유지하지만, 밀집 평균−0.004619/−0.036969ms에 비해 마지막ACK+0.062392/+0.083996ms로 동시 개선에 실패했다. MMC666을 유지하며 새FIT/STA·실기ZIP은 없다."
+      },
+      {
+        "id": "S4",
+        "status": "689D_whole_FIT_STA_and_two_start_schedule_passed",
+        "deliverable": "Only a budget-qualified candidate: same-work two starts, independent bytes/guards, whole Lite FIT/STA whenever ROM contents or RTL change."
+      },
+      {
+        "id": "S5",
+        "status": "MMC690_two_hardware_runs_analyzed_small_gain_and_unresolved_boot_timeout",
+        "deliverable": "Unique installer/log names, no RESTORE; physical5-40s/40-55s and stage entry/STOP/menu."
+      },
+      {
+        "id": "S3j",
+        "status": "receive682_input7_recovered_joint_timing_failed_keep_MMC666",
+        "deliverable": "682의 제한 묶음+송신 준비 제거는 두 위상 모두955 ACK 전956 입력7블록 확인(여유0.620/0.516ms), 첫 BG ROM창,952 표시3회·957 최종대기0회·큰묶음·보호조건을 유지했다. 밀집 평균−0.010523/−0.007096ms지만957 마지막ACK+0.115564/−0.120872ms로 동시 개선은 미달해 MMC666을 유지한다."
+      },
+      {
+        "id": "S3k",
+        "status": "pair683_handoff_order_verified_early_DMA_tradeoff_failed_keep_MMC666",
+        "deliverable": "683은 planner에서 선행 발행한192B map의 경계를 최종 출력으로 넘겨, 두 위상 모두956·957의 map1024→map1216→BG48B 순서를 구현했다. 입력7블록·첫BG ROM창·952 표시3회·957 최종대기0회·보호조건은 유지했다. 그러나 밀집 평균은MMC666 대비−0.011845/−0.036634ms,957 마지막ACK는+0.485257/−0.009405ms로 동시 개선에 실패했다. 실기 선택본은MMC666이다."
+      },
+      {
+        "id": "S3l",
+        "status": "bg684_preOBJ_map_verified_phase1_ACK224_clocks_late_keep_MMC666",
+        "deliverable": "684는 BG 완료 직후 OBJ 계산 전에 확정 map192B를 발행해683의 연속 순서를 유지했다. 두 위상 모두956의384B와957의1152B 선행 DMA를 회복하고7블록·첫BG ROM창·952 표시3회·957 최종대기0회·보호조건을 유지했다. MMC666 대비 밀집 평균은−0.007412/−0.035144ms,957 마지막ACK는+0.010430/−0.213994ms다. 위상1의224클록 지연 때문에 동시 개선은 미달이며 실기는MMC666을 유지한다."
+      },
+      {
+        "id": "S3m",
+        "status": "complete685_time_improved_input7_phase2_82us_late_keep_MMC666",
+        "deliverable": "685는 수락된 map1536B를 VBlank 잔여 시간 안에서 한 번에 끝내957의 마지막384B를 선행 DMA했다. SEAL 뒤 중복 E0도 줄여 두 위상 모두 밀집 평균−0.038571/−0.049764ms,957 마지막ACK−0.183357/−0.396326ms로 MMC666보다 빨라졌다. 952 표시3회·957 최종대기0회와 보호조건은 유지했지만 위상2의7번째 입력 검사 완료가955 ACK보다0.081864ms 늦어 전체 채택은 보류한다. 실기 기준은MMC666이다."
+      },
+      {
+        "id": "S3n",
+        "status": "seal686_input7_recovered_phase1_dense_regression_keep_MMC666",
+        "deliverable": "686은 SEAL 성공 뒤 첫 E0 전에 입력을 시작하도록 소유권을 옮겨 진입 대기를154.389→4.810µs로 줄였다. 두 위상 모두7블록 마감을+1.305946/+0.171500ms로 회복하고957 마지막384B 선행·952 표시3회·957 최종대기0회·보호조건을 유지했다. MMC666 대비 마지막ACK는−0.188944/−0.385896ms지만 밀집 평균은+0.062596/−0.047082ms여서 동시 개선은 미달이다. 위상1의955 마지막map이253선에수락돼1152B 선행 DMA를 놓쳤으므로 MMC666을 유지한다."
+      },
+      {
+        "id": "S3o",
+        "status": "pair687_DMA_and_timing_gain_publication951_guard_failed_keep_MMC666",
+        "deliverable": "687은 인접 map의 조회를 두 패킷 단위로 공유하되 준비된 bulk의 완료 처리를 우선했다. 955 마지막 map 검사 완료를 위상1/2에서 593.930/1043.522µs 앞당겨 두 위상 모두 1152B 선행 DMA를 회복했다. 7블록 수신·957 마지막384B 선행·952 표시3회·957 최종대기0회를 유지했고, MMC666 대비 밀집 평균은 −0.044959/−0.001378ms, 마지막ACK는 −0.167340/−0.407501ms다. 그러나 위상1의951 공개가247선으로 기존246선 제한을 넘어서 후보 채택은 보류하고 실기 기준MMC666을 유지한다."
+      },
+      {
+        "id": "S3p",
+        "status": "owner688_timing_guards_pass_whole_FIT_6LAB_short_keep_MMC666",
+        "deliverable": "688에서 실제 E8 빈 응답의 조회 허가와 receipt-only 완료를 구분해 951 공개를 위상1 247→236선, 위상2 236선으로 회복했다. 955 선행 DMA 1536/1152B와 7블록 수신, 952 표시3회·957 최종대기0회를 유지했다. MMC666 대비 밀집 평균 −0.051906/−0.001248ms, 마지막 ACK −0.188944/−0.385896ms로 두 위상 모두 개선했다. Flash 212984B/free8B·추가 RAM0B다. 다만 680 RTL+685 ROM의 첫 전체 Lite FIT는 969/963 LAB로 6 LAB 부족해 실패했고 STA·새 설치본은 없다. 실기 기준 MMC666을 유지한다."
+      },
+      {
+        "id": "S3q",
+        "status": "status689_schedule_identical_full_FIT_STA_pass_keep_MMC666_until_hardware",
+        "deliverable": "689D는 688의 ARM·685의 65816 바이너리를 그대로 유지하면서 6 LAB 부족을 해소했다. 전체 Quartus Lite FIT는 15295 LE·963/963 LAB·56/56 M9K로 통과했고, 기존 제약의 최악 setup/hold/recovery/removal은 +0.104/+0.137/+1.460/+0.488ns다. 같은 두 위상106화면 재생은 688과 클록 단위로 일치했다. 실기 기준은 MMC666이며 새 설치본·실물 시험은 아직 없다."
+      }
+    ],
+    "protected": [
+      "911 SEAL189/validation214-line margin",
+      "951 reveal<=246",
+      "952 interval<=3 VBlank",
+      "954/955 no selected-baseline VBlank regression",
+      "957 final_wait=0",
+      "both-phase dense mean and957 lastACK improvement",
+      "independent identity/CRC/coverage, STOP, cold/partial recovery, capture recovery, menu"
+    ],
+    "stop_rule": "다음은689D보드와 고정688 ARM·685 CPU를 묶어 고유 설치/로그 이름의 제한 실기 전달본을 준비한다. 새 기능이나 같은 발행/seed 미세 조정은 더하지 않는다. package hash·실제 programmer/loader·STOP/base/menu 경계를 확인하고 MMC666과 같은 첫 레벨 동선에서5–40초·40–55초를 비교한다. RESTORE는 제외한다. 새 실기 결과 전까지 제품·FPS 기준은MMC666을 유지하며, LAB여유0·setup0.104ns·Flash8B와 외부 IO 미완료 범위를 전달 문서에 남긴다.",
     "limited_delivery_gate": true,
     "external_IO_signoff": false,
-    "new_hardware_test": true
-  }
+    "new_hardware_test": false,
+    "new_simulation": "689: 106 linked frames cycle-identical688; actual serial equivalence at two phases/two SPI rates;256 loader opcodes,34 accepted/66 rejected bulk cases per phase; unchanged ARM/CPU guards inherited by hash.",
+    "new_synthesis": "689D whole Lite FIT15295LE/963LAB/56M9K;setup+.104 hold+.137 recovery+1.460 removal+.488ns. Existing IO constraints only; no added waiver or seed change.",
+    "budget_670": {
+      "reference_reconstructions": 106,
+      "reference_fault_rejections": 318,
+      "dense_hypothetical_E1_saving_B": 1417.2,
+      "gross_wire_ms": 4.319085714285714,
+      "new_D1_removed_B": 0,
+      "new_E0_polls_removed": 0,
+      "verified_net_ARM_deletion_B": 0,
+      "verified_net_LE_deletion": 0,
+      "new_target_time": false,
+      "candidate_gate_passed": false,
+      "A0": "reject released collector read",
+      "A1": "not selected; retention/ports/tile lifetime unresolved",
+      "B": "bounded cost probe only",
+      "whole_recipe_readiness_gate": "open; preserve early rows and charge incremental descriptor overhead"
+    },
+    "budget_671": {
+      "selected": "MMC666",
+      "candidate_gate_passed": false,
+      "kernel_commands": 509,
+      "ownership_model_rejections": 45,
+      "actual_RTL": false,
+      "whole_schedule": false,
+      "new_synthesis": false,
+      "Flash_resource_link_B": 212748,
+      "Flash_free_B": 244,
+      "source_DMA_check_ms": 42.58,
+      "row_954_ms": 88.99,
+      "row_955_ms": 85.17,
+      "unallocated_ARM_context_B": 300,
+      "final_ACK_menu_product_path": "unchanged, no new end-to-end proof"
+    },
+    "budget_672": {
+      "selected": "MMC666",
+      "candidate_gate_passed": false,
+      "dense_delta_ms": [
+        0.022200212391965124,
+        0.036261588529484357
+      ],
+      "last_ACK_delta_ms": [
+        0.004562963117476,
+        -0.045629631174759995
+      ],
+      "dense_VBlank": [
+        15,
+        15
+      ],
+      "protected_all": true,
+      "new_final_waits": [],
+      "ARM_Flash_B": 212496,
+      "physical_SNES_ROM_free_B": 42,
+      "observed_SNES_stack_B": 11,
+      "whole_FIT_STA": false,
+      "ROM_changed_requires_new_board_before_selection": true
+    },
+    "budget_673": {
+      "selected": "MMC666",
+      "new_product": false,
+      "replay_captures": 106,
+      "all_baseline_ACKs_equal": true,
+      "all_protected": true,
+      "packet_assembly_ms": 0.105571428,
+      "ideal_current_ROM_remaining_ms": [
+        2.385079427,
+        2.428287894,
+        2.298103762,
+        2.332931277
+      ],
+      "actual_timing_improvement": false
+    },
+    "budget_674": {
+      "selected": "MMC666",
+      "candidate_selected": false,
+      "replay_captures": 106,
+      "Flash_B": 212524,
+      "Flash_free_B": 468,
+      "extra_static_RAM_B": 0,
+      "dense_delta_ms": [
+        9.90332477979512,
+        13.229501400364057
+      ],
+      "last_ACK_delta_ms": [
+        49.91080803930779,
+        66.33291229910391
+      ],
+      "interval952_VBlank": [
+        4,
+        5
+      ],
+      "final_wait957": [
+        0,
+        0
+      ],
+      "new_FIT_STA": false
+    },
+    "budget_675": {
+      "selected": "MMC666",
+      "Flash_B": 212624,
+      "Flash_free_B": 368,
+      "extra_static_RAM_B": 0,
+      "new_FIT_STA": false,
+      "candidate_selected": false,
+      "replay_captures": 106,
+      "actual_RTL_ownership": true,
+      "dense_delta_ms": [
+        6.701744988842158,
+        3.3105135512554824
+      ],
+      "last_ACK_delta_ms": [
+        33.763226540130425,
+        16.925706393251435
+      ],
+      "interval952_VBlank": [
+        5,
+        4
+      ],
+      "map_tail_ms": [
+        6.561556924911942,
+        6.561366448722522
+      ]
+    },
+    "budget_676": {
+      "input_Flash_B": 212704,
+      "combined_Flash_B": 212688,
+      "combined_free_B": 304,
+      "extra_static_RAM_B": 0,
+      "board_changed": false,
+      "client_changed": false,
+      "LE": 15324,
+      "LAB": 962,
+      "M9K": 56,
+      "extra_DMA_feedback": false,
+      "selected": false,
+      "combined_dense_delta_ms": [
+        3.27240815313975,
+        3.2821114338916004
+      ],
+      "combined_last_ACK_delta_ms": [
+        16.947776235268613,
+        16.710781518248687
+      ],
+      "map_ahead_B": [
+        192,
+        192
+      ],
+      "input_callback_ms": 0.6215113468138543,
+      "input_callback_DMA_starts": 0
+    },
+    "budget_677": {
+      "reserve_Flash_B": 212732,
+      "run_Flash_B": 212724,
+      "run_free_B": 268,
+      "extra_static_RAM_B": 0,
+      "progress_stack_B": 32,
+      "board_changed": false,
+      "client_changed": false,
+      "selected": false,
+      "run_dense_delta_ms": [
+        -0.044549419497968756,
+        -0.05386158912547501
+      ],
+      "run_last_ACK_delta_ms": [
+        0.48395345554128105,
+        -0.17609312765606358
+      ],
+      "map_ahead952_B": [
+        1536,
+        1152
+      ],
+      "display952_VBlank": [
+        3,
+        3
+      ],
+      "all_protected": true,
+      "phase1_956_reveal_delay_ms": 0.34753017049837615
+    },
+    "budget_678": {
+      "Flash_B": 212800,
+      "Flash_free_B": 192,
+      "extra_static_RAM_B": 0,
+      "poll_stack_delta_B": 8,
+      "board_changed": false,
+      "client_changed": false,
+      "selected": false,
+      "dense_delta_ms": [
+        -0.04566687985327178,
+        -0.05654349397819658
+      ],
+      "last_ACK_delta_ms": [
+        0.010429629982802285,
+        -0.18270476809159003
+      ],
+      "map_ahead956_B": [
+        128,
+        128
+      ],
+      "map_ahead957_B": [
+        1664,
+        1664
+      ],
+      "display952_VBlank": [
+        3,
+        3
+      ],
+      "all_protected": true,
+      "input_handoff_READ_blocks": 0,
+      "next": "Retain empty-STATUS credit fix and9523/3VB/large banks. Budget actual956 DMA-progress publication and identity/STOP/ownership boundary before more RTL. New callbacks34/35 perform0READ and956earlymap remains128B; no more query-size/fixed-wait/phase sweeps. Existing ACK writes fault on empty queue and must not become DMA retirement. Whole caps84LE/1LAB/0M9K,ARM192B(678) or496B(MMC666),SNES packedROM11B; no free mailbox/CRC/control or FIT claim."
+    },
+    "budget_679": {
+      "evidence": "analysis/progress679-budget.json",
+      "new_replay": false,
+      "new_FIT_STA": false,
+      "simultaneous_improvement_proven": false,
+      "next": "Prototype the nonblocking E0 bit3 actual map-DMA event through the existing host write path; prove E1/ACK/STOP clear priority and complete empty-queue identity. Full ARM link <=212992B and body<=5984B plus exact packed ROM/boot checks first. Couple only to useful ARM work creating a genuinely empty queue; do not bypass new-packet priority or wait for the bit. Then both-start full timing/protections, followed by one whole Lite FIT/STA. No observation-only product or delay/phase sweeps."
+    },
+    "budget_680": {
+      "evidence": "analysis/progress680-verification.json",
+      "Flash_B": 212828,
+      "Flash_free_B": 164,
+      "body_B": 5948,
+      "body_free_B": 36,
+      "packed_ROM_free_B": 16,
+      "new_static_RAM_B": 0,
+      "new_DMA_stack_B": 3,
+      "MAP_comb_delta": 35,
+      "MAP_FF_delta": 3,
+      "MAP_RAM_delta": 0,
+      "FIT_STA": false,
+      "map956_ahead_B": [
+        512,
+        512
+      ],
+      "dense_delta_ms": [
+        -0.0467843402085677,
+        -0.0546624357134462
+      ],
+      "last_ACK_delta_ms": [
+        0.010429629982802285,
+        -0.21306244107724667
+      ],
+      "all_protected": true,
+      "selected": false,
+      "next": "KeepMMC666 and freeze680 actual E0 event/fixed-neighbor map as evidence,not product. Budget956remaining512B+blocked tile and957remaining384B map against actual next E1/credit/ROM and finalVBlank; preserve MMC666 phase1 956640B+tile16B baseline. Explain useful producer-work relocation and net code/control deletion before another implementation. Do not repeat emptyD0/fixed delays/phase or chunk-size sweeps/longer scans. Both-start911/951/952/957 and dense+lastACK must pass before one wholeLiteFIT/STA. No observation-only delivery."
+    },
+    "budget_681": {
+      "Flash_B": 212848,
+      "Flash_free_B": 144,
+      "body_B": 5967,
+      "packed_ROM_free_B": 0,
+      "extra_static_RAM_B": 0,
+      "selected": false,
+      "whole_FIT_STA": false,
+      "variants": {
+        "client": {
+          "dense_delta_ms": [
+            -0.04073142995069645,
+            -0.03726730284927271
+          ],
+          "last_ACK_delta_ms": [
+            -0.011174603553002448,
+            -0.22414392293397412
+          ],
+          "two_start_gate": false
+        },
+        "joint": {
+          "dense_delta_ms": [
+            -0.048237038670457366,
+            -0.04263111255470875
+          ],
+          "last_ACK_delta_ms": [
+            0.5920677449165798,
+            15.619767724690547
+          ],
+          "two_start_gate": false
+        },
+        "zero": {
+          "dense_delta_ms": [
+            -0.043841694606278736,
+            -0.033635556694541435
+          ],
+          "last_ACK_delta_ms": [
+            0.5506285900741956,
+            0.2315005369397007
+          ],
+          "two_start_gate": false
+        },
+        "mapfirst": {
+          "dense_delta_ms": [
+            -0.004618836135236393,
+            -0.03696931342118859
+          ],
+          "last_ACK_delta_ms": [
+            0.06239153650426367,
+            0.0839957700400684
+          ],
+          "two_start_gate": false
+        }
+      },
+      "next": "다음은 955 최종 ACK 전 956 geometry7블록 수신을 회복하고, 첫 zero/BG 공급이 기존 ROM 허용 구간을 놓치지 않도록 발행·credit 예산을 확정한다. 957의 마지막384B만 옮겨 offset1024의 map384B를 밀어내지 않도록 수락된 전체 범위와 VBlank 여유를 함께 판정한다. 같은 고정 대기·크기/위상 상수·선택 순서 반복은 보류하며, 두 위상 종단 개선 뒤에만 전체 Lite FIT/STA를 진행한다."
+    },
+    "budget_682": {
+      "resources": {
+        "account": {
+          "firmware": "996c624bb0931c72059696f5c61581a9f1706fdf04976a92fb53e68625d75796",
+          "Flash_B": 212796,
+          "Flash_free_B": 196,
+          "data_B": 10040,
+          "BSS_B": 19544,
+          "callback_stack_B": 32,
+          "poll_stack_B": 560
+        },
+        "progress": {
+          "firmware": "47dfe19c4a338923b3db734dc9368718c8ddc0255e0b5196924dfec6b473e70e",
+          "Flash_B": 212800,
+          "Flash_free_B": 192,
+          "data_B": 10040,
+          "BSS_B": 19544,
+          "callback_stack_B": 32,
+          "poll_stack_B": 560
+        },
+        "credit": {
+          "firmware": "c1408cd7f8eb284ee5b7878dc95674ec23081495a8f0b71adf714d94536f9bc0",
+          "Flash_B": 212832,
+          "Flash_free_B": 160,
+          "data_B": 10040,
+          "BSS_B": 19544,
+          "callback_stack_B": 32,
+          "poll_stack_B": 560
+        },
+        "batch": {
+          "firmware": "20a59375bf0b446c5273f62a72e9c0cdb6c311117bf19b4395c035bcfb9d5065",
+          "Flash_B": 212860,
+          "Flash_free_B": 132,
+          "data_B": 10040,
+          "BSS_B": 19544,
+          "callback_stack_B": 40,
+          "poll_stack_B": 560
+        },
+        "read": {
+          "firmware": "ee477ad169b3a2830d2002ef17e07316363a68f68e86470c1d7f3d20226c4f2c",
+          "Flash_B": 212844,
+          "Flash_free_B": 148,
+          "data_B": 10040,
+          "BSS_B": 19544,
+          "callback_stack_B": 40,
+          "poll_stack_B": 560
+        }
+      },
+      "request_gate": {
+        "account": false,
+        "progress": false,
+        "credit": false,
+        "batch": false,
+        "read": false
+      },
+      "timing_gate": {
+        "account": false,
+        "progress": false,
+        "credit": false,
+        "batch": false,
+        "read": false
+      },
+      "next": "682 read 입력 경로는 수신 회복 비교 후보로 고정한다. 다음은956/957의 map1024·1216 사이에 들어간 BG48B 때문에 수락 시384B 병합이 사라지는 경계를 다룬다. ARM이 두 map을 연속 발행하는 방식과65816이 이미 수락된 map을 제한적으로 병합하는 방식을 분리 비교한다. 첫 BG ROM창·큰묶음·7블록·STOP·독립 검사·최종 ACK를 유지하고,956의 추가128B 선행 기회와957의 추가192B를 함께 확보해야 한다. 위상1의 이전956 표시 지연0.081295ms와957 자체 간격 증가0.034269ms를 나눠 예산을 잡는다. 현재map 한 패킷의 전송/드라이버0.692830ms를 BG 지연에 공짜로 옮기지 않는다. Flash148B·packedROM0B 안에서 삭제할 코드를 먼저 정하고, 두 위상 전체 시간 통과 뒤에만 전체 Lite FIT/STA를 진행한다. 같은 입력 polling·고정 지연/위상·선택 크기 변형은 반복하지 않는다."
+    },
+    "budget_683": {
+      "Flash_B": 212944,
+      "free_B": 48,
+      "new_static_RAM_B": 0,
+      "request_gate": false,
+      "next": "683의경계기록은검증된비교후보로보존하되실기기준은MMC666을유지한다. 다음은BG loop 완료 직후,OBJ 계산 전에map1216의실제최종쓰기·발행가능시각을계측한다. planner 도중아직확정되지않은행을보내지않고,확정된후속map을앞당겨두map의연속발행을지키면서BG48B와후속ordinary 소비를VBlank보다앞에놓을수있는지비교한다. 956의1100B padding 소비ACK를기존첫선행DMA보다0.680/0.386ms,957 위상1의마지막map3392 ACK를기존1152B DMA시각보다0.192ms 앞당길예산이필요하다. 고정대기·위상·DMA크기변형을반복하지않는다. 두위상의7블록(현재최소여유75µs)·첫BG ROM창·큰묶음·9523회·957최종대기0회·독립검사·STOP·최종ACK·메뉴복귀를유지하고,Flash48B/packedROM0B안에서실제삭제예산을먼저확인한다. 기존call673의부모호출·immutable·END시각으로수정경계가실제목표패킷에적용됨을확인한후종단재생한다. 밀집평균과957마지막ACK가두위상모두개선된뒤에만전체Lite FIT/STA와새실기전달을진행한다."
+    },
+    "budget_684": {
+      "Flash_B": 212992,
+      "free_B": 0,
+      "new_static_RAM_B": 0,
+      "request_gate": false,
+      "remaining_phase1_ACK_clocks": 224,
+      "next": "684의 BG 완료 map 발행·7블록·큰 묶음을 비교 기준으로 보존한다. 957 마지막map3200/3392의384B는 두 위상 모두 기존384B/1152B 선행 DMA 전에 수락됐다. 후속OBJ288B 수락이249/253선에 들어와 다음 빈큐 기회를 닫는 실제 경계와 E0 진행 공개/ARM bulk 허가를 먼저 대조한다. 수신ACK와 전체DMA완료를 혼동하지 않고 STOP·새패킷 우선을 유지하며, 마지막384B를 앞선 VBlank로 옮길 수 있는지 순비용으로 판단한다. 추가 전송 대기나 위상별 상수는 넣지 않는다. 위상1의남은224클록은VBlank대기반환+264와반환뒤−40의합이며678/680에서도같았다. SEAL을더앞당기는것만으로이값을줄인다고계상하거나10µs만맞추는고정지연탐색은반복하지않는다. ARM여유0B·packedROM0B이므로공동완료/허가에서실제로삭제할코드와조건을먼저정한다. 911/951/952/957·독립검사·STOP·메뉴복귀와두위상종단시간을통과한후에만전체Lite FIT/STA·새실기전달로간다."
+    },
+    "budget_685": {
+      "Flash_B": 212988,
+      "free_B": 4,
+      "CPU_body_free_B": 0,
+      "packed_free_B": 13,
+      "new_static_RAM_B": 0,
+      "request_gate": false,
+      "phase2_input_deficit_ms": 0.08186376183400536,
+      "post_SEAL_poll_ms": 0.15438919175920449,
+      "next": "685의 BG 완료 map·큰 묶음·1536B 완료 DMA를 보존한다. 다음은 SEAL E1 성공 뒤 첫 E0보다 먼저 bounded7 입력을 시작하는 소유권 경계 하나를 검토한다. 측정된 첫 E0와 진입 비용0.154389ms 대비 필요한 선행량은 위상2 0.081864ms다. 이 차이는 가능 예산이며 성공 시간이 아니다. E1 수락 오류·STOP·부분 입력·CRC/POP 실패 때 입력 중단과 cold 복구를 유지하고, 이전 최종ACK 전체 identity를 확인하기 전 새 COMMIT/EA/표시 공개를 금지한다. 일반 출력 credit 우선권은 그대로 두고 Flash4B 안에서 기존 대기 제어를 대체한다. 두 시작 위상106화면에서7블록·첫BG ROM창·911/951/952/957과 밀집/마지막ACK를 다시 함께 통과해야 한다. 그 뒤에만 전체 Lite FIT/STA·새 전달을 진행한다. 고정 지연·위상 상수·DMA 크기 반복 탐색은 하지 않는다."
+    },
+    "budget_686": {
+      "Flash_B": 212952,
+      "free_B": 40,
+      "new_static_RAM_B": 0,
+      "request_gate": false,
+      "input_entry_us": 4.809523800384016,
+      "input7_margins_ms": [
+        1.3059455758367071,
+        0.17149964880360957
+      ],
+      "phase1_dense_delta_ms": 0.06259640423606783,
+      "phase1_last_map_ACK_late_clocks": 3070,
+      "next": "686의 SEAL 소유권·7블록 수신과685의957 마지막384B 선행 DMA를 유지한다. 다음은 위상1의955 마지막map3392/192B 발행→수락→ACK를 기존65025724(251선) 마감과 대조한다. 686의65028794(253선)는3070클록/142.944µs 늦고1152B 선행 DMA를 놓쳤다. 첫BG의ROM허용창, map행 확정·발행·credit·후속tile 순서를 묶어 기존 실제 수락 마감 회복에 필요한 비용을 정한다. 154µs E0를 되돌리거나 ACK를 늦춰7블록을 맞추지 않는다. 248/252 DMA 허용선과246 표시 검사선, STOP·새패킷 우선·독립검사·최종ACK·메뉴복귀를 유지한다. 두 위상 모두7블록·952 표시3회·957최종대기0회·밀집평균·마지막ACK를 함께 통과한 뒤에만 전체Lite FIT/STA·새전달로 간다. 고정지연·위상상수·DMA크기 탐색은 하지 않는다."
+    },
+    "budget_687": {
+      "Flash_B": 212988,
+      "free_B": 4,
+      "new_static_RAM_B": 0,
+      "map_stack_delta_B": 8,
+      "request_gate": false,
+      "next": "687의전송후map소유권 갱신·bulk우선권과686의7블록수신·685의957 마지막384B 선행DMA를 유지한다. 먼저951의실제map/tile 소비ACK·빈큐DMA 시작과공개까지의비용을대조해247→246선을회복할삭제예산을잡는다. map생산기에서추정한bulk상태만으로허가하지말고, plan progress가실제E8 빈응답을검증한경로와조회없이complete485만수행한경로를구분해공유허가를전달하는구조를검토한다. 기존map_pair 문맥·중복판단을재사용하고추가정적RAM없이Flash212992B이하를지킨다. 위상2의955는빠른수락에도선행map320B가줄었으므로,128B map과1344/1536B범위가빈큐가되는시각을함께확인한다. 248/252 DMA허용선·246 공개선을늘리거나고정지연/프레임번호분기로통과시키지않는다. 새소유권관측은runpy 실제실행경계에서첫화면부터연결됐음을확인한후전체재생한다. 두위상951공개선·952표시3회·957최종대기0회·7블록·첫BG ROM창·밀집평균·마지막ACK를모두통과한뒤전체Lite FIT/STA와고유파일명전달로간다. 실기비교는5–40초·40–55초와RESTORE제외를유지한다."
+    },
+    "budget_688": {
+      "Flash_B": 212984,
+      "free_B": 8,
+      "new_static_RAM_B": 0,
+      "request_gate": true,
+      "whole_FIT": false,
+      "LAB_required": 969,
+      "LAB_available": 963,
+      "LE": 15321,
+      "M9K": 56,
+      "STA_executed": false,
+      "board_evidence": "analysis/owner688-board.json",
+      "next": "다음은 688 ARM과 685 CPU의 통과 바이너리를 고정하고, 680 E0 진행 공개에 추가된 bus 주소 비교·ack/stop 무효화·SPI flags 선택을 기존 601C 최종 ACK/queue 상태 판정과 공동 처리할 수 있는지 검토한다. 삭제할 비교기·상태 조건과 CDC 소유권을 먼저 특정하고 최소 6 LAB의 전체 배치 부족을 없애야 한다. LE 단독 감소를 성공 기준으로 삼지 않는다. 새 패킷/STOP 우선·실제 DMA 완료 뒤에만 진행 공개·기존 최종 ACK identity를 유지한다. 구조 변경 뒤 해당 RTL guard와 두 위상 전체 일정, 한 번의 전체 FIT·STA 순으로 검증한다. 8B Flash와 packed ROM 13B 여유를 비용 없이 쓰지 않는다. 회로 경계 변경이 불필요하다면 통과 ARM/CPU를 다시 미세 조정하지 않는다."
+    },
+    "budget_689": {
+      "Flash_B": 212984,
+      "free_B": 8,
+      "new_ARM_RAM_B": 0,
+      "request_gate": true,
+      "whole_FIT": true,
+      "STA": true,
+      "LE": 15295,
+      "LAB": 963,
+      "LAB_free": 0,
+      "M9K": 56,
+      "setup_ns": 0.104,
+      "external_IO_signoff": false,
+      "next": "다음은689D보드와 고정688 ARM·685 CPU를 묶어 고유 설치/로그 이름의 제한 실기 전달본을 준비한다. 새 기능이나 같은 발행/seed 미세 조정은 더하지 않는다. package hash·실제 programmer/loader·STOP/base/menu 경계를 확인하고 MMC666과 같은 첫 레벨 동선에서5–40초·40–55초를 비교한다. RESTORE는 제외한다. 새 실기 결과 전까지 제품·FPS 기준은MMC666을 유지하며, LAB여유0·setup0.104ns·Flash8B와 외부 IO 미완료 범위를 전달 문서에 남긴다."
+    },
+    "delivery690": {
+      "package": "analysis/trial690-package.json",
+      "ZIP_SHA256": "d55ce6113b32cf97f589e9666e69b6c29bcd16ecbdbb115753218c3d32cf7cec",
+      "Flash_free_B": 8,
+      "LAB_free": 0,
+      "setup_ns": 0.104,
+      "physical_verified": false,
+      "window_s": [
+        [
+          5,
+          40
+        ],
+        [
+          40,
+          55
+        ]
+      ],
+      "RESTORE": false
+    },
+    "hardware691": {
+      "successes": 1,
+      "failures": 1,
+      "trimmed_fps": 19.8,
+      "trimmed_change_pct": 1.3306038894575378,
+      "output_final_ACK_ms": 25.561433695238094,
+      "startup_cause": null,
+      "causal_speedup_proven": false
+    }
+  },
+  "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6"
 }

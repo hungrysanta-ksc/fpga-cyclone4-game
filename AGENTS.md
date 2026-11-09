@@ -11,12 +11,15 @@
 
 ## 현재 작업 범위
 
-- 실기 기준은 MMC662다. `analysis/hardware663-mmc662.json`과 `cores/nes/HANDOFF.ko.md`를 먼저 확인한다. PR153은 master `9a1aa775871ea6d5f19eedc9dc97e3e05f339a31`에 병합됐다.
-- 후속 브랜치는 `codex/nes-output-budget-664`다. 같은 map·OBJ 작업량에서 ARM 발행·65816 수락·DMA·VBlank를 분리하고 두 시작 위상의 밀집 표시 간격과 마지막 ACK를 함께 판정한다. 상세 근거는 `docs/nes-output664-results.ko.md`에 둔다.
-- 665에서 664 all의 914 추가 대기를 제거했다. `docs/nes-entry665-results.ko.md`와 `analysis/entry665-verification.json`이 현재 후보 근거다. MMC666 실기 분석은 `docs/nes-hardware667-results.ko.md`다. 실행·복귀 성공, 초반 +0.73%·후반 −8.23%이나 작업량이 달라 속도 개선·회귀를 확정하지 않는다. 다음은 출력 작업량을 맞춘 비교이며 실기 비교 기준은 MMC662다.
-- 실기 평균 출력·최종 ACK 26.51ms를 특정 재생 장면의 단계 비용과 동일시하거나 비율로 분배하지 않는다. 실제 링크 M4·65816, CPI/IRQ/SPI 모델, 반복 ROM 허용 달력과 물리 로그의 범위를 구분한다.
+- 사용자 지정 개발·실기 기준은 MMC666이다. `analysis/hardware667-mmc666.json`과 `cores/nes/HANDOFF.ko.md`를 먼저 확인한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다.
+- 현재 브랜치는 `codex/nes-output-budget-668`, PR155다. 최신689 근거는 아래에 연결한다. `docs/nes-output668-results.ko.md`와 `analysis/output668-verification.json`의 이전 두 ARM 후보는 기능 통과·종단 시간 실패로 기각했고 MMC666을 유지한다.
+- 반복 탐색만 줄이면 map 선행 DMA가 감소할 수 있다. 일괄 map drain은 911의 업로드 VBlank 회귀를 만들었다. 같은 단독 탐색/drain/위상별 고정 지연 변형은 새 근거 전까지 보류한다.
+- 670에서669 계획의 거래·복원·소유권·삭제 예산표를 작성했다. `docs/nes-supply670-results.ko.md`와 `analysis/supply670-budget.json`을 읽는다. 실제plan slot으로106개 map 참조복원 일치, descriptor 가정의 밀집 E1절감1417.2B(4.319ms wire)이나 새 target 시간은 미검증이다. D1/E0 삭제0, 순삭제0B/0LE. COMMIT 뒤 collector 재읽기A0는 기각, 별도snapshot은tile RAM을 공짜로 쓸 수 없어 미선택이다.
+- 671 B 제한 시험은 실제 비용 실패로 기각했다. `docs/nes-supply671-results.ko.md`·`analysis/supply671-verification.json`을 읽는다. 전체링크 ARM 생산기/509개65816 command/45개소유권 모델 검사 통과지만 source DMA·CRC42.58ms,954/955 행복원·검사88.99/85.17ms로 wire절감3.21/3.24ms를 초과한다. ARM 자원링크212748B/free244,새문맥300B미할당. 새RTL/종단일정/FIT/ZIP 없음. 후속672 수락 범위 비교도 시간 게이트에서 기각됐다. 같은 LUT/CRC 미세조정은 보류한다.
+- 현재689는 `docs/nes-status689-results.ko.md`·`analysis/status689-verification.json`을 읽는다. 689D는 688의 ARM·685의 65816 바이너리를 그대로 유지하면서 6 LAB 부족을 해소했다. 전체 Quartus Lite FIT는 15295 LE·963/963 LAB·56/56 M9K로 통과했고, 기존 제약의 최악 setup/hold/recovery/removal은 +0.104/+0.137/+1.460/+0.488ns다. 같은 두 위상106화면 재생은 688과 클록 단위로 일치했다. MMC690 실기2회는691에서 분석했다. `docs/nes-hardware691-results.ko.md`·`analysis/hardware691-mmc690.json`을 먼저 읽는다. 1차stage0 timeout/2차20.71fps·5–55초19.80fps,두실행메뉴복귀성공이며MMC666대조군을보존한다.579 current_followup을 따른다.
+- 실기 평균 출력·최종 ACK26.84ms를 고정 재생의 비율로 나누지 않는다. 실제 링크 M4·65816, CPI/IRQ/SPI 모델, 반복 ROM 달력과 실기 로그의 범위를 구분한다.
 - 이전 Current/FIRST/NEXT 누적은 [664 시작 전 원문](docs/progress/archive/AGENTS-before664.md)에 바이트 그대로 보존했다. 그 안의 '현재'는 당시 기록이며 새 실행 지시가 아니다.
-- 검증된 GBC와 사용자 세이브·백업을 보존한다. 새 실기 전달 전에는 MMC662 파일을 덮지 않는다.
+- 검증된 GBC와 사용자 세이브·백업을 보존한다. 새 실기 전달 전에는 MMC662·MMC666 파일을 덮지 않는다.
 
 ## 문서와 PR
 
