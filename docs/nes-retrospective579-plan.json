@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
-    "next": "707D·기존694/704 ARM·기존65816 유지.714 전체BG완료→planflush→실제대기map 후보는106화면정확성/STOP/최종ACK/menu검사통과나911마감회귀·952–95718회불변으로기각.954는마지막BG생산0.739/0.668ms와E9수락2.211/2.140ms가이전ROM창보다늦다.955는BG생산뒤남은행2.385ms가발행을막는다.임계구간quiet0회이므로동기callback삽입만반복하지않는다.다음은BG탐색/slot/plan확정과map행쓰기분리의실제CPU·SPI·stack·독립소유권예산.교체962B상한1116B/정상Flash여유244B는미채택후보공간이지제품회수분이아니다.911/951/952/957·7블록·STOP·cold·메뉴를지키며두위상18VBlank미만·밀집평균·957ACK동시개선필수.713의918주사선관측실패근거도그대로보존한다.",
+    "next": "707D·기존694/704 ARM·기존65816 유지.715 split은기존OAM/CGRAM/HDMA2144B를빌려BG탐색/slot/plan과map쓰기를분리했다.106화면동일작업/픽셀/독립검사와STOP/menu통과지만952–95718→19VB,밀집+3.266/+3.152ms,ACK+33.967/+16.824ms,위상1의911마감회귀.정상Flash212996B·경계1120B로각4B초과.955 마지막BG뒤2.385ms중2.149ms는map쓰기제거뒤에도남은탐색/slot확인이다.전체BG-first/2차map순회·추가flush변형은보류한다.다음은원본행발행/큰묶음순서그대로동일프레임exact-slot hit의중복40B plan생성/tag/key확인비용을계측해실제삭제가능부분만대체.기존hash/정확한key검사중복구현금지,미검증reuse/STOP생략금지.원본정상Flash여유8B·경계1116B·정적RAM증가≤4B·FPGA/65816증가0.714미채택여유는제품예산이아니다.두위상911/951/952/957·7블록·cold/STOP/최종ACK/menu와18VB미만·밀집/957ACK동시개선필수.",
     "document": "docs/nes-bg707-results.ko.md",
     "evidence": "analysis/bg707-verification.json",
     "timing_reference": "analysis/bg707-verification.json",
@@ -551,6 +551,11 @@
         "id": "S706",
         "status": "physical_bonus_passed_startup_BG_fault_and_repeated_pixel_issue_open",
         "deliverable": "706 실기: MMC704 1차는 기존690과 같은 stage0 5초 준비 timeout,705 1차는193:230 배경 CHR21E161 deadline2(age2)로 서로 다르다. 704 2차는 정상60초·메뉴 복귀,5–55초19.04fps(700대비−10.10%,작업량 증가로인과미확정)다. 705 2차는298.56초·5957표시·사용자종료/메뉴복귀,스페이드 클리어를 사용자 확인했다. 그러나 여러 장면의 반복 타일 깨짐과 최대430ms 표시 공백이 남아 전체 안정성은 미승인이다."
+      },
+      {
+        "id": "split715",
+        "status": "complete_actual_split_rejected_timing_and_Flash",
+        "deliverable": "Borrowed2144B/0staticRAM; actual106same-work/pixel/independentchecks;952-95718->19VB both;dense+3.265517/+3.152039ms;ACK+33.967349/+16.823924ms;normalFlash212996 and boundary1120 each4Bover. No new board/65816/FIT/installer. Original707D/ARM/65816 retained. See docs/nes-split715-results.ko.md and analysis/split715-verification.json."
       }
     ],
     "protected": [
