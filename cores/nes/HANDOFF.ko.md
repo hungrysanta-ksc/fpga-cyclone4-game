@@ -2,7 +2,7 @@
 
 PR156 병합 `4ee65ac300c3b5eca73848bd0b408c1bc63b6800` 확인 뒤 현재 브랜치는 `codex/nes-bg-deadline-707` / PR157 draft이다. 다음 개발 기준은 MMC690이고 MMC666 대조군은 보존한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 이전 대조군 MMC666은 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
 
-**현재725:** 725A/B는 검증된 bulk의 수신 전/후에 수락 map DMA를 연결했다. 각 두 위상106화면,총212화면의 동일 출력·독립 검사·STOP·최종ACK·메뉴 경계와951/911/952/957·BG ROM 마감·map 연속 DMA를 유지했다. 그러나952–957은18VBlank 그대로이고 밀집 평균·마지막ACK가 함께 개선되지 않아 둘 다 기각했다. B의952–957 추가 DMA는0회이며,대부분 bulk 진입 때 남은 수락 map이0B였다. 정상/장시간 ARM은723C의212992/212948B 그대로,ROM 여유 A28B/B8B·새WRAM0B다. 포장 변경으로 초기 복원21–22ms가 늘어 위상1에서 첫 표시부터1VBlank 늦었다. 새FIT/STA·설치본은 없다. 선택본707D·기존ARM/65816과723C 비교 기준을 유지한다. bulk 앞/뒤의 무조건 DMA 조회는 종료하고,목표 VBlank 전에 확정 map이 수락되지 못하는 생산·ARM 발행·SPI/credit 경계를 먼저 분해한다. BG ROM 마감과 map 연속 DMA를 지킬 정확한 선행 수락 범위·필요 시간을 정한 뒤 기존 발행/idle 제어를 교체한다. ARM Flash212992B·공동경계4700B·추가RAM0B·기존65816 ROM여유26B와 초기복원비용을 함께 적용한다. 미채택 후보의 절감은 무료 예산으로 합치지 않는다. [725 검증·다음 경계](../../docs/nes-consume725-results.ko.md)
+**현재726:** 726A는 warm BG 완료 뒤 checked-empty credit로192B map을 먼저 발행했다. 두 위상106화면에서952 첫 map ACK는약5.54/5.10ms 빨라졌지만 BG48B·OBJ32B가 다음 map 앞에 끼어384B 연속 DMA가192B로 갈라졌다. 952 선행map1920→1728B,위상2의953 BG ROM 마감 회귀,952–957은18VBlank 그대로·957ACK−0.016855/+0.011175ms여서 미채택이다. 정상/장시간Flash212984/212940B,새RAM0B·ROM불변이다. 인접 쌍 B/C는정상Flash20/24B 초과로 전체시간 미실행;C 단독35경계는통과했다. 선택본707D·기존ARM/65816과723C 기준을 유지한다. 다음은 checked-empty grant 아래 정확한 인접192B 쌍을 실제credit·STOP으로 수락하는 공동 경계이며,C의새mode와기존pair/진행제어에서Flash최소24B·같은경계22B를실제삭제한뒤에만전체일정을검증한다. 첫패킷시각만개선하거나미채택후보의여유를합친성공으로판정하지않는다. [726 검증·다음 경계](../../docs/nes-accept726-results.ko.md)
 
 
 ## 현재 작업
