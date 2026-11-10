@@ -2,7 +2,7 @@
 
 PR156 병합 `4ee65ac300c3b5eca73848bd0b408c1bc63b6800` 확인 뒤 현재 브랜치는 `codex/nes-bg-deadline-707` / PR157 draft이다. 다음 개발 기준은 MMC690이고 MMC666 대조군은 보존한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 이전 대조군 MMC666은 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
 
-**현재730:** 730 A/B는첫OBJ 생산공백을약9.2→3.75ms로줄였으나두위상밀집간격·마지막ACK 동시개선에실패했다. B는956선행map384B도잃어미채택이며선택707D·기존ARM/65816과727을유지한다. 다음은384B쌍경계의OBJ·ordinary 중첩과SEAL 최소5.6ms 선행예산이다. [730 결과·예산](../../docs/nes-owner730-results.ko.md)
+**현재731:** 731은 map 쌍 경계의 ordinary 중첩을 구현했으나 마지막ACK가+0.276/+0.154ms 늦고952·957 후속DMA·953 BG 마감이 회귀해 미채택이다.956 선행1024B와 표시·안전 조건은 유지했고 Flash24B 여유다. 다음은 남은 map DMA 묶음·OBJ 소유권·다음 BG 마감을 함께 보존할 교체 예산이다.선택707D·기존 ARM/65816과727을 유지한다. [731 결과·경계](../../docs/nes-overlap731-results.ko.md)
 
 
 ## 현재 작업
