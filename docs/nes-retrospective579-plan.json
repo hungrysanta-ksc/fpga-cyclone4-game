@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
-    "next": "선택707D·기존 ARM/65816과727을 유지한다.732B는 구간/안전 단위시험을 통과했지만 정상 Flash28B·같은 함수경계24B가 초과한다. 두 단계 발행·구간 종료와 기존 packet/span 완료 제어의 실제 중복 삭제를 먼저 확인한다. A/C/D의 동일 pass 분배·함수 공유·직접분기 변형을 반복하지 않는다. 정상/장시간 전체 링크가 한도 안에 들어온 뒤 같은 후보로 두 위상106화면을 실행한다.952·957 offset2048..3583의1536B DMA,956의1024B,다음953 BG 원래ROM 구간(727 마지막E9 여유281/165us),908·911·951·952·957·7블록을 보호하고 두 밀집 지표와957 마지막ACK를 함께 줄여야 한다. 기존 E0 bit8을 전체DMA 완료로 해석하거나 프레임번호/고정대기/검사 생략을 추가하지 않는다.732의 새 전체시간·장시간판·FIT·실기 결과는 아직 없다.",
+    "next": "선택707D·기존 ARM/65816과727을 유지한다.733의 영점 패딩 저장 제거는 자원 절감으로 보존하되 전체732B 일정은 미채택이다.956의 수락된3072..3455 map384B와240선 근처 새OBJ/HDMA 수락을 기존 DMA 진행·credit 경계에 맞춰 빈 큐 기회를 확보할 발행 조건부터 정한다. map ACK는 실제128B DMA보다3.523/3.595ms 빨랐으므로 map 미수락으로 오진하지 않는다. STOP·새 패킷 우선·독립 검사·최종 ACK·메뉴 복귀,952/9571536B·9561024B·다음953 BG 원래ROM 구간·911·951·7블록을 유지하고 두 밀집 평균과957 마지막ACK를 양쪽 위상에서 함께 줄인다. E0 단일 진행을 전체 완료로 해석하거나 프레임/위상 고정 지연 변형을 반복하지 않는다. 새 설치본은 없다.",
     "document": "docs/nes-bg707-results.ko.md",
     "evidence": "analysis/bg707-verification.json",
     "timing_reference": "analysis/bg707-verification.json",
@@ -1213,7 +1213,7 @@
       "schedule": "cycle identical to703B in both starts; separate actualCPU/PSRAM boundary and linkedARM/65816 replay",
       "physical_verified": false
     },
-    "stage": 732,
+    "stage": 733,
     "708_result": {
       "proof": "analysis/tail708-verification.json",
       "report": "docs/nes-tail708-results.ko.md",
@@ -1937,6 +1937,69 @@
         280.81048478928705,
         164.65615130944215
       ]
+    },
+    "733_result": {
+      "selected": false,
+      "document": "docs/nes-padding733-results.ko.md",
+      "evidence": "analysis/padding733-verification.json",
+      "archive": "analysis/padding733-archive.json",
+      "normal_Flash_B": 212792,
+      "long_Flash_B": 212748,
+      "whole_budget_pass": true,
+      "old_code_only_budget_pass": false,
+      "code_plus_padding_B": 5004,
+      "baseline_code_plus_padding_B": 5206,
+      "new_complete_CPU_frames": 106,
+      "extra_static_RAM_B": 0,
+      "observed_stack_saved_B": [
+        8,
+        8
+      ],
+      "timing_pass": false,
+      "phases": {
+        "1": {
+          "delta": {
+            "mean952_957_ms": 0.005820106017182525,
+            "dense951_955_ms": -0.0019741799610315525,
+            "last_ACK_ms": 0.01145396864182751,
+            "VBlank": 0
+          },
+          "protected": {
+            "deadline911": true,
+            "public951": true,
+            "interval952": true,
+            "wait957": true,
+            "seven_blocks": true,
+            "prior_gains": true,
+            "map384_and_following": false,
+            "map384_contiguous": true,
+            "map1536_contiguous": true,
+            "tile956_early": true,
+            "BG953_window": true
+          }
+        },
+        "2": {
+          "delta": {
+            "mean952_957_ms": 0.0010864197898783345,
+            "dense951_955_ms": -0.00096846564125741,
+            "last_ACK_ms": 0.01173333373065257,
+            "VBlank": 0
+          },
+          "protected": {
+            "deadline911": true,
+            "public951": true,
+            "interval952": true,
+            "wait957": true,
+            "seven_blocks": true,
+            "prior_gains": true,
+            "map384_and_following": true,
+            "map384_contiguous": true,
+            "map1536_contiguous": true,
+            "tile956_early": true,
+            "BG953_window": true
+          }
+        }
+      }
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",
