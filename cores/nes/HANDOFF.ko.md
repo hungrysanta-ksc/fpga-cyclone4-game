@@ -2,7 +2,7 @@
 
 PR156 병합 `4ee65ac300c3b5eca73848bd0b408c1bc63b6800` 확인 뒤 현재 브랜치는 `codex/nes-bg-deadline-707` / PR157 draft이다. 다음 개발 기준은 MMC690이고 MMC666 대조군은 보존한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 이전 대조군 MMC666은 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
 
-**현재729:** 729은727의 bulk 소유권·cached credit로 ordinary를 함께 발행하고 span/OAM 비용 계산을 공유했다. 정상/장시간 Flash212992/212948B·추가 RAM0B·stack/ROM 불변,두 위상106화면의 같은 map·tile·plan·픽셀·최종 ACK를 검증했다. 384B 연속 DMA·BG ROM 마감·951/911/952/957·7블록·독립 검사·STOP·메뉴 경계는 통과했지만,952–957 평균+0.000047/+0.003694ms·957 마지막 ACK−0.005587/+0.024025ms·18VBlank 그대로이고 위상2의908이2→3회로 회귀해 미채택이다. 선택707D·기존 ARM/65816과727을 유지한다. 953 OBJ112회는 모두 캡처 캐시 적중이며 첫 OBJ64B의 소비·bank 반환과 마지막 OBJ256B 생산 사이 약9.1–9.2ms 공백을 다음 대상으로 삼는다. map384B를 끊지 않는 생산/소비 소유권 변경의 범위·삭제 예산을 먼저 확인한다. ordinary 선행은 패딩 E1을 옮겼지만 다음 입력 서비스가 후반에 더 들어와 SEAL을 늦췄다. 같은 cached-credit 우회·대기/poll 조정은 반복하지 않는다. 1100B 패딩은 이미 고정source DMA·64B STOP 경로이므로 이를 새 DMA 최적화로 다시 세지 않는다. Flash0B·ROM26B 여유,전체 후반/입력·908/911/951/952/957 보호와 두 위상 종단 비교를 유지한다. [729 검증·다음 예산](../../docs/nes-tail729-results.ko.md)
+**현재730:** 730 A/B는첫OBJ 생산공백을약9.2→3.75ms로줄였으나두위상밀집간격·마지막ACK 동시개선에실패했다. B는956선행map384B도잃어미채택이며선택707D·기존ARM/65816과727을유지한다. 다음은384B쌍경계의OBJ·ordinary 중첩과SEAL 최소5.6ms 선행예산이다. [730 결과·예산](../../docs/nes-owner730-results.ko.md)
 
 
 ## 현재 작업
