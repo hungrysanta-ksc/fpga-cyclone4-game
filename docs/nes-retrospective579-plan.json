@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
-    "next": "719는 716B·717을 유지한 ACK 시각 기반 DMA 대기 제한을 실제 ARM에 연결했다. 두 위상106화면에서 951 공개236선·911 표시2회/242선·952 표시3회·957 최종대기0·7블록과908/934/940/943의2회를 함께 유지했다. 정상Flash212992B/여유0B,장시간212948B/44B,정적RAM+4B다. 그러나 원본 대비 밀집평균+0.084573/+0.093606ms,952–957합계18회로 동시개선에 실패했다. 마지막ACK 약83.23ms 단축은cold906 한회차와앞쪽네화면의효과이며지속FPS개선이아니다. 707D·기존694/704 ARM·기존65816 선택을 유지한다. 다음은953의BG 생산/E9/ROM창과956의OBJ capture 공급/bulk뱅크해제를 분리해 최소9.45–9.73ms의SEAL 선행 부족을 검토한다. 956의80회읽기는외부ROM이아닌OBJ_capture다. 빈D0/8ms상수조정은보류하고 새상태공개는전체삭제예산부터확정한다.",
+    "next": "720은 warm 행 선행발행1회·BG 완료공급·map 뒤 실제producer조회로 953/956 공급을 수정했다. 두위상106화면의 동일작업·픽셀과951236선·9112회·9523회·957대기0·7블록·716B네화면2회를 유지하고 정상Flash212976B/free16B,719대비RAM0B를 확인했다. 그러나952–957은18회,719대비평균+0.040663/+0.021635ms·마지막ACK+0.251429/+0.129812ms로 미채택이다. 956 OBJ응답은동일시각−8.028/−7.545ms지만map선행감소로표시이득이없고,953 E9도직전ROM창에1.991–2.114ms늦다. 707D·기존ARM/65816선택을유지한다. 다음은719 map연속공급을보존한producer조회/BGflush분리와953 공급마감·956 SEAL최소6.534–6.539ms부족의공동예산이다. 준비된tile무조건우선/대기상수튜닝은보류한다.",
     "document": "docs/nes-bg707-results.ko.md",
     "evidence": "analysis/bg707-verification.json",
     "timing_reference": "analysis/bg707-verification.json",
@@ -1198,7 +1198,7 @@
       "schedule": "cycle identical to703B in both starts; separate actualCPU/PSRAM boundary and linkedARM/65816 replay",
       "physical_verified": false
     },
-    "stage": 719,
+    "stage": 720,
     "708_result": {
       "proof": "analysis/tail708-verification.json",
       "report": "docs/nes-tail708-results.ko.md",
@@ -1533,6 +1533,32 @@
       "next_SEAL_advance_lower_bound_ms": [
         9.44784793897474,
         9.734476520109254
+      ]
+    },
+    "720_result": {
+      "selected": false,
+      "document": "docs/nes-supply720-results.ko.md",
+      "evidence": "analysis/supply720-verification.json",
+      "archive": "analysis/supply720-archive.json",
+      "complete_CPU_frames": 106,
+      "normal_Flash_B": 212976,
+      "long_Flash_B": 212932,
+      "static_RAM_delta_719_B": 0,
+      "after951_VBlank": [
+        18,
+        18
+      ],
+      "last_ACK_delta_719_ms": [
+        0.2514285799425551,
+        0.12981164460737843
+      ],
+      "BG_E9_before_prior_ROM_shortfall_ms": [
+        2.114416019902813,
+        1.9909595101787771
+      ],
+      "SEAL956_advance_optimistic_lower_bound_ms": [
+        6.534442549314456,
+        6.539471120913312
       ]
     }
   },
