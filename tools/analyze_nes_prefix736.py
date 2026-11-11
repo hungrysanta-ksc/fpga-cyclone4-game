@@ -55,8 +55,12 @@ def timeline(folder, row):
 
 
 def compare(temp,probe,tag,phase):
+    return compare_paths(temp, probe, tag, phase, temp/f'nes-prefix736-{tag}{phase}',
+                         probe/('arm05' if tag=='a' else 'arm06')/'src')
+
+
+def compare_paths(temp,probe,tag,phase,candidate_path,firmware):
     base_path=temp/f'nes-pair727-a{phase}'
-    candidate_path=temp/f'nes-prefix736-{tag}{phase}'
     ref=temp/f'nes-front638-both{phase}h'
     calendar=Calendar(temp/'nes-service509-rom03')
     base,new=[report(f,ref,calendar) for f in (base_path,candidate_path)]
@@ -65,7 +69,7 @@ def compare(temp,probe,tag,phase):
     paths=(base_path,candidate_path)
     b,c=[read(p/'joint.json') for p in paths]
     assert c['parameters']==b['parameters'] and c['client_SHA256']==b['client_SHA256']
-    for f,j in [(probe.parent/'nes-pair727/arm01/src',b),(probe/('arm05' if tag=='a' else 'arm06')/'src',c)]:
+    for f,j in [(probe.parent/'nes-pair727/arm01/src',b),(firmware,c)]:
         assert j['firmware_SHA256']==sha(f/'obj-nes-100/firmware.stm') and j['passed'] and j['commits']==53
     def work(p):
         plans=[(e['generation'],e['plan']) for e in read(p/'events.json') if e.get('name')=='nes_plan200_emit' and e['event']=='call673']

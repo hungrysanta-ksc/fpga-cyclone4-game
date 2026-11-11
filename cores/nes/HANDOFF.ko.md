@@ -2,7 +2,7 @@
 
 PR156 병합 `4ee65ac300c3b5eca73848bd0b408c1bc63b6800` 확인 뒤 현재 브랜치는 `codex/nes-bg-deadline-707` / PR157 draft이다. 다음 개발 기준은 MMC690이고 MMC666 대조군은 보존한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 이전 대조군 MMC666은 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
 
-**현재 736** 기존 707D와 연구 대조군 727을 유지한다. [957의 OBJ 소비·테이블 전송과 map DMA 마감](../../docs/nes-prefix736-results.ko.md)
+**현재 737** 기존 707D와 연구 대조군 727을 유지한다. [map 선행 DMA 회복과 957의 소비·표시 시각](../../docs/nes-grant737-results.ko.md)
 
 
 ## 현재 작업

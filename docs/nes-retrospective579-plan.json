@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
-    "next": "727의 952 map 발행과 953 첫 BG ROM 허가를 보존한다. 957은 240B 테이블을 map 뒤로 둔 B에서도 마지막 map ACK가 727의 1,536B DMA 시작보다 1.261 / 1.361ms 늦었다. 두 위상의 선행 DMA를 회복할 map 생산·발행 구간과 DMA 시작 뒤 OBJ·section 5 수신을 함께 검증한다. 956 선행 DMA·STOP·독립 검사·최종 ACK·메뉴 복귀를 유지한다.",
+    "next": "727의 map·BG 공급을 유지한다. 먼저 957의 대상 뱅크에서 이전 최종 ACK 이후 section 5의 scroll·패딩·raw·테이블이 WRAM에 언제까지 보존되는지 읽기·쓰기 추적으로 확인한다. 이력이 일치할 때 변경 바이트만 발행하는 비용을 기존 전체 복원과 비교한다. 독립 검사·cold/부분 전송/STOP 무효화·메뉴 복귀를 포함하고, 두 위상에서 실제 표시 간격과 최종 ACK가 함께 줄어야 선택한다.",
     "document": "docs/nes-bg707-results.ko.md",
     "evidence": "analysis/bg707-verification.json",
     "timing_reference": "analysis/bg707-verification.json",
@@ -1213,7 +1213,7 @@
       "schedule": "cycle identical to703B in both starts; separate actualCPU/PSRAM boundary and linkedARM/65816 replay",
       "physical_verified": false
     },
-    "stage": 736,
+    "stage": 737,
     "708_result": {
       "proof": "analysis/tail708-verification.json",
       "report": "docs/nes-tail708-results.ko.md",
@@ -2260,6 +2260,22 @@
             }
           }
         }
+      }
+    },
+    "737_result": {
+      "document": "docs/nes-grant737-results.ko.md",
+      "evidence": "analysis/grant737-verification.json",
+      "archive": "analysis/grant737-archive.json",
+      "selected": [],
+      "CPU_frames": 318,
+      "retained": "727",
+      "map_DMA_B": 1536,
+      "section5_changes_957": {
+        "scroll": 2,
+        "raw": 3,
+        "padding": 0,
+        "tables": 0,
+        "tail": 0
       }
     }
   },
