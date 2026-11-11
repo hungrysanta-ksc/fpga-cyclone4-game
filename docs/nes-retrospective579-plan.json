@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
-    "next": "기존 707D와 연구 대조군 727을 유지한다. 957의 마지막 OBJ ACK는 727에서 이미 260/259선이다. HDMA·테이블 확정 뒤 OBJ ACK 전의 SPI 여유는 총 2.159/2.216ms이고 최대 연속 구간은 0.166ms다. 마지막 OBJ 공급과 확정된 section 5의 소비를 이전 VBlank 앞에서 겹칠 수 있도록, section 5의 순차 offset을 지키며 scroll·패딩부터 앞당기고 240B 테이블의 연속 SPI 구간과 65816 소비 마감을 함께 검증한다. 956 선행 map·952/957의 1,536B·다음 BG·STOP·독립 검사·최종 ACK·메뉴 복귀를 유지한다.",
+    "next": "727의 952 map 발행과 953 첫 BG ROM 허가를 보존한다. 957은 240B 테이블을 map 뒤로 둔 B에서도 마지막 map ACK가 727의 1,536B DMA 시작보다 1.261 / 1.361ms 늦었다. 두 위상의 선행 DMA를 회복할 map 생산·발행 구간과 DMA 시작 뒤 OBJ·section 5 수신을 함께 검증한다. 956 선행 DMA·STOP·독립 검사·최종 ACK·메뉴 복귀를 유지한다.",
     "document": "docs/nes-bg707-results.ko.md",
     "evidence": "analysis/bg707-verification.json",
     "timing_reference": "analysis/bg707-verification.json",
@@ -1213,7 +1213,7 @@
       "schedule": "cycle identical to703B in both starts; separate actualCPU/PSRAM boundary and linkedARM/65816 replay",
       "physical_verified": false
     },
-    "stage": 735,
+    "stage": 736,
     "708_result": {
       "proof": "analysis/tail708-verification.json",
       "report": "docs/nes-tail708-results.ko.md",
@@ -2156,6 +2156,107 @@
               "956_tile128_vs734B": false,
               "956_last384_before_OBJ": true,
               "BG_windows": true
+            }
+          }
+        }
+      }
+    },
+    "736_result": {
+      "document": "docs/nes-prefix736-results.ko.md",
+      "evidence": "analysis/prefix736-verification.json",
+      "archive": "analysis/prefix736-archive.json",
+      "selected": [],
+      "CPU_frames": 212,
+      "phases": {
+        "a": {
+          "1": {
+            "delta": {
+              "mean952_957_ms": 0.030885362597871335,
+              "dense951_955_ms": -0.005289312348416786,
+              "last_ACK_ms": 0.7384550514609118,
+              "VBlank": 0,
+              "prior_display_shift_ms": 0.010429629982802285,
+              "from_previous_display_to_ACK_ms": 0.7280254214781096
+            },
+            "protected": {
+              "deadline911": true,
+              "public951": true,
+              "interval952": true,
+              "wait957": true,
+              "seven_blocks": true,
+              "previous_gains": true,
+              "long_map_DMA": false,
+              "early956": true,
+              "last384_before_OBJ": true,
+              "BG_windows": false
+            }
+          },
+          "2": {
+            "delta": {
+              "mean952_957_ms": 2.590645590371068,
+              "dense951_955_ms": -0.00439534406417863,
+              "last_ACK_ms": 16.094781497389427,
+              "VBlank": 1,
+              "prior_display_shift_ms": 0.0,
+              "from_previous_display_to_ACK_ms": 16.094781497389427
+            },
+            "protected": {
+              "deadline911": true,
+              "public951": true,
+              "interval952": true,
+              "wait957": false,
+              "seven_blocks": true,
+              "previous_gains": true,
+              "long_map_DMA": false,
+              "early956": true,
+              "last384_before_OBJ": true,
+              "BG_windows": false
+            }
+          }
+        },
+        "b": {
+          "1": {
+            "delta": {
+              "mean952_957_ms": 0.12495379611836199,
+              "dense951_955_ms": -0.005419682723207586,
+              "last_ACK_ms": 0.739293146727387,
+              "VBlank": 0,
+              "prior_display_shift_ms": 0.0038179895472758366,
+              "from_previous_display_to_ACK_ms": 0.7354751571801111
+            },
+            "protected": {
+              "deadline911": true,
+              "public951": true,
+              "interval952": true,
+              "wait957": true,
+              "seven_blocks": true,
+              "previous_gains": true,
+              "long_map_DMA": false,
+              "early956": true,
+              "last384_before_OBJ": true,
+              "BG_windows": false
+            }
+          },
+          "2": {
+            "delta": {
+              "mean952_957_ms": 0.12133757024635372,
+              "dense951_955_ms": 0.0021417990143248744,
+              "last_ACK_ms": 0.7236487017531835,
+              "VBlank": 0,
+              "prior_display_shift_ms": 0.004842328206301061,
+              "from_previous_display_to_ACK_ms": 0.7188063735468825
+            },
+            "protected": {
+              "deadline911": true,
+              "public951": true,
+              "interval952": true,
+              "wait957": true,
+              "seven_blocks": true,
+              "previous_gains": true,
+              "long_map_DMA": false,
+              "early956": true,
+              "last384_before_OBJ": true,
+              "BG_windows": false
             }
           }
         }
