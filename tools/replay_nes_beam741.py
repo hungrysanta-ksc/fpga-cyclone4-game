@@ -126,7 +126,7 @@ def replacements(client, variant):
     return out
 
 
-def run(a):
+def run(a, *, adjust_arrivals=None, observe_script=None):
     base=a.trace.parent/f'nes-pair727-a{a.phase}'
     ref=a.trace
     a.trace=base
@@ -171,6 +171,8 @@ def run(a):
                         clock+=pulse_shift
                     assert clock>=previous;previous=clock;new.append(f'{clock}\t{h}\t{b}')
                 (args.out/'arrivals.tsv').write_text('\n'.join(new)+'\n',newline='\n')
+            if adjust_arrivals is not None:
+                adjust_arrivals(args.out,base,plan)
             (args.out/'timing741.json').write_text(json.dumps(dict(advance=advance,pulse_shift=pulse_shift,
                 feedback_sha=sha(a.feedback/'pulse741.txt') if a.feedback else None)))
             s=once(s,'local function loaded()',"""local patch741=false
@@ -252,14 +254,14 @@ checkedMem527(function()
 end,emu.callbackType.exec,{labels['ready524']})
 """
                 s=once(s,'local finished522=false',hook+'local finished522=false')
-            return s
+            return observe_script(s) if observe_script else s
         def compare(old,new):
             assert [r for r in old if int(r['g'])<957]==[r for r in new if int(r['g'])<957]
             for event in ('load','ack','reveal'):
                 def ids(rows):
                     return [(r['g'],r['index'],r['op'],r['section'],r['value']) for r in rows if r['event']==event]
                 assert ids(old)==ids(new),event
-            if a.variant=='control' and a.calendar!='overlap' and not a.feedback:assert sha(ref/'window.csv')==sha(args.out/'window.csv')
+            if a.variant=='control' and a.calendar!='overlap' and not a.feedback and adjust_arrivals is None:assert sha(ref/'window.csv')==sha(args.out/'window.csv')
             return dict(prefix_events=sum(int(r['g'])<957 for r in old))
         return real_run(args,edit_script=edit,compare_trace=compare)
     with patch.object(replay,'run',retimed):

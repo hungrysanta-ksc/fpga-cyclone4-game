@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
-    "next": "727에서 마지막 map 반환·OBJ descriptor 확인의 왕복 비용과 첫 scroll 발행을 함께 검토한다. 실제 ARM·SPI에서 약 0.29ms의 scroll 경합을 피하고 257선까지 OBJ를 시작할 수 있는 예산부터 확인한다.",
+    "next": "727의 952·957 map 선행 DMA와 기존 발행 순서를 유지한 채, 65816에서 OBJ 9개 슬롯의 중복 검사와 대상 뱅크 기록을 두 bitmap 바이트의 마스크로 처리할 수 있는지 검증한다. 부분 바이트·중복·STOP·cold 복구를 대조하고, 첫 bulk 읽기와 실제 OBJ DMA 시작선까지 다시 잰다.",
     "document": "docs/nes-bg707-results.ko.md",
     "evidence": "analysis/bg707-verification.json",
     "timing_reference": "analysis/bg707-verification.json",
@@ -606,6 +606,11 @@
         "id": "S741",
         "status": "measured_rejected",
         "deliverable": "741에서 957의 BG 48B와 1,536B map 선행 DMA를 두 위상 모두 회복했다. 실제 반환·입력 비용을 포함하면 최종 OBJ 288B가 남아 727을 유지한다."
+      },
+      {
+        "id": "S742",
+        "status": "measured_rejected",
+        "deliverable": "957의 OBJ 발행과 첫 scroll을 조정한 742는 두 위상의 DMA·최종 ACK 목표를 통과하지 못했다. 727을 유지하며 65816의 OBJ 범위 검사 비용을 다음 대상으로 삼는다."
       }
     ],
     "protected": [
@@ -1233,7 +1238,7 @@
       "schedule": "cycle identical to703B in both starts; separate actualCPU/PSRAM boundary and linkedARM/65816 replay",
       "physical_verified": false
     },
-    "stage": 741,
+    "stage": 742,
     "708_result": {
       "proof": "analysis/tail708-verification.json",
       "report": "docs/nes-tail708-results.ko.md",
@@ -2357,6 +2362,22 @@
         24.025
       ],
       "physical_ROM_excess_B_at_prefix512": 88
+    },
+    "742_result": {
+      "document": "docs/nes-receipt742-results.ko.md",
+      "evidence": "analysis/receipt742-verification.json",
+      "selected": false,
+      "retained": "727",
+      "linked_ACK_delta_us": [
+        44.047,
+        55.035
+      ],
+      "linked_dense_delta_us": [
+        -59.101,
+        -55.299
+      ],
+      "lost_prefix_generation": 952,
+      "OBJ_final_B": 288
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",
