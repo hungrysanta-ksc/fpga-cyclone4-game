@@ -2,7 +2,7 @@
 
 PR156 병합 `4ee65ac300c3b5eca73848bd0b408c1bc63b6800` 확인 뒤 현재 브랜치는 `codex/nes-bg-deadline-707` / PR157 draft이다. 다음 개발 기준은 MMC690이고 MMC666 대조군은 보존한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 이전 대조군 MMC666은 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
 
-**현재 745** 두 위상 모두 48B BG를 먼저 전송하고 1,536B map 뒤에 수락된 288B OBJ를 남겼다. 실제 ARM의 scroll 유예는 위상 2만 257선에 도달했고, 727 map 시각 고정 시험은 위상 1만 통과했다. 727을 유지한다. [두 위상 결과](../../docs/nes-bg745-results.ko.md)
+**현재 746** 957에서 마지막 map credit이 남은 동안 ARM이 OAM 116B를 완성했다. 727의 521개 map 발행 시각을 고정한 일괄 후보는 위상 1에서 OBJ DMA 256선 H1286·최종 ACK 400클록 단축, 위상 2에서 긴 map 종료 260선·ACK 12클록 지연이었다. 두 위상을 함께 개선하지 못해 727을 유지한다. [두 위상 결과](../../docs/nes-oam746-results.ko.md)
 
 
 ## 현재 작업
