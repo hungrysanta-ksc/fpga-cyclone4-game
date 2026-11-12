@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
-    "next": "957의 OBJ 선행 수락 일정을 고정하고 48B BG를 긴 map 전에 소비했을 때 map 마감과 OBJ 선택 시각을 측정한다. 288B 전체 또는 일부의 실제 전송을 257선 안에 시작하는 데 필요한 ROM과 빔 검사 비용을 비교한다. E8 조회 위치 조정은 종료한다.",
+    "next": "750의 BG·map·OBJ 전송 순서를 유지하면서 65816의 기존 descriptor 선택과 채널 설정을 공유해 ROM을 줄인다. 694와 같은 부팅 prefix에서 107B를 회수하거나 더 짧은 prefix로 최소 39B를 줄인 뒤, 정적 ROM으로 처음부터 부팅해 E8 시각과 257선 여유, 두 위상의 밀집 간격·최종 ACK를 다시 검증한다.",
     "document": "docs/nes-bg707-results.ko.md",
     "evidence": "analysis/bg707-verification.json",
     "timing_reference": "analysis/bg707-verification.json",
@@ -646,6 +646,11 @@
         "id": "S749",
         "status": "pre_map_receipt_verified_next_vblank_retain727",
         "deliverable": "마지막 map 페이지 앞에서 E8을 조회하면 957 OBJ 수락이 긴 map DMA보다 7.053 / 6.726ms 빨랐다. 두 위상 모두 map 뒤에 BG 48B가 OBJ 288B 앞에 남아 OBJ DMA는 다음 VBlank 226선에 시작했다. 밀집 간격은 13.968 / 8.241µs, 최종 ACK는 1,296 / 1,062클록 늘었다. 952·957의 1,536B 선행 DMA와 STOP·새 패킷 우선·독립 검사·메뉴 복귀를 확인했고 727을 유지한다."
+      },
+      {
+        "id": "S750",
+        "status": "timing_pass_static_ROM_over_budget",
+        "deliverable": "750의 공동 실행에서 BG 48B → map 1,536B → OBJ 288B를 두 위상 모두 같은 VBlank 안에 마쳤다. OBJ 시작은 257선 H1352 / 255선 H1100, 727 대비 밀집 간격은 17.538 / 20.766µs, 마지막 ACK는 2,764 / 2,676클록 단축됐다. 위상 1 여유는 12클록이며 정적 ROM은 694 부팅 prefix에서 107B 초과해 성능 비교 기준은 727을 유지한다."
       }
     ],
     "protected": [
@@ -2572,6 +2577,31 @@
         1296,
         1062
       ]
+    },
+    "750_result": {
+      "document": "docs/nes-bg750-results.ko.md",
+      "evidence": "analysis/bg750-verification.json",
+      "timing_pass": true,
+      "production_selected": false,
+      "retained": 727,
+      "OBJ_line": [
+        257,
+        255
+      ],
+      "margin_clocks": [
+        12,
+        2992
+      ],
+      "dense_delta_us": [
+        -17.538,
+        -20.766
+      ],
+      "ACK_delta_clocks": [
+        -2764,
+        -2676
+      ],
+      "same_prefix_over_B": 107,
+      "best_prefix_over_B": 39
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",
