@@ -2,7 +2,7 @@
 
 PR156 병합 `4ee65ac300c3b5eca73848bd0b408c1bc63b6800` 확인 뒤 현재 브랜치는 `codex/nes-bg-deadline-707` / PR157 draft이다. 다음 개발 기준은 MMC690이고 MMC666 대조군은 보존한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 이전 대조군 MMC666은 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
 
-**현재 739** 957의 OBJ 준비 후 ARM 조회가 두 위상에서 약 8ms 지연됐다. OBJ·OAM을 먼저 수락하면 957의 1,536B 선행 DMA를 잃어 727을 유지한다. [staging·큐 점유·246선 검증](../../docs/nes-owner739-results.ko.md)
+**현재 740** 957의 OBJ·OAM을 246선 안에 처리하고 1,536B map 선행 DMA를 유지했다. BG 48B가 최종 업로드로 밀려 727을 유지한다. [두 위상과 실제 DMA 순서](../../docs/nes-gap740-results.ko.md)
 
 
 ## 현재 작업
