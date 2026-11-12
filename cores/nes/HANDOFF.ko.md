@@ -2,7 +2,7 @@
 
 PR156 병합 `4ee65ac300c3b5eca73848bd0b408c1bc63b6800` 확인 뒤 현재 브랜치는 `codex/nes-bg-deadline-707` / PR157 draft이다. 다음 개발 기준은 MMC690이고 MMC666 대조군은 보존한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 이전 대조군 MMC666은 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
 
-**현재 743** 743의 두 바이트 OBJ 검사는 첫 원본 읽기를 두 위상 모두 0.221ms 앞당겼다. 727의 고정 발행에서 마지막 ACK는 그대로였고, 완전 링크에서는 908 위상 1이 한 VBlank 늦어져 727을 유지한다. [두 위상 결과](../../docs/nes-bitmap743-results.ko.md)
+**현재 744** 744의 65816 재생에서 수락된 OBJ의 DMA를 두 위상 모두 257선에 시작했다. 727 원래 발행에서는 map이 끝날 때 내부 큐가 비어 53화면의 시각이 원본과 같았다. 727을 유지한다. [두 위상 결과](../../docs/nes-chain744-results.ko.md)
 
 
 ## 현재 작업
