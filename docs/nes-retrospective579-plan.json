@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
-    "next": "727의 952·957 선행 DMA 1,536B를 유지하고, 957의 마지막 OBJ가 map DMA 시작 전에 준비됐는지와 당시 staging·credit 소유자를 확인한다. OBJ 수락과 후속 OAM 검사를 246선 앞으로 옮겼을 때 두 위상의 표시 간격·마지막 ACK가 함께 줄어드는지 검증한다.",
+    "next": "727의 마지막 map ACK부터 1,536B DMA 시작까지 1.578 / 1.419ms에 OBJ 조회·큐 수락과 빈 큐 DMA를 함께 넣을 수 있는지 먼저 재생한다. 8개 map 발행 시각, 952·957 선행 DMA와 246선 마감을 고정하고, 두 위상의 밀집 간격·마지막 ACK로 채택 여부를 정한다.",
     "document": "docs/nes-bg707-results.ko.md",
     "evidence": "analysis/bg707-verification.json",
     "timing_reference": "analysis/bg707-verification.json",
@@ -591,6 +591,11 @@
         "id": "S738",
         "status": "measured_rejected",
         "deliverable": "738에서 section 5의 1,754B가 보존됐다. 957 E1은 552B에서 42B로 줄었지만 전체 WRAM 재검산을 포함하면 두 위상 모두 표시가 3→4 VBlank가 되고 마지막 ACK가 16.77ms 늦어졌다. 952·957의 1,536B 선행 DMA는 동일했다. 727을 유지한다."
+      },
+      {
+        "id": "S739",
+        "status": "measured_rejected",
+        "deliverable": "739에서 OBJ 288B는 map DMA보다 9.234 / 9.108ms 먼저 준비됐고, BG 반환 뒤 ARM 조회까지 7.996 / 7.789ms를 기다렸다. 큐 점유는 최대 1/4이었다. 후보 모두 OBJ·OAM은 246선 전에 처리했으나 957의 1,536B 선행 DMA를 잃었다. 952를 지킨 B도 마지막 ACK가 0.738 / 0.737ms 늦어져 727을 유지한다."
       }
     ],
     "protected": [
@@ -1218,7 +1223,7 @@
       "schedule": "cycle identical to703B in both starts; separate actualCPU/PSRAM boundary and linkedARM/65816 replay",
       "physical_verified": false
     },
-    "stage": 738,
+    "stage": 739,
     "708_result": {
       "proof": "analysis/tail708-verification.json",
       "report": "docs/nes-tail708-results.ko.md",
@@ -2294,6 +2299,21 @@
       "additional_VBlank": [
         1,
         1
+      ]
+    },
+    "739_result": {
+      "document": "docs/nes-owner739-results.ko.md",
+      "evidence": "analysis/owner739-verification.json",
+      "selected": false,
+      "retained": "727",
+      "BG_owner_to_E8_ms": [
+        7.9964,
+        7.788983
+      ],
+      "max_queue_depth_during_wait": 1,
+      "B_final_ACK_delta_ms": [
+        0.738455,
+        0.737338
       ]
     }
   },
