@@ -2,7 +2,7 @@
 
 PR156 병합 `4ee65ac300c3b5eca73848bd0b408c1bc63b6800` 확인 뒤 현재 브랜치는 `codex/nes-bg-deadline-707` / PR157 draft이다. 다음 개발 기준은 MMC690이고 MMC666 대조군은 보존한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 이전 대조군 MMC666은 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
 
-**현재 748** 748은 727에서 입력 조회 한 번을 OAM 반환 뒤로 옮겼다. 두 위상 모두 905의 map 22개 시각과 952·957의 1,536B DMA를 지켰지만, 957 OBJ는 긴 map 도중 도착해 다음 VBlank 225선에서 전송됐다. 밀집 간격은 1.738 / 2.313µs 늘고 ACK는 0 / +12클록이었다. 727을 유지한다. [두 위상 결과](../../docs/nes-input748-results.ko.md)
+**현재 749** 마지막 map 페이지 앞에서 E8을 조회하면 957 OBJ 수락이 긴 map DMA보다 7.053 / 6.726ms 빨랐다. 두 위상 모두 map 뒤에 BG 48B가 OBJ 288B 앞에 남아 OBJ DMA는 다음 VBlank 226선에 시작했다. 밀집 간격은 13.968 / 8.241µs, 최종 ACK는 1,296 / 1,062클록 늘었다. 952·957의 1,536B 선행 DMA와 STOP·새 패킷 우선·독립 검사·메뉴 복귀를 확인했고 727을 유지한다. [두 위상 결과](../../docs/nes-obj749-results.ko.md)
 
 
 ## 현재 작업
