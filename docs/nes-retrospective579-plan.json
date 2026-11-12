@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
-    "next": "727의 기존 반환 처리와 OAM 송신 완료 경로에서 입력 조회 한 번의 순서만 바꾸는 최소 교체를 검토한다. 첫 905 map 발행이 62클록 늦어지는 지점부터 추적해 521개 map 발행 시각을 전체 링크에서도 대조한다. 952·957의 1,536B와 STOP·새 패킷 우선·독립 검사를 유지하고 두 위상의 밀집 간격과 최종 ACK가 함께 줄어든 경우에만 Flash·65816 ROM 한도 안에서 실기 후보로 채택한다.",
+    "next": "727에서 마지막 OBJ를 긴 map DMA 시작 전에 수락할 수 있는지 E8 descriptor 준비·ARM 발행·65816 검사 시간을 먼저 대조한다. 748의 OBJ 발행은 map 시작보다 7,450 / 6,731클록 늦었다. 이 예산을 맞추기 어려우면 694 ROM 26B 여유 안에서 검증된 288B OBJ의 부분 전송이 가능한지 검토한다. 입력 조회 한 번의 재배치는 다시 시도하지 않는다.",
     "document": "docs/nes-bg707-results.ko.md",
     "evidence": "analysis/bg707-verification.json",
     "timing_reference": "analysis/bg707-verification.json",
@@ -636,6 +636,11 @@
         "id": "S747",
         "status": "matched_pass_linked_phase1_regression_retain727",
         "deliverable": "727의 부팅과 521개 map 발행 시각을 고정하고 E0로 마지막 map 반환을 확인했다. 입력 조회를 OAM 반환 뒤에 수행하면 두 위상 모두 OBJ 64B DMA가 255선에서 시작하고 최종 ACK가 154·178클록 빨라졌다. 전체 링크에서는 위상 1의 밀집 표시 간격이 1.785µs 늘고 Flash가 368·412B 초과해 727을 유지한다."
+      },
+      {
+        "id": "S748",
+        "status": "within_size_post_SEAL_only_retain727",
+        "deliverable": "748은 727에서 입력 조회 한 번을 OAM 반환 뒤로 옮겼다. 두 위상 모두 905의 map 22개 시각과 952·957의 1,536B DMA를 지켰지만, 957 OBJ는 긴 map 도중 도착해 다음 VBlank 225선에서 전송됐다. 밀집 간격은 1.738 / 2.313µs 늘고 ACK는 0 / +12클록이었다. 727을 유지한다."
       }
     ],
     "protected": [
@@ -1263,7 +1268,7 @@
       "schedule": "cycle identical to703B in both starts; separate actualCPU/PSRAM boundary and linkedARM/65816 replay",
       "physical_verified": false
     },
-    "stage": 747,
+    "stage": 748,
     "708_result": {
       "proof": "analysis/tail708-verification.json",
       "report": "docs/nes-tail708-results.ko.md",
@@ -2514,6 +2519,32 @@
         412
       ],
       "same_prefix_ROM_over_B": 279
+    },
+    "748_result": {
+      "document": "docs/nes-input748-results.ko.md",
+      "evidence": "analysis/input748-verification.json",
+      "selected": false,
+      "retained": 727,
+      "overlap": "957 OBJ arrives during long map in both phases",
+      "first_different_map": [
+        906,
+        0,
+        -49
+      ],
+      "dense_delta_us": [
+        1.738,
+        2.313
+      ],
+      "final_ACK_delta_clocks": [
+        0,
+        12
+      ],
+      "flash_free_long_normal": [
+        148,
+        104
+      ],
+      "ROM_free": 26,
+      "BSS_delta": 240
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",
