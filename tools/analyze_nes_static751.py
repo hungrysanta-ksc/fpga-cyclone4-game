@@ -11,16 +11,16 @@ from analyze_nes_owner739 import csv_groups, ms, read, sha
 from analyze_nes_receipt742 import whole
 
 
-def phase(temp,variant,n):
-    client=temp/f'nes-static751-{variant}'
-    folder=temp/f'nes-static751-{variant}{n}'
+def phase(temp,variant,n,*,client=None,folder=None,firmware=None):
+    client=client or temp/f'nes-static751-{variant}'
+    folder=folder or temp/f'nes-static751-{variant}{n}'
     reference=temp/f'nes-obj749-page{n}'
     prior=read(Path('analysis/obj749-verification.json'))['phases'][str(n)]
     image=sha(client/'sink165.sfc')
     summary=whole(folder,temp/f'nes-pair727-a{n}',expected_client_sha=image)
     joint=read(folder/'joint.json')
     assert 'for i,v in ipairs({' not in (folder/'capture.lua').read_text(encoding='utf8')
-    assert image==sha(folder/'client.sfc') and summary['firmware']==prior['page']['firmware']
+    assert image==sha(folder/'client.sfc') and summary['firmware']==(firmware or prior['page']['firmware'])
     def query(d):
         return next(e for e in read(d/'events.json') if e.get('generation')==957 and
                     e.get('opcode')=='0xe8' and e['reply']==prior['page']['E8_reply'])

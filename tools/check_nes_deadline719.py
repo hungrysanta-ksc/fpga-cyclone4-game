@@ -21,7 +21,7 @@ class Deadline(QuietProbe):
    if self.event719 and self.drains==2:self.put(self.window719,'nes_sink_window184','status_flags',10,1)
   super().hook(u,at,size,user)
 
-def check(src,case):
+def check(src,case,*,map_input=None):
  m=Deadline(src,'normal');m.clock719=10000000;m.event719=case not in ('expiry','stopped_clock')
  if case=='wrap':m.clock719=0xffffff00
  m.heads=[];m.test_sink=sink=0x20015800;plan=0x20016300;window=m.window719=0x20016b00
@@ -43,8 +43,20 @@ def check(src,case):
  m.u.mem_write(window+m.layout['nes_sink_window184']['last'],bytes([7,1] if case=='last_tile' else [2,2])+bytes(8))
  for k,v,n in [('prepared',1,1),('open',1,1),('displayed',1,1),('serial',48,4),('generation',952,2),('target',1,1)]:m.put(m.resident,'nes_resident211',k,v,n)
  for k,v,n in [('valid',1,1),('generation',952,2),('bg_count',1,2),('obj_count',16,2),('hdma_size',21,2),('display_mask',0x1e,1)]:m.put(m.video,'nes_native_video165',k,v,n)
+ if map_input:
+  policy,kind,size=map_input
+  m.u.mem_write(m.data_symbols['nes_cost471_available'],bytes(4))
+  for k in ('ending','bulk_valid'):m.put(plan,'nes_plan200',k,1,1)
+  if policy=='repay':m.put(plan,'nes_plan200','bg_input_due',1,1)
+  m.u.mem_write(plan+m.layout['nes_plan200']['bulk'],bytes((1,kind))+size.to_bytes(2,'little')+bytes(8))
  ok=m.call('nes_sink212_seal',[sink,m.video,m.resident,4192]);positive=case not in ('STOP','bad_credit','bad_final')
  assert bool(ok)==positive,(case,ok,m.drains,m.samples)
+ if map_input:
+  applies=policy=='repay' or (kind==1 and size>=256)
+  assert m.drains==int(applies) and m.samples==int(applies and case!='bad_credit')
+  assert m.reasons==[4]*m.samples
+  assert m.get(sink,'nes_native_sink165','ack635',8)==45|((48 if ok else 46)<<32)
+  return dict(policy=policy,kind=kind,size=size,case=case,committed=bool(ok),drains=m.drains,input=m.samples)
  if case in ('cold','last_tile','no_clock','stale','current_deadline','budget_boundary'):assert m.drains==m.samples==0,case
  if case in ('normal','wrap','bad_final','budget_after'):assert (m.drains,m.samples)==(3,2),(case,m.drains,m.samples)
  if case=='expiry':assert 2<m.samples<20,(case,m.samples)
