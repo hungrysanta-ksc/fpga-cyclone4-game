@@ -381,7 +381,7 @@
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
     "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
-    "next": "750의 BG·map·OBJ 전송 순서를 유지하면서 65816의 기존 descriptor 선택과 채널 설정을 공유해 ROM을 줄인다. 694와 같은 부팅 prefix에서 107B를 회수하거나 더 짧은 prefix로 최소 39B를 줄인 뒤, 정적 ROM으로 처음부터 부팅해 E8 시각과 257선 여유, 두 위상의 밀집 간격·최종 ACK를 다시 검증한다.",
+    "next": "751 sharedfast의 정적 ROM을 기준으로 956 공개와 957의 BG descriptor 준비·E1 발행 사이에서 위상 2의 462클록 차이가 처음 생기는 사건을 찾는다. 두 위상의 E8 마감, 1,536B map 선행과 OBJ 257선 마감을 같은 리셋 실행에서 비교한다.",
     "document": "docs/nes-bg707-results.ko.md",
     "evidence": "analysis/bg707-verification.json",
     "timing_reference": "analysis/bg707-verification.json",
@@ -651,6 +651,11 @@
         "id": "S750",
         "status": "timing_pass_static_ROM_over_budget",
         "deliverable": "750의 공동 실행에서 BG 48B → map 1,536B → OBJ 288B를 두 위상 모두 같은 VBlank 안에 마쳤다. OBJ 시작은 257선 H1352 / 255선 H1100, 727 대비 밀집 간격은 17.538 / 20.766µs, 마지막 ACK는 2,764 / 2,676클록 단축됐다. 위상 1 여유는 12클록이며 정적 ROM은 694 부팅 prefix에서 107B 초과해 성능 비교 기준은 727을 유지한다."
+      },
+      {
+        "id": "S751",
+        "status": "static_ROM_and_DMA_pass_phase2_E8_late",
+        "deliverable": "공유 선택기와 빠른 부팅을 결합한 5,120B 정적 ROM은 61B가 남고, 957 OBJ를 257선 H1256 / 256선 H1316에 시작했다. 두 위상의 밀집 간격·최종 ACK는 727보다 줄었지만 749의 E8보다 위상 2가 21.496µs 늦어 비교 기준은 727을 유지한다."
       }
     ],
     "protected": [
@@ -2602,6 +2607,31 @@
       ],
       "same_prefix_over_B": 107,
       "best_prefix_over_B": 39
+    },
+    "751_result": {
+      "document": "docs/nes-static751-results.ko.md",
+      "evidence": "analysis/static751-verification.json",
+      "status": "static_ROM_and_DMA_pass_phase2_E8_late",
+      "retained": 727,
+      "production_selected": false,
+      "candidate": "sharedfast",
+      "ROM_free_B": 61,
+      "margin_clocks": [
+        108,
+        1412
+      ],
+      "E8_delta_us": [
+        -33.377,
+        21.496
+      ],
+      "dense_delta_us": [
+        -21.62,
+        -17.631
+      ],
+      "ACK_delta_clocks": [
+        -3010,
+        -2558
+      ]
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",
