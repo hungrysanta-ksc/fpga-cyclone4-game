@@ -26,11 +26,11 @@ def cpu_frame(folder, g):
             sum(r['event']=='wait169' and r['clock']>seal('final212')['clock'] for r in rows)}
 
 
-def whole(folder,base):
+def whole(folder,base,*,expected_client_sha=None):
     j=read(folder/'joint.json')
     orig=read(base/'joint.json')
     assert j['passed'] and j['commits']==53 and j['max_bulk_banks']<=2 and j['map_WRAM_VRAM_verified']
-    assert j['parameters']==orig['parameters'] and j['client_SHA256']==orig['client_SHA256']
+    assert j['parameters']==orig['parameters'] and j['client_SHA256']==(expected_client_sha or orig['client_SHA256'])
     assert all(sha(folder/f'frame-{g}.rgb')==sha(base/f'frame-{g}.rgb') for g in range(905,958))
     expected=packets(base)
     heads=packets(folder)
@@ -55,13 +55,14 @@ def whole(folder,base):
               bytes((1,1))+target[obj][0][14:16]+target[obj][0][10:12]+target[obj][0][8:10]+target[obj][0][16:20])
     issue=[e for e in events if target[row][2]<e['clock']<=target[obj][2]+1]
     ps={g:any(x['offset']==67584 and x['size']==1536 for x in frames[g]['prefix']) for g in (952,957)}
-    obj_dmas=[x for x in frames[957]['prefix'] if x['offset']==2720 or x['offset']==(16384+2720)]
     # The tile tap binds the DMA grant to its exact WRAM source. Convert
     # the grant to the separate MDMAEN event before testing scanline 257.
-    tile=[r for r in records(folder/'tile532.csv') if r['g']==957 and r['src']==19104]
-    starts=[next(s for s in cpu if s['clock']>=r['clock'] and s['event']=='ppu_dma')['line'] for r in tile]
+    tile=[r for r in records(folder/'tile532.csv') if r['g']==957 and 19104<=r['src']<19392]
+    obj_dmas=[next(x for x in frames[957]['prefix'] if x['start']>=r['clock']) for r in tile]
+    assert len({x['start'] for x in obj_dmas})==len(tile) and all(x['size']==r['n'] for x,r in zip(obj_dmas,tile))
+    starts=[x['first_line'] for x in obj_dmas]
     final=[r for r in records(folder/'seal528.csv') if r['g']==957 and r['event']=='dma' and 19104<=r['src']<19392]
-    assert len(starts)==len(obj_dmas) and sum(r['n'] for r in tile)+sum(r['bytes'] for r in final)==288
+    assert sum(r['n'] for r in tile)+sum(r['bytes'] for r in final)==288
     dense=ms(frames[957]['reveal']['clock']-frames[951]['reveal']['clock'])/6
     ref=read(Path('analysis/owner739-verification.json'))['phases']['1' if j['parameters']['start']==7288416 else '2']['ref']
     metrics=dict(dense_ms=dense,dense_delta_us=1000*(dense-ref['dense_ms']),

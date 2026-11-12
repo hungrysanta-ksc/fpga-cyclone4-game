@@ -49,7 +49,7 @@ def pack(body, prefix):
     return bytes(out)
 
 
-def build(base,out,*,edit_body=None,allow_extension=False):
+def build(base,out,*,edit_body=None,allow_extension=False,prefix_sizes=None):
     selected=json.loads(Path('analysis/reuse635-verification.json').read_text())
     assert sha(base/'sink165.sfc')==selected['phases'][0]['runs']['idle_short']['client']
     rom=(base/'sink165.sfc').read_bytes()
@@ -63,7 +63,8 @@ def build(base,out,*,edit_body=None,allow_extension=False):
             length=len(body)
         else:
             assert len(body)==length
-    for prefix in range(length//128*128,0,-128):
+    for prefix in (range(length//128*128,0,-128) if prefix_sizes is None else prefix_sizes):
+        assert 0<prefix<=length and prefix%2==0  # boot verifies the literal prefix in words
         stream=pack(body,prefix)
         if BOOT+prefix+len(stream)<=STORED:break
     else:raise ValueError('ROM capacity')
