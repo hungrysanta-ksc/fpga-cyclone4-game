@@ -38,25 +38,27 @@ def guards(src,mode):
     # uint64_t pending occupies r2/r3, with 'finished' on the AAPCS stack.
     def offer(limit,mask=0xffffff):
         return machine.call('nes_map757_offer',[machine.s,machine.video,0,mask,limit])
-    assert offer(0) and not packets
+    first=6 if mode=='tail' else 0
+    limit_two=first+2
+    assert offer(first) and not packets
     for flag in ready:
         ready[flag]=False
-        assert offer(2) and not packets
+        assert offer(limit_two) and not packets
         ready[flag]=True;failed=flag
-        assert not offer(2) and not packets
+        assert not offer(limit_two) and not packets
         failed=None
-    assert offer(1,6) and not packets
+    assert offer(first+1,6<<(first*3)) and not packets
     failed='nes_window184_enqueue'
-    assert not offer(1) and machine.get(machine.s,sink,'right757')==0
+    assert not offer(first+1) and machine.get(machine.s,sink,'right757')==0
     machine.setup();machine.put(machine.s,sink,'plan',machine.p,4)
     failed=None;packets.clear()
-    assert offer(2) and len(packets)==(1 if mode=='row' else 2)
-    for limit in range(1,9):
+    assert offer(limit_two) and len(packets)==(1 if mode=='row' else 2)
+    for limit in range(first+1,9):
         count=len(packets)
         assert offer(limit)
         assert all(offset+192<=2048+192*limit for offset in packets[count:])
-    assert packets==list(range(2048,3584,192)) and machine.get(machine.s,sink,'right757')==255
-    assert offer(8) and len(packets)==8
+    assert packets==list(range(2048+192*first,3584,192)) and machine.get(machine.s,sink,'right757')==((255<<first)&255)
+    assert offer(8) and len(packets)==8-first
     proof['range_guards']=dict(failed_enqueue_unpublished=True,blocked_room_and_tile=True,
         sparse_fallback=True,duplicate_free=True,offsets=packets)
     proof.update(verify(src,'mapobj'))
@@ -64,6 +66,6 @@ def guards(src,mode):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('src',type=Path);p.add_argument('mode',choices=('row','pair','page'));p.add_argument('out',type=Path)
+    p.add_argument('src',type=Path);p.add_argument('mode',choices=('row','pair','page','tail'));p.add_argument('out',type=Path)
     a=p.parse_args()
     a.out.write_text(json.dumps(guards(a.src,a.mode),indent=2)+'\n',encoding='utf8')

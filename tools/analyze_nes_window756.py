@@ -10,7 +10,7 @@ from analyze_nes_map628 import normalize
 from analyze_nes_owner739 import csv_groups, ms, packets, read, sha
 
 
-def summarize(folder, base, phase, reference):
+def summarize(folder, base, phase, reference, *, ordered_page=True):
     run=read(folder/'joint.json')
     assert run['passed'] and run['commits']==run['map_WRAM_VRAM_verified']==53
     assert run['parameters']==read(base/'joint.json')['parameters'] and run['max_bulk_banks']<=2
@@ -39,7 +39,8 @@ def summarize(folder, base, phase, reference):
         assert abs(push-wire['clock'])<=1 and push<=load['clock']<=ack['clock']
         page.append(dict(offset=offset,op=h[0],B=wire['bytes'],start=wire['start'],push=push,
                          accepted=load['clock'],retired=ack['clock']))
-    assert [r['offset'] for r in page]==list(range(2048,3584,192))
+    offsets=[r['offset'] for r in page]
+    assert (offsets if ordered_page else sorted(offsets))==list(range(2048,3584,192))
     last=page[-1]['retired']
     assert last<lo or last>hi
     prior=read(Path('analysis/obj749-verification.json'))['phases'][str(phase)]['page']
