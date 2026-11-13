@@ -26,10 +26,15 @@ def run(a):
         h=bytes.fromhex(h);g=int.from_bytes(h[8:10],'little')
         if h[0]==7:last_tile[g]=i
     advance=round(a.advance_us*21.477272);rows=[];ledger=[];previous=0
+    tail_gap=getattr(a,'tail_gap_us',0)
+    if tail_gap and (a.mode!='all' or a.generation!=a.through or tail_gap>a.advance_us or tail_gap<0):
+        raise ValueError('A tail gap requires one full generation and must fit within the requested advance')
     for i,((_,t,h,b),e) in enumerate(zip(ps,spi,strict=True)):
         h=bytes.fromhex(h);g=int.from_bytes(h[8:10],'little');assert abs(t-e['clock'])<=1
         selected=a.generation<=g<=a.through and (a.mode=='all' or a.mode=='seal' and h[0]==3 or a.mode=='tail' and i>last_tile[g])
         desired=t-advance if selected else t
+        if selected and i>last_tile[g] and h[1]!=2 and tail_gap:
+            desired+=round(tail_gap*21.477272)
         # Retain each E1 wire+driver duration, including headers/request CRC.
         duration=e['clock']-e['start']
         offer=max(desired,round(previous+duration)) if selected else t
@@ -82,7 +87,7 @@ def run(a):
             final_waits=sum(e['event']=='wait169' and e['clock']>=one(seal,'final212')['clock'] for e in seal),
             seal_load_advance_ms=ms(one(old,'load')['clock']-one(seal,'load')['clock']))
     out=dict(passed=True,scope=__doc__,mode=a.mode,generation=a.generation,through=a.through,advance_us=a.advance_us,
-        metrics=metrics,offers=ledger,same_pixels=True,full_CRC_coverage_ACK=True,client_SHA256=sha(a.out/'client.sfc'),
+        metrics=metrics,tail_gap_us=getattr(a,'tail_gap_us',0),offers=ledger,same_pixels=True,full_CRC_coverage_ACK=True,client_SHA256=sha(a.out/'client.sfc'),
         dense_mean_ms=sum(metrics[g]['interval_ms'] for g in range(951,956))/5,
         last_ACK=metrics[957]['ACK'],prefix_exact=True,new_ARM=False,new_FPGA=False,
         pins={n:sha(a.out/n) for n in ('capture.lua','arrivals.tsv','window.csv','admission711.csv','result.json','seal528.csv','budget685.csv')})
@@ -95,4 +100,5 @@ if __name__=='__main__':
     p.add_argument('--mode',choices=['control','seal','tail','all'],required=True)
     p.add_argument('--generation',type=int,default=951);p.add_argument('--through',type=int,default=957)
     p.add_argument('--advance-us',type=int,default=0)
+    p.add_argument('--tail-gap-us',type=int,default=0,help='Extra time before ordinary/SEAL following the last tile and map (sensitivity only)')
     run(p.parse_args())
