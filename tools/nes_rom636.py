@@ -49,7 +49,7 @@ def pack(body, prefix):
     return bytes(out)
 
 
-def build(base,out,*,edit_body=None,allow_extension=False,prefix_sizes=None,medium_pages=False,boot_bytes=BOOT,short_errors=False,fast_backrefs=False):
+def build(base,out,*,edit_body=None,allow_extension=False,prefix_sizes=None,medium_pages=False,boot_bytes=BOOT,short_errors=False,fast_backrefs=False,body_limit=0x1900):
     selected=json.loads(Path('analysis/reuse635-verification.json').read_text())
     assert sha(base/'sink165.sfc')==selected['phases'][0]['runs']['idle_short']['client']
     rom=(base/'sink165.sfc').read_bytes()
@@ -59,7 +59,7 @@ def build(base,out,*,edit_body=None,allow_extension=False,prefix_sizes=None,medi
     if edit_body is not None:
         body=edit_body(body,json.loads((base/'labels.json').read_text()))
         if allow_extension:
-            assert original_length<=len(body)<=0x1900
+            assert original_length<=len(body)<=body_limit
             length=len(body)
         else:
             assert len(body)==length
