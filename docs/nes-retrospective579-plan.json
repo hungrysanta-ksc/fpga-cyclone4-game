@@ -16,10 +16,10 @@
   "preserve_historical_evidence": true,
   "implementation_started": true,
   "merged_PR149": "6094a7cff6995981bea4f55be7f4ce6e27a81e06",
-  "branch": "codex/nes-output-longrun-692",
+  "branch": "codex/nes-bg-deadline-707",
   "merged_PR150": "588fa177ed1a82056a5cc86813506c3f2024cc70",
-  "current_step": 706,
-  "current_evidence": "analysis/hardware706-mmc704-705.json",
+  "current_step": 707,
+  "current_evidence": "analysis/bg707-verification.json",
   "selected_manifest": "analysis/whole580-manifest.json",
   "protected": [
     "MMC577 selected artifacts",
@@ -374,17 +374,17 @@
   "clean_clone_rebuild_complete": false,
   "new_installer_required_now": false,
   "retrospective_PR": 150,
-  "PR": 156,
+  "PR": 157,
   "bounded_prototype_started": true,
   "candidate_manifest": "analysis/trial690-package.json",
   "merged_PR151": "a3582cd",
   "merged_PR153": "9a1aa775871ea6d5f19eedc9dc97e3e05f339a31",
   "current_followup": {
-    "candidate": "706 실기: MMC704 1차는 기존690과 같은 stage0 5초 준비 timeout,705 1차는193:230 배경 CHR21E161 deadline2(age2)로 서로 다르다. 704 2차는 정상60초·메뉴 복귀,5–55초19.04fps(700대비−10.10%,작업량 증가로인과미확정)다. 705 2차는298.56초·5957표시·사용자종료/메뉴복귀,스페이드 클리어를 사용자 확인했다. 그러나 여러 장면의 반복 타일 깨짐과 최대430ms 표시 공백이 남아 전체 안정성은 미승인이다.",
-    "next": "먼저705 초기 배경CHR 오류를699/703B 실제CPU·mapper·PSRAM 일정으로 재현한다. 이어 여러 장면의 타일 깨짐을 캡처/scroll/CHR-bank→ARM map/tile→실제VRAM/표시bank 일관성으로 분리한다. 별도704 stage0 timeout은 SNES첫fetch·WRAM복원·ready공개로 추적한다. 독립 검사·STOP·최종ACK·메뉴와스페이드수정을유지하고,안정성확인전추가속도최적화·새ZIP은보류한다. 오류무시·timeout완화·근거없는재시도는금지한다.",
-    "document": "docs/nes-hardware706-results.ko.md",
-    "evidence": "analysis/hardware706-mmc704-705.json",
-    "timing_reference": "analysis/output692-verification.json",
+    "candidate": "707D: BG render-start and PPUDATA read-tail prefetch; source-only rtl/ppu.sv; functional/whole FIT/STA passed; display clocks unchanged",
+    "next": "PR157 회고의 순서를 적용한다. 707D 실기 대조와 753 후보 비교를 준비하고, 현재 SPI에서 없어지는 D1/E1 바이트·거래와 전체 자원 예산을 먼저 검토한다. 같은 발행 순서의 미세 조정은 재개하지 않는다.",
+    "document": "docs/nes-bg707-results.ko.md",
+    "evidence": "analysis/bg707-verification.json",
+    "timing_reference": "analysis/bg707-verification.json",
     "hardware_baseline": "MMC690",
     "steps": [
       {
@@ -551,6 +551,121 @@
         "id": "S706",
         "status": "physical_bonus_passed_startup_BG_fault_and_repeated_pixel_issue_open",
         "deliverable": "706 실기: MMC704 1차는 기존690과 같은 stage0 5초 준비 timeout,705 1차는193:230 배경 CHR21E161 deadline2(age2)로 서로 다르다. 704 2차는 정상60초·메뉴 복귀,5–55초19.04fps(700대비−10.10%,작업량 증가로인과미확정)다. 705 2차는298.56초·5957표시·사용자종료/메뉴복귀,스페이드 클리어를 사용자 확인했다. 그러나 여러 장면의 반복 타일 깨짐과 최대430ms 표시 공백이 남아 전체 안정성은 미승인이다."
+      },
+      {
+        "id": "split715",
+        "status": "complete_actual_split_rejected_timing_and_Flash",
+        "deliverable": "Borrowed2144B/0staticRAM; actual106same-work/pixel/independentchecks;952-95718->19VB both;dense+3.265517/+3.152039ms;ACK+33.967349/+16.823924ms;normalFlash212996 and boundary1120 each4Bover. No new board/65816/FIT/installer. Original707D/ARM/65816 retained. See docs/nes-split715-results.ko.md and analysis/split715-verification.json."
+      },
+      {
+        "id": "lazy716",
+        "status": "complete_two_variants_rejected_keep_B_calculation_kernel",
+        "deliverable": "A/B each106same-work/pixel frames. B planner~1ms faster;908/934/940/943 each3->2VB bothphases;957ACK -65.878572/-65.887977ms. Dense952-95718VBunchanged;951248/247line and normalFlash213008(16over) fail. No RTL/65816/FIT/installer changes. See docs/nes-lazy716-results.ko.md and analysis/lazy716-verification.json."
+      },
+      {
+        "id": "tail717",
+        "status": "complete_policy_and_observer_control_rejected_resource_public_line",
+        "deliverable": "717 candidate106 plus716B observercontrol106 exact clocks/instructions/bytes.954 preparation-1.60/-1.63ms,SEAL-0.559/-0.615ms vs716B but queue+1.04/+1.09ms.951248/248line,normalFlash213000(8over),dense18VBunchanged. All independent/STOP/menu guards pass. Last-BG search optimistic deletion ceiling9541.159ms/9550.730ms insufficient alone. See docs/nes-tail717-results.ko.md."
+      },
+      {
+        "id": "idle718",
+        "status": "complete_A_B_rejected_despite_B_951_recovery",
+        "deliverable": "A/B each106samework/pixel frames. B951236/236line andmap1792B, normalFlash212892B/free100. But9112->3VB; dense18unchanged, mean+0.082934/+0.094910ms,957ACK-0.033896/+16.574172ms vsoriginal. A951248/248 and717ACK+49.195/+50.357ms. Keep707D/originalARM/65816; protect beam AND VBlank ordinal. No installer/newRTL/FIT."
+      },
+      {
+        "id": "S725",
+        "status": "two_consumer_placements_functional_resource_pass_timing_rejected",
+        "deliverable": "Actual linked ARM/65816 212 frames; no accepted map backlog at most bulk entries. Preserve723BG/map, isolate packed-loader cold regression; next budget map acceptance before VBlank without adding unconditional polls."
+      },
+      {
+        "id": "S726",
+        "status": "first_map_acceptance_improved_contiguous_DMA_BG_protection_failed_pair_resource_rejected",
+        "deliverable": "A actual106frames,first map5.54/5.10ms earlier but384B split byBG48/OBJ32. B/C20/24B Flash over; C35guards only. Replace shared pair/progress with actual deletion before full timing; no constant or phase tuning."
+      },
+      {
+        "id": "S727",
+        "status": "Flash_and_pair_BG_protection_recovered_requested_mean_ACK_improve_prior_dense_regresses_not_selected",
+        "deliverable": "106frames,35 guards per normal/long,32 linked transition comparisons. Flash-24B; both952384B and953ROM restored.18VB unchanged; next already accepted map versus incomingOBJ empty-queue DMA boundary."
+      },
+      {
+        "id": "S738",
+        "status": "measured_rejected",
+        "deliverable": "738에서 section 5의 1,754B가 보존됐다. 957 E1은 552B에서 42B로 줄었지만 전체 WRAM 재검산을 포함하면 두 위상 모두 표시가 3→4 VBlank가 되고 마지막 ACK가 16.77ms 늦어졌다. 952·957의 1,536B 선행 DMA는 동일했다. 727을 유지한다."
+      },
+      {
+        "id": "S739",
+        "status": "measured_rejected",
+        "deliverable": "739에서 OBJ 288B는 map DMA보다 9.234 / 9.108ms 먼저 준비됐고, BG 반환 뒤 ARM 조회까지 7.996 / 7.789ms를 기다렸다. 큐 점유는 최대 1/4이었다. 후보 모두 OBJ·OAM은 246선 전에 처리했으나 957의 1,536B 선행 DMA를 잃었다. 952를 지킨 B도 마지막 ACK가 0.738 / 0.737ms 늦어져 727을 유지한다."
+      },
+      {
+        "id": "S740",
+        "status": "measured_rejected",
+        "deliverable": "740에서 OBJ 조회를 먼저 시작하고 실제 map 반환·입력 서비스 뒤 수락해도 OAM ACK가 246선보다 0.414 / 0.324ms 빨랐다. 952·957의 1,536B 선행 DMA를 보존했지만 BG 48B가 최종 업로드에 남아 두 위상 모두 밀집 간격과 마지막 ACK가 늦어졌다. 727을 유지한다."
+      },
+      {
+        "id": "S741",
+        "status": "measured_rejected",
+        "deliverable": "741에서 957의 BG 48B와 1,536B map 선행 DMA를 두 위상 모두 회복했다. 실제 반환·입력 비용을 포함하면 최종 OBJ 288B가 남아 727을 유지한다."
+      },
+      {
+        "id": "S742",
+        "status": "measured_rejected",
+        "deliverable": "957의 OBJ 발행과 첫 scroll을 조정한 742는 두 위상의 DMA·최종 ACK 목표를 통과하지 못했다. 727을 유지하며 65816의 OBJ 범위 검사 비용을 다음 대상으로 삼는다."
+      },
+      {
+        "id": "S743",
+        "status": "measured_rejected",
+        "deliverable": "743의 두 바이트 OBJ 검사는 첫 원본 읽기를 두 위상 모두 0.221ms 앞당겼다. 727의 고정 발행에서 마지막 ACK는 그대로였고, 완전 링크에서는 908 위상 1이 한 VBlank 늦어져 727을 유지한다."
+      },
+      {
+        "id": "S744",
+        "status": "causal_replay_pass_original_offers_unchanged",
+        "deliverable": "744의 65816 재생에서 수락된 OBJ의 DMA를 두 위상 모두 257선에 시작했다. 727 원래 발행에서는 map이 끝날 때 내부 큐가 비어 53화면의 시각이 원본과 같았다. 727을 유지한다."
+      },
+      {
+        "id": "S745",
+        "status": "live_partial_phase_fail_retain727",
+        "deliverable": "두 위상 모두 48B BG를 먼저 전송하고 1,536B map 뒤에 수락된 288B OBJ를 남겼다. 실제 ARM의 scroll 유예는 위상 2만 257선에 도달했고, 727 map 시각 고정 시험은 위상 1만 통과했다. 727을 유지한다."
+      },
+      {
+        "id": "S746",
+        "status": "one_phase_only_retain727",
+        "deliverable": "957에서 마지막 map credit이 남은 동안 ARM이 OAM 116B를 완성했다. 727의 521개 map 발행 시각을 고정한 일괄 후보는 위상 1에서 OBJ DMA 256선 H1286·최종 ACK 400클록 단축, 위상 2에서 긴 map 종료 260선·ACK 12클록 지연이었다. 두 위상을 함께 개선하지 못해 727을 유지한다."
+      },
+      {
+        "id": "S747",
+        "status": "matched_pass_linked_phase1_regression_retain727",
+        "deliverable": "727의 부팅과 521개 map 발행 시각을 고정하고 E0로 마지막 map 반환을 확인했다. 입력 조회를 OAM 반환 뒤에 수행하면 두 위상 모두 OBJ 64B DMA가 255선에서 시작하고 최종 ACK가 154·178클록 빨라졌다. 전체 링크에서는 위상 1의 밀집 표시 간격이 1.785µs 늘고 Flash가 368·412B 초과해 727을 유지한다."
+      },
+      {
+        "id": "S748",
+        "status": "within_size_post_SEAL_only_retain727",
+        "deliverable": "748은 727에서 입력 조회 한 번을 OAM 반환 뒤로 옮겼다. 두 위상 모두 905의 map 22개 시각과 952·957의 1,536B DMA를 지켰지만, 957 OBJ는 긴 map 도중 도착해 다음 VBlank 225선에서 전송됐다. 밀집 간격은 1.738 / 2.313µs 늘고 ACK는 0 / +12클록이었다. 727을 유지한다."
+      },
+      {
+        "id": "S749",
+        "status": "pre_map_receipt_verified_next_vblank_retain727",
+        "deliverable": "마지막 map 페이지 앞에서 E8을 조회하면 957 OBJ 수락이 긴 map DMA보다 7.053 / 6.726ms 빨랐다. 두 위상 모두 map 뒤에 BG 48B가 OBJ 288B 앞에 남아 OBJ DMA는 다음 VBlank 226선에 시작했다. 밀집 간격은 13.968 / 8.241µs, 최종 ACK는 1,296 / 1,062클록 늘었다. 952·957의 1,536B 선행 DMA와 STOP·새 패킷 우선·독립 검사·메뉴 복귀를 확인했고 727을 유지한다."
+      },
+      {
+        "id": "S750",
+        "status": "timing_pass_static_ROM_over_budget",
+        "deliverable": "750의 공동 실행에서 BG 48B → map 1,536B → OBJ 288B를 두 위상 모두 같은 VBlank 안에 마쳤다. OBJ 시작은 257선 H1352 / 255선 H1100, 727 대비 밀집 간격은 17.538 / 20.766µs, 마지막 ACK는 2,764 / 2,676클록 단축됐다. 위상 1 여유는 12클록이며 정적 ROM은 694 부팅 prefix에서 107B 초과해 성능 비교 기준은 727을 유지한다."
+      },
+      {
+        "id": "S751",
+        "status": "static_ROM_and_DMA_pass_phase2_E8_late",
+        "deliverable": "공유 선택기와 빠른 부팅을 결합한 5,120B 정적 ROM은 61B가 남고, 957 OBJ를 257선 H1256 / 256선 H1316에 시작했다. 두 위상의 밀집 간격·최종 ACK는 727보다 줄었지만 749의 E8보다 위상 2가 21.496µs 늦어 비교 기준은 727을 유지한다."
+      },
+      {
+        "id": "S752",
+        "status": "phase2_cause_reproduced_no_joint_candidate",
+        "deliverable": "751 위상 2의 462클록 지연은 955 최종 ACK를 포착한 ARM E0에서 956 일정을 거쳐 이어졌다. 큰 OBJ가 있는 map의 반환 뒤 OAM 발행을 조정한 후보는 두 위상 모두 OBJ를 256선에 시작하고 727 대비 밀집 간격과 마지막 ACK를 줄였다. 749 대비 E8은 위상 2에서 4,359클록 앞섰고 위상 1에서 834클록 늦어 727을 비교 기준으로 유지한다."
+      },
+      {
+        "id": "S753",
+        "status": "both_phase_E8_OBJ_and_receipt_pass",
+        "deliverable": "최초 7블록을 받은 뒤 warm 뱅크에서 128B 이상인 준비 블록 하나를 선행 수신했다. 956 최종 ACK 대기의 E0는 두 위상 모두 12→9회, 957 입력→planner는 17,750 / 17,751클록 줄었다. 749의 E8 마감과 952·957의 1,536B map 선행을 지키고 OBJ는 양쪽 246선에 시작했다. 727 대비 밀집 평균은 22.489 / 19.850µs, 957 ACK는 360,266 / 2,558클록 빨랐다."
       }
     ],
     "protected": [
@@ -565,9 +680,9 @@
     "stop_rule": "60초 MMC695는 MMC690 실행 코드를 보존한다. MMC696은 장시간 기능 시험으로만 전달하며 위상1 밀집+10.728us와906 내부대기 증가를 공개했다. 성능 후보의 두 위상 동시개선 게이트는 완화하지 않는다. 외부IO/실기 장시간 승인 미완료,새실기결과 전MMC690 기준 유지. 고정지연/위상상수/seed 반복 금지.",
     "limited_delivery_gate": false,
     "external_IO_signoff": false,
-    "new_hardware_test": true,
-    "new_simulation": "None. Decode12physical logs and inspect exact shipped sources;705 BG deadline not yet reproduced.",
-    "new_synthesis": "None. 703B/704 wholeFIT/STA evidence retained; no product or constraint changes.",
+    "new_hardware_test": false,
+    "new_simulation": "367 boundary cases plus3072 fine-Y reference cases; actual T65/arbiter/PSRAM and separate two-start106frame linkedARM/65816 replay",
+    "new_synthesis": "Selected707D wholeLite15322LE/962LAB/56M9K, setup+.362/hold+.145/recovery+1.594/removal+.483ns; constraints/pins/seed unchanged",
     "budget_670": {
       "reference_reconstructions": 106,
       "reference_fault_rejections": 318,
@@ -1150,8 +1265,1441 @@
       "user_exit": true,
       "full_stability": false,
       "pixel_corruption_multiple_scenes": true
+    },
+    "priority_after_PR156": {
+      "background_CHR": "reproduce_and_fix_first",
+      "spade": "resolved_by_user_hardware_confirmation",
+      "repeated_tile_corruption": "record_only_not_performance_gate",
+      "stage0_timeout": "separate_record_not_performance_gate",
+      "then": "same_work_output_final_ACK_speed"
+    },
+    "707_result": {
+      "selected": "707D board04",
+      "proof": "analysis/bg707-verification.json",
+      "report": "docs/nes-bg707-results.ko.md",
+      "boundary_cases": 367,
+      "fine_cases": 3072,
+      "FIT": {
+        "LE": 15322,
+        "LAB": 962,
+        "M9K": 56
+      },
+      "STA_ns": {
+        "setup": 0.362,
+        "hold": 0.145,
+        "recovery": 1.594,
+        "removal": 0.483
+      },
+      "schedule": "cycle identical to703B in both starts; separate actualCPU/PSRAM boundary and linkedARM/65816 replay",
+      "physical_verified": false
+    },
+    "stage": 762,
+    "708_result": {
+      "proof": "analysis/tail708-verification.json",
+      "report": "docs/nes-tail708-results.ko.md",
+      "archive": "analysis/tail708-archive.json",
+      "selected_speed_change": false,
+      "matched_candidate_frames": 318,
+      "separate_credit_candidate_Flash_B": 213008,
+      "normal_initialized_Flash_B": 213008,
+      "next_implemented": false
+    },
+    "709_result": {
+      "proof": "analysis/credit709-verification.json",
+      "report": "docs/nes-credit709-results.ko.md",
+      "archive": "analysis/credit709-archive.json",
+      "selected": false,
+      "Flash_delta_B": -52,
+      "normal_Flash_B": 212932,
+      "long_Flash_B": 212888,
+      "E0_saved_transactions": [
+        185,
+        215
+      ],
+      "dense_delta_ms": [
+        -0.0151788365,
+        0.0429663507
+      ],
+      "last_ACK_delta_ms": [
+        0.0216042335,
+        -0.0094052913
+      ],
+      "safety_schedule_preserved": true,
+      "next_hint_implemented": false
+    },
+    "710_result": {
+      "proof": "analysis/credit710-verification.json",
+      "report": "docs/nes-credit710-results.ko.md",
+      "archive": "analysis/credit710-archive.json",
+      "selected": false,
+      "Flash_delta_B": -48,
+      "normal_Flash_B": 212936,
+      "long_Flash_B": 212892,
+      "E0_saved_transactions": [
+        219,
+        180
+      ],
+      "unchanged_E1_skipped": [
+        260,
+        258
+      ],
+      "dense_delta_ms": [
+        0.037695662652126316,
+        0.05056508107733748
+      ],
+      "last_ACK_delta_ms": [
+        -16.62874130383039,
+        -0.00940529132377706
+      ],
+      "FIT_LE": 15356,
+      "FIT_LAB": 963,
+      "FIT_M9K": 56,
+      "STA_ns": {
+        "setup": 0.381,
+        "hold": 0.145,
+        "recovery": 1.412,
+        "removal": 0.483
+      },
+      "safety_schedule_preserved": true,
+      "cold906_phase1_VBlank": [
+        8,
+        7
+      ],
+      "new_hardware": false
+    },
+    "711_result": {
+      "proof": "analysis/deadline711-budget.json",
+      "report": "docs/nes-deadline711-results.ko.md",
+      "archive": "analysis/deadline711-archive.json",
+      "selected": false,
+      "unchanged_target": true,
+      "completed_runs": 22,
+      "CPU_frames": 1166,
+      "conditional_first_sample_us": 15750,
+      "prior_failed_sample_us": 15500,
+      "global_minimum_proven": false,
+      "after951_intervals_VBlank": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "new_ARM_or_ROM_schedule": false,
+      "whole_FIT_STA": "707D unchanged inherited",
+      "new_hardware": false
+    },
+    "712_result": {
+      "proof": "analysis/ready712-budget.json",
+      "report": "docs/nes-ready712-results.ko.md",
+      "archive": "analysis/ready712-archive.json",
+      "selected": false,
+      "unchanged_target": true,
+      "final_CPU_frames": 106,
+      "preliminary_CPU_frames": 106,
+      "all_clocks_pixels_work_identical": true,
+      "dense_delta_ms": [
+        0,
+        0
+      ],
+      "last_ACK_delta_ms": [
+        0,
+        0
+      ],
+      "after951_VBlank": [
+        18,
+        18
+      ],
+      "replacement_budget": {
+        "functions_B": {
+          "map527": 364,
+          "nes_sink527_early": 104,
+          "nes_plan527_map_credit": 70,
+          "offer527": 16,
+          "quiet528": 56,
+          "drive554": 236,
+          "nes_plan200_progress": 262
+        },
+        "gross_boundary_B": 1108,
+        "proven_net_deletion_B": 0,
+        "normal_growth_limit_B": 8,
+        "long_growth_limit_B": 52,
+        "normal_replacement_ceiling_B": 1116,
+        "preferred_replacement_ceiling_B": 1108,
+        "RAM_growth_ceiling_B": 4,
+        "new_packet_buffer_B": 0,
+        "new_RTL_LE": 0,
+        "new_SNES_ROM_B": 0,
+        "new_SPI_transactions_preferred": 0,
+        "retained": "poll/CRC/counter/descriptor identity, complete485 actual bulk receipt, wire packet validation, final SEAL coverage and display ACK/EA; no deletion credit for these functions"
+      },
+      "decision": {
+        "selected_implementation": false,
+        "confirmed_replacement_boundary": true,
+        "existing_wait_insertion_funded": false,
+        "reason": "Existing emit/flush ROM-wait SPI holes cannot fund one unchanged 192B map packet. A new row order must pay blocking SPI and preserve tile production/ROM deadlines; no net timing win is yet established.",
+        "pre_supply957_minimum": {
+          "method": "Move unchanged 192B map E1 service only; excludes preparation, other SPI/IRQ and remaining DMA",
+          "packet_SPI_ms": 0.6928304840807142,
+          "necessary_packet_count": 3,
+          "required_shift_ms": [
+            1.8852697600535602,
+            1.922006269235792
+          ]
+        },
+        "earlier_BG_production_ms": {
+          "954": [
+            1.6233145517889067,
+            1.5490403001440693
+          ],
+          "955": [
+            0.3469085610472724,
+            0.2708009760725856
+          ]
+        },
+        "runtime_pump_savings_not_equal_ROM_wait": true
+      },
+      "whole_FIT_STA": "707D unchanged inherited",
+      "new_hardware": false
+    },
+    "713_result": {
+      "proof": "analysis/rows713-verification.json",
+      "report": "docs/nes-rows713-results.ko.md",
+      "archive": "analysis/rows713-archive.json",
+      "selected": false,
+      "changed_target": "experimental ARM only; selected original unchanged",
+      "complete_CPU_frames": 159,
+      "variants": {
+        "a": {
+          "replacement_B": 1102,
+          "normal_Flash_B": 212932,
+          "long_Flash_B": 212888,
+          "RAM_delta_B": 4,
+          "phases": {
+            "1": {
+              "gate": false,
+              "delta": {
+                "dense_ms": 3.4394126032393615,
+                "last_ACK_ms": -16.618032308758767,
+                "after951_VBlank": 1,
+                "after951_mean_ms": 2.877274171505576
+              },
+              "protected": {
+                "deadline911": true,
+                "public951": true,
+                "interval952": false,
+                "wait957": true,
+                "seven_blocks": true
+              },
+              "last_completed_generation": null
+            },
+            "2": {
+              "gate": false,
+              "delta": {
+                "dense_ms": 3.4453165187832013,
+                "last_ACK_ms": -16.654349770306023,
+                "after951_VBlank": 1,
+                "after951_mean_ms": 2.7687873953451856
+              },
+              "protected": {
+                "deadline911": true,
+                "public951": true,
+                "interval952": false,
+                "wait957": true,
+                "seven_blocks": true
+              },
+              "last_completed_generation": null
+            }
+          }
+        },
+        "b": {
+          "replacement_B": 1114,
+          "normal_Flash_B": 212944,
+          "long_Flash_B": 212900,
+          "RAM_delta_B": 4,
+          "phases": {
+            "1": {
+              "gate": false,
+              "delta": null,
+              "protected": null,
+              "last_completed_generation": 917
+            },
+            "2": {
+              "gate": false,
+              "delta": {
+                "dense_ms": 3.392721384727075,
+                "last_ACK_ms": 0.26660741643538344,
+                "after951_VBlank": 1,
+                "after951_mean_ms": 2.818747185396731
+              },
+              "protected": {
+                "deadline911": false,
+                "public951": true,
+                "interval952": true,
+                "wait957": true,
+                "seven_blocks": true
+              },
+              "last_completed_generation": null
+            }
+          }
+        }
+      },
+      "diagnostic": {
+        "message": "...mohallo\\AppData\\Local\\Temp\\nes-rows713-diag1\\capture.lua:94: BEAM713 g=918 saved=253/0/69 current=254/198/69 elapsed=1562 bytes=448 length=448",
+        "exact_packet_and_CPU_trace_reproduction": true,
+        "pins": {
+          "capture.lua": "5efd56d6c4213411cf8920dc3e0d2fb1fd438e16593f4d71fd56a1702c9929f3",
+          "map-error.txt": "98cbfb6156294be11fa073548140d7df905cf8b292870ed478caed7729e66fe4",
+          "window.csv": "f79eceabc7248f7e6c1dd283612f0b9e4318ab13f06b518dfc3f085639b96dec",
+          "packets.jsonl": "3acfe8b6c96d148684ba4374a255d650ed3a48476158997c06b2b33af2b93147"
+        }
+      },
+      "new_FIT_STA": false,
+      "new_installer": false
+    },
+    "714_result": {
+      "proof": "analysis/fence714-verification.json",
+      "report": "docs/nes-fence714-results.ko.md",
+      "archive": "analysis/fence714-archive.json",
+      "selected": false,
+      "complete_CPU_frames": 106,
+      "replacement_B": 962,
+      "whole_Flash_delta_B": -236,
+      "static_RAM_delta_B": 0,
+      "observed_extra_stack_max_B": 100,
+      "phases": {
+        "1": {
+          "gate": false,
+          "delta": {
+            "dense_ms": 0.09029079670825979,
+            "last_ACK_ms": 33.923675222812285,
+            "after951_VBlank": 0,
+            "after951_mean_ms": 0.17640353331031378
+          },
+          "protected": {
+            "deadline911": false,
+            "public951": true,
+            "interval952": true,
+            "wait957": true,
+            "seven_blocks": true
+          },
+          "after951_VBlank": 18
+        },
+        "2": {
+          "gate": false,
+          "delta": {
+            "dense_ms": 0.10129778120796828,
+            "last_ACK_ms": -16.37554341165861,
+            "after951_VBlank": 0,
+            "after951_mean_ms": 0.0330737224603439
+          },
+          "protected": {
+            "deadline911": false,
+            "public951": true,
+            "interval952": true,
+            "wait957": true,
+            "seven_blocks": true
+          },
+          "after951_VBlank": 18
+        }
+      },
+      "new_FIT_STA": false,
+      "new_installer": false
+    },
+    "718_result": {
+      "selected": false,
+      "document": "docs/nes-idle718-results.ko.md",
+      "evidence": "analysis/idle718-verification.json",
+      "complete_CPU_frames": 212
+    },
+    "719_result": {
+      "selected": false,
+      "document": "docs/nes-deadline719-results.ko.md",
+      "evidence": "analysis/deadline719-verification.json",
+      "archive": "analysis/deadline719-archive.json",
+      "complete_CPU_frames": 106,
+      "normal_Flash_B": 212992,
+      "long_Flash_B": 212948,
+      "static_RAM_delta_B": 4,
+      "both_951_line": 236,
+      "both_911_VBlank": 2,
+      "both_dense_952_957_VBlank": 18,
+      "next_SEAL_advance_lower_bound_ms": [
+        9.44784793897474,
+        9.734476520109254
+      ]
+    },
+    "720_result": {
+      "selected": false,
+      "document": "docs/nes-supply720-results.ko.md",
+      "evidence": "analysis/supply720-verification.json",
+      "archive": "analysis/supply720-archive.json",
+      "complete_CPU_frames": 106,
+      "normal_Flash_B": 212976,
+      "long_Flash_B": 212932,
+      "static_RAM_delta_719_B": 0,
+      "after951_VBlank": [
+        18,
+        18
+      ],
+      "last_ACK_delta_719_ms": [
+        0.2514285799425551,
+        0.12981164460737843
+      ],
+      "BG_E9_before_prior_ROM_shortfall_ms": [
+        2.114416019902813,
+        1.9909595101787771
+      ],
+      "SEAL956_advance_optimistic_lower_bound_ms": [
+        6.534442549314456,
+        6.539471120913312
+      ]
+    },
+    "721_result": {
+      "selected": false,
+      "document": "docs/nes-obj721-results.ko.md",
+      "evidence": "analysis/obj721-verification.json",
+      "archive": "analysis/obj721-archive.json",
+      "complete_CPU_frames": 106,
+      "A_normal_Flash_B": 212936,
+      "A_after951_VBlank": [
+        19,
+        18
+      ],
+      "A_last_ACK_delta_719_ms": [
+        16.798129669354655,
+        0.13111534835522873
+      ],
+      "D_normal_Flash_B": 212996,
+      "D_boundary_B": 1744,
+      "D_guard_cases": 10,
+      "D_full_timing_run": false,
+      "same_boundary_cap_B": 1744,
+      "old_named_subset_D_B": 1130
+    },
+    "722_result": {
+      "selected": false,
+      "document": "docs/nes-obj722-results.ko.md",
+      "evidence": "analysis/obj722-verification.json",
+      "archive": "analysis/obj722-archive.json",
+      "complete_CPU_frames": 106,
+      "normal_Flash_B": 212960,
+      "long_Flash_B": 212916,
+      "static_RAM_delta_719_B": 0,
+      "whole_boundary_B": 1880,
+      "whole_boundary_cap_B": 1916,
+      "after951_VBlank": [
+        18,
+        18
+      ],
+      "last_ACK_delta_719_ms": [
+        0.007077248916901551,
+        -0.017879365684803916
+      ],
+      "all_protected": true,
+      "SEAL_advance_optimistic_ms": {
+        "953": [
+          9.60475799719815,
+          9.71669027612073
+        ],
+        "956": [
+          9.654391861312739,
+          9.652808792476058
+        ]
+      }
+    },
+    "723_result": {
+      "selected": false,
+      "document": "docs/nes-supply723-results.ko.md",
+      "evidence": "analysis/supply723-verification.json",
+      "archive": "analysis/supply723-archive.json",
+      "complete_CPU_frames": 212,
+      "normal_Flash_B": 212992,
+      "long_Flash_B": 212948,
+      "static_RAM_delta_722_B": 0,
+      "after951_VBlank": [
+        18,
+        18
+      ],
+      "all_protected": true,
+      "BG953_ROM_delta_722_ms": [
+        -16.269664042993913,
+        -15.956216413332196
+      ],
+      "last_ACK_delta_722_ms": [
+        0.0,
+        -0.005587301776501224
+      ],
+      "next_boundary": {
+        "existing_functions_B": {
+          "wait634": 240,
+          "packet_wire": 692,
+          "nes_sink212_seal": 1336
+        },
+        "current_B": 4698,
+        "same_boundary_cap_B": 4700,
+        "normal_Flash_free_B": 0,
+        "long_Flash_free_B": 44,
+        "new_static_RAM_budget_B": 0,
+        "proven_reclaim_B": 0,
+        "scope": "Review map credit/DMA wait and ready bulk ownership together with wait634, packet_wire and seal. Count unchanged functions on both sides; no budget is free reclaimed code.",
+        "time_goal": "Keep C BG prior-window success, continuous map DMA and seven input blocks; remove actual bulk ready-to-submit hold and late ordinary tail, not a frame-dependent delay constant."
+      }
+    },
+    "724_result": {
+      "selected": false,
+      "document": "docs/nes-tail724-results.ko.md",
+      "evidence": "analysis/tail724-verification.json",
+      "archive": "analysis/tail724-archive.json",
+      "complete_CPU_frames": 106,
+      "normal_Flash_B": 212928,
+      "long_Flash_B": 212884,
+      "static_RAM_delta_723_B": 0,
+      "whole_boundary_B": 4634,
+      "whole_boundary_cap_B": 4700,
+      "after951_VBlank": [
+        18,
+        18
+      ],
+      "last_ACK_delta_723_ms": [
+        0.15998307420048505,
+        0.1889439217420164
+      ],
+      "map_DMA_before": [
+        1920,
+        1024,
+        2048
+      ],
+      "map_DMA_after": [
+        384,
+        128,
+        1664
+      ],
+      "BG953_window_preserved": false,
+      "remaining_723_Flash_free_B": 0
+    },
+    "725_result": {
+      "selected": false,
+      "document": "docs/nes-consume725-results.ko.md",
+      "evidence": "analysis/consume725-verification.json",
+      "archive": "analysis/consume725-archive.json",
+      "complete_CPU_frames": 212,
+      "normal_Flash_B": 212992,
+      "long_Flash_B": 212948,
+      "new_static_RAM_B": 0,
+      "physical_ROM_free_B": {
+        "A": 28,
+        "B": 8
+      },
+      "new_FIT_STA": false,
+      "all_protected": true,
+      "variants": {
+        "A": {
+          "last_ACK_delta_723_ms": [
+            16.63963654229457,
+            0.02346666746130514
+          ],
+          "after951_VBlank": [
+            18,
+            18
+          ],
+          "boot_restore_extra_ms": 21.25828643414303
+        },
+        "B": {
+          "last_ACK_delta_723_ms": [
+            16.627344478386267,
+            0.005587301776501224
+          ],
+          "after951_VBlank": [
+            18,
+            18
+          ],
+          "boot_restore_extra_ms": 22.231594403609545
+        }
+      }
+    },
+    "726_result": {
+      "selected": false,
+      "document": "docs/nes-accept726-results.ko.md",
+      "evidence": "analysis/accept726-verification.json",
+      "archive": "analysis/accept726-archive.json",
+      "complete_CPU_frames": 106,
+      "normal_Flash_B": 212984,
+      "long_Flash_B": 212940,
+      "new_static_RAM_B": 0,
+      "ROM_unchanged": true,
+      "whole_boundary_B": 4688,
+      "whole_cap_B": 4700,
+      "last_ACK_delta_723_ms": [
+        -0.016855027025778693,
+        0.011174603553002448
+      ],
+      "after951_VBlank": [
+        18,
+        18
+      ],
+      "B_Flash_over_B": 20,
+      "C_Flash_over_B": 24,
+      "C_whole_over_B": 22,
+      "C_guard_cases": 35,
+      "pair_full_timing": false
+    },
+    "727_result": {
+      "selected": false,
+      "document": "docs/nes-pair727-results.ko.md",
+      "evidence": "analysis/pair727-verification.json",
+      "archive": "analysis/pair727-archive.json",
+      "complete_CPU_frames": 106,
+      "normal_Flash_B": 212992,
+      "long_Flash_B": 212948,
+      "new_static_RAM_B": 0,
+      "ROM_unchanged": true,
+      "whole_boundary_B": 4696,
+      "whole_cap_B": 4700,
+      "requested_average_and_ACK_pass": true,
+      "prior_dense_adoption_pass": false,
+      "last_ACK_delta_723_ms": [
+        -0.01853121755872906,
+        -0.0005587301776501224
+      ],
+      "after951_VBlank": [
+        18,
+        18
+      ],
+      "map384_recovered": true,
+      "BG_deadline_preserved": true,
+      "normal_long_admission_cases_each": 35,
+      "differential_cases": 32
+    },
+    "728_result": {
+      "selected": false,
+      "document": "docs/nes-dma728-results.ko.md",
+      "evidence": "analysis/dma728-verification.json",
+      "archive": "analysis/dma728-archive.json",
+      "complete_CPU_frames": 212,
+      "normal_Flash_B": 212992,
+      "long_Flash_B": 212948,
+      "new_static_RAM_B": 0,
+      "C_ROM_free_B": 30,
+      "C_ARM_stack_extra_B": [
+        36,
+        0
+      ],
+      "C_last_ACK_delta_727_ms": [
+        0.01145396864182751,
+        0.0
+      ],
+      "C_after951_mean_delta_727_ms": [
+        0.0036783070028576503,
+        0.0
+      ],
+      "C_after951_VBlank": [
+        18,
+        18
+      ],
+      "all_protected": true,
+      "requested_average_and_ACK_pass": false,
+      "new_FIT_STA": false
+    },
+    "729_result": {
+      "selected": false,
+      "document": "docs/nes-tail729-results.ko.md",
+      "evidence": "analysis/tail729-verification.json",
+      "archive": "analysis/tail729-archive.json",
+      "complete_CPU_frames": 106,
+      "normal_Flash_B": 212992,
+      "long_Flash_B": 212948,
+      "extra_RAM_B": 0,
+      "ROM_unchanged": true,
+      "requested_protection_pass": true,
+      "prior908_phase2_VBlank": [
+        2,
+        3
+      ],
+      "last_ACK_delta_727_ms": [
+        -0.005587301776501224,
+        0.024025397638955264
+      ],
+      "mean952_957_delta_727_ms": [
+        4.656084813348116e-05,
+        0.003693827285580653
+      ],
+      "after951_VBlank": [
+        18,
+        18
+      ],
+      "timing_pass": false
+    },
+    "730_result": {
+      "selected": false,
+      "document": "docs/nes-owner730-results.ko.md",
+      "evidence": "analysis/owner730-verification.json",
+      "archive": "analysis/owner730-archive.json",
+      "complete_CPU_frames": 212,
+      "normal_Flash_B": 212972,
+      "long_Flash_B": 212928,
+      "extra_static_RAM_B": 0,
+      "observed_stack_phase1_extra_B": 100,
+      "ROM_unchanged": true,
+      "variants": [
+        "A",
+        "B"
+      ],
+      "timing_pass": false,
+      "first_OBJ_gap_ms": [
+        3.7509419259578216,
+        3.7486138835509464
+      ],
+      "last_ACK_delta_727_ms": [
+        0.054848679105987015,
+        0.06062222427503828
+      ],
+      "next_minimum_SEAL_advance_ms": [
+        5.612444634495479,
+        5.548935637635916
+      ]
+    },
+    "731_result": {
+      "selected": false,
+      "document": "docs/nes-overlap731-results.ko.md",
+      "evidence": "analysis/overlap731-verification.json",
+      "archive": "analysis/overlap731-archive.json",
+      "complete_CPU_frames": 106,
+      "normal_Flash_B": 212968,
+      "long_Flash_B": 212924,
+      "extra_static_RAM_B": 0,
+      "observed_stack_delta_B": [
+        92,
+        -8
+      ],
+      "ROM_unchanged": true,
+      "timing_pass": false,
+      "last_ACK_delta_727_ms": [
+        0.2761989511517105,
+        0.1538370422463337
+      ],
+      "mean952_957_delta_727_ms": [
+        -0.01711887183189731,
+        -0.03821093603818326
+      ],
+      "early956_map_B": [
+        1024,
+        1024
+      ],
+      "missed_BG_reads953": [
+        8,
+        8
+      ]
+    },
+    "732_result": {
+      "selected": false,
+      "document": "docs/nes-extent732-results.ko.md",
+      "evidence": "analysis/extent732-verification.json",
+      "archive": "analysis/extent732-archive.json",
+      "new_complete_CPU_frames": 0,
+      "normal_builds": 4,
+      "new_long_builds": 0,
+      "normal_Flash_B": {
+        "A": 213096,
+        "B": 213020,
+        "C": 213080,
+        "D": 213036
+      },
+      "minimum_Flash_excess_B": 28,
+      "minimum_boundary_excess_B": 24,
+      "extra_static_RAM_B": 0,
+      "new_stack_measurement": false,
+      "ROM_unchanged": true,
+      "budget_pass": false,
+      "timing_pass": null,
+      "baseline_BG953_E9_window_margin_us": [
+        280.81048478928705,
+        164.65615130944215
+      ]
+    },
+    "733_result": {
+      "selected": false,
+      "document": "docs/nes-padding733-results.ko.md",
+      "evidence": "analysis/padding733-verification.json",
+      "archive": "analysis/padding733-archive.json",
+      "normal_Flash_B": 212792,
+      "long_Flash_B": 212748,
+      "whole_budget_pass": true,
+      "old_code_only_budget_pass": false,
+      "code_plus_padding_B": 5004,
+      "baseline_code_plus_padding_B": 5206,
+      "new_complete_CPU_frames": 106,
+      "extra_static_RAM_B": 0,
+      "observed_stack_saved_B": [
+        8,
+        8
+      ],
+      "timing_pass": false,
+      "phases": {
+        "1": {
+          "delta": {
+            "mean952_957_ms": 0.005820106017182525,
+            "dense951_955_ms": -0.0019741799610315525,
+            "last_ACK_ms": 0.01145396864182751,
+            "VBlank": 0
+          },
+          "protected": {
+            "deadline911": true,
+            "public951": true,
+            "interval952": true,
+            "wait957": true,
+            "seven_blocks": true,
+            "prior_gains": true,
+            "map384_and_following": false,
+            "map384_contiguous": true,
+            "map1536_contiguous": true,
+            "tile956_early": true,
+            "BG953_window": true
+          }
+        },
+        "2": {
+          "delta": {
+            "mean952_957_ms": 0.0010864197898783345,
+            "dense951_955_ms": -0.00096846564125741,
+            "last_ACK_ms": 0.01173333373065257,
+            "VBlank": 0
+          },
+          "protected": {
+            "deadline911": true,
+            "public951": true,
+            "interval952": true,
+            "wait957": true,
+            "seven_blocks": true,
+            "prior_gains": true,
+            "map384_and_following": true,
+            "map384_contiguous": true,
+            "map1536_contiguous": true,
+            "tile956_early": true,
+            "BG953_window": true
+          }
+        }
+      }
+    },
+    "734_result": {
+      "selected": false,
+      "document": "docs/nes-idle734-results.ko.md",
+      "evidence": "analysis/idle734-verification.json",
+      "archive": "analysis/idle734-archive.json",
+      "normal_Flash_B": 212948,
+      "long_Flash_B": 212904,
+      "total_new_CPU_frames": 212,
+      "extra_static_RAM_B": 0,
+      "observed_stack_saved_B": [
+        8,
+        8
+      ],
+      "timing_pass": false,
+      "all_B_protected": true,
+      "prior_A_timing_pass": false,
+      "phases": {
+        "1": {
+          "delta": {
+            "mean952_957_ms": 0.005758024886333146,
+            "dense951_955_ms": -0.02897947188078831,
+            "last_ACK_ms": 0.01853121755872906,
+            "VBlank": 0
+          },
+          "protected": {
+            "deadline911": true,
+            "public951": true,
+            "interval952": true,
+            "wait957": true,
+            "seven_blocks": true,
+            "prior_gains": true,
+            "map384_and_following": true,
+            "map384_contiguous": true,
+            "map1536_contiguous": true,
+            "tile956_early": true,
+            "BG953_window": true,
+            "next_BG_windows": true
+          }
+        },
+        "2": {
+          "delta": {
+            "mean952_957_ms": 0.001955555621776739,
+            "dense951_955_ms": 0.00018624339255524092,
+            "last_ACK_ms": 0.01173333373065257,
+            "VBlank": 0
+          },
+          "protected": {
+            "deadline911": true,
+            "public951": true,
+            "interval952": true,
+            "wait957": true,
+            "seven_blocks": true,
+            "prior_gains": true,
+            "map384_and_following": true,
+            "map384_contiguous": true,
+            "map1536_contiguous": true,
+            "tile956_early": true,
+            "BG953_window": true,
+            "next_BG_windows": true
+          }
+        }
+      }
+    },
+    "735_result": {
+      "document": "docs/nes-tail735-results.ko.md",
+      "evidence": "analysis/tail735-verification.json",
+      "archive": "analysis/tail735-archive.json",
+      "selected": false,
+      "CPU_frames": 212,
+      "phases": {
+        "A": {
+          "1": {
+            "delta": {
+              "mean952_957_ms": 0.0008070547010490259,
+              "dense951_955_ms": -0.014955344421764494,
+              "last_ACK_ms": -16.644944478982246,
+              "VBlank": 0
+            },
+            "protected": {
+              "deadline911": true,
+              "public951": true,
+              "interval952": true,
+              "wait957": true,
+              "seven_blocks": true,
+              "prior_intervals": false,
+              "1536B": true,
+              "956_early_vs727": true,
+              "956_tile128_vs734B": false,
+              "956_last384_before_OBJ": true,
+              "BG_windows": true
+            }
+          },
+          "2": {
+            "delta": {
+              "mean952_957_ms": 0.005106173012414672,
+              "dense951_955_ms": -0.0031661376733538305,
+              "last_ACK_ms": 0.01173333373065257,
+              "VBlank": 0
+            },
+            "protected": {
+              "deadline911": true,
+              "public951": true,
+              "interval952": true,
+              "wait957": true,
+              "seven_blocks": true,
+              "prior_intervals": true,
+              "1536B": true,
+              "956_early_vs727": true,
+              "956_tile128_vs734B": false,
+              "956_last384_before_OBJ": true,
+              "BG_windows": false
+            }
+          }
+        },
+        "B": {
+          "1": {
+            "delta": {
+              "mean952_957_ms": 0.0066892418490880345,
+              "dense951_955_ms": -0.0012292063908247997,
+              "last_ACK_ms": 0.01853121755872906,
+              "VBlank": 0
+            },
+            "protected": {
+              "deadline911": true,
+              "public951": true,
+              "interval952": true,
+              "wait957": true,
+              "seven_blocks": true,
+              "prior_intervals": true,
+              "1536B": true,
+              "956_early_vs727": false,
+              "956_tile128_vs734B": false,
+              "956_last384_before_OBJ": false,
+              "BG_windows": true
+            }
+          },
+          "2": {
+            "delta": {
+              "mean952_957_ms": 0.003631746154724169,
+              "dense951_955_ms": -0.004060105957591986,
+              "last_ACK_ms": 0.015551323277928407,
+              "VBlank": 0
+            },
+            "protected": {
+              "deadline911": true,
+              "public951": true,
+              "interval952": true,
+              "wait957": true,
+              "seven_blocks": true,
+              "prior_intervals": true,
+              "1536B": true,
+              "956_early_vs727": true,
+              "956_tile128_vs734B": false,
+              "956_last384_before_OBJ": true,
+              "BG_windows": true
+            }
+          }
+        }
+      }
+    },
+    "736_result": {
+      "document": "docs/nes-prefix736-results.ko.md",
+      "evidence": "analysis/prefix736-verification.json",
+      "archive": "analysis/prefix736-archive.json",
+      "selected": [],
+      "CPU_frames": 212,
+      "phases": {
+        "a": {
+          "1": {
+            "delta": {
+              "mean952_957_ms": 0.030885362597871335,
+              "dense951_955_ms": -0.005289312348416786,
+              "last_ACK_ms": 0.7384550514609118,
+              "VBlank": 0,
+              "prior_display_shift_ms": 0.010429629982802285,
+              "from_previous_display_to_ACK_ms": 0.7280254214781096
+            },
+            "protected": {
+              "deadline911": true,
+              "public951": true,
+              "interval952": true,
+              "wait957": true,
+              "seven_blocks": true,
+              "previous_gains": true,
+              "long_map_DMA": false,
+              "early956": true,
+              "last384_before_OBJ": true,
+              "BG_windows": false
+            }
+          },
+          "2": {
+            "delta": {
+              "mean952_957_ms": 2.590645590371068,
+              "dense951_955_ms": -0.00439534406417863,
+              "last_ACK_ms": 16.094781497389427,
+              "VBlank": 1,
+              "prior_display_shift_ms": 0.0,
+              "from_previous_display_to_ACK_ms": 16.094781497389427
+            },
+            "protected": {
+              "deadline911": true,
+              "public951": true,
+              "interval952": true,
+              "wait957": false,
+              "seven_blocks": true,
+              "previous_gains": true,
+              "long_map_DMA": false,
+              "early956": true,
+              "last384_before_OBJ": true,
+              "BG_windows": false
+            }
+          }
+        },
+        "b": {
+          "1": {
+            "delta": {
+              "mean952_957_ms": 0.12495379611836199,
+              "dense951_955_ms": -0.005419682723207586,
+              "last_ACK_ms": 0.739293146727387,
+              "VBlank": 0,
+              "prior_display_shift_ms": 0.0038179895472758366,
+              "from_previous_display_to_ACK_ms": 0.7354751571801111
+            },
+            "protected": {
+              "deadline911": true,
+              "public951": true,
+              "interval952": true,
+              "wait957": true,
+              "seven_blocks": true,
+              "previous_gains": true,
+              "long_map_DMA": false,
+              "early956": true,
+              "last384_before_OBJ": true,
+              "BG_windows": false
+            }
+          },
+          "2": {
+            "delta": {
+              "mean952_957_ms": 0.12133757024635372,
+              "dense951_955_ms": 0.0021417990143248744,
+              "last_ACK_ms": 0.7236487017531835,
+              "VBlank": 0,
+              "prior_display_shift_ms": 0.004842328206301061,
+              "from_previous_display_to_ACK_ms": 0.7188063735468825
+            },
+            "protected": {
+              "deadline911": true,
+              "public951": true,
+              "interval952": true,
+              "wait957": true,
+              "seven_blocks": true,
+              "previous_gains": true,
+              "long_map_DMA": false,
+              "early956": true,
+              "last384_before_OBJ": true,
+              "BG_windows": false
+            }
+          }
+        }
+      }
+    },
+    "737_result": {
+      "document": "docs/nes-grant737-results.ko.md",
+      "evidence": "analysis/grant737-verification.json",
+      "archive": "analysis/grant737-archive.json",
+      "selected": [],
+      "CPU_frames": 318,
+      "retained": "727",
+      "map_DMA_B": 1536,
+      "section5_changes_957": {
+        "scroll": 2,
+        "raw": 3,
+        "padding": 0,
+        "tables": 0,
+        "tail": 0
+      }
+    },
+    "738_result": {
+      "document": "docs/nes-retained738-results.ko.md",
+      "evidence": "analysis/retained738-verification.json",
+      "selected": false,
+      "retained": "727",
+      "prior_WRAM_size": 1754,
+      "changed_bytes": 5,
+      "delta_wire_B": 42,
+      "additional_VBlank": [
+        1,
+        1
+      ]
+    },
+    "739_result": {
+      "document": "docs/nes-owner739-results.ko.md",
+      "evidence": "analysis/owner739-verification.json",
+      "selected": false,
+      "retained": "727",
+      "BG_owner_to_E8_ms": [
+        7.9964,
+        7.788983
+      ],
+      "max_queue_depth_during_wait": 1,
+      "B_final_ACK_delta_ms": [
+        0.738455,
+        0.737338
+      ]
+    },
+    "740_result": {
+      "document": "docs/nes-gap740-results.ko.md",
+      "evidence": "analysis/gap740-verification.json",
+      "selected": false,
+      "retained": "727",
+      "OAM_ACK_margin_ms": [
+        0.413553,
+        0.324064
+      ],
+      "final_extra_BG_B": 48,
+      "first_progress_final_ACK_delta_ms": [
+        0.049634,
+        0.06444
+      ]
+    },
+    "741_result": {
+      "document": "docs/nes-beam741-results.ko.md",
+      "evidence": "analysis/beam741-verification.json",
+      "selected": false,
+      "retained": "727",
+      "prefix_DMA_B": [
+        384,
+        48,
+        1536
+      ],
+      "final_OBJ_B": 288,
+      "ACK_delta_us": [
+        5.215,
+        24.025
+      ],
+      "physical_ROM_excess_B_at_prefix512": 88
+    },
+    "742_result": {
+      "document": "docs/nes-receipt742-results.ko.md",
+      "evidence": "analysis/receipt742-verification.json",
+      "selected": false,
+      "retained": "727",
+      "linked_ACK_delta_us": [
+        44.047,
+        55.035
+      ],
+      "linked_dense_delta_us": [
+        -59.101,
+        -55.299
+      ],
+      "lost_prefix_generation": 952,
+      "OBJ_final_B": 288
+    },
+    "743_result": {
+      "document": "docs/nes-bitmap743-results.ko.md",
+      "evidence": "analysis/bitmap743-verification.json",
+      "retained": "727",
+      "selected": false,
+      "fixed_final_ACK_delta_clocks": [
+        0,
+        0
+      ],
+      "earlier_offer_OBJ_DMA_start_line": [
+        258,
+        258
+      ],
+      "linked_final_ACK_delta_clocks": [
+        715140,
+        252
+      ],
+      "linked_908_VBlank": [
+        3,
+        2
+      ]
+    },
+    "744_result": {
+      "document": "docs/nes-chain744-results.ko.md",
+      "evidence": "analysis/chain744-verification.json",
+      "selected": false,
+      "retained": "727",
+      "original_offer_delta_clocks": [
+        0,
+        0
+      ],
+      "priced_offer_OBJ_start": [
+        [
+          257,
+          468
+        ],
+        [
+          257,
+          1246
+        ]
+      ],
+      "priced_offer_ACK_delta_clocks": [
+        -400,
+        -500
+      ],
+      "joint_ROM_over_B_at_prefix512": 279
+    },
+    "745_result": {
+      "document": "docs/nes-bg745-results.ko.md",
+      "evidence": "analysis/bg745-verification.json",
+      "selected": false,
+      "retained": 727,
+      "full_ARM_reserved_ACK_delta_clocks": [
+        112,
+        -500
+      ],
+      "matched_reserved_ACK_delta_clocks": [
+        -400,
+        12
+      ],
+      "ROM_over_B": 279
+    },
+    "746_result": {
+      "document": "docs/nes-oam746-results.ko.md",
+      "evidence": "analysis/oam746-verification.json",
+      "selected": false,
+      "retained": 727,
+      "matched_ACK_delta_clocks": [
+        -400,
+        12
+      ],
+      "matched_phase2_E0_before_map_ACK_clocks": 123,
+      "linked_ACK_delta_clocks": [
+        -120,
+        -178
+      ],
+      "ROM_over_B": 279
+    },
+    "747_result": {
+      "document": "docs/nes-credit747-results.ko.md",
+      "evidence": "analysis/credit747-verification.json",
+      "selected": false,
+      "retained": 727,
+      "matched_OBJ_line_H": [
+        [
+          255,
+          994
+        ],
+        [
+          255,
+          1270
+        ]
+      ],
+      "matched_final_ACK_delta_clocks": [
+        -154,
+        -178
+      ],
+      "linked_final_ACK_delta_clocks": [
+        -154,
+        -500
+      ],
+      "linked_dense_delta_us": [
+        1.785,
+        -4.749
+      ],
+      "linked_full_Flash_over_B": [
+        368,
+        412
+      ],
+      "same_prefix_ROM_over_B": 279
+    },
+    "748_result": {
+      "document": "docs/nes-input748-results.ko.md",
+      "evidence": "analysis/input748-verification.json",
+      "selected": false,
+      "retained": 727,
+      "overlap": "957 OBJ arrives during long map in both phases",
+      "first_different_map": [
+        906,
+        0,
+        -49
+      ],
+      "dense_delta_us": [
+        1.738,
+        2.313
+      ],
+      "final_ACK_delta_clocks": [
+        0,
+        12
+      ],
+      "flash_free_long_normal": [
+        148,
+        104
+      ],
+      "ROM_free": 26,
+      "BSS_delta": 240
+    },
+    "749_result": {
+      "document": "docs/nes-obj749-results.ko.md",
+      "evidence": "analysis/obj749-verification.json",
+      "retained": 727,
+      "selected": false,
+      "page_receipt_lead_ms": [
+        7.053,
+        6.726
+      ],
+      "page_tail": [
+        "BG48",
+        "OBJ288"
+      ],
+      "page_dense_delta_us": [
+        13.968,
+        8.241
+      ],
+      "page_ACK_delta_clocks": [
+        1296,
+        1062
+      ]
+    },
+    "750_result": {
+      "document": "docs/nes-bg750-results.ko.md",
+      "evidence": "analysis/bg750-verification.json",
+      "timing_pass": true,
+      "production_selected": false,
+      "retained": 727,
+      "OBJ_line": [
+        257,
+        255
+      ],
+      "margin_clocks": [
+        12,
+        2992
+      ],
+      "dense_delta_us": [
+        -17.538,
+        -20.766
+      ],
+      "ACK_delta_clocks": [
+        -2764,
+        -2676
+      ],
+      "same_prefix_over_B": 107,
+      "best_prefix_over_B": 39
+    },
+    "751_result": {
+      "document": "docs/nes-static751-results.ko.md",
+      "evidence": "analysis/static751-verification.json",
+      "status": "static_ROM_and_DMA_pass_phase2_E8_late",
+      "retained": 727,
+      "production_selected": false,
+      "candidate": "sharedfast",
+      "ROM_free_B": 61,
+      "margin_clocks": [
+        108,
+        1412
+      ],
+      "E8_delta_us": [
+        -33.377,
+        21.496
+      ],
+      "dense_delta_us": [
+        -21.62,
+        -17.631
+      ],
+      "ACK_delta_clocks": [
+        -3010,
+        -2558
+      ]
+    },
+    "752_result": {
+      "document": "docs/nes-credit752-results.ko.md",
+      "evidence": "analysis/credit752-verification.json",
+      "status": "phase2_cause_reproduced_no_joint_candidate",
+      "comparison": 727,
+      "production_selected": false,
+      "passed_both": [],
+      "static_ROM": "751 sharedfast",
+      "origin_phase2_E0_delta": 462,
+      "fault_replays": 28
+    },
+    "753_result": {
+      "document": "docs/nes-credit753-results.ko.md",
+      "evidence": "analysis/credit753-verification.json",
+      "candidate": "prefix",
+      "comparison": 727,
+      "simulation_selected": true,
+      "production_selected": false,
+      "board": "707D",
+      "ROM": "751 sharedfast",
+      "flash_free_B": 32,
+      "protected_frames": [
+        908,
+        911,
+        951,
+        952,
+        957
+      ],
+      "E8_delta_clocks": [
+        -383092,
+        -21835
+      ],
+      "OBJ_start": [
+        [
+          246,
+          884
+        ],
+        [
+          246,
+          1118
+        ]
+      ],
+      "ACK_delta_clocks": [
+        -360266,
+        -2558
+      ],
+      "alternate": "sealcrc"
+    },
+    "PR157_review": {
+      "document": "docs/nes-pr157-retrospective.ko.md",
+      "evidence": "analysis/pr157-retrospective.json",
+      "physical_comparator": "MMC704 60s / MMC705 long run",
+      "timing_comparator": "707D entry and 753 prefix exit; 905..957 two phases",
+      "current_execution_order": "See the four ordered steps in the review. They supersede earlier next-step proposals. Original benchmark and historical step entries are retained."
     }
   },
   "merged_PR154": "3f8292795b8a5e53d6cf250fcc568223e748a3d6",
-  "merged_PR155": "c5a25a448e856ce9eddeb86d90965d2ae804a966"
+  "merged_PR155": "c5a25a448e856ce9eddeb86d90965d2ae804a966",
+  "merged_PR156": "4ee65ac300c3b5eca73848bd0b408c1bc63b6800"
 }

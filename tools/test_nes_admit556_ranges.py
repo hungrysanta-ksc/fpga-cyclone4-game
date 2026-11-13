@@ -6,10 +6,11 @@ import os
 from pathlib import Path
 import subprocess
 
+from nes_raw506 import once
 from nes_sinkpack181 import ShortCode
 
 
-def run(client, mesen, out):
+def run(client, mesen, out, *, nine_obj=False):
     out.mkdir(parents=True,exist_ok=False)
     labels=json.loads((client/'labels.json').read_text())
     body=(client/'body.bin').read_bytes()
@@ -66,6 +67,19 @@ emu.addMemoryCallback(function(_,flags)
  done=done+1;if done==#cases then local f=assert(io.open(root..'/cases.json','w'));f:write(done);f:close();emu.stop(0)end
 end,emu.callbackType.write,0x101)
 """
+    if nine_obj:
+        # Include each valid nine-slot start and each possible duplicate.
+        # The wide BIT rejects both bytes before marking any part of the range.
+        lua=once(lua,'local done=0;', """for bank=0,1 do for start=0,119 do for dup=-1,8 do
+ cases[#cases+1]={bank,1,32,start,9,dup}
+end end end
+local done=0;""")
+        lua=once(lua,' if dup>=0 then mark', """ if sec==1 and n==9 then
+  if start>0 then mark(0x1280,first-1) end
+  if start+9<128 then mark(0x1280,first+9) end
+ end
+ if dup>=0 then mark""")
+        lua=once(lua,'if j==dup then break end','if j==dup or (sec==1 and n==9 and dup>=0) then break end')
     script=out/'test.lua'
     script.write_text(lua.replace('@ROOT@',json.dumps(out.as_posix())))
     with (out/'mesen.log').open('wb') as log:
@@ -73,10 +87,11 @@ end,emu.callbackType.write,0x101)
                         '--enableStdout','--debug.scriptWindow.allowIoOsAccess=true'],cwd=out,stdout=log,stderr=subprocess.STDOUT,
                        env=dict(os.environ,DOTNET_ROOT='C:/works/dotnet',DOTNET_ROOT_X64='C:/works/dotnet'),
                        creationflags=subprocess.CREATE_NO_WINDOW,timeout=55,check=True)
-    assert json.loads((out/'cases.json').read_text())==108
+    assert json.loads((out/'cases.json').read_text())==(2508 if nine_obj else 108)
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser()
     for n in ('client','mesen','out'):p.add_argument('--'+n,type=Path,required=True)
-    a=p.parse_args();run(a.client,a.mesen.resolve(),a.out.resolve())
+    p.add_argument('--nine-obj',action='store_true')
+    a=p.parse_args();run(a.client,a.mesen.resolve(),a.out.resolve(),nine_obj=a.nine_obj)

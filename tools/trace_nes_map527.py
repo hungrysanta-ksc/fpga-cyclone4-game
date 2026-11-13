@@ -5,6 +5,7 @@ import hashlib
 import json
 from pathlib import Path
 import struct
+from unicorn import UC_HOOK_MEM_WRITE
 
 import test_nes_raw506_joint as joint
 from check_nes_game478 import UC_HOOK_CODE, UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2, UC_ARM_REG_R3
@@ -89,6 +90,15 @@ class MapRuntime(joint.Runtime):
         for name,fn in [('memset',bg_done),('map_word185',map_word),('packet_wire',packet),
                         ('nes_window184_enqueue',enqueue),('nes_plan200_end',lambda *x:record('end_enter')),
                         ('nes_resident211_prepare',lambda *x:record('prepare_enter'))]:
+            if name=='map_word185' and name not in self.syms:
+                # The split planner can inline its single map writer. Observe
+                # actual stores rather than changing target code to keep a symbol.
+                start=self.video+video['map']
+                def stored(u,access,address,size,value,user):
+                    for at in range(max(address,start),min(address+size,start+4096)):
+                        self.groups[(at-start)//64]=self.clock
+                self.u.hook_add(UC_HOOK_MEM_WRITE,stored,begin=start,end=start+4095)
+                continue
             pc=self.syms[name]
             self.u.hook_add(UC_HOOK_CODE,fn,begin=pc,end=pc)
         if 'nes_plan527_map_credit' in self.syms:

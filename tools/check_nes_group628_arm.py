@@ -9,7 +9,7 @@ from check_nes_game478 import UC_HOOK_CODE, UC_ARM_REG_PC, UC_ARM_REG_LR, UC_ARM
 from check_nes_supply485_arm import ARM
 
 
-def run(a):
+def run(a, *, capacity=880, end=4096):
     m=ARM(a.src,'normal')
     m.s=0x20010000
     ptr=0x20018000
@@ -37,11 +37,11 @@ def run(a):
             bank=(serial-1)&1
             m.put(m.s,'nes_native_sink165','serial',serial,4)
             m.u.mem_write(bases+4*bank,struct.pack('<I',serial-2))
-            m.u.mem_write(history+880*bank,runs)
+            m.u.mem_write(history+capacity*bank,runs)
             for indices in ([],[0],[n//4-1],list(range(1,n//4,5)),list(range(n//4))):
                 b=bytearray(group*(n//4))
                 for i in indices:b[4*i]^=i+1
-                assert submit(4096-n,bytes(b))
+                assert submit(end-n,bytes(b))
                 h=packets[-1]
                 if len(indices)==n//4:
                     assert h[0]==2 and h[16:]==b
@@ -55,11 +55,11 @@ def run(a):
                     assert struct.unpack_from('<HH',h,20)==(sum(words)%65536,sum(w*(len(words)-j) for j,w in enumerate(words))%65536)
                 results.append(h[0])
     bank=(serial-1)&1
-    for content in (bytes(880),(b'\x01'+group)*176):
-        m.u.mem_write(history+880*bank,content)
-        assert submit(4032,group*16) and packets[-1][0]==2
+    for content in (bytes(capacity),(b'\x01'+group)*(capacity//5)):
+        m.u.mem_write(history+capacity*bank,content)
+        assert submit(end-64,group*16) and packets[-1][0]==2
     m.u.mem_write(bases+4*bank,struct.pack('<I',serial-3))
-    m.u.mem_write(history+880*bank,runs)
+    m.u.mem_write(history+capacity*bank,runs)
     assert submit(2048,group*16) and packets[-1][0]==2
     m.u.mem_write(bases+4*bank,struct.pack('<I',serial-2))
     assert submit(2048,group*16) and packets[-1][0]==9
