@@ -12,7 +12,7 @@ from nes_raw506 import once
 from trace_nes_owner739 import observe
 
 
-def run(a, early_schedule=None):
+def run(a, early_schedule=None, after_retire=None):
     a.frames = 66
     labels = read(a.client/"labels.json")
     events = [e for e in read(a.trace/"events.json") if e.get("generation")==969]
@@ -63,6 +63,11 @@ end,emu.callbackType.exec,{labels[name]})""")
             path.write_text("".join("\t".join(r)+"\n" for r in rows),newline="\n")
             instructions=",".join(f"[{ids[new]+1}]={{{round(tx[i]['clock']-tx[i]['start'])},{packets[i][0]}}}"
                                   for new,i in enumerate(order[prefix:],prefix))
+            if after_retire is not None:
+                before,after=after_retire(packets)
+                assert order==list(range(len(ids))) and after>before
+                script=once(script,"local finished522=false",
+                            f"local checkedMap782={ids[before]+1};local nextMap782={ids[after]+1}\nlocal finished522=false")
             if a.hold:
                 # Keep the original VRAM oracle, and wait for all five specified
                 # destinations to pass it before allowing the SEAL wire to start.
@@ -135,6 +140,13 @@ end),emu.callbackType.exec,8269685)""")
    if job[2]==7 then bulk779=sent+1 end
   end""")
 
+        if after_retire is not None:
+            script=once(script,"   if now<endAt then return end","""   if sent+1==nextMap782 then
+    local receipt=retiredEvents[checkedMap782]
+    if not receipt then return end
+    endAt=math.max(endAt,receipt[2]+job[1])
+   end
+   if now<endAt then return end""")
         if a.hold:
             script=once(script,"   if now<endAt then return end","""   if job[2]==3 then
     if not gate779 then return end

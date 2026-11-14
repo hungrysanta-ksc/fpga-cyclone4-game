@@ -9,8 +9,8 @@ import subprocess
 from nes_raw506 import once, sha
 
 
-def run(base, trace, mesen, out, stop=False, map_stop=False, table_stop=False):
-    map_stop = map_stop or table_stop
+def run(base, trace, mesen, out, stop=False, map_stop=False, table_stop=False, retire_offset=None):
+    map_stop = map_stop or table_stop or retire_offset is not None
     stop = stop or map_stop
     out=out.resolve()
     out.mkdir(parents=True,exist_ok=False)
@@ -57,6 +57,10 @@ def run(base, trace, mesen, out, stop=False, map_stop=False, table_stop=False):
  sample516("load")''')
             s=once(s, 'if packet and pw(8)==FAULT and pb(0)==5 and pb(1)==5 and pw(10)==21 then\n   interrupted',
                       'if mapStopPending then\n   interrupted')
+        if retire_offset is not None:
+            s=once(s,'if pw(8)==FAULT and pb(0)==2 and pb(1)==2 and pw(10)==1216 then mapStopPending=true end','')
+            marker='lastStatus=ack[1];sample516("ack",lastStatus)'
+            s=once(s,marker,marker+f'\n  if pw(8)==FAULT and pb(1)==2 and pw(10)=={retire_offset} and lastStatus==0 then mapStopPending=true end')
         if table_stop:
             s=once(s,'pb(0)==2 and pb(1)==2 and pw(10)==1216 then mapStopPending',
                    f'pb(0)==2 and pb(1)==5 and pw(10)=={int.from_bytes(table[10:12],"little")} then mapStopPending')
@@ -111,7 +115,8 @@ def run(base, trace, mesen, out, stop=False, map_stop=False, table_stop=False):
         if table_stop:
             proof["table_offset"]=int.from_bytes(table[10:12],"little")
         else:
-            proof["map_offset"]=1216
+            proof["map_offset"]=1216 if retire_offset is None else retire_offset
+            proof["after_return"]=retire_offset is not None
         proof.update(last_packet_status=result['last_status'],
                      blanks_after_STOP=result['blanks_after_STOP'])
     else:
@@ -126,5 +131,8 @@ if __name__=='__main__':
     p.add_argument('--stop',action='store_true')
     p.add_argument('--map-stop',action='store_true')
     p.add_argument("--table-stop",action="store_true")
+    p.add_argument("--after-map-return",type=int,metavar="OFFSET")
     a=p.parse_args()
-    run(a.base,a.trace,a.mesen,a.out,a.stop,a.map_stop,a.table_stop)
+    if a.after_map_return is not None and (a.table_stop or a.map_stop):
+        p.error("choose one STOP trigger")
+    run(a.base,a.trace,a.mesen,a.out,a.stop,a.map_stop,a.table_stop,a.after_map_return)

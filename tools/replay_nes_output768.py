@@ -96,7 +96,7 @@ checkedMem527(function(a,v)
 end,emu.callbackType.write,0x7004,0x7007)
 """ + marker)
             return source
-        if variant in ("781B","781C"):
+        if variant in ("781B","781C","782","782B","782C","782D","782E"):
             # Warm banks run the original rank-ordered object builder after
             # slot zero, before normal BG. The oracle still independently
             # compares every encoded byte, tile payload and END against 763.
@@ -105,6 +105,10 @@ end,emu.callbackType.write,0x7004,0x7007)
                 def __init__(self, options):
                     super().__init__(options)
                     for g in range(907, LAST+1):
+                        if variant in ("782","782B","782C","782D","782E"):
+                            geometry=(options.data/f"frame{g}.geometry").read_bytes()
+                            if int.from_bytes(geometry[5732:5734],"little")>24:
+                                continue
                         plans=self.plansets[g]
                         assert plans[0][6]==2 and all(q[6]<2 for q in plans[1:])
                         self.plansets[g]=[plans[0]]+[q for q in plans if q[6]==1]+[q for q in plans if q[6]==0]
@@ -188,6 +192,16 @@ end,emu.callbackType.write,0x7004,0x7007)
     pin_path = Path(remaining[remaining.index("--arm")+1]) / "obj-nes-100/sd2snes.elf"
     manifest = read(ROOT / f"analysis/trial{763 if variant == '763' else 767}-package.json")
     expected = manifest["variants"]["763"]["ELF"] if variant == "763" else manifest["ELF"]
+    if variant == "782C":
+        expected="8bf256d955da327c8359a78823b8e2d542f5bbbb6db09fd561622114579b4b08"
+    if variant == "782D":
+        expected="7193456ca235672c4f116bd30581a1a3b81fadf7f822e95ad9b092ad52ff0a87"
+    if variant == "782E":
+        expected="e4e80459428edaedbc48b129e448ca85632e7790c8cdf03623c82caebde59e42"
+    if variant == "782B":
+        expected="feb6530402c23d07cdcc5aecc6293754b34252db3643da1ea0c0876f47a2da2b"
+    if variant == "782":
+        expected="e5e1a8f4ccef3bff3ea7d0c4dcef46b1c9e46f10b7934caf0fc464fabf0753de"
     if variant == "781C":
         expected = "a60455581ca6488fe8ba268d8c0693fd5ac83842f1e47861b43583502fb5fcbc"
     if variant == "781B":
@@ -226,7 +240,7 @@ end,emu.callbackType.write,0x7004,0x7007)
         stack.enter_context(patch.object(tile, "run_schedule", schedule))
         if variant in ("770","771"):
             stack.enter_context(patch.object(Runtime,"__init__",diagnostic))
-        if variant in ("781B","781C"):
+        if variant in ("781B","781C","782","782B","782C","782D","782E"):
             # Tile END precedes CGRAM and raw writes. Sample the original
             # complete set of observer fields at the checked planner exit.
             from functools import partial
@@ -243,7 +257,7 @@ end,emu.callbackType.write,0x7004,0x7007)
             stack.enter_context(patch.object(Runtime, "__init__", immediate969))
         if omit_wait:
             stack.enter_context(patch.object(Runtime, "__init__", hook))
-        runpy.run_module("test_nes_status689" if variant in ("763","770","779C","780","781","781B","781C") else "test_nes_static751",run_name="__main__")
+        runpy.run_module("test_nes_status689" if variant in ("763","770","779C","780","781","781B","781C","782","782B","782C","782D","782E") else "test_nes_static751",run_name="__main__")
 
 
 if __name__ == "__main__":
@@ -256,7 +270,7 @@ if __name__ == "__main__":
     for arg in ("out", "board", "bin", "prefix"):
         p.add_argument(arg, type=Path)
     p = sub.add_parser("run", add_help=False)
-    p.add_argument("variant", choices=("763","767","769","770","771","776","776B","777","777B","778","778B","779","779B","779C","780","781","781B","781C"))
+    p.add_argument("variant", choices=("763","767","769","770","771","776","776B","777","777B","778","778B","779","779B","779C","780","781","781B","781C","782","782B","782C","782D","782E"))
     p.add_argument("extras", type=Path)
     p.add_argument("--omit-wait969", action="store_true")
     p.add_argument("--map969", action="store_true")

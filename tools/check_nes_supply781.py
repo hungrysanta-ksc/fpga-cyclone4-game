@@ -19,6 +19,8 @@ def sealed_wait(src, case):
     m.u.mem_write(window+m.layout["nes_sink_window184"]["last"], bytes([2 if case=="ordinary" else 3]))
     m.put(window,"nes_sink_window184","sent",11,2)
     m.put(window,"nes_sink_window184","retired",11 if case=="returned" else 10,2)
+    if case=="uncached":
+        m.put(m.state,"nes_native165","ready183",0,1)
     if case=="STOP":
         m.case="STOP_before"
     m.ops.clear()

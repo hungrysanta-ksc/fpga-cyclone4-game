@@ -54,7 +54,7 @@ class Reports(ARM):
             return
         super().hook(u,at,size,user)
 
-    def run(self,good):
+    def run(self,good,trial=577):
         self.printed=b''
         self.files={}
         self.call('nes_budget210_reset',[])
@@ -82,7 +82,7 @@ class Reports(ARM):
         self.measuring=False
         cost=self.instructions-before
         stack=0x2001e000-self.low
-        assert b'candidate=NES-MMC577' in self.printed
+        assert f'candidate=NES-MMC{trial}'.encode() in self.printed
         if good:
             assert len(self.files)==2 and self.printed in self.files.values()
             assert b'ppu_history_15=' in self.printed and b'pad_15_ticks=' in self.printed
