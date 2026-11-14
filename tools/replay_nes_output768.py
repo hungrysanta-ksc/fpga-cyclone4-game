@@ -63,7 +63,7 @@ def inputs(out, game):
     (out / "obj-cache.json").write_text(json.dumps(cache), encoding="utf8")
 
 
-def replay(variant, extras, remaining, omit_wait, receipt969=False, watch969=False):
+def replay(variant, extras, remaining, omit_wait, receipt969=False, watch969=False, map969=False):
     import test_nes_obj609 as obj
     import test_nes_tile532 as tile
 
@@ -175,6 +175,10 @@ end,emu.callbackType.write,0x7004,0x7007)
     pin_path = Path(remaining[remaining.index("--arm")+1]) / "obj-nes-100/sd2snes.elf"
     manifest = read(ROOT / f"analysis/trial{763 if variant == '763' else 767}-package.json")
     expected = manifest["variants"]["763"]["ELF"] if variant == "763" else manifest["ELF"]
+    if variant == "778B":
+        expected = "b875e3a9aefb359f0e5192f066c8d3cf932fc5b2905153bdf08e90ad99ece4ff"
+    if variant == "778":
+        expected = "f2167762b618b3fda45eb629a693fb8915adf818dd8212b66c97ec73af716507"
     if variant == "777B":
         expected = "31d63bf16abba708dc8527ab1c156ba5468cf6a65c442b8d6028d0bf78110418"
     if variant == "777":
@@ -195,6 +199,9 @@ end,emu.callbackType.write,0x7004,0x7007)
         stack.enter_context(patch.object(tile, "run_schedule", schedule))
         if variant in ("770","771"):
             stack.enter_context(patch.object(Runtime,"__init__",diagnostic))
+        if map969:
+            from test_nes_rows757 import observe
+            stack.enter_context(patch.object(Runtime, "__init__", observe(Runtime.__init__, 969, 1024, 1407)))
         if watch969:
             from trace_nes_prefix777 import observe
             stack.enter_context(patch.object(Runtime, "__init__", observe(Runtime.__init__)))
@@ -216,9 +223,10 @@ if __name__ == "__main__":
     for arg in ("out", "board", "bin", "prefix"):
         p.add_argument(arg, type=Path)
     p = sub.add_parser("run", add_help=False)
-    p.add_argument("variant", choices=("763","767","769","770","771","776","776B","777","777B"))
+    p.add_argument("variant", choices=("763","767","769","770","771","776","776B","777","777B","778","778B"))
     p.add_argument("extras", type=Path)
     p.add_argument("--omit-wait969", action="store_true")
+    p.add_argument("--map969", action="store_true")
     p.add_argument("--watch969", action="store_true")
     p.add_argument("--receipt969", action="store_true")
     a, rest = parser.parse_known_args()
@@ -235,4 +243,4 @@ if __name__ == "__main__":
         assert [r["wire"] for r in tail["957"]] == [r["wire"] for r in prefix["957"]]
         (a.out / "joint-sender.json").write_text(json.dumps({**tail,**prefix}),encoding="utf8")
     else:
-        replay(a.variant,a.extras,rest,a.omit_wait969,a.receipt969,a.watch969)
+        replay(a.variant,a.extras,rest,a.omit_wait969,a.receipt969,a.watch969,a.map969)

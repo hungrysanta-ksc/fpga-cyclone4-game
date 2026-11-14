@@ -9,7 +9,8 @@ import subprocess
 from nes_raw506 import once, sha
 
 
-def run(base, trace, mesen, out, stop=False):
+def run(base, trace, mesen, out, stop=False, map_stop=False):
+    stop = stop or map_stop
     out=out.resolve()
     out.mkdir(parents=True,exist_ok=False)
     assert json.loads((base/'audit.json').read_bytes())['frames']==66
@@ -48,6 +49,13 @@ def run(base, trace, mesen, out, stop=False):
   if packet and pw(8)==FAULT and pb(0)==5 and pb(1)==5 and pw(10)==21 then
    interrupted=true;return 128
   end""")
+        if map_stop:
+            s=once(s, "local interrupted=false", "local mapStopPending=false;local interrupted=false")
+            s=once(s, 'packet=requests[index];sample516("load")', '''packet=requests[index]
+ if pw(8)==FAULT and pb(0)==2 and pb(1)==2 and pw(10)==1216 then mapStopPending=true end
+ sample516("load")''')
+            s=once(s, 'if packet and pw(8)==FAULT and pb(0)==5 and pb(1)==5 and pw(10)==21 then\n   interrupted',
+                      'if mapStopPending then\n   interrupted')
         s=once(s,"local function write(a,v)", """local function write(a,v)
  if interrupted and a==0x420b then error('new DMA after sampled STOP') end""")
         s=once(s,"  if uniform545() then\n   assert(fillBytes545", """  if uniform545() and interrupted then
@@ -69,6 +77,21 @@ def run(base, trace, mesen, out, stop=False):
         s=once(s,"  if rejected then\n   local screen", """  assert(replaced and lastStatus==224 and word(0x1248)==FAULT-905,'table accepted out of order')
   if rejected then
    local screen""")
+    if map_stop:
+        # An idle STOP may halt before another head exists to carry E4.
+        # Keep clocking and checking all DMA and display writes for three blanks.
+        s=once(s,'local mapStopPending=false','local sampledFrame=nil;local mapStopPending=false')
+        s=once(s,'interrupted=true;return 128','interrupted=true;sampledFrame=sampledFrame or emu.getState().frameCount;return 128')
+        s=once(s," if (rejected or index>TOTAL)and not packet and st.frameCount>shown+2 then",
+               """ if sampledFrame and st.frameCount>=sampledFrame+3 then
+  assert(commits==64 and captured==64 and word(0x1248)==64 and word(0x124a)==0,'STOP published identity')
+  local screen=emu.getScreenBuffer();local f=assert(io.open(ROOT..'/retained.rgb','wb'))
+  for y=0,238 do local row={};for x=0,255 do local b=screen[y*256+x+1];row[#row+1]=string.char((b>>16)&255,(b>>8)&255,b&255)end;f:write(table.concat(row))end;f:close()
+  local proof=assert(io.open(ROOT..'/result.json','w'))
+  proof:write(string.format('{"passed":true,"commits":%d,"last_status":%d,"blanks_after_STOP":%d}',commits,lastStatus,st.frameCount-sampledFrame))
+  proof:close();emu.stop(0);return
+ end
+ if (rejected or index>TOTAL)and not packet and st.frameCount>shown+2 then""")
     (out/'capture.lua').write_text(s,encoding='utf8',newline='\n')
     with (out/'mesen.log').open('wb') as log:
         subprocess.run([str(mesen),'--testRunner',str(out/'capture.lua'),str(out/'client.sfc'),
@@ -77,15 +100,22 @@ def run(base, trace, mesen, out, stop=False):
                        cwd=out,env=dict(os.environ,DOTNET_ROOT='C:/works/dotnet',DOTNET_ROOT_X64='C:/works/dotnet'),
                        stdout=log,stderr=subprocess.STDOUT,timeout=330,check=True,creationflags=subprocess.CREATE_NO_WINDOW)
     result=json.loads((out/'result.json').read_bytes())
-    assert result['passed'] and result['commits']==64 and result['last_status']==(228 if stop else 224)
+    assert result['passed'] and result['commits']==64 and (result.get('blanks_after_STOP',0)>=3 if map_stop else result['last_status']==(228 if stop else 224))
     assert sha(out/'retained.rgb')==sha(trace/'frame-968.rgb')
-    (out/'proof.json').write_text(json.dumps(dict(commits=64,reject=result['last_status'],retained=sha(out/'retained.rgb'),
-        client=sha(out/'client.sfc'),table_offset=int.from_bytes(table[10:12],'little'),table=sha(out/'table.bin')),indent=2)+'\n')
+    proof = dict(commits=64, retained=sha(out/'retained.rgb'), client=sha(out/'client.sfc'))
+    if map_stop:
+        proof.update(map_offset=1216, last_packet_status=result['last_status'],
+                     blanks_after_STOP=result['blanks_after_STOP'])
+    else:
+        proof.update(reject=result['last_status'], table_offset=int.from_bytes(table[10:12],'little'),
+                     table=sha(out/'table.bin'))
+    (out/'proof.json').write_text(json.dumps(proof,indent=2)+'\n')
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for key in ('base','trace','mesen','out'):p.add_argument(key,type=Path)
     p.add_argument('--stop',action='store_true')
+    p.add_argument('--map-stop',action='store_true')
     a=p.parse_args()
-    run(a.base,a.trace,a.mesen,a.out,a.stop)
+    run(a.base,a.trace,a.mesen,a.out,a.stop,a.map_stop)
