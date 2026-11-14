@@ -1,0 +1,102 @@
+"""Lossless Mode 3 BG2 staging for the GBC renderer. VRAM addresses are words."""
+
+
+def initialize(a, dma):
+    a.stz(0x2116)
+    a.write(0x2117, 0x7c)
+    dma(a, 0x03c000, 2048, 1, 0x18)
+    a.write(0x2108, 0x7c)
+    a.stz(0x210f)
+    a.stz(0x210f)
+    a.write(0x2110, 0xff)
+    a.write(0x2110, 3)
+    a.write(0x212d, 2)
+    a.write(0x2130, 2)
+    a.write(0x2131, 0x21)
+    a.write(0x2132, 0xe0)
+    a.write(0x5c, 0x50)
+    a.write(0x210b, 0x50)
+    a.jsr("residual_colors")
+
+
+def emit_staging(a, dma, next_buffer, phase, blank_seen):
+    a.label("residual_colors")
+    a.write(0x2121, 64)
+    for index in range(16):
+        rgb = (index & 1) | ((index & 6) << 4) | ((index & 8) << 7)
+        a.write(0x2122, rgb & 255)
+        a.write(0x2122, rgb >> 8)
+    a.emit(0x60)
+
+    a.label("check_menu_wait")
+    # The menu issues its own snapshot requests. Discard the interrupted
+    # request on return. Startup calls leave 3f clear until IRQ is enabled.
+    a.read(0x3f)
+    a.branch(0xf0, "menu_done")
+    a.read(0x4218)
+    a.emit(0x29, 0x30, 0xc9, 0x30)
+    a.branch(0xd0, "menu_done")
+    a.read(0x4219)
+    a.emit(0x29, 0x10)
+    a.branch(0xf0, "menu_done")
+    a.emit(0x22, 0, 0xa0, 0x7e)
+    a.emit(0x68, 0x68)  # discard this local JSR, A8
+    a.jump("request_prepare")
+    a.label("menu_done")
+    a.emit(0x60)
+
+    a.label("repeat_colors")
+    # Replay the currently visible frame's original row-zero palette; the
+    # PPU reloads its seven old HDMA pointers automatically on line zero.
+    a.stz(0x2121)
+    a.read(next_buffer)
+    a.branch(0xf0, "repeat_palette_one")
+    dma(a, 0x7e4000, 128, 0, 0x22)
+    a.emit(0x60)
+    a.label("repeat_palette_one")
+    dma(a, 0x7e6000, 128, 0, 0x22)
+    a.emit(0x60)
+
+    a.label("stage_bg2")
+    a.read(0x3f)
+    a.branch(0xf0, "copy_low")
+    a.jsr("repeat_colors")
+    a.label("copy_low")
+    a.write(0x2115, 0x80)
+    a.stz(0x2116)
+    a.read(next_buffer)
+    a.branch(0xd0, "low_one")
+    a.lda8(0x30)
+    a.branch(0x80, "low_base")
+    a.label("low_one")
+    a.lda8(0x50)
+    a.label("low_base")
+    a.sta(0x2117)
+    dma(a, 0x418000, 11520, 1, 0x18)
+    a.read(0x3f)
+    a.branch(0xf0, "low_done")
+    # Redisplay the old frame while the new lower layer is safely inactive.
+    # Start the original 24 upper-plane passes at a fresh line 185.
+    a.stz(blank_seen)
+    a.stz(phase)
+    a.write(0x4209, 40)
+    a.stz(0x420a)
+    a.read(0x4211)
+    a.write(0x4200, 0x21)
+    a.label("next_185")
+    a.read(blank_seen)
+    a.branch(0xf0, "next_185")
+    a.label("low_done")
+    a.emit(0x60)
+
+    a.label("publish_bg2")
+    a.read(next_buffer)
+    a.branch(0xd0, "publish_one")
+    a.lda8(0x30)
+    a.branch(0x80, "publish_base")
+    a.label("publish_one")
+    a.lda8(0x50)
+    a.label("publish_base")
+    a.sta(0x210b)
+    a.sta(0x5c)
+    a.emit(0x60)

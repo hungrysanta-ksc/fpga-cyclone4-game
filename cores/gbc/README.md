@@ -2,6 +2,7 @@
 
 다른 코어 작업에는 [이식 회고](../../docs/development/GBC-PORTING-LESSONS.ko.md)를 먼저 읽습니다. 실행 코어는 Gameboy_MiSTer 기반이며 SameBoy 유래 CGB 부트 코드를 사용합니다.
 
+- [GBC774 해리 포터·갤러가 RGB555 실기 시험](../../docs/development/GBC774.ko.md)
 - [GBC773 원피스 8 MiB 실기 시험과 갤러가·웬델린 원색 출력 검증](../../docs/development/GBC773.ko.md)
 - 내부 후보: G13C44. 사용자 실기 성공: 2026-10-04.
 - 공개 제품 매핑: [sd2snesHST 0.9.0](https://github.com/hungrysanta-ksc/sd2snesHST/releases/tag/v0.9.0).

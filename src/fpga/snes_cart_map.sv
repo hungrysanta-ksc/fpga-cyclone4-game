@@ -7,8 +7,8 @@ module snes_cart_map(
  output wire[18:0]sram_addr
 );
  assign reg_select=!addr[22]&&addr[15:4]==12'h600;
- assign frame_select=!romsel_n&&addr[22:16]==7'h40&&addr[15];
+ assign frame_select=!romsel_n&&addr[22:17]==6'h20&&addr[15];
  assign program_select=!romsel_n&&addr[22:19]==0&&addr[15];
- assign sram_addr=frame_select?{3'b000,page,addr[14:0]}:
+ assign sram_addr=frame_select?{{2{addr[16]}},1'b0,page,addr[14:0]}:
                   program_select?(19'h10000+{1'b0,addr[18:16],addr[14:0]}):19'b0;
 endmodule

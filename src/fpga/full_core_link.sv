@@ -35,7 +35,7 @@ module full_core_link(
  output wire[21:0]ROM_ADDR,output wire ROM_1CE,ROM_2CE,ROM_OE,ROM_WE,ROM_BHE,ROM_BLE,
  inout wire[15:0]ROM_DATA);
  wire rtc_dirty,rtc_watchdog_tick;
- wire metadata_ready,metadata_valid,metadata_word,committed_frame;wire[15:0]metadata_addr,metadata_data;
+ wire metadata_ready,metadata_valid,metadata_word,committed_frame;wire[16:0]metadata_addr;wire[15:0]metadata_data;
  wire clk,locked,logic_reset,bus_clk,bus_locked,source_page,source_front_valid;
  gbc_bus_pll0 bus_pll(reset,CLKIN,bus_clk,bus_locked);
  gbc_pll0 pll(.areset(reset),.inclk0(CLKIN),.c0(clk),.locked(locked));
@@ -177,7 +177,19 @@ module full_core_link(
  assign cart_in=!a15?rom_byte:rtc_chosen?rtc_cart_read:ram_chosen?save_client_data:8'hff;
  assign rom_not_ready=!a15&&rd&&!hit; // Status only; not proof of a CPU sample miss.
  ppu_stream stream(clk,core_reset||session_flush,ppu_ce,lcd_on,lcd_clkena,lcd_data,raw_pixel_valid,pixel_rgb);
- assign pixel_valid=raw_pixel_valid&&keep_pixels;
+ // Select whole LCD frames when a two-layer upload holds the output pages.
+ // An admission decision survives to the last pixel, including a fast-mode change.
+ reg [14:0] lcd_position;
+ reg accept_lcd_frame;
+ wire new_frame=lcd_position==0;
+ assign pixel_valid=raw_pixel_valid&&(new_frame?(keep_pixels&&capture_active):accept_lcd_frame);
+ always @(posedge clk)begin
+  if(core_reset||session_flush||!lcd_on)begin lcd_position<=0;accept_lcd_frame<=0;end
+  else if(raw_pixel_valid)begin
+   if(new_frame)accept_lcd_frame<=keep_pixels&&capture_active;
+   lcd_position<=lcd_position==23039?15'd0:lcd_position+1'b1;
+  end
+ end
  wire cap_req,cap_write,cap_ready,cap_rsp;
  wire audio_delay_protocol_error,audio_delay_overrun;
  wire[22:0]cap_word_addr;wire[15:0]cap_data,cap_response;
@@ -186,7 +198,7 @@ module full_core_link(
  assign capture_error=pipeline_error||metadata_error||save_timing_error||mcu_error||audio_delay_protocol_error||audio_delay_overrun;
  assign capture_error_code=audio_delay_overrun?4'd13:audio_delay_protocol_error?4'd12:mcu_error?4'd11:save_timing_error?4'd10:metadata_error?4'd9:pipeline_error_code;
  wire pixel_write_valid,pixel_write_ready;
- wire[14:0]pixel_write_addr;wire[15:0]pixel_write_data;
+ wire[15:0]pixel_write_addr;wire[15:0]pixel_write_data;
  wire upload_boundary;
  wire[9:0]host_joy_update;
  board_output_ring3_link output_pages(clk,bus_clk,logic_reset,capture_done,lcd_on,pixel_valid&&capture_active,processing_bank,

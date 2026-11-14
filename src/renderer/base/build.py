@@ -11,6 +11,11 @@ import json
 import struct
 import sys
 import zlib
+import os
+
+RGB774 = os.environ.get("GBC_RENDERER_PROFILE") == "rgb774"
+if RGB774:
+    import rgb774
 
 P = Path(__file__).resolve().parent
 R = P
@@ -184,22 +189,24 @@ body.stz(0x2116)
 body.stz(0x2117)
 dma(body, 0x018800, 0, 0x09, 0x18)                        # count 0 = 64 KiB
 body.stz(0x2116)
-body.write(0x2117, 0x60)
+body.write(0x2117, 0x78 if RGB774 else 0x60)
 dma(body, 0x018000, 2048, 0x01, 0x18)
 body.write(0x2105, 3)                                     # Mode 3, BG1 8bpp
-body.write(0x2107, 0x60)                                  # tilemap at VRAM $6000
+body.write(0x2107, 0x78 if RGB774 else 0x60)                                  # tilemap at VRAM $6000
 body.stz(0x210B)                                          # tile graphics at $0000
 body.stz(0x210D)
 body.stz(0x210D)
 body.write(0x210E, 0xFF)
 body.write(0x210E, 0x03)
 body.write(0x212C, 1)
+if RGB774:
+    rgb774.initialize(body, dma)
 
 if G8:
     # Require the exact known-good G7 FPGA before starting the producer.
     body.read(0x6000); body.emit(0xc9, 0xc3)
     body.emit(0xf0, 3); body.jump('fatal_endpoint')
-    body.read(0x6007); body.emit(0xc9, 0xaf if G12 else 0xab if G11 else 0xa7)
+    body.read(0x6007); body.emit(0xc9, 0xb0 if RGB774 else 0xaf if G12 else 0xab if G11 else 0xa7)
     body.emit(0xf0, 3); body.jump('fatal_endpoint')
 
 # First frame is prepared and installed while the display remains blank.
@@ -207,7 +214,21 @@ if G9:
     body.jsr('audio_init')
     body.jsr('audio_indicator')
 body.jsr("request_prepare")
+if RGB774:
+    body.jsr("stage_bg2")
 body.jsr("install_frame")
+if RGB774:
+    # Boot may finish on any scanline. Start the first display with the same
+    # row-zero colors and HDMA pointer reload as all following displays.
+    body.stz(0x420c)
+    body.label("first_wait_visible")
+    body.read(0x4212)
+    body.branch(0x30, "first_wait_visible")
+    body.label("first_wait_vblank")
+    body.read(0x4212)
+    body.branch(0x10, "first_wait_vblank")
+    body.jsr("repeat_colors")
+    body.write(0x420c, 0x7f)
 body.stz(PHASE)
 body.stz(BLANK_SEEN)
 body.write(0x4209, 40)
@@ -215,11 +236,15 @@ body.stz(0x420A)
 if G8: body.read(0x4211)  # discard stale TIMEUP before enabling V-IRQ
 body.write(0x4200, 0x21)                                  # V-IRQ + auto joypad
 body.write(0x3f,1);body.emit(0x58)                                           # cli
+if RGB774:
+    body.stz(0x5d)
 body.label("main_loop")
 if G8:
     body.read(PHASE); body.branch(0xf0, 'main_loop')
 else: body.emit(0xCB)                                     # wai for line 41
 body.jsr("request_prepare")                               # prepare next page visibly
+if RGB774:
+    body.write(0x5d, 1)
 if G8:
     # Never start a long DMA late in an already elapsed blank interval.
     body.stz(BLANK_SEEN)
@@ -229,12 +254,16 @@ body.branch(0xD0, "already_blank")
 if G8: body.jump('wait_blank')
 else: body.emit(0xCB)                                     # wai for line 185
 body.label("already_blank")
+if RGB774:
+    body.jsr("stage_bg2")
 body.jsr("install_frame")
 body.stz(BLANK_SEEN)
 body.stz(PHASE)
 body.write(0x4209, 40)
 body.stz(0x420A)
 body.write(0x4200, 0x21)
+if RGB774:
+    body.stz(0x5d)
 body.branch(0x80, "main_loop")
 
 # IRQ saves full A/X before entering A8; RTI restores interrupted flags.
@@ -255,6 +284,15 @@ body.stz(0x420A)
 body.write(0x4200, 0x21)
 body.emit(0xab,0xc2,0x20,0xfa,0x68,0x40)                               # plx; pla; rti
 body.label("irq_blank")
+if RGB774:
+    body.read(0x5d)
+    body.branch(0xd0, "upload_blank")
+    body.write(0x2100, 0x80)
+    body.jsr("repeat_colors")
+    body.stz(PHASE)
+    body.write(0x4209, 40)
+    body.emit(0xab,0xc2,0x20,0xfa,0x68,0x40)
+    body.label("upload_blank")
 body.write(0x2100, 0x80)
 body.jsr('c2_auto')
 if not G8: body.stz(0x420C)
@@ -289,6 +327,8 @@ body.label("retry_request")
 body.write(0x6001, 0x80)                                  # clear local error
 body.write(0x6001, 0x01)
 body.label("poll_status")
+if RGB774:
+    body.jsr("check_menu_wait")
 body.read(0x6002)
 body.emit(0x29, 0x10)
 if G8:
@@ -306,7 +346,7 @@ if G8:
     body.label('retry_vblank_in'); body.read(0x4212); body.emit(0x29, 0x80)
     body.branch(0xf0, 'retry_vblank_in')
     if G10: body.jsr('g10_probe')  # keep fault/X diagnostics alive during LCD-invalid retry
-    body.jump('retry_request')
+    body.jump('request_prepare' if RGB774 else 'retry_request')
     body.label('snapshot_valid')
 else: body.branch(0xF0, "retry_request")
 body.read(NEXT_BUFFER)
@@ -333,6 +373,8 @@ copy_long_x(body,"copy_b1_h5",4248832,8286208,726)
 copy_long_x(body,"copy_b1_h6",4249600,8286976,726)
 body.emit(0x60)
 
+if RGB774:
+    rgb774.emit_staging(body, dma, NEXT_BUFFER, PHASE, BLANK_SEEN)
 body.label("install_frame")
 if G8: body.jsr('prepare_hdma')
 else: body.stz(0x420C)
@@ -359,6 +401,8 @@ for pair in range(3):
         if pair*8+row==15:body.jsr('c15_dma_gap');body.emit(0xea,0xea)
         else:body.write(0x420B, 0x80)
 if G8:
+    if RGB774:
+        body.jsr("publish_bg2")
     body.read(NEXT_BUFFER); body.emit(0x49, 1); body.sta(NEXT_BUFFER)
     body.emit(0xee,0x18,0)
     body.emit(0x60)
@@ -528,9 +572,14 @@ rom[0x3000:0x3000+len(extra_bytes)] = extra_bytes
 tilemap = bytearray()
 for y in range(32):
     for x in range(32):
-        tile = (y - 5) * 20 + x - 6 if 6 <= x < 26 and 5 <= y < 23 else 511
+        tile = (y - 5) * 20 + x - 6 if 6 <= x < 26 and 5 <= y < 23 else (360 if RGB774 else 511)
         tilemap += struct.pack("<H", tile)
 rom[0x8000:0x8800] = tilemap
+if RGB774:
+    # ROM bank 3, after the complete menu maps/highlights.
+    for i in range(0, 2048, 2):
+        tile = struct.unpack_from("<H", tilemap, i)[0]
+        struct.pack_into("<H", rom, 0x1c000+i, tile | (4 << 10))
 rom[0x8800] = 0
 if G10:
     font,diag_map=assets('G13C10' if G12 else 'G11' if G11 else 'G10')
@@ -588,7 +637,7 @@ verification = {
     "font_source_sha256": hashlib.sha256((P/'build_gbc_diagnostic_renderer.py').read_bytes()).hexdigest() if G10 else None,
     "io_source_sha256": hashlib.sha256((P/'g9_snes_io.py').read_bytes()).hexdigest() if G9 else None,
     "spc_program_hex": spc_program().hex() if G9 else None,
-    "expected_fpga_id": 'AF' if G12 else 'AB' if G11 else 'A7' if G8 else None,
+    "expected_fpga_id": 'B0' if RGB774 else 'AF' if G12 else 'AB' if G11 else 'A7' if G8 else None,
     "boot_bytes": len(boot_bytes),
     "wram_body_bytes": len(body_bytes),
     "wram_extra_bytes": len(extra_bytes),

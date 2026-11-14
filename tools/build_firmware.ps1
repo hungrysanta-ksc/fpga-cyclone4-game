@@ -7,6 +7,7 @@ param(
  [string]$QuartusBin,
  [string]$MiniImage,
  [switch]$Candidate,
+ [switch]$Rgb774,
  [ValidatePattern('^[D-Z]:$')][string]$Drive='W:',
  [ValidatePattern('^[D-Z]:$')][string]$ArmDrive='V:'
 )
@@ -48,13 +49,18 @@ try {
  Push-Location "$work/src"
  try {
   $buildArgs=@('-r','CONFIG=config-mk3-stm32','AWK=awk','BIN2C=../utils/bin2c.exe','OBJDIR=obj-g13p3','DEPDIR=.dep-g13p3','GBC_DIAG_CFLAGS=-DGBC_DIAGNOSTIC -DGBC_PROBE_G12 -DGBC_SAVE_G12 -DGBC_DUMP_G12','build')
+  if($Rgb774){
+   $buildArgs=@($buildArgs | ForEach-Object {$_.Replace('OBJDIR=obj-g13p3','OBJDIR=obj-rgb774').Replace('DEPDIR=.dep-g13p3','DEPDIR=.dep-rgb774')})
+   $buildArgs=@($buildArgs | ForEach-Object {if($_ -like 'GBC_DIAG_CFLAGS=*'){"$_ -DGBC_RGB774"}else{$_}})
+  }
   & $Make @buildArgs
   # Make 3.81 may stop after generating its first dependency on a clean tree.
   if($LASTEXITCODE -ne 0){& $Make @buildArgs}
   if($LASTEXITCODE -ne 0){throw 'Firmware build failed; inspect the complete log'}
  } finally {Pop-Location}
 } finally {$env:PATH=$savedPath;& subst $Drive /D;& subst $ArmDrive /D}
-$fw=Join-Path $root 'src/obj-g13p3/firmware.stm'
+$objectDir=if($Rgb774){'obj-rgb774'}else{'obj-g13p3'}
+$fw=Join-Path $root "src/$objectDir/firmware.stm"
 if($Candidate) {
   Write-Output "Candidate firmware (original version ID): $fw"
   return

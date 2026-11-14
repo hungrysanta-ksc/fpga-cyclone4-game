@@ -68,7 +68,11 @@ enum { SGB_BIOS_CHECK = 0, SGB_BIOS_OK = 1, SGB_BIOS_MISMATCH = 2, SGB_BIOS_MISS
  * reset until all three SRAM payloads and mapper masks are installed. */
 #define SGB_FEAT_GBC_RUN 0x8000u
 #if defined(GBC_PROBE_G12)
+#if defined(GBC_RGB774)
+#define GBC_RENDERER_CRC32 0xb6ed88f2u
+#else
 #define GBC_RENDERER_CRC32 0x0af44f8au
+#endif
 #ifdef GBC_SAVE_G12
 #define GBC_LAUNCH_LABEL "G13C43"
 #else
