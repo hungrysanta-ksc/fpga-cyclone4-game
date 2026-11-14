@@ -9,7 +9,8 @@ import subprocess
 from nes_raw506 import once, sha
 
 
-def run(base, trace, mesen, out, stop=False, map_stop=False):
+def run(base, trace, mesen, out, stop=False, map_stop=False, table_stop=False):
+    map_stop = map_stop or table_stop
     stop = stop or map_stop
     out=out.resolve()
     out.mkdir(parents=True,exist_ok=False)
@@ -56,6 +57,9 @@ def run(base, trace, mesen, out, stop=False, map_stop=False):
  sample516("load")''')
             s=once(s, 'if packet and pw(8)==FAULT and pb(0)==5 and pb(1)==5 and pw(10)==21 then\n   interrupted',
                       'if mapStopPending then\n   interrupted')
+        if table_stop:
+            s=once(s,'pb(0)==2 and pb(1)==2 and pw(10)==1216 then mapStopPending',
+                   f'pb(0)==2 and pb(1)==5 and pw(10)=={int.from_bytes(table[10:12],"little")} then mapStopPending')
         s=once(s,"local function write(a,v)", """local function write(a,v)
  if interrupted and a==0x420b then error('new DMA after sampled STOP') end""")
         s=once(s,"  if uniform545() then\n   assert(fillBytes545", """  if uniform545() and interrupted then
@@ -104,7 +108,11 @@ def run(base, trace, mesen, out, stop=False, map_stop=False):
     assert sha(out/'retained.rgb')==sha(trace/'frame-968.rgb')
     proof = dict(commits=64, retained=sha(out/'retained.rgb'), client=sha(out/'client.sfc'))
     if map_stop:
-        proof.update(map_offset=1216, last_packet_status=result['last_status'],
+        if table_stop:
+            proof["table_offset"]=int.from_bytes(table[10:12],"little")
+        else:
+            proof["map_offset"]=1216
+        proof.update(last_packet_status=result['last_status'],
                      blanks_after_STOP=result['blanks_after_STOP'])
     else:
         proof.update(reject=result['last_status'], table_offset=int.from_bytes(table[10:12],'little'),
@@ -117,5 +125,6 @@ if __name__=='__main__':
     for key in ('base','trace','mesen','out'):p.add_argument(key,type=Path)
     p.add_argument('--stop',action='store_true')
     p.add_argument('--map-stop',action='store_true')
+    p.add_argument("--table-stop",action="store_true")
     a=p.parse_args()
-    run(a.base,a.trace,a.mesen,a.out,a.stop,a.map_stop)
+    run(a.base,a.trace,a.mesen,a.out,a.stop,a.map_stop,a.table_stop)
