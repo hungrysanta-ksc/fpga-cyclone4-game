@@ -83,6 +83,18 @@ def replay(variant, extras, remaining, omit_wait):
                 expected = (directory / "expected-cgram.bin").read_bytes() + (directory / "expected-oam.bin").read_bytes()
                 assert len(expected) == 1056
                 (args.out / f"colors636-{gen}.bin").write_bytes(expected)
+            if variant in ("770", "771"):
+                # Observe actual cartridge timestamp writes in the same callback
+                # domain as the independently logged PPU DMA and final ACK.
+                marker = "local function loaded()"
+                assert source.count(marker)==1
+                source = source.replace(marker, """local marks769=assert(io.open(ROOT..'/marks769.csv','w'))
+checkedMem527(function(a,v)
+ local st=emu.getState()
+ marks769:write(string.format('%d,%d,%d,%d,%d,%d\\n',pw(8),a,v,st.frameCount,st['ppu.scanline'],st.masterClock))
+ marks769:flush()
+end,emu.callbackType.write,0x7004,0x7007)
+""" + marker)
             return source
         return original_schedule(args, extended_oracle, link, frames=LAST-904)
     # Counterfactual only on 969. Execute the existing no-wait branch without
@@ -100,17 +112,60 @@ def replay(variant, extras, remaining, omit_wait):
                 cpu.events.append(dict(event="omit_optional_wait768", generation=969, clock=cpu.clock))
                 u.reg_write(UC_ARM_REG_PC, resume | 1)
         cpu.u.hook_add(UC_HOOK_CODE, omit, begin=pc, end=pc)
+
+    def diagnostic(cpu, args, link):
+        from check_nes_game478 import UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2, UC_ARM_REG_LR
+        from test_nes_raw506_joint import MASTER
+        base_init(cpu,args,link)
+        def window(u, address, size, unused):
+            # Exercise the actual logger in this 66-frame fixture. Change only
+            # the argument to its elapsed-time filter, never the system tick.
+            u.reg_write(UC_ARM_REG_R0,2500+cpu.generation-905)
+        def mailbox(u, address, size, unused):
+            assert bytes(u.mem_read(u.reg_read(UC_ARM_REG_R1),8))==bytes([0x78])+bytes(7)
+            cpu.clock=link.rpc(cpu.clock)
+            writes=(args.out/"marks769.csv").read_text().splitlines()
+            # EA already advanced the input generation. The page still holds
+            # the most recent SNES ACK, until the next SEAL.
+            g=int(writes[-1].split(",",1)[0])
+            rows=[list(map(int,x.split(","))) for x in writes if x.split(",",1)[0]==str(g)]
+            assert [r[1] for r in rows]==[0x7004,0x7005,0x7006,0x7006,0x7007]
+            rx=bytes([0,0x78,rows[0][2],rows[1][2],rows[3][2],rows[4][2],0x5a,0xa5])
+            cpu.clock+=cpu.observer_cost.get("screen146",64*MASTER/2625000)
+            cpu.clock=link.rpc(cpu.clock)
+            u.mem_write(u.reg_read(UC_ARM_REG_R2),rx)
+            u.reg_write(UC_ARM_REG_R0,1)
+            u.reg_write(UC_ARM_REG_PC,u.reg_read(UC_ARM_REG_LR))
+        def record(u, address, size, unused):
+            # Input prefetch also calls consumed() while output is still live.
+            if int.from_bytes(u.mem_read(cpu.data_symbols["live769"],4),"little"):
+                return
+            count=int.from_bytes(u.mem_read(cpu.data_symbols["count769"],2),"little")
+            assert 1<=count<=66
+            data=bytes(u.mem_read(cpu.data_symbols["ptrcache"],36*count))
+            (args.out/"registered769.bin").write_bytes(data)
+            assert data[-27]&1,(cpu.generation,data[-36:].hex())
+        for name,callback in (("begin769",window),("nes_rom_spi_transfer",mailbox),("nes_native165_consumed",record)):
+            pc=cpu.syms[name]
+            cpu.u.hook_add(UC_HOOK_CODE,callback,begin=pc,end=pc)
     pin_path = Path(remaining[remaining.index("--arm")+1]) / "obj-nes-100/sd2snes.elf"
-    manifest = read(ROOT / f"analysis/trial{variant}-package.json")
+    manifest = read(ROOT / f"analysis/trial{763 if variant == '763' else 767}-package.json")
     expected = manifest["variants"]["763"]["ELF"] if variant == "763" else manifest["ELF"]
+    if variant == "769":
+        expected = "bf7eb6f4904f5d22b50f919e8ec175e256e938e653406ddf24ba2ad13e3f8aa9"
+    if variant in ("770","771"):
+        expected = {"770":"0dc7ab4ef1df47f5325f39930eaeae06418c83890a37e9c1e2ab7f38435d185e",
+                    "771":"e8500e87ccb247bf573ba35ee7156c09d9a8c0ee0681207cd5b5fd16aed1073f"}[variant]
     pin(pin_path, expected)
     sys.argv[1:] = remaining
     with ExitStack() as stack:
         stack.enter_context(patch.object(obj, "capture", capture))
         stack.enter_context(patch.object(tile, "run_schedule", schedule))
+        if variant in ("770","771"):
+            stack.enter_context(patch.object(Runtime,"__init__",diagnostic))
         if omit_wait:
             stack.enter_context(patch.object(Runtime, "__init__", hook))
-        runpy.run_module("test_nes_status689" if variant == "763" else "test_nes_static751",run_name="__main__")
+        runpy.run_module("test_nes_status689" if variant in ("763","770") else "test_nes_static751",run_name="__main__")
 
 
 if __name__ == "__main__":
@@ -123,7 +178,7 @@ if __name__ == "__main__":
     for arg in ("out", "board", "bin", "prefix"):
         p.add_argument(arg, type=Path)
     p = sub.add_parser("run", add_help=False)
-    p.add_argument("variant", choices=("763","767"))
+    p.add_argument("variant", choices=("763","767","769","770","771"))
     p.add_argument("extras", type=Path)
     p.add_argument("--omit-wait969", action="store_true")
     a, rest = parser.parse_known_args()
