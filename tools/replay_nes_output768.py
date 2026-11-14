@@ -96,6 +96,19 @@ checkedMem527(function(a,v)
 end,emu.callbackType.write,0x7004,0x7007)
 """ + marker)
             return source
+        if variant in ("781B","781C"):
+            # Warm banks run the original rank-ordered object builder after
+            # slot zero, before normal BG. The oracle still independently
+            # compares every encoded byte, tile payload and END against 763.
+            original_link = link
+            class ObjectFirst(original_link):
+                def __init__(self, options):
+                    super().__init__(options)
+                    for g in range(907, LAST+1):
+                        plans=self.plansets[g]
+                        assert plans[0][6]==2 and all(q[6]<2 for q in plans[1:])
+                        self.plansets[g]=[plans[0]]+[q for q in plans if q[6]==1]+[q for q in plans if q[6]==0]
+            link=ObjectFirst
         return original_schedule(args, extended_oracle, link, frames=LAST-904)
     # Counterfactual only on 969. Execute the existing no-wait branch without
     # modifying the linked code, E0 validation, packet admission or final ACK.
@@ -175,6 +188,12 @@ end,emu.callbackType.write,0x7004,0x7007)
     pin_path = Path(remaining[remaining.index("--arm")+1]) / "obj-nes-100/sd2snes.elf"
     manifest = read(ROOT / f"analysis/trial{763 if variant == '763' else 767}-package.json")
     expected = manifest["variants"]["763"]["ELF"] if variant == "763" else manifest["ELF"]
+    if variant == "781C":
+        expected = "a60455581ca6488fe8ba268d8c0693fd5ac83842f1e47861b43583502fb5fcbc"
+    if variant == "781B":
+        expected = "1ae609dc37e1384e8a5321cea961ce624bde53bb04453ca9d4b61b82392be7e8"
+    if variant == "781":
+        expected = "4343596585c1407dbb68f9cfef814805775d98091548f36d07922461652540b2"
     if variant == "780":
         expected = "74069c77d65b569e831d344b77e53f0a7c02287792bc4fa31123a7686d662d8f"
     if variant == "779C":
@@ -207,6 +226,12 @@ end,emu.callbackType.write,0x7004,0x7007)
         stack.enter_context(patch.object(tile, "run_schedule", schedule))
         if variant in ("770","771"):
             stack.enter_context(patch.object(Runtime,"__init__",diagnostic))
+        if variant in ("781B","781C"):
+            # Tile END precedes CGRAM and raw writes. Sample the original
+            # complete set of observer fields at the checked planner exit.
+            from functools import partial
+            import test_nes_tail646 as observer
+            stack.enter_context(patch.object(observer,"watch",partial(observer.watch,complete="nes_resident211_prepare")))
         if map969:
             from test_nes_rows757 import observe
             stack.enter_context(patch.object(Runtime, "__init__", observe(Runtime.__init__, 969, 1024, 1407)))
@@ -218,7 +243,7 @@ end,emu.callbackType.write,0x7004,0x7007)
             stack.enter_context(patch.object(Runtime, "__init__", immediate969))
         if omit_wait:
             stack.enter_context(patch.object(Runtime, "__init__", hook))
-        runpy.run_module("test_nes_status689" if variant in ("763","770","779C","780") else "test_nes_static751",run_name="__main__")
+        runpy.run_module("test_nes_status689" if variant in ("763","770","779C","780","781","781B","781C") else "test_nes_static751",run_name="__main__")
 
 
 if __name__ == "__main__":
@@ -231,7 +256,7 @@ if __name__ == "__main__":
     for arg in ("out", "board", "bin", "prefix"):
         p.add_argument(arg, type=Path)
     p = sub.add_parser("run", add_help=False)
-    p.add_argument("variant", choices=("763","767","769","770","771","776","776B","777","777B","778","778B","779","779B","779C","780"))
+    p.add_argument("variant", choices=("763","767","769","770","771","776","776B","777","777B","778","778B","779","779B","779C","780","781","781B","781C"))
     p.add_argument("extras", type=Path)
     p.add_argument("--omit-wait969", action="store_true")
     p.add_argument("--map969", action="store_true")

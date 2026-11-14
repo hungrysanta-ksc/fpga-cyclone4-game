@@ -6,7 +6,7 @@ from test_nes_raw506_joint import Runtime
 from unicorn import UC_HOOK_MEM_WRITE
 
 
-def watch(original):
+def watch(original, complete="nes_plan200_end"):
     def init(cpu, args, link):
         original(cpu, args, link)
         layout = cpu.layout["nes_native_video165"]
@@ -36,7 +36,7 @@ def watch(original):
             handles.clear()
             assert set(stamps) == set(regions) and bytes(u.mem_read(cpu.video+layout["valid"],1))==b"\1"
             cpu.events.append(dict(generation=cpu.generation,event="last_writes646",clock=cpu.clock,writes=stamps.copy()))
-        for name, fn in (("nes_native_video211_plan", start), ("nes_plan200_end", done)):
+        for name, fn in (("nes_native_video211_plan", start), (complete, done)):
             pc = cpu.syms[name]
             cpu.u.hook_add(UC_HOOK_CODE, fn, begin=pc, end=pc)
     return init
