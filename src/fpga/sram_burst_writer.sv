@@ -2,7 +2,7 @@
 // Complete is asserted only after both write pulses and bus release finish.
 module sram_burst_writer(
  input wire clk,reset,grant,foreground_read,
- input wire write_valid,input wire[15:0]write_addr,write_data,input wire write_word,
+ input wire write_valid,input wire[16:0]write_addr,input wire[15:0]write_data,input wire write_word,
  output wire write_done,output reg using_write=0,output reg slot_violation=0,
  input wire[18:0]foreground_addr,output wire[7:0]foreground_data,
  output reg[18:0]ram_addr=0,output wire ram_oe,ram_we,inout wire[7:0]ram_data
@@ -40,9 +40,9 @@ module sram_burst_writer(
    if(!using_write)addr_next<=foreground_addr;
    case(state)
     0:if(begin_write)begin
-     addr_next<={3'b0,write_addr};data_next<=write_data[7:0];held_high<=write_data[15:8];
+     addr_next<={{2{write_addr[16]}},1'b0,write_addr[15:0]};data_next<=write_data[7:0];held_high<=write_data[15:8];
      held_word<=write_word;using_write<=1;state<=1;
-     if(write_word&&write_addr==16'hffff)slot_violation<=1;
+     if(write_word&&(&write_addr[15:0]))slot_violation<=1;
     end
     2:begin state<=3;drive_next<=1;end
     6:state<=held_word?7:13;

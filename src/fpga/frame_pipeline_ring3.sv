@@ -9,7 +9,7 @@ module frame_pipeline_ring3(
  output wire req_valid,req_write,output wire[22:0]req_addr,
  output wire[15:0]req_data,input wire req_ready,rsp_valid,input wire[15:0]rsp_data,
  output wire word_valid,input wire word_ready,
- output wire[14:0]word_addr,output wire[15:0]word_data,
+ output wire[15:0]word_addr,output wire[15:0]word_data,
  output wire palette_valid,input wire palette_ready,
  output wire palette_initial,output wire[7:0]palette_after_row,
  output wire[5:0]palette_slot,output wire[14:0]palette_rgb,
@@ -22,7 +22,7 @@ module frame_pipeline_ring3(
  reg[4:0]state;assign debug_state=state;
  reg[1:0]bank_q;reg[9:0]count_q;reg[5:0]slot_q;reg[8:0]id_q;
  reg[7:0]row_q,x_q;reg initial_palette;
- reg[15:0]ids_q,high_bits;reg[14:0]rgb_q;reg[2:0]release_bank;
+ reg[15:0]ids_q;reg[14:0]rgb_q;reg[2:0]release_bank;
  wire[2:0]banks;wire[9:0]count0,count1,count2;wire[23:0]capture_fault;
  wire ce;wire[2:0]cc;reg[3:0]stored_error_code;
  assign error_code=ce?{1'b0,cc}:stored_error_code;
@@ -56,13 +56,13 @@ module frame_pipeline_ring3(
  wire vpready,vd,ve,vb;wire[7:0]vy,vx;
  wire vpal=state==INIT||(state==PALOUT&&palette_ready&&!initial_palette);
  indexed_sixplane converter(clk,local_reset,state==VSTART,vpal,slot_q,
- state==INIT?init_id:id_q,state==LOW||state==HIGH,
- state==LOW?{high_bits[x_q[3:0]],ids_q[7:0]}:{high_bits[x_q[3:0]+4'd1],ids_q[15:8]},vpready,vy,vx,
- word_valid,word_ready,word_addr,word_data,vd,ve,vb,evicted_id,state==INIT,count_q);
- wire own_req=state==DREQ||state==IREQ||state==HREQ;
+ state==INIT?init_id:id_q,state==LOW,
+ ids_q[8:0],vpready,vy,vx,
+ word_valid,word_ready,word_addr,word_data,vd,ve,vb,evicted_id,state==INIT,count_q,ids_q[12:9]);
+ wire own_req=state==DREQ||state==IREQ;
  wire[22:0]frame_base=23'h400000+{5'b0,bank_q,16'b0};
  wire[22:0]own_addr=state==DREQ ? frame_base+23'he000+id_q :
- state==HREQ ? frame_base+23'hb000+row_q*23'd10+{19'b0,x_q[7:4]} : frame_base+23'h8000+row_q*23'd80+{16'b0,x_q[7:1]};
+ frame_base+23'h8000+row_q*23'd160+x_q;
  video_router router(clk,reset,fifo_level>=7'd16,{own_req,(pr&&!planner_cache_hit),bw,br,cv},
  {1'b0,1'b0,1'b1,1'b0,cw},
  {own_addr,(23'h430000+{7'b0,pra[16:1]}),(23'h430000+{7'b0,bwa[16:1]}),
@@ -81,7 +81,7 @@ module frame_pipeline_ring3(
  always @(posedge clk)begin
   if(reset)begin
    state<=IDLE;bank_q<=0;count_q<=0;slot_q<=0;id_q<=0;row_q<=0;x_q<=0;
-   initial_palette<=1;ids_q<=0;high_bits<=0;rgb_q<=0;release_bank<=0;frame_done<=0;
+   initial_palette<=1;ids_q<=0;rgb_q<=0;release_bank<=0;frame_done<=0;
    stored_error_code<=0;planner_lane<=0;
   end else begin
    release_bank<=0;frame_done<=0;if(planner_accept)planner_lane<=pra[0];
@@ -105,18 +105,13 @@ module frame_pipeline_ring3(
     PWAIT:if(pu)begin
      if(pur!=row_q-1'b1)begin stored_error_code<=5;state<=FAILED;end
      else begin slot_q<=pus;id_q<=pui;state<=DREQ;end
-    end else if(prow)state<=HREQ;
-    HREQ:if(accepted[4])state<=HWAIT;
-    HWAIT:if(responded[4])begin high_bits<=response;state<=IREQ;end
+    end else if(prow)state<=IREQ;
     IREQ:if(accepted[4])state<=IWAIT;
     IWAIT:if(responded[4])begin ids_q<=response;state<=LOW;end
     LOW:if(vpready)begin
      if(vy!=row_q||vx!=x_q)begin stored_error_code<=5;state<=FAILED;end
-     else state<=HIGH;
-    end
-    HIGH:if(vpready)begin
-     if(x_q==158)begin x_q<=0;if(row_q==143)state<=FINISH;else begin row_q<=row_q+1'b1;state<=PWAIT;end end
-     else begin x_q<=x_q+8'd2;state<=x_q[3:0]==14?HREQ:IREQ;end
+     else if(x_q==159)begin x_q<=0;if(row_q==143)state<=FINISH;else begin row_q<=row_q+1'b1;state<=PWAIT;end end
+     else begin x_q<=x_q+1'b1;state<=IREQ;end
     end
     FINISH:if(vd)begin release_bank<=3'b001<<bank_q;bank_q<=bank_q==2?2'd0:bank_q+1'b1;frame_done<=1;state<=IDLE;end
    endcase

@@ -10,7 +10,7 @@
 
 | 코어 | 상태 | 확인된 범위 | 다음 목표 |
 |---|---|---|---|
-| [GB/GBC](cores/gbc/README.md) | **추가 성공·공개 완료** | G13C44 / sd2snesHST 0.9.0, 실기·저장·RTC 등은 호환성 문서 범위 | 검증된 구현·세이브 보존, 회귀 유지 |
+| [GB/GBC](cores/gbc/README.md) | **추가 성공·공개 완료** | [sd2snesHST 0.9.1](https://github.com/hungrysanta-ksc/sd2snesHST/releases/tag/v0.9.1) 공개. 8 MiB MBC5 실행, 갤러가 타이틀·웬델린 카드 표시 실기 확인 | 검증된 구현·세이브 보존, 회귀 유지 |
 | [NES](cores/nes/README.md) | **개발 중** | MMC690 성공 실행20.71fps·5–55초19.80fps, 2회 중1회 부팅 실패·둘 다 메뉴 복귀 | BG CHR 수정 실기 확인·출력 최적화·60fps |
 | [PC Engine](cores/pce/README.md) | 조사 대기 | 구현·실기 성공 없음 | NES 이후 범위·자원 검토 |
 

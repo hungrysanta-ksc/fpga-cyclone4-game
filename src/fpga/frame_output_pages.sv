@@ -2,11 +2,11 @@
 // no changes to CPU/capture/planner/saves, and no additional frame buffers.
 module frame_output_pages(
  input wire clk,reset,frame_done,upload_boundary,read_idle,
- input wire pixel_valid,input wire[14:0]pixel_addr,input wire[15:0]pixel_data,
+ input wire pixel_valid,input wire[15:0]pixel_addr,input wire[15:0]pixel_data,
  output wire pixel_ready,
  input wire palette_valid,palette_initial,input wire[7:0]palette_after_row,
  input wire[5:0]palette_slot,input wire[14:0]palette_rgb,output wire palette_ready,
- output wire word_valid,input wire word_ready,output wire[15:0]word_addr,word_data,
+ output wire word_valid,input wire word_ready,output wire[16:0]word_addr,output wire[15:0]word_data,
  output wire byte_valid,input wire byte_ready,output wire[15:0]byte_addr,output wire[7:0]byte_data,
  output wire front_page,front_valid,published,error,input wire discard,suspend
 );
@@ -33,7 +33,7 @@ module frame_output_pages(
  end
  assign word_valid=(select_meta?mv:pixel_valid)&&writing&&!error&&!suspend&&!discard;
  assign pixel_ready=word_ready&&owner_locked&&!owner_meta&&writing&&!error&&!suspend&&!discard;
- assign word_addr={back_page,select_meta?ma:pixel_addr};assign word_data=select_meta?md:pixel_data;
+ assign word_addr={!select_meta&&pixel_addr[15],back_page,select_meta?ma:pixel_addr[14:0]};assign word_data=select_meta?md:pixel_data;
  assign mready=word_ready&&owner_locked&&owner_meta&&writing&&!error&&!suspend&&!discard;
  assign byte_valid=0;assign byte_addr=0;assign byte_data=0;
  assign error=page_error||meta_error;

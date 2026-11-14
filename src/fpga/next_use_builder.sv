@@ -12,17 +12,17 @@ module next_use_builder (
  reg[14:0]row_base;reg[7:0]low_byte;
  reg pending_write;reg[15:0]word_q;reg[16:0]write_address;
  (* ramstyle="M9K" *) reg[7:0]nearest[0:511];
- reg[7:0]nearest_q;reg[15:0]high_bits;reg[8:0]second_id;
+ reg[7:0]nearest_q;
  wire last_id={1'b0,id_q}+10'd1>=count_q;
  wire ends_word=id_q[0]||last_id;
  wire pack_step=state==PACK&&(!ends_word||!pending_write||write_ready);
  wire[8:0]nearest_read_addr=state==SCAN?id_q:id_q+9'd1;
  wire[7:0]value_q=nearest_q;
- wire[8:0]first_id={high_bits[x_q[3:0]],rsp_ids[7:0]};
- wire[8:0]last_pair_id={high_bits[x_q[3:0]+4'd1],rsp_ids[15:8]};
- wire valid_pixel=(state==RESPONSE&&rsp_valid&&{1'b0,first_id}<count_q&&{1'b0,last_pair_id}<count_q)||state==SECOND;
+ wire[8:0]first_id=rsp_ids[8:0];
+
+ wire valid_pixel=(state==RESPONSE&&rsp_valid&&{1'b0,first_id}<count_q);
  wire nearest_we=state==CLEAR||valid_pixel;
- wire[8:0]nearest_write_addr=state==CLEAR?id_q:state==SECOND?second_id:first_id;
+ wire[8:0]nearest_write_addr=state==CLEAR?id_q:first_id;
  wire[7:0]nearest_wdata=state==CLEAR?8'hff:row_q;
  // Single synchronous RAM read/write ports. A lookahead read addresses the
  // following ID, never the ID being updated on the same edge.
@@ -30,9 +30,8 @@ module next_use_builder (
   if(nearest_we)nearest[nearest_write_addr]<=nearest_wdata;
   if(state==SCAN||(pack_step&&!last_id))nearest_q<=nearest[nearest_read_addr];
  end
- wire prefetch=state==SECOND&&x_q!=158&&x_q[3:0]!=14;
- assign req_valid=state==REQUEST||state==HREQ||prefetch;
- assign req_addr=state==HREQ?15'h3000+{4'b0,row_base[14:4]}+{11'b0,x_q[7:4]}:{1'b0,row_base[14:1]}+{8'b0,x_q[7:1]}+(prefetch?15'd1:15'd0);
+ assign req_valid=state==REQUEST;
+ assign req_addr=row_base+x_q;
  assign write_valid=pending_write;
  assign write_addr=write_address;
  assign write_data=word_q;
@@ -40,7 +39,7 @@ module next_use_builder (
  always @(posedge clk_sys)begin
   if(reset)begin
    state<=IDLE;done<=0;error<=0;count_q<=0;row_q<=0;x_q<=0;id_q<=0;
-   row_base<=0;low_byte<=0;high_bits<=0;second_id<=0;word_q<=0;write_address<=0;pending_write<=0;
+   row_base<=0;low_byte<=0;word_q<=0;write_address<=0;pending_write<=0;
   end else begin
    done<=0;
    if(pending_write&&write_ready)pending_write<=0;
@@ -50,22 +49,14 @@ module next_use_builder (
     else state<=CLEAR;
    end else case(state)
     CLEAR:if(id_q==511)begin
-     row_q<=143;row_base<=22880;x_q<=0;state<=HREQ;
+     row_q<=143;row_base<=22880;x_q<=0;state<=REQUEST;
     end else id_q<=id_q+1'b1;
-    HREQ:if(req_ready)state<=HRESP;
-    HRESP:if(rsp_valid)begin high_bits<=rsp_ids;state<=REQUEST;end
     REQUEST:if(req_ready)state<=RESPONSE;
     RESPONSE:if(rsp_valid)begin
-     if({1'b0,first_id}>=count_q||{1'b0,last_pair_id}>=count_q)begin
+     if({1'b0,first_id}>=count_q)begin
       error<=1;state<=FAILED;
-     end else begin
-      
-      second_id<=last_pair_id;state<=SECOND;
-     end
-    end
-    SECOND:begin
-     if(x_q==158)begin id_q<=0;state<=SCAN;end
-     else begin x_q<=x_q+2'd2;state<=x_q[3:0]==14?HREQ:(req_ready?RESPONSE:REQUEST);end
+     end else if(x_q==159)begin id_q<=0;state<=SCAN;end
+     else begin x_q<=x_q+1'b1;state<=REQUEST;end
     end
     SCAN:state<=PACK;
     PACK:if(pack_step)begin
@@ -80,7 +71,7 @@ module next_use_builder (
      if(row_q==0)begin done<=1;state<=IDLE;end
      else begin
       row_q<=row_q-1'b1;row_base<=row_base-15'd160;
-      x_q<=0;state<=HREQ;
+      x_q<=0;state<=REQUEST;
      end
     end
     default:;

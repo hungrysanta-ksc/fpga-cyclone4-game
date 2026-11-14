@@ -1,5 +1,7 @@
 from pathlib import Path
 import ast,struct,json,hashlib,zlib,re
+import os
+RGB774 = os.environ.get("GBC_RENDERER_PROFILE") == "rgb774"
 P=Path(__file__).resolve().parent;R=P/'results/g13c40-renderer-v2';R.mkdir(exist_ok=False)
 B=P/'results/g13c26-renderer-v1';C15=P/'results/g13c15-renderer-v4'
 rom=bytearray((B/'gbc_snes.bin').read_bytes());old=bytes(rom);meta=json.loads((C15/'verification.json').read_text())
@@ -12,13 +14,18 @@ a.emit(0x08,0xc2,0x10,0xda,0x5a,0xe2,0x20) # PHP X/Y16 saves; DB is already0 in 
 a.read(0x3f);a.branch(0xd0,'active');a.jump('return')
 a.label('active');a.read(0x4218);a.emit(0x29,0x30,0xc9,0x30);a.branch(0xf0,'shoulders');a.jump('return')
 a.label('shoulders');a.read(0x4219);a.emit(0x29,0x10);a.branch(0xd0,'open');a.jump('return')
-a.label('open');a.stz(0x5b);a.stz(0x6005);a.stz(0x6006);a.write(0x600d,1)
+a.label('open')
+if RGB774:
+ a.write(0x5d,1)
+a.stz(0x5b);a.stz(0x6005);a.stz(0x6006);a.write(0x600d,1)
 # Wait for existing IRQ blank before changing PPU or HDMA ownership.
 a.label('wait_blank');jsr(a,'service');a.read(0x0b); # BLANK_SEEN patched below from original module constants
 a.branch(0xf0,'wait_blank');a.emit(0x78);a.write(0x4200,1);a.stz(0x420c)
 jsr(a,'reply')
 a.stz(0x50);a.stz(0x52);a.stz(0x57);jsr(a,'save_status')
 a.write(0x2100,0x80);a.write(0x2115,0x80);a.stz(0x2116);a.write(0x2117,0x70);dma(a,0x00d000,3072,1,0x18)
+if RGB774:
+ a.stz(0x212d);a.stz(0x2131)
 a.stz(0x2105);a.write(0x2108,0x68);a.write(0x210b,0x70);a.stz(0x210f);a.stz(0x210f);a.write(0x2110,255);a.write(0x2110,3);a.write(0x212c,2)
 # Four 2bpp text palettes: white, green values, dim panel, bright panel.
 # Glyphs +96 set plane1 so the row/panel fill is opaque.
@@ -50,6 +57,10 @@ a.label('restart_wait');a.jump('restart_wait')
 a.label('result');a.read(0x51);a.emit(0x29,0x60,0xc9,0x20);a.branch(0xd0,'result_draw');a.read(0x54);a.emit(0x29,0xf0,0xc9,0x10);a.branch(0xd0,'result_load');a.write(0x55,1);a.branch(0x80,'result_draw');a.label('result_load');a.emit(0xc9,0x20);a.branch(0xd0,'result_draw');a.write(0x55,6);a.label('result_draw');jsr(a,'frame');jsr(a,'draw');a.jump('loop')
 a.label('close');jsr(a,'release');a.write(0x600d,5);jsr(a,'reply');a.read(0x51);a.emit(0x29,64);a.branch(0xf0,'close_ok');jsr(a,'save_status');jsr(a,'draw');a.jump('loop');a.label('close_ok');jsr(a,'idle')
 a.write(0x2100,0x80);a.stz(0x420c);a.write(0x2105,3);a.stz(0x210b);a.write(0x212c,1)
+if RGB774:
+ a.write(0x2108,0x7c);a.write(0x212d,2);a.write(0x2131,0x21);a.write(0x2130,2);a.read(0x5c);a.sta(0x210b)
+if RGB774:
+ a.stz(0x5d)
 a.stz(0x2d);a.stz(0x2e);a.stz(0x2f);a.stz(0x20);a.stz(0x21)
 a.write(0x4209,185);a.stz(0x420a);a.read(0x4211);a.write(0x4200,0x21);a.emit(0x58)
 a.label('return');a.emit(0xc2,0x10,0x7a,0xfa,0x28,0x6b)

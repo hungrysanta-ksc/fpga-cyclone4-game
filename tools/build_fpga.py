@@ -2,7 +2,7 @@
 import argparse,hashlib,json,re,shutil,subprocess
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--quartus-bin',type=Path,required=True);p.add_argument('--rle',type=Path,required=True);a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--quartus-bin',type=Path,required=True);p.add_argument('--rle',type=Path,required=True);p.add_argument('--candidate',action='store_true',help='Keep the newly built trial after timing and RLE checks');a=p.parse_args()
 out=a.out.resolve()
 if not str(out).isascii():raise SystemExit('Use an ASCII output path for Quartus')
 shutil.copytree(ROOT/'src/fpga',out)
@@ -35,4 +35,4 @@ actual=hashlib.sha256(data).hexdigest()
 result=dict(constrained_timing_pass=True,slack_checks=len(slacks),minimum_slack=min(slacks),rle_roundtrip=True,sha256=actual,identical_to_tested_c43=actual==expected)
 (out/'rebuild-verification.json').write_text(json.dumps(result,indent=2))
 print(json.dumps(result,indent=2))
-if actual!=expected:raise SystemExit('New placement is not the tested C44 binary; preserve the release payload and validate separately')
+if actual!=expected and not a.candidate:raise SystemExit('New placement is not the tested C44 binary; preserve the release payload and validate separately')

@@ -1,0 +1,90 @@
+--- a/rgb_capture64_abort.sv
++++ b/rgb_capture64_abort.sv
+@@ -3,7 +3,7 @@
+ // dictionary 1c000..1c3ff. Each transaction is 16 bits and must receive an
+ // acknowledgement (rsp_valid), including writes, after request acceptance.
+ // Source is not backpressured: FIFO overflow aborts the frame, never drops pixels.
+-module rgb_capture64_abort (
++module rgb_capture64_abort #(parameter SPLIT_RGB = 0) (
+  input wire clk_sys, reset, start, abort_frame,
+  output reg aborted,
+  input wire pixel_valid,
+@@ -24,7 +24,7 @@
+  localparam IDLE=0, BOOT_REQ=1, BOOT_WAIT=2, CLEAR_REQ=3, CLEAR_WAIT=4,
+  BLACK_REQ=5, BLACK_WAIT=6, DICT0_REQ=7, DICT0_WAIT=8,
+  TAKE=9, LOOKUP=10, MAP_REQ=11, MAP_WAIT=12, NEW_REQ=13, NEW_WAIT=14,
+- DICT_REQ=15, DICT_WAIT=16, PACK=17, WRITE_REQ=18, WRITE_WAIT=19, FAILED=20, HIGH_REQ=21, HIGH_WAIT=22;
++ DICT_REQ=15, DICT_WAIT=16, PACK=17, WRITE_REQ=18, WRITE_WAIT=19, FAILED=20, HIGH_REQ=21, HIGH_WAIT=22, RESIDUAL_REQ=23, RESIDUAL_WAIT=24;
+  reg [4:0] state;
+  reg initialized,active,abort_pending;
+  reg [6:0] epoch;
+@@ -34,7 +34,11 @@
+  reg [5:0] head,tail;
+  reg [6:0] queued;
+  reg [14:0] received,consumed;
+- reg [14:0] rgb_q;
++ reg [14:0] source_rgb;
++ // The optional second layer adds back exactly these four RGB555 bits.
++ wire [3:0] residual = {source_rgb[10],source_rgb[6:5],source_rgb[0]};
++ wire [14:0] rgb_q = SPLIT_RGB ? (source_rgb & 15'h7b9e) : source_rgb;
++ reg [15:0] packed_residual;
+  reg [8:0] id_q;reg[7:0]low_id;reg[15:0]high_bits;
+  (* ramstyle="logic" *) reg [14:0] cache_rgb[0:15];
+  (* ramstyle="logic" *) reg [8:0] cache_id[0:15];
+@@ -53,17 +57,19 @@
+   hit=0;hit_id=0;
+   for(k=0;k<16;k=k+1) if(cache_valid[k] && cache_rgb[k]==rgb_q) begin hit=1;hit_id=cache_id[k];end
+  end
+- assign req_valid=state==BOOT_REQ || state==CLEAR_REQ || state==BLACK_REQ || state==DICT0_REQ || state==MAP_REQ || state==NEW_REQ || state==DICT_REQ || state==WRITE_REQ || state==HIGH_REQ;
++ assign req_valid=state==BOOT_REQ || state==CLEAR_REQ || state==BLACK_REQ || state==DICT0_REQ || state==MAP_REQ || state==NEW_REQ || state==DICT_REQ || state==WRITE_REQ || state==HIGH_REQ || state==RESIDUAL_REQ;
+  assign req_write=state!=MAP_REQ;
+- assign req_addr=(state==BOOT_REQ || state==CLEAR_REQ) ? {1'b0,clear_at,1'b0} :
++ assign req_addr=state==RESIDUAL_REQ ? (17'h17000+{3'b0,consumed[14:2],1'b0}) :
++                 (state==BOOT_REQ || state==CLEAR_REQ) ? {1'b0,clear_at,1'b0} :
+                  state==BLACK_REQ ? 17'd0 : state==DICT0_REQ ? 17'h1c000 :
+                  (state==MAP_REQ || state==NEW_REQ) ? {1'b0,rgb_q,1'b0} :
+                  state==DICT_REQ ? (17'h1c000+{7'b0,id_q,1'b0}) :
+                  state==HIGH_REQ ? (17'h16000+{5'b0,consumed[14:4],1'b0}) : (17'h10000+{2'b0,consumed[14:1],1'b0});
+- assign req_data=(state==BOOT_REQ || state==CLEAR_REQ || state==DICT0_REQ) ? 16'd0 :
++ assign req_data=state==RESIDUAL_REQ ? packed_residual :
++                 (state==BOOT_REQ || state==CLEAR_REQ || state==DICT0_REQ) ? 16'd0 :
+                  state==BLACK_REQ ? {epoch,9'd0} : state==NEW_REQ ? {epoch,id_q} :
+                  state==DICT_REQ ? {1'b0,rgb_q} : state==HIGH_REQ ? high_bits : {id_q[7:0],low_id};
+- always @(posedge clk_sys) begin if(push&&!reset)fifo[tail]<=pixel_rgb;if(pop&&!reset)rgb_q<=fifo[head];end
++ always @(posedge clk_sys) begin if(push&&!reset)fifo[tail]<=pixel_rgb;if(pop&&!reset)source_rgb<=fifo[head];end
+  always @(posedge clk_sys) begin
+   if(reset) begin
+    state<=IDLE;initialized<=0;abort_pending<=0;aborted<=0;active<=0;epoch<=1;sweep_start<=0;
+@@ -127,12 +133,21 @@
+      cache_rgb[victim]<=rgb_q;cache_id[victim]<=id_q;cache_valid[victim]<=1;victim<=victim+1'b1;state<=PACK;
+     end
+     PACK:begin
++     if (SPLIT_RGB) packed_residual<={residual,packed_residual[15:4]};
+      high_bits[consumed[3:0]]<=id_q[8];
+      if(consumed[0])state<=WRITE_REQ;
+      else begin low_id<=id_q[7:0];consumed<=consumed+1'b1;state<=TAKE;end
+     end
+     WRITE_REQ:if(req_ready)state<=WRITE_WAIT;
+     WRITE_WAIT:if(rsp_valid)begin
++     if(SPLIT_RGB && consumed[1:0]==3)state<=RESIDUAL_REQ;
++     else if(consumed[3:0]==15)state<=HIGH_REQ;
++     else begin consumed<=consumed+1'b1;state<=TAKE;end
++    end
++    // 17000..19cff holds four original residuals per word in the same bank
++    // as the IDs. Finish the write before publication or LCD abort.
++    RESIDUAL_REQ:if(req_ready)state<=RESIDUAL_WAIT;
++    RESIDUAL_WAIT:if(rsp_valid)begin
+      if(consumed[3:0]==15)state<=HIGH_REQ;
+      else begin consumed<=consumed+1'b1;state<=TAKE;end
+     end
+--- a/capture_ring3_lcd.sv
++++ b/capture_ring3_lcd.sv
+@@ -27,7 +27,7 @@
+  // and sweep state across frames, so its lookup map must remain shared.
+  assign req_addr=23'h400000+{7'b0,byte_addr[16:1]}+
+                  (byte_addr[16]?{5'b0,write_bank,16'b0}:23'd0);
+- rgb_capture64_abort engine(clk,reset,launch,abort_frame,cancelled,pixel_valid&&lcd_on&&running&&!error,
++ rgb_capture64_abort #(.SPLIT_RGB(1)) engine(clk,reset,launch,abort_frame,cancelled,pixel_valid&&lcd_on&&running&&!error,
+   pixel_rgb,active,req_valid,req_write,req_ready,byte_addr,req_data,
+   rsp_valid,rsp_data,colors,done,cap_error,cap_code,busy,fifo_level,engine_context);
+  always @(posedge clk) begin

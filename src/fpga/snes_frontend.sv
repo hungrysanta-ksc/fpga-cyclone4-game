@@ -7,7 +7,7 @@ module snes_frontend(
  output wire[7:0]snes_data_out,output wire databus_oe_n,databus_dir,
  output wire upload_start,read_idle,
  input wire upload_busy,upload_done,upload_page,upload_valid,upload_error,
- input wire write_valid,input wire[15:0]write_addr,write_data,input wire write_word,
+ input wire write_valid,input wire[16:0]write_addr,input wire[15:0]write_data,input wire write_word,
  output wire write_done,writer_busy,bus_error,
  output wire[18:0]ram_addr,output wire ram_oe,ram_we,inout wire[7:0]ram_data,
  output wire[9:0]joy_update,
@@ -37,7 +37,7 @@ module snes_frontend(
  wire[7:0]base_q;
  assign menu_write=host_write&&host_addr==13;assign menu_data=host_data;
  assign diag_request=host_write&&host_addr==8;
- assign host_q=host_addr==13?menu_status:host_addr==7?8'haf:
+ assign host_q=host_addr==13?menu_status:host_addr==7?8'hb0:
                host_addr==8?{6'b0,diag_valid,diag_busy}:
                host_addr==9?diag_snapshot[7:0]:
                host_addr==10?diag_snapshot[15:8]:

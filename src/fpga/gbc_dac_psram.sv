@@ -51,7 +51,8 @@ module gbc_dac_psram #(
 
  wire delay_ready,delay_busy,delayed_valid;
  wire signed[15:0]delayed_l,delayed_r;
- audio_psram_delay_client delay_client(clk_audio,reset_audio,
+ // Keep the 32 KiB stereo ring above the 8 MiB cartridge and video scratch.
+ audio_psram_delay_client #(.BASE_WORD(23'h500000)) delay_client(clk_audio,reset_audio,
   filtered_valid,filtered_l,filtered_r,DELAY_SAMPLES,delay_ready,delay_busy,
   delayed_valid,delayed_l,delayed_r,req_valid,req_write,req_addr,req_wdata,
   req_ready,rsp_valid,rsp_rdata,delay_protocol_error,delay_sample_overrun);

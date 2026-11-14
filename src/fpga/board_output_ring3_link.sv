@@ -3,11 +3,11 @@
 module board_output_ring3_link(
  input wire source_clk,bus_clk,reset,frame_done,
  input wire lcd_on,source_pixel_valid,input wire[1:0]processing_bank,
- input wire pixel_valid,input wire[14:0]pixel_addr,input wire[15:0]pixel_data,output wire pixel_ready,
+ input wire pixel_valid,input wire[15:0]pixel_addr,input wire[15:0]pixel_data,output wire pixel_ready,
  input wire palette_valid,palette_initial,input wire[7:0]palette_after_row,
  input wire[5:0]palette_slot,input wire[14:0]palette_rgb,output wire palette_ready,
  input wire upload_start,bus_read_idle,output wire bus_busy,upload_done,bus_page,bus_front_valid,bus_error,
- output wire write_valid,input wire write_ready,output wire[15:0]write_addr,write_data,
+ output wire write_valid,input wire write_ready,output wire[16:0]write_addr,output wire[15:0]write_data,
  output wire write_word,committed_frame,
  output wire front_page,front_valid,published,source_error,host_upload_boundary,
  input wire discard,suspend,output wire state_drained
@@ -17,7 +17,7 @@ module board_output_ring3_link(
  assign state_drained=drained;
  wire word_valid,word_ready,byte_valid,byte_ready,boundary,read_idle,drained,page_error;
  wire pixel_ack,palette_ack;reg pending=0,fence_error=0;
- wire[15:0]word_addr,word_data,byte_addr;wire[7:0]byte_data;
+ wire[16:0]word_addr;wire[15:0]word_data,byte_addr;wire[7:0]byte_data;
  wire inhibit=pending||frame_done||suspend||discard;
  assign committed_frame=pending&&drained&&!reset&&!fence_error&&!suspend&&!discard;
  assign source_error=page_error||fence_error;
