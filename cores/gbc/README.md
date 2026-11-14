@@ -4,8 +4,9 @@
 
 - [GBC774 해리 포터·갤러가 RGB555 실기 시험](../../docs/development/GBC774.ko.md)
 - [GBC773 원피스 8 MiB 실기 시험과 갤러가·웬델린 원색 출력 검증](../../docs/development/GBC773.ko.md)
-- 내부 후보: G13C44. 사용자 실기 성공: 2026-10-04.
-- 공개 제품 매핑: [sd2snesHST 0.9.0](https://github.com/hungrysanta-ksc/sd2snesHST/releases/tag/v0.9.0).
+- 현재 배포는 [sd2snesHST 0.9.1](https://github.com/hungrysanta-ksc/sd2snesHST/releases/tag/v0.9.1)이며 GBC774에 대응한다.
+- 이전 내부 후보: G13C44. 사용자 실기 성공: 2026-10-04.
+- 이전 공개 제품 매핑: [sd2snesHST 0.9.0](https://github.com/hungrysanta-ksc/sd2snesHST/releases/tag/v0.9.0).
 - 고정 구현 커밋: 35ef4aef14fc6abef6495a980b7f00f257e5174f.
 - FPGA: [src/fpga](../../src/fpga), MCU: [overlay](../../src/firmware-overlay), SNES 출력: [renderer](../../src/renderer).
 - [빌드](../../docs/BUILD-C44.ko.md), [호환성](../../docs/COMPATIBILITY.ko.md), [사용 가이드](../../docs/USER-GUIDE.ko.md).
