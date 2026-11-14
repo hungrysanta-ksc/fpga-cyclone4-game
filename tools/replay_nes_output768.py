@@ -63,7 +63,7 @@ def inputs(out, game):
     (out / "obj-cache.json").write_text(json.dumps(cache), encoding="utf8")
 
 
-ROWS783_ELF = {
+ROW_SCHEDULE_ELF = {
     "783": "ea3b037c91e6ab5d8682ecba45a08806867dda1b4f6250f2155b9734c480b883",
     "783B": "50fcc312a80f9cf926d685f83b9879c6a493c0644a5030d62f766186b16a92ba",
     "783C": "313fb97e14f96d48abd8badb362fb74c5cd57226212fa2923941e5683e0c3e8a",
@@ -73,6 +73,10 @@ ROWS783_ELF = {
     "783G": "e39c66995900e635da42b87567e84d51f73ba00cd0f1203b79447e72c315093f",
     "783H": "79ae5e0ffa23a9cbf7d0b5904440f6f3c0862d1ab3c8dca67ec3e9953ce7141a",
     "783I": "7962b52cfd74bc74989650e02729db24f0ee6b073150b222878bfa2c198287ab",
+    "784A": "2d5c27ccf173815901bed0d04bfdbea2ac710ecc7c67c6a2fbf70e0fbcf6f6f5",
+    "784B": "10a58880d65752936650a1e904c009bbed22421111cbc69c1cf4e91a5e1dfa5b",
+    "784C": "206e807366fc4a5bd5902e7bb91760527712372325a65e18c46d18fd81ecd342",
+    "784D": "c3190eee6125be5dd2c5e5196c0e3b172239573d457522dafc8ab27162a5d796",
 }
 
 def replay(variant, extras, remaining, omit_wait, receipt969=False, watch969=False, map969=False, right969=False):
@@ -108,7 +112,7 @@ checkedMem527(function(a,v)
 end,emu.callbackType.write,0x7004,0x7007)
 """ + marker)
             return source
-        if variant in ("781B","781C","782","782B","782C","782D","782E",*ROWS783_ELF):
+        if variant in ("781B","781C","782","782B","782C","782D","782E",*ROW_SCHEDULE_ELF):
             # Warm banks run the original rank-ordered object builder after
             # slot zero, before normal BG. The oracle still independently
             # compares every encoded byte, tile payload and END against 763.
@@ -117,7 +121,7 @@ end,emu.callbackType.write,0x7004,0x7007)
                 def __init__(self, options):
                     super().__init__(options)
                     for g in range(907, LAST+1):
-                        if variant in ("782","782B","782C","782D","782E",*ROWS783_ELF):
+                        if variant in ("782","782B","782C","782D","782E",*ROW_SCHEDULE_ELF):
                             geometry=(options.data/f"frame{g}.geometry").read_bytes()
                             if int.from_bytes(geometry[5732:5734],"little")>24:
                                 continue
@@ -204,8 +208,8 @@ end,emu.callbackType.write,0x7004,0x7007)
     pin_path = Path(remaining[remaining.index("--arm")+1]) / "obj-nes-100/sd2snes.elf"
     manifest = read(ROOT / f"analysis/trial{763 if variant == '763' else 767}-package.json")
     expected = manifest["variants"]["763"]["ELF"] if variant == "763" else manifest["ELF"]
-    if variant in ROWS783_ELF:
-        expected=ROWS783_ELF[variant]
+    if variant in ROW_SCHEDULE_ELF:
+        expected=ROW_SCHEDULE_ELF[variant]
     if variant == "782C":
         expected="8bf256d955da327c8359a78823b8e2d542f5bbbb6db09fd561622114579b4b08"
     if variant == "782D":
@@ -254,7 +258,7 @@ end,emu.callbackType.write,0x7004,0x7007)
         stack.enter_context(patch.object(tile, "run_schedule", schedule))
         if variant in ("770","771"):
             stack.enter_context(patch.object(Runtime,"__init__",diagnostic))
-        if variant in ("781B","781C","782","782B","782C","782D","782E",*ROWS783_ELF):
+        if variant in ("781B","781C","782","782B","782C","782D","782E",*ROW_SCHEDULE_ELF):
             # Tile END precedes CGRAM and raw writes. Sample the original
             # complete set of observer fields at the checked planner exit.
             from functools import partial
@@ -271,7 +275,7 @@ end,emu.callbackType.write,0x7004,0x7007)
             stack.enter_context(patch.object(Runtime, "__init__", immediate969))
         if omit_wait:
             stack.enter_context(patch.object(Runtime, "__init__", hook))
-        runpy.run_module("test_nes_status689" if variant in ("763","770","779C","780","781","781B","781C","782","782B","782C","782D","782E",*ROWS783_ELF) else "test_nes_static751",run_name="__main__")
+        runpy.run_module("test_nes_status689" if variant in ("763","770","779C","780","781","781B","781C","782","782B","782C","782D","782E",*ROW_SCHEDULE_ELF) else "test_nes_static751",run_name="__main__")
 
 
 if __name__ == "__main__":
@@ -284,7 +288,7 @@ if __name__ == "__main__":
     for arg in ("out", "board", "bin", "prefix"):
         p.add_argument(arg, type=Path)
     p = sub.add_parser("run", add_help=False)
-    p.add_argument("variant", choices=("763","767","769","770","771","776","776B","777","777B","778","778B","779","779B","779C","780","781","781B","781C","782","782B","782C","782D","782E",*ROWS783_ELF))
+    p.add_argument("variant", choices=("763","767","769","770","771","776","776B","777","777B","778","778B","779","779B","779C","780","781","781B","781C","782","782B","782C","782D","782E",*ROW_SCHEDULE_ELF))
     p.add_argument("extras", type=Path)
     p.add_argument("--omit-wait969", action="store_true")
     p.add_argument("--right969", action="store_true",help="also observe both right-page map ranges")
