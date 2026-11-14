@@ -1,0 +1,6015 @@
+{
+  "scope": "905\u2013970, linked M4 and original 65816; modeled SPI/IRQ and recorded ROM calendar. Prior edge is the first allowed capture start after 952 ACK for each boot. Positive lead means the final D2 finished before that edge.",
+  "builds": {
+    "1": {
+      "mode": "crc",
+      "flash": 212980,
+      "firmware": "304846d7a262a28764fea5bf36620b6add1861e3a803ef6064f180720c369e2f",
+      "elf": "eda26447e99225ecc79297c303df8002cc595b70da0816fec49306a5e53666c2",
+      "guards": {
+        "guards": {
+          "firmware": "304846d7a262a28764fea5bf36620b6add1861e3a803ef6064f180720c369e2f",
+          "menu": {
+            "firmware": "304846d7a262a28764fea5bf36620b6add1861e3a803ef6064f180720c369e2f",
+            "rows": {
+              "normal": {
+                "prepared": 1,
+                "released": 1,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ],
+                  [
+                    "save_report",
+                    "RETURN_READY_RESET_RELEASED"
+                  ],
+                  [
+                    "nes_diag_leave",
+                    null
+                  ]
+                ]
+              },
+              "base": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "menu": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "latched": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ]
+                ]
+              },
+              "checkpoint": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ]
+                ]
+              }
+            },
+            "marker_cases": 4
+          },
+          "ACK": {
+            "wrap": true,
+            "corrupt_bits": 152,
+            "bytes_covered": 18
+          },
+          "input": [
+            {
+              "case": "STOP_after3",
+              "success": false,
+              "checked_blocks": 3,
+              "remaining": 4,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208
+              ],
+              "commit": false
+            },
+            {
+              "case": "CRC_third",
+              "success": false,
+              "checked_blocks": 2,
+              "remaining": 5,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            },
+            {
+              "case": "cache_token",
+              "success": false,
+              "checked_blocks": 1,
+              "remaining": 6,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            }
+          ],
+          "owned": [
+            {
+              "stop": false,
+              "success": true,
+              "operations": [],
+              "remains_committed": true
+            },
+            {
+              "stop": true,
+              "success": false,
+              "operations": [],
+              "remains_committed": true
+            }
+          ],
+          "sealed": [
+            {
+              "case": "waiting",
+              "success": true,
+              "extra": 1,
+              "operations": [
+                209,
+                210,
+                208
+              ]
+            },
+            {
+              "case": "progress",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "returned",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "ordinary",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "STOP",
+              "success": false,
+              "extra": 0,
+              "operations": []
+            }
+          ],
+          "uncached": {
+            "case": "uncached",
+            "success": true,
+            "extra": 0,
+            "operations": []
+          }
+        },
+        "reports": [
+          {
+            "persist": false,
+            "budget_bytes": 3473,
+            "budget": "5ff3541f5696da70284bd0f0547004f5fe33245a77a55afab2a99c6e43cdff60",
+            "baseline": {
+              "instructions": 63518,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 70900,
+              "observed_stack_B": 7752
+            }
+          },
+          {
+            "persist": true,
+            "budget_bytes": 5022,
+            "budget": "9bf9a9e4b10c80c8f665ad00106e1821fd65cdddf2dcdc3745bfff3bcd6af134",
+            "baseline": {
+              "instructions": 390428,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 444182,
+              "observed_stack_B": 7848
+            }
+          }
+        ]
+      }
+    },
+    "2": {
+      "mode": "handoff",
+      "flash": 213004,
+      "firmware": "873ca423d8b190347c9f513516c6c897323b7b0528fcdc3dd49bda940150799a",
+      "elf": "20e9759b62c9f54e6c60a8cb16798a3728954a5630459d40431302b60c005f1e"
+    },
+    "3": {
+      "mode": "poll",
+      "flash": 213012,
+      "firmware": "597f7d69b0e4dde577a03ffc4e09454c8dadef81ecd1b0b74f63aae4200beb49",
+      "elf": "dd167a83cd89d144de1d264defe3279f27b5f9a043cc11e6b63b53c34cc6a533"
+    },
+    "4": {
+      "mode": "cache",
+      "flash": 213072,
+      "firmware": "1ce496df43ffa7370ef611f7c1416791b420f42bf454004717965ca468af774c",
+      "elf": "f78d44f902d889532cbf4d50a8f04486330200105509ea7e5feff6bb30621e2b"
+    },
+    "5": {
+      "mode": "cache_poll",
+      "flash": 213096,
+      "firmware": "ce0ce8da7f6ee1d1aadf27f53d85b7f322067e2a7a07fe562722646582266718",
+      "elf": "e263268277cbc0bf77fd630d8d762d0cc717a88015790578322d22c0679754fc"
+    },
+    "6": {
+      "mode": "cache_crc",
+      "flash": 213060,
+      "firmware": "d4c55e0851aaa723205f4d242946119f73995a87197553d18156cbd6b8ab1e8a",
+      "elf": "7a66317b017d01726ba346fcfb2edcc47a99726dd09ecdf84a7fba8b640ab9b5"
+    },
+    "7": {
+      "mode": "cache_fit",
+      "flash": 212996,
+      "firmware": "348546fe7c09b7b04a3020b51bb4317a57e22a3e2eda2dfcb4b103d8e62f6c72",
+      "elf": "ba60e90f989602f260e26badc8d3b719a19ebb4f3fee88d8dc64466d87fd996a"
+    },
+    "8": {
+      "mode": "cache_poll_fit",
+      "flash": 213020,
+      "firmware": "16f731acb54202bcfe9ecbf84e0202c8e8e9ad43fec1420edcfe3bed744c2d78",
+      "elf": "7d62c8ebc9df87b6422c53eb126c065fdfda8c08b4dcb0e433f02e46b623cf3f"
+    },
+    "9": {
+      "mode": "cache_crc_fit",
+      "flash": 212984,
+      "firmware": "810875e195b1b74e90cb90719ceae72285c912eab71530b39f916feee639e1cb",
+      "elf": "62265e2b240feecd9562216577617ea30e3a93abfe9f71b90887bf19339da6aa",
+      "guards": {
+        "guards": {
+          "firmware": "810875e195b1b74e90cb90719ceae72285c912eab71530b39f916feee639e1cb",
+          "menu": {
+            "firmware": "810875e195b1b74e90cb90719ceae72285c912eab71530b39f916feee639e1cb",
+            "rows": {
+              "normal": {
+                "prepared": 1,
+                "released": 1,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ],
+                  [
+                    "save_report",
+                    "RETURN_READY_RESET_RELEASED"
+                  ],
+                  [
+                    "nes_diag_leave",
+                    null
+                  ]
+                ]
+              },
+              "base": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "menu": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "latched": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ]
+                ]
+              },
+              "checkpoint": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ]
+                ]
+              }
+            },
+            "marker_cases": 4
+          },
+          "ACK": {
+            "wrap": true,
+            "corrupt_bits": 152,
+            "bytes_covered": 18
+          },
+          "input": [
+            {
+              "case": "STOP_after3",
+              "success": false,
+              "checked_blocks": 3,
+              "remaining": 4,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208
+              ],
+              "commit": false
+            },
+            {
+              "case": "CRC_third",
+              "success": false,
+              "checked_blocks": 2,
+              "remaining": 5,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            },
+            {
+              "case": "cache_token",
+              "success": false,
+              "checked_blocks": 1,
+              "remaining": 6,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            }
+          ],
+          "owned": [
+            {
+              "stop": false,
+              "success": true,
+              "operations": [],
+              "remains_committed": true
+            },
+            {
+              "stop": true,
+              "success": false,
+              "operations": [],
+              "remains_committed": true
+            }
+          ],
+          "sealed": [
+            {
+              "case": "waiting",
+              "success": true,
+              "extra": 1,
+              "operations": [
+                209,
+                210,
+                208
+              ]
+            },
+            {
+              "case": "progress",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "returned",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "ordinary",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "STOP",
+              "success": false,
+              "extra": 0,
+              "operations": []
+            }
+          ],
+          "uncached": {
+            "case": "uncached",
+            "success": true,
+            "extra": 0,
+            "operations": []
+          }
+        },
+        "reports": [
+          {
+            "persist": false,
+            "budget_bytes": 3473,
+            "budget": "5ff3541f5696da70284bd0f0547004f5fe33245a77a55afab2a99c6e43cdff60",
+            "baseline": {
+              "instructions": 63518,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 70936,
+              "observed_stack_B": 7752
+            }
+          },
+          {
+            "persist": true,
+            "budget_bytes": 5022,
+            "budget": "9bf9a9e4b10c80c8f665ad00106e1821fd65cdddf2dcdc3745bfff3bcd6af134",
+            "baseline": {
+              "instructions": 390428,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 444179,
+              "observed_stack_B": 7848
+            }
+          }
+        ]
+      },
+      "cache_guards": {
+        "firmware": "810875e195b1b74e90cb90719ceae72285c912eab71530b39f916feee639e1cb",
+        "cases": [
+          {
+            "case": "cached",
+            "ops": [
+              211,
+              208,
+              209,
+              210,
+              208
+            ],
+            "state": 4
+          },
+          {
+            "case": "uncached",
+            "ops": [
+              208,
+              211,
+              208,
+              209,
+              210,
+              208
+            ],
+            "state": 4
+          },
+          {
+            "case": "bad_crc",
+            "ops": [],
+            "state": 5
+          },
+          {
+            "case": "bad_token",
+            "ops": [],
+            "state": 5
+          },
+          {
+            "case": "stop_commit",
+            "ops": [
+              211,
+              208,
+              209
+            ],
+            "state": 5
+          }
+        ]
+      }
+    },
+    "10": {
+      "mode": "handoff_fit",
+      "flash": 212928,
+      "firmware": "2a20736b31274b1bdb1e61d4e416d358ca9c94a6b7aefd15ab181803d884e815",
+      "elf": "4e3ac65800c2c8f3568d8dce1b3ebaeb3ffefc79b3181a4b924c93bc11d98406",
+      "guards": {
+        "guards": {
+          "firmware": "2a20736b31274b1bdb1e61d4e416d358ca9c94a6b7aefd15ab181803d884e815",
+          "menu": {
+            "firmware": "2a20736b31274b1bdb1e61d4e416d358ca9c94a6b7aefd15ab181803d884e815",
+            "rows": {
+              "normal": {
+                "prepared": 1,
+                "released": 1,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ],
+                  [
+                    "save_report",
+                    "RETURN_READY_RESET_RELEASED"
+                  ],
+                  [
+                    "nes_diag_leave",
+                    null
+                  ]
+                ]
+              },
+              "base": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "menu": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "latched": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ]
+                ]
+              },
+              "checkpoint": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ]
+                ]
+              }
+            },
+            "marker_cases": 4
+          },
+          "ACK": {
+            "wrap": true,
+            "corrupt_bits": 152,
+            "bytes_covered": 18
+          },
+          "input": [
+            {
+              "case": "STOP_after3",
+              "success": false,
+              "checked_blocks": 3,
+              "remaining": 4,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208
+              ],
+              "commit": false
+            },
+            {
+              "case": "CRC_third",
+              "success": false,
+              "checked_blocks": 2,
+              "remaining": 5,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            },
+            {
+              "case": "cache_token",
+              "success": false,
+              "checked_blocks": 1,
+              "remaining": 6,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            }
+          ],
+          "owned": [
+            {
+              "stop": false,
+              "success": true,
+              "operations": [],
+              "remains_committed": true
+            },
+            {
+              "stop": true,
+              "success": false,
+              "operations": [],
+              "remains_committed": true
+            }
+          ],
+          "sealed": [
+            {
+              "case": "waiting",
+              "success": true,
+              "extra": 1,
+              "operations": [
+                209,
+                210,
+                208
+              ]
+            },
+            {
+              "case": "progress",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "returned",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "ordinary",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "STOP",
+              "success": false,
+              "extra": 0,
+              "operations": []
+            }
+          ],
+          "uncached": {
+            "case": "uncached",
+            "success": true,
+            "extra": 0,
+            "operations": []
+          }
+        },
+        "reports": [
+          {
+            "persist": false,
+            "budget_bytes": 3473,
+            "budget": "5ff3541f5696da70284bd0f0547004f5fe33245a77a55afab2a99c6e43cdff60",
+            "baseline": {
+              "instructions": 63518,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 70936,
+              "observed_stack_B": 7752
+            }
+          },
+          {
+            "persist": true,
+            "budget_bytes": 5022,
+            "budget": "9bf9a9e4b10c80c8f665ad00106e1821fd65cdddf2dcdc3745bfff3bcd6af134",
+            "baseline": {
+              "instructions": 390428,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 444179,
+              "observed_stack_B": 7848
+            }
+          }
+        ]
+      }
+    },
+    "11": {
+      "mode": "poll_fit",
+      "flash": 212936,
+      "firmware": "3498d48f04aa405a6598a21ec723f6c10d9d1c4960367cbeffc23a6c9a62f1fb",
+      "elf": "a4caba65dcc2af9a3a268d4323aa430b37a3d409eed9c2988f2fb8e92c972929",
+      "guards": {
+        "guards": {
+          "firmware": "3498d48f04aa405a6598a21ec723f6c10d9d1c4960367cbeffc23a6c9a62f1fb",
+          "menu": {
+            "firmware": "3498d48f04aa405a6598a21ec723f6c10d9d1c4960367cbeffc23a6c9a62f1fb",
+            "rows": {
+              "normal": {
+                "prepared": 1,
+                "released": 1,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ],
+                  [
+                    "save_report",
+                    "RETURN_READY_RESET_RELEASED"
+                  ],
+                  [
+                    "nes_diag_leave",
+                    null
+                  ]
+                ]
+              },
+              "base": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "menu": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "latched": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ]
+                ]
+              },
+              "checkpoint": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ]
+                ]
+              }
+            },
+            "marker_cases": 4
+          },
+          "ACK": {
+            "wrap": true,
+            "corrupt_bits": 152,
+            "bytes_covered": 18
+          },
+          "input": [
+            {
+              "case": "STOP_after3",
+              "success": false,
+              "checked_blocks": 3,
+              "remaining": 4,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208
+              ],
+              "commit": false
+            },
+            {
+              "case": "CRC_third",
+              "success": false,
+              "checked_blocks": 2,
+              "remaining": 5,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            },
+            {
+              "case": "cache_token",
+              "success": false,
+              "checked_blocks": 1,
+              "remaining": 6,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            }
+          ],
+          "owned": [
+            {
+              "stop": false,
+              "success": true,
+              "operations": [],
+              "remains_committed": true
+            },
+            {
+              "stop": true,
+              "success": false,
+              "operations": [],
+              "remains_committed": true
+            }
+          ],
+          "sealed": [
+            {
+              "case": "waiting",
+              "success": true,
+              "extra": 1,
+              "operations": [
+                209,
+                210,
+                208
+              ]
+            },
+            {
+              "case": "progress",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "returned",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "ordinary",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "STOP",
+              "success": false,
+              "extra": 0,
+              "operations": []
+            }
+          ],
+          "uncached": {
+            "case": "uncached",
+            "success": true,
+            "extra": 0,
+            "operations": []
+          }
+        },
+        "reports": [
+          {
+            "persist": false,
+            "budget_bytes": 3473,
+            "budget": "5ff3541f5696da70284bd0f0547004f5fe33245a77a55afab2a99c6e43cdff60",
+            "baseline": {
+              "instructions": 63518,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 70936,
+              "observed_stack_B": 7752
+            }
+          },
+          {
+            "persist": true,
+            "budget_bytes": 5022,
+            "budget": "9bf9a9e4b10c80c8f665ad00106e1821fd65cdddf2dcdc3745bfff3bcd6af134",
+            "baseline": {
+              "instructions": 390428,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 444179,
+              "observed_stack_B": 7848
+            }
+          }
+        ]
+      }
+    },
+    "12": {
+      "mode": "fused",
+      "flash": 212992,
+      "firmware": "5dfede82a908688e7b2d390f0e9448704fd2badbd06df0cb8c1b69341547d923",
+      "elf": "a563183c2a3a404c6eef9aaf9b8c958850f35df4430e406fdfcac8bb7b80c5a6",
+      "guards": {
+        "guards": {
+          "firmware": "5dfede82a908688e7b2d390f0e9448704fd2badbd06df0cb8c1b69341547d923",
+          "menu": {
+            "firmware": "5dfede82a908688e7b2d390f0e9448704fd2badbd06df0cb8c1b69341547d923",
+            "rows": {
+              "normal": {
+                "prepared": 1,
+                "released": 1,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ],
+                  [
+                    "save_report",
+                    "RETURN_READY_RESET_RELEASED"
+                  ],
+                  [
+                    "nes_diag_leave",
+                    null
+                  ]
+                ]
+              },
+              "base": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "menu": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "latched": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ]
+                ]
+              },
+              "checkpoint": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ]
+                ]
+              }
+            },
+            "marker_cases": 4
+          },
+          "ACK": {
+            "wrap": true,
+            "corrupt_bits": 152,
+            "bytes_covered": 18
+          },
+          "input": [
+            {
+              "case": "STOP_after3",
+              "success": false,
+              "checked_blocks": 3,
+              "remaining": 4,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208
+              ],
+              "commit": false
+            },
+            {
+              "case": "CRC_third",
+              "success": false,
+              "checked_blocks": 2,
+              "remaining": 5,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            },
+            {
+              "case": "cache_token",
+              "success": false,
+              "checked_blocks": 1,
+              "remaining": 6,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            }
+          ],
+          "owned": [
+            {
+              "stop": false,
+              "success": true,
+              "operations": [],
+              "remains_committed": true
+            },
+            {
+              "stop": true,
+              "success": false,
+              "operations": [],
+              "remains_committed": true
+            }
+          ],
+          "sealed": [
+            {
+              "case": "waiting",
+              "success": true,
+              "extra": 1,
+              "operations": [
+                209,
+                210,
+                208
+              ]
+            },
+            {
+              "case": "progress",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "returned",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "ordinary",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "STOP",
+              "success": false,
+              "extra": 0,
+              "operations": []
+            }
+          ],
+          "uncached": {
+            "case": "uncached",
+            "success": true,
+            "extra": 0,
+            "operations": []
+          }
+        },
+        "reports": [
+          {
+            "persist": false,
+            "budget_bytes": 3473,
+            "budget": "5ff3541f5696da70284bd0f0547004f5fe33245a77a55afab2a99c6e43cdff60",
+            "baseline": {
+              "instructions": 63518,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 70955,
+              "observed_stack_B": 7752
+            }
+          },
+          {
+            "persist": true,
+            "budget_bytes": 5022,
+            "budget": "9bf9a9e4b10c80c8f665ad00106e1821fd65cdddf2dcdc3745bfff3bcd6af134",
+            "baseline": {
+              "instructions": 390428,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 444285,
+              "observed_stack_B": 7848
+            }
+          }
+        ]
+      },
+      "cache_guards": {
+        "firmware": "5dfede82a908688e7b2d390f0e9448704fd2badbd06df0cb8c1b69341547d923",
+        "cases": [
+          {
+            "case": "cached",
+            "ops": [
+              211,
+              208,
+              209,
+              210,
+              208
+            ],
+            "state": 4
+          },
+          {
+            "case": "uncached",
+            "ops": [
+              208,
+              211,
+              208,
+              209,
+              210,
+              208
+            ],
+            "state": 4
+          },
+          {
+            "case": "bad_crc",
+            "ops": [],
+            "state": 5
+          },
+          {
+            "case": "bad_token",
+            "ops": [],
+            "state": 5
+          },
+          {
+            "case": "stop_commit",
+            "ops": [
+              211,
+              208,
+              209
+            ],
+            "state": 5
+          }
+        ]
+      }
+    },
+    "13": {
+      "mode": "compact",
+      "flash": 213004,
+      "firmware": "21094806e1093e1eabe22f00c96b3f5804dfa3fe4a5f57eae37695498180e765",
+      "elf": "73e2b508e7f3b64323063ffc25f88b25b91d562b6251a5bb5c8a0980bc0edf3b"
+    },
+    "14": {
+      "mode": "retire",
+      "flash": 212944,
+      "firmware": "2f81418460a684ad90025c939f59a0eecb6013b59563387c77c1d6938947bc0a",
+      "elf": "4b0ac5a29c1c799d489a57ed7618b472f33ee63c289b684d2914e3df43aa4b5c",
+      "guards": {
+        "guards": {
+          "firmware": "2f81418460a684ad90025c939f59a0eecb6013b59563387c77c1d6938947bc0a",
+          "menu": {
+            "firmware": "2f81418460a684ad90025c939f59a0eecb6013b59563387c77c1d6938947bc0a",
+            "rows": {
+              "normal": {
+                "prepared": 1,
+                "released": 1,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ],
+                  [
+                    "save_report",
+                    "RETURN_READY_RESET_RELEASED"
+                  ],
+                  [
+                    "nes_diag_leave",
+                    null
+                  ]
+                ]
+              },
+              "base": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "menu": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "latched": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ]
+                ]
+              },
+              "checkpoint": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ]
+                ]
+              }
+            },
+            "marker_cases": 4
+          },
+          "ACK": {
+            "wrap": true,
+            "corrupt_bits": 152,
+            "bytes_covered": 18
+          },
+          "input": [
+            {
+              "case": "STOP_after3",
+              "success": false,
+              "checked_blocks": 3,
+              "remaining": 4,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208
+              ],
+              "commit": false
+            },
+            {
+              "case": "CRC_third",
+              "success": false,
+              "checked_blocks": 2,
+              "remaining": 5,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            },
+            {
+              "case": "cache_token",
+              "success": false,
+              "checked_blocks": 1,
+              "remaining": 6,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            }
+          ],
+          "owned": [
+            {
+              "stop": false,
+              "success": true,
+              "operations": [],
+              "remains_committed": true
+            },
+            {
+              "stop": true,
+              "success": false,
+              "operations": [],
+              "remains_committed": true
+            }
+          ],
+          "sealed": [
+            {
+              "case": "waiting",
+              "success": true,
+              "extra": 1,
+              "operations": [
+                209,
+                210,
+                208
+              ]
+            },
+            {
+              "case": "progress",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "returned",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "ordinary",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "STOP",
+              "success": false,
+              "extra": 0,
+              "operations": []
+            }
+          ],
+          "uncached": {
+            "case": "uncached",
+            "success": true,
+            "extra": 0,
+            "operations": []
+          }
+        },
+        "reports": [
+          {
+            "persist": false,
+            "budget_bytes": 3473,
+            "budget": "5ff3541f5696da70284bd0f0547004f5fe33245a77a55afab2a99c6e43cdff60",
+            "baseline": {
+              "instructions": 63518,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 70900,
+              "observed_stack_B": 7752
+            }
+          },
+          {
+            "persist": true,
+            "budget_bytes": 5022,
+            "budget": "9bf9a9e4b10c80c8f665ad00106e1821fd65cdddf2dcdc3745bfff3bcd6af134",
+            "baseline": {
+              "instructions": 390428,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 444182,
+              "observed_stack_B": 7848
+            }
+          }
+        ]
+      },
+      "cache_guards": {
+        "firmware": "2f81418460a684ad90025c939f59a0eecb6013b59563387c77c1d6938947bc0a",
+        "cases": [
+          {
+            "case": "normal",
+            "passed": true,
+            "ops": [
+              234,
+              232
+            ]
+          },
+          {
+            "case": "busy",
+            "passed": true,
+            "ops": [
+              234,
+              232,
+              232
+            ]
+          },
+          {
+            "case": "no_finish",
+            "passed": false,
+            "ops": []
+          },
+          {
+            "case": "no_ACK",
+            "passed": false,
+            "ops": []
+          },
+          {
+            "case": "stop_after_EA",
+            "passed": false,
+            "ops": [
+              234
+            ]
+          },
+          {
+            "case": "count",
+            "passed": false,
+            "ops": [
+              234,
+              232
+            ]
+          },
+          {
+            "case": "descriptor",
+            "passed": false,
+            "ops": [
+              234,
+              232
+            ]
+          },
+          {
+            "case": "fault",
+            "passed": false,
+            "ops": [
+              234,
+              232
+            ]
+          },
+          {
+            "case": "crc",
+            "passed": false,
+            "ops": [
+              234,
+              232
+            ]
+          }
+        ]
+      }
+    },
+    "15": {
+      "mode": "retire_cache",
+      "flash": 212952,
+      "firmware": "badea16e49da31302b9acaf8834ecc3fdaa8159be5338c08bb23751e8c340e45",
+      "elf": "43756cb3ad9f3fe6fbc201654f5dd7816e82f1ea6de563b7ebea8d9288cf2a5b",
+      "guards": {
+        "guards": {
+          "firmware": "badea16e49da31302b9acaf8834ecc3fdaa8159be5338c08bb23751e8c340e45",
+          "menu": {
+            "firmware": "badea16e49da31302b9acaf8834ecc3fdaa8159be5338c08bb23751e8c340e45",
+            "rows": {
+              "normal": {
+                "prepared": 1,
+                "released": 1,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ],
+                  [
+                    "save_report",
+                    "RETURN_READY_RESET_RELEASED"
+                  ],
+                  [
+                    "nes_diag_leave",
+                    null
+                  ]
+                ]
+              },
+              "base": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "menu": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "latched": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ]
+                ]
+              },
+              "checkpoint": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ]
+                ]
+              }
+            },
+            "marker_cases": 4
+          },
+          "ACK": {
+            "wrap": true,
+            "corrupt_bits": 152,
+            "bytes_covered": 18
+          },
+          "input": [
+            {
+              "case": "STOP_after3",
+              "success": false,
+              "checked_blocks": 3,
+              "remaining": 4,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208
+              ],
+              "commit": false
+            },
+            {
+              "case": "CRC_third",
+              "success": false,
+              "checked_blocks": 2,
+              "remaining": 5,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            },
+            {
+              "case": "cache_token",
+              "success": false,
+              "checked_blocks": 1,
+              "remaining": 6,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            }
+          ],
+          "owned": [
+            {
+              "stop": false,
+              "success": true,
+              "operations": [],
+              "remains_committed": true
+            },
+            {
+              "stop": true,
+              "success": false,
+              "operations": [],
+              "remains_committed": true
+            }
+          ],
+          "sealed": [
+            {
+              "case": "waiting",
+              "success": true,
+              "extra": 1,
+              "operations": [
+                209,
+                210,
+                208
+              ]
+            },
+            {
+              "case": "progress",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "returned",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "ordinary",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "STOP",
+              "success": false,
+              "extra": 0,
+              "operations": []
+            }
+          ],
+          "uncached": {
+            "case": "uncached",
+            "success": true,
+            "extra": 0,
+            "operations": []
+          }
+        },
+        "reports": [
+          {
+            "persist": false,
+            "budget_bytes": 3473,
+            "budget": "5ff3541f5696da70284bd0f0547004f5fe33245a77a55afab2a99c6e43cdff60",
+            "baseline": {
+              "instructions": 63518,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 70936,
+              "observed_stack_B": 7752
+            }
+          },
+          {
+            "persist": true,
+            "budget_bytes": 5022,
+            "budget": "9bf9a9e4b10c80c8f665ad00106e1821fd65cdddf2dcdc3745bfff3bcd6af134",
+            "baseline": {
+              "instructions": 390428,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 444179,
+              "observed_stack_B": 7848
+            }
+          }
+        ]
+      },
+      "cache_guards": {
+        "firmware": "badea16e49da31302b9acaf8834ecc3fdaa8159be5338c08bb23751e8c340e45",
+        "cases": [
+          {
+            "case": "cached",
+            "ops": [
+              211,
+              208,
+              209,
+              210,
+              208
+            ],
+            "state": 4
+          },
+          {
+            "case": "uncached",
+            "ops": [
+              208,
+              211,
+              208,
+              209,
+              210,
+              208
+            ],
+            "state": 4
+          },
+          {
+            "case": "bad_crc",
+            "ops": [],
+            "state": 5
+          },
+          {
+            "case": "bad_token",
+            "ops": [],
+            "state": 5
+          },
+          {
+            "case": "stop_commit",
+            "ops": [
+              211,
+              208,
+              209
+            ],
+            "state": 5
+          },
+          {
+            "case": "normal",
+            "passed": true,
+            "ops": [
+              234,
+              232
+            ]
+          },
+          {
+            "case": "busy",
+            "passed": true,
+            "ops": [
+              234,
+              232,
+              232
+            ]
+          },
+          {
+            "case": "no_finish",
+            "passed": false,
+            "ops": []
+          },
+          {
+            "case": "no_ACK",
+            "passed": false,
+            "ops": []
+          },
+          {
+            "case": "stop_after_EA",
+            "passed": false,
+            "ops": [
+              234
+            ]
+          },
+          {
+            "case": "count",
+            "passed": false,
+            "ops": [
+              234,
+              232
+            ]
+          },
+          {
+            "case": "descriptor",
+            "passed": false,
+            "ops": [
+              234,
+              232
+            ]
+          },
+          {
+            "case": "fault",
+            "passed": false,
+            "ops": [
+              234,
+              232
+            ]
+          },
+          {
+            "case": "crc",
+            "passed": false,
+            "ops": [
+              234,
+              232
+            ]
+          }
+        ]
+      }
+    },
+    "16": {
+      "mode": "retire_full",
+      "flash": 212948,
+      "firmware": "10e0733f0300d8cca3be1e70cbee52b945d49b8c2731423b15a236b8537981a2",
+      "elf": "684b07c06af0286d97acb81e79637b100f093cd8e0d175678001a8dff02d7e40",
+      "guards": {
+        "guards": {
+          "firmware": "10e0733f0300d8cca3be1e70cbee52b945d49b8c2731423b15a236b8537981a2",
+          "menu": {
+            "firmware": "10e0733f0300d8cca3be1e70cbee52b945d49b8c2731423b15a236b8537981a2",
+            "rows": {
+              "normal": {
+                "prepared": 1,
+                "released": 1,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ],
+                  [
+                    "save_report",
+                    "RETURN_READY_RESET_RELEASED"
+                  ],
+                  [
+                    "nes_diag_leave",
+                    null
+                  ]
+                ]
+              },
+              "base": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "menu": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "latched": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ]
+                ]
+              },
+              "checkpoint": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ]
+                ]
+              }
+            },
+            "marker_cases": 4
+          },
+          "ACK": {
+            "wrap": true,
+            "corrupt_bits": 152,
+            "bytes_covered": 18
+          },
+          "input": [
+            {
+              "case": "STOP_after3",
+              "success": false,
+              "checked_blocks": 3,
+              "remaining": 4,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208
+              ],
+              "commit": false
+            },
+            {
+              "case": "CRC_third",
+              "success": false,
+              "checked_blocks": 2,
+              "remaining": 5,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            },
+            {
+              "case": "cache_token",
+              "success": false,
+              "checked_blocks": 1,
+              "remaining": 6,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            }
+          ],
+          "owned": [
+            {
+              "stop": false,
+              "success": true,
+              "operations": [],
+              "remains_committed": true
+            },
+            {
+              "stop": true,
+              "success": false,
+              "operations": [],
+              "remains_committed": true
+            }
+          ],
+          "sealed": [
+            {
+              "case": "waiting",
+              "success": true,
+              "extra": 1,
+              "operations": [
+                209,
+                210,
+                208
+              ]
+            },
+            {
+              "case": "progress",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "returned",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "ordinary",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "STOP",
+              "success": false,
+              "extra": 0,
+              "operations": []
+            }
+          ],
+          "uncached": {
+            "case": "uncached",
+            "success": true,
+            "extra": 0,
+            "operations": []
+          }
+        },
+        "reports": [
+          {
+            "persist": false,
+            "budget_bytes": 3473,
+            "budget": "5ff3541f5696da70284bd0f0547004f5fe33245a77a55afab2a99c6e43cdff60",
+            "baseline": {
+              "instructions": 63518,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 70955,
+              "observed_stack_B": 7752
+            }
+          },
+          {
+            "persist": true,
+            "budget_bytes": 5022,
+            "budget": "9bf9a9e4b10c80c8f665ad00106e1821fd65cdddf2dcdc3745bfff3bcd6af134",
+            "baseline": {
+              "instructions": 390428,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 444285,
+              "observed_stack_B": 7848
+            }
+          }
+        ]
+      },
+      "cache_guards": {
+        "firmware": "10e0733f0300d8cca3be1e70cbee52b945d49b8c2731423b15a236b8537981a2",
+        "cases": [
+          {
+            "case": "cached",
+            "ops": [
+              211,
+              208,
+              209,
+              210,
+              208
+            ],
+            "state": 4
+          },
+          {
+            "case": "uncached",
+            "ops": [
+              208,
+              211,
+              208,
+              209,
+              210,
+              208
+            ],
+            "state": 4
+          },
+          {
+            "case": "bad_crc",
+            "ops": [],
+            "state": 5
+          },
+          {
+            "case": "bad_token",
+            "ops": [],
+            "state": 5
+          },
+          {
+            "case": "stop_commit",
+            "ops": [
+              211,
+              208,
+              209
+            ],
+            "state": 5
+          },
+          {
+            "case": "normal",
+            "passed": true,
+            "ops": [
+              234,
+              232
+            ]
+          },
+          {
+            "case": "busy",
+            "passed": true,
+            "ops": [
+              234,
+              232,
+              232
+            ]
+          },
+          {
+            "case": "no_finish",
+            "passed": false,
+            "ops": []
+          },
+          {
+            "case": "no_ACK",
+            "passed": false,
+            "ops": []
+          },
+          {
+            "case": "stop_after_EA",
+            "passed": false,
+            "ops": [
+              234
+            ]
+          },
+          {
+            "case": "count",
+            "passed": false,
+            "ops": [
+              234,
+              232
+            ]
+          },
+          {
+            "case": "descriptor",
+            "passed": false,
+            "ops": [
+              234,
+              232
+            ]
+          },
+          {
+            "case": "fault",
+            "passed": false,
+            "ops": [
+              234,
+              232
+            ]
+          },
+          {
+            "case": "crc",
+            "passed": false,
+            "ops": [
+              234,
+              232
+            ]
+          }
+        ]
+      }
+    },
+    "17": {
+      "mode": "owned",
+      "flash": 213064,
+      "firmware": "ccead3bcae4d7ded00ae648d28dac26b2f86227a4f81b0530fc1885cadcd5d0b",
+      "elf": "1ffe8d2f01fb3fc01700e6b0d01808fe77815b29d0963a8e8802bf2304cf303e"
+    },
+    "18": {
+      "mode": "sealed",
+      "flash": 213032,
+      "firmware": "65dad8f0a9ec049a1f4d6c6091789fc482f2e6da555379d4b20304d92cf71901",
+      "elf": "e00070ae20af78e91937bcd872564b50493d1e68d3eb28d67512fd27af7a6c76"
+    },
+    "19": {
+      "mode": "sealed_poll",
+      "flash": 213060,
+      "firmware": "fe0c83c45db6ffb0b02ba2f5856e662f71a21b2ae9bc3e3f4cff17715b98e7aa",
+      "elf": "fb9950b22bd93621efcd0e0a2907ba0d703458337e6dea685fd5a180f774b26d"
+    },
+    "20": {
+      "mode": "sealed_fit",
+      "flash": 213008,
+      "firmware": "9c8993f0c33b9361aedf7d347ab23682979fc98cc0e179e015ce7a1914a74b69",
+      "elf": "c14096da440d1fdab995fccaeb35b7adcdf7cb63f8309bb55440122a1111f316"
+    },
+    "21": {
+      "mode": "sealed_compact",
+      "flash": 212996,
+      "firmware": "3187738b3399e1633991d041269304d95d4d9ec820155ce53407823203035e64",
+      "elf": "598736453101d1600ffb402fe53d290fad8257e572d2d5a19a5376a020fb6137"
+    },
+    "22": {
+      "mode": "sealed_history",
+      "flash": 212980,
+      "firmware": "90b2954cb0f9c6ab0ec0fbbf9ee477ed68554c000caedee48084f4c5ce82ee1f",
+      "elf": "7411614234c3e3c59f6defdec2a8776f286b037590be65c1ebe69b8d92afd1f4",
+      "guards": {
+        "guards": {
+          "firmware": "90b2954cb0f9c6ab0ec0fbbf9ee477ed68554c000caedee48084f4c5ce82ee1f",
+          "menu": {
+            "firmware": "90b2954cb0f9c6ab0ec0fbbf9ee477ed68554c000caedee48084f4c5ce82ee1f",
+            "rows": {
+              "normal": {
+                "prepared": 1,
+                "released": 1,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ],
+                  [
+                    "save_report",
+                    "RETURN_READY_RESET_RELEASED"
+                  ],
+                  [
+                    "nes_diag_leave",
+                    null
+                  ]
+                ]
+              },
+              "base": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "menu": {
+                "prepared": 0,
+                "released": 0,
+                "calls": []
+              },
+              "latched": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ]
+                ]
+              },
+              "checkpoint": {
+                "prepared": 0,
+                "released": 0,
+                "calls": [
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "save_report",
+                    "PREPARED_RESET_HELD"
+                  ],
+                  [
+                    "nes_return_log_allow",
+                    null
+                  ],
+                  [
+                    "nes_return_failed",
+                    null
+                  ],
+                  [
+                    "nes_checkpoint112",
+                    "MENU_PREPARED"
+                  ]
+                ]
+              }
+            },
+            "marker_cases": 4
+          },
+          "ACK": {
+            "wrap": true,
+            "corrupt_bits": 152,
+            "bytes_covered": 18
+          },
+          "input": [
+            {
+              "case": "STOP_after3",
+              "success": false,
+              "checked_blocks": 3,
+              "remaining": 4,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208
+              ],
+              "commit": false
+            },
+            {
+              "case": "CRC_third",
+              "success": false,
+              "checked_blocks": 2,
+              "remaining": 5,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            },
+            {
+              "case": "cache_token",
+              "success": false,
+              "checked_blocks": 1,
+              "remaining": 6,
+              "operations": [
+                208,
+                209,
+                210,
+                208,
+                209
+              ],
+              "commit": false
+            }
+          ],
+          "owned": [
+            {
+              "stop": false,
+              "success": true,
+              "operations": [],
+              "remains_committed": true
+            },
+            {
+              "stop": true,
+              "success": false,
+              "operations": [],
+              "remains_committed": true
+            }
+          ],
+          "sealed": [
+            {
+              "case": "waiting",
+              "success": true,
+              "extra": 1,
+              "operations": [
+                209,
+                210,
+                208
+              ]
+            },
+            {
+              "case": "progress",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "returned",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "ordinary",
+              "success": true,
+              "extra": 0,
+              "operations": []
+            },
+            {
+              "case": "STOP",
+              "success": false,
+              "extra": 0,
+              "operations": []
+            }
+          ],
+          "uncached": {
+            "case": "uncached",
+            "success": true,
+            "extra": 0,
+            "operations": []
+          }
+        },
+        "reports": [
+          {
+            "persist": false,
+            "budget_bytes": 3473,
+            "budget": "5ff3541f5696da70284bd0f0547004f5fe33245a77a55afab2a99c6e43cdff60",
+            "baseline": {
+              "instructions": 63518,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 70955,
+              "observed_stack_B": 7752
+            }
+          },
+          {
+            "persist": true,
+            "budget_bytes": 5022,
+            "budget": "9bf9a9e4b10c80c8f665ad00106e1821fd65cdddf2dcdc3745bfff3bcd6af134",
+            "baseline": {
+              "instructions": 390428,
+              "observed_stack_B": 7744
+            },
+            "candidate": {
+              "instructions": 446935,
+              "observed_stack_B": 7848
+            }
+          }
+        ]
+      },
+      "cache_guards": {
+        "firmware": "90b2954cb0f9c6ab0ec0fbbf9ee477ed68554c000caedee48084f4c5ce82ee1f",
+        "cases": [
+          {
+            "case": "cached",
+            "ops": [
+              211,
+              208,
+              209,
+              210,
+              208
+            ],
+            "state": 4
+          },
+          {
+            "case": "uncached",
+            "ops": [
+              208,
+              211,
+              208,
+              208,
+              209,
+              210,
+              208
+            ],
+            "state": 4
+          },
+          {
+            "case": "bad_crc",
+            "ops": [],
+            "state": 5
+          },
+          {
+            "case": "bad_token",
+            "ops": [],
+            "state": 5
+          },
+          {
+            "case": "stop_commit",
+            "ops": [
+              211,
+              208,
+              209
+            ],
+            "state": 5
+          }
+        ]
+      }
+    }
+  },
+  "phases": {
+    "1": {
+      "763": {
+        "dense_ms": 49.943696,
+        "final970": 82162406
+      },
+      "783G": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -16.582553,
+            "first_input_from_display_ms": -8.468158,
+            "planner_from_display_ms": 8.062501,
+            "SEAL_from_display_ms": 40.572564,
+            "data_complete_pop_from_ACK_ms": 5.605374,
+            "commit_pop_from_ACK_ms": 6.316984
+          },
+          "954": {
+            "capture_ready_from_display_ms": -16.503958,
+            "first_input_from_display_ms": -9.268746,
+            "planner_from_display_ms": 7.097095,
+            "SEAL_from_display_ms": 35.522482,
+            "data_complete_pop_from_ACK_ms": 4.632425,
+            "commit_pop_from_ACK_ms": 5.341941
+          },
+          "959": {
+            "capture_ready_from_display_ms": -0.439628,
+            "first_input_from_display_ms": -0.073901,
+            "planner_from_display_ms": 15.682718,
+            "SEAL_from_display_ms": 36.11995,
+            "data_complete_pop_from_ACK_ms": 13.164906,
+            "commit_pop_from_ACK_ms": 13.874421
+          },
+          "960": {
+            "capture_ready_from_display_ms": -17.033169,
+            "first_input_from_display_ms": -16.727491,
+            "planner_from_display_ms": 3.1287,
+            "SEAL_from_display_ms": 29.462215,
+            "data_complete_pop_from_ACK_ms": -0.419109,
+            "commit_pop_from_ACK_ms": 1.412727
+          },
+          "968": {
+            "capture_ready_from_display_ms": -16.438866,
+            "first_input_from_display_ms": -6.360025,
+            "planner_from_display_ms": 9.599554,
+            "SEAL_from_display_ms": 37.427845,
+            "data_complete_pop_from_ACK_ms": 7.12944,
+            "commit_pop_from_ACK_ms": 7.838955
+          },
+          "969": {
+            "capture_ready_from_display_ms": -32.565588,
+            "first_input_from_display_ms": -31.934805,
+            "planner_from_display_ms": 2.995925,
+            "SEAL_from_display_ms": 28.694426,
+            "data_complete_pop_from_ACK_ms": -15.368019,
+            "commit_pop_from_ACK_ms": 1.235326
+          }
+        },
+        "ACK952_clock": 55721116,
+        "D2_clock": 55856787.58984998,
+        "edge_after_ACK": 55749408,
+        "captured_edge": 56106776,
+        "lead_ms": -4.999685,
+        "ACK_to_D2_ms": 6.316984,
+        "wire_after_ACK": [
+          {
+            "op": "0xd1",
+            "start_ms": -0.285457,
+            "end_ms": 0.540942
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 1.065204,
+            "end_ms": 1.139504
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 1.164194,
+            "end_ms": 1.238493
+          },
+          {
+            "op": "0xe0",
+            "start_ms": 1.258041,
+            "end_ms": 1.367097,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 1.440573,
+            "end_ms": 1.549656
+          },
+          {
+            "op": "0xea",
+            "start_ms": 1.595513,
+            "end_ms": 1.667239
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 1.673001,
+            "end_ms": 1.782083
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 1.835441,
+            "end_ms": 2.652697
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 2.945959,
+            "end_ms": 3.020259
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 3.044949,
+            "end_ms": 3.119248
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 3.151558,
+            "end_ms": 3.968814
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 5.025267,
+            "end_ms": 5.099566
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 5.124257,
+            "end_ms": 5.198556
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 5.229698,
+            "end_ms": 5.470955
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 5.531074,
+            "end_ms": 5.605374
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 5.632159,
+            "end_ms": 5.706458
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 5.735101,
+            "end_ms": 5.8094
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 5.834305,
+            "end_ms": 5.908592
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 5.933282,
+            "end_ms": 6.007582
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 6.036153,
+            "end_ms": 6.110452
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 6.126071,
+            "end_ms": 6.221042
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 6.242685,
+            "end_ms": 6.316984
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 2,
+          "969": 2
+        },
+        "dense": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "dense_ms": 49.866218,
+        "reveal954": 57878782,
+        "final970": 73962654,
+        "first969": [
+          192,
+          16,
+          192,
+          32,
+          64
+        ],
+        "map_start_lines": [
+          237,
+          243
+        ],
+        "matched_frames": 66,
+        "firmware": "5bfd54547ab810fcec720e08de85ee59986004a1c6ad214a5a512a2d80820b0f"
+      },
+      "crc": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -33.136052,
+            "first_input_from_display_ms": -18.186885,
+            "planner_from_display_ms": 2.643916,
+            "SEAL_from_display_ms": 27.02792,
+            "data_complete_pop_from_ACK_ms": -5.117532,
+            "commit_pop_from_ACK_ms": 1.049595
+          },
+          "954": {
+            "capture_ready_from_display_ms": -17.026185,
+            "first_input_from_display_ms": -6.817463,
+            "planner_from_display_ms": 8.304275,
+            "SEAL_from_display_ms": 36.364954,
+            "data_complete_pop_from_ACK_ms": 6.088886,
+            "commit_pop_from_ACK_ms": 6.698687
+          },
+          "959": {
+            "capture_ready_from_display_ms": -17.176297,
+            "first_input_from_display_ms": -7.031393,
+            "planner_from_display_ms": 8.498346,
+            "SEAL_from_display_ms": 28.07703,
+            "data_complete_pop_from_ACK_ms": 6.229582,
+            "commit_pop_from_ACK_ms": 6.839383
+          },
+          "960": {
+            "capture_ready_from_display_ms": -0.111374,
+            "first_input_from_display_ms": 0.074987,
+            "planner_from_display_ms": 14.662636,
+            "SEAL_from_display_ms": 40.890575,
+            "data_complete_pop_from_ACK_ms": 12.386538,
+            "commit_pop_from_ACK_ms": 12.996339
+          },
+          "968": {
+            "capture_ready_from_display_ms": -0.252546,
+            "first_input_from_display_ms": 0.061385,
+            "planner_from_display_ms": 14.742195,
+            "SEAL_from_display_ms": 43.554787,
+            "data_complete_pop_from_ACK_ms": 12.444644,
+            "commit_pop_from_ACK_ms": 13.05654
+          },
+          "969": {
+            "capture_ready_from_display_ms": -16.920026,
+            "first_input_from_display_ms": -9.817791,
+            "planner_from_display_ms": 8.241362,
+            "SEAL_from_display_ms": 32.886858,
+            "data_complete_pop_from_ACK_ms": 5.945906,
+            "commit_pop_from_ACK_ms": 6.555707
+          }
+        },
+        "ACK952_clock": 55004496,
+        "D2_clock": 55027038.44254242,
+        "edge_after_ACK": 55034672,
+        "captured_edge": 55034672,
+        "lead_ms": 0.355425,
+        "ACK_to_D2_ms": 1.049595,
+        "wire_after_ACK": [
+          {
+            "op": "0xe0",
+            "start_ms": 0.050074,
+            "end_ms": 0.15913,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.207725,
+            "end_ms": 0.316808
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.330856,
+            "end_ms": 0.402582
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.408344,
+            "end_ms": 0.517426
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.534188,
+            "end_ms": 0.608487
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 0.616773,
+            "end_ms": 0.69106
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.699132,
+            "end_ms": 0.773431
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.785383,
+            "end_ms": 0.859682
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 0.866992,
+            "end_ms": 0.961962
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 0.975296,
+            "end_ms": 1.049595
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 4,
+          "969": 3
+        },
+        "dense": [
+          4,
+          2,
+          3,
+          3,
+          3,
+          3
+        ],
+        "dense_ms": 49.734125,
+        "reveal954": 56806210,
+        "final970": 72533302,
+        "first969": [
+          0,
+          16,
+          0,
+          32,
+          0
+        ],
+        "map_start_lines": [],
+        "matched_frames": 66,
+        "firmware": "304846d7a262a28764fea5bf36620b6add1861e3a803ef6064f180720c369e2f",
+        "tail_saving_vs_G_ms": 5.267389,
+        "G_ACK_budget_minus_candidate_tail_ms": 0.267705,
+        "D2_to_G_target_ms": 33.634139,
+        "dense_vs_G_ms": -0.132093,
+        "ACK970_vs_G_ms": -66.551841,
+        "dense_vs_763_ms": -0.209571,
+        "ACK970_vs_763_ms": -448.339249,
+        "missed": [
+          "first_969_destinations",
+          "map_starts_by_252",
+          "protected_display"
+        ],
+        "pass_schedule": false
+      },
+      "cache": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -33.950029,
+            "first_input_from_display_ms": -20.224356,
+            "planner_from_display_ms": 2.40366,
+            "SEAL_from_display_ms": 26.970837,
+            "data_complete_pop_from_ACK_ms": -7.186479,
+            "commit_pop_from_ACK_ms": 0.848545
+          },
+          "954": {
+            "capture_ready_from_display_ms": -0.340825,
+            "first_input_from_display_ms": -0.060485,
+            "planner_from_display_ms": 14.237899,
+            "SEAL_from_display_ms": 45.724336,
+            "data_complete_pop_from_ACK_ms": 12.19059,
+            "commit_pop_from_ACK_ms": 12.636317
+          },
+          "959": {
+            "capture_ready_from_display_ms": -17.176949,
+            "first_input_from_display_ms": -7.006829,
+            "planner_from_display_ms": 8.110937,
+            "SEAL_from_display_ms": 27.729872,
+            "data_complete_pop_from_ACK_ms": 6.00839,
+            "commit_pop_from_ACK_ms": 6.454117
+          },
+          "960": {
+            "capture_ready_from_display_ms": -0.109325,
+            "first_input_from_display_ms": 0.027039,
+            "planner_from_display_ms": 14.631273,
+            "SEAL_from_display_ms": 40.915718,
+            "data_complete_pop_from_ACK_ms": 12.519297,
+            "commit_pop_from_ACK_ms": 12.96712
+          },
+          "968": {
+            "capture_ready_from_display_ms": -0.243327,
+            "first_input_from_display_ms": -0.153472,
+            "planner_from_display_ms": 14.111175,
+            "SEAL_from_display_ms": 40.653115,
+            "data_complete_pop_from_ACK_ms": 11.981936,
+            "commit_pop_from_ACK_ms": 12.427663
+          },
+          "969": {
+            "capture_ready_from_display_ms": -16.781926,
+            "first_input_from_display_ms": -12.301527,
+            "planner_from_display_ms": 5.417315,
+            "SEAL_from_display_ms": 30.316327,
+            "data_complete_pop_from_ACK_ms": 3.288077,
+            "commit_pop_from_ACK_ms": 3.733804
+          }
+        },
+        "ACK952_clock": 54307242,
+        "D2_clock": 54325466.42461652,
+        "edge_after_ACK": 54319936,
+        "captured_edge": 54677304,
+        "lead_ms": -0.257501,
+        "ACK_to_D2_ms": 0.848545,
+        "wire_after_ACK": [
+          {
+            "op": "0xe0",
+            "start_ms": 0.011265,
+            "end_ms": 0.120321,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.168916,
+            "end_ms": 0.277999
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.292046,
+            "end_ms": 0.363772
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.369534,
+            "end_ms": 0.478617
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 0.497903,
+            "end_ms": 0.57219
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.578023,
+            "end_ms": 0.652322
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 0.666155,
+            "end_ms": 0.761126
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 0.774245,
+            "end_ms": 0.848545
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 4,
+          "969": 3
+        },
+        "dense": [
+          4,
+          2,
+          3,
+          3,
+          3,
+          3
+        ],
+        "dense_ms": 49.733939,
+        "reveal954": 56085094,
+        "final970": 71818100,
+        "first969": [
+          192,
+          0,
+          192,
+          0,
+          64
+        ],
+        "map_start_lines": [
+          247,
+          254
+        ],
+        "matched_frames": 66,
+        "firmware": "810875e195b1b74e90cb90719ceae72285c912eab71530b39f916feee639e1cb",
+        "tail_saving_vs_G_ms": 5.468439,
+        "G_ACK_budget_minus_candidate_tail_ms": 0.468755,
+        "D2_to_G_target_ms": 66.299927,
+        "dense_vs_G_ms": -0.132279,
+        "ACK970_vs_G_ms": -99.852253,
+        "dense_vs_763_ms": -0.209757,
+        "ACK970_vs_763_ms": -481.639661,
+        "STOP": {
+          "commits": 64,
+          "retained": "b429bfce87553e4ddd0708a97600b66cd40c75121d6af224e25c96e4041810dd",
+          "client": "c79e2b013701fa9cde8a8164da3f0545f2b7c916b8477aa6d74ec405002ebf2e",
+          "map_offset": 2496,
+          "after_return": true,
+          "last_packet_status": 0,
+          "blanks_after_STOP": 4
+        },
+        "missed": [
+          "first_969_destinations",
+          "map_starts_by_252",
+          "protected_display"
+        ],
+        "pass_schedule": false
+      },
+      "checked": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -17.177321,
+            "first_input_from_display_ms": -15.812724,
+            "planner_from_display_ms": 2.693236,
+            "SEAL_from_display_ms": 27.357944,
+            "data_complete_pop_from_ACK_ms": -2.742633,
+            "commit_pop_from_ACK_ms": 1.098463
+          },
+          "954": {
+            "capture_ready_from_display_ms": -0.389062,
+            "first_input_from_display_ms": -0.189146,
+            "planner_from_display_ms": 14.309431,
+            "SEAL_from_display_ms": 45.482126,
+            "data_complete_pop_from_ACK_ms": 12.09359,
+            "commit_pop_from_ACK_ms": 12.703391
+          },
+          "959": {
+            "capture_ready_from_display_ms": -16.950384,
+            "first_input_from_display_ms": -16.84201,
+            "planner_from_display_ms": 2.682494,
+            "SEAL_from_display_ms": 22.60315,
+            "data_complete_pop_from_ACK_ms": -3.686457,
+            "commit_pop_from_ACK_ms": 1.023078
+          },
+          "960": {
+            "capture_ready_from_display_ms": -0.24193,
+            "first_input_from_display_ms": 0.085496,
+            "planner_from_display_ms": 14.889924,
+            "SEAL_from_display_ms": 41.147963,
+            "data_complete_pop_from_ACK_ms": 12.613374,
+            "commit_pop_from_ACK_ms": 13.223175
+          },
+          "968": {
+            "capture_ready_from_display_ms": -0.240068,
+            "first_input_from_display_ms": -0.061686,
+            "planner_from_display_ms": 14.402702,
+            "SEAL_from_display_ms": 40.931548,
+            "data_complete_pop_from_ACK_ms": 12.107246,
+            "commit_pop_from_ACK_ms": 12.717048
+          },
+          "969": {
+            "capture_ready_from_display_ms": -16.738252,
+            "first_input_from_display_ms": -11.966727,
+            "planner_from_display_ms": 5.952832,
+            "SEAL_from_display_ms": 30.776069,
+            "data_complete_pop_from_ACK_ms": 3.657376,
+            "commit_pop_from_ACK_ms": 4.267177
+          }
+        },
+        "ACK952_clock": 55019114,
+        "D2_clock": 55042705.98949516,
+        "edge_after_ACK": 55034672,
+        "captured_edge": 55392040,
+        "lead_ms": -0.374069,
+        "ACK_to_D2_ms": 1.098463,
+        "wire_after_ACK": [
+          {
+            "op": "0xe0",
+            "start_ms": -0.026471,
+            "end_ms": 0.082585,
+            "sent": 1151,
+            "retired": 1150,
+            "flags": 3,
+            "ACK_status": 0,
+            "ACK_op": 2
+          },
+          {
+            "op": "0xe0",
+            "start_ms": 0.098299,
+            "end_ms": 0.207355,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.256593,
+            "end_ms": 0.365676
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.379724,
+            "end_ms": 0.45145
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.457212,
+            "end_ms": 0.566294
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.583056,
+            "end_ms": 0.657355
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 0.665641,
+            "end_ms": 0.739928
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.747999,
+            "end_ms": 0.822298
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.834251,
+            "end_ms": 0.90855
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 0.915859,
+            "end_ms": 1.01083
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 1.024164,
+            "end_ms": 1.098463
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 4,
+          "969": 3
+        },
+        "dense": [
+          3,
+          2,
+          4,
+          3,
+          2,
+          3
+        ],
+        "dense_ms": 47.086163,
+        "reveal954": 57134006,
+        "final970": 72890558,
+        "first969": [
+          0,
+          16,
+          192,
+          0,
+          64
+        ],
+        "map_start_lines": [
+          252
+        ],
+        "matched_frames": 66,
+        "firmware": "2a20736b31274b1bdb1e61d4e416d358ca9c94a6b7aefd15ab181803d884e815",
+        "tail_saving_vs_G_ms": 5.218521,
+        "G_ACK_budget_minus_candidate_tail_ms": 0.218837,
+        "D2_to_G_target_ms": 32.904645,
+        "dense_vs_G_ms": -2.780055,
+        "ACK970_vs_G_ms": -49.917699,
+        "dense_vs_763_ms": -2.857533,
+        "ACK970_vs_763_ms": -431.705107,
+        "missed": [
+          "display_953_954",
+          "first_969_destinations",
+          "protected_display"
+        ],
+        "pass_schedule": false
+      },
+      "poll": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -17.239154,
+            "first_input_from_display_ms": -9.403188,
+            "planner_from_display_ms": 7.128614,
+            "SEAL_from_display_ms": 39.618439,
+            "data_complete_pop_from_ACK_ms": 4.672897,
+            "commit_pop_from_ACK_ms": 5.384507
+          },
+          "954": {
+            "capture_ready_from_display_ms": -16.527052,
+            "first_input_from_display_ms": -9.574623,
+            "planner_from_display_ms": 6.792194,
+            "SEAL_from_display_ms": 35.253919,
+            "data_complete_pop_from_ACK_ms": 4.327072,
+            "commit_pop_from_ACK_ms": 5.036588
+          },
+          "959": {
+            "capture_ready_from_display_ms": -0.420351,
+            "first_input_from_display_ms": -0.085869,
+            "planner_from_display_ms": 15.671155,
+            "SEAL_from_display_ms": 36.13606,
+            "data_complete_pop_from_ACK_ms": 13.15289,
+            "commit_pop_from_ACK_ms": 13.862406
+          },
+          "960": {
+            "capture_ready_from_display_ms": -17.026092,
+            "first_input_from_display_ms": -16.751134,
+            "planner_from_display_ms": 3.036946,
+            "SEAL_from_display_ms": 29.367696,
+            "data_complete_pop_from_ACK_ms": -0.443758,
+            "commit_pop_from_ACK_ms": 1.281016
+          },
+          "968": {
+            "capture_ready_from_display_ms": -16.438494,
+            "first_input_from_display_ms": -6.613466,
+            "planner_from_display_ms": 9.346518,
+            "SEAL_from_display_ms": 36.889787,
+            "data_complete_pop_from_ACK_ms": 6.874308,
+            "commit_pop_from_ACK_ms": 7.585919
+          },
+          "969": {
+            "capture_ready_from_display_ms": -32.571176,
+            "first_input_from_display_ms": -32.471452,
+            "planner_from_display_ms": 3.005888,
+            "SEAL_from_display_ms": 29.014206,
+            "data_complete_pop_from_ACK_ms": -15.903786,
+            "commit_pop_from_ACK_ms": 1.245289
+          }
+        },
+        "ACK952_clock": 55735178,
+        "D2_clock": 55850822.53039433,
+        "edge_after_ACK": 55749408,
+        "captured_edge": 56106776,
+        "lead_ms": -4.721947,
+        "ACK_to_D2_ms": 5.384507,
+        "wire_after_ACK": [
+          {
+            "op": "0xd2",
+            "start_ms": 0.132489,
+            "end_ms": 0.206789
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.231479,
+            "end_ms": 0.305778
+          },
+          {
+            "op": "0xe0",
+            "start_ms": 0.325397,
+            "end_ms": 0.434453,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.508096,
+            "end_ms": 0.617179
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.663036,
+            "end_ms": 0.734762
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.740524,
+            "end_ms": 0.849607
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 0.902964,
+            "end_ms": 1.72022
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 2.013482,
+            "end_ms": 2.087782
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 2.112472,
+            "end_ms": 2.186771
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 2.219081,
+            "end_ms": 3.036337
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 4.09279,
+            "end_ms": 4.167089
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 4.19178,
+            "end_ms": 4.266079
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 4.297222,
+            "end_ms": 4.538478
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 4.598597,
+            "end_ms": 4.672897
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 4.697587,
+            "end_ms": 4.771886
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 4.800529,
+            "end_ms": 4.874828
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 4.899733,
+            "end_ms": 4.97402
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 5.000806,
+            "end_ms": 5.075105
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 5.103676,
+            "end_ms": 5.177975
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 5.193594,
+            "end_ms": 5.288565
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 5.310208,
+            "end_ms": 5.384507
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 2,
+          "969": 2
+        },
+        "dense": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "dense_ms": 49.936479,
+        "reveal954": 57878438,
+        "final970": 73962428,
+        "first969": [
+          192,
+          16,
+          192,
+          32,
+          64
+        ],
+        "map_start_lines": [
+          237,
+          243
+        ],
+        "matched_frames": 66,
+        "firmware": "3498d48f04aa405a6598a21ec723f6c10d9d1c4960367cbeffc23a6c9a62f1fb",
+        "tail_saving_vs_G_ms": 0.932477,
+        "G_ACK_budget_minus_candidate_tail_ms": -4.067207,
+        "D2_to_G_target_ms": -4.721947,
+        "dense_vs_G_ms": 0.070261,
+        "ACK970_vs_G_ms": -0.010523,
+        "dense_vs_763_ms": -0.007217,
+        "ACK970_vs_763_ms": -381.79793,
+        "missed": [
+          "display_953_954",
+          "dense_and_final"
+        ],
+        "pass_schedule": false
+      },
+      "fused": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -32.879874,
+            "first_input_from_display_ms": -18.550469,
+            "planner_from_display_ms": 2.503789,
+            "SEAL_from_display_ms": 26.891963,
+            "data_complete_pop_from_ACK_ms": -5.511854,
+            "commit_pop_from_ACK_ms": 0.911158
+          },
+          "954": {
+            "capture_ready_from_display_ms": -17.00933,
+            "first_input_from_display_ms": -7.198246,
+            "planner_from_display_ms": 7.846854,
+            "SEAL_from_display_ms": 35.925978,
+            "data_complete_pop_from_ACK_ms": 5.799092,
+            "commit_pop_from_ACK_ms": 6.244819
+          },
+          "959": {
+            "capture_ready_from_display_ms": -16.945541,
+            "first_input_from_display_ms": -16.902584,
+            "planner_from_display_ms": 2.549044,
+            "SEAL_from_display_ms": 22.49187,
+            "data_complete_pop_from_ACK_ms": -3.780603,
+            "commit_pop_from_ACK_ms": 0.891771
+          },
+          "960": {
+            "capture_ready_from_display_ms": -17.027023,
+            "first_input_from_display_ms": -13.884486,
+            "planner_from_display_ms": 4.262884,
+            "SEAL_from_display_ms": 30.637597,
+            "data_complete_pop_from_ACK_ms": 1.934313,
+            "commit_pop_from_ACK_ms": 2.596415
+          },
+          "968": {
+            "capture_ready_from_display_ms": -0.263721,
+            "first_input_from_display_ms": -0.08004,
+            "planner_from_display_ms": 14.400934,
+            "SEAL_from_display_ms": 40.47311,
+            "data_complete_pop_from_ACK_ms": 12.2696,
+            "commit_pop_from_ACK_ms": 12.715326
+          },
+          "969": {
+            "capture_ready_from_display_ms": -16.764326,
+            "first_input_from_display_ms": -12.742115,
+            "planner_from_display_ms": 5.49094,
+            "SEAL_from_display_ms": 30.459921,
+            "data_complete_pop_from_ACK_ms": 3.145327,
+            "commit_pop_from_ACK_ms": 3.807429
+          }
+        },
+        "ACK952_clock": 54284258,
+        "D2_clock": 54303827.19851779,
+        "edge_after_ACK": 54319936,
+        "captured_edge": 54319936,
+        "lead_ms": 0.750039,
+        "ACK_to_D2_ms": 0.911158,
+        "wire_after_ACK": [
+          {
+            "op": "0xe0",
+            "start_ms": -0.051606,
+            "end_ms": 0.05745,
+            "sent": 1151,
+            "retired": 1150,
+            "flags": 3,
+            "ACK_status": 0,
+            "ACK_op": 2
+          },
+          {
+            "op": "0xe0",
+            "start_ms": 0.073236,
+            "end_ms": 0.182292,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.23153,
+            "end_ms": 0.340612
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.35466,
+            "end_ms": 0.426386
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.432148,
+            "end_ms": 0.541231
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 0.560516,
+            "end_ms": 0.634803
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.640637,
+            "end_ms": 0.714936
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 0.728769,
+            "end_ms": 0.82374
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 0.836859,
+            "end_ms": 0.911158
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 3,
+          "969": 3
+        },
+        "dense": [
+          4,
+          2,
+          3,
+          3,
+          2,
+          3
+        ],
+        "dense_ms": 47.1001,
+        "reveal954": 56091606,
+        "final970": 71461206,
+        "first969": [
+          0,
+          0,
+          192,
+          0,
+          64
+        ],
+        "map_start_lines": [
+          248
+        ],
+        "matched_frames": 66,
+        "firmware": "5dfede82a908688e7b2d390f0e9448704fd2badbd06df0cb8c1b69341547d923",
+        "tail_saving_vs_G_ms": 5.405826,
+        "G_ACK_budget_minus_candidate_tail_ms": 0.406142,
+        "D2_to_G_target_ms": 67.307468,
+        "dense_vs_G_ms": -2.766118,
+        "ACK970_vs_G_ms": -116.46954,
+        "dense_vs_763_ms": -2.843596,
+        "ACK970_vs_763_ms": -498.256948,
+        "missed": [
+          "first_969_destinations",
+          "protected_display"
+        ],
+        "pass_schedule": false
+      },
+      "retire": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -33.70577,
+            "first_input_from_display_ms": -14.780699,
+            "planner_from_display_ms": 2.821174,
+            "SEAL_from_display_ms": 27.080255,
+            "data_complete_pop_from_ACK_ms": -0.606329,
+            "commit_pop_from_ACK_ms": 1.07752
+          },
+          "954": {
+            "capture_ready_from_display_ms": -0.10411,
+            "first_input_from_display_ms": 0.070275,
+            "planner_from_display_ms": 15.607763,
+            "SEAL_from_display_ms": 47.092573,
+            "data_complete_pop_from_ACK_ms": 13.145189,
+            "commit_pop_from_ACK_ms": 13.854704
+          },
+          "959": {
+            "capture_ready_from_display_ms": -17.179836,
+            "first_input_from_display_ms": -14.394356,
+            "planner_from_display_ms": 4.577071,
+            "SEAL_from_display_ms": 24.718596,
+            "data_complete_pop_from_ACK_ms": 1.842884,
+            "commit_pop_from_ACK_ms": 2.768775
+          },
+          "960": {
+            "capture_ready_from_display_ms": -0.108207,
+            "first_input_from_display_ms": 0.049116,
+            "planner_from_display_ms": 15.459706,
+            "SEAL_from_display_ms": 42.020234,
+            "data_complete_pop_from_ACK_ms": 12.93456,
+            "commit_pop_from_ACK_ms": 13.644076
+          },
+          "968": {
+            "capture_ready_from_display_ms": -17.136068,
+            "first_input_from_display_ms": -17.023333,
+            "planner_from_display_ms": 2.813337,
+            "SEAL_from_display_ms": 31.485377,
+            "data_complete_pop_from_ACK_ms": -3.141971,
+            "commit_pop_from_ACK_ms": 1.052738
+          },
+          "969": {
+            "capture_ready_from_display_ms": -17.147615,
+            "first_input_from_display_ms": -17.083344,
+            "planner_from_display_ms": 2.930406,
+            "SEAL_from_display_ms": 28.497381,
+            "data_complete_pop_from_ACK_ms": -3.303987,
+            "commit_pop_from_ACK_ms": 1.167944
+          }
+        },
+        "ACK952_clock": 55731468,
+        "D2_clock": 55754610.19593007,
+        "edge_after_ACK": 55749408,
+        "captured_edge": 56106776,
+        "lead_ms": -0.242219,
+        "ACK_to_D2_ms": 1.07752,
+        "wire_after_ACK": [
+          {
+            "op": "0xe0",
+            "start_ms": 0.069153,
+            "end_ms": 0.178209,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.259209,
+            "end_ms": 0.330935
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.336697,
+            "end_ms": 0.44578
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.495637,
+            "end_ms": 0.569936
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 0.594841,
+            "end_ms": 0.669128
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.693818,
+            "end_ms": 0.768118
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.796689,
+            "end_ms": 0.870988
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 0.886607,
+            "end_ms": 0.981578
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 1.003221,
+            "end_ms": 1.07752
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 3,
+          "969": 2
+        },
+        "dense": [
+          3,
+          2,
+          4,
+          3,
+          3,
+          2
+        ],
+        "dense_ms": 47.238045,
+        "reveal954": 57863740,
+        "final970": 73962400,
+        "first969": [
+          192,
+          16,
+          192,
+          32,
+          64
+        ],
+        "map_start_lines": [
+          236,
+          243
+        ],
+        "matched_frames": 66,
+        "firmware": "2f81418460a684ad90025c939f59a0eecb6013b59563387c77c1d6938947bc0a",
+        "tail_saving_vs_G_ms": 5.239464,
+        "G_ACK_budget_minus_candidate_tail_ms": 0.23978,
+        "D2_to_G_target_ms": -0.242219,
+        "dense_vs_G_ms": -2.628173,
+        "ACK970_vs_G_ms": -0.011826,
+        "dense_vs_763_ms": -2.705651,
+        "ACK970_vs_763_ms": -381.799234,
+        "missed": [
+          "display_953_954",
+          "protected_display"
+        ],
+        "pass_schedule": false
+      },
+      "retirecache": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -17.196039,
+            "first_input_from_display_ms": -9.900836,
+            "planner_from_display_ms": 6.273721,
+            "SEAL_from_display_ms": 39.890634,
+            "data_complete_pop_from_ACK_ms": 4.026222,
+            "commit_pop_from_ACK_ms": 4.538425
+          },
+          "954": {
+            "capture_ready_from_display_ms": -16.527425,
+            "first_input_from_display_ms": -9.360414,
+            "planner_from_display_ms": 6.497961,
+            "SEAL_from_display_ms": 34.928738,
+            "data_complete_pop_from_ACK_ms": 4.243342,
+            "commit_pop_from_ACK_ms": 4.755545
+          },
+          "959": {
+            "capture_ready_from_display_ms": -17.165215,
+            "first_input_from_display_ms": -12.93809,
+            "planner_from_display_ms": 3.655541,
+            "SEAL_from_display_ms": 23.829842,
+            "data_complete_pop_from_ACK_ms": 1.129119,
+            "commit_pop_from_ACK_ms": 1.641322
+          },
+          "960": {
+            "capture_ready_from_display_ms": -0.097778,
+            "first_input_from_display_ms": -0.019858,
+            "planner_from_display_ms": 15.033062,
+            "SEAL_from_display_ms": 41.617017,
+            "data_complete_pop_from_ACK_ms": 12.715682,
+            "commit_pop_from_ACK_ms": 13.227885
+          },
+          "968": {
+            "capture_ready_from_display_ms": -16.629393,
+            "first_input_from_display_ms": -16.449049,
+            "planner_from_display_ms": 2.752015,
+            "SEAL_from_display_ms": 31.397935,
+            "data_complete_pop_from_ACK_ms": -2.717591,
+            "commit_pop_from_ACK_ms": 1.001868
+          },
+          "969": {
+            "capture_ready_from_display_ms": -33.805224,
+            "first_input_from_display_ms": -22.365029,
+            "planner_from_display_ms": 2.586072,
+            "SEAL_from_display_ms": 28.113161,
+            "data_complete_pop_from_ACK_ms": -5.950149,
+            "commit_pop_from_ACK_ms": 0.835926
+          }
+        },
+        "ACK952_clock": 54662148,
+        "D2_clock": 54759620.97986475,
+        "edge_after_ACK": 54677304,
+        "captured_edge": 55034672,
+        "lead_ms": -3.832748,
+        "ACK_to_D2_ms": 4.538425,
+        "wire_after_ACK": [
+          {
+            "op": "0xd1",
+            "start_ms": -0.139243,
+            "end_ms": 0.678014
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 0.971062,
+            "end_ms": 1.045361
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 1.059504,
+            "end_ms": 1.133803
+          },
+          {
+            "op": "0xe0",
+            "start_ms": 1.153422,
+            "end_ms": 1.262478,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xea",
+            "start_ms": 1.343478,
+            "end_ms": 1.415204
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 1.420966,
+            "end_ms": 1.530049
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 1.58331,
+            "end_ms": 2.400567
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 3.456805,
+            "end_ms": 3.531105
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 3.545247,
+            "end_ms": 3.619547
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 3.650761,
+            "end_ms": 3.892017
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 3.951922,
+            "end_ms": 4.026222
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 4.040364,
+            "end_ms": 4.114664
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 4.154544,
+            "end_ms": 4.228831
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 4.242974,
+            "end_ms": 4.317273
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 4.347726,
+            "end_ms": 4.442697
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 4.464125,
+            "end_ms": 4.538425
+          }
+        ],
+        "intervals": {
+          "909": 3,
+          "960": 4,
+          "969": 2
+        },
+        "dense": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          2
+        ],
+        "dense_ms": 47.176398,
+        "reveal954": 56806210,
+        "final970": 72890670,
+        "first969": [
+          192,
+          16,
+          192,
+          32,
+          64
+        ],
+        "map_start_lines": [
+          236,
+          242
+        ],
+        "matched_frames": 66,
+        "firmware": "badea16e49da31302b9acaf8834ecc3fdaa8159be5338c08bb23751e8c340e45",
+        "tail_saving_vs_G_ms": 1.778559,
+        "G_ACK_budget_minus_candidate_tail_ms": -3.221125,
+        "D2_to_G_target_ms": 46.085323,
+        "dense_vs_G_ms": -2.68982,
+        "ACK970_vs_G_ms": -49.912484,
+        "dense_vs_763_ms": -2.767298,
+        "ACK970_vs_763_ms": -431.699892,
+        "missed": [
+          "display_953_954",
+          "protected_display"
+        ],
+        "pass_schedule": false
+      },
+      "retirefull": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -32.874659,
+            "first_input_from_display_ms": -18.517721,
+            "planner_from_display_ms": 2.413906,
+            "SEAL_from_display_ms": 26.349156,
+            "data_complete_pop_from_ACK_ms": -5.481202,
+            "commit_pop_from_ACK_ms": 0.821276
+          },
+          "954": {
+            "capture_ready_from_display_ms": -17.014917,
+            "first_input_from_display_ms": -7.764905,
+            "planner_from_display_ms": 7.283954,
+            "SEAL_from_display_ms": 34.95863,
+            "data_complete_pop_from_ACK_ms": 5.236193,
+            "commit_pop_from_ACK_ms": 5.68192
+          },
+          "959": {
+            "capture_ready_from_display_ms": -16.939675,
+            "first_input_from_display_ms": -16.726949,
+            "planner_from_display_ms": 2.602048,
+            "SEAL_from_display_ms": 22.511053,
+            "data_complete_pop_from_ACK_ms": -3.821343,
+            "commit_pop_from_ACK_ms": 0.728401
+          },
+          "960": {
+            "capture_ready_from_display_ms": -17.039035,
+            "first_input_from_display_ms": -13.851242,
+            "planner_from_display_ms": 3.95929,
+            "SEAL_from_display_ms": 30.441669,
+            "data_complete_pop_from_ACK_ms": 1.848957,
+            "commit_pop_from_ACK_ms": 2.294684
+          },
+          "968": {
+            "capture_ready_from_display_ms": -16.880729,
+            "first_input_from_display_ms": -7.851678,
+            "planner_from_display_ms": 9.509308,
+            "SEAL_from_display_ms": 36.849466,
+            "data_complete_pop_from_ACK_ms": 7.380069,
+            "commit_pop_from_ACK_ms": 7.825796
+          },
+          "969": {
+            "capture_ready_from_display_ms": -32.571921,
+            "first_input_from_display_ms": -31.938804,
+            "planner_from_display_ms": 2.52252,
+            "SEAL_from_display_ms": 27.917512,
+            "data_complete_pop_from_ACK_ms": -16.584275,
+            "commit_pop_from_ACK_ms": 0.839008
+          }
+        },
+        "ACK952_clock": 53926778,
+        "D2_clock": 53944416.770202175,
+        "edge_after_ACK": 53962568,
+        "captured_edge": 53962568,
+        "lead_ms": 0.845137,
+        "ACK_to_D2_ms": 0.821276,
+        "wire_after_ACK": [
+          {
+            "op": "0xe0",
+            "start_ms": -0.018858,
+            "end_ms": 0.090198,
+            "sent": 1151,
+            "retired": 1150,
+            "flags": 3,
+            "ACK_status": 0,
+            "ACK_op": 2
+          },
+          {
+            "op": "0xe0",
+            "start_ms": 0.105984,
+            "end_ms": 0.21504,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.264873,
+            "end_ms": 0.336599
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.342361,
+            "end_ms": 0.451444
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 0.470634,
+            "end_ms": 0.544921
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.550754,
+            "end_ms": 0.625053
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 0.638887,
+            "end_ms": 0.733858
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 0.746977,
+            "end_ms": 0.821276
+          }
+        ],
+        "intervals": {
+          "909": 3,
+          "960": 3,
+          "969": 2
+        },
+        "dense": [
+          4,
+          2,
+          3,
+          3,
+          2,
+          3
+        ],
+        "dense_ms": 47.082578,
+        "reveal954": 55734568,
+        "final970": 71103472,
+        "first969": [
+          192,
+          16,
+          192,
+          32,
+          64
+        ],
+        "map_start_lines": [
+          234,
+          240
+        ],
+        "matched_frames": 66,
+        "firmware": "10e0733f0300d8cca3be1e70cbee52b945d49b8c2731423b15a236b8537981a2",
+        "tail_saving_vs_G_ms": 5.495708,
+        "G_ACK_budget_minus_candidate_tail_ms": 0.496024,
+        "D2_to_G_target_ms": 84.041923,
+        "dense_vs_G_ms": -2.78364,
+        "ACK970_vs_G_ms": -133.125939,
+        "dense_vs_763_ms": -2.861118,
+        "ACK970_vs_763_ms": -514.913347,
+        "STOP": {
+          "commits": 64,
+          "retained": "b429bfce87553e4ddd0708a97600b66cd40c75121d6af224e25c96e4041810dd",
+          "client": "c79e2b013701fa9cde8a8164da3f0545f2b7c916b8477aa6d74ec405002ebf2e",
+          "map_offset": 2496,
+          "after_return": true,
+          "last_packet_status": 0,
+          "blanks_after_STOP": 3
+        },
+        "missed": [
+          "protected_display"
+        ],
+        "pass_schedule": false
+      },
+      "sealed": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -17.193431,
+            "first_input_from_display_ms": -15.541501,
+            "planner_from_display_ms": 2.5572,
+            "SEAL_from_display_ms": 27.116014,
+            "data_complete_pop_from_ACK_ms": -2.471791,
+            "commit_pop_from_ACK_ms": 0.999823
+          },
+          "954": {
+            "capture_ready_from_display_ms": -0.340825,
+            "first_input_from_display_ms": -0.024685,
+            "planner_from_display_ms": 14.475392,
+            "SEAL_from_display_ms": 45.48073,
+            "data_complete_pop_from_ACK_ms": 12.26089,
+            "commit_pop_from_ACK_ms": 12.871548
+          },
+          "959": {
+            "capture_ready_from_display_ms": -17.176576,
+            "first_input_from_display_ms": -7.004828,
+            "planner_from_display_ms": 8.314275,
+            "SEAL_from_display_ms": 27.903358,
+            "data_complete_pop_from_ACK_ms": 6.044535,
+            "commit_pop_from_ACK_ms": 6.655193
+          },
+          "960": {
+            "capture_ready_from_display_ms": -0.109139,
+            "first_input_from_display_ms": -0.108665,
+            "planner_from_display_ms": 15.035762,
+            "SEAL_from_display_ms": 41.289508,
+            "data_complete_pop_from_ACK_ms": 12.758687,
+            "commit_pop_from_ACK_ms": 13.369346
+          },
+          "968": {
+            "capture_ready_from_display_ms": -0.260368,
+            "first_input_from_display_ms": -0.185414,
+            "planner_from_display_ms": 14.280927,
+            "SEAL_from_display_ms": 40.693157,
+            "data_complete_pop_from_ACK_ms": 11.982632,
+            "commit_pop_from_ACK_ms": 12.59329
+          },
+          "969": {
+            "capture_ready_from_display_ms": -16.722701,
+            "first_input_from_display_ms": -12.605903,
+            "planner_from_display_ms": 5.737051,
+            "SEAL_from_display_ms": 30.786778,
+            "data_complete_pop_from_ACK_ms": 3.440619,
+            "commit_pop_from_ACK_ms": 4.051277
+          }
+        },
+        "ACK952_clock": 54304724,
+        "D2_clock": 54326197.4637419,
+        "edge_after_ACK": 54319936,
+        "captured_edge": 54677304,
+        "lead_ms": -0.291539,
+        "ACK_to_D2_ms": 0.999823,
+        "wire_after_ACK": [
+          {
+            "op": "0xe0",
+            "start_ms": -0.093942,
+            "end_ms": 0.015114,
+            "sent": 1151,
+            "retired": 1150,
+            "flags": 3,
+            "ACK_status": 0,
+            "ACK_op": 2
+          },
+          {
+            "op": "0xe0",
+            "start_ms": 0.159852,
+            "end_ms": 0.268908,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.317503,
+            "end_ms": 0.426586
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.440634,
+            "end_ms": 0.51236
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.518122,
+            "end_ms": 0.627204
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 0.646728,
+            "end_ms": 0.721015
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.729087,
+            "end_ms": 0.803386
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 0.817219,
+            "end_ms": 0.91219
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 0.925523,
+            "end_ms": 0.999823
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 4,
+          "969": 3
+        },
+        "dense": [
+          3,
+          2,
+          3,
+          3,
+          3,
+          3
+        ],
+        "dense_ms": 46.942476,
+        "reveal954": 56085506,
+        "final970": 72175932,
+        "first969": [
+          0,
+          0,
+          192,
+          0,
+          64
+        ],
+        "map_start_lines": [
+          249
+        ],
+        "matched_frames": 66,
+        "firmware": "90b2954cb0f9c6ab0ec0fbbf9ee477ed68554c000caedee48084f4c5ce82ee1f",
+        "tail_saving_vs_G_ms": 5.317161,
+        "G_ACK_budget_minus_candidate_tail_ms": 0.317477,
+        "D2_to_G_target_ms": 66.26589,
+        "dense_vs_G_ms": -2.923742,
+        "ACK970_vs_G_ms": -83.191292,
+        "dense_vs_763_ms": -3.00122,
+        "ACK970_vs_763_ms": -464.978699,
+        "missed": [
+          "first_969_destinations",
+          "protected_display"
+        ],
+        "pass_schedule": false
+      }
+    },
+    "2": {
+      "763": {
+        "dense_ms": 49.942175,
+        "final970": 81822390
+      },
+      "783G": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -17.077029,
+            "first_input_from_display_ms": -14.4016,
+            "planner_from_display_ms": 3.133505,
+            "SEAL_from_display_ms": 27.659844,
+            "data_complete_pop_from_ACK_ms": -0.441509,
+            "commit_pop_from_ACK_ms": 1.389851
+          },
+          "954": {
+            "capture_ready_from_display_ms": -0.113981,
+            "first_input_from_display_ms": 0.113738,
+            "planner_from_display_ms": 15.582363,
+            "SEAL_from_display_ms": 47.553525,
+            "data_complete_pop_from_ACK_ms": 13.119789,
+            "commit_pop_from_ACK_ms": 13.829304
+          },
+          "959": {
+            "capture_ready_from_display_ms": -0.436089,
+            "first_input_from_display_ms": -0.235581,
+            "planner_from_display_ms": 15.304663,
+            "SEAL_from_display_ms": 35.539709,
+            "data_complete_pop_from_ACK_ms": 12.786851,
+            "commit_pop_from_ACK_ms": 13.496366
+          },
+          "960": {
+            "capture_ready_from_display_ms": -17.038291,
+            "first_input_from_display_ms": -14.385418,
+            "planner_from_display_ms": 3.158935,
+            "SEAL_from_display_ms": 29.502723,
+            "data_complete_pop_from_ACK_ms": -0.209928,
+            "commit_pop_from_ACK_ms": 1.343305
+          },
+          "968": {
+            "capture_ready_from_display_ms": -16.481237,
+            "first_input_from_display_ms": -6.416626,
+            "planner_from_display_ms": 9.540858,
+            "SEAL_from_display_ms": 37.462952,
+            "data_complete_pop_from_ACK_ms": 7.070744,
+            "commit_pop_from_ACK_ms": 7.780259
+          },
+          "969": {
+            "capture_ready_from_display_ms": -32.589521,
+            "first_input_from_display_ms": -31.804378,
+            "planner_from_display_ms": 3.190913,
+            "SEAL_from_display_ms": 29.171303,
+            "data_complete_pop_from_ACK_ms": -15.451872,
+            "commit_pop_from_ACK_ms": 1.430314
+          }
+        },
+        "ACK952_clock": 56089064,
+        "D2_clock": 56118914.21485102,
+        "edge_after_ACK": 56106776,
+        "captured_edge": 56464144,
+        "lead_ms": -0.565166,
+        "ACK_to_D2_ms": 1.389851,
+        "wire_after_ACK": [
+          {
+            "op": "0xe0",
+            "start_ms": -0.04463,
+            "end_ms": 0.064426,
+            "sent": 1151,
+            "retired": 1150,
+            "flags": 3,
+            "ACK_status": 0,
+            "ACK_op": 2
+          },
+          {
+            "op": "0xe0",
+            "start_ms": 0.233973,
+            "end_ms": 0.343029,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.416505,
+            "end_ms": 0.525588
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.571445,
+            "end_ms": 0.643171
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.648933,
+            "end_ms": 0.758016
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.807968,
+            "end_ms": 0.882267
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 0.907172,
+            "end_ms": 0.981459
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 1.006149,
+            "end_ms": 1.080449
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 1.10902,
+            "end_ms": 1.183319
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 1.198938,
+            "end_ms": 1.293909
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 1.315552,
+            "end_ms": 1.389851
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 2,
+          "969": 2
+        },
+        "dense": [
+          3,
+          2,
+          4,
+          3,
+          3,
+          3
+        ],
+        "dense_ms": 49.99707,
+        "reveal954": 58221494,
+        "final970": 74315838,
+        "first969": [
+          192,
+          16,
+          192,
+          32,
+          64
+        ],
+        "map_start_lines": [
+          235,
+          240
+        ],
+        "matched_frames": 66,
+        "firmware": "5bfd54547ab810fcec720e08de85ee59986004a1c6ad214a5a512a2d80820b0f"
+      },
+      "crc": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -17.171548,
+            "first_input_from_display_ms": -15.249849,
+            "planner_from_display_ms": 2.79229,
+            "SEAL_from_display_ms": 26.934054,
+            "data_complete_pop_from_ACK_ms": -2.180496,
+            "commit_pop_from_ACK_ms": 1.195874
+          },
+          "954": {
+            "capture_ready_from_display_ms": -0.337287,
+            "first_input_from_display_ms": -0.22409,
+            "planner_from_display_ms": 14.274082,
+            "SEAL_from_display_ms": 45.451024,
+            "data_complete_pop_from_ACK_ms": 12.060556,
+            "commit_pop_from_ACK_ms": 12.670357
+          },
+          "959": {
+            "capture_ready_from_display_ms": -17.1722,
+            "first_input_from_display_ms": -7.068847,
+            "planner_from_display_ms": 8.338789,
+            "SEAL_from_display_ms": 27.958299,
+            "data_complete_pop_from_ACK_ms": 6.070024,
+            "commit_pop_from_ACK_ms": 6.679825
+          },
+          "960": {
+            "capture_ready_from_display_ms": -0.103551,
+            "first_input_from_display_ms": -0.08294,
+            "planner_from_display_ms": 15.059581,
+            "SEAL_from_display_ms": 41.103172,
+            "data_complete_pop_from_ACK_ms": 12.567108,
+            "commit_pop_from_ACK_ms": 13.393284
+          },
+          "968": {
+            "capture_ready_from_display_ms": -16.927103,
+            "first_input_from_display_ms": -16.617232,
+            "planner_from_display_ms": 2.771972,
+            "SEAL_from_display_ms": 31.131607,
+            "data_complete_pop_from_ACK_ms": -3.816007,
+            "commit_pop_from_ACK_ms": 1.086318
+          },
+          "969": {
+            "capture_ready_from_display_ms": -16.78323,
+            "first_input_from_display_ms": -16.752531,
+            "planner_from_display_ms": 2.790968,
+            "SEAL_from_display_ms": 28.070511,
+            "data_complete_pop_from_ACK_ms": -4.049353,
+            "commit_pop_from_ACK_ms": 1.105313
+          }
+        },
+        "ACK952_clock": 55376358,
+        "D2_clock": 55402042.11298373,
+        "edge_after_ACK": 55392040,
+        "captured_edge": 55749408,
+        "lead_ms": -0.465707,
+        "ACK_to_D2_ms": 1.195874,
+        "wire_after_ACK": [
+          {
+            "op": "0xe0",
+            "start_ms": -0.057369,
+            "end_ms": 0.051686,
+            "sent": 1151,
+            "retired": 1150,
+            "flags": 3,
+            "ACK_status": 0,
+            "ACK_op": 2
+          },
+          {
+            "op": "0xe0",
+            "start_ms": 0.196353,
+            "end_ms": 0.305409,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.354004,
+            "end_ms": 0.463087
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.477135,
+            "end_ms": 0.548861
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.554623,
+            "end_ms": 0.663705
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.680467,
+            "end_ms": 0.754766
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 0.763052,
+            "end_ms": 0.837339
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.84541,
+            "end_ms": 0.919709
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.931662,
+            "end_ms": 1.005961
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 1.01327,
+            "end_ms": 1.108241
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 1.121575,
+            "end_ms": 1.195874
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 4,
+          "969": 2
+        },
+        "dense": [
+          3,
+          2,
+          3,
+          3,
+          3,
+          3
+        ],
+        "dense_ms": 46.945999,
+        "reveal954": 57157466,
+        "final970": 73247684,
+        "first969": [
+          192,
+          16,
+          192,
+          32,
+          64
+        ],
+        "map_start_lines": [
+          234,
+          240
+        ],
+        "matched_frames": 66,
+        "firmware": "304846d7a262a28764fea5bf36620b6add1861e3a803ef6064f180720c369e2f",
+        "tail_saving_vs_G_ms": 0.193977,
+        "G_ACK_budget_minus_candidate_tail_ms": -0.371188,
+        "D2_to_G_target_ms": 32.813007,
+        "dense_vs_G_ms": -3.051071,
+        "ACK970_vs_G_ms": -49.734156,
+        "dense_vs_763_ms": -2.996176,
+        "ACK970_vs_763_ms": -399.245584,
+        "missed": [
+          "protected_display",
+          "captures_prior_edge"
+        ],
+        "pass_schedule": false
+      },
+      "cache": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -32.879036,
+            "first_input_from_display_ms": -18.45089,
+            "planner_from_display_ms": 2.552481,
+            "SEAL_from_display_ms": 26.656272,
+            "data_complete_pop_from_ACK_ms": -5.415109,
+            "commit_pop_from_ACK_ms": 0.960303
+          },
+          "954": {
+            "capture_ready_from_display_ms": -17.003929,
+            "first_input_from_display_ms": -7.449117,
+            "planner_from_display_ms": 7.719134,
+            "SEAL_from_display_ms": 35.555447,
+            "data_complete_pop_from_ACK_ms": 5.671825,
+            "commit_pop_from_ACK_ms": 6.117552
+          },
+          "959": {
+            "capture_ready_from_display_ms": -17.181139,
+            "first_input_from_display_ms": -6.933759,
+            "planner_from_display_ms": 8.057713,
+            "SEAL_from_display_ms": 27.698955,
+            "data_complete_pop_from_ACK_ms": 5.955166,
+            "commit_pop_from_ACK_ms": 6.400893
+          },
+          "960": {
+            "capture_ready_from_display_ms": -0.114167,
+            "first_input_from_display_ms": -0.025214,
+            "planner_from_display_ms": 14.362646,
+            "SEAL_from_display_ms": 40.135544,
+            "data_complete_pop_from_ACK_ms": 12.252765,
+            "commit_pop_from_ACK_ms": 12.698492
+          },
+          "968": {
+            "capture_ready_from_display_ms": -0.263162,
+            "first_input_from_display_ms": -0.095499,
+            "planner_from_display_ms": 14.169148,
+            "SEAL_from_display_ms": 40.605995,
+            "data_complete_pop_from_ACK_ms": 12.039909,
+            "commit_pop_from_ACK_ms": 12.485636
+          },
+          "969": {
+            "capture_ready_from_display_ms": -16.781926,
+            "first_input_from_display_ms": -12.776185,
+            "planner_from_display_ms": 5.365576,
+            "SEAL_from_display_ms": 30.259895,
+            "data_complete_pop_from_ACK_ms": 3.236337,
+            "commit_pop_from_ACK_ms": 3.682064
+          }
+        },
+        "ACK952_clock": 54641608,
+        "D2_clock": 54662232.69848027,
+        "edge_after_ACK": 54677304,
+        "captured_edge": 54677304,
+        "lead_ms": 0.701733,
+        "ACK_to_D2_ms": 0.960303,
+        "wire_after_ACK": [
+          {
+            "op": "0xe0",
+            "start_ms": 0.123024,
+            "end_ms": 0.232079,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.280675,
+            "end_ms": 0.389757
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.403805,
+            "end_ms": 0.475531
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.481293,
+            "end_ms": 0.590376
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 0.609661,
+            "end_ms": 0.683948
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.689782,
+            "end_ms": 0.764081
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 0.777914,
+            "end_ms": 0.872885
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 0.886004,
+            "end_ms": 0.960303
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 4,
+          "969": 3
+        },
+        "dense": [
+          4,
+          2,
+          3,
+          3,
+          3,
+          3
+        ],
+        "dense_ms": 49.73487,
+        "reveal954": 56448974,
+        "final970": 72175708,
+        "first969": [
+          192,
+          0,
+          192,
+          0,
+          64
+        ],
+        "map_start_lines": [
+          246,
+          252
+        ],
+        "matched_frames": 66,
+        "firmware": "810875e195b1b74e90cb90719ceae72285c912eab71530b39f916feee639e1cb",
+        "tail_saving_vs_G_ms": 0.429548,
+        "G_ACK_budget_minus_candidate_tail_ms": -0.135617,
+        "D2_to_G_target_ms": 67.259161,
+        "dense_vs_G_ms": -0.2622,
+        "ACK970_vs_G_ms": -99.646268,
+        "dense_vs_763_ms": -0.207305,
+        "ACK970_vs_763_ms": -449.157696,
+        "STOP": {
+          "commits": 64,
+          "retained": "b429bfce87553e4ddd0708a97600b66cd40c75121d6af224e25c96e4041810dd",
+          "client": "c79e2b013701fa9cde8a8164da3f0545f2b7c916b8477aa6d74ec405002ebf2e",
+          "map_offset": 2496,
+          "after_return": true,
+          "last_packet_status": 0,
+          "blanks_after_STOP": 4
+        },
+        "missed": [
+          "first_969_destinations",
+          "protected_display"
+        ],
+        "pass_schedule": false
+      },
+      "checked": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -33.951705,
+            "first_input_from_display_ms": -16.076254,
+            "planner_from_display_ms": 2.643985,
+            "SEAL_from_display_ms": 27.206155,
+            "data_complete_pop_from_ACK_ms": -2.789789,
+            "commit_pop_from_ACK_ms": 1.049212
+          },
+          "954": {
+            "capture_ready_from_display_ms": -0.375374,
+            "first_input_from_display_ms": -0.188982,
+            "planner_from_display_ms": 14.52597,
+            "SEAL_from_display_ms": 45.797157,
+            "data_complete_pop_from_ACK_ms": 12.311991,
+            "commit_pop_from_ACK_ms": 12.921793
+          },
+          "959": {
+            "capture_ready_from_display_ms": -17.035497,
+            "first_input_from_display_ms": -6.259894,
+            "planner_from_display_ms": 8.93232,
+            "SEAL_from_display_ms": 28.520754,
+            "data_complete_pop_from_ACK_ms": 6.663103,
+            "commit_pop_from_ACK_ms": 7.272904
+          },
+          "960": {
+            "capture_ready_from_display_ms": -0.096567,
+            "first_input_from_display_ms": -0.078059,
+            "planner_from_display_ms": 14.724366,
+            "SEAL_from_display_ms": 40.736645,
+            "data_complete_pop_from_ACK_ms": 12.447815,
+            "commit_pop_from_ACK_ms": 13.057616
+          },
+          "968": {
+            "capture_ready_from_display_ms": -0.257575,
+            "first_input_from_display_ms": 0.033951,
+            "planner_from_display_ms": 14.714714,
+            "SEAL_from_display_ms": 41.336069,
+            "data_complete_pop_from_ACK_ms": 12.201021,
+            "commit_pop_from_ACK_ms": 12.810822
+          },
+          "969": {
+            "capture_ready_from_display_ms": -16.93148,
+            "first_input_from_display_ms": -12.092475,
+            "planner_from_display_ms": 6.12609,
+            "SEAL_from_display_ms": 30.991087,
+            "data_complete_pop_from_ACK_ms": 3.830634,
+            "commit_pop_from_ACK_ms": 4.440435
+          }
+        },
+        "ACK952_clock": 54664646,
+        "D2_clock": 54687180.219221465,
+        "edge_after_ACK": 54677304,
+        "captured_edge": 55034672,
+        "lead_ms": -0.459845,
+        "ACK_to_D2_ms": 1.049212,
+        "wire_after_ACK": [
+          {
+            "op": "0xe0",
+            "start_ms": -0.075722,
+            "end_ms": 0.033334,
+            "sent": 1151,
+            "retired": 1150,
+            "flags": 3,
+            "ACK_status": 0,
+            "ACK_op": 2
+          },
+          {
+            "op": "0xe0",
+            "start_ms": 0.049049,
+            "end_ms": 0.158104,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.207343,
+            "end_ms": 0.316425
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.330473,
+            "end_ms": 0.402199
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.407961,
+            "end_ms": 0.517044
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.533805,
+            "end_ms": 0.608105
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 0.61639,
+            "end_ms": 0.690677
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.698749,
+            "end_ms": 0.773048
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.785,
+            "end_ms": 0.859299
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 0.866609,
+            "end_ms": 0.96158
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 0.974913,
+            "end_ms": 1.049212
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 4,
+          "969": 3
+        },
+        "dense": [
+          3,
+          2,
+          3,
+          3,
+          3,
+          3
+        ],
+        "dense_ms": 47.045717,
+        "reveal954": 56442918,
+        "final970": 72533302,
+        "first969": [
+          192,
+          0,
+          0,
+          0,
+          0
+        ],
+        "map_start_lines": [
+          237
+        ],
+        "matched_frames": 66,
+        "firmware": "2a20736b31274b1bdb1e61d4e416d358ca9c94a6b7aefd15ab181803d884e815",
+        "tail_saving_vs_G_ms": 0.340639,
+        "G_ACK_budget_minus_candidate_tail_ms": -0.224526,
+        "D2_to_G_target_ms": 66.097584,
+        "dense_vs_G_ms": -2.951353,
+        "ACK970_vs_G_ms": -82.996388,
+        "dense_vs_763_ms": -2.896458,
+        "ACK970_vs_763_ms": -432.507816,
+        "missed": [
+          "first_969_destinations",
+          "protected_display",
+          "captures_prior_edge"
+        ],
+        "pass_schedule": false
+      },
+      "poll": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -17.087459,
+            "first_input_from_display_ms": -14.611508,
+            "planner_from_display_ms": 2.967375,
+            "SEAL_from_display_ms": 27.514761,
+            "data_complete_pop_from_ACK_ms": -0.652542,
+            "commit_pop_from_ACK_ms": 1.221406
+          },
+          "954": {
+            "capture_ready_from_display_ms": -0.120593,
+            "first_input_from_display_ms": -0.043836,
+            "planner_from_display_ms": 15.425193,
+            "SEAL_from_display_ms": 47.089128,
+            "data_complete_pop_from_ACK_ms": 12.962167,
+            "commit_pop_from_ACK_ms": 13.671682
+          },
+          "959": {
+            "capture_ready_from_display_ms": -0.442049,
+            "first_input_from_display_ms": -0.36514,
+            "planner_from_display_ms": 15.175508,
+            "SEAL_from_display_ms": 35.379726,
+            "data_complete_pop_from_ACK_ms": 12.657244,
+            "commit_pop_from_ACK_ms": 13.366759
+          },
+          "960": {
+            "capture_ready_from_display_ms": -17.020691,
+            "first_input_from_display_ms": -14.490822,
+            "planner_from_display_ms": 3.07661,
+            "SEAL_from_display_ms": 29.421986,
+            "data_complete_pop_from_ACK_ms": -0.314594,
+            "commit_pop_from_ACK_ms": 1.260528
+          },
+          "968": {
+            "capture_ready_from_display_ms": -16.491666,
+            "first_input_from_display_ms": -6.344449,
+            "planner_from_display_ms": 9.61344,
+            "SEAL_from_display_ms": 37.529534,
+            "data_complete_pop_from_ACK_ms": 7.143325,
+            "commit_pop_from_ACK_ms": 7.852841
+          },
+          "969": {
+            "capture_ready_from_display_ms": -32.570989,
+            "first_input_from_display_ms": -31.784336,
+            "planner_from_display_ms": 3.027533,
+            "SEAL_from_display_ms": 28.978168,
+            "data_complete_pop_from_ACK_ms": -15.430949,
+            "commit_pop_from_ACK_ms": 1.266934
+          }
+        },
+        "ACK952_clock": 56089328,
+        "D2_clock": 56115560.47308439,
+        "edge_after_ACK": 56106776,
+        "captured_edge": 56464144,
+        "lead_ms": -0.409013,
+        "ACK_to_D2_ms": 1.221406,
+        "wire_after_ACK": [
+          {
+            "op": "0xe0",
+            "start_ms": -0.084766,
+            "end_ms": 0.02429,
+            "sent": 1151,
+            "retired": 1150,
+            "flags": 3,
+            "ACK_status": 0,
+            "ACK_op": 2
+          },
+          {
+            "op": "0xe0",
+            "start_ms": 0.064885,
+            "end_ms": 0.173941,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.24806,
+            "end_ms": 0.357143
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.403,
+            "end_ms": 0.474726
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.480488,
+            "end_ms": 0.589571
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.639523,
+            "end_ms": 0.713822
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 0.738727,
+            "end_ms": 0.813014
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.837704,
+            "end_ms": 0.912003
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.940575,
+            "end_ms": 1.014874
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 1.030493,
+            "end_ms": 1.125464
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 1.147107,
+            "end_ms": 1.221406
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 2,
+          "969": 2
+        },
+        "dense": [
+          3,
+          2,
+          4,
+          3,
+          3,
+          3
+        ],
+        "dense_ms": 50.003014,
+        "reveal954": 58221368,
+        "final970": 74320022,
+        "first969": [
+          192,
+          16,
+          192,
+          32,
+          64
+        ],
+        "map_start_lines": [
+          235,
+          240
+        ],
+        "matched_frames": 66,
+        "firmware": "3498d48f04aa405a6598a21ec723f6c10d9d1c4960367cbeffc23a6c9a62f1fb",
+        "tail_saving_vs_G_ms": 0.168445,
+        "G_ACK_budget_minus_candidate_tail_ms": -0.39672,
+        "D2_to_G_target_ms": -0.409013,
+        "dense_vs_G_ms": 0.005944,
+        "ACK970_vs_G_ms": 0.194811,
+        "dense_vs_763_ms": 0.060839,
+        "ACK970_vs_763_ms": -349.316617,
+        "missed": [
+          "display_953_954",
+          "dense_and_final",
+          "captures_prior_edge"
+        ],
+        "pass_schedule": false
+      },
+      "fused": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -33.938761,
+            "first_input_from_display_ms": -19.270358,
+            "planner_from_display_ms": 2.532948,
+            "SEAL_from_display_ms": 27.10307,
+            "data_complete_pop_from_ACK_ms": -6.233839,
+            "commit_pop_from_ACK_ms": 0.940318
+          },
+          "954": {
+            "capture_ready_from_display_ms": -0.375374,
+            "first_input_from_display_ms": -0.100612,
+            "planner_from_display_ms": 14.198177,
+            "SEAL_from_display_ms": 45.42318,
+            "data_complete_pop_from_ACK_ms": 12.150415,
+            "commit_pop_from_ACK_ms": 12.596142
+          },
+          "959": {
+            "capture_ready_from_display_ms": -17.127501,
+            "first_input_from_display_ms": -16.897286,
+            "planner_from_display_ms": 2.589746,
+            "SEAL_from_display_ms": 22.763506,
+            "data_complete_pop_from_ACK_ms": -3.991679,
+            "commit_pop_from_ACK_ms": 0.930377
+          },
+          "960": {
+            "capture_ready_from_display_ms": -0.11901,
+            "first_input_from_display_ms": 0.168972,
+            "planner_from_display_ms": 14.557237,
+            "SEAL_from_display_ms": 40.54379,
+            "data_complete_pop_from_ACK_ms": 12.446904,
+            "commit_pop_from_ACK_ms": 12.892631
+          },
+          "968": {
+            "capture_ready_from_display_ms": -0.244258,
+            "first_input_from_display_ms": -0.139039,
+            "planner_from_display_ms": 14.093633,
+            "SEAL_from_display_ms": 40.165809,
+            "data_complete_pop_from_ACK_ms": 11.996321,
+            "commit_pop_from_ACK_ms": 12.442048
+          },
+          "969": {
+            "capture_ready_from_display_ms": -16.781833,
+            "first_input_from_display_ms": -13.0841,
+            "planner_from_display_ms": 4.934676,
+            "SEAL_from_display_ms": 29.933504,
+            "data_complete_pop_from_ACK_ms": 2.803342,
+            "commit_pop_from_ACK_ms": 3.251164
+          }
+        },
+        "ACK952_clock": 55021736,
+        "D2_clock": 55041931.47392995,
+        "edge_after_ACK": 55034672,
+        "captured_edge": 55392040,
+        "lead_ms": -0.338007,
+        "ACK_to_D2_ms": 0.940318,
+        "wire_after_ACK": [
+          {
+            "op": "0xe0",
+            "start_ms": -0.022446,
+            "end_ms": 0.08661,
+            "sent": 1151,
+            "retired": 1150,
+            "flags": 3,
+            "ACK_status": 0,
+            "ACK_op": 2
+          },
+          {
+            "op": "0xe0",
+            "start_ms": 0.102396,
+            "end_ms": 0.211451,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.26069,
+            "end_ms": 0.369772
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.38382,
+            "end_ms": 0.455546
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.461308,
+            "end_ms": 0.570391
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 0.589676,
+            "end_ms": 0.663963
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.669797,
+            "end_ms": 0.744096
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 0.757929,
+            "end_ms": 0.8529
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 0.866019,
+            "end_ms": 0.940318
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 4,
+          "969": 2
+        },
+        "dense": [
+          4,
+          2,
+          3,
+          3,
+          2,
+          3
+        ],
+        "dense_ms": 47.112827,
+        "reveal954": 56800298,
+        "final970": 72533048,
+        "first969": [
+          192,
+          16,
+          192,
+          0,
+          64
+        ],
+        "map_start_lines": [
+          240,
+          247
+        ],
+        "matched_frames": 66,
+        "firmware": "5dfede82a908688e7b2d390f0e9448704fd2badbd06df0cb8c1b69341547d923",
+        "tail_saving_vs_G_ms": 0.449533,
+        "G_ACK_budget_minus_candidate_tail_ms": -0.115632,
+        "D2_to_G_target_ms": 49.580064,
+        "dense_vs_G_ms": -2.884243,
+        "ACK970_vs_G_ms": -83.008214,
+        "dense_vs_763_ms": -2.829348,
+        "ACK970_vs_763_ms": -432.519642,
+        "missed": [
+          "first_969_destinations",
+          "protected_display",
+          "captures_prior_edge"
+        ],
+        "pass_schedule": false
+      },
+      "retire": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -17.081965,
+            "first_input_from_display_ms": -14.228149,
+            "planner_from_display_ms": 2.880841,
+            "SEAL_from_display_ms": 27.431044,
+            "data_complete_pop_from_ACK_ms": -0.268058,
+            "commit_pop_from_ACK_ms": 1.137188
+          },
+          "954": {
+            "capture_ready_from_display_ms": -0.118823,
+            "first_input_from_display_ms": 0.180618,
+            "planner_from_display_ms": 15.501731,
+            "SEAL_from_display_ms": 47.159621,
+            "data_complete_pop_from_ACK_ms": 13.039157,
+            "commit_pop_from_ACK_ms": 13.748673
+          },
+          "959": {
+            "capture_ready_from_display_ms": -0.421562,
+            "first_input_from_display_ms": -0.213341,
+            "planner_from_display_ms": 15.179392,
+            "SEAL_from_display_ms": 35.391366,
+            "data_complete_pop_from_ACK_ms": 12.66158,
+            "commit_pop_from_ACK_ms": 13.371095
+          },
+          "960": {
+            "capture_ready_from_display_ms": -17.038291,
+            "first_input_from_display_ms": -14.52493,
+            "planner_from_display_ms": 2.871911,
+            "SEAL_from_display_ms": 29.20045,
+            "data_complete_pop_from_ACK_ms": -0.349441,
+            "commit_pop_from_ACK_ms": 1.056281
+          },
+          "968": {
+            "capture_ready_from_display_ms": -16.484496,
+            "first_input_from_display_ms": -6.454266,
+            "planner_from_display_ms": 9.355707,
+            "SEAL_from_display_ms": 36.794431,
+            "data_complete_pop_from_ACK_ms": 6.885593,
+            "commit_pop_from_ACK_ms": 7.595108
+          },
+          "969": {
+            "capture_ready_from_display_ms": -32.589521,
+            "first_input_from_display_ms": -32.497144,
+            "planner_from_display_ms": 2.903462,
+            "SEAL_from_display_ms": 28.865677,
+            "data_complete_pop_from_ACK_ms": -16.146638,
+            "commit_pop_from_ACK_ms": 1.142863
+          }
+        },
+        "ACK952_clock": 56089170,
+        "D2_clock": 56113593.686533235,
+        "edge_after_ACK": 56106776,
+        "captured_edge": 56464144,
+        "lead_ms": -0.317437,
+        "ACK_to_D2_ms": 1.137188,
+        "wire_after_ACK": [
+          {
+            "op": "0xe0",
+            "start_ms": 0.128821,
+            "end_ms": 0.237877,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.318877,
+            "end_ms": 0.390603
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.396365,
+            "end_ms": 0.505447
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.555304,
+            "end_ms": 0.629604
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 0.654508,
+            "end_ms": 0.728795
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.753486,
+            "end_ms": 0.827785
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.856356,
+            "end_ms": 0.930655
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 0.946274,
+            "end_ms": 1.041245
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 1.062888,
+            "end_ms": 1.137188
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 2,
+          "969": 2
+        },
+        "dense": [
+          3,
+          2,
+          4,
+          3,
+          3,
+          3
+        ],
+        "dense_ms": 49.971042,
+        "reveal954": 58221096,
+        "final970": 74319768,
+        "first969": [
+          192,
+          16,
+          192,
+          32,
+          64
+        ],
+        "map_start_lines": [
+          238,
+          244
+        ],
+        "matched_frames": 66,
+        "firmware": "2f81418460a684ad90025c939f59a0eecb6013b59563387c77c1d6938947bc0a",
+        "tail_saving_vs_G_ms": 0.252663,
+        "G_ACK_budget_minus_candidate_tail_ms": -0.312502,
+        "D2_to_G_target_ms": -0.317437,
+        "dense_vs_G_ms": -0.026028,
+        "ACK970_vs_G_ms": 0.182984,
+        "dense_vs_763_ms": 0.028867,
+        "ACK970_vs_763_ms": -349.328444,
+        "missed": [
+          "display_953_954",
+          "dense_and_final",
+          "captures_prior_edge"
+        ],
+        "pass_schedule": false
+      },
+      "retirecache": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -33.67951,
+            "first_input_from_display_ms": -14.326519,
+            "planner_from_display_ms": 2.701262,
+            "SEAL_from_display_ms": 27.441008,
+            "data_complete_pop_from_ACK_ms": -0.518428,
+            "commit_pop_from_ACK_ms": 0.968251
+          },
+          "954": {
+            "capture_ready_from_display_ms": -0.116681,
+            "first_input_from_display_ms": 0.015964,
+            "planner_from_display_ms": 14.979408,
+            "SEAL_from_display_ms": 46.926537,
+            "data_complete_pop_from_ACK_ms": 12.724598,
+            "commit_pop_from_ACK_ms": 13.236801
+          },
+          "959": {
+            "capture_ready_from_display_ms": -17.021808,
+            "first_input_from_display_ms": -5.92518,
+            "planner_from_display_ms": 9.706678,
+            "SEAL_from_display_ms": 30.05689,
+            "data_complete_pop_from_ACK_ms": 7.394769,
+            "commit_pop_from_ACK_ms": 7.906972
+          },
+          "960": {
+            "capture_ready_from_display_ms": -16.350866,
+            "first_input_from_display_ms": -16.334462,
+            "planner_from_display_ms": 2.669715,
+            "SEAL_from_display_ms": 29.199239,
+            "data_complete_pop_from_ACK_ms": -2.294668,
+            "commit_pop_from_ACK_ms": 0.864537
+          },
+          "968": {
+            "capture_ready_from_display_ms": -17.068276,
+            "first_input_from_display_ms": -16.791661,
+            "planner_from_display_ms": 2.688125,
+            "SEAL_from_display_ms": 31.38434,
+            "data_complete_pop_from_ACK_ms": -3.060204,
+            "commit_pop_from_ACK_ms": 0.937979
+          },
+          "969": {
+            "capture_ready_from_display_ms": -17.016873,
+            "first_input_from_display_ms": -16.774941,
+            "planner_from_display_ms": 2.603274,
+            "SEAL_from_display_ms": 28.365055,
+            "data_complete_pop_from_ACK_ms": -3.143626,
+            "commit_pop_from_ACK_ms": 0.853127
+          }
+        },
+        "ACK952_clock": 55373536,
+        "D2_clock": 55394331.392932035,
+        "edge_after_ACK": 55392040,
+        "captured_edge": 55749408,
+        "lead_ms": -0.106689,
+        "ACK_to_D2_ms": 0.968251,
+        "wire_after_ACK": [
+          {
+            "op": "0xe0",
+            "start_ms": 0.147054,
+            "end_ms": 0.25611,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.33711,
+            "end_ms": 0.408836
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.414598,
+            "end_ms": 0.523681
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 0.584371,
+            "end_ms": 0.658658
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.672801,
+            "end_ms": 0.7471
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 0.777552,
+            "end_ms": 0.872523
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 0.893952,
+            "end_ms": 0.968251
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 3,
+          "969": 2
+        },
+        "dense": [
+          3,
+          2,
+          4,
+          3,
+          3,
+          4
+        ],
+        "dense_ms": 52.550606,
+        "reveal954": 57516412,
+        "final970": 73605270,
+        "first969": [
+          192,
+          16,
+          192,
+          32,
+          64
+        ],
+        "map_start_lines": [
+          237,
+          243
+        ],
+        "matched_frames": 66,
+        "firmware": "badea16e49da31302b9acaf8834ecc3fdaa8159be5338c08bb23751e8c340e45",
+        "tail_saving_vs_G_ms": 0.4216,
+        "G_ACK_budget_minus_candidate_tail_ms": -0.143565,
+        "D2_to_G_target_ms": 33.172025,
+        "dense_vs_G_ms": 2.553536,
+        "ACK970_vs_G_ms": -33.084649,
+        "dense_vs_763_ms": 2.608431,
+        "ACK970_vs_763_ms": -382.596076,
+        "missed": [
+          "display_953_954",
+          "protected_display",
+          "dense_and_final",
+          "captures_prior_edge"
+        ],
+        "pass_schedule": false
+      },
+      "retirefull": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -17.250329,
+            "first_input_from_display_ms": -12.921882,
+            "planner_from_display_ms": 2.516715,
+            "SEAL_from_display_ms": 27.309427,
+            "data_complete_pop_from_ACK_ms": 0.114637,
+            "commit_pop_from_ACK_ms": 0.92199
+          },
+          "954": {
+            "capture_ready_from_display_ms": -0.385989,
+            "first_input_from_display_ms": -0.17425,
+            "planner_from_display_ms": 14.001908,
+            "SEAL_from_display_ms": 45.09176,
+            "data_complete_pop_from_ACK_ms": 11.952284,
+            "commit_pop_from_ACK_ms": 12.398011
+          },
+          "959": {
+            "capture_ready_from_display_ms": -17.181325,
+            "first_input_from_display_ms": -7.3542,
+            "planner_from_display_ms": 7.856263,
+            "SEAL_from_display_ms": 27.434024,
+            "data_complete_pop_from_ACK_ms": 5.753264,
+            "commit_pop_from_ACK_ms": 6.19899
+          },
+          "960": {
+            "capture_ready_from_display_ms": -0.105972,
+            "first_input_from_display_ms": 0.121091,
+            "planner_from_display_ms": 14.603101,
+            "SEAL_from_display_ms": 40.885919,
+            "data_complete_pop_from_ACK_ms": 12.276393,
+            "commit_pop_from_ACK_ms": 12.938495
+          },
+          "968": {
+            "capture_ready_from_display_ms": -16.760788,
+            "first_input_from_display_ms": -8.453246,
+            "planner_from_display_ms": 9.248075,
+            "SEAL_from_display_ms": 35.663189,
+            "data_complete_pop_from_ACK_ms": 7.118836,
+            "commit_pop_from_ACK_ms": 7.564563
+          },
+          "969": {
+            "capture_ready_from_display_ms": -32.566147,
+            "first_input_from_display_ms": -30.137992,
+            "planner_from_display_ms": 2.477706,
+            "SEAL_from_display_ms": 27.66031,
+            "data_complete_pop_from_ACK_ms": -17.128646,
+            "commit_pop_from_ACK_ms": 0.794194
+          }
+        },
+        "ACK952_clock": 54305946,
+        "D2_clock": 54325747.83438153,
+        "edge_after_ACK": 54319936,
+        "captured_edge": 54677304,
+        "lead_ms": -0.270604,
+        "ACK_to_D2_ms": 0.92199,
+        "wire_after_ACK": [
+          {
+            "op": "0xd2",
+            "start_ms": 0.040337,
+            "end_ms": 0.114637
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.12047,
+            "end_ms": 0.194769
+          },
+          {
+            "op": "0xe0",
+            "start_ms": 0.206698,
+            "end_ms": 0.315754,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.365587,
+            "end_ms": 0.437313
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.443075,
+            "end_ms": 0.552158
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 0.571348,
+            "end_ms": 0.645635
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.651468,
+            "end_ms": 0.725768
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 0.739601,
+            "end_ms": 0.834572
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 0.847691,
+            "end_ms": 0.92199
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 4,
+          "969": 2
+        },
+        "dense": [
+          3,
+          2,
+          3,
+          3,
+          3,
+          3
+        ],
+        "dense_ms": 46.922005,
+        "reveal954": 56085504,
+        "final970": 71818340,
+        "first969": [
+          192,
+          16,
+          192,
+          32,
+          64
+        ],
+        "map_start_lines": [
+          237,
+          243
+        ],
+        "matched_frames": 66,
+        "firmware": "10e0733f0300d8cca3be1e70cbee52b945d49b8c2731423b15a236b8537981a2",
+        "tail_saving_vs_G_ms": 0.467861,
+        "G_ACK_budget_minus_candidate_tail_ms": -0.097304,
+        "D2_to_G_target_ms": 82.926182,
+        "dense_vs_G_ms": -3.075065,
+        "ACK970_vs_G_ms": -116.285625,
+        "dense_vs_763_ms": -3.02017,
+        "ACK970_vs_763_ms": -465.797053,
+        "STOP": {
+          "commits": 64,
+          "retained": "b429bfce87553e4ddd0708a97600b66cd40c75121d6af224e25c96e4041810dd",
+          "client": "c79e2b013701fa9cde8a8164da3f0545f2b7c916b8477aa6d74ec405002ebf2e",
+          "map_offset": 2496,
+          "after_return": true,
+          "last_packet_status": 0,
+          "blanks_after_STOP": 3
+        },
+        "missed": [
+          "protected_display",
+          "captures_prior_edge"
+        ],
+        "pass_schedule": false
+      },
+      "sealed": {
+        "dependencies": {
+          "953": {
+            "capture_ready_from_display_ms": -33.957106,
+            "first_input_from_display_ms": -15.677325,
+            "planner_from_display_ms": 2.460534,
+            "SEAL_from_display_ms": 27.250574,
+            "data_complete_pop_from_ACK_ms": -2.607615,
+            "commit_pop_from_ACK_ms": 0.863999
+          },
+          "954": {
+            "capture_ready_from_display_ms": -0.365316,
+            "first_input_from_display_ms": -0.145743,
+            "planner_from_display_ms": 14.354334,
+            "SEAL_from_display_ms": 45.594338,
+            "data_complete_pop_from_ACK_ms": 12.139831,
+            "commit_pop_from_ACK_ms": 12.75049
+          },
+          "959": {
+            "capture_ready_from_display_ms": -17.171548,
+            "first_input_from_display_ms": -8.599149,
+            "planner_from_display_ms": 8.780423,
+            "SEAL_from_display_ms": 28.3685,
+            "data_complete_pop_from_ACK_ms": 6.510682,
+            "commit_pop_from_ACK_ms": 7.121341
+          },
+          "960": {
+            "capture_ready_from_display_ms": -0.109325,
+            "first_input_from_display_ms": 0.013771,
+            "planner_from_display_ms": 14.819699,
+            "SEAL_from_display_ms": 41.11118,
+            "data_complete_pop_from_ACK_ms": 12.32625,
+            "commit_pop_from_ACK_ms": 13.153283
+          },
+          "968": {
+            "capture_ready_from_display_ms": -0.25804,
+            "first_input_from_display_ms": -0.222918,
+            "planner_from_display_ms": 14.243422,
+            "SEAL_from_display_ms": 40.431299,
+            "data_complete_pop_from_ACK_ms": 11.945128,
+            "commit_pop_from_ACK_ms": 12.555786
+          },
+          "969": {
+            "capture_ready_from_display_ms": -16.722701,
+            "first_input_from_display_ms": -12.85792,
+            "planner_from_display_ms": 5.697219,
+            "SEAL_from_display_ms": 30.66097,
+            "data_complete_pop_from_ACK_ms": 3.400786,
+            "commit_pop_from_ACK_ms": 4.011445
+          }
+        },
+        "ACK952_clock": 54307394,
+        "D2_clock": 54325950.33759969,
+        "edge_after_ACK": 54319936,
+        "captured_edge": 54677304,
+        "lead_ms": -0.280033,
+        "ACK_to_D2_ms": 0.863999,
+        "wire_after_ACK": [
+          {
+            "op": "0xe0",
+            "start_ms": 0.024028,
+            "end_ms": 0.133084,
+            "sent": 1151,
+            "retired": 1151,
+            "flags": 2,
+            "ACK_status": 1,
+            "ACK_op": 3
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.18168,
+            "end_ms": 0.290762
+          },
+          {
+            "op": "0xea",
+            "start_ms": 0.30481,
+            "end_ms": 0.376536
+          },
+          {
+            "op": "0xe8",
+            "start_ms": 0.382298,
+            "end_ms": 0.491381
+          },
+          {
+            "op": "0xd3",
+            "start_ms": 0.510904,
+            "end_ms": 0.585191
+          },
+          {
+            "op": "0xd0",
+            "start_ms": 0.593263,
+            "end_ms": 0.667562
+          },
+          {
+            "op": "0xd1",
+            "start_ms": 0.681395,
+            "end_ms": 0.776366
+          },
+          {
+            "op": "0xd2",
+            "start_ms": 0.789699,
+            "end_ms": 0.863999
+          }
+        ],
+        "intervals": {
+          "909": 2,
+          "960": 4,
+          "969": 3
+        },
+        "dense": [
+          3,
+          2,
+          3,
+          3,
+          3,
+          3
+        ],
+        "dense_ms": 47.04744,
+        "reveal954": 56085316,
+        "final970": 71818438,
+        "first969": [
+          0,
+          16,
+          192,
+          0,
+          64
+        ],
+        "map_start_lines": [
+          250
+        ],
+        "matched_frames": 66,
+        "firmware": "90b2954cb0f9c6ab0ec0fbbf9ee477ed68554c000caedee48084f4c5ce82ee1f",
+        "tail_saving_vs_G_ms": 0.525852,
+        "G_ACK_budget_minus_candidate_tail_ms": -0.039313,
+        "D2_to_G_target_ms": 82.916753,
+        "dense_vs_G_ms": -2.94963,
+        "ACK970_vs_G_ms": -116.281062,
+        "dense_vs_763_ms": -2.894735,
+        "ACK970_vs_763_ms": -465.79249,
+        "missed": [
+          "first_969_destinations",
+          "protected_display",
+          "captures_prior_edge"
+        ],
+        "pass_schedule": false
+      }
+    }
+  },
+  "CRC8_transitions": 256,
+  "passing_both": []
+}
