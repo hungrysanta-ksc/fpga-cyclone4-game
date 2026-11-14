@@ -37,7 +37,7 @@ def seal_receipts(src):
     return dict(wrap=True,corrupt_bits=152,bytes_covered=18)
 
 
-def verify(src,policy):
+def verify(src,policy,trial='690'):
     handoff_cases=('normal','pending','wrap','wrong_BG','bad_receipt_crc',
                    'bad_descriptor_crc','wrong_generation','STOP')
     if policy.startswith('look'):
@@ -56,7 +56,7 @@ def verify(src,policy):
                 handoff=[after_bg(src,c,policy.startswith('look')) for c in handoff_cases],
                 deadline=[deadline(src,c) for c in deadline_cases],
                 receipt=[receipt(src,c,True) for c in receipt_cases],
-                menu=menu(src,'690'))
+                menu=menu(src,trial))
 
 
 if __name__=='__main__':

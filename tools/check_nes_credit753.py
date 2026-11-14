@@ -104,8 +104,9 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for k in ('arm','out'):p.add_argument('--'+k,type=Path,required=True)
     p.add_argument('--policy',required=True)
+    p.add_argument('--trial',default='690')
     a=p.parse_args()
-    v=verify(a.arm,'mapobj')
+    v=verify(a.arm,'mapobj',a.trial)
     cases=['normal','wrap','empty','output_progress','bad_token','STOP_before','STOP_after_READ','bad_CRC','bad_retire','failed_IO']
     if a.policy=='large':cases+=['small']
     if a.policy=='geometry':cases+=['wrong_kind']
