@@ -28,6 +28,24 @@ module gbc_rgb_capture773_tb;
   begin n=mem[18'hb800+posn/4]>>(4*(posn%4)); unpack_low={4'b0,n[3],3'b0,n[2:1],4'b0,n[0]}; end
  endfunction
  task automatic tick(input integer n);repeat(n)@(negedge clk);endtask
+ // Optional bridge to the SNES pixel test, using the actual RTL output.
+ string output_prefix;
+ task automatic export_frame;
+  integer pal_fd, plane_fd, low_fd;
+  if ($value$plusargs("EXPORT=%s",output_prefix)) begin
+   pal_fd=$fopen({output_prefix,".pal"},"w");
+   plane_fd=$fopen({output_prefix,".planes"},"w");
+   low_fd=$fopen({output_prefix,".low"},"w");
+   if (!pal_fd || !plane_fd || !low_fd) $fatal(1,"cannot open output");
+   for(integer s=0;s<64;s++) $fdisplay(pal_fd,"-1 %0d %0d",s,initial_colors[s]);
+   for(integer y=0;y<143;y++)
+    for(integer e=0;e<event_counts[y];e++)
+     $fdisplay(pal_fd,"%0d %0d %0d",y,event_slots[y*7+e],event_colors[y*7+e]);
+   for(integer i=0;i<8640;i++) $fdisplay(plane_fd,"%04h",output_words[i]);
+   for(integer i=0;i<5760;i++) $fdisplay(low_fd,"%04h",mem[18'hb800+i]);
+   $fclose(pal_fd); $fclose(plane_fd); $fclose(low_fd);
+  end
+ endtask
  task automatic verify_frame;
   for(integer s=0;s<64;s=s+1)live_colors[s]=initial_colors[s];
   for(integer y=0;y<144;y=y+1)begin
@@ -78,6 +96,7 @@ module gbc_rgb_capture773_tb;
   if(done)begin
    if(word_count!=8640||pal_count!=64||!(&seen))$fatal(1,"INCOMPLETE_OUTPUT");
    verify_frame();
+   export_frame();
    if(cycle-begin_cycle>max_cycles)max_cycles=cycle-begin_cycle;
 
    $display("FRAME_PASS frame=%0d cycles=%0d",frames,cycle-begin_cycle);

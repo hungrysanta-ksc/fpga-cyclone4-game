@@ -55,7 +55,32 @@ def planar(image, planes):
     return data
 
 
-def build(pixels):
+def hardware_output(prefix):
+    def words(ext):
+        return np.loadtxt(str(prefix) + ext, dtype=np.uint16, converters=lambda s: int(s, 16))
+    # FPGA words are ordered by plane pair, fine Y, tile row, tile column.
+    planes = words('.planes').reshape(3, 8, 18, 20).transpose(0, 2, 1, 3)
+    indices = np.zeros((144, 160), dtype=np.uint8)
+    for pair in range(3):
+        for bit in range(8):
+            w = planes[pair].reshape(144, 20)
+            indices[:, bit::8] |= ((w >> (7-bit) & 1) << (2*pair)).astype(np.uint8)
+            indices[:, bit::8] |= ((w >> (15-bit) & 1) << (2*pair+1)).astype(np.uint8)
+    packed = words('.low')
+    residual = np.stack([packed >> (4*i) & 15 for i in range(4)], axis=1).reshape(144, 160)
+    rows = np.loadtxt(str(prefix) + '.pal', dtype=int, ndmin=2)
+    if len(rows) < 64 or not np.all(rows[:64, 0] == -1) or not np.array_equal(rows[:64, 1], np.arange(64)):
+        raise ValueError("incomplete initial palette")
+    initial = rows[:64, 2].tolist()
+    events = [[] for _ in range(144)]
+    for y, slot, color in rows[64:]:
+        if not (0 <= y < 143 and 0 < slot < 64 and 0 <= color < 32768 and len(events[y]) < 7):
+            raise ValueError("invalid palette event")
+        events[y].append((int(slot), int(color)))
+    return initial, indices, events, residual
+
+
+def build(pixels, hardware=None):
     if pixels.shape != (144, 160) or pixels.min() < 0 or pixels.max() > 32767:
         raise ValueError("expected 160x144 RGB555")
     # One low red bit, two green, one blue. Carries cannot cross components.
@@ -63,7 +88,16 @@ def build(pixels):
     palette = [(n & 1) | ((n & 6) << 4) | ((n & 8) << 7) for n in range(16)]
     base = pixels & (0x7fff ^ (1 | 3 << 5 | 1 << 10))
     assert np.array_equal(base + np.array(palette)[residual], pixels)
-    initial, indices, events = schedule(base)
+    if hardware is None:
+        initial, indices, events = schedule(base)
+    else:
+        initial, indices, events, residual = hardware_output(hardware)
+        live = np.array(initial)
+        for y in range(144):
+            if not np.array_equal(live[indices[y]] + np.array(palette)[residual[y]], pixels[y]):
+                raise ValueError(f"RTL RGB555 mismatch on line {y}")
+            for slot, color in events[y]:
+                live[slot] = color
     rom = bytearray(131072)
     a = Asm(0x8000)
     a.emit(0x78, 0x18, 0xfb, 0xc2, 0x10)
@@ -135,5 +169,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('capture', type=Path)
     parser.add_argument('output', type=Path)
+    parser.add_argument('--hardware', type=Path, help='Questa +EXPORT file prefix')
     args = parser.parse_args()
-    args.output.write_bytes(build(np.load(args.capture, allow_pickle=False)))
+    args.output.write_bytes(build(np.load(args.capture, allow_pickle=False), args.hardware))
