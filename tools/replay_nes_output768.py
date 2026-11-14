@@ -175,6 +175,8 @@ end,emu.callbackType.write,0x7004,0x7007)
     pin_path = Path(remaining[remaining.index("--arm")+1]) / "obj-nes-100/sd2snes.elf"
     manifest = read(ROOT / f"analysis/trial{763 if variant == '763' else 767}-package.json")
     expected = manifest["variants"]["763"]["ELF"] if variant == "763" else manifest["ELF"]
+    if variant == "780":
+        expected = "74069c77d65b569e831d344b77e53f0a7c02287792bc4fa31123a7686d662d8f"
     if variant == "779C":
         expected = "5f99912fbab534eca552affad778b300cac0274bbeb27c1aff5a0697bb6bead9"
     if variant == "779B":
@@ -216,7 +218,7 @@ end,emu.callbackType.write,0x7004,0x7007)
             stack.enter_context(patch.object(Runtime, "__init__", immediate969))
         if omit_wait:
             stack.enter_context(patch.object(Runtime, "__init__", hook))
-        runpy.run_module("test_nes_status689" if variant in ("763","770","779C") else "test_nes_static751",run_name="__main__")
+        runpy.run_module("test_nes_status689" if variant in ("763","770","779C","780") else "test_nes_static751",run_name="__main__")
 
 
 if __name__ == "__main__":
@@ -229,7 +231,7 @@ if __name__ == "__main__":
     for arg in ("out", "board", "bin", "prefix"):
         p.add_argument(arg, type=Path)
     p = sub.add_parser("run", add_help=False)
-    p.add_argument("variant", choices=("763","767","769","770","771","776","776B","777","777B","778","778B","779","779B","779C"))
+    p.add_argument("variant", choices=("763","767","769","770","771","776","776B","777","777B","778","778B","779","779B","779C","780"))
     p.add_argument("extras", type=Path)
     p.add_argument("--omit-wait969", action="store_true")
     p.add_argument("--map969", action="store_true")

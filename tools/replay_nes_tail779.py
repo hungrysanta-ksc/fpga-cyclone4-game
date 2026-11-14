@@ -2,6 +2,7 @@
 """Measure the original consumer and isolate tail wire packing with four FIFO credits."""
 import argparse
 import json
+import re
 from pathlib import Path
 from unittest.mock import patch
 
@@ -11,7 +12,7 @@ from nes_raw506 import once
 from trace_nes_owner739 import observe
 
 
-def run(a):
+def run(a, early_schedule=None):
     a.frames = 66
     labels = read(a.client/"labels.json")
     events = [e for e in read(a.trace/"events.json") if e.get("generation")==969]
@@ -41,15 +42,24 @@ end,emu.callbackType.exec,{labels[name]})""")
             # time and backpressure; runtime feasibility is checked by full links.
             prefix=next(i for i,t in enumerate(tx) if t["start"]>=one(events,"output_enter531")["clock"])
             order=list(range(prefix))+[i for i in maps if i>=prefix][:1]+tiles+ordinary+[i for i in maps if i>=prefix][1:]+[seal]
-            assert sorted(order)==list(range(len(ids)))
             cursor=one(events,"output_enter531")["clock"]
+            barriers={}
+            if early_schedule is not None:
+                prefix,order,cursor,barriers=early_schedule(packets,tx,events)
+            assert sorted(order)==list(range(len(ids)))
             schedule=[]
             for new,i in enumerate(order[prefix:],prefix):
                 _,h,b=rows[ids[i]]
-                cursor+=tx[i]["clock"]-tx[i]["start"]
+                cursor=max(cursor,barriers.get(i,0))+tx[i]["clock"]-tx[i]["start"]
                 schedule.append([str(round(cursor)),h[:4]+new.to_bytes(2,'little').hex()+h[8:],b])
             for dest,row in zip(ids[prefix:],schedule,strict=True):
                 rows[dest]=row
+            if prefix == 0:
+                start=rows[ids[0]][0]
+                # The Lua source is keyed to the first original PUSH in the
+                # packet capture; it must agree with the rewritten BEGIN.
+                script,count=re.subn(r"sourceRelease\[969\]=\d+", "sourceRelease[969]="+start,script)
+                assert count==1
             path.write_text("".join("\t".join(r)+"\n" for r in rows),newline="\n")
             instructions=",".join(f"[{ids[new]+1}]={{{round(tx[i]['clock']-tx[i]['start'])},{packets[i][0]}}}"
                                   for new,i in enumerate(order[prefix:],prefix))
