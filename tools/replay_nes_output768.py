@@ -63,7 +63,7 @@ def inputs(out, game):
     (out / "obj-cache.json").write_text(json.dumps(cache), encoding="utf8")
 
 
-def replay(variant, extras, remaining, omit_wait):
+def replay(variant, extras, remaining, omit_wait, receipt969=False):
     import test_nes_obj609 as obj
     import test_nes_tile532 as tile
 
@@ -113,6 +113,30 @@ end,emu.callbackType.write,0x7004,0x7007)
                 u.reg_write(UC_ARM_REG_PC, resume | 1)
         cpu.u.hook_add(UC_HOOK_CODE, omit, begin=pc, end=pc)
 
+    def immediate969(cpu, args, link):
+        # Isolate the branch on the original image after 968 ACK. The normal
+        # receipt, bounded loop increment and next poll's STOP guard still run.
+        from unicorn.arm_const import UC_ARM_REG_R4
+        from check_nes_game478 import UC_ARM_REG_R0
+        base_init(cpu,args,link)
+        pc=0x0801f94e
+        assert bytes(cpu.u.mem_read(pc,12))==bytes.fromhex("2046fff710fb002881d00135")
+        def checked(u, address, size, unused):
+            if cpu.generation!=969 or cpu.irq:
+                return
+            plan=u.reg_read(UC_ARM_REG_R4)
+            layout=cpu.layout['nes_plan200']
+            window=int.from_bytes(u.mem_read(plan+layout['window'],4),'little')
+            last=bytes(u.mem_read(window+cpu.layout['nes_sink_window184']['last'],2))
+            descriptor=bytes(u.mem_read(plan+layout['bulk'],12))
+            if last!=bytes([9,4]) or int.from_bytes(descriptor[8:12],'little')!=160:
+                return
+            assert not u.mem_read(plan+layout['bulk_pending'],1)[0] and u.reg_read(UC_ARM_REG_R0)==1
+            assert descriptor[0:8]==bytes.fromhex("010140008000c903")
+            cpu.events.append(dict(event="checked_receipt776",generation=969,clock=cpu.clock))
+            u.reg_write(UC_ARM_REG_PC,0x0801f959)
+        cpu.u.hook_add(UC_HOOK_CODE,checked,begin=pc,end=pc)
+
     def diagnostic(cpu, args, link):
         from check_nes_game478 import UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2, UC_ARM_REG_LR
         from test_nes_raw506_joint import MASTER
@@ -151,6 +175,10 @@ end,emu.callbackType.write,0x7004,0x7007)
     pin_path = Path(remaining[remaining.index("--arm")+1]) / "obj-nes-100/sd2snes.elf"
     manifest = read(ROOT / f"analysis/trial{763 if variant == '763' else 767}-package.json")
     expected = manifest["variants"]["763"]["ELF"] if variant == "763" else manifest["ELF"]
+    if variant == "776":
+        expected = "4cbfd9734d380a6831f839593d38df69a84ad13a7a708af6f14f57eb32b93d71"
+    if variant == "776B":
+        expected = "a840292b38bc742b148da653f1c91127a6b85cdfe966db81b5faca4a952cbb8e"
     if variant == "769":
         expected = "bf7eb6f4904f5d22b50f919e8ec175e256e938e653406ddf24ba2ad13e3f8aa9"
     if variant in ("770","771"):
@@ -163,6 +191,9 @@ end,emu.callbackType.write,0x7004,0x7007)
         stack.enter_context(patch.object(tile, "run_schedule", schedule))
         if variant in ("770","771"):
             stack.enter_context(patch.object(Runtime,"__init__",diagnostic))
+        if receipt969:
+            assert variant == "767" and not omit_wait
+            stack.enter_context(patch.object(Runtime, "__init__", immediate969))
         if omit_wait:
             stack.enter_context(patch.object(Runtime, "__init__", hook))
         runpy.run_module("test_nes_status689" if variant in ("763","770") else "test_nes_static751",run_name="__main__")
@@ -178,9 +209,10 @@ if __name__ == "__main__":
     for arg in ("out", "board", "bin", "prefix"):
         p.add_argument(arg, type=Path)
     p = sub.add_parser("run", add_help=False)
-    p.add_argument("variant", choices=("763","767","769","770","771"))
+    p.add_argument("variant", choices=("763","767","769","770","771","776","776B"))
     p.add_argument("extras", type=Path)
     p.add_argument("--omit-wait969", action="store_true")
+    p.add_argument("--receipt969", action="store_true")
     a, rest = parser.parse_known_args()
     if a.action == "inputs":
         assert not rest
@@ -195,4 +227,4 @@ if __name__ == "__main__":
         assert [r["wire"] for r in tail["957"]] == [r["wire"] for r in prefix["957"]]
         (a.out / "joint-sender.json").write_text(json.dumps({**tail,**prefix}),encoding="utf8")
     else:
-        replay(a.variant,a.extras,rest,a.omit_wait969)
+        replay(a.variant,a.extras,rest,a.omit_wait969,a.receipt969)
