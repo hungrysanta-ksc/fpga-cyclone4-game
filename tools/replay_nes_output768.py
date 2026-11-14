@@ -63,7 +63,7 @@ def inputs(out, game):
     (out / "obj-cache.json").write_text(json.dumps(cache), encoding="utf8")
 
 
-def replay(variant, extras, remaining, omit_wait):
+def replay(variant, extras, remaining, omit_wait, receipt969=False, watch969=False, map969=False):
     import test_nes_obj609 as obj
     import test_nes_tile532 as tile
 
@@ -96,6 +96,19 @@ checkedMem527(function(a,v)
 end,emu.callbackType.write,0x7004,0x7007)
 """ + marker)
             return source
+        if variant in ("781B","781C"):
+            # Warm banks run the original rank-ordered object builder after
+            # slot zero, before normal BG. The oracle still independently
+            # compares every encoded byte, tile payload and END against 763.
+            original_link = link
+            class ObjectFirst(original_link):
+                def __init__(self, options):
+                    super().__init__(options)
+                    for g in range(907, LAST+1):
+                        plans=self.plansets[g]
+                        assert plans[0][6]==2 and all(q[6]<2 for q in plans[1:])
+                        self.plansets[g]=[plans[0]]+[q for q in plans if q[6]==1]+[q for q in plans if q[6]==0]
+            link=ObjectFirst
         return original_schedule(args, extended_oracle, link, frames=LAST-904)
     # Counterfactual only on 969. Execute the existing no-wait branch without
     # modifying the linked code, E0 validation, packet admission or final ACK.
@@ -112,6 +125,30 @@ end,emu.callbackType.write,0x7004,0x7007)
                 cpu.events.append(dict(event="omit_optional_wait768", generation=969, clock=cpu.clock))
                 u.reg_write(UC_ARM_REG_PC, resume | 1)
         cpu.u.hook_add(UC_HOOK_CODE, omit, begin=pc, end=pc)
+
+    def immediate969(cpu, args, link):
+        # Isolate the branch on the original image after 968 ACK. The normal
+        # receipt, bounded loop increment and next poll's STOP guard still run.
+        from unicorn.arm_const import UC_ARM_REG_R4
+        from check_nes_game478 import UC_ARM_REG_R0
+        base_init(cpu,args,link)
+        pc=0x0801f94e
+        assert bytes(cpu.u.mem_read(pc,12))==bytes.fromhex("2046fff710fb002881d00135")
+        def checked(u, address, size, unused):
+            if cpu.generation!=969 or cpu.irq:
+                return
+            plan=u.reg_read(UC_ARM_REG_R4)
+            layout=cpu.layout['nes_plan200']
+            window=int.from_bytes(u.mem_read(plan+layout['window'],4),'little')
+            last=bytes(u.mem_read(window+cpu.layout['nes_sink_window184']['last'],2))
+            descriptor=bytes(u.mem_read(plan+layout['bulk'],12))
+            if last!=bytes([9,4]) or int.from_bytes(descriptor[8:12],'little')!=160:
+                return
+            assert not u.mem_read(plan+layout['bulk_pending'],1)[0] and u.reg_read(UC_ARM_REG_R0)==1
+            assert descriptor[0:8]==bytes.fromhex("010140008000c903")
+            cpu.events.append(dict(event="checked_receipt776",generation=969,clock=cpu.clock))
+            u.reg_write(UC_ARM_REG_PC,0x0801f959)
+        cpu.u.hook_add(UC_HOOK_CODE,checked,begin=pc,end=pc)
 
     def diagnostic(cpu, args, link):
         from check_nes_game478 import UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2, UC_ARM_REG_LR
@@ -151,6 +188,32 @@ end,emu.callbackType.write,0x7004,0x7007)
     pin_path = Path(remaining[remaining.index("--arm")+1]) / "obj-nes-100/sd2snes.elf"
     manifest = read(ROOT / f"analysis/trial{763 if variant == '763' else 767}-package.json")
     expected = manifest["variants"]["763"]["ELF"] if variant == "763" else manifest["ELF"]
+    if variant == "781C":
+        expected = "a60455581ca6488fe8ba268d8c0693fd5ac83842f1e47861b43583502fb5fcbc"
+    if variant == "781B":
+        expected = "1ae609dc37e1384e8a5321cea961ce624bde53bb04453ca9d4b61b82392be7e8"
+    if variant == "781":
+        expected = "4343596585c1407dbb68f9cfef814805775d98091548f36d07922461652540b2"
+    if variant == "780":
+        expected = "74069c77d65b569e831d344b77e53f0a7c02287792bc4fa31123a7686d662d8f"
+    if variant == "779C":
+        expected = "5f99912fbab534eca552affad778b300cac0274bbeb27c1aff5a0697bb6bead9"
+    if variant == "779B":
+        expected = "70ce148d04c005532e93683ec37d5f231718b7b07410d573a10451956c8ddc5d"
+    if variant == "779":
+        expected = "27f1877c3f0adebcf5594a9be51328cbebb635a9dfa55a4d98c6c29ba4dec87b"
+    if variant == "778B":
+        expected = "b875e3a9aefb359f0e5192f066c8d3cf932fc5b2905153bdf08e90ad99ece4ff"
+    if variant == "778":
+        expected = "f2167762b618b3fda45eb629a693fb8915adf818dd8212b66c97ec73af716507"
+    if variant == "777B":
+        expected = "31d63bf16abba708dc8527ab1c156ba5468cf6a65c442b8d6028d0bf78110418"
+    if variant == "777":
+        expected = "7942d92ea7dcb9383c2fd7d094962a812b23f43edb29690cabc7e0a83bec818a"
+    if variant == "776":
+        expected = "4cbfd9734d380a6831f839593d38df69a84ad13a7a708af6f14f57eb32b93d71"
+    if variant == "776B":
+        expected = "a840292b38bc742b148da653f1c91127a6b85cdfe966db81b5faca4a952cbb8e"
     if variant == "769":
         expected = "bf7eb6f4904f5d22b50f919e8ec175e256e938e653406ddf24ba2ad13e3f8aa9"
     if variant in ("770","771"):
@@ -163,9 +226,24 @@ end,emu.callbackType.write,0x7004,0x7007)
         stack.enter_context(patch.object(tile, "run_schedule", schedule))
         if variant in ("770","771"):
             stack.enter_context(patch.object(Runtime,"__init__",diagnostic))
+        if variant in ("781B","781C"):
+            # Tile END precedes CGRAM and raw writes. Sample the original
+            # complete set of observer fields at the checked planner exit.
+            from functools import partial
+            import test_nes_tail646 as observer
+            stack.enter_context(patch.object(observer,"watch",partial(observer.watch,complete="nes_resident211_prepare")))
+        if map969:
+            from test_nes_rows757 import observe
+            stack.enter_context(patch.object(Runtime, "__init__", observe(Runtime.__init__, 969, 1024, 1407)))
+        if watch969:
+            from trace_nes_prefix777 import observe
+            stack.enter_context(patch.object(Runtime, "__init__", observe(Runtime.__init__)))
+        if receipt969:
+            assert variant == "767" and not omit_wait
+            stack.enter_context(patch.object(Runtime, "__init__", immediate969))
         if omit_wait:
             stack.enter_context(patch.object(Runtime, "__init__", hook))
-        runpy.run_module("test_nes_status689" if variant in ("763","770") else "test_nes_static751",run_name="__main__")
+        runpy.run_module("test_nes_status689" if variant in ("763","770","779C","780","781","781B","781C") else "test_nes_static751",run_name="__main__")
 
 
 if __name__ == "__main__":
@@ -178,9 +256,12 @@ if __name__ == "__main__":
     for arg in ("out", "board", "bin", "prefix"):
         p.add_argument(arg, type=Path)
     p = sub.add_parser("run", add_help=False)
-    p.add_argument("variant", choices=("763","767","769","770","771"))
+    p.add_argument("variant", choices=("763","767","769","770","771","776","776B","777","777B","778","778B","779","779B","779C","780","781","781B","781C"))
     p.add_argument("extras", type=Path)
     p.add_argument("--omit-wait969", action="store_true")
+    p.add_argument("--map969", action="store_true")
+    p.add_argument("--watch969", action="store_true")
+    p.add_argument("--receipt969", action="store_true")
     a, rest = parser.parse_known_args()
     if a.action == "inputs":
         assert not rest
@@ -195,4 +276,4 @@ if __name__ == "__main__":
         assert [r["wire"] for r in tail["957"]] == [r["wire"] for r in prefix["957"]]
         (a.out / "joint-sender.json").write_text(json.dumps({**tail,**prefix}),encoding="utf8")
     else:
-        replay(a.variant,a.extras,rest,a.omit_wait969)
+        replay(a.variant,a.extras,rest,a.omit_wait969,a.receipt969,a.watch969,a.map969)
