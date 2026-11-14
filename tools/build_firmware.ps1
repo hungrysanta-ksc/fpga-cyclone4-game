@@ -6,6 +6,7 @@ param(
  [Parameter(Mandatory=$true)][string]$UnixBin,
  [string]$QuartusBin,
  [string]$MiniImage,
+ [switch]$Candidate,
  [ValidatePattern('^[D-Z]:$')][string]$Drive='W:',
  [ValidatePattern('^[D-Z]:$')][string]$ArmDrive='V:'
 )
@@ -54,6 +55,10 @@ try {
  } finally {Pop-Location}
 } finally {$env:PATH=$savedPath;& subst $Drive /D;& subst $ArmDrive /D}
 $fw=Join-Path $root 'src/obj-g13p3/firmware.stm'
+if($Candidate) {
+  Write-Output "Candidate firmware (original version ID): $fw"
+  return
+}
 # genhdr uses a timestamp-derived four-byte version ID. Verify every other
 # byte before assigning the frozen C44 ID to a separate reproducible output.
 $manifest=Get-Content -Raw -LiteralPath (Join-Path $PSScriptRoot '../release/c44-artifacts.json') | ConvertFrom-Json

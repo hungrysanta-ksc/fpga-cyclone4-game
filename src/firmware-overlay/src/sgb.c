@@ -149,6 +149,9 @@ void sgb_id(sgb_romprops_t* props, uint8_t *filename) {
   
   /* ROM size in bytes */
   switch (header->romsize) {
+    case 0x08:
+      if(props->has_egbc && props->mapper_id == 5) props->romsize_bytes = 8u << 20;
+      break;
     case 0x52: case 0x53: case 0x54:
       props->romsize_bytes += (uint32_t)(32 * 1024) << ((header->romsize >> 4) & 0x0F);
       //break;

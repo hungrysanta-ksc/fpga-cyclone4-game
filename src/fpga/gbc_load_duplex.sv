@@ -1,5 +1,5 @@
 // D0 init, D1 write next/read previous 512B, D2 final read, D3 status, D4 capability.
-// At most 4MiB; incomplete packets cannot finish or release RUN.
+// At most 8MiB; incomplete packets cannot finish or release RUN.
 module gbc_load_duplex(input wire clk,reset,run,cmd_ready,input wire[7:0]cmd,input wire end_message,input wire[31:0]byte_count,
  input wire rx_valid,input wire[15:0]rx_data,input wire tx_take,
  output wire[15:0]tx_data,output wire mode,stream_ready,lock_bus,inhibit_run,
@@ -8,10 +8,10 @@ module gbc_load_duplex(input wire clk,reset,run,cmd_ready,input wire[7:0]cmd,inp
  reg end_pending=0;
  reg session=0,last_done=1,final_done=0,fault=0,transaction=0;
  reg writing=0,reading=0,engine_start=0,engine_reset=0;
- reg[13:0]blocks=0;reg[8:0]received=0;
+ reg[14:0]blocks=0;reg[8:0]received=0;
  reg[22:0]wb=0,rb=0;
  wire primed,done,error,tx_valid;
- wire[13:0]previous=blocks-1'b1;
+ wire[14:0]previous=blocks-1'b1;
  assign lock_bus=session&&!run;
  assign inhibit_run=session&&(!final_done||!last_done||fault||error);
  assign mode=session&&!run&&(cmd==8'hd1||cmd==8'hd2);
@@ -41,9 +41,9 @@ module gbc_load_duplex(input wire clk,reset,run,cmd_ready,input wire[7:0]cmd,inp
     end
     if(cmd==8'hd1||cmd==8'hd2)begin
      if(run||!session||!last_done||fault||error||final_done||
-        (cmd==8'hd1&&blocks==8192)||(cmd==8'hd2&&blocks==0))fault<=1;
+        (cmd==8'hd1&&blocks==15'd16384)||(cmd==8'hd2&&blocks==0))fault<=1;
      else begin
-      writing<=cmd==8'hd1;reading<=blocks!=0;wb<={2'b0,blocks[12:0],8'b0};rb<={2'b0,previous[12:0],8'b0};
+      writing<=cmd==8'hd1;reading<=blocks!=0;wb<={1'b0,blocks[13:0],8'b0};rb<={1'b0,previous[13:0],8'b0};
       last_done<=0;transaction<=1;received<=0;engine_start<=1;
      end
     end

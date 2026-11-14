@@ -366,7 +366,7 @@ static uint8_t gbc_copy_duplex(uint8_t *filename,uint32_t expected_size) {
   uint32_t total=0,crc=crc32_init();tick_t mark;UINT count;
   file_open(filename,FA_READ);
   if(file_res)return 0;
-  if(!expected_size||expected_size>0x400000u||(expected_size&511u)||file_handle.fsize!=expected_size)goto fail;
+  if(!expected_size||expected_size>0x800000u||(expected_size&511u)||file_handle.fsize!=expected_size)goto fail;
   if(!spi_gbc_duplex_begin())goto fail;
   gbc_load_profile.duplex_used=1;
   while(total<expected_size) {
@@ -452,6 +452,12 @@ static uint32_t gbc_load_rom(uint8_t *filename, uint32_t game_size,
   FPGA_SELECT(); FPGA_TX_BYTE(0xd4);
   uint8_t ram_protocol = FPGA_RX_BYTE(); FPGA_DESELECT();
   if(ram_protocol != 0xdf) goto failed;
+  if(game_size > 0x400000u || sgb_romprops.header.romsize == 8) {
+    if(game_size != 0x800000u || sgb_romprops.romsize_bytes != game_size) goto failed;
+    FPGA_SELECT(); FPGA_TX_BYTE(0xe6);
+    uint8_t capacity = FPGA_RX_BYTE(); FPGA_DESELECT();
+    if(capacity != 0xa8) goto failed;
+  }
   gbc_launch_stage = 3;
   printf("GBC: renderer SRAM write/readback\n");
   if(!gbc_copy_verified((uint8_t *)SGBSR, 0x890000, renderer_size,
@@ -461,7 +467,7 @@ static uint32_t gbc_load_rom(uint8_t *filename, uint32_t game_size,
   snes_reset(0);
   printf("GBC: game PSRAM write/readback\n");
   gbc_launch_stage = 4;
-  if(game_size&&game_size<=0x400000u&&!(game_size&511u)) {
+  if(game_size&&game_size<=0x800000u&&!(game_size&511u)) {
     if(!gbc_copy_duplex(filename,game_size))goto failed;
   } else if(!gbc_copy_verified(filename,0,game_size,0))goto failed;
   GBC_LOAD_PACE_END();

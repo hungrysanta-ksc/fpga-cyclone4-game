@@ -64,7 +64,7 @@ module fxpak_gbc_top(
  spi_cmd_data==8'hde ?save_snapshot_status:spi_cmd_data==8'hd5 ?boot_snapshot[7:0]:
   spi_cmd_data==8'hd6 ?boot_snapshot[15:8]:spi_cmd_data==8'hd7 ?boot_snapshot[23:16]:
   spi_cmd_data==8'hd8 ?boot_snapshot[31:24]:
-  spi_cmd_data==8'hd4 ?8'hdf:spi_cmd_data==8'hd3 ?load_status:legacy_spi_data;
+  spi_cmd_data==8'he6 ?8'ha8:spi_cmd_data==8'hd4 ?8'hdf:spi_cmd_data==8'hd3 ?load_status:legacy_spi_data;
  wire[31:0]spi_byte_count;wire[2:0]spi_bit_count;
  gbc_spi mcu_spi(core_clock,SPI_SCK,SPI_MOSI,legacy_miso,SPI_SS,
   spi_cmd_ready,spi_param_ready,spi_cmd_data,spi_param_data,
