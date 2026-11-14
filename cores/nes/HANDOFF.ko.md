@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-**PR158 실기 비교 대기.** PR157은 master `a37946e`에 병합됐다. 707D 실기 A/B 설치본은 MMC763·765(60초), MMC764·766(장시간)이다. [설치 순서](../../docs/nes-mmc763-766-trial.ko.md) · [선택 근거와 다음 작업](../../docs/progress/pr-158.md)
+**PR158 실기 7회 분석.** 763 2회차의 20.64fps(5–55초)를 기준으로 수정한 B 60초판 767과 비교한다. 764/766 장시간판은 중간 성 162선 dot 0에서 ROM 오류 2를 기록했다. [결과·후속 재현 경계](../../docs/nes-hardware767-results.ko.md) · [설치](../../docs/nes-mmc767-trial.ko.md)
 
 PR156 병합 `4ee65ac300c3b5eca73848bd0b408c1bc63b6800` 확인 뒤 현재 브랜치는 `codex/nes-bg-deadline-707` / PR157 draft이다. 다음 개발 기준은 MMC690이고 MMC666 대조군은 보존한다. PR154는 master `3f8292795b8a5e53d6cf250fcc568223e748a3d6`에 병합됐다. 이전 대조군 MMC666은 [667 실기 분석](../../docs/nes-hardware667-results.ko.md)과 [설치 안내](../../docs/nes-mmc666-trial.ko.md)를 따른다. MMC662는 이전 비교 기준으로 보존한다.
 
