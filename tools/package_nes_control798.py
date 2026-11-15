@@ -28,7 +28,7 @@ def log_evidence(path):
                 total=int(last[4]), display_stopped=any(m[2]==b"DISPLAY_STOPPED" for m in rows))
 
 
-def verify(n, firmware, renderer, temp, prior, *, work=WORK, parent=None):
+def verify(n, firmware, renderer, temp, prior, *, work=WORK, parent=None, reference_run=None):
     src = work/f"link{n}/src"
     fw = digest(firmware)
     size,crc,inv = struct.unpack_from("<III",firmware,8)
@@ -62,7 +62,7 @@ def verify(n, firmware, renderer, temp, prior, *, work=WORK, parent=None):
         assert base["passed"] and base["firmware_sha256"]==fw
         assert base["base_restored"]==base["safe_return"]==int(fault=="none")
     mode=read(checks/"mode.json")
-    if n in (798,802):
+    if n in (798,802,805):
         assert mode["firmware_SHA256"]==fw and mode["unfinished_excluded"]
         assert [(w["start_s"],w["end_s"]) for w in mode["accepted"]]==[(5,40),(40,55)]
     else:
@@ -77,7 +77,7 @@ def verify(n, firmware, renderer, temp, prior, *, work=WORK, parent=None):
         assert joint["frames"][0]["release_masterclock"]==(7288416,7467100)[phase-1]
         pixels=[sha(folder/f"frame-{g}.rgb") for g in (905,906)]
         reference = f"nes-reset796b-{n-2}" if parent is None else f"nes-control798-{parent}"
-        assert pixels==[sha(temp/f"{reference}-p{phase}/frame-{g}.rgb") for g in (905,906)]
+        assert pixels==[sha(temp/f"{reference_run or reference}-p{phase}/frame-{g}.rgb") for g in (905,906)]
         phases.append(dict(frames=joint["frames"],pixels=pixels))
     good,bad=(check(src,renderer,damaged) for damaged in (False,True))
     assert good["accepted"] and not bad["accepted"] and good["firmware"]==bad["firmware"]==fw

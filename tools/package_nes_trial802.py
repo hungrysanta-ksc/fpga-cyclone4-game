@@ -105,23 +105,32 @@ def package(board, temp):
     delivery = temp/"nes-delivery802"
     reference = read(ROOT/"analysis/control798-package.json")
     original = PROBES/"nes-control798/MMC798-60SEC-MMC799-LONG.zip"
+    parents = {n:(PROBES/f"nes-control798/link{n}",reference["variants"][str(n)]["ELF"])
+               for n,_ in EDITIONS}
+    return package_pair(board,temp,delivery,WORK,EDITIONS,parents,reference,original,evidence,proof)
+
+
+def package_pair(board,temp,delivery,work,editions,parents,reference,original,evidence,proof,reference_runs=None):
+    timed,long_run = [n for _,n in editions]
     assert sha(original) == reference["ZIP_SHA256"]
-    files = {"README-KO.txt": (ROOT/"docs/nes-mmc802-803-trial.ko.md").read_bytes()}
+    files = {"README-KO.txt": (ROOT/f"docs/nes-mmc{timed}-{long_run}-trial.ko.md").read_bytes()}
     variants = {}
     with ZipFile(original) as archive:
-        for parent, n in EDITIONS:
-            mode = "60SEC" if n == 802 else "LONG"
-            prefix = f"0{n-801}-MMC{n}-{mode}-SD-ROOT/"
+        for index,(parent,n) in enumerate(editions,1):
+            mode = "60SEC" if index == 1 else "LONG"
+            prefix = f"0{index}-MMC{n}-{mode}-SD-ROOT/"
             old = prefix.replace(str(n), str(parent))
-            fw = (WORK/f"link{n}/src/obj-nes-100/firmware.stm").read_bytes()
+            fw = (work/f"link{n}/src/obj-nes-100/firmware.stm").read_bytes()
             same = {k:archive.read(old+k) for k in (*GBC, "sd2snes/fpga_base.bi3","sd2snes/m3nu.bin")}
             assert all(digest(v) == reference["files"][old+k] for k,v in same.items())
             ctl = reference["variants"][str(parent)]
-            report = verify(n,fw,same["sd2snes/gbc_snes.bin"],temp,{"ROM_SHA256":ctl["client"]},work=WORK,parent=parent)
+            report = verify(n,fw,same["sd2snes/gbc_snes.bin"],temp,{"ROM_SHA256":ctl["client"]},work=work,parent=parent,
+                            reference_run=reference_runs[parent] if reference_runs else None)
             elf = Path("src/obj-nes-100/sd2snes.elf")
-            with (PROBES/f"nes-control798/link{parent}"/elf).open("rb") as first, (WORK/f"link{n}"/elf).open("rb") as second:
+            parent_path,parent_hash = parents[parent]
+            with (parent_path/elf).open("rb") as first, (work/f"link{n}"/elf).open("rb") as second:
                 a,b = ELFFile(first),ELFFile(second)
-                assert sha(PROBES/f"nes-control798/link{parent}"/elf) == ctl["ELF"]
+                assert sha(parent_path/elf) == parent_hash
                 for tag in (".text",".data",".ahbram",".ARM.exidx",".rodata"):
                     u,v = a.get_section_by_name(tag), b.get_section_by_name(tag)
                     assert u["sh_addr"]==v["sh_addr"] and u["sh_size"]==v["sh_size"]
@@ -133,7 +142,7 @@ def package(board, temp):
             packed = delivery/f"packed{n}"
             bi = (packed/f"fpga_mmc{n}.bi3").read_bytes()
             img = read(packed/"image.json")
-            target = board if n == 802 else delivery/"board803"
+            target = board if n == timed else delivery/f"board{n}"
             rom = read(delivery/f"rom{n}/result.json")
             assert img["BI3"] == digest(bi) and img["SOF"] == sha(target/"output_files/board.sof")
             assert img["programmer"]["passed"] and rom["bytes"] == 5120
@@ -150,7 +159,7 @@ def package(board, temp):
     manifest = dict(variants=variants, board=evidence, fortress=proof,
                     physical_test=False, files={k:digest(v) for k,v in files.items()})
     files["manifest.json"] = (json.dumps(manifest,indent=2)+"\n").encode()
-    zip_path = WORK/"MMC802-60SEC-MMC803-LONG.zip"
+    zip_path = work/f"MMC{timed}-60SEC-MMC{long_run}-LONG.zip"
     with ZipFile(zip_path,"x",ZIP_DEFLATED) as z:
         for name, data in files.items():
             z.writestr(name,data)
@@ -158,7 +167,7 @@ def package(board, temp):
         assert set(z.namelist()) == set(files) and z.testzip() is None
         assert all(z.read(k)==v for k,v in files.items())
         assert not any("restore" in k.lower() for k in z.namelist())
-    save(ROOT/"analysis/trial802-package.json",dict(**manifest,ZIP_SHA256=sha(zip_path)))
+    save(ROOT/f"analysis/trial{timed}-package.json",dict(**manifest,ZIP_SHA256=sha(zip_path)))
     print(zip_path, sha(zip_path))
 
 

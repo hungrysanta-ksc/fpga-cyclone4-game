@@ -65,7 +65,7 @@ def run(number, src, out):
         if number in ("792", "796"):
             proof["timer"] = timer(src)
         (out.parent / f"guards{number}.json").write_text(json.dumps(proof, indent=2))
-    if number in ("763", "765", "792", "796", "798", "802"):
+    if number in ("763", "765", "792", "796", "798", "802", "805"):
         execute("check_nes_windows518.py", ["--arm", src, "--layout", "trimmed", "--out", out / "mode.json"], "mode")
         if number == "765":
             (out / "timer.json").write_text(json.dumps(timed(src), indent=2) + "\n")
@@ -75,7 +75,7 @@ def run(number, src, out):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("trial", choices=["763", "764", "765", "766", "792", "793", "796", "797", "798", "799", "802", "803"])
+    parser.add_argument("trial", choices=["763", "764", "765", "766", "792", "793", "796", "797", "798", "799", "802", "803", "805", "806"])
     parser.add_argument("arm", type=Path)
     parser.add_argument("out", type=Path)
     args = parser.parse_args()
