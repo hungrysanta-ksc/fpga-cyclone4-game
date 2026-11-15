@@ -43,11 +43,11 @@ def payloads(folder):
     return sorted(packets),tiles
 
 
-def linked(folder, base):
+def linked(folder, base, *, expected_client=None):
     j=read(folder/"joint.json")
     assert j["passed"] and j["commits"]==j["map_WRAM_VRAM_verified"]==66
     assert j["parameters"]==read(base/"joint.json")["parameters"]
-    assert sha(folder/"client.sfc")==sha(base/"client.sfc")
+    assert sha(folder/"client.sfc")==sha(expected_client or (base/"client.sfc"))
     assert section5(folder)==section5(base) and payloads(folder)==payloads(base)
     for g in range(905,971):
         for name in (f"frame-{g}.rgb",f"map-{g}.bin",f"expected-{g}.bin"):
