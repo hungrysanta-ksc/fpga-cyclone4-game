@@ -8,7 +8,7 @@ from check_nes_credit752 import Handoff, menu, seal_receipts, sha
 from check_nes_receive682 import Burst, burst
 
 
-def sealed_wait(src, case):
+def sealed_wait(src, case, *, batch_empty_status=False):
     m=Burst(src, "normal")
     assert m.call("wait634",[m.rt,m.check|1,2,0]) and m.index==7
     m.layout["nes_sink_window184"]=Handoff(src,"normal").layout["nes_sink_window184"]
@@ -27,7 +27,10 @@ def sealed_wait(src, case):
     ok=m.call("wait634",[m.rt,m.check|1,2,int(case=="progress")])
     assert bool(ok)==(case!="STOP")
     assert m.index==7+int(case=="waiting"),(case,m.index,m.ops)
-    assert m.ops==([0xd1,0xd2,0xd0] if case=="waiting" else []),(case,m.ops)
+    expected = [0xd1,0xd2,0xd0] if case=="waiting" else []
+    if case=="waiting" and batch_empty_status:
+        expected.append(0xd0)  # positive block retired, then no next block
+    assert m.ops==expected,(case,m.ops)
     assert m.state_value()!=4
     return dict(case=case,success=bool(ok),extra=m.index-7,operations=m.ops)
 
@@ -54,14 +57,14 @@ def owned_wait(src, stop):
     return dict(stop=stop,success=bool(ok),operations=m.ops,remains_committed=True)
 
 
-def check(src, extra, owner):
+def check(src, extra, owner, *, batch_empty_status=False):
     result=dict(firmware=sha(src/"obj-nes-100/firmware.stm"),menu=menu(src,"763"),
                 ACK=seal_receipts(src),
                 input=[burst(src,c) for c in ("STOP_after3","CRC_third","cache_token")])
     if owner:
         result["owned"]=[owned_wait(src,s) for s in (False,True)]
     if extra:
-        result["sealed"]=[sealed_wait(src,c) for c in ("waiting","progress","returned","ordinary","STOP")]
+        result["sealed"]=[sealed_wait(src,c,batch_empty_status=batch_empty_status) for c in ("waiting","progress","returned","ordinary","STOP")]
     return result
 
 
