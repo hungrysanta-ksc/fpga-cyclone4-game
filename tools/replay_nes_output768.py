@@ -64,6 +64,8 @@ def inputs(out, game):
 
 
 ROW_SCHEDULE_ELF = {
+    "796": "ffeacc6ceb1a8294f61705daae7c8fab4a111cfa9a3ff26c4ca965905c1a5c3f",
+    "797": "b15086991d1927dde200938d34f36911cedc59ab423d529e2bc176f302dc2df5",
     "793": "1ab6a50a7651ec7b1f1672b9f6649c4a6cdf34b572b7d9a6fead071100ff719a",
     "792": "2a9c76a026cde2247f9075c2d16f58be1c35555b71911ce5d73ad9ed3d1c9d69",
     "783": "ea3b037c91e6ab5d8682ecba45a08806867dda1b4f6250f2155b9734c480b883",
@@ -138,7 +140,7 @@ ROW_SCHEDULE_ELF = {
     "786M": "ca8107c7724637af422211e72032399c039a1767a45c1f65c9ee18a03f035a0d",
 }
 
-def replay(variant, extras, remaining, omit_wait, receipt969=False, watch969=False, map969=False, right969=False):
+def replay(variant, extras, remaining, omit_wait, receipt969=False, watch969=False, map969=False, right969=False, last=LAST):
     import test_nes_obj609 as obj
     import test_nes_tile532 as tile
 
@@ -153,7 +155,7 @@ def replay(variant, extras, remaining, omit_wait, receipt969=False, watch969=Fal
         assert frames == 53
         def extended_oracle(source, options):
             source = instrument(source, options)
-            for gen in range(958, LAST+1):
+            for gen in range(958, last+1):
                 directory = args.capture / f"frame{gen}"
                 expected = (directory / "expected-cgram.bin").read_bytes() + (directory / "expected-oam.bin").read_bytes()
                 assert len(expected) == 1056
@@ -179,7 +181,7 @@ end,emu.callbackType.write,0x7004,0x7007)
             class ObjectFirst(original_link):
                 def __init__(self, options):
                     super().__init__(options)
-                    for g in range(907, LAST+1):
+                    for g in range(907, last+1):
                         if variant in ("782","782B","782C","782D","782E",*ROW_SCHEDULE_ELF):
                             geometry=(options.data/f"frame{g}.geometry").read_bytes()
                             if int.from_bytes(geometry[5732:5734],"little")>24:
@@ -188,7 +190,7 @@ end,emu.callbackType.write,0x7004,0x7007)
                         assert plans[0][6]==2 and all(q[6]<2 for q in plans[1:])
                         self.plansets[g]=[plans[0]]+[q for q in plans if q[6]==1]+[q for q in plans if q[6]==0]
             link=ObjectFirst
-        return original_schedule(args, extended_oracle, link, frames=LAST-904)
+        return original_schedule(args, extended_oracle, link, frames=last-904)
     # Counterfactual only on 969. Execute the existing no-wait branch without
     # modifying the linked code, E0 validation, packet admission or final ACK.
     from check_nes_game478 import UC_HOOK_CODE, UC_ARM_REG_PC
@@ -334,7 +336,7 @@ end,emu.callbackType.write,0x7004,0x7007)
             stack.enter_context(patch.object(Runtime, "__init__", immediate969))
         if omit_wait:
             stack.enter_context(patch.object(Runtime, "__init__", hook))
-        runpy.run_module("test_nes_longrun694" if variant == "793" else "test_nes_status689" if variant in ("763","770","779C","780","781","781B","781C","782","782B","782C","782D","782E",*ROW_SCHEDULE_ELF) else "test_nes_static751",run_name="__main__")
+        runpy.run_module("test_nes_longrun694" if variant in ("793","797") else "test_nes_status689" if variant in ("763","770","779C","780","781","781B","781C","782","782B","782C","782D","782E",*ROW_SCHEDULE_ELF) else "test_nes_static751",run_name="__main__")
 
 
 if __name__ == "__main__":
@@ -349,6 +351,7 @@ if __name__ == "__main__":
     p = sub.add_parser("run", add_help=False)
     p.add_argument("variant", choices=("763","767","769","770","771","776","776B","777","777B","778","778B","779","779B","779C","780","781","781B","781C","782","782B","782C","782D","782E",*ROW_SCHEDULE_ELF))
     p.add_argument("extras", type=Path)
+    p.add_argument("--boot-pair", action="store_true", help="stop after the first two displayed generations")
     p.add_argument("--omit-wait969", action="store_true")
     p.add_argument("--right969", action="store_true",help="also observe both right-page map ranges")
     p.add_argument("--map969", action="store_true")
@@ -368,4 +371,4 @@ if __name__ == "__main__":
         assert [r["wire"] for r in tail["957"]] == [r["wire"] for r in prefix["957"]]
         (a.out / "joint-sender.json").write_text(json.dumps({**tail,**prefix}),encoding="utf8")
     else:
-        replay(a.variant,a.extras,rest,a.omit_wait969,a.receipt969,a.watch969,a.map969,a.right969)
+        replay(a.variant,a.extras,rest,a.omit_wait969,a.receipt969,a.watch969,a.map969,a.right969,906 if a.boot_pair else LAST)

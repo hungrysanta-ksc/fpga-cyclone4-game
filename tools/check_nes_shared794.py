@@ -7,12 +7,42 @@ import subprocess
 from pathlib import Path
 from zipfile import ZipFile
 
-from check_nes_game478 import ELFFile, Uc, UC_ARCH_ARM, UC_MODE_THUMB, UC_MODE_MCLASS, UC_HOOK_CODE
+from check_nes_game478 import ELFFile, Machine, Uc, UC_ARCH_ARM, UC_MODE_THUMB, UC_MODE_MCLASS, UC_HOOK_CODE
 from unicorn.arm_const import (UC_ARM_REG_LR, UC_ARM_REG_PC, UC_ARM_REG_R0, UC_ARM_REG_R1,
                                UC_ARM_REG_R2, UC_ARM_REG_R3, UC_ARM_REG_R10, UC_ARM_REG_SP)
 
 ROOT = Path(__file__).resolve().parents[2]
 PROBES = ROOT / "probes"
+
+
+def check_cartridge_dispatch(src):
+    """Run the linked GBC filename and mapper decoder with a synthetic MBC5 header."""
+    cpu = Machine(src, bytes(128))
+    props, filename = 0x20012000, 0x20012100
+    reads = []
+    def io(u, pc, size, name):
+        if name == "file_readblock":
+            assert u.reg_read(UC_ARM_REG_R1) == 0x100
+            header = bytearray(u.reg_read(UC_ARM_REG_R2))
+            header[0x47:0x4a] = bytes([0x1b,8,3])
+            u.mem_write(u.reg_read(UC_ARM_REG_R0), bytes(header))
+            reads.append(1)
+        u.reg_write(UC_ARM_REG_R0,0)
+        u.reg_write(UC_ARM_REG_PC,u.reg_read(UC_ARM_REG_LR))
+    for name in ("printf","snprintf","file_readblock"):
+        pc=cpu.syms[name]
+        cpu.u.hook_add(UC_HOOK_CODE,io,name,begin=pc,end=pc)
+    cases={}
+    for ext in ("sfc","smc","EgBc","gbc"):
+        reads.clear()
+        cpu.u.mem_write(filename,("example."+ext+"\0").encode())
+        cpu.u.mem_write(props,b"\xff"*128)
+        cpu.call("sgb_id",[props,filename])
+        mapper,egbc,ram,size=struct.unpack("<BBII",cpu.u.mem_read(props,10))
+        cases[ext] = [mapper,egbc,ram,size,len(reads)]
+    assert cases==dict(sfc=[0,0,0,0,0],smc=[0,0,0,0,0],
+                       EgBc=[5,1,32768,8<<20,1],gbc=[5,0,32768,0,1])
+    return cases
 
 
 def check(src, renderer, damage):

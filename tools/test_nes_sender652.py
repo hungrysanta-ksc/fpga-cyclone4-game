@@ -17,7 +17,7 @@ def gates(rows,board_owner):
         start=cpu.clock
         begin(cpu,generation)
         g=cpu.input_generation
-        if str(g) not in rows:return
+        if g>=905+cpu.a.frames or str(g) not in rows:return
         packets=[bytes.fromhex(r["wire"]) for r in rows[str(g)]]
         assert cpu.packets==packets
         cpu.packets=packets

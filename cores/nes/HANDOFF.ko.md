@@ -1,5 +1,7 @@
 # 현재 NES 인계
 
+**MMC796·797 실기 대기.** 복구판에서 일반 SNES와 eGBC 실행을 확인했다. MMC792의 NES는 RESET 해제가 2ms 걸리는 경우 ARM이 RESET을 계속 잡는 경로가 재현됐다. 796·797은 해제를 최대 20ms 확인하고 시간이 지나면 STOP과 base 복구를 시도한다. 두 최종 링크의 첫 두 화면 및 ACK, eGBC 정상 렌더러 수락·손상 거부를 확인했다. 다음 NES 시험판도 공용 ARM에서 PR160의 렌더러와 8MiB 인식을 검사한다. 먼저 MMC796의 첫 화면과 자동 메뉴 복귀를 실기로 확인한다. [설치·LED 판독](../../docs/nes-mmc796-797-trial.ko.md) · [최종 링크 근거](../../analysis/reset796-package.json)
+
 **MMC792·793 실기 사용 보류.** MMC792 NES는 384KiB 읽기 검사를 마친 후 첫 화면과 복귀가 확인되지 않았다. 공용 ARM의 PR160 eGBC 렌더러 거부는 재현했고 794·795 개발 링크에서 수정했다. 다음 NES 검증은 START 응답부터 첫 프레임 진입까지이며 실기 대조군은 MMC763이다. [로그 해석·복구·재현](../../docs/nes-shared794-results.ko.md)
 
 **PR161 · 969 발행 순서.** 실기 기준은 MMC763이다. 777A는 227선 전에 OAM·scroll·padding 196B를 수락하고 496→880B DMA를 확보했다. 두 위상 모두 969는 3 VBlank, 연속 마지막 ACK는 MMC767보다 늦었다. 다음은 첫 VBlank에서 offset 1,024 뒤 1,216 map의 발행이 끊기는 원인과 독립 검사 예산을 맞춘다. [측정·재현](../../docs/progress/pr-161.md)
