@@ -14,7 +14,12 @@ def check(src, n, recovered):
     cpu = Machine(src, bytes(128))
     cpu.u.mem_map(0xe000e000, 0x2000)
     with (src/"obj-nes-100/sd2snes.elf").open("rb") as f:
-        base = ELFFile(f).get_section_by_name(".symtab").get_symbol_by_name("nes_run136")[0]["st_value"]
+        symbols = ELFFile(f).get_section_by_name(".symtab")
+        base = symbols.get_symbol_by_name("nes_run136")[0]["st_value"]
+        if n in (807,808):
+            trace = symbols.get_symbol_by_name("nes_trace166")[0]
+            assert trace["st_size"]==44
+            cpu.u.mem_write(trace["st_value"]+40,bytes([64,33]))
     for offset, word in ((12,recovered["context"]), (24,recovered["ppu"])):
         cpu.u.mem_write(base+offset,struct.pack("<II",int(word[:8],16),int(word[8:],16)))
     cpu.u.mem_write(base+20,bytes(recovered["status"]))
@@ -45,6 +50,8 @@ def check(src, n, recovered):
     name=f"/sd2snes/nes-game-last-mmc{n}.txt"
     assert active is None and set(files)=={name,f"/sd2snes/nes-budget-mmc{n}.txt"}
     g=fields(files[name].decode())
+    if n in (807,808):
+        assert (g["obj_line"],g["obj_load"])==("64","33")
     assert g["candidate"]==f"NES-MMC{n}" and g["menu_state"]=="PREPARED_RESET_HELD"
     assert g["fault_context_valid"]==g["ppu_state_valid"]=="1"
     assert g["ppu_state_hi"]+g["ppu_state_lo"]==recovered["ppu"]
