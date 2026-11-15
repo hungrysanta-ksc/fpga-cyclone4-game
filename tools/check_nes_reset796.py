@@ -11,7 +11,7 @@ from check_nes_shared794 import PROBES
 from unicorn import UC_HOOK_MEM_WRITE
 
 
-def replay(src, release_ms, fault=None, control=False, probe=0):
+def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages=None, retained_context=None):
     obj = src / "obj-nes-100"
     firmware = (obj / "firmware.stm").read_bytes()
     u = Uc(UC_ARCH_ARM, UC_MODE_THUMB | UC_MODE_MCLASS)
@@ -77,9 +77,14 @@ def replay(src, release_ms, fault=None, control=False, probe=0):
                 if status==0x86:
                     observes+=1
                 reply[1:4]=bytes([0xe5,int(status==2),0])
+                if stopped_pages is not None and status==2:
+                    reply[2:4]=bytes([3,2])
                 reply[4:]=max(1,observes).to_bytes(4,"big")
             elif op==0x73:
                 reply[1:]=bytes([0xe6,0xe1 if fault=="copy" else 3,0,0,0,0,3])
+            elif stopped_pages is not None and op in stopped_pages:
+                assert status==2 and driven
+                reply[1:]=stopped_pages[op]
             else:
                 assert op in (0x76,0x77)
             cpu.mem_write(c,bytes(reply))
@@ -98,6 +103,12 @@ def replay(src, release_ms, fault=None, control=False, probe=0):
             # Model the next successful periodic observer sample inside gameplay.
             observes+=1
             cpu.mem_write(symbols["nes_run136"]+4,struct.pack("<I",observes))
+            if stopped_pages is not None:
+                base=symbols["nes_run136"]
+                cpu.mem_write(base+20,bytes([4]))
+                if retained_context is not None:
+                    cpu.mem_write(base+12,struct.pack("<II",retained_context>>32,retained_context&0xffffffff))
+                    cpu.mem_write(base+22,bytes([1]))
         cpu.reg_write(UC_ARM_REG_R0,int(value))
         cpu.reg_write(UC_ARM_REG_PC,cpu.reg_read(UC_ARM_REG_LR))
     names=["get_snes_reset","snes_reset","nes_return_delay","fpga_get_done","nes_diag_active",
@@ -130,14 +141,24 @@ def replay(src, release_ms, fault=None, control=False, probe=0):
         assert checkpoints==(["DISPLAY_NEXT"] if fatal else ["DISPLAY_NEXT",end_record])
         assert driven and ms==(0 if fault=="start" or probe==1 else 1 if fault in ("done","timer") else min(20,max(1,release_ms)))
         if not fatal:
-            assert ops[-5:]==[0x70,0x70,0x73,0x77,0x76] and status==2
+            pages=[] if stopped_pages is None else ([0x71,0x72] if retained_context is None else [])+[0x74,0x75]
+            suffix=[0x70,0x70,0x73,*pages,0x77,0x76]
+            assert ops[-len(suffix):]==suffix and status==2
             expected_error=9 if probe!=1 and release_ms>20 else 6 if fault=="copy" else 0
+            if stopped_pages is not None:
+                expected_error=4
             assert u.mem_read(symbols["nes_run136"]+20,1)[0]==expected_error
             if probe:
                 assert records==[["DISPLAY_NEXT",probe,0x60000],[end_record,probe,expected_error]]
         if frames and "nes_boot_stage796" in symbols:
             assert all(stage in stages for stage in range(1,8))
-    return dict(release_ms=release_ms,fault=fault,elapsed_ms=ms,terminal=failed,frame_entry=frames,
+    report=symbols["nes_run136"]
+    def pair(offset):
+        hi,lo=struct.unpack("<II",u.mem_read(report+offset,8))
+        return f"{hi:08x}{lo:08x}"
+    captured={} if stopped_pages is None else dict(context=pair(12),ppu=pair(24),
+                        status=list(u.mem_read(report+20,3)),ppu_valid=u.mem_read(report+32,1)[0])
+    return dict(**captured,release_ms=release_ms,fault=fault,elapsed_ms=ms,terminal=failed,frame_entry=frames,
                 reset_asserted=driven,spi=ops,stages=stages,checkpoints=checkpoints,records=records)
 
 
