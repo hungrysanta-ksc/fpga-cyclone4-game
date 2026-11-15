@@ -60,8 +60,8 @@ def packet_order(folder):
     return by_generation
 
 
-def result(folder, base, image):
-    s = linked(folder, base, expected_client=image)
+def result(folder, base, image, *, group_section5=False):
+    s = linked(folder, base, expected_client=image, group_section5=group_section5)
     rows, events = csv_groups(folder / "window.csv"), read(folder / "events.json")
     phase = read(folder / "joint.json")["parameters"]["ROM_phase"]
     def display(g):

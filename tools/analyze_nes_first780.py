@@ -24,7 +24,7 @@ def coverage(transfers, blank):
     return out
 
 
-def payloads(folder):
+def payloads(folder, *, group_section5=False):
     """Resolve checked tile bulk tokens into destination bytes before comparison."""
     packets, tiles = [], {}
     for _,_,header,payload in map(json.loads,(folder/"packets.jsonl").read_text().splitlines()):
@@ -38,17 +38,19 @@ def payloads(folder):
             for i,b in enumerate(data,start):
                 assert (h[1],i) not in tiles
                 tiles[h[1],i]=b
-        else:
+        elif not (group_section5 and h[1]==5):
             packets.append(h[:2]+h[4:])
     return sorted(packets),tiles
 
 
-def linked(folder, base, *, expected_client=None):
+def linked(folder, base, *, expected_client=None, group_section5=False):
     j=read(folder/"joint.json")
     assert j["passed"] and j["commits"]==j["map_WRAM_VRAM_verified"]==66
     assert j["parameters"]==read(base/"joint.json")["parameters"]
     assert sha(folder/"client.sfc")==sha(expected_client or (base/"client.sfc"))
-    assert section5(folder)==section5(base) and payloads(folder)==payloads(base)
+    # A different DATA split must reconstruct every section-5 byte at its original offset.
+    assert section5(folder)==section5(base)
+    assert payloads(folder,group_section5=group_section5)==payloads(base,group_section5=group_section5)
     for g in range(905,971):
         for name in (f"frame-{g}.rgb",f"map-{g}.bin",f"expected-{g}.bin"):
             assert sha(folder/name)==sha(base/name)

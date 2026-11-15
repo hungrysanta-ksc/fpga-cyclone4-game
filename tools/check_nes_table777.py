@@ -23,7 +23,15 @@ def run(base, trace, mesen, out, stop=False, map_stop=False, table_stop=False, r
     for src in base.glob('colors636-*.bin'):
         (out/src.name).write_bytes(src.read_bytes())
     packets=[bytes.fromhex(json.loads(row)[2]) for row in (trace/'packets.jsonl').read_text().splitlines()]
-    table,=[h for h in packets if h[:2]==bytes((2,5)) and h[8:10]==(969).to_bytes(2,'little') and len(h)==256]
+    frame=[h for h in packets if h[8:10]==(969).to_bytes(2,'little')]
+    tables=[h for h in frame if h[:2]==bytes((2,5)) and len(h)==256]
+    if len(tables)>1:
+        # A compact raw DATA can also be 240B. The tables end exactly 9B
+        # before the section-5 size declared by the verified SEAL.
+        seal,=[h for h in frame if h[0]==3]
+        table_offset=int.from_bytes(seal[26:28],'little')-249
+        tables=[h for h in tables if int.from_bytes(h[10:12],'little')==table_offset]
+    table,=tables
     assert int.from_bytes(table[10:12],'little')>1121
     (out/'table.bin').write_bytes(table)
     s=(base/'capture.lua').read_text()

@@ -62,7 +62,7 @@ def exercise(src,case,limited=False):
     return dict(case=case,ops=m.ops,state=m.state_value())
 
 
-def retirement(src, case):
+def retirement(src, case, complete=None):
     from check_nes_handoff678 import Handoff
     m=Handoff(src,"normal")
     m.setup()
@@ -81,16 +81,28 @@ def retirement(src, case):
             return bytes(7)
         assert op==0xe8
         rx=bytearray(20);rx[1:4]=bytes((0xd7,4,1))
+        if complete is False and len(ops)==1:
+            rx[3],rx[5]=2,4
         if case=="count":rx[5]=1
         if case=="descriptor":rx[6]=1
         if case=="fault":rx[3]|=128
-        if case=="busy" and len(ops)==2:rx[3]=6;rx[5]=4
+        if case=="busy" and len(ops)==(3 if complete is False else 2):rx[3]=6;rx[5]=4
         rx[19]=crc(rx[1:19],8,7,0)^(case=="crc")
         return bytes(rx)
     m.endpoint.exchange=exchange
-    ok=m.call("nes_plan200_retire",[m.p])
+    ok=(m.call("nes_plan200_retire",[m.p]) if complete is None else
+        m.call("nes_plan200_handoff790",[m.p,int(complete)]))
     assert bool(ok)==(case in ("normal","busy"))
-    assert ops==([] if case in ("no_finish","no_ACK") else [0xea] if case=="stop_after_EA" else [0xea,0xe8,0xe8] if case=="busy" else [0xea,0xe8])
+    if case in ("no_finish","no_ACK"):
+        expected=[]
+    elif complete is False and case in ("count","descriptor","fault","crc"):
+        expected=[0xe8]
+    else:
+        expected=[0xe8] if complete is False else []
+        expected.append(0xea)
+        if case!="stop_after_EA":
+            expected.extend([0xe8,0xe8] if case=="busy" else [0xe8])
+    assert ops==expected,(case,complete,ops,expected)
     assert bool(m.get(m.p,"nes_plan200","started"))!=bool(ok)
     return dict(case=case,passed=bool(ok),ops=ops)
 
