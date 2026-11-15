@@ -15,13 +15,18 @@ def assemble(number, base, work, quartus):
     assert sha(base/"output_files/board.sof") == read(work.parent/"nes-trial763/packed763/image.json")["SOF"]
     pins = read(ROOT/"analysis/bg707-verification.json")["inputs"]
     client = CLIENT if number == 792 else OUT/"client793"
-    board = work/f"board{number}"
     for name, h in {**pins["base"], **pins["changed"]}.items():
         if name != "sink-program.hex":
             assert sha(base/name) == h, name
+    assert sha(base/"sink-program.hex") == proof["ROM_bus"]["program"]
+    replace_client(number, base, work, quartus, client)
+
+
+def replace_client(number, base, work, quartus, client):
+    """Change only the client MIF of an already routed and assembled project."""
+    board = work/f"board{number}"
     shutil.copytree(base, board)
     old = bytes.fromhex((base/"sink-program.hex").read_text())
-    assert sha(base/"sink-program.hex") == proof["ROM_bus"]["program"]
     new = bytes.fromhex((client/"sink-program.hex").read_text())
     mif, = (board/"db").glob("board.ram*_nes_sink_bus165_*.hdl.mif")
     pattern = re.compile(r"^(\s*)(\d+)(\s*:\s*)([01]{8})(;)", re.M)

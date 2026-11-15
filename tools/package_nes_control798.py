@@ -28,8 +28,8 @@ def log_evidence(path):
                 total=int(last[4]), display_stopped=any(m[2]==b"DISPLAY_STOPPED" for m in rows))
 
 
-def verify(n, firmware, renderer, temp, prior):
-    src = WORK/f"link{n}/src"
+def verify(n, firmware, renderer, temp, prior, *, work=WORK, parent=None):
+    src = work/f"link{n}/src"
     fw = digest(firmware)
     size,crc,inv = struct.unpack_from("<III",firmware,8)
     assert firmware[:4]==b"STM3" and size+512==len(firmware)<=212992
@@ -54,7 +54,7 @@ def verify(n, firmware, renderer, temp, prior):
             row=replay(src,delay,fault,probe=probe)
             cases.append(dict(probe=probe, delay_ms=delay, fault=fault, frames=row["frame_entry"],
                               terminal=row["terminal"], records=row["records"]))
-    checks=WORK/f"check{n}"
+    checks=work/f"check{n}"
     menu=read(checks/"menu.json")
     assert menu["firmware"]==fw and menu["marker_cases"]==4
     for fault in ("none","program","done","busy","token"):
@@ -62,26 +62,27 @@ def verify(n, firmware, renderer, temp, prior):
         assert base["passed"] and base["firmware_sha256"]==fw
         assert base["base_restored"]==base["safe_return"]==int(fault=="none")
     mode=read(checks/"mode.json")
-    if n==798:
+    if n in (798,802):
         assert mode["firmware_SHA256"]==fw and mode["unfinished_excluded"]
         assert [(w["start_s"],w["end_s"]) for w in mode["accepted"]]==[(5,40),(40,55)]
     else:
         assert mode["firmware"]==fw and mode["passed"]
     phases=[]
     for phase in (1,2):
-        folder=temp/f"nes-control798-{n}-p{phase}"
+        folder=temp/f"{work.name}-{n}-p{phase}"
         joint=read(folder/"joint.json")
         assert joint["passed"] and joint["last_status"]==1 and joint["commits"]==2
         assert joint["firmware_SHA256"]==fw and joint["client_SHA256"]==prior["ROM_SHA256"]
         assert [r["generation"] for r in joint["frames"]]==[905,906]
         assert joint["frames"][0]["release_masterclock"]==(7288416,7467100)[phase-1]
         pixels=[sha(folder/f"frame-{g}.rgb") for g in (905,906)]
-        assert pixels==[sha(temp/f"nes-reset796b-{n-2}-p{phase}/frame-{g}.rgb") for g in (905,906)]
+        reference = f"nes-reset796b-{n-2}" if parent is None else f"nes-control798-{parent}"
+        assert pixels==[sha(temp/f"{reference}-p{phase}/frame-{g}.rgb") for g in (905,906)]
         phases.append(dict(frames=joint["frames"],pixels=pixels))
     good,bad=(check(src,renderer,damaged) for damaged in (False,True))
     assert good["accepted"] and not bad["accepted"] and good["firmware"]==bad["firmware"]==fw
     return dict(firmware=fw,ELF=CONTROL_ELF[str(n)],free_flash_B=212992-len(firmware),
-                control=n-35,client=prior["ROM_SHA256"],phases=phases,boot=cases,
+                control=n-35 if parent is None else parent,client=prior["ROM_SHA256"],phases=phases,boot=cases,
                 checks={p.relative_to(checks).as_posix():sha(p) for p in sorted(checks.rglob("*.json"))},
                 GBC_loader=[good,bad],dispatch=check_cartridge_dispatch(src))
 
