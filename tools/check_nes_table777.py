@@ -9,17 +9,20 @@ import subprocess
 from nes_raw506 import once, sha
 
 
-def run(base, trace, mesen, out, stop=False, map_stop=False, table_stop=False, retire_offset=None):
+def run(base, trace, mesen, out, stop=False, map_stop=False, table_stop=False, retire_offset=None, client=None):
     map_stop = map_stop or table_stop or retire_offset is not None
     stop = stop or map_stop
     out=out.resolve()
     out.mkdir(parents=True,exist_ok=False)
     assert json.loads((base/'audit.json').read_bytes())['frames']==66
-    assert sha(base/'client.sfc')==sha(trace/'client.sfc')
+    image = client / 'sink165.sfc' if client else base / 'client.sfc'
+    assert sha(image)==sha(trace/'client.sfc')
     # This replay reads the original input files and writes its own observer logs.
     for src in base.iterdir():
         if src.name=='client.sfc' or src.name=='arrivals.tsv' or src.name.startswith(('map-','expected-')):
             (out/src.name).write_bytes(src.read_bytes())
+    if client:
+        (out/'client.sfc').write_bytes(image.read_bytes())
     for src in base.glob('colors636-*.bin'):
         (out/src.name).write_bytes(src.read_bytes())
     packets=[bytes.fromhex(json.loads(row)[2]) for row in (trace/'packets.jsonl').read_text().splitlines()]
@@ -136,6 +139,7 @@ def run(base, trace, mesen, out, stop=False, map_stop=False, table_stop=False, r
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for key in ('base','trace','mesen','out'):p.add_argument(key,type=Path)
+    p.add_argument('--client',type=Path,help='Use the final client bound to the supplied ARM trace')
     p.add_argument('--stop',action='store_true')
     p.add_argument('--map-stop',action='store_true')
     p.add_argument("--table-stop",action="store_true")
@@ -143,4 +147,4 @@ if __name__=='__main__':
     a=p.parse_args()
     if a.after_map_return is not None and (a.table_stop or a.map_stop):
         p.error("choose one STOP trigger")
-    run(a.base,a.trace,a.mesen,a.out,a.stop,a.map_stop,a.table_stop,a.after_map_return)
+    run(a.base,a.trace,a.mesen,a.out,a.stop,a.map_stop,a.table_stop,a.after_map_return,a.client)

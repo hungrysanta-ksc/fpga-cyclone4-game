@@ -64,6 +64,8 @@ def inputs(out, game):
 
 
 ROW_SCHEDULE_ELF = {
+    "793": "1ab6a50a7651ec7b1f1672b9f6649c4a6cdf34b572b7d9a6fead071100ff719a",
+    "792": "2a9c76a026cde2247f9075c2d16f58be1c35555b71911ce5d73ad9ed3d1c9d69",
     "783": "ea3b037c91e6ab5d8682ecba45a08806867dda1b4f6250f2155b9734c480b883",
     "783B": "50fcc312a80f9cf926d685f83b9879c6a493c0644a5030d62f766186b16a92ba",
     "783C": "313fb97e14f96d48abd8badb362fb74c5cd57226212fa2923941e5683e0c3e8a",
@@ -332,7 +334,7 @@ end,emu.callbackType.write,0x7004,0x7007)
             stack.enter_context(patch.object(Runtime, "__init__", immediate969))
         if omit_wait:
             stack.enter_context(patch.object(Runtime, "__init__", hook))
-        runpy.run_module("test_nes_status689" if variant in ("763","770","779C","780","781","781B","781C","782","782B","782C","782D","782E",*ROW_SCHEDULE_ELF) else "test_nes_static751",run_name="__main__")
+        runpy.run_module("test_nes_longrun694" if variant == "793" else "test_nes_status689" if variant in ("763","770","779C","780","781","781B","781C","782","782B","782C","782D","782E",*ROW_SCHEDULE_ELF) else "test_nes_static751",run_name="__main__")
 
 
 if __name__ == "__main__":

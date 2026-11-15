@@ -56,7 +56,16 @@ def run(number, src, out):
     for fault in ("none", "program", "done", "busy", "token"):
         tag = "base-" + fault
         execute("check_nes_transfer512_recovery.py", ["--arm", src, "--trial", number, "--fault", fault, "--out", out / tag], tag)
-    if number in ("763", "765"):
+    if number in ("792", "793"):
+        # Exercise a failing CRC, a stale token and STOP during pending ownership
+        # on the exact release ELF, including independent final-ACK receipts.
+        from check_nes_commit790 import verify
+        from check_nes_longrun692 import run as timer
+        proof = verify(src, True, trial=number)
+        if number == "792":
+            proof["timer"] = timer(src)
+        (out.parent / f"guards{number}.json").write_text(json.dumps(proof, indent=2))
+    if number in ("763", "765", "792"):
         execute("check_nes_windows518.py", ["--arm", src, "--layout", "trimmed", "--out", out / "mode.json"], "mode")
         if number == "765":
             (out / "timer.json").write_text(json.dumps(timed(src), indent=2) + "\n")
@@ -66,7 +75,7 @@ def run(number, src, out):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("trial", choices=["763", "764", "765", "766"])
+    parser.add_argument("trial", choices=["763", "764", "765", "766", "792", "793"])
     parser.add_argument("arm", type=Path)
     parser.add_argument("out", type=Path)
     args = parser.parse_args()

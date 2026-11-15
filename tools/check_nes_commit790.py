@@ -7,8 +7,8 @@ from check_nes_capture785 import exercise, retirement
 from check_nes_supply781 import check
 
 
-def verify(src, rearm, *, batch_empty_status=False):
-    proof = check(src, extra=True, owner=True, batch_empty_status=batch_empty_status)
+def verify(src, rearm, *, batch_empty_status=False, trial="763"):
+    proof = check(src, extra=True, owner=True, batch_empty_status=batch_empty_status, trial=trial)
     proof["commit"] = [exercise(src, case) for case in
                        ("cached", "uncached", "bad_token", "bad_crc", "stop_commit")]
     if rearm:

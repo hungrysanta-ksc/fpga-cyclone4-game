@@ -57,8 +57,8 @@ def owned_wait(src, stop):
     return dict(stop=stop,success=bool(ok),operations=m.ops,remains_committed=True)
 
 
-def check(src, extra, owner, *, batch_empty_status=False):
-    result=dict(firmware=sha(src/"obj-nes-100/firmware.stm"),menu=menu(src,"763"),
+def check(src, extra, owner, *, batch_empty_status=False, trial="763"):
+    result=dict(firmware=sha(src/"obj-nes-100/firmware.stm"),menu=menu(src,trial),
                 ACK=seal_receipts(src),
                 input=[burst(src,c) for c in ("STOP_after3","CRC_third","cache_token")])
     if owner:
