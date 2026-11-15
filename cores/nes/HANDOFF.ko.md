@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-**MMC796·797 실기 대기.** 복구판에서 일반 SNES와 eGBC 실행을 확인했다. MMC792의 NES는 RESET 해제가 2ms 걸리는 경우 ARM이 RESET을 계속 잡는 경로가 재현됐다. 796·797은 해제를 최대 20ms 확인하고 시간이 지나면 STOP과 base 복구를 시도한다. 두 최종 링크의 첫 두 화면 및 ACK, eGBC 정상 렌더러 수락·손상 거부를 확인했다. 다음 NES 시험판도 공용 ARM에서 PR160의 렌더러와 8MiB 인식을 검사한다. 먼저 MMC796의 첫 화면과 자동 메뉴 복귀를 실기로 확인한다. [설치·LED 판독](../../docs/nes-mmc796-797-trial.ko.md) · [최종 링크 근거](../../analysis/reset796-package.json)
+**MMC796 실기에서 SNES·eGBC 실행과 메뉴 복귀 확인, NES 암전 재현.** 마지막 SD 기록은 232.090초 DISPLAY_NEXT다. 콘솔 리셋으로 복구되지 않았고 전원 재투입 후 SD 메뉴가 돌아왔다. 이 기기는 분해해야 카트리지 LED가 보인다. 실기 진단은 화면·메뉴 복귀와 SD 파일로 진행한다. MMC798·799는 실기에서 실행된 763·764의 NES 처리와 보드·65816 조합, PR160 eGBC 로더, 796 RESET 처리를 묶었다. 먼저 798 일반 실행을 확인하고 실패할 때만 BOOT, 필요하면 START의 STOP 뒤 SD 기록을 확인한다. [설치·진단 순서](../../docs/nes-mmc798-799-trial.ko.md) · [최종 링크 근거](../../analysis/control798-package.json)
 
 **MMC792·793 실기 사용 보류.** MMC792 NES는 384KiB 읽기 검사를 마친 후 첫 화면과 복귀가 확인되지 않았다. 공용 ARM의 PR160 eGBC 렌더러 거부는 재현했고 794·795 개발 링크에서 수정했다. 다음 NES 검증은 START 응답부터 첫 프레임 진입까지이며 실기 대조군은 MMC763이다. [로그 해석·복구·재현](../../docs/nes-shared794-results.ko.md)
 

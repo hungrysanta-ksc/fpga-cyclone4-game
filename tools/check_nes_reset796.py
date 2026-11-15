@@ -11,7 +11,7 @@ from check_nes_shared794 import PROBES
 from unicorn import UC_HOOK_MEM_WRITE
 
 
-def replay(src, release_ms, fault=None, control=False):
+def replay(src, release_ms, fault=None, control=False, probe=0):
     obj = src / "obj-nes-100"
     firmware = (obj / "firmware.stm").read_bytes()
     u = Uc(UC_ARCH_ARM, UC_MODE_THUMB | UC_MODE_MCLASS)
@@ -33,7 +33,9 @@ def replay(src, release_ms, fault=None, control=False):
     failed = False
     ms = frames = observes = 0
     status = 0x82
-    ops, checkpoints, stages = [], [], []
+    ops, checkpoints, stages, records = [], [], [], []
+    if "nes_boot_probe798" in symbols:
+        u.mem_write(symbols["nes_boot_probe798"],bytes([probe]))
     def hook(cpu, address, size, name):
         nonlocal driven, failed, ms, status, frames, observes
         a,b,c = [cpu.reg_read(reg) for reg in (UC_ARM_REG_R0,UC_ARM_REG_R1,UC_ARM_REG_R2)]
@@ -55,8 +57,9 @@ def replay(src, release_ms, fault=None, control=False):
         elif name=="nes_return_fail":
             failed = True
         elif name=="nes_checkpoint112":
-            assert driven
+            assert driven and status!=0x86
             checkpoints.append(bytes(cpu.mem_read(a,32)).split(b"\0")[0].decode())
+            records.append([checkpoints[-1],b,c])
             value=1
         elif name=="nes_rom_spi_transfer":
             op=cpu.mem_read(b,1)[0]
@@ -103,7 +106,7 @@ def replay(src, release_ms, fault=None, control=False):
     for name in names:
         addr=symbols[name]&~1
         u.hook_add(UC_HOOK_CODE,hook,name,begin=addr,end=addr)
-    if not control:
+    if not control and "nes_boot_stage796" in symbols:
         at=symbols["nes_boot_stage796"]
         u.hook_add(UC_HOOK_MEM_WRITE,lambda cpu,access,address,size,value,data: stages.append(value),
                    begin=at,end=at)
@@ -120,19 +123,22 @@ def replay(src, release_ms, fault=None, control=False):
         assert failed==(release_ms>1) and result==(release_ms<=1)
     else:
         fatal=fault in ("done","timer","start","stop")
-        entered=release_ms<=20 and fault not in ("done","timer","start","copy")
+        entered=not probe and release_ms<=20 and fault not in ("done","timer","start","copy")
         assert failed==fatal and bool(result)==(not fatal) and frames==int(entered)
         assert ops.count(0x63)==1 and ops.count(0x64)==int(fault not in ("timer","done","start"))
-        assert checkpoints==(["DISPLAY_NEXT"] if fatal else ["DISPLAY_NEXT","DISPLAY_STOPPED"])
-        assert driven and ms==(0 if fault=="start" else 1 if fault in ("done","timer") else min(20,max(1,release_ms)))
+        end_record="PROBE_STOPPED" if probe else "DISPLAY_STOPPED"
+        assert checkpoints==(["DISPLAY_NEXT"] if fatal else ["DISPLAY_NEXT",end_record])
+        assert driven and ms==(0 if fault=="start" or probe==1 else 1 if fault in ("done","timer") else min(20,max(1,release_ms)))
         if not fatal:
             assert ops[-5:]==[0x70,0x70,0x73,0x77,0x76] and status==2
-            expected_error=9 if release_ms>20 else 6 if fault=="copy" else 0
+            expected_error=9 if probe!=1 and release_ms>20 else 6 if fault=="copy" else 0
             assert u.mem_read(symbols["nes_run136"]+20,1)[0]==expected_error
-        if frames:
+            if probe:
+                assert records==[["DISPLAY_NEXT",probe,0x60000],[end_record,probe,expected_error]]
+        if frames and "nes_boot_stage796" in symbols:
             assert all(stage in stages for stage in range(1,8))
     return dict(release_ms=release_ms,fault=fault,elapsed_ms=ms,terminal=failed,frame_entry=frames,
-                reset_asserted=driven,spi=ops,stages=stages,checkpoints=checkpoints)
+                reset_asserted=driven,spi=ops,stages=stages,checkpoints=checkpoints,records=records)
 
 
 if __name__=="__main__":

@@ -63,6 +63,10 @@ def inputs(out, game):
     (out / "obj-cache.json").write_text(json.dumps(cache), encoding="utf8")
 
 
+CONTROL_ELF = {
+    "798": "24439b9438fd1099863947d2005349ef873660d30032e3e988a8a87a912dc39d",
+    "799": "145106e7d2b2cfd21e18b434156daa4dcae3bcb2701b17d867e71f6cbeea644e",
+}
 ROW_SCHEDULE_ELF = {
     "796": "ffeacc6ceb1a8294f61705daae7c8fab4a111cfa9a3ff26c4ca965905c1a5c3f",
     "797": "b15086991d1927dde200938d34f36911cedc59ab423d529e2bc176f302dc2df5",
@@ -271,6 +275,8 @@ end,emu.callbackType.write,0x7004,0x7007)
     expected = manifest["variants"]["763"]["ELF"] if variant == "763" else manifest["ELF"]
     if variant in ROW_SCHEDULE_ELF:
         expected=ROW_SCHEDULE_ELF[variant]
+    if variant in CONTROL_ELF:
+        expected=CONTROL_ELF[variant]
     if variant == "782C":
         expected="8bf256d955da327c8359a78823b8e2d542f5bbbb6db09fd561622114579b4b08"
     if variant == "782D":
@@ -336,7 +342,7 @@ end,emu.callbackType.write,0x7004,0x7007)
             stack.enter_context(patch.object(Runtime, "__init__", immediate969))
         if omit_wait:
             stack.enter_context(patch.object(Runtime, "__init__", hook))
-        runpy.run_module("test_nes_longrun694" if variant in ("793","797") else "test_nes_status689" if variant in ("763","770","779C","780","781","781B","781C","782","782B","782C","782D","782E",*ROW_SCHEDULE_ELF) else "test_nes_static751",run_name="__main__")
+        runpy.run_module("test_nes_longrun694" if variant in ("793","797","799") else "test_nes_status689" if variant in ("763","770","779C","780","781","781B","781C","782","782B","782C","782D","782E",*ROW_SCHEDULE_ELF,*CONTROL_ELF) else "test_nes_static751",run_name="__main__")
 
 
 if __name__ == "__main__":
@@ -349,7 +355,7 @@ if __name__ == "__main__":
     for arg in ("out", "board", "bin", "prefix"):
         p.add_argument(arg, type=Path)
     p = sub.add_parser("run", add_help=False)
-    p.add_argument("variant", choices=("763","767","769","770","771","776","776B","777","777B","778","778B","779","779B","779C","780","781","781B","781C","782","782B","782C","782D","782E",*ROW_SCHEDULE_ELF))
+    p.add_argument("variant", choices=("763","767","769","770","771","776","776B","777","777B","778","778B","779","779B","779C","780","781","781B","781C","782","782B","782C","782D","782E",*ROW_SCHEDULE_ELF,*CONTROL_ELF))
     p.add_argument("extras", type=Path)
     p.add_argument("--boot-pair", action="store_true", help="stop after the first two displayed generations")
     p.add_argument("--omit-wait969", action="store_true")
