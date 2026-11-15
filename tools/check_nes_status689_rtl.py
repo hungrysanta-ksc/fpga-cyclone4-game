@@ -65,6 +65,25 @@ def prepare(a):
    if(!fault||dut.endpoint.accepted!=0||dut.ready)$fatal(1,"invalid length published");
   end
   $display("PASS689 checks=%0d compared=%0d phase=%0f half=%0f",checks,compared,PHASE,HALF);$finish;''')
+    if getattr(a, "stop_edge", False):
+        anchor = "  // High length bytes and low-byte overflow"
+        s = once(s,anchor,'''  // STOP sampled on the command edge must suppress this response's
+  // progress bit. STOP one clock later must suppress only future responses.
+  for(int late=0;late<2;late++)begin
+   event_write();expect_flags(10);
+   fork
+    status();
+    begin
+     do @(negedge clk); while(dut.endpoint.ss[1] || !dut.endpoint.sck[1] ||
+       dut.endpoint.prev_sck || dut.endpoint.byte_count!=0 || dut.endpoint.bit_count!=7);
+     if(late)@(negedge clk);
+     stop=1;@(negedge clk);stop=0;
+    end
+   join
+   if(rx[2] !== (late?8'd10:8'd2))$fatal(1,"STOP edge broke immutable flags");
+   expect_flags(2);
+  end
+''' + anchor)
     (a.out/'status689_tb.sv').write_text(s,newline='\n')
     commands=[('vlib',['work']),('vlog',['-sv',*files[:-1],*('reference_'+n for n in files[:3]),'status689_tb.sv'])]
     commands.extend((f'vsim{i}',['-c','status689_tb',f'-gPHASE={phase}',f'-gHALF={half}','-do','onbreak {quit -code 1}; onerror {quit -code 1}; run -all; quit -code 0']) for i,(phase,half) in enumerate(((0,190.476),(8,190.476),(0,47.619),(8,47.619))))
@@ -80,4 +99,5 @@ def prepare(a):
 if __name__=='__main__':
     p=argparse.ArgumentParser()
     for k in ('bin','base','board','out'):p.add_argument('--'+k,type=Path,required=True)
+    p.add_argument("--stop-edge",action="store_true")
     prepare(p.parse_args())
