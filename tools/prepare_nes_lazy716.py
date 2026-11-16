@@ -9,6 +9,12 @@ from nes_raw506 import once,sha
 def run(a):
  assert sha(a.base/'obj-nes-100/firmware.stm') in ('b5c42303c6831190f77c95367bd1640e3e575caea8e3909af27e2587ad5eb600','a1408f18a82602aa54fb67607c933c7dd5de79213e43adc1d2ee185ca3ae712a')
  names=('nes_planner211.c','nes_resident211.c','nes_resident211.h');f={n:(a.base/n).read_text() for n in names}
+ patch_rows(f,a.variant)
+ a.out.mkdir(parents=True,exist_ok=False)
+ for n,s in f.items():(a.out/n).write_text(s,encoding='utf8',newline='\n')
+ (a.out.parent/(a.out.name+'-recipe.json')).write_text(json.dumps(dict(stage=716,variant=a.variant,base={n:sha(a.base/n) for n in names},patch={n:sha(a.out/n) for n in names},new_static_RAM_B=0,new_SPI_opcode=False,extra_internal_argument_B=4),indent=2)+'\n')
+
+def patch_rows(f,variant):
  n='nes_resident211.h';f[n]=once(f[n],'uint64_t,struct nes_plan191 *);','uint64_t,struct nes_plan191 *,bool rows_ready);')
  n='nes_resident211.c';s=once(f[n],'uint64_t exact,struct nes_plan191 *q){','uint64_t exact,struct nes_plan191 *q,bool rows_ready){')
  s=once(s,'q->kind>2)return UINT16_MAX;','q->kind>2||(!rows_ready&&q->kind==2))return UINT16_MAX;')
@@ -36,7 +42,7 @@ def run(a):
  s=once(s,'   for(unsigned f=0;f<8;f++){q.row[f*2]=q.row[f*2+1]=(uint8_t)f;q.alt[f]=65535;}\n','')
  s=once(s,'nes_resident211_slot(resident,p,tag|((unsigned)masks[e]<<13),&q)','nes_resident211_slot(resident,p,tag|((unsigned)masks[e]<<13),&q,false)')
  s=once(s,'} /* full exceptional row mapping; ordinary q.row remains identity */','} /* Exceptional shape is complete; ordinary rows are filled on a miss. */');f[n]=s
- if a.variant=='b':
+ if variant=='b':
   # One real constructor serves exceptional caller and write-required miss.
   # Retained-bank hits keep the header/ownership checks without constructing
   # and then rechecking the ordinary constant shape that will not be sent.
@@ -62,9 +68,6 @@ static bool ordinary(const struct nes_plan191 *q,bool rows_ready){''')
   uint8_t *mapping=q.row;for(unsigned f=0;f<8;f++){mapping[f*2]=(uint8_t)f;mapping[f*2+1]=(uint8_t)f;}''','''  nes_resident716_rows(&q);
   uint8_t *mapping=q.row;''');f[n]=s
   n='nes_resident211.h';f[n]=once(f[n],'bool nes_resident211_prepare(', 'void nes_resident716_rows(struct nes_plan191 *);\nbool nes_resident211_prepare(')
- a.out.mkdir(parents=True,exist_ok=False)
- for n,s in f.items():(a.out/n).write_text(s,encoding='utf8',newline='\n')
- (a.out.parent/(a.out.name+'-recipe.json')).write_text(json.dumps(dict(stage=716,variant=a.variant,base={n:sha(a.base/n) for n in names},patch={n:sha(a.out/n) for n in names},new_static_RAM_B=0,new_SPI_opcode=False,extra_internal_argument_B=4),indent=2)+'\n')
 
 if __name__=='__main__':
  p=argparse.ArgumentParser()

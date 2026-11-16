@@ -64,6 +64,22 @@ def inputs(out, game):
 
 
 CONTROL_ELF = {
+    "811": "5d45693e95da069641cadd7601cb09ac0cf5de047f0f22dfeff770fa03ecfbae",
+    "812": "d8e2f9a0d980d7bd34aaf2c07093ae0f36abdb3078f597df6c84f5f38c067fc5",
+    "812B": "9e397034dd445a349adfe824682e5ef5bf6a427ef8fb656a98248e1b0035d60d",
+    "813": "573d336a9fb05687cde57eb134a12c77dd5b41a4b5576d8a0d42af37daa6f67c",
+    "814": "cb70cc3aad7bff2a0d1e8df45575be2e42695a513b447b0d180ca71abfca4488",
+    "812C": "cf5e930a5486c984976c5091bfe248fa6974ae6cbec6c1dfd0f118db19114bcb",
+    "810I": "735361910caa57f08c1df5102e2634d2d577c8834f7b100ea871d61149eeea5f",
+    "810H": "4df559b222da210336d8b03386f225278121707ff4315b4fb9e1d257d85c4b13",
+    "810G": "4d603853de584e8394d30ec1cede35f8bf6c71b123d2e859587b3e0ec1a15e04",
+    "810F": "5c2506f6505e4e164ffa5d0b924ced76223e898bd9ea4b354c217c55295c5c9b",
+    "810E": "353d53f76af909d0ab9ce40ccd0f12f77abdb3eb1304ba4514133489ac4e2bb4",
+    "810D": "2cd1bc3e461f306d2a6af66ad161c046d65c58b75cae0ab749a92f83a7799846",
+    "810C": "947c8f69829c3648997a7f229f3316024fa006289ddd1cd7a81961233bcc995f",
+    "810B": "0ce288b79ebfe860194b1f45bb8a156af799dcd9451c3fc5e7703b8c561467da",
+    "810": "5276828d5694e22601495a8fae78b54d5ea04aad0f6c78d7ffa7c8bbe6bc6ddb",
+    "809": "ea8b94b709277b7f0cb00b5673be6f9a739d825592c1324a85096f6490c564ad",
     "807": "d235e48351629ed83856964959d5af25493331389cf364f28abceedd376e0a0b",
     "808": "d91a41acbd7fea2bcedbcdf97c0bc671df1fbbedb509649b6444376ca75a3632",
     "805": "e7963092a753198a2c126fe0060531756063fd0477885abbed4c793bacb006c2",
@@ -350,7 +366,7 @@ end,emu.callbackType.write,0x7004,0x7007)
             stack.enter_context(patch.object(Runtime, "__init__", immediate969))
         if omit_wait:
             stack.enter_context(patch.object(Runtime, "__init__", hook))
-        runpy.run_module("test_nes_longrun694" if variant in ("793","797","799","803","804L","806","808") else "test_nes_status689" if variant in ("763","770","779C","780","781","781B","781C","782","782B","782C","782D","782E",*ROW_SCHEDULE_ELF,*CONTROL_ELF) else "test_nes_static751",run_name="__main__")
+        runpy.run_module("test_nes_longrun694" if variant in ("793","797","799","803","804L","806","808","812","812B","812C","814") else "test_nes_status689" if variant in ("763","770","779C","780","781","781B","781C","782","782B","782C","782D","782E",*ROW_SCHEDULE_ELF,*CONTROL_ELF) else "test_nes_static751",run_name="__main__")
 
 
 if __name__ == "__main__":
