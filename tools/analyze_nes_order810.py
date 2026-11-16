@@ -13,11 +13,11 @@ def ms(ticks):
     return ticks * 1000 / MASTER
 
 
-def schedule(folder, reference):
+def schedule(folder, reference, expected_client=None):
     joint = read(folder / "joint.json")
     assert joint["passed"] and joint["commits"] == joint["map_WRAM_VRAM_verified"] == 66
     assert joint["parameters"] == reference["parameters"]
-    assert joint["client_SHA256"] == reference["client_SHA256"]
+    assert joint["client_SHA256"] == (expected_client or reference["client_SHA256"])
     cpu = csv_groups(folder / "window.csv")
     events = read(folder / "events.json")
     packets = [json.loads(line) for line in (folder / "packets.jsonl").read_text().splitlines()]
@@ -78,7 +78,7 @@ def schedule(folder, reference):
                                                     "seal528.csv","budget685.csv","tile532.csv")})
 
 
-def compare(temp, labels):
+def compare(temp, labels, *, clients=None):
     results = {}
     for phase in (1,2):
         parent = temp / f"nes-output809-base-p{phase}"
@@ -92,7 +92,7 @@ def compare(temp, labels):
             for g in range(905,971):
                 for f in (f"expected-{g}.bin",f"map-{g}.bin",f"frame-{g}.rgb"):
                     assert (parent/f).read_bytes()==(d/f).read_bytes(),(label,phase,g,f)
-            row = schedule(d,baseline)
+            row = schedule(d,baseline,(clients or {}).get(label))
             rows[label] = row
             row["vs807_dense_ms"] = row["dense_ms"]-rows["base"]["dense_ms"]
             row["vs807_last_ACK_ms"] = ms(row["last_ACK"]-rows["base"]["last_ACK"])

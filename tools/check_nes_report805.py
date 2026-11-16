@@ -16,7 +16,7 @@ def check(src, n, recovered):
     with (src/"obj-nes-100/sd2snes.elf").open("rb") as f:
         symbols = ELFFile(f).get_section_by_name(".symtab")
         base = symbols.get_symbol_by_name("nes_run136")[0]["st_value"]
-        if n in (807,808):
+        if n in (807,808,811,812):
             trace = symbols.get_symbol_by_name("nes_trace166")[0]
             assert trace["st_size"]==44
             cpu.u.mem_write(trace["st_value"]+40,bytes([64,33]))
@@ -50,7 +50,7 @@ def check(src, n, recovered):
     name=f"/sd2snes/nes-game-last-mmc{n}.txt"
     assert active is None and set(files)=={name,f"/sd2snes/nes-budget-mmc{n}.txt"}
     g=fields(files[name].decode())
-    if n in (807,808):
+    if n in (807,808,811,812):
         assert (g["obj_line"],g["obj_load"])==("64","33")
     assert g["candidate"]==f"NES-MMC{n}" and g["menu_state"]=="PREPARED_RESET_HELD"
     assert g["fault_context_valid"]==g["ppu_state_valid"]=="1"

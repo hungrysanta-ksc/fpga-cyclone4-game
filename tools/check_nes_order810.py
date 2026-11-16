@@ -121,7 +121,7 @@ if __name__ == "__main__":
     parser.add_argument("output", type=Path)
     parser.add_argument("--credit",choices=("batch","idle","object"))
     parser.add_argument("--geometry",type=Path)
-    parser.add_argument("--grant-polls",type=int,choices=(24,56))
+    parser.add_argument("--grant-polls",type=int,choices=(24,32,56))
     args = parser.parse_args()
     scenarios = ("normal","cold","long_map","unfinished","no_patch","even","large","first_error","padding_error")
     result={"prefix":[case(args.arm,s) for s in scenarios]}

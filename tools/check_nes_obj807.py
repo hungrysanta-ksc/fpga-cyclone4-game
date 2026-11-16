@@ -82,7 +82,7 @@ class Receiver(Machine):
                      ((self.video,"nes_native_video165"),(self.resident,"nes_resident211")))
 
 
-def check(src):
+def check(src, *, limit=None):
     m = Receiver(src, bytes(128))
     m.token = 65520
     accepted = 0
@@ -123,7 +123,8 @@ def check(src):
     m.ops = []
     m.u.mem_map(0xe0001000,0x1000)
     runtime = 0x20013000
-    limit = 0 if b"mmc808.txt" in (src/"obj-nes-100/firmware.stm").read_bytes() else 6000
+    if limit is None:
+        limit = 0 if b"mmc808.txt" in (src/"obj-nes-100/firmware.stm").read_bytes() else 6000
     assert m.call("nes_runtime165_begin",[runtime,m.state,m.video,m.lut,m.spi|1,0x0807ffa1,
                   0x0807ff91,0,limit,m.resident,1,1])==1
     before = m.protected()
@@ -144,5 +145,6 @@ def check(src):
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("src",type=Path);p.add_argument("output",type=Path)
+    p.add_argument("--limit",type=int,choices=(0,6000),help="Runtime tick limit from the selected edition")
     a=p.parse_args()
-    a.output.write_text(json.dumps(check(a.src),indent=2)+"\n",newline="\n")
+    a.output.write_text(json.dumps(check(a.src,limit=a.limit),indent=2)+"\n",newline="\n")

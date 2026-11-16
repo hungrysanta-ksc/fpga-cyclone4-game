@@ -45,7 +45,7 @@ def check(src, policy):
     return dict(firmware=sha(src/"obj-nes-100/firmware.stm"),cases=cases)
 
 
-def reproduce_beam(trace, out, mesen, client):
+def reproduce_beam(trace, out, mesen, client, generation=957):
     """Replay the recorded packet prefix; keep the original independent guard."""
     import re
     import subprocess
@@ -54,7 +54,7 @@ def reproduce_beam(trace, out, mesen, client):
     import replay_nes_map527 as replay
     from trace_nes_owner739 import observe
     from nes_raw506 import once
-    args = SimpleNamespace(trace=trace,out=out,mesen=mesen,client=client,frames=53)
+    args = SimpleNamespace(trace=trace,out=out,mesen=mesen,client=client,frames=generation-905+1)
     def instrument(script):
         original = "beam685 and beam685.line>=225 and beam685.line<=252 and beam685.frame==st.frameCount"
         return once(script, "assert("+original+")", """assert("""+original+""",
@@ -67,12 +67,12 @@ def reproduce_beam(trace, out, mesen, client):
             pass
     message=(out/"map-error.txt").read_text()
     fields={name:int(value) for name,value in re.findall(r"(\w+)=(-?\d+)",message)}
-    assert fields["g"]==957 and not (225<=fields["sampled_line"]<=252 and fields["sampled_frame"]==fields["frame"])
+    assert fields["g"]==generation and not (225<=fields["sampled_line"]<=252 and fields["sampled_frame"]==fields["frame"])
     from analyze_nes_output768 import csv_groups
     def prefix(folder):
         return [(g,r["clock"]) for g,rows in csv_groups(folder/"window.csv").items()
                 for r in rows if r["op"]==3 and r["event"]=="reveal"]
-    assert prefix(trace)==prefix(out) and prefix(out)[-1][0]==956
+    assert prefix(trace)==prefix(out) and prefix(out)[-1][0]==generation-1
     (out/"beam.json").write_text(json.dumps(fields,indent=2)+"\n",newline="\n")
 
 
@@ -82,8 +82,9 @@ if __name__=="__main__":
     if sys.argv[1:2]==["beam"]:
         for key in ("trace","out","mesen","client"):
             p.add_argument(key,type=Path)
+        p.add_argument("--generation",type=int,default=957)
         a=p.parse_args(sys.argv[2:])
-        reproduce_beam(a.trace,a.out,a.mesen,a.client)
+        reproduce_beam(a.trace,a.out,a.mesen,a.client,a.generation)
         raise SystemExit(0)
     p.add_argument("src",type=Path)
     p.add_argument("policy",choices=("credit","firstfit","headfit","page"))
