@@ -31,7 +31,7 @@ def check(parent, src, edition):
     assert costs[18][1] < costs[18][0]
     guard = protocol_check(src,False,False,trial=str(edition))
     assert guard["ACK"]["corrupt_bits"] == 152
-    obj = obj_check(src,limit=0 if edition in (808,812) else 6000)
+    obj = obj_check(src,limit=0 if edition in (808,812,814) else 6000)
     assert obj["service_stop_pending"] and obj["runtime_consecutive_skips"] == 2
     result = {}
     for name,root in (("parent",parent),("candidate",src)):
@@ -46,7 +46,7 @@ if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("parent",type=Path)
     p.add_argument("src",type=Path)
-    p.add_argument("edition",type=int,choices=(807,808,811,812))
+    p.add_argument("edition",type=int,choices=(807,808,811,812,813,814))
     p.add_argument("out",type=Path)
     a=p.parse_args()
     a.out.write_text(json.dumps(check(a.parent,a.src,a.edition),indent=2)+"\n",newline="\n")
