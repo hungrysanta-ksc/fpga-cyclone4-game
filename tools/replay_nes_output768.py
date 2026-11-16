@@ -64,6 +64,7 @@ def inputs(out, game):
 
 
 CONTROL_ELF = {
+    "815": "631f8b3bb48d16ca26d664b1cd7709816be03caa26d6edb567d8aee639d24635",
     "811": "5d45693e95da069641cadd7601cb09ac0cf5de047f0f22dfeff770fa03ecfbae",
     "812": "d8e2f9a0d980d7bd34aaf2c07093ae0f36abdb3078f597df6c84f5f38c067fc5",
     "812B": "9e397034dd445a349adfe824682e5ef5bf6a427ef8fb656a98248e1b0035d60d",

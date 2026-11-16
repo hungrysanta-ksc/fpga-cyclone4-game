@@ -1,6 +1,6 @@
 # 프로젝트 현황
 
-목표는 sd2snes Cyclone IV 멀티 코어 확장이다. 최근 NES 실기 결과는 MMC807(60초)·808(장시간)에서 확인했다. [실기 결과](progress/pr-162.md#mmc807808-실기-결과) · [설치 안내](nes-mmc807-808-trial.ko.md) · [NES 인계](../cores/nes/HANDOFF.ko.md)
+목표는 sd2snes Cyclone IV 멀티 코어 확장이다. 최근 NES 실기 결과는 MMC813(60초)·814(장시간)에서 확인했다. [실기 결과](progress/pr-163.md) · [설치 안내](nes-mmc813-814-trial.ko.md) · [NES 인계](../cores/nes/HANDOFF.ko.md)
 
 시작 실패는 성능 집계에서 제외하고 자연 재발 시 두 실행의 로그 서명을 비교한다.
 
@@ -9,7 +9,7 @@
 | 코어 | 판정 | 근거·한계 |
 |---|---|---|
 | GB/GBC | 추가 성공·제품 공개 | G13C44/sd2snesHST0.9.0,[기준선](../cores/gbc/README.md)·[호환성](COMPATIBILITY.ko.md) |
-| NES | 개발 중·제품 미포함 | MMC807 SMB3 첫 레벨 5–55초 18.86 fps. MMC808 초과 화면 복구·직접 종료·메뉴 복귀 확인 |
+| NES | 개발 중·제품 미포함 | MMC813 SMB3 첫 레벨 5–55초 20.24 fps. MMC814 장시간 직접 종료·메뉴 복귀 확인 |
 | PC Engine | 조사 대기 | 구현·실기 성공 없음 |
 
 대상은FXPAK Pro/Mk.III,EP4CE15F17C8,STM32F401RCT6,PSRAM IS66WVE4M16EBLL-70BLI 두개다. 다른보드/전체IO승인을뜻하지않는다.
