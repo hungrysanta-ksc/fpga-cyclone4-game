@@ -1,5 +1,5 @@
 param(
-    [Parameter(Mandatory)][ValidateSet('807','809','810','810B','810C','810D','810E','810F','810G','810H','810I','811','812','812B','812C','813','814','815','815R')][string]$Variant,
+    [Parameter(Mandatory)][ValidateSet('807','809','810','810B','810C','810D','810E','810F','810G','810H','810I','811','812','812B','812C','813','814','815','815R','816','817')][string]$Variant,
     [Parameter(Mandatory)][ValidateSet(1,2)][int]$Phase,
     [Parameter(Mandatory)][string]$Game,
     [string]$TraceRoot=(Join-Path $env:LOCALAPPDATA 'Temp'),
@@ -24,6 +24,8 @@ try {
         '812'=@('mmc812','nes-trial811/link812')
         '812B'=@('mmc812b','nes-trial811/link812b')
         '813'=@('mmc813','nes-prefix813/link813')
+        '816'=@('mmc816','nes-trial816/link816')
+        '817'=@('mmc817','nes-trial816/link817')
         '815'=@('grant815','nes-output815/grant32')
         '815R'=@('raw815','nes-prefix813/link813')
         '814'=@('mmc814','nes-prefix813/link814')
@@ -32,6 +34,8 @@ try {
     $label,$build=$images[$Variant]
     $arm="../probes/$build/src"
     $client=if($Variant -in '812','812B','812C','814'){'../probes/nes-longrun694/client01'}else{'../probes/nes-complete685/client01'}
+    if ($Variant -eq '816') { $client='../probes/nes-output815/client' }
+    if ($Variant -eq '817') { $client='../probes/nes-trial816/client817' }
     if ($Variant -eq '815R') {
         $client='../probes/nes-output815/client'
         $Variant='813'
