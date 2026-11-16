@@ -53,19 +53,20 @@ def receiver(src,case):
     if case in ('STOP_before','STOP_after_READ','bad_CRC','failed_IO'):assert 0xd2 not in m.ops
     return dict(case=case,passed=bool(ok),ops=m.ops,receiver_state=m.state_value(),checks=m.checks)
 
-def caller(src,case):
+def caller(src,case,*,fail_drain=1):
     m=QuietProbe(src,'normal');m.heads=[];m.test_sink=sink=0x20015800;plan,window=0x20016300,0x20016b00
-    m.samples=m.drains=0;m.reasons=[];m.stop_at=1 if case=='STOP' else 0;m.bad_drain=1 if case=='bad_credit' else 0;m.reject_final=case=='bad_final'
+    m.samples=m.drains=0;m.reasons=[];m.stop_at=1 if case=='STOP' else 0;m.bad_drain=fail_drain if case in ('bad_credit','bad_progress') else 0;m.reject_final=case=='bad_final'
     m.u.mem_write(m.data_symbols['nes_cost471_available'],bytes(4))
-    for k,v,n in [('serial',48,4),('generation',952,2),('displayed',1,1),('state',1,1),('plan',plan,4),('enqueue',m.callback|1,4),('exchange',m.callback|1,4),('ack635',45|(46<<32),8),('obj_next',15 if case=='under_threshold' else 16,2)]:m.put(sink,'nes_native_sink165',k,v,n)
+    for k,v,n in [('serial',48,4),('generation',952,2),('displayed',1,1),('state',1,1),('plan',plan,4),('enqueue',m.callback|1,4),('exchange',m.callback|1,4),('ack635',45|(46<<32),8),('obj_next',15 if case in ('under_threshold','bad_progress') else 16,2)]:m.put(sink,'nes_native_sink165',k,v,n)
     for k,v in [('window',window),('guard',m.guard|1)]:m.put(plan,'nes_plan200',k,v,4)
     m.put(window,'nes_sink_window184','wait',m.guard|1,4)
     for k,v,n in [('prepared',1,1),('open',1,1),('displayed',1,1),('serial',48,4),('generation',952,2),('target',1,1),('map_upload',0x7ffff<<32,8)]:m.put(m.resident,'nes_resident211',k,v,n)
     for k,v,n in [('valid',1,1),('generation',952,2),('bg_count',1,2),('obj_count',16,2),('hdma_size',21,2),('display_mask',0x1e,1)]:m.put(m.video,'nes_native_video165',k,v,n)
     ok=m.call('nes_sink212_seal',[sink,m.video,m.resident,4192])
     assert bool(ok)==(case in ('normal','under_threshold'))
-    assert m.reasons==([] if case in ('under_threshold','bad_credit') else [4]),(case,m.reasons)
-    assert any(h[0]==3 for h in m.heads)==(case not in ('STOP','bad_credit'))
+    assert m.reasons==([] if case in ('under_threshold','bad_credit','bad_progress') else [4]),(case,m.reasons)
+    assert any(h[0]==3 for h in m.heads)==(case not in ('STOP','bad_credit','bad_progress'))
+    if case=='bad_progress':assert m.drains==fail_drain
     assert m.get(sink,'nes_native_sink165','ack635',8)==(45|((48 if ok else 46)<<32))
     return dict(case=case,committed=bool(ok),idle_calls=m.samples,drains=m.drains)
 

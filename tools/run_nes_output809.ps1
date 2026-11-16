@@ -1,5 +1,5 @@
 param(
-    [Parameter(Mandatory)][ValidateSet(807,809)][int]$Variant,
+    [Parameter(Mandatory)][ValidateSet('807','809','810','810B','810C','810D','810E','810F','810G','810H','810I')][string]$Variant,
     [Parameter(Mandatory)][ValidateSet(1,2)][int]$Phase,
     [Parameter(Mandatory)][string]$Game,
     [string]$TraceRoot=(Join-Path $env:LOCALAPPDATA 'Temp'),
@@ -8,9 +8,21 @@ param(
 $ErrorActionPreference='Stop'
 Push-Location (Split-Path $PSScriptRoot -Parent)
 try {
-    $label='base'
-    $arm='../probes/nes-obj807/link807/src'
-    if($Variant -eq 809){$label='fold';$arm='../probes/nes-output809/link807/src'}
+    $images=@{
+        '807'=@('base','nes-obj807/link807')
+        '809'=@('fold','nes-output809/link807')
+        '810'=@('order810','nes-order810/link807')
+        '810B'=@('order810b','nes-order810b/link807')
+        '810C'=@('order810c','nes-order810c/final807')
+        '810D'=@('order810d','nes-order810d/link807')
+        '810E'=@('order810e','nes-order810e/ship807')
+        '810F'=@('order810f','nes-order810f/link807')
+        '810G'=@('order810g','nes-order810g/final807')
+        '810H'=@('order810h','nes-order810h/link807')
+        '810I'=@('order810i','nes-order810i/link807')
+    }
+    $label,$build=$images[$Variant]
+    $arm="../probes/$build/src"
     $out=Join-Path $TraceRoot "nes-output809-$label-p$Phase"
     if(Test-Path -LiteralPath $out){throw "Output already exists: $out"}
     & $Python -X utf8 tools/replay_nes_output768.py run $Variant ../probes/nes-output768-inputs --arm $arm --game $Game --emit --geometry650 --commit-pop-bound `
