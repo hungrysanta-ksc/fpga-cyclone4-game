@@ -8,7 +8,8 @@ from check_nes_game478 import crc, sha
 from check_nes_supply485_arm import ARM
 
 
-def exercise(src, end, fixed, *, bad_status=False, end_plan=False):
+def exercise(src, end, fixed, *, bad_status=False, end_plan=False, advance_credit=False,
+             initial_plan_sent=3):
     m = ARM(src, "normal")
     m.setup()
     p, w, s = "nes_plan200", "nes_sink_window184", "nes_native_sink165"
@@ -22,7 +23,7 @@ def exercise(src, end, fixed, *, bad_status=False, end_plan=False):
     m.endpoint.generation=generation
     m.put(m.s,s,"generation",generation,2)
     m.put(m.p,p,"generation",generation,2)
-    m.put(m.p,p,"sent",3,2)
+    m.put(m.p,p,"sent",initial_plan_sent,2)
     m.put(m.p,p,"started",1,1)
     m.put(m.video,"nes_native_video165","hdma_size",21,2)
     m.put(m.video,"nes_native_video165","patch_count",1,1)
@@ -32,7 +33,7 @@ def exercise(src, end, fixed, *, bad_status=False, end_plan=False):
     def exchange(tx, clock):
         if tx[0] == 0xe8:
             descriptor=struct.pack("<BBHHHI",1,0,16,16,generation,2)
-            reply=bytes.fromhex("00d704010003")+descriptor+bytes(1)
+            reply=bytes.fromhex("00d70401")+struct.pack(">H",initial_plan_sent)+descriptor+bytes(1)
             return reply+bytes([crc(reply[1:],8,7,0)])
         if tx[0] == 0xe9:
             assert tx[3] == 2 and tx[4] == 0x81 and tx[12] == 0x83 and tx[-1] == 0xa5
@@ -43,9 +44,11 @@ def exercise(src, end, fixed, *, bad_status=False, end_plan=False):
             heads.append(tx[1:-2])
             return bytes(len(tx))
         assert tx == bytes([0xe0])+bytes(19) and len(heads) >= 4
-        retired = (initial+3) & 65535  # FIFO consumed the tile and two of three map packets
+        consumed = 5 if advance_credit and len(heads)==6 else 3
+        retired = (initial+consumed) & 65535
         accepted = (initial+len(heads)) & 65535
-        ack = bytes([0, heads[2][0]])+heads[2][2:10]+bytes.fromhex("659a")
+        latest=heads[consumed-1]
+        ack = bytes([0, latest[0]])+latest[2:10]+bytes.fromhex("659a")
         reported = (accepted+int(bad_status and bool(polls))) & 65535
         reply = bytes.fromhex("00f703")+struct.pack(">HH",reported,retired)+ack
         polls.append(reported)
@@ -68,6 +71,8 @@ def exercise(src, end, fixed, *, bad_status=False, end_plan=False):
     assert m.call("nes_scroll810",[m.s,m.video,0,0])
     issued = m.get(m.video,"nes_native_video165","scroll_issued")
     assert issued == int(not fixed)
+    if advance_credit and issued:
+        assert m.call("nes_window532_room",[m.w,m.q]) and m.u.mem_read(m.q,1) == b"\1"
     if end_plan:
         # Runtime enables quiet map service while END flushes the final OBJ.
         # A lone END can be deferred; exercise the actual nonempty batch here.
@@ -83,9 +88,9 @@ def exercise(src, end, fixed, *, bad_status=False, end_plan=False):
     assert m.get(m.p,p,"bulk_pending") == int(not ok or end_plan)
     assert result["window_error"] == result["plan_error"] == (0 if ok else 5)
     assert result["sent"] == ((end-2+int(end_plan and ok)) & 65535 if fixed else end)
-    assert result["retired"] == (end-3)&65535
-    assert result["plan_sent"] == 3+int(end_plan and ok)
-    assert len(polls) == 1+int(fixed) and result["flags"] == 3
+    assert result["retired"] == (end-(1 if advance_credit and issued else 3))&65535
+    assert result["plan_sent"] == initial_plan_sent+int(end_plan and ok)
+    assert len(polls) == 1+int(fixed)+int(advance_credit and issued) and result["flags"] == 3
     if not fixed:
         assert heads[-2][0:2]==bytes((2,5)) and heads[-1][0:2]==bytes((5,5))
     return result
