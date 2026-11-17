@@ -48,8 +48,8 @@ def verify_rejection(folder,fault):
         assert (folder/"fault.json").is_file()
 
 
-def replay(mode,phase,temp,budget,fixed=False,fault=None,tag=None):
-    client=OUT/"client"
+def replay(mode,phase,temp,budget,fixed=False,fault=None,tag=None,*,client=None,arm=None,overlay_root=OUT,on_attach=trace_credit,force_repair=False):
+    client=client or OUT/"client"
     label=json.loads((client/"labels.json").read_bytes())
     tag=tag or "833"+mode+("fixed" if fixed else "")+(fault or "")
     def adapt(s):
@@ -85,6 +85,11 @@ end,emu.callbackType.exec,DONE)
         hook=hook.replace("DAMAGE",action)
         if fault=="damage":
             hook+=f"checkedMem527(function() if bundle833() and pw(8)==909 and rows833==1 then local a=0x10000+word(0x7a)+62;emu.write(a,rd(a)~1,emu.memType.snesWorkRam) end end,emu.callbackType.exec,{label['check833']})\n"
+        if "repair834" in label:
+            hook+="local repairs834=assert(io.open(ROOT..'/repairs834.txt','w'))\n"
+            hook+=f"checkedMem527(function() if bundle833() then repairs834:write(pw(8)..' '..rows833..'\\n');repairs834:flush() end end,emu.callbackType.exec,{label['repair834']})\n"
+            if force_repair or fault=="damage":
+                hook+=f"local altered834=false;checkedMem527(function() if bundle833() and pw(8)==909 and rows833==1 and not altered834 then altered834=true;local a=0x10000+word(0x7a)+62;emu.write(a,pb(16)~1,emu.memType.snesWorkRam) end end,emu.callbackType.exec,{label['inspect834']})\n"
         anchor="checkedMem527(function()rpc()end"
         s=once(s,anchor,hook+anchor)
         if fault:
@@ -102,11 +107,11 @@ end,emu.callbackType.exec,DONE)
     folder=temp/f"nes-tile821-demoB-jointmirror-p{phase}-{tag}"
     if mode=="base":
         assert not fixed and not fault
-        run("base",phase,temp,budget,tag=tag,on_attach=trace_credit)
+        run("base",phase,temp,budget,tag=tag,on_attach=on_attach)
         return
     try:
-        run(mode,phase,temp,budget,fixed,arm=PROBES/"nes-output823"/("link-833"+mode),
-            overlay_root=OUT,tag=tag,client=None if fixed else client,adapt=adapt,on_attach=trace_credit)
+        run(mode,phase,temp,budget,fixed,arm=arm or PROBES/"nes-output823"/("link-833"+mode),
+            overlay_root=overlay_root,tag=tag,client=None if fixed else client,adapt=adapt,on_attach=on_attach)
     except (AssertionError,BrokenPipeError):
         if not fault:raise
         verify_rejection(folder,fault)

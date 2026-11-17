@@ -74,9 +74,9 @@ def sender(mode):
     (out/name).write_text(text,newline="\n")
 
 
-def client():
-    src=PROBES/"nes-output815/client"
-    assert sha(src/"sink165.sfc")=="3ca9aaefd9efad64a3cb63b59b627314f9f6b8e87fb79e236ba7e7d01fa856e1"
+def client(src=None,out=None,*,expected="3ca9aaefd9efad64a3cb63b59b627314f9f6b8e87fb79e236ba7e7d01fa856e1",step=8,inspect_first=False):
+    src=src or PROBES/"nes-output815/client"
+    assert sha(src/"sink165.sfc")==expected and step in (8,16)
     body=bytearray((src/"body.bin").read_bytes())
     c=Code(0x7e2000+len(body))
     c.labels.update(json.loads((src/"labels.json").read_bytes()))
@@ -98,16 +98,25 @@ def client():
     c.label("ordinary833");c.jump("literal1814")
     c.label("expand833");c.emit(0xc2,0x20,0x64,0x60)
     c.label("row833");c.emit(0xa6,0x60);c.branch(0xf0,"word833");c.emit(0xca,0xca)
-    c.label("word833");c.long(0xbf,0x400010);c.emit(0x85,0x62,0xa6,0x7a,0xa0,8,0)
+    c.label("word833");c.long(0xbf,0x400010);c.emit(0x85,0x62,0xa6,0x7a,0xa0,64//step,0)
+    if inspect_first:
+        # Check the physical destination, even on the first use of a bank.
+        # A miss starts a full write followed by a separate readback.
+        c.label("inspect834")
+        for off in range(0,step,2):
+            c.long(0xdf,0x7f0000+off);c.branch(0xd0,"repair834")
+        c.emit(0x8a,0x18,0x69,step,0,0xaa,0xa5,0x62,0x88)
+        c.branch(0xd0,"inspect834");c.jump("verified834")
+        c.label("repair834");c.emit(0xa6,0x7a,0xa0,64//step,0)
     c.label("store833")
-    for off in (0,2,4,6):c.long(0x9f,0x7f0000+off)
-    c.emit(0x8a,0x18,0x69,8,0,0xaa,0xa5,0x62,0x88);c.branch(0xd0,"store833")
-    c.emit(0xa6,0x7a,0xa0,8,0)
+    for off in range(0,step,2):c.long(0x9f,0x7f0000+off)
+    c.emit(0x8a,0x18,0x69,step,0,0xaa,0xa5,0x62,0x88);c.branch(0xd0,"store833")
+    c.emit(0xa6,0x7a,0xa0,64//step,0)
     c.label("check833")
-    for off in (0,2,4,6):
+    for off in range(0,step,2):
         c.long(0xdf,0x7f0000+off);c.branch(0xd0,"damage833")
-    c.emit(0x8a,0x18,0x69,8,0,0xaa,0xa5,0x62,0x88);c.branch(0xd0,"check833")
-    c.emit(0x86,0x7a,0xeb,0xc5,0x62);c.branch(0xd0,"service833")
+    c.emit(0x8a,0x18,0x69,step,0,0xaa,0xa5,0x62,0x88);c.branch(0xd0,"check833")
+    c.label("verified834");c.emit(0x86,0x7a,0xeb,0xc5,0x62);c.branch(0xd0,"service833")
     # Existing pending record uses byte+1 for an independently verified
     # uniform row; the ordinary BEGIN/fault/final ACK own its lifetime.
     c.emit(0x29,255,0,0x1a,0xa6,0x60);c.absolute(0x9d,0x14a0)
@@ -118,7 +127,7 @@ def client():
     c.branch(0xf0,"done833");c.jump("row833")
     c.label("done833");c.jump("accepted")
     body.extend(c.finish())
-    out=OUT/"client"
+    out=out or OUT/"client"
     with patch.object(codec,"pack",pack):
         codec.build(PROBES/"nes-reuse635/client04",out,edit_body=lambda *_:bytes(body),
                     allow_extension=True,prefix_sizes=[128,64,16,2],medium_pages=True,boot_bytes=320,fast_backrefs=True)

@@ -19,7 +19,7 @@ def thumb_bl(pc, target):
                        0xd000|(j1<<13)|(j2<<11)|((delta>>1)&2047))
 
 
-def build(mode, candidate=None, out_root=OUT):
+def build(mode, candidate=None, out_root=OUT, extra_entry=None):
     base=BASE/"src/obj-nes-100"
     candidate=candidate or (BASE if mode=="base" else PROBES/"nes-output823"/("link-832"+mode))
     obj=candidate/"src/obj-nes-100/nes_native_sink165.o"
@@ -37,13 +37,16 @@ SECTIONS { . = 0x08060000; .sink : { *(.text*) *(.rodata*) }
  /DISCARD/ : { *(.ARM.exidx*) *(.ARM.extab*) } }
 """)
     ld=next((PROBES.parent/".tools/arm-gnu-toolchain-13.3.rel1").glob("*/bin/arm-none-eabi-ld.exe"))
-    subprocess.run([ld,"--gc-sections","-T","layout.ld",obj.resolve(),"-o","sink.elf"],cwd=out,check=True)
+    retain=["--undefined",extra_entry] if extra_entry else []
+    subprocess.run([ld,"--gc-sections",*retain,"-T","layout.ld",obj.resolve(),"-o","sink.elf"],cwd=out,check=True)
     with (out/"sink.elf").open("rb") as f:
         elf=ELFFile(f)
         section=elf.get_section_by_name(".sink")
         assert section["sh_addr"]==0x08060000 and section.data_size<0x10000
         (out/"sink.bin").write_bytes(section.data())
         entry=elf.get_section_by_name(".symtab").get_symbol_by_name("nes_sink212_seal")[0]["st_value"]&~1
+        if extra_entry:
+            extra_target=elf.get_section_by_name(".symtab").get_symbol_by_name(extra_entry)[0]["st_value"]&~1
     sites=[]
     with (base/"nes_native_runtime165.o").open("rb") as f:
         elf=ELFFile(f)
@@ -62,6 +65,13 @@ SECTIONS { . = 0x08060000; .sink : { *(.text*) *(.rodata*) }
         original=thumb_bl(pc,syms["nes_sink212_seal"]&~1)
         assert flash[pc-0x0800c000:pc-0x0800c000+4]==original
         patches.append([pc,original.hex(),thumb_bl(pc,entry).hex()])
+    if extra_entry:
+        pc=syms[extra_entry]&~1
+        original=flash[pc-0x0800c000:pc-0x0800c000+4]
+        # A Thumb-2 unconditional B.W preserves the original caller's LR.
+        branch=bytearray(thumb_bl(pc,extra_target))
+        branch[3]&=0xbf
+        patches.append([pc,original.hex(),branch.hex()])
     (out/"entry.json").write_text(json.dumps(dict(entry=entry,patches=patches,
         parent=sha(base/"firmware.stm"),sink=sha(out/"sink.bin"),object=sha(obj))))
 
