@@ -140,8 +140,8 @@ class Trace(replay.TraceLink):
         return super().exchange(seq, t, op, args)
 
 
-def run(mode, phase, test):
-    tag = "842" + mode + test
+def run(mode, phase, test, *, tag=None, on_attach=None):
+    tag = tag or "842" + mode + test
     if test in ("opening","refopening"):
         client = CLIENT if test=="opening" else section.REFERENCE
         with patch.object(sys,"argv",["replay","","","","","",tag,str(BUDGET)]):
@@ -166,7 +166,7 @@ def run(mode, phase, test):
     with patch.object(replay, "TraceLink", Trace):
         try:
             replay.run("palette", phase, TEMP, BUDGET, arm=section.BASE if test=="original" else arm(mode),
-                       client=section.REFERENCE if fixed or test=="original" else CLIENT, tag=tag, adapt=adapt)
+                       client=section.REFERENCE if fixed or test=="original" else CLIENT, tag=tag, adapt=adapt, on_attach=on_attach)
         except (AssertionError,OSError,TimeoutError):
             if test not in ("stop","damage"):
                 raise

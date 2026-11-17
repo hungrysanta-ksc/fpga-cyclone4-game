@@ -12,9 +12,9 @@ from nes_tile842 import TEMP
 import nes_handoff843 as handoff
 
 
-def run(phase, test):
+def run(phase, test, *, dst=None, retime=None, adapt=None):
     src=folder(phase,"842controlfixed")
-    dst=TEMP/f"nes-handoff843-{test}{'-v3' if test in ('stop','tailstop','preempt') else ''}-p{phase}"
+    dst=dst or TEMP/f"nes-handoff843-{test}{'-v3' if test in ('stop','tailstop','preempt') else ''}-p{phase}"
     dst.mkdir(exist_ok=False)
     for pattern in ("client.sfc","expected-*.bin","map-*.bin","colors636-*.bin"):
         for file in src.glob(pattern):
@@ -35,6 +35,8 @@ def run(phase, test):
                "tail":start51-20000,"tailstop":start51-20000,"preempt":start51-20000}
         bg[1]=ticks[test]
         records.append(bg)
+        if retime is not None:
+            retime(records, first)
         records.sort(key=lambda r:r[1])
         for i in range(first,len(records)):
             b=bytearray.fromhex(records[i][2])
@@ -97,7 +99,7 @@ end
    tick=preempt843
    local f=assert(io.open(ROOT..'/preempt843.txt','w'));f:write(preempt843);f:close()
   end;rpc();observe843(a);""",1)
-    lua=lua.replace("assert(captured==commits)","assert(captured==commits);io843:close()",1)
+    lua=lua.replace("assert(captured==commits)","if completed843 then return end;assert(captured==commits);completed843=true;io843:close()",1)
     if test in ("stop","tailstop"):
         endmap=transfer["end"][0]
         condition=(f"emu.getState().masterClock>{endmap}" if test=="stop" else "selectedBG843")
@@ -121,6 +123,8 @@ end
         lua=lua.replace("local function loaded()",hook+
                         f"checkedMem527(cancel843,emu.callbackType.exec,{labels['stop523']})\n"+
                         f"checkedMem527(cancel843,emu.callbackType.exec,{labels['service_done']})\nlocal function loaded()",1)
+    if adapt is not None:
+        lua=adapt(lua)
     (dst/"capture.lua").write_text(lua,encoding="utf8")
     args=[str(TEMP/"nes-bonus698-mesen/Mesen.exe"),"--testRunner",str(dst/"capture.lua"),str(dst/"client.sfc"),
           "--timeout=600","--doNotSaveSettings","--enableStdout","--snes.disableFrameSkipping=true",
