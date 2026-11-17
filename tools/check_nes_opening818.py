@@ -11,7 +11,7 @@ from unicorn.arm_const import (UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2, UC_A
 from prepare_nes_opening818 import ADVENTURE_SHA, ROM_SHA, SRC, WORK
 
 
-def admission(src,raw):
+def admission(src,raw,edition=818):
     u=Uc(UC_ARCH_ARM,UC_MODE_THUMB|UC_MODE_MCLASS)
     for addr,size in ((0x08000000,0x80000),(0x20000000,0x20000),(0xe000e000,0x2000),(0x40000000,0x100000)):
         u.mem_map(addr,size)
@@ -26,8 +26,8 @@ def admission(src,raw):
                 u.mem_write(seg["p_vaddr"],seg.data())
         symbols={s.name:s["st_value"]&~1 for s in elf.get_section_by_name(".symtab").iter_symbols()}
     path,image,report,done=0x20001000,0x20001100,0x20001200,0x0807fff0
-    u.mem_write(path,b"/sd2snes/nes/mmc818.nes\0")
-    u.mem_write(image,b"/sd2snes/fpga_mmc818.bi3\0")
+    u.mem_write(path,f"/sd2snes/nes/mmc{edition}.nes\0".encode())
+    u.mem_write(image,f"/sd2snes/fpga_mmc{edition}.bi3\0".encode())
     st=dict(pos=0,read_B=0,program=False)
     yes=("nes_diag_sd_handoff113","nes_checkpoint_begin112","nes_checkpoint112","nes_cf86_enter094",
          "nes_css_begin108","nes_cf86_check094","nes_cf86_finish094")

@@ -11,7 +11,7 @@
 | 코어 | 상태 | 확인된 범위 | 다음 목표 |
 |---|---|---|---|
 | [GB/GBC](cores/gbc/README.md) | **추가 성공·공개 완료** | [sd2snesHST 0.9.1](https://github.com/hungrysanta-ksc/sd2snesHST/releases/tag/v0.9.1) 공개. 8 MiB MBC5 실행, 갤러가 타이틀·웬델린 카드 표시 실기 확인 | 검증된 구현·세이브 보존, 회귀 유지 |
-| [NES](cores/nes/README.md) | **개발 중** | SMB3 첫 레벨 5–55초 18.86 fps(MMC807). MMC808 장시간 실기에서 스프라이트 초과 화면 복구·직접 종료·메뉴 복귀 | 출력·최종 ACK 대기 단축, 60 fps |
+| [NES](cores/nes/README.md) | **개발 중** | [모험도 4 무입력 데모](docs/progress/pr-164.md#mmc825-실기-결과) 실기 60초 완주·메뉴 복귀. MMC825의 5–55초 평균 17.34 fps. SMB3 장시간 구동 확인 | 출력·최종 ACK 대기 단축, 60 fps |
 | [PC Engine](cores/pce/README.md) | 조사 대기 | 구현·실기 성공 없음 | NES 이후 범위·자원 검토 |
 
 PR155 병합 후 개발 기준은 MMC690이며, 다음 수치는 보존 대조군 MMC666의 기록이다. 실기에서 60.32초에 1,221화면(20.24fps)을 표시하고 메뉴로 복귀했다. 5–40초 19.63fps, 40–55초 19.33fps, 5–55초 19.54fps다. MMC662보다 초반은 소폭 상승하고 후반은 하락했으나 map·OBJ 작업량이 크게 달라 구현만의 개선·회귀를 확정하지 않는다. [실기 비교](docs/nes-hardware667-results.ko.md)

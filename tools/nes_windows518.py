@@ -9,6 +9,12 @@ from nes_transfer512 import compact_reports
 
 FIELD = 'display_1_40_60'
 TRIMMED_FIELD = 'display_5_40_55'
+DEMO_FIELD = 'display_1_30_60'
+LAYOUTS = {
+    FIELD: ((1,40),(40,60)),
+    TRIMMED_FIELD: ((5,40),(40,55)),
+    DEMO_FIELD: ((1,30),(30,60)),
+}
 def patch(src,out):
     assert sha(src/'obj-nes-100/firmware.stm')==json.loads((Path(__file__).resolve().parents[1]/'analysis/window516-package.json').read_text())['firmware_SHA256']
     out.mkdir(parents=True,exist_ok=False)
@@ -26,14 +32,15 @@ def windows(budget,elapsed_ms):
     from analyze_nes_supply485_hardware import fields
     b=fields(budget)
     # Old frame-start bins straddle 1s, and cannot reconstruct completion time.
-    if FIELD in b and TRIMMED_FIELD in b:raise ValueError('ambiguous window layout')
-    field = TRIMMED_FIELD if TRIMMED_FIELD in b else FIELD
-    if field not in b:return None
+    layouts = LAYOUTS.keys() & b.keys()
+    if len(layouts)>1:raise ValueError('ambiguous window layout')
+    if not layouts:return None
+    field = layouts.pop()
     if b.get('tick_ms')!='10':raise ValueError('unexpected tick rate')
     counts=b[field].split(',')
     if len(counts)!=2 or any(not c.isascii() or not c.isdecimal() for c in counts):raise ValueError('invalid display window counts')
     if elapsed_ms<60000:raise ValueError('incomplete 60-second observation')
-    bounds = [(5,40),(40,55)] if field == TRIMMED_FIELD else [(1,40),(40,60)]
+    bounds = LAYOUTS[field]
     return [dict(start_s=start,end_s=end,displays=int(n),fps=int(n)/(end-start)) for n,(start,end) in zip(counts,bounds)]
 
 def duration_ms(progress):
@@ -51,6 +58,14 @@ def duration_ms(progress):
 def read_run(budget, progress):
     return windows(budget.read_text(encoding="utf-8-sig"),
                    duration_ms(progress.read_text(encoding="utf-8-sig")))
+
+
+def fps_delta(previous, current):
+    if previous is None or current is None:
+        return None
+    if [(w["start_s"], w["end_s"]) for w in previous] != [(w["start_s"], w["end_s"]) for w in current]:
+        raise ValueError("Cannot compare FPS from different reporting windows")
+    return [c["fps"] - b["fps"] for b, c in zip(previous, current)]
 
 
 if __name__ == "__main__":
@@ -73,7 +88,5 @@ if __name__ == "__main__":
     else:
         previous = read_run(a.previous_budget, a.previous_progress)
         current = read_run(a.current_budget, a.current_progress)
-        delta = None
-        if previous is not None and current is not None:
-            delta = [c["fps"] - b["fps"] for b, c in zip(previous, current)]
+        delta = fps_delta(previous, current)
         print(json.dumps(dict(previous=previous, current=current, fps_delta=delta)))

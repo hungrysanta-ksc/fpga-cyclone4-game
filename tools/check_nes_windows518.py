@@ -4,7 +4,7 @@ import argparse
 import json
 from pathlib import Path
 from check_nes_game478 import Machine, sha
-from nes_windows518 import duration_ms, windows
+from nes_windows518 import DEMO_FIELD, FIELD, TRIMMED_FIELD, LAYOUTS, duration_ms, fps_delta, windows
 
 def run(a):
     m=Machine(a.arm,bytes(128))
@@ -15,18 +15,26 @@ def run(a):
         assert 0<n<6144 and m.u.mem_read(base+n,1)==b'\0'
         return bytes(m.u.mem_read(base,n)).decode('ascii')
     assert [w['displays'] for w in windows(report(),60000)]==[0,0]
-    trimmed = a.layout == 'trimmed'
-    ticks=([0,99,100,499,500,3999,4000,5499,5500,5999,6000,6011] if trimmed
-           else [0,99,100,3999,4000,5999,6000,6011])
+    field, ticks = {
+        'demo': (DEMO_FIELD,[0,99,100,2999,3000,5999,6000,6011]),
+        'trimmed': (TRIMMED_FIELD,[0,99,100,499,500,3999,4000,5499,5500,5999,6000,6011]),
+        'legacy': (FIELD,[0,99,100,3999,4000,5999,6000,6011]),
+    }[a.layout]
     before=0
+    expected=[0,0]
     for tick in ticks:
         m.call('nes_budget210_frame',[before])
         m.call('nes_budget210_display',[tick,m.video]);before=tick
+        for i,(start,end) in enumerate(LAYOUTS[field]):
+            if start*100 <= tick < end*100:
+                expected[i]+=1
+        assert [w['displays'] for w in windows(report(),60000)]==expected, tick
     m.call('nes_budget210_frame',[6012]) # unfinished frame
     out=report();result=windows(out,60070)
     assert [w['displays'] for w in result]==[2,2]
-    assert result[0]['fps']==2/(35 if trimmed else 39) and result[1]['fps']==2/(15 if trimmed else 20)
-    assert [(r['start_s'],r['end_s']) for r in result]==([(5,40),(40,55)] if trimmed else [(1,40),(40,60)])
+    assert tuple((r['start_s'],r['end_s']) for r in result)==LAYOUTS[field]
+    assert [r['fps'] for r in result]==[2/(end-start) for start,end in LAYOUTS[field]]
+    assert fps_delta(result,result)==[0,0]
     # The old per-frame-start bins and the new completion windows use different boundaries.
     assert sum(int(line.split('=')[1].split(',')[0],16) for line in out.splitlines()
                if line.startswith('b') and len(line)>4 and line[1:3].isdigit() and line[3]=='=')==len(ticks)
@@ -34,9 +42,12 @@ def run(a):
     m.call('nes_budget210_reset',[])
     assert all(w['displays']==0 for w in windows(report(),60000))
     assert windows('bin_ticks=500\n',60000) is None
-    field='display_5_40_55' if trimmed else 'display_1_40_60'
+    other = FIELD if field != FIELD else TRIMMED_FIELD
+    try:fps_delta(result, windows(out.replace(field,other),60000))
+    except ValueError:pass
+    else:raise AssertionError("Compared incompatible windows")
     for invalid,time in [(out,59990),(out.replace(field+'=2,2',field+'=2,-1'),60000),
-                         (out+'\n'+('display_1_40_60' if trimmed else 'display_5_40_55')+'=2,2\n',60000)]:
+                         (out+'\n'+other+'=2,2\n',60000)]:
         try:windows(invalid,time)
         except ValueError:continue
         raise AssertionError('Invalid observation accepted')
@@ -53,5 +64,5 @@ def run(a):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for n in ('arm','out'):p.add_argument('--'+n,type=Path,required=True)
-    p.add_argument('--layout',choices=('legacy','trimmed'),default='legacy')
+    p.add_argument('--layout',choices=('legacy','trimmed','demo'),default='legacy')
     a=p.parse_args();r=run(a);a.out.write_text(json.dumps(r,indent=2)+'\n',encoding='utf8',newline='\n');print(r)
