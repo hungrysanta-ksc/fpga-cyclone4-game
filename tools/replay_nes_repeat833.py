@@ -48,7 +48,7 @@ def verify_rejection(folder,fault):
         assert (folder/"fault.json").is_file()
 
 
-def replay(mode,phase,temp,budget,fixed=False,fault=None,tag=None,*,client=None,arm=None,overlay_root=OUT,on_attach=trace_credit,force_repair=False):
+def replay(mode,phase,temp,budget,fixed=False,fault=None,tag=None,*,client=None,arm=None,overlay_root=OUT,on_attach=trace_credit,force_repair=False,extra_trace=None):
     client=client or OUT/"client"
     label=json.loads((client/"labels.json").read_bytes())
     tag=tag or "833"+mode+("fixed" if fixed else "")+(fault or "")
@@ -103,7 +103,7 @@ end,emu.callbackType.exec,DONE)
             if fault=="damage":
                 # Corrupt once, even though the comparison loop revisits its PC.
                 s=once(s,"and rows833==1 then local","and rows833==1 and not injected833 then injected833=true;local")
-        return s
+        return extra_trace(s) if extra_trace else s
     folder=temp/f"nes-tile821-demoB-jointmirror-p{phase}-{tag}"
     if mode=="base":
         assert not fixed and not fault

@@ -74,7 +74,7 @@ def sender(mode):
     (out/name).write_text(text,newline="\n")
 
 
-def client(src=None,out=None,*,expected="3ca9aaefd9efad64a3cb63b59b627314f9f6b8e87fb79e236ba7e7d01fa856e1",step=8,inspect_first=False):
+def client(src=None,out=None,*,expected="3ca9aaefd9efad64a3cb63b59b627314f9f6b8e87fb79e236ba7e7d01fa856e1",step=8,inspect_first=False,repair_step=None):
     src=src or PROBES/"nes-output815/client"
     assert sha(src/"sink165.sfc")==expected and step in (8,16)
     body=bytearray((src/"body.bin").read_bytes())
@@ -107,6 +107,9 @@ def client(src=None,out=None,*,expected="3ca9aaefd9efad64a3cb63b59b627314f9f6b8e
             c.long(0xdf,0x7f0000+off);c.branch(0xd0,"repair834")
         c.emit(0x8a,0x18,0x69,step,0,0xaa,0xa5,0x62,0x88)
         c.branch(0xd0,"inspect834");c.jump("verified834")
+        if repair_step is not None:
+            assert repair_step in (2,4,8,16)
+            step=repair_step
         c.label("repair834");c.emit(0xa6,0x7a,0xa0,64//step,0)
     c.label("store833")
     for off in range(0,step,2):c.long(0x9f,0x7f0000+off)
