@@ -59,6 +59,8 @@ class GameLink(joint.Link):
         self.fp=(a.out/"producer.jsonl").open("w",buffering=1)
         def lua(args):
             s=a.template.read_text()
+            if getattr(a, "adapt_template", None):
+                s=a.adapt_template(s)
             s=re.sub('local ROOT=.*',lambda _: 'local ROOT='+json.dumps(a.out.as_posix()),s,count=1)
             for key,pipe in (("cmds",self.commands),("replies",self.replies)):
                 s=re.sub('local '+key+r'=assert\(io.open\("[^"]+"',lambda _: 'local '+key+'=assert(io.open('+json.dumps(pipe.name),s,count=1)
@@ -131,17 +133,17 @@ class GameLink(joint.Link):
         self.now=now
         return super().advance(now)
 
-def main(source,group,mode,phase,temp,*,arm=None,link_class=GameLink):
+def main(source,group,mode,phase,temp,*,arm=None,link_class=GameLink,client=None,client_hash=None,adapt_template=None):
     data=source/group
     start=7288416+(phase-1)*178684
     a=SimpleNamespace(arm=arm or WORK/"link820b/src",data=data,fixture=data,plans=data,
-        client=WORK.parent/"nes-output815/client",mesen=temp/"nes-bonus698-mesen/Mesen.exe",
+        client=client or WORK.parent/"nes-output815/client",adapt_template=adapt_template,mesen=temp/"nes-bonus698-mesen/Mesen.exe",
         out=temp/f"nes-tile821-{group}-{mode}-p{phase}-{sys.argv[6]}",mode=mode,rom_phase=0,
         start=start,cpi=2,candidate=True,frames=len(json.loads((data/"work.json").read_text())),
         calendar=temp/"nes-service509-rom03",trace_credit=True,capture_gate=True,early_export=True,commit_pop_bound=True,
         spi_us=0,rom_stride=48,driver503=None,template=temp/"nes-output809-mmc816-p1/capture.lua")
     assert sha(a.template).lower()=="7b4d48ae2bdb36f065b910dca7d8c379746126492a449a995e591e4b1d47445e"
-    assert sha(a.client/"sink165.sfc").lower()=="3ca9aaefd9efad64a3cb63b59b627314f9f6b8e87fb79e236ba7e7d01fa856e1"
+    assert sha(a.client/"sink165.sfc").lower()==(client_hash or "3ca9aaefd9efad64a3cb63b59b627314f9f6b8e87fb79e236ba7e7d01fa856e1")
     log=Path(sys.argv[7]) if len(sys.argv)>7 else Path.home()/"Downloads/nes-budget-mmc820.txt"
     budget=dict(l.strip().split("=",1) for l in log.read_text().splitlines() if "=" in l)
     def setup(original):
