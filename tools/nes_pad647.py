@@ -18,6 +18,12 @@ RAW_START = 1121
 def receiver(body, labels):
     body = bytearray(head_map(body, labels))
     assert hashlib.sha256(body).hexdigest() == "dc8db1b495328baf5dfdbb959adda660f0692b6be48d3a70028f2147b542f969"
+    return add_padding_history(body, labels)
+
+
+def add_padding_history(body, labels):
+    """Install the checked hooks on a caller-verified layout."""
+    body = bytearray(body)
     c = Code(ORIGIN + len(body))
     c.labels.update(labels)
 
