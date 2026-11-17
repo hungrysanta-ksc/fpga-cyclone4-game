@@ -37,18 +37,21 @@ class TraceLink(MirrorLink):
         return super().exchange(seq, t, op, args)
 
 
-def run(mode, phase, temp, budget, fixed=False, tail=False):
+def run(mode, phase, temp, budget, fixed=False, tail=False, *, arm=None, overlay_root=OUT,
+        tag=None, client=None, adapt=None, on_attach=None):
     assert not tail or fixed
-    arm = BASE if mode == "base" else PROBES/"nes-output823"/("link-832"+mode)
+    arm = arm or (BASE if mode == "base" else PROBES/"nes-output823"/("link-832"+mode))
     original = joint.Runtime.__init__
     def attach(cpu, *args):
         original(cpu, *args)
+        if on_attach:
+            on_attach(cpu)
         def mark(u, address, size, data):
             if cpu.link.generation == 909:
                 (cpu.a.out/"section-ready832.txt").write_text(str(cpu.clock))
         pos = cpu.syms["nes_sink212_seal"] & ~1
         if fixed:
-            overlay=OUT/("overlay-"+mode)
+            overlay=overlay_root/("overlay-"+mode)
             entry=json.loads((overlay/"entry.json").read_bytes())
             assert entry["parent"]==sha(BASE/"src/obj-nes-100/firmware.stm")
             assert entry["sink"]==sha(overlay/"sink.bin")
@@ -68,10 +71,11 @@ def run(mode, phase, temp, budget, fixed=False, tail=False):
             del cpu.patches832
         return original_call(cpu,name,args)
     with patch.object(joint.Runtime, "__init__", attach), patch.object(joint.Runtime,"call",call), patch.object(
-            sys, "argv", ["replay","","","","","","832"+mode+("tail" if tail else "")+("fixed" if fixed else ""),str(budget)]):
+            sys, "argv", ["replay","","","","","",tag or ("832"+mode+("tail" if tail else "")+("fixed" if fixed else "")),str(budget)]):
         main(PROBES/"nes-tile821/demo-extra01", "demoB", "jointmirror", phase,
              temp, arm=(BASE if fixed else arm)/"src", link_class=TraceLink,
-             adapt_template=(lambda s:after_display2572(s,PROBES/"nes-seal831/client-tail")) if tail else None)
+             client=client,client_hash=sha(client/"sink165.sfc") if client else None,
+             adapt_template=adapt or ((lambda s:after_display2572(s,PROBES/"nes-seal831/client-tail")) if tail else None))
 
 
 if __name__ == "__main__":

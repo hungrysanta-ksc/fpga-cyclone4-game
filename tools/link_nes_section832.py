@@ -19,11 +19,11 @@ def thumb_bl(pc, target):
                        0xd000|(j1<<13)|(j2<<11)|((delta>>1)&2047))
 
 
-def build(mode):
+def build(mode, candidate=None, out_root=OUT):
     base=BASE/"src/obj-nes-100"
-    candidate=BASE if mode=="base" else PROBES/"nes-output823"/("link-832"+mode)
+    candidate=candidate or (BASE if mode=="base" else PROBES/"nes-output823"/("link-832"+mode))
     obj=candidate/"src/obj-nes-100/nes_native_sink165.o"
-    out=OUT/("overlay-"+mode)
+    out=out_root/("overlay-"+mode)
     out.mkdir(exist_ok=True)
     with (base/"sd2snes.elf").open("rb") as f:
         syms={s.name:s["st_value"] for s in ELFFile(f).get_section_by_name(".symtab").iter_symbols() if s.name}
