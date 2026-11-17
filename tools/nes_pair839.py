@@ -137,10 +137,9 @@ def fixed_pair(s):
                        +"\n".join(edits)+"\n  end\n"+mark))
 
 
-def stop_pair(a):
+def stop_pair(a, *, arm=BASE, tag="839stopReturn"):
     from analyze_nes_map830 import window
     from replay_nes_section832 import run
-    tag="839stopReturn"
     label=json.loads((CLIENT/"labels.json").read_bytes())
     def inject(s):
         s=oracle(s)
@@ -168,7 +167,7 @@ end,emu.callbackType.exec,{label['stop523']})
 """
         return once(s,"checkedMem527(function()rpc()end",hook+"checkedMem527(function()rpc()end")
     try:
-        run("palette",a.phase,a.temp,a.budget,arm=BASE,client=CLIENT,tag=tag,adapt=inject)
+        run("palette",a.phase,a.temp,a.budget,arm=arm,client=CLIENT,tag=tag,adapt=inject)
     except (AssertionError,TimeoutError,OSError):
         folder=a.temp/f"nes-tile821-demoB-jointmirror-p{a.phase}-{tag}"
         rows=window(folder)
