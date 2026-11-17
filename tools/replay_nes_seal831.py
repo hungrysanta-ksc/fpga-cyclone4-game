@@ -11,7 +11,15 @@ from replay_nes_output822 import MirrorLink
 from replay_nes_tile821 import main
 
 
-def run(a):
+def after_display2572(s, client):
+    before=(PROBES/"nes-output815/client/body.bin").read_bytes()
+    after=(client/"body.bin").read_bytes()
+    edits=[f"emu.write({0x2000+i},{b},emu.memType.snesWorkRam)" for i,b in enumerate(after)
+           if i>=len(before) or before[i]!=b]
+    return once(s,"  lastStatus=ack[1];","  if pw(8)==908 and pb(0)==3 and ack[1]==1 then\n"+"\n".join(edits)+"\n  end\n  lastStatus=ack[1];")
+
+
+def run(a, *, arm_override=None, tag_override=None):
     short_sender=a.sender in ("short","splitshort")
     version=a.rom or ("short" if short_sender else "checked")
     if short_sender and version not in ("wire","short"):
@@ -20,8 +28,10 @@ def run(a):
     client={"stock":stock,"checked":OUT/"client","short":OUT/"client-short",
             "pad":OUT/"client-pad","wire":OUT/"client-wire","tail":OUT/"client-tail"}[version]
     link={"original":"link-826","joined":"link-830joined"}.get(a.sender,"link-831"+a.sender)
-    arm = PROBES/"nes-output823"/link
+    arm = arm_override or PROBES/"nes-output823"/link
     tag = "831"+a.sender+(a.rom or "")+("-guard-"+a.fault if a.fault else "")
+    if tag_override:
+        tag=tag_override
     if a.after2572:
         assert a.sender=="original" and version in ("checked","tail") and not a.fault
         tag+="fixed"
@@ -30,11 +40,7 @@ def run(a):
             # Diagnostic only. Execute the full MMC826 boot and previous
             # generations. On return of 2572's final ACK install only changed
             # executable WRAM bytes, leaving state, events and clocks intact.
-            before=(PROBES/"nes-output815/client/body.bin").read_bytes()
-            after=(client/"body.bin").read_bytes()
-            edits=[f"emu.write({0x2000+i},{b},emu.memType.snesWorkRam)" for i,b in enumerate(after)
-                   if i>=len(before) or before[i]!=b]
-            s=once(s,"  lastStatus=ack[1];","  if pw(8)==908 and pb(0)==3 and ack[1]==1 then\n"+"\n".join(edits)+"\n  end\n  lastStatus=ack[1];")
+            s=after_display2572(s,client)
         if version in ("pad","short"):
             # The monitor verifies every physical byte even on a reuse hit,
             # and permits zero DMA bytes only after the actual hit branch.
