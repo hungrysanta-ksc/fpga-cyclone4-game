@@ -9,7 +9,7 @@ from prepare_nes_trial802 import PROBES
 from analyze_nes_output822 import BASE_ARM, CLIENT
 
 
-def transition(temp):
+def transition(temp, editions=(820,824,825)):
     work=PROBES/"nes-trial825"
     schedule=json.loads((work/"data/change/work.json").read_text())
     pictures=[r["source_frame"] for r in schedule]
@@ -17,7 +17,7 @@ def transition(temp):
     results={}
     for phase in (1,2):
         control=temp/f"nes-tile821-change-base-p{phase}-825-820"
-        for edition in (820,824,825):
+        for edition in editions:
             folder=control if edition==820 else temp/f"nes-tile821-change-jointmirror-p{phase}-825-{edition}"
             arm=BASE_ARM if edition==820 else sha(PROBES/f"nes-output823/link-{edition}/src/obj-nes-100/firmware.stm")
             key=f"{edition}-p{phase}"

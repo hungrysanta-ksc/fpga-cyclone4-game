@@ -14,7 +14,7 @@ from prepare_nes_opening818 import ADVENTURE_SHA
 
 
 def package(temp, game, edition="824"):
-    assert edition in ("824","825")
+    assert edition in ("824","825","826")
     work = PROBES / f"nes-trial{edition}"
     links = PROBES / "nes-output823"
     src = links / f"link-{edition}/src"
@@ -46,7 +46,8 @@ def package(temp, game, edition="824"):
         "menu.json", "base/result.json", "timer.json", "windows.json")]
     assert menu["firmware"] == base["firmware_sha256"] == timer["firmware"] == windows["firmware_SHA256"] == digest(fw)
     assert menu["rows"]["normal"]["released"] and base["passed"] and base["safe_return"] and base["base_restored"]
-    assert timer["passed"] and windows["layout"] == "trimmed" and windows["unfinished_excluded"]
+    layout = "demo" if edition=="826" else "trimmed"
+    assert timer["passed"] and windows["layout"] == layout and windows["unfinished_excluded"]
 
     game_bytes = game.read_bytes()
     assert digest(game_bytes) == ADVENTURE_SHA
@@ -97,6 +98,15 @@ def package(temp, game, edition="824"):
         assert credit["replay"]["825"]["firmware"]==digest(fw)
         assert credit["replay"]["824"]["firmware"]==read(ROOT/"analysis/trial824-package.json")["arm"]
         evidence.update(transition=transition(temp),credit=credit)
+    if edition=="826":
+        from check_nes_demo825 import transition
+        evidence["transition"] = transition(temp, editions=(820,825,826))
+        prior = read(ROOT / "analysis/trial825-package.json")
+        for clip, run in evidence["final_runs"].items():
+            for metric in ("interval_vblanks","final_clock"):
+                assert run[metric] == prior["final_runs"][clip][metric], (clip,metric)
+        for phase in (1,2):
+            assert evidence["transition"]["results"][f"826-p{phase}"]["acks"] == prior["transition"]["results"][f"825-p{phase}"]["acks"]
     files["manifest.json"] = (json.dumps(evidence, indent=2) + "\n").encode()
     out = work / f"MMC{edition}-ADVENTURE-60SEC-SD-ROOT.zip"
     with ZipFile(out, "x") as z:
@@ -114,6 +124,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("temp", type=Path)
     parser.add_argument("game", type=Path)
-    parser.add_argument("--edition", choices=("824","825"),default="824")
+    parser.add_argument("--edition", choices=("824","825","826"),default="824")
     args = parser.parse_args()
     package(args.temp, args.game,args.edition)

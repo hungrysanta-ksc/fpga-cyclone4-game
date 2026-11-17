@@ -14,7 +14,7 @@ from replay_nes_tile821 import main, GameLink
 
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument("action",choices=("prepare","820","824","825"))
+    p.add_argument("action",choices=("prepare","820","824","825","826"))
     p.add_argument("temp",type=Path)
     p.add_argument("rom",type=Path)
     p.add_argument("--budget",type=Path)
