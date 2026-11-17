@@ -12,8 +12,8 @@ def read(path):
     return json.loads(path.read_bytes())
 
 
-def measure(phase,mode,test):
-    f=folder(phase,"842"+mode+test)
+def measure(phase,mode,test,tag=None):
+    f=folder(phase,tag or "842"+mode+test)
     rows=window(f)
     reveals=[point(r) for r in rows if r["event"]=="reveal"]
     costs=read(Path("analysis/section841-results.json"))["phases"][str(phase)]
