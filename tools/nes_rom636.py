@@ -49,7 +49,7 @@ def pack(body, prefix):
     return bytes(out)
 
 
-def build(base,out,*,edit_body=None,allow_extension=False,prefix_sizes=None,medium_pages=False,boot_bytes=BOOT,short_errors=False,fast_backrefs=False,body_limit=0x1900):
+def build(base,out,*,edit_body=None,allow_extension=False,prefix_sizes=None,medium_pages=False,boot_bytes=BOOT,short_errors=False,fast_backrefs=False,body_limit=0x1900,single_word_prefix=False):
     selected=json.loads(Path('analysis/reuse635-verification.json').read_text())
     assert sha(base/'sink165.sfc')==selected['phases'][0]['runs']['idle_short']['client']
     rom=(base/'sink165.sfc').read_bytes()
@@ -80,9 +80,14 @@ def build(base,out,*,edit_body=None,allow_extension=False,prefix_sizes=None,medi
             return
         c.emit(branch^0x20,3);c.jump('bad')
     immediate(0xa9,prefix-1);immediate(0xa2,first);immediate(0xa0,DEST)
-    c.emit(0x54,0x7e,0x00);immediate(0xa2,0)
-    c.label('prefix');c.long(0xbf,first);c.long(0xdf,0x7e0000+DEST);bad_if(0xd0)
-    c.emit(0xe8,0xe8);immediate(0xe0,prefix);c.branch(0xd0,'prefix')
+    c.emit(0x54,0x7e,0x00)
+    if single_word_prefix:
+        assert prefix==2
+        c.long(0xaf,first);c.long(0xcf,0x7e0000+DEST);bad_if(0xd0)
+    else:
+        immediate(0xa2,0)
+        c.label('prefix');c.long(0xbf,first);c.long(0xdf,0x7e0000+DEST);bad_if(0xd0)
+        c.emit(0xe8,0xe8);immediate(0xe0,prefix);c.branch(0xd0,'prefix')
     c.emit(0xe2,0x20,0x64,2)
     c.label('pass');immediate(0xa2,first+prefix);immediate(0xa0,DEST+prefix)
     c.label('token');call(c,'read')

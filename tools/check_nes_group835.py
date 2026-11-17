@@ -10,10 +10,10 @@ from replay_nes_seal831 import after_display2572
 from replay_nes_section832 import run
 
 
-def guard(phase,temp,budget,fault):
-    client=OUT/"client-warm"
+def guard(phase,temp,budget,fault,*,client=None,tag_prefix="835warmguard",mode="progress",overlays=OUT,raw_row=False):
+    client=client or OUT/"client-warm"
     labels=json.loads((client/"labels.json").read_bytes())
-    tag="835warmguard"+fault
+    tag=tag_prefix+fault
     def adapt(s):
         s=after_display2572(s,client)
         hook="""
@@ -23,12 +23,14 @@ local function seal835() return packet and pb(0)==3 and pw(8)==909 end
 """
         if fault=="stop":
             hook+=f"""
-checkedMem527(function() if seal835() then armed835=true end end,emu.callbackType.exec,{labels['early835']})
+checkedMem527(function() if seal835() then armed835=true end end,emu.callbackType.exec,{labels['raw836'] if raw_row else labels['early835']})
+local n835=0
 checkedMem527(function() if armed835 and seal835() and not stopped835 then
+ n835=n835+1;if n835<{2 if raw_row else 1} then return end
  stopped835=true
  local f=assert(io.open(ROOT..'/injected835.txt','w'))
  f:write(emu.getState().masterClock);f:close()
-end end,emu.callbackType.exec,{labels['service835']})
+end end,emu.callbackType.exec,{labels['row836'] if raw_row else labels['service835']})
 """
             s=once(s," if a==0x6001 then"," if a==0x6001 then\n  if stopped835 then return 128 end")
         else:
@@ -37,7 +39,7 @@ end end,emu.callbackType.exec,{labels['service835']})
         s=once(s,"local FAULT=905","local FAULT=909")
         return once(s,"checkedMem527(function()rpc()end",hook+"checkedMem527(function()rpc()end")
     try:
-        run("progress",phase,temp,budget,True,overlay_root=OUT,tag=tag,adapt=adapt)
+        run(mode,phase,temp,budget,True,overlay_root=overlays,tag=tag,adapt=adapt)
     except (AssertionError,BrokenPipeError):
         folder=temp/f"nes-tile821-demoB-jointmirror-p{phase}-{tag}"
         events=window(folder)
