@@ -20,6 +20,12 @@ MASTER=21477272
 PERIOD=341*262*4
 ARM_HZ=84000000
 
+def frame_generations(a):
+    return getattr(a, 'generations', range(905,905+a.frames))
+
+def next_generation(a,g):
+    return getattr(a,'next_generation',{}).get(g,g+1)
+
 def replace(s,a,b):
     assert s.count(a)==1,(a,s.count(a))
     return s.replace(a,b)
@@ -109,7 +115,7 @@ class Link:
         self.token=0;self.accepted=0;self.end=False;self.producer_clock=0;self.calls=[]
         self.generation=905;self.tilebytes={};self.max_banks=0;self.rom_reads=0;self.max_rounding=0;self.future=[]
         self.plansets={}
-        for g in range(905,905+a.frames):
+        for g in frame_generations(a):
             self.plansets[g]=[bytes.fromhex(q)for _,q in json.loads((a.plans/f'frame{g}/plans.json').read_text())]
             shutil.copyfile(a.fixture/f'expected-{g}.bin',a.out/f'expected-{g}.bin')
         blob=(a.fixture/'requests.bin').read_bytes();at=0;index=0
@@ -254,7 +260,7 @@ class Link:
             assert self.sent==self.retired and self.last[0]==1 and self.last[1]==3
             assert tx[1:3]==struct.pack('<H',self.generation) and int.from_bytes(tx[3:5],'big')==self.accepted
             assert self.plan_at==len(self.plansets[self.generation])+1
-            self.generation+=1;self.plan_at=0;self.accepted=0;self.end=False
+            self.generation=next_generation(self.a,self.generation);self.plan_at=0;self.accepted=0;self.end=False
         return t
 
 class Runtime(ARM):
@@ -304,7 +310,7 @@ class Runtime(ARM):
     def begin_input(self, generation=None):
         self.input_generation=self.generation if generation is None else generation
         self.index=0;self.prepared=False
-        if self.input_generation>=905+self.a.frames:return
+        if self.input_generation>frame_generations(self.a)[-1]:return
         g=self.input_generation;geom=(self.a.data/f'frame{g}.geometry').read_bytes();raw=(self.a.data/f'frame{g}.raw').read_bytes()
         self.packets,_,_=(encode if self.a.candidate else old_encode)(geom,raw,g)
         if self.a.capture_gate and g>905:
@@ -316,8 +322,9 @@ class Runtime(ARM):
     def offer_input(self):
         # END must have drained the old tile reader. The output generation and
         # its committed capture cache stay owned until the actual ACK and EA.
-        upcoming=self.generation+1
-        if (self.input_generation!=self.generation or upcoming>=905+self.a.frames
+        upcoming=next_generation(self.a,self.generation)
+        if (self.input_generation!=self.generation or upcoming>frame_generations(self.a)[-1]
+                or self.generation in getattr(self.a,'blank_frames_after',{})
                 or self.index!=len(self.packets) or not self.prepared
                 or self.clock<self.next_capture_ready or not self.link.end
                 or self.link.todo or self.link.flight or self.link.open or self.link.jobs):
@@ -388,9 +395,19 @@ class Runtime(ARM):
         if getattr(self.a,'trace_credit',False) and op in (0xe0,0xe8):
             self.events[-1]['reply']=bytes(rx).hex()
         if op==0xea:
-            self.generation+=1
+            previous=self.generation
+            self.generation=next_generation(self.a,previous)
             if self.input_generation!=self.generation:
-                assert self.input_generation==self.generation-1
+                assert self.input_generation==previous
+                blanks=getattr(self.a,'blank_frames_after',{}).get(previous,0)
+                if blanks:
+                    # Invalid geometry cannot export while the old display lease
+                    # is live. The source PPU keeps running throughout the gap.
+                    gap=dict(event='blank_interval',generation=previous,ea_start=start,
+                        first_ready=self.next_capture_ready,retire_EA=self.clock,source_frames=blanks)
+                    self.events.append(gap)
+                    (self.a.out/'blank-interval.json').write_text(json.dumps(gap))
+                    self.next_capture_ready+=blanks*PERIOD
                 self.start_token=(self.start_token+len(self.packets))&65535
                 self.begin_input()
         assert len(rx)==n;u.mem_write(u.reg_read(UC_ARM_REG_R2),rx);ret(1)
@@ -420,7 +437,7 @@ def run(a):
     a.out.mkdir(parents=True,exist_ok=False);link=Link(a)
     try:
         m=Runtime(a,link);steps=0
-        while m.generation<905+a.frames:
+        while m.generation<=frame_generations(a)[-1]:
             before=m.generation
             ok=m.call('nes_runtime165_step',[m.rt])
             if not ok:

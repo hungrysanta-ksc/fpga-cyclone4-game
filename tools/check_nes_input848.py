@@ -17,7 +17,7 @@ def run(board, data, arm, out):
         raise RuntimeError("Run inside the project FLOAT wrapper")
     work = json.loads((data / "work.json").read_text())
     gens = [row["g"] for row in work]
-    assert gens == list(range(905, 905 + len(work)))
+    assert gens[0] == 905 and gens == sorted(set(gens))
     args = SimpleNamespace(board=board, data=data, out=out, guards=False,
                            bin=Path("C:/altera_standard/25.1std/questa_fse/win64"))
     prepare(args, encoder=encode, codec="nes_geometry_sender653.sv", bench=bench, generations=gens)

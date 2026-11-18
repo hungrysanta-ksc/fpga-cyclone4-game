@@ -35,7 +35,7 @@ def frame_fetches(capture):
     return byframe.get
 
 
-def prepare(rtl,capture,rom,src,out,groups=None):
+def prepare(rtl,capture,rom,src,out,groups=None,*,capture_generations=None):
     assert sha(rom)==ADVENTURE_SHA
     chr=rom.read_bytes()[-131072:]
     out.mkdir(parents=True,exist_ok=False)
@@ -53,7 +53,7 @@ def prepare(rtl,capture,rom,src,out,groups=None):
         cache={}
         folded={}
         for serial,f in enumerate(frames,1):
-            g=904+serial
+            g=904+serial if capture_generations is None else capture_generations[f]
             d=base/f"frame{g}"
             d.mkdir()
             packets,geo,raw,_=inputs(rtl,f,wire_generation=g)

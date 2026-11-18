@@ -65,7 +65,7 @@ class GameLink(joint.Link):
             for key,pipe in (("cmds",self.commands),("replies",self.replies)):
                 s=re.sub('local '+key+r'=assert\(io.open\("[^"]+"',lambda _: 'local '+key+'=assert(io.open('+json.dumps(pipe.name),s,count=1)
             s=s.replace("and 66 or","and "+str(a.frames)+" or")
-            for g in range(905,905+a.frames):
+            for g in joint.frame_generations(a):
                 for k in ("colors636","map"):
                     name=f"{k}-{g}.bin"
                     shutil.copyfile(a.data/name,a.out/name)
@@ -143,6 +143,12 @@ def main(source,group,mode,phase,temp,*,arm=None,link_class=GameLink,client=None
         calendar=temp/"nes-service509-rom03",trace_credit=True,capture_gate=True,early_export=True,commit_pop_bound=True,
         spi_us=0,rom_stride=48,driver503=None,template=temp/"nes-output809-mmc816-p1/capture.lua")
     assert sha(a.template).lower()=="7b4d48ae2bdb36f065b910dca7d8c379746126492a449a995e591e4b1d47445e"
+    work=json.loads((data/"work.json").read_bytes())
+    a.generations=[w["g"] for w in work]
+    assert a.generations==sorted(set(a.generations)) and a.generations[0]==905
+    a.next_generation=dict(zip(a.generations,a.generations[1:]))
+    a.blank_frames_after={w["g"]:z["source_frame"]-w["source_frame"]-1 for w,z in zip(work,work[1:])
+                          if z["g"]>w["g"]+1}
     assert sha(a.client/"sink165.sfc").lower()==(client_hash or "3ca9aaefd9efad64a3cb63b59b627314f9f6b8e87fb79e236ba7e7d01fa856e1")
     log=Path(sys.argv[7]) if len(sys.argv)>7 else Path.home()/"Downloads/nes-budget-mmc820.txt"
     budget=dict(l.strip().split("=",1) for l in log.read_text().splitlines() if "=" in l)

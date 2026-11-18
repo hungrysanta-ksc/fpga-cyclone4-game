@@ -24,7 +24,7 @@ def run(capture, board, out):
     simulate(board, out, [(f, f) for f in json.loads((capture/"capture.json").read_text())["sampled"]])
 
 
-def simulate(board, out, ranges, *, adapt=None):
+def simulate(board, out, ranges, *, adapt=None, extra_modules=()):
     assert os.environ["SALT_LICENSE_SERVER"] == "18000@localhost"
     bench=(ROOT/"tests/nes-functional/geometry230_tb.sv").read_text()
     bench=bench.replace(".frame_owned(owned)",".start_permitted(1'b1),.discard_permitted(1'b1),.frame_owned(owned)")
@@ -35,7 +35,7 @@ def simulate(board, out, ranges, *, adapt=None):
     bench=bench.replace("enable=0;$fclose(fd);", "enable=0;$fclose(fd);$fclose(cf);")
     (out/"mask820_tb.sv").write_text(adapt(bench) if adapt else bench)
     names=["nes_native_frame201","nes_native_planes165","nes_patch_capture181","nes_patch_rows181",
-           "nes_native_compact181","nes_native_raster181","nes_native_export203"]
+           "nes_native_compact181","nes_native_raster181","nes_native_export203",*extra_modules]
     q=Path("C:/altera_standard/25.1std/questa_fse/win64")
     def call(tool,args,label):
         with (out/(label+".log")).open("wb") as f:
