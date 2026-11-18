@@ -125,21 +125,27 @@ packet=requests[index];""".replace('SEED',json.dumps(seed.as_posix())))
     else:
         lua=once(lua,"local MODE='normal'","local MODE='guard852'")
         lua=once(lua,'local FAULT=905','local FAULT='+str(g))
-        if case in ('damage','stop','prefix'):
-            action={'stop':'stop852=true','damage':"emu.write(0x10000+word(0x7a)+63,0x81,emu.memType.snesWorkRam)",
+        if case in ('damage','stop','prefix','omitted','overlap','tail-last','late-stop'):
+            action={'tail-last':"local a=0x10000+word(0x7a)+1471;emu.write(a,0x81,emu.memType.snesWorkRam);emu.write(a~32768,0x81,emu.memType.snesWorkRam)",
+                    'late-stop':'stop852=true','omitted':"local a=0x10000+word(0x7a);emu.write(a,rd(a)~1,emu.memType.snesWorkRam)",
+                    'overlap':"emu.write(0x1316,rd(0x1316)|0x40,emu.memType.snesWorkRam)", 'stop':'stop852=true','damage':"emu.write(0x10000+word(0x7a)+63,0x81,emu.memType.snesWorkRam)",
                     'prefix':"local a=0x10000+word(0x7a);emu.write(a,rd(a)~1,emu.memType.snesWorkRam)"}[case]
             if column_client:
-                site=labels['column_service'] if case=='stop' else labels['column_write']
+                site=labels['column_service'] if case in ('stop','late-stop') else labels['column_write']
+                if case=='overlap':site=labels['column_mark']
                 if case=='prefix':
                     site=labels['column_written']
-                    action="local a=0x10000+word(0x7a)+emu.getState()['cpu.y'];emu.write(a,rd(a)~1,emu.memType.snesWorkRam)"
+                    operand=(client/"body.bin").read_bytes()[site-0x7e2000:site-0x7e2000+2]
+                    assert operand in (bytes.fromhex("d1 7a"),bytes.fromhex("d1 68"))
+                    action="local a=0x10000+word("+str(operand[1])+")+emu.getState()['cpu.y'];emu.write(a,rd(a)~1,emu.memType.snesWorkRam)"
             else:
                 site=labels['check_tail852']
+            condition="and word(0x60)==26 " if case=="late-stop" else ""
             hooks=f"""
 local stop852=false
 local injected852=false
 checkedMem527(function()
- if not injected852 then
+ if not injected852 {condition}then
   injected852=true
   {action}
  end
@@ -165,7 +171,7 @@ end,emu.callbackType.exec,{site})
                        env=dict(os.environ,DOTNET_ROOT='C:/works/dotnet',DOTNET_ROOT_X64='C:/works/dotnet'))
     result=json.loads((out/'result.json').read_bytes())
     assert result['passed'] and result['commits']==commits
-    assert result['last_status']==(1 if case=='restart' else 228 if case=='stop' else 224)
+    assert result['last_status']==(1 if case=='restart' else 228 if case in ('stop','late-stop') else 224)
     if case!='restart' and commits:
         assert sha(out/'retained.rgb')==sha(trial/f'frame-{g-1}.rgb')
     elif case=='restart':

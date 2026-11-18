@@ -10,14 +10,16 @@ from nes_raw506 import once
 from prepare_nes_column853 import PROBE
 
 
-def run(temp,clip,phase,enabled,tag,scalar=False,eager=False):
+def run(temp,clip,phase,enabled,tag,scalar=False,eager=False,arm=None,client=None):
     root=temp/('nes-trans850-c0' if clip=='transition' else 'nes-comparison851')
-    arm=PROBE/('link3/src' if eager else 'link5/src')
-    client=PROBE/('client' if scalar else 'fast')
+    arm=arm or PROBE/('link3/src' if eager else 'link5/src')
+    client=client or PROBE/('client' if scalar else 'fast')
     source=json.loads((root/f'sender-{clip}/sender.json').read_bytes())
     original=joint.Runtime.__init__
     def init(cpu,a,link):
         original(cpu,a,link)
+        if 'disable_column' not in cpu.layout['nes_native_sink165']:
+            return
         field=cpu.layout['nes_native_sink165']['disable_column']
         cpu.u.mem_write(cpu.rt+cpu.layout['nes_native_runtime165']['sink']+field,bytes([not enabled]))
     def template(s):
@@ -28,6 +30,8 @@ def run(temp,clip,phase,enabled,tag,scalar=False,eager=False):
         # All hooks observe clocks without altering the client or its schedule.
         hooks=[]
         for label in ('column_write','literal1814','column_service','accepted'):
+            if label not in labels:
+                continue
             hooks.append(f"checkedMem527(function() if packet and pb(1)==2 then sample516('{label}') end end,emu.callbackType.exec,{labels[label]})")
         s=once(s,'local function loaded()', '\n'.join(hooks)+'\nlocal function loaded()')
         return s
@@ -46,5 +50,7 @@ if __name__=='__main__':
     p.add_argument('tag')
     p.add_argument('--scalar',action='store_true')
     p.add_argument('--eager',action='store_true')
+    p.add_argument('--arm',type=Path)
+    p.add_argument('--client',type=Path)
     a=p.parse_args()
-    run(a.temp,a.clip,a.phase,a.policy=='on',a.tag,scalar=a.scalar,eager=a.eager)
+    run(a.temp,a.clip,a.phase,a.policy=='on',a.tag,scalar=a.scalar,eager=a.eager,arm=a.arm,client=a.client)
