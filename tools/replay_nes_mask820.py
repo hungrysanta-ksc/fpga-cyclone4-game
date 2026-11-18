@@ -21,6 +21,11 @@ def run(capture, board, out):
         for ext in ("hex","palette"):
             f=stim/f"frame{frame}.{ext}"
             shutil.copyfile(f,out/f.name)
+    simulate(board, out, [(f, f) for f in json.loads((capture/"capture.json").read_text())["sampled"]])
+
+
+def simulate(board, out, ranges, *, adapt=None):
+    assert os.environ["SALT_LICENSE_SERVER"] == "18000@localhost"
     bench=(ROOT/"tests/nes-functional/geometry230_tb.sv").read_text()
     bench=bench.replace(".frame_owned(owned)",".start_permitted(1'b1),.discard_permitted(1'b1),.frame_owned(owned)")
     bench=bench.replace('enable=1;', '''cf=$fopen($sformatf("frame%0d.query",f),"w");enable=1;''')
@@ -28,7 +33,7 @@ def run(capture, board, out):
    $fwrite(cf,"%0d %0d %016h\\n",query_kind,query_index,data);
   if(!reset&&enable&&tx_valid''')
     bench=bench.replace("enable=0;$fclose(fd);", "enable=0;$fclose(fd);$fclose(cf);")
-    (out/"mask820_tb.sv").write_text(bench)
+    (out/"mask820_tb.sv").write_text(adapt(bench) if adapt else bench)
     names=["nes_native_frame201","nes_native_planes165","nes_patch_capture181","nes_patch_rows181",
            "nes_native_compact181","nes_native_raster181","nes_native_export203"]
     q=Path("C:/altera_standard/25.1std/questa_fse/win64")
@@ -38,10 +43,10 @@ def run(capture, board, out):
     call("vlib",["work"],"lib")
     call("vlog",["-sv",*[board/(n+".sv") for n in names],"mask820_tb.sv"],"compile")
     failures=[]
-    for frame in json.loads((capture/"capture.json").read_text())["sampled"]:
-        call("vsim",["-c","work.geometry230_tb",f"+FIRST={frame}",f"+LAST={frame}",
+    for frame,last in ranges:
+        call("vsim",["-c","work.geometry230_tb",f"+FIRST={frame}",f"+LAST={last}",
                      "-do","onerror {quit -code 1}; run -all; quit -f"],str(frame))
-        if "PASS GEOMETRY230 frames=1" not in (out/f"{frame}.log").read_text(errors="replace"):
+        if f"PASS GEOMETRY230 frames={last-frame+1}\n" not in (out/f"{frame}.log").read_text(errors="replace"):
             failures.append(frame)
     assert not failures,failures
 

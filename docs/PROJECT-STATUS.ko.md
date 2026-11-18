@@ -1,6 +1,6 @@
 # 프로젝트 현황
 
-목표는 sd2snes Cyclone IV 멀티 코어 확장이다. 최근 NES 실기 결과는 MMC813(60초)·814(장시간)에서 확인했다. [실기 결과](progress/pr-163.md) · [설치 안내](nes-mmc813-814-trial.ko.md) · [NES 인계](../cores/nes/HANDOFF.ko.md)
+목표는 sd2snes Cyclone IV 멀티 코어 확장이다. NES 성능은 MMC826의 모험도 4 무입력 실기를 기준으로 비교한다. 1–30초 17.52 FPS, 30–60초 16.13 FPS로 60초 완주와 메뉴 복귀를 확인했다. [MMC826 실기 결과](progress/pr-165.md#mmc826-실기-기준값) · [SMB3 장시간 실기](progress/pr-163.md) · [NES 인계](../cores/nes/HANDOFF.ko.md)
 
 시작 실패는 성능 집계에서 제외하고 자연 재발 시 두 실행의 로그 서명을 비교한다.
 

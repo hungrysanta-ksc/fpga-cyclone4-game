@@ -6,8 +6,9 @@ from pathlib import Path
 from analyze_nes_section841 import folder, window
 
 
-def budget(phase, tag):
-    run = folder(phase, tag)
+def budget(phase, tag, *, run=None):
+    if run is None:
+        run = folder(phase, tag)
     assert json.loads((run / "joint.json").read_bytes())["passed"]
     reveals = [r for r in window(run) if r["event"] == "reveal"]
     assert [r["g"] for r in reveals] == list(range(905, 911))

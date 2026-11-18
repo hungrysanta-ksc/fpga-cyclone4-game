@@ -24,16 +24,26 @@ def obj_lines(writes,fold):
     return lines
 
 
+def frame_fetches(capture):
+    if not (capture/"ppu-fetch.bin").is_file():
+        def one(frame):
+            path=capture/str(frame)/"ppu-fetch.bin"
+            return records(path,FETCH) if path.is_file() else None
+        return one
+    byframe={}
+    for row in records(capture/"ppu-fetch.bin",FETCH):byframe.setdefault(row[0],[]).append(row)
+    return byframe.get
+
+
 def prepare(rtl,capture,rom,src,out,groups=None):
     assert sha(rom)==ADVENTURE_SHA
     chr=rom.read_bytes()[-131072:]
     out.mkdir(parents=True,exist_ok=False)
-    byframe={}
-    for row in records(capture/"ppu-fetch.bin",FETCH):byframe.setdefault(row[0],[]).append(row)
+    fetch=frame_fetches(capture)
     for group,first in groups or (("early",660),("late",1320),("earlyB",700),("lateB",1440),("demo",2700),
                                   ("demoA",2440),("demoB",2560),("demoC",2860),("demoD",3110)):
         frames=range(first,first+24,4) if isinstance(first,int) else first
-        if frames[0] not in byframe:continue
+        if fetch(frames[0]) is None:continue
         base=out/group
         base.mkdir()
         machine=Machine(src,palette())
@@ -74,7 +84,7 @@ def prepare(rtl,capture,rom,src,out,groups=None):
                 index+=1
                 bundle.extend(struct.pack("<H",len(packet))+packet)
                 (base/f"tile-{index:04}.bin").write_bytes(payload)
-            writes,_=samples(byframe[f],rtl/f"frame{f}.hex",chr)
+            writes,_=samples(fetch(f),rtl/f"frame{f}.hex",chr)
             cache[g]=obj_lines(writes,False)
             folded[g]=obj_lines(writes,True)
             hits=int.from_bytes(read(machine.resident,"nes_resident211","hits",4),"little")

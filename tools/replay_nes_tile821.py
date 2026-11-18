@@ -133,7 +133,7 @@ class GameLink(joint.Link):
         self.now=now
         return super().advance(now)
 
-def main(source,group,mode,phase,temp,*,arm=None,link_class=GameLink,client=None,client_hash=None,adapt_template=None):
+def main(source,group,mode,phase,temp,*,arm=None,link_class=GameLink,client=None,client_hash=None,adapt_template=None,packet_source=None):
     data=source/group
     start=7288416+(phase-1)*178684
     a=SimpleNamespace(arm=arm or WORK/"link820b/src",data=data,fixture=data,plans=data,
@@ -156,6 +156,8 @@ def main(source,group,mode,phase,temp,*,arm=None,link_class=GameLink,client=None
             self.link.e8_extra=self.driver_extra[0xe8]
         return init
     def encode(geo,raw,g):
+        if packet_source is not None:
+            return [bytes.fromhex(r["wire"]) for r in packet_source[str(g)]],None,None
         return [bytes.fromhex(x) for x in json.loads((data/f"frame{g}/packets.json").read_text())],None,None
     with patch.object(joint,"encode",encode),patch.object(joint,"Link",link_class),patch.object(joint.Runtime,"linked_runtime_storage",True,create=True),patch.object(joint.Runtime,"__init__",setup(joint.Runtime.__init__)):
         joint.run(a)
