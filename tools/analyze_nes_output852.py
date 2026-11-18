@@ -12,7 +12,7 @@ from check_nes_game478 import sha
 from prepare_nes_map828 import PROBES
 
 
-def measure(temp,clip,phase,variant,tag):
+def measure(temp,clip,phase,variant,tag,column=False):
     root=temp/('nes-trans850-c0' if clip=='transition' else 'nes-comparison851')
     work=load(root/clip/clip/'work.json')
     baseline=variant=='849'
@@ -69,18 +69,32 @@ def measure(temp,clip,phase,variant,tag):
             image=(folder/f'map-{g}.bin').read_bytes()
         if section==2 and op in (2,4,9):
             extent=n if op==2 else span
+            if op==9 and column: extent=1472
             expected=image[at:at+extent]
             if op==9:
                 base=int.from_bytes(b[16:20],'little')
                 assert bank in banks and base==banks[bank][0]==serial-2 and base>0
                 prior=banks[bank][1]
                 decoded=bytearray()
-                for pos in range(0,extent,64):
-                    tail=prior[at+pos+36:at+pos+64]
-                    assert tail==bytes(28)
-                    start=20+(pos//64)*36
-                    decoded.extend(b[start:start+36]+tail)
-                assert expected==decoded and n==4+36*(extent//64)
+                if column:
+                    assert (at,n,span)==(2048,52,0)
+                    col=int.from_bytes(b[20:22],'little')
+                    assert not col&1 and col<64 and banks[bank^1][0]==serial-1
+                    decoded=bytearray(prior[at:at+extent])
+                    peer=bytearray(banks[bank^1][1][at:at+extent])
+                    for row in range(23):
+                        j=row*64+col
+                        data=b[22+2*row:24+2*row]
+                        assert decoded[j:j+2]!=data
+                        decoded[j:j+2]=peer[j:j+2]=data
+                    assert decoded==expected==peer
+                else:
+                    for pos in range(0,extent,64):
+                        tail=prior[at+pos+36:at+pos+64]
+                        assert tail==bytes(28)
+                        start=20+(pos//64)*36
+                        decoded.extend(b[start:start+36]+tail)
+                    assert expected==decoded and n==4+36*(extent//64)
             elif op==4:
                 assert b[16:]*(extent//2)==expected
             else:

@@ -12,16 +12,18 @@ from nes_raw506 import once, sha
 from prepare_nes_map828 import PROBES
 
 
-def arm_guard(temp,kind):
+def arm_guard(temp,kind,replay_override=None,history="tail_rows",tag_prefix="852"):
     from replay_nes_output852 import run as replay,joint
     from unicorn.arm_const import UC_ARM_REG_LR,UC_ARM_REG_PC,UC_ARM_REG_R0,UC_ARM_REG_R1,UC_ARM_REG_R2
+    if replay_override is not None:
+        replay=replay_override
     state={}
     original=joint.Runtime.hook
     def hook(cpu,u,pc,size,ctx):
         if not cpu.live:
             return original(cpu,u,pc,size,ctx)
         def published():
-            addr=cpu.rt+cpu.layout['nes_native_runtime165']['sink']+cpu.layout['nes_native_sink165']['tail_rows']
+            addr=cpu.rt+cpu.layout['nes_native_runtime165']['sink']+cpu.layout['nes_native_sink165'][history]
             return bytes(u.mem_read(addr,8)).hex()
         if kind=='stop' and 'armed' in state and pc==cpu.syms['nes_cf86_check094']:
             state['fired']=True
@@ -40,7 +42,7 @@ def arm_guard(temp,kind):
             if reply[7:9]==bytes((1,3)) and int.from_bytes(reply[15:17],'little')==state['generation']:
                 reply[9]^=1;reply[19]=joint.crc(reply[1:19],8,7,0)
                 u.mem_write(rx,bytes(reply));state['fired']=True
-    tag='852-arm-'+kind
+    tag=tag_prefix+'-arm-'+kind
     with patch.object(joint.Runtime,'hook',hook):
         try:
             replay(temp,'demo',1,'reuse',tag,False)
@@ -51,17 +53,21 @@ def arm_guard(temp,kind):
             raise AssertionError('injected ARM fault was accepted')
     folder=temp/f'nes-tile821-demo-jointmirror-p1-{tag}'
     sink=json.loads((folder/'fault.json').read_bytes())['sink']
-    off=sink['layout']['tail_rows']
+    off=sink['layout'][history]
     assert bytes.fromhex(sink['bytes'])[off:off+8].hex()==state['committed']
     events=json.loads((folder/'events.json').read_bytes())
     assert not any(e.get('opcode') in ('0xea','0xd3') for e in events if e.get('clock',-1)>state['armed'])
     return dict(generation=state['generation'],fault=failure,committed_unchanged=True,no_EA_or_D3=True)
 
 
-def run(temp,trial,case,seed=None):
+def run(temp,trial,case,seed=None,column_client=None):
     out=trial/('guard-'+case)
     out.mkdir()
-    client,=(folder for folder in (PROBES/'nes-output852'/n for n in ('client-board','client-dma'))
+    if column_client:
+        client=column_client
+        assert sha(client/'sink165.sfc')==sha(trial/'client.sfc')
+    else:
+        client,=(folder for folder in (PROBES/'nes-output852'/n for n in ('client-board','client-dma'))
              if (folder/'sink165.sfc').is_file() and sha(folder/'sink165.sfc')==sha(trial/'client.sfc'))
     labels=json.loads((client/'labels.json').read_bytes())
     rows=[]
@@ -77,6 +83,9 @@ def run(temp,trial,case,seed=None):
             assert span in (64,128,192)
             n=4+36*(span//64)
             b=b[:12]+n.to_bytes(2,'little')+span.to_bytes(2,'little')+(1).to_bytes(4,'little')+bytes(n-4)
+            if column_client:
+                b[10:16]=bytes((0,8,52,0,0,0))
+                b=b[:16]+bytes((1,))+bytes(51)
             b[0]=9;hit=True
         if case=='restart':
             assert not hit
@@ -86,6 +95,8 @@ def run(temp,trial,case,seed=None):
             b[14:16]=(64 if b[14]!=64 else 128).to_bytes(2,'little')
         if hit and case=='range':
             b[10:12]=(4096).to_bytes(2,'little')
+        if hit and case=='column':
+            b[20:22]=bytes((63,0))
         rows.append((target,'PUSH',b.hex(),bulk))
         if case!='restart' and hit:
             break
@@ -117,6 +128,13 @@ packet=requests[index];""".replace('SEED',json.dumps(seed.as_posix())))
         if case in ('damage','stop','prefix'):
             action={'stop':'stop852=true','damage':"emu.write(0x10000+word(0x7a)+63,0x81,emu.memType.snesWorkRam)",
                     'prefix':"local a=0x10000+word(0x7a);emu.write(a,rd(a)~1,emu.memType.snesWorkRam)"}[case]
+            if column_client:
+                site=labels['column_service'] if case=='stop' else labels['column_write']
+                if case=='prefix':
+                    site=labels['column_written']
+                    action="local a=0x10000+word(0x7a)+emu.getState()['cpu.y'];emu.write(a,rd(a)~1,emu.memType.snesWorkRam)"
+            else:
+                site=labels['check_tail852']
             hooks=f"""
 local stop852=false
 local injected852=false
@@ -125,7 +143,7 @@ checkedMem527(function()
   injected852=true
   {action}
  end
-end,emu.callbackType.exec,{labels['check_tail852']})
+end,emu.callbackType.exec,{site})
 """
             lua=once(lua,'local function loaded()',hooks+'local function loaded()')
             lua=once(lua,' if a==0x6001 then',' if a==0x6001 then\n  if stop852 then return 128 end')
