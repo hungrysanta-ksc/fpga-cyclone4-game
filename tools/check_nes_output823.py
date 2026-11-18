@@ -17,7 +17,10 @@ def check(a):
         injected=False
         def accept(self, tx, at):
             now=super().accept(tx,at)
-            if a.generation==909 and tx[:3]==bytes([0xe1,2,2]) and int.from_bytes(tx[9:11],"little")==909 and int.from_bytes(tx[11:13],"little")==3392:
+            target_section, target_offset = (5,1121) if a.section5 else (2,3392)
+            if (a.generation==909 and tx[0]==0xe1 and (a.section5 or tx[1]==2) and tx[2]==target_section
+                    and int.from_bytes(tx[9:11],"little")==909
+                    and int.from_bytes(tx[11:13],"little")==target_offset):
                 self.armed=True
             return now
 
@@ -57,6 +60,9 @@ def check(a):
         return hook(machine,u,at,size,user)
 
     tag="823"+a.variant+"-"+a.fault+("-fence" if a.generation==910 else "")
+    if a.section5:
+        assert a.generation==909
+        tag+="-section5"
     out=a.temp/f"nes-tile821-demoB-jointmirror-p1-{tag}"
     arm=WORK.parent/"nes-output823"/("link-"+a.variant)/"src"
     with patch.object(sys,"argv",["check","","","","","",tag,str(a.budget)]), patch.object(joint.Runtime,"hook",stop):
@@ -78,11 +84,20 @@ def check(a):
     packets=[bytes.fromhex(json.loads(line)[2]) for line in (out/"packets.jsonl").read_text().splitlines()]
     current=[p for p in packets if int.from_bytes(p[8:10],"little")==a.generation]
     assert any(p[1]==2 and p[10:12]==(3392).to_bytes(2,"little") for p in current)
-    assert not any(p[0]==3 for p in current)
+    if a.section5:
+        assert any(p[1]==5 and int.from_bytes(p[10:12],"little")==1121 for p in current)
+    seal_submitted=any(p[0]==3 for p in current)
+    if a.section5 and a.fault=="identity":
+        # A full-queue identity is checked on the first all-retired response.
+        # With ordered section 5 this may be the final display ACK itself.
+        assert not any(e.get("opcode")=="0xea" and e["generation"]==a.generation
+                       for e in json.loads((out/"events.json").read_bytes()))
+    else:
+        assert not seal_submitted
     if a.generation==910:
         assert current[-1][:2]==bytes([7,1]) and not any(p[1] in (3,4,5) for p in current)
     result=dict(arm=sha(arm/"obj-nes-100/firmware.stm"),case=a.fault,generation=a.generation,
-                runtime_error=reason[2],window_error=error,seal_submitted=False)
+                runtime_error=reason[2],window_error=error,seal_submitted=seal_submitted)
     (out/"rejection.json").write_text(json.dumps(result)+"\n")
 
 
@@ -93,4 +108,5 @@ if __name__=="__main__":
     p.add_argument("temp",type=Path)
     p.add_argument("budget",type=Path)
     p.add_argument("--generation",choices=(909,910),type=int,default=909)
+    p.add_argument("--section5",action="store_true")
     check(p.parse_args())

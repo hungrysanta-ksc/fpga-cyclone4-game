@@ -49,7 +49,7 @@ def pack(body, prefix):
     return bytes(out)
 
 
-def build(base,out,*,edit_body=None,allow_extension=False,prefix_sizes=None,medium_pages=False,boot_bytes=BOOT,short_errors=False,fast_backrefs=False,body_limit=0x1900):
+def build(base,out,*,edit_body=None,allow_extension=False,prefix_sizes=None,medium_pages=False,boot_bytes=BOOT,short_errors=False,fast_backrefs=False,body_limit=0x1900,single_word_prefix=False):
     selected=json.loads(Path('analysis/reuse635-verification.json').read_text())
     assert sha(base/'sink165.sfc')==selected['phases'][0]['runs']['idle_short']['client']
     rom=(base/'sink165.sfc').read_bytes()
@@ -64,7 +64,7 @@ def build(base,out,*,edit_body=None,allow_extension=False,prefix_sizes=None,medi
         else:
             assert len(body)==length
     for prefix in (range(length//128*128,0,-128) if prefix_sizes is None else prefix_sizes):
-        assert 0<prefix<=length and prefix%2==0  # boot verifies the literal prefix in words
+        assert 0<=prefix<=length and prefix%2==0  # zero starts both decoded passes at DEST
         stream=pack(body,prefix)
         if boot_bytes+prefix+len(stream)<=STORED:break
     else:raise ValueError('ROM capacity')
@@ -79,10 +79,20 @@ def build(base,out,*,edit_body=None,allow_extension=False,prefix_sizes=None,medi
             c.branch(branch,'bad')
             return
         c.emit(branch^0x20,3);c.jump('bad')
-    immediate(0xa9,prefix-1);immediate(0xa2,first);immediate(0xa0,DEST)
-    c.emit(0x54,0x7e,0x00);immediate(0xa2,0)
-    c.label('prefix');c.long(0xbf,first);c.long(0xdf,0x7e0000+DEST);bad_if(0xd0)
-    c.emit(0xe8,0xe8);immediate(0xe0,prefix);c.branch(0xd0,'prefix')
+    if prefix:
+        immediate(0xa9,prefix-1);immediate(0xa2,first);immediate(0xa0,DEST)
+        c.emit(0x54,0x7e,0x00)
+    else:
+        # MVN normally sets DBR to its destination. The stream decoder
+        # reads/writes WRAM via DBR on both the copy and comparison passes.
+        c.emit(0xf4,0x7e,0x7e,0xab,0xab)
+    if prefix and single_word_prefix:
+        assert prefix==2
+        c.long(0xaf,first);c.long(0xcf,0x7e0000+DEST);bad_if(0xd0)
+    elif prefix:
+        immediate(0xa2,0)
+        c.label('prefix');c.long(0xbf,first);c.long(0xdf,0x7e0000+DEST);bad_if(0xd0)
+        c.emit(0xe8,0xe8);immediate(0xe0,prefix);c.branch(0xd0,'prefix')
     c.emit(0xe2,0x20,0x64,2)
     c.label('pass');immediate(0xa2,first+prefix);immediate(0xa0,DEST+prefix)
     c.label('token');call(c,'read')
