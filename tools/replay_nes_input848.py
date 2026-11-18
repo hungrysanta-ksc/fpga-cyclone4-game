@@ -16,7 +16,9 @@ if __name__ == "__main__":
         p.add_argument(name, type=Path)
     p.add_argument("phase", type=int, choices=(1, 2))
     p.add_argument("tag")
-    p.add_argument("--reference837", action="store_true")
+    variants = p.add_mutually_exclusive_group()
+    variants.add_argument("--reference837", action="store_true")
+    variants.add_argument("--arm", type=Path, help="alternate fully linked ARM src directory")
     args = p.parse_args()
     replies = json.loads((args.sender / "sender.json").read_text())
     verified = json.loads((args.sender / "verified.json").read_text())
@@ -25,6 +27,8 @@ if __name__ == "__main__":
         (f["source"], f["generation"]) for f in verified["frames"]]
     argv = ["replay", "", "", "", "", "", args.tag, str(args.budget)]
     reference = dict(arm=WORK.parent / "nes-output823/link-826/src")
+    if args.arm:
+        reference["arm"] = args.arm.resolve()
     if args.reference837:
         reference.update(arm=WORK.parent / "nes-output823/link-837palette/src",
                          client=WORK.parent / "nes-window837/client-sticky",
