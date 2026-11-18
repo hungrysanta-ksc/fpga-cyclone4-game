@@ -12,7 +12,7 @@ from check_nes_serial654 import bench
 from nes_direct653 import encode
 
 
-def run(board, data, arm, out):
+def run(board, data, arm, out, *, encoder=encode, adapt=bench):
     if os.environ.get("SALT_LICENSE_SERVER") != "18000@localhost":
         raise RuntimeError("Run inside the project FLOAT wrapper")
     work = json.loads((data / "work.json").read_text())
@@ -20,7 +20,7 @@ def run(board, data, arm, out):
     assert gens[0] == 905 and gens == sorted(set(gens))
     args = SimpleNamespace(board=board, data=data, out=out, guards=False,
                            bin=Path("C:/altera_standard/25.1std/questa_fse/win64"))
-    prepare(args, encoder=encode, codec="nes_geometry_sender653.sv", bench=bench, generations=gens)
+    prepare(args, encoder=encoder, codec="nes_geometry_sender653.sv", bench=adapt, generations=gens)
     replies = json.loads((out / "sender.json").read_text())
     machine = Machine(arm, palette())
     frames = []
