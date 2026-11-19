@@ -52,5 +52,7 @@ if __name__=='__main__':
     p.add_argument('--eager',action='store_true')
     p.add_argument('--arm',type=Path)
     p.add_argument('--client',type=Path)
+    p.add_argument('--budget',type=Path)
     a=p.parse_args()
-    run(a.temp,a.clip,a.phase,a.policy=='on',a.tag,scalar=a.scalar,eager=a.eager,arm=a.arm,client=a.client)
+    run(a.temp,a.clip,a.phase,a.policy=='on',a.tag,scalar=a.scalar,eager=a.eager,
+        arm=a.arm,client=a.client,budget=a.budget)
