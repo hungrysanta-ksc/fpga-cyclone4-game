@@ -27,9 +27,12 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def index(folder, dest, out):
+def index(folder, dest, out, frame_sets=None):
+    if frame_sets is None:
+        frame_sets = {name: list(range(start-2, start+60)) for name, start in CLIPS.items()}
+    selected_frames = [f for frames in frame_sets.values() for f in frames]
     meta = json.loads((folder / "capture.json").read_text())
-    assert meta["sampled"] == ids() and meta["rom"] == ADVENTURE_SHA and meta["exit_code"] == 0
+    assert meta["sampled"] == selected_frames and meta["rom"] == ADVENTURE_SHA and meta["exit_code"] == 0
     clocks = {}
     for line in (folder / "frames.tsv").read_text().splitlines():
         f, clock, *buttons = map(int, line.split())
@@ -37,7 +40,7 @@ def index(folder, dest, out):
         clocks[f] = clock
     assert len(clocks) == 3600
     dest.mkdir(parents=True, exist_ok=False)
-    for f in ids():
+    for f in selected_frames:
         d = dest / str(f)
         d.mkdir()
         (d / "capture.json").write_text(json.dumps(dict(exit_code=0, capture_first=f, capture_last=f)))
@@ -45,7 +48,7 @@ def index(folder, dest, out):
         (d / f"frame-{f:04d}.rgb").write_bytes((folder / f"frame-{f:04d}.rgb").read_bytes())
     # Separate the observation files once. Geometry230 can now validate one frame
     # at a time without scanning the other 185 captures or using their row state.
-    selected = set(ids())
+    selected = set(selected_frames)
     outside = {}
     for name, (codec, frame_offset) in STREAMS.items():
         outside[name] = {}
@@ -71,9 +74,9 @@ def index(folder, dest, out):
             if last is not None:
                 (dest / str(last) / name).write_bytes(chunk)
     clips = {}
-    for label, start in CLIPS.items():
+    for label, source_ids in frame_sets.items():
         frames = []
-        for f in range(start - 2, start + 60):
+        for i, f in enumerate(source_ids):
             d = dest / str(f)
             rgb = (d / f"frame-{f:04d}.rgb").read_bytes()
             state = (folder / f"state-{f:04d}.bin").read_bytes()
@@ -84,7 +87,7 @@ def index(folder, dest, out):
                 path.touch(exist_ok=True)
                 counts[name] = path.stat().st_size // codec.size
             frames.append(dict(source=f, clock=clocks[f], rgb=digest(rgb), state=digest(state),
-                               records=counts, warmup=f < start))
+                               records=counts, warmup=i < 2))
         measured = frames[2:]
         gaps = [b["clock"] - a["clock"] for a, b in zip(frames[1:], measured)]
         assert min(gaps) > 0
