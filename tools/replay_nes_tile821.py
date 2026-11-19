@@ -65,7 +65,7 @@ class GameLink(joint.Link):
             for key,pipe in (("cmds",self.commands),("replies",self.replies)):
                 s=re.sub('local '+key+r'=assert\(io.open\("[^"]+"',lambda _: 'local '+key+'=assert(io.open('+json.dumps(pipe.name),s,count=1)
             s=s.replace("and 66 or","and "+str(a.frames)+" or")
-            for g in range(905,905+a.frames):
+            for g in joint.frame_generations(a):
                 for k in ("colors636","map"):
                     name=f"{k}-{g}.bin"
                     shutil.copyfile(a.data/name,a.out/name)
@@ -133,7 +133,7 @@ class GameLink(joint.Link):
         self.now=now
         return super().advance(now)
 
-def main(source,group,mode,phase,temp,*,arm=None,link_class=GameLink,client=None,client_hash=None,adapt_template=None):
+def main(source,group,mode,phase,temp,*,arm=None,link_class=GameLink,client=None,client_hash=None,adapt_template=None,packet_source=None):
     data=source/group
     start=7288416+(phase-1)*178684
     a=SimpleNamespace(arm=arm or WORK/"link820b/src",data=data,fixture=data,plans=data,
@@ -143,6 +143,12 @@ def main(source,group,mode,phase,temp,*,arm=None,link_class=GameLink,client=None
         calendar=temp/"nes-service509-rom03",trace_credit=True,capture_gate=True,early_export=True,commit_pop_bound=True,
         spi_us=0,rom_stride=48,driver503=None,template=temp/"nes-output809-mmc816-p1/capture.lua")
     assert sha(a.template).lower()=="7b4d48ae2bdb36f065b910dca7d8c379746126492a449a995e591e4b1d47445e"
+    work=json.loads((data/"work.json").read_bytes())
+    a.generations=[w["g"] for w in work]
+    assert a.generations==sorted(set(a.generations)) and a.generations[0]==905
+    a.next_generation=dict(zip(a.generations,a.generations[1:]))
+    a.blank_frames_after={w["g"]:z["source_frame"]-w["source_frame"]-1 for w,z in zip(work,work[1:])
+                          if z["g"]>w["g"]+1}
     assert sha(a.client/"sink165.sfc").lower()==(client_hash or "3ca9aaefd9efad64a3cb63b59b627314f9f6b8e87fb79e236ba7e7d01fa856e1")
     log=Path(sys.argv[7]) if len(sys.argv)>7 else Path.home()/"Downloads/nes-budget-mmc820.txt"
     budget=dict(l.strip().split("=",1) for l in log.read_text().splitlines() if "=" in l)
@@ -156,6 +162,8 @@ def main(source,group,mode,phase,temp,*,arm=None,link_class=GameLink,client=None
             self.link.e8_extra=self.driver_extra[0xe8]
         return init
     def encode(geo,raw,g):
+        if packet_source is not None:
+            return [bytes.fromhex(r["wire"]) for r in packet_source[str(g)]],None,None
         return [bytes.fromhex(x) for x in json.loads((data/f"frame{g}/packets.json").read_text())],None,None
     with patch.object(joint,"encode",encode),patch.object(joint,"Link",link_class),patch.object(joint.Runtime,"linked_runtime_storage",True,create=True),patch.object(joint.Runtime,"__init__",setup(joint.Runtime.__init__)):
         joint.run(a)

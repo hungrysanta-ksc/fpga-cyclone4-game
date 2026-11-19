@@ -6,7 +6,7 @@ import os
 import shutil
 import subprocess
 import sys
-from prepare_nes_tile821 import FETCH,records,samples,lanes,ADVENTURE_SHA,sha
+from prepare_nes_tile821 import frame_fetches,samples,lanes,ADVENTURE_SHA,sha
 
 def test(temp,root,data,rom,held=False,*,inputs=None,out=None):
     assert sha(rom)==ADVENTURE_SHA and os.environ["SALT_LICENSE_SERVER"]=="18000@localhost"
@@ -19,15 +19,14 @@ def test(temp,root,data,rom,held=False,*,inputs=None,out=None):
         standard=[(data/folder,temp/f"nes-tile821-{capture}",temp/f"nes-tile821-rtl{rtl}")
                   for folder,capture,rtl in (("extra01","extra","-extra"),("demo-extra01","demo-extra","-demo-extra"),("data02","game",""))]
         for folder,capture,rtl in inputs or standard:
-            ff=defaultdict(list)
-            for row in records(capture/"ppu-fetch.bin",FETCH):ff[row[0]].append(row)
+            fetch=frame_fetches(capture)
             for d in sorted(folder.iterdir()):
                 group=len(allgroups);allgroups.append(d.name)
                 caches=json.loads((d/"cache.json").read_text())
                 for w in json.loads((d/"work.json").read_text()):
                     gen,f=w["g"],w["source_frame"]
                     stim=rtl/f"frame{f}.hex"
-                    writes,_=samples(ff[f],stim,body)
+                    writes,_=samples(fetch(f),stim,body)
                     ticks=[i for i,h in enumerate(stim.read_bytes().splitlines()) if (value:=int(h,16))>>54&3==3 and (value>>49&15)>2]
                     record(0,gen,group,0)
                     for tick,(_,addr,v) in zip(ticks,(s for s in writes if s[0]),strict=True):record(1,tick,addr,v)
@@ -51,16 +50,21 @@ def test(temp,root,data,rom,held=False,*,inputs=None,out=None):
         with (out/f"{tool}.log").open("wb") as log:
             subprocess.run([q/(tool+".exe"),*args],cwd=out,stdout=log,stderr=subprocess.STDOUT,check=True)
     assert "PASS MIRROR822" in (out/"vsim.log").read_text(errors="replace")
-    groups=defaultdict(lambda:defaultdict(dict))
-    for line in (out/"hits.tsv").read_text().splitlines():
-        i,g,a,kind=map(int,line.split())
-        lookup=groups[allgroups[i]][g]
-        assert lookup.setdefault(a,kind)==kind
-    (out/"hits.json").write_text(json.dumps(groups))
+    write_hits(out,allgroups)
     if inputs is not None:
         return
     if held:
         assert (out/"hits.tsv").read_bytes()==(temp/"nes-output822-rtl/hits.tsv").read_bytes()
     else:shutil.copyfile(out/"hits.json",root/"hits.json")
+
+
+def write_hits(out,allgroups):
+    # A real clip with no OBJ plan has no lookup rows, but still has a result.
+    groups={group:defaultdict(dict) for group in allgroups}
+    for line in (out/"hits.tsv").read_text().splitlines():
+        i,g,a,kind=map(int,line.split())
+        lookup=groups[allgroups[i]][g]
+        assert lookup.setdefault(a,kind)==kind
+    (out/"hits.json").write_text(json.dumps(groups))
 
 if __name__=="__main__":test(*(Path(x).resolve() for x in sys.argv[1:5]),held="--held" in sys.argv)

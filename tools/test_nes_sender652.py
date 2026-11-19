@@ -17,7 +17,7 @@ def gates(rows,board_owner):
         start=cpu.clock
         begin(cpu,generation)
         g=cpu.input_generation
-        if g>=905+cpu.a.frames or str(g) not in rows:return
+        if str(g) not in rows:return
         packets=[bytes.fromhex(r["wire"]) for r in rows[str(g)]]
         assert cpu.packets==packets
         cpu.packets=packets
@@ -26,9 +26,10 @@ def gates(rows,board_owner):
             # The FPGA starts from the owned capture, closed preceding plan
             # and drained ROM reader, even while the ARM serves other work.
             # Use a positive E8 observation as a conservative close witness.
-            closed=next(e["clock"] for e in cpu.events if e["generation"]==g-1
+            previous=joint.frame_generations(cpu.a)[joint.frame_generations(cpu.a).index(g)-1]
+            closed=next(e["clock"] for e in cpu.events if e["generation"]==previous
                         and e.get("opcode")=="0xe8" and bytes.fromhex(e["reply"])[3]==2)
-            service=cpu.link.phases[g-1].get("cache611",[])
+            service=cpu.link.phases[previous].get("cache611",[])
             drained=max((r[4] for r in service),default=closed)
             cpu.start652=max(cpu.source_ready,closed,drained+4)
             assert cpu.start652<=max(cpu.source_ready,cpu.clock)
