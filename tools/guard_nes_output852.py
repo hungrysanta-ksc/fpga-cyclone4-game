@@ -60,7 +60,7 @@ def arm_guard(temp,kind,replay_override=None,history="tail_rows",tag_prefix="852
     return dict(generation=state['generation'],fault=failure,committed_unchanged=True,no_EA_or_D3=True)
 
 
-def run(temp,trial,case,seed=None,column_client=None):
+def run(temp,trial,case,seed=None,column_client=None,edit_seal=None,adapt_lua=None):
     out=trial/('guard-'+case)
     out.mkdir()
     if column_client:
@@ -78,6 +78,10 @@ def run(temp,trial,case,seed=None,column_client=None):
         if case=='restart' and g>906:
             break
         hit=b[:2]==bytes((9,2))
+        if edit_seal:
+            hit=False
+            if b[0]==3:
+                b,hit=edit_seal(b,g,case)
         if case=='cold' and g==905 and b[1]==2 and b[0] in (2,4) and int.from_bytes(b[10:12],'little')>=2048:
             span=int.from_bytes(b[12:14] if b[0]==2 else b[14:16],'little')
             assert span in (64,128,192)
@@ -100,7 +104,7 @@ def run(temp,trial,case,seed=None,column_client=None):
         rows.append((target,'PUSH',b.hex(),bulk))
         if case!='restart' and hit:
             break
-    assert (case=='restart' and g==907) or (case=='cold' and hit and g==905) or (hit and g>906)
+    assert (case=='restart' and g==907) or (case=='cold' and hit and g==905) or (hit and (g>906 or edit_seal and g==906))
     commits=2 if case=='restart' else g-905
     rows.append((rows[-1][0]+1,'FINISH','',''))
     with (out/'commands.txt').open('w',encoding='ascii',newline='\n') as f:
@@ -159,6 +163,8 @@ end,emu.callbackType.exec,{site})
   for bank=0,1 do for i=0,4095 do mem:write(string.char(rd(0x15000+bank*32768+i))) end end
   mem:close()
   assert(captured==commits)""")
+    if adapt_lua:
+        lua=adapt_lua(lua,labels)
     (out/'capture.lua').write_text(lua,encoding='utf8')
     for opt in ('expected-*.bin','colors636-*.bin','map-*.bin','client.sfc'):
         for file in trial.glob(opt):

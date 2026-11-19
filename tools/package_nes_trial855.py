@@ -17,11 +17,11 @@ SRC = WORK / "link/src"
 FW = SRC / "obj-nes-100/firmware.stm"
 
 
-def reset_policy():
+def reset_policy(src=SRC):
     from check_nes_game478 import ELFFile, Machine
     from check_nes_hardware494_termination import member_offset
 
-    with (SRC / "obj-nes-100/sd2snes.elf").open("rb") as stream:
+    with (src / "obj-nes-100/sd2snes.elf").open("rb") as stream:
         offsets = {member_offset(m) for cu in ELFFile(stream).get_dwarf_info().iter_CUs()
                    for d in cu.iter_DIEs() if d.tag == "DW_TAG_structure_type"
                    and "DW_AT_name" in d.attributes
@@ -29,7 +29,7 @@ def reset_policy():
                    for m in d.iter_children() if m.tag == "DW_TAG_member"
                    and m.attributes["DW_AT_name"].value == b"disable_column"}
     offset, = offsets
-    cpu = Machine(SRC, bytes(128))
+    cpu = Machine(src, bytes(128))
     sink = 0x20012000
     cpu.u.mem_write(sink + offset, bytes([255]))
     cpu.call("nes_sink165_reset", [sink, 0, 0])
@@ -37,34 +37,34 @@ def reset_policy():
     return dict(disable_before=255, disable_after=0, offset=offset)
 
 
-def loader(game):
+def loader(game, src=SRC, edition=855, work=WORK):
     parent = read(ROOT / "analysis/trial826-package.json")
     raw = game.read_bytes()
     assert digest(raw) == parent["rom"]
     rows = {}
     for name, data, error in (("original", raw, 0),
                               ("damaged", raw[:-1] + bytes([raw[-1] ^ 1]), 4)):
-        result = admission(SRC, data, 855)
+        result = admission(src, data, edition)
         assert result == dict(program=error == 0, read_B=len(data), error=error)
         rows[name] = result
-    save(WORK / "loader.json", dict(firmware=sha(FW), rom=digest(raw), cases=rows))
+    save(work / "loader.json", dict(firmware=sha(src/"obj-nes-100/firmware.stm"), rom=digest(raw), cases=rows))
 
 
-def board_proof(temp, parent):
-    board = temp / "nes-trial816-board855"
-    fit = resources(temp, "855")
+def board_proof(temp, parent, edition="855", client_dir=CLIENT, reference="822held"):
+    board = temp / f"nes-trial816-board{edition}"
+    fit = resources(temp, edition)
     assert "Fitter Status : Successful" in (board / "output_files/board.fit.summary").read_text()
     assert all(v >= 0 for v in fit["min_slack_ns"].values())
     mif, = (board / "db").glob("board.ram*_nes_sink_bus165_*.hdl.mif")
     rows = sorted((int(a), int(b, 2)) for a, b in re.findall(
         r"^\s*(\d+)\s*:\s*([01]{8});", mif.read_text(), re.M))
     assert [i for i, _ in rows] == list(range(5120))
-    client = bytes.fromhex((CLIENT / "sink-program.hex").read_text())
+    client = bytes.fromhex((client_dir / "sink-program.hex").read_text())
     assert bytes(v for _, v in rows) == client
-    packed = temp / "nes-trial855-packed"
+    packed = temp / f"nes-trial{edition}-packed"
     image = read(packed / "image.json")
-    bi = (packed / "fpga_mmc855.bi3").read_bytes()
-    assert image["number"] == "855" and image["SOF"] == sha(board / "output_files/board.sof")
+    bi = (packed / f"fpga_mmc{edition}.bi3").read_bytes()
+    assert image["number"] == edition and image["SOF"] == sha(board / "output_files/board.sof")
     assert image["BI3"] == digest(bi) == image["programmer"]["image_sha256"]
     assert image["RBF"] == sha(packed / "board.rbf") == image["programmer"]["rbf_sha256"]
     assert image["programmer"]["passed"]
@@ -81,7 +81,7 @@ def board_proof(temp, parent):
             r"^; (Unconstrained [\w ]+?)\s*;\s*(\d+)\s*;\s*(\d+)\s*;", text, re.M)}
     sta = board / "output_files/board.sta.rpt"
     io = unconstrained(sta)
-    assert io and io == unconstrained(temp / "nes-trial816-board822held/output_files/board.sta.rpt")
+    assert io and io == unconstrained(temp / f"nes-trial816-board{reference}/output_files/board.sta.rpt")
     return dict(fit=fit, prior_fit=parent["fit"], constrained_paths=target_slacks, unconstrained=io,
                 image=image, ROM_bus=digest(client),
                 STA_report=sha(board / "output_files/board.sta.rpt")), bi
