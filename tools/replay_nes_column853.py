@@ -10,7 +10,7 @@ from nes_raw506 import once
 from prepare_nes_column853 import PROBE
 
 
-def run(temp,clip,phase,enabled,tag,scalar=False,eager=False,arm=None,client=None):
+def run(temp,clip,phase,enabled,tag,scalar=False,eager=False,arm=None,client=None,budget=None):
     root=temp/('nes-trans850-c0' if clip=='transition' else 'nes-comparison851')
     arm=arm or PROBE/('link3/src' if eager else 'link5/src')
     client=client or PROBE/('client' if scalar else 'fast')
@@ -35,7 +35,7 @@ def run(temp,clip,phase,enabled,tag,scalar=False,eager=False,arm=None,client=Non
             hooks.append(f"checkedMem527(function() if packet and pb(1)==2 then sample516('{label}') end end,emu.callbackType.exec,{labels[label]})")
         s=once(s,'local function loaded()', '\n'.join(hooks)+'\nlocal function loaded()')
         return s
-    argv=['replay','','','','','',tag,str(Path.home()/'Downloads/nes-budget-mmc826.txt')]
+    argv=['replay','','','','','',tag,str(budget or Path.home()/'Downloads/nes-budget-mmc826.txt')]
     with patch.object(sys,'argv',argv),patch.object(MirrorLink,'lookup_file',root/f'hits-{clip}/hits.json'),gates(source,True),patch.object(joint.Runtime,'__init__',init):
         main(root/clip,clip,'jointmirror',phase,temp,arm=arm,client=client,client_hash=sha(client/'sink165.sfc'),
              link_class=MirrorLink,packet_source=source,adapt_template=template)
