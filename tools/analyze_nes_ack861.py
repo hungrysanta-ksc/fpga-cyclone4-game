@@ -34,15 +34,31 @@ def real(logs, ed):
     return dict(bin=out,sha=hw['sha256'],whole_run_final_quiet=poll[2])
 
 
-def observe(temp, ed, phase, quiet, pin=None, high=False):
+def observe(temp, ed, phase, quiet, pin=None, high=False, consumer=None, tail864=False, arm_override=None, tag_override=None):
     base=temp/'nes-ack861'
     suffix='' if pin is None else f'-g{pin}-bounded'
     slot='-high' if high else ''
     d=temp/f'nes-tile821-demo-jointmirror-p{phase}-861-{ed}-{quiet}{slot}{suffix}'
+    if consumer is not None:
+        d=d.with_name(d.name+f'-cpu{consumer}-864')
+    if tail864:
+        d=d.with_name(d.name+'-tail864')
+        if tail864=='control':d=d.with_name(d.name+'-control')
+    if arm_override and tag_override:
+        d=temp/f'nes-tile821-demo-jointmirror-p{phase}-{tag_override}'
     r=load(d/'joint.json')
     expected=load(ROOT/f'analysis/trial{ed}-package.json')
+    client=load(ROOT/f'analysis/trial{consumer}-package.json')['client'] if consumer else expected['client']
     sources=SOURCE if pin is None else SOURCE[:pin+2-905]
-    assert r['passed'] and r['commits']==len(sources) and r['firmware_SHA256']==expected['ARM'] and r['client_SHA256']==expected['client']
+    arm=expected['ARM']
+    if tail864:
+        from prepare_nes_trial802 import PROBES
+        from nes_raw506 import sha
+        arm=sha(PROBES/'nes-tail864'/('control' if tail864=='control' else 'link')/'src/obj-nes-100/firmware.stm')
+    if arm_override and tag_override:
+        from nes_raw506 import sha
+        arm=sha(arm_override/'obj-nes-100/firmware.stm')
+    assert r['passed'] and r['commits']==len(sources) and r['firmware_SHA256']==arm and r['client_SHA256']==client
     obs=load(d/'ack861.json')
     spi=[e for e in load(d/'events.json') if e['event']=='SPI']
     transactions=defaultdict(list)

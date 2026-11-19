@@ -1,4 +1,4 @@
-"""Compare final links on identical scene inputs; vary only the quiet final-ACK timer in replay."""
+"""Replay linked ARM and 65816 combinations on the same corpus, with optional ACK timer or section-5 controls."""
 import argparse
 import json
 import sys
@@ -12,14 +12,30 @@ from unicorn import UC_HOOK_CODE
 from unicorn.arm_const import UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2, UC_ARM_REG_R3, UC_ARM_REG_R4, UC_ARM_REG_XPSR
 
 
-def replay(temp, edition, phase, quiet, only_generation=None, high=False):
+def replay(temp, edition, phase, quiet, only_generation=None, high=False, consumer=None, tail864=None, arm_override=None, tag_override=None):
     work = temp/'nes-ack861'
     arm = PROBES/f'nes-trial{edition}/link/src'
-    client = PROBES/('nes-column854/client-e' if edition == 855 else 'nes-seal858/client-e')
+    if tail864:
+        assert edition==855 and consumer is None and high and quiet==128 and only_generation is None
+        arm=PROBES/'nes-tail864'/('control' if tail864=='control' else 'link')/'src'
+    if consumer is not None and (not high or quiet!=128 or only_generation is not None):
+        raise ValueError('crossed links require the complete high-slot reference replay')
+    client = PROBES/('nes-column854/client-e' if (consumer or edition)==855 else 'nes-seal858/client-e')
     source = json.loads((work/'sender-demo/sender.json').read_bytes())
     tag = f'861-{edition}-{quiet}'
     if high:
         tag+='-high'
+    if consumer is not None:
+        tag+=f'-cpu{consumer}-864'
+    if tail864:
+        tag+='-tail864'
+        if tail864=='control':tag+='-control'
+    if arm_override is not None or tag_override is not None:
+        if not (arm_override and tag_override and high and edition==855 and quiet==128
+                and consumer is None and tail864 is None and only_generation is None):
+            raise ValueError('custom ARM comparison requires a full MMC855 high-slot replay')
+        arm=arm_override
+        tag=tag_override
     if only_generation is not None:
         assert quiet == 256 and 907 <= only_generation <= 964
         tag += f'-g{only_generation}-bounded'
@@ -87,4 +103,6 @@ if __name__=='__main__':
     p.add_argument('quiet',type=int,choices=(128,256))
     p.add_argument('--only-generation',type=int)
     p.add_argument('--high',action='store_true')
+    p.add_argument('--consumer',type=int,choices=(855,860))
+    p.add_argument('--tail864',nargs='?',const='joined',choices=('joined','control'))
     replay(**vars(p.parse_args()))
