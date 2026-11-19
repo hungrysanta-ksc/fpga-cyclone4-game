@@ -48,6 +48,42 @@ def sender(short=False,split=None):
     (out/src.name).write_text(text,newline="\n")
 
 
+def checked_tables(c):
+    # The pointer supplied by scroll_end181 addresses a bounded table in
+    # bank 7F. X is the current absolute offset, Y the relative terminator
+    # position expected by the original length/sum checks.
+    c.emit(0xa6,0x70)
+    c.label("row831")
+    def sample(offset):
+        c.long(0xbf,0x7f0000+offset)
+    def check(op):
+        c.emit(op^0x20,3); c.jump("invalid181")
+    sample(0); c.emit(0x29,255,0)
+    c.emit(0xd0,3); c.jump("table_end181")
+    c.emit(0xc9,128,0); check(0xb0)
+    c.emit(0x85,0x78,0x18,0x65,0x74,0x85,0x74,0xc9,225,0); check(0xb0)
+    for off in (81,162):
+        sample(off); c.emit(0x29,255,0,0xc5,0x78); check(0xd0)
+    sample(1); c.emit(0xc9,3,0); c.branch(0xf0,"raw831")
+    c.emit(0xc9,0,0); check(0xd0)
+    c.emit(0xa9,0x31,0,0x85,0x7a,0xa9,0x11,0,0x85,0x7c)
+    c.absolute(0xad,0x123a); c.emit(0xc9,0x18,0)
+    c.branch(0xf0,"clip831"); c.emit(0xa9,0,0); c.branch(0x80,"window831")
+    c.label("clip831"); c.emit(0xa9,17,0)
+    c.label("window831"); c.emit(0x85,0x7e); c.branch(0x80,"values831")
+    c.label("raw831"); c.emit(0xa5,0x76,0x18,0x65,0x78,0x85,0x76)
+    c.emit(0xa9,0x38,0,0x85,0x7a,0xa9,1,0,0x85,0x7c,0x64,0x7e)
+    c.label("values831")
+    sample(1); c.long(0xdf,0x7f0052); check(0xd0)
+    for off,zp in ((3,0x7a),(84,0x7a),(163,0x7c),(165,0x7e)):
+        sample(off)
+        if off==84:
+            c.emit(0x38,0xe9,0x20,0)
+        c.emit(0xc5,zp); check(0xd0)
+    c.emit(0x8a,0x18,0x69,5,0,0xaa,0x98,0x18,0x69,5,0,0xa8,0xc0,81,0)
+    check(0xb0); c.jump("row831")
+
+
 def client(fast_tail=False, padding=False, short=False):
     assert sha(CLIENT/"sink165.sfc") == "3ca9aaefd9efad64a3cb63b59b627314f9f6b8e87fb79e236ba7e7d01fa856e1"
     body = bytearray((CLIENT/"body.bin").read_bytes())
@@ -80,43 +116,8 @@ def client(fast_tail=False, padding=False, short=False):
         c.jump("covered619")
         c.label("missing831"); c.jump("mark_bad212")
 
-    def tables(c):
-        # The pointer supplied by scroll_end181 addresses a bounded table in
-        # bank 7F. X is the current absolute offset, Y the relative terminator
-        # position expected by the original length/sum checks.
-        c.emit(0xa6,0x70)
-        c.label("row831")
-        def sample(offset):
-            c.long(0xbf,0x7f0000+offset)
-        def check(op):
-            c.emit(op^0x20,3); c.jump("invalid181")
-        sample(0); c.emit(0x29,255,0)
-        c.emit(0xd0,3); c.jump("table_end181")
-        c.emit(0xc9,128,0); check(0xb0)
-        c.emit(0x85,0x78,0x18,0x65,0x74,0x85,0x74,0xc9,225,0); check(0xb0)
-        for off in (81,162):
-            sample(off); c.emit(0x29,255,0,0xc5,0x78); check(0xd0)
-        sample(1); c.emit(0xc9,3,0); c.branch(0xf0,"raw831")
-        c.emit(0xc9,0,0); check(0xd0)
-        c.emit(0xa9,0x31,0,0x85,0x7a,0xa9,0x11,0,0x85,0x7c)
-        c.absolute(0xad,0x123a); c.emit(0xc9,0x18,0)
-        c.branch(0xf0,"clip831"); c.emit(0xa9,0,0); c.branch(0x80,"window831")
-        c.label("clip831"); c.emit(0xa9,17,0)
-        c.label("window831"); c.emit(0x85,0x7e); c.branch(0x80,"values831")
-        c.label("raw831"); c.emit(0xa5,0x76,0x18,0x65,0x78,0x85,0x76)
-        c.emit(0xa9,0x38,0,0x85,0x7a,0xa9,1,0,0x85,0x7c,0x64,0x7e)
-        c.label("values831")
-        sample(1); c.long(0xdf,0x7f0052); check(0xd0)
-        for off,zp in ((3,0x7a),(84,0x7a),(163,0x7c),(165,0x7e)):
-            sample(off)
-            if off==84:
-                c.emit(0x38,0xe9,0x20,0)
-            c.emit(0xc5,zp); check(0xd0)
-        c.emit(0x8a,0x18,0x69,5,0,0xaa,0x98,0x18,0x69,5,0,0xa8,0xc0,81,0)
-        check(0xb0); c.jump("row831")
-
     block("coverage212","covered619",requirements)
-    block("table181","table_end181",tables)
+    block("table181","table_end181",checked_tables)
     if fast_tail:
         # DATA8 has already validated its 4-byte period, inactive OAM bounds
         # and alignment. DATA4/5 have already validated their 2-byte period.
