@@ -1,5 +1,9 @@
 # 현재 NES 인계
 
+**MMC872 · 모험도 4 무입력 60초 실기 전달본.** 871 warm_dual의 ARM을 새 파일명으로 링크하고 869의 65816 ROM을 보드에 넣었다. 두 위상 재생 348장의 공개 시각과 여섯 구간의 마지막 ACK가 871과 일치했다. 703은 59·231선, 759는 176, 전환은 119/119, 936은 2/2, 밀집은 141/141이다. Flash 36B 여유, Quartus Lite FIT·STA, 독립 검사, STOP 뒤 cold 복구와 base·메뉴 반환을 확인했다. 다음은 실기 3종 로그에서 60초 완주와 메뉴 복귀를 확인하고 `display_1_30_60`을 MMC866의 519/507장과 비교하는 일이다. [설치와 측정](../../docs/nes-mmc872-trial.ko.md) · [최종 링크·보드·ZIP 검증](../../analysis/trial872-package.json)
+
+재현할 때는 `package_nes_trial872.py prepare`로 파일명을 갱신하고 871 warm_dual의 `link-credit`에서 872의 `link-credit`으로 ARM 전체 링크를 만든다. 같은 도구의 `board TEMP`와 `loader ROM`으로 보드·로더를 검증한다. [871 재생·검사 절차](../../docs/nes-capture871-results.ko.md#재현)에 WORK를 `probes/nes-trial872`, TAG를 `872-final`, 메뉴 검사 번호를 872로 지정한다. 추가로 `check_nes_longrun692.py`, `check_nes_windows518.py --layout demo`, `check_nes_transfer512_recovery.py --trial 872 --fault none`의 결과를 WORK의 timer.json·windows.json·base에 둔다. `check_nes_longrun694_boot.py`에 854E와 WORK/client02를 넘겨 TEMP/nes-trial872-boot에 기록한 다음 `package_nes_trial872.py pack TEMP`로 ZIP을 생성한다.
+
 **871 · 후속 후보 warm_dual, 실기 기준 MMC866.** 첫 화면을 정상 공개한 뒤부터 입력 COMMIT 앞뒤의 확인된 D0 응답을 재사용한다. 오프닝 703은 두 위상 모두 59·231선, 759는 176이며, 전환 952는 140에 공개했다. 오프닝 60간격은 125/124, 전환 48간격은 119/119, 밀집 60간격은 141/141이다. 밀집 마지막 ACK는 MMC866보다 66.54/49.64ms 빠르다. 다음 실기 비교에서는 새 파일명으로 링크한 뒤 Flash 여유 36B와 두 위상의 같은 마감을 다시 확인한다. [첫 지연·대조군·복구 검증과 재현](../../docs/nes-capture871-results.ko.md)
 
 **870 · 밀집 후보 G, 실기 기준 MMC866.** 869의 map 절감(69,213→40,158B)을 유지하며 팔레트 발행과 OBJ 처리를 겹쳤다. 936은 5→2 VBlank, 오프닝 703은 양쪽 모두 59·231선이다. 밀집 60개 간격은 MMC866의 145/144→141/141, 마지막 ACK는 66.55/49.92ms 단축됐다. 오프닝 전체는 양쪽 +1 VBlank, 전환은 +1/+2다. 다음은 이 두 구간에서 처음 놓친 마감을 찾아 밀집 이득과 함께 회복하는 것이다. [후보별 시간·독립 검사·재현](../../docs/nes-progress870-results.ko.md)
