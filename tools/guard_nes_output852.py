@@ -60,8 +60,8 @@ def arm_guard(temp,kind,replay_override=None,history="tail_rows",tag_prefix="852
     return dict(generation=state['generation'],fault=failure,committed_unchanged=True,no_EA_or_D3=True)
 
 
-def run(temp,trial,case,seed=None,column_client=None,edit_seal=None,adapt_lua=None,column_op=9):
-    out=trial/('guard-'+case)
+def run(temp,trial,case,seed=None,column_client=None,edit_seal=None,adapt_lua=None,column_op=9,output_name=None):
+    out=trial/('guard-'+(output_name or case))
     out.mkdir()
     if column_client:
         client=column_client
