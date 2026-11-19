@@ -10,19 +10,20 @@ from analyze_nes_map830 import load,window
 from nes_raw506 import once
 
 
-def verify(temp,phase,tag):
-    folder=temp/f'nes-tile821-demo-jointmirror-p{phase}-{tag}-on'
-    out=folder/'wram859-bus'
+def replay_arrivals(temp,folder,out,hooks,records=None,release=None,template=None):
     out.mkdir()
-    lua=(folder/'capture.lua').read_text()
+    lua=template if template is not None else (folder/'capture.lua').read_text()
     lua=once(lua,'local ROOT=',f'local INPUT={json.dumps(folder.as_posix())}\nlocal ROOT=')
     lua=once(lua,'local ROOT='+json.dumps(folder.as_posix()),'local ROOT='+json.dumps(out.as_posix()))
     lua=once(lua,"io.open(ROOT..'/'..name,'rb')","io.open(INPUT..'/'..name,'rb')")
-    records=[json.loads(line) for line in (folder/'packets.jsonl').read_text().splitlines()]
+    fixed=records is None
+    if fixed:
+        records=[json.loads(line) for line in (folder/'packets.jsonl').read_text().splitlines()]
     with (out/'push.txt').open('w') as f:
         for _,clock,data,bulk in records:
             f.write(f'{clock} {data} {bulk}\n')
-    release={r['generation']:r['release_masterclock'] for r in load(folder/'joint.json')['frames']}
+    if release is None:
+        release={r['generation']:r['release_masterclock'] for r in load(folder/'joint.json')['frames']}
     start=lua.index('local cmds=assert(')
     end=lua.index('local progressLog=',start)
     lua=lua[:start]+'''
@@ -45,19 +46,7 @@ rpc=function()
   advance()
  end
 end
-local count=0
-local writes=assert(io.open(ROOT..'/writes.csv','w'))
-checkedMem527(function(a,v)
- if packet and pw(8)==964 and pb(0)==2 and pb(1)==5 and pw(10)>=1121 then
-  assert(count<pw(12) and v==pb(16+count),'wrong WRAM DMA byte')
-  if count==0 or count+1==pw(12) then
-   writes:write(string.format('%d,%d,%d,%d\\n',index,count,pw(12),emu.getState().masterClock));writes:flush()
-  end
-  count=count+1
-  if count==pw(12) then count=0 end
- end
-end,emu.callbackType.write,0x2180)
-'''+lua[end:]
+'''+hooks+lua[end:]
     lua=once(lua,'advance()\nrpc=', ''.join(f'sourceRelease[{g}]={v}\n' for g,v in release.items())+'advance()\nrpc=')
     # In a recorded run the CPU samples the head only at $6000. The poll
     # callback already supplies every PUSH up to that clock. Verify this
@@ -73,7 +62,28 @@ end,emu.callbackType.write,0x2180)
     original=window(folder)
     def times(rows):
         return [(r['index'],r['event'],r['clock']) for r in rows if r['event'] in ('load','ack','reveal')]
-    assert times(original)==times(window(out)) and load(out/'result.json')['passed']
+    if fixed:
+        assert times(original)==times(window(out))
+    assert load(out/'result.json')['passed']
+
+
+def verify(temp,phase,tag):
+    folder=temp/f'nes-tile821-demo-jointmirror-p{phase}-{tag}-on'
+    out=folder/'wram859-bus'
+    replay_arrivals(temp,folder,out,'''
+local count=0
+local writes=assert(io.open(ROOT..'/writes.csv','w'))
+checkedMem527(function(a,v)
+ if packet and pw(8)==964 and pb(0)==2 and pb(1)==5 and pw(10)>=1121 then
+  assert(count<pw(12) and v==pb(16+count),'wrong WRAM DMA byte')
+  if count==0 or count+1==pw(12) then
+   writes:write(string.format('%d,%d,%d,%d\\n',index,count,pw(12),emu.getState().masterClock));writes:flush()
+  end
+  count=count+1
+  if count==pw(12) then count=0 end
+ end
+end,emu.callbackType.write,0x2180)
+''')
     with (out/'writes.csv').open() as f:
         markers=[tuple(map(int,r)) for r in csv.reader(f)]
     assert len(markers)==4
