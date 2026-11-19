@@ -10,11 +10,14 @@ from check_nes_wram859 import replay_arrivals
 from prepare_nes_trial802 import PROBES
 
 
-def guards(temp):
+def guards(temp, folder=None, out=None):
     from check_nes_seal858 import coverage
     from guard_nes_output852 import run as run_guard
     from nes_raw506 import once
-    folder=temp/'nes-tile821-demo-jointmirror-p1-861-855-128-high-tail864'
+    if folder is None:
+        folder=temp/'nes-tile821-demo-jointmirror-p1-861-855-128-high-tail864'
+    if out is None:
+        out=PROBES/'nes-tail864/guards.json'
     client=PROBES/'nes-column854/client-e'
     results={}
     for name in ('full-middle','table-entry','bad-width'):
@@ -31,7 +34,7 @@ def guards(temp):
     stop=run_guard(temp,folder,'stop',column_client=client,edit_seal=lambda b,g,k:(b,g==906),
                    adapt_lua=inject)
     restart=run_guard(temp,folder,'restart',folder/'guard-stop/canceled.bin',client)
-    (PROBES/'nes-tail864/guards.json').write_text(json.dumps(dict(rejected=results,stop=stop,restart=restart)))
+    out.write_text(json.dumps(dict(rejected=results,stop=stop,restart=restart)))
 
 
 def pack_tail(folder,mode):

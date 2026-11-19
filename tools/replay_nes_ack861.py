@@ -12,7 +12,7 @@ from unicorn import UC_HOOK_CODE
 from unicorn.arm_const import UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2, UC_ARM_REG_R3, UC_ARM_REG_R4, UC_ARM_REG_XPSR
 
 
-def replay(temp, edition, phase, quiet, only_generation=None, high=False, consumer=None, tail864=None):
+def replay(temp, edition, phase, quiet, only_generation=None, high=False, consumer=None, tail864=None, arm_override=None, tag_override=None):
     work = temp/'nes-ack861'
     arm = PROBES/f'nes-trial{edition}/link/src'
     if tail864:
@@ -30,6 +30,12 @@ def replay(temp, edition, phase, quiet, only_generation=None, high=False, consum
     if tail864:
         tag+='-tail864'
         if tail864=='control':tag+='-control'
+    if arm_override is not None or tag_override is not None:
+        if not (arm_override and tag_override and high and edition==855 and quiet==128
+                and consumer is None and tail864 is None and only_generation is None):
+            raise ValueError('custom ARM comparison requires a full MMC855 high-slot replay')
+        arm=arm_override
+        tag=tag_override
     if only_generation is not None:
         assert quiet == 256 and 907 <= only_generation <= 964
         tag += f'-g{only_generation}-bounded'
