@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-**MMC892 · 첫 벡터 공급 수정, 실기 확인 대기.** MMC891의 `03`을 실제 RAM 초기화와 브리지 회로로 재현했다. ARM은 첫 E0가 무응답일 때 SPI73의 현재 active를 확인한 뒤 RESET을 해제한다. 네 위상에서 두 벡터와 첫 stage 쓰기를 확인했다. 전체 FIT·STA와 STOP·메뉴 경로를 통과했다. 다음은 같은 모험도 4 ROM으로 `NES-DIAG/NES BOOT 892.nh1`을 1회 실행해 stage 3과 메뉴 복귀를 확인하는 일이다. [검증 결과](../../docs/nes-reset892-results.ko.md) · [설치 순서](../../docs/nes-mmc892-trial.ko.md)
+**MMC892 · 첫 벡터 공급 수정, 실기 부팅 진단 통과.** MMC891의 `03`을 실제 RAM 초기화와 브리지 회로로 재현했다. ARM은 첫 E0가 무응답일 때 SPI73의 현재 active를 확인한 뒤 RESET을 해제한다. 네 위상에서 두 벡터와 첫 stage 쓰기를 확인했다. 전체 FIT·STA와 STOP·메뉴 경로를 통과했다. NES BOOT 892 실기 1회에서 약 240ms에 stage 3에 도달했고 STOP·base 복구·메뉴 복귀를 확인했다. 다음은 같은 설치의 `NES MMC3 892.nh1`으로 모험도 4 무입력 60초를 측정하는 일이다. [검증 결과](../../docs/nes-reset892-results.ko.md) · [설치 순서](../../docs/nes-mmc892-trial.ko.md)
 
 **MMC891 · 실기에서 벡터 읽기 주소만 관측.** NES BOOT 891은 384KiB 검증·START 뒤 stage 0, 누적 `03`으로 5초 뒤 종료했다. STOP·base·실제 메뉴 복귀가 성공했다. 다음은 두 벡터 스트로브에서 세션 해제·주소 tag·ROM 출력 허가를 대조하는 작업이다. 실기 FPS 기준은 MMC872다. [실기 판독과 대조 조건](../../docs/nes-boot891-results.ko.md#nes-boot-891-실기-결과)
 
