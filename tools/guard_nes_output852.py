@@ -60,7 +60,7 @@ def arm_guard(temp,kind,replay_override=None,history="tail_rows",tag_prefix="852
     return dict(generation=state['generation'],fault=failure,committed_unchanged=True,no_EA_or_D3=True)
 
 
-def run(temp,trial,case,seed=None,column_client=None,edit_seal=None,adapt_lua=None,column_op=9,output_name=None):
+def run(temp,trial,case,seed=None,column_client=None,edit_seal=None,adapt_lua=None,column_op=9,output_name=None,select_packet=None):
     out=trial/('guard-'+(output_name or case))
     out.mkdir()
     if column_client:
@@ -78,6 +78,8 @@ def run(temp,trial,case,seed=None,column_client=None,edit_seal=None,adapt_lua=No
         if case=='restart' and g>906:
             break
         hit=b[:2]==bytes((column_op,2))
+        if select_packet:
+            hit=select_packet(b,g)
         if case=="two-stop":hit=hit and len(b)==116
         if edit_seal:
             hit=False

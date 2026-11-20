@@ -135,12 +135,12 @@ def compare(temp, work, tag):
     return result
 
 
-def guards(temp, work, tag):
+def guards(temp, work, tag, client_name='client02'):
     folder=temp/f'nes-tile821-demo-jointmirror-p1-{tag}'
     result={}
     for name in ('cold','base','length','column','range','overlap','omitted','prefix','stop','late-stop','two-stop','restart'):
         seed=folder/'guard-two-stop/canceled.bin' if name=='restart' else None
-        result[name]=guard(temp,folder,name,seed,column_client=work/'client02',column_op=10)
+        result[name]=guard(temp,folder,name,seed,column_client=work/client_name,column_op=10)
     packet=next(b for b in packets(folder) if b[:2]==bytes((10,2)) and len(b)==116)
     g=int.from_bytes(packet[8:10],'little')
     bank=(int.from_bytes(packet[4:8],'little')-1)&1
@@ -154,7 +154,7 @@ def guards(temp, work, tag):
         at=y*64+col
         expected[at:at+2]=packet[24+y*2:26+y*2]
     assert before[2048:3520]!=expected and saved[bank*4096+2048:bank*4096+3520]==expected
-    return dict(client=digest(work/'client02/sink165.sfc'), source_tag=tag, cases=result,
+    return dict(client=digest(work/client_name/'sink165.sfc'), source_tag=tag, cases=result,
                 two_column_cancel=dict(g=g,changed_columns_written=1,peer_intact=True))
 
 
