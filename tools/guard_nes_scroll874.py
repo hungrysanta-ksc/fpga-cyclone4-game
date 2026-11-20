@@ -7,7 +7,7 @@ from guard_nes_progress870 import Machine, offsets, crc, UC_HOOK_CODE
 from unicorn.arm_const import UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2, UC_ARM_REG_LR, UC_ARM_REG_PC
 
 
-def check(src,progress_reads=1):
+def check(src,progress_reads=1,rows=0xffffffff):
     m = Machine(src, bytes(128))
     sink, plan, window = 0x20012000, 0x20013000, 0x20014000
     guard, spi, queue = 0x0807ffc0, 0x0807ffc4, 0x0807ffc8
@@ -66,7 +66,7 @@ def check(src,progress_reads=1):
         put(m.video,'hdma_size',21,2)
         put(m.video,'scroll_issued',0)
         ops=[]
-        ok=m.call('nes_scroll810',[sink,m.video,0xffffffff,0x7fffff,1])
+        ok=m.call('nes_scroll810',[sink,m.video,rows,0x7fffff,1])
         assert ok==(case in ('normal','no_progress')) and bool(m.u.mem_read(m.video+layout[m.video]['scroll_issued'],1)[0])==bool(ok)
         if ok:
             expected=['live','returned']
@@ -87,5 +87,6 @@ if __name__=='__main__':
     p.add_argument('src',type=Path)
     p.add_argument('out',type=Path)
     p.add_argument('--progress-reads',type=int,choices=(1,96),default=1)
+    p.add_argument('--rows',type=lambda n:int(n,0),default=0xffffffff)
     a=p.parse_args()
-    a.out.write_text(json.dumps(check(a.src,a.progress_reads),indent=2)+'\n')
+    a.out.write_text(json.dumps(check(a.src,a.progress_reads,a.rows),indent=2)+'\n')

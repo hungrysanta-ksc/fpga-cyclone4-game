@@ -70,5 +70,5 @@ if __name__=='__main__':
     p.add_argument('temp',type=Path)
     p.add_argument('phase',type=int)
     p.add_argument('--held',action='store_true')
-    p.add_argument('--audit',choices=('878-once','880-progress','880-end'))
+    p.add_argument('--audit',choices=('878-once','880-progress','880-end','881-range'))
     run(**vars(p.parse_args()))
