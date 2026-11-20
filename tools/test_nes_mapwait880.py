@@ -9,12 +9,15 @@ from test_nes_word873_idle import run_consumer
 from nes_raw506 import once
 
 
-def run(temp,phase,held,audit=None):
+def run(temp,phase,held,audit=None,generation=950):
+    assert generation==950 or (generation==959 and audit)
     assert not (held and audit)
     trial=temp/f'nes-tile821-demo-jointmirror-p{phase}-{audit or "879-static"}'
     out=temp/f'nes-mapwait880-consumer-{phase}-{audit or int(held)}'
+    if generation!=950:
+        out=out.with_name(out.name+f'-g{generation}')
     out.mkdir()
-    r=receipt(trial,950)
+    r=receipt(trial,generation)
     frame,line,returned=r['map_return']
     if held:assert 0<line<225
     # Put the SPI start near the opening of this VBlank. The consumer's actual
@@ -25,10 +28,10 @@ def run(temp,phase,held,audit=None):
     for raw in (trial/'packets.jsonl').read_text().splitlines():
         _,clock,data,bulk=json.loads(raw)
         b=bytes.fromhex(data)
-        if int.from_bytes(b[8:10],'little')==950:
+        if int.from_bytes(b[8:10],'little')==generation:
             if b[:2]==bytes((2,5)) and b[10:14]==bytes((0,0,21,0)):changed=True
         ops.append((clock+(shift if changed else 0),'PUSH',data,bulk))
-        if b[0]==3 and int.from_bytes(b[8:10],'little')==950:break
+        if b[0]==3 and int.from_bytes(b[8:10],'little')==generation:break
     assert changed
     def audit_dma(lua):
         lua=once(lua,'local function write(a,v)','''local range880=nil
@@ -44,24 +47,24 @@ local function write(a,v)''')
   if visible then
    if dmaRemaining==1''')
         return once(lua,'dmaRemaining=dmaLength;sample516("ppu_dma",dmaLength);',
-            '''dmaRemaining=dmaLength;
-  if not packet and word(0x1226)==950 and regs[0x4301]==0x18 then
+            f'''dmaRemaining=dmaLength;
+  if not packet and word(0x1226)=={generation} and regs[0x4301]==0x18 then
    assert(regs[0x4300]==1)
    range880=regs[0x4302]+256*regs[0x4303]+65536*regs[0x4304]
    dest880=2*(regs[0x2116]+256*regs[0x2117])
   end
   sample516("ppu_dma",dmaLength);''')
-    run_consumer(temp,trial,out,ops,46,audit_dma if audit else None)
+    run_consumer(temp,trial,out,ops,generation-905+1,audit_dma if audit else None)
     result=dict(shift_clocks=shift)
     def row(path,g,event):
         return next(r for r in window(path) if r['g']==g and r['event']==event)
-    assert row(trial,949,'reveal')==row(out,949,'reveal')
-    assert (out/'frame-950.rgb').read_bytes()==(trial/'frame-950.rgb').read_bytes()
+    assert row(trial,generation-1,'reveal')==row(out,generation-1,'reveal')
+    assert (out/f'frame-{generation}.rgb').read_bytes()==(trial/f'frame-{generation}.rgb').read_bytes()
     for e in ('reveal','load','ppu_dma'):
-        result[e]=[r for r in window(out) if r['g']==950 and r['event']==e and (e!='load' or r['op']==3)]
-    result['final_ACK']=next(r for r in window(out) if r['g']==950 and r['event']=='ack' and r['op']==3)
+        result[e]=[r for r in window(out) if r['g']==generation and r['event']==e and (e!='load' or r['op']==3)]
+    result['final_ACK']=next(r for r in window(out) if r['g']==generation and r['event']=='ack' and r['op']==3)
     if not held:
-        assert result['reveal']==[row(trial,950,'reveal')] and result['final_ACK']['clock']==r['ACK']
+        assert result['reveal']==[row(trial,generation,'reveal')] and result['final_ACK']['clock']==r['ACK']
     (out/'summary.json').write_text(json.dumps(result,indent=2)+'\n')
 
 
@@ -70,5 +73,6 @@ if __name__=='__main__':
     p.add_argument('temp',type=Path)
     p.add_argument('phase',type=int)
     p.add_argument('--held',action='store_true')
-    p.add_argument('--audit',choices=('878-once','880-progress','880-end','881-range','882-oam','882-single','882-direct','883-shared','883-ack','884-room'))
+    p.add_argument('--audit',choices=('878-once','880-progress','880-end','881-range','882-oam','882-single','882-direct','883-shared','883-ack','884-room','886-static'))
+    p.add_argument('--generation',type=int,choices=(950,959),default=950)
     run(**vars(p.parse_args()))
