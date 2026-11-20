@@ -11,7 +11,8 @@ from check_nes_shared794 import PROBES
 from unicorn import UC_HOOK_MEM_WRITE
 
 
-def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages=None, retained_context=None):
+def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages=None, retained_context=None,
+           pre_snapshots=None, deny_release=False, bad_post_crc=False):
     obj = src / "obj-nes-100"
     firmware = (obj / "firmware.stm").read_bytes()
     u = Uc(UC_ARCH_ARM, UC_MODE_THUMB | UC_MODE_MCLASS)
@@ -34,16 +35,20 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
     ms = frames = observes = 0
     status = 0x82
     ops, checkpoints, stages, records = [], [], [], []
+    pre_reads=0
+    reset_releases=[]
     if "nes_boot_probe798" in symbols:
         u.mem_write(symbols["nes_boot_probe798"],bytes([probe]))
     def hook(cpu, address, size, name):
-        nonlocal driven, failed, ms, status, frames, observes
+        nonlocal driven, failed, ms, status, frames, observes, pre_reads
         a,b,c = [cpu.reg_read(reg) for reg in (UC_ARM_REG_R0,UC_ARM_REG_R1,UC_ARM_REG_R2)]
         value = 0
         if name=="get_snes_reset":
             value = driven or ms<release_ms
         elif name=="snes_reset":
             driven = bool(a)
+            if not driven:
+                reset_releases.append(pre_reads)
         elif name=="nes_return_delay":
             assert (a,b)==(1,1)
             ms+=1
@@ -81,7 +86,11 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
                     reply[2:4]=bytes([3,2])
                 reply[4:]=max(1,observes).to_bytes(4,"big")
             elif op==0x73:
-                reply[1:]=bytes([0xe6,0xe1 if fault=="copy" else 3,0,0,0,0,3])
+                if pre_snapshots is not None and driven and status==0x86:
+                    reply[1:]=pre_snapshots[pre_reads]
+                    pre_reads+=1
+                else:
+                    reply[1:]=bytes([0xe6,0xe1 if fault=="copy" else 3,0,0,0,0,3])
             elif stopped_pages is not None and op in stopped_pages:
                 assert status==2 and driven
                 reply[1:]=stopped_pages[op]
@@ -95,6 +104,8 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
             if fault!="defer" or not driven:
                 reply[1]=0xf7
                 reply[19]=crc(reply[1:19],8,7,0)
+                if bad_post_crc and not driven:
+                    reply[19]^=1
             cpu.mem_write(c,bytes(reply))
             value=1
         elif name.startswith("native_frames222"):
@@ -134,17 +145,19 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
         assert failed==(release_ms>1) and result==(release_ms<=1)
     else:
         fatal=fault in ("done","timer","start","stop")
-        entered=not probe and release_ms<=20 and fault not in ("done","timer","start","copy")
+        entered=not probe and not deny_release and not bad_post_crc and release_ms<=20 and fault not in ("done","timer","start","copy")
         assert failed==fatal and bool(result)==(not fatal) and frames==int(entered)
         assert ops.count(0x63)==1 and ops.count(0x64)==int(fault not in ("timer","done","start"))
         end_record="PROBE_STOPPED" if probe else "DISPLAY_STOPPED"
         assert checkpoints==(["DISPLAY_NEXT"] if fatal else ["DISPLAY_NEXT",end_record])
-        assert driven and ms==(0 if fault=="start" or probe==1 else 1 if fault in ("done","timer") else min(20,max(1,release_ms)))
+        assert driven and ms==(0 if fault=="start" or probe==1 or deny_release else 1 if fault in ("done","timer") else min(20,max(1,release_ms)))
         if not fatal:
             pages=[] if stopped_pages is None else ([0x71,0x72] if retained_context is None else [])+[0x74,0x75]
             suffix=[0x70,0x70,0x73,*pages,0x77,0x76]
             assert ops[-len(suffix):]==suffix and status==2
             expected_error=9 if probe!=1 and release_ms>20 else 6 if fault=="copy" else 0
+            if deny_release or bad_post_crc:
+                expected_error=7 if deny_release else 8
             if stopped_pages is not None:
                 expected_error=4
             assert u.mem_read(symbols["nes_run136"]+20,1)[0]==expected_error
@@ -158,6 +171,10 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
         return f"{hi:08x}{lo:08x}"
     captured={} if stopped_pages is None else dict(context=pair(12),ppu=pair(24),
                         status=list(u.mem_read(report+20,3)),ppu_valid=u.mem_read(report+32,1)[0])
+    if pre_snapshots is not None:
+        assert pre_reads==len(pre_snapshots)
+        assert reset_releases==([] if deny_release else [pre_reads])
+        captured.update(pre_reads=pre_reads,reset_releases=reset_releases)
     return dict(**captured,release_ms=release_ms,fault=fault,elapsed_ms=ms,terminal=failed,frame_entry=frames,
                 reset_asserted=driven,spi=ops,stages=stages,checkpoints=checkpoints,records=records)
 

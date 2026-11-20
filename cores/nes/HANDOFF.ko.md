@@ -1,5 +1,7 @@
 # 현재 NES 인계
 
+**MMC892 · 첫 벡터 공급 수정, 실기 확인 대기.** MMC891의 `03`을 실제 RAM 초기화와 브리지 회로로 재현했다. ARM은 첫 E0가 무응답일 때 SPI73의 현재 active를 확인한 뒤 RESET을 해제한다. 네 위상에서 두 벡터와 첫 stage 쓰기를 확인했다. 전체 FIT·STA와 STOP·메뉴 경로를 통과했다. 다음은 같은 모험도 4 ROM으로 `NES-DIAG/NES BOOT 892.nh1`을 1회 실행해 stage 3과 메뉴 복귀를 확인하는 일이다. [검증 결과](../../docs/nes-reset892-results.ko.md) · [설치 순서](../../docs/nes-mmc892-trial.ko.md)
+
 **MMC891 · 실기에서 벡터 읽기 주소만 관측.** NES BOOT 891은 384KiB 검증·START 뒤 stage 0, 누적 `03`으로 5초 뒤 종료했다. STOP·base·실제 메뉴 복귀가 성공했다. 다음은 두 벡터 스트로브에서 세션 해제·주소 tag·ROM 출력 허가를 대조하는 작업이다. 실기 FPS 기준은 MMC872다. [실기 판독과 대조 조건](../../docs/nes-boot891-results.ko.md#nes-boot-891-실기-결과)
 
 **MMC890 · 모험도 4 무입력 60초 실기 전달본.** 888 ARM·889 소비기를 MMC890으로 최종 링크했다. 밀집 60간격은 두 위상 모두 138회이고, 비교 대상 MMC872는 141회다. 1–30초·30–60초 실기 기준은 각각 519·523장이다. 실기 1회차는 5초 stage 0 준비 시간 초과 뒤 메뉴 복귀, 2회차는 DISPLAY_NEXT 뒤 검은 화면과 본체 리셋 복귀 실패다. NES BOOT 890도 stage 0에서 5초 시간 초과 후 메뉴로 복귀했다. 다음은 RESET 해제·벡터 읽기부터 첫 $7000 쓰기까지의 검증이다. [실기 기록](../../docs/progress/pr-170.md#mmc890-실기-부팅) [SD 설치와 로그 이름](../../docs/nes-mmc890-trial.ko.md) · [보드와 최종 링크 검증](../../analysis/trial890-package.json)
