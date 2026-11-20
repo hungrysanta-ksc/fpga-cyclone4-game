@@ -73,6 +73,6 @@ if __name__=='__main__':
     p.add_argument('temp',type=Path)
     p.add_argument('phase',type=int)
     p.add_argument('--held',action='store_true')
-    p.add_argument('--audit',choices=('878-once','880-progress','880-end','881-range','882-oam','882-single','882-direct','883-shared','883-ack','884-room','886-static','887-seal'))
+    p.add_argument('--audit',choices=('878-once','880-progress','880-end','881-range','882-oam','882-single','882-direct','883-shared','883-ack','884-room','886-static','887-seal','888-word'))
     p.add_argument('--generation',type=int,choices=(950,959),default=950)
     run(**vars(p.parse_args()))
