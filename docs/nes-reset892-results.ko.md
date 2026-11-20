@@ -30,6 +30,14 @@ Quartus Lite 전체 보드를 새 디렉터리에서 MAP·FIT·ASM·STA했다. 1
 
 STOP과 base 복구가 성공했고, 사용자가 실제 SD 메뉴 복귀를 확인했다. 부팅 진단 1회 결과이며 게임 프레임 수는 0이다. 다음 비교는 같은 설치의 `NES MMC3 892.nh1`으로 무입력 60초를 실행한 뒤 MMC872와 오프닝 1–30초·데모 30–60초 표시 FPS를 대조한다.
 
+## NES MMC3 892 일반 실행 실기 결과
+
+일반 실행에서는 검은 화면이 지속됐고 사용자가 본체 RESET을 눌러도 메뉴로 돌아오지 않았다. 진행 파일은 40,960B(512B × 80)다. 앞의 79개 레코드는 경과 시간을 제외한 모든 필드가 BOOT 성공본과 일치했다. 양쪽 모두 seq 79는 222,470ms의 DISPLAY_NEXT였고 일반 실행의 모드 값은 0, BOOT는 2였다. 일반 실행에서 이후의 DISPLAY_STOPPED·STOP_DONE·MENU_PREPARED 기록은 없었다. 기존 budget·game-last는 BOOT 실행 때 생성된 파일이다.
+
+최종 ARM의 run136은 DISPLAY_NEXT를 기록한 뒤 START를 요청한다. 다음 SD 체크포인트는 세션에서 돌아와 STOP을 검사한 뒤에 남는다. 따라서 일반 실행의 START 수락, stage 3, 첫 프레임 실행, STOP 중 어디까지 갔는지는 미확정이다. nes_checkpoint112는 RUN 중 SD 기록을 허용하지 않는다. 현행 부팅 대조 시험도 native_frames222를 모형으로 대체한다.
+
+MMC872와 MMC892의 최종 ELF에서 native_frames222 진입 시 각각 31,864B(레지스터 저장 8B 포함)를 예약한다. .bss 끝 0x20007954와 스택 상단 0x20010000도 같다. 호출자·하위 함수·IRQ를 포함한 실제 스택 최저점은 미측정이다. 다음 검증은 최종 ARM의 실제 프레임 루틴으로 첫 입력부터 첫 표시 ACK까지 재생하고, 짧게 종료하는 대조 조건에서 STOP·base·메뉴까지 확인한다. 60초 성능 비교는 일반 실행 복구 뒤 진행한다.
+
 ## 재현
 
 1. MMC891 인계 자료로 891E 보드와 최종 ARM 소스를 준비한다. `nes_reset892.py board TEMP`로 보드를 합성하고 `arm`으로 패치를 만든다. `build_nes_mmc479_arm.ps1`의 Base는 probes/nes-trial891/link-credit, Patch와 Out은 probes/nes-reset892/patch와 link다.
