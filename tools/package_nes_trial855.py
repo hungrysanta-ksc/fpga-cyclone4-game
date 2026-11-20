@@ -50,7 +50,7 @@ def loader(game, src=SRC, edition=855, work=WORK):
     save(work / "loader.json", dict(firmware=sha(src/"obj-nes-100/firmware.stm"), rom=digest(raw), cases=rows))
 
 
-def board_proof(temp, parent, edition="855", client_dir=CLIENT, reference="822held"):
+def board_proof(temp, parent, edition="855", client_dir=CLIENT, reference="822held", *, expected_input_paths=None):
     board = temp / f"nes-trial816-board{edition}"
     fit = resources(temp, edition)
     assert "Fitter Status : Successful" in (board / "output_files/board.fit.summary").read_text()
@@ -81,7 +81,12 @@ def board_proof(temp, parent, edition="855", client_dir=CLIENT, reference="822he
             r"^; (Unconstrained [\w ]+?)\s*;\s*(\d+)\s*;\s*(\d+)\s*;", text, re.M)}
     sta = board / "output_files/board.sta.rpt"
     io = unconstrained(sta)
-    assert io and io == unconstrained(temp / f"nes-trial816-board{reference}/output_files/board.sta.rpt")
+    old_io = unconstrained(temp / f"nes-trial816-board{reference}/output_files/board.sta.rpt")
+    if expected_input_paths is not None:
+        before, after = expected_input_paths
+        assert old_io["Unconstrained Input Port Paths"] == [before, before] and 0 <= after < before
+        old_io["Unconstrained Input Port Paths"] = [after, after]
+    assert io and io == old_io
     return dict(fit=fit, prior_fit=parent["fit"], constrained_paths=target_slacks, unconstrained=io,
                 image=image, ROM_bus=digest(client),
                 STA_report=sha(board / "output_files/board.sta.rpt")), bi
