@@ -8,9 +8,9 @@ from nes_bulk889 import WORK
 from nes_raw506 import once
 
 
-def verify(temp,tag='889-reader'):
+def verify(temp,tag='889-reader',work=WORK,client='client03'):
     trial=temp/f'nes-tile821-demo-jointmirror-p1-{tag}'
-    results=guards(temp,WORK,tag,'client03')
+    results=guards(temp,work,tag,client)
     faults={}
     # A WRAM header or a separately read FPGA descriptor may be corrupt.
     # Matching invalid length/offset pairs reach the actual bound/alignment checks.
@@ -45,7 +45,7 @@ end,emu.callbackType.exec,{labels['data']})
                 needle='return d[a-0x6040+1]'
                 lua=once(lua,needle,'if hit889 then '+set_value+' end;'+needle)
             return lua
-        faults[name]=run(temp,trial,'bulk889-'+name,column_client=WORK/'client03',
+        faults[name]=run(temp,trial,'bulk889-'+name,column_client=work/client,
                          select_packet=lambda b,g:g==907 and b[:2]==bytes([7,section]),adapt_lua=adapt)
     results['bad_tiles']=faults
     return results

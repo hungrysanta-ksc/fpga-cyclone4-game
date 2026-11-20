@@ -25,20 +25,27 @@ QUARTUS = Path('C:/altera_lite/25.1std/quartus/bin64')
 
 def board(temp):
     parent = read(ROOT / 'analysis/trial866-package.json')
-    base = temp / 'nes-trial816-board855'
-    assert sha(base/'output_files/board.sof') == parent['board']['image']['SOF']
-    rom = (CLIENT/'sink165.sfc').read_bytes()
-    assert digest(rom) == read(ROOT/'analysis/capture871-results.json')['detail']['client']
-    assert bytes.fromhex((CLIENT/'sink-program.hex').read_text()) == rom[:5056] + rom[-64:]
-    dest = temp / 'nes-trial816-board872'
+    dest = compile_board(temp, '855', '872', CLIENT, parent['board']['image']['SOF'],
+                         read(ROOT/'analysis/capture871-results.json')['detail']['client'])
+    image(SimpleNamespace(board=dest, out=temp/'nes-trial872-packed', quartus=QUARTUS, number='872'))
+
+
+def compile_board(temp, base_edition, edition, client, expected_sof, expected_client):
+    base = temp / f'nes-trial816-board{base_edition}'
+    assert sha(base/'output_files/board.sof') == expected_sof
+    rom = (client/'sink165.sfc').read_bytes()
+    assert digest(rom) == expected_client
+    assert bytes.fromhex((client/'sink-program.hex').read_text()) == rom[:5056] + rom[-64:]
+    dest = temp / f'nes-trial816-board{edition}'
     dest.mkdir()
     for sub in ('rtl', 'sys'):
         shutil.copytree(base/sub, dest/sub)
     for f in base.iterdir():
         if f.suffix in ('.sv','.v','.vhd','.qpf','.qsf','.sdc','.tcl','.hex'):
-            shutil.copyfile(CLIENT/f.name if f.name == 'sink-program.hex' else f, dest/f.name)
-    fit(temp, 872, QUARTUS)
-    image(SimpleNamespace(board=dest, out=temp/'nes-trial872-packed', quartus=QUARTUS, number='872'))
+            shutil.copyfile(client/f.name if f.name == 'sink-program.hex' else f, dest/f.name)
+    fit(temp, edition, QUARTUS)
+    return dest
+
 
 
 def verify_link():
@@ -111,7 +118,15 @@ def package(temp):
     reference = read(ROOT/'analysis/trial866-package.json')
     assert checks['loader']['cases']==reference['checks']['loader']['cases']
     assert checks['loader']['rom']==reference['checks']['loader']['rom']
-    source = PROBES/'nes-trial866/MMC866-ADVENTURE-60SEC-SD-ROOT.zip'
+    report = dict(edition=872, physical=False, ARM=digest(fw), client=parent['client'], flash_B=len(fw),
+                  flash_free_B=212992-len(fw), board=proof, final_link_runs=clips, checks=checks)
+    write_verified_archive(WORK,reference,fw,bitstream,report)
+
+
+def write_verified_archive(work,reference,fw,bitstream,report):
+    edition = report['edition']
+    prior = reference['edition']
+    source = PROBES/f'nes-trial{prior}/MMC{prior}-ADVENTURE-60SEC-SD-ROOT.zip'
     assert sha(source)==reference['ZIP_SHA256']
     files = {}
     with ZipFile(source) as original:
@@ -119,21 +134,19 @@ def package(temp):
             data = original.read(name)
             assert digest(data)==checksum
             if name=='README-KO.txt':
-                data = (ROOT/'docs/nes-mmc872-trial.ko.md').read_bytes()
+                data = (ROOT/f'docs/nes-mmc{edition}-trial.ko.md').read_bytes()
             elif name.endswith('/firmware.stm'):
                 data = fw
-            elif name.endswith('/fpga_mmc866.bi3'):
+            elif name.endswith(f'/fpga_mmc{prior}.bi3'):
                 data = bitstream
             elif name.endswith('/ROM-NOT-INCLUDED.txt'):
-                assert b'mmc866.nes' in data
-                data = data.replace(b'mmc866.nes',b'mmc872.nes')
-            files[name.replace('866','872')] = data
+                assert f'mmc{prior}.nes'.encode() in data
+                data = data.replace(f'mmc{prior}.nes'.encode(),f'mmc{edition}.nes'.encode())
+            files[name.replace(str(prior),str(edition))] = data
     assert len(files)==11 and all('restore' not in n.lower() and not n.lower().endswith('.nes') for n in files)
-    report = dict(edition=872, physical=False, ARM=digest(fw), client=parent['client'], flash_B=len(fw),
-                  flash_free_B=212992-len(fw), board=proof, final_link_runs=clips, checks=checks,
-                  reference_ZIP=sha(source), files={n:digest(data) for n,data in files.items()})
+    report.update(reference_ZIP=sha(source),files={n:digest(data) for n,data in files.items()})
     files['manifest.json'] = (json.dumps(report,indent=2)+'\n').encode()
-    archive = WORK/'MMC872-ADVENTURE-60SEC-SD-ROOT.zip'
+    archive = work/f'MMC{edition}-ADVENTURE-60SEC-SD-ROOT.zip'
     partial = archive.with_suffix('.partial')
     with ZipFile(partial,'w') as z:
         for name,data in files.items():
@@ -142,7 +155,7 @@ def package(temp):
         assert z.testzip() is None and z.namelist()==list(files) and all(z.read(n)==b for n,b in files.items())
     partial.replace(archive)
     report.update(ZIP_SHA256=sha(archive), ZIP_B=archive.stat().st_size)
-    save(ROOT/'analysis/trial872-package.json',report)
+    save(ROOT/f'analysis/trial{edition}-package.json',report)
     print(archive, report['ZIP_SHA256'])
 
 
