@@ -14,10 +14,10 @@ from prepare_nes_frame862 import PARENTS, PROBES, ROOT, WORK
 from read_nes_frame862 import decode as read_trace
 
 
-def board(temp, n, client):
+def board(temp, n, client, packed=None):
     project = temp / f'nes-trial816-board{n}'
     reports = project / 'output_files'
-    packed = temp / f'nes-frame862-final{n}'
+    packed = packed or temp / f'nes-frame862-final{n}'
     image = read(packed / 'image.json')
     data = (packed / f'fpga_mmc{n}.bi3').read_bytes()
     assert sha(reports / 'board.sof') == image['SOF']
