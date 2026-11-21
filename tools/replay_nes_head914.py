@@ -27,13 +27,13 @@ class LateHead(LeadingRecord):
         return bytes(reply)
 
 
-def replay(temp,phase,cold,rev):
+def replay(temp,phase,cold,rev,*,arm=None,edition=907,wire_tag='914wire',run_id=None,transcript_dir=None):
     state='cold' if cold else 'warm'
-    folder=temp/f'nes-tile821-obj-jointmirror-p{phase}-914wire-{state}-pair'
+    folder=temp/f'nes-tile821-obj-jointmirror-p{phase}-{wire_tag}-{state}-pair'
     origin=int((folder/'origin914.txt').read_text())
     jobs=[j for l in (folder/'producer.jsonl').read_text().splitlines() if (j:=json.loads(l))['generation']==912]
     board=temp/f'nes-port914{rev}/nes-trial816-board914'
-    transcript=(board/f'trace-{phase}-{state}.log').read_text(errors='replace')
+    transcript=((transcript_dir or board)/f'trace-{phase}-{state}.log').read_text(errors='replace')
     assert 'PASS914 trace' in transcript
     rows=re.findall(r'chunk=(\d+) bytes=(\d+) head=(\d+) reference_producer=(\d+) reference_return=(\d+)',transcript)
     assert len(rows)==len(jobs)==8
@@ -44,7 +44,7 @@ def replay(temp,phase,cold,rev):
             limits[j['token']]=origin+int(head)
     with patch.object(peer,'PeerLink',LateHead),patch.object(LateHead,'limits',limits,create=True),patch.object(peer,'CLIENT',OUT/'consumer'),patch.object(peer,'monitor',monitor):
         tag={'F':'914head','G':'914ghead','I':'914ihead'}[rev]
-        peer.compare(temp,phase,cold,True,edition=907,work_arm=work('idle'),run_id=tag)
+        peer.compare(temp,phase,cold,True,edition=edition,work_arm=arm or work('idle'),run_id=run_id or tag)
 
 
 if __name__=='__main__':

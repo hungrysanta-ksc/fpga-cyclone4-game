@@ -9,12 +9,15 @@ ROW=struct.Struct('<6H4B16s12s')
 CAP=124
 SIZE=16+CAP*ROW.size+4+320*8
 MS=32768/84000
+TRACE_BYTES={905:SIZE,907:SIZE+2,915:SIZE+6}
 
-def decode(path,expected_edition=905):
+def decode(path,expected_edition=905,*,direct_probe=False):
     data=path.read_bytes()
+    expected_size=TRACE_BYTES[expected_edition]+2*int(expected_edition==915 and not direct_probe)
+    if len(data)!=expected_size:
+        raise ValueError('wrong supply trace edition or truncated SD write')
     magic,edition,mode,count,d0,d1,size,capacity=HEADER.unpack_from(data)
-    if expected_edition not in (905,907) or (magic,edition,size,capacity,len(data))!=(
-            0x9001,expected_edition,ROW.size,CAP,SIZE+2*(expected_edition==907)) or mode>3 or count>CAP:
+    if (magic,edition,size,capacity)!=(0x9001,expected_edition,ROW.size,CAP) or mode>3 or count>CAP:
         raise ValueError('wrong supply trace edition or truncated SD write')
     selected,score=struct.unpack_from('<2H',data,16+CAP*size)
     if selected>count:raise ValueError('invalid detail index')
@@ -51,6 +54,8 @@ def decode(path,expected_edition=905):
                 r['invalid']='ARM descriptor / FPGA token';continue
             r.update(last_token=tok,last_kind=kind,last_bytes=n,last_offset=offset,E9_to_last_publish_ms=elapsed(last))
         if selected!=i+1:continue
+        r['END_age_ticks512']=ia
+        r['ACK_age_ticks512']=ea
         if not (0<nc<63 and 0<nt<255 and r.get('last_kind')==1):
             raise ValueError('incomplete selected generation')
         pos=0;chunks=[]
@@ -85,7 +90,15 @@ def decode(path,expected_edition=905):
         if pos!=nt or chunks[-1]['bytes']!=r['last_bytes'] or chunks[-1]['kind']!='OBJ':
             raise ValueError('tile stream and validated ARM descriptor disagree')
         r['detail']=chunks
+        if edition==915:
+            commit,query=struct.unpack_from('<HH',data,SIZE+2)
+            r['commit_age_ticks512']=None if commit==65535 else commit
+            r['first_query_ticks512']=query
+            if len(data)==SIZE+8:
+                r['commit_step_ticks512']=struct.unpack_from('<H',data,SIZE+6)[0]
+                # The paired-timer link reuses the full query-cost bound.
+                r['first_query_ticks512']=probe
     return dict(mode=mode,dropped=[d0,d1],selected=selected,rows=rows,
-                displayed55=struct.unpack_from('<H',data,SIZE)[0] if edition==907 else None)
+                displayed55=struct.unpack_from('<H',data,SIZE)[0] if edition in (907,915) else None)
 
 if __name__=='__main__':print(json.dumps(decode(Path(sys.argv[1])),indent=2))

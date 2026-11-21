@@ -8,13 +8,13 @@ from pathlib import Path
 from unittest.mock import patch
 from replay_nes_tile903 import joint, replay, window, UC_HOOK_CODE, UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2, UC_ARM_REG_R3, UC_ARM_REG_LR, UC_ARM_REG_PC
 from prepare_nes_supply905 import WORK
-from read_nes_supply905 import decode,SIZE
+from read_nes_supply905 import decode,TRACE_BYTES
 
 def run(temp,clip,phase,*,tag='905-supply',out=None,base=None,runner=replay,work=WORK,edition=905):
     out=out or temp/f'nes-tile821-{clip}-jointmirror-p{phase}-{tag}'
     base=base or temp/f'nes-tile821-{clip}-jointmirror-p{phase}-903-tile'
     original=joint.Runtime.__init__
-    holders=[];pages=[]
+    holders=[];pages=[];commit_steps={}
     def stamp(t):return int(t*84000000/joint.MASTER/32768)&1023
     def init(cpu,args,link):
         original(cpu,args,link);holders.append(cpu)
@@ -34,6 +34,15 @@ def run(temp,clip,phase,*,tag='905-supply',out=None,base=None,runner=replay,work
             if u.mem_read(tx,1)!=b'\x78':return
             assert clip=='late' and u.reg_read(UC_ARM_REG_R3)==32 and 0x20000000<=tx<0x20010000
             page=u.mem_read(tx+1,1)[0];g=cpu.generation
+            if edition==915 and page==0 and 'step_begin915' in cpu.data_symbols and g not in commit_steps:
+                def word(name,size):
+                    return int.from_bytes(u.mem_read(cpu.data_symbols[name],size),'little')
+                assert word('commit_gen915',2)==g
+                before=word('step_begin915',4);after=word('commit_clock915',4)
+                pops=[e for e in cpu.events if e.get('input_generation')==g and e.get('opcode')=='0xd2']
+                edge=int(pops[-1]['clock']*joint.ARM_HZ/joint.MASTER)&0xffffffff
+                assert (edge-before)&0xffffffff <= (after-before)&0xffffffff
+                commit_steps[g]=dict(before=before,D2=edge,after=after)
             jobs=[j for j in map(json.loads,(out/'producer.jsonl').read_text().splitlines()) if j['generation']==g]
             t0=next(e['start'] for e in cpu.events if e.get('opcode')=='0xe9' and e['generation']==g)
             last=jobs[-1]; count=sum(j['bytes']//(16<<j['kind']) for j in jobs)
@@ -54,8 +63,10 @@ def run(temp,clip,phase,*,tag='905-supply',out=None,base=None,runner=replay,work
     with patch.object(joint.Runtime,'__init__',init):
         runner(temp,temp/'nes-latency898',897,clip,phase,candidate_arm=work/'link/src',replay_tag=tag)
     cpu,=holders
-    path=out/'records.bin';path.write_bytes(cpu.u.mem_read(cpu.data_symbols['ptrcache'],SIZE+2*(edition==907)))
-    data=decode(path,edition)
+    length=TRACE_BYTES[edition]+2*int(edition==915 and 'step_begin915' in cpu.data_symbols)
+    path=out/'records.bin';path.write_bytes(cpu.u.mem_read(cpu.data_symbols['ptrcache'],length))
+    data=decode(path,edition,direct_probe=edition==915 and 'step_begin915' not in cpu.data_symbols)
+    if commit_steps:(out/'step915.json').write_text(json.dumps(commit_steps))
     assert len(data['rows'])==(6 if clip=='late' else 0) and not any(data['dropped'])
     assert all('invalid' not in r for r in data['rows'])
     if clip=='late':assert any(r.get('detail') for r in data['rows'])

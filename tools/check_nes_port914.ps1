@@ -1,6 +1,13 @@
 $ErrorActionPreference='Stop'
 $rev=if($env:NES_PORT914_VARIANT -in 'F','G','H','I'){$env:NES_PORT914_VARIANT}else{'I'}
 $board=Join-Path $env:LOCALAPPDATA "Temp/nes-port914$rev/nes-trial816-board914"
+$release915=$env:NES_PORT914_RELEASE -eq '915'
+$logdir=if($release915){Join-Path $env:LOCALAPPDATA 'Temp/nes-trial915-rtl'}else{$board}
+$physical=$release915 -and $env:NES_PORT914_FEEDBACK -eq '1'
+if($physical){$logdir=Join-Path $env:LOCALAPPDATA 'Temp/nes-trial915-rtl-feedback'}
+$step915=$release915 -and $env:NES_PORT914_STEP -eq '1'
+if($step915){$logdir=Join-Path $env:LOCALAPPDATA 'Temp/nes-trial915step-rtl'}
+if($release915){[IO.Directory]::CreateDirectory($logdir) | Out-Null}
 $bin='C:/altera_standard/25.1std/questa_fse/win64'
 $tb=Join-Path (Split-Path $PSScriptRoot -Parent) 'tests/nes-functional/tb_nes_port914.sv'
 Push-Location $board
@@ -21,10 +28,15 @@ try {
  & "$bin/vsim.exe" -c tb_nes_spi914 -do 'onerror {quit -code 1}; onbreak {quit -code 1}; run -all; quit -code 0' *> spi914.log
  if($LASTEXITCODE -or !(Select-String spi914.log -Pattern 'PASS914 SPI' -Quiet)){throw 'see spi914.log'}
  foreach($phase in 1,2){foreach($cache in 'cold','warm'){
+  if($physical -and ($phase -ne 2 -or $cache -ne 'warm')){continue}
   $generations=if($env:NES_PORT914_LEAD -eq '1' -and $cache -eq 'warm'){@(910,911)}elseif($env:NES_PORT914_LEAD -eq '1'){@()}else{@(912)}
   foreach($generation in $generations){
    $trace=if($generation -eq 912){Join-Path $env:LOCALAPPDATA "Temp/nes-tile821-obj-jointmirror-p$phase-914wire-$cache-pair"}else{Join-Path $env:LOCALAPPDATA "Temp/nes-tile821-obj-jointmirror-p$phase-914lead-$cache-pair/gen$generation"}
+   if($release915){$trace=$trace.Replace('-914wire-','-915wire-').Replace('-914lead-','-915wire-')}
+   if($physical){$trace=$trace.Replace('-915wire-','-915physical-')}
+   if($step915){$trace=$trace.Replace('-915wire-','-915stepwire-')}
    $log=if($generation -eq 912){"trace-$phase-$cache.log"}else{"lead-$generation-$phase-$cache.log"}
+   $log=Join-Path $logdir $log
    & "$bin/vsim.exe" -c -gREPLAY=1 "-gG=$generation" tb_nes_port914 "+trace=$trace" -do 'onerror {quit -code 1}; onbreak {quit -code 1}; run -all; quit -code 0' *> $log
   if($LASTEXITCODE -or !(Select-String $log -Pattern 'PASS914 trace' -Quiet)){throw "see $log"}
  }}}
