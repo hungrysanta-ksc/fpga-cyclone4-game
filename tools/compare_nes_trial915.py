@@ -68,10 +68,21 @@ def compare(old_dir,new_dir):
     a=capture(old_dir,907);b=capture(new_dir,915)
     result=dict(MMC907=a,MMC915=b,display_FPS_delta=fps_delta(a['display_windows'],b['display_windows']),
                 FPS_delta_55_60=b['window_display_FPS_55_60']-a['window_display_FPS_55_60'])
+    # These summary rows have the last descriptor, but no per-tile grant history.
+    fields=('tick','BG','OBJ','map','tiles','chunks','last_kind','last_bytes','last_offset')
+    summaries=[]
     for directory,edition in ((old_dir,907),(new_dir,915)):
         rows=decode(directory/f'nes-frame-mmc{edition}.bin',edition)['rows']
+        index={tuple(r.get(k) for k in fields):r for r in rows}
+        if len(index)!=len(rows):
+            raise ValueError('ambiguous time and workload in trace summaries')
+        summaries.append(index)
         row=next((r for r in rows if 'detail' in r),None)
         result[f'MMC{edition}']['capture_phase']=phase_bounds(row) if row else dict(status='no complete detailed row')
+    before,after=summaries
+    result['matched_summary_ACK_ms']=[
+        dict(tick=k[0],MMC907=before[k]['input_to_final_ACK_ms'],MMC915=after[k]['input_to_final_ACK_ms'])
+        for k in sorted(before.keys() & after.keys())]
     x,y=a['workload'],b['workload']
     if x and y:
         keys=('BG','OBJ','map','tiles','chunks','last_bytes','last_offset','shape')
