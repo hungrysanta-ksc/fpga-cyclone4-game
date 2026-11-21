@@ -48,18 +48,19 @@ class GameReplay(ColdFrame):
         super().exchange(cpu, tx, rx, n)
 
 
-def verify(game):
-    path = OBJ / 'firmware.stm'
+def check_game_path(src):
+    obj = src / 'obj-nes-100'
+    path = obj / 'firmware.stm'
     fw = path.read_bytes()
     length, checksum, inverse = struct.unpack_from('<III', fw, 8)
-    assert fw[:4] == b'STM3' and len(fw) == 512 + length <= 212992
+    assert fw[:4] == b'STM3' and len(fw) == 512 + length
     assert zlib.crc32(fw[512:]) == checksum == inverse ^ 0xffffffff
-    with (OBJ / 'sd2snes.elf').open('rb') as f:
+    with (obj / 'sd2snes.elf').open('rb') as f:
         symbols = {s.name: (s['st_value'], s['st_size']) for s in
                    ELFFile(f).get_section_by_name('.symtab').iter_symbols()}
     ram, width = symbols['status_request876']
     assert width == 8 and ram % 4 == 0 and 0x20000000 <= ram <= 0x20010000 - width
-    m = Machine(SRC, bytes(128))
+    m = Machine(src, bytes(128))
     m.u.mem_write(0x0800c000, fw)
     m.u.mem_write(ram, b'\xcc' * width)
     stop = symbols['bssloop'][0]
@@ -67,7 +68,7 @@ def verify(game):
     assert m.u.reg_read(UC_ARM_REG_PC) == stop and bytes(m.u.mem_read(ram, width)) == D0
     functions = {k:(symbols[k][0] & ~1, symbols[k][1])
                  for k in ('nes_native165_poll', 'nes_native165_prepare')}
-    entry = 0x20010000 - sum(entry_stack(SRC)) + read(ROOT/'analysis/hardware894-results.json')['delta_B']
+    entry = 0x20010000 - sum(entry_stack(src)) + read(ROOT/'analysis/hardware894-results.json')['delta_B']
     fixture = read(TRACE)
     baseline = read(ROOT/'analysis/trial893-package.json')
     assert sha(TRACE) == baseline['candidate']['trace'] and fixture['client'] == baseline['client']
@@ -79,7 +80,7 @@ def verify(game):
     for name, trace, corrupt in [('normal', ready, False), ('bad-crc', ready, True),
                                   ('1247-empty-offers', delayed, False)]:
         frame = GameReplay(trace, entry, corrupt, ram, functions)
-        result = replay(SRC, 1, 'defer', pre_snapshots=[bytes.fromhex('e6000040000003')], game=frame)
+        result = replay(src, 1, 'defer', pre_snapshots=[bytes.fromhex('e6000040000003')], game=frame)
         checked = frame.result()
         assert not result['terminal'] and result['reset_asserted'] and result['spi'].count(0x64) == 1
         assert result['checkpoints'] == ['DISPLAY_NEXT', 'DISPLAY_STOPPED']
@@ -102,8 +103,18 @@ def verify(game):
     last = [tuple(bytes.fromhex(v) for v in row) for row in ready[-3:]]
     assert [tx[0] for tx, rx in last] == [0xe0, 0xea, 0xe8]
     assert last[0][1][15:17] == last[1][0][1:3]
-    save(WORK/'replay.json', cases)
     assert len(cases['normal']['d0_sites']) == 4, cases['normal']['d0_sites']
+    return cases, ram, entry
+
+
+def verify(game):
+    path = OBJ / 'firmware.stm'
+    fw = path.read_bytes()
+    assert len(fw) <= 212992
+    fixture = read(TRACE)
+    baseline = read(ROOT/'analysis/trial893-package.json')
+    cases, ram, entry = check_game_path(SRC)
+    save(WORK/'replay.json', cases)
     menu = check(SRC, '897')
     assert menu['rows']['normal']['released']
     for kind in ('progress', 'game-last', 'budget'):
