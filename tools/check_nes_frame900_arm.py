@@ -12,9 +12,13 @@ from prepare_nes_frame900 import WORK
 from read_nes_frame900 import ROW,read_trace
 
 
-def verify(n):
-    src=WORK/f'link{n}/src'
-    out=WORK/f'proof{n}'
+def verify(n,src=None,out=None):
+    src=src or WORK/f'link{n}/src'
+    out=out or WORK/f'proof{n}'
+    row_type,decoder,capacity=ROW,read_trace,194
+    if n==903:
+        from read_nes_tile903 import ROW as row_type, decode as decoder
+        capacity=151
     class WindowMachine(windows.Machine):
         def __init__(self,*args):
             super().__init__(*args)
@@ -52,6 +56,8 @@ def verify(n):
             tx=cpu.reg_read(UC_ARM_REG_R1)
             assert 0x20000000<=tx<0x20010000 and cpu.mem_read(tx,1)==b'\x78'
             wire=bytes([0,0x90,255,0x34,0x12])+struct.pack('<10H',8000,8050,8800,9300,9400,9450,3939,8100,8200,9600)+bytes(1)
+            if n==903:
+                wire=struct.pack('<BBBH8HIB',0,0x93,3,g,3940,0,0,0,0,0,9400,9600,0,0)
             cpu.mem_write(cpu.reg_read(UC_ARM_REG_R2),wire);q.ret(cpu,1)
         pc=q.syms['nes_native165_bulk'];q.u.hook_add(UC_HOOK_CODE,bulk,None,begin=pc,end=pc)
         for tick in (2999,3000,3499,3500,5499,5500,5999,6000):
@@ -74,12 +80,14 @@ def verify(n):
         q.call('save_report',[at,1])
         raw=out/f'mode{mode}.bin'
         raw.write_bytes(files[f'/sd2snes/nes-frame-mmc{n}.bin'])
-        run=read_trace(raw);rows=run['rows']
+        run=decoder(raw);rows=run['rows']
         ticks=[t for t in (3000,3499,5500,5999) if not (mode==1 and t>=5500 or mode==2 and t<5500)]
+        if n==903:
+            ticks=[3000,3499] if mode==1 else [5500,5999]
         assert [r['tick'] for r in rows]==ticks and all(r['bank']==1 and 'invalid' not in r for r in rows)
-        assert all(ROW.unpack_from(raw.read_bytes(),16+i*42)[3:5]==(156,58) for i in range(len(rows)))
+        assert all(row_type.unpack_from(raw.read_bytes(),16+i*row_type.size)[3:5]==(156,58) for i in range(len(rows)))
         # A full buffer must count the omitted row, without overwriting any payload.
-        q.u.mem_write(scratch+6,struct.pack('<H',194))
+        q.u.mem_write(scratch+6,struct.pack('<H',capacity))
         before=bytes(q.u.mem_read(scratch+16,8176))
         tick=ticks[0];q.call('nes_budget210_frame',[tick]);q.call('nes_budget210_display',[tick,q.video])
         assert bytes(q.u.mem_read(scratch+16,8176))==before
