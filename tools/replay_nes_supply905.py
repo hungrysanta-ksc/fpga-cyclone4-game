@@ -10,7 +10,7 @@ from replay_nes_tile903 import joint, replay, window, UC_HOOK_CODE, UC_ARM_REG_R
 from prepare_nes_supply905 import WORK
 from read_nes_supply905 import decode,SIZE
 
-def run(temp,clip,phase,*,tag='905-supply',out=None,base=None,runner=replay):
+def run(temp,clip,phase,*,tag='905-supply',out=None,base=None,runner=replay,work=WORK,edition=905):
     out=out or temp/f'nes-tile821-{clip}-jointmirror-p{phase}-{tag}'
     base=base or temp/f'nes-tile821-{clip}-jointmirror-p{phase}-903-tile'
     original=joint.Runtime.__init__
@@ -52,10 +52,10 @@ def run(temp,clip,phase,*,tag='905-supply',out=None,base=None,runner=replay):
         for name,fn in [('nes_budget210_frame',frame),('nes_native165_bulk',query)]:
             at=cpu.syms[name];cpu.u.hook_add(UC_HOOK_CODE,fn,begin=at,end=at)
     with patch.object(joint.Runtime,'__init__',init):
-        runner(temp,temp/'nes-latency898',897,clip,phase,candidate_arm=WORK/'link/src',replay_tag=tag)
+        runner(temp,temp/'nes-latency898',897,clip,phase,candidate_arm=work/'link/src',replay_tag=tag)
     cpu,=holders
-    path=out/'records.bin';path.write_bytes(cpu.u.mem_read(cpu.data_symbols['ptrcache'],SIZE))
-    data=decode(path)
+    path=out/'records.bin';path.write_bytes(cpu.u.mem_read(cpu.data_symbols['ptrcache'],SIZE+2*(edition==907)))
+    data=decode(path,edition)
     assert len(data['rows'])==(6 if clip=='late' else 0) and not any(data['dropped'])
     assert all('invalid' not in r for r in data['rows'])
     if clip=='late':assert any(r.get('detail') for r in data['rows'])

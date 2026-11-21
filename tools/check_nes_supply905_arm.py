@@ -10,18 +10,18 @@ from package_nes_trial855 import loader
 from prepare_nes_supply905 import WORK
 
 
-def run(game):
-    src=WORK/'link/src'
-    out=WORK/'proof'
+def run(game,work=WORK,edition=905):
+    src=work/'link/src'
+    out=work/'proof'
     out.mkdir(exist_ok=True)
-    verify(905,src,out)
+    verify(edition,src,out)
     save(out/'timer.json',timer_cases(src))
-    loader(game,src,905,out)
-    save(out/'menu.json',check(src,'905'))
+    loader(game,src,edition,out)
+    save(out/'menu.json',check(src,str(edition)))
     cases,ram,entry=check_game_path(src)
     save(out/'sram.json',dict(cases=cases,ram=ram,entry=entry))
-    checked('check_nes_transfer512_recovery.py',['--arm',src,'--trial','905','--fault','none','--out',out/'base'],out/'base.log')
-    print('PASS905 final ARM boot, SRAM D0, CRC, timer, STOP and base/menu')
+    checked('check_nes_transfer512_recovery.py',['--arm',src,'--trial',edition,'--fault','none','--out',out/'base'],out/'base.log')
+    print(f'PASS{edition} final ARM boot, SRAM D0, CRC, timer, STOP and base/menu')
 
 
 if __name__=='__main__':

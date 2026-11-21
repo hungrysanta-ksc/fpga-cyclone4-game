@@ -42,10 +42,10 @@ class PeerLink(TimedLink):
         return result
 
 
-def compare(temp, phase, cold, paired):
+def compare(temp, phase, cold, paired, *, edition=905,work_arm=None):
     work = temp/'nes-gap904'
     source = json.loads((work/'sender-obj/sender.json').read_bytes())
-    tag = f'906-{"cold" if cold else "warm"}-{"pair" if paired else "byte"}'
+    tag = f'{906 if edition==905 else edition}-{"cold" if cold else "warm"}-{"pair" if paired else "byte"}'
     prefix = f'nes-tile821-obj-jointmirror-p{phase}-'
     def workload(temp, _, edition, clip, phase, *, candidate_arm, replay_tag):
         def adapt(s):
@@ -56,7 +56,8 @@ def compare(temp, phase, cold, paired):
              patch.object(PeerLink,'cold_obj',cold), patch.object(PeerLink,'lookup_file',work/'hits-obj/hits.json'), gates(source,True):
             main(work/'data-obj','obj','jointmirror',phase,temp,arm=candidate_arm,client=CLIENT,
                  client_hash=sha(CLIENT/'sink165.sfc'),link_class=PeerLink,packet_source=source,adapt_template=adapt)
-    run(temp,'late',phase,tag=tag,out=temp/(prefix+tag),base=temp/(prefix+'904-retire'),runner=workload)
+    kwargs={'work':work_arm} if work_arm else {}
+    run(temp,'late',phase,tag=tag,out=temp/(prefix+tag),base=temp/(prefix+'904-retire'),runner=workload,edition=edition,**kwargs)
 
 
 if __name__ == '__main__':

@@ -10,11 +10,12 @@ CAP=124
 SIZE=16+CAP*ROW.size+4+320*8
 MS=32768/84000
 
-def decode(path):
+def decode(path,expected_edition=905):
     data=path.read_bytes()
     magic,edition,mode,count,d0,d1,size,capacity=HEADER.unpack_from(data)
-    if (magic,edition,size,capacity,len(data))!=(0x9001,905,ROW.size,CAP,SIZE) or mode>3 or count>CAP:
-        raise ValueError('wrong MMC905 file or truncated SD write')
+    if expected_edition not in (905,907) or (magic,edition,size,capacity,len(data))!=(
+            0x9001,expected_edition,ROW.size,CAP,SIZE+2*(expected_edition==907)) or mode>3 or count>CAP:
+        raise ValueError('wrong supply trace edition or truncated SD write')
     selected,score=struct.unpack_from('<2H',data,16+CAP*size)
     if selected>count:raise ValueError('invalid detail index')
     table=memoryview(data)[16+CAP*size+4:]
@@ -27,6 +28,9 @@ def decode(path):
         rows.append(r)
         if bank>1 or not (3000<=tick<3500 if mode==1 else 5500<=tick<6000) or flags!=(3 if mode==3 else 7):
             r['invalid']='window, input, ACK, or trace transaction';continue
+        if ea>ia:
+            r['invalid']='final ACK before input completion';continue
+        r['input_to_final_ACK_ms']=round((ia-ea)*MS/64,3)
         if mode==3:continue
         if h[1]!=0x95 or word(h,2)!=g:
             r['invalid']='trace generation';continue
@@ -45,7 +49,7 @@ def decode(path):
             ready,kind,n,offset,gen,tok=struct.unpack('<BBHHHI',desc)
             if not (ready==1 and kind<=1 and gen==g and tok==token and 0<n<=2048 and n%(16<<kind)==0):
                 r['invalid']='ARM descriptor / FPGA token';continue
-            r.update(last_token=tok,last_kind=kind,last_bytes=n,E9_to_last_publish_ms=elapsed(last))
+            r.update(last_token=tok,last_kind=kind,last_bytes=n,last_offset=offset,E9_to_last_publish_ms=elapsed(last))
         if selected!=i+1:continue
         if not (0<nc<63 and 0<nt<255 and r.get('last_kind')==1):
             raise ValueError('incomplete selected generation')
@@ -81,6 +85,7 @@ def decode(path):
         if pos!=nt or chunks[-1]['bytes']!=r['last_bytes'] or chunks[-1]['kind']!='OBJ':
             raise ValueError('tile stream and validated ARM descriptor disagree')
         r['detail']=chunks
-    return dict(mode=mode,dropped=[d0,d1],selected=selected,rows=rows)
+    return dict(mode=mode,dropped=[d0,d1],selected=selected,rows=rows,
+                displayed55=struct.unpack_from('<H',data,SIZE)[0] if edition==907 else None)
 
 if __name__=='__main__':print(json.dumps(decode(Path(sys.argv[1])),indent=2))
