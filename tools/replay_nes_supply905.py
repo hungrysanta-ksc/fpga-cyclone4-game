@@ -10,10 +10,9 @@ from replay_nes_tile903 import joint, replay, window, UC_HOOK_CODE, UC_ARM_REG_R
 from prepare_nes_supply905 import WORK
 from read_nes_supply905 import decode,SIZE
 
-def run(temp,clip,phase):
-    tag='905-supply'
-    out=temp/f'nes-tile821-{clip}-jointmirror-p{phase}-{tag}'
-    base=temp/f'nes-tile821-{clip}-jointmirror-p{phase}-903-tile'
+def run(temp,clip,phase,*,tag='905-supply',out=None,base=None,runner=replay):
+    out=out or temp/f'nes-tile821-{clip}-jointmirror-p{phase}-{tag}'
+    base=base or temp/f'nes-tile821-{clip}-jointmirror-p{phase}-903-tile'
     original=joint.Runtime.__init__
     holders=[];pages=[]
     def stamp(t):return int(t*84000000/joint.MASTER/32768)&1023
@@ -53,7 +52,7 @@ def run(temp,clip,phase):
         for name,fn in [('nes_budget210_frame',frame),('nes_native165_bulk',query)]:
             at=cpu.syms[name];cpu.u.hook_add(UC_HOOK_CODE,fn,begin=at,end=at)
     with patch.object(joint.Runtime,'__init__',init):
-        replay(temp,temp/'nes-latency898',897,clip,phase,candidate_arm=WORK/'link/src',replay_tag=tag)
+        runner(temp,temp/'nes-latency898',897,clip,phase,candidate_arm=WORK/'link/src',replay_tag=tag)
     cpu,=holders
     path=out/'records.bin';path.write_bytes(cpu.u.mem_read(cpu.data_symbols['ptrcache'],SIZE))
     data=decode(path)
