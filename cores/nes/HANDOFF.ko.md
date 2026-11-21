@@ -1,5 +1,7 @@
 # 현재 NES 인계
 
+**MMC897 · 일반 실행 실기 대기.** 첫 화면 재생에서 D0 네 곳이 같은 SRAM 주소를 사용해 33개 D1·D2와 최종 ACK·STOP을 완료했다. CRC 오류는 첫 D2 전에 멈추며, base·메뉴 복귀를 별도로 검사했다. 다음은 모험도 4 첫 화면, 데모 전환, 무입력 60초 뒤 메뉴 복귀 확인이다. [실기 순서](../../docs/nes-mmc897-trial.ko.md) · [검증 결과](../../docs/progress/pr-170.md#mmc897-일반-실행의-d0-sram-송신)
+
 **MMC896 · SRAM에서 첫 입력 제안 확인, STOP·메뉴 복귀 성공.** 같은 설치의 Flash 실행은 START 직전 기록 뒤 검은 화면에서 멈췄다. SRAM은 D0를 1,248회 조회했고 입력 CRC 오류는 0이었다. 다음 검증은 일반 실행의 네 D0 송신 지점을 SRAM으로 통일하고 D1·D2, 첫 화면 최종 ACK, 메뉴 복귀까지 확인하는 것이다. [실기 결과](../../docs/progress/pr-170.md#mmc896-sramflash-실기-결과)
 
 **MMC892 · 첫 벡터 공급 수정, 실기 부팅 진단 통과.** MMC891의 `03`을 실제 RAM 초기화와 브리지 회로로 재현했다. ARM은 첫 E0가 무응답일 때 SPI73의 현재 active를 확인한 뒤 RESET을 해제한다. 네 위상에서 두 벡터와 첫 stage 쓰기를 확인했다. 전체 FIT·STA와 STOP·메뉴 경로를 통과했다. NES BOOT 892 실기 1회에서 약 240ms에 stage 3에 도달했고 STOP·base 복구·메뉴 복귀를 확인했다. 일반 실행은 222,470ms의 DISPLAY_NEXT에서 기록이 끊겼고 검은 화면에서 본체 RESET으로 메뉴 복귀하지 못했다. 다음은 실제 ARM 첫 프레임과 STOP 경계 확인이다. [검증 결과](../../docs/nes-reset892-results.ko.md) · [설치 순서](../../docs/nes-mmc892-trial.ko.md)
