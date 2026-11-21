@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-**MMC895 첫 입력 진단판 준비.** 같은 MMC894에서 BOOT는 stage 3·STOP·메뉴 복귀에 성공했고 BLOCK은 메뉴로 돌아오지 않았다. MMC895의 첫 실기 대상은 OFFER다. 작업 메모리 초기화와 첫 E0를 거쳐 유효한 D0 제안을 확인한 뒤 D1 전에 STOP한다. [설치 순서](../../docs/nes-mmc895-trial.ko.md) · [재생과 후속 판정](../../docs/progress/pr-170.md#mmc895-첫-입력-진단)
+**MMC895 OFFER 실기는 검은 화면에서 메뉴 복귀에 실패했다.** START 직전의 seq 79까지 기록됐다. 다음 시험은 설치된 `NES-DIAG/NES INIT 895.nh1`이다. 첫 런타임 E0 검사 뒤 D0 조회 전에 STOP한다. [실기 대조 결과](../../docs/progress/pr-170.md#mmc895-offer-실기)
 
 **MMC892 · 첫 벡터 공급 수정, 실기 부팅 진단 통과.** MMC891의 `03`을 실제 RAM 초기화와 브리지 회로로 재현했다. ARM은 첫 E0가 무응답일 때 SPI73의 현재 active를 확인한 뒤 RESET을 해제한다. 네 위상에서 두 벡터와 첫 stage 쓰기를 확인했다. 전체 FIT·STA와 STOP·메뉴 경로를 통과했다. NES BOOT 892 실기 1회에서 약 240ms에 stage 3에 도달했고 STOP·base 복구·메뉴 복귀를 확인했다. 일반 실행은 222,470ms의 DISPLAY_NEXT에서 기록이 끊겼고 검은 화면에서 본체 RESET으로 메뉴 복귀하지 못했다. 다음은 실제 ARM 첫 프레임과 STOP 경계 확인이다. [검증 결과](../../docs/nes-reset892-results.ko.md) · [설치 순서](../../docs/nes-mmc892-trial.ko.md)
 
