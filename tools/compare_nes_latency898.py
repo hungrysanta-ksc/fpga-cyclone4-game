@@ -45,13 +45,16 @@ def board(temp, work, rom):
         check_sender(board_src, work/'fixture'/name, arm, work/('sender-'+name))
 
 
-def replay(temp, work, edition, clip, phase):
+def replay(temp, work, edition, clip, phase, *, candidate_arm=None, replay_tag=None):
     arm_dir, client_dir = IMAGES[edition]
     arm, client = PROBES/arm_dir/'src', PROBES/client_dir
     results = PROBES.parent/'repository-nes-milestone/analysis'
     manifest = json.loads((results/f'trial{edition}-package.json').read_bytes())
     assert sha(arm/'obj-nes-100/firmware.stm') == manifest['ARM']
     assert sha(client/'sink165.sfc') == manifest['client']
+    if candidate_arm is not None:
+        assert replay_tag
+        arm=candidate_arm
     source = json.loads((work/('sender-'+clip)/'sender.json').read_bytes())
     loads = []
     original = joint.Runtime.__init__
@@ -68,7 +71,7 @@ def replay(temp, work, edition, clip, phase):
     def adapt(s):
         return map_samples(once(monitor(s, 'demo'), 'local n=pb(0)==2 and pw(12) or pw(14)',
                                'local n=pb(0)==9 and 1472 or pb(0)==2 and pw(12) or pw(14)'))
-    tag = f'898-{edition}'
+    tag = replay_tag or f'898-{edition}'
     # Same wire calibration, start offsets, ROM calendar and initial state on both sides.
     argv = ['replay','','','','','',tag,str(Path.home()/'Downloads/nes-budget-mmc872.txt')]
     with patch.object(sys,'argv',argv), patch.object(MirrorLink,'lookup_file',work/'hits/hits.json'), \
