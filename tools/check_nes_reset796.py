@@ -12,7 +12,7 @@ from unicorn import UC_HOOK_MEM_WRITE
 
 
 def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages=None, retained_context=None,
-           pre_snapshots=None, deny_release=False, bad_post_crc=False):
+           pre_snapshots=None, deny_release=False, bad_post_crc=False, game=None):
     obj = src / "obj-nes-100"
     firmware = (obj / "firmware.stm").read_bytes()
     u = Uc(UC_ARCH_ARM, UC_MODE_THUMB | UC_MODE_MCLASS)
@@ -98,6 +98,8 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
                 assert op in (0x76,0x77)
             cpu.mem_write(c,bytes(reply))
             value=1
+        elif name=="nes_native165_bulk" and game is not None and frames:
+            return  # Use the real SPI/DMA driver and the modeled DMA registers.
         elif name=="nes_native165_bulk":
             assert cpu.mem_read(b,1)[0]==0xe0
             reply=bytearray(20)
@@ -111,6 +113,8 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
         elif name.startswith("native_frames222"):
             assert not driven and ms>=release_ms and status==0x86
             frames+=1
+            if game is not None:
+                return  # Execute the linked function with its real caller and stack.
             # Model the next successful periodic observer sample inside gameplay.
             observes+=1
             cpu.mem_write(symbols["nes_run136"]+4,struct.pack("<I",observes))
@@ -133,12 +137,15 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
         u.hook_add(UC_HOOK_MEM_WRITE,lambda cpu,access,address,size,value,data: stages.append(value),
                    begin=at,end=at)
     args=(0x2000b000, 0x60000, 0x2000b080, 1)
+    if game is not None:
+        args=game.install(u,symbols)
     for reg,val in zip((UC_ARM_REG_R0,UC_ARM_REG_R1,UC_ARM_REG_R2,UC_ARM_REG_R3),args):
         u.reg_write(reg,val)
     end=0x0803fff0
-    u.reg_write(UC_ARM_REG_SP,0x2000fe00)
+    u.reg_write(UC_ARM_REG_SP,0x2000fe00 if game is None else game.entry_sp)
     u.reg_write(UC_ARM_REG_LR,end|1)
-    u.emu_start(symbols["nes_display_enter146" if control else "run136"]|1,end,count=500000)
+    u.emu_start(symbols["nes_display_enter146" if control else "run136"]|1,end,
+                count=500000 if game is None else 20000000)
     assert u.reg_read(UC_ARM_REG_PC)==end
     result=u.reg_read(UC_ARM_REG_R0)
     if control:
@@ -160,6 +167,8 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
                 expected_error=7 if deny_release else 8
             if stopped_pages is not None:
                 expected_error=4
+            if game is not None:
+                expected_error=game.expected_error
             assert u.mem_read(symbols["nes_run136"]+20,1)[0]==expected_error
             if probe:
                 assert records==[["DISPLAY_NEXT",probe,0x60000],[end_record,probe,expected_error]]

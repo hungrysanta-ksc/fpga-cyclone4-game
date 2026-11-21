@@ -123,10 +123,11 @@ def package(temp):
     write_verified_archive(WORK,reference,fw,bitstream,report)
 
 
-def write_verified_archive(work,reference,fw,bitstream,report):
+def write_verified_archive(work,reference,fw,bitstream,report,*,source=None):
     edition = report['edition']
     prior = reference['edition']
-    source = PROBES/f'nes-trial{prior}/MMC{prior}-ADVENTURE-60SEC-SD-ROOT.zip'
+    if source is None:
+        source = PROBES/f'nes-trial{prior}/MMC{prior}-ADVENTURE-60SEC-SD-ROOT.zip'
     assert sha(source)==reference['ZIP_SHA256']
     files = {}
     with ZipFile(source) as original:
