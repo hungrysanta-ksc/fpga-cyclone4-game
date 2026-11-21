@@ -7,11 +7,24 @@ sys.path.insert(0,str(BASE/'.tools/arm259-python'))
 from unicorn import Uc,UC_ARCH_ARM,UC_MODE_THUMB,UC_MODE_MCLASS,UC_HOOK_CODE
 from unicorn.arm_const import UC_ARM_REG_PC,UC_ARM_REG_SP,UC_ARM_REG_LR,UC_ARM_REG_R0,UC_ARM_REG_R1,UC_ARM_REG_R2,UC_ARM_REG_R3,UC_ARM_REG_XPSR
 from elftools.elf.elffile import ELFFile
-p=argparse.ArgumentParser();p.add_argument('--fault',choices=['none','program','done','busy','token'],default='none');p.add_argument('--out',required=True,type=Path);a=p.parse_args();d=a.out.resolve();assert not d.exists();d.mkdir(parents=True)
+p=argparse.ArgumentParser();p.add_argument('--fault',choices=['none','program','done','busy','token'],default='none');p.add_argument('--out',required=True,type=Path);p.add_argument('--game',type=Path);a=p.parse_args();d=a.out.resolve();assert not d.exists();d.mkdir(parents=True)
 obj=BASE/'probes/nes-nrom418/arm01/src/obj-nes-100';elf=obj/'sd2snes.elf';fw=obj/'firmware.stm';rom=BASE/'probes/nes-nrom428/fixture01/nrom16.nes';raw=rom.read_bytes();assert sha(fw)=='596a8a73ca2b8a66f946fe612b1f4480ecff258e01b2e9bf32b952e0448cd30c';assert sha(rom)=='61cc6ae495fb34dd6aa28497db6f584fa308063a79ba9412bde50c0c9419fd2c'
 names=['nes_cf86_fail094','nes_rom_verify','nes_rom_verified_start','nes_rom_spi_frame','nes_nrom406_header','nes_nrom406_layout','load_crc','nes_menu_sd_probe','nes_diag_sd_handoff113','nes_checkpoint_begin112','nes_checkpoint112','nes_cf86_enter094','nes_css_begin108','nes_menu_entry_only113','nes_menu_base_only116','nes_cf86_check094','nes_cf86_failed094','nes_cf86_finish094','nes_cf86_monitoring094','nes_diag_sd_failed','nes_return_failed','nes_return_fail','nes_menu_diagnostic_pending','nes_diag_leave','nes_diag_progress','nes_diag_fpga_pgm','snes_reset','slow_end','slow_begin','configured','nes_return_spi_ready','nes_cf86_arm094','native_session165','nes_display_leave146','nes_game149_transfer','fpga_test','f_open','f_read','f_close','f_lseek','gpio_owned','nes_run136']
+if a.game:
+ raw=a.game.read_bytes()
+ assert len(raw)==16+0x60000 and hashlib.sha256(raw).hexdigest()=='9d7402da135fd1290346ccc9332836daee3a9a3cda3789999c3f86efdb5b19c2'
+ names.append('run136')
 with elf.open('rb') as f:
- e=ELFFile(f);segments=[(x['p_vaddr'],x.data()) for x in e.iter_segments() if x['p_type']=='PT_LOAD' and x['p_filesz']];symbols={x.name:(x['st_value']&~1 if x['st_info']['type']=='STT_FUNC' else x['st_value']) for x in e.get_section_by_name('.symtab').iter_symbols() if x.name in names};sizes={x.name:x['st_size'] for x in e.get_section_by_name('.symtab').iter_symbols() if x.name in names};assert set(symbols)==set(names),set(names)-set(symbols)
+ e=ELFFile(f);segments=[(x['p_vaddr'],x.data()) for x in e.iter_segments() if x['p_type']=='PT_LOAD' and x['p_filesz']]
+ symbols={};sizes={}
+ for x in e.get_section_by_name('.symtab').iter_symbols():
+  name=x.name
+  if name.startswith('native_session165.constprop.'):name='native_session165'
+  if name in names:
+   assert name not in symbols,name
+   symbols[name]=x['st_value']&~1 if x['st_info']['type']=='STT_FUNC' else x['st_value']
+   sizes[name]=x['st_size']
+ assert set(symbols)==set(names),set(names)-set(symbols)
  for typename,required in [('nes_mcu_load_report',{'result':0,'acknowledged_bytes':4,'end_accepted':13,'stop_ok':14,'base_restored':15,'recovery_attempted':16}),('nes_sd_readback_report',{'load':0,'verify':20,'verified':28}),('nes_run136_report',{'first':0,'last':4,'stopped':8})]:
   found=[]
   for cu in e.get_dwarf_info().iter_CUs():
@@ -35,6 +48,12 @@ for b in range(256):
 true_hooks={'nes_menu_base_only116','nes_diag_sd_handoff113','nes_checkpoint_begin112','nes_checkpoint112','nes_cf86_enter094','nes_css_begin108','nes_cf86_check094','nes_cf86_finish094','nes_cf86_arm094','nes_return_spi_ready','configured','nes_display_leave146'}
 false_hooks={'nes_menu_entry_only113','nes_cf86_failed094','nes_cf86_monitoring094','nes_diag_sd_failed','nes_return_failed','nes_menu_diagnostic_pending'}
 void_hooks={'nes_return_fail','nes_diag_leave','nes_diag_progress','snes_reset'}
+if a.game:
+ expected=raw[16:]
+ true_hooks.remove('nes_menu_base_only116')
+ false_hooks.add('nes_menu_base_only116')
+ # Actual caller frames above nes_menu_sd_probe on the 893 link.
+ stack=0x20010000-304-24
 def finish(uc,v):uc.reg_write(UC_ARM_REG_R0,v);uc.reg_write(UC_ARM_REG_PC,uc.reg_read(UC_ARM_REG_LR))
 def hook(uc,address,n,user):
  if address==sentinel:uc.emu_stop();return
@@ -91,8 +110,17 @@ def hook(uc,address,n,user):
  uc.mem_write(rxp,bytes(rx));finish(uc,1)
 for name in true_hooks|false_hooks|void_hooks|{'nes_cf86_fail094','slow_begin','slow_end','configured','nes_diag_fpga_pgm','fpga_test','native_session165','f_open','f_read','f_close','f_lseek','nes_game149_transfer'}:u.hook_add(UC_HOOK_CODE,hook,begin=symbols[name],end=symbols[name])
 u.hook_add(UC_HOOK_CODE,hook,begin=sentinel,end=sentinel)
+if a.game:
+ u.hook_add(UC_HOOK_CODE,lambda cpu,*_:cpu.emu_stop(),begin=symbols['run136'],end=symbols['run136'])
 for reg,value in zip((UC_ARM_REG_R0,UC_ARM_REG_R1,UC_ARM_REG_R2,UC_ARM_REG_R3),(path,image,0,out)):u.reg_write(reg,value)
-u.reg_write(UC_ARM_REG_SP,stack);u.reg_write(UC_ARM_REG_LR,sentinel|1);u.reg_write(UC_ARM_REG_XPSR,0x01000000);started=time.monotonic();u.emu_start(symbols['nes_menu_sd_probe']|1,sentinel+2,count=5000000000);assert u.reg_read(UC_ARM_REG_PC)==sentinel,'ARM instruction limit'
+u.reg_write(UC_ARM_REG_SP,stack);u.reg_write(UC_ARM_REG_LR,sentinel|1);u.reg_write(UC_ARM_REG_XPSR,0x01000000);started=time.monotonic();u.emu_start(symbols['nes_menu_sd_probe']|1,sentinel+2,count=5000000000)
+if a.game:
+ assert u.reg_read(UC_ARM_REG_PC)==symbols['run136'] and state['flags']==0x82
+ assert expected==memory and state['cursor']==state['count']==0x60000 and calls['f_close']==2
+ assert bytes(u.mem_read(out+28,1))==b'\1' and u.reg_read(UC_ARM_REG_R1)==0x60000
+ (d/'result.json').write_text(json.dumps(dict(passed=True,ROM=sha(a.game),firmware=sha(fw),compared=state['cursor'],closed=calls['f_close'],entry_sp=hex(u.reg_read(UC_ARM_REG_SP))),indent=2)+'\n')
+ sys.exit(0)
+assert u.reg_read(UC_ARM_REG_PC)==sentinel,'ARM instruction limit'
 result=bytes(u.mem_read(out,36));safe=u.reg_read(UC_ARM_REG_R0)
 assert safe==int(a.fault=='none') and result[15]==int(a.fault=='none') and result[16]==1 and result[28]==0
 assert ops[0x63]==0 and ops[0x64]==1 and calls['f_open']==0 and calls['native_session165']==0 and len(config)==2

@@ -1,0 +1,302 @@
+{
+  "edition": 891,
+  "physical": false,
+  "scope": "Boot diagnosis; no new FPS measurement",
+  "ARM": "b14ad95106123c1ae1551364cb49074453f32c7e3427ad79973ffe2010f91c4b",
+  "client": "ea640b7463ff7c64a28b7082e570491097cf4cb6b614c9bc9ee7f854e5004a80",
+  "flash_B": 212956,
+  "flash_free_B": 36,
+  "board": {
+    "fit": {
+      "M9K": [
+        56,
+        56
+      ],
+      "LAB": [
+        963,
+        963
+      ],
+      "LE": [
+        15334,
+        15408
+      ],
+      "fit_sha256": "133d9f02181d4901e6f12e7d98545bd82a726a6f2470694e22efb0c5043b136f",
+      "min_slack_ns": {
+        "Setup": 0.41,
+        "Hold": 0.149,
+        "Recovery": 1.575,
+        "Removal": 0.489,
+        "Minimum Pulse Width": 2.627
+      }
+    },
+    "prior_fit": {
+      "M9K": [
+        56,
+        56
+      ],
+      "LAB": [
+        962,
+        963
+      ],
+      "LE": [
+        15278,
+        15408
+      ],
+      "fit_sha256": "d3be6a559f4f02b10315dcbc802d61a1e013f6b812c8720fd3d887be6f33d014",
+      "min_slack_ns": {
+        "Setup": 0.497,
+        "Hold": 0.152,
+        "Recovery": 1.238,
+        "Removal": 0.481,
+        "Minimum Pulse Width": 2.675
+      }
+    },
+    "constrained_paths": {
+      "io612": {
+        "paths": 9,
+        "worst_ns": 1.324
+      },
+      "paths612": {
+        "paths": 360,
+        "worst_ns": 0.149
+      },
+      "paths801": {
+        "paths": 12,
+        "worst_ns": 1.082
+      },
+      "phase801": {
+        "paths": 6,
+        "worst_ns": 0.846
+      },
+      "reader661": {
+        "paths": 6,
+        "worst_ns": 1.203
+      },
+      "word660": {
+        "paths": 24,
+        "worst_ns": 24.042
+      }
+    },
+    "unconstrained": {
+      "Unconstrained Clocks": [
+        0,
+        0
+      ],
+      "Unconstrained Input Ports": [
+        54,
+        54
+      ],
+      "Unconstrained Input Port Paths": [
+        557,
+        557
+      ],
+      "Unconstrained Output Ports": [
+        53,
+        54
+      ],
+      "Unconstrained Output Port Paths": [
+        2967,
+        2970
+      ]
+    },
+    "image": {
+      "number": "891E",
+      "SOF": "26e5726e2ff0f9cc83c1d61d2b4f1b096f479645368789d86404c1911ea0c4f2",
+      "RBF": "616da11562b937ba433d22fca8df4ce4e7c6245c2e61f6c0254723e3287d1fce",
+      "BI3": "5c179b9704e11d50a7150ebf37ac59022315e248a8a988586f93f1f44f63e59f",
+      "programmer": {
+        "passed": true,
+        "image_sha256": "5c179b9704e11d50a7150ebf37ac59022315e248a8a988586f93f1f44f63e59f",
+        "rbf_sha256": "616da11562b937ba433d22fca8df4ce4e7c6245c2e61f6c0254723e3287d1fce",
+        "programmer_sha256": "854146b52103c8bd281f2aad85ef2fdb6fbcebef8fc116fce1514b3c59fb885e",
+        "scope": "actual 227 programmer/FatFS with selected diagnostic BI3/RBF and modeled GPIO/DONE; not physical reconfiguration or base token"
+      },
+      "physical": false
+    },
+    "ROM_bus": "d8c14e8fd3d6756c8880d9bd5f9e26d0eb498d45f94d0cdfdbfe0d99019b8341",
+    "STA_report": "3eac5c6213e2e9bb5c622f91e8e25933304d746ee4284acef241b03218226817",
+    "new_nonclock_input_fanouts": [
+      "SNES_ROMSEL_IN\tnes_screen_status151:screen_status|select_sync[0]"
+    ]
+  },
+  "changed_board_inputs": [
+    "nes_screen_status151.sv"
+  ],
+  "status_RTL": "de452245b9e3e1995fdbe2458e19f84dab43b00f9e6168f07d26b14c503ec40a",
+  "cases_per_board": 28,
+  "checks": {
+    "loader": {
+      "firmware": "b14ad95106123c1ae1551364cb49074453f32c7e3427ad79973ffe2010f91c4b",
+      "rom": "9d7402da135fd1290346ccc9332836daee3a9a3cda3789999c3f86efdb5b19c2",
+      "cases": {
+        "original": {
+          "program": true,
+          "read_B": 393232,
+          "error": 0
+        },
+        "damaged": {
+          "program": false,
+          "read_B": 393232,
+          "error": 4
+        }
+      }
+    },
+    "base": {
+      "passed": true,
+      "fault": "none",
+      "safe_return": 1,
+      "base_restored": 1,
+      "recovery_attempted": 1,
+      "verified": 0,
+      "calls": {
+        "snes_reset": 1,
+        "nes_diag_sd_handoff113": 1,
+        "nes_checkpoint_begin112": 1,
+        "nes_cf86_enter094": 1,
+        "nes_checkpoint112": 10,
+        "nes_css_begin108": 1,
+        "nes_menu_entry_only113": 1,
+        "nes_menu_base_only116": 3,
+        "nes_diag_progress": 2,
+        "nes_diag_fpga_pgm": 2,
+        "configured": 2,
+        "nes_return_spi_ready": 1,
+        "nes_cf86_arm094": 1,
+        "slow_begin": 1,
+        "nes_game149_transfer": 4,
+        "nes_cf86_monitoring094": 1,
+        "nes_return_failed": 4,
+        "nes_cf86_failed094": 3,
+        "nes_cf86_check094": 1,
+        "slow_end": 1,
+        "nes_cf86_finish094": 1,
+        "nes_diag_sd_failed": 1,
+        "fpga_test": 1,
+        "nes_menu_diagnostic_pending": 1,
+        "nes_diag_leave": 1
+      },
+      "config_paths": [
+        "/sd2snes/fpga_mmc891.bi3",
+        "/sd2snes/fpga_base.bi3"
+      ],
+      "firmware_sha256": "b14ad95106123c1ae1551364cb49074453f32c7e3427ad79973ffe2010f91c4b",
+      "scope": "actual menu cleanup ARM machine code; base-only diagnostic skips payload; programmer/DONE/SPI/token/guard are modeled; no hardware recovery or reset electrical proof"
+    },
+    "menu": {
+      "firmware": "b14ad95106123c1ae1551364cb49074453f32c7e3427ad79973ffe2010f91c4b",
+      "rows": {
+        "normal": {
+          "prepared": 1,
+          "released": 1,
+          "calls": [
+            [
+              "nes_return_failed",
+              null
+            ],
+            [
+              "nes_return_log_allow",
+              null
+            ],
+            [
+              "save_report",
+              "PREPARED_RESET_HELD"
+            ],
+            [
+              "nes_return_log_allow",
+              null
+            ],
+            [
+              "nes_return_failed",
+              null
+            ],
+            [
+              "nes_checkpoint112",
+              "MENU_PREPARED"
+            ],
+            [
+              "save_report",
+              "RETURN_READY_RESET_RELEASED"
+            ],
+            [
+              "nes_diag_leave",
+              null
+            ]
+          ]
+        },
+        "base": {
+          "prepared": 0,
+          "released": 0,
+          "calls": []
+        },
+        "menu": {
+          "prepared": 0,
+          "released": 0,
+          "calls": []
+        },
+        "latched": {
+          "prepared": 0,
+          "released": 0,
+          "calls": [
+            [
+              "nes_return_failed",
+              null
+            ]
+          ]
+        },
+        "checkpoint": {
+          "prepared": 0,
+          "released": 0,
+          "calls": [
+            [
+              "nes_return_failed",
+              null
+            ],
+            [
+              "nes_return_log_allow",
+              null
+            ],
+            [
+              "save_report",
+              "PREPARED_RESET_HELD"
+            ],
+            [
+              "nes_return_log_allow",
+              null
+            ],
+            [
+              "nes_return_failed",
+              null
+            ],
+            [
+              "nes_checkpoint112",
+              "MENU_PREPARED"
+            ]
+          ]
+        }
+      },
+      "marker_cases": 4
+    },
+    "markers": {
+      "NES-DIAG/NES BOOT 891.nh1": 386,
+      "NES START 891.nh1": 385,
+      "NES MMC3 891.nh1": 384,
+      "NES BOOT 890.nh1": 0
+    }
+  },
+  "reference_ZIP": "4f10c52c2021e0158340f101bf24376da2f8046f516c9dddd1e80b2f13831d5b",
+  "files": {
+    "README-KO.txt": "8e238fd9deb2f509bf277ae00a38efd13105af2b31f89cbd19c50608d65cf203",
+    "MMC891-ADVENTURE-60SEC-SD-ROOT/sd2snes/gbc_snes.bin": "730564d2b2efe60d73ff3aa2bd55b0639fd951480227023303909c8bf448af1c",
+    "MMC891-ADVENTURE-60SEC-SD-ROOT/sd2snes/fpga_egbc.bi3": "cd98e5b6a0db18d931dcc9ba72f1d39f513842f5eb3405dc8539a3bb8542a69c",
+    "MMC891-ADVENTURE-60SEC-SD-ROOT/sd2snes/fpga_base.bi3": "eff3f675c93a0209caf4987d72e0f277492c3dddc2b4c2aff334a667b4dbfbc7",
+    "MMC891-ADVENTURE-60SEC-SD-ROOT/sd2snes/m3nu.bin": "f53b777a0bbe37668cd88cf8c80c5e5a0a60f861f58d1d4d3d9b082e9d1b4325",
+    "MMC891-ADVENTURE-60SEC-SD-ROOT/sd2snes/firmware.stm": "b14ad95106123c1ae1551364cb49074453f32c7e3427ad79973ffe2010f91c4b",
+    "MMC891-ADVENTURE-60SEC-SD-ROOT/sd2snes/fpga_mmc891.bi3": "5c179b9704e11d50a7150ebf37ac59022315e248a8a988586f93f1f44f63e59f",
+    "MMC891-ADVENTURE-60SEC-SD-ROOT/sd2snes/nes/ROM-NOT-INCLUDED.txt": "0c6b7d29da6617076dea94421fbcea526335397cdc2d264b9ca1342646ebf1cb",
+    "MMC891-ADVENTURE-60SEC-SD-ROOT/NES MMC3 891.nh1": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "MMC891-ADVENTURE-60SEC-SD-ROOT/NES-DIAG/NES START 891.nh1": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "MMC891-ADVENTURE-60SEC-SD-ROOT/NES-DIAG/NES BOOT 891.nh1": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "ZIP_SHA256": "1148c92cf663ac127996f9bbe8cc95ec4d13c9f7e2c8b4eb3f9984221101f55c",
+  "ZIP_B": 741144
+}

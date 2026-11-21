@@ -11,7 +11,8 @@ from check_nes_shared794 import PROBES
 from unicorn import UC_HOOK_MEM_WRITE
 
 
-def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages=None, retained_context=None):
+def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages=None, retained_context=None,
+           pre_snapshots=None, deny_release=False, bad_post_crc=False, game=None, stop_checkpoint=None):
     obj = src / "obj-nes-100"
     firmware = (obj / "firmware.stm").read_bytes()
     u = Uc(UC_ARCH_ARM, UC_MODE_THUMB | UC_MODE_MCLASS)
@@ -34,16 +35,20 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
     ms = frames = observes = 0
     status = 0x82
     ops, checkpoints, stages, records = [], [], [], []
+    pre_reads=0
+    reset_releases=[]
     if "nes_boot_probe798" in symbols:
         u.mem_write(symbols["nes_boot_probe798"],bytes([probe]))
     def hook(cpu, address, size, name):
-        nonlocal driven, failed, ms, status, frames, observes
+        nonlocal driven, failed, ms, status, frames, observes, pre_reads
         a,b,c = [cpu.reg_read(reg) for reg in (UC_ARM_REG_R0,UC_ARM_REG_R1,UC_ARM_REG_R2)]
         value = 0
         if name=="get_snes_reset":
             value = driven or ms<release_ms
         elif name=="snes_reset":
             driven = bool(a)
+            if not driven:
+                reset_releases.append(pre_reads)
         elif name=="nes_return_delay":
             assert (a,b)==(1,1)
             ms+=1
@@ -60,6 +65,10 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
             assert driven and status!=0x86
             checkpoints.append(bytes(cpu.mem_read(a,32)).split(b"\0")[0].decode())
             records.append([checkpoints[-1],b,c])
+            if probe in (3,4,5,6,7) and checkpoints[-1]=='DISPLAY_NEXT':
+                assert c==cpu.reg_read(UC_ARM_REG_SP) and 0x20000000 < c <= 0x20010000
+            if stop_checkpoint and checkpoints[-1]==stop_checkpoint:
+                assert status==2 and ops[-2:]==[0x64,0x65]
             value=1
         elif name=="nes_rom_spi_transfer":
             op=cpu.mem_read(b,1)[0]
@@ -81,7 +90,11 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
                     reply[2:4]=bytes([3,2])
                 reply[4:]=max(1,observes).to_bytes(4,"big")
             elif op==0x73:
-                reply[1:]=bytes([0xe6,0xe1 if fault=="copy" else 3,0,0,0,0,3])
+                if pre_snapshots is not None and driven and status==0x86:
+                    reply[1:]=pre_snapshots[pre_reads]
+                    pre_reads+=1
+                else:
+                    reply[1:]=bytes([0xe6,0xe1 if fault=="copy" else 3,0,0,0,0,3])
             elif stopped_pages is not None and op in stopped_pages:
                 assert status==2 and driven
                 reply[1:]=stopped_pages[op]
@@ -89,17 +102,23 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
                 assert op in (0x76,0x77)
             cpu.mem_write(c,bytes(reply))
             value=1
+        elif name=="nes_native165_bulk" and game is not None and frames:
+            return  # Use the real SPI/DMA driver and the modeled DMA registers.
         elif name=="nes_native165_bulk":
             assert cpu.mem_read(b,1)[0]==0xe0
             reply=bytearray(20)
             if fault!="defer" or not driven:
                 reply[1]=0xf7
                 reply[19]=crc(reply[1:19],8,7,0)
+                if bad_post_crc and not driven:
+                    reply[19]^=1
             cpu.mem_write(c,bytes(reply))
             value=1
         elif name.startswith("native_frames222"):
             assert not driven and ms>=release_ms and status==0x86
             frames+=1
+            if game is not None:
+                return  # Execute the linked function with its real caller and stack.
             # Model the next successful periodic observer sample inside gameplay.
             observes+=1
             cpu.mem_write(symbols["nes_run136"]+4,struct.pack("<I",observes))
@@ -122,34 +141,44 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
         u.hook_add(UC_HOOK_MEM_WRITE,lambda cpu,access,address,size,value,data: stages.append(value),
                    begin=at,end=at)
     args=(0x2000b000, 0x60000, 0x2000b080, 1)
+    if game is not None:
+        args=game.install(u,symbols)
     for reg,val in zip((UC_ARM_REG_R0,UC_ARM_REG_R1,UC_ARM_REG_R2,UC_ARM_REG_R3),args):
         u.reg_write(reg,val)
     end=0x0803fff0
-    u.reg_write(UC_ARM_REG_SP,0x2000fe00)
+    u.reg_write(UC_ARM_REG_SP,0x2000fe00 if game is None else game.entry_sp)
     u.reg_write(UC_ARM_REG_LR,end|1)
-    u.emu_start(symbols["nes_display_enter146" if control else "run136"]|1,end,count=500000)
+    u.emu_start(symbols["nes_display_enter146" if control else "run136"]|1,end,
+                count=500000 if game is None else 20000000)
     assert u.reg_read(UC_ARM_REG_PC)==end
     result=u.reg_read(UC_ARM_REG_R0)
     if control:
         assert failed==(release_ms>1) and result==(release_ms<=1)
     else:
         fatal=fault in ("done","timer","start","stop")
-        entered=not probe and release_ms<=20 and fault not in ("done","timer","start","copy")
+        entered=probe in (0,3,4,5,6,7) and not deny_release and not bad_post_crc and release_ms<=20 and fault not in ("done","timer","start","copy")
         assert failed==fatal and bool(result)==(not fatal) and frames==int(entered)
         assert ops.count(0x63)==1 and ops.count(0x64)==int(fault not in ("timer","done","start"))
         end_record="PROBE_STOPPED" if probe else "DISPLAY_STOPPED"
-        assert checkpoints==(["DISPLAY_NEXT"] if fatal else ["DISPLAY_NEXT",end_record])
-        assert driven and ms==(0 if fault=="start" or probe==1 else 1 if fault in ("done","timer") else min(20,max(1,release_ms)))
+        middle=[stop_checkpoint] if stop_checkpoint else []
+        assert checkpoints==(["DISPLAY_NEXT"] if fatal else ["DISPLAY_NEXT",*middle,end_record])
+        assert driven and ms==(0 if fault=="start" or probe==1 or deny_release else 1 if fault in ("done","timer") else min(20,max(1,release_ms)))
         if not fatal:
             pages=[] if stopped_pages is None else ([0x71,0x72] if retained_context is None else [])+[0x74,0x75]
             suffix=[0x70,0x70,0x73,*pages,0x77,0x76]
             assert ops[-len(suffix):]==suffix and status==2
             expected_error=9 if probe!=1 and release_ms>20 else 6 if fault=="copy" else 0
+            if deny_release or bad_post_crc:
+                expected_error=7 if deny_release else 8
             if stopped_pages is not None:
                 expected_error=4
+            if game is not None:
+                expected_error=game.expected_error
             assert u.mem_read(symbols["nes_run136"]+20,1)[0]==expected_error
             if probe:
-                assert records==[["DISPLAY_NEXT",probe,0x60000],[end_record,probe,expected_error]]
+                expected_total=records[0][2] if probe in (3,4,5,6,7) else 0x60000
+                assert records==[["DISPLAY_NEXT",probe,expected_total],*[[name,probe,expected_error] for name in middle],
+                                 [end_record,probe,expected_error]]
         if frames and "nes_boot_stage796" in symbols:
             assert all(stage in stages for stage in range(1,8))
     report=symbols["nes_run136"]
@@ -158,6 +187,10 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
         return f"{hi:08x}{lo:08x}"
     captured={} if stopped_pages is None else dict(context=pair(12),ppu=pair(24),
                         status=list(u.mem_read(report+20,3)),ppu_valid=u.mem_read(report+32,1)[0])
+    if pre_snapshots is not None:
+        assert pre_reads==len(pre_snapshots)
+        assert reset_releases==([] if deny_release else [pre_reads])
+        captured.update(pre_reads=pre_reads,reset_releases=reset_releases)
     return dict(**captured,release_ms=release_ms,fault=fault,elapsed_ms=ms,terminal=failed,frame_entry=frames,
                 reset_asserted=driven,spi=ops,stages=stages,checkpoints=checkpoints,records=records)
 

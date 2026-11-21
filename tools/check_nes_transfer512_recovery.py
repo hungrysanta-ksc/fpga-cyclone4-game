@@ -9,6 +9,7 @@ p.add_argument("--arm",type=Path,required=True)
 p.add_argument("--fault",choices=("none","program","done","busy","token"),required=True)
 p.add_argument("--out",type=Path,required=True)
 p.add_argument("--trial",type=int,help="Use the selected MMC trial's ROM and bitstream paths.")
+p.add_argument("--game",type=Path,help="Exercise all three file passes up to the real MMC RUN call.")
 a=p.parse_args()
 obj=a.arm.resolve()/"obj-nes-100"
 path=ROOT/"tools/check_nes_nrom464_recovery.py"
@@ -25,4 +26,7 @@ if a.trial is not None:
         assert s.count(literal)==1
         s=s.replace(literal,repr(new.encode()+b'\0'))
 sys.argv=[str(path),"--fault",a.fault,"--out",str(a.out)]
+if a.game:
+    assert a.trial and a.fault=='none'
+    sys.argv.extend(['--game',str(a.game)])
 exec(compile(s,str(path),"exec"),{"__name__":"__main__","__file__":str(path)})

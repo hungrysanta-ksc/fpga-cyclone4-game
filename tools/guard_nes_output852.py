@@ -60,8 +60,8 @@ def arm_guard(temp,kind,replay_override=None,history="tail_rows",tag_prefix="852
     return dict(generation=state['generation'],fault=failure,committed_unchanged=True,no_EA_or_D3=True)
 
 
-def run(temp,trial,case,seed=None,column_client=None,edit_seal=None,adapt_lua=None):
-    out=trial/('guard-'+case)
+def run(temp,trial,case,seed=None,column_client=None,edit_seal=None,adapt_lua=None,column_op=9,output_name=None,select_packet=None):
+    out=trial/('guard-'+(output_name or case))
     out.mkdir()
     if column_client:
         client=column_client
@@ -77,7 +77,10 @@ def run(temp,trial,case,seed=None,column_client=None,edit_seal=None,adapt_lua=No
         g=int.from_bytes(b[8:10],'little')
         if case=='restart' and g>906:
             break
-        hit=b[:2]==bytes((9,2))
+        hit=b[:2]==bytes((column_op,2))
+        if select_packet:
+            hit=select_packet(b,g)
+        if case=="two-stop":hit=hit and len(b)==116
         if edit_seal:
             hit=False
             if b[0]==3:
@@ -90,7 +93,10 @@ def run(temp,trial,case,seed=None,column_client=None,edit_seal=None,adapt_lua=No
             if column_client:
                 b[10:16]=bytes((0,8,52,0,0,0))
                 b=b[:16]+bytes((1,))+bytes(51)
-            b[0]=9;hit=True
+            if column_op==10:
+                b[10:16]=bytes((0,8,54,0,0,0))
+                b=b[:16]+bytes((1,0,0,0,0,8))+bytes(48)
+            b[0]=column_op;hit=True
         if case=='restart':
             assert not hit
         if hit and case=='base':
@@ -100,7 +106,8 @@ def run(temp,trial,case,seed=None,column_client=None,edit_seal=None,adapt_lua=No
         if hit and case=='range':
             b[10:12]=(4096).to_bytes(2,'little')
         if hit and case=='column':
-            b[20:22]=bytes((63,0))
+            field=22 if column_op==10 else 20
+            b[field:field+2]=bytes((63,0))
         rows.append((target,'PUSH',b.hex(),bulk))
         if case!='restart' and hit:
             break
@@ -129,13 +136,13 @@ packet=requests[index];""".replace('SEED',json.dumps(seed.as_posix())))
     else:
         lua=once(lua,"local MODE='normal'","local MODE='guard852'")
         lua=once(lua,'local FAULT=905','local FAULT='+str(g))
-        if case in ('damage','stop','prefix','omitted','overlap','tail-last','late-stop'):
+        if case in ('damage','stop','prefix','omitted','overlap','tail-last','late-stop','two-stop'):
             action={'tail-last':"local a=0x10000+word(0x7a)+1471;emu.write(a,0x81,emu.memType.snesWorkRam);emu.write(a~32768,0x81,emu.memType.snesWorkRam)",
-                    'late-stop':'stop852=true','omitted':"local a=0x10000+word(0x7a);emu.write(a,rd(a)~1,emu.memType.snesWorkRam)",
+                    'two-stop':'stop852=true','late-stop':'stop852=true','omitted':"local a=0x10000+word(0x7a);emu.write(a,rd(a)~1,emu.memType.snesWorkRam)",
                     'overlap':"emu.write(0x1316,rd(0x1316)|0x40,emu.memType.snesWorkRam)", 'stop':'stop852=true','damage':"emu.write(0x10000+word(0x7a)+63,0x81,emu.memType.snesWorkRam)",
                     'prefix':"local a=0x10000+word(0x7a);emu.write(a,rd(a)~1,emu.memType.snesWorkRam)"}[case]
             if column_client:
-                site=labels['column_service'] if case in ('stop','late-stop') else labels['column_write']
+                site=labels['column_service'] if case in ('stop','late-stop','two-stop') else labels['column_write']
                 if case=='overlap':site=labels['column_mark']
                 if case=='prefix':
                     site=labels['column_written']
@@ -145,6 +152,10 @@ packet=requests[index];""".replace('SEED',json.dumps(seed.as_posix())))
             else:
                 site=labels['check_tail852']
             condition="and word(0x60)==26 " if case=="late-stop" else ""
+            if column_op==10:
+                if case in ("late-stop","two-stop"):condition="and word(0x60)>=70 "
+                condition=f"and packet and pb(0)==10 and pw(8)=={g} "+condition
+                if case=="omitted":action="local a=0x10000+word(0x7a)+(pw(22)+4)%64;emu.write(a,rd(a)~1,emu.memType.snesWorkRam)"
             hooks=f"""
 local stop852=false
 local injected852=false
@@ -177,7 +188,7 @@ end,emu.callbackType.exec,{site})
                        env=dict(os.environ,DOTNET_ROOT='C:/works/dotnet',DOTNET_ROOT_X64='C:/works/dotnet'))
     result=json.loads((out/'result.json').read_bytes())
     assert result['passed'] and result['commits']==commits
-    assert result['last_status']==(1 if case=='restart' else 228 if case in ('stop','late-stop') else 224)
+    assert result['last_status']==(1 if case=='restart' else 228 if case in ('stop','late-stop','two-stop') else 224)
     if case!='restart' and commits:
         assert sha(out/'retained.rgb')==sha(trial/f'frame-{g-1}.rgb')
     elif case=='restart':
