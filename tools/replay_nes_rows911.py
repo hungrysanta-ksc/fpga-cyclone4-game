@@ -106,6 +106,12 @@ class AheadLink(RowLink):
             self.ready_rows = {}
             self.seen_rows = set()
 
+    def scan_start(self, batch):
+        return batch.get('first_check')
+
+    def row_scan_time(self, batch, scan_end, record_index):
+        return scan_end
+
     def pump(self, now):
         if self.stopped:
             return
@@ -115,13 +121,14 @@ class AheadLink(RowLink):
         batches = self.phases.get(self.owner,{}).get('banks557',[])
         while self.next_batch < len(batches):
             b = batches[self.next_batch]
-            if 'first_check' not in b:
+            start = self.scan_start(b)
+            if start is None:
                 break
             records = self.plansets[self.owner][b['first']:b['first']+b['count']]
             # Private copy at CRC acceptance; conservatively charge the whole
             # scan after the original reader's first CHECK. No future E9.
-            at = b['first_check'] + 20*b['count']
-            for q in records:
+            at = start + 20*b['count']
+            for record_index,q in enumerate(records):
                 if q[6] != 1:
                     continue
                 assert len(wire_plan(q)) == 8
@@ -132,10 +139,14 @@ class AheadLink(RowLink):
                 for lane,addr in lanes(q):
                     if lane%2==0 and addr not in self.seen_rows:
                         self.seen_rows.add(addr)
-                        self.queue.append((addr,at))
+                        self.queue.append((addr,self.row_scan_time(b,at,record_index)))
             self.next_batch += 1
         while self.queue:
             addr, at = self.queue[0]
+            if callable(at):
+                at=at()
+                if at is None:
+                    break
             if addr in self.ready_rows:
                 self.queue.pop(0)
                 continue
