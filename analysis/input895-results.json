@@ -1,0 +1,418 @@
+{
+  "firmware": "8b98c5d26e6954548c3774c16413bc48ab1d6d43c2d1e1d9e3ef3e40a2467eca",
+  "flash_bytes": 212744,
+  "physical": false,
+  "parent_zip": "5e12a1c8864d1e8d05ef6aaf445c41ed18b8a8c378daee429bd055fc494fcb40",
+  "board": "5c179b9704e11d50a7150ebf37ac59022315e248a8a988586f93f1f44f63e59f",
+  "client": "ea640b7463ff7c64a28b7082e570491097cf4cb6b614c9bc9ee7f854e5004a80",
+  "files": {
+    "README-KO.txt": "7191c030db7c893370603988622539039821757d49a0d9dabeaad45f20f9d9b2",
+    "MMC895-FIRST-INPUT-SD-ROOT/sd2snes/gbc_snes.bin": "730564d2b2efe60d73ff3aa2bd55b0639fd951480227023303909c8bf448af1c",
+    "MMC895-FIRST-INPUT-SD-ROOT/sd2snes/fpga_egbc.bi3": "cd98e5b6a0db18d931dcc9ba72f1d39f513842f5eb3405dc8539a3bb8542a69c",
+    "MMC895-FIRST-INPUT-SD-ROOT/sd2snes/fpga_base.bi3": "eff3f675c93a0209caf4987d72e0f277492c3dddc2b4c2aff334a667b4dbfbc7",
+    "MMC895-FIRST-INPUT-SD-ROOT/sd2snes/m3nu.bin": "f53b777a0bbe37668cd88cf8c80c5e5a0a60f861f58d1d4d3d9b082e9d1b4325",
+    "MMC895-FIRST-INPUT-SD-ROOT/sd2snes/firmware.stm": "8b98c5d26e6954548c3774c16413bc48ab1d6d43c2d1e1d9e3ef3e40a2467eca",
+    "MMC895-FIRST-INPUT-SD-ROOT/sd2snes/fpga_mmc895.bi3": "5c179b9704e11d50a7150ebf37ac59022315e248a8a988586f93f1f44f63e59f",
+    "MMC895-FIRST-INPUT-SD-ROOT/sd2snes/nes/ROM-NOT-INCLUDED.txt": "034553ca3369614851c9c152b0dcecbb434486e8fff6e47f8c02bd6b6a30b2cf",
+    "MMC895-FIRST-INPUT-SD-ROOT/NES-DIAG/NES BOOT 895.nh1": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "MMC895-FIRST-INPUT-SD-ROOT/NES-DIAG/NES BLOCK 895.nh1": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "MMC895-FIRST-INPUT-SD-ROOT/NES OFFER 895.nh1": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "MMC895-FIRST-INPUT-SD-ROOT/NES-DIAG/NES DATA 895.nh1": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "MMC895-FIRST-INPUT-SD-ROOT/NES-DIAG/NES INIT 895.nh1": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "tests": {
+    "firmware": "8b98c5d26e6954548c3774c16413bc48ab1d6d43c2d1e1d9e3ef3e40a2467eca",
+    "cases": {
+      "BOOT-ok": {
+        "ops": [],
+        "tx_sources": [],
+        "stop": [
+          "PROBE_STOPPED",
+          2,
+          0
+        ],
+        "foreground_gap": 33860
+      },
+      "INIT-ok": {
+        "ops": [
+          224
+        ],
+        "tx_sources": [
+          "SRAM"
+        ],
+        "stop": [
+          "PROBE_STOPPED",
+          6,
+          0
+        ],
+        "foreground_gap": 1684
+      },
+      "OFFER-ok": {
+        "ops": [
+          224,
+          208
+        ],
+        "tx_sources": [
+          "SRAM",
+          "flash"
+        ],
+        "stop": [
+          "PROBE_STOPPED",
+          4,
+          0
+        ],
+        "foreground_gap": 1260
+      },
+      "DATA-ok": {
+        "ops": [
+          224,
+          208,
+          209
+        ],
+        "tx_sources": [
+          "SRAM",
+          "flash",
+          "SRAM"
+        ],
+        "stop": [
+          "PROBE_STOPPED",
+          5,
+          0
+        ],
+        "foreground_gap": 1260
+      },
+      "BLOCK-ok": {
+        "ops": [
+          224,
+          208,
+          209,
+          210,
+          208
+        ],
+        "tx_sources": [
+          "SRAM",
+          "flash",
+          "SRAM",
+          "SRAM",
+          "flash"
+        ],
+        "stop": [
+          "PROBE_STOPPED",
+          3,
+          0
+        ],
+        "foreground_gap": 1260
+      },
+      "INIT-e0-crc": {
+        "ops": [
+          224
+        ],
+        "tx_sources": [
+          "SRAM"
+        ],
+        "stop": [
+          "PROBE_STOPPED",
+          6,
+          4
+        ],
+        "foreground_gap": 1684
+      },
+      "OFFER-offer-length": {
+        "ops": [
+          224,
+          208
+        ],
+        "tx_sources": [
+          "SRAM",
+          "flash"
+        ],
+        "stop": [
+          "PROBE_STOPPED",
+          4,
+          4
+        ],
+        "foreground_gap": 1260
+      },
+      "OFFER-offer-crc": {
+        "ops": [
+          224,
+          208
+        ],
+        "tx_sources": [
+          "SRAM",
+          "flash"
+        ],
+        "stop": [
+          "PROBE_STOPPED",
+          4,
+          4
+        ],
+        "foreground_gap": 1260
+      },
+      "OFFER-empty": {
+        "ops": [
+          224,
+          208
+        ],
+        "tx_sources": [
+          "SRAM",
+          "flash"
+        ],
+        "stop": [
+          "PROBE_STOPPED",
+          4,
+          4
+        ],
+        "foreground_gap": 1260
+      },
+      "DATA-data": {
+        "ops": [
+          224,
+          208,
+          209
+        ],
+        "tx_sources": [
+          "SRAM",
+          "flash",
+          "SRAM"
+        ],
+        "stop": [
+          "PROBE_STOPPED",
+          5,
+          4
+        ],
+        "foreground_gap": 1260
+      },
+      "DATA-decode": {
+        "ops": [
+          224,
+          208,
+          209
+        ],
+        "tx_sources": [
+          "SRAM",
+          "flash",
+          "SRAM"
+        ],
+        "stop": [
+          "PROBE_STOPPED",
+          5,
+          4
+        ],
+        "foreground_gap": 1260
+      },
+      "BLOCK-token": {
+        "ops": [
+          224,
+          208,
+          209,
+          210,
+          208
+        ],
+        "tx_sources": [
+          "SRAM",
+          "flash",
+          "SRAM",
+          "SRAM",
+          "flash"
+        ],
+        "stop": [
+          "PROBE_STOPPED",
+          3,
+          4
+        ],
+        "foreground_gap": 1260
+      },
+      "OFFER-delayed": {
+        "ops": [
+          224,
+          208,
+          208,
+          208,
+          208
+        ],
+        "stop": [
+          "PROBE_STOPPED",
+          4,
+          0
+        ],
+        "tx_sources": [
+          "SRAM",
+          "flash",
+          "flash",
+          "flash",
+          "flash"
+        ]
+      }
+    },
+    "entry_sp": "0x2000fe80",
+    "replay_entry_sp": "0x2000fe70",
+    "markers": {
+      "BOOT": 2,
+      "BLOCK": 3,
+      "OFFER": 4,
+      "DATA": 5,
+      "INIT": 6
+    },
+    "menu": {
+      "firmware": "8b98c5d26e6954548c3774c16413bc48ab1d6d43c2d1e1d9e3ef3e40a2467eca",
+      "rows": {
+        "normal": {
+          "prepared": 1,
+          "released": 1,
+          "calls": [
+            [
+              "nes_return_failed",
+              null
+            ],
+            [
+              "nes_return_log_allow",
+              null
+            ],
+            [
+              "save_report",
+              "PREPARED_RESET_HELD"
+            ],
+            [
+              "nes_return_log_allow",
+              null
+            ],
+            [
+              "nes_return_failed",
+              null
+            ],
+            [
+              "nes_checkpoint112",
+              "MENU_PREPARED"
+            ],
+            [
+              "save_report",
+              "RETURN_READY_RESET_RELEASED"
+            ],
+            [
+              "nes_diag_leave",
+              null
+            ]
+          ]
+        },
+        "base": {
+          "prepared": 0,
+          "released": 0,
+          "calls": []
+        },
+        "menu": {
+          "prepared": 0,
+          "released": 0,
+          "calls": []
+        },
+        "latched": {
+          "prepared": 0,
+          "released": 0,
+          "calls": [
+            [
+              "nes_return_failed",
+              null
+            ]
+          ]
+        },
+        "checkpoint": {
+          "prepared": 0,
+          "released": 0,
+          "calls": [
+            [
+              "nes_return_failed",
+              null
+            ],
+            [
+              "nes_return_log_allow",
+              null
+            ],
+            [
+              "save_report",
+              "PREPARED_RESET_HELD"
+            ],
+            [
+              "nes_return_log_allow",
+              null
+            ],
+            [
+              "nes_return_failed",
+              null
+            ],
+            [
+              "nes_checkpoint112",
+              "MENU_PREPARED"
+            ]
+          ]
+        }
+      },
+      "marker_cases": 4
+    }
+  },
+  "loader": {
+    "firmware": "8b98c5d26e6954548c3774c16413bc48ab1d6d43c2d1e1d9e3ef3e40a2467eca",
+    "rom": "9d7402da135fd1290346ccc9332836daee3a9a3cda3789999c3f86efdb5b19c2",
+    "cases": {
+      "original": {
+        "program": true,
+        "read_B": 393232,
+        "error": 0
+      },
+      "damaged": {
+        "program": false,
+        "read_B": 393232,
+        "error": 4
+      }
+    }
+  },
+  "full_loader": {
+    "passed": true,
+    "ROM": "9d7402da135fd1290346ccc9332836daee3a9a3cda3789999c3f86efdb5b19c2",
+    "firmware": "8b98c5d26e6954548c3774c16413bc48ab1d6d43c2d1e1d9e3ef3e40a2467eca",
+    "compared": 393216,
+    "closed": 2,
+    "entry_sp": "0x2000fe80"
+  },
+  "base": {
+    "passed": true,
+    "fault": "none",
+    "safe_return": 1,
+    "base_restored": 1,
+    "recovery_attempted": 1,
+    "verified": 0,
+    "calls": {
+      "snes_reset": 1,
+      "nes_diag_sd_handoff113": 1,
+      "nes_checkpoint_begin112": 1,
+      "nes_cf86_enter094": 1,
+      "nes_checkpoint112": 10,
+      "nes_css_begin108": 1,
+      "nes_menu_entry_only113": 1,
+      "nes_menu_base_only116": 4,
+      "nes_diag_progress": 2,
+      "nes_diag_fpga_pgm": 2,
+      "configured": 2,
+      "nes_return_spi_ready": 1,
+      "nes_cf86_arm094": 1,
+      "slow_begin": 1,
+      "nes_game149_transfer": 4,
+      "nes_cf86_monitoring094": 1,
+      "nes_return_failed": 4,
+      "nes_cf86_failed094": 3,
+      "nes_cf86_check094": 1,
+      "slow_end": 1,
+      "nes_cf86_finish094": 1,
+      "nes_diag_sd_failed": 1,
+      "fpga_test": 1,
+      "nes_menu_diagnostic_pending": 1,
+      "nes_diag_leave": 1
+    },
+    "config_paths": [
+      "/sd2snes/fpga_mmc895.bi3",
+      "/sd2snes/fpga_base.bi3"
+    ],
+    "firmware_sha256": "8b98c5d26e6954548c3774c16413bc48ab1d6d43c2d1e1d9e3ef3e40a2467eca",
+    "scope": "actual menu cleanup ARM machine code; base-only diagnostic skips payload; programmer/DONE/SPI/token/guard are modeled; no hardware recovery or reset electrical proof"
+  },
+  "ZIP_SHA256": "81802c8b7af65f682426c6e91ddb321555fd76c1d1246350c0005161b08adcc1"
+}
