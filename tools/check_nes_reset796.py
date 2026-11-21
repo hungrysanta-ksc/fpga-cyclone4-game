@@ -12,7 +12,7 @@ from unicorn import UC_HOOK_MEM_WRITE
 
 
 def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages=None, retained_context=None,
-           pre_snapshots=None, deny_release=False, bad_post_crc=False, game=None):
+           pre_snapshots=None, deny_release=False, bad_post_crc=False, game=None, stop_checkpoint=None):
     obj = src / "obj-nes-100"
     firmware = (obj / "firmware.stm").read_bytes()
     u = Uc(UC_ARCH_ARM, UC_MODE_THUMB | UC_MODE_MCLASS)
@@ -65,8 +65,10 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
             assert driven and status!=0x86
             checkpoints.append(bytes(cpu.mem_read(a,32)).split(b"\0")[0].decode())
             records.append([checkpoints[-1],b,c])
-            if probe in (3,4,5,6) and checkpoints[-1]=='DISPLAY_NEXT':
+            if probe in (3,4,5,6,7) and checkpoints[-1]=='DISPLAY_NEXT':
                 assert c==cpu.reg_read(UC_ARM_REG_SP) and 0x20000000 < c <= 0x20010000
+            if stop_checkpoint and checkpoints[-1]==stop_checkpoint:
+                assert status==2 and ops[-2:]==[0x64,0x65]
             value=1
         elif name=="nes_rom_spi_transfer":
             op=cpu.mem_read(b,1)[0]
@@ -154,11 +156,12 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
         assert failed==(release_ms>1) and result==(release_ms<=1)
     else:
         fatal=fault in ("done","timer","start","stop")
-        entered=probe in (0,3,4,5,6) and not deny_release and not bad_post_crc and release_ms<=20 and fault not in ("done","timer","start","copy")
+        entered=probe in (0,3,4,5,6,7) and not deny_release and not bad_post_crc and release_ms<=20 and fault not in ("done","timer","start","copy")
         assert failed==fatal and bool(result)==(not fatal) and frames==int(entered)
         assert ops.count(0x63)==1 and ops.count(0x64)==int(fault not in ("timer","done","start"))
         end_record="PROBE_STOPPED" if probe else "DISPLAY_STOPPED"
-        assert checkpoints==(["DISPLAY_NEXT"] if fatal else ["DISPLAY_NEXT",end_record])
+        middle=[stop_checkpoint] if stop_checkpoint else []
+        assert checkpoints==(["DISPLAY_NEXT"] if fatal else ["DISPLAY_NEXT",*middle,end_record])
         assert driven and ms==(0 if fault=="start" or probe==1 or deny_release else 1 if fault in ("done","timer") else min(20,max(1,release_ms)))
         if not fatal:
             pages=[] if stopped_pages is None else ([0x71,0x72] if retained_context is None else [])+[0x74,0x75]
@@ -173,8 +176,9 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
                 expected_error=game.expected_error
             assert u.mem_read(symbols["nes_run136"]+20,1)[0]==expected_error
             if probe:
-                expected_total=records[0][2] if probe in (3,4,5,6) else 0x60000
-                assert records==[["DISPLAY_NEXT",probe,expected_total],[end_record,probe,expected_error]]
+                expected_total=records[0][2] if probe in (3,4,5,6,7) else 0x60000
+                assert records==[["DISPLAY_NEXT",probe,expected_total],*[[name,probe,expected_error] for name in middle],
+                                 [end_record,probe,expected_error]]
         if frames and "nes_boot_stage796" in symbols:
             assert all(stage in stages for stage in range(1,8))
     report=symbols["nes_run136"]

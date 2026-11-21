@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-**MMC895 INIT 실기에서 런타임 E0 1회·D0 0회로 STOP·메뉴 복귀에 성공했다.** 같은 이미지의 OFFER는 검은 화면에 머물렀다. 다음 대조는 첫 D0의 송신 바이트와 검사·STOP 순서를 고정하고 DMA 송신 버퍼를 Flash와 SRAM으로 바꿔 비교하는 것이다. [실기 대조 결과](../../docs/progress/pr-170.md#mmc895-init-실기)
+**MMC896 · 첫 D0의 SRAM·Flash 대조 실기 대기.** MMC895 INIT 실기는 메뉴로 복귀했고 OFFER는 검은 화면에 머물렀다. MMC896의 두 마커는 같은 ARM 링크에서 같은 D0를 보내고 모드별 로그를 남긴다. 각각 전원 투입부터 SRAM, FLASH 순으로 확인한다. [실기 순서](../../docs/nes-mmc896-trial.ko.md) · [검증 및 판독](../../docs/progress/pr-170.md#mmc896-d0-송신-주소-대조)
 
 **MMC892 · 첫 벡터 공급 수정, 실기 부팅 진단 통과.** MMC891의 `03`을 실제 RAM 초기화와 브리지 회로로 재현했다. ARM은 첫 E0가 무응답일 때 SPI73의 현재 active를 확인한 뒤 RESET을 해제한다. 네 위상에서 두 벡터와 첫 stage 쓰기를 확인했다. 전체 FIT·STA와 STOP·메뉴 경로를 통과했다. NES BOOT 892 실기 1회에서 약 240ms에 stage 3에 도달했고 STOP·base 복구·메뉴 복귀를 확인했다. 일반 실행은 222,470ms의 DISPLAY_NEXT에서 기록이 끊겼고 검은 화면에서 본체 RESET으로 메뉴 복귀하지 못했다. 다음은 실제 ARM 첫 프레임과 STOP 경계 확인이다. [검증 결과](../../docs/nes-reset892-results.ko.md) · [설치 순서](../../docs/nes-mmc892-trial.ko.md)
 
