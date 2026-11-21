@@ -1,6 +1,6 @@
 # 현재 NES 인계
 
-**NES BLOCK 894 실기에서 메뉴 복귀에 실패했다.** 마지막 기록은 START 직전이다. 실측 스택 위치로 보정한 첫 블록 재생에서는 STOP까지 진행했다. 같은 펌웨어에서 `NES BOOT 894.nh1`만 추가해 부팅 직후 STOP·메뉴 복귀를 대조한다. [실기 판독과 대조 시험](../../docs/progress/pr-170.md#mmc894-첫-블록-실기)
+**MMC894 동일 펌웨어 실기 대조에서 BOOT는 stage 3·STOP·메뉴 복귀에 성공했고 BLOCK은 메뉴로 돌아오지 않았다.** 두 실행은 ROM 대조까지 같은 경로를 기록했다. 다음 계측은 BLOCK의 작업 메모리 초기화·첫 E0·D0/D1/D2·반환 확인과 직후 STOP을 나눠 관측한다. [실기 판독과 대조 시험](../../docs/progress/pr-170.md#mmc894-첫-블록-실기)
 
 **MMC892 · 첫 벡터 공급 수정, 실기 부팅 진단 통과.** MMC891의 `03`을 실제 RAM 초기화와 브리지 회로로 재현했다. ARM은 첫 E0가 무응답일 때 SPI73의 현재 active를 확인한 뒤 RESET을 해제한다. 네 위상에서 두 벡터와 첫 stage 쓰기를 확인했다. 전체 FIT·STA와 STOP·메뉴 경로를 통과했다. NES BOOT 892 실기 1회에서 약 240ms에 stage 3에 도달했고 STOP·base 복구·메뉴 복귀를 확인했다. 일반 실행은 222,470ms의 DISPLAY_NEXT에서 기록이 끊겼고 검은 화면에서 본체 RESET으로 메뉴 복귀하지 못했다. 다음은 실제 ARM 첫 프레임과 STOP 경계 확인이다. [검증 결과](../../docs/nes-reset892-results.ko.md) · [설치 순서](../../docs/nes-mmc892-trial.ko.md)
 
