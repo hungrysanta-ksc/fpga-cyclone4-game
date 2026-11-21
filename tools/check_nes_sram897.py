@@ -48,7 +48,7 @@ class GameReplay(ColdFrame):
         super().exchange(cpu, tx, rx, n)
 
 
-def check_game_path(src):
+def check_game_path(src, *, order=None):
     obj = src / 'obj-nes-100'
     path = obj / 'firmware.stm'
     fw = path.read_bytes()
@@ -73,6 +73,8 @@ def check_game_path(src):
     baseline = read(ROOT/'analysis/trial893-package.json')
     assert sha(TRACE) == baseline['candidate']['trace'] and fixture['client'] == baseline['client']
     ready = fixture['transactions']
+    if order is not None:
+        ready = order(ready)
     empty = bytearray.fromhex('00d6000000000000')
     empty[-1] = crc(empty[1:-1], 8, 7, 0)
     delayed = ready[:1] + [[D0.hex(), empty.hex()]] * 1247 + ready[1:]

@@ -42,10 +42,10 @@ class PeerLink(TimedLink):
         return result
 
 
-def compare(temp, phase, cold, paired, *, edition=905,work_arm=None):
+def compare(temp, phase, cold, paired, *, edition=905,work_arm=None,run_id=None):
     work = temp/'nes-gap904'
     source = json.loads((work/'sender-obj/sender.json').read_bytes())
-    tag = f'{906 if edition==905 else edition}-{"cold" if cold else "warm"}-{"pair" if paired else "byte"}'
+    tag = f'{run_id or (906 if edition==905 else edition)}-{"cold" if cold else "warm"}-{"pair" if paired else "byte"}'
     prefix = f'nes-tile821-obj-jointmirror-p{phase}-'
     def workload(temp, _, edition, clip, phase, *, candidate_arm, replay_tag):
         def adapt(s):
