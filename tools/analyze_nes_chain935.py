@@ -28,8 +28,8 @@ def markers():
     return len(cases)+1
 
 
-def measure(temp,variant,phase,cache,control=False):
-    tag='935'+variant+('base' if control else 'final')
+def measure(temp,variant,phase,cache,control=False,*,tag=None,trial=None):
+    tag=tag or '935'+variant+('base' if control else 'final')
     path=directory(temp,phase,tag,cache)
     old=directory(temp,phase,'933fair',cache)
     base,checks=sample(directory(temp,phase,'925final',cache),ORIGINAL)
@@ -42,7 +42,7 @@ def measure(temp,variant,phase,cache,control=False):
     other934=[(t-previous_times[j],j) for j,t in current_times.items() if j[:2] not in ((912,32),(912,35))]
     rom=output(variant)
     with patch.object(banks,'client',lambda _:rom):
-        result=banks.measure(path,ORIGINAL if control else fit_arm(),base,prior,job_times(old),checks)
+        result=banks.measure(path,trial or (ORIGINAL if control else fit_arm()),base,prior,job_times(old),checks)
     early=result['preDMA']
     rows=[r for r in read_csv(path,'window.csv') if r['g']=='912' and
           int(r['clock'])<result['SEAL'] and r['event'] in ('ppu_dma','ppu_last')]

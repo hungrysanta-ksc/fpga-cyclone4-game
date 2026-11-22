@@ -13,9 +13,9 @@ from nes_chain935 import output
 from nes_raw506 import once
 
 
-def run(temp,variant,phase,case):
+def run(temp,variant,phase,case,*,tag=None):
     rom=output(variant)
-    trial=directory(temp,phase,'935'+variant+'final','cold')
+    trial=directory(temp,phase,tag or '935'+variant+'final','cold')
     out=next(path for i in count(1) if not (path:=trial/f'edge935-{case}-{i:02d}').exists())
     out.mkdir()
     labels=json.loads((rom/'labels.json').read_bytes())

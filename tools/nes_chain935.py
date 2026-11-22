@@ -235,7 +235,7 @@ def prepare(variant):
     build(base,destination,bytes(body),c.labels)
 
 
-def replay(temp, mode, phase, cache, variant):
+def replay(temp, mode, phase, cache, variant, *, work_arm=None, tag=None):
     base_monitor=beam_monitor(nes_window924.trace)
     def monitor(source,scene):
         lua=base_monitor(source,scene)
@@ -255,10 +255,10 @@ checkedMem527(function() capture934('grant935') end,emu.callbackType.exec,{site}
 """
             lua=lua.replace('local function loaded()',hook+'local function loaded()',1)
         return lua
-    target = fit_arm() if mode=='final' else ORIGINAL if mode=='base' else arm(mode)
+    target = work_arm or (fit_arm() if mode=='final' else ORIGINAL if mode=='base' else arm(mode))
     with patch.object(nes_window924,'client',lambda _:output(variant)), patch.object(nes_window924,'trace',monitor), patch.object(nes_window924,'LeadingRecord',QueuedPages):
         nes_window924.replay(temp,'objheader',phase,cache=='cold',arm=target,
-                             edition=925,tag='935'+('' if variant=='chain' else variant)+mode,trace_last=True)
+                             edition=925,tag=tag or '935'+('' if variant=='chain' else variant)+mode,trace_last=True)
 
 
 if __name__=='__main__':
