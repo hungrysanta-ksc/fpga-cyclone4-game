@@ -14,9 +14,9 @@ import analyze_nes_chain935 as chain
 from nes_discovery942 import MODES, ROM, work
 
 
-def check(temp,mode):
+def check(temp,mode,*,tag=None,record='safety942.json'):
     trial=work(mode)
-    tag='942'+mode
+    tag=tag or '942'+mode
     with patch.object(nes_return920,'client',lambda _:ROM),patch.object(nes_obj923,'client',lambda _:ROM):
         nes_return920.guards(temp,'first',tag=tag,destination=trial/'final-guards.json')
         nes_obj923.obj_stops(temp,'first',tag=tag,destination=trial/'final-stops.json')
@@ -34,7 +34,7 @@ def check(temp,mode):
                 continue
             for case in ('head','stop'):
                 result['edge'][f'{phase}-{case}']=edge.run(temp,'bounded',phase,case,tag=tag)
-    (trial/'safety942.json').write_text(json.dumps(result,indent=2)+'\n')
+    (trial/record).write_text(json.dumps(result,indent=2)+'\n')
 
 
 if __name__=='__main__':
