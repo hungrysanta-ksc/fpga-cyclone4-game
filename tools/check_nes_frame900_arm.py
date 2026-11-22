@@ -12,7 +12,7 @@ from prepare_nes_frame900 import WORK
 from read_nes_frame900 import ROW,read_trace
 
 
-def verify(n,src=None,out=None,*,short_header=False):
+def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,412)):
     src=src or WORK/f'link{n}/src'
     out=out or WORK/f'proof{n}'
     row_type,decoder,capacity=ROW,read_trace,194
@@ -38,7 +38,7 @@ def verify(n,src=None,out=None,*,short_header=False):
     for mode in (0,1,2,3):
         q=TimedProbe(src)
         scratch=q.data['ptrcache'];at=0x20012000
-        for name,value in [('MMC3',384),('EARLY',410),('LATE',411),('CONTROL',412)]:
+        for name,value in zip(('MMC3','EARLY','LATE','CONTROL'),marker_values,strict=True):
             q.u.mem_write(at,f'NES {name} {n}.nh1'.encode()+b'\0')
             assert q.call('marker_geometry',[at])==value
         q.u.mem_write(q.data['mode900'],bytes([mode]))
