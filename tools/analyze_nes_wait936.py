@@ -14,9 +14,9 @@ import analyze_nes_obj923 as obj
 import analyze_nes_chain935 as chain
 
 
-def analyze(temp, mode, phase, cache):
-    tag = '936'+mode if mode != '935' else '935boundedfinal'
-    arm = work(mode) if mode != '935' else fit_arm()
+def analyze(temp, mode, phase, cache, *, tag=None, arm=None):
+    tag = tag or ('936'+mode if mode != '935' else '935boundedfinal')
+    arm = arm or (work(mode) if mode != '935' else fit_arm())
     folder = directory(temp, phase, tag, cache)
     ref = directory(temp, phase, '935boundedfinal', cache)
     stats = measure(temp,'bounded',phase,cache,tag=tag,trial=arm)

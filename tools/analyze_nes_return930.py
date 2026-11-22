@@ -10,19 +10,19 @@ from nes_return930 import image
 from test_nes_raw506_joint import crc
 
 
-def jobs(folder, tokens=(35,36,37,38)):
+def jobs(folder, tokens=(35,36,37,38), *, generation=912):
     events=read(folder/'events.json')
     e1=[e for e in events if e.get('opcode')=='0xe1']
     packets=[json.loads(line) for line in (folder/'packets.jsonl').read_text().splitlines()]
-    heads=[r for r in read_csv(folder,'window.csv') if r['g']=='912']
+    heads=[r for r in read_csv(folder,'window.csv') if int(r['g'])==generation]
     loaded=iter(r for r in heads if r['event']=='load')
     ready={p['token']:p for line in (folder/'producer.jsonl').read_text().splitlines()
-           if (p:=json.loads(line))['generation']==912}
+           if (p:=json.loads(line))['generation']==generation}
     returns=dict(read(folder/'returns904.json'))
     result={}
     for wire,event in zip(packets,e1,strict=True):
         b=bytes.fromhex(wire[2])
-        if int.from_bytes(b[8:10],'little')!=912:
+        if int.from_bytes(b[8:10],'little')!=generation:
             continue
         head=next(loaded)
         assert (b[0],b[1])==(int(head['op']),int(head['section']))
@@ -35,7 +35,7 @@ def jobs(folder, tokens=(35,36,37,38)):
         size=int.from_bytes(b[14:16],'little')
         assert ready[token]['bytes']==size
         desc=bytes((1,1))+b[14:16]+b[10:12]+b[8:10]+b[16:20]
-        e8=next(e for e in events if e.get('generation')==912 and e.get('opcode')=='0xe8'
+        e8=next(e for e in events if e.get('generation')==generation and e.get('opcode')=='0xe8'
                 and bytes.fromhex(e['reply'])[6:18]==desc)
         reply=bytes.fromhex(e8['reply'])
         assert crc(reply[1:19],8,7,0)==reply[19]
