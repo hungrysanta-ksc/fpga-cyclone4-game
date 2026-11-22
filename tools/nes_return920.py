@@ -132,10 +132,10 @@ def replay(temp,phase,cold,mode,edges=False):
         peer.compare(temp,phase,cold,True,edition=915,work_arm=arm(mode),run_id='920'+mode+('edges' if edges else ''))
 
 
-def guards(temp,mode):
+def guards(temp,mode,*,tag=None,destination=None):
     from guard_nes_output852 import run
     from check_nes_prefetch912 import stop_test
-    tag='920'+mode
+    tag=tag or '920'+mode
     trial=temp/f'nes-tile821-obj-jointmirror-p1-{tag}-warm-pair'
     rom=client(mode)
     results={}
@@ -171,7 +171,7 @@ end,emu.callbackType.exec,{labels['bulk194']})\n"""
         return b,True
     results['seal']=run(temp,trial,'bad-seal',column_client=rom,edit_seal=bad_seal)
     results['display_stop']=stop_test(temp,tag,rom)
-    (WORK/f'{mode}-guards.json').write_text(json.dumps(results,indent=2)+'\n',encoding='utf8')
+    (destination or WORK/f'{mode}-guards.json').write_text(json.dumps(results,indent=2)+'\n',encoding='utf8')
 
 
 def bus_test(temp,phase,mode):
