@@ -8,7 +8,7 @@ DEST=0x2000
 STORED=5056
 
 
-def build(base,out,body,labels,straight=False):
+def build(base,out,body,labels,straight=False,*,shared_byte=False,compact_mvn=False,minimum=3):
     stored=bytearray(body)
     if straight:
         tail=labels['suffix']-0x7e0000
@@ -20,8 +20,16 @@ def build(base,out,body,labels,straight=False):
         c=Code(0x8000)
         def imm(op,v):c.emit(op);c.word(v)
         # Retain the previous boot status, stack, interrupt and PPU setup.
-        end_init=rom.index(bytes.fromhex('8d 00 70 c2 30'))+3; c.emit(*rom[:end_init])
-        c.emit(0xc2,0x30)
+        end_init=rom.index(bytes.fromhex('8d 00 70 c2 30'))+3
+        init=rom[:end_init]
+        if shared_byte or compact_mvn:
+            # A is already zero after setting D. Keep DBR, PPU, interrupt,
+            # and diagnostic writes in their original order.
+            assert init.count(bytes.fromhex('5b e2 20 a9 00 48 ab'))==1
+            init=init.replace(bytes.fromhex('5b e2 20 a9 00 48 ab'),bytes.fromhex('5b e2 20 48 ab'))
+            init=init.replace(bytes.fromhex('a9 00 8d 00 42 a9 00 8d 0c 42'),bytes.fromhex('9c 00 42 9c 0c 42'))
+        c.emit(*init)
+        if not compact_mvn:c.emit(0xc2,0x30)
         if prefix==0:
             c.emit(0xf4,0x7e,0x7e,0xab,0xab)
         else:
@@ -29,32 +37,56 @@ def build(base,out,body,labels,straight=False):
             imm(0xa2,0);c.label('prefix');c.long(0xbf,first);c.long(0xdf,0x7e0000+DEST)
             c.emit(0xf0,3);c.jump('bad')
             c.emit(0xe8,0xe8);imm(0xe0,prefix);c.branch(0xd0,'prefix')
-        c.emit(0xe2,0x20,0x64,2)
+        if not compact_mvn:c.emit(0xe2,0x20)
+        c.emit(0x64,2)
         c.label('pass');imm(0xa2,first+prefix);imm(0xa0,DEST+prefix);c.emit(0x64,3)
         c.label('token');imm(0xc0,DEST+len(body));c.branch(0xf0,'end')
         # The sentinel in bit 7 survives exactly seven subsequent shifts.
         c.emit(0x46,3);c.branch(0xd0,'flag');call(c,'read')
         c.emit(0x38,0x6a,0x85,3)
         c.label('flag');c.branch(0xb0,'match')
-        call(c,'read');c.emit(0x24,2);c.branch(0x30,'literal_check')
-        c.absolute(0x99,0);c.branch(0x80,'literal_done')
-        c.label('literal_check');c.absolute(0xd9,0);c.branch(0xd0,'bad')
-        c.label('literal_done');c.emit(0xc8);c.branch(0x80,'token')
+        call(c,'read')
+        if shared_byte:
+            call(c,'byte');c.branch(0x80,'token')
+        else:
+            c.emit(0x24,2);c.branch(0x30,'literal_check')
+            c.absolute(0x99,0);c.branch(0x80,'literal_done')
+            c.label('literal_check');c.absolute(0xd9,0);c.branch(0xd0,'bad')
+            c.label('literal_done');c.emit(0xc8);c.branch(0x80,'token')
         c.label('match');call(c,'read');c.emit(0x85,4);call(c,'read')
-        c.emit(0x48,0x4a,0x4a,0x4a,0x4a,0x85,5,0x68,0x29,15,0x18,0x69,3,0x85,6,0x64,7)
+        c.emit(0x48,0x4a,0x4a,0x4a,0x4a,0x85,5,0x68,0x29,15,0x18,0x69,minimum,0x85,6,0x64,7)
         c.emit(0xc2,0x20,0x98,0x18,0x65,6);imm(0xc9,DEST+len(body)+1);c.branch(0xb0,'bad')
         c.emit(0x98,0x18,0xe5,4);imm(0xc9,DEST);c.branch(0x90,'bad')
-        c.emit(0xda,0xaa,0xa5,6,0x3a,0x24,2); # BIT $02 in 16-bit sees flag byte too; use 8-bit phase test.
-        c.emit(0xe2,0x20,0x24,2);c.branch(0x30,'verify')
-        c.emit(0xc2,0x20,0x54,0x7e,0x7e,0xe2,0x20);c.branch(0x80,'match_done')
-        c.label('verify');c.absolute(0xbd,0);c.label('compare');c.absolute(0xd9,0);c.branch(0xd0,'bad')
-        c.emit(0xe8,0xc8,0xc6,6);c.branch(0xd0,'verify')
-        c.label('match_done');c.emit(0xfa);c.jump('token')
+        if shared_byte:
+            c.emit(0xda,0xaa,0xe2,0x20)
+            c.label('copy_match');c.absolute(0xbd,0);call(c,'byte')
+            c.emit(0xe8,0xc6,6);c.branch(0xd0,'copy_match')
+            c.emit(0xfa);c.branch(0x80,'token')
+            c.label('byte');c.emit(0x24,2);c.branch(0x30,'verify_byte')
+            c.absolute(0x99,0);c.branch(0x80,'byte_done')
+            c.label('verify_byte');c.label('compare');c.absolute(0xd9,0);c.branch(0xd0,'bad')
+            c.label('byte_done');c.emit(0xc8,0x60)
+        else:
+            c.emit(0xda,0xaa,0xa5,6,0x3a)
+            if not compact_mvn:c.emit(0x24,2); # BIT $02 in 16-bit sees flag byte too; use 8-bit phase test.
+            c.emit(0xe2,0x20,0x24,2);c.branch(0x30,'verify')
+            c.emit(0xc2,0x20,0x54,0x7e,0x7e,0xe2,0x20);c.branch(0x80,'match_done')
+            c.label('verify');c.absolute(0xbd,0);c.label('compare');c.absolute(0xd9,0);c.branch(0xd0,'bad')
+            c.emit(0xe8,0xc8,0xc6,6);c.branch(0xd0,'verify')
+            c.label('match_done');c.emit(0xfa)
+            if compact_mvn:c.branch(0x80,'token')
+            else:c.jump('token')
         c.label('end');imm(0xe0,limit);c.branch(0xd0,'bad')
-        c.emit(0xa5,2);c.branch(0x30,'ready');c.emit(0xa9,128,0x85,2);c.jump('pass')
+        if compact_mvn:
+            # Carry reads the previous pass flag; DEC changes zero into a negative byte.
+            c.emit(0x06,2);c.branch(0xb0,'ready');c.emit(0xc6,2);c.jump('pass')
+        else:
+            c.emit(0xa5,2);c.branch(0x30,'ready');c.emit(0xa9,128,0x85,2);c.jump('pass')
         c.label('ready')
         if straight:call(c,'expand_suffix')
-        c.emit(0xa9,0,0x48,0xab);c.long(0x5c,0x7e2000)
+        if compact_mvn:c.emit(0x4b,0xab)  # Reset loader is in program bank zero.
+        else:c.emit(0xa9,0,0x48,0xab)
+        c.long(0x5c,0x7e2000)
         c.label('read');imm(0xe0,limit);c.branch(0xb0,'bad');c.long(0xbf,0);c.emit(0xe8,0x60)
         c.label('bad');c.emit(0xe2,0x20,0xa9,0xe1);c.long(0x8f,0x007000);c.emit(0x80,0xfe)
         if straight:
@@ -65,13 +97,14 @@ def build(base,out,body,labels,straight=False):
             c.emit(0x18);imm(0x69,0x200);c.emit(0xe8,0xe8,0xe8);imm(0xe0,tail+93)
             c.branch(0xd0,'expand_word');c.emit(0xe2,0x20,0x60)
         return c.finish(),c.labels
-    for prefix in range(1024,-1,-32):
+    for prefix in ((0,) if compact_mvn else range(1024,-1,-32)):
         stub,_=loader(prefix,0x8100,0x9000)
         first=0x8000+len(stub)
-        stream=encode(bytes(stored),prefix)
+        stream=encode(bytes(stored),prefix) if minimum==3 else encode(bytes(stored),prefix,minimum)
         if len(stub)+len(stream)<=STORED:break
     else:raise ValueError('physical ROM capacity')
-    assert decode(stream,prefix,len(body))==stored
+    restored=decode(stream,prefix,len(body)) if minimum==3 else decode(stream,prefix,len(body),minimum)
+    assert restored==stored
     limit=first+len(stream)
     code,boot=loader(prefix,first,limit)
     assert len(code)==len(stub)
