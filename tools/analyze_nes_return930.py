@@ -10,7 +10,7 @@ from nes_return930 import image
 from test_nes_raw506_joint import crc
 
 
-def jobs(folder):
+def jobs(folder, tokens=(35,36,37,38)):
     events=read(folder/'events.json')
     e1=[e for e in events if e.get('opcode')=='0xe1']
     packets=[json.loads(line) for line in (folder/'packets.jsonl').read_text().splitlines()]
@@ -29,7 +29,7 @@ def jobs(folder):
         if b[:2]!=bytes((7,1)):
             continue
         token=int.from_bytes(b[16:20],'little')
-        if token not in (35,36,37,38):
+        if token not in tokens:
             continue
         at=int.from_bytes(b[10:12],'little')
         size=int.from_bytes(b[14:16],'little')
@@ -47,7 +47,7 @@ def jobs(folder):
         setup={name:int(steps[name]) for name in
                ('header920','bulk194920','data_size_ok920','mark212920','append212920')}
         result[token]=dict(offset=at,bytes=size,clocks=marks,setup=setup)
-    assert next(loaded,None) is None and set(result)=={35,36,37,38}
+    assert next(loaded,None) is None and set(result)==set(tokens)
     return result
 
 
