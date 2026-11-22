@@ -70,6 +70,8 @@ def package(temp):
     assert checks['loader']['cases']['original']['program'] and not checks['loader']['cases']['damaged']['program']
     cases=read(proof/'sram.json')['cases']
     assert len(cases['normal']['d0_sites'])==4 and cases['normal']['checked_retire']
+    assert not cases['bad-crc']['checked_retire'] and cases['1247-empty-offers']['checked_retire']
+    assert all('DISPLAY_STOPPED' in r['control']['checkpoints'] for r in cases.values())
     packed,board=routed(temp,parent)
     runs={}
     for phase in (1,2):
@@ -79,8 +81,11 @@ def package(temp):
             joint=read(folder/'joint.json')
             assert joint['passed'] and joint['firmware_SHA256']==firmware and joint['client_SHA256']==parent['client']
             result=read(folder/'verified905.json')
-            rows=capture(folder/'records.bin')['rows']
+            data=capture(folder/'records.bin')
+            rows=data['rows']
             assert len(rows)==6 and result['RGB']==8 and all('invalid' not in r for r in rows)
+            assert data['DWT_available'] and not any(data['dropped'])
+            assert all(r['blocks'] and r['other']>=0 for r in data['input_30_60'].values())
             runs[key]=dict(intervals=result['intervals'][-1],MMC925_intervals=parent['cases'][key]['intervals'],
                            last_ACK=result['final_ACK'][-1],MMC925_ACK=parent['cases'][key]['final_ACK'],
                            RGB=result['RGB'],records=len(rows),joint=sha(folder/'joint.json'))
