@@ -124,9 +124,9 @@ def replay(temp,mode,phase,cold):
         peer.compare(temp,phase,cold,True,edition=915,work_arm=WORK/mode,run_id='923'+mode)
 
 
-def obj_stops(temp,mode):
+def obj_stops(temp,mode,*,tag=None,destination=None):
     from guard_nes_output852 import run
-    folder=temp/f'nes-tile821-obj-jointmirror-p1-923{mode}-warm-pair'
+    folder=temp/f'nes-tile821-obj-jointmirror-p1-{tag or "923"+mode}-warm-pair'
     outcomes={}
     for length in (32,352):
         def adapt(lua,labels):
@@ -141,7 +141,7 @@ def obj_stops(temp,mode):
         outcomes[length]=run(temp,folder,'stop',column_client=client('first'),output_name=f'obj-stop-{length}',
                              select_packet=lambda b,g:g==909 and b[:2]==bytes((7,1)) and int.from_bytes(b[14:16],'little')==length,
                              adapt_lua=adapt)
-    (WORK/f'{mode}-stops.json').write_text(json.dumps(outcomes,indent=2)+'\n')
+    (destination or WORK/f'{mode}-stops.json').write_text(json.dumps(outcomes,indent=2)+'\n')
 
 
 if __name__=='__main__':

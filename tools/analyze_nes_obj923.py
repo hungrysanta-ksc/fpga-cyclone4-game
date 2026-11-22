@@ -82,19 +82,19 @@ def analyze(temp,modes):
     return result
 
 
-def recovery(mode):
-    proof=WORK/mode/'proof'
-    digest=sha(WORK/mode/'link/src/obj-nes-100/firmware.stm')
+def recovery(mode,work=WORK):
+    proof=work/mode/'proof'
+    digest=sha(work/mode/'link/src/obj-nes-100/firmware.stm')
     assert all(read(proof/f)['firmware']==digest for f in ('loader.json','menu.json','timer.json'))
     base=read(proof/'base/result.json')
     assert base['safe_return'] and base['firmware_sha256']==digest
     assert read(proof/'menu.json')['rows']['normal']['released'] and read(proof/'timer.json')['passed']
     rx=read(proof/'sram.json')['cases']
     assert len(rx['normal']['d0_sites'])==4 and rx['normal']['checked_retire'] and not rx['bad-crc']['checked_retire']
-    faults=read(WORK/f'{mode}-guards.json')
+    faults=read(work/f'{mode}-guards.json')
     assert faults=={name:dict(status=status,commits=n) for name,status,n in
                     [('stop-copy',228,3),('descriptor',224,3),('duplicate',224,3),('seal',224,4),('display_stop',228,4)]}
-    stops=read(WORK/f'{mode}-stops.json')
+    stops=read(work/f'{mode}-stops.json')
     assert stops=={str(n):dict(status=228,commits=4) for n in (32,352)}
     return dict(firmware=digest,consumer=sha(client('first')/'sink165.sfc'),SRAM_D0_sites=4,
                 CRC_rejected=True,STOP=faults,last_byte_STOP=stops,menu=True)

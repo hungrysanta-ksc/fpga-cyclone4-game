@@ -32,8 +32,10 @@ def run(temp,clip,phase,*,tag='905-supply',out=None,base=None,runner=replay,work
         def query(u,*_):
             tx=u.reg_read(UC_ARM_REG_R1)
             if u.mem_read(tx,1)!=b'\x78':return
-            assert clip=='late' and u.reg_read(UC_ARM_REG_R3)==32 and 0x20000000<=tx<0x20010000
+            length=u.reg_read(UC_ARM_REG_R3)
+            assert clip=='late' and length in (16,32) and 0x20000000<=tx<0x20010000
             page=u.mem_read(tx+1,1)[0];g=cpu.generation
+            assert length==32 or page==0
             if edition==915 and page==0 and 'step_begin915' in cpu.data_symbols and g not in commit_steps:
                 def word(name,size):
                     return int.from_bytes(u.mem_read(cpu.data_symbols[name],size),'little')
@@ -55,8 +57,8 @@ def run(temp,clip,phase,*,tag='905-supply',out=None,base=None,runner=replay,work
                     v=(tok%2048)<<21|((tok-1)%2)<<20|j['kind']<<19|(j['bytes']//16)<<11|stamp(returns[tok])
                     struct.pack_into('<I',body,8*i,v)
             pages.append((g,page))
-            u.mem_write(u.reg_read(UC_ARM_REG_R2),h+bytes(body))
-            cpu.clock+=32*8*joint.MASTER/2625000+cpu.driver_extra.get(0xe0,0)
+            u.mem_write(u.reg_read(UC_ARM_REG_R2),(h+bytes(body))[:length])
+            cpu.clock+=length*8*joint.MASTER/2625000+cpu.driver_extra.get(0xe0,0)
             u.reg_write(UC_ARM_REG_R0,1);u.reg_write(UC_ARM_REG_PC,u.reg_read(UC_ARM_REG_LR))
         for name,fn in [('nes_budget210_frame',frame),('nes_native165_bulk',query)]:
             at=cpu.syms[name];cpu.u.hook_add(UC_HOOK_CODE,fn,begin=at,end=at)
