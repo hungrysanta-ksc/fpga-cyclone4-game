@@ -133,7 +133,7 @@ class GameLink(joint.Link):
         self.now=now
         return super().advance(now)
 
-def main(source,group,mode,phase,temp,*,arm=None,link_class=GameLink,client=None,client_hash=None,adapt_template=None,packet_source=None):
+def main(source,group,mode,phase,temp,*,arm=None,link_class=GameLink,client=None,client_hash=None,adapt_template=None,packet_source=None,driver_extra_us=None):
     data=source/group
     start=7288416+(phase-1)*178684
     a=SimpleNamespace(arm=arm or WORK/"link820b/src",data=data,fixture=data,plans=data,
@@ -151,12 +151,16 @@ def main(source,group,mode,phase,temp,*,arm=None,link_class=GameLink,client=None
                           if z["g"]>w["g"]+1}
     assert sha(a.client/"sink165.sfc").lower()==(client_hash or "3ca9aaefd9efad64a3cb63b59b627314f9f6b8e87fb79e236ba7e7d01fa856e1")
     log=Path(sys.argv[7]) if len(sys.argv)>7 else Path.home()/"Downloads/nes-budget-mmc820.txt"
-    budget=dict(l.strip().split("=",1) for l in log.read_text().splitlines() if "=" in l)
+    if driver_extra_us is None:
+        budget=dict(l.strip().split("=",1) for l in log.read_text().splitlines() if "=" in l)
     def setup(original):
         def init(self,args,link):
             original(self,args,link)
             self.link.cpu=self
             for i,op in enumerate((0xd0,0xd1,0xd2,0xd3,0xe0,0xe1,0xe8,0xe9,0xea)):
+                if driver_extra_us is not None:
+                    self.driver_extra[op]=driver_extra_us[hex(op)]*joint.MASTER/1e6
+                    continue
                 calls,n,hi,lo,_=map(int,budget[f"cost_op_{i:02}"].split(","))
                 self.driver_extra[op]=max(0,((hi*2**32+lo)/84000000-n*8/2625000)/calls)*joint.MASTER
             self.link.e8_extra=self.driver_extra[0xe8]

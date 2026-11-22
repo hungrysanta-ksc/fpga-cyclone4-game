@@ -12,13 +12,17 @@ from prepare_nes_frame900 import WORK
 from read_nes_frame900 import ROW,read_trace
 
 
-def verify(n,src=None,out=None):
+def verify(n,src=None,out=None,*,short_header=False):
     src=src or WORK/f'link{n}/src'
     out=out or WORK/f'proof{n}'
     row_type,decoder,capacity=ROW,read_trace,194
     if n==903:
         from read_nes_tile903 import ROW as row_type, decode as decoder
         capacity=151
+    if n in (905,907,915,925):
+        from read_nes_supply905 import ROW as row_type, decode, CAP as capacity
+        direct_probe=n==915 and 'step_begin915' not in (src/'nes_budget210.c').read_text()
+        decoder=lambda path:decode(path,n,direct_probe=direct_probe)
     class WindowMachine(windows.Machine):
         def __init__(self,*args):
             super().__init__(*args)
@@ -52,13 +56,16 @@ def verify(n,src=None,out=None):
         assert q.call('nes_window184_through',[s,at,1])
         time(180000)
         def bulk(cpu,pc,size,_):
-            assert mode!=3 and cpu.reg_read(UC_ARM_REG_R3)==26
+            length=cpu.reg_read(UC_ARM_REG_R3)
+            assert mode!=3 and length==(16 if short_header else 32 if n in (905,907,915,925) else 26)
             tx=cpu.reg_read(UC_ARM_REG_R1)
             assert 0x20000000<=tx<0x20010000 and cpu.mem_read(tx,1)==b'\x78'
             wire=bytes([0,0x90,255,0x34,0x12])+struct.pack('<10H',8000,8050,8800,9300,9400,9450,3939,8100,8200,9600)+bytes(1)
             if n==903:
                 wire=struct.pack('<BBBH8HIB',0,0x93,3,g,3940,0,0,0,0,0,9400,9600,0,0)
-            cpu.mem_write(cpu.reg_read(UC_ARM_REG_R2),wire);q.ret(cpu,1)
+            if n in (905,907,915,925):
+                wire=struct.pack('<BBHBBHHHI',0,0x95,g,0,0,120,122,120,0)+bytes(16)
+            cpu.mem_write(cpu.reg_read(UC_ARM_REG_R2),wire[:length]);q.ret(cpu,1)
         pc=q.syms['nes_native165_bulk'];q.u.hook_add(UC_HOOK_CODE,bulk,None,begin=pc,end=pc)
         for tick in (2999,3000,3499,3500,5499,5500,5999,6000):
             q.call('nes_budget210_frame',[tick]);q.call('nes_budget210_display',[tick,q.video])
@@ -82,15 +89,22 @@ def verify(n,src=None,out=None):
         raw.write_bytes(files[f'/sd2snes/nes-frame-mmc{n}.bin'])
         run=decoder(raw);rows=run['rows']
         ticks=[t for t in (3000,3499,5500,5999) if not (mode==1 and t>=5500 or mode==2 and t<5500)]
-        if n==903:
+        if n in (903,905,907,915,925):
             ticks=[3000,3499] if mode==1 else [5500,5999]
+        if n in (907,915,925):assert run['displayed55']==2
         assert [r['tick'] for r in rows]==ticks and all(r['bank']==1 and 'invalid' not in r for r in rows)
         assert all(row_type.unpack_from(raw.read_bytes(),16+i*row_type.size)[3:5]==(156,58) for i in range(len(rows)))
         # A full buffer must count the omitted row, without overwriting any payload.
         q.u.mem_write(scratch+6,struct.pack('<H',capacity))
         before=bytes(q.u.mem_read(scratch+16,8176))
         tick=ticks[0];q.call('nes_budget210_frame',[tick]);q.call('nes_budget210_display',[tick,q.video])
-        assert bytes(q.u.mem_read(scratch+16,8176))==before
+        expected=bytearray(before)
+        if n in (907,915,925) and 5500<=tick<6000:
+            from read_nes_supply905 import SIZE
+            position=SIZE-16
+            count=struct.unpack_from('<H',before,position)[0]
+            struct.pack_into('<H',expected,position,count+1)
+        assert bytes(q.u.mem_read(scratch+16,8176))==expected
         assert sum(struct.unpack('<2H',q.u.mem_read(scratch+8,4)))==1
     q=TimedProbe(src)
     s=q.rt+q.layout['nes_native_runtime165']['transport']

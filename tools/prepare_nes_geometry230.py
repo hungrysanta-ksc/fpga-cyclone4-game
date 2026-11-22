@@ -27,6 +27,8 @@ def main():
         p.add_argument('--'+n, type=Path, required=True)
     p.add_argument('--first', type=int, default=905)
     p.add_argument('--last', type=int, default=975)
+    p.add_argument('--allow-disabled-tail',action='store_true',
+                   help='Allow missing rows after an observed PPUMASK disables both planes through line 231.')
     a = p.parse_args(); a.out.mkdir(parents=True, exist_ok=False)
     meta=json.loads((a.capture/'capture.json').read_text()); assert meta['exit_code']==0
     assert meta['capture_first']<=a.first<=a.last<=meta['capture_last']
@@ -55,7 +57,12 @@ def main():
         # Palette mirroring is materialized as the collector sees it.
         # Mesen's paletteRam stores the mirrored universal entries separately.
         missing_anchors=[y for y in range(8,232) if (f,y) not in anchors]
+        changes=sorted((line*341+dot,val) for k,_,line,dot,addr,val in writes[f]
+                       if k==0 and addr==0x2001)
+        fetch_lines={r[1] for r in fetch[f]}
         for y in missing_anchors:
+            if a.allow_disabled_tail and changes and changes[-1][0]<y*341+1 and not changes[-1][1]&0x18 and y not in fetch_lines:
+                continue
             assert y in (193,194) and any(k==0 and addr==0x2001 and not(val&0x18) and 0<=y-line<=1 for k,_,line,d,addr,val in writes[f]),(f,y,'missing row anchor without rendering transition')
         palettes={anchors[f,y][5] for y in range(8,232) if (f,y) in anchors}
         assert len(palettes)==1, 'Need explicit per-dot palette changes'

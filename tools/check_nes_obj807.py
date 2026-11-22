@@ -27,6 +27,12 @@ def packets(generation, count, spread=False, split=False):
 
 
 class Receiver(Machine):
+    def __init__(self, src, palette):
+        super().__init__(src, palette)
+        # Later diagnostic links timestamp a completed input even when poll
+        # is called directly, before the first runtime step.
+        self.u.mem_map(0xe0001000,0x1000)
+
     def hook(self, u, at, size, user):
         if at in (0x0807ffa0,0x0807ff90):
             u.reg_write(UC_ARM_REG_R0, 1 if at==0x0807ffa0 else int(not self.stop))
@@ -54,7 +60,17 @@ class Receiver(Machine):
                 self.decision = tx[4]
                 u.mem_write(u.reg_read(UC_ARM_REG_R2), self.status())
                 if not self.decision:
-                    self.packets[-1] = struct.pack(">HHQ",0xe002,self.gen,6)
+                    b = struct.pack(">HHQ",0xe002,self.gen,6)
+                    fault = getattr(self,"terminal_fault",None)
+                    # Advertise the faulty offer at the first post-D3 STATUS.
+                    # A positive cached length/token remains binding until POP.
+                    self.packets[-1] = {
+                        "COMMIT":struct.pack(">HHQ",0xe003,self.gen,0),
+                        "generation":struct.pack(">HHQ",0xe002,self.gen-1,6),
+                        "reason":b[:-1]+b"\x01","extra":b+b,
+                    }.get(fault,b)
+                    if fault=="token":self.start_token+=1
+                    self.bad_crc=fault=="CRC"
                 self.prepared = True
                 u.reg_write(UC_ARM_REG_R0, 1)
                 u.reg_write(UC_ARM_REG_PC, u.reg_read(UC_ARM_REG_LR))
@@ -68,6 +84,14 @@ class Receiver(Machine):
         while self.index < len(self.packets)-1:
             assert self.poll() == 1
         assert self.state_value() == 2
+        if "nes_native913_classify" in self.syms and gen % 2:
+            # Exercise the display-wait path and the lazy prepare path on
+            # successive generations, including wrap, overflow and recovery.
+            before = self.protected()
+            ops = len(self.ops)
+            for _ in range(2):
+                self.call("nes_native913_classify", [self.state])
+            assert self.protected() == before and self.state_value() == 2 and len(self.ops) == ops
         if runtime is None:
             assert self.call("nes_native165_prepare", [self.state,1,self.spi|1,0]) == 1
         else:
@@ -109,19 +133,13 @@ def check(src, *, limit=None):
     guards=[]
     for fault in ("COMMIT","generation","reason","extra","CRC","token"):
         m = Receiver(src,bytes(128))
+        m.terminal_fault=fault
         assert m.stage(7,33) == 0
-        b = m.packets[-1]
-        mutations={"COMMIT":struct.pack(">HHQ",0xe003,7,0),"generation":struct.pack(">HHQ",0xe002,6,6),
-                   "reason":b[:-1]+b"\x01","extra":b+b,"token":b,"CRC":b}
-        m.packets[-1]=mutations[fault]
-        if fault=="token":m.start_token+=1
-        m.bad_crc = fault=="CRC"
         assert m.poll()==0 and m.state_value()==5, fault
         guards.append(fault)
     m = Receiver(src, bytes(128))
     m.stop = False
     m.ops = []
-    m.u.mem_map(0xe0001000,0x1000)
     runtime = 0x20013000
     if limit is None:
         limit = 0 if b"mmc808.txt" in (src/"obj-nes-100/firmware.stm").read_bytes() else 6000

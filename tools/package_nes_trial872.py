@@ -144,7 +144,7 @@ def write_verified_archive(work,reference,fw,bitstream,report,*,source=None):
                 assert f'mmc{prior}.nes'.encode() in data
                 data = data.replace(f'mmc{prior}.nes'.encode(),f'mmc{edition}.nes'.encode())
             files[name.replace(str(prior),str(edition))] = data
-    assert len(files)==11 and all('restore' not in n.lower() and not n.lower().endswith('.nes') for n in files)
+    assert len(files)==len(reference['files']) and all('restore' not in n.lower() and not n.lower().endswith('.nes') for n in files)
     report.update(reference_ZIP=sha(source),files={n:digest(data) for n,data in files.items()})
     files['manifest.json'] = (json.dumps(report,indent=2)+'\n').encode()
     archive = work/f'MMC{edition}-ADVENTURE-60SEC-SD-ROOT.zip'
