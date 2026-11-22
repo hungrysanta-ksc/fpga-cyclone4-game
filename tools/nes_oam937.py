@@ -58,6 +58,26 @@ def prepare(mode):
     src.write_text(code,newline='\n')
 
 
+def guards(temp,tag,arm):
+    import nes_return920, nes_obj923
+    from check_nes_chain935 import run
+    from analyze_nes_palette921 import directory
+    from analyze_nes_chain935 import measure
+    for phase,cache in ((1,'warm'),(1,'cold'),(2,'cold')):
+        folder=directory(temp,phase,tag,cache)
+        if not (folder/'joint.json').exists():
+            raise FileNotFoundError(folder/'joint.json')
+    with patch.object(nes_return920,'client',lambda _:output('bounded')),patch.object(nes_obj923,'client',lambda _:output('bounded')):
+        nes_return920.guards(temp,'first',tag=tag,destination=arm/'final-guards.json')
+        nes_obj923.obj_stops(temp,'first',tag=tag,destination=arm/'final-stops.json')
+    for phase in (1,2):
+        trial=measure(temp,'bounded',phase,'cold',tag=tag,trial=arm)
+        if not trial['tail_grant']:
+            continue
+        for case in ('stop','head'):
+            run(temp,'bounded',phase,case,tag=tag)
+
+
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('action',choices=('prepare','replay','proof','guards'))
@@ -76,20 +96,4 @@ if __name__=='__main__':
         from check_nes_supply905_arm import run
         run(Path.home()/'Downloads/test/Takahashi Meijin no Boukenjima 4 (J).nes',work(a.mode),925,short_header=True)
     else:
-        import nes_return920, nes_obj923
-        from check_nes_chain935 import run
-        from analyze_nes_palette921 import directory
-        from analyze_nes_chain935 import measure
-        for phase,cache in ((1,'warm'),(1,'cold'),(2,'cold')):
-            folder=directory(a.temp,phase,tag,cache)
-            if not (folder/'joint.json').exists():
-                p.error(f'finish replay {a.mode} {phase} {cache} before running guards')
-        with patch.object(nes_return920,'client',lambda _:output('bounded')),patch.object(nes_obj923,'client',lambda _:output('bounded')):
-            nes_return920.guards(a.temp,'first',tag=tag,destination=work(a.mode)/'final-guards.json')
-            nes_obj923.obj_stops(a.temp,'first',tag=tag,destination=work(a.mode)/'final-stops.json')
-        for phase in (1,2):
-            trial=measure(a.temp,'bounded',phase,'cold',tag=tag,trial=work(a.mode))
-            if not trial['tail_grant']:
-                continue
-            for case in ('stop','head'):
-                run(a.temp,'bounded',phase,case,tag=tag)
+        guards(a.temp,tag,work(a.mode))
