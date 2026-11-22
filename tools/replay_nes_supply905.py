@@ -57,7 +57,14 @@ def run(temp,clip,phase,*,tag='905-supply',out=None,base=None,runner=replay,work
                     v=(tok%2048)<<21|((tok-1)%2)<<20|j['kind']<<19|(j['bytes']//16)<<11|stamp(returns[tok])
                     struct.pack_into('<I',body,8*i,v)
             pages.append((g,page))
-            u.mem_write(u.reg_read(UC_ARM_REG_R2),(h+bytes(body))[:length])
+            reply=h+bytes(body)
+            if edition==927:
+                # Bench-proven wire format. Display timings come from Mesen's PPU events.
+                assert page==0 and length==32
+                reply=bytearray.fromhex((temp/'nes-display927-wire/reply927.hex').read_text())+bytes(8)
+                assert reply[1]==0x97 and len(reply)==32
+                struct.pack_into('<H',reply,2,g)
+            u.mem_write(u.reg_read(UC_ARM_REG_R2),bytes(reply[:length]))
             cpu.clock+=length*8*joint.MASTER/2625000+cpu.driver_extra.get(0xe0,0)
             u.reg_write(UC_ARM_REG_R0,1);u.reg_write(UC_ARM_REG_PC,u.reg_read(UC_ARM_REG_LR))
         for name,fn in [('nes_budget210_frame',frame),('nes_native165_bulk',query)]:
@@ -65,18 +72,27 @@ def run(temp,clip,phase,*,tag='905-supply',out=None,base=None,runner=replay,work
     with patch.object(joint.Runtime,'__init__',init):
         runner(temp,temp/'nes-latency898',897,clip,phase,candidate_arm=work/'link/src',replay_tag=tag)
     cpu,=holders
-    length=TRACE_BYTES[edition]+2*int(edition==915 and 'step_begin915' in cpu.data_symbols)
+    if edition==927:
+        from read_nes_display927 import DISPLAYED,decode as decode927
+        length=DISPLAYED+4+48+56
+    else:
+        length=TRACE_BYTES[edition]+2*int(edition==915 and 'step_begin915' in cpu.data_symbols)
     path=out/'records.bin';path.write_bytes(cpu.u.mem_read(cpu.data_symbols['ptrcache'],length))
-    data=decode(path,edition,direct_probe=edition==915 and 'step_begin915' not in cpu.data_symbols)
+    data=decode927(path) if edition==927 else decode(path,edition,direct_probe=edition==915 and 'step_begin915' not in cpu.data_symbols)
     if commit_steps:(out/'step915.json').write_text(json.dumps(commit_steps))
     assert len(data['rows'])==(6 if clip=='late' else 0) and not any(data['dropped'])
     assert all('invalid' not in r for r in data['rows'])
-    if clip=='late':assert any(r.get('detail') for r in data['rows'])
+    if clip=='late':
+        if edition==927:
+            assert all('foreground_cycles' in r for r in data['rows'])
+            assert any(sum(r['prefetch_cycles']) for r in data['rows'])
+            assert any(sum(r['foreground_cycles']) for r in data['rows'])
+        else:assert any(r.get('detail') for r in data['rows'])
     def marks(p):
         w={r['g']:r for r in window(p) if r['event']=='reveal'}
         return w[912]['frame']-w[906]['frame']
     for g in range(905,913):assert (out/f'frame-{g}.rgb').read_bytes()==(base/f'frame-{g}.rgb').read_bytes()
-    result=dict(pages=len(pages),selected=data['selected'],RGB=8,intervals=[marks(base),marks(out)],
+    result=dict(pages=len(pages),selected=data.get('selected'),RGB=8,intervals=[marks(base),marks(out)],
                 final_ACK=[json.loads((p/'joint.json').read_bytes())['frames'][-1]['ACK_masterclock'] for p in (base,out)])
     (out/'verified905.json').write_text(json.dumps(result))
     print(result)
