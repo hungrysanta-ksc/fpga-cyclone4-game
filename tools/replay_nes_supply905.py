@@ -36,7 +36,7 @@ def run(temp,clip,phase,*,tag='905-supply',out=None,base=None,runner=replay,work
             assert clip=='late' and length in (16,32) and 0x20000000<=tx<0x20010000
             page=u.mem_read(tx+1,1)[0];g=cpu.generation
             assert length==32 or page==0
-            if edition==915 and page==0 and 'step_begin915' in cpu.data_symbols and g not in commit_steps:
+            if edition in (915,925) and page==0 and 'step_begin915' in cpu.data_symbols and g not in commit_steps:
                 def word(name,size):
                     return int.from_bytes(u.mem_read(cpu.data_symbols[name],size),'little')
                 assert word('commit_gen915',2)==g

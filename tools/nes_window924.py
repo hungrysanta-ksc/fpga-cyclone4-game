@@ -130,14 +130,15 @@ def prepare(mode):
         path.write_text(s, newline='\n')
 
 
-def replay(temp, mode, phase, cold):
+def replay(temp, mode, phase, cold, *, arm=None, edition=915, tag=None):
     def monitor(source, scene):
         return once(trace(source, scene), 'pb(0)==7 and pw(8)==908', 'pb(0)==7 and pw(8)==909')
     cache = 'cold' if cold else 'warm'
     reference = temp / f'nes-tile821-obj-jointmirror-p{phase}-923warm-{cache}-pair'
     costs = json.loads((reference/'joint.json').read_bytes())['parameters']['driver_extra_us']
     with patch.object(peer, 'main', partial(peer.main, driver_extra_us=costs)), patch.object(peer, 'PeerLink', LeadingRecord), patch.object(peer, 'CLIENT', client('first')), patch.object(peer, 'monitor', monitor):
-        peer.compare(temp, phase, cold, True, edition=915, work_arm=BASE if mode=='control' else WORK/mode, run_id=run_tag(mode))
+        target = arm or (BASE if mode=='control' else WORK/mode)
+        peer.compare(temp, phase, cold, True, edition=edition, work_arm=target, run_id=tag or run_tag(mode))
 
 
 if __name__ == '__main__':

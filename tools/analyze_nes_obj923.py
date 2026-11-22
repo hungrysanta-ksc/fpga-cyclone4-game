@@ -82,9 +82,10 @@ def analyze(temp,modes):
     return result
 
 
-def recovery(mode,work=WORK):
-    proof=work/mode/'proof'
-    digest=sha(work/mode/'link/src/obj-nes-100/firmware.stm')
+def recovery(mode,work=WORK,*,trial=None):
+    trial=trial or work/mode
+    proof=trial/'proof'
+    digest=sha(trial/'link/src/obj-nes-100/firmware.stm')
     assert all(read(proof/f)['firmware']==digest for f in ('loader.json','menu.json','timer.json'))
     base=read(proof/'base/result.json')
     assert base['safe_return'] and base['firmware_sha256']==digest
