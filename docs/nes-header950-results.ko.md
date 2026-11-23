@@ -35,3 +35,5 @@
 재현은 기존 949 재생 자료와 같은 TEMP 경로를 사용한다. `tools/nes_header950.py prepare bound`에 TEMP 경로를 전달하고 `tools/build_nes_trial577.ps1`로 `probes/nes-header950/bound/link`를 빌드한다. 같은 스크립트의 `replay bound TEMP PHASE CACHE`를 1·2 및 warm·cold 조합으로 실행한다. 이어 `guards bound TEMP`, `tools/check_nes_header950.py bound`, `tools/analyze_nes_header950.py TEMP OUT bound` 순서로 판정한다.
 
 [측정값과 보호 조건](../analysis/header950-results.json) · [ARM 변경](../tools/nes_header950.py) · [헤더·오류 로그 시험](../tools/check_nes_header950.py)
+
+**최종 링크 검증에서 확인한 적용 범위.** 위의 13·14회 결과는 914I 인터페이스에 933의 행 이력·페이지 선행 읽기 모델을 결합한 일정이다. 설치용 914I 공급기로 같은 바이너리를 재생하면 13·16회다. [MMC950 전달 조건 판정](nes-trial950-results.ko.md)

@@ -45,7 +45,7 @@ def test(mode):
         before=len(calls);q.call('finish_header950',[]);q.call('finish_header950',[])
         assert len(calls)==before+1 and q.u.mem_read(scratch+14,1)[0]==(7 if name=='match' else 3)
         assert int.from_bytes(q.u.mem_read(scratch+40,4),'little')==token
-    if mode=='bound':
+    if mode in ('bound','release'):
         # A chunk with zero token must not authenticate an absent descriptor.
         arm_row();q.u.mem_write(scratch+32,bytes(12))
         current[5]=1;struct.pack_into('<I',current,12,0);ok=True
@@ -88,7 +88,7 @@ def test(mode):
     assert trace_outputs(SOURCE/'link/src')==trace_outputs(built)
     result=dict(saved_generation_and_token=True,stale_generation=True,stale_token=True,
                 empty_and_SPI_failure_rejected=True,one_shot=True,timed_exit_before_D2_no_probe=True,reset_discards_pending=True,
-                unexpected_chunk_tested=mode=='bound',sink_report_vectors=3,short_and_exact_capacity=True)
+                unexpected_chunk_tested=mode in ('bound','release'),sink_report_vectors=3,short_and_exact_capacity=True)
     (work(mode)/'identity950.json').write_text(json.dumps(result,indent=2)+'\n')
     print(result)
 

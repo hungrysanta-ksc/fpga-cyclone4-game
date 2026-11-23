@@ -118,13 +118,13 @@ def replay(temp,mode,phase,cache):
         chain.replay(temp,'final',phase,cache,'bounded',work_arm=work(mode),tag='950'+mode)
 
 
-def guards(temp,mode):
+def guards(temp,mode,*,edition=925):
     from check_nes_supply905_arm import run
     from nes_order938 import empty_next_offer
     from nes_deadline947 import check_obj_recovery
     import nes_return920
     arm=work(mode)
-    run(Path.home()/'Downloads/test/Takahashi Meijin no Boukenjima 4 (J).nes',arm,925,
+    run(Path.home()/'Downloads/test/Takahashi Meijin no Boukenjima 4 (J).nes',arm,edition,
         short_header=True,order=empty_next_offer,marker_values=(4,8,16,24))
     with patch.object(nes_return920,'client',lambda _:ROM):
         nes_return920.guards(temp,'first',tag='950'+mode,destination=arm/'final-guards.json')
