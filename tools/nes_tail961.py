@@ -80,8 +80,8 @@ def fixtures(temp,phase,tag):
         fixture(temp,phase,True,g,tag,include_bg=True)
 
 
-def guards(temp,phase):
-    folder=nes_ready958.directory(temp,phase,'961pair','cold')
+def guards(temp,phase,tag='961pair'):
+    folder=nes_ready958.directory(temp,phase,tag,'cold')
     def damage(b,g,case):
         if g!=908:
             return b,False
