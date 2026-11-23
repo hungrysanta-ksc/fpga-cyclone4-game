@@ -68,8 +68,9 @@ def summary(folder, control):
                 timing912=timing912, RGB=8, VRAM_B=joint['vram_DMA_B'])
 
 
-def guard(temp, phase, case, retry=False):
-    trial=directory(temp,phase,'959retryseal' if retry else '959orderedseal','cold')
+def guard(temp, phase, case, retry=False, *, static_client=None, tag=None):
+    trial=directory(temp,phase,tag or ('959retryseal' if retry else '959orderedseal'),'cold')
+    client=static_client or ROM
     select=lambda b,g: g==906 and b[0]==3
     if case=='identity':
         def damage(b,g,kind):
@@ -77,7 +78,7 @@ def guard(temp, phase, case, retry=False):
                 return b,False
             b[8]^=1
             return b,True
-        return fault_run(temp,trial,'bad-seal',column_client=ROM,edit_seal=damage)
+        return fault_run(temp,trial,'bad-seal',column_client=client,edit_seal=damage)
     def adapt(script,labels):
         hook='if not injected852 then'
         assert script.count(hook)==1
@@ -87,10 +88,11 @@ def guard(temp, phase, case, retry=False):
             assert script.count(old)==1
             site=labels['sample618']
             if retry:
-                body=bytearray((ROM/'body.bin').read_bytes())
-                for at,original,value in edits('retry'):
-                    assert body[at]==original
-                    body[at]=value
+                body=bytearray((client/'body.bin').read_bytes())
+                if static_client is None:
+                    for at,original,value in edits('retry'):
+                        assert body[at]==original
+                        body[at]=value
                 site=0x7e2000+body.index(bytes.fromhex('201936f0034c'),labels['group_wait912']-0x7e2000)
             script=script.replace(old,f"end,emu.callbackType.exec,{site})")
         else:
@@ -103,7 +105,7 @@ def guard(temp, phase, case, retry=False):
    end""")
         check='  assert(captured==commits)'
         return script.replace(check,'  assert(injected852);assert(captured==commits)')
-    out=fault_run(temp,trial,'stop',column_client=ROM,select_packet=select,adapt_lua=adapt,
+    out=fault_run(temp,trial,'stop',column_client=client,select_packet=select,adapt_lua=adapt,
                   output_name='edge959-'+case)
     trace=rows(trial/('guard-edge959-'+case)/'window.csv')
     started=[int(r['value']) for r in trace if r['g']=='906' and r['op']=='3' and r['event']=='ppu_dma']

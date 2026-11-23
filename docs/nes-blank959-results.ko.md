@@ -32,6 +32,8 @@ RTL 응답 대조 범위는 905를 거쳐 도달한 **906**이다. 906의 최종
 
 ## 후속작업
 
+960에서 기존 소량 DMA 경로를 그대로 정적 ROM에 넣고, 17블록 선행 수신과 두 위상의 최종 ACK를 재검증했다. [960 정적 부팅·전체 보드 결과](nes-blank960-results.ko.md)
+
 기존 소량 DMA 허용 및 911 공개 전 17블록 수신을 보존하는 후보에서 압축 ROM을 **24B 이상** 줄인다. 전체 ROM을 부팅한 뒤 두 위상의 906 선행 전송, 911 입력, 여섯 표시 간격, 912 최종 ACK를 다시 측정한다. 위상별 결과가 함께 개선되는지 확인한 뒤 실기 전달 여부를 결정한다.
 
 재현은 958과 같은 두 위상의 자료에서 `tools/nes_blank959.py prepare TEMP`로 시작한다. `--retry ordered`는 정적 ROM 생성과 `static` 실행에 사용하고, `seal`은 옵션 없음·`--retry`·`--retry ordered` 세 가지로 비교한다. 정적 ROM의 `static → credit → closed` 단계마다 두 ARM 재생 뒤 기존 FLOAT 래퍼로 `tools/check_nes_ready958.ps1`을 실행한다. `NES_959_RTL`은 각각 `959orderedstatic`, `959orderedcredit`, `959orderedclosed`이고 `NES_958_RTL`은 각각 `closed`, `credit`, `closed`다. `tools/check_nes_blank959.py TEMP --phase N --guard before|after|identity`를 각 위상과 두 후보(`--retry` 유무)에서 실행한 후 같은 스크립트를 `TEMP`만 주어 집계한다.

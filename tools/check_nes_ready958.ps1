@@ -3,7 +3,7 @@ $ErrorActionPreference='Stop'
 $mode=if($env:NES_958_RTL){$env:NES_958_RTL}else{'mark'}
 if($mode -notin 'mark','credit','closed','short'){throw 'unknown replay'}
 $tag=if($env:NES_959_RTL){$env:NES_959_RTL}else{"958$mode"}
-if ($env:NES_959_RTL -and $tag -notin '959orderedstatic','959orderedcredit','959orderedclosed'){throw 'unknown static replay'}
+if ($env:NES_959_RTL -and $tag -notin '959orderedstatic','959orderedcredit','959orderedclosed','960static','960credit','960closed'){throw 'unknown static replay'}
 $env:NES_CHR952='checked'
 $env:NES_CHR951_GUARDS_ONLY='1'
 & (Join-Path $PSScriptRoot 'check_nes_chr951.ps1')
