@@ -42,15 +42,23 @@ try {
  }
  if($env:NES_CHR951_GUARDS_ONLY -eq '1'){return}
  $failed=@()
+ $feedback=$env:NES_FEEDBACK953
+ if($feedback -and ($feedback -notmatch '^953[a-z0-9]+$' -or $variant952 -ne 'checked')){throw 'Invalid feedback replay'}
  foreach($cache in 'cold','warm'){foreach($phase in 1,2){
+  if($feedback -and $env:NES_FEEDBACK953_COLD2 -eq '1' -and ($cache -ne 'cold' -or $phase -ne 2)){continue}
   if($rev -eq 'bankedcontrol' -and $cache -eq 'warm'){continue}
   $tag=if($rev -in 'control','bankedcontrol'){'neighbor'}else{$rev}
   if($variant952 -and $env:NES_CHR952_RTL_ROWS -eq '1'){$tag+='rows'}
   $folder=Join-Path $base "nes-tile821-obj-jointmirror-p$phase-$prefix$tag-$cache-pair"
+  if($feedback){$folder=Join-Path $base "nes-tile821-obj-jointmirror-p$phase-$feedback-$cache-pair"}
   $previous=''
   $single=($rev -in 'neighbor','coldneighbor','control','bankedcontrol') -or (($variant952 -or $rev -eq 'banked') -and $cache -eq 'warm')
   $frames=if($single){@(909,912)}else{@(905..912)}
   if($rev -eq 'bankedcontrol'){$frames=@(909)}
+  if($feedback -and !$single){
+   $frames=@(908..912)
+   $previous=Join-Path $base "nes-tile821-obj-jointmirror-p$phase-952checkedrows-cold-pair/gen907/rows-out951.hex"
+  }
   $checkpointMode=if($single){2}else{1}
   foreach($g in $frames){
    $d=if($g -eq 912){$folder}else{Join-Path $folder "gen$g"}
