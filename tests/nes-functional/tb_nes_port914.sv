@@ -182,10 +182,16 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
   end
 `endif
   reg writable958=0;
+  integer handed965=0;
   always @(posedge host) if(counting && $test$plusargs("timing958"))begin
+   if(transport.pending && transport.box_ready)handed965<=accepted;
    if(host_idle && !writable958)$display("WRITABLE958 packets=%0d edge=%0d",accepted,tick);
    writable958<=host_idle;
   end
+  always @(posedge transport.box_ready)if(counting && $test$plusargs("timing958"))
+   $display("BOX965 released=%0d edge=%0d",handed965,tick);
+  always @(posedge seen_end)if(counting && $test$plusargs("timing958"))
+   $display("END965 packets=%0d edge=%0d",accepted,tick);
   always @(posedge clk) if(counting && $test$plusargs("timing958"))begin
    if(pv && pr && enabled_plan)
     $display("PLAN958 kind=%0d slot=%0d tag=%0d at=%0d",kind,slot,tag,tick);
@@ -280,7 +286,13 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
       count=plans;crc='1;size=0;
       if(batch_no==target_batch)begin
        read_admission_edge();
-       if(host_idle!==1'b1 || wr!==1'b1 || seen_end || accepted!=batch_no)$fatal(1,"E9 snapshot not writable");
+        if(host_idle!==1'b1 || wr!==1'b1 || seen_end || accepted!=batch_no)begin
+         if($test$plusargs("multiple965") && !host_idle && !seen_end && accepted==batch_no)begin
+          $display("EARLY965 batch=%0d snapshot=%0d",batch_no,tick);
+          wait(host_idle);$display("OPEN965 batch=%0d edge=%0d",batch_no,tick);
+         end
+         $fatal(1,"E9 snapshot not writable");
+        end
        for(int k=0;k<sz;k++)begin
         read_admission_edge();
         if(wr!==1'b1)$fatal(1,"lost E9 credit at byte %0d",k);
@@ -299,6 +311,10 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
        if(transport.pending!==1'b1 || batch_fault!==1'b0 || accepted!=batch_no+1)$fatal(1,"E9 seal rejected");
        $display("ACCEPT954 batch=%0d edge=%0d bytes=%0d plans=%0d crc=%04h",batch_no,tick,size,count,crc);
        if($test$plusargs("prefix954"))begin $display("PASS954 prefix");$finish;end
+        if($test$plusargs("multiple965"))begin
+         if($fscanf(admission_file,"%d",target_batch)!=1)target_batch=-1;
+         else if(target_batch<=batch_no)$fatal(1,"unordered E9 admission");
+        end
       end
       batch_no++;
      end

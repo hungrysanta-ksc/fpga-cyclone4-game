@@ -14,7 +14,7 @@ from test_nes_banks557 import MASTER, crc, host_after
 BASE = '952checkedrows'
 
 
-def evidence(folder, generation, include_first_valid=False, *, log_name='port952-checked.log'):
+def evidence(folder, generation, include_first_valid=False, *, log_name='port952-checked.log', all_polls=False):
     trace = folder / f'gen{generation}'
     if generation==912 and not (trace/log_name).is_file():
         trace=folder
@@ -38,6 +38,9 @@ def evidence(folder, generation, include_first_valid=False, *, log_name='port952
     if include_first_valid:
         at = min(t for t,d in desc.items() if d[0]==len(jobs))
         observed.setdefault(at,(desc[at][0],sampled[at][1],sampled[at][2]))
+    if all_polls:
+        for at,flags,count,token in sampled.values():
+            observed.setdefault(at,(token,flags,count))
     packets = [bytes.fromhex(json.loads(line)[2]) for line in (folder/'packets.jsonl').read_text().splitlines()]
     tiles = {int.from_bytes(p[16:20],'little'):p for p in packets if p[0]==7 and int.from_bytes(p[8:10],'little')==generation}
     result = {}

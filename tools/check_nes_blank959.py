@@ -17,7 +17,7 @@ def rows(path):
         return list(csv.DictReader(stream))
 
 
-def summary(folder, control):
+def summary(folder, control, *, map1920_destination=0xa780):
     joint = read(folder/'joint.json')
     assert joint['passed'] and joint['commits'] == 8
     for g in range(905,913):
@@ -46,7 +46,10 @@ def summary(folder, control):
             and int(r['bytes'])==1920 and int(r['port'])==24]
     assert len(maps)<=1
     if maps:
-        assert int(maps[0]['bank'])==1 and int(maps[0]['dst'])==0xa780
+        dst=int(maps[0]['dst'])
+        assert int(maps[0]['bank'])==1 and 0xa000<=dst<=0xb000-1920
+        if map1920_destination is not None:
+            assert dst==map1920_destination
     events = read(folder/'events.json')
     inputs = [e for e in events if e.get('input_generation')==912 and e.get('event')=='SPI']
     plans = [e for e in events if e.get('generation')==912 and e.get('opcode')=='0xe9']

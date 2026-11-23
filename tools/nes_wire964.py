@@ -10,8 +10,8 @@ from nes_page963 import simulate
 from test_nes_banks557 import MASTER, crc, host_after
 
 
-def fixtures(temp,tag):
-    for p in (1,2):
+def fixtures(temp,tag,phases=(1,2)):
+    for p in phases:
         folder=directory(temp,p,tag,'cold')
         sends={g:(at,raw) for g,_,at,raw in read(folder/'hint963.json')['hints']}
         for g in range(905,913):
