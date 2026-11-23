@@ -45,6 +45,8 @@
 
 ## 후속작업
 
+이후 실행한 [971 ARM 실제 생성·선행 발행 비교](nes-palette971-results.ko.md)에서 팔레트·테이블의 준비 시각과 타일 공급에 미친 영향을 확인했다.
+
 911의 목표는 실제 ARM에서 첫 타일 전 일반 출력 준비를 끝내고 E9·유효 E8과 두 타일 뱅크의 공급을 유지하는 것이다. 특히 위상 2의 토큰 28 반환과 후속 384B 생산을 다시 결합해야 한다. 911의 공개와 다음 912 최종 ACK까지 같은 연속 일정에서 개선된 뒤 실기판을 결정한다. 이번 재생 결과는 1–30초·30–60초 실기 FPS에 반영하지 않는다. [클록별 발행·수락·DMA·공개 기록](../analysis/output970-results.json)
 
 재현에는 MMC966 빈 캐시의 두 위상 원본과 기존 Mesen 실행 파일이 필요하다. `tools/check_nes_output970.py`에 TEMP, 새 출력 폴더, 위상, 조건을 주고 911에는 `--generation 911`을 지정한다. 907은 control/tail/frame/ordinary, 911은 control/ordinary/prelude/reserved를 실행한다. 911 위상 1의 prelude에서 `--fault stop_decode`, `--fault bad_seal`도 각각 실행한다. `tools/check_nes_payload970.py`로 원본 링크의 버퍼를 확인하고 `tools/analyze_nes_output970.py`로 두 위상 결과를 집계한다.
