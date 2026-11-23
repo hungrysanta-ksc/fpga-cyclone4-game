@@ -2,6 +2,8 @@
 $ErrorActionPreference='Stop'
 $mode=if($env:NES_958_RTL){$env:NES_958_RTL}else{'mark'}
 if($mode -notin 'mark','credit','closed','short'){throw 'unknown replay'}
+$tag=if($env:NES_959_RTL){$env:NES_959_RTL}else{"958$mode"}
+if ($env:NES_959_RTL -and $tag -notin '959orderedstatic','959orderedcredit','959orderedclosed'){throw 'unknown static replay'}
 $env:NES_CHR952='checked'
 $env:NES_CHR951_GUARDS_ONLY='1'
 & (Join-Path $PSScriptRoot 'check_nes_chr951.ps1')
@@ -12,9 +14,9 @@ $env:PYTHONPATH=Join-Path (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
 Push-Location (Join-Path $temp 'nes-952checked/nes-trial816-board952')
 try {
  foreach($p in 1,2){
-  & $python (Join-Path $PSScriptRoot 'nes_ready958.py') $temp $p --fixtures $mode
+  & $python (Join-Path $PSScriptRoot 'nes_ready958.py') $temp $p --fixtures $mode --fixture-tag $tag
   if($LASTEXITCODE){throw 'fixture export failed'}
-  $base=Join-Path $temp "nes-tile821-obj-jointmirror-p$p-958$mode-cold-pair"
+  $base=Join-Path $temp "nes-tile821-obj-jointmirror-p$p-$tag-cold-pair"
   $opts=@()
   foreach($gen in 905,906){
    $d=Join-Path $base "gen$gen"

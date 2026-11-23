@@ -36,8 +36,8 @@ def policy(temp, phase, mode):
                tag='958'+mode,work_arm=WORK if mode=='control' else CANDIDATE,edition=955)
 
 
-def feedback(temp,phase,close=False):
-    base=directory(temp,phase,'958mark','cold')
+def feedback(temp,phase,close=False,*,trial_tag=None,baseline_tag='958mark',credit_tag='958credit'):
+    base=directory(temp,phase,baseline_tag,'cold')
     d=base/'gen906'
     origin=int((d/'origin914.txt').read_text())
     log=(d/'timing958.log').read_text(errors='replace')
@@ -46,13 +46,16 @@ def feedback(temp,phase,close=False):
     edge=origin+int(first[1])
     expected=bytes.fromhex(json.loads((base/'e9wire914-906.jsonl').read_text().splitlines()[6])[1])
     captured=[]
-    late=None
+    late={}
     if close:
-        previous=directory(temp,phase,'958credit','cold')/'gen906'
+        previous=directory(temp,phase,credit_tag,'cold')/'gen906'
         text=(previous/'timing958.log').read_text(errors='replace')
-        row,=re.findall(r'E8914 difference edge=(\d+) token=(\d+)/(\d+) flags=1/0 count=7/7',text)
-        assert row[1]==row[2] and re.search(r'E8914 compared=\d+ different=1\b',text)
-        late=int((previous/'origin914.txt').read_text())+int(row[0])
+        origin=int((previous/'origin914.txt').read_text())
+        for clock,token,wanted,actual,modeled in re.findall(
+                r'E8914 difference edge=(\d+) token=(\d+)/(\d+) flags=(\d)/(\d) count=7/7',text):
+            assert token==wanted and (actual,modeled) in (('1','0'),('2','1'))
+            late[origin+int(clock)]=(int(modeled),int(actual))
+        assert re.search(rf'E8914 compared=\d+ different={len(late)}\b',text)
 
     def wrap(parent):
         class Credit(supply(parent,'checked')):
@@ -72,12 +75,13 @@ def feedback(temp,phase,close=False):
                     out[19]=crc(out[1:19],8,7,0)
                     captured.append(edge)
                     return bytes(out)
-                if self.generation==906 and tx[0]==0xe8 and round(sample)==late:
-                    assert len(captured)==2 and reply[3:6]==bytes([0,0,7])
+                if self.generation==906 and tx[0]==0xe8 and round(sample) in late:
+                    modeled,actual=late[round(sample)]
+                    assert len(captured)>=2 and reply[3:6]==bytes([modeled,0,7])
                     out=bytearray(reply)
-                    out[3]=1
+                    out[3]=actual
                     out[19]=crc(out[1:19],8,7,0)
-                    captured.append(late)
+                    captured.append(round(sample))
                     return bytes(out)
                 return reply
 
@@ -92,20 +96,35 @@ def feedback(temp,phase,close=False):
                 self.verified=None
         return Credit
     with complete_row_set():
-        replay(temp,phase,'cold','banked',wrap=wrap,tag='958closed' if close else '958credit',
+        replay(temp,phase,'cold','banked',wrap=wrap,tag=trial_tag or ('958closed' if close else '958credit'),
                work_arm=WORK,edition=955)
-    assert len(captured)==2+int(close)
-    if close:
+    assert len(captured)==2+len(late) and set(captured[2:])==set(late)
+    if close and (trial_tag is None or trial_tag.endswith('closed')):
         a=previous.parent
-        b=directory(temp,phase,'958closed','cold')
+        b=directory(temp,phase,trial_tag or '958closed','cold')
+        check_corrected_trace(a,b,late,allow_reschedule=bool(trial_tag))
+
+
+def check_corrected_trace(a,b,late,*,allow_reschedule):
+    before=json.loads((a/'events.json').read_bytes())
+    after=json.loads((b/'events.json').read_bytes())
+    if allow_reschedule and late:
+        # The terminal E8 flag changes ARM branches after the final sample.
+        # Verify every event through that sample, then use the new trace
+        # for RTL comparison and the rendered-output/ACK checks.
+        last=max(late)
+        end=next(i+1 for i,x in enumerate(before) if x.get('opcode')=='0xe8'
+                 and round(host_after(x['start']+7.5*MASTER/2625000,3))==last)
+        before,after=before[:end],after[:end]
+    else:
         for f in ('window.csv','packets.jsonl','producer.jsonl','e9wire914-906.jsonl'):
             assert (a/f).read_bytes()==(b/f).read_bytes(), f
-        before=json.loads((a/'events.json').read_bytes())
-        after=json.loads((b/'events.json').read_bytes())
-        changed,=[(x,y) for x,y in zip(before,after,strict=True) if x!=y]
-        x,y=changed
+    changed=[(x,y) for x,y in zip(before,after,strict=True) if x!=y]
+    assert len(changed)==len(late)
+    for x,y in changed:
         assert (x['generation'],x['opcode'])==(906,'0xe8')
-        assert {**x,'reply':y['reply']}==y and round(host_after(x['start']+7.5*MASTER/2625000,3))==late
+        assert {**x,'reply':y['reply']}==y
+        assert round(host_after(x['start']+7.5*MASTER/2625000,3)) in late
 
 
 def trace(temp, phase):
@@ -139,8 +158,8 @@ def trace(temp, phase):
     (folder/'emit958.json').write_text(json.dumps(marks)+'\n')
 
 
-def fixtures(temp, phase, mode):
-    tag='958'+mode
+def fixtures(temp, phase, mode, *, tag=None):
+    tag=tag or '958'+mode
     folder = directory(temp, phase, tag, 'cold')
     for g in (905,906):
         fixture(temp,phase,True,g,tag,include_bg=True)
@@ -161,6 +180,7 @@ if __name__ == '__main__':
     p.add_argument('temp', type=Path)
     p.add_argument('phase', type=int, choices=(1,2))
     p.add_argument('--fixtures',choices=('mark','credit','closed','short'))
+    p.add_argument('--fixture-tag')
     p.add_argument('--policy',choices=('prepare','short','control','credit','closed'))
     a = p.parse_args()
     if a.policy=='prepare':
@@ -170,6 +190,6 @@ if __name__ == '__main__':
     elif a.policy:
         policy(a.temp,a.phase,a.policy)
     elif a.fixtures:
-        fixtures(a.temp,a.phase,a.fixtures)
+        fixtures(a.temp,a.phase,a.fixtures,tag=a.fixture_tag)
     else:
         trace(a.temp, a.phase)

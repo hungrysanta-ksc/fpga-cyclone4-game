@@ -32,6 +32,8 @@ MMC956 실기의 576B OBJ 묶음에서 관찰한 허가 대기가 E9 선행 발�
 
 ## 후속작업
 
+959에서 남은 VBlank에 1,920B map을 보내고 세대 912의 최종 ACK까지 추적했다. [단일 DMA와 정적 ROM 비교](nes-blank959-results.ko.md)
+
 실제 65816의 VBlank 대기 진입에서 빔 위치, 수락된 DMA 길이, 설정 비용과 독립 검사 완료를 함께 확인한다. 226선·239선에 남은 시간 안에 비활성 VRAM으로 완결 가능한 범위만 보내는 대조를 우선한다. 두 위상의 DMA 마지막 쓰기·공개·912 최종 ACK, STOP·새 패킷 우선과 메뉴 복귀를 함께 확인한 뒤 실기판을 결정한다.
 
 재현할 때는 `tools/nes_ready958.py TEMP PHASE`로 읽기 전용 계측 대조군을 생성한다. `--policy prepare` 후 기존 `build_nes_trial577.ps1`으로 `probes/nes-ready958-short/link`를 링크하고 두 위상에서 `--policy control`과 `--policy short`를 실행한다. FLOAT 래퍼에서 `tools/check_nes_ready958.ps1`을 `NES_958_RTL=mark`와 `short`로 각각 실행한다. 이어 `credit`과 `closed`를 순서대로 각각 ARM의 `--policy`와 RTL의 `NES_958_RTL`에 적용하고 `analyze_nes_ready958.py TEMP MMC956_BIN`으로 집계한다.
