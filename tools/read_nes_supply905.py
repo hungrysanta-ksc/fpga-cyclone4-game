@@ -9,7 +9,7 @@ ROW=struct.Struct('<6H4B16s12s')
 CAP=124
 SIZE=16+CAP*ROW.size+4+320*8
 MS=32768/84000
-TRACE_BYTES={905:SIZE,907:SIZE+2,915:SIZE+6,925:SIZE+8,950:SIZE+8}
+TRACE_BYTES={905:SIZE,907:SIZE+2,915:SIZE+6,925:SIZE+8,950:SIZE+8,955:SIZE+8}
 
 def decode(path,expected_edition=905,*,direct_probe=False):
     data=path.read_bytes()
@@ -90,7 +90,7 @@ def decode(path,expected_edition=905,*,direct_probe=False):
         if pos!=nt or chunks[-1]['bytes']!=r['last_bytes'] or chunks[-1]['kind']!='OBJ':
             raise ValueError('tile stream and validated ARM descriptor disagree')
         r['detail']=chunks
-        if edition in (915,925,950):
+        if edition in (915,925,950,955):
             commit,query=struct.unpack_from('<HH',data,SIZE+2)
             r['commit_age_ticks512']=None if commit==65535 else commit
             r['first_query_ticks512']=query
@@ -99,6 +99,6 @@ def decode(path,expected_edition=905,*,direct_probe=False):
                 # The paired-timer link reuses the full query-cost bound.
                 r['first_query_ticks512']=probe
     return dict(mode=mode,dropped=[d0,d1],selected=selected,rows=rows,
-                displayed55=struct.unpack_from('<H',data,SIZE)[0] if edition in (907,915,925,950) else None)
+                displayed55=struct.unpack_from('<H',data,SIZE)[0] if edition in (907,915,925,950,955) else None)
 
 if __name__=='__main__':print(json.dumps(decode(Path(sys.argv[1])),indent=2))

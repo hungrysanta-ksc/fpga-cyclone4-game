@@ -8,6 +8,7 @@ from pathlib import Path
 from analyze_nes_chr951 import directory, logtext
 from fixture_nes_port914 import fixture
 from nes_companion952 import complete_row_set, replay, supply
+from prepare_nes_trial950 import RELEASE
 from test_nes_banks557 import MASTER, crc, host_after
 
 BASE = '952checkedrows'
@@ -55,7 +56,7 @@ def evidence(folder, generation, include_first_valid=False):
     return result
 
 
-def run(temp, phase, cache, sources, tag, only_910=False):
+def run(temp, phase, cache, sources, tag, only_910=False, *, work_arm=RELEASE, edition=950):
     measured = {}
     if cache == 'cold':
         for source in sources:
@@ -82,7 +83,7 @@ def run(temp, phase, cache, sources, tag, only_910=False):
                 return bytes(out)
         return Feedback
     with complete_row_set():
-        replay(temp,phase,cache,'banked',wrap=wrap,tag=tag)
+        replay(temp,phase,cache,'banked',wrap=wrap,tag=tag,work_arm=work_arm,edition=edition)
     for gen in ((908,909,910,911,912) if cache=='cold' else (909,912)):
         fixture(temp,phase,cache=='cold',gen,tag,include_bg=True)
 
