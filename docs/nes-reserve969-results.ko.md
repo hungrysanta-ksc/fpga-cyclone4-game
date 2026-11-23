@@ -30,6 +30,8 @@ MMC966 보드의 원본 RTL에 실제 SPI 페이지 명령을 보냈다. 서로 
 
 ## 후속작업
 
+907의 일반 출력 수락과 911의 직전 VBlank 공개를 같은 수신 ROM으로 검증했다. [세대 907·911의 표시 마감](nes-output970-results.ko.md)
+
 새 설치본은 만들지 않았다. 다음 후보는 907에서 일반 출력의 발행·수락과 SEAL 검사 시작을 앞당겨 이전 VBlank에서 잔여 DMA를 마칠 수 있는지다. 실기에서는 세대 1531과 작업량이 맞는 화면에서 마지막 타일·SEAL·첫/마지막 DMA·공개·ARM ACK를 함께 기록해 재생과 대조한다. 모험도 4의 실기 기준을 유지하며 다른 MMC3 장면의 첫 비교 대상은 커비다. [세 ROM의 검증 결과](nes-demos968-results.ko.md)
 
 재현은 기존 Starter FLOAT 래퍼에서 환경 변수 `NES_RELEASE969=1`로 `tools/check_nes_obj967.ps1`을 실행한 뒤, `python tools/check_nes_reserve969.py <기존 재생 TEMP> analysis/reserve969-results.json --hardware <BIN 폴더>`로 한다. 재실행은 새 출력 접미사를 `--tag`로 지정한다. 실제 보드 파일과 펌웨어는 MMC966 그대로다. 이번 시험은 보드 RTL 반환·STOP과 빈 캐시 재생을 포함하며 새 FIT·STA 및 실기 메뉴 복귀는 측정하지 않았다. [위상별 허가·DMA·공개·ACK와 실기 쌍](../analysis/reserve969-results.json)
