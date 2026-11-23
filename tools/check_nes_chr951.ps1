@@ -14,6 +14,10 @@ if($variant952){
  $defines=@('+define+NES_COMPANION952')
 }
 $board = Join-Path $base $project
+if ($env:NES_TAIL961 -eq 'pair') {
+ if ($variant952 -ne 'checked') { throw '961 requires the checked row-cache build' }
+ $board=Join-Path $base 'nes-trial816-board961'
+}
 $bin='C:/altera_standard/25.1std/questa_fse/win64'
 $bench=Join-Path (Split-Path $PSScriptRoot -Parent) 'tests/nes-functional/tb_nes_port914.sv'
 Push-Location $board

@@ -161,6 +161,16 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
   end
   always @(posedge clk)if(counting&&source.ahead.take)
    $display("ROM914 edge=%0d spec=%0d addr=%0d",tick,source.ahead.spec,source.shared_address[16:0]);
+  reg waiting961=0;
+  reg [16:0] address961;
+  always @(posedge clk) if(counting && $test$plusargs("tail961"))begin
+   if(source.ahead.foreground && (!waiting961 || address961!=source.ahead.address[16:0]))
+    $display("REQ961 at=%0d addr=%0d",tick,source.ahead.address[16:0]);
+   if(source.ahead.reply && !source.ahead.spec_owner)
+    $display("REPLY961 at=%0d addr=%0d",tick,source.ahead.reply_address[16:0]);
+   waiting961<=source.ahead.foreground && !source.ahead.take;
+   address961<=source.ahead.address[16:0];
+  end
 `ifdef NES_COMPANION952
   always @(posedge clk)begin
    if(counting && source.ahead.aux952 && source.ahead.take)

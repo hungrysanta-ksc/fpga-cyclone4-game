@@ -14,9 +14,9 @@ from test_nes_banks557 import MASTER, crc, host_after
 BASE = '952checkedrows'
 
 
-def evidence(folder, generation, include_first_valid=False):
+def evidence(folder, generation, include_first_valid=False, *, log_name='port952-checked.log'):
     trace = folder / f'gen{generation}'
-    log = logtext(trace / 'port952-checked.log')
+    log = logtext(trace / log_name)
     assert 'PASS914 trace' in log
     origin = int((trace / 'origin914.txt').read_text())
     jobs = [j for j in map(json.loads, (folder / 'producer.jsonl').read_text().splitlines())

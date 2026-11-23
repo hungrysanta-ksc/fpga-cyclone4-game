@@ -28,7 +28,7 @@ class Rows952(RowStore):
         return (((tag>>10&1)<<4) | ((tag&15)^((tag>>8&1)<<1)),address&7)
 
 
-def supply(base, variant, snapshots=None):
+def supply(base, variant, snapshots=None, *, redirect=None):
     halves=variant!='pair'
     checked=variant=='checked'
     class Companion(base):
@@ -76,17 +76,23 @@ def supply(base, variant, snapshots=None):
                 return
             batches=self.phases.get(self.owner,{}).get('banks557',[])
             for b in batches[before:self.next_batch]:
-                if self.start is not None:
+                if self.start is not None and redirect is None:
                     break
                 for r in self.plansets[self.owner][b['first']:b['first']+b['count']]:
                     if r[6]!=1:
                         continue
-                    span=companion(int.from_bytes(r[4:6],'little'),r[7],halves)
+                    tag=int.from_bytes(r[4:6],'little')
+                    span=redirect(tag,r[7]) if redirect else None
+                    if not span and self.start is None:
+                        span=companion(tag,r[7],halves)
+                    if self.start is not None and span==(self.start,self.count):
+                        continue
                     if span:
                         self.start,self.count=span
                         self.cursor=0
                         self.opened=self.scan_start(b)+20*b['count']
-                        break
+                        if redirect is None:
+                            break
             if self.start is None or self.queue:
                 return
             while self.cursor < self.count:

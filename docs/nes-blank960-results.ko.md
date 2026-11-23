@@ -33,6 +33,8 @@ ROM 초기값을 교체해 Quartus Lite 전체 MAP·FIT·ASM·STA를 다시 실�
 
 ## 후속작업
 
+다음 단계의 ROM 요청·E8·수락 대조와 연속 표시 결과는 [961 검증 기록](nes-tail961-results.ko.md)에 있다.
+
 빈 캐시에서 907은 두 위상 모두 먼저 공개되지만 908 공개는 여전히 VBlank 39·40이다. 65816이 908의 마지막 OBJ 패킷을 읽기 시작하는 시각은 255·256선이고 SEAL 수락은 두 위상 모두 다음 화면 주사의 28선이다. 이때 tile·팔레트·OAM 등 6개 DMA에 1,792B가 남는다. 다음 검증은 마지막 OBJ의 ROM 준비, 첫 유효 E8, 65816 패킷 읽기 사이의 시간을 나란히 비교해 **907→908의 세 간격 중 한 VBlank를 줄일 수 있는지** 확인한다. 기존 캐시 13회와 911 공개 전 입력 17블록을 함께 대조한다. 이번 측정은 60초 실기 FPS에 대한 추정값을 제공하지 않는다.
 
 재현에는 기존 958/959 재생 자료를 사용한다. `tools/nes_blank960.py prepare TEMP` 후 두 위상의 `static`, `credit`, `closed`를 차례대로 실행한다. 각 단계에서 기존 FLOAT 래퍼로 `tools/check_nes_ready958.ps1`을 실행하고 `NES_959_RTL`에는 각각 `960static`, `960credit`, `960closed`, `NES_958_RTL`에는 `closed`, `credit`, `closed`를 지정한다. 기존 캐시는 `control`과 `static`에 `--cache warm`을 준다. `fit`은 952 보드 소스와 새 ROM으로 전체 Quartus를 실행한다. 오류 주입은 `tools/check_nes_blank960.py TEMP --phase N --guard before|after|identity`, 집계는 같은 스크립트에 `TEMP`만 주어 실행한다. 부팅·ARM 메뉴·복구 대조는 각각 `check_nes_longrun694_boot.py`, `check_nes_menu533.py`, `check_nes_transfer512_recovery.py`를 사용한다.
