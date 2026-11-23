@@ -159,12 +159,12 @@ def prepare(mode):
         path.write_text(code,newline='\n')
 
 
-def check_obj_recovery(temp,mode):
+def check_obj_recovery(temp,mode,*,work=work,prefix='947'):
     import analyze_nes_obj923 as validation
     import check_nes_chain935 as edge
     import nes_obj923
     arm=work(mode)
-    tag='947'+mode
+    tag=prefix+mode
     packets=temp/f'nes-tile821-obj-jointmirror-p1-{tag}-warm-pair'/'packets.jsonl'
     heads=[bytes.fromhex(json.loads(line)[2]) for line in packets.read_text().splitlines()]
     sizes=[int.from_bytes(h[14:16],'little') for h in heads
@@ -179,7 +179,7 @@ def check_obj_recovery(temp,mode):
     with patch.object(edge,'output',lambda _:ROM):
         result['edge']={f'{phase}-{case}':edge.run(temp,'bounded',phase,case,tag=tag)
                         for phase in (1,2) for case in ('head','stop')}
-    (arm/'safety947.json').write_text(json.dumps(result,indent=2)+'\n')
+    (arm/f'safety{prefix}.json').write_text(json.dumps(result,indent=2)+'\n')
 
 
 if __name__=='__main__':

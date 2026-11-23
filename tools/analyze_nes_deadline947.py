@@ -101,7 +101,7 @@ def inspect(folder, arm, calendar):
         final_ACK=timing['final_ACK'],capture_D2=capture,preDMA=last['preDMA'],stages=stages),quality
 
 
-def report(temp,modes):
+def report(temp,modes,*,prefix='947',work=work):
     cal=Calendar(temp/'nes-service509-rom03')
     result=dict(master_Hz=MASTER,physical=False,ROM=sha(ROM/'sink165.sfc'),cases={})
     for cache in ('warm','cold'):
@@ -121,7 +121,7 @@ def report(temp,modes):
                 capture911-=PERIOD
             reference['D2_minus_target911']=reference['capture_D2']-capture911
             for mode in modes:
-                folder=directory(temp,phase,'947'+mode,cache)
+                folder=directory(temp,phase,prefix+mode,cache)
                 row,actual=inspect(folder,work(mode),cal)
                 assert all(actual[k]==expected[k] for k in ('map','colors','RGB','sections','tiles'))
                 assert ordinary_packets(folder)==ordinary_packets(ref)
@@ -168,7 +168,7 @@ def report(temp,modes):
     result['selected']='946' if not any(g['eligible'] for g in result['gates'].values()) else None
     result['recovery']={}
     for mode in modes:
-        path=work(mode)/'safety947.json'
+        path=work(mode)/f'safety{prefix}.json'
         if path.exists():
             safety=read(path)
             assert safety['consumer']==result['ROM'] and safety['firmware']==result['cases']['warm1'][mode]['sha256']
