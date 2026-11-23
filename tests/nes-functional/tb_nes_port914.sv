@@ -195,7 +195,7 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
       probes++;observed=chunk?token:0;observed_flags=seen_end?2:host_idle?1:0;
       if(chunk)$display("DESC914 edge=%0d local_token=%0d kind=%0d bytes=%0d slot=%0d gen=%0d",sample,token,chunk_kind,chunk_length,bulk.chunk_slot,chunk_gen);
       if(observed!=requested||accepted!=seq||observed_flags!=flags)begin
-       if(wrong<8)$display("E8914 difference edge=%0d token=%0d/%0d flags=%0d/%0d count=%0d/%0d",sample,observed,requested,observed_flags,flags,accepted,seq);
+       if(wrong<8 || $test$plusargs("all_e8_differences"))$display("E8914 difference edge=%0d token=%0d/%0d flags=%0d/%0d count=%0d/%0d",sample,observed,requested,observed_flags,flags,accepted,seq);
        wrong++;
       end
      end

@@ -1,6 +1,6 @@
 # 프로젝트 현황
 
-목표는 sd2snes Cyclone IV 멀티 코어 확장이다. NES 성능은 MMC826의 모험도 4 무입력 실기를 기준으로 비교한다. 1–30초 17.52 FPS, 30–60초 16.13 FPS로 60초 완주와 메뉴 복귀를 확인했다. [MMC826 실기 결과](progress/pr-165.md#mmc826-실기-기준값) · [SMB3 장시간 실기](progress/pr-163.md) · [NES 인계](../cores/nes/HANDOFF.ko.md)
+목표는 sd2snes Cyclone IV 멀티 코어 확장이다. NES 실기 성능 기준은 모험도 4 무입력 MMC925의 오프닝 22.14 FPS·데모 22.23 FPS다. MMC927은 계측판이며, 952 보드의 개선은 재생·RTL 단계다. [실기 결과](nes-hardware925-results.ko.md) · [PR174 회고와 다음 실기 조건](progress/pr-174.md)
 
 시작 실패는 성능 집계에서 제외하고 자연 재발 시 두 실행의 로그 서명을 비교한다.
 
@@ -9,7 +9,7 @@
 | 코어 | 판정 | 근거·한계 |
 |---|---|---|
 | GB/GBC | 추가 성공·제품 공개 | G13C44/sd2snesHST0.9.0,[기준선](../cores/gbc/README.md)·[호환성](COMPATIBILITY.ko.md) |
-| NES | 개발 중·제품 미포함 | MMC813 SMB3 첫 레벨 5–55초 20.24 fps. MMC814 장시간 직접 종료·메뉴 복귀 확인 |
+| NES | 개발 중·제품 미포함 | MMC925 모험도 4 데모 실기 22.23 FPS. SMB3 장시간·사용자 종료 확인. |
 | PC Engine | 조사 대기 | 구현·실기 성공 없음 |
 
 대상은FXPAK Pro/Mk.III,EP4CE15F17C8,STM32F401RCT6,PSRAM IS66WVE4M16EBLL-70BLI 두개다. 다른보드/전체IO승인을뜻하지않는다.
