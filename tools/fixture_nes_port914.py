@@ -21,7 +21,7 @@ class FixtureLink(LeadingRecord):
         return super().accept(tx,t)
 
 
-def fixture(temp,phase,cold,g=912,tag='914wire',*,include_bg=False):
+def fixture(temp,phase,cold,g=912,tag='914wire',*,include_bg=False,earlier_origin=None,initial_polls=False):
     case=f'nes-tile821-obj-jointmirror-p{phase}-{tag}-{"cold" if cold else "warm"}-pair'
     run=temp/case
     name='e9wire914.jsonl' if g==912 else f'e9wire914-{g}.jsonl'
@@ -31,6 +31,8 @@ def fixture(temp,phase,cold,g=912,tag='914wire',*,include_bg=False):
     packet=json.loads((run/'banks904.json').read_bytes())[str(g)]['banks557']
     assert [e[0] for e in events]==[p['seal'] for p in packet]
     origin=int(events[0][0])-2048
+    if earlier_origin is not None:
+        origin=min(origin,earlier_origin)
     wire=[];sizes=[];length=0
     for end,body in events:
         data=bytes.fromhex(body);n=int.from_bytes(data[1:3],'little')
@@ -53,7 +55,7 @@ def fixture(temp,phase,cold,g=912,tag='914wire',*,include_bg=False):
     token_map={j['token']:i+1 for i,j in enumerate(jobs)}
     polls=[]
     for e in json.loads((run/'events.json').read_bytes()):
-        if e['generation']!=g or e.get('opcode')!='0xe8' or e['start']<events[0][0]:continue
+        if e['generation']!=g or e.get('opcode')!='0xe8' or (not initial_polls and e['start']<events[0][0]):continue
         reply=bytes.fromhex(e['reply'])
         assert reply[3] in (0,1,2) and reply[6] in (0,1)
         sample=round(host_after(e['start']+7.5*MASTER/2625000,3)-origin)

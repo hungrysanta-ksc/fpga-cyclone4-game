@@ -8,7 +8,8 @@ DEST=0x2000
 STORED=5056
 
 
-def build(base,out,body,labels,straight=False,*,shared_byte=False,compact_mvn=False,minimum=3):
+def build(base,out,body,labels,straight=False,*,shared_byte=False,compact_mvn=False,minimum=3,short_pairs=False):
+    assert not short_pairs or (minimum==2 and compact_mvn)
     stored=bytearray(body)
     if straight:
         tail=labels['suffix']-0x7e0000
@@ -40,7 +41,9 @@ def build(base,out,body,labels,straight=False,*,shared_byte=False,compact_mvn=Fa
         if not compact_mvn:c.emit(0xe2,0x20)
         c.emit(0x64,2)
         c.label('pass');imm(0xa2,first+prefix);imm(0xa0,DEST+prefix);c.emit(0x64,3)
-        c.label('token');imm(0xc0,DEST+len(body));c.branch(0xf0,'end')
+        c.label('token');imm(0xc0,DEST+len(body))
+        if short_pairs:c.emit(0xd0,3);c.jump('end')
+        else:c.branch(0xf0,'end')
         # The sentinel in bit 7 survives exactly seven subsequent shifts.
         c.emit(0x46,3);c.branch(0xd0,'flag');call(c,'read')
         c.emit(0x38,0x6a,0x85,3)
@@ -51,10 +54,23 @@ def build(base,out,body,labels,straight=False,*,shared_byte=False,compact_mvn=Fa
         else:
             c.emit(0x24,2);c.branch(0x30,'literal_check')
             c.absolute(0x99,0);c.branch(0x80,'literal_done')
-            c.label('literal_check');c.absolute(0xd9,0);c.branch(0xd0,'bad')
+            c.label('literal_check');c.absolute(0xd9,0)
+            if short_pairs:c.emit(0xf0,3);c.jump('bad')
+            else:c.branch(0xd0,'bad')
             c.label('literal_done');c.emit(0xc8);c.branch(0x80,'token')
-        c.label('match');call(c,'read');c.emit(0x85,4);call(c,'read')
-        c.emit(0x48,0x4a,0x4a,0x4a,0x4a,0x85,5,0x68,0x29,15,0x18,0x69,minimum,0x85,6,0x64,7)
+        c.label('match');call(c,'read')
+        if not short_pairs:
+            c.emit(0x85,4);call(c,'read')
+        c.emit(0x48,0x4a,0x4a,0x4a,0x4a,0x85,5,0x68,0x29,15)
+        if short_pairs:
+            c.branch(0xf0,'short_pair')
+            c.emit(0x18,0x69,minimum,0x85,6);call(c,'read');c.emit(0x85,4)
+            c.branch(0x80,'match_length')
+            c.label('short_pair');c.emit(0xa5,5,0x85,4,0x64,5,0xa9,2,0x85,6)
+            c.label('match_length')
+        else:
+            c.emit(0x18,0x69,minimum,0x85,6)
+        c.emit(0x64,7)
         c.emit(0xc2,0x20,0x98,0x18,0x65,6);imm(0xc9,DEST+len(body)+1);c.branch(0xb0,'bad')
         c.emit(0x98,0x18,0xe5,4);imm(0xc9,DEST);c.branch(0x90,'bad')
         if shared_byte:
@@ -74,7 +90,7 @@ def build(base,out,body,labels,straight=False,*,shared_byte=False,compact_mvn=Fa
             c.label('verify');c.absolute(0xbd,0);c.label('compare');c.absolute(0xd9,0);c.branch(0xd0,'bad')
             c.emit(0xe8,0xc8,0xc6,6);c.branch(0xd0,'verify')
             c.label('match_done');c.emit(0xfa)
-            if compact_mvn:c.branch(0x80,'token')
+            if compact_mvn and not short_pairs:c.branch(0x80,'token')
             else:c.jump('token')
         c.label('end');imm(0xe0,limit);c.branch(0xd0,'bad')
         if compact_mvn:
@@ -100,10 +116,16 @@ def build(base,out,body,labels,straight=False,*,shared_byte=False,compact_mvn=Fa
     for prefix in ((0,) if compact_mvn else range(1024,-1,-32)):
         stub,_=loader(prefix,0x8100,0x9000)
         first=0x8000+len(stub)
-        stream=encode(bytes(stored),prefix) if minimum==3 else encode(bytes(stored),prefix,minimum)
+        if short_pairs:
+            stream=encode(bytes(stored),prefix,minimum,short_pairs=True)
+        else:
+            stream=encode(bytes(stored),prefix) if minimum==3 else encode(bytes(stored),prefix,minimum)
         if len(stub)+len(stream)<=STORED:break
     else:raise ValueError('physical ROM capacity')
-    restored=decode(stream,prefix,len(body)) if minimum==3 else decode(stream,prefix,len(body),minimum)
+    if short_pairs:
+        restored=decode(stream,prefix,len(body),minimum,short_pairs=True)
+    else:
+        restored=decode(stream,prefix,len(body)) if minimum==3 else decode(stream,prefix,len(body),minimum)
     assert restored==stored
     limit=first+len(stream)
     code,boot=loader(prefix,first,limit)

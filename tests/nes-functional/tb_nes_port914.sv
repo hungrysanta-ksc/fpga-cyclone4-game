@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 `timescale 1ns/1ps
-module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15:0] G=16'd912);
+module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15:0] G=16'd912, parameter WINDOW957=0);
  reg clk=0,host=0,mem=0,reset=0,stop=0;
  always #23.28 clk=~clk;
  always #5.95 host=~host;
@@ -11,8 +11,8 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
  reg [16:0] cap_addr;reg [7:0] cap_data;
  wire cap_ready,cap_sample_ready,bulk_ok,bulk_permit,ev,er;
  wire [15:0] eg;wire [1:0] out_kind;wire [5:0] out_length;
- wire enabled_plan=REPLAY?bulk_permit:permit;
- wire output_ready=REPLAY?bulk_ok:out_ready;
+ wire enabled_plan=(REPLAY||WINDOW957)?bulk_permit:permit;
+ wire output_ready=(REPLAY||WINDOW957)?bulk_ok:out_ready;
  wire wr,pv,pr,done,shortform,hint,hint_ready,closed,batch_fault,host_idle;
  wire [12:0] tag,hint_tag;wire [7:0] mask,altmask,hint_mask;
  wire [1:0] kind;wire [15:0] gen;wire [9:0] slot;
@@ -35,6 +35,10 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
  wire ce1,ce2;
  wire core_req=core_want&&core_ok;
  nes_source_tile192 #(.EXTERNAL_PLAN(1)) source(.clk(clk),.reset(reset),.stop(stop),
+`ifdef NES_MAIL964
+  .page963(trace_run.page_valid && trace_run.page_payload[25:10]==G),
+  .page_base963(trace_run.page_payload[9:0]),
+`endif
   .frame_owned(1'b1),.geometry_valid(1'b1),.frame_generation(G),
   .source_ready(1'b1),.source_is_rom(1'b1),.source_writing(1'b0),.captured_epoch(32'd1),.live_epoch(32'd1),
   .plan_short(shortform),.plan_valid(pv&&enabled_plan),.plan_ready(pr),.plan_kind(kind),
@@ -64,6 +68,8 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
   .rom_data(lo),.bg_word(hi),.psram_address(ram_addr),.psram_1ce(ce1),.psram_2ce(ce2),.psram_data(pins));
  integer fills=0,hits=0,bytes_out=0,done_count=0,core_reads=0;
  reg expected_error=0,full_bg=0;reg [7:0] bg_mask=0;
+ reg reverse_rows957=0;
+ wire [2:0] expected_row=(WINDOW957 && reverse_rows957)?~idx[3:1]:idx[3:1];
  wire [12:0] bg_tag=(!idx[0]&&bg_mask[idx[3:1]])?13'h1a31+idx[3:1]:13'h163;
  always @(posedge clk)if(!reset)begin
   if(fault||(batch_fault&&!expected_error&&!stop))$fatal(1,"unexpected fault");
@@ -78,7 +84,7 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
   if(source.ahead.hit_reply&&source.arb_response)hits++;
   if(done)done_count++;
   if(tv&&output_ready)begin
-   if(tdata!==(REPLAY?expected_bytes[((RETAIN951 && out_kind==1)?8192:0)+32*dest+idx]:idx>=16?8'h00:content(full_bg?bg_tag:13'h110+dest,idx[3:1],idx[0])))$fatal(1,"bad tile %d index %d data %x",dest,idx,tdata);
+   if(tdata!==(REPLAY?expected_bytes[((RETAIN951 && out_kind==1)?8192:0)+32*dest+idx]:idx>=16?8'h00:content(full_bg?bg_tag:13'h110+dest,expected_row,idx[0])))$fatal(1,"bad tile %d index %d data %x",dest,idx,tdata);
    bytes_out++;
   end
  end
@@ -111,7 +117,7 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
   @(negedge clk);stop=1;repeat(12)@(negedge clk);stop=0;
   repeat(150)@(negedge clk);expected_error=0;
  endtask
- initial if(!REPLAY)begin
+ initial if(!REPLAY&&!WINDOW957)begin
   #2;reset=1;repeat(10)@(negedge clk);reset=0;repeat(150)@(negedge clk);
   expected_error=1;batch(G,1);repeat(40)@(negedge clk);
   if(!batch_fault||fills||bytes_out)$fatal(1,"CRC admission");recover();
@@ -131,7 +137,7 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
   wait(done_count==9);@(negedge clk);full(8'h5a);wait(done_count==10);
   $display("PASS914 checked repeated generation after STOP, hits=%0d speculative grants=%0d core=%0d",hits,fills,core_reads);$finish;
  end
- if(REPLAY)begin:trace_run
+ if(REPLAY||WINDOW957)begin:trace_run
   reg consume=0;wire chunk,chunk_kind,bulk_fault,consume_fault,end_sealed;wire [31:0] token;
   reg seen_end=0,all_polls=0;integer accepted=0;
   wire [11:0] chunk_length;wire [15:0] chunk_gen;
@@ -142,6 +148,55 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
    .chunk_length(chunk_length),.chunk_generation(chunk_gen),.chunk_token(token),.consume(consume),.consume_token(token),
    .consume_error(consume_fault),.fault(bulk_fault),.address(24'd0),.read_n(1'b1),.write_n(1'b1));
   integer tick=-1;reg counting=0;
+`ifdef NES_MAIL964
+  // Replay EB on serial pins. Other plan packets enter through the checked
+  // RAM/seal path below. Deselect conservatively at ARM callback completion.
+  reg ss964=1,sck964=0,mosi964=0;
+  wire source_valid,page_valid,spi_fault964;
+  wire [25:0] source_payload,page_payload;
+  nes_plan_spi200 hint_endpoint(.clk(host),.enable(1'b1),.reset(reset),.stop(stop),.source_fault(fault),
+   .SPI_SS(ss964),.SPI_SCK(sck964),.SPI_MOSI(mosi964),.page963(source_valid),.payload963(source_payload),
+   .plan_idle(host_idle),.plan_ready(wr),.retire_done(1'b0),.end_sealed(1'b0),.chunk_ready(chunk),.fault(spi_fault964));
+  nes_native_mailbox206 #(.WIDTH(26),.CONSUMER_CAPTURE(0)) hint_mail(.src_clk(host),.dst_clk(clk),
+   .reset(reset||stop||fault),.src_valid(source_valid),.src_data(source_payload),.dst_valid(page_valid),
+   .dst_ready(1'b1),.dst_data(page_payload));
+  initial begin:serial_hint
+   integer at;reg [55:0] wire_bytes964;
+   if($value$plusargs("page_at=%d",at))begin
+    if(!$value$plusargs("page_bytes=%h",wire_bytes964))$fatal;
+    wait(counting);
+    while(tick<at-460)@(negedge clk);
+    ss964=0;
+    for(int i=55;i>=0;i--)begin mosi964=wire_bytes964[i];#95;sck964=1;#190;sck964=0;#95;end
+    while(tick<at)@(negedge clk);
+    ss964=1;
+    repeat(12)begin @(posedge clk);
+     if(page_valid)begin
+      if(page_payload!=={G,wire_bytes964[20:16],wire_bytes964[31:27]} || spi_fault964)$fatal(1,"wrong EB payload");
+      $display("PAGE964 accepted at=%0d base=%0d",tick,page_payload[9:0]*8);
+      disable serial_hint;
+     end
+    end
+    $fatal(1,"missing EB at=%d",at);
+   end
+  end
+`endif
+  reg writable958=0;
+  integer handed965=0;
+  always @(posedge host) if(counting && $test$plusargs("timing958"))begin
+   if(transport.pending && transport.box_ready)handed965<=accepted;
+   if(host_idle && !writable958)$display("WRITABLE958 packets=%0d edge=%0d",accepted,tick);
+   writable958<=host_idle;
+  end
+  always @(posedge transport.box_ready)if(counting && $test$plusargs("timing958"))
+   $display("BOX965 released=%0d edge=%0d",handed965,tick);
+  always @(posedge seen_end)if(counting && $test$plusargs("timing958"))
+   $display("END965 packets=%0d edge=%0d",accepted,tick);
+  always @(posedge clk) if(counting && $test$plusargs("timing958"))begin
+   if(pv && pr && enabled_plan)
+    $display("PLAN958 kind=%0d slot=%0d tag=%0d at=%0d",kind,slot,tag,tick);
+   if(done)$display("DONE958 at=%0d",tick);
+  end
   always @(posedge clk)if(counting)tick++;
   always @(posedge host)begin
    if(end_sealed)seen_end<=1;
@@ -149,6 +204,16 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
   end
   always @(posedge clk)if(counting&&source.ahead.take)
    $display("ROM914 edge=%0d spec=%0d addr=%0d",tick,source.ahead.spec,source.shared_address[16:0]);
+  reg waiting961=0;
+  reg [16:0] address961;
+  always @(posedge clk) if(counting && $test$plusargs("tail961"))begin
+   if(source.ahead.foreground && (!waiting961 || address961!=source.ahead.address[16:0]))
+    $display("REQ961 at=%0d addr=%0d",tick,source.ahead.address[16:0]);
+   if(source.ahead.reply && !source.ahead.spec_owner)
+    $display("REPLY961 at=%0d addr=%0d",tick,source.ahead.reply_address[16:0]);
+   waiting961<=source.ahead.foreground && !source.ahead.take;
+   address961<=source.ahead.address[16:0];
+  end
 `ifdef NES_COMPANION952
   always @(posedge clk)begin
    if(counting && source.ahead.aux952 && source.ahead.take)
@@ -169,7 +234,7 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
    while(tick<byte_edge)@(negedge host);
    if(tick!=byte_edge)$fatal(1,"missed E9 edge %0d at %0d",byte_edge,tick);
   endtask
-  initial begin
+  initial if(REPLAY)begin
    if(!$value$plusargs("trace=%s",dir))$fatal;
    $readmemh({dir,"/chr914.hex"},chr);$readmemh({dir,"/expected914.hex"},expected_bytes);
    $readmemh({dir,"/wire914.hex"},wire_bytes);
@@ -221,7 +286,13 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
       count=plans;crc='1;size=0;
       if(batch_no==target_batch)begin
        read_admission_edge();
-       if(host_idle!==1'b1 || wr!==1'b1 || seen_end || accepted!=batch_no)$fatal(1,"E9 snapshot not writable");
+        if(host_idle!==1'b1 || wr!==1'b1 || seen_end || accepted!=batch_no)begin
+         if($test$plusargs("multiple965") && !host_idle && !seen_end && accepted==batch_no)begin
+          $display("EARLY965 batch=%0d snapshot=%0d",batch_no,tick);
+          wait(host_idle);$display("OPEN965 batch=%0d edge=%0d",batch_no,tick);
+         end
+         $fatal(1,"E9 snapshot not writable");
+        end
        for(int k=0;k<sz;k++)begin
         read_admission_edge();
         if(wr!==1'b1)$fatal(1,"lost E9 credit at byte %0d",k);
@@ -240,6 +311,10 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
        if(transport.pending!==1'b1 || batch_fault!==1'b0 || accepted!=batch_no+1)$fatal(1,"E9 seal rejected");
        $display("ACCEPT954 batch=%0d edge=%0d bytes=%0d plans=%0d crc=%04h",batch_no,tick,size,count,crc);
        if($test$plusargs("prefix954"))begin $display("PASS954 prefix");$finish;end
+        if($test$plusargs("multiple965"))begin
+         if($fscanf(admission_file,"%d",target_batch)!=1)target_batch=-1;
+         else if(target_batch<=batch_no)$fatal(1,"unordered E9 admission");
+        end
       end
       batch_no++;
      end
@@ -265,5 +340,5 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
    join
   end
  end
- initial begin if(REPLAY)repeat(RETAIN951?6000000:2500000)@(posedge clk);else #2000000;$fatal(1,"timeout");end
+ initial begin if(REPLAY||WINDOW957)repeat(RETAIN951?6000000:2500000)@(posedge clk);else #2000000;$fatal(1,"timeout");end
 endmodule
