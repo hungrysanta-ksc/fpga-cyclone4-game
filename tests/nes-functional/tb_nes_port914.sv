@@ -163,6 +163,12 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
   integer fd,a,b,c,prev,gr,bs,rs,deadline,sz,plans,check,off=0,j=0,ck,cs,prod,pop,first;
   integer totals,expected_jobs,expected_total;
   integer polls,sample,flags,seq,requested,observed,observed_flags,wrong=0,probes=0;
+  integer admission_file, target_batch=-1, batch_no=0, byte_edge;
+  task read_admission_edge;
+   if($fscanf(admission_file,"%d",byte_edge)!=1)$fatal(1,"missing E9 edge");
+   while(tick<byte_edge)@(negedge host);
+   if(tick!=byte_edge)$fatal(1,"missed E9 edge %0d at %0d",byte_edge,tick);
+  endtask
   initial begin
    if(!$value$plusargs("trace=%s",dir))$fatal;
    $readmemh({dir,"/chr914.hex"},chr);$readmemh({dir,"/expected914.hex"},expected_bytes);
@@ -171,6 +177,10 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
    bs=$fopen({dir,"/batch914.txt"},"r");rs=$fopen({dir,"/tokens914.txt"},"r");
    totals=$fopen({dir,"/sizes914.txt"},"r");
    polls=$fopen({dir,"/polls914.txt"},"r");
+   if($test$plusargs("admission954"))begin
+    admission_file=$fopen({dir,"/admission954.txt"},"r");
+    if(!admission_file || $fscanf(admission_file,"%d",target_batch)!=1)$fatal;
+   end
    if($fscanf(totals,"%d %d",expected_jobs,expected_total)!=2)$fatal;
    if(!(fd&&gr&&bs&&rs))$fatal;
    #2;reset=1;qualified=0;repeat(8)@(negedge clk);reset=0;
@@ -208,13 +218,30 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
     end
     begin
      while($fscanf(bs,"%d %d %d %d",deadline,sz,plans,check)==4)begin
-      while(tick<deadline-2*sz)@(negedge clk);
       count=plans;crc='1;size=0;
-      for(int k=0;k<sz;k++)send_byte(wire_bytes[off+k]);
+      if(batch_no==target_batch)begin
+       read_admission_edge();
+       if(host_idle!==1'b1 || wr!==1'b1 || seen_end || accepted!=batch_no)$fatal(1,"E9 snapshot not writable");
+       for(int k=0;k<sz;k++)begin
+        read_admission_edge();
+        if(wr!==1'b1)$fatal(1,"lost E9 credit at byte %0d",k);
+        byte_in=wire_bytes[off+k];write_en=1;size++;crc=update_crc(crc,byte_in);
+        @(negedge host);write_en=0;
+       end
+      end else begin
+       while(tick<deadline-2*sz)@(negedge clk);
+       for(int k=0;k<sz;k++)send_byte(wire_bytes[off+k]);
+      end
       off+=sz;@(negedge host);write_en=0;if(crc!==check[15:0])$fatal(1,"wire CRC");
       while(tick<deadline)@(negedge host);
       if(tick>deadline+1)$fatal(1,"E9 bank unavailable at reference seal");
       seal=1;@(negedge host);seal=0;
+      if(batch_no==target_batch)begin
+       if(transport.pending!==1'b1 || batch_fault!==1'b0 || accepted!=batch_no+1)$fatal(1,"E9 seal rejected");
+       $display("ACCEPT954 batch=%0d edge=%0d bytes=%0d plans=%0d crc=%04h",batch_no,tick,size,count,crc);
+       if($test$plusargs("prefix954"))begin $display("PASS954 prefix");$finish;end
+      end
+      batch_no++;
      end
     end
     begin
