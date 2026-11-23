@@ -35,6 +35,10 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
  wire ce1,ce2;
  wire core_req=core_want&&core_ok;
  nes_source_tile192 #(.EXTERNAL_PLAN(1)) source(.clk(clk),.reset(reset),.stop(stop),
+`ifdef NES_MAIL964
+  .page963(trace_run.page_valid && trace_run.page_payload[25:10]==G),
+  .page_base963(trace_run.page_payload[9:0]),
+`endif
   .frame_owned(1'b1),.geometry_valid(1'b1),.frame_generation(G),
   .source_ready(1'b1),.source_is_rom(1'b1),.source_writing(1'b0),.captured_epoch(32'd1),.live_epoch(32'd1),
   .plan_short(shortform),.plan_valid(pv&&enabled_plan),.plan_ready(pr),.plan_kind(kind),
@@ -144,6 +148,39 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
    .chunk_length(chunk_length),.chunk_generation(chunk_gen),.chunk_token(token),.consume(consume),.consume_token(token),
    .consume_error(consume_fault),.fault(bulk_fault),.address(24'd0),.read_n(1'b1),.write_n(1'b1));
   integer tick=-1;reg counting=0;
+`ifdef NES_MAIL964
+  // Replay EB on serial pins. Other plan packets enter through the checked
+  // RAM/seal path below. Deselect conservatively at ARM callback completion.
+  reg ss964=1,sck964=0,mosi964=0;
+  wire source_valid,page_valid,spi_fault964;
+  wire [25:0] source_payload,page_payload;
+  nes_plan_spi200 hint_endpoint(.clk(host),.enable(1'b1),.reset(reset),.stop(stop),.source_fault(fault),
+   .SPI_SS(ss964),.SPI_SCK(sck964),.SPI_MOSI(mosi964),.page963(source_valid),.payload963(source_payload),
+   .plan_idle(host_idle),.plan_ready(wr),.retire_done(1'b0),.end_sealed(1'b0),.chunk_ready(chunk),.fault(spi_fault964));
+  nes_native_mailbox206 #(.WIDTH(26),.CONSUMER_CAPTURE(0)) hint_mail(.src_clk(host),.dst_clk(clk),
+   .reset(reset||stop||fault),.src_valid(source_valid),.src_data(source_payload),.dst_valid(page_valid),
+   .dst_ready(1'b1),.dst_data(page_payload));
+  initial begin:serial_hint
+   integer at;reg [55:0] wire_bytes964;
+   if($value$plusargs("page_at=%d",at))begin
+    if(!$value$plusargs("page_bytes=%h",wire_bytes964))$fatal;
+    wait(counting);
+    while(tick<at-460)@(negedge clk);
+    ss964=0;
+    for(int i=55;i>=0;i--)begin mosi964=wire_bytes964[i];#95;sck964=1;#190;sck964=0;#95;end
+    while(tick<at)@(negedge clk);
+    ss964=1;
+    repeat(12)begin @(posedge clk);
+     if(page_valid)begin
+      if(page_payload!=={G,wire_bytes964[20:16],wire_bytes964[31:27]} || spi_fault964)$fatal(1,"wrong EB payload");
+      $display("PAGE964 accepted at=%0d base=%0d",tick,page_payload[9:0]*8);
+      disable serial_hint;
+     end
+    end
+    $fatal(1,"missing EB at=%d",at);
+   end
+  end
+`endif
   reg writable958=0;
   always @(posedge host) if(counting && $test$plusargs("timing958"))begin
    if(host_idle && !writable958)$display("WRITABLE958 packets=%0d edge=%0d",accepted,tick);

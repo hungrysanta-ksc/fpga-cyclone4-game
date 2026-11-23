@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 `timescale 1ns/1ps
-module tb_nes_page963;
+module tb_nes_page963 #(parameter CONSUMER_CAPTURE=1);
  reg host=0,clk=0,reset=1,stop=0,ss=1,sck=0,mosi=0;
  always #6 host=~host;
  always #23 clk=~clk;
@@ -10,7 +10,7 @@ module tb_nes_page963;
    .SPI_SS(ss),.SPI_SCK(sck),.SPI_MOSI(mosi),.page963(source),.payload963(payload),
    .plan_idle(1'b1),.plan_ready(1'b1),.plan_write(write_plan),.plan_seal(seal),.fault(fault),
    .retire(retire),.retire_done(1'b0),.end_sealed(1'b0),.chunk_ready(1'b0));
- nes_native_mailbox206 #(.WIDTH(26),.CONSUMER_CAPTURE(1)) mail(
+ nes_native_mailbox206 #(.WIDTH(26),.CONSUMER_CAPTURE(CONSUMER_CAPTURE)) mail(
    .src_clk(host),.dst_clk(clk),.reset(reset||stop),.src_valid(source),.src_data(payload),
    .dst_valid(valid),.dst_ready(1'b1),.dst_data(received));
  wire admitted=valid&&received[25:10]==16'd909;

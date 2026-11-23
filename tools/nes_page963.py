@@ -97,7 +97,7 @@ def page_reader(parent,enabled,neighbor):
     return Pages
 
 
-def simulate(temp,phase,cache,enabled,work,neighbor):
+def simulate(temp,phase,cache,enabled,work,neighbor,*,feedback=None,tag=None):
     init=joint.Runtime.__init__
     def charge(cpu,*args):
         init(cpu,*args)
@@ -106,8 +106,11 @@ def simulate(temp,phase,cache,enabled,work,neighbor):
         ea=next(e for e in controls if e.get('opcode')=='0xea' and e['bytes']==7)
         cpu.driver_extra[0xeb]=ea['clock']-ea['start']-7*8*joint.MASTER/2625000
     with patch.object(joint.Runtime,'__init__',charge),patch.object(nes_chr951,'ROM',PACKED),complete_row_set():
-        replay(temp,phase,cache,'banked',wrap=lambda b:page_reader(supply(b,'checked',redirect=next_pair),enabled,neighbor),
-               tag='963b'+work.name+('both' if neighbor else 'on' if enabled else 'off'),work_arm=work,edition=955)
+        def wrap(base):
+            reader=page_reader(supply(base,'checked',redirect=next_pair),enabled,neighbor)
+            return feedback(reader) if feedback else reader
+        replay(temp,phase,cache,'banked',wrap=wrap,
+               tag=tag or '963b'+work.name+('both' if neighbor else 'on' if enabled else 'off'),work_arm=work,edition=955)
 
 
 if __name__=='__main__':

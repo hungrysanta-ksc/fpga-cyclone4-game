@@ -16,6 +16,8 @@ BASE = '952checkedrows'
 
 def evidence(folder, generation, include_first_valid=False, *, log_name='port952-checked.log'):
     trace = folder / f'gen{generation}'
+    if generation==912 and not (trace/log_name).is_file():
+        trace=folder
     log = logtext(trace / log_name)
     assert 'PASS914 trace' in log
     origin = int((trace / 'origin914.txt').read_text())

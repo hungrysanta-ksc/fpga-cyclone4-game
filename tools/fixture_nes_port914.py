@@ -21,7 +21,7 @@ class FixtureLink(LeadingRecord):
         return super().accept(tx,t)
 
 
-def fixture(temp,phase,cold,g=912,tag='914wire',*,include_bg=False):
+def fixture(temp,phase,cold,g=912,tag='914wire',*,include_bg=False,earlier_origin=None):
     case=f'nes-tile821-obj-jointmirror-p{phase}-{tag}-{"cold" if cold else "warm"}-pair'
     run=temp/case
     name='e9wire914.jsonl' if g==912 else f'e9wire914-{g}.jsonl'
@@ -31,6 +31,8 @@ def fixture(temp,phase,cold,g=912,tag='914wire',*,include_bg=False):
     packet=json.loads((run/'banks904.json').read_bytes())[str(g)]['banks557']
     assert [e[0] for e in events]==[p['seal'] for p in packet]
     origin=int(events[0][0])-2048
+    if earlier_origin is not None:
+        origin=min(origin,earlier_origin)
     wire=[];sizes=[];length=0
     for end,body in events:
         data=bytes.fromhex(body);n=int.from_bytes(data[1:3],'little')
