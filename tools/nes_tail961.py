@@ -24,14 +24,15 @@ def next_pair(tag,mask):
     return None
 
 
-def run(temp,phase,cache, *, correction=None, recheck=False):
+def run(temp,phase,cache, *, correction=None, recheck=False, output_tag=None,
+        feedback_generations=(908,909)):
     redirected=correction!='960closed'
     folder=nes_ready958.directory(temp,phase,correction,'cold') if correction else None
     samples={}
     used=[]
     if correction:
         assert cache=='cold'
-        for gen in (908,909):
+        for gen in feedback_generations:
             samples.update(evidence(folder,gen,log_name='tail961.log'))
     tag='961pair' if not correction else ('961wirepair' if redirected else '961wirebase')
     if recheck:
@@ -39,6 +40,7 @@ def run(temp,phase,cache, *, correction=None, recheck=False):
         for gen in (908,909):
             samples.update(evidence(previous,gen,log_name='tail961.log'))
         tag+='2'
+    tag=output_tag or tag
     def wrapped(base,variant):
         parent=supply(base,variant,redirect=next_pair if redirected else None)
         if not samples:

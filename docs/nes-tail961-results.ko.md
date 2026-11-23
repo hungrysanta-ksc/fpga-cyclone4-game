@@ -30,6 +30,8 @@ Quartus Lite 전체 MAP·FIT·ASM·STA에서 960→961은 15,247→15,201 LE, 96
 
 ## 후속작업
 
+909의 주소·행 확정 시각과 8타일 묶음에 대한 검증은 [962 결과](nes-origin962-results.ko.md)에 있다.
+
 905–908에서 수락된 E9에는 인접 태그 3072–3075가 한 번도 없었다. 네 태그는 두 위상 모두 909의 첫 묶음에서 처음 등장했다. 다음에는 909의 입력 복원과 ARM planner에서 3074의 주소·행 마스크가 처음 확정되는 시각을 직전 ROM 허가와 비교한다. 먼저 확정된다면 앞당긴 실제 발행으로 기존 타일 공급과의 경쟁까지 재생한다. 채택 조건은 908 조기 공개를 유지하면서 두 위상에서 여섯 표시 간격과 912 최종 ACK가 함께 줄어드는 것이다.
 
 재현 순서는 `tools/nes_tail961.py`의 `board`·`fit`, 두 위상의 `run`·`fixtures`, 단일 FLOAT 래퍼에서 `tools/check_nes_tail961.ps1`의 control·pair, 그리고 `wire`·`fixtures`와 동일 RTL 재생이다. 960 대조군의 두 번째 피드백은 `wire --recheck`와 `NES_WIRE961=2`를 사용한다. 오류 주입은 두 위상 각각 `guards`로 실행한다. 수치와 보고서 해시는 [검증 결과](../analysis/tail961-results.json)에 있다.
