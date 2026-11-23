@@ -144,6 +144,16 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
    .chunk_length(chunk_length),.chunk_generation(chunk_gen),.chunk_token(token),.consume(consume),.consume_token(token),
    .consume_error(consume_fault),.fault(bulk_fault),.address(24'd0),.read_n(1'b1),.write_n(1'b1));
   integer tick=-1;reg counting=0;
+  reg writable958=0;
+  always @(posedge host) if(counting && $test$plusargs("timing958"))begin
+   if(host_idle && !writable958)$display("WRITABLE958 packets=%0d edge=%0d",accepted,tick);
+   writable958<=host_idle;
+  end
+  always @(posedge clk) if(counting && $test$plusargs("timing958"))begin
+   if(pv && pr && enabled_plan)
+    $display("PLAN958 kind=%0d slot=%0d tag=%0d at=%0d",kind,slot,tag,tick);
+   if(done)$display("DONE958 at=%0d",tick);
+  end
   always @(posedge clk)if(counting)tick++;
   always @(posedge host)begin
    if(end_sealed)seen_end<=1;

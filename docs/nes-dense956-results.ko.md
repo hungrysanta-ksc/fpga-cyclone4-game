@@ -59,6 +59,8 @@ Questa에서 952 보드의 E9 수신기, CHR 캐시, ROM 중재기, 물리 PSRAM
 
 ## 후속작업
 
+958에서 ARM의 실제 발행과 952 RTL의 쓰기 허가를 대조했다. OBJ 공급을 앞당긴 재생에서 처음 놓친 표시는 65816이 이미 열린 VBlank를 건너뛴 지점이었다. [958의 측정과 다음 시험](nes-ready958-results.ko.md)
+
 다음에는 실제 ARM이 해당 OBJ 행의 CHR 주소를 처음 확정한 때와 E9를 보낼 수 있는 첫 SPI 슬롯을 이전 ROM 허가 구간에 맞춘다. 그때 행이 확정돼 있다면 그 행만 선행 공급하고, 기존 BG·OBJ의 허가를 밀지 않는지 확인한다. 후보는 두 ARM 시작 위상에서 마지막 OBJ 준비·화면 공개·최종 ACK가 함께 앞당겨지는지 비교한다. 실기에서 소유자 판별이 필요하면 가장 긴 공백의 앞뒤 요청과 허가만 기록한다. [설치 및 회수할 파일](nes-mmc956-trial.ko.md)
 
 재현 시 `prepare_nes_dense956.py`, `build_nes_trial577.ps1 -SourceRoot ../probes/nes-trial956/link` 순으로 실행한다. 최종 링크의 공통 검사는 `check_nes_supply905_arm.run`에 MMC956, 짧은 헤더, `nes_order938.empty_next_offer`, marker 값 (4,8,16,24)를 전달한다. `package_nes_dense956.py MMC955_BIN`은 두 슬롯 검증과 SHA 검사를 통과한 파일만 패키징한다.
