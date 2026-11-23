@@ -27,7 +27,7 @@ def capture(folder):
     return record
 
 
-def run(temp,phase,cache,record,*,tail=None):
+def run(temp,phase,cache,record,*,tail=None,work=ARM,edition=955,tag=None):
     polls={(int(g),at):(flag,n,bytes.fromhex(data) if data else bytes(12))
            for g,v in record.items() for at,flag,n,data in v['polls']}
     grants={int(g):v['grants'] for g,v in record.items()}
@@ -78,8 +78,8 @@ def run(temp,phase,cache,record,*,tail=None):
                 assert len(queue)==n
                 queue.append(dict(seal=t,sample=self.e9_snapshot557,count=tx[3],first=self.plan_at))
         return Wire
-    tag='965measured' if tail is None else '965tail'
-    simulate(temp,phase,cache,True,ARM,True,feedback=wrap,tag=tag)
+    tag=tag or ('965measured' if tail is None else '965tail')
+    simulate(temp,phase,cache,True,work,True,feedback=wrap,tag=tag,edition=edition)
     assert used==polls.keys() and len(sealed)==sum(map(len,grants.values()))
     if tail is not None:
         folder=directory(temp,phase,tag,cache)

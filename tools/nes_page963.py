@@ -97,7 +97,7 @@ def page_reader(parent,enabled,neighbor):
     return Pages
 
 
-def simulate(temp,phase,cache,enabled,work,neighbor,*,feedback=None,tag=None):
+def simulate(temp,phase,cache,enabled,work,neighbor,*,feedback=None,tag=None,edition=955):
     init=joint.Runtime.__init__
     def charge(cpu,*args):
         init(cpu,*args)
@@ -110,7 +110,7 @@ def simulate(temp,phase,cache,enabled,work,neighbor,*,feedback=None,tag=None):
             reader=page_reader(supply(base,'checked',redirect=next_pair),enabled,neighbor)
             return feedback(reader) if feedback else reader
         replay(temp,phase,cache,'banked',wrap=wrap,
-               tag=tag or '963b'+work.name+('both' if neighbor else 'on' if enabled else 'off'),work_arm=work,edition=955)
+               tag=tag or '963b'+work.name+('both' if neighbor else 'on' if enabled else 'off'),work_arm=work,edition=edition)
 
 
 if __name__=='__main__':

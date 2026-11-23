@@ -36,6 +36,12 @@ MMC955를 실기 기준으로 두고 964의 동일 ARM·65816·FPGA에서 세대
 
 [측정값 및 원본 보고서 해시](../analysis/credit965-results.json) · [위상별 E8 응답과 E9 수락 기록](../analysis/credit965-wire.json)
 
+동일한 ARM·65816과 964 보드로 구성한 [MMC966 실기판 설치 방법](nes-mmc966-trial.ko.md)과 [최종 링크의 검증값](../analysis/trial966-package.json)을 참고한다.
+
+MMC966 재생에서 여섯 간격 중 세 번의 VBlank를 사용한 것은 908→909 한 곳이다. 909의 마지막 OBJ 수락부터 SEAL 수락까지 3.05–3.13ms, SEAL 수락부터 업로드 진입까지 1.47–1.48ms였다. 업로드 진입은 위상별 112·105선이어서 다음 225선의 DMA 시작까지 7.16·7.65ms를 기다렸다. DMA 시작부터 공개까지는 두 위상 모두 1.20ms였다. 다음에는 직전 VBlank가 닫히기 전에 909의 마지막 OBJ를 얼마나 일찍 준비·수락할 수 있는지 확인한다.
+
+966 재현 순서는 `package_nes_trial966.py prepare`, `build_nes_trial577.ps1 -SourceRoot ../probes/nes-trial966/link`, 같은 Python 도구의 `image TEMP`와 `guards GAME_ROM`이다. Starter FLOAT로 `check_nes_trial966_bus.ps1`을 실행한다. 각 위상과 캐시에서 `replay TEMP --phase P --cache CACHE`를 끝낸 뒤 위상마다 `consumer TEMP --phase P`로 STOP·SEAL 오류를 주입한다. `pack TEMP`는 최종 링크와 동일 응답 재생의 SPI·소비·DMA 시각, 8장 RGB 및 계측 출력을 확인한 뒤 압축 파일을 만든다.
+
 ### 재현
 
 964 보드와 ARM 링크, 964의 입력·ROM 허가 fixture를 사용한다. `nes_verified965.py TEMP PHASE CACHE --record analysis/credit965-wire.json`으로 최종 ARM에 보관한 응답을 직접 반환한다. 인수 `PHASE`는 1·2, `CACHE`는 cold·warm이다. 재생 디렉터리 이름은 `965measured`다.
