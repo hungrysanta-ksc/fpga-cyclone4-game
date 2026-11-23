@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 `timescale 1ns/1ps
-module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15:0] G=16'd912);
+module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15:0] G=16'd912, parameter WINDOW957=0);
  reg clk=0,host=0,mem=0,reset=0,stop=0;
  always #23.28 clk=~clk;
  always #5.95 host=~host;
@@ -11,8 +11,8 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
  reg [16:0] cap_addr;reg [7:0] cap_data;
  wire cap_ready,cap_sample_ready,bulk_ok,bulk_permit,ev,er;
  wire [15:0] eg;wire [1:0] out_kind;wire [5:0] out_length;
- wire enabled_plan=REPLAY?bulk_permit:permit;
- wire output_ready=REPLAY?bulk_ok:out_ready;
+ wire enabled_plan=(REPLAY||WINDOW957)?bulk_permit:permit;
+ wire output_ready=(REPLAY||WINDOW957)?bulk_ok:out_ready;
  wire wr,pv,pr,done,shortform,hint,hint_ready,closed,batch_fault,host_idle;
  wire [12:0] tag,hint_tag;wire [7:0] mask,altmask,hint_mask;
  wire [1:0] kind;wire [15:0] gen;wire [9:0] slot;
@@ -64,6 +64,8 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
   .rom_data(lo),.bg_word(hi),.psram_address(ram_addr),.psram_1ce(ce1),.psram_2ce(ce2),.psram_data(pins));
  integer fills=0,hits=0,bytes_out=0,done_count=0,core_reads=0;
  reg expected_error=0,full_bg=0;reg [7:0] bg_mask=0;
+ reg reverse_rows957=0;
+ wire [2:0] expected_row=(WINDOW957 && reverse_rows957)?~idx[3:1]:idx[3:1];
  wire [12:0] bg_tag=(!idx[0]&&bg_mask[idx[3:1]])?13'h1a31+idx[3:1]:13'h163;
  always @(posedge clk)if(!reset)begin
   if(fault||(batch_fault&&!expected_error&&!stop))$fatal(1,"unexpected fault");
@@ -78,7 +80,7 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
   if(source.ahead.hit_reply&&source.arb_response)hits++;
   if(done)done_count++;
   if(tv&&output_ready)begin
-   if(tdata!==(REPLAY?expected_bytes[((RETAIN951 && out_kind==1)?8192:0)+32*dest+idx]:idx>=16?8'h00:content(full_bg?bg_tag:13'h110+dest,idx[3:1],idx[0])))$fatal(1,"bad tile %d index %d data %x",dest,idx,tdata);
+   if(tdata!==(REPLAY?expected_bytes[((RETAIN951 && out_kind==1)?8192:0)+32*dest+idx]:idx>=16?8'h00:content(full_bg?bg_tag:13'h110+dest,expected_row,idx[0])))$fatal(1,"bad tile %d index %d data %x",dest,idx,tdata);
    bytes_out++;
   end
  end
@@ -111,7 +113,7 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
   @(negedge clk);stop=1;repeat(12)@(negedge clk);stop=0;
   repeat(150)@(negedge clk);expected_error=0;
  endtask
- initial if(!REPLAY)begin
+ initial if(!REPLAY&&!WINDOW957)begin
   #2;reset=1;repeat(10)@(negedge clk);reset=0;repeat(150)@(negedge clk);
   expected_error=1;batch(G,1);repeat(40)@(negedge clk);
   if(!batch_fault||fills||bytes_out)$fatal(1,"CRC admission");recover();
@@ -131,7 +133,7 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
   wait(done_count==9);@(negedge clk);full(8'h5a);wait(done_count==10);
   $display("PASS914 checked repeated generation after STOP, hits=%0d speculative grants=%0d core=%0d",hits,fills,core_reads);$finish;
  end
- if(REPLAY)begin:trace_run
+ if(REPLAY||WINDOW957)begin:trace_run
   reg consume=0;wire chunk,chunk_kind,bulk_fault,consume_fault,end_sealed;wire [31:0] token;
   reg seen_end=0,all_polls=0;integer accepted=0;
   wire [11:0] chunk_length;wire [15:0] chunk_gen;
@@ -169,7 +171,7 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
    while(tick<byte_edge)@(negedge host);
    if(tick!=byte_edge)$fatal(1,"missed E9 edge %0d at %0d",byte_edge,tick);
   endtask
-  initial begin
+  initial if(REPLAY)begin
    if(!$value$plusargs("trace=%s",dir))$fatal;
    $readmemh({dir,"/chr914.hex"},chr);$readmemh({dir,"/expected914.hex"},expected_bytes);
    $readmemh({dir,"/wire914.hex"},wire_bytes);
@@ -265,5 +267,5 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
    join
   end
  end
- initial begin if(REPLAY)repeat(RETAIN951?6000000:2500000)@(posedge clk);else #2000000;$fatal(1,"timeout");end
+ initial begin if(REPLAY||WINDOW957)repeat(RETAIN951?6000000:2500000)@(posedge clk);else #2000000;$fatal(1,"timeout");end
 endmodule
