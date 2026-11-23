@@ -21,7 +21,7 @@ class FixtureLink(LeadingRecord):
         return super().accept(tx,t)
 
 
-def fixture(temp,phase,cold,g=912,tag='914wire'):
+def fixture(temp,phase,cold,g=912,tag='914wire',*,include_bg=False):
     case=f'nes-tile821-obj-jointmirror-p{phase}-{tag}-{"cold" if cold else "warm"}-pair'
     run=temp/case
     name='e9wire914.jsonl' if g==912 else f'e9wire914-{g}.jsonl'
@@ -73,12 +73,12 @@ def fixture(temp,phase,cold,g=912,tag='914wire'):
     assert sha(rom)==ADVENTURE_SHA
     chr_bytes=rom.read_bytes()[-131072:]
     (d/'chr914.hex').write_text(''.join(f'{b:02x}\n' for b in chr_bytes))
-    expected=bytearray(8192)
+    expected=bytearray(16384 if include_bg else 8192)
     for _,raw in json.loads((temp/f'nes-gap904/data-obj/obj/frame{g}/plans.json').read_bytes()):
         q=bytes.fromhex(raw)
-        assert q[6] in (1,2)
+        assert q[6] in ((0,1,2) if include_bg else (1,2))
         for idx,addr in lanes(q):
-            expected[32*int.from_bytes(q[2:4],'little')+idx]=chr_bytes[addr]
+            expected[(8192 if include_bg and q[6]==1 else 0)+32*int.from_bytes(q[2:4],'little')+idx]=chr_bytes[addr]
     (d/'expected914.hex').write_text(''.join(f'{b:02x}\n' for b in expected))
 
 

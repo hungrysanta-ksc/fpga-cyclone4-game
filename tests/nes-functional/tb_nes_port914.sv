@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 `timescale 1ns/1ps
-module tb_nes_port914 #(parameter REPLAY=0,parameter [15:0] G=16'd912);
+module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15:0] G=16'd912);
  reg clk=0,host=0,mem=0,reset=0,stop=0;
  always #23.28 clk=~clk;
  always #5.95 host=~host;
  always #2.976 mem=~mem;
  reg write_en=0,seal=0,permit=1,core_want=0,out_ready=1;
  reg [7:0] byte_in; reg [15:0] crc;reg [9:0] size;reg [4:0] count;
- reg cap_start=0,cap_seal=0,cap_sample=0,qualified=1;
+ reg cap_start=0,cap_seal=0,cap_sample=0,release_capture951=0,qualified=1;
  reg [16:0] cap_addr;reg [7:0] cap_data;
  wire cap_ready,cap_sample_ready,bulk_ok,bulk_permit,ev,er;
  wire [15:0] eg;wire [1:0] out_kind;wire [5:0] out_length;
@@ -39,7 +39,7 @@ module tb_nes_port914 #(parameter REPLAY=0,parameter [15:0] G=16'd912);
   .source_ready(1'b1),.source_is_rom(1'b1),.source_writing(1'b0),.captured_epoch(32'd1),.live_epoch(32'd1),
   .plan_short(shortform),.plan_valid(pv&&enabled_plan),.plan_ready(pr),.plan_kind(kind),
   .plan_generation(gen),.plan_slot(slot),.plan_tag(tag),.plan_rows(rows),.plan_mask(mask),
-  .plan_alt_mask(altmask),.plan_alt_tags(alts),.cap_start(cap_start),.cap_seal(cap_seal),.cap_release(1'b0),
+  .plan_alt_mask(altmask),.plan_alt_tags(alts),.cap_start(cap_start),.cap_seal(cap_seal),.cap_release(release_capture951),.cap_release_generation(G),
   .cap_ready(cap_ready),.cap_generation(G),.cap_sample_ready(cap_sample_ready),.cap_address(cap_addr),.cap_data(cap_data),
   .cap_sample(cap_sample),.qualified_slot(qualified),.core_safe(!core_want),.core_request(core_req),
   .core_address(22'h200040),.core_ready(core_ok),.core_response(core_return),
@@ -55,7 +55,7 @@ module tb_nes_port914 #(parameter REPLAY=0,parameter [15:0] G=16'd912);
  wire [21:0] word_addr={ram_addr[19:0],ce1,1'b0};
  // Logical bit 3 selects the high/low PSRAM lane. Reconstruct every byte
  // from the physical chip and address pins, independently of request state.
- reg [7:0] chr[0:131071],expected_bytes[0:8191];
+ reg [7:0] chr[0:131071],expected_bytes[0:(RETAIN951?16383:8191)];
  wire [15:0] pins=REPLAY? {chr[{word_addr[16:4],1'b0,word_addr[3:1]}],chr[{word_addr[16:4],1'b1,word_addr[3:1]}]}:
    {content(word_addr[16:4],word_addr[3:1],1'b0),content(word_addr[16:4],word_addr[3:1],1'b1)};
  nes_rom_physical #(.READ_CYCLES(16)) reader(.clk(clk),.mem_clk(mem),.reset(reset),.check_mode(1'b0),
@@ -74,7 +74,7 @@ module tb_nes_port914 #(parameter REPLAY=0,parameter [15:0] G=16'd912);
   if(source.ahead.hit_reply&&source.arb_response)hits++;
   if(done)done_count++;
   if(tv&&output_ready)begin
-   if(tdata!==(REPLAY?expected_bytes[32*dest+idx]:idx>=16?8'h00:content(full_bg?bg_tag:13'h110+dest,idx[3:1],idx[0])))$fatal(1,"bad tile %d index %d data %x",dest,idx,tdata);
+   if(tdata!==(REPLAY?expected_bytes[((RETAIN951 && out_kind==1)?8192:0)+32*dest+idx]:idx>=16?8'h00:content(full_bg?bg_tag:13'h110+dest,idx[3:1],idx[0])))$fatal(1,"bad tile %d index %d data %x",dest,idx,tdata);
    bytes_out++;
   end
  end
@@ -147,7 +147,7 @@ module tb_nes_port914 #(parameter REPLAY=0,parameter [15:0] G=16'd912);
    $display("ROM914 edge=%0d spec=%0d addr=%0d",tick,source.ahead.spec,source.shared_address[16:0]);
   always @(posedge host)if(counting&&bulk.state==bulk.SEAL&&!bulk.hc)
    $display("PUB914 token=%0d bytes=%0d at=%0d",bulk.token,bulk.used,tick);
-  reg [7:0] wire_bytes[0:4095];string dir;
+  reg [7:0] wire_bytes[0:4095];string dir, previous_rows;
   integer fd,a,b,c,prev,gr,bs,rs,deadline,sz,plans,check,off=0,j=0,ck,cs,prod,pop,first;
   integer totals,expected_jobs,expected_total;
   integer polls,sample,flags,seq,requested,observed,observed_flags,wrong=0,probes=0;
@@ -168,7 +168,14 @@ module tb_nes_port914 #(parameter REPLAY=0,parameter [15:0] G=16'd912);
     if(!cap_sample_ready)$fatal;cap_sample=1;cap_addr=b;cap_data=c;@(negedge clk);cap_sample=0;
    end
    repeat(8)@(negedge clk);cap_seal=1;@(negedge clk);cap_seal=0;
-   repeat(150)@(negedge clk);counting=1;
+   repeat(RETAIN951?280:150)@(negedge clk);
+   // Carry only completed rows from the preceding RTL invocation. Everything
+   // else starts from the independently captured generation and the ARM wire.
+   if(RETAIN951==1 && G!=905)begin
+    if(!$value$plusargs("previous_rows=%s",previous_rows))$fatal;
+    $readmemh(previous_rows,source.ahead.rows);
+   end
+   counting=1;
    fork
     begin
      while($fscanf(polls,"%d %d %d %d",sample,flags,seq,requested)==4)begin
@@ -206,11 +213,18 @@ module tb_nes_port914 #(parameter REPLAY=0,parameter [15:0] G=16'd912);
       while(tick<pop)@(negedge host);@(negedge host);consume=1;@(negedge host);consume=0;
      end
      if(j!=expected_jobs||bulk_fault||consume_fault||fault||batch_fault||bytes_out!=expected_total)$fatal(1,"end n=%0d bytes=%0d",j,bytes_out);
-     wait(all_polls);$display("E8914 compared=%0d different=%0d",probes,wrong);
+     wait(all_polls);
+     if(RETAIN951)begin
+      @(negedge clk);release_capture951=1;
+      @(negedge clk);release_capture951=0;
+      repeat(270)@(negedge clk);
+      $writememh({dir,"/rows-out951.hex"},source.ahead.rows);
+     end
+     $display("E8914 compared=%0d different=%0d",probes,wrong);
      $display("PASS914 trace chunks=%0d bytes=%0d hits=%0d grants=%0d",j,bytes_out,hits,fills);$finish;
     end
    join
   end
  end
- initial begin if(REPLAY)repeat(2500000)@(posedge clk);else #2000000;$fatal(1,"timeout");end
+ initial begin if(REPLAY)repeat(RETAIN951?6000000:2500000)@(posedge clk);else #2000000;$fatal(1,"timeout");end
 endmodule
