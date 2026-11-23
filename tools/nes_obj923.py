@@ -124,11 +124,11 @@ def replay(temp,mode,phase,cold):
         peer.compare(temp,phase,cold,True,edition=915,work_arm=WORK/mode,run_id='923'+mode)
 
 
-def obj_stops(temp,mode,*,tag=None,destination=None):
+def obj_stops(temp,mode,*,tag=None,destination=None,lengths=(32,352),output_prefix="obj-stop"):
     from guard_nes_output852 import run
     folder=temp/f'nes-tile821-obj-jointmirror-p1-{tag or "923"+mode}-warm-pair'
     outcomes={}
-    for length in (32,352):
+    for length in lengths:
         def adapt(lua,labels):
             lua=once(lua,'if not injected852 then','if false and not injected852 then')
             lua=once(lua,'local i=a-0x400800;',f'''local i=a-0x400800;
@@ -138,7 +138,7 @@ def obj_stops(temp,mode,*,tag=None,destination=None):
             lua=once(lua,original,f'if injected852 then assert(lastStatus==228 and reads=={length}) else {original} end')
             lua=once(lua,'consumed[#consumed+1]=',"assert(not injected852,'returned canceled OBJ');consumed[#consumed+1]=")
             return once(lua,'  assert(captured==commits)','  assert(injected852);assert(captured==commits)')
-        outcomes[length]=run(temp,folder,'stop',column_client=client('first'),output_name=f'obj-stop-{length}',
+        outcomes[length]=run(temp,folder,'stop',column_client=client('first'),output_name=f'{output_prefix}-{length}',
                              select_packet=lambda b,g:g==909 and b[:2]==bytes((7,1)) and int.from_bytes(b[14:16],'little')==length,
                              adapt_lua=adapt)
     (destination or WORK/f'{mode}-stops.json').write_text(json.dumps(outcomes,indent=2)+'\n')

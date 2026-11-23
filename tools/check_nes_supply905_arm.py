@@ -10,11 +10,11 @@ from package_nes_trial855 import loader
 from prepare_nes_supply905 import WORK
 
 
-def run(game,work=WORK,edition=905,*,order=None,short_header=False):
+def run(game,work=WORK,edition=905,*,order=None,short_header=False,marker_values=(384,410,411,412)):
     src=work/'link/src'
     out=work/'proof'
     out.mkdir(exist_ok=True)
-    verify(edition,src,out,short_header=short_header)
+    verify(edition,src,out,short_header=short_header,marker_values=marker_values)
     save(out/'timer.json',timer_cases(src))
     loader(game,src,edition,out)
     save(out/'menu.json',check(src,str(edition)))

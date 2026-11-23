@@ -130,9 +130,10 @@ def prepare(mode):
         path.write_text(s, newline='\n')
 
 
-def replay(temp, mode, phase, cold, *, arm=None, edition=915, tag=None):
+def replay(temp, mode, phase, cold, *, arm=None, edition=915, tag=None, trace_last=False):
     def monitor(source, scene):
-        return once(trace(source, scene), 'pb(0)==7 and pw(8)==908', 'pb(0)==7 and pw(8)==909')
+        generation = '(pw(8)==909 or pw(8)==912)' if trace_last else 'pw(8)==909'
+        return once(trace(source, scene), 'pb(0)==7 and pw(8)==908', 'pb(0)==7 and '+generation)
     cache = 'cold' if cold else 'warm'
     reference = temp / f'nes-tile821-obj-jointmirror-p{phase}-923warm-{cache}-pair'
     costs = json.loads((reference/'joint.json').read_bytes())['parameters']['driver_extra_us']

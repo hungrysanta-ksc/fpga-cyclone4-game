@@ -2,19 +2,20 @@
 from collections import defaultdict
 
 
-def encode(body, prefix=0):
+def encode(body, prefix=0, minimum=3):
+    assert minimum in (2,3)
     locations=defaultdict(list)
     options=[]
     for i in range(len(body)):
-        key=body[i:i+3]
+        key=body[i:i+minimum]
         best={}
         for j in reversed(locations[key]):
             distance=i-j
             if distance>4096:break
-            k=3
-            while k<min(18,len(body)-i) and body[j+k]==body[i+k]:k+=1
-            for size in range(3,k+1):best.setdefault(size,distance)
-            if k==18:break
+            k=minimum
+            while k<min(minimum+15,len(body)-i) and body[j+k]==body[i+k]:k+=1
+            for size in range(minimum,k+1):best.setdefault(size,distance)
+            if k==minimum+15:break
         options.append(best)
         locations[key].append(i)
     n=len(body)
@@ -36,13 +37,13 @@ def encode(body, prefix=0):
         else:
             out[flags]|=1<<slot
             d=options[i][size]-1
-            out.extend((d&255,((d>>8)<<4)|(size-3)))
+            out.extend((d&255,((d>>8)<<4)|(size-minimum)))
         i+=size
         slot=(slot+1)%8
     assert len(out)==prefix+cost[prefix][0]
     return bytes(out)
 
-def decode(stream,prefix,expected):
+def decode(stream,prefix,expected,minimum=3):
     """Check exact consumption and overlapping back-references like the loader."""
     out=bytearray(stream[:prefix])
     i=prefix
@@ -54,7 +55,7 @@ def decode(stream,prefix,expected):
                 low,high=stream[i:i+2]
                 i+=2
                 distance=1+low+((high>>4)<<8)
-                length=(high&15)+3
+                length=(high&15)+minimum
                 assert distance<=len(out) and len(out)+length<=expected
                 for _ in range(length):
                     out.append(out[-distance])

@@ -1,14 +1,14 @@
 # 다른 PC·새 작업에서 재개하기
 
-이 문서는 채팅 기억과 이전 PC의 Downloads 없이 현재 작업을 파악하기 위한 진입점이다. 현재 PC를 계속 사용한다. 마지막 회고499 이후의 진행을 [579 회고](../nes-retrospective579.ko.md)로 재평가했다. 실행 순서는 [579 계획](../nes-retrospective579-plan.json) 하나를 기준으로 삼으며 499/504의 오래된 NEXT를 그대로 재개하지 않는다.
+NES 재개 순서는 [PR174 회고](../progress/pr-174.md#후속작업)에서 확인한다. 기준은 MMC925 실기와 952 보드·953 되먹임 재생이다. 아래 이전 PR의 번호는 당시 실험을 찾기 위한 이력이다.
 
 ## 1. 상태를 읽는다
 
 1. [루트 README](../../README.md) → [프로젝트 현황](../PROJECT-STATUS.ko.md).
-2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md) → 현재 브랜치/PR은 인계 문서를 따른다. MMC666 개발 기준은 [PR154](../progress/pr-154.md)이다. 회고 기준은 [PR150](../progress/pr-150.md).
+2. [NES 현재 인계](../../cores/nes/HANDOFF.ko.md)와 최신 [PR별 기록](../progress/README.md)을 확인한다.
 3. 수정할 경계의 상세 계약/검증만 연다. 과거 누적 AGENTS/HANDOFF를 처음부터 읽거나 그 안의 NEXT를 현재 지시로 쓰지 않는다.
 
-GB/GBC는 추가·공개 완료, NES는 MMC666 실기20.24fps/5–55초19.54fps다. 실행·메뉴 복귀 정상이며 전체60Hz·capture무손실·외부IO sign-off는 미완료다. [667 실기 기록](../nes-hardware667-results.ko.md)
+GB/GBC는 공개 완료 상태다. NES의 60 FPS와 다음 후보의 실기 성능은 미확인이다. [현재 실기 결과](../nes-hardware925-results.ko.md)
 
 ## 2. Git 기준을 확인한다
 

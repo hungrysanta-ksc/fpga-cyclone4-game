@@ -82,7 +82,7 @@ def analyze(temp,modes):
     return result
 
 
-def recovery(mode,work=WORK,*,trial=None):
+def recovery(mode,work=WORK,*,trial=None,stop_lengths=(32,352)):
     trial=trial or work/mode
     proof=trial/'proof'
     digest=sha(trial/'link/src/obj-nes-100/firmware.stm')
@@ -96,7 +96,7 @@ def recovery(mode,work=WORK,*,trial=None):
     assert faults=={name:dict(status=status,commits=n) for name,status,n in
                     [('stop-copy',228,3),('descriptor',224,3),('duplicate',224,3),('seal',224,4),('display_stop',228,4)]}
     stops=read(work/f'{mode}-stops.json')
-    assert stops=={str(n):dict(status=228,commits=4) for n in (32,352)}
+    assert stops=={str(n):dict(status=228,commits=4) for n in stop_lengths}
     return dict(firmware=digest,consumer=sha(client('first')/'sink165.sfc'),SRAM_D0_sites=4,
                 CRC_rejected=True,STOP=faults,last_byte_STOP=stops,menu=True)
 

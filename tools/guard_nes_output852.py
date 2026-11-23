@@ -111,7 +111,7 @@ def run(temp,trial,case,seed=None,column_client=None,edit_seal=None,adapt_lua=No
         rows.append((target,'PUSH',b.hex(),bulk))
         if case!='restart' and hit:
             break
-    assert (case=='restart' and g==907) or (case=='cold' and hit and g==905) or (hit and (g>906 or edit_seal and g==906))
+    assert (case=='restart' and g==907) or (case=='cold' and hit and g==905) or (hit and (g>906 or (edit_seal or select_packet) and g==906))
     commits=2 if case=='restart' else g-905
     rows.append((rows[-1][0]+1,'FINISH','',''))
     with (out/'commands.txt').open('w',encoding='ascii',newline='\n') as f:
