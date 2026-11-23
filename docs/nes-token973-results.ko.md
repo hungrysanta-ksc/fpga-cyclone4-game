@@ -31,6 +31,8 @@ MMC966 동일 조건 대조군과 972의 첫 팔레트 32B 선행 후보를 같�
 
 ## 후속작업
 
+974에서 반복 OAM의 실제 복원 비용과 스크롤 패딩·첫 OBJ 간격을 확인했다. [측정값과 채택 판단](nes-oam974-results.ko.md)
+
 MMC966을 유지한다. 다음에는 911 OAM의 65816 수락→ACK 약 2ms를 WRAM 쓰기와 필수 검사로 분리하고, 앞선 스크롤 패딩 복원이 첫 OBJ 뱅크 반환을 늦추는지도 함께 본다. 기존 화면의 독립 검사를 유지하고 908·911 공개와 912 최종 ACK가 함께 개선될 때 실기 후보로 올린다.
 
 재현 시 972 대조군과 동일한 TEMP를 사용한다. `nes_token973.py prepare`로 before96·before232의 소스를 생성하고 해당 link를 `build_nes_trial577.ps1`로 빌드한다. `run MODE TEMP --phase N`으로 네 모드를 두 위상에서 실행한다. `check_nes_token973.py TEMP OUT --mode MODE --guard FAULT`로 두 후보의 bad_seal·stop_decode를, `--tail-phase N`으로 후반 연속 발행을 재생한다. 출력 폴더는 각각 TEMP 아래 nes-973-MODE-FAULT와 nes-973-tail-pN이다. 마지막에 같은 스크립트에 TEMP와 결과 JSON 경로를 주어 집계한다.

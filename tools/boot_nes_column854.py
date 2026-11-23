@@ -8,7 +8,7 @@ DEST=0x2000
 STORED=5056
 
 
-def build(base,out,body,labels,straight=False,*,shared_byte=False,compact_mvn=False,minimum=3,short_pairs=False):
+def build(base,out,body,labels,straight=False,*,shared_byte=False,compact_mvn=False,minimum=3,short_pairs=False,near_end=False):
     assert not short_pairs or (minimum==2 and compact_mvn)
     stored=bytearray(body)
     if straight:
@@ -42,7 +42,7 @@ def build(base,out,body,labels,straight=False,*,shared_byte=False,compact_mvn=Fa
         c.emit(0x64,2)
         c.label('pass');imm(0xa2,first+prefix);imm(0xa0,DEST+prefix);c.emit(0x64,3)
         c.label('token');imm(0xc0,DEST+len(body))
-        if short_pairs:c.emit(0xd0,3);c.jump('end')
+        if short_pairs and not near_end:c.emit(0xd0,3);c.jump('end')
         else:c.branch(0xf0,'end')
         # The sentinel in bit 7 survives exactly seven subsequent shifts.
         c.emit(0x46,3);c.branch(0xd0,'flag');call(c,'read')
