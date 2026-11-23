@@ -54,4 +54,6 @@ MMC966의 보드 RTL에서 E9 시각과 목표 32B OBJ를 고정하고 7B 페이
 
 `python tools/check_nes_page968.py <기존 재생 TEMP> analysis/page968-results.json`으로 두 위상을 재현한다. 같은 위치에서 재실행할 때는 새 출력 폴더 접미사를 `--tag`로 지정한다.
 
+후속 보드 시험과 일곱 조건의 연속 재생에서 907의 선행 읽기 이득이 SEAL과 화면 공개까지 이어지는지 확인했다. [세대 반환 전 CHR 선행 읽기와 표시 마감](nes-reserve969-results.ko.md)
+
 재현에는 MMC966 패키지의 964 보드 소스와 두 원본 BIN이 필요하다. 기존 Starter FLOAT 래퍼에서 `tools/check_nes_obj967.ps1`을 실행한 다음 `python tools/analyze_nes_obj967.py <BIN 폴더> <nes-obj967 로그 폴더> <board.sof> <결과 JSON>`을 실행한다. [실기 토큰별 기록과 RTL 시각](../analysis/obj967-results.json)
