@@ -14,7 +14,7 @@ def run(temp,clip,phase,*,tag='905-supply',out=None,base=None,runner=replay,work
     out=out or temp/f'nes-tile821-{clip}-jointmirror-p{phase}-{tag}'
     base=base or temp/f'nes-tile821-{clip}-jointmirror-p{phase}-903-tile'
     original=joint.Runtime.__init__
-    holders=[];pages=[];commit_steps={}
+    holders=[];pages=[];commit_steps={};headers=[]
     def stamp(t):return int(t*84000000/joint.MASTER/32768)&1023
     def init(cpu,args,link):
         original(cpu,args,link);holders.append(cpu)
@@ -35,6 +35,21 @@ def run(temp,clip,phase,*,tag='905-supply',out=None,base=None,runner=replay,work
             length=u.reg_read(UC_ARM_REG_R3)
             assert clip=='late' and length in (16,32) and 0x20000000<=tx<0x20010000
             page=u.mem_read(tx+1,1)[0];g=cpu.generation
+            if 'finish_header950' in cpu.syms:
+                # On 914I tr_gen is sink_spi165.ack_work[79:64]. EA changes
+                # plan ownership; D3 and D2 do not write the SNES ACK register.
+                last_e0=next(e for e in reversed(cpu.events) if e.get('opcode')=='0xe0')
+                status=bytes.fromhex(last_e0['reply'])
+                g=int.from_bytes(status[15:17],'little')
+                assert status[7:9]==bytes((1,3)) and status[17:19]==bytes((0x65,0x9a))
+                if cpu.generation!=g:
+                    assert cpu.generation==g+1 and length==16
+                    recent=[e for e in cpu.events if e.get('start',-1)>last_e0['clock']]
+                    pops=[e for e in recent if e.get('opcode')=='0xd2' and e['input_generation']==g+1]
+                    assert pops and recent[-1]['opcode']=='0xd0'
+                    assert not any(e.get('opcode') in ('0xe1','0xe9') for e in recent)
+                    headers.append(dict(display=g,input=cpu.generation,read=round(cpu.clock),
+                                        D2=round(pops[-1]['clock'])))
             assert length==32 or page==0
             if edition in (915,925) and page==0 and 'step_begin915' in cpu.data_symbols and g not in commit_steps:
                 def word(name,size):
@@ -79,6 +94,7 @@ def run(temp,clip,phase,*,tag='905-supply',out=None,base=None,runner=replay,work
         length=TRACE_BYTES[edition]+2*int(edition==915 and 'step_begin915' in cpu.data_symbols)
     path=out/'records.bin';path.write_bytes(cpu.u.mem_read(cpu.data_symbols['ptrcache'],length))
     data=decode927(path) if edition==927 else decode(path,edition,direct_probe=edition==915 and 'step_begin915' not in cpu.data_symbols)
+    if 'finish_header950' in cpu.syms:(out/'headers950.json').write_text(json.dumps(headers))
     if commit_steps:(out/'step915.json').write_text(json.dumps(commit_steps))
     assert len(data['rows'])==(6 if clip=='late' else 0) and not any(data['dropped'])
     assert all('invalid' not in r for r in data['rows'])
