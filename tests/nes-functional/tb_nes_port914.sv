@@ -68,6 +68,10 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
  always @(posedge clk)if(!reset)begin
   if(fault||(batch_fault&&!expected_error&&!stop))$fatal(1,"unexpected fault");
   if(core_return)core_reads++;
+`ifdef NES_COMPANION952
+  if(source.ahead.take&&source.ahead.aux952&&(core_req||source.arb_request||stop))
+   $fatal(1,"companion displaced a primary request");
+`endif
   if(source.ahead.take&&source.ahead.spec)begin
    if(core_req||source.arb_request||stop)$fatal(1,"priority");fills++;
   end
@@ -145,6 +149,14 @@ module tb_nes_port914 #(parameter REPLAY=0, parameter RETAIN951=0, parameter [15
   end
   always @(posedge clk)if(counting&&source.ahead.take)
    $display("ROM914 edge=%0d spec=%0d addr=%0d",tick,source.ahead.spec,source.shared_address[16:0]);
+`ifdef NES_COMPANION952
+  always @(posedge clk)begin
+   if(counting && source.ahead.aux952 && source.ahead.take)
+    $display("AUX952 at=%0d address=%0d",tick,source.ahead.physical_address[16:0]);
+   if(counting && source.ahead.hit && source.ahead.demand)
+    $display("HIT952 at=%0d address=%0d",tick,source.ahead.address[16:0]);
+  end
+`endif
   always @(posedge host)if(counting&&bulk.state==bulk.SEAL&&!bulk.hc)
    $display("PUB914 token=%0d bytes=%0d at=%0d",bulk.token,bulk.used,tick);
   reg [7:0] wire_bytes[0:4095];string dir, previous_rows;

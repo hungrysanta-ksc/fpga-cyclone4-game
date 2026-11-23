@@ -152,7 +152,7 @@ class Empty(Retain):
         super().begin()
 
 
-def replay(temp,phase,cache,variant):
+def replay(temp,phase,cache,variant,*,wrap=None,tag=None):
     from replay_nes_strip869 import dense
     from test_nes_receive649 import admission
     runtime=dense.joint.Runtime
@@ -230,9 +230,10 @@ def replay(temp,phase,cache,variant):
             return result
     optional=patch.object(replay_nes_rows911,'lanes',neighbor) if variant=='neighbor' else nullcontext()
     suppliers={'retain':Retain,'empty':Empty,'neighbor':WireTrace,'coldneighbor':ColdNeighbor,'banked':Banked,'idle':IdlePage}
+    supplier=suppliers[variant] if wrap is None else wrap(suppliers[variant])
     with optional,patch.object(runtime,'offer_input',admission(runtime.offer_input)),patch.object(nes_chain935,'output',lambda _:ROM):
         nes_chain935.replay(temp,'final',phase,cache,'bounded',work_arm=RELEASE,
-                            tag='951'+variant,edition=950,supplier=suppliers[variant])
+                            tag=tag or '951'+variant,edition=950,supplier=supplier)
 
 
 if __name__=='__main__':
