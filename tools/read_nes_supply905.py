@@ -9,7 +9,7 @@ ROW=struct.Struct('<6H4B16s12s')
 CAP=124
 SIZE=16+CAP*ROW.size+4+320*8
 MS=32768/84000
-TRACE_BYTES={905:SIZE,907:SIZE+2,915:SIZE+6,925:SIZE+8,950:SIZE+8,955:SIZE+8}
+TRACE_BYTES={905:SIZE,907:SIZE+2,915:SIZE+6,925:SIZE+8,950:SIZE+8,955:SIZE+8,956:SIZE+8}
 
 def decode(path,expected_edition=905,*,direct_probe=False):
     data=path.read_bytes()
@@ -21,6 +21,9 @@ def decode(path,expected_edition=905,*,direct_probe=False):
         raise ValueError('wrong supply trace edition or truncated SD write')
     selected,score=struct.unpack_from('<2H',data,16+CAP*size)
     if selected>count:raise ValueError('invalid detail index')
+    dual=edition==956
+    if dual and (score>count or (score and score==selected)):
+        raise ValueError('invalid second detail index')
     table=memoryview(data)[16+CAP*size+4:]
     rows=[]
     def word(a,i):return int.from_bytes(a[i:i+2],'little')
@@ -53,14 +56,23 @@ def decode(path,expected_edition=905,*,direct_probe=False):
             if not (ready==1 and kind<=1 and gen==g and tok==token and 0<n<=2048 and n%(16<<kind)==0):
                 r['invalid']='ARM descriptor / FPGA token';continue
             r.update(last_token=tok,last_kind=kind,last_bytes=n,last_offset=offset,E9_to_last_publish_ms=elapsed(last))
-        if selected!=i+1:continue
+        if i+1!=selected and not (dual and i+1==score):continue
+        slot=int(dual and i+1==score)
+        tile_base=slot*160
+        chunk_base=tile_base+128 if dual else 256
+        if dual:
+            if (nt>128 or nc>32 or r.get('last_offset')!=1184+32*slot or
+                    r.get('last_bytes')!=32 or dirty or obj<40 or not 5600<=tick<5750):
+                raise ValueError('wrong dense OBJ sample')
+            interval=word(data,SIZE+2+2*slot)
+            r['previous_to_current_ARM_ACK_ms']=None if interval==65535 else round(interval*MS/64,3)
         r['END_age_ticks512']=ia
         r['ACK_age_ticks512']=ea
         if not (0<nc<63 and 0<nt<255 and r.get('last_kind')==1):
             raise ValueError('incomplete selected generation')
         pos=0;chunks=[]
         for j in range(nc):
-            rec=struct.unpack_from('<I',table,(256+j)*8)[0]
+            rec=struct.unpack_from('<I',table,(chunk_base+j)*8)[0]
             tok=token-nc+1+j
             k=(rec>>19)&1;bank_id=(rec>>20)&1;units=(rec>>11)&255
             if rec>>21!=tok%2048 or bank_id!=(tok-1)%2 or not units or units%(1<<k):
@@ -68,7 +80,8 @@ def decode(path,expected_edition=905,*,direct_probe=False):
             tiles=[]
             for _ in range(units>>k):
                 if pos>=nt:raise ValueError('too many consumed tiles')
-                v=int.from_bytes(table[pos*8:pos*8+5],'little');pos+=1
+                start=(tile_base+pos)*8
+                v=int.from_bytes(table[start:start+5],'little');pos+=1
                 n=v>>30
                 t=dict(grants=n)
                 if n:
@@ -98,7 +111,7 @@ def decode(path,expected_edition=905,*,direct_probe=False):
                 r['commit_step_ticks512']=struct.unpack_from('<H',data,SIZE+6)[0]
                 # The paired-timer link reuses the full query-cost bound.
                 r['first_query_ticks512']=probe
-    return dict(mode=mode,dropped=[d0,d1],selected=selected,rows=rows,
-                displayed55=struct.unpack_from('<H',data,SIZE)[0] if edition in (907,915,925,950,955) else None)
+    return dict(mode=mode,dropped=[d0,d1],selected=[selected,score] if dual else selected,rows=rows,
+                displayed55=struct.unpack_from('<H',data,SIZE)[0] if edition in (907,915,925,950,955,956) else None)
 
-if __name__=='__main__':print(json.dumps(decode(Path(sys.argv[1])),indent=2))
+if __name__=='__main__':print(json.dumps(decode(Path(sys.argv[1]),int(sys.argv[2]) if len(sys.argv)>2 else 905),indent=2))

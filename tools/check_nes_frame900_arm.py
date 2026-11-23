@@ -19,7 +19,7 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
     if n==903:
         from read_nes_tile903 import ROW as row_type, decode as decoder
         capacity=151
-    if n in (905,907,915,925,950,955):
+    if n in (905,907,915,925,950,955,956):
         from read_nes_supply905 import ROW as row_type, decode, CAP as capacity
         direct_probe=n==915 and 'step_begin915' not in (src/'nes_budget210.c').read_text()
         decoder=lambda path:decode(path,n,direct_probe=direct_probe)
@@ -59,13 +59,13 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
         time(180000)
         def bulk(cpu,pc,size,_):
             length=cpu.reg_read(UC_ARM_REG_R3)
-            assert mode!=3 and length==(16 if short_header else 32 if n in (905,907,915,925,927,950,955) else 26)
+            assert mode!=3 and length==(16 if short_header else 32 if n in (905,907,915,925,927,950,955,956) else 26)
             tx=cpu.reg_read(UC_ARM_REG_R1)
             assert 0x20000000<=tx<0x20010000 and cpu.mem_read(tx,1)==b'\x78'
             wire=bytes([0,0x90,255,0x34,0x12])+struct.pack('<10H',8000,8050,8800,9300,9400,9450,3939,8100,8200,9600)+bytes(1)
             if n==903:
                 wire=struct.pack('<BBBH8HIB',0,0x93,3,g,3940,0,0,0,0,0,9400,9600,0,0)
-            if n in (905,907,915,925,950,955):
+            if n in (905,907,915,925,950,955,956):
                 wire=struct.pack('<BBHBBHHHI',0,0x95,g,0,0,120,122,120,0)+bytes(16)
             if n==927:
                 wire=struct.pack('<BBHBBH8H',0,0x97,g,0x7f,0x38,10,100,110,115,130,140,150,160,105)+bytes(8)
@@ -98,9 +98,9 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
         raw.write_bytes(files[f'/sd2snes/nes-frame-mmc{n}.bin'])
         run=decoder(raw);rows=run['rows']
         ticks=[t for t in (3000,3499,5500,5999) if not (mode==1 and t>=5500 or mode==2 and t<5500)]
-        if n in (903,905,907,915,925,927,950,955):
+        if n in (903,905,907,915,925,927,950,955,956):
             ticks=[3000,3499] if mode==1 else [5500,5999]
-        if n in (907,915,925,927,950,955):assert run['displayed55']==2
+        if n in (907,915,925,927,950,955,956):assert run['displayed55']==2
         if n==927:
             assert run['bins'][0]['foreground']==(100,50,25,1)
             assert run['bins'][0]['prefetch']==(30,20,10,1)
@@ -112,7 +112,7 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
         before=bytes(q.u.mem_read(scratch+16,8176))
         tick=ticks[0];q.call('nes_budget210_frame',[tick]);q.call('nes_budget210_display',[tick,q.video])
         expected=bytearray(before)
-        if n in (907,915,925,927,950,955) and 5500<=tick<6000:
+        if n in (907,915,925,927,950,955,956) and 5500<=tick<6000:
             if n==927:
                 from read_nes_display927 import DISPLAYED as SIZE
             else:
