@@ -28,6 +28,8 @@ MMC966 ARM의 OBJ 계산 완료 시점에 plan 레코드 14개와 END가 한 E9�
 
 ## 후속작업
 
+[973의 token 30 E8·E1 실측](nes-token973-results.ko.md)에서 직전 뱅크 반환 뒤의 팔레트 거래와 65816 후반 소비 시간을 분리했다.
+
 MMC966을 비교 기준으로 유지한다. 다음에는 마지막 384B OBJ가 보인 뒤 ARM이 동일 token을 처음 확인한 E8과 해당 E1 발행을 대조해, 기다린 시간 중 후속 팔레트 전송과 앞선 뱅크 반환이 차지한 몫을 가른다. 그 구간만 줄여도 2.95ms를 전부 확보할 수 없으므로 OAM·section 5의 마지막 발행과 SEAL 수락을 함께 비교한다. [두 위상 클록·패킷·독립 검사 결과](../analysis/palette972-results.json)
 
 재현에는 971의 동일 조건 대조군과 MMC966 link가 필요하다. `nes_plan_palette972.py prepare TEMP`와 `--prefix`로 각 작업 폴더를 만든 뒤 `build_nes_trial577.ps1`로 해당 link를 빌드한다. 각 후보에서 `run TEMP --phase 1/2`를 실행한다. `check_nes_palette972.py observe TEMP`로 같은 위상과 후보의 쓰기를 계측한다. `bad_seal`·`stop_decode`는 위상 1에서 후보별로 실행하고 마지막에 `report TEMP --out analysis/palette972-results.json`으로 집계한다.
