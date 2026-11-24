@@ -95,9 +95,11 @@ SCHEDULER="""
 """
 
 
-def run(temp,phase,mode,fault,audit=False,stage=False):
+def run(temp,phase,mode,fault,audit=False,stage=False,*,destination=None,extra=None,rom=None):
     d,cmds,rows,events=ledger(temp,phase)
     out=temp/(f"nes-overlap1002-{mode}-p{phase}"+("-"+fault if fault else "")+("-audit" if audit else "")+("-stage" if stage else ""))
+    if destination is not None:
+        out=destination
     jobs=[];prior={}
     for cmd,j in zip(cmds[-20:],rows[1:],strict=True):
         op,sec=j["op"],j["section"]
@@ -139,8 +141,8 @@ def run(temp,phase,mode,fault,audit=False,stage=False):
         if audit:
             from nes_service1002 import instrument as count_service
             s=count_service(s)
-        return s
-    replay(temp,d,out,"fixed" if mode=="reference" else "frame",commands,912,fault,observe=instrument)
+        return extra(s) if extra else s
+    replay(temp,d,out,"fixed" if mode=="reference" else "frame",commands,912,fault,observe=instrument,rom=rom)
 
 
 if __name__=="__main__":

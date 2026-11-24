@@ -66,7 +66,7 @@ def ordinary_first(commands, target, before_all_tiles):
     return earlier
 
 
-def replay(temp, trace, out, mode, commands, target=907, fault=None, *, observe=None):
+def replay(temp, trace, out, mode, commands, target=907, fault=None, *, observe=None, rom=None):
     out = out.resolve()
     out.mkdir(parents=True)
     lua = (trace / "capture.lua").read_text()
@@ -134,7 +134,7 @@ local starts=assert(io.open(ROOT..'/starts.txt','w'))""")
     (out / "capture.lua").write_text(lua, encoding="utf8")
     for glob in ("client.sfc", "expected-*.bin", "map-*.bin", "colors636-*.bin"):
         for f in trace.glob(glob):
-            shutil.copyfile(f, out / f.name)
+            shutil.copyfile(rom if rom is not None and f.name=="client.sfc" else f, out / f.name)
     with (out / "mesen.log").open("wb") as log:
         subprocess.run([temp / "nes-bonus698-mesen/Mesen.exe", "--testRunner", out / "capture.lua", out / "client.sfc",
                         "--timeout=180", "--doNotSaveSettings", "--enableStdout", "--snes.disableFrameSkipping=true",
