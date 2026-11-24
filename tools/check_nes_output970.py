@@ -148,7 +148,8 @@ local starts=assert(io.open(ROOT..'/starts.txt','w'))""")
     for g in range(905, committed+1):
         assert sha(out / f"frame-{g}.rgb") == sha(trace / f"frame-{g}.rgb")
     if fault:
-        assert result["last_status"] == (228 if fault == "stop_decode" else 224)
+        expected_status = {"stop_decode": 228, "held_stop": 0}.get(fault, 224)
+        assert result["last_status"] == expected_status
         assert sha(out / "retained.rgb") == sha(trace / f"frame-{committed}.rgb")
         return dict(commits=result["commits"], status=result["last_status"], previous_screen_retained=True)
     clocks = counters(out, target)
