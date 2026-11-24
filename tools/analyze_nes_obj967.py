@@ -14,6 +14,21 @@ DIGESTS = {
     966: "c223944a88f83ee8cc6736de3817ee7c98061a1328047d4b0a2e386776104d9a",
 }
 
+WORKLOAD_FIELDS = ("BG", "OBJ", "map", "tiles", "chunks", "last_kind", "last_bytes", "last_offset")
+
+
+def matched_workloads(previous, current):
+    """Uniquely matched in both directions within 30 frame-start ticks."""
+    def matches(a, b):
+        return abs(a["tick"] - b["tick"]) <= 30 and all(a[k] == b[k] for k in WORKLOAD_FIELDS)
+
+    pairs = []
+    for a in previous:
+        candidates = [b for b in current if matches(a, b)]
+        if len(candidates) == 1 and sum(matches(x, candidates[0]) for x in previous) == 1:
+            pairs.append((a, candidates[0]))
+    return pairs
+
 
 def capture(directory, edition):
     path = directory / f"nes-frame-mmc{edition}.bin"
