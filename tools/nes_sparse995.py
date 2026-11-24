@@ -39,7 +39,7 @@ def decode(packed, length):
     return bytes(next(literals) if mask & (1 << i) else 0 for i in range(length))
 
 
-def run(temp, phase, mode):
+def run(temp, phase, mode, *, work=BASE, tag=None):
     # Counterfactual. Preserve every logical byte, CRC, credit and receiver
     # instruction. No encoding or decoding cost is charged on either CPU.
     init = joint.Runtime.__init__
@@ -82,9 +82,9 @@ def run(temp, phase, mode):
         link.response = timed
         link.accept = retire
 
-    tag = "995wire" + mode
+    tag = tag or "995wire" + mode
     with patch.object(joint.Runtime, "__init__", install):
-        nes_page963.simulate(temp, phase, "cold", True, BASE, True, tag=tag, edition=966)
+        nes_page963.simulate(temp, phase, "cold", True, work, True, tag=tag, edition=966)
     assert [x["kind"] for x in log] == ["raw", "table", "seal"]
     from nes_ready958 import directory
     (directory(temp, phase, tag, "cold")/"transport995.json").write_text(json.dumps(log))
