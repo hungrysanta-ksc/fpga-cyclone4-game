@@ -66,7 +66,7 @@ def ordinary_first(commands, target, before_all_tiles):
     return earlier
 
 
-def replay(temp, trace, out, mode, commands, target=907, fault=None):
+def replay(temp, trace, out, mode, commands, target=907, fault=None, *, observe=None):
     out = out.resolve()
     out.mkdir(parents=True)
     lua = (trace / "capture.lua").read_text()
@@ -129,6 +129,8 @@ local starts=assert(io.open(ROOT..'/starts.txt','w'))""")
     (out / "commands.txt").write_text("".join(f"{i}\n{at}\n{op}\n{wire}\n{bulk}\n"
                                              for i, (at, op, wire, bulk) in enumerate(stream, 1)), encoding="ascii", newline="\n")
     (out / "wire.txt").write_text("".join(f"{n}\n" for n in durations))
+    if observe is not None:
+        lua = observe(lua)
     (out / "capture.lua").write_text(lua, encoding="utf8")
     for glob in ("client.sfc", "expected-*.bin", "map-*.bin", "colors636-*.bin"):
         for f in trace.glob(glob):
