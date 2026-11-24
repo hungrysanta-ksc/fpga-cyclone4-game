@@ -99,13 +99,16 @@ def original_order(temp,phase):
     replay(temp,ref,out,'fixed',commands,912,observe=instrument)
 
 
-def execute(temp, phase, policy, fault):
+def execute(temp, phase, policy, fault, *, destination=None, observe=None):
     _, _, jobs, events=ledger(temp,phase)
     tokens=[j['token'] for j in jobs if 'token' in j]
     assert tokens==list(range(31,39))
     e0=max(math.ceil(e['clock']-e['start']) for e in events
            if e.get('generation')==912 and e.get('opcode')=='0xe0')
     out=temp/(f'nes-credit1004-{policy}-p{phase}'+('-'+fault if fault else ''))
+
+    if destination is not None:
+        out=destination
 
     def instrument(script):
         lo=script.index("  if operation=='EARLY' then")
@@ -114,10 +117,11 @@ def execute(temp, phase, policy, fault):
         body=body.replace('RESERVE_FROM','2' if policy=='feed' else '3')
         body=body.replace('RESERVE_SEAL',str(policy in ('seal','both')).lower()).replace('E0_COST',str(e0))
         script=script[:lo]+body+script[hi:]
-        return once(script,'local function nextCommand()',"""local snapshot1004=nil
+        script=once(script,'local function nextCommand()',"""local snapshot1004=nil
 local tiles1004=0
 local status1004=assert(io.open(ROOT..'/status1004.txt','w'))
 local function nextCommand()""")
+        return observe(script) if observe else script
     run(temp,phase,'tail',fault,destination=out,extra=instrument)
 
 
