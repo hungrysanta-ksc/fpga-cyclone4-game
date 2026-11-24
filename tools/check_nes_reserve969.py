@@ -6,7 +6,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import nes_page963
-from analyze_nes_obj967 import capture
+from analyze_nes_obj967 import WORKLOAD_FIELDS, capture, matched_workloads
 from check_nes_blank959 import directory, read, rows as csv_rows, sha
 from nes_feedback953 import evidence
 from nes_verified965 import run
@@ -179,24 +179,16 @@ def report(temp, data, tag):
 
 def physical_pair(folder):
     from read_nes_supply905 import decode
-    keys = ("BG", "OBJ", "map", "tiles", "chunks", "last_kind", "last_bytes", "last_offset")
     groups = []
     for edition in (955, 966):
         capture(folder, edition)  # Pins the file digest and checks for missing/invalid records.
         groups.append([r for r in decode(folder / f"nes-frame-mmc{edition}.bin", edition)["rows"] if "last_bytes" in r])
 
-    def matches(a, b):
-        return abs(a["tick"] - b["tick"]) <= 30 and all(a[k] == b[k] for k in keys)
-
-    pairs = []
-    for a in groups[0]:
-        candidates = [b for b in groups[1] if matches(a, b)]
-        if len(candidates) == 1 and sum(matches(x, candidates[0]) for x in groups[0]) == 1:
-            pairs.append((a, candidates[0]))
+    pairs = matched_workloads(*groups)
     a, b = max(pairs, key=lambda p: (p[0]["E9_to_last_publish_ms"] - p[1]["E9_to_last_publish_ms"])
                - (p[0]["input_to_final_ACK_ms"] - p[1]["input_to_final_ACK_ms"]))
     fields = ("tick", "generation", "input_to_first_E9_ms_bounds", "E9_to_last_publish_ms", "input_to_final_ACK_ms")
-    return {"matched": len(pairs), "workload": {k: a[k] for k in keys},
+    return {"matched": len(pairs), "workload": {k: a[k] for k in WORKLOAD_FIELDS},
             "955": {k: a[k] for k in fields}, "966": {k: b[k] for k in fields}}
 
 
