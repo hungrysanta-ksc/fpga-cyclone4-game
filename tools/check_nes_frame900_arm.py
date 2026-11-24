@@ -14,6 +14,7 @@ from read_nes_frame900 import ROW,read_trace
 
 def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,412)):
     from read_nes_supply905 import TRACE_BYTES
+    tail_log = n in (1012,1014)
     supply_log = n in TRACE_BYTES
     src=src or WORK/f'link{n}/src'
     out=out or WORK/f'proof{n}'
@@ -29,9 +30,9 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
         from read_nes_display927 import ROW as row_type, CAP as capacity, decode as decoder
     if n==1010:
         from read_nes_display1010 import ROW as row_type, CAP as capacity, decode as decoder
-    if n==1012:
+    if tail_log:
         from read_nes_tail1012 import ROW as row_type, CAPACITY as capacity, decode
-        decoder=lambda path:decode(path.read_bytes())
+        decoder=lambda path:decode(path.read_bytes(),n)
     class WindowMachine(windows.Machine):
         def __init__(self,*args):
             super().__init__(*args)
@@ -52,7 +53,7 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
         q.call('nes_budget210_reset',[])
         g=0x1234
         q.put(q.video,'nes_native_video165','generation',g,2)
-        if n==1012:
+        if tail_log:
             q.u.mem_write(q.video+q.layout['nes_native_video165']['map_dirty'],((1<<23)-1).to_bytes(8,'little'))
         def time(t):q.u.mem_write(0xe0001004,struct.pack('<I',t))
         time(100000);q.call('input900',[g]);time(120000);q.call('input900',[g+2])
@@ -68,7 +69,7 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
         time(180000)
         def bulk(cpu,pc,size,_):
             length=cpu.reg_read(UC_ARM_REG_R3)
-            assert mode!=3 and length==(16 if short_header else 32 if supply_log or n in (927,1010,1012) else 26)
+            assert mode!=3 and length==(16 if short_header else 32 if supply_log or n in (927,1010,1012,1014) else 26)
             tx=cpu.reg_read(UC_ARM_REG_R1)
             assert 0x20000000<=tx<0x20010000 and cpu.mem_read(tx,1)==b'\x78'
             wire=bytes([0,0x90,255,0x34,0x12])+struct.pack('<10H',8000,8050,8800,9300,9400,9450,3939,8100,8200,9600)+bytes(1)
@@ -78,7 +79,7 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
                 wire=struct.pack('<BBHBBHHHI',0,0x95,g,0,0,120,122,120,0)+bytes(16)
             if n==927:
                 wire=struct.pack('<BBHBBH8H',0,0x97,g,0x7f,0x38,10,100,110,115,130,140,150,160,105)+bytes(8)
-            if n in (1010,1012):
+            if n in (1010,1012,1014):
                 wire=struct.pack('<BBHBB3HI5H',0,0xa1,g,0,0,20,93,22,0,10,40,90,91,91)+bytes(4)+bytes((15,165))
             cpu.mem_write(cpu.reg_read(UC_ARM_REG_R2),wire[:length]);q.ret(cpu,1)
         pc=q.syms['nes_native165_bulk'];q.u.hook_add(UC_HOOK_CODE,bulk,None,begin=pc,end=pc)
@@ -109,9 +110,9 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
         raw.write_bytes(files[f'/sd2snes/nes-frame-mmc{n}.bin'])
         run=decoder(raw);rows=run['rows']
         ticks=[t for t in (3000,3499,5500,5999) if not (mode==1 and t>=5500 or mode==2 and t<5500)]
-        if supply_log or n in (903,927,1010,1012):
+        if supply_log or n in (903,927,1010,1012,1014):
             ticks=[3000,3499] if mode==1 else [5500,5999]
-        counts_displays = (supply_log and n!=905) or n in (927,1010,1012)
+        counts_displays = (supply_log and n!=905) or n in (927,1010,1012,1014)
         if counts_displays:assert run['displayed55']==2
         if n==927:
             assert run['bins'][0]['foreground']==(100,50,25,1)
@@ -127,7 +128,7 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
         if counts_displays and 5500<=tick<6000:
             if n==927:
                 from read_nes_display927 import DISPLAYED as SIZE
-            elif n in (1010,1012):
+            elif n in (1010,1012,1014):
                 SIZE=16+row_type.size*capacity
             else:
                 from read_nes_supply905 import SIZE
@@ -135,7 +136,7 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
             count=struct.unpack_from('<H',before,position)[0]
             struct.pack_into('<H',expected,position,count+1)
         actual=bytearray(q.u.mem_read(scratch+16,8176))
-        if n==1012:
+        if tail_log:
             # A full table still performs the regular observer read into its discard row.
             from read_nes_tail1012 import SIZE as log_size
             end=log_size-16

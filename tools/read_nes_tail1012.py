@@ -13,10 +13,10 @@ STRIDE = TRACE.size+64*PACKET.size
 SIZE = OFFSET+3*STRIDE+ROW.size
 
 
-def decode(data):
-    if len(data)!=SIZE:
-        raise ValueError("wrong MMC1012 log length")
-    report=decode_rows(data,1012,CAPACITY)
+def decode(data,edition=1012):
+    if edition not in (1012,1014) or len(data)!=SIZE:
+        raise ValueError("unsupported tail log edition or length")
+    report=decode_rows(data,edition,CAPACITY)
     samples=[]
     for slot,(bg,tiles,chunks,kind,length) in enumerate(((532,3,2,1,64),(529,1,1,0,16))):
         start=OFFSET+slot*STRIDE
@@ -59,4 +59,6 @@ def decode(data):
 if __name__=="__main__":
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("log",type=Path)
-    print(json.dumps(decode(parser.parse_args().log.read_bytes()),indent=2))
+    parser.add_argument("--edition",type=int,choices=(1012,1014),default=1012)
+    args=parser.parse_args()
+    print(json.dumps(decode(args.log.read_bytes(),args.edition),indent=2))

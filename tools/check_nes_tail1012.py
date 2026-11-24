@@ -17,7 +17,7 @@ from prepare_nes_tail1012 import WORK
 from read_nes_tail1012 import HEADER, OFFSET, ROW, SIZE, STRIDE, decode
 
 
-def trace_test(src):
+def trace_test(src,edition=1012):
     m=TimedProbe(src)
     m.call("nes_budget210_reset",[])
     cache=m.data["ptrcache"]
@@ -64,31 +64,31 @@ def trace_test(src):
         m.u.mem_write(m.data["start950"],struct.pack("<I",current))
         m.call("finish_header950",[])
         m.u.mem_write(cache+6,struct.pack("<H",idx+1))
-        sample=decode(bytes(m.u.mem_read(cache,SIZE)))["samples"]
+        sample=decode(bytes(m.u.mem_read(cache,SIZE)),edition)["samples"]
         assert len(sample)==idx+1 and sample[-1]["packets"][1]["first_credit_observed"]==sample[-1]["packets"][2]["first_credit_observed"]
         assert [p["payload"] for p in sample[-1]["packets"]]==[8,4,240,24]
     # Scratch cannot promote a frame after a reset.
     m.call("nes_budget210_reset",[])
-    assert not decode(bytes(m.u.mem_read(cache,SIZE)))["samples"]
+    assert not decode(bytes(m.u.mem_read(cache,SIZE)),edition)["samples"]
     return dict(workloads=2,grouped_credit=True,counter_wrap=True,reset=True)
 
 
-def run(game):
-    src=WORK/"link/src"
-    out=WORK/"proof"
+def run(game,*,work=WORK,edition=1012):
+    src=work/"link/src"
+    out=work/"proof"
     out.mkdir(exist_ok=True)
-    save(out/"trace.json",trace_test(src))
+    save(out/"trace.json",trace_test(src,edition))
     assert check_header(src)==11
-    verify(1012,src,out,marker_values=(4,8,16,24))
+    verify(edition,src,out,marker_values=(4,8,16,24))
     save(out/"timer.json",timer_cases(src))
-    save(out/"menu.json",check(src,"1012"))
+    save(out/"menu.json",check(src,str(edition)))
     cases,ram,entry=check_game_path(src,order=empty_next_offer)
     save(out/"sram.json",dict(cases=cases,ram=ram,entry=entry))
-    loader(game,src,1012,out)
+    loader(game,src,edition,out)
     recovery=Path(tempfile.mkdtemp(prefix="recovery-",dir=out))/"base"
-    checked("check_nes_transfer512_recovery.py",["--arm",src,"--trial",1012,"--fault","none","--out",recovery],out/"base.log")
+    checked("check_nes_transfer512_recovery.py",["--arm",src,"--trial",edition,"--fault","none","--out",recovery],out/"base.log")
     (out/"base-result.json").write_bytes((recovery/"result.json").read_bytes())
-    print("PASS1012 archive selection, guards, windows, timer, SRAM D0, game loader, STOP and menu")
+    print(f"PASS{edition} archive selection, guards, windows, timer, SRAM D0, game loader, STOP and menu")
 
 
 if __name__=="__main__":

@@ -17,16 +17,16 @@ from unicorn import UC_HOOK_CODE
 from unicorn.arm_const import UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2, UC_ARM_REG_R3, UC_ARM_REG_PC, UC_ARM_REG_LR
 
 
-def run(temp, phase, mode):
+def run(temp, phase, mode, *, firmware=None, tag=None):
     clip = "late"
     corpus = temp/"nes-latency898"
     source = json.loads((corpus/"sender-late/sender.json").read_bytes())
     ref = json.loads((ROOT/"analysis/trial1012-package.json").read_bytes())
     assert sha(PACKED/"sink165.sfc") == ref["client"]
-    tag = "1013c-" + mode
+    tag = tag or "1013c-" + mode
     out = temp/f"nes-tile821-late-jointmirror-p{phase}-{tag}"
     template = temp/f"nes-tile821-obj-jointmirror-p{phase}-978returned-cold-pair/capture.lua"
-    firmware = (BASE if mode=="control" else WORK/mode)/"link/src"
+    firmware = firmware or (BASE if mode=="control" else WORK/mode)/"link/src"
     calibration = json.loads((template.parent/"joint.json").read_bytes())["parameters"]["driver_extra_us"]
     workload = []
     original = joint.Runtime.__init__
