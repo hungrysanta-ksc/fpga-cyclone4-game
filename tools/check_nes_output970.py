@@ -12,7 +12,7 @@ from check_nes_blank959 import directory, read, rows, sha
 from nes_raw506 import once
 
 
-def packet_path(trace, target=907):
+def packet_path(trace, target=907, *, expected_shape=None):
     packets = [json.loads(line) for line in (trace / "packets.jsonl").read_text().splitlines()]
     events = [e for e in read(trace / "events.json") if e.get("opcode") == "0xe1"]
     tiles = [json.loads(line) for line in (trace / "producer.jsonl").read_text().splitlines()]
@@ -39,7 +39,8 @@ def packet_path(trace, target=907):
                                issue=round(event["start"]), arrive=arrival, load=int(load["clock"]),
                                ack=int(ack["clock"]), tile_observed=source))
         commands.append((g, head[0], arrival, wire, bulk, source, math.ceil(event["clock"] - event["start"])))
-    assert (len(ledger), [r["op"] for r in ledger].count(7)) == {907: (23, 2), 911: (16, 3)}[target]
+    shape = expected_shape or {907: (23, 2), 911: (16, 3)}[target]
+    assert (len(ledger), [r["op"] for r in ledger].count(7)) == shape
     return commands, ledger
 
 
