@@ -27,6 +27,8 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
         decoder=lambda path:decode(path,n,direct_probe=direct_probe)
     if n==927:
         from read_nes_display927 import ROW as row_type, CAP as capacity, decode as decoder
+    if n==1010:
+        from read_nes_display1010 import ROW as row_type, CAP as capacity, decode as decoder
     class WindowMachine(windows.Machine):
         def __init__(self,*args):
             super().__init__(*args)
@@ -61,7 +63,7 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
         time(180000)
         def bulk(cpu,pc,size,_):
             length=cpu.reg_read(UC_ARM_REG_R3)
-            assert mode!=3 and length==(16 if short_header else 32 if supply_log or n==927 else 26)
+            assert mode!=3 and length==(16 if short_header else 32 if supply_log or n in (927,1010) else 26)
             tx=cpu.reg_read(UC_ARM_REG_R1)
             assert 0x20000000<=tx<0x20010000 and cpu.mem_read(tx,1)==b'\x78'
             wire=bytes([0,0x90,255,0x34,0x12])+struct.pack('<10H',8000,8050,8800,9300,9400,9450,3939,8100,8200,9600)+bytes(1)
@@ -71,6 +73,8 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
                 wire=struct.pack('<BBHBBHHHI',0,0x95,g,0,0,120,122,120,0)+bytes(16)
             if n==927:
                 wire=struct.pack('<BBHBBH8H',0,0x97,g,0x7f,0x38,10,100,110,115,130,140,150,160,105)+bytes(8)
+            if n==1010:
+                wire=struct.pack('<BBHBB3HI5H',0,0xa1,g,0,0,20,93,22,0,10,40,90,91,91)+bytes(4)+bytes((15,165))
             cpu.mem_write(cpu.reg_read(UC_ARM_REG_R2),wire[:length]);q.ret(cpu,1)
         pc=q.syms['nes_native165_bulk'];q.u.hook_add(UC_HOOK_CODE,bulk,None,begin=pc,end=pc)
         if n==927:
@@ -100,9 +104,9 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
         raw.write_bytes(files[f'/sd2snes/nes-frame-mmc{n}.bin'])
         run=decoder(raw);rows=run['rows']
         ticks=[t for t in (3000,3499,5500,5999) if not (mode==1 and t>=5500 or mode==2 and t<5500)]
-        if supply_log or n in (903,927):
+        if supply_log or n in (903,927,1010):
             ticks=[3000,3499] if mode==1 else [5500,5999]
-        counts_displays = (supply_log and n!=905) or n==927
+        counts_displays = (supply_log and n!=905) or n in (927,1010)
         if counts_displays:assert run['displayed55']==2
         if n==927:
             assert run['bins'][0]['foreground']==(100,50,25,1)
@@ -118,6 +122,8 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
         if counts_displays and 5500<=tick<6000:
             if n==927:
                 from read_nes_display927 import DISPLAYED as SIZE
+            elif n==1010:
+                SIZE=16+row_type.size*capacity
             else:
                 from read_nes_supply905 import SIZE
             position=SIZE-16
