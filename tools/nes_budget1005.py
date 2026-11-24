@@ -22,6 +22,11 @@ def earliest(phase, permille):
         arrive=max(max(bus,w['independent_release'])+wire,previous)
         return (arrive,receiver,max(arrive,receiver)+cpu)
 
+    return schedule(queues,jobs[0],jobs[-1],step)
+
+
+def schedule(queues,begin,seal,step):
+    """Explore all interleavings preserving FIFO order within each queue."""
     def retain(states,new):
         if any(all(a<=b for a,b in zip(old,new)) for old in states):
             return
@@ -29,11 +34,11 @@ def earliest(phase, permille):
         states.append(new)
 
     initial=(0,)*len(queues)
-    states={initial:[step((0,0,0),jobs[0])]}
+    states={initial:[step((0,0,0),begin)]}
     for pos in product(*(range(len(q)+1) for q in queues)):
         front=states.pop(pos)
         if all(n==len(q) for n,q in zip(pos,queues)):
-            return min(step(t,jobs[-1])[-1] for t in front)
+            return min(step(t,seal)[-1] for t in front)
         for k,(n,q) in enumerate(zip(pos,queues)):
             if n==len(q):
                 continue
