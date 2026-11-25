@@ -38,7 +38,7 @@ def trace_test(src,edition=1012):
     pc=m.syms["nes_native165_bulk"]
     m.u.hook_add(UC_HOOK_CODE,spi,None,begin=pc,end=pc)
     cases=((532,5517,3,2,1,64),(529,5604,1,1,0,16))
-    if edition==1025:
+    if edition in (1025,1027):
         cases=((645,5517,9,3,1,32),(644,5821,4,2,0,48))
     for idx,(bg,scene,tiles,chunks,kind,length) in enumerate(cases):
         gen=100+idx
@@ -55,10 +55,13 @@ def trace_test(src,edition=1012):
         tick();m.call("e0900",[gen,idx])
         at=cache+HEADER.size+idx*ROW.size
         desc=struct.pack("<BBHHHI",1,kind,length,0,gen,34)
-        obj,dirty=(10,3) if edition==1025 else (18,23)
-        row=ROW.pack(scene,gen,bg,100,2,1,obj,dirty,3,idx,bytes(32),desc)
+        obj,dirty=(10,3) if edition in (1025,1027) else (18,23)
+        row=ROW.pack(scene,gen,bg,6000 if edition==1027 else 100,2,1,obj,dirty,3,idx,bytes(32),desc)
         m.u.mem_write(at,row)
         response[:]=struct.pack("<BBHBB3HI5H",0,0xa1,gen,tiles,chunks,20,99,24,34,10,40,90,91,91)+bytes(4)+bytes((15,0xa5))
+        if edition==1027:
+            response[6:12]=bytes((20,99,24,192,21,22))
+            response[26:30]=bytes((20,23,24,25))
         # A stale header must not promote the trace. An accepted header is immutable.
         response[2]^=1
         assert not m.call("header950",[at])
@@ -68,7 +71,10 @@ def trace_test(src,edition=1012):
         m.u.mem_write(m.data["start950"],struct.pack("<I",current))
         m.call("finish_header950",[])
         m.u.mem_write(cache+6,struct.pack("<H",idx+1))
-        sample=decode(bytes(m.u.mem_read(cache,SIZE)),edition)["samples"]
+        report=decode(bytes(m.u.mem_read(cache,SIZE)),edition)
+        sample=report["samples"]
+        if edition==1027:
+            assert report["rows"][-1]["last_slot_run"]["ticks_from_first_E9"]["head_E8"]==5
         assert len(sample)==idx+1 and sample[-1]["packets"][1]["first_credit_observed"]==sample[-1]["packets"][2]["first_credit_observed"]
         assert [p["payload"] for p in sample[-1]["packets"]]==[8,4,240,24]
     # Scratch cannot promote a frame after a reset.

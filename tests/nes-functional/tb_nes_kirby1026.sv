@@ -92,8 +92,14 @@ module tb_nes_kirby1026;
   end
  end
  task n;@(negedge nes);endtask
+`ifdef KIRBY1027_OBSERVER
+ `include "kirby1027_scoreboard.svh"
+`endif
  initial begin
   if(!$value$plusargs("CASE=%d",scenario))$fatal;
+`ifdef KIRBY1027_OBSERVER
+  hold_cycles=45000;
+`endif
   repeat(8)n;reset=0;while(!capready)n;capture=1;n;capture=0;n;seal_capture=1;n;seal_capture=0;
   repeat(40)n;
   for(g=0;g<7;g++)for(j=0;j<units[g];j++)begin
@@ -104,8 +110,14 @@ module tb_nes_kirby1026;
   if(scenario==3)repeat(hold_cycles)n;
   while(!ender)n;finish=1;n;finish=0;
   while(nreturn!=7)n;
+`ifdef KIRBY1027_OBSERVER
+  inspect_header();
+`endif
   // Flush/abort cannot expose an old chunk as ready after the reset releases.
   stop=1;repeat(8)n;stop=0;repeat(12)n;
+`ifdef KIRBY1027_OBSERVER
+  if(trace.complete || trace.read_ok || trace.reply!==0)$fatal(1,"STOP left a readable footer");
+`endif
   if(chunk||req||tv||nbyte!=640||ncheck!=640||!last_reads||
      !(last_done<end_sent && end_sent<=published && published<=visible && visible<=observed))$fatal(1,"end state");
   $display("PASS1026 case=%0d fg_wait_nes=%0d bank_wait_host=%0d final_grants=%0d prior_return=%0d last_done=%0d end=%0d publish=%0d visible=%0d poll=%0d bytes=%0d",

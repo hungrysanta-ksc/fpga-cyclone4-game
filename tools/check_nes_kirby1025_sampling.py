@@ -7,8 +7,8 @@ from prepare_nes_kirby1025 import WORK
 from read_nes_tail1012 import SIZE, decode
 
 
-def check():
-    src = WORK / 'link/src'
+def check(edition=1025):
+    src = WORK.with_name(f'nes-kirby{edition}') / 'link/src'
     q = TimedProbe(src)
     q.call('nes_budget210_reset', [])
     calls = []
@@ -32,7 +32,7 @@ def check():
         q.call('nes_budget210_frame', [tick])
         q.call('nes_budget210_display', [tick, q.video])
         q.call('finish_header950', [])
-    result = decode(bytes(q.u.mem_read(q.data['ptrcache'], SIZE)), 1025)
+    result = decode(bytes(q.u.mem_read(q.data['ptrcache'], SIZE)), edition)
     expected = list(range(3001,6000,40))
     assert calls == expected == [r['tick'] for r in result['rows']]
     assert not any('invalid' in r for r in result['rows'])
