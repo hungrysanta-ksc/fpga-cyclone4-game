@@ -10,8 +10,8 @@ from prepare_nes_opening818 import ADVENTURE_SHA
 FRAMES = (1500, 1557, 2100, 3000, 3600)
 
 
-def capture(rom, mesen, out, frames=FRAMES):
-    assert sha(rom) == ADVENTURE_SHA
+def capture(rom, mesen, out, frames=FRAMES, *, expected_sha=ADVENTURE_SHA):
+    assert sha(rom) == expected_sha
     out.mkdir(parents=True, exist_ok=False)
     text = (ROOT / "tests/nes-functional/capture_geometry230.lua").read_text()
     text = text[:text.index("local function input(f)")] + text[text.index("local function screenshot(f)"):]

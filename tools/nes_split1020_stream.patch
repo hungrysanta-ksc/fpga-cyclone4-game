@@ -1,0 +1,178 @@
+--- a/nes_native_video165.h
++++ b/nes_native_video165.h
+@@ -18 +18 @@
+- uint8_t groups,objects,error;bool valid;uint8_t patch_count;bool scroll_issued; /*181 tail padding. */
++ uint8_t groups,objects,error;bool valid;uint8_t patch_count;bool scroll_issued, raw_prefix_issued; /*181 tail padding. */
+--- a/nes_native_sink165.c
++++ b/nes_native_sink165.c
+@@ -273,0 +274,10 @@
++static __attribute__((noinline)) bool pair1020(struct nes_native_sink165 *s,
++ struct nes_native_video165 *p,unsigned offset,bool early){
++ const uint8_t *joined=(uint8_t *)p->bg_keys+4096+(offset-1121);
++ unsigned op=early?24:2;
++ if(!packet(s,op,5,offset,joined,201))return false;
++ if(early){
++  if(!map527(s,p,0x7fffff,1))return false;
++ }
++ return packet(s,op,5,offset+201,joined+201,240);
++}
+@@ -305,0 +316,4 @@
++ if(map==0x7fffff && p->patch_count==1 && (s->map_next&127)==12){
++  if(!pair1020(s,p,1121,true))return false;
++  p->raw_prefix_issued=true;
++ }
+@@ -347,7 +361,2 @@
+-  unsigned packed=2048;const uint8_t *raw=p->patch.chr;
+-  if(p->patch_count && p->patch_count<=2){
+-   uint8_t *out=(uint8_t *)p->bg_keys+4096;packed=0;
+-   for(unsigned plane=0;plane<3;plane++)for(unsigned row=0;row<p->patch_count;row++)for(unsigned tile=0;tile<32;tile++)
+-    {memcpy(out+packed,p->patch.chr+tile*64+plane*16+row*2,2);packed+=2;}
+-   raw=out;
+-  }
++  unsigned packed=p->patch_count<=2?p->patch_count*192u:2048u;
++  const uint8_t *raw=(const uint8_t *)p->bg_keys+4096;
+@@ -386,5 +394,0 @@
+-  _Static_assert(__builtin_offsetof(struct nes_native_video165,patch.enable)==
+-                 __builtin_offsetof(struct nes_native_video165,patch.mode)+162,"HDMA table layout");
+-  const uint8_t *tables=(const uint8_t *)p+__builtin_offsetof(struct nes_native_video165,patch.mode);
+-  /* One contiguous wire image, outside both source regions. Its
+-   * 441 bytes fit even when all 2,048 canonical CHR bytes are live. */
+@@ -394,6 +398 @@
+-  uint8_t *joined=(uint8_t *)p->bg_keys+6144;
+-  memcpy(joined,raw+prefix,192);
+-  memcpy(joined+192,tables,243);
+-  memcpy(joined+435,p->patch.size,6);
+-  if(!packet(s,2,5,offset,joined,201))return false;
+-  if(!packet(s,2,5,offset+201,joined+201,240))return false;
++  if(!p->raw_prefix_issued && !pair1020(s,p,offset,false))return false;
+--- a/nes_planner211.c
++++ b/nes_planner211.c
+@@ -198,52 +197,0 @@
+- /* No OBJ/raw operation below writes map. A completed offer may only
+-  * continue the exact683 map prefix; cold and other heads keep old priority. */
+- if(resident->offer_map && !resident->offer_map(resident->ctx,next_offer!=3))return fail(p,7);
+-
+- /* No callback retains scratch pointers; only ACKed tentative bytes persist.
+-  * Clear all544 bytes, including high-OAM, before changing its lifetime. */
+- memset(p->oam,0,sizeof(p->oam));
+- for(unsigned i=0;i<128;i++)p->oam[i*4+1]=240;
+- /* BG allocation and its final synchronous staging callback have finished.
+-  * No later lookup reads bg_keys. Borrow448 of its8192 bytes for OBJ checks;
+-  * the raw patch phase below clears its own complete region before reuse.
+-  * Byte access may alias the expired uint64_t keys, with no new allocation. */
+- uint8_t *rank_used=(uint8_t *)p->bg_keys,*evaluation=rank_used+224;
+- memset(rank_used,0,448);
+- /* Compact fragments already carry stable NES evaluation rank. Sorting by
+-  * rank preserves every visible row; same-rank visible overlaps are rejected. */
+- for(unsigned rank=0;rank<8;rank++)for(unsigned i=0;i<s->counts[2];i++){
+-  uint64_t v=s->objects[i];if(v>>49)return fail(p,8);if(((v>>46)&7)!=rank)continue;
+-  unsigned tag=(unsigned)v&8191,x=(unsigned)(v>>22)&255,attr=(unsigned)(v>>30)&255,mask=(unsigned)(v>>38)&255;
+-  int top=(int)((v>>13)&511);if(top&256)top-=512;if(!mask)return fail(p,8);
+-  if(!tile(s,tag,2))return fail(p,9);
+-  uint8_t masks[2]={0};
+-  for(unsigned f=0;f<8;f++)if(mask&(1u<<f)){
+-   int y=top+((attr&128)?7-(int)f:(int)f);if(y<0||y>=224)return fail(p,10);
+-   if(patched(s,(unsigned)y))continue;
+-   if(rank_used[y]&(1u<<rank))return fail(p,10);
+-   rank_used[y]|=(uint8_t)(1u<<rank);
+-   if(!(s->raster[y]&(UINT64_C(1)<<40)))continue;
+-   masks[epoch(s,(unsigned)y)]|=(uint8_t)(1u<<f);
+-  }
+-  for(unsigned e=0;e<palettes;e++)if(masks[e]){
+-   if(p->objects==128)return fail(p,11);
+-   for(int y=top;y<top+8;y++)if(y>=0&&y<224&&!patched(s,(unsigned)y)&&++evaluation[y]>32)return fail(p,12);
+-   struct nes_plan191 q;q.generation=s->generation;q.slot=0;q.tag=(uint16_t)tag;q.kind=1;q.mask=masks[e];
+-   for(unsigned f=0;f<8;f++){q.row[f*2]=q.row[f*2+1]=(uint8_t)f;q.alt[f]=65535;}
+-   unsigned slot=nes_resident211_slot(resident,p,tag|((unsigned)masks[e]<<13),&q);
+-   if(slot>=128)return fail(p,13);
+-   unsigned o=p->objects++*4;p->oam[o]=(uint8_t)x;p->oam[o+1]=(uint8_t)top;p->oam[o+2]=(uint8_t)slot;
+-   p->oam[o+3]=(uint8_t)(((e*4+(attr&3))<<1)|((attr&32)?0x20:0x30)|(attr&0xc0));
+-  }
+- }
+-
+- if(p->scroll_issued && resident->finish_obj && !resident->finish_obj(resident->ctx))
+-  return fail(p,7);
+- /* CGRAM becomes the palette only after the final OBJ ACK. */
+- memset(p->cgram,0,sizeof(p->cgram));
+- put16(p->cgram,lut[s->palette[0]]);
+- for(unsigned e=0;e<palettes;e++)for(unsigned a=0;a<4;a++)for(unsigned c=0;c<4;c++){
+-  put16(p->cgram+(e*16+a*4+c)*2,lut[s->palette[e*32+a*4+c]]);
+-  put16(p->cgram+(128+e*64+a*16+c)*2,lut[s->palette[e*32+16+a*4+c]]);
+- }
+-
+@@ -272 +219,0 @@
+-  for(unsigned c=0;c<64;c++)put16(p->cgram+(64+c)*2,lut[c]);
+@@ -288 +235,72 @@
+- }
++  {
++uint8_t *out=(uint8_t *)p->bg_keys+4096;unsigned packed=2048;
++  if(p->patch_count<=2){
++   packed=0;
++   for(unsigned plane=0;plane<3;plane++)for(unsigned row=0;row<p->patch_count;row++)for(unsigned tile=0;tile<32;tile++)
++    {memcpy(out+packed,p->patch.chr+tile*64+plane*16+row*2,2);packed+=2;}
++  }else memcpy(out,p->patch.chr,2048);
++  _Static_assert(__builtin_offsetof(struct nes_native_video165,patch.enable)==
++                 __builtin_offsetof(struct nes_native_video165,patch.mode)+162,"HDMA table layout");
++  const uint8_t *tables=(const uint8_t *)p+__builtin_offsetof(struct nes_native_video165,patch.mode);
++  /* One contiguous wire image, outside both source regions. Its
++   * 441 bytes fit even when all 2,048 canonical CHR bytes are live. */
++  memcpy(out+packed,tables,243);
++  memcpy(out+packed+243,p->patch.size,6);
++  }
++ }
++ /* No OBJ/raw operation below writes map. A completed offer may only
++  * continue the exact683 map prefix; cold and other heads keep old priority. */
++ if(resident->offer_map && !resident->offer_map(resident->ctx,next_offer!=3))return fail(p,7);
++
++ /* No callback retains scratch pointers; only ACKed tentative bytes persist.
++  * Clear all544 bytes, including high-OAM, before changing its lifetime. */
++ memset(p->oam,0,sizeof(p->oam));
++ for(unsigned i=0;i<128;i++)p->oam[i*4+1]=240;
++ /* BG allocation and its final synchronous staging callback have finished.
++  * No later lookup reads bg_keys. Borrow448 of its8192 bytes for OBJ checks;
++  * the raw patch phase below clears its own complete region before reuse.
++  * Byte access may alias the expired uint64_t keys, with no new allocation. */
++ /* Preserve the completed raw patch while evaluating OBJ. */
++ _Static_assert(sizeof(p->patch)<=2304,"OBJ scratch overlaps patch");
++ uint8_t *rank_used=(uint8_t *)p->bg_keys+2304,*evaluation=rank_used+224;
++ memset(rank_used,0,448);
++ /* Compact fragments already carry stable NES evaluation rank. Sorting by
++  * rank preserves every visible row; same-rank visible overlaps are rejected. */
++ for(unsigned rank=0;rank<8;rank++)for(unsigned i=0;i<s->counts[2];i++){
++  uint64_t v=s->objects[i];if(v>>49)return fail(p,8);if(((v>>46)&7)!=rank)continue;
++  unsigned tag=(unsigned)v&8191,x=(unsigned)(v>>22)&255,attr=(unsigned)(v>>30)&255,mask=(unsigned)(v>>38)&255;
++  int top=(int)((v>>13)&511);if(top&256)top-=512;if(!mask)return fail(p,8);
++  if(!tile(s,tag,2))return fail(p,9);
++  uint8_t masks[2]={0};
++  for(unsigned f=0;f<8;f++)if(mask&(1u<<f)){
++   int y=top+((attr&128)?7-(int)f:(int)f);if(y<0||y>=224)return fail(p,10);
++   if(patched(s,(unsigned)y))continue;
++   if(rank_used[y]&(1u<<rank))return fail(p,10);
++   rank_used[y]|=(uint8_t)(1u<<rank);
++   if(!(s->raster[y]&(UINT64_C(1)<<40)))continue;
++   masks[epoch(s,(unsigned)y)]|=(uint8_t)(1u<<f);
++  }
++  for(unsigned e=0;e<palettes;e++)if(masks[e]){
++   if(p->objects==128)return fail(p,11);
++   for(int y=top;y<top+8;y++)if(y>=0&&y<224&&!patched(s,(unsigned)y)&&++evaluation[y]>32)return fail(p,12);
++   struct nes_plan191 q;q.generation=s->generation;q.slot=0;q.tag=(uint16_t)tag;q.kind=1;q.mask=masks[e];
++   for(unsigned f=0;f<8;f++){q.row[f*2]=q.row[f*2+1]=(uint8_t)f;q.alt[f]=65535;}
++   unsigned slot=nes_resident211_slot(resident,p,tag|((unsigned)masks[e]<<13),&q);
++   if(slot>=128)return fail(p,13);
++   unsigned o=p->objects++*4;p->oam[o]=(uint8_t)x;p->oam[o+1]=(uint8_t)top;p->oam[o+2]=(uint8_t)slot;
++   p->oam[o+3]=(uint8_t)(((e*4+(attr&3))<<1)|((attr&32)?0x20:0x30)|(attr&0xc0));
++  }
++ }
++
++ if(p->scroll_issued && resident->finish_obj && !resident->finish_obj(resident->ctx))
++  return fail(p,7);
++ /* CGRAM becomes the palette only after the final OBJ ACK. */
++ memset(p->cgram,0,sizeof(p->cgram));
++ put16(p->cgram,lut[s->palette[0]]);
++ for(unsigned e=0;e<palettes;e++)for(unsigned a=0;a<4;a++)for(unsigned c=0;c<4;c++){
++  put16(p->cgram+(e*16+a*4+c)*2,lut[s->palette[e*32+a*4+c]]);
++  put16(p->cgram+(128+e*64+a*16+c)*2,lut[s->palette[e*32+16+a*4+c]]);
++ }
++
++ if(p->patch_count)
++  for(unsigned c=0;c<64;c++)put16(p->cgram+(64+c)*2,lut[c]);

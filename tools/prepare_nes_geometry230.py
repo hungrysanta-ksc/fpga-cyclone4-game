@@ -25,6 +25,7 @@ def main():
     p = argparse.ArgumentParser()
     for n in ('capture', 'prior', 'out'):
         p.add_argument('--'+n, type=Path, required=True)
+    p.add_argument('--kirby14', action='store_true', help='Carry physical CHR bit 17 in stimulus bit 107')
     p.add_argument('--first', type=int, default=905)
     p.add_argument('--last', type=int, default=975)
     p.add_argument('--allow-disabled-tail',action='store_true',
@@ -86,7 +87,7 @@ def main():
                 raise AssertionError('Midframe palette write needs exact event capture')
         for row in fetch[f]:
             _,y,d,addr,val,physical,kind,v,t,x,mask,ctrl,oy,ot,oa,ox=row
-            assert kind==57 and physical<131072
+            assert kind==57 and physical<(262144 if a.kirby14 else 131072)
             states[y*341+d+1]=(v,t,x,mask,ctrl)
             if d%8 not in (5,7):continue
             obj=257<=d<=320
@@ -120,7 +121,7 @@ def main():
             low=not bool(addr&8) if obj else d%8==5
             tick=y*341+d+1+(2 if obj and not low else 0)
             assert tick not in signals
-            signals[tick]=(physical|(addr<<17)|(attr<<31)|(oa<<33)|(ox<<41)|
+            signals[tick]=((physical & 0x1ffff)|((physical>>17)<<107)|(addr<<17)|(attr<<31)|(oa<<33)|(ox<<41)|
                 (int(bg and low)<<49)|(int(bg and not low)<<50)|
                 (int(obj and low)<<51)|(int(obj and not low)<<52)|
                 (int(obj and valid)<<53)|(3<<54))

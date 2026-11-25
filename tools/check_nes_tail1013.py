@@ -52,8 +52,8 @@ def collect(d):
     return result,outcome
 
 
-def guards(mode):
-    root=WORK/mode
+def guards(mode, *, root=None):
+    root=root or WORK/mode
     g=json.loads((root/"guards.json").read_bytes())
     receipt=g["cases"]["normal"]
     recovery=json.loads((root/"recovery/result.json").read_bytes())

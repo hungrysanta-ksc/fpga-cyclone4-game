@@ -66,7 +66,8 @@ def ordinary_first(commands, target, before_all_tiles):
     return earlier
 
 
-def replay(temp, trace, out, mode, commands, target=907, fault=None, *, observe=None, rom=None):
+def replay(temp, trace, out, mode, commands, target=907, fault=None, *, observe=None, rom=None,
+           schedule_after=None, reserved_spi=False):
     out = out.resolve()
     out.mkdir(parents=True)
     lua = (trace / "capture.lua").read_text()
@@ -108,7 +109,7 @@ local starts=assert(io.open(ROOT..'/starts.txt','w'))""")
     if mode in ("ordinary", "prelude", "reserved"):
         commands = ordinary_first(commands, target, mode != "ordinary")
     busy = []
-    if mode == "reserved":
+    if mode == "reserved" or reserved_spi:
         first = next(p[2] for p in commands if p[0] == target)
         busy = [(math.floor(e["start"]), math.ceil(e["clock"])) for e in read(trace / "events.json")
                 if "start" in e and e.get("opcode") != "0xe1" and e["clock"] > first]
@@ -118,6 +119,8 @@ local starts=assert(io.open(ROOT..'/starts.txt','w'))""")
         # Preserve BEGIN and the entire boot. In the tail variant also preserve
         # both tile handoffs. Model a dedicated E1 bus only for the selected tail.
         early = g == target and op != 1 and (mode in ("frame", "ordinary", "prelude", "reserved") or (mode == "tail" and arrival > last_tile))
+        if schedule_after is not None:
+            early = g == target and len(stream) >= schedule_after
         if fault == "bad_seal" and g == target and op == 3:
             damaged = bytearray.fromhex(wire)
             damaged[8] ^= 1

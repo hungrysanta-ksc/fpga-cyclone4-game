@@ -86,7 +86,7 @@ def encode(geometry,raw,generation):
  return packets,counts,arrays
 
 class Machine:
- def __init__(self,src,palette):
+ def __init__(self,src,palette, *, buffers=(0x20008000,0x2000b000,0x2000f000,0x20011000)):
   self.src=src;self.layout={};self.instructions=0;self.plans=[];self.token=0
   self.u=Uc(UC_ARCH_ARM,UC_MODE_THUMB|UC_MODE_MCLASS);self.u.mem_map(0x08000000,0x80000);self.u.mem_map(0x20000000,0x20000)
   flash=(src/'obj-nes-100/firmware.stm').read_bytes()
@@ -100,7 +100,7 @@ class Machine:
     for d in cu.iter_DIEs():
      if d.tag!='DW_TAG_structure_type' or not d.attributes.get('DW_AT_name') or not d.attributes.get('DW_AT_byte_size'):continue
      name=d.attributes['DW_AT_name'].value.decode()
-     if name not in ['nes_native165','nes_native_video165','nes_resident211','nes_plan191']:continue
+     if name not in ['nes_native165','nes_native_video165','nes_resident211','nes_plan191','nes_plan200']:continue
      item={'size':d.attributes['DW_AT_byte_size'].value}
      for c in d.iter_children():
       if c.tag!='DW_TAG_member':continue
@@ -120,7 +120,7 @@ class Machine:
         if member.attributes.get('DW_AT_name'):item[member.attributes['DW_AT_name'].value.decode()]=off
      if name in self.layout:assert self.layout[name]==item
      self.layout[name]=item
-  self.state,self.video,self.resident,self.lut=0x20008000,0x2000b000,0x2000f000,0x20011000
+  self.state,self.video,self.resident,self.lut=buffers
   assert self.state+self.layout['nes_native165']['size']<=self.video
   assert self.video+self.layout['nes_native_video165']['size']<=self.resident
   assert self.resident+self.layout['nes_resident211']['size']<=self.lut

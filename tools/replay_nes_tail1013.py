@@ -17,7 +17,7 @@ from unicorn import UC_HOOK_CODE
 from unicorn.arm_const import UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2, UC_ARM_REG_R3, UC_ARM_REG_PC, UC_ARM_REG_LR
 
 
-def run(temp, phase, mode, *, firmware=None, tag=None):
+def run(temp, phase, mode, *, firmware=None, tag=None, observe_arm=None, observe_client=None):
     clip = "late"
     corpus = temp/"nes-latency898"
     source = json.loads((corpus/"sender-late/sender.json").read_bytes())
@@ -43,6 +43,8 @@ def run(temp, phase, mode, *, firmware=None, tag=None):
 
     def setup(cpu,args,link):
         original(cpu,args,link)
+        if observe_arm:
+            observe_arm(cpu)
         cpu.driver_extra[0xeb]=calibration["0xeb"]*joint.MASTER/1e6
         seed_slots(cpu,json.loads((corpus/"late-slots.json").read_bytes()))
 
@@ -100,7 +102,7 @@ def run(temp, phase, mode, *, firmware=None, tag=None):
          patch.object(joint.Runtime,"__init__",setup), gates(source,True):
         main(corpus/"late-high",clip,"jointmirror",phase,temp,arm=firmware,client=PACKED,
              client_hash=ref["client"],link_class=Link,packet_source=source,driver_extra_us=calibration,
-             adapt_template=lambda s:template.read_text())
+             adapt_template=lambda s:observe_client(template.read_text()) if observe_client else template.read_text())
     assert len(workload)==len(CLIPS[clip])
     (out/"loads898.json").write_text(json.dumps(workload))
 
