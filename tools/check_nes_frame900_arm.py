@@ -14,7 +14,7 @@ from read_nes_frame900 import ROW,read_trace
 
 def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,412)):
     from read_nes_supply905 import TRACE_BYTES
-    tail_log = n in (1012,1014,1016,1023,1024,1025,1027,1028)
+    tail_log = n in (1012,1014,1016,1023,1024,1025,1027,1028,1029,1030)
     supply_log = n in TRACE_BYTES
     src=src or WORK/f'link{n}/src'
     out=out or WORK/f'proof{n}'
@@ -33,6 +33,9 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
     if n==1016:
         from read_nes_supply1016 import ROW as row_type, CAP as capacity, decode
         decoder=lambda path:decode(path.read_bytes())
+    elif n in (1029,1030):
+        from read_nes_ingress1029 import ROW as row_type, CAPACITY as capacity, decode
+        decoder=lambda path:decode(path.read_bytes(),n)
     elif tail_log:
         from read_nes_tail1012 import ROW as row_type, CAPACITY as capacity, decode
         decoder=lambda path:decode(path.read_bytes(),n)
@@ -56,7 +59,7 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
         q.call('nes_budget210_reset',[])
         g=0x1234
         q.put(q.video,'nes_native_video165','generation',g,2)
-        if tail_log and n not in (1025,1027,1028):
+        if tail_log and n not in (1025,1027,1028,1029,1030):
             q.u.mem_write(q.video+q.layout['nes_native_video165']['map_dirty'],((1<<23)-1).to_bytes(8,'little'))
         def time(t):q.u.mem_write(0xe0001004,struct.pack('<I',t))
         time(100000);q.call('input900',[g]);time(120000);q.call('input900',[g+2])
@@ -82,7 +85,7 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
                 wire=struct.pack('<BBHBBHHHI',0,0x95,g,0,0,120,122,120,0)+bytes(16)
             if n==927:
                 wire=struct.pack('<BBHBBH8H',0,0x97,g,0x7f,0x38,10,100,110,115,130,140,150,160,105)+bytes(8)
-            if n in (1010,1012,1014,1023,1024,1025,1027,1028):
+            if n in (1010,1012,1014,1023,1024,1025,1027,1028,1029,1030):
                 wire=struct.pack('<BBHBB3HI5H',0,0xa1,g,0,0,20,93,22,0,10,40,90,91,91)+bytes(4)+bytes((15,165))
             if n==1016:
                 wire=bytearray(32);wire[1]=0xb6;struct.pack_into('<H',wire,2,g)
@@ -118,7 +121,7 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
         ticks=[t for t in (3000,3499,5500,5999) if not (mode==1 and t>=5500 or mode==2 and t<5500)]
         if supply_log or tail_log or n in (903,927,1010):
             ticks=[3000,3499] if mode==1 else [5500,5999]
-        if n in (1025,1027,1028) and mode in (0,3):
+        if n in (1025,1027,1028,1029,1030) and mode in (0,3):
             ticks=[3000,3499,5499,5999]
         counts_displays = (supply_log and n!=905) or tail_log or n in (927,1010)
         if counts_displays:assert run['displayed55']==2
