@@ -63,7 +63,7 @@ def package(build,image,capture):
             data=old.read(name)
             assert digest(data)==sha
             if name=='README-KO.txt':
-                data=(ROOT/'docs/nes-mmc1023-trial.ko.md').read_bytes()
+                data=(ROOT/'docs/nes-mmc1023-trial.ko.md').read_text(encoding='utf-8').encode('utf-8')
             elif name.endswith('/firmware.stm'):
                 data=fw
             elif name.endswith('/fpga_mmc1012.bi3'):
