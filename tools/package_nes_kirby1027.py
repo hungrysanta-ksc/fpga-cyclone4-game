@@ -11,8 +11,7 @@ from package_nes_trial872 import ROOT, digest, read, write_verified_archive
 from check_nes_kirby1027_header import WORK
 
 
-def package():
-    routed=WORK/'lite-tag'
+def timing(routed):
     fit=(routed/'board.fit.summary').read_text()
     assert 'Fitter Status : Successful' in fit and 'Lite Edition' in fit
     le=int(re.search(r'Total logic elements : ([\d,]+)',fit)[1].replace(',',''))
@@ -34,6 +33,28 @@ def package():
             delays[group+'_margin_ns']=round(edges*5.952-74-delays[group]-delays['capture'],3)
             assert delays[group+'_margin_ns']>0
 
+    return dict(LE=le,LAB=resource('Total LABs:  partially or completely used'),M9K=resource('M9Ks'),
+                STA_checks=len(slacks),min_slack_ns=min(slacks),io=io)
+
+
+def programmer(routed,work,edition):
+    raw=(routed/'board.rbf').read_bytes()
+    packed=encode(raw)
+    assert decode(packed)==raw
+    scratch=Path(tempfile.mkdtemp(prefix=f'kirby{edition}-pgm-'))
+    name=f'fpga_mmc{edition}.bi3'
+    for n,d in [('board.rbf',raw),(name,packed)]:
+        (scratch/n).write_bytes(d)
+    checked('test_nes_nrom458_programmer.py',['--image',scratch/name,'--rbf',scratch/'board.rbf',
+            '--out',scratch/'programmer'],work/'programmer.log')
+    p=read(scratch/'programmer/result.json')
+    assert p['passed'] and p['image_sha256']==digest(packed) and p['rbf_sha256']==digest(raw)
+    return packed,p
+
+
+def package():
+    routed=WORK/'lite-tag'
+    board=timing(routed)
     src=WORK/'link/src'
     fw=(src/'obj-nes-100/firmware.stm').read_bytes()
     size,crc,inverse=struct.unpack_from('<III',fw,8)
@@ -52,19 +73,9 @@ def package():
     assert proof['sram']['cases']['normal']['checked_retire'] and 'bad-crc' in proof['sram']['cases']
     assert proof['sampling']['wire_reads']==proof['sampling']['windows']==75 and proof['trace']['reset']
 
-    raw=(routed/'board.rbf').read_bytes()
-    packed=encode(raw)
-    assert decode(packed)==raw
-    scratch=Path(tempfile.mkdtemp(prefix='kirby1027-pgm-'))
-    for n,d in [('board.rbf',raw),('fpga_mmc1027.bi3',packed)]:
-        (scratch/n).write_bytes(d)
-    checked('test_nes_nrom458_programmer.py',['--image',scratch/'fpga_mmc1027.bi3','--rbf',scratch/'board.rbf',
-            '--out',scratch/'programmer'],WORK/'programmer.log')
-    p=read(scratch/'programmer/result.json')
-    assert p['passed'] and p['image_sha256']==digest(packed) and p['rbf_sha256']==digest(raw)
+    packed,p=programmer(routed,WORK,1027)
     report=dict(edition=1027,physical=False,reference_gameplay=1024,reference_trace=1025,
-                LE=le,LAB=resource('Total LABs:  partially or completely used'),M9K=resource('M9Ks'),
-                STA_checks=len(slacks),min_slack_ns=min(slacks),io=io,
+                **board,
                 flash_B=len(fw),flash_free_B=212992-len(fw),firmware=digest(fw),board_BI3=digest(packed),
                 SOF=digest((routed/'board.sof').read_bytes()),programmer=p,
                 sampling=proof['sampling'],observer=proof['header'],stack_gap_B=proof['sram']['cases']['normal']['static_gap_bytes'])
