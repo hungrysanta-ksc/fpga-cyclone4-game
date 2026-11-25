@@ -15,8 +15,11 @@ def decode(path):
     data=path.read_bytes()
     if len(data)!=HEADER.size+CAP*ROW.size+2:
         raise ValueError('incomplete frame log')
+    return decode_rows(data,1010,CAP)
+
+def decode_rows(data,expected_edition,expected_capacity):
     magic,edition,mode,n,d0,d1,size,capacity=HEADER.unpack_from(data)
-    if (magic,edition,size,capacity)!=(0x9001,1010,ROW.size,CAP) or n>CAP or mode>3:
+    if (magic,edition,size,capacity)!=(0x9001,expected_edition,ROW.size,expected_capacity) or n>capacity or mode>3:
         raise ValueError('wrong trace header')
     rows=[]
     for i in range(n):
@@ -60,7 +63,7 @@ def decode(path):
         hi=(age+1)*MS-ea*ARM_TICK
         if hi>=lo:
             row['final_ACK_to_ARM_E0_ms']=[lo,hi]
-    return dict(rows=rows,dropped=[d0,d1],displayed55=int.from_bytes(data[-2:],'little'),
+    return dict(rows=rows,dropped=[d0,d1],displayed55=struct.unpack_from('<H',data,HEADER.size+capacity*ROW.size)[0],
                 fpga_tick_ms=MS)
 
 if __name__=='__main__':
