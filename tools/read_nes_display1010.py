@@ -26,7 +26,9 @@ def decode_rows(data,expected_edition,expected_capacity):
         tick,g,bg,ia,ea,probe,obj,dirty,valid,bank,h,desc=ROW.unpack_from(data,16+i*ROW.size)
         row=dict(tick=tick,generation=g,BG=bg,OBJ=obj,map=dirty,bank=bank)
         rows.append(row)
-        if not (3000<=tick<3500 if mode==1 else 5500<=tick<6000) or bank>1 or ea>ia:
+        start = 3000 if mode==1 or (edition==1025 and mode in (0,3)) else 5500
+        stop = 3500 if mode==1 else 6000
+        if not start<=tick<stop or bank>1 or ea>ia:
             row['invalid']='window, bank or ARM age'
             continue
         if mode==3:

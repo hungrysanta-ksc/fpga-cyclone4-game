@@ -37,7 +37,10 @@ def trace_test(src,edition=1012):
         m.ret(cpu,1)
     pc=m.syms["nes_native165_bulk"]
     m.u.hook_add(UC_HOOK_CODE,spi,None,begin=pc,end=pc)
-    for idx,(bg,scene,tiles,chunks,kind,length) in enumerate(((532,5517,3,2,1,64),(529,5604,1,1,0,16))):
+    cases=((532,5517,3,2,1,64),(529,5604,1,1,0,16))
+    if edition==1025:
+        cases=((645,5517,9,3,1,32),(644,5821,4,2,0,48))
+    for idx,(bg,scene,tiles,chunks,kind,length) in enumerate(cases):
         gen=100+idx
         m.call("nes_budget210_frame",[scene])
         # The window owner publishes frame_start once per completed frame.
@@ -52,7 +55,8 @@ def trace_test(src,edition=1012):
         tick();m.call("e0900",[gen,idx])
         at=cache+HEADER.size+idx*ROW.size
         desc=struct.pack("<BBHHHI",1,kind,length,0,gen,34)
-        row=ROW.pack(scene,gen,bg,100,2,1,18,23,3,idx,bytes(32),desc)
+        obj,dirty=(10,3) if edition==1025 else (18,23)
+        row=ROW.pack(scene,gen,bg,100,2,1,obj,dirty,3,idx,bytes(32),desc)
         m.u.mem_write(at,row)
         response[:]=struct.pack("<BBHBB3HI5H",0,0xa1,gen,tiles,chunks,20,99,24,34,10,40,90,91,91)+bytes(4)+bytes((15,0xa5))
         # A stale header must not promote the trace. An accepted header is immutable.
