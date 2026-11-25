@@ -14,7 +14,7 @@ from read_nes_frame900 import ROW,read_trace
 
 def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,412)):
     from read_nes_supply905 import TRACE_BYTES
-    tail_log = n in (1012,1014,1016,1023)
+    tail_log = n in (1012,1014,1016,1023,1024)
     supply_log = n in TRACE_BYTES
     src=src or WORK/f'link{n}/src'
     out=out or WORK/f'proof{n}'
@@ -82,7 +82,7 @@ def verify(n,src=None,out=None,*,short_header=False,marker_values=(384,410,411,4
                 wire=struct.pack('<BBHBBHHHI',0,0x95,g,0,0,120,122,120,0)+bytes(16)
             if n==927:
                 wire=struct.pack('<BBHBBH8H',0,0x97,g,0x7f,0x38,10,100,110,115,130,140,150,160,105)+bytes(8)
-            if n in (1010,1012,1014,1023):
+            if n in (1010,1012,1014,1023,1024):
                 wire=struct.pack('<BBHBB3HI5H',0,0xa1,g,0,0,20,93,22,0,10,40,90,91,91)+bytes(4)+bytes((15,165))
             if n==1016:
                 wire=bytearray(32);wire[1]=0xb6;struct.pack_into('<H',wire,2,g)

@@ -123,7 +123,7 @@ def package(temp):
     write_verified_archive(WORK,reference,fw,bitstream,report)
 
 
-def write_verified_archive(work,reference,fw,bitstream,report,*,source=None):
+def write_verified_archive(work,reference,fw,bitstream,report,*,source=None,game_label='ADVENTURE'):
     edition = report['edition']
     prior = reference['edition']
     if source is None:
@@ -147,7 +147,7 @@ def write_verified_archive(work,reference,fw,bitstream,report,*,source=None):
     assert len(files)==len(reference['files']) and all('restore' not in n.lower() and not n.lower().endswith('.nes') for n in files)
     report.update(reference_ZIP=sha(source),files={n:digest(data) for n,data in files.items()})
     files['manifest.json'] = (json.dumps(report,indent=2)+'\n').encode()
-    archive = work/f'MMC{edition}-ADVENTURE-60SEC-SD-ROOT.zip'
+    archive = work/f'MMC{edition}-{game_label}-60SEC-SD-ROOT.zip'
     partial = archive.with_suffix('.partial')
     with ZipFile(partial,'w') as z:
         for name,data in files.items():

@@ -57,31 +57,34 @@ def widened_wire(rows):
         output.append((tx,rx))
     return output
 
-def run(mode):
-    PROOF.mkdir(exist_ok=True)
+def run(mode,edition=1023):
+    work=WORK.with_name(f'nes-kirby{edition}')
+    src=work/'link/src'
+    proof=work/'proof'
+    proof.mkdir(exist_ok=True)
     if mode=='run':
-        cases,ram,entry=check_game_path(SRC,order=widened_wire,rom_revision=0x7c,rom_pages=12,content_crc=0x248c7140)
-        save(PROOF/'sram.json',dict(cases=cases,ram=ram,entry=entry))
+        cases,ram,entry=check_game_path(src,order=widened_wire,rom_revision=0x7c,rom_pages=12,content_crc=0x248c7140)
+        save(proof/'sram.json',dict(cases=cases,ram=ram,entry=entry))
     elif mode=='guards':
-        save(PROOF/'trace.json',trace_test(SRC,1023))
-        assert check_header(SRC)==11
-        verify(1023,SRC,PROOF,marker_values=(4,8,16,24))
-        save(PROOF/'timer.json',timer_cases(SRC))
-        save(PROOF/'menu.json',check(SRC,'1023'))
+        save(proof/'trace.json',trace_test(src,edition))
+        assert check_header(src)==11
+        verify(edition,src,proof,marker_values=(4,8,16,24))
+        save(proof/'timer.json',timer_cases(src))
+        save(proof/'menu.json',check(src,str(edition)))
         raw=rom_path(Path.home()/'Downloads/test','kirby').read_bytes()
         loader={}
         for key,img,err in [('kirby',raw,0),('bad-last',raw[:-1]+bytes([raw[-1]^1]),4)]:
-            r=admission(SRC,img,1023)
+            r=admission(src,img,edition)
             assert r==dict(program=err==0,read_B=len(raw),error=err),r
             loader[key]=r
-        save(PROOF/'loader.json',loader)
+        save(proof/'loader.json',loader)
     elif mode=='base':
-        recovery=Path(tempfile.mkdtemp(prefix='recovery-',dir=PROOF))/'base'
-        checked('check_nes_transfer512_recovery.py',['--arm',SRC,'--revision','0x7c','--trial',1023,'--fault','none','--out',recovery],PROOF/'base.log')
-        (PROOF/'base-result.json').write_bytes((recovery/'result.json').read_bytes())
+        recovery=Path(tempfile.mkdtemp(prefix='recovery-',dir=proof))/'base'
+        checked('check_nes_transfer512_recovery.py',['--arm',src,'--revision','0x7c','--trial',edition,'--fault','none','--out',recovery],proof/'base.log')
+        (proof/'base-result.json').write_bytes((recovery/'result.json').read_bytes())
     else:
         raise ValueError(mode)
-    print('PASS1023',mode)
+    print('PASS',edition,mode)
 
 if __name__=='__main__':
-    run(sys.argv[1])
+    run(sys.argv[1],int(sys.argv[2]) if len(sys.argv)>2 else 1023)

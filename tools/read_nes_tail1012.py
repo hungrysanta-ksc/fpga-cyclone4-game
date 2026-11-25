@@ -14,7 +14,7 @@ SIZE = OFFSET+3*STRIDE+ROW.size
 
 
 def decode(data,edition=1012):
-    if edition not in (1012,1014,1023) or len(data)!=SIZE:
+    if edition not in (1012,1014,1023,1024) or len(data)!=SIZE:
         raise ValueError("unsupported tail log edition or length")
     report=decode_rows(data,edition,CAPACITY)
     samples=[]
@@ -59,6 +59,6 @@ def decode(data,edition=1012):
 if __name__=="__main__":
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("log",type=Path)
-    parser.add_argument("--edition",type=int,choices=(1012,1014,1023),default=1012)
+    parser.add_argument("--edition",type=int,choices=(1012,1014,1023,1024),default=1012)
     args=parser.parse_args()
     print(json.dumps(decode(args.log.read_bytes(),args.edition),indent=2))
