@@ -12,7 +12,8 @@ from unicorn import UC_HOOK_MEM_WRITE
 
 
 def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages=None, retained_context=None,
-           pre_snapshots=None, deny_release=False, bad_post_crc=False, game=None, stop_checkpoint=None):
+           pre_snapshots=None, deny_release=False, bad_post_crc=False, game=None, stop_checkpoint=None,
+           rom_revision=0x7b, rom_pages=6, content_crc=None):
     obj = src / "obj-nes-100"
     firmware = (obj / "firmware.stm").read_bytes()
     u = Uc(UC_ARCH_ARM, UC_MODE_THUMB | UC_MODE_MCLASS)
@@ -75,7 +76,7 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
             ops.append(op)
             reply=bytearray(8)
             if op==0x65:
-                reply[1:7]=bytes([0x7b,status,0,6,0,0])
+                reply[1:7]=bytes([rom_revision,status,0,rom_pages,0,0])
             elif op==0x63:
                 assert driven and status==0x82
                 status=0x86 if fault!="start" else 0x82
@@ -143,6 +144,8 @@ def replay(src, release_ms, fault=None, control=False, probe=0, *, stopped_pages
     args=(0x2000b000, 0x60000, 0x2000b080, 1)
     if game is not None:
         args=game.install(u,symbols)
+        if content_crc is not None:
+            args=(args[0],rom_pages<<16,args[2],content_crc)
     for reg,val in zip((UC_ARM_REG_R0,UC_ARM_REG_R1,UC_ARM_REG_R2,UC_ARM_REG_R3),args):
         u.reg_write(reg,val)
     end=0x0803fff0

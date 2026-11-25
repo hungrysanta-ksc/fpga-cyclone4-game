@@ -7,7 +7,7 @@ from check_nes_game478 import Machine
 from build_nes_game164 import palette
 
 
-def inputs(folder, f, *, wire_generation=None):
+def inputs(folder, f, *, wire_generation=None, kirby14=False):
     gen, patches, obj, exc, groups, pals = map(int,(folder/f"frame{f}.cfg").read_text().split())
     counts = (33*groups,224,obj,exc,224,32*pals)
     geometry=bytearray(5741)
@@ -23,7 +23,10 @@ def inputs(folder, f, *, wire_generation=None):
             raw[i]=v
         elif k<6:
             off=offsets[k]+i*sizes[k]
-            geometry[off:off+sizes[k]]=v.to_bytes(sizes[k],"little")
+            # Legacy compact test fixture stores the exception position and low 13 tag bits.
+            # The Kirby checker compares the full exception from the separate query stream.
+            stored = v & 0xffffffff if kirby14 and k==3 else v
+            geometry[off:off+sizes[k]]=stored.to_bytes(sizes[k],"little")
     assert len(seen)==sum(counts)+len(raw)
     struct.pack_into("<6HB",geometry,5728,*counts,patches)
     packets=[]
@@ -33,6 +36,8 @@ def inputs(folder, f, *, wire_generation=None):
         k,i=(word>>93),(word>>64)&8191
         assert ((word>>77)&65535)==gen
         width=8 if k==0 and i&4096 else (2,1,7,4,7,1,2,8)[k]
+        if kirby14 and k==3:
+            width=5
         payload=word&((1<<64)-1)
         # Bit 63 is the FPGA ingress flush strobe on map cells. Feed the
         # receiver's ordinary uncompressed map representation in this replay.

@@ -7,7 +7,7 @@ from pathlib import Path
 def words(b):
     return struct.unpack("<%dH"%(len(b)//2),b)
 
-def compare(folder, capture, rom, f):
+def compare(folder, capture, rom, f, *, hardware_tiles=None, clip_left=False):
     d=folder/str(f)
     def read(key):
         return (d/(key+".bin")).read_bytes()
@@ -24,6 +24,10 @@ def compare(folder, capture, rom, f):
     def pix(obj,slot,x,y):
         a,b=gfx[obj,slot][y]
         return (a>>(7-x)&1)+2*(b>>(7-x)&1)
+    if hardware_tiles is not None:
+        assert hardware_tiles.keys() == gfx.keys()
+        assert all(gfx[key] == hardware_tiles[key] for key in gfx)
+        gfx=hardware_tiles
     geo=read("geometry")
     raster=struct.unpack_from("<224Q",geo,3872)
     mem=words(read("map"))
@@ -31,7 +35,22 @@ def compare(folder, capture, rom, f):
     cg=words(read("cgram"))
     obj=read("oam")
     patch=read("patch")
-    ref=(capture/f"frame-{f}.rgb").read_bytes()
+    ref_file=capture/f"frame-{f:04d}.rgb"
+    if not ref_file.exists():
+        ref_file=capture/f"frame-{f}.rgb"
+    ref=ref_file.read_bytes()
+    if clip_left:
+        normal=[r for r in raster if not (r>>49)&1]
+        mask=read("display_mask")[0]
+        assert all(((r>>36)&255)|16==mask for r in normal)
+        if len(normal)<224:
+            # Decode the actual ARM HDMA enable table used by the 65816.
+            modes=[]
+            table=patch[2210:2291]
+            for pos in range(0,len(table),5):
+                if not table[pos]:break
+                modes.extend([(table[pos+1],table[pos+3])]*table[pos])
+            assert modes==[(1,0) if (r>>49)&1 else (17,17 if mask==0x18 else 0) for r in raster]
     result=[]
     for y,r in enumerate(raster):
         raw=r>>49&1
@@ -59,6 +78,8 @@ def compare(folder, capture, rom, f):
                         if c:
                             if at&16 or not bg:idx=128+(at>>1&7)*16+c
                             break
+            if clip_left and not raw and x<8 and mask==0x18:
+                idx=0
             pos=((y+8)*256+x)*3
             rr,gg,bb=ref[pos:pos+3]
             if cg[idx]!=(rr>>3|(gg>>3)<<5|(bb>>3)<<10):

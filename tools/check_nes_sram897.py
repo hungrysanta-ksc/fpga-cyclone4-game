@@ -48,7 +48,7 @@ class GameReplay(ColdFrame):
         super().exchange(cpu, tx, rx, n)
 
 
-def check_game_path(src, *, order=None):
+def check_game_path(src, *, order=None, rom_revision=0x7b, rom_pages=6, content_crc=None):
     obj = src / 'obj-nes-100'
     path = obj / 'firmware.stm'
     fw = path.read_bytes()
@@ -82,7 +82,8 @@ def check_game_path(src, *, order=None):
     for name, trace, corrupt in [('normal', ready, False), ('bad-crc', ready, True),
                                   ('1247-empty-offers', delayed, False)]:
         frame = GameReplay(trace, entry, corrupt, ram, functions)
-        result = replay(src, 1, 'defer', pre_snapshots=[bytes.fromhex('e6000040000003')], game=frame)
+        result = replay(src, 1, 'defer', pre_snapshots=[bytes.fromhex('e6000040000003')], game=frame,
+                        rom_revision=rom_revision, rom_pages=rom_pages, content_crc=content_crc)
         checked = frame.result()
         assert not result['terminal'] and result['reset_asserted'] and result['spi'].count(0x64) == 1
         assert result['checkpoints'] == ['DISPLAY_NEXT', 'DISPLAY_STOPPED']
