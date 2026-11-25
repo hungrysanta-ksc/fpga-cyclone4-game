@@ -1,0 +1,45 @@
+--- a/nes_native_sink165.c
++++ b/nes_native_sink165.c
+@@ -274,10 +273,0 @@
+-static __attribute__((noinline)) bool pair1020(struct nes_native_sink165 *s,
+- struct nes_native_video165 *p,unsigned offset,bool early){
+- const uint8_t *joined=(uint8_t *)p->bg_keys+4096+(offset-1121);
+- unsigned op=early?24:2;
+- if(!packet(s,op,5,offset,joined,201))return false;
+- if(early){
+-  if(!map527(s,p,0x7fffff,1))return false;
+- }
+- return packet(s,op,5,offset+201,joined+201,240);
+-}
+@@ -317 +307,3 @@
+-  if(!pair1020(s,p,1121,true))return false;
++  if(!packet(s,24,5,1121,(uint8_t *)p->bg_keys+6144,201))return false;
++  if(!map527(s,p,map,1))return false;
++  if(!packet(s,24,5,1322,(uint8_t *)p->bg_keys+6345,240))return false;
+@@ -362 +354 @@
+-  const uint8_t *raw=(const uint8_t *)p->bg_keys+4096;
++  const uint8_t *raw=p->patch_count<=2?(const uint8_t *)p->bg_keys+4096:p->patch.chr;
+@@ -398 +390,3 @@
+-  if(!p->raw_prefix_issued && !pair1020(s,p,offset,false))return false;
++  uint8_t *joined=(uint8_t *)p->bg_keys+6144;
++  if(!p->raw_prefix_issued && !packet(s,2,5,offset,joined,201))return false;
++  if(!p->raw_prefix_issued && !packet(s,2,5,offset+201,joined+201,240))return false;
+--- a/nes_planner211.c
++++ b/nes_planner211.c
+@@ -236 +236 @@
+-uint8_t *out=(uint8_t *)p->bg_keys+4096;unsigned packed=2048;
++unsigned packed=2048;const uint8_t *raw=p->patch.chr;
+@@ -238 +238 @@
+-   packed=0;
++   uint8_t *out=(uint8_t *)p->bg_keys+4096;packed=0;
+@@ -241 +241,2 @@
+-  }else memcpy(out,p->patch.chr,2048);
++   raw=out;
++  }
+@@ -247,2 +248,4 @@
+-  memcpy(out+packed,tables,243);
+-  memcpy(out+packed+243,p->patch.size,6);
++  uint8_t *joined=(uint8_t *)p->bg_keys+6144;
++  memcpy(joined,raw+packed-192,192);
++  memcpy(joined+192,tables,243);
++  memcpy(joined+435,p->patch.size,6);
