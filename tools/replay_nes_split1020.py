@@ -11,10 +11,10 @@ from nes_split1020 import WORK
 from report_nes_split1020 import frame908
 
 
-def compare(temp,phase):
+def compare(temp,phase,*,dest=None,sender=replay):
     trace=temp/f"nes-tile821-late-jointmirror-p{phase}-1020-stream"
     control=temp/f"nes-tile821-late-jointmirror-p{phase}-1018wire-control"
-    dest=temp/"nes-split1020-stream-grants"/f"p{phase}"
+    dest=dest or temp/"nes-split1020-stream-grants"/f"p{phase}"
     g=908
     frames,_=collect(trace)
     base=frame908(control,collect(control)[0])
@@ -35,7 +35,7 @@ def compare(temp,phase):
    if pending526.off==768 and dmaLength==192 then map_gate=2;rpc() end
   end''')
 
-    timing=replay(temp,trace,dest,"two_map_starts",commands,g,observe=mark,schedule_after=cut)
+    timing=sender(temp,trace,dest,"two_map_starts",commands,g,observe=mark,schedule_after=cut)
     ev=[v for v in records(dest/"window.csv") if v["g"]==str(g)]
     starts=[list(map(int,line.split())) for line in (dest/"starts.txt").read_text().splitlines()]
     actual=[]
