@@ -12,16 +12,16 @@ from nes_order938 import empty_next_offer
 from nes_tail1013 import ROOT, VARIANTS, WORK
 
 
-def guards(temp,mode):
-    root=WORK/mode
+def guards(temp,mode,*,root=None,trace=None,tag=None):
+    root=root or WORK/mode
     src=root/"link/src"
     cases,ram,entry=check_game_path(src,order=empty_next_offer)
     (root/"guards.json").write_text(json.dumps(dict(sram=ram,entry=entry,cases=cases,menu=check(src,"1012"))))
     if not (root/"recovery/result.json").exists():
         subprocess.run([sys.executable,ROOT/"tools/check_nes_transfer512_recovery.py","--arm",src,"--trial","1012",
                         "--fault","none","--out",root/"recovery"],check=True)
-    trace=temp/f"nes-tile821-late-jointmirror-p1-1013c-{mode}"
-    result=client_faults(temp,trace,f"nes-tail1013-guard-{mode}")
+    trace=trace or temp/f"nes-tile821-late-jointmirror-p1-1013c-{mode}"
+    result=client_faults(temp,trace,tag or f"nes-tail1013-guard-{mode}")
     (root/"faults.json").write_text(json.dumps(result))
 
 
