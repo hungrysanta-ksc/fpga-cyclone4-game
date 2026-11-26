@@ -29,6 +29,25 @@ class GameReplay(ColdFrame):
 
     def install(self, cpu, symbols):
         args = super().install(cpu, symbols)
+        if 'block1029' in symbols:
+            from read_nes_ingress1029 import INGRESS, OFFSET
+            self.input_records = []
+            def completed(cpu, at, size, user):
+                start = symbols['ptrcache'] + OFFSET + 82 * INGRESS.size
+                first, end, wire, restore, retire, payload, gen, blocks = INGRESS.unpack(
+                    cpu.mem_read(start, INGRESS.size))
+                reads = [rx[1:-2] for tx,rx in self.rows[:self.index] if tx[0]==0xd1]
+                begin = max(i for i,r in enumerate(reads) if r[:2]==b'\xe0\0')
+                generation_reads = reads[begin:]
+                assert gen==int.from_bytes(generation_reads[0][2:4],'big')
+                if getattr(self,'ready_age_oracle',None) is not None:
+                    age,payload=divmod(payload,1<<24)
+                    assert age==self.ready_age_oracle[gen]
+                assert blocks==len(generation_reads) and payload==sum(map(len,generation_reads))
+                assert min(wire,restore,retire)>0 and ((end-first)&0xffffffff)>=wire+restore+retire
+                self.input_records.append(dict(generation=gen,blocks=blocks,payload_bytes=payload))
+            at = symbols['input900'] & ~1
+            cpu.hook_add(UC_HOOK_CODE, completed, begin=at, end=at)
         def observe(cpu, at, size, name):
             if cpu.reg_read(UC_ARM_REG_R1) == self.ram:
                 self.calls[f'{name}+0x{at-self.functions[name][0]:x}'] += 1
@@ -48,7 +67,7 @@ class GameReplay(ColdFrame):
         super().exchange(cpu, tx, rx, n)
 
 
-def check_game_path(src, *, order=None, rom_revision=0x7b, rom_pages=6, content_crc=None):
+def check_game_path(src, *, order=None, rom_revision=0x7b, rom_pages=6, content_crc=None, ready_age_oracle=None):
     obj = src / 'obj-nes-100'
     path = obj / 'firmware.stm'
     fw = path.read_bytes()
@@ -82,6 +101,7 @@ def check_game_path(src, *, order=None, rom_revision=0x7b, rom_pages=6, content_
     for name, trace, corrupt in [('normal', ready, False), ('bad-crc', ready, True),
                                   ('1247-empty-offers', delayed, False)]:
         frame = GameReplay(trace, entry, corrupt, ram, functions)
+        frame.ready_age_oracle=ready_age_oracle
         result = replay(src, 1, 'defer', pre_snapshots=[bytes.fromhex('e6000040000003')], game=frame,
                         rom_revision=rom_revision, rom_pages=rom_pages, content_crc=content_crc)
         checked = frame.result()
@@ -95,6 +115,9 @@ def check_game_path(src, *, order=None, rom_revision=0x7b, rom_pages=6, content_
             assert checked['opcodes']['0xd1'] == checked['opcodes']['0xd2'] == 33
             assert checked['opcodes']['0xea'] == 1
         cases[name] = dict(**checked, d0_sites=frame.calls, control=result)
+        if hasattr(frame,'input_records'):
+            assert [r['generation'] for r in frame.input_records]==([] if corrupt else [905,906])
+            cases[name]['input_observer']=frame.input_records
     # Check the first block and the final accepted identity against the wire
     # bytes as well as exercising the normal firmware comparisons above.
     first = [tuple(bytes.fromhex(v) for v in row) for row in ready[:5]]

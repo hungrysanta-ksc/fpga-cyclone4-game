@@ -10,6 +10,29 @@ from read_nes_supply905 import CAP, MS
 ROW=struct.Struct('<6H4B32s12s')
 ARM_TICK=512/84000
 
+def kirby_boundaries(header, origin, published, query, acquisition_ms):
+    # Input precedes the first E9. An acquisition spanning an 8-bit wrap
+    # could alias two occurrences of the same stamp; do not guess an epoch.
+    if acquisition_ms >= 255*MS:
+        return {'unresolved': '8-bit timestamp window'}
+    span=(query-origin)&1023
+    if span>=255 or span*MS>acquisition_ms+MS:
+        return {'unresolved': 'query and input windows disagree'}
+    start,done,end,head=header[26:30]
+    stamps=dict(plan=start,done=done,END=end,head_E8=head)
+    req,grant=bool(header[9]&64),bool(header[9]&128)
+    if req!=grant:
+        return {'unresolved': 'incomplete foreground transaction'}
+    if req:
+        stamps['first_request'],stamps['first_grant']=header[10:12]
+    age={name:(stamp-origin)&255 for name,stamp in stamps.items()}
+    age['writer']=(published-origin)&1023
+    order=['plan']+(['first_request','first_grant'] if req else [])+['done','END','writer','head_E8']
+    if not all(age[a]<=age[b] for a,b in zip(order,order[1:])) or age['head_E8']>span:
+        return {'unresolved': 'event order or frame association'}
+    return {'foreground_read':req,'ticks_from_first_E9':age,
+            'ms_from_first_E9':{k:round(v*MS,4) for k,v in age.items()}}
+
 
 def decode(path):
     data=path.read_bytes()
@@ -26,7 +49,9 @@ def decode_rows(data,expected_edition,expected_capacity):
         tick,g,bg,ia,ea,probe,obj,dirty,valid,bank,h,desc=ROW.unpack_from(data,16+i*ROW.size)
         row=dict(tick=tick,generation=g,BG=bg,OBJ=obj,map=dirty,bank=bank)
         rows.append(row)
-        if not (3000<=tick<3500 if mode==1 else 5500<=tick<6000) or bank>1 or ea>ia:
+        start = 3000 if mode==1 or (edition in (1025,1027,1028,1029,1030,1031,1032) and mode in (0,3)) else 5500
+        stop = 3500 if mode==1 else 6000
+        if not start<=tick<stop or bank>1 or ea>ia:
             row['invalid']='window, bank or ARM age'
             continue
         if mode==3:
@@ -52,6 +77,10 @@ def decode_rows(data,expected_edition,expected_capacity):
         if max(ia,ea,probe)==65535 or (ia+probe+2)*ARM_TICK>=(1024-1)*MS:
             continue
         origin,query,last=struct.unpack_from('<3H',h,6)
+        if edition==1027:
+            origin,query,last=(h[6+i]|(((h[9]>>(i*2))&3)<<8) for i in range(3))
+            if h[5]:
+                row['last_slot_run']=kirby_boundaries(h,origin,last,query,(ia+probe+2)*ARM_TICK)
         age=(query-ack)&1023
         supply=(last-origin)&1023
         after=(query-last)&1023
