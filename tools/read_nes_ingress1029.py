@@ -10,12 +10,15 @@ from read_nes_display1010 import ARM_TICK
 INGRESS = struct.Struct('<6I2H')
 
 
-def boundaries(data, index, row):
+def boundaries(data, index, row, edition=None):
     if 'supply_ms' not in row or 'last_tile_to_show_ms' not in row:
         return None
     raw = ROW.unpack_from(data, HEADER.size + index*ROW.size)
     ia, _, probe = raw[3:6]
     origin, query, last = struct.unpack_from('<3H', raw[-2], 6)
+    if edition == 1027:
+        header = raw[-2]
+        origin, query, last = (header[6+i] | (((header[9] >> (2*i)) & 3) << 8) for i in range(3))
     prev, seal, ack = (row[k] for k in ('previous_show','SEAL','final_ACK'))
     q = ack-prev + ((query-ack) & 1023)
     first = q - ((query-origin) & 1023)
