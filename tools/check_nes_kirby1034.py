@@ -34,7 +34,7 @@ def layout(h):
     return good
 
 
-def sampling(src,header):
+def sampling(src,header,edition=1034):
     q=TimedProbe(src)
     q.call('nes_budget210_reset',[])
     calls=[]
@@ -55,7 +55,7 @@ def sampling(src,header):
         q.call('nes_budget210_display',[tick,q.video])
         q.call('finish_header950',[])
     data=bytes(q.u.mem_read(q.data['ptrcache'],SIZE))
-    assert HEADER.unpack_from(data)==(0x9001,1034,0,75,0,0,ROW.size,CAPACITY)
+    assert HEADER.unpack_from(data)==(0x9001,edition,0,75,0,0,ROW.size,CAPACITY)
     assert calls==expected
     for i,tick in enumerate(calls):
         row=ROW.unpack_from(data,HEADER.size+i*ROW.size)
