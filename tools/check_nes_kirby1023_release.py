@@ -66,7 +66,7 @@ def run(mode,edition=1023):
         cases,ram,entry=check_game_path(src,order=widened_wire,rom_revision=0x7c,rom_pages=12,content_crc=0x248c7140)
         save(proof/'sram.json',dict(cases=cases,ram=ram,entry=entry))
     elif mode=='guards':
-        if edition in (1029,1030):
+        if edition in (1029,1030,1031,1032):
             from check_nes_ingress1029 import trace_test as ingress_test
             trace=ingress_test(src,edition)
         else:

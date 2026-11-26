@@ -33,7 +33,7 @@ def boundaries(data, index, row):
 
 
 def decode(data, edition):
-    if edition not in (1029,1030) or len(data)!=SIZE:
+    if edition not in (1029,1030,1031,1032) or len(data)!=SIZE:
         raise ValueError('invalid edition or size')
     report = decode_rows(data,edition,CAPACITY)
     for i,row in enumerate(report['rows']):
@@ -42,6 +42,11 @@ def decode(data, edition):
         first,end,d1,restore,retire,size,gen,blocks = INGRESS.unpack_from(data,OFFSET+i*INGRESS.size)
         if not blocks:
             continue
+        if edition in (1031,1032):
+            age,size=divmod(size,1<<24)
+            if age>127:
+                raise ValueError('invalid D2 first-block age')
+            row['ready_to_D1_ms']=[age*32768/84000, (age+1)*32768/84000 if age<127 else None]
         duration = (end-first)&0xffffffff
         gaps = duration-d1-restore-retire
         if gen!=row['generation'] or gaps<0 or duration>=84000000 or not blocks<=size<=256*blocks:

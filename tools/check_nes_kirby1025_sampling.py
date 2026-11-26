@@ -33,7 +33,7 @@ def check(edition=1025):
         q.call('nes_budget210_display', [tick, q.video])
         q.call('finish_header950', [])
     from read_nes_ingress1029 import decode as ingress_decode
-    reader = ingress_decode if edition in (1029,1030) else decode
+    reader = ingress_decode if edition in (1029,1030,1031,1032) else decode
     result = reader(bytes(q.u.mem_read(q.data['ptrcache'], SIZE)), edition)
     expected = list(range(3001,6000,40))
     assert calls == expected == [r['tick'] for r in result['rows']]

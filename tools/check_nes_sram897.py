@@ -40,6 +40,9 @@ class GameReplay(ColdFrame):
                 begin = max(i for i,r in enumerate(reads) if r[:2]==b'\xe0\0')
                 generation_reads = reads[begin:]
                 assert gen==int.from_bytes(generation_reads[0][2:4],'big')
+                if getattr(self,'ready_age_oracle',None) is not None:
+                    age,payload=divmod(payload,1<<24)
+                    assert age==self.ready_age_oracle[gen]
                 assert blocks==len(generation_reads) and payload==sum(map(len,generation_reads))
                 assert min(wire,restore,retire)>0 and ((end-first)&0xffffffff)>=wire+restore+retire
                 self.input_records.append(dict(generation=gen,blocks=blocks,payload_bytes=payload))
@@ -64,7 +67,7 @@ class GameReplay(ColdFrame):
         super().exchange(cpu, tx, rx, n)
 
 
-def check_game_path(src, *, order=None, rom_revision=0x7b, rom_pages=6, content_crc=None):
+def check_game_path(src, *, order=None, rom_revision=0x7b, rom_pages=6, content_crc=None, ready_age_oracle=None):
     obj = src / 'obj-nes-100'
     path = obj / 'firmware.stm'
     fw = path.read_bytes()
@@ -98,6 +101,7 @@ def check_game_path(src, *, order=None, rom_revision=0x7b, rom_pages=6, content_
     for name, trace, corrupt in [('normal', ready, False), ('bad-crc', ready, True),
                                   ('1247-empty-offers', delayed, False)]:
         frame = GameReplay(trace, entry, corrupt, ram, functions)
+        frame.ready_age_oracle=ready_age_oracle
         result = replay(src, 1, 'defer', pre_snapshots=[bytes.fromhex('e6000040000003')], game=frame,
                         rom_revision=rom_revision, rom_pages=rom_pages, content_crc=content_crc)
         checked = frame.result()
