@@ -26,6 +26,8 @@ class GameReplay(ColdFrame):
         self.functions = functions
         self.calls = Counter()
         self.d0_count = 0
+        self.checked_d2_stamp = False
+        self.capture_intervals = None
 
     def install(self, cpu, symbols):
         args = super().install(cpu, symbols)
@@ -44,7 +46,17 @@ class GameReplay(ColdFrame):
                     age,payload=divmod(payload,1<<24)
                     assert age==self.ready_age_oracle[gen]
                 assert blocks==len(generation_reads) and payload==sum(map(len,generation_reads))
-                assert min(wire,restore,retire)>0 and ((end-first)&0xffffffff)>=wire+restore+retire
+                if self.checked_d2_stamp:
+                    duration=(end-first)&0xffffffff
+                    assert 0<restore <= ((wire-first)&0xffffffff) < duration
+                    if self.capture_intervals is None:
+                        assert 0<retire<=duration
+                    else:
+                        release,capture=self.capture_intervals[gen]
+                        assert retire&65535==(0x8080|release|(capture<<8))
+                        assert (retire>>16==65535)==(gen==905)
+                else:
+                    assert min(wire,restore,retire)>0 and ((end-first)&0xffffffff)>=wire+restore+retire
                 self.input_records.append(dict(generation=gen,blocks=blocks,payload_bytes=payload))
             at = symbols['input900'] & ~1
             cpu.hook_add(UC_HOOK_CODE, completed, begin=at, end=at)
@@ -67,7 +79,8 @@ class GameReplay(ColdFrame):
         super().exchange(cpu, tx, rx, n)
 
 
-def check_game_path(src, *, order=None, rom_revision=0x7b, rom_pages=6, content_crc=None, ready_age_oracle=None):
+def check_game_path(src, *, order=None, rom_revision=0x7b, rom_pages=6, content_crc=None, ready_age_oracle=None,
+                    checked_d2_stamp=False, capture_intervals=None):
     obj = src / 'obj-nes-100'
     path = obj / 'firmware.stm'
     fw = path.read_bytes()
@@ -102,6 +115,8 @@ def check_game_path(src, *, order=None, rom_revision=0x7b, rom_pages=6, content_
                                   ('1247-empty-offers', delayed, False)]:
         frame = GameReplay(trace, entry, corrupt, ram, functions)
         frame.ready_age_oracle=ready_age_oracle
+        frame.checked_d2_stamp=checked_d2_stamp
+        frame.capture_intervals=capture_intervals
         result = replay(src, 1, 'defer', pre_snapshots=[bytes.fromhex('e6000040000003')], game=frame,
                         rom_revision=rom_revision, rom_pages=rom_pages, content_crc=content_crc)
         checked = frame.result()

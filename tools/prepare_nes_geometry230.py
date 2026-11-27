@@ -26,6 +26,7 @@ def main():
     for n in ('capture', 'prior', 'out'):
         p.add_argument('--'+n, type=Path, required=True)
     p.add_argument('--kirby14', action='store_true', help='Carry physical CHR bit 17 in stimulus bit 107')
+    p.add_argument('--chr-ram-type',type=int,help='Mesen nesChrRam memory type recorded by the source adapter')
     p.add_argument('--first', type=int, default=905)
     p.add_argument('--last', type=int, default=975)
     p.add_argument('--allow-disabled-tail',action='store_true',
@@ -87,7 +88,10 @@ def main():
                 raise AssertionError('Midframe palette write needs exact event capture')
         for row in fetch[f]:
             _,y,d,addr,val,physical,kind,v,t,x,mask,ctrl,oy,ot,oa,ox=row
-            assert kind==57 and physical<(262144 if a.kirby14 else 131072)
+            if a.chr_ram_type is not None:
+                assert kind==a.chr_ram_type and 0<=physical<8192
+            else:
+                assert kind==57 and physical<(262144 if a.kirby14 else 131072)
             states[y*341+d+1]=(v,t,x,mask,ctrl)
             if d%8 not in (5,7):continue
             obj=257<=d<=320

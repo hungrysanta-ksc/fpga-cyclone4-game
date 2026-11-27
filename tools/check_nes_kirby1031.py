@@ -9,9 +9,9 @@ from prepare_nes_kirby1031 import WORK
 
 
 def run(edition=1031):
-    assert edition in (1031,1032)
+    assert edition in (1031,1032,1034)
     work=WORK.with_name(f'nes-kirby{edition}')
-    logs=work if edition==1031 else work/'bus-test'
+    logs=work if edition==1031 else WORK.with_name('nes-kirby1032')/'bus-test'
     pattern=r'^# PASS1031 mode=(\d+) bytes=(\d+) available=(\d+) positive=(\d+) D1=(\d+) age=(\d+)$'
     rows={}
     for f in (750,1830,3030,3570):
@@ -44,7 +44,8 @@ def run(edition=1031):
         assert seen==list(oracle)
         return tagged
     cases,_,_=check_game_path(work/'link/src',order=with_age,rom_revision=0x7c,
-                              rom_pages=12,content_crc=0x248c7140,ready_age_oracle=oracle)
+                              rom_pages=12,content_crc=0x248c7140,ready_age_oracle=oracle,
+                              checked_d2_stamp=edition==1034)
     result=dict(RTL={f'{f}-{m}':r for (f,m),r in rows.items()},ARM_cases=cases,ARM_age_bins=oracle)
     (work/'proof').mkdir(exist_ok=True)
     (work/'proof/age.json').write_text(json.dumps(result,indent=2)+'\n')

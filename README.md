@@ -27,6 +27,7 @@ PR155 병합 후 개발 기준은 MMC690이며, 다음 수치는 보존 대조�
 | 필요한 정보 | 진입점 |
 |---|---|
 | 현재 완료·미완료·측정값 | [프로젝트 현황](docs/PROJECT-STATUS.ko.md) |
+| FF3 실기판에서 게임 저장·같은 장면 불러오기 | [NES 코어 메뉴와 슬롯 사용법](docs/nes-ff3-play1045.ko.md) · [1050 전투 경계·연사와 이동 성능 기준](docs/nes-ff3-1050.ko.md) |
 | 다른 PC·새 작업에서 이어가기 | [재개 안내](docs/development/RESUME.ko.md) |
 | NES 선택 소스·산출물·남은 작업 | [현재 NES 인계](cores/nes/HANDOFF.ko.md) |
 | PR별 진척과 결정 | [PR 기록 폴더](docs/progress/README.md) |

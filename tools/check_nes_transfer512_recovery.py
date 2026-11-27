@@ -26,6 +26,12 @@ if a.trial is not None:
         literal="b'"+old+"\\0'"
         assert s.count(literal)==1
         s=s.replace(literal,repr(new.encode()+b'\0'))
+if a.revision==0x7d:
+    if a.trial is None:
+        s=s.replace('/sd2snes/fpga_nrom16.bi3','/sd2snes/nes-chrram.bi3')
+    # The browser selects the physical board ID before the ordinary loader.
+    s=s.replace("names=['nes_cf86_fail094'", "names=['nes_board_id','nes_cf86_fail094'")
+    s=s.replace("u.reg_write(UC_ARM_REG_SP,stack);", "u.mem_write(symbols['nes_board_id'],bytes([0x7d]));u.reg_write(UC_ARM_REG_SP,stack);")
 sys.argv=[str(path),"--fault",a.fault,"--out",str(a.out)]
 if a.game:
     assert a.trial and a.fault=='none'
