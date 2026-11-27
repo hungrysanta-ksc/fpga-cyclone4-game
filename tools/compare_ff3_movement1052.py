@@ -11,7 +11,7 @@ ROW=struct.Struct('<I6H12s2B2x')
 TICK_MS=65536/84000
 FIELD_MS=1000/60.0988
 
-def decode(path):
+def decode(path, *, free_route=False):
     data=path.read_bytes()
     magic,edition,slot,rom,serial,crc,used,start,done,misses=HEADER.unpack_from(data)
     if magic!=0x32354d46 or edition not in (1052,1053) or not 1<=slot<=4 or rom!=0x4be84aa7:
@@ -26,14 +26,16 @@ def decode(path):
         if footer!=0x5a or p[0]!=0xd2 or gen!=int.from_bytes(p[1:3],'little') or not ack_ok:
             raise ValueError(f'{path}: missing/torn event at index {i}')
         flags=p[3]
-        if i and flags&31!=17:
+        if i and not flags&16:
+            raise ValueError(f'{path}: missing movement latch at {i}')
+        if i and not free_route and flags&15!=1:
             raise ValueError(f'{path}: expected held RIGHT, got flags {flags:#x} at {i}')
         tile=p[4]+((p[8]&15)<<8)
         seal=p[5]+((p[8]>>4)<<8)
         show=p[6]+((p[9]&15)<<8)
         final=p[7]+((p[9]>>4)<<8)
         move=p[10]+((p[11]&15)<<8)
-        rows.append(dict(index=i,tick=tick,gen=gen,x=x,y=y,bg=bg,obj=obj,show=show,final=final,
+        rows.append(dict(index=i,direction=flags&15,tick=tick,gen=gen,x=x,y=y,bg=bg,obj=obj,show=show,final=final,
                          arm_ack=ack,move=move,tile=tile if flags&32 else None,seal=seal))
     if len({r['move'] for r in rows if r['index']})!=1:
         raise ValueError('movement origin changed during the sample')
@@ -66,7 +68,12 @@ def summary(rows):
     def stats(v):
         return dict(mean=round(statistics.mean(v),3),p95=round(sorted(v)[math.ceil(.95*len(v))-1],3),
                     max=round(max(v),3)) if v else None
-    return dict(displays=len(moving),fps=round(len(gaps)*1000/sum(gaps),3),gap_ms=stats(gaps),
+    pairs=list(zip(moving,moving[1:]))
+    consecutive_tiles=[(a,b) for a,b in pairs if b['tile'] is not None]
+    return dict(displays=len(moving),duration_ms=round(sum(gaps),3),
+                previous_ack_to_last_tile_ms=stats([dt(b['tile'],a['final']) for a,b in consecutive_tiles]),
+                final_ack_gap_ms=stats([dt(b['final'],a['final']) for a,b in pairs]),
+                fps=round(len(gaps)*1000/sum(gaps),3),gap_ms=stats(gaps),
                 vblank_intervals={str(n):fields.count(n) for n in set(fields)},
                 tile_to_seal_ms=stats(stage('seal','tile')),seal_to_show_ms=stats(stage('show','seal')),
                 show_to_final_ack_ms=stats(stage('final','show')),
@@ -76,8 +83,9 @@ def summary(rows):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('page',type=Path);p.add_argument('group',type=Path);p.add_argument('--rows',action='store_true')
+    p.add_argument('--free-route',action='store_true',help='allow turns and pauses; match scroll position AND held direction')
     args=p.parse_args()
-    a,b=map(decode,(args.page,args.group))
+    a,b=(decode(path,free_route=args.free_route) for path in (args.page,args.group))
     if a[0]!=b[0] or (a[1],b[1])!=(1052,1053):raise ValueError('different slot, ROM, serial, CRC or policy order')
     report={}
     for run in (a,b):
@@ -92,12 +100,19 @@ def main():
         bins={}
         for prev,row in zip(rows,rows[1:]):
             if prev['index'] and row['index']:
-                bins.setdefault((row['x'],row['y']),[]).append(dt(row['show'],prev['show']))
+                key=(row['x'],row['y'],row['direction']) if args.free_route else (row['x'],row['y'])
+                bins.setdefault(key,[]).append(dt(row['show'],prev['show']))
         return bins
     old,new=(by_position(run[3]) for run in (a,b))
     shared=old.keys() & new.keys()
     report['common_scroll_positions']=len(shared)
+    report['slot_rom_serial_body_crc']=list(a[0])
+    report['free_route']=args.free_route
     if shared:
+        report['matched_scroll_bins']=[
+            dict(key=list(k),counts=[len(old[k]),len(new[k])],
+                 mean_gaps_ms=[round(statistics.mean(q[k]),3) for q in (old,new)])
+            for k in sorted(shared)]
         report['equal_position_mean_gap_delta_ms']=round(statistics.mean(
             statistics.mean(new[key])-statistics.mean(old[key]) for key in shared),3)
     print(json.dumps(report,indent=2))
