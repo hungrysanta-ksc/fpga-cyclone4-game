@@ -5,8 +5,11 @@ from pathlib import Path
 from check_nes_pair1054 import Machine, WORK, drive, UC_HOOK_CODE, UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2, UC_ARM_REG_PC, UC_ARM_REG_LR
 from check_ff3_sd1043 import crc8
 
-def run(board, root=WORK, retry_delays=None, menu_timeout=False):
-    raw=next((Path.home()/'Downloads/test').glob('Hoshi no Kirby*.nes' if board==0x7c else 'Final Fantasy III*rel.DWYN*.nes')).read_bytes()
+def run(board, root=WORK, retry_delays=None, menu_timeout=False, raw=None, image=None):
+    if raw is None:
+        raw=next((Path.home()/'Downloads/test').glob('Hoshi no Kirby*.nes' if board==0x7c else 'Final Fantasy III*rel.DWYN*.nes')).read_bytes()
+    prg=raw[4]*16384
+    if image is None:image='/sd2snes/nes-chr'+('rom' if board==0x7c else 'ram')+'.bi3'
     m=Machine(root/'release/link/src',drive(raw))
     u=m.u
     u.mem_map(0xe000e000,4096)
@@ -53,10 +56,10 @@ def run(board, root=WORK, retry_delays=None, menu_timeout=False):
             assert c==512 and b not in pages
             off=len(pages)*512
             block=raw[16+off:16+off+512]
-            if off>=0x80000:
+            if off>=prg:
                 block=bytes(block[j//16*16+(j&1)*8+(j%16)//2] for j in range(512))
             assert bytes(u.mem_read(a,512))==block
-            assert b==(off if off<0x80000 else 0x200000+off-0x80000)
+            assert b==(off if off<prg else 0x200000+off-prg)
             pages.append(b)
         elif name=='slow_begin':u.mem_write(m.sym['gpio_owned'],b'\1')
         elif name=='slow_end':u.mem_write(m.sym['gpio_owned'],b'\0')
@@ -132,7 +135,7 @@ def run(board, root=WORK, retry_delays=None, menu_timeout=False):
         pos=events.index(('starting',0))
         assert events[pos+1:pos+4]==[('delay',100),('reset',1),('delay',5)]
     assert sequence==[0x60,0x62,0x63,0x64] and len(pages)==total//512
-    assert configs==['/sd2snes/nes-chr'+('rom' if board==0x7c else 'ram')+'.bi3','/sd2snes/fpga_base.bi3']
+    assert configs==[image,'/sd2snes/fpga_base.bi3']
     assert m.call('nes_menu_diagnostic_prepared',1)==1
     m.call('nes_menu_diagnostic_released')
     assert m.call('nes_menu_diagnostic_pending')==0 and not m.writes
