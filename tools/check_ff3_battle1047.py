@@ -18,7 +18,10 @@ def runtime_modes(src, *, page_history=False):
     cases=[(0x7d,0,256 if page_history else 2,1),(0x7d,1,1,1),(0x7c,0,1,2)]
     if page_history:
         cases.extend((0x7d,(255^(1<<p))<<1,1+(1<<p),1) for p in range(8))
-    for revision, receipt, content, scheduling in cases:
+    cases=[(0x2234,*case) for case in cases]
+    if 'dirty_chr' in rx and page_history:
+        cases.extend((0x2235,0x7d,group<<1,257+group,1) for group in (0,1,7,8,16,56,63))
+    for version, revision, receipt, content, scheduling in cases:
         m=Machine(src,fat16())
         u=m.u
         u.hook_del(m.hooks['nes_runtime165_step'])
@@ -48,7 +51,7 @@ def runtime_modes(src, *, page_history=False):
         else:
             u.mem_write(resident+rs['resident'],b'\x01'*288)
         header=callback+8
-        word=(0x2234<<48)|(1<<42)|(1<<36)|(224<<28)|(receipt<<3)
+        word=(version<<48)|(1<<42)|(1<<36)|(224<<28)|(receipt<<3)
         u.mem_write(header,struct.pack('>HHQ',0xe000,1,word))
         assert m.call('nes_native165_packet',receiver,0,header,12)
         put(receiver+rx['state'],'B',4)
@@ -69,7 +72,8 @@ def runtime_modes(src, *, page_history=False):
         assert observed==[content,scheduling],(revision,receipt,observed)
         bits=u.mem_read(resident+rs['resident'],288)
         if page_history:
-            assert bits[0]==bits[144]==(255^(content-1)),(revision,receipt,content,bits[0],bits[144])
+            invalid=(content-1) if version==0x2234 else sum(1<<p for p in range(8) if p*8==receipt>>1)
+            assert bits[0]==bits[144]==(255^invalid),(revision,receipt,content,bits[0],bits[144])
         else:
             assert bool(any(bits))==(content==1)
         if receipt:
@@ -88,7 +92,8 @@ def runtime_modes(src, *, page_history=False):
     print('PASS linked runtime CHR receipt selection, bank scheduling, wrong final generation and abort')
 
 
-def replay(src, records, history, candidate, stride, *, native_colors=False, pages=None, profile=False):
+def replay(src, records, history, candidate, stride, *, native_colors=False, pages=None, profile=False,
+           written_groups=None, instruction_samples=None, touched_tiles=None):
     rx,video,rs=layouts(src)
     m=Machine(src,fat16())
     u=m.u
@@ -115,6 +120,8 @@ def replay(src, records, history, candidate, stride, *, native_colors=False, pag
     u.hook_add(UC_HOOK_CODE,emit,None,writer,writer)
     m.call('nes_resident211_reset',res)
     banks=[{},{}]
+    tile_epoch=Counter()
+    bank_versions=[{},{}]
     serializer,wire_input=base+0x11000,base+0x11400
     wire,=layouts(src,('nes_plan200',))
     encoded_lengths={}
@@ -132,9 +139,12 @@ def replay(src, records, history, candidate, stride, *, native_colors=False, pag
     stats=[]
     last_clean=True
     retained_pages=255
+    pending_groups=set()
     for i,(frame,geometry) in enumerate(records):
         last_clean &= history[frame]
         if pages is not None:retained_pages &= pages[frame]
+        if written_groups is not None:pending_groups.update(written_groups[frame])
+        if touched_tiles is not None:tile_epoch.update(touched_tiles[frame])
         if i%stride:continue
         clean=last_clean;last_clean=True
         clean_pages=retained_pages;retained_pages=255
@@ -144,9 +154,17 @@ def replay(src, records, history, candidate, stride, *, native_colors=False, pag
         u.mem_write(receiver,bytes(0x4000))
         hdr=(0x2234<<48)|(len(maps)//33<<42)|(len(palette)//32<<36)|(224<<28)|(len(objects)<<20)|(len(ex)<<12)|(int(clean and (candidate or pages is not None))<<3)|(len(pixels)//256)
         if pages is not None and candidate:hdr|=clean_pages<<4
+        group=None
+        if i and len(pending_groups)==1:
+            group,=pending_groups
+            hdr=(hdr & ((1<<48)-1) & ~0xff8)|(0x2235<<48)|(group<<4)
+        pending_groups.clear()
         u.mem_write(header,struct.pack('>HHQ',0xe000,gen,hdr))
         assert m.call('nes_native165_packet',receiver,0,header,12),(frame,'header')
-        if candidate and pages is not None:assert get(receiver+rx['clean_pages'],'B')==clean_pages
+        if 'dirty_chr' in rx:
+            dirty=get(receiver+rx['dirty_chr'],'H')
+            assert dirty==(256+group if group is not None else 255^clean_pages)
+        elif candidate and pages is not None:assert get(receiver+rx['clean_pages'],'B')==clean_pages
         elif candidate:assert bool(get(receiver+rx['chr_unchanged'],'B'))==clean
         kinds={word&16383:1 for word in maps}
         for word in objects:
@@ -171,16 +189,21 @@ def replay(src, records, history, candidate, stride, *, native_colors=False, pag
                 # from a modified physical page, on both destination banks.
                 for saved in banks:
                     for key,body in list(saved.items()):
-                        page=(int.from_bytes(body[:2],'little')>>6)&7
-                        if not clean_pages&(1<<page):del saved[key]
+                        tag=int.from_bytes(body[:2],'little')
+                        modified=(tag>>3)&63==group if group is not None else not clean_pages&(1<<((tag>>6)&7))
+                        if modified:del saved[key]
             else:banks=[{},{}]
         stack[:]=[writer|1,0]
         content=(1+(255^clean_pages)) if candidate and pages is not None else (2 if not clean and (candidate or pages is not None) else 1)
+        if 'dirty_chr' in rx:content=1+dirty
         assert m.call('nes_resident211_begin',res,1,content,gen)
         stack.clear();commands.clear()
         executed=[0]
         if profile:
-            def count_instruction(u,pc,size,data):executed[0]+=1
+            sample=instruction_samples.get(frame) if instruction_samples is not None else None
+            def count_instruction(u,pc,size,data):
+                executed[0]+=1
+                if sample is not None:sample[pc]+=1
             counter=u.hook_add(UC_HOOK_CODE,count_instruction)
         assert m.call('nes_native_video211_plan',receiver,lut,out,res),(frame,'planner',get(out+video['error'],'B'))
         if profile:u.hook_del(counter)
@@ -188,11 +211,21 @@ def replay(src, records, history, candidate, stride, *, native_colors=False, pag
         stack[:]=[1]
         assert m.call('nes_resident211_commit',res,serial,gen,bank)
         stack.clear()
-        for k,s,cmd in commands:banks[bank][(int(k==1),s)]=cmd
+        for k,s,cmd in commands:
+            key=(int(k==1),s)
+            banks[bank][key]=cmd
+            if touched_tiles is not None:
+                tag=None if k==2 else int.from_bytes(cmd[:2],'little')&511
+                bank_versions[bank][key]=(tag,tile_epoch[tag])
         # Only compare visible tile definitions. Invalidated but unused slots
         # may retain different old data in VRAM; they cannot affect this image.
         used=bytes(u.mem_read(res+rs['used'],144))
-        values=[banks[bank][(int(i>=1024),i if i<1024 else i-1024)] for i in range(1152) if used[i//8]&(1<<(i%8))]
+        visible=[(int(i>=1024),i if i<1024 else i-1024) for i in range(1152) if used[i//8]&(1<<(i%8))]
+        values=[banks[bank][key] for key in visible]
+        if touched_tiles is not None:
+            for key in visible:
+                tag,issued_epoch=bank_versions[bank][key]
+                assert issued_epoch==tile_epoch[tag],(frame,bank,key,tag,'stale CHR tile')
         image=hashlib.sha256()
         for key,n in [('map',4096),('oam',544),('cgram',512),('hdma',get(out+video['hdma_size'],'H'))]:
             image.update(bytes(u.mem_read(out+video[key],n)))
