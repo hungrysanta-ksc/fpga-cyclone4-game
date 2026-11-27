@@ -14,13 +14,14 @@ def main():
     for name in ('mesen', 'rom', 'slot', 'out'):
         ap.add_argument(name, type=Path)
     ap.add_argument('--frames',type=int,nargs='+',default=[])
+    ap.add_argument('--serial',type=int,default=8,help='Required sequence number of the supplied slot')
     ap.add_argument('--route', type=Path, help='Timed controller inputs and screenshot frame numbers')
     args = ap.parse_args()
     route = json.loads(args.route.read_text()) if args.route else None
     out = args.out.resolve()
     rom, slot = args.rom.read_bytes(), args.slot.read_bytes()
     assert hashlib.sha256(rom).hexdigest() == 'f4e33d48c474a9ac7d945d1bafcdcaf01fec9b7d78257357c574b9661ccdd1b5'
-    assert struct.unpack_from('<4s6I', slot) == (b'NESS', 1, zlib.crc32(rom), 524288, 1, 21264, 8)
+    assert struct.unpack_from('<4s6I', slot) == (b'NESS', 1, zlib.crc32(rom), 524288, 1, 21264, args.serial)
     assert len(slot) == 21300 and struct.unpack_from('<II', slot, 28) == (zlib.crc32(slot[36:]), zlib.crc32(slot[:32]))
     tests = Path(__file__).resolve().parents[1]/'tests/nes-functional'
     init = (tests/'ff3_battle_reference1047.lua').read_text().split('local f=-118;', 1)[0]
@@ -79,7 +80,7 @@ end,emu.eventType.startFrame)
                             script,work/'game.nes','--timeout=480','--enableStdout','--doNotSaveSettings','--debug.scriptWindow.allowIoOsAccess=true',
                             '--preferences.overrideSaveDataFolder=true','--preferences.saveDataFolder='+tmp],
                            cwd=work, stdout=log, stderr=subprocess.STDOUT, check=True, timeout=510)
-        for path in [work/'walk.tsv', *work.glob('*.ppm')]:
+        for path in [work/'walk.tsv',work/'chr-tiles.tsv', *work.glob('*.ppm')]:
             shutil.copyfile(path,out/path.name)
         if args.frames:
             for name in ('ppu-fetch.bin','nametable.bin','rows.bin','writes.bin'):
