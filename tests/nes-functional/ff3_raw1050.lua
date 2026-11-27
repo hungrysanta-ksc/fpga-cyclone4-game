@@ -4,9 +4,10 @@ local f=assert(io.open(dir.."/cases","rb"));local data=f:read("*a");f:close()
 local wr,vr=emu.memType.snesWorkRam,emu.memType.snesVideoRam
 local function put(a,v) emu.write(a,v&255,wr) end
 local function word(a,v) put(a,v);put(a+1,v>>8) end
-local function done(s,n) local o=assert(io.open(dir.."/result","w"));o:write(s);o:close();emu.stop(n) end
+local finished=false
+local function done(s,n) finished=true;local o=assert(io.open(dir.."/result","w"));o:write(s);o:close();emu.stop(n) end
 local function hook(addr,fn)
- emu.addMemoryCallback(function() local ok,msg=pcall(fn);if not ok then done(tostring(msg),1) end end,emu.callbackType.exec,addr)
+ emu.addMemoryCallback(function() if finished then return end;local ok,msg=pcall(fn);if not ok then done(tostring(msg),1) end end,emu.callbackType.exec,addr)
 end
 -- A16/X16, DBR=0, forced blank. The service reads the ordinary STOP port.
 local code={0xc2,0x30,0xad,0x00,0x08,0x20,raw&255,raw>>8,0x4c,0x00,0x1a}
