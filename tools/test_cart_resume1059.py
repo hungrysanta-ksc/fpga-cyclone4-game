@@ -9,7 +9,7 @@ from prepare_nes_carts1056 import ROOT
 from check_ff3_checkpoint_rtl import BIN
 
 
-def run(m):
+def run(m, castle_slot=None):
     board=OUT/f"board-{m}"
     names={5:"Dragon Quest IV (K1.2)",7:"Battletoads v1.0 (K)",21:"WaiwaiWorld 2 (K)"}
     raw=(Path.home()/"Downloads/test"/(names[m]+".nes")).read_bytes()
@@ -51,10 +51,21 @@ endmodule
         tmp=Path(tmp)
         (tmp/"prg.bin").write_bytes(raw[16:16+prg_bytes])
         if m==21:(tmp/"chr.bin").write_bytes(raw[16+prg_bytes:])
+        if castle_slot:
+            import struct
+            from prepare_cart_debug1060 import OUT as output
+            raw_slot=castle_slot.read_bytes()
+            header=struct.unpack_from('<9I',raw_slot)
+            assert header[:6]==(0x5353454e,1,zlib.crc32(raw),prg_bytes,1,8*words)
+            assert len(raw_slot)==36+words*8 and header[7:]==(zlib.crc32(raw_slot[36:]),zlib.crc32(raw_slot[:32]))
+            (tmp/'physical.hex').write_text(''.join(f'{v:016x}\n' for v, in struct.iter_unpack('<Q',raw_slot[36:])))
+            tb=tb.replace(" reg clk=0;", " reg [7:0] inspect_oam=0; reg clk=0;").replace(".native_oam_address(11'd0)", ".native_oam_address(inspect_oam)")
+            tb=tb[:tb.index(" initial begin\n  fd=")]+(ROOT/"tests/nes-functional/dq4_castle1060.svh").read_text()+"\nendmodule"
+        else: output=OUT
         (tmp/"tb.sv").write_text(tb)
         (tmp/"imports.sv").write_text("import regs_savestates::*;")
         def tool(name,*args):
-            p=OUT/f"resume-{m}-{name}.log"
+            p=output/f"resume-{m}-{name}.log"
             with p.open("w") as out:
                 result=subprocess.run([BIN/(name+".exe"),*args],cwd=tmp,stdout=out,stderr=subprocess.STDOUT,timeout=900)
             log=p.read_text(errors="replace")
@@ -65,8 +76,11 @@ endmodule
         tool("vcom","-2008",*[board/n for n in re.findall(r"^set_global_assignment -name VHDL_FILE (rtl/\S+)",qsf,re.M)])
         files=re.findall(r"^set_global_assignment -name SYSTEMVERILOG_FILE ((?:rtl|sys)/\S+)",qsf,re.M)
         files += ["cart_nrom.sv","nes_probe.sv","nes_local_memory.sv","nes_native_ciram165.sv","nes_checkpoint_memory.sv"]
+        if castle_slot:
+            files += ["nes_native_compact181.sv","nes_native_planes165.sv","nes_native_raster181.sv","nes_patch_capture181.sv","nes_patch_rows181.sv","nes_native_frame201.sv"]
         tool("vlog","-mfcu","-sv","+define+FF3_FITTED",board/files[0],"imports.sv",*[board/n for n in files[1:]],"tb.sv")
-        assert "# PASS cartridge CPU resume" in tool("vsim","-c","-L","altera_mf_ver","-suppress","3009","ff3_checkpoint_tb","-do","onerror {quit -code 1}; run -all; quit -f")
+        expected="# PASS castle" if castle_slot else "# PASS cartridge CPU resume"
+        assert expected in tool("vsim","-c","-L","altera_mf_ver","-suppress","3009","ff3_checkpoint_tb",*(["+walk_down"] if castle_slot else []),"-do","onerror {quit -code 1}; run -all; quit -f")
 
 
 if __name__=="__main__":

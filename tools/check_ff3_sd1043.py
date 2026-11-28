@@ -59,7 +59,11 @@ class Machine:
             address=self.sym[name]&~1
             self.hooks[name]=u.hook_add(UC_HOOK_CODE,self.hook,name,address,address)
         u.mem_write(0x0807ffe0,b'0:\0')
-        assert self.call('f_mount',self.sym['fatfs'],0x0807ffe0,1)==0
+        if 'f_mount' in self.sym:
+            assert self.call('f_mount',self.sym['fatfs'],0x0807ffe0,1)==0
+        else:
+            # Size-LTO debug link inlines the lazy FatFS registration.
+            u.mem_write(self.sym['FatFs'],struct.pack('<I',self.sym['fatfs']))
         u.mem_write(self.sym['nes_board_id'],b'\x7d')
         u.mem_write(self.sym['gpio_owned'],b'\1')
         self.rom(0x7169ada2)
