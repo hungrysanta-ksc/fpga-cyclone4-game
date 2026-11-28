@@ -9,11 +9,21 @@ from prepare_nes_carts1056 import ROOT
 from check_ff3_checkpoint_rtl import BIN
 
 
-def run(m, castle_slot=None, geometry_output=None):
+def run(m, castle_slot=None, geometry_output=None, *, zelda=None):
     board=OUT/f"board-{m}"
     names={5:"Dragon Quest IV (K1.2)",7:"Battletoads v1.0 (K)",21:"WaiwaiWorld 2 (K)"}
+    checksums={5:0x9ac62bb9,7:0xca40be7e,21:0x20f150ff}
+    output=OUT
+    if m==1:
+        from prepare_nes_headers1064 import OUT as candidate
+        assert zelda in (1,2)
+        board=candidate/"board-1"
+        output=candidate/f"zelda{zelda}"
+        output.mkdir(exist_ok=True)
+        names[1]=f"Zelda no Densetsu {zelda} (K)"
+        checksums[1]=(0xdf472057,0x5696ba15)[zelda-1]
     raw=(Path.home()/"Downloads/test"/(names[m]+".nes")).read_bytes()
-    assert zlib.crc32(raw)=={5:0x9ac62bb9,7:0xca40be7e,21:0x20f150ff}[m]
+    assert zlib.crc32(raw)==checksums[m]
     prg_bytes=16384*raw[4]
     words=2785 if m==5 else 2658
     original=(ROOT/"tests/nes-functional/ff3_checkpoint_tb.sv").read_text()
@@ -47,6 +57,21 @@ endmodule
 """
     tb=tb.replace("@INIT@",f"for(int i=0;i<1024;i++){ex}[i]=8'(i*19^(i>>8));" if m==5 else 'fd=$fopen("chr.bin","rb");n=$fread(pattern,fd);$fclose(fd);' if m==21 else "")
     tb=tb.replace("@SAVED@",f"for(int i=0;i<1024;i++)if($isunknown({ex}[i]) || {ex}[i]!==checkpoint[97+i/8][8*(i%8)+:8])$fatal(1,\"exram %0d\",i);" if m==5 else "").replace("@CLEAR@",f"for(int i=0;i<1024;i++){ex}[i]=0;" if m==5 else "")
+    if m==1:
+        tb=tb.replace("repeat(300000)@(negedge clk);", "wait(mapper_writes>=12); repeat(128)@(negedge clk);")
+        tb=tb.replace('if(loads!=WORDS)', 'if(core.core.multi_mapper.mapper_state!==checkpoint[33][25:0])$fatal(1,"MMC1 registers after restore");\n  if(loads!=WORDS)')
+        start_marker=" initial begin\n  fd="
+        tb=tb.replace(start_marker,""" integer mapper_writes=0,fetch_count=0;
+ always @(posedge clk) if(!core_reset && core.core.cpu_ce && core.core.cpu_Instrnew && !paused) begin
+   fetch_count++;
+   if(fetch_count<=16 || fetch_count%32768==0)
+     $display("MMC1 fetch %0d CPU=%h physical=%h opcode=%h writes=%0d",fetch_count,
+              core.core.cpu_addr_full[15:0],ca,core.core.internal_data_bus,mapper_writes);
+ end
+ always @(posedge clk) if(!reset && core.core.cart_ce && core.core.prg_write && core.core.prg_addr[15])
+   mapper_writes++;
+"""+start_marker)
+        tb=tb.replace('  $display("PASS cartridge', '  if(!mapper_writes)$fatal(1,"no CPU mapper writes");\n  $display("MMC1 WRITES %0d",mapper_writes);\n  $display("PASS cartridge')
     with tempfile.TemporaryDirectory(prefix="cart-resume-") as tmp:
         tmp=Path(tmp)
         (tmp/"prg.bin").write_bytes(raw[16:16+prg_bytes])
@@ -67,7 +92,6 @@ endmodule
                 end=original.index('   end',start)
                 dump=original[start:end].replace('proof_frame','field1060')
                 tb=tb.replace(' if(valid_capture)for', ' if(valid_capture)begin\n'+dump+' end\n if(valid_capture)for')
-        else: output=OUT
         (tmp/"tb.sv").write_text(tb)
         (tmp/"imports.sv").write_text("import regs_savestates::*;")
         def tool(name,*args):

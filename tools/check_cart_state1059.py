@@ -32,10 +32,10 @@ def traces():
     return result
 
 
-def state(board,crc,rom_size,size):
+def state(board,crc,rom_size,size,root=None):
     disk=fat16()
     def boot():
-        machine=Machine(OUT/"release/link/src",disk)
+        machine=Machine((root or OUT)/"release/link/src",disk)
         from unicorn import UC_HOOK_CODE
         from unicorn.arm_const import UC_ARM_REG_PC, UC_ARM_REG_LR
         delay=machine.sym["delay_us"] & ~1
@@ -52,7 +52,7 @@ def state(board,crc,rom_size,size):
     m.state[:]=payload
     assert m.call("nes_menu_state_io",1,0,live=True)==1 and m.writes>0
     assert m.call("nes_menu_state_resume")==1
-    if board in (0x83,0x84):
+    if board in (0x83,0x84,0x85):
         battery=bytes((i*11+i//128)&255 for i in range(8192))
         m.battery[:]=battery
         assert m.call("nes_menu_state_io",0,0,live=True)==1

@@ -69,12 +69,15 @@ static inline unsigned nes_cart_profile(const struct nes_cartridge *c) {
  if(c->console || c->timing || c->console_detail || c->device>1 || c->misc ||
     c->tail_size || (c->wiring&12)) return 0;
  if(c->format==NES_20) {
-  if(c->mapper==5 && !c->submapper && c->wiring==2 && c->prg_size==1048576 &&
-     !c->chr_size && c->work_ram==0x70 && c->pattern_ram==7) return 0x84;
+  if(!c->submapper && c->wiring==2 && !c->chr_size && c->work_ram==0x70 && c->pattern_ram==7) {
+   if(c->mapper==5 && c->prg_size==1048576) return 0x84;
+   if(c->mapper==1 && c->prg_size==262144) return 0x85;
+  }
   if(c->submapper!=1 || c->work_ram) return 0;
   if(c->mapper==3 && c->wiring==1 && c->prg_size==32768 && c->chr_size==32768 && !c->pattern_ram) return 0x81;
   if(c->mapper==7 && !c->wiring && c->prg_size==524288 && !c->chr_size && c->pattern_ram==7) return 0x82;
  } else if(c->format==NES_INES && c->work_ram<=1) {
+  if(c->mapper==1 && c->wiring==2 && c->prg_size==262144 && !c->chr_size) return 0x85;
   if(c->mapper==4 && !(c->wiring&~2u) && c->prg_size==524288) {
    if(c->chr_size==262144) return 0x7c;
    if(!c->chr_size) return 0x7d;

@@ -1,5 +1,6 @@
 """Use one size decoder for SD selection and for DEBUG/RELEASE loader revalidation."""
 from shutil import copytree, copyfile
+from prepare_nes_kirby1023 import edit
 from prepare_nes_compat1062 import OUT as BASE, ROOT
 
 OUT = BASE.parent / "nes-headers1064"
@@ -9,6 +10,14 @@ def prepare(mode):
     copytree(BASE/mode/"link",link,dirs_exist_ok=True)
     src = link/"src"
     copyfile(ROOT/"src/nes/nes_cartridge_header.h",src/"nes_cartridge_header.h")
+    edit(src,"nes_menu_diagnostic.c",('[0x84-0x7c]="/sd2snes/nes-m5.bi3",','[0x84-0x7c]="/sd2snes/nes-m5.bi3",\n [0x85-0x7c]="/sd2snes/nes-m1.bi3",'))
+    edit(src,"nes_mmc479.h",("nes_board_id==0x82 || nes_board_id==0x84","nes_board_id==0x82 || (nes_board_id&0xfe)==0x84"))
+    edit(src,"nes_savefile.c",("return (id.rom_bytes==0x60000u","return (id.rom_bytes==0x40000u || id.rom_bytes==0x60000u"))
+    if mode=="debug":
+        for f in ("nes_menu_diagnostic.c","nes_checkpoint112.c"):
+            edit(src,f,("debug1062","debug1064"))
+        edit(src,"nes_checkpoint112.c",("DEBUG1062","DEBUG1064"))
+        edit(src,"nes_budget210.c",("movement->edition=1062","movement->edition=1064"))
     menu = src/"nes_menu_diagnostic.c"
     body = menu.read_text()
     start = body.index("unsigned nes_image_id(")
