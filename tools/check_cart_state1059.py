@@ -32,7 +32,7 @@ def traces():
     return result
 
 
-def state(board,crc,rom_size,size,root=None):
+def state(board,crc,rom_size,size,root=None,battery_bytes=8192):
     disk=fat16()
     def boot():
         machine=Machine((root or OUT)/"release/link/src",disk)
@@ -43,6 +43,7 @@ def state(board,crc,rom_size,size,root=None):
         machine.rom(crc)
         machine.u.mem_write(machine.sym["nes_board_id"],bytes([board]))
         machine.u.mem_write(machine.sym["nes_cart_bytes"],struct.pack("<I",rom_size))
+        machine.battery=bytearray(battery_bytes)
         machine.state=bytearray(size)
         return machine
     payload=bytearray((i*31+(i>>8))&255 for i in range(size))
@@ -52,18 +53,18 @@ def state(board,crc,rom_size,size,root=None):
     m.state[:]=payload
     assert m.call("nes_menu_state_io",1,0,live=True)==1 and m.writes>0
     assert m.call("nes_menu_state_resume")==1
-    if board in (0x83,0x84,0x85):
-        battery=bytes((i*11+i//128)&255 for i in range(8192))
+    if board in (0x83,0x84,0x85,0x86):
+        battery=bytes((i*11+i//128+i//8192)&255 for i in range(battery_bytes))
         m.battery[:]=battery
-        assert m.call("nes_menu_state_io",0,0,live=True)==1
+        assert m.call("nes_menu_state_io",0,0,live=True,instructions=120000000*(battery_bytes//8192))==1
         m=boot()
-        assert m.call("nes_restore_boot_battery",instructions=180000000)==1
+        assert m.call("nes_restore_boot_battery",instructions=180000000*(battery_bytes//8192))==1
         assert m.flags==0 and m.battery==battery and not m.writes
     else:
-        assert m.call("nes_menu_state_io",0,0,live=True)==0xffffffff
+        assert m.call("nes_menu_state_io",0,0,live=True,instructions=120000000*(battery_bytes//8192))==0xffffffff
     m=boot()
     m.u.mem_write(m.sym["ff3_next_slot"],b"\1")
-    assert m.call("nes_restore_boot_battery",instructions=180000000)==1
+    assert m.call("nes_restore_boot_battery",instructions=180000000*(battery_bytes//8192))==1
     assert m.flags==0 and m.state==payload and not m.writes
     m.rom(crc^1)
     assert m.call("nes_menu_state_io",1,1,live=True)==0

@@ -9,15 +9,21 @@ from prepare_nes_carts1056 import ROOT
 from check_ff3_checkpoint_rtl import BIN
 
 
-def run(m, castle_slot=None, geometry_output=None, *, zelda=None):
+def run(m, castle_slot=None, geometry_output=None, *, zelda=None, opening=False, sxrom=False, title_fix=False):
     board=OUT/f"board-{m}"
     names={5:"Dragon Quest IV (K1.2)",7:"Battletoads v1.0 (K)",21:"WaiwaiWorld 2 (K)"}
     checksums={5:0x9ac62bb9,7:0xca40be7e,21:0x20f150ff}
     output=OUT
-    if m==1:
+    if m==1 and sxrom:
+        from prepare_sxrom1065 import BOARD as board, OUT as output
+        names[1]="Final Fantasy 1 & 2 (J) [!]"
+        checksums[1]=0x6f8906ad
+    elif m==1:
         from prepare_nes_headers1064 import OUT as candidate
         assert zelda in (1,2)
         board=candidate/"board-1"
+        if title_fix:
+            from prepare_zelda_title1065 import BOARD as board
         output=candidate/f"zelda{zelda}"
         output.mkdir(exist_ok=True)
         names[1]=f"Zelda no Densetsu {zelda} (K)"
@@ -25,7 +31,7 @@ def run(m, castle_slot=None, geometry_output=None, *, zelda=None):
     raw=(Path.home()/"Downloads/test"/(names[m]+".nes")).read_bytes()
     assert zlib.crc32(raw)==checksums[m]
     prg_bytes=16384*raw[4]
-    words=2785 if m==5 else 2658
+    words=5730 if sxrom else 2785 if m==5 else 2658
     original=(ROOT/"tests/nes-functional/ff3_checkpoint_tb.sv").read_text()
     tb=original[:original.index(" wire [191:0] live_mapper")]+original[original.index(" // File indices"):original.index(" task automatic battery_byte")]
     tb+=original[original.index(" task automatic check_resumed_cpu"):original.index(" reg [5:0] reference_pixels")]
@@ -72,6 +78,17 @@ endmodule
    mapper_writes++;
 """+start_marker)
         tb=tb.replace('  $display("PASS cartridge', '  if(!mapper_writes)$fatal(1,"no CPU mapper writes");\n  $display("MMC1 WRITES %0d",mapper_writes);\n  $display("PASS cartridge')
+    if sxrom:
+        assert m==1 and not opening and not castle_slot
+        memory=(ROOT/"tests/nes-functional/sxrom_sram1065.svh").read_text()
+        tb=tb.replace(" nes_checkpoint_memory #",memory+"\n nes_checkpoint_memory #").replace("mem(.clk(clk)", "mem(.sx_addr(sx_addr),.sx_oe(sx_oe),.sx_we(sx_we),.sx_data(sx_data),.clk(clk)")
+        tb=tb.replace("wait(paused);@(negedge clk);save_req=1;", """wait(paused);@(negedge clk);
+  for(int i=0;i<32768;i++)sx_memory[i]=sx_pattern(i);
+  save_req=1;""")
+        tb=tb.replace("if(loads!=WORDS)", """for(int i=0;i<32768;i++)
+    if(checkpoint[1634+i/8][8*(i%8)+:8]!==sx_pattern(i) || sx_memory[i]!==sx_pattern(i))
+      $fatal(1,"battery image mismatch byte %0d",i);
+  if(loads!=WORDS)""")
     with tempfile.TemporaryDirectory(prefix="cart-resume-") as tmp:
         tmp=Path(tmp)
         (tmp/"prg.bin").write_bytes(raw[16:16+prg_bytes])
@@ -92,10 +109,28 @@ endmodule
                 end=original.index('   end',start)
                 dump=original[start:end].replace('proof_frame','field1060')
                 tb=tb.replace(' if(valid_capture)for', ' if(valid_capture)begin\n'+dump+' end\n if(valid_capture)for')
+        if opening:
+            assert m==1 and zelda==2 and not castle_slot
+            output=candidate.parent/"nes-mmc1-1065"
+            output.mkdir(exist_ok=True)
+            collector=(ROOT/"tests/nes-functional/dq4_castle1060.svh").read_text().split("always @(posedge clk) if(measuring1060 && ce && line_no>=7")[0]
+            if title_fix:
+                output=output/"title-fix"
+                output.mkdir(exist_ok=True)
+                collector=collector.replace(".ppu_read(pr)",".address_change(core.native_addr_write),.pattern_data(pq),.ppu_read(pr)")
+            tb=tb[:tb.index(" integer mapper_writes=")]+collector + (ROOT/"tests/nes-functional/zelda2_opening1065.svh").read_text()+"\nendmodule"
+        if title_fix:
+            check=(ROOT/"tests/nes-functional/zelda2_title_check1065.svh").read_text()
+            start=original.index('    $display("GEOMETRY ')
+            dump=original[start:original.index('   end',start)].replace("proof_frame","field1060")
+            check=check.replace("   accepted_titles++;","   accepted_titles++;\n"+dump)
+            tb=tb.replace("integer changes=0", check+"\ninteger changes=0")
+            tb=tb.replace("wait(field1060==32)", "wait(field1060==24)")
+            tb=tb.replace('$display("PASS opening capture trace")', 'if(!accepted_titles || rejected_titles)$fatal(1,"title fields valid=%0d rejected=%0d",accepted_titles,rejected_titles); $display("PASS opening capture trace")')
         (tmp/"tb.sv").write_text(tb)
         (tmp/"imports.sv").write_text("import regs_savestates::*;")
         def tool(name,*args):
-            p=output/f"resume-{m}-{name}.log"
+            p=output/f"resume-{'sxrom' if sxrom else m}-{name}.log"
             with p.open("w") as out:
                 result=subprocess.run([BIN/(name+".exe"),*args],cwd=tmp,stdout=out,stderr=subprocess.STDOUT,timeout=900)
             log=p.read_text(errors="replace")
@@ -106,10 +141,10 @@ endmodule
         tool("vcom","-2008",*[board/n for n in re.findall(r"^set_global_assignment -name VHDL_FILE (rtl/\S+)",qsf,re.M)])
         files=re.findall(r"^set_global_assignment -name SYSTEMVERILOG_FILE ((?:rtl|sys)/\S+)",qsf,re.M)
         files += ["cart_nrom.sv","nes_probe.sv","nes_local_memory.sv","nes_native_ciram165.sv","nes_checkpoint_memory.sv"]
-        if castle_slot:
+        if castle_slot or opening:
             files += ["nes_native_compact181.sv","nes_native_planes165.sv","nes_native_raster181.sv","nes_patch_capture181.sv","nes_patch_rows181.sv","nes_native_frame201.sv"]
         tool("vlog","-mfcu","-sv","+define+FF3_FITTED",board/files[0],"imports.sv",*[board/n for n in files[1:]],"tb.sv")
-        expected="# PASS castle" if castle_slot else "# PASS cartridge CPU resume"
+        expected="# PASS opening" if opening else "# PASS castle" if castle_slot else "# PASS cartridge CPU resume"
         assert expected in tool("vsim","-c","-L","altera_mf_ver","-suppress","3009","ff3_checkpoint_tb",*(["+walk_down"] if castle_slot else []),"-do","onerror {quit -code 1}; run -all; quit -f")
 
 

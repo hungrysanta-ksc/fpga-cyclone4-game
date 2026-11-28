@@ -46,11 +46,14 @@ def captured(log):
         yield frame,fields
 
 
-def check(src, bands, records=(), *, fold_backdrop=False):
+def check(src, bands, records=(), *, fold_backdrop=False, board=None):
+    counts = {}
     rx,video,resident = layouts(src)
     for start,end,geometry in [(a,b,None) for a,b in bands]+[(f,f,data) for f,data in records]:
         m=Machine(src,fat16())
         u=m.u
+        if board is not None:
+            u.mem_write(m.sym["nes_board_id"], bytes([board]))
         # Extra address space is fixture storage for the public function's arguments.
         base=0x21000000
         u.mem_map(base,0x20000)
@@ -159,8 +162,11 @@ def check(src, bands, records=(), *, fold_backdrop=False):
                 pos=(col//32)*1024+row*32+col%32
                 tile=get(out+video['map']+pos*2,'H')&1023
                 assert (tile==0)==hidden,(y,screen_x,tile)
-        if geometry:print('PASS captured frame',start,'blank rows',sum((v>>36)&255==0 and not (v>>49)&1 for v in rasters))
+        if geometry:
+            counts[start] = dict(objects=get(out+video['objects'],'B'), raw_lines=len(retained) if pixels else 0)
+            print('PASS captured frame',start,'blank rows',sum((v>>36)&255==0 and not (v>>49)&1 for v in rasters))
     print('PASS linked Cortex-M4 planner: blank slot, nonblank BG and backdrop palette at every pixel of',len(bands),'frames')
+    return counts
 
 
 if __name__=='__main__':
