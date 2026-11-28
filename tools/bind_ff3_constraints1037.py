@@ -26,13 +26,17 @@ def bind(board):
     path.write_text(table+source)
     # The CHR port moved to SRAM. PRG-only PSRAM reads have a constant top
     # address bit. Drop only its two old constraints if MAP proves it constant.
-    node="nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader|address_hold[21]"
-    if re.search(r"^; "+re.escape(node)+r"\s*; Stuck at GND ",report,re.M):
-        path=board/"cdc576.sdc"
-        lines=path.read_text().splitlines(keepends=True)
-        old=[line for line in lines if "{"+node+"}" in line]
-        assert len(old)==2 and all("check_response_address[21]" in line for line in old)
-        path.write_text("".join(line for line in lines if line not in old))
+    reader="nes_live_joint:core|nes_spi_boot:loader_boot|nes_rom_boot:boot|nes_rom_physical:reader"
+    # A 256 KiB PRG-only board also fixes bit 18 to zero.
+    for bit in (21,18):
+        node=f"{reader}|address_hold[{bit}]"
+        if re.search(r"^; "+re.escape(node)+r"\s*; Stuck at GND ",report,re.M):
+            path=board/"cdc576.sdc"
+            lines=path.read_text().splitlines(keepends=True)
+            old=[line for line in lines if "{"+node+"}" in line]
+            if not old: continue
+            assert len(old)==2 and all(f"check_response_address[{bit}]" in line for line in old)
+            path.write_text("".join(line for line in lines if line not in old))
     path=board/"cdc576.sdc"
     source=path.read_text()
     start="proc cdc576_pin {regname} {"

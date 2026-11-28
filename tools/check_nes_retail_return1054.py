@@ -5,10 +5,10 @@ from pathlib import Path
 from check_nes_pair1054 import Machine, WORK, drive, UC_HOOK_CODE, UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2, UC_ARM_REG_PC, UC_ARM_REG_LR
 from check_ff3_sd1043 import crc8
 
-def run(board, root=WORK, retry_delays=None, menu_timeout=False, raw=None, image=None, reject_crc=False):
+def run(board, root=WORK, retry_delays=None, menu_timeout=False, raw=None, image=None, reject_crc=False, expected_prg_bytes=None):
     if raw is None:
         raw=next((Path.home()/'Downloads/test').glob('Hoshi no Kirby*.nes' if board==0x7c else 'Final Fantasy III*rel.DWYN*.nes')).read_bytes()
-    prg=raw[4]*16384
+    prg=raw[4]*16384 if expected_prg_bytes is None else expected_prg_bytes
     if image is None:image='/sd2snes/nes-chr'+('rom' if board==0x7c else 'ram')+'.bi3'
     m=Machine(root/'release/link/src',drive(raw))
     u=m.u

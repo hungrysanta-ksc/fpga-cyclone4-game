@@ -115,7 +115,7 @@ class Machine:
                 if self.count==len(self.state)//8:self.flags=35
                 else:self.word=(self.word+1)%(len(self.state)//8)
             elif op in (7,8):
-                assert idx<8192 and self.flags&3==3
+                assert idx<len(self.battery) and self.flags&3==3
                 self.bat_index=idx
                 if op==8:self.battery[idx]=tx[4]
                 self.flags=67 if op==7 else 3
