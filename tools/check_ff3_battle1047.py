@@ -93,7 +93,7 @@ def runtime_modes(src, *, page_history=False):
 
 
 def replay(src, records, history, candidate, stride, *, native_colors=False, pages=None, profile=False,
-           written_groups=None, instruction_samples=None, touched_tiles=None):
+           written_groups=None, instruction_samples=None, touched_tiles=None, board_id=None):
     rx,video,rs=layouts(src)
     m=Machine(src,fat16())
     u=m.u
@@ -119,6 +119,8 @@ def replay(src, records, history, candidate, stride, *, native_colors=False, pag
         commands.append((kind,slot,command[4:]))
     u.hook_add(UC_HOOK_CODE,emit,None,writer,writer)
     m.call('nes_resident211_reset',res)
+    if board_id is not None:
+        u.mem_write(m.sym["nes_board_id"], bytes([board_id]))
     banks=[{},{}]
     tile_epoch=Counter()
     bank_versions=[{},{}]

@@ -1,6 +1,6 @@
-param([string]$Work=(Join-Path $PSScriptRoot '../../probes/nes-ff3-movement1052'))
+param([string]$Work=(Join-Path $PSScriptRoot '../../probes/nes-ff3-movement1052'),[string]$BoardDir='board-c',[switch]$TraceOnly)
 $ErrorActionPreference='Stop'
-$board=(Resolve-Path "$Work/board-c").Path
+$board=(Resolve-Path "$Work/$BoardDir").Path
 $out=(Resolve-Path $Work).Path
 $tb=(Resolve-Path "$PSScriptRoot/../tests/nes-functional/ff3_movement1052_tb.sv").Path
 $bin='C:/altera_standard/25.1std/questa_fse/win64'
@@ -14,4 +14,5 @@ try {
  & "$bin/vsim.exe" -c ff3_movement1052_tb -do 'onerror {quit -code 1};run -all;quit -f' *> "$out/trace.log"
  if($LASTEXITCODE -or !(Select-String -LiteralPath "$out/trace.log" -SimpleMatch 'PASS1052')){throw 'trace test'}
 }finally{Pop-Location}
+if($TraceOnly){return}
 & "$PSScriptRoot/check_ff3_chr1051.ps1" -Board $board -Report $out
