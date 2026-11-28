@@ -108,8 +108,8 @@ class Machine:
                 if op==5:assert tx[4:12]==self.state[8*idx:8*idx+8]
                 else:self.state[8*idx:8*idx+8]=tx[4:12]
                 self.count+=1
-                if self.count==2658:self.flags=35
-                else:self.word=(self.word+1)%2658
+                if self.count==len(self.state)//8:self.flags=35
+                else:self.word=(self.word+1)%(len(self.state)//8)
             elif op in (7,8):
                 assert idx<8192 and self.flags&3==3
                 self.bat_index=idx
