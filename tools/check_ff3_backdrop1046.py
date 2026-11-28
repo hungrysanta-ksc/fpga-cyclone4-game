@@ -46,7 +46,7 @@ def captured(log):
         yield frame,fields
 
 
-def check(src, bands, records=()):
+def check(src, bands, records=(), *, fold_backdrop=False):
     rx,video,resident = layouts(src)
     for start,end,geometry in [(a,b,None) for a,b in bands]+[(f,f,data) for f,data in records]:
         m=Machine(src,fat16())
@@ -118,19 +118,41 @@ def check(src, bands, records=()):
             assert 1<=lines<=127
             scanlines.extend([(x,v)]*lines)
         assert len(scanlines)==224
+        folded=set()
         if geometry and pixels:
             # patch.chr starts at offset zero of the output union. Decode the
             # eight SNES bitplanes including the raw palette base at index 64.
             chr_data=bytes(u.mem_read(out,2048))
-            for i,nes_color in enumerate(pixels):
-                slot,x=divmod(i,256)
-                pos=(x//8)*64+slot*2
-                color=sum(((chr_data[pos+(plane//2)*16+(plane%2)]>>(7-x%8))&1)<<plane for plane in range(8))
-                assert color==64+nes_color,(start,slot,x,color,nes_color)
+            raw_lines=[y for y,v in enumerate(rasters) if v>>49&1]
+            has_blank=any((v>>36)&255==0 and not(v>>49&1) for v in rasters)
+            retained=[]
+            for i,y in enumerate(raw_lines):
+                line=pixels[i*256:(i+1)*256]
+                if fold_backdrop and has_blank and all(c==palette[0] for c in line):
+                    folded.add(y)
+                    continue
+                slot=len(retained)
+                retained.append(y)
+                assert scanlines[y][0]==0 and (scanlines[y][1]+y+1)&255==slot
+                for x,nes_color in enumerate(line):
+                    pos=(x//8)*64+slot*2
+                    color=sum(((chr_data[pos+(plane//2)*16+(plane%2)]>>(7-x%8))&1)<<plane for plane in range(8))
+                    assert color==64+nes_color,(start,slot,x,color,nes_color)
+            assert get(out+video['patch_count'],'B')==len(retained)
+            if retained:
+                for bank in range(2):
+                    table=bytes(u.mem_read(out+2048+bank*81,81))
+                    modes=[]
+                    for i in range(0,80,5):
+                        n=table[i]
+                        if not n:break
+                        modes.extend([table[i+1]]*n)
+                    assert modes==[3 if y in retained else 0 for y in range(224)]
         for y,(x,v) in enumerate(scanlines):
             assert (x,v)==(get(out+video['hofs']+2*y,'H'),get(out+video['vofs']+2*y,'H'))
             row=((v+y+1)&255)//8
             hidden=(rasters[y]>>36)&255==0 and not (rasters[y]>>49)&1 if geometry else start<=y<end
+            hidden=hidden or y in folded
             if geometry and not hidden:continue
             for screen_x in range(256):
                 col=((x+screen_x)//8)%64

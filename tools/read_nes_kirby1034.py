@@ -9,10 +9,13 @@ from read_nes_ingress1029 import CAPACITY, HEADER, INGRESS, OFFSET, ROW, SIZE
 
 
 def sample(data, i, edition=1034):
+    first_tick=100 if edition==1054 else 3000
+    if edition==1054:
+        edition=1035  # The CHR-ROM FPGA event layout is identical.
     tick, gen, bg, ia, ea, probe, obj, dirty, valid, bank, h, desc = ROW.unpack_from(data, HEADER.size+i*ROW.size)
     result = dict(tick=tick, generation=gen)
     token = int.from_bytes(desc[8:], 'little')
-    if (valid != 7 or not 3000 <= tick < 6000 or bank > 1 or ea > ia or max(ia, probe) == 65535
+    if (valid != 7 or not first_tick <= tick < 6000 or bank > 1 or ea > ia or max(ia, probe) == 65535
             or h[1] != (0xa5 if edition==1035 else 0xa4) or h[30:] != bytes((15,165)) or h[2:4] != struct.pack('<H',gen)
             or not desc[0] or desc[6:8] != h[2:4] or h[12:16] != desc[8:]):
         raise ValueError('incomplete identity or observation')
@@ -96,7 +99,7 @@ def sample(data, i, edition=1034):
 
 def decode(data, expected=1034):
     magic,edition,mode,count,_,_,size,capacity=HEADER.unpack_from(data)
-    if expected not in (1034,1035) or (magic,edition,size,capacity,len(data))!=(0x9001,expected,ROW.size,CAPACITY,SIZE) or count>capacity or mode!=0:
+    if expected not in (1034,1035,1054) or (magic,edition,size,capacity,len(data))!=(0x9001,expected,ROW.size,CAPACITY,SIZE) or count>capacity or mode!=0:
         raise ValueError(f'not an MMC{expected} game trace')
     rows=[]
     for i in range(count):
@@ -110,6 +113,6 @@ def decode(data, expected=1034):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('file',type=Path)
-    p.add_argument('--edition',type=int,choices=(1034,1035),default=1034)
+    p.add_argument('--edition',type=int,choices=(1034,1035,1054),default=1034)
     args=p.parse_args()
     print(json.dumps(decode(args.file.read_bytes(),args.edition),indent=2))
