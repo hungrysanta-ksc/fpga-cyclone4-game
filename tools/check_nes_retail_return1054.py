@@ -5,7 +5,7 @@ from pathlib import Path
 from check_nes_pair1054 import Machine, WORK, drive, UC_HOOK_CODE, UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2, UC_ARM_REG_PC, UC_ARM_REG_LR
 from check_ff3_sd1043 import crc8
 
-def run(board, root=WORK, retry_delays=None, menu_timeout=False, raw=None, image=None):
+def run(board, root=WORK, retry_delays=None, menu_timeout=False, raw=None, image=None, reject_crc=False):
     if raw is None:
         raw=next((Path.home()/'Downloads/test').glob('Hoshi no Kirby*.nes' if board==0x7c else 'Final Fantasy III*rel.DWYN*.nes')).read_bytes()
     prg=raw[4]*16384
@@ -121,6 +121,14 @@ def run(board, root=WORK, retry_delays=None, menu_timeout=False, raw=None, image
         assert configs==['/sd2snes/nes-chrram.bi3']
         return dict(base_restored=False,mutations=sequence,status_probes=probes)
     assert finished
+    if reject_crc:
+        assert not sequence and not probes and ('starting',0) not in events
+        assert configs==['/sd2snes/fpga_base.bi3']
+        assert any(fmt=='ROM read failed' for _,fmt,_ in messages)
+        assert m.call('nes_menu_diagnostic_prepared',1)==1
+        m.call('nes_menu_diagnostic_released')
+        assert not m.call('nes_menu_diagnostic_pending') and not m.writes
+        return dict(rejected_before_start=True,base=configs[-1])
     if revised:
         assert menu_commands==([0x55] if menu_timeout else [0x55,0x77])
         if menu_timeout or retry_delays>=20:

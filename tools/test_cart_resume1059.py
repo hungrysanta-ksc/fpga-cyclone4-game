@@ -9,7 +9,7 @@ from prepare_nes_carts1056 import ROOT
 from check_ff3_checkpoint_rtl import BIN
 
 
-def run(m, castle_slot=None):
+def run(m, castle_slot=None, geometry_output=None):
     board=OUT/f"board-{m}"
     names={5:"Dragon Quest IV (K1.2)",7:"Battletoads v1.0 (K)",21:"WaiwaiWorld 2 (K)"}
     raw=(Path.home()/"Downloads/test"/(names[m]+".nes")).read_bytes()
@@ -61,6 +61,12 @@ endmodule
             (tmp/'physical.hex').write_text(''.join(f'{v:016x}\n' for v, in struct.iter_unpack('<Q',raw_slot[36:])))
             tb=tb.replace(" reg clk=0;", " reg [7:0] inspect_oam=0; reg clk=0;").replace(".native_oam_address(11'd0)", ".native_oam_address(inspect_oam)")
             tb=tb[:tb.index(" initial begin\n  fd=")]+(ROOT/"tests/nes-functional/dq4_castle1060.svh").read_text()+"\nendmodule"
+            if geometry_output:
+                output=geometry_output
+                start=original.index('    $display("GEOMETRY ')
+                end=original.index('   end',start)
+                dump=original[start:end].replace('proof_frame','field1060')
+                tb=tb.replace(' if(valid_capture)for', ' if(valid_capture)begin\n'+dump+' end\n if(valid_capture)for')
         else: output=OUT
         (tmp/"tb.sv").write_text(tb)
         (tmp/"imports.sv").write_text("import regs_savestates::*;")

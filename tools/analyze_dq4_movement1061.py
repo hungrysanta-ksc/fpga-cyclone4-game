@@ -12,7 +12,7 @@ WINDOW_MS = 5500
 
 def decode(data):
     magic, edition, slot, rom, serial, crc, used, _, done, misses = HEADER.unpack_from(data)
-    if (magic, edition, slot, rom) != (0x31364d44, 1061, 1, 0x9ac62bb9):
+    if edition not in (1061, 1062) or (magic, slot, rom) != (0x31364d44, 1, 0x9ac62bb9):
         raise ValueError("requires a DQ4 slot 1 restore")
     if done != 1 or misses or not 3 <= used <= 340 or len(data) < HEADER.size + used * ROW.size:
         raise ValueError(f"incomplete or interrupted recording: rows={used}, status={done}, missing={misses}")
